@@ -130,13 +130,16 @@ export const zircuit: ScalingProject = opStackL2({
         chainId: 48900,
       },
     ],
+    explorerUrl: 'https://explorer.zircuit.com',
   },
   nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
   l1StandardBridgePremintedTokens: ['ZRC'],
   associatedTokens: ['ZRC'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x912C7271a6A3622dfb8B218eb46a6122aB046C79'),
+      address: ChainSpecificAddress(
+        'eth:0x912C7271a6A3622dfb8B218eb46a6122aB046C79',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:

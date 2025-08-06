@@ -51,7 +51,7 @@ export class AnomalyNotifier {
     latestRecord: RealTimeLivenessRecord,
     latestStat: AnomalyStatsRecord,
   ) {
-    if (interval < this.minDuration) {
+    if (interval < this.minDuration && z < 100) {
       return
     }
 
@@ -85,8 +85,8 @@ export class AnomalyNotifier {
     latestRecord: RealTimeLivenessRecord,
     latestStat: AnomalyStatsRecord,
   ) {
-    // send only if the duration is over minDuration and we haven't sent a notification yet
-    if (interval < this.minDuration) {
+    // send only if the duration is over minDuration OR z-score is over 100 and we haven't sent a notification yet
+    if (interval < this.minDuration && z < 100) {
       return
     }
 
@@ -114,7 +114,12 @@ export class AnomalyNotifier {
     block: Block,
     latestRecord: RealTimeLivenessRecord,
   ) {
-    if (duration < this.minDuration) {
+    const relatedEntityId = this.generateRelatedEntityId(ongoingAnomaly)
+    const notifications =
+      await this.db.notifications.getByRelatedEntityId(relatedEntityId)
+
+    // we only want to send notification if we previously sent a notification about the detected anomaly
+    if (notifications.length === 0) {
       return
     }
 

@@ -101,7 +101,7 @@ export const layer2financezk: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('StarkExchange', {
           name: 'StarkExchange',
         }),
@@ -128,7 +128,7 @@ export const layer2financezk: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Governor',

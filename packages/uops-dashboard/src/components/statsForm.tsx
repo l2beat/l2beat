@@ -67,7 +67,7 @@ export function StatsForm({
     getStats(chainId, blockCount)
   }
 
-  const getStats = async (chainId: string, overideBlockCount: number) => {
+  const getStats = async (chainId: string, overrideBlockCount: number) => {
     setIsLoading(true)
 
     const chain = SUPPORTED_CHAINS.find((c) => c.id === chainId)
@@ -77,7 +77,7 @@ export function StatsForm({
     }
 
     let currentBatchSize = chain.customBatchSize || 10
-    let blocksLeftToFetch = overideBlockCount ?? blockCount
+    let blocksLeftToFetch = overrideBlockCount ?? blockCount
     let currentLastFetched = lastFetched
 
     try {

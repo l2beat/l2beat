@@ -83,7 +83,7 @@
       ]
     },
     {
-      "name": "zkLink",
+      "name": "OptimismzkLink",
       "address": "oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
@@ -155,7 +155,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L1ERC20Bridge",
+      "name": "OptimismL1ERC20Bridge",
       "address": "oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA",
       "type": "Contract",
       "sourceHashes": [
@@ -508,5 +508,5 @@
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
   "usedBlockNumbers": { "optimism": 139044511 },
-  "permissionsConfigHash": "0x70de559a85af019e19413d9970b501211c2eef9c658ee39a81ec79c504a47f4c"
+  "permissionsConfigHash": "0xa52d924a2d1677aa8315bc14d2d2615ca2ff6a066d62370a3b3d9fd78a2dbb5e"
 }

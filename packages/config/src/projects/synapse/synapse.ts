@@ -123,7 +123,7 @@ export const synapse: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'L1BridgeZap',
           'Entry point for deposits. Acts as a relayer between user and escrow, enabling token swap feature.',
@@ -142,7 +142,7 @@ export const synapse: Bridge = {
   },
 
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'Bridge Multisig',

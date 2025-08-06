@@ -11,8 +11,7 @@ import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
  *
  */
 
-const chain = process.argv[2] || 'arbitrum' // Default to 'optimism' if no argument is provided
-const discovery = new ProjectDiscovery('stargatev2', chain)
+const discovery = new ProjectDiscovery('stargatev2')
 
 const pools: string[] = discovery.getContractValue<string[]>(
   'TokenMessaging',

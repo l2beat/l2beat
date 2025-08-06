@@ -36,14 +36,14 @@ export const risc0: BaseProject = {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.RISC0,
         ZK_CATALOG_TAGS.ISA.RISCV,
-        ZK_CATALOG_TAGS.Arithmetization.AIR,
+        // ZK_CATALOG_TAGS.Arithmetization.AIR,
         ZK_CATALOG_TAGS.Field.BabyBear,
       ],
       finalWrap: [
         ZK_CATALOG_TAGS.Groth16.Snarkjs,
         ZK_CATALOG_TAGS.curve.BN254,
-        ZK_CATALOG_TAGS.Arithmetization.R1CS,
-        ZK_CATALOG_TAGS.PCS.KZG,
+        // ZK_CATALOG_TAGS.Arithmetization.R1CS,
+        // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
     proofSystemInfo: '',
@@ -55,7 +55,6 @@ export const risc0: BaseProject = {
     ],
     verifierHashes: [
       {
-        // the value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol
         hash: '0x21c5fdd9b4d576b17581f50b755482ba7a2134a3b5186e8e454acfa1f69511ab',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
@@ -66,6 +65,8 @@ export const risc0: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('taiko'), ProjectId('bob'), ProjectId('hibachi')],
+        description:
+          'Custom verifier ID: the value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol.',
       },
     ],
   },

@@ -1,8 +1,4 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -36,7 +32,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 
 export const ternoa: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1727455020), // 2024-09-27T17:09:00Z
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Zeeve],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Payments'],
   display: {
@@ -112,7 +108,7 @@ export const ternoa: ScalingProject = polygonCDKStack({
   associatedTokens: ['CAPS'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(bridge.address),
+      address: bridge.address,
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',
@@ -143,7 +139,7 @@ export const ternoa: ScalingProject = polygonCDKStack({
   // ],
   milestones: [
     {
-      title: 'Mainnet Launch',
+      title: 'Ternoa Mainnet Launch',
       url: 'https://x.com/Ternoa_/status/1884519126812487828',
       date: '2025-01-29',
       description: 'Ternoa 2.0 mainnet is live.',

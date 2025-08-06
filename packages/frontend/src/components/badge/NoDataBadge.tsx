@@ -1,6 +1,6 @@
 import { Badge } from './Badge'
 
-export interface Props {
+interface Props {
   className?: string
 }
 

@@ -6,7 +6,7 @@ import type { BaseProject } from '../../types'
 export const zircuitprover: BaseProject = {
   id: ProjectId('zircuitprover'),
   slug: 'zircuitprover',
-  name: 'Zircuit Prover',
+  name: 'Zircuit',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-21')),
   statuses: {
@@ -30,7 +30,7 @@ export const zircuitprover: BaseProject = {
   zkCatalogInfo: {
     creator: 'Zircuit Labs',
     techStack: {
-      finalWrap: [
+      snark: [
         ZK_CATALOG_TAGS.Plonk.Halo2,
         ZK_CATALOG_TAGS.curve.BN254,
         ZK_CATALOG_TAGS.PCS.KZG,

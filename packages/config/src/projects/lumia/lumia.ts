@@ -1,8 +1,4 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -110,7 +106,7 @@ export const lumia: ScalingProject = polygonCDKStack({
   associatedTokens: ['LUMIA'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(bridge.address),
+      address: bridge.address,
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',
@@ -145,5 +141,13 @@ export const lumia: ScalingProject = polygonCDKStack({
       membersCount: membersCountDAC,
     },
   }),
-  milestones: [],
+  milestones: [
+    {
+      title: 'Lumia Mainnet Launch',
+      url: 'https://x.com/BuildOnLumia/status/1895133948096676276',
+      date: '2025-02-27',
+      description: 'Lumia is live on mainnet, integrated with Agglayer.',
+      type: 'general',
+    },
+  ],
 })

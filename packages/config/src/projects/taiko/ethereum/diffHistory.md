@@ -77,7 +77,7 @@ Generated with discovered.json: 0xa14d0b5804b0b13aa300d9e4913b17ccbac8a1c6
 
 ## Description
 
-Config: add version to verifier decription.
+Config: add version to verifier description.
 
 ## Config/verification related changes
 
@@ -3132,7 +3132,7 @@ Generated with discovered.json: 0x375f6b8891b6a923cdfe2360c4becc0eb11bc870
 
 ## Description
 
-Some core upgrade permissions transfered to DAOController.
+Some core upgrade permissions transferred to DAOController.
 
 ## Watched changes
 

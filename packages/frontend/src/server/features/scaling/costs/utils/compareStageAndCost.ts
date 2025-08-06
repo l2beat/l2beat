@@ -24,7 +24,7 @@ interface CostComparable {
   costOrder: number
 }
 
-export function compareCosts(a: CostComparable, b: CostComparable) {
+function compareCosts(a: CostComparable, b: CostComparable) {
   const diff = a.costOrder - b.costOrder
   if (diff !== 0) {
     return diff

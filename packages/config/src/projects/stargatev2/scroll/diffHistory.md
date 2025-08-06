@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xcd9e8aa221f0ed7cacd49ade7e6154ddff62c241
+
+# Diff at Thu, 31 Jul 2025 10:51:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1752074075
+- current timestamp: 1752074075
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752074075 (main branch discovery), not current.
+
+```diff
+    contract TokenMessagingScroll (0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038) {
+    +++ description: None
+      name:
+-        "TokenMessaging"
++        "TokenMessagingScroll"
+    }
+```
+
 Generated with discovered.json: 0xfef8ec8db60829a4a2694cc2b84ffc45a29f7c87
 
 # Diff at Mon, 14 Jul 2025 12:47:12 GMT:
@@ -331,7 +358,7 @@ Generated with discovered.json: 0x95bcd41295300487776a2a249f7437269d0a0cf3
 
 ## Description
 
-Deficit config adjustements affecting fee calculation.
+Deficit config adjustments affecting fee calculation.
 
 ## Watched changes
 

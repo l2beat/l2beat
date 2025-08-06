@@ -95,7 +95,7 @@ function getEthereumEntry(
   data: ActivityProjectTableData,
   tab: CommonScalingEntry['tab'],
 ): ScalingActivityEntry {
-  const notSyncedStatus = data
+  const syncWarning = data
     ? getActivitySyncWarning(data.syncedUntil)
     : undefined
   return {
@@ -112,7 +112,7 @@ function getEthereumEntry(
       tps: data.tps,
       uops: data.uops,
       ratio: data.ratio,
-      isSynced: !notSyncedStatus,
+      isSynced: !syncWarning,
     },
     statuses: undefined,
   }

@@ -1,8 +1,4 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -37,7 +33,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 export const penchain: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1740706975),
   additionalPurposes: ['Gaming'],
-  additionalBadges: [BADGES.DA.DAC],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'Pentagon Chain',
@@ -109,7 +105,7 @@ export const penchain: ScalingProject = polygonCDKStack({
   associatedTokens: ['PC'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(bridge.address),
+      address: bridge.address,
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',

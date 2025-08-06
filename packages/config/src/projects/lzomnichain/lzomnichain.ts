@@ -98,7 +98,7 @@ export const lzOmnichain: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'TSS Oracle',
           'Contract used to submit source chain block hashes. One of the default Oracles.',
@@ -135,7 +135,7 @@ export const lzOmnichain: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Default Relayer',

@@ -20,7 +20,7 @@ import { discoverAndUpdateDiffHistory } from '../implementations/discovery/disco
 
 // NOTE(radomski): We need to modify the args object because the only allowed
 // chains are those that we know of. But we also want to allow the user to
-// specify "all" as the chain namas the chain name.
+// specify "all" as the chain name.
 const { project: _, chain: __, ...remainingArgs } = DiscoverCommandArgs
 const args = {
   ...remainingArgs,
@@ -141,7 +141,7 @@ function addressPredicate(
 
 // TODO(radomski): This will not exist. In the future all of this information
 // will be stored in the discovery but since we're emulating having a single
-// discvoered.json we have to do this trick.
+// discovered.json we have to do this trick.
 function getTimestamp(args: {
   timestamp: number | undefined
   dev: boolean

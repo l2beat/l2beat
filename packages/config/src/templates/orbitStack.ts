@@ -25,7 +25,7 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { formatChallengePeriod, formatDelay } from '../common/formatDelays'
+import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -169,6 +169,7 @@ interface OrbitStackConfigCommon {
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   stackedRiskView?: Partial<ProjectScalingRiskView>
+  hostChain: string
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
@@ -491,9 +492,7 @@ function orbitStackCommon(
           [
             templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
-              address: ChainSpecificAddress.address(
-                templateVars.bridge.address,
-              ),
+              address: templateVars.bridge.address,
               tokens: trackedGasTokens ?? ['ETH'],
               description: trackedGasTokens
                 ? `Contract managing Inboxes and Outboxes. It escrows ${trackedGasTokens?.join(', ')} sent to L2.`
@@ -700,7 +699,7 @@ function orbitStackCommon(
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
   const layer2s = require('../processing/layer2s').layer2s as ScalingProject[]
-  const hostChain = templateVars.discovery.chain
+  const hostChain = templateVars.hostChain
 
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
@@ -916,6 +915,12 @@ function getRiskView(
   const challengePeriodSeconds =
     challengePeriodBlocks * blockNumberOpcodeTimeSeconds
 
+  const challengeGracePeriodBlocks =
+    templateVars.discovery.getContractValueOrUndefined(
+      'RollupProxy',
+      'challengeGracePeriodBlocks',
+    )
+
   const validatorWhitelistDisabled =
     templateVars.discovery.getContractValue<boolean>(
       'RollupProxy',
@@ -927,7 +932,13 @@ function getRiskView(
       templateVars.nonTemplateRiskView?.stateValidation ??
       (() => {
         if (validatorWhitelistDisabled) {
-          return RISK_VIEW.STATE_FP_INT
+          return RISK_VIEW.STATE_FP_INT(
+            challengePeriodSeconds,
+            challengeGracePeriodBlocks
+              ? Number(challengeGracePeriodBlocks) *
+                  blockNumberOpcodeTimeSeconds
+              : undefined,
+          )
         }
 
         const nOfChallengers = isPostBoLD
@@ -945,8 +956,11 @@ function getRiskView(
             nOfChallengers,
             templateVars.hasAtLeastFiveExternalChallengers ?? false,
             challengePeriodSeconds,
+            challengeGracePeriodBlocks
+              ? Number(challengeGracePeriodBlocks) *
+                  blockNumberOpcodeTimeSeconds
+              : undefined,
           ),
-          secondLine: formatChallengePeriod(challengePeriodSeconds),
         }
       })(),
     dataAvailability:

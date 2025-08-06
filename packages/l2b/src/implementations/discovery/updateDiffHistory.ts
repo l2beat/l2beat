@@ -91,20 +91,14 @@ export async function updateDiffHistoryForChain(
   let configRelatedDiff
 
   // TDDO(radomski): Use timestamp after the merge
-  if (
-    (discoveryFromMainBranch?.blockNumber ?? 0) >
-    (curDiscovery.blockNumber ?? Number.MAX_SAFE_INTEGER)
-  ) {
+  if ((discoveryFromMainBranch?.timestamp ?? 0) > curDiscovery.timestamp) {
     throw new Error(
-      `Main branch discovery block number (${discoveryFromMainBranch?.blockNumber}) is higher than current discovery block number (${curDiscovery.blockNumber})`,
+      `Main branch discovery timestamp (${discoveryFromMainBranch?.timestamp}) is higher than current discovery timestamp (${curDiscovery.timestamp})`,
     )
   }
 
   // TDDO(radomski): Use timestamp after the merge
-  if (
-    (discoveryFromMainBranch?.blockNumber ?? 0) <
-    (curDiscovery.blockNumber ?? discoveryFromMainBranch?.blockNumber ?? 0)
-  ) {
+  if ((discoveryFromMainBranch?.timestamp ?? 0) < curDiscovery.timestamp) {
     const rerun = await performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       discoveryFolder,
       discoveryFromMainBranch,
@@ -181,7 +175,11 @@ export async function updateDiffHistoryForChain(
     await revertDiffHistory(diffHistoryPath, historyFileFromMainBranch)
   }
 
-  updateDiffHistoryHash(configReader, diffHistoryPath, projectName, chain)
+  const diffHistoryExistsAfterRevert =
+    existsSync(diffHistoryPath) && statSync(diffHistoryPath).isFile()
+  if (diffHistoryExistsAfterRevert) {
+    updateDiffHistoryHash(configReader, diffHistoryPath, projectName, chain)
+  }
 }
 
 function removeIgnoredFields(diffs: DiscoveryDiff[]) {
@@ -237,26 +235,17 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       : [{ project: projectName, chain }]
 
   for (const dependency of dependencies) {
-    // TODO(radomski): Remove the duplication after the PR containg this code is merged
+    // TODO(radomski): Remove the duplication after the PR containing this code is merged
     let timestamp =
       discoveryFromMainBranch.dependentDiscoveries?.[dependency.project]?.[
         dependency.chain
       ]?.timestamp
 
-    let blockNumber =
-      discoveryFromMainBranch.dependentDiscoveries?.[dependency.project]?.[
-        dependency.chain
-      ]?.blockNumber
-
-    if (dependency.project === projectName && dependency.chain === chain) {
-      blockNumber = discoveryFromMainBranch.blockNumber
-    }
-
     if (dependency.project === projectName && dependency.chain === chain) {
       timestamp = discoveryFromMainBranch.timestamp
     }
 
-    if (timestamp === undefined && blockNumber === undefined) {
+    if (timestamp === undefined) {
       // We rediscover on the past block number, but with current configs and dependencies.
       // Those dependencies might not have been referenced in the old discovery.
       // In that case we don't fail - the diff will show all those "added".
@@ -269,7 +258,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     const prevStructure = await rediscoverStructureOnBlock(
       dependency.project,
       dependency.chain,
-      { blockNumber, timestamp } as Timing,
+      { blockNumber: undefined, timestamp } as Timing,
       saveSources,
       overwriteCache,
     )
@@ -299,7 +288,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   // get code diff with main branch
   // (we only diff code for target discovery, not dependencies)
   const flatDiff = compareFolders(
-    `${discoveryFolder}/.flat@${discoveryFromMainBranch.blockNumber}`,
+    `${discoveryFolder}/.flat@${discoveryFromMainBranch.timestamp}`,
     `${discoveryFolder}/.flat`,
     logger,
   )
@@ -375,23 +364,15 @@ function getFileVersionOnMainBranch(
     const quotedPath = shellQuote(filePath)
     const content = execSync(
       `git show ${mainBranch}:${quotedPath} 2>/dev/null`,
-      {
-        maxBuffer: BUFFER_SIZE,
-      },
+      { maxBuffer: BUFFER_SIZE },
     ).toString()
     const mainBranchHash = execSync(`git rev-parse ${mainBranch}`)
       .toString()
       .trim()
-    return {
-      content,
-      mainBranchHash,
-    }
+    return { content, mainBranchHash }
   } catch {
     logger.info(`No previous version of ${filePath} found`)
-    return {
-      content: '',
-      mainBranchHash: '',
-    }
+    return { content: '', mainBranchHash: '' }
   }
 }
 

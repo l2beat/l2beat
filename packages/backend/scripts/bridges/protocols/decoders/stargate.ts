@@ -7,7 +7,6 @@ import type { Message } from '../../types/Message'
 
 export const STARGATE = {
   name: 'stargate',
-  messagingLayer: 'layerzerov2',
   decoder: decoder,
 }
 
@@ -38,33 +37,34 @@ function decoder(
           encodeEventTopics({ abi: ABI, eventName: 'OFTSent' })[0],
     )
 
-    if (oftSentLog) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: oftSentLog.data,
-        topics: oftSentLog.topics,
-        eventName: 'OFTSent',
-      })
+    if (!oftSentLog) {
+      return undefined
+    }
+    const data = decodeEventLog({
+      abi: ABI,
+      data: oftSentLog.data,
+      topics: oftSentLog.topics,
+      eventName: 'OFTSent',
+    })
 
-      const destination = NETWORKS.find(
-        (b) => b.eid === data.args.dstEid,
-      )?.chainShortName
+    const destination = NETWORKS.find(
+      (b) => b.eid === data.args.dstEid,
+    )?.chainShortName
 
-      return {
-        type: 'asset',
-        direction: 'outbound',
-        application: STARGATE.name,
-        origin: chain.shortName,
-        destination: destination ?? data.args.dstEid.toString(),
-        blockTimestamp: input.blockTimestamp,
-        txHash: input.transactionHash,
-        customType: 'OFTSent',
-        matchingId: data.args.guid,
-        amount: data.args.amountSentLD,
-        token: network.usdc,
-        messageProtocol: 'layerzerov2',
-        messageId: data.args.guid,
-      }
+    return {
+      type: 'asset',
+      direction: 'outbound',
+      application: STARGATE.name,
+      origin: chain.shortName,
+      destination: destination ?? data.args.dstEid.toString(),
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'OFTSent',
+      matchingId: data.args.guid,
+      amount: data.args.amountSentLD,
+      token: network.usdc,
+      // messageProtocol: 'layerzerov2',
+      // messageId: data.args.guid,
     }
   }
 
@@ -79,33 +79,34 @@ function decoder(
         l.topics[0] ===
           encodeEventTopics({ abi: ABI, eventName: 'OFTReceived' })[0],
     )
-    if (oftReceivedLog) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: oftReceivedLog.data,
-        topics: oftReceivedLog.topics,
-        eventName: 'OFTReceived',
-      })
+    if (!oftReceivedLog) {
+      return undefined
+    }
+    const data = decodeEventLog({
+      abi: ABI,
+      data: oftReceivedLog.data,
+      topics: oftReceivedLog.topics,
+      eventName: 'OFTReceived',
+    })
 
-      const origin = NETWORKS.find(
-        (c) => c.eid === data.args.srcEid,
-      )?.chainShortName
+    const origin = NETWORKS.find(
+      (c) => c.eid === data.args.srcEid,
+    )?.chainShortName
 
-      return {
-        type: 'asset',
-        direction: 'inbound',
-        application: STARGATE.name,
-        origin: origin ?? data.args.srcEid.toString(),
-        destination: chain.shortName,
-        blockTimestamp: input.blockTimestamp,
-        txHash: input.transactionHash,
-        customType: 'OFTReceived',
-        matchingId: data.args.guid,
-        amount: data.args.amountReceivedLD,
-        token: network.usdc,
-        messageProtocol: 'layerzerov2',
-        messageId: data.args.guid,
-      }
+    return {
+      type: 'asset',
+      direction: 'inbound',
+      application: STARGATE.name,
+      origin: origin ?? data.args.srcEid.toString(),
+      destination: chain.shortName,
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'OFTReceived',
+      matchingId: data.args.guid,
+      amount: data.args.amountReceivedLD,
+      token: network.usdc,
+      // messageProtocol: 'layerzerov2',
+      // messageId: data.args.guid,
     }
   }
 

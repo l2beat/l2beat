@@ -53,7 +53,8 @@
         "chain": "ethereum",
         "escrowAddress": "0x41d3D33156aE7c62c094AAe2995003aE63f587B3",
         "decimals": 6,
-        "sinceTimestamp": 1635067681
+        "sinceTimestamp": 1635067681,
+        "untilTimestamp": 1745668800
       },
       "category": "stablecoin",
       "source": "canonical",

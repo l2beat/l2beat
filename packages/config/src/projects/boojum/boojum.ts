@@ -35,14 +35,14 @@ export const boojum: BaseProject = {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Boojum,
         ZK_CATALOG_TAGS.ISA.EraVM,
-        ZK_CATALOG_TAGS.Arithmetization.Plonkish,
+        // ZK_CATALOG_TAGS.Arithmetization.Plonkish,
         ZK_CATALOG_TAGS.Field.Goldilocks,
       ],
       finalWrap: [
         ZK_CATALOG_TAGS.Plonk.Bellman,
         ZK_CATALOG_TAGS.Fflonk.Zksync,
         ZK_CATALOG_TAGS.curve.BN254,
-        ZK_CATALOG_TAGS.PCS.KZG,
+        // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
     proofSystemInfo: `
@@ -80,6 +80,16 @@ export const boojum: BaseProject = {
     ],
     verifierHashes: [
       {
+        hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
+        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+        knownDeployments: [
+          'https://etherscan.io/address/0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911',
+          'https://gateway.explorer.zksync.io/address/0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5',
+        ],
+        verificationStatus: 'notVerified',
+        usedBy: [ProjectId('zksync2')],
+      },
+      {
         hash: '0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
@@ -87,7 +97,6 @@ export const boojum: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         usedBy: [
-          ProjectId('zksync2'),
           ProjectId('abstract'),
           ProjectId('grvt'),
           ProjectId('lens'),
@@ -111,6 +120,16 @@ export const boojum: BaseProject = {
         ],
       },
       {
+        hash: '0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+        knownDeployments: [
+          'https://etherscan.io/address/0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6',
+          'https://gateway.explorer.zksync.io/address/0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717',
+        ],
+        verificationStatus: 'notVerified',
+        usedBy: [ProjectId('zksync2')],
+      },
+      {
         hash: '0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
@@ -118,7 +137,6 @@ export const boojum: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         usedBy: [
-          ProjectId('zksync2'),
           ProjectId('abstract'),
           ProjectId('grvt'),
           ProjectId('lens'),

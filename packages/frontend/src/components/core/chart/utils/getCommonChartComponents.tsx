@@ -1,14 +1,24 @@
-import { CartesianGrid, XAxis, YAxis, type YAxisProps } from 'recharts'
+import {
+  CartesianGrid,
+  ReferenceArea,
+  XAxis,
+  YAxis,
+  type YAxisProps,
+} from 'recharts'
 import type { ScaleType } from 'recharts/types/util/types'
+import { NoDataPatternDef } from '../defs/NoDataPatternDef'
 import { getXAxisProps } from './getXAxisProps'
-export interface CommonChartComponentsProps<
+
+interface CommonChartComponentsProps<
   T extends {
     timestamp: number
   },
 > {
   data: T[] | undefined
   yAxis?: Omit<YAxisProps, 'scale' | 'tick'> & { scale?: 'log' | 'lin' }
+  chartType?: 'bar' | 'line'
   isLoading: boolean | undefined
+  syncedUntil: number | undefined
 }
 
 // Recharts 2.x does not support wrapping its components, so to solve it we need to return an array of components
@@ -17,17 +27,25 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
   data,
   yAxis,
   isLoading,
+  chartType = 'line',
+  syncedUntil,
 }: CommonChartComponentsProps<T>) {
   const { scale, tickCount, ...rest } = yAxis ?? {}
+  const lastSyncedTimestamp =
+    syncedUntil &&
+    (chartType === 'line'
+      ? data?.findLast((d) => d.timestamp <= syncedUntil)
+      : data?.find((d) => d.timestamp > syncedUntil)
+    )?.timestamp
 
   return [
     <CartesianGrid
-      key={'cartesian-grid'}
+      key="cartesian-grid"
       vertical={false}
       syncWithTicks={!isLoading}
     />,
     <YAxis
-      key={'y-axis'}
+      key="y-axis"
       tickLine={false}
       axisLine={false}
       mirror
@@ -41,6 +59,19 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
       tick={{ width: 350 }}
       {...rest}
     />,
-    <XAxis key={'x-axis'} {...getXAxisProps(data)} />,
+    <XAxis key="x-axis" {...getXAxisProps(data)} />,
+    lastSyncedTimestamp && (
+      <ReferenceArea
+        yAxisId={yAxis?.yAxisId}
+        key="last-valid-timestamp"
+        x1={lastSyncedTimestamp}
+        fill="url(#noDataFill)"
+      />
+    ),
+    lastSyncedTimestamp && (
+      <defs key="not-synced-defs">
+        <NoDataPatternDef />
+      </defs>
+    ),
   ]
 }

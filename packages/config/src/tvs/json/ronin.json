@@ -148,7 +148,7 @@
         "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
         "decimals": 0,
         "sinceTimestamp": 1655883630,
-        "untilTimestamp": 1745226000
+        "untilTimestamp": 1745193600
       },
       "category": "other",
       "source": "canonical",

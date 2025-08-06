@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -49,7 +49,9 @@ export const alephzero: ScalingProject = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xccaF21F002EAF230c9Fa810B34837a3739B70F7B'),
+      address: ChainSpecificAddress(
+        'eth:0xccaF21F002EAF230c9Fa810B34837a3739B70F7B',
+      ),
       name: 'ERC20Gateway',
       description:
         'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.',
@@ -65,5 +67,5 @@ export const alephzero: ScalingProject = orbitStackL2({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
 })

@@ -6,7 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('muster', 'arbitrum')
+const discovery = new ProjectDiscovery('muster')
 
 export const muster: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1718609683), // 2024-06-17T07:34:43Z
@@ -29,10 +29,15 @@ export const muster: ScalingProject = orbitStackL3({
       bridges: [
         'https://bridge.arbitrum.io/?destinationChain=muster&sourceChain=arbitrum-one',
       ],
-      documentation: ['https://docs.cometh.io/marketplace'],
+      documentation: ['https://docs.cometh.io'],
       explorers: ['https://muster-explorer.alt.technology/'],
       repositories: ['https://github.com/cometh-hq'],
-      socialMedia: ['https://x.com/Cometh', 'https://blog.cometh.io/'],
+      socialMedia: [
+        'https://x.com/Cometh',
+        'https://blog.cometh.io/',
+        'https://linkedin.com/company/comethstudio',
+        'https://youtube.com/@comethio',
+      ],
     },
   },
   chainConfig: {
@@ -46,9 +51,10 @@ export const muster: ScalingProject = orbitStackL3({
       },
     ],
   },
+  hostChain: 'arbitrum',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
 })

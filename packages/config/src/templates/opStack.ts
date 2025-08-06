@@ -23,7 +23,11 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { formatChallengePeriod, formatDelay } from '../common/formatDelays'
+import {
+  formatChallengeAndExecutionDelay,
+  formatChallengePeriod,
+  formatDelay,
+} from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -186,6 +190,7 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   stackedRiskView?: ProjectScalingRiskView
+  hostChain: string
 }
 
 function opStackCommon(
@@ -311,9 +316,7 @@ function opStackCommon(
         migratedToLockbox(templateVars)
           ? templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
-              address: ChainSpecificAddress.address(
-                templateVars.discovery.getContract('ETHLockbox').address,
-              ),
+              address: templateVars.discovery.getContract('ETHLockbox').address,
               tokens: optimismPortalTokens,
               premintedTokens: templateVars.optimismPortalPremintedTokens,
               description: `Main escrow for users depositing ${optimismPortalTokens.join(
@@ -323,7 +326,7 @@ function opStackCommon(
             })
           : templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
-              address: ChainSpecificAddress.address(portal.address),
+              address: portal.address,
               tokens: optimismPortalTokens,
               premintedTokens: templateVars.optimismPortalPremintedTokens,
               description: `Main entry point for users depositing ${optimismPortalTokens.join(
@@ -333,7 +336,7 @@ function opStackCommon(
             }),
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: ChainSpecificAddress.address(l1StandardBridgeEscrow),
+          address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           premintedTokens: templateVars.l1StandardBridgePremintedTokens,
           excludedTokens: templateVars.nonTemplateExcludedTokens,
@@ -468,7 +471,7 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
 
 export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   const layer2s = require('../processing/layer2s').layer2s as ScalingProject[]
-  const hostChain = templateVars.discovery.chain
+  const hostChain = templateVars.hostChain
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
@@ -704,7 +707,7 @@ In the tree of proposed state roots, each parent node can have multiple children
 2. the proposal is proven correct with a full validity proof (invalidates all conflicting proposals)
 3. a conflicting sibling proposal is proven faulty
 
-Proving any of the ${proposalOutputCount} intermediate state commitments in a proposal faulty invalidates the entire proposal. Proving a proposal valid invalidates all conflicting siblings. Pruning of a tournament's children happens strictly chronologically, which guarantees that the first faulty proposal of a given proposer is always pruned first. When pruned, an invalid proposal leads to the elimination of its proposer, which invalidates all their subsequent proposals, slashes their bond, and disallows future proposals by the same address. A slashed bond is transfered to an address chosen by the prover who caused the slashing.
+Proving any of the ${proposalOutputCount} intermediate state commitments in a proposal faulty invalidates the entire proposal. Proving a proposal valid invalidates all conflicting siblings. Pruning of a tournament's children happens strictly chronologically, which guarantees that the first faulty proposal of a given proposer is always pruned first. When pruned, an invalid proposal leads to the elimination of its proposer, which invalidates all their subsequent proposals, slashes their bond, and disallows future proposals by the same address. A slashed bond is transferred to an address chosen by the prover who caused the slashing.
 
 A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [
@@ -866,7 +869,6 @@ function getRiskViewStateValidation(
   templateVars: OpStackConfigCommon,
 ): TableReadyValue {
   const fraudProofType = getFraudProofType(templateVars)
-
   switch (fraudProofType) {
     case 'None': {
       return {
@@ -876,24 +878,31 @@ function getRiskViewStateValidation(
     }
     case 'Permissioned': {
       return {
-        ...RISK_VIEW.STATE_FP_INT,
+        ...RISK_VIEW.STATE_FP_INT(
+          getChallengePeriod(templateVars),
+          getExecutionDelay(templateVars),
+        ),
         description:
-          RISK_VIEW.STATE_FP_INT.description +
+          RISK_VIEW.STATE_FP_INT().description +
           ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
     case 'Permissionless': {
       return {
-        ...RISK_VIEW.STATE_FP_INT,
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
+        ...RISK_VIEW.STATE_FP_INT(
+          getChallengePeriod(templateVars),
+          getExecutionDelay(templateVars),
+        ),
       }
     }
     case 'Kailua': {
       return {
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
+        secondLine: formatChallengeAndExecutionDelay(
+          getChallengePeriod(templateVars) +
+            Number(getExecutionDelay(templateVars)),
+        ),
       }
     }
   }
@@ -1531,6 +1540,25 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
         'MAX_CLOCK_DURATION',
       )
     }
+  }
+}
+
+function getExecutionDelay(
+  templateVars: OpStackConfigCommon,
+): number | undefined {
+  const fraudProofType = getFraudProofType(templateVars)
+  const portal = getOptimismPortal(templateVars)
+  switch (fraudProofType) {
+    case 'Permissioned':
+    case 'Permissionless':
+    case 'Kailua': {
+      return templateVars.discovery.getContractValue<number>(
+        portal.name ?? portal.address,
+        'disputeGameFinalityDelaySeconds',
+      )
+    }
+    default:
+      return undefined
   }
 }
 

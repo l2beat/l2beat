@@ -330,6 +330,25 @@
     },
     {
       "mode": "auto",
+      "id": "soneium-SUPER",
+      "priceId": "superfarm",
+      "symbol": "SUPER",
+      "name": "SuperFarm",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14040/large/SV-Logo-200x200.png?1706880312",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xe53EC727dbDEB9E2d5456c3be40cFF031AB40A55",
+        "chain": "ethereum",
+        "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+        "decimals": 18,
+        "sinceTimestamp": 1733134751
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "soneium-TRALA",
       "priceId": "trala-token",
       "symbol": "TRALA",
@@ -416,7 +435,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -577,7 +603,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

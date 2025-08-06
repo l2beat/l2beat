@@ -1059,7 +1059,7 @@ Generated with discovered.json: 0x472d524045dc782d30bd1e31419a1954850c0c72
 
 ## Description
 
-intial discovery of an orbit stack chain with espresso sequencing and anytrust DA.
+initial discovery of an orbit stack chain with espresso sequencing and anytrust DA.
 
 ## Initial discovery
 

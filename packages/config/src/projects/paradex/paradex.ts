@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatLargeNumber,
   formatSeconds,
@@ -10,7 +11,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  ESCROW,
   EXITS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -112,9 +112,10 @@ export const paradex: ScalingProject = {
     },
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3'),
+        address: ChainSpecificAddress(
+          'eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3',
+        ),
         tokens: ['USDC'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         upgradableBy: [
           {
             name: 'USDC Escrow owner',

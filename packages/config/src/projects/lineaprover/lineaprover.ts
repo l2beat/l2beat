@@ -6,7 +6,7 @@ import type { BaseProject } from '../../types'
 export const lineaprover: BaseProject = {
   id: ProjectId('lineaprover'),
   slug: 'lineaprover',
-  name: 'Linea prover',
+  name: 'Linea',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-18')),
   statuses: {
@@ -35,14 +35,16 @@ export const lineaprover: BaseProject = {
   zkCatalogInfo: {
     creator: 'Consensys',
     techStack: {
-      finalWrap: [
+      zkVM: [
         ZK_CATALOG_TAGS.Plonk.linea,
-        ZK_CATALOG_TAGS.Plonk.Gnark,
         ZK_CATALOG_TAGS.ISA.EVM,
         ZK_CATALOG_TAGS.curve['BLS12-377'],
-        ZK_CATALOG_TAGS.curve.BN254,
         ZK_CATALOG_TAGS.curve['BW6-761'],
-        ZK_CATALOG_TAGS.PCS.KZG,
+      ],
+      finalWrap: [
+        ZK_CATALOG_TAGS.Plonk.Gnark,
+        ZK_CATALOG_TAGS.curve.BN254,
+        // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
     proofSystemInfo: '',
@@ -60,8 +62,6 @@ export const lineaprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        // Custom verifier ID: SHA256 hash of all VK_... values from the smart contract
-        // abi packed in the same order they are defined
         hash: '0xcfdff368eb0a9961712338df56f966f0f28899dcd1892b9898fce4928ca0d582',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
@@ -69,6 +69,8 @@ export const lineaprover: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('linea')],
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
     ],
   },

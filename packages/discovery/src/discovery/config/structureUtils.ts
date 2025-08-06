@@ -12,10 +12,15 @@ export function buildSharedModuleIndex(
   configReader ??= new ConfigReader(getDiscoveryPaths().discovery)
 
   for (const sharedModule of config.sharedModules) {
-    const discovery = configReader?.readDiscovery(sharedModule, config.chain)
-    for (const entry of discovery.entries) {
-      result.add(entry.address)
-    }
+    // TODO(radomski): This solution is really bad. But it's going to be gone
+    // in 2-3 weeks. If it's still here, improve it!
+    // ~ 29.07.202V
+    try {
+      const discovery = configReader?.readDiscovery(sharedModule, config.chain)
+      for (const entry of discovery.entries) {
+        result.add(entry.address)
+      }
+    } catch {}
   }
   return result
 }

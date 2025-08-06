@@ -6,19 +6,19 @@ import type {
 } from '@l2beat/discovery'
 import {
   ConfigReader,
-  getChainShortName,
   getDiscoveryPaths,
   RolePermissionEntries,
 } from '@l2beat/discovery'
 import {
   assert,
   ChainSpecificAddress,
-  type EthereumAddress,
   type LegacyTokenBridgedUsing,
   notUndefined,
   UnixTime,
+  unique,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import groupBy from 'lodash/groupBy'
 import isString from 'lodash/isString'
 import uniq from 'lodash/uniq'
 import { EXPLORER_URLS } from '../common/explorerUrls'
@@ -54,30 +54,55 @@ export class ProjectDiscovery {
 
   constructor(
     public readonly projectName: string,
-    public readonly chain: string = 'ethereum',
     public readonly configReader = new ConfigReader(paths.discovery),
   ) {
-    const discovery = configReader.readDiscovery(projectName, chain)
-    this.discoveries = [
-      discovery,
-      ...(discovery.sharedModules ?? []).map((module) =>
-        configReader.readDiscovery(module, chain),
-      ),
-    ]
-    this.projectAndDependentDiscoveries = [
-      ...this.discoveries,
-      ...Object.entries(discovery.dependentDiscoveries ?? {}).flatMap(
-        ([projectName, chains]) =>
-          Object.keys(chains).map((chain) =>
-            configReader.readDiscovery(projectName, chain),
-          ),
-      ),
-    ]
+    const chains = configReader.readAllDiscoveredChainsForProject(projectName)
+    const projectDiscoveries = chains.map((chain) =>
+      configReader.readDiscovery(projectName, chain),
+    )
+
+    this.discoveries = [...projectDiscoveries]
+    const alreadyAdded = new Set<string>(
+      projectDiscoveries.map((d) => `${d.chain}:${d.name}`),
+    )
+    for (const discovery of this.discoveries) {
+      for (const sharedModule of discovery.sharedModules ?? []) {
+        const key = `${discovery.chain}:${sharedModule}`
+        if (alreadyAdded.has(key)) continue
+
+        try {
+          this.discoveries.push(
+            configReader.readDiscovery(sharedModule, discovery.chain),
+          )
+        } catch {}
+        alreadyAdded.add(key)
+      }
+    }
+
+    this.projectAndDependentDiscoveries = [...this.discoveries]
+    for (const discovery of projectDiscoveries) {
+      this.projectAndDependentDiscoveries.push(
+        ...Object.entries(discovery.dependentDiscoveries ?? {}).flatMap(
+          ([dependentProjectName, chains]) => {
+            if (dependentProjectName === projectName) return []
+            return Object.keys(chains).map((chain) =>
+              configReader.readDiscovery(dependentProjectName, chain),
+            )
+          },
+        ),
+      )
+    }
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
 
-  get timestamp(): number {
-    return this.discoveries.reduce((min, d) => Math.max(min, d.timestamp), 0)
+  get timestampPerChain(): Record<string, number> {
+    const grouped = groupBy(this.discoveries, (d) => d.chain)
+    return Object.fromEntries(
+      Object.entries(grouped).map(([chain, discovery]) => [
+        chain,
+        Math.max(...discovery.map((d) => d.timestamp)),
+      ]),
+    )
   }
 
   getName(address: ChainSpecificAddress): string {
@@ -120,7 +145,7 @@ export class ProjectDiscovery {
       isVerified: isEntryVerified(contract),
       address: contract.address,
       upgradeability: getUpgradeability(contract),
-      chain: this.chain,
+      chain: ChainSpecificAddress.longChain(contract.address),
       references: contract.references?.map((x) => ({
         title: x.text,
         url: x.href,
@@ -146,7 +171,7 @@ export class ProjectDiscovery {
     untilTimestamp,
     sharedEscrow,
   }: {
-    address: EthereumAddress
+    address: ChainSpecificAddress
     name?: string
     description?: string
     sinceTimestamp?: UnixTime
@@ -165,11 +190,7 @@ export class ProjectDiscovery {
     untilTimestamp?: UnixTime
     sharedEscrow?: SharedEscrow
   }): ProjectEscrow {
-    const chainSpecificAddress = ChainSpecificAddress.from(
-      getChainShortName(this.chain),
-      address,
-    )
-    const contractRaw = this.getContract(chainSpecificAddress.toString())
+    const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp ?? contractRaw.sinceTimestamp
     assert(
       timestamp !== undefined,
@@ -182,19 +203,20 @@ export class ProjectDiscovery {
       upgradableBy,
     }
 
-    const contract = this.getContractDetails(chainSpecificAddress, options)
+    const contract = this.getContractDetails(address, options)
 
+    const chain = ChainSpecificAddress.longChain(address)
     return {
-      address: address,
+      address: ChainSpecificAddress.address(address),
       sinceTimestamp: UnixTime(timestamp),
       tokens,
       excludedTokens,
       premintedTokens,
       contract,
       isUpcoming,
-      chain: this.chain,
+      chain,
       includeInTotal:
-        (includeInTotal ?? this.chain === 'ethereum') ? true : includeInTotal,
+        (includeInTotal ?? chain === 'ethereum') ? true : includeInTotal,
       source,
       bridgedUsing,
       isHistorical,
@@ -257,11 +279,6 @@ export class ProjectDiscovery {
       (s) => s !== undefined && s !== '',
     )
 
-    const formattedDesc = combinedDescriptions.join('\n')
-
-    const descriptionWithContractNames =
-      this.replaceAddressesWithNames(formattedDesc)
-
     const references = [
       ...(userReferences ?? []),
       ...(contract.references ?? []).map((x) => ({
@@ -272,9 +289,9 @@ export class ProjectDiscovery {
 
     return {
       name: contract.name ?? contract.address,
-      description: descriptionWithContractNames,
+      description: combinedDescriptions.join('\n'),
       accounts: this.formatPermissionedAccounts([contract.address]),
-      chain: this.chain,
+      chain: ChainSpecificAddress.longChain(contract.address),
       references,
       participants: this.getPermissionedAccounts(identifier, '$members'),
     }
@@ -302,7 +319,7 @@ export class ProjectDiscovery {
       )
       assert(
         contracts.length === 1,
-        `Found no contract of ${identifier} name (${this.projectName}) on ${this.chain}`,
+        `Found no contract of ${identifier} name (${this.projectName})`,
       )
 
       return contracts[0]
@@ -418,11 +435,12 @@ export class ProjectDiscovery {
       const isVerified = isEntryVerified(entry)
 
       const raw = ChainSpecificAddress.address(address)
+      const chain = ChainSpecificAddress.longChain(address)
       const name = `${raw.slice(0, 6)}…${raw.slice(38, 42)}`
-      const explorerUrl = EXPLORER_URLS[this.chain]
+      const explorerUrl = EXPLORER_URLS[chain]
       assert(
         isNonNullable(explorerUrl),
-        `Failed to find explorer url for chain [${this.chain}]`,
+        `Failed to find explorer url for chain [${chain}]`,
       )
       const url = `${explorerUrl}/address/${raw}`
 
@@ -455,11 +473,26 @@ export class ProjectDiscovery {
       references?: ReferenceLink[]
     },
   ): ProjectPermission {
+    let chain = 'ethereum'
+    if (accounts.length > 0) {
+      const chains = accounts.map((a) =>
+        ChainSpecificAddress.longChain(a.address),
+      )
+      const uniqueChains = unique(chains)
+      assert(
+        uniqueChains.length === 1,
+        `All accounts must be on the same chain. Found ${uniqueChains.join(
+          ', ',
+        )}`,
+      )
+      chain = uniqueChains[0]
+    }
+
     return {
       name,
       accounts,
       description,
-      chain: this.chain,
+      chain,
       ...(opts ?? {}),
     }
   }
@@ -483,7 +516,7 @@ export class ProjectDiscovery {
       isVerified: isEntryVerified(contract),
       name: contract.name ?? contract.address,
       upgradeability: getUpgradeability(contract),
-      chain: this.chain,
+      chain: ChainSpecificAddress.longChain(contract.address),
       ...descriptionOrOptions,
     }
   }
@@ -495,7 +528,7 @@ export class ProjectDiscovery {
     return {
       name: contract.name ?? contract.address,
       accounts: this.formatPermissionedAccounts([contract.address]),
-      chain: this.chain,
+      chain: ChainSpecificAddress.longChain(contract.address),
       references: contract.references?.map((x) => ({
         title: x.text,
         url: x.href,
@@ -511,7 +544,7 @@ export class ProjectDiscovery {
     return {
       name: eoa.name ?? eoa.address,
       accounts: this.formatPermissionedAccounts([eoa.address]),
-      chain: this.chain,
+      chain: ChainSpecificAddress.longChain(eoa.address),
       references: eoa.references?.map((x) => ({
         title: x.text,
         url: x.href,
@@ -783,12 +816,21 @@ export class ProjectDiscovery {
         }
       }
 
-      result.push({
-        ...RoleDescriptions[role],
-        description: finalDescription.join('\n'),
-        accounts: this.formatPermissionedAccounts(addresses),
-        chain: this.chain,
-      })
+      const allAccounts = this.formatPermissionedAccounts(addresses)
+      const uniqueChains = unique(
+        allAccounts.map((a) => ChainSpecificAddress.longChain(a.address)),
+      )
+      for (const uniqueChain of uniqueChains) {
+        const accounts = allAccounts.filter(
+          (a) => ChainSpecificAddress.longChain(a.address) === uniqueChain,
+        )
+        result.push({
+          ...RoleDescriptions[role],
+          description: finalDescription.join('\n'),
+          accounts,
+          chain: uniqueChain,
+        })
+      }
     }
     return result
   }
@@ -824,11 +866,7 @@ export class ProjectDiscovery {
   replaceAddressesWithNames(s: string): string {
     const ethereumAddressRegex = /\b(?:[a-zA-Z0-9]+:)?0x[a-fA-F0-9]{40}\b/g
     const addressStrings = s.match(ethereumAddressRegex) ?? []
-    const addresses = addressStrings.map((a) =>
-      a.includes(':')
-        ? ChainSpecificAddress(a)
-        : ChainSpecificAddress.from(getChainShortName(this.chain), a),
-    )
+    const addresses = addressStrings.map((a) => ChainSpecificAddress(a))
 
     for (const address of addresses) {
       const contract = this.getContractByAddress(address)
@@ -854,7 +892,9 @@ export class ProjectDiscovery {
     return priority
   }
 
-  getDiscoveredPermissions(): ProjectPermissions {
+  getDiscoveredPermissions(
+    chainsToIgnore: string[] = [],
+  ): Record<string, ProjectPermissions> {
     const permissionedContracts = this.permissionRegistry
       .getPermissionedContracts()
       .map((address) => this.getContractByAddress(address))
@@ -893,7 +933,7 @@ export class ProjectDiscovery {
       allActors.push({
         name: eoa.name ?? this.getEOAName(eoa.address),
         accounts: this.formatPermissionedAccounts([eoa.address]),
-        chain: this.chain,
+        chain: ChainSpecificAddress.longChain(eoa.address),
         description,
       })
     }
@@ -901,7 +941,7 @@ export class ProjectDiscovery {
     // NOTE(radomski): Checking for assumptions made about discovery driven actors
     assert(allActors.every((actor) => actor.accounts.length === 1))
     assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
-    assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
+    // assert(allUnique(allActors.map((actor) => actor.accounts[0].name))) // TODO(radomski): Between chains
 
     const roles = this.describeRolePermissions([
       ...permissionedContracts,
@@ -970,10 +1010,33 @@ export class ProjectDiscovery {
       )
     })
 
-    return {
-      roles: roles.map((p) => ({ ...p, discoveryDrivenData: true })),
-      actors: actors.map((p) => ({ ...p, discoveryDrivenData: true })),
+    const rolesGrouped = groupBy(
+      roles.map((p) => ({ ...p, discoveryDrivenData: true })),
+      (p) => p.chain,
+    )
+    const actorsGrouped = groupBy(
+      actors.map((p) => ({ ...p, discoveryDrivenData: true })),
+      (p) => p.chain,
+    )
+
+    const allChains = new Set([
+      ...Object.keys(rolesGrouped),
+      ...Object.keys(actorsGrouped),
+    ])
+
+    const result = Object.fromEntries(
+      Array.from(allChains).map((chain) => [
+        chain,
+        {
+          roles: rolesGrouped[chain] || [],
+          actors: actorsGrouped[chain] || [],
+        },
+      ]),
+    )
+    for (const chainToRemove of chainsToIgnore) {
+      delete result[chainToRemove]
     }
+    return result
   }
 
   linkupActorsIntoAccounts(
@@ -1006,7 +1069,9 @@ export class ProjectDiscovery {
     return result
   }
 
-  getDiscoveredContracts(): ProjectContract[] {
+  getDiscoveredContracts(
+    chainsToIgnore: string[] = [],
+  ): Record<string, ProjectContract[]> {
     const contracts = this.discoveries
       .flatMap((discovery) =>
         discovery.entries.filter((e) => e.type === 'Contract'),
@@ -1016,7 +1081,7 @@ export class ProjectDiscovery {
         return (b.category?.priority ?? 0) - (a.category?.priority ?? 0)
       })
 
-    const result = contracts
+    const all = contracts
       .filter((contract) => contract.receivedPermissions === undefined)
       .filter((contract) => !isMultisigLike(contract))
       .map((contract) => {
@@ -1029,7 +1094,7 @@ export class ProjectDiscovery {
         })
       })
 
-    result.forEach((contract) => {
+    all.forEach((contract) => {
       if (contract.description !== undefined) {
         contract.description = this.replaceAddressesWithNames(
           contract.description,
@@ -1037,6 +1102,10 @@ export class ProjectDiscovery {
       }
     })
 
+    const result = groupBy(all, (contract) => contract.chain)
+    for (const chainToRemove of chainsToIgnore) {
+      delete result[chainToRemove]
+    }
     return result
   }
 }

@@ -38,19 +38,32 @@ function readProject(
   chain: string,
   project: string,
   configReader: ConfigReader,
+  seen = new Set<string>(),
 ): ProjectData[] {
-  const discovery = configReader.readDiscovery(project, chain)
-  const sharedModules = discovery.sharedModules ?? []
+  const key = `${project}::${chain}`
 
-  return [
-    {
-      config: configReader.readConfig(project, chain),
-      discovery,
-    },
-    ...sharedModules.flatMap((sharedModule) =>
-      readProject(chain, sharedModule, configReader),
-    ),
-  ]
+  if (seen.has(key)) {
+    return []
+  }
+
+  seen.add(key)
+
+  try {
+    const discovery = configReader.readDiscovery(project, chain)
+    const sharedModules = discovery.sharedModules ?? []
+
+    return [
+      {
+        config: configReader.readConfig(project, chain),
+        discovery,
+      },
+      ...sharedModules.flatMap((sharedModule) =>
+        readProject(chain, sharedModule, configReader, seen),
+      ),
+    ]
+  } catch {
+    return []
+  }
 }
 
 export function getProject(

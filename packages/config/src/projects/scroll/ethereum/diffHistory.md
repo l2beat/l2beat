@@ -1,4 +1,198 @@
-Generated with discovered.json: 0xce0eff158ed4b8179eb29cdd17bdff5c20a67cc6
+Generated with discovered.json: 0x702c1de2593846e5c1a811495641a1498ae1a084
+
+# Diff at Wed, 06 Aug 2025 10:12:58 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@20ccf0027e872551f979af7bbff38272be6736e1 block: 1754403402
+- current timestamp: 1754475055
+
+## Description
+
+Added Security Council minority permission.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754403402 (main branch discovery), not current.
+
+```diff
+    contract Scroll Security Council Minority (0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"unpause core contracts via the PauseController.","role":".scMinorityNoDelay"}]
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.scMinorityNoDelay:
++        ["eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"]
+    }
+```
+
+Generated with discovered.json: 0xab6e2506f957aa6e6de33f09471f27c961bb729b
+
+# Diff at Tue, 05 Aug 2025 14:17:50 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
+- current timestamp: 1754403402
+
+## Description
+
+Access control changes.
+
+## Watched changes
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.PAUSE_CONTROLLER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b"]}
+      values.accessControl.roles.SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"]}
+      values.accessControl.targets.eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556.setPause(bool).0:
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556.setPause(bool).0:
+-        "emergency-nodelay"
++        "PAUSE_CONTROLLER_ROLE"
+      values.accessControl.targets.eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556.updateMaxNumTxInChunk(uint256):
+-        ["ops-fast"]
+      values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.setPause(bool).0:
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.setPause(bool).0:
+-        "emergency-nodelay"
++        "PAUSE_CONTROLLER_ROLE"
+      values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.updateFeeVault(address).0:
+-        "ops-fast"
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.updateMaxReplayTimes(uint256):
+-        ["ops-fast"]
+      values.accessControl.targets.eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D.updateMessageQueueParameters((uint32,uint112,uint112)).0:
+-        "ops-fast"
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D.updateEnforcedBatchParameters((uint24,uint24)).0:
+-        "ops-fast"
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d.setPause(bool).0:
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d.setPause(bool).0:
+-        "emergency-nodelay"
++        "PAUSE_CONTROLLER_ROLE"
+      values.accessControl.targets.eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b:
++        {"pause(address)":["emergency-nodelay"],"updatePauseCooldownPeriod(uint256)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"resetPauseCooldownPeriod(address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"unpause(address)":["emergency-nodelay","SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE"]}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Security Council Minority (0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PauseController (0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/PauseController/PauseController.sol      |  619 +++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++++++
+ .../Scroll Security Council Minority/Safe.sol      | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 4 files changed, 2473 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753093859 (main branch discovery), not current.
+
+```diff
+    contract TimelockSCEmergency (0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update and reset the PauseController cooldown period.","role":".scNoDelay"}
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the L1ScrollMessenger fee vault address.","role":".scNoDelay"}
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the minimum delay message queue parameters and enforced mode parameters.","role":".scNoDelay"}
+    }
+```
+
+```diff
+    contract TimelockFast (0x0e58939204eEDa84F796FBc86840A50af10eC4F4) {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.3:
+-        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the L1ScrollMessenger fee vault address.","role":".opsFast"}
+      directlyReceivedPermissions.4:
+-        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the minimum delay message queue parameters and enforced mode parameters.","role":".opsFast"}
+    }
+```
+
+```diff
+    contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update and reset the PauseController cooldown period.","role":".scNoDelay","via":[{"address":"eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}
+      receivedPermissions.13:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the L1ScrollMessenger fee vault address.","role":".scNoDelay","via":[{"address":"eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}
+      receivedPermissions.14:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the minimum delay message queue parameters and enforced mode parameters.","role":".scNoDelay","via":[{"address":"eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}
+    }
+```
+
+```diff
+    contract TimelockEmergency (0x826714adD4dDA2b8750794A467C892c0Cd49216b) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.0.description:
+-        "pause the L1 -> L2 messenger and enforced transaction mode."
++        "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue."
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "pause the L1 -> L2 messenger and enforced transaction mode."
++        "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue."
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      receivedPermissions.6:
+-        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the L1ScrollMessenger fee vault address.","role":".opsFast","via":[{"address":"eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]}
+      receivedPermissions.7:
+-        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the minimum delay message queue parameters and enforced mode parameters.","role":".opsFast","via":[{"address":"eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]}
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      values.gateways:
++        {"eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2":"eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE","eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48":"eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B","eth:0x6B175474E89094C44Da98b954EedeAC495271d0F":"eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515","eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0":"eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504","eth:0xD9A442856C234a39a81a089C06451EBAa4306a72":"eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a"}
+    }
+```
+
+Generated with discovered.json: 0x6303a10360194ad898c7dc058c2695e0c9e1ca60
 
 # Diff at Mon, 21 Jul 2025 10:32:24 GMT:
 

@@ -1,8 +1,8 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getRangeWithMax } from '~/utils/range/range'
-import { type CostsTimeRange, rangeToResolution } from '../costs/utils/range'
+import type { CostsTimeRange } from '../costs/utils/range'
+import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 
 export function getActivityForProjectAndRange(
   projectId: string,
@@ -13,11 +13,10 @@ export function getActivityForProjectAndRange(
   }
 
   const db = getDb()
-  const resolution = rangeToResolution(range)
-  const [from, to] = getRangeWithMax({ type: range }, resolution)
+  const fullySyncedRange = getFullySyncedActivityRange({ type: range })
 
-  return db.activity.getByProjectAndTimeRange(ProjectId(projectId), [
-    from ? UnixTime.toStartOf(from, 'day') : null,
-    UnixTime.toStartOf(to, 'day'),
-  ])
+  return db.activity.getByProjectAndTimeRange(
+    ProjectId(projectId),
+    fullySyncedRange,
+  )
 }

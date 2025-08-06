@@ -2,7 +2,7 @@ import { existsSync } from 'fs'
 import path from 'path'
 import { getImageParams } from './getImageParams'
 
-export type DiagramType =
+type DiagramType =
   | 'architecture'
   | 'upgrades-and-governance'
   | 'state-validation'

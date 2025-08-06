@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x458e73d51eaf36d5354ea8597514dff1b63344f9
+
+# Diff at Thu, 31 Jul 2025 10:51:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1752074075
+- current timestamp: 1752074075
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752074075 (main branch discovery), not current.
+
+```diff
+    contract TokenMessagingArbitrum (0x19cFCE47eD54a88614648DC3f19A5980097007dD) {
+    +++ description: None
+      name:
+-        "TokenMessaging"
++        "TokenMessagingArbitrum"
+    }
+```
+
 Generated with discovered.json: 0xb3b5b246f3a156a8d0ccbdd292e217195aa7fa39
 
 # Diff at Mon, 14 Jul 2025 12:47:12 GMT:
@@ -417,7 +444,7 @@ Generated with discovered.json: 0x982358c1af2dfb055951961248fb16a5aa699dd2
 
 ## Description
 
-Deficit config adjustements affecting fee calculation.
+Deficit config adjustments affecting fee calculation.
 
 ## Watched changes
 

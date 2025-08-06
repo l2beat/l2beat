@@ -1,5 +1,6 @@
 import {
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -16,18 +17,18 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_VALIDATION,
-  STATE_ZKP_SN,
+  STATE_ZKP_ST_SN_WRAP,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROOFS } from '../../common/proofSystems'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('scroll')
-const l2Discovery = new ProjectDiscovery('scroll', 'scroll')
 
 const enforcedModeDelayParameters = discovery.getContractValue<{
   maxDelayEnterEnforcedMode: number
@@ -43,6 +44,11 @@ const minSelfSequenceDelay = Math.min(
   maxDelayEnterEnforcedMode,
 )
 
+const cooldownPeriod = discovery.getContractValue<number>(
+  'PauseController',
+  'pauseCooldownPeriod',
+)
+
 const upgradesSC = {
   upgradableBy: [{ name: 'Scroll Security Council', delay: 'no' }],
 }
@@ -52,7 +58,7 @@ const upgradeDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 
-const finalizationPeriod = 0
+const finalizationPeriod = 0 // state root immediately finalized when proven
 const chainId = 534352
 
 export const scroll: ScalingProject = {
@@ -100,37 +106,42 @@ export const scroll: ScalingProject = {
         'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet be confirmed.',
     },
   },
-  stage: {
-    stage: 'UnderReview',
+  scopeOfAssessment: {
+    inScope: [
+      'Ability to deposit, spend, and withdraw the gas token (ETH)',
+      'Upgradability of L1 and L2 core contracts',
+      'Forced transaction mechanism via L1',
+    ],
+    notInScope: ['Upgradability of other external ERC20 token contracts'],
   },
-  // stage: getStage(
-  //   {
-  //     stage0: {
-  //       callsItselfRollup: true,
-  //       stateRootsPostedToL1: true,
-  //       dataAvailabilityOnL1: true,
-  //       rollupNodeSourceAvailable: true,
-  //       stateVerificationOnL1: true,
-  //       fraudProofSystemAtLeast5Outsiders: null,
-  //     },
-  //     stage1: {
-  //       principle: false,
-  //       usersHave7DaysToExit: true,
-  //       usersCanExitWithoutCooperation: true,
-  //       securityCouncilProperlySetUp: true,
-  //     },
-  //     stage2: {
-  //       proofSystemOverriddenOnlyInCaseOfABug: false,
-  //       fraudProofSystemIsPermissionless: null,
-  //       delayWith30DExitWindow: false,
-  //     },
-  //   },
-  //   {
-  //     rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
-  //     securityCouncilReference:
-  //       'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council',
-  //   },
-  // ),
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
+      securityCouncilReference:
+        'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council',
+    },
+  ),
   chainConfig: {
     name: 'scroll',
     chainId,
@@ -155,43 +166,54 @@ export const scroll: ScalingProject = {
     associatedTokens: ['SCR'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9'),
+        address: ChainSpecificAddress(
+          'eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9',
+        ),
         tokens: '*',
         excludedTokens: ['rsETH'],
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367'),
+        address: ChainSpecificAddress(
+          'eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367',
+        ),
         tokens: ['ETH'],
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xb2b10a289A229415a124EFDeF310C10cb004B6ff'), // custom gateway
+        address: ChainSpecificAddress(
+          'eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff',
+        ), // custom gateway
         tokens: '*',
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B'),
+        address: ChainSpecificAddress(
+          'eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B',
+        ),
         tokens: ['USDC'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x67260A8B73C5B77B55c1805218A42A7A6F98F515'),
+        address: ChainSpecificAddress(
+          'eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515',
+        ),
         tokens: ['DAI'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x6625C6332c9F91F2D27c304E729B86db87A3f504'),
+        address: ChainSpecificAddress(
+          'eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504',
+        ),
         tokens: ['wstETH'],
         ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xA033Ff09f2da45f0e9ae495f525363722Df42b2a'),
+        address: ChainSpecificAddress(
+          'eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a',
+        ),
         tokens: ['pufETH'],
         ...ESCROW.CANONICAL_EXTERNAL,
         description:
@@ -356,7 +378,7 @@ export const scroll: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...STATE_ZKP_SN,
+      ...STATE_ZKP_ST_SN_WRAP,
       secondLine: formatExecutionDelay(finalizationPeriod),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -603,18 +625,23 @@ export const scroll: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: discovery.getDiscoveredContracts(),
-      [l2Discovery.chain]: l2Discovery.getDiscoveredContracts(),
+      ...discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: discovery.getDiscoveredPermissions(),
-    [l2Discovery.chain]: l2Discovery.getDiscoveredPermissions(),
+    ...discovery.getDiscoveredPermissions(),
   },
-  upgradesAndGovernance:
-    'All core contracts in the Scroll protocol are upgradable by the `ProxyAdmin`, which is controlled by the Security Council through the `ScrollOwner` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the `updateMessageQueueParameters` and `updateEnforcedBatchParameters` functions through the `TimelockFast`, or by pausing the `EnforcedTXGateway` through the `TimelockEmergency`. It also has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the `TimelockSCSlow`) and upgrading the affected contracts. SCR token holders perform onchain voting on governance proposals through the `AgoraGovernor` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.',
+  upgradesAndGovernance: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the Security Council through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the \`TimelockSCSlow\`) and upgrading the affected contracts. The Security Council can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the \`updateMessageQueueParameters\` and \`updateEnforcedBatchParameters\` functions or by pausing the \`EnforcedTXGateway\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the Security Council minority can unpause, while the Security Council majority is authorized to update and reset the cooldown period. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.`,
   milestones: [
+    {
+      title: 'Access control upgrade',
+      url: 'https://etherscan.io/tx/0x13c8a293bc6a367eb2510a2bd71cacefbe9705588a574696e790db820b3f520d',
+      date: '2025-08-01T00:00:00Z',
+      description:
+        'Scroll Security Council upgrades permissions to regain Stage 1 status.',
+      type: 'general',
+    },
     {
       title: 'Emergency upgrade',
       url: 'https://forum.scroll.io/t/security-council-report-scroll-mainnet-emergency-upgrade-on-2025-05-26/810',
@@ -685,5 +712,5 @@ export const scroll: ScalingProject = {
       type: 'general',
     },
   ],
-  discoveryInfo: getDiscoveryInfo([discovery, l2Discovery]),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

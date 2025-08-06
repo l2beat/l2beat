@@ -6,9 +6,13 @@ export function getDiscoveryInfo(
 ): ProjectDiscoveryInfo {
   const timestampPerChain: Record<string, number> = {}
 
-  for (const { chain, timestamp } of discoveries) {
-    timestampPerChain[chain] ??= Number.POSITIVE_INFINITY
-    timestampPerChain[chain] = Math.min(timestampPerChain[chain], timestamp)
+  for (const discovery of discoveries) {
+    for (const [chain, timestamp] of Object.entries(
+      discovery.timestampPerChain,
+    )) {
+      timestampPerChain[chain] ??= Number.POSITIVE_INFINITY
+      timestampPerChain[chain] = Math.min(timestampPerChain[chain], timestamp)
+    }
   }
 
   return {

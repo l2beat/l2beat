@@ -10,5 +10,11 @@
     "address": "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1",
     "chain": "ethereum",
     "blockNumber": 22775246
+  },
+  "L1VerifierPlonk_v28_1": {
+    "hash": "0xeef6daabc71bf67f02da2eebec0939402f99a165f2c3f40225b4b804021b4962",
+    "address": "0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717",
+    "chain": "gateway",
+    "blockNumber": 17025
   }
 }

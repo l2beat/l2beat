@@ -1,5 +1,5 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import { Badge } from '~/components/badge/Badge'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
@@ -34,13 +34,13 @@ export function LivenessIntervalCell(props: {
     const tooltipText = getNonApplicableTooltipText(props.dataType, props.entry)
 
     if (!tooltipText) {
-      return <Badge type="gray">N/A</Badge>
+      return <NotApplicableBadge />
     }
 
     return (
       <Tooltip>
         <TooltipTrigger>
-          <Badge type="gray">N/A</Badge>
+          <NotApplicableBadge />
         </TooltipTrigger>
         <TooltipContent>{tooltipText}</TooltipContent>
       </Tooltip>

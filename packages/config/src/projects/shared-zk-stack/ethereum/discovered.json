@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "timestamp": 1753346675,
-  "configHash": "0x67a7ecd7638462310962c6d3ac8e1a9bc65bf1f33a322aceab2fe02402985adb",
+  "timestamp": 1754120227,
+  "configHash": "0x0aaaef30a9547a261f336c6d448ed0f4644527e8980f2484a86102f52e582259",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -241,7 +241,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "EraAdminProxy",
+      "name": "EraChainAdminProxy",
       "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063",
       "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
@@ -280,7 +280,8 @@
           { "_protocolVersion": 107374182400, "_upgradeTimestamp": 1736517600 },
           { "_protocolVersion": 111669149696, "_upgradeTimestamp": 1741773600 },
           { "_protocolVersion": 115964116992, "_upgradeTimestamp": 1746435600 },
-          { "_protocolVersion": 120259084288, "_upgradeTimestamp": 1750042800 }
+          { "_protocolVersion": 120259084288, "_upgradeTimestamp": 1750042800 },
+          { "_protocolVersion": 120259084289, "_upgradeTimestamp": 0 }
         ]
       },
       "fieldMeta": {
@@ -463,7 +464,13 @@
         "MAX_NUMBER_OF_ZK_CHAINS": 100,
         "messageRoot": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
         "migrationPaused": false,
-        "migrations": [],
+        "migrations": [
+          {
+            "chainId": 324,
+            "assetId": "0x4322964cbd328346d5f59803d2974742a54a69e59fd8b8d4ca5c64773646bf7a",
+            "settlementLayerChainId": 9075
+          }
+        ],
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -730,7 +737,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 209,
+        "nonce": 219,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -857,7 +864,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.",
-      "ignoreInWatchMode": ["sharedTree"],
+      "ignoreInWatchMode": ["sharedTree", "getAggregatedRoot"],
       "sinceTimestamp": 1739109035,
       "sinceBlock": 21809367,
       "values": {
@@ -1711,7 +1718,7 @@
         "0x5462a6c55c6e9f2d98c21f2588b2b9a4de1dc41ba0c10906f8965e21849a3a52"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,0.",
+      "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,1.",
       "sinceTimestamp": 1717520663,
       "sinceBlock": 20019830,
       "values": {
@@ -1752,13 +1759,13 @@
         "$upgradeCount": 6,
         "admin": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063",
         "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getSemverProtocolVersion": [0, 28, 0],
-        "initialCutHash": "0xf5e92e1f82b7dcec41aad4bfbbd238b89380f311b2b65956d2073f59b4f9a58f",
+        "getSemverProtocolVersion": [0, 28, 1],
+        "initialCutHash": "0x1ba089adbb5d0a9aa3f96947db5b1fd831e17ab789f1147883d891e1e7951605",
         "initialForceDeploymentHash": "0xed1057fbf858575d7348c4f2c82dd034534c62d97d0ac1d46f98ed197403f3d9",
         "l1GenesisUpgrade": "eth:0x7Dde6ce8Ee4865f4BBD134d3BE827DBE5282100E",
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "protocolVersion": 120259084288,
+        "protocolVersion": 120259084289,
         "serverNotifierAddress": "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
         "storedBatchZero": "0x9629612e3685846dc5056347758c0f8286fc877383c762aa17b1411758a582d8",
         "validatorTimelock": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
@@ -2030,7 +2037,10 @@
         "emergencyUpgradeBoard": "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
         "emergencyUpgradesExecuted": [
           "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13",
-          "0x09a5358047d9d0898d14c31823e9ea544f5f33c280441d1f34d5cc6dafe7a055"
+          "0x09a5358047d9d0898d14c31823e9ea544f5f33c280441d1f34d5cc6dafe7a055",
+          "0x9566d2c3ede4eb9a53f71f5f94bdf0e07db77ed92e421f399868d1db1a5622c6",
+          "0x820d3989346828f564c6322b3b47631996ea66f7a826213d95ad69ded62adcdc",
+          "0x8902737c0457ffdc1623387ed17201ccd6184b4cfef9c62dd5f00208e4b6e563"
         ],
         "EXTENDED_LEGAL_VETO_PERIOD": 604800,
         "guardians": "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
@@ -3270,13 +3280,13 @@
     "shared-zk-stack/L1GenesisUpgrade": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
     "shared-zk-stack/L1NativeTokenVault": "0x9bb3e98b90b9d1e113cc71a85d4137492755be55071e020952622ae30a2ed397",
     "shared-zk-stack/L1Nullifier": "0xffad2aec15a6d3fed0ca55cc600f9ee54a1148708bbb360b9b82a1a4c7c05416",
-    "shared-zk-stack/MessageRoot": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
+    "shared-zk-stack/MessageRoot": "0x2c788525cb453dd86cf50fe9437ba488b1be3e698da9ccc0ae016598b93c48dd",
     "shared-zk-stack/ProtocolUpgradeHandler": "0x8aea3a24bbb610625e47a3a4b122ab03edc5836adb2cfec7e7d726f872498925",
     "shared-zk-stack/RollupDAManager": "0x22b0bd78735c1c2fcbfd46f139a45581a44353b1025dfe3a7fe0ef88699bfde2",
     "shared-zk-stack/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/SecurityCouncil": "0x0b8804832bc8dce16a070579f3ae7bd8a88ec36c613ed48e2ffc2d8fae340180",
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22987909 },
-  "permissionsConfigHash": "0x4991c6c2a3bdc0383e57439df53ba4a6803cf1917c0cbdc0bd343427890a53ef"
+  "usedBlockNumbers": { "ethereum": 23051924 },
+  "permissionsConfigHash": "0xb225a1c4ad9acaae4a1265042a215cb9c2dffbea01a44fa59f1fc00bc0dda257"
 }

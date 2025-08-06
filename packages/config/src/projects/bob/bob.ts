@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -28,7 +28,9 @@ export const bob: ScalingProject = opStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x091dF5E1284E49fA682407096aD34cfD42B95B72'),
+      address: ChainSpecificAddress(
+        'eth:0x091dF5E1284E49fA682407096aD34cfD42B95B72',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
     }),
@@ -40,7 +42,7 @@ export const bob: ScalingProject = opStackL2({
     {
       title: 'Proof System Intervention',
       url: 'https://app.blocksec.com/explorer/tx/eth/0xa065f636adfc7cdf08007ee81303028fa4daf291279a75a5ae1d3a975acce806?line=7',
-      date: '2025-07-17T00:00:00Z',
+      date: '2025-07-24T00:00:00Z',
       description:
         'A state root proposal is manually resolved after changing the finalization config.',
       type: 'incident',
