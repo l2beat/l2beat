@@ -1,5 +1,6 @@
 import type { TrustedSetup } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -71,8 +72,7 @@ export const zkCatalogColumns = [
     id: 'attesters',
     header: 'Attesters',
     cell: (ctx) => {
-      if (ctx.row.original.attesters.length === 0)
-        return <span className="font-semibold text-xs leading-none">N/A</span>
+      if (ctx.row.original.attesters.length === 0) return <NotApplicableBadge />
 
       return (
         <div>

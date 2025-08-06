@@ -4,7 +4,7 @@ interface Props {
   className?: string
 }
 
-export function NaBadge(props: Props) {
+export function NotApplicableBadge(props: Props) {
   return (
     <Badge className={props.className} type="gray" size="small">
       N/A
