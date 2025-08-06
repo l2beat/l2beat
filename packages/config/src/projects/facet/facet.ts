@@ -229,7 +229,7 @@ export const facet: ScalingProject = {
         risks: [
           {
             category: 'Funds can be stolen if',
-            text: 'Funds can be lost if the fast bridge EOA operator signs an invalid withdrawal request.',
+            text: 'the fast bridge EOA operator signs an invalid withdrawal request.',
           },
         ],
         references: [
