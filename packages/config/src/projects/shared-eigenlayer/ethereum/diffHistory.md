@@ -1,25 +1,29 @@
-Generated with discovered.json: 0xafaedd5e1dcc96518442a53979fa32b643882676
+Generated with discovered.json: 0xa77a0020e4577228b7f3ab29441437a651026b7e
 
-# Diff at Tue, 29 Jul 2025 13:57:53 GMT:
+# Diff at Wed, 06 Aug 2025 18:00:39 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@985826fe73e93650e4402d9ab61540358802d73e block: 1748273831
-- current timestamp: 1753797465
+- comparing to: main@20ccf0027e872551f979af7bbff38272be6736e1 block: 1748273831
+- current timestamp: 1754503221
 
 ## Description
 
 Redistribution upgrade. Enables AVS to extend the slashing mechanisms to repurpose slashed funds instead of burning them.
-It is an opt-in feature, no AVSs currently implement it. ETH and EIGEN are not yet eligible for redistribution, every other ERC-20 staked token is.
+It is an opt-in feature, no AVS currently implements it. ETH and EIGEN are not yet eligible for redistribution, every other ERC-20 staked token is.
 
-- AllocationManager: now allows an authorized account to create a Redistribution operator set, a list of addresses that will receive redistributed funds. This list cannot be changed once set (security reasons).
-- StrategyManager: redistribution is achieved through clearBurnOrRedistributableShares() which is a permissionless function that clears burn/redistributable shares and sends underlying tokens to recipients.
+Main changes:
+- AllocationManager.sol: now allows an authorized account to create a Redistribution operator set, a list of addresses that will receive redistributed funds. This list cannot be changed once set (security reasons).
+- StrategyManager.sol: redistribution is achieved through clearBurnOrRedistributableShares() which is a permissionless function that clears burn/redistributable shares and sends underlying tokens to recipients.
+- EigenPod.sol: requestConsolidation() and requestWithdrawal() functions (Pectra support)
+- EigenPodManager.sol: redistribution support, increaseBurnableShares() becomes increaseBurnOrRedistributableShares()
 
+## Watched changes
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1748273831 (main branch discovery), not current.
+```diff
+-   Status: DELETED
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa)
+    +++ description: Ethereum Beacon Chain deposit contract.
+```
 
 ```diff
 -   Status: DELETED
@@ -38,14 +42,10 @@ discovery. Values are for block 1748273831 (main branch discovery), not current.
 
 ```diff
     contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
-    +++ description: None
-      template:
--        "eigenlayer/DelegationManager"
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
       sourceHashes.1:
 -        "0x3be3c1a5b3c5a2b2e3d0af8a02c711c6eead5686cab112054a0e80e945fdc766"
 +        "0x070312684717f779729ea8c996718a93f984ef1cc6afd216b9b80007e7d49e7c"
-      description:
--        "The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator."
       values.$implementation:
 -        "eth:0xA75112d1df37FA53a431525CD47A7d7faCEA7E73"
 +        "eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89"
@@ -97,14 +97,10 @@ discovery. Values are for block 1748273831 (main branch discovery), not current.
 
 ```diff
     contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
-    +++ description: None
-      template:
--        "eigenlayer/StrategyManager"
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
       sourceHashes.1:
 -        "0xa50d63fab44e951546763a60992b2c223d1b089ebbd81504210b24beadcf5b50"
 +        "0x60a5779b3a2f393b1ced806a8d45492e70d92e11a9943b66a8511672ae88c7d3"
-      description:
--        "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake."
       values.$implementation:
 -        "eth:0xba4b2b8A076851A3044882493C2e36503d50b925"
 +        "eth:0x46aefd30415be99e20169eE7046F65784B46d123"
@@ -141,8 +137,6 @@ discovery. Values are for block 1748273831 (main branch discovery), not current.
 ```diff
     contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
     +++ description: None
-      template:
--        "eigenlayer/EigenPodManager"
       sourceHashes.1:
 -        "0xbe7ad5846796adf94452f7dc75108c6c396689c7f7be205733374d0ef6c126ca"
 +        "0x1d0e4cec5c013a815e3c94572dfa980117f415c1f63d79ba522cf437c672534f"
@@ -166,14 +160,10 @@ discovery. Values are for block 1748273831 (main branch discovery), not current.
 
 ```diff
     contract AllocationManager (0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39) {
-    +++ description: None
-      template:
--        "eigenlayer/AllocationManager"
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
       sourceHashes.1:
 -        "0x82974ffe4d2eaf842109ba34b64dc6aaacd4ab2040d3c53815e2cdf43946630b"
 +        "0xa704abda563be08e6ca83769e716b07daf54f505f36b9a0278f751eb355c802e"
-      description:
--        "Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake."
       values.$implementation:
 -        "eth:0x740058839A1668Af5700e5d7B062007275e77D25"
 +        "eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345"
@@ -199,6 +189,9 @@ discovery. Values are for block 1748273831 (main branch discovery), not current.
 ```diff
     contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
     +++ description: None
+      values.$members.2:
+-        "eth:0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
++        "eth:0x957236B539bfA49b650B66426BcaFbF477C1c334"
       receivedPermissions.11:
 +        {"permission":"upgrade","from":"eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
     }
@@ -212,14 +205,10 @@ discovery. Values are for block 1748273831 (main branch discovery), not current.
 
 ```diff
     contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
-    +++ description: None
-      template:
--        "eigenlayer/EIGEN token"
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
       sourceHashes.1:
 -        "0x857392f0c602177fab038b9cc445ed977e9367e7ac3b70515f6296d459a585af"
 +        "0xb8dbca65e053a47c078cebe919fab85c18b0b261e0b86e6a776e6262ba02a097"
-      description:
--        "The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract."
       values.$implementation:
 -        "eth:0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"
 +        "eth:0x2C4A81e257381F87F5A5C4bd525116466D972E50"
@@ -248,7 +237,7 @@ discovery. Values are for block 1748273831 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract bEIGEN-Strategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
@@ -260,13 +249,58 @@ discovery. Values are for block 1748273831 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract StrategyBase (0xD4d1746142642Db4c1ab17b03B9c58baac913E5B)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract Safe (0xfD636E8EB3839cE82A58936b795043Da7DB0c734)
     +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AllocationManager/AllocationManager.sol        |  561 ++++---
+ .../DelegationManager/DelegationManager.sol        |  169 +-
+ .../DepositContract.sol => /dev/null               |  160 --
+ .../EIGEN token/Eigen.sol                          |  250 ++-
+ .../{.flat@1748273831 => .flat}/EigenPod.sol       |  504 ++++--
+ .../EigenPodManager/EigenPodManager.sol            |   69 +-
+ .../Safe.sol                                       |    0
+ .../SafeProxy.p.sol                                |    0
+ .../Safe.sol                                       | 1088 +++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../{.flat@1748273831 => .flat}/StrategyBase.sol   |   55 +-
+ .../StrategyManager/StrategyManager.sol            | 1237 +++++++++------
+ .../.flat/bEIGEN-Strategy/EigenStrategy.sol        | 1621 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++
+ 14 files changed, 5367 insertions(+), 1113 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1748273831 (main branch discovery), not current.
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: The token backing EIGEN and used for intersubjective staking.
+      template:
++        "eigenlayer/bEIGENToken"
+      description:
++        "The token backing EIGEN and used for intersubjective staking."
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+      template:
+-        "eigenlayer/EIGEN token"
++        "eigenlayer/EIGENToken"
+    }
 ```
 
 Generated with discovered.json: 0x5d8401e3ec9c713e1502f80b6eaf3ae7b4030ff4

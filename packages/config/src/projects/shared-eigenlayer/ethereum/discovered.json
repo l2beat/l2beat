@@ -1,35 +1,13 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "timestamp": 1753797465,
+  "timestamp": 1754503221,
   "configHash": "0xe9b3ea091613579f148b4a656378dd43274ef2d6feb0e8ac7c261107fdef750e",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000E16E4",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "DepositContract",
-      "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-      "type": "Contract",
-      "template": "global/DepositContract",
-      "sourceHashes": [
-        "0x50e829416130215b875975340a7567d915ecf66f25070a50813ca972a4322191"
-      ],
-      "proxyType": "immutable",
-      "description": "Ethereum Beacon Chain deposit contract.",
-      "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"],
-      "sinceTimestamp": 1602667372,
-      "sinceBlock": 11052984,
-      "values": {
-        "$immutable": true,
-        "get_deposit_count": "0x4983210000000000",
-        "get_deposit_root": "0x5908e45b3c4d97b8dcb06c63ab26630a5edb1f573d4bcda12b612f5ceda00bfb"
-      },
-      "implementationNames": {
-        "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
-      }
     },
     {
       "name": "StrategiesBeacon",
@@ -77,7 +55,7 @@
           "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         },
         "isExpired": false,
-        "latestPress": 1753318871,
+        "latestPress": 1753923611,
         "owner": "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
       },
       "fieldMeta": {
@@ -200,7 +178,8 @@
           "eth:0x15f4314d4c5da6e36eC40b3BC2A279685F0d84b2",
           "eth:0x9110e4e9e561514dE3be844D6fF9eF7cAcE65415",
           "eth:0xd314209cE0ae9aDfD7643BB9d8becD62290D826a",
-          "eth:0xeadDFE246Cc8b309FfC6dDb4AB677Be49E8512AB"
+          "eth:0xeadDFE246Cc8b309FfC6dDb4AB677Be49E8512AB",
+          "eth:0xD24a5F9A0E578f38e2B76d422b0a355ffee88F2E"
         ],
         "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "domainSeparator": "0xa376b8f73e544301999d5aabb44e4d306777f6f0f08bf031c1c4bbc027313aeb",
@@ -337,11 +316,13 @@
       "name": "DelegationManager",
       "address": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
       "type": "Contract",
+      "template": "eigenlayer/DelegationManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x070312684717f779729ea8c996718a93f984ef1cc6afd216b9b80007e7d49e7c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.",
       "sinceTimestamp": 1686348935,
       "sinceBlock": 17445563,
       "values": {
@@ -960,11 +941,13 @@
       "name": "bEIGEN token",
       "address": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
       "type": "Contract",
+      "template": "eigenlayer/bEIGENToken",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x06b65d2894679524c6c376c7f4f4de01c85bb91d59784505b3aca00b9e976a09"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The token backing EIGEN and used for intersubjective staking.",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1710958955,
       "sinceBlock": 19477666,
@@ -1001,7 +984,7 @@
         "name": "Backing Eigen",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "bEIGEN",
-        "totalSupply": "1738017693987916153846153899",
+        "totalSupply": "1739305114501981276923076977",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -1019,11 +1002,13 @@
       "name": "StrategyManager",
       "address": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
       "type": "Contract",
+      "template": "eigenlayer/StrategyManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x60a5779b3a2f393b1ced806a8d45492e70d92e11a9943b66a8511672ae88c7d3"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.",
       "sinceTimestamp": 1686348947,
       "sinceBlock": 17445564,
       "values": {
@@ -1160,6 +1145,7 @@
       "name": "EigenPodManager",
       "address": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
       "type": "Contract",
+      "template": "eigenlayer/EigenPodManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x1d0e4cec5c013a815e3c94572dfa980117f415c1f63d79ba522cf437c672534f"
@@ -1214,7 +1200,7 @@
         "delegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 33892,
+        "numPods": 33926,
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
@@ -1276,11 +1262,13 @@
       "name": "AllocationManager",
       "address": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
       "type": "Contract",
+      "template": "eigenlayer/AllocationManager",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xa704abda563be08e6ca83769e716b07daf54f505f36b9a0278f751eb355c802e"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.",
       "sinceTimestamp": 1744052255,
       "sinceBlock": 22218956,
       "values": {
@@ -1312,6 +1300,11 @@
         "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39": "TransparentUpgradeableProxy",
         "eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345": "AllocationManager"
       }
+    },
+    {
+      "address": "eth:0x957236B539bfA49b650B66426BcaFbF477C1c334",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815",
@@ -1368,11 +1361,14 @@
       "name": "bEIGEN-Strategy",
       "address": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
       "type": "Contract",
+      "template": "eigenlayer/Strategy",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xb58160c9903763d4c6dd724e3ce4e687fa5eeff34a50885a3a3b614aee688553"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
+      "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1713414611,
       "sinceBlock": 19679966,
       "values": {
@@ -1396,24 +1392,30 @@
           ]
         ],
         "$upgradeCount": 3,
-        "EIGEN": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
-        "sharesToUnderlying": [0, 1, 2, 3, 4],
-        "sharesToUnderlyingView": [0, 1, 2, 3, 4],
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "417164970331664732346201631",
+        "totalShares": "417069392634991653093922597",
         "underlyingToken": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
-        "underlyingToShares": [0, 1, 2, 3, 4],
-        "underlyingToSharesView": [0, 1, 2, 3, 4],
         "version": "1.5.0"
       },
-      "errors": {
-        "sharesToUnderlying": "Processing error occurred.",
-        "sharesToUnderlyingView": "Processing error occurred.",
-        "underlyingToShares": "Processing error occurred.",
-        "underlyingToSharesView": "Processing error occurred."
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
+        }
       },
       "implementationNames": {
         "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7": "TransparentUpgradeableProxy",
@@ -1427,11 +1429,6 @@
     },
     {
       "address": "eth:0xAF4D94Cd299211de542530399290877E2c85F061",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xb7Ae34BB33da55f12797e793E01e63a17B11d108",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1692,7 +1689,7 @@
         "$members": [
           "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF",
           "eth:0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830",
-          "eth:0xb7Ae34BB33da55f12797e793E01e63a17B11d108",
+          "eth:0x957236B539bfA49b650B66426BcaFbF477C1c334",
           "eth:0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",
           "eth:0xFBB1A3C8C8A99A2A4797250dF87E307Dc3f01Fe0",
           "eth:0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
@@ -1702,7 +1699,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 74,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1793,6 +1790,7 @@
       "name": "EigenPod",
       "address": "eth:0xcb27A4819A64FBA93ABD4D480e4466aEc0503745",
       "type": "Contract",
+      "template": "eigenlayer/EigenPod",
       "sourceHashes": [
         "0xde563a9e55789a1e2e556d02f4dd7eb0f5266ad6ff6816f3406321b92603eb14"
       ],
@@ -1833,10 +1831,13 @@
       "name": "StrategyBase",
       "address": "eth:0xD4d1746142642Db4c1ab17b03B9c58baac913E5B",
       "type": "Contract",
+      "template": "eigenlayer/Strategy",
       "sourceHashes": [
         "0x162ffe3ef6e872099c9fd14d63e6aa37922cde251b0e9af8360ccf20aa375274"
       ],
       "proxyType": "immutable",
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
+      "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1752178079,
       "sinceBlock": 22891063,
       "values": {
@@ -1844,14 +1845,27 @@
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
-        "sharesToUnderlying": [],
-        "sharesToUnderlyingView": [],
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
         "totalShares": 0,
         "underlyingToken": "eth:0x0000000000000000000000000000000000000000",
-        "underlyingToShares": [],
-        "underlyingToSharesView": [],
         "version": "1.5.0"
+      },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
+        }
       },
       "implementationNames": {
         "eth:0xD4d1746142642Db4c1ab17b03B9c58baac913E5B": "StrategyBase"
@@ -1901,11 +1915,13 @@
       "name": "EIGEN token",
       "address": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
       "type": "Contract",
+      "template": "eigenlayer/EIGENToken",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xb8dbca65e053a47c078cebe919fab85c18b0b261e0b86e6a776e6262ba02a097"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1697499563,
       "sinceBlock": 18366276,
@@ -1956,7 +1972,7 @@
         "name": "Eigen",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "EIGEN",
-        "totalSupply": "1738017693987916153846153899",
+        "totalSupply": "1739305114501981276923076977",
         "transferRestrictionsDisabledAfter": 0,
         "version": "1.6.0"
       },
@@ -2178,14 +2194,6 @@
     }
   ],
   "abis": {
-    "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": [
-      "constructor()",
-      "event DepositEvent(bytes pubkey, bytes withdrawal_credentials, bytes amount, bytes signature, bytes index)",
-      "function deposit(bytes pubkey, bytes withdrawal_credentials, bytes signature, bytes32 deposit_data_root) payable",
-      "function get_deposit_count() view returns (bytes)",
-      "function get_deposit_root() view returns (bytes32)",
-      "function supportsInterface(bytes4 interfaceId) pure returns (bool)"
-    ],
     "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": [
       "constructor(address implementation_)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -3430,19 +3438,26 @@
     ]
   },
   "usedTemplates": {
+    "eigenlayer/AllocationManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/AVSDirectory": "0xc57750a5155e09049ae1ea4afd500090b460c5844ccb1d2d973da7af0d8d96f7",
+    "eigenlayer/bEIGENToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/DelegationManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/EigenLayerPauserRegistry": "0x650c2bb1c48c3b4074538696cc4c8cc5a1610e60b132f774c9b120c619c34086",
+    "eigenlayer/EigenPod": "0x272665b09a47d2ea7de03261d45c149901717f76ba1cbaf1e015c17a1778a868",
+    "eigenlayer/EigenPodManager": "0xf1378651f0f74d64b9ef4ecb62fc6b0908c5fa61d0228aea84689e975859f4cf",
+    "eigenlayer/EIGENToken": "0x47c3793e522d863027dd4d7d9ae9f79149767db55e073a2fb68ac71a6be7412b",
     "eigenlayer/PermissionController": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/RewardAllStakersActionGenerator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/RewardsCoordinator": "0x6808f3647434cff5e6faad71aaaa768e5a2232d0d0bba9b3998cb36a0efe79d9",
     "eigenlayer/StrategiesBeacon": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/Strategy": "0x5b542b237664461cc9425426a34e0cf216d43947d261781837a5c00bbebfbc9b",
     "eigenlayer/StrategyFactory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/StrategyManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/TimelockControllerOwning": "0xaf1ebe8a6cc93d2ab3ea744cf16dd3a829de773907808c85af29327d02934811",
     "eigenlayer/TokenHopper": "0x2d11e019aadd23bb3977879af9e11d7021f86ccb0c073820375d508372480683",
-    "global/DepositContract": "0xfc77f1d7412b523d27d6db22532ffaa54e0026a15c868272f2f454514cab5df5",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23025234 },
-  "permissionsConfigHash": "0xa6773d049fd0745e20fc555f8e3a75b2593dae7706acbf222abdd5ae94910cea"
+  "usedBlockNumbers": { "ethereum": 23083675 },
+  "permissionsConfigHash": "0xaa2ead69b923ba291f26fb73735038ee087526321b051bdbaade7c41395238c5"
 }
