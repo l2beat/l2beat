@@ -175,7 +175,7 @@ function CustomTooltip({
       <HorizontalSeparator className="my-1" />
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
-          if (entry.type === 'none') return null
+          if (entry.type === 'none' || entry.hide) return null
           const configEntry = entry.name ? config[entry.name] : undefined
           if (!configEntry) return null
 

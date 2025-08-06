@@ -38,8 +38,14 @@ export function DaPercentageThroughputChart({
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
-      const total =
-        (ethereum ?? 0) + (celestia ?? 0) + (avail ?? 0) + (eigenda ?? 0)
+      const toSum = [
+        dataKeys.includes('ethereum') ? ethereum : 0,
+        dataKeys.includes('celestia') ? celestia : 0,
+        dataKeys.includes('avail') ? avail : 0,
+        dataKeys.includes('eigenda') ? eigenda : 0,
+      ].filter((e) => e !== null)
+
+      const total = toSum.reduce((acc, curr) => acc + curr, 0)
       if (total === 0) {
         return {
           timestamp: timestamp,
@@ -57,7 +63,7 @@ export function DaPercentageThroughputChart({
         eigenda: eigenda !== null ? round((eigenda / total) * 100, 2) : null,
       }
     })
-  }, [data])
+  }, [data, dataKeys])
 
   const syncedUntil = Math.max(...Object.values(syncStatus ?? {}))
 
@@ -168,7 +174,7 @@ function CustomTooltip({
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
-          if (!configEntry) return null
+          if (!configEntry || entry.hide) return null
 
           const projectSyncStatus = entry.name
             ? syncStatus?.[entry.name]

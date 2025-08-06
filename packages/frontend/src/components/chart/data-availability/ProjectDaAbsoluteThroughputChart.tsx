@@ -191,7 +191,7 @@ export function ProjectDaThroughputCustomTooltip({
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
           const configEntry = entry.name ? config[entry.name] : undefined
-          if (!configEntry) return null
+          if (!configEntry || entry.hide) return null
 
           return (
             <div
