@@ -1,9 +1,9 @@
 import { assert } from '@l2beat/shared-pure'
 import type MarkdownIt from 'markdown-it'
-import type { GlossaryTermWithoutDescription } from '~/components/markdown/GlossaryContext'
+import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 
 export function linkGlossaryTerms(
-  glossary: GlossaryTermWithoutDescription[],
+  glossary: GlossaryTerm[],
   ignoreDelimiter = ':',
 ) {
   const ignorePattern = new RegExp(
@@ -11,13 +11,18 @@ export function linkGlossaryTerms(
     'gi',
   )
 
-  const termToId = new Map(
+  const termToData = new Map(
     glossary.flatMap((entry) =>
-      entry.matches.map((term) => [term.toLowerCase(), entry.id]),
+      entry.matches.map((term) => [
+        term.toLowerCase(),
+        { id: entry.id, description: entry.description },
+      ]),
     ),
   )
 
-  const glossaryTerms = [...termToId.keys()].sort((a, b) => b.length - a.length)
+  const glossaryTerms = [...termToData.keys()].sort(
+    (a, b) => b.length - a.length,
+  )
 
   return (sourceText: string) => {
     let text = sourceText
@@ -49,10 +54,14 @@ export function linkGlossaryTerms(
           return matchedTerm // Don't replace if within an existing link
         }
 
-        const glossaryTermId = termToId.get(matchedTerm.toLowerCase())
+        const glossaryTermData = termToData.get(matchedTerm.toLowerCase())
 
-        return glossaryTermId
-          ? createGlossaryLink(glossaryTermId, matchedTerm)
+        return glossaryTermData
+          ? createGlossaryLink(
+              glossaryTermData.id,
+              matchedTerm,
+              glossaryTermData.description,
+            )
           : matchedTerm
       })
     }
@@ -74,15 +83,21 @@ export function glossaryPlugin(md: MarkdownIt) {
   md.renderer.rules.link_open = (tokens, index, options, env, self) => {
     const token = tokens[index]
     assert(token, 'Token is not defined')
-    if (isGlossaryLink(token.attrGet('href'))) {
+    const href = token.attrGet('href')
+    if (isGlossaryLink(href)) {
+      const [cleanHref, description] = href?.split('?description=') || []
+      assert(cleanHref && description, 'Href or description is not defined')
+
       token.attrSet('data-link-role', 'glossary')
+      token.attrSet('data-description', decodeURIComponent(description))
+      token.attrSet('href', cleanHref)
     }
     return defaultRender(tokens, index, options, env, self)
   }
 }
 
-function createGlossaryLink(id: string, term: string) {
-  const href = `/glossary#${id}`
+function createGlossaryLink(id: string, term: string, description: string) {
+  const href = `/glossary#${id}?description=${encodeURIComponent(description)}`
 
   return `[${term}](${href})`
 }

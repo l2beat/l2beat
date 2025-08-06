@@ -1,17 +1,16 @@
 import { createContext, useContext } from 'react'
 
-const GlossaryContext = createContext<GlossaryTermWithoutDescription[] | null>(
-  null,
-)
+const GlossaryContext = createContext<GlossaryTerm[] | null>(null)
 
 interface Props {
-  terms: GlossaryTermWithoutDescription[]
+  terms: GlossaryTerm[]
   children: React.ReactNode
 }
 
-export interface GlossaryTermWithoutDescription {
+export interface GlossaryTerm {
   id: string
   matches: string[]
+  description: string
 }
 
 export function GlossaryContextProvider({ children, terms }: Props) {

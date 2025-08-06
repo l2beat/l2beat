@@ -33,11 +33,13 @@
     "eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "Scroll Multisig 3",
     "eth:0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": "Scroll Multisig 4",
     "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "Scroll Security Council", // multichain multisig
+    "eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE": "Scroll Security Council Minority",
     "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": "Scroll Multisig 1",
     "scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": "Scroll Multisig 2",
     "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "Scroll Multisig 3",
     "scr:0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": "Scroll Multisig 4",
     "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "Scroll Security Council", // multichain multisig
+    "scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE": "Scroll Security Council Minority",
     "scr:0x5a09a94ee8198d3c474d723337aa58023810022c": "cts-Zellic",
     "eth:0xd512543315c95506E4209805b888414EEF15C8C4": "Katana Admin Multisig", // multichain multisig
     "eth:0x03105070424FbA70E4FC37A674eB70eD5190F9A0": "Katana DeFi SC Multisig", // multichain multisig
