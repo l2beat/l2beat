@@ -47,16 +47,16 @@ In some tests rpc calls to ethereum network are performed through Alchemy. In or
 | --------------------------------- | -------------------------------------------------------- |
 | Arbitrum One, Arbitrum Nova       | https://medium.com/offchainlabs                          |
 | Aztec, Aztec Connect              | https://medium.com/aztec-protocol                        |
-| Boba Network                      | https://boba.network/blog/                               |
+| Boba Network                      | https://bobanetwork.medium.com                           |
 | DeGate                            | https://medium.com/degate                                |
-| dYdX                              | https://dydx.exchange/blog                               |
-| Fuel                              | https://fuel-labs.ghost.io/                              |
+| dYdX                              | https://dydx.xyz/blog                                    |
+| Fuel                              | https://fuel.network/blog                                |
 | Gluon                             | https://blog.leverj.io/                                  |
 | Hermez                            | https://blog.hermez.io/, https://blog.polygon.technology |
 | ImmutableX                        | https://medium.com/@immutablex                           |
 | Layer2.Finance, Layer2.Finance-zk | https://blog.celer.network/                              |
 | Loopring                          | https://medium.com/loopring-protocol                     |
-| Metis                             | https://metisl2.medium.com/                             |
+| Metis                             | https://metisl2.medium.com/                              |
 | myria                             | https://medium.com/@myriagames                           |
 | OMGNetwork                        | -                                                        |
 | Optimism                          | https://optimism.mirror.xyz/                             |
