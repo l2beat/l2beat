@@ -15,6 +15,7 @@ import {
 import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
 import { ChartLoader } from './ChartLoader'
 import { ChartMilestones } from './ChartMilestones'
+import { ChartNoDataSourceState } from './ChartNoDataSourceState'
 import { ChartNoDataState } from './ChartNoDataState'
 
 export type ChartMeta = Record<
@@ -145,12 +146,13 @@ function ChartContainer<T extends { timestamp: number }>({
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
-              '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.recharts-legend-wrapper]:top-[calc(50%-11px)]',
+              '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.recharts-legend-wrapper]:top-[calc(50%-18px)]',
               loaderClassName,
             )}
           />
         )}
         {!hasData && !isLoading && <ChartNoDataState size={size} />}
+        {noDataSourcesSelected && <ChartNoDataSourceState />}
         {isClient && size !== 'small' && (
           <Logo
             animated={false}
@@ -159,18 +161,6 @@ function ChartContainer<T extends { timestamp: number }>({
               logoClassName,
             )}
           />
-        )}
-        {noDataSourcesSelected && (
-          <div className="pointer-events-none absolute inset-0 z-30 flex select-none flex-col items-center justify-center gap-4 text-center duration-200 dark:from-neutral-900">
-            <span
-              className={cn(
-                'font-medium text-2xl text-yellow-700 leading-none dark:text-yellow-200',
-                size === 'small' && 'text-xl',
-              )}
-            >
-              Please select at least one data source
-            </span>
-          </div>
         )}
         {!isLoading && milestones && (
           <ChartMilestones data={data} milestones={milestones} ref={ref} />
