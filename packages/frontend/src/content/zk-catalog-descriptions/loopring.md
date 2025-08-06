@@ -4,4 +4,4 @@ Since groth16 requires a circuit-specific trusted setup, Loopring run [their own
 
 The protocol doesn’t make use of proof aggregation techniques.
 
-The source code of the circuits can be found [here](https://github.com/Loopring/protocol3-circuits.git).
+The source code of the circuits can be found [here](https://github.com/Loopring/protocol3-circuits).
