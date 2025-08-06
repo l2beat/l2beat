@@ -241,7 +241,7 @@ function ChartLegendContent({
       <OverflowWrapper childrenRef={contentRef}>
         <div
           className={cn(
-            'group mx-auto flex h-3.5 w-fit items-center gap-2',
+            'mx-auto flex h-3.5 w-fit items-center gap-2',
             verticalAlign === 'top' && 'pb-3',
             className,
           )}
@@ -258,8 +258,8 @@ function ChartLegendContent({
               <div
                 key={item.value}
                 className={cn(
-                  'flex items-center gap-[3px] [&>svg]:text-secondary',
-                  !!onItemClick && 'cursor-pointer select-none',
+                  'group/legend-item flex items-center gap-[3px] transition-opacity [&>svg]:text-secondary',
+                  isInteractive && 'cursor-pointer select-none',
                   isHidden && 'opacity-50',
                 )}
                 onClick={
@@ -275,7 +275,15 @@ function ChartLegendContent({
                   type={itemConfig.indicatorType}
                   backgroundColor={itemConfig.color}
                 />
-                <span className="text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
+                <span
+                  className={cn(
+                    'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
+                    !isHidden &&
+                      isInteractive &&
+                      'group-hover/legend-item:opacity-50',
+                    isHidden && 'line-through',
+                  )}
+                >
                   {itemConfig.legendLabel ?? itemConfig.label}
                 </span>
               </div>
@@ -283,7 +291,7 @@ function ChartLegendContent({
           })}
         </div>
       </OverflowWrapper>
-      {!hasFinishedOnboarding && !!onItemClick && (
+      {!hasFinishedOnboarding && isInteractive && (
         <div
           id={id}
           className={cn(
