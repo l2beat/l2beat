@@ -269,7 +269,7 @@ function ChartLegendContent({
         <div
           id={id}
           className={cn(
-            '-bottom-3.5 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-13 italic transition-[opacity,font-size] ease-out group-hover:text-label-value-14',
+            '-bottom-3.5 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-13 italic transition-[opacity,scale] ease-out group-hover:scale-[1.08]',
             currentLegendOnboardingId !== id && 'opacity-0',
           )}
           data-role="legend-onboarding"
