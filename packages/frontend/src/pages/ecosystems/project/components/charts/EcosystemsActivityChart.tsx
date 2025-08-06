@@ -14,7 +14,7 @@ import {
   EthereumFillGradientDef,
   EthereumStrokeGradientDef,
 } from '~/components/core/chart/defs/EthereumGradientDef'
-import { useHiddenDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
@@ -44,17 +44,6 @@ export function EcosystemsActivityChart({
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }) {
-  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys()
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
-
-  const { data, isLoading } = api.activity.chart.useQuery({
-    range: { type: timeRange },
-    filter: {
-      type: 'projects',
-      projectIds: entries.map((project) => project.id),
-    },
-  })
-
   const chartMeta = useMemo(() => {
     return {
       projects: {
@@ -73,6 +62,16 @@ export function EcosystemsActivityChart({
       },
     } satisfies ChartMeta
   }, [name])
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
+  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
+
+  const { data, isLoading } = api.activity.chart.useQuery({
+    range: { type: timeRange },
+    filter: {
+      type: 'projects',
+      projectIds: entries.map((project) => project.id),
+    },
+  })
 
   const chartData = useMemo(
     () =>
@@ -98,29 +97,26 @@ export function EcosystemsActivityChart({
         isLoading={isLoading}
         className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+        }}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-          <ChartLegend
-            content={
-              <ChartLegendContent
-                hiddenDataKeys={hiddenDataKeys}
-                onClick={toggleDataKey}
-              />
-            }
-          />
+          <ChartLegend content={<ChartLegendContent />} />
           {getStrokeOverFillAreaComponents({
             data: [
               {
                 dataKey: 'ethereum',
                 stroke: 'url(#strokeEthereum)',
                 fill: 'url(#fillEthereum)',
-                hide: hiddenDataKeys.includes('ethereum'),
+                hide: !dataKeys.includes('ethereum'),
               },
               {
                 dataKey: 'projects',
                 stroke: 'var(--ecosystem-primary)',
                 fill: 'url(#fillProjects)',
-                hide: hiddenDataKeys.includes('projects'),
+                hide: !dataKeys.includes('projects'),
               },
             ],
           })}

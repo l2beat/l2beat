@@ -29,6 +29,10 @@ export type ChartMeta = Record<
 
 type ChartContextProps = {
   meta: ChartMeta
+  interactiveLegend?: {
+    dataKeys: string[]
+    onItemClick: (dataKey: string) => void
+  }
 }
 
 const ChartContext = React.createContext<ChartContextProps | null>(null)
@@ -72,11 +76,11 @@ function ChartContainer<T extends { timestamp: number }>({
   meta,
   data,
   isLoading,
-  dataKeys,
   milestones,
   loaderClassName,
   logoClassName,
   size = 'regular',
+  interactiveLegend,
   ...props
 }: React.ComponentProps<'div'> & {
   meta: ChartMeta
@@ -84,7 +88,10 @@ function ChartContainer<T extends { timestamp: number }>({
     typeof RechartsPrimitive.ResponsiveContainer
   >['children']
   data: T[] | undefined
-  dataKeys?: string[]
+  interactiveLegend?: {
+    dataKeys: string[]
+    onItemClick: (dataKey: string) => void
+  }
   milestones?: Milestone[]
   loaderClassName?: string
   logoClassName?: string
@@ -112,8 +119,9 @@ function ChartContainer<T extends { timestamp: number }>({
   )
 
   const hasData = data && data.length > 1
+  const noDataSourcesSelected = interactiveLegend?.dataKeys.length === 0
   return (
-    <ChartContext.Provider value={{ meta }}>
+    <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div
         ref={ref}
         className={cn(
@@ -121,7 +129,7 @@ function ChartContainer<T extends { timestamp: number }>({
           size === 'regular' &&
             'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
           size === 'small' && 'h-[114px] min-h-[114px] w-full',
-          dataKeys?.length === 0 &&
+          noDataSourcesSelected &&
             '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
           className,
         )}
@@ -151,7 +159,7 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {dataKeys?.length === 0 && (
+        {noDataSourcesSelected && (
           <div className="pointer-events-none absolute inset-0 z-30 flex select-none flex-col items-center justify-center gap-4 text-center duration-200 dark:from-neutral-900">
             <span
               className={cn(
@@ -209,21 +217,17 @@ function ChartLegendContent({
   verticalAlign = 'bottom',
   nameKey,
   reverse = false,
-  onItemClick,
-  dataKeys,
 }: React.ComponentProps<'div'> &
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
     nameKey?: string
     reverse?: boolean
-    onItemClick?: (dataKey: string) => void
-    dataKeys?: string[]
   }) {
   const id = React.useId()
 
   const contentRef = React.useRef<HTMLDivElement>(null)
-  const { meta } = useChart()
+  const { meta, interactiveLegend } = useChart()
 
-  const isInteractive = dataKeys !== undefined
+  const isInteractive = interactiveLegend?.dataKeys !== undefined
   const {
     currentLegendOnboardingId,
     hasFinishedOnboarding,
@@ -253,7 +257,8 @@ function ChartLegendContent({
 
             if (!itemConfig || item.type === 'none') return null
 
-            const isHidden = isInteractive && !dataKeys?.includes(key)
+            const isHidden =
+              isInteractive && !interactiveLegend?.dataKeys?.includes(key)
             return (
               <div
                 key={item.value}
@@ -263,9 +268,9 @@ function ChartLegendContent({
                   isHidden && 'opacity-50',
                 )}
                 onClick={
-                  onItemClick
+                  interactiveLegend?.onItemClick
                     ? () => {
-                        onItemClick?.(key)
+                        interactiveLegend.onItemClick(key)
                         setHasFinishedOnboarding(true)
                       }
                     : undefined

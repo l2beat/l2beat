@@ -15,7 +15,7 @@ import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGr
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
-import { useHiddenDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -40,8 +40,8 @@ export function DaAbsoluteThroughputChart({
   syncStatus,
   resolution,
 }: Props) {
-  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys()
   const chartMeta = getDaChartMeta({ shape: 'line' })
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const max = useMemo(() => {
     return data
       ? Math.max(
@@ -70,7 +70,15 @@ export function DaAbsoluteThroughputChart({
   )
 
   return (
-    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+    <ChartContainer
+      data={chartData}
+      meta={chartMeta}
+      isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
+    >
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <defs>
           <EthereumFillGradientDef id="ethereum-fill" />
@@ -78,39 +86,32 @@ export function DaAbsoluteThroughputChart({
           <LimeFillGradientDef id="eigenda-fill" />
           <SkyFillGradientDef id="avail-fill" />
         </defs>
-        <ChartLegend
-          content={
-            <ChartLegendContent
-              hiddenDataKeys={hiddenDataKeys}
-              onClick={toggleDataKey}
-            />
-          }
-        />
+        <ChartLegend content={<ChartLegendContent />} />
         {getStrokeOverFillAreaComponents({
           data: [
             {
               dataKey: 'ethereum',
               stroke: chartMeta.ethereum.color,
               fill: 'url(#ethereum-fill)',
-              hide: hiddenDataKeys.includes('ethereum'),
+              hide: !dataKeys.includes('ethereum'),
             },
             {
               dataKey: 'celestia',
               stroke: chartMeta.celestia.color,
               fill: 'url(#celestia-fill)',
-              hide: hiddenDataKeys.includes('celestia'),
+              hide: !dataKeys.includes('celestia'),
             },
             {
               dataKey: 'avail',
               stroke: chartMeta.avail.color,
               fill: 'url(#avail-fill)',
-              hide: hiddenDataKeys.includes('avail'),
+              hide: !dataKeys.includes('avail'),
             },
             {
               dataKey: 'eigenda',
               stroke: chartMeta.eigenda.color,
               fill: 'url(#eigenda-fill)',
-              hide: hiddenDataKeys.includes('eigenda'),
+              hide: !dataKeys.includes('eigenda'),
             },
           ],
         })}

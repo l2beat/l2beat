@@ -10,7 +10,7 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { useDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
@@ -61,27 +61,22 @@ export function StackedTvsChart({
   className,
   tickCount,
 }: Props) {
-  const { dataKeys, toggleDataKey } = useDataKeys(chartMeta)
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
 
   return (
     <ChartContainer
       data={data}
-      dataKeys={dataKeys}
       meta={chartMeta}
       isLoading={isLoading}
       milestones={milestones}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
       className={className}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
-        <ChartLegend
-          content={
-            <ChartLegendContent
-              reverse
-              dataKeys={dataKeys}
-              onItemClick={toggleDataKey}
-            />
-          }
-        />
+        <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
           dataKey="external"
           hide={!dataKeys.includes('external')}

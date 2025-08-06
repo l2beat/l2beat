@@ -17,7 +17,7 @@ import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGr
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
-import { useHiddenDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
@@ -49,7 +49,11 @@ export function ProjectDaAbsoluteThroughputChart({
   syncedUntil,
   resolution,
 }: Props) {
-  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys(['projectMax'])
+  const projectChartMeta = getProjectChartMeta(projectId)
+
+  const { dataKeys, toggleDataKey } = useChartDataKeys(projectChartMeta, [
+    'projectMax',
+  ])
   const max = useMemo(() => {
     return dataWithConfiguredThroughputs
       ? Math.max(
@@ -74,14 +78,16 @@ export function ProjectDaAbsoluteThroughputChart({
     )
   }, [dataWithConfiguredThroughputs, denominator])
 
-  const projectChartMeta = getProjectChartMeta(projectId)
-
   return (
     <ChartContainer
       meta={projectChartMeta}
       data={chartData}
       className="mb-2"
       isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
@@ -95,14 +101,7 @@ export function ProjectDaAbsoluteThroughputChart({
           {projectId === 'avail' && <SkyFillGradientDef id="avail-fill" />}
           {projectId === 'eigenda' && <LimeFillGradientDef id="eigenda-fill" />}
         </defs>
-        <ChartLegend
-          content={
-            <ChartLegendContent
-              onClick={toggleDataKey}
-              hiddenDataKeys={hiddenDataKeys}
-            />
-          }
-        />
+        <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="project"
           fill={`url(#${projectId}-fill)`}
@@ -111,7 +110,7 @@ export function ProjectDaAbsoluteThroughputChart({
           strokeWidth={2}
           isAnimationActive={false}
           dot={false}
-          hide={hiddenDataKeys.includes('project')}
+          hide={!dataKeys.includes('project')}
         />
         <Area
           dataKey="projectTarget"
@@ -124,7 +123,7 @@ export function ProjectDaAbsoluteThroughputChart({
           }
           type="stepAfter"
           dot={false}
-          hide={hiddenDataKeys.includes('projectTarget')}
+          hide={!dataKeys.includes('projectTarget')}
         />
         <Area
           dataKey="projectMax"
@@ -137,7 +136,7 @@ export function ProjectDaAbsoluteThroughputChart({
           }
           type="stepAfter"
           dot={false}
-          hide={hiddenDataKeys.includes('projectMax')}
+          hide={!dataKeys.includes('projectMax')}
         />
         <ChartTooltip
           filterNull={false}

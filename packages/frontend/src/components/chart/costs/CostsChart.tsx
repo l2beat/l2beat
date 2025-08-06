@@ -11,7 +11,7 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { useDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
@@ -119,29 +119,24 @@ export function CostsChart({
       indicatorType: { shape: 'line' },
     },
   } satisfies ChartMeta
-  const { dataKeys, toggleDataKey } = useDataKeys(chartMeta, ['posted'])
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, ['posted'])
 
   const resolution = rangeToResolution({ type: range })
 
   return (
     <ChartContainer
       data={data}
-      dataKeys={dataKeys}
       meta={chartMeta}
       isLoading={isLoading}
       milestones={milestones}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
       className={className}
     >
       <ComposedChart data={data} margin={{ top: 20 }}>
-        <ChartLegend
-          content={
-            <ChartLegendContent
-              dataKeys={dataKeys}
-              onItemClick={toggleDataKey}
-              reverse
-            />
-          }
-        />
+        <ChartLegend content={<ChartLegendContent reverse />} />
         {hasPostedData && (
           <Line
             yAxisId="right"

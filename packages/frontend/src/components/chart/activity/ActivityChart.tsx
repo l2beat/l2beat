@@ -28,7 +28,7 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
-import { useDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
@@ -90,26 +90,22 @@ export function ActivityChart({
     },
   } satisfies ChartMeta
 
-  const { dataKeys, toggleDataKey } = useDataKeys(chartMeta)
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
 
   return (
     <ChartContainer
       data={data}
-      dataKeys={dataKeys}
       className={className}
       meta={chartMeta}
       isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
-        <ChartLegend
-          content={
-            <ChartLegendContent
-              dataKeys={dataKeys}
-              onItemClick={toggleDataKey}
-            />
-          }
-        />
+        <ChartLegend content={<ChartLegendContent />} />
         {getStrokeOverFillAreaComponents({
           data: [
             {
