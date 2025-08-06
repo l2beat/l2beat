@@ -19,7 +19,7 @@ export const jovay: ScalingProject = upcomingL2({
       documentation: ['https://docs.jovay.io/'],
       explorers: ['https://sepolia-explorer.jovay.io/'],
       socialMedia: [
-        'https://x.com/Jovay_Network',
+        'https://x.com/JovayNetwork',
         'https://discord.com/invite/8pYGeFAs44',
         'https://t.me/Jovay_Network',
       ],
