@@ -4,15 +4,14 @@ import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useIsClient } from '~/hooks/useIsClient'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../OverflowWrapper'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
-import { useChartCurrentLegend } from './ChartCurrentLegendContext'
 import {
   ChartDataIndicator,
   type ChartDataIndicatorType,
 } from './ChartDataIndicator'
+import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
 import { ChartLoader } from './ChartLoader'
 import { ChartMilestones } from './ChartMilestones'
 import { ChartNoDataState } from './ChartNoDataState'
@@ -204,18 +203,15 @@ function ChartLegendContent({
     onClick?: (dataKey: string) => void
   }) {
   const id = React.useId()
-  const [hasFinishedLegendOnboarding, setHasFinishedLegendOnboarding] =
-    useLocalStorage('has-finished-legend-onboarding', false)
 
   const contentRef = React.useRef<HTMLDivElement>(null)
   const { meta } = useChart()
-  const chartCurrentLegend = useChartCurrentLegend()
-
-  const hasFinishedLegendOnboardingInitial = React.useRef<boolean>(null)
-  // biome-ignore lint/correctness/useExhaustiveDependencies: we want to run this only once
-  React.useEffect(() => {
-    hasFinishedLegendOnboardingInitial.current = hasFinishedLegendOnboarding
-  }, [])
+  const {
+    currentLegendOnboardingId,
+    hasFinishedOnboarding,
+    setHasFinishedOnboarding,
+    hasFinishedOnboardingInitial,
+  } = useChartLegendOnboarding()
 
   if (!payload?.length) {
     return null
@@ -223,12 +219,7 @@ function ChartLegendContent({
 
   const actualPayload = reverse ? [...payload].reverse() : payload
   return (
-    <div
-      className={cn(
-        'relative',
-        !hasFinishedLegendOnboardingInitial.current && !!onClick && 'mb-3',
-      )}
-    >
+    <div className={cn('relative', !hasFinishedOnboardingInitial && 'mb-3')}>
       <OverflowWrapper childrenRef={contentRef}>
         <div
           className={cn(
@@ -257,7 +248,7 @@ function ChartLegendContent({
                   onClick
                     ? () => {
                         onClick?.(key)
-                        setHasFinishedLegendOnboarding(true)
+                        setHasFinishedOnboarding(true)
                       }
                     : undefined
                 }
@@ -274,12 +265,12 @@ function ChartLegendContent({
           })}
         </div>
       </OverflowWrapper>
-      {!hasFinishedLegendOnboarding && !!onClick && (
+      {!hasFinishedOnboarding && !!onClick && (
         <div
           id={id}
           className={cn(
             '-bottom-3.5 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-13 italic transition-[opacity,font-size] ease-out group-hover:text-label-value-14',
-            chartCurrentLegend !== id && 'opacity-0',
+            currentLegendOnboardingId !== id && 'opacity-0',
           )}
           data-role="legend-onboarding"
         >

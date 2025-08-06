@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'next-themes'
-import { ChartCurrentLegendProvider } from '~/components/core/chart/ChartCurrentLegendContext'
+import { ChartLegendOnboardingProvider } from '~/components/core/chart/ChartLegendOnboardingContext'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import { DevAutoReloader } from '~/components/DevAutoReloader'
 import type { GlossaryTermWithoutDescription } from '~/components/markdown/GlossaryContext'
@@ -32,9 +32,9 @@ export function AppLayout({
         <TooltipProvider delayDuration={300} disableHoverableContent>
           <GlossaryContextProvider terms={terms}>
             <SearchBarContextProvider projects={searchBarProjects}>
-              <ChartCurrentLegendProvider>
+              <ChartLegendOnboardingProvider>
                 {children}
-              </ChartCurrentLegendProvider>
+              </ChartLegendOnboardingProvider>
             </SearchBarContextProvider>
           </GlossaryContextProvider>
         </TooltipProvider>
