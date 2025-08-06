@@ -113,7 +113,9 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             <EthereumFillGradientDef id="ethereum-fill" />
             <EthereumStrokeGradientDef id="ethereum-stroke" />
           </defs>
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend
+            content={<ChartLegendContent disableOnboarding={true} />}
+          />
           {getStrokeOverFillAreaComponents({
             data: [
               {

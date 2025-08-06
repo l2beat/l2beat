@@ -117,7 +117,9 @@ export function ScalingSummaryTvsChart({
             <YellowFillGradientDef id="others-fill" />
             <YellowStrokeGradientDef id="others-stroke" />
           </defs>
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend
+            content={<ChartLegendContent disableOnboarding={true} />}
+          />
           {getStrokeOverFillAreaComponents({
             data: [
               {

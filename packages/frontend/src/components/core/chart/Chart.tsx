@@ -217,10 +217,12 @@ function ChartLegendContent({
   verticalAlign = 'bottom',
   nameKey,
   reverse = false,
+  disableOnboarding,
 }: React.ComponentProps<'div'> &
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
     nameKey?: string
     reverse?: boolean
+    disableOnboarding?: boolean
   }) {
   const id = React.useId()
 
@@ -241,7 +243,15 @@ function ChartLegendContent({
 
   const actualPayload = reverse ? [...payload].reverse() : payload
   return (
-    <div className={cn('relative', !hasFinishedOnboardingInitial && 'mb-3')}>
+    <div
+      className={cn(
+        'relative',
+        isInteractive &&
+          !hasFinishedOnboardingInitial &&
+          !disableOnboarding &&
+          'mb-3',
+      )}
+    >
       <OverflowWrapper childrenRef={contentRef}>
         <div
           className={cn(
@@ -296,7 +306,7 @@ function ChartLegendContent({
           })}
         </div>
       </OverflowWrapper>
-      {!hasFinishedOnboarding && isInteractive && (
+      {!hasFinishedOnboarding && isInteractive && !disableOnboarding && (
         <div
           id={id}
           className={cn(
