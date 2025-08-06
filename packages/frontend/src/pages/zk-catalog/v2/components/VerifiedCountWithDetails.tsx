@@ -16,6 +16,12 @@ export function VerifiedCountWithDetails({
 }: Props) {
   const totalCount = successfulCount + unsuccessfulCount + notVerifiedCount
 
+  if (totalCount === 0) {
+    return (
+      <span className="font-bold text-label-value-16 text-secondary">n/a</span>
+    )
+  }
+
   const groupedByStatus = [
     { Icon: VerifiedIcon, count: successfulCount },
     { Icon: CircleQuestionMarkIcon, count: notVerifiedCount },
@@ -30,7 +36,9 @@ export function VerifiedCountWithDetails({
     const { count, Icon } = status
     return (
       <div className="flex items-center gap-0.5">
-        <span>{count}</span>
+        <span className="font-bold text-label-value-16 text-secondary">
+          {count}
+        </span>
         {<Icon />}
       </div>
     )
@@ -38,7 +46,9 @@ export function VerifiedCountWithDetails({
 
   return (
     <div className="flex items-center gap-1.5 leading-none">
-      <span>{totalCount}</span>
+      <span className="font-bold text-label-value-16 text-secondary">
+        {totalCount}
+      </span>
       <div className="select-none font-medium text-base text-secondary">
         (
         <div className="inline-flex items-center gap-1">

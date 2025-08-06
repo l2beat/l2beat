@@ -20,8 +20,8 @@ export const zkCatalogColumns = [
       id: 'name',
       cell: (ctx) => {
         return (
-          <div className="space-y-px">
-            <div className="font-bold text-base leading-none">
+          <div className="max-w-[146px] space-y-px">
+            <div className="whitespace-pre-wrap font-bold text-base leading-none">
               {ctx.row.original.name}
             </div>
             {ctx.row.original.creator && (

@@ -12,9 +12,9 @@ export function TechStackCell({
   }
 
   return (
-    <div className="space-y-2 py-3">
+    <div className="space-y-2 py-4">
       {techStack.zkVM && (
-        <div>
+        <div className="flex flex-col gap-0.5">
           <span className="font-medium text-[11px] text-secondary leading-none">
             zkVM
           </span>
@@ -26,7 +26,7 @@ export function TechStackCell({
         </div>
       )}
       {techStack.finalWrap && (
-        <div>
+        <div className="flex flex-col gap-0.5">
           <span className="font-medium text-[11px] text-secondary leading-none">
             Final wrap
           </span>
