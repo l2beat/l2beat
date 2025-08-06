@@ -18,8 +18,12 @@ export function useHiddenDataKeys(initialHiddenDataKeys: string[] = []) {
   return { hiddenDataKeys, toggleDataKey }
 }
 
-export function useDataKeys(chartMeta: ChartMeta) {
-  const [dataKeys, setDataKeys] = useState<string[]>(Object.keys(chartMeta))
+export function useDataKeys(chartMeta: ChartMeta, hiddenDataKeys?: string[]) {
+  const [dataKeys, setDataKeys] = useState<string[]>(
+    hiddenDataKeys
+      ? Object.keys(chartMeta).filter((key) => !hiddenDataKeys.includes(key))
+      : Object.keys(chartMeta),
+  )
 
   const toggleDataKey = (dataKey: string) => {
     setDataKeys((prev) => {

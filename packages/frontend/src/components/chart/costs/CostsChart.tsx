@@ -11,7 +11,7 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { useHiddenDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
+import { useDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
@@ -88,7 +88,6 @@ export function CostsChart({
   hasPostedData,
   hasBlobs,
 }: Props) {
-  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys(['posted'])
   const chartMeta = {
     calldata: {
       label: 'Calldata',
@@ -120,12 +119,14 @@ export function CostsChart({
       indicatorType: { shape: 'line' },
     },
   } satisfies ChartMeta
+  const { dataKeys, toggleDataKey } = useDataKeys(chartMeta, ['posted'])
 
   const resolution = rangeToResolution({ type: range })
 
   return (
     <ChartContainer
       data={data}
+      dataKeys={dataKeys}
       meta={chartMeta}
       isLoading={isLoading}
       milestones={milestones}
@@ -135,8 +136,8 @@ export function CostsChart({
         <ChartLegend
           content={
             <ChartLegendContent
-              hiddenDataKeys={hiddenDataKeys}
-              onClick={toggleDataKey}
+              dataKeys={dataKeys}
+              onItemClick={toggleDataKey}
               reverse
             />
           }
@@ -149,7 +150,7 @@ export function CostsChart({
             stroke={chartMeta.posted.color}
             dot={false}
             isAnimationActive={false}
-            hide={hiddenDataKeys.includes('posted')}
+            hide={!dataKeys.includes('posted')}
           />
         )}
         <Area
@@ -162,7 +163,7 @@ export function CostsChart({
           dot={false}
           activeDot={false}
           isAnimationActive={false}
-          hide={hiddenDataKeys.includes('overhead')}
+          hide={!dataKeys.includes('overhead')}
         />
         <Area
           yAxisId="left"
@@ -174,7 +175,7 @@ export function CostsChart({
           dot={false}
           activeDot={false}
           isAnimationActive={false}
-          hide={hiddenDataKeys.includes('compute')}
+          hide={!dataKeys.includes('compute')}
         />
         {chartMeta.blobs && (
           <Area
@@ -187,7 +188,7 @@ export function CostsChart({
             dot={false}
             activeDot={false}
             isAnimationActive={false}
-            hide={hiddenDataKeys.includes('blobs')}
+            hide={!dataKeys.includes('blobs')}
           />
         )}
         <Area
@@ -199,7 +200,7 @@ export function CostsChart({
           stackId="a"
           dot={false}
           isAnimationActive={false}
-          hide={hiddenDataKeys.includes('calldata')}
+          hide={!dataKeys.includes('calldata')}
         />
 
         {hasPostedData && (
@@ -215,7 +216,7 @@ export function CostsChart({
             tick={{
               width: 100,
             }}
-            hide={hiddenDataKeys.includes('posted')}
+            hide={!dataKeys.includes('posted')}
           />
         )}
 
@@ -253,15 +254,9 @@ function CustomTooltip({
 }) {
   if (!active || !payload || typeof label !== 'number') return null
 
-  const dataKeys = payload.map((p) => p.dataKey)
-  const hasPostedAndEstimated =
-    dataKeys.includes('posted') && dataKeys.includes('estimatedPosted')
-  const filteredPayload = payload.filter(
-    (p) => !hasPostedAndEstimated || p.name !== 'estimatedPosted',
-  )
-  const reversedPayload = [...filteredPayload].reverse()
-  const total = payload.reduce<number | null>((acc, curr) => {
-    if (curr.name === 'posted' || curr.name === 'estimatedPosted') {
+  const actualPayload = [...payload].reverse().filter((p) => !p.hide)
+  const total = actualPayload.reduce<number | null>((acc, curr) => {
+    if (curr.name === 'posted') {
       return acc
     }
     if (curr.value === null || curr.value === undefined) {
@@ -277,7 +272,7 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
-        <div className="mb-3 font-medium text-label-value-14 text-secondary">
+        <div className="font-medium text-label-value-14 text-secondary">
           {formatRange(
             label,
             label +
@@ -288,16 +283,22 @@ function CustomTooltip({
                   : UnixTime.HOUR),
           )}
         </div>
-        <div className="flex w-full items-center justify-between gap-2 text-heading-16">
-          <span>Total</span>
-          <span className="whitespace-nowrap text-primary tabular-nums">
-            {total !== null ? formatCostValue(total, unit, 'total') : 'No data'}
-          </span>
-        </div>
-        <HorizontalSeparator className="mt-1.5" />
+        {actualPayload.filter((p) => p.name !== 'posted').length > 1 && (
+          <>
+            <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
+              <span>Total</span>
+              <span className="whitespace-nowrap text-primary tabular-nums">
+                {total !== null
+                  ? formatCostValue(total, unit, 'total')
+                  : 'No data'}
+              </span>
+            </div>
+            <HorizontalSeparator className="mt-1.5" />
+          </>
+        )}
         <div className="mt-2 flex flex-col gap-2">
-          {reversedPayload.map((entry) => {
-            if (entry.type === 'none') return null
+          {actualPayload.map((entry) => {
+            if (entry.type === 'none' || entry.hide) return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
