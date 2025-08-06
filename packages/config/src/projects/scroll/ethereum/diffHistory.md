@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x702c1de2593846e5c1a811495641a1498ae1a084
+
+# Diff at Wed, 06 Aug 2025 10:12:58 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@20ccf0027e872551f979af7bbff38272be6736e1 block: 1754403402
+- current timestamp: 1754475055
+
+## Description
+
+Added Security Council minority permission.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754403402 (main branch discovery), not current.
+
+```diff
+    contract Scroll Security Council Minority (0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"unpause core contracts via the PauseController.","role":".scMinorityNoDelay"}]
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.scMinorityNoDelay:
++        ["eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"]
+    }
+```
+
 Generated with discovered.json: 0xab6e2506f957aa6e6de33f09471f27c961bb729b
 
 # Diff at Tue, 05 Aug 2025 14:17:50 GMT:

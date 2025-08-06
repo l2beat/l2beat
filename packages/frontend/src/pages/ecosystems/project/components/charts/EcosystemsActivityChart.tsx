@@ -31,18 +31,21 @@ import type {
 } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
 
 export function EcosystemsActivityChart({
+  id,
   name,
   entries,
   allScalingProjectsUops,
   className,
   ecosystemMilestones,
 }: {
+  id: string
   name: string
   entries: EcosystemEntry['liveProjects']
   allScalingProjectsUops: number
@@ -100,7 +103,7 @@ export function EcosystemsActivityChart({
 
   return (
     <EcosystemWidget className={className}>
-      <Header range={range} stats={stats} />
+      <Header range={range} stats={stats} invert={id === 'superchain'} />
       <ChartContainer
         data={chartData}
         meta={chartMeta}
@@ -176,27 +179,47 @@ export function EcosystemsActivityChart({
 function Header({
   range,
   stats,
+  invert,
 }: {
   range: [number, number] | undefined
   stats: { latestUops: number; marketShare: number } | undefined
+  invert?: boolean
 }) {
   return (
-    <div className="mb-3 flex items-start justify-between">
-      <div>
+    <div className="mb-3">
+      <div className="flex justify-between">
         <div className="font-bold text-xl">Activity</div>
-        <div className="font-medium text-secondary text-xs">
-          <EcosystemChartTimeRange range={range} />
-        </div>
-      </div>
-      <div className="text-right">
-        {stats?.latestUops !== undefined ? (
-          <div className="font-bold text-xl">
+        {invert ? (
+          stats?.marketShare ? (
+            <div className="font-semibold text-xl">
+              {formatPercent(stats?.marketShare)} market share
+            </div>
+          ) : (
+            <Skeleton className="my-[5px] ml-auto h-5 w-20" />
+          )
+        ) : stats?.latestUops ? (
+          <div className="font-semibold text-xl">
             {formatActivityCount(stats.latestUops)} UOPS
           </div>
         ) : (
-          <Skeleton className="my-[5px] ml-auto h-5 w-32" />
+          <Skeleton className="my-[5px] ml-auto h-5 w-20" />
         )}
-        <EcosystemsMarketShare marketShare={stats?.marketShare} />
+      </div>
+      <div className="flex justify-between gap-1">
+        <EcosystemChartTimeRange range={range} />
+        {invert ? (
+          stats?.latestUops !== undefined ? (
+            <div className="font-medium text-branding-primary text-xs">
+              {formatActivityCount(stats.latestUops)} UOPS
+            </div>
+          ) : (
+            <Skeleton className="my-[3px] ml-auto h-[14px] w-36" />
+          )
+        ) : (
+          <div className="text-right">
+            <EcosystemsMarketShare marketShare={stats?.marketShare} />
+          </div>
+        )}
       </div>
     </div>
   )
