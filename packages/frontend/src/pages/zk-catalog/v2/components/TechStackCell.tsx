@@ -19,8 +19,8 @@ export function TechStackCell({
             zkVM
           </span>
           <div className="flex flex-wrap gap-x-[5px] gap-y-1">
-            {techStack.zkVM.map((zkVM) => (
-              <TechStackTag key={zkVM.name} tag={zkVM} />
+            {techStack.zkVM.map((zkVM, i) => (
+              <TechStackTag key={`${zkVM.name}-${i}`} tag={zkVM} />
             ))}
           </div>
         </div>
@@ -31,8 +31,8 @@ export function TechStackCell({
             Final wrap
           </span>
           <div className="flex flex-wrap gap-x-[5px] gap-y-1">
-            {techStack.finalWrap.map((finalWrap) => (
-              <TechStackTag key={finalWrap.name} tag={finalWrap} />
+            {techStack.finalWrap.map((finalWrap, i) => (
+              <TechStackTag key={`${finalWrap.name}-${i}`} tag={finalWrap} />
             ))}
           </div>
         </div>
