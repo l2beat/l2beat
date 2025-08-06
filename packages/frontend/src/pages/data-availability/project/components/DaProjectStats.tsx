@@ -91,7 +91,9 @@ export function getCommonDaProjectStats(
 
   // Duration of storage
   const durationOfStorage =
-    project.kind === 'DA Service' && project.header.durationStorage === 0
+    project.kind === 'DA Service' &&
+    (project.header.durationStorage === 0 ||
+      project.header.durationStorage === undefined)
       ? {
           value: 'Flexible',
           tooltip:
