@@ -8,7 +8,12 @@ Generated with discovered.json: 0xafaedd5e1dcc96518442a53979fa32b643882676
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Redistribution upgrade. Enables AVS to extend the slashing mechanisms to repurpose slashed funds instead of burning them.
+It is an opt-in feature, no AVSs currently implement it. ETH and EIGEN are not yet eligible for redistribution, every other ERC-20 staked token is.
+
+- AllocationManager: now allows an authorized account to create a Redistribution operator set, a list of addresses that will receive redistributed funds. This list cannot be changed once set (security reasons).
+- StrategyManager: redistribution is achieved through clearBurnOrRedistributableShares() which is a permissionless function that clears burn/redistributable shares and sends underlying tokens to recipients.
+
 
 ## Config/verification related changes
 
