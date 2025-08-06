@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import type { ChartMeta } from '../Chart'
 
 export function useHiddenDataKeys(initialHiddenDataKeys: string[] = []) {
   const [hiddenDataKeys, setHiddenDataKeys] = useState<string[]>(
@@ -15,4 +16,19 @@ export function useHiddenDataKeys(initialHiddenDataKeys: string[] = []) {
   }
 
   return { hiddenDataKeys, toggleDataKey }
+}
+
+export function useDataKeys(chartMeta: ChartMeta) {
+  const [dataKeys, setDataKeys] = useState<string[]>(Object.keys(chartMeta))
+
+  const toggleDataKey = (dataKey: string) => {
+    setDataKeys((prev) => {
+      if (prev.includes(dataKey)) {
+        return prev.filter((key) => key !== dataKey)
+      }
+      return [...prev, dataKey]
+    })
+  }
+
+  return { dataKeys, toggleDataKey }
 }
