@@ -15,6 +15,7 @@ import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGr
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -40,6 +41,7 @@ export function DaAbsoluteThroughputChart({
   resolution,
 }: Props) {
   const chartMeta = getDaChartMeta({ shape: 'line' })
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const max = useMemo(() => {
     return data
       ? Math.max(
@@ -68,7 +70,15 @@ export function DaAbsoluteThroughputChart({
   )
 
   return (
-    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+    <ChartContainer
+      data={chartData}
+      meta={chartMeta}
+      isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
+    >
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <defs>
           <EthereumFillGradientDef id="ethereum-fill" />
@@ -83,21 +93,25 @@ export function DaAbsoluteThroughputChart({
               dataKey: 'ethereum',
               stroke: chartMeta.ethereum.color,
               fill: 'url(#ethereum-fill)',
+              hide: !dataKeys.includes('ethereum'),
             },
             {
               dataKey: 'celestia',
               stroke: chartMeta.celestia.color,
               fill: 'url(#celestia-fill)',
+              hide: !dataKeys.includes('celestia'),
             },
             {
               dataKey: 'avail',
               stroke: chartMeta.avail.color,
               fill: 'url(#avail-fill)',
+              hide: !dataKeys.includes('avail'),
             },
             {
               dataKey: 'eigenda',
               stroke: chartMeta.eigenda.color,
               fill: 'url(#eigenda-fill)',
+              hide: !dataKeys.includes('eigenda'),
             },
           ],
         })}
@@ -161,7 +175,7 @@ function CustomTooltip({
       <HorizontalSeparator className="my-1" />
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
-          if (entry.type === 'none') return null
+          if (entry.type === 'none' || entry.hide) return null
           const configEntry = entry.name ? config[entry.name] : undefined
           if (!configEntry) return null
 

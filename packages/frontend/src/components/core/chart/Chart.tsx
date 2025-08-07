@@ -2,8 +2,8 @@ import type { Milestone } from '@l2beat/config'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
-import { useEventListener } from '~/hooks/useEventListener'
 import { useIsClient } from '~/hooks/useIsClient'
+import { CursorClickIcon } from '~/icons/CursorClick'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../OverflowWrapper'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
@@ -11,8 +11,10 @@ import {
   ChartDataIndicator,
   type ChartDataIndicatorType,
 } from './ChartDataIndicator'
+import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
 import { ChartLoader } from './ChartLoader'
 import { ChartMilestones } from './ChartMilestones'
+import { ChartNoDataSourceState } from './ChartNoDataSourceState'
 import { ChartNoDataState } from './ChartNoDataState'
 
 export type ChartMeta = Record<
@@ -28,6 +30,10 @@ export type ChartMeta = Record<
 
 type ChartContextProps = {
   meta: ChartMeta
+  interactiveLegend?: {
+    dataKeys: string[]
+    onItemClick: (dataKey: string) => void
+  }
 }
 
 const ChartContext = React.createContext<ChartContextProps | null>(null)
@@ -75,6 +81,7 @@ function ChartContainer<T extends { timestamp: number }>({
   loaderClassName,
   logoClassName,
   size = 'regular',
+  interactiveLegend,
   ...props
 }: React.ComponentProps<'div'> & {
   meta: ChartMeta
@@ -82,6 +89,10 @@ function ChartContainer<T extends { timestamp: number }>({
     typeof RechartsPrimitive.ResponsiveContainer
   >['children']
   data: T[] | undefined
+  interactiveLegend?: {
+    dataKeys: string[]
+    onItemClick: (dataKey: string) => void
+  }
   milestones?: Milestone[]
   loaderClassName?: string
   logoClassName?: string
@@ -91,26 +102,10 @@ function ChartContainer<T extends { timestamp: number }>({
   const ref = React.useRef<HTMLDivElement>(null)
   const isClient = useIsClient()
 
-  useEventListener(
-    'touchstart',
-    () => {
-      document.body.classList.add('overflow-x-clip')
-      document.documentElement.classList.add('overflow-x-clip')
-    },
-    ref,
-  )
-  useEventListener(
-    'touchend',
-    () => {
-      document.body.classList.remove('overflow-x-clip')
-      document.documentElement.classList.remove('overflow-x-clip')
-    },
-    ref,
-  )
-
   const hasData = data && data.length > 1
+  const noDataSourcesSelected = interactiveLegend?.dataKeys.length === 0
   return (
-    <ChartContext.Provider value={{ meta }}>
+    <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div
         ref={ref}
         className={cn(
@@ -118,6 +113,8 @@ function ChartContainer<T extends { timestamp: number }>({
           size === 'regular' &&
             'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
           size === 'small' && 'h-[114px] min-h-[114px] w-full',
+          noDataSourcesSelected &&
+            '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
           className,
         )}
         {...props}
@@ -131,12 +128,13 @@ function ChartContainer<T extends { timestamp: number }>({
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
-              '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.recharts-legend-wrapper]:top-[calc(50%-11px)]',
+              '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.recharts-legend-wrapper]:top-[calc(50%-18px)]',
               loaderClassName,
             )}
           />
         )}
         {!hasData && !isLoading && <ChartNoDataState size={size} />}
+        {noDataSourcesSelected && <ChartNoDataSourceState />}
         {isClient && size !== 'small' && (
           <Logo
             animated={false}
@@ -192,13 +190,25 @@ function ChartLegendContent({
   verticalAlign = 'bottom',
   nameKey,
   reverse = false,
+  disableOnboarding,
 }: React.ComponentProps<'div'> &
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
     nameKey?: string
     reverse?: boolean
+    disableOnboarding?: boolean
   }) {
+  const id = React.useId()
+
   const contentRef = React.useRef<HTMLDivElement>(null)
-  const { meta } = useChart()
+  const { meta, interactiveLegend } = useChart()
+
+  const isInteractive = interactiveLegend?.dataKeys !== undefined
+  const {
+    currentLegendOnboardingId,
+    hasFinishedOnboarding,
+    setHasFinishedOnboarding,
+    hasFinishedOnboardingInitial,
+  } = useChartLegendOnboarding()
 
   if (!payload?.length) {
     return null
@@ -206,41 +216,87 @@ function ChartLegendContent({
 
   const actualPayload = reverse ? [...payload].reverse() : payload
   return (
-    <OverflowWrapper childrenRef={contentRef}>
-      <div
-        className={cn(
-          'mx-auto flex w-fit items-center gap-2',
-          verticalAlign === 'top' && 'pb-3',
-          className,
-        )}
-        ref={contentRef}
-      >
-        {actualPayload.map((item) => {
-          const key = `${nameKey ?? item.dataKey ?? 'value'}`
-          const itemConfig = getPayloadConfigFromPayload(meta, item, key)
+    <div
+      className={cn(
+        'relative',
+        isInteractive &&
+          !hasFinishedOnboardingInitial &&
+          !disableOnboarding &&
+          'mb-3',
+      )}
+    >
+      <OverflowWrapper childrenRef={contentRef}>
+        <div
+          className={cn(
+            'mx-auto flex h-3.5 w-fit items-center gap-2',
+            verticalAlign === 'top' && 'pb-3',
+            className,
+          )}
+          ref={contentRef}
+        >
+          {actualPayload.map((item) => {
+            const key = `${nameKey ?? item.dataKey ?? 'value'}`
+            const itemConfig = getPayloadConfigFromPayload(meta, item, key)
 
-          if (!itemConfig || item.type === 'none') return null
+            if (!itemConfig || item.type === 'none') return null
 
-          return (
-            <div
-              key={item.value}
-              className="flex items-center gap-[3px] [&>svg]:text-secondary"
-            >
-              <ChartDataIndicator
-                type={itemConfig.indicatorType}
-                backgroundColor={itemConfig.color}
-              />
-              <span className="text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
-                {itemConfig.legendLabel ?? itemConfig.label}
-              </span>
-            </div>
-          )
-        })}
-      </div>
-    </OverflowWrapper>
+            const isHidden =
+              isInteractive && !interactiveLegend?.dataKeys?.includes(key)
+            return (
+              <div
+                key={item.value}
+                className={cn(
+                  'group/legend-item flex items-center gap-[3px] transition-opacity [&>svg]:text-secondary',
+                  isInteractive && 'cursor-pointer select-none',
+                  isHidden && 'opacity-50',
+                )}
+                onClick={
+                  interactiveLegend?.onItemClick
+                    ? () => {
+                        interactiveLegend.onItemClick(key)
+                        if (!disableOnboarding) {
+                          setHasFinishedOnboarding(true)
+                        }
+                      }
+                    : undefined
+                }
+              >
+                <ChartDataIndicator
+                  type={itemConfig.indicatorType}
+                  backgroundColor={itemConfig.color}
+                />
+                <span
+                  className={cn(
+                    'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
+                    !isHidden &&
+                      isInteractive &&
+                      'group-hover/legend-item:opacity-50',
+                    isHidden && 'line-through',
+                  )}
+                >
+                  {itemConfig.legendLabel ?? itemConfig.label}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+      </OverflowWrapper>
+      {!hasFinishedOnboarding && isInteractive && !disableOnboarding && (
+        <div
+          id={id}
+          className={cn(
+            '-bottom-3.5 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-12 italic transition-[opacity,scale] ease-out group-hover:scale-[1.15]',
+            currentLegendOnboardingId !== id && 'opacity-0',
+          )}
+          data-role="legend-onboarding"
+        >
+          <CursorClickIcon className="-top-0.5 relative inline-block fill-current" />
+          Try clicking legend items to toggle data
+        </div>
+      )}
+    </div>
   )
 }
-
 ChartLegendContent.displayName = 'ChartLegend'
 
 // Helper to extract item config from a payload.

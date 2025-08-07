@@ -1,4 +1,4 @@
-# How to add activity tracking for existing project? ?
+# How to add activity tracking for an existing project ?
 
 ## Introduction
 
