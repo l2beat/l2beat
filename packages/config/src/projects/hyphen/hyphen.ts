@@ -85,7 +85,7 @@ export const hyphen: Bridge = {
         },
         {
           category: 'Funds can be frozen if',
-          text: "one of the contracts is paused by it's owner.",
+          text: 'one of the contracts is paused by its owner.',
         },
       ],
       isIncomplete: true,

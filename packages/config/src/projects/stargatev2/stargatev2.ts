@@ -263,7 +263,7 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
           'base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7',
         ),
         tokens: ['ETH'],
-        description: 'Stargate liquidity pool for USDC on Base.',
+        description: 'Stargate liquidity pool for ETH on Base.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(

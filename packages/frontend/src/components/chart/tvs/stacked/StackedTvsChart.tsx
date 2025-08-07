@@ -1,5 +1,4 @@
 import type { Milestone } from '@l2beat/config'
-
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -27,6 +26,8 @@ interface StackedTvsChartDataPoint {
 interface Props {
   data: StackedTvsChartDataPoint[] | undefined
   syncedUntil: number | undefined
+  dataKeys: (keyof typeof scalingStackedTvsChartMeta)[]
+  toggleDataKey: (dataKey: string) => void
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
@@ -34,7 +35,7 @@ interface Props {
   className?: string
 }
 
-const chartMeta = {
+export const scalingStackedTvsChartMeta = {
   canonical: {
     label: 'Canonically bridged',
     color: 'var(--chart-stacked-purple)',
@@ -60,20 +61,27 @@ export function StackedTvsChart({
   isLoading,
   className,
   tickCount,
+  dataKeys,
+  toggleDataKey,
 }: Props) {
   return (
     <ChartContainer
       data={data}
-      meta={chartMeta}
+      meta={scalingStackedTvsChartMeta}
       isLoading={isLoading}
       milestones={milestones}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
       className={className}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
           dataKey="external"
-          fill={chartMeta.external.color}
+          hide={!dataKeys.includes('external')}
+          fill={scalingStackedTvsChartMeta.external.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -82,7 +90,8 @@ export function StackedTvsChart({
         />
         <Area
           dataKey="native"
-          fill={chartMeta.native.color}
+          hide={!dataKeys.includes('native')}
+          fill={scalingStackedTvsChartMeta.native.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -91,7 +100,8 @@ export function StackedTvsChart({
         />
         <Area
           dataKey="canonical"
-          fill={chartMeta.canonical.color}
+          hide={!dataKeys.includes('canonical')}
+          fill={scalingStackedTvsChartMeta.canonical.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -99,11 +109,11 @@ export function StackedTvsChart({
         />
         {getCommonChartComponents({
           data,
+          isLoading,
           yAxis: {
             tickFormatter: (value: number) => formatCurrency(value, unit),
             tickCount,
           },
-          isLoading,
           syncedUntil,
         })}
         <ChartTooltip
@@ -124,7 +134,7 @@ function CustomTooltip({
   if (!active || !payload || typeof label !== 'number') return null
 
   const total = payload.reduce<number | null>((acc, curr) => {
-    if (curr.value === null || curr.value === undefined) {
+    if (curr.value === null || curr.value === undefined || curr.hide) {
       return acc
     }
     if (acc === null) {
@@ -132,27 +142,35 @@ function CustomTooltip({
     }
     return acc + curr.value
   }, null)
-  const reversedPayload = [...payload].reverse()
+  const actualPayload = [...payload].reverse().filter((entry) => !entry.hide)
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-44 xs:w-56! flex-col">
-        <div className="mb-3 font-medium text-label-value-14 text-secondary">
+        <div className="font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>
-        <div className="flex w-full items-center justify-between gap-2 text-heading-16">
-          <span className="[@media(min-width:600px)]:hidden">Total</span>
-          <span className="hidden [@media(min-width:600px)]:inline">
-            Total value secured
-          </span>
-          <span className="text-primary">
-            {total !== null ? formatCurrency(total, unit) : 'No data'}
-          </span>
-        </div>
-        <HorizontalSeparator className="mt-1.5" />
+        {actualPayload.length > 1 && (
+          <>
+            <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
+              <span className="[@media(min-width:600px)]:hidden">Total</span>
+              <span className="hidden [@media(min-width:600px)]:inline">
+                Total value secured
+              </span>
+              <span className="text-primary">
+                {total !== null ? formatCurrency(total, unit) : 'No data'}
+              </span>
+            </div>
+            <HorizontalSeparator className="mt-1.5" />
+          </>
+        )}
         <div className="mt-2 flex flex-col gap-2">
-          {reversedPayload.map((entry) => {
+          {actualPayload.map((entry) => {
             if (entry.type === 'none') return null
-            const config = chartMeta[entry.name as keyof typeof chartMeta]
+            const config =
+              scalingStackedTvsChartMeta[
+                entry.name as keyof typeof scalingStackedTvsChartMeta
+              ]
             return (
               <div
                 key={entry.name}

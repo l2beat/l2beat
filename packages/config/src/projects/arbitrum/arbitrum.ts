@@ -399,7 +399,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       url: 'https://twitter.com/arbitrum/status/1542159109511847937',
       date: '2022-06-29T00:00:00Z',
       description:
-        'Due of the heavy load being put on the chain, Odyssey program got paused.',
+        'Due to the heavy load being put on the chain, Odyssey program got paused.',
       type: 'incident',
     },
     {
