@@ -1,3 +1,159 @@
+Generated with discovered.json: 0xdfa190571a94e62a3ed48eeebc8535e10f2a45cd
+
+# Diff at Wed, 06 Aug 2025 15:10:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1702d91eebfba5d614c3470bbe1babe10fbe4c2b block: 1743421199
+- current timestamp: 1754482928
+
+## Description
+
+XLayer migrates from Validium to pessimistic proofs (no state transition proofs).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (0x05652Ec92366F3C2255991a265c499E01Ba58e6a)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/2).
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x1e37EA18e9515db29b3E94A00eD31484A3130204)
+    +++ description: None
+```
+
+```diff
+    contract PolygonPessimisticConsensus (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: System contract defining the X Layer logic. It only enforces bridge accounting (pessimistic) proofs and is otherwise kept minimal as the layer 2 state transitions are not proven.
+      name:
+-        "PolygonZkEVM"
++        "PolygonPessimisticConsensus"
+      template:
+-        "polygon-cdk/PolygonZkEVM"
++        "polygon-cdk/PolygonPessimisticConsensus"
+      sourceHashes.1:
+-        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
++        "0x555aef5e938f2211fc99363d15a2fcb7a9dc24ee5154f0d6be32a136d7dfbdf7"
+      description:
+-        "The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches."
++        "System contract defining the X Layer logic. It only enforces bridge accounting (pessimistic) proofs and is otherwise kept minimal as the layer 2 state transitions are not proven."
+      values.$implementation:
+-        "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
++        "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
+      values.$pastUpgrades.2:
++        ["2025-08-05T12:41:47.000Z","0xab579dbf426db0badfaef925504105088f3300b51f1362a4084c57d7e13c0fb1",["eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.calculatePolPerForceBatch:
+-        0
+      values.dataAvailabilityProtocol:
+-        "eth:0x05652Ec92366F3C2255991a265c499E01Ba58e6a"
+      values.GLOBAL_EXIT_ROOT_MANAGER_L2:
+-        "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA"
+      values.INITIALIZE_TX_BRIDGE_LIST_LEN_LEN:
+-        249
+      values.INITIALIZE_TX_BRIDGE_PARAMS:
+-        "0x80808401c9c38094"
+      values.INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS:
+-        "0x80b9"
+      values.INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS_EMPTY_METADATA:
+-        "0x80b8"
+      values.INITIALIZE_TX_CONSTANT_BYTES:
+-        32
+      values.INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA:
+-        31
+      values.INITIALIZE_TX_DATA_LEN_EMPTY_METADATA:
+-        228
+      values.INITIALIZE_TX_EFFECTIVE_PERCENTAGE:
+-        "0xff"
+      values.isSequenceWithDataAvailabilityAllowed:
+-        false
+      values.SIGNATURE_INITIALIZE_TX_R:
+-        "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0"
+      values.SIGNATURE_INITIALIZE_TX_S:
+-        "0x000000000000000000000000000000000000000000000000000000005ca1ab1e"
+      values.SIGNATURE_INITIALIZE_TX_V:
+-        27
+      values.TIMESTAMP_RANGE:
+-        36
++++ description: 0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)
+      values.CONSENSUS_TYPE:
++        0
+      values.getConsensusHash:
++        "0x98293538c941dc104cfe32cbcbb62446815cbaf38feebc35af553113b8499aee"
+      fieldMeta.CONSENSUS_TYPE:
++        {"description":"0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"}
+      implementationNames.eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F:
+-        "PolygonValidiumEtrog"
+      implementationNames.eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B:
++        "PolygonPessimisticConsensus"
+    }
+```
+
+```diff
+    EOA  (0x491619874b866c3cDB7C8553877da223525ead01) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x05652Ec92366F3C2255991a265c499E01Ba58e6a","description":"manage the members of the data availability committee and the threshold for valid commitments.","role":".owner"}
+    }
+```
+
+```diff
+    EOA  (0x610DE9141a2c51A9A9624278AA97fbE54b27c102) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "must provide a signature for each pessimistic proof, attesting to a valid state transition."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (0xa90B4C8B8807569980F6cC958c8905383136B5eA) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "set core system parameters like the trusted sequencer and manage forced transactions/batches."
++        "set the trusted sequencer address."
+    }
+```
+
+## Source code changes
+
+```diff
+.../PolygonDataCommittee.sol => /dev/null          | 1254 ------------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  695 -------
+ .../PolygonPessimisticConsensus.sol                |  845 +++++++++
+ .../PolygonTransparentProxy.p.sol                  |    0
+ .../PolygonValidiumEtrog.sol => /dev/null          | 1996 --------------------
+ .../.flat@1743421199/ProxyAdmin.sol => /dev/null   |  147 --
+ 6 files changed, 845 insertions(+), 4092 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1743421199 (main branch discovery), not current.
+
+```diff
+    contract PolygonZkEVM (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches.
+      name:
+-        "Validium"
++        "PolygonZkEVM"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
 Generated with discovered.json: 0xab3dc926ae98ab2ee73f748ce9993f4b527eee3f
 
 # Diff at Mon, 14 Jul 2025 12:46:43 GMT:

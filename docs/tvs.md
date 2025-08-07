@@ -224,7 +224,7 @@ pnpm tvs:generate [project] [--include-zero-amounts | --exclude | --help]
 
 - `project` - provide the id of a project for which you want to calculate TVS (if empty TVS will be calculated for all projects)
 - `include-zero-amounts` - by default config generation remove tokens which final value is zero, you can disable this 
-- `exclude` - coma delimited list of projects to exclude from config generation (in case of temporary issues) 
+- `exclude` - comma-delimited list of projects to exclude from config generation (in case of temporary issues) 
 
 This script uses two inputs:
 

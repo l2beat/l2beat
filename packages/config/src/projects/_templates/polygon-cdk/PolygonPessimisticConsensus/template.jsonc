@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreInWatchMode": ["lastAccInputHash"],
+  "ignoreRelatives": ["gasTokenAddress", "pol"],
+  "category": "core",
+  "description": "System contract defining the {{networkName}} logic. It only enforces bridge accounting (pessimistic) proofs and is otherwise kept minimal as the layer 2 state transitions are not proven.",
+  "fields": {
+    "admin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the trusted sequencer address."
+        }
+      ]
+    },
+    "trustedSequencer": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "must provide a signature for each pessimistic proof, attesting to a valid state transition."
+        }
+      ]
+    },
+    "CONSENSUS_TYPE": {
+      "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
+    },
+    "forceBatchAddress": {
+      "severity": "HIGH",
+      "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sole address that can force batches."
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import type { TableReadyValue } from '@l2beat/config'
-import { NaBadge } from '~/components/badge/NaBadge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { UpcomingBadge } from '~/components/badge/UpcomingBadge'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
@@ -34,7 +34,7 @@ export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
       )
     }
     if (emptyMode === 'n/a') {
-      return <NaBadge />
+      return <NotApplicableBadge />
     }
     if (emptyMode === 'no-data') {
       return <NoDataBadge />

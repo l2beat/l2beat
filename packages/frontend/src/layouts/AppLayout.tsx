@@ -1,7 +1,8 @@
 import { ThemeProvider } from 'next-themes'
+import { ChartLegendOnboardingProvider } from '~/components/core/chart/ChartLegendOnboardingContext'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import { DevAutoReloader } from '~/components/DevAutoReloader'
-import type { GlossaryTermWithoutDescription } from '~/components/markdown/GlossaryContext'
+import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
 import { SearchBarContextProvider } from '~/components/search-bar/SearchBarContext'
 import type { SearchBarProject } from '~/components/search-bar/SearchBarEntry'
@@ -9,7 +10,7 @@ import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/React'
 
 export interface AppLayoutProps {
-  terms: GlossaryTermWithoutDescription[]
+  terms: GlossaryTerm[]
   searchBarProjects: SearchBarProject[]
 }
 
@@ -31,7 +32,9 @@ export function AppLayout({
         <TooltipProvider delayDuration={300} disableHoverableContent>
           <GlossaryContextProvider terms={terms}>
             <SearchBarContextProvider projects={searchBarProjects}>
-              {children}
+              <ChartLegendOnboardingProvider>
+                {children}
+              </ChartLegendOnboardingProvider>
             </SearchBarContextProvider>
           </GlossaryContextProvider>
         </TooltipProvider>

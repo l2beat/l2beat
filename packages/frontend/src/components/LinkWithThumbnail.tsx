@@ -24,7 +24,7 @@ export function LinkWithThumbnail({
     <PlainLink
       href={props.href}
       className={cn(
-        'group flex gap-6 rounded-md bg-surface-primary transition-all hover:bg-surface-secondary',
+        'group flex gap-6 rounded-md bg-surface-primary transition-colors hover:bg-surface-secondary',
         orientation === 'vertical' && 'max-w-96 flex-col bg-surface-secondary',
         props.className,
       )}
@@ -35,9 +35,9 @@ export function LinkWithThumbnail({
         className={cn(
           'aspect-video w-full object-cover object-left will-change-transform',
           orientation === 'vertical' &&
-            'rounded-t-md transition-all group-hover:scale-[1.03] group-hover:rounded-md',
+            'rounded-t-md transition-[scale,border-radius] group-hover:scale-[1.03] group-hover:rounded-md',
           orientation === 'horizontal' &&
-            'max-w-36 rounded-md transition-all group-hover:scale-105 md:max-w-48',
+            'max-w-36 rounded-md transition-[scale] group-hover:scale-105 md:max-w-48',
         )}
         height={props.height}
         width={props.width}
@@ -47,7 +47,7 @@ export function LinkWithThumbnail({
           orientation === 'vertical' &&
             'mb-6 flex h-full flex-col justify-between px-6',
           orientation === 'horizontal' &&
-            'self-center py-[15px] transition-all group-hover:translate-x-0.5',
+            'self-center py-[15px] transition-transform group-hover:translate-x-0.5',
         )}
       >
         <div>

@@ -7,7 +7,7 @@ export const STARKNET_TOTAL_SUPPLY_SELECTOR =
 export class StarknetTotalSupplyProvider {
   private logger: Logger
   constructor(
-    private readonly starkentClients: StarknetClient[],
+    private readonly starknetClients: StarknetClient[],
     logger: Logger,
   ) {
     this.logger = logger.for(this)
@@ -18,7 +18,7 @@ export class StarknetTotalSupplyProvider {
     blockNumber: number,
     chain: string,
   ): Promise<bigint[]> {
-    const client = this.starkentClients.find((r) => r.chain === chain)
+    const client = this.starknetClients.find((r) => r.chain === chain)
 
     if (!client) {
       throw new Error(`Missing starknet client for ${chain}`)

@@ -1439,7 +1439,7 @@ Executed two proposalas 46 and 47.
 The first one according to the description submitted by the Chainport Congress aims to: "Deploy Arbitrage, Upgrade Main and Side Bridge and add new Maintainer".
 While the second one wants to: "Refund HODL tokens".
 
-In the process the implementation of the Vault changed, since this contract is unverfied it's impossible to analyze what has really happened.
+In the process the implementation of the Vault changed, since this contract is unverified it's impossible to analyze what has really happened.
 
 ## Watched changes
 
