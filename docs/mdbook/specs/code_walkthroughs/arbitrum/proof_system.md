@@ -414,7 +414,7 @@ function fastConfirmNewAssertion(
 ) external whenNotPaused
 ```
 
-Both functions, in practice, act very similar to the admin-gated `forceCreateAssertion` and `forceConfirmAsserton` functions in the `RollupAdminLogic` contract, see [Admin operations](./admin_ops.md) for more details.
+Both functions, in practice, act very similar to the admin-gated `forceCreateAssertion` and `forceConfirmAssertion` functions in the `RollupAdminLogic` contract, see [Admin operations](./admin_ops.md) for more details.
 
 ## The `EdgeChallengeManager` contract
 
@@ -612,7 +612,7 @@ struct ExecutionContext {
 
 where the `maxInboxMessagesRead` is filled with the `nextInboxPosition` of the config of the previous assertion, the `bridge` reference is taken from `assertionChain`, and the `initialWasmModuleRoot` is again taken from the config of the previous assertion. It is checked that the edge exists, that its type is `SmallStep`, and that its length is one.
 
-Then the appropriate data to pass to the `oneStepProofEntry` contract for the onchain one step execution is prepared. In particular, the machine step correspondingto the start height of this edge is computed. Machine steps reset to zero with new blocks, so there's no need to fetch the corresponding `Block` level edge. The machine step of a `SmallStep` edge corresponds to its `startHeight` plus the `startHeight` of its `BigStep` edge. Previous level edges are fetched through the `originId` field stored in each edge and the `firstRivals` mapping. It is necessary to go through the `firstRivals` mapping as the `originId` stores a mutual id of the edge and not an edge id, which is needed to fetch the `startHeight`.
+Then the appropriate data to pass to the `oneStepProofEntry` contract for the onchain one step execution is prepared. In particular, the machine step corresponding to the start height of this edge is computed. Machine steps reset to zero with new blocks, so there's no need to fetch the corresponding `Block` level edge. The machine step of a `SmallStep` edge corresponds to its `startHeight` plus the `startHeight` of its `BigStep` edge. Previous level edges are fetched through the `originId` field stored in each edge and the `firstRivals` mapping. It is necessary to go through the `firstRivals` mapping as the `originId` stores a mutual id of the edge and not an edge id, which is needed to fetch the `startHeight`.
 
 It is made sure that the `beforeHash` inside `oneStepData` is included in the `startHistoryRoot` at position `machineStep`. The `OneStepData` struct is defined as:
 
@@ -645,7 +645,7 @@ If the edge is unrivaled, then the time between the current block number and its
 
 If the edge has been bisected, i.e. it has children, then the minimum children unrivaled time is counted. The rationale is that if a child is correct but the parent is not, it would be incorrect to count the unrivaled time of the correct child towards the parent. If the honest party acts as fast as possible, then an incorrect claim's unrivaled time would always be close to zero. If an edge is confirmed by a one step proof, then it's unrivaled time is set to infinity (in practice `type(uint64).max`).
 
-Finally, if the total time unrivaled is greater than the challenge period (espressed with `confirmationThresholdBlock`), then the edge is confirmed. Note that this value is a different variable compared to the `confirmPeriodBlocks` in the `RollupProxy` contract, which determines when an assertion can be confirmed if not challenged.
+Finally, if the total time unrivaled is greater than the challenge period (expressed with `confirmationThresholdBlock`), then the edge is confirmed. Note that this value is a different variable compared to the `confirmPeriodBlocks` in the `RollupProxy` contract, which determines when an assertion can be confirmed if not challenged.
 
 The way that timers across different levels affect each other is explained in the following section.
 
