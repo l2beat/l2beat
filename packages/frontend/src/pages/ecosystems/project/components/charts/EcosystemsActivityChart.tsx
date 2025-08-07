@@ -1,9 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
 import { useMemo, useState } from 'react'
 import { AreaChart } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
-import { Checkbox } from '~/components/core/Checkbox'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -11,19 +9,16 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
-import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import {
   EthereumFillGradientDef,
   EthereumStrokeGradientDef,
 } from '~/components/core/chart/defs/EthereumGradientDef'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
-import { useIsClient } from '~/hooks/useIsClient'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
-import { EthereumLineIcon } from '~/icons/EthereumLineIcon'
 import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
 import type {
   EcosystemEntry,
@@ -52,21 +47,6 @@ export function EcosystemsActivityChart({
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }) {
-  const isClient = useIsClient()
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
-  const [showMainnet, setShowMainnet] = useLocalStorage(
-    'ecosystems-activity-show-mainnet',
-    false,
-  )
-
-  const { data, isLoading } = api.activity.chart.useQuery({
-    range: { type: timeRange },
-    filter: {
-      type: 'projects',
-      projectIds: entries.map((project) => project.id),
-    },
-  })
-
   const chartMeta = useMemo(() => {
     return {
       projects: {
@@ -85,6 +65,16 @@ export function EcosystemsActivityChart({
       },
     } satisfies ChartMeta
   }, [name])
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
+  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
+
+  const { data, isLoading } = api.activity.chart.useQuery({
+    range: { type: timeRange },
+    filter: {
+      type: 'projects',
+      projectIds: entries.map((project) => project.id),
+    },
+  })
 
   const chartData = useMemo(
     () =>
@@ -110,22 +100,30 @@ export function EcosystemsActivityChart({
         isLoading={isLoading}
         className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+        }}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend
+            content={<ChartLegendContent disableOnboarding={true} />}
+          />
           {getStrokeOverFillAreaComponents({
-            data: compact([
-              showMainnet && {
+            data: [
+              {
                 dataKey: 'ethereum',
                 stroke: 'url(#strokeEthereum)',
                 fill: 'url(#fillEthereum)',
+                hide: !dataKeys.includes('ethereum'),
               },
               {
                 dataKey: 'projects',
                 stroke: 'var(--ecosystem-primary)',
                 fill: 'url(#fillProjects)',
+                hide: !dataKeys.includes('projects'),
               },
-            ]),
+            ],
           })}
           {getCommonChartComponents({
             data: chartData,
@@ -150,28 +148,13 @@ export function EcosystemsActivityChart({
           </defs>
         </AreaChart>
       </ChartContainer>
-      <ChartControlsWrapper className="mt-2.5">
-        {isClient ? (
-          <Checkbox
-            name="showMainnetActivity"
-            checked={showMainnet}
-            onCheckedChange={(state) => setShowMainnet(!!state)}
-          >
-            <div className="flex flex-row items-center gap-2">
-              <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-              <span className="hidden 2xl:inline">ETH Mainnet Operations</span>
-              <span className="2xl:hidden">ETH UOPS</span>
-            </div>
-          </Checkbox>
-        ) : (
-          <Skeleton className="h-8 w-[114px] md:w-[230px]" />
-        )}
+      <div className="mt-2.5 ml-auto w-fit">
         <ActivityTimeRangeControls
           timeRange={timeRange}
           setTimeRange={setTimeRange}
           projectSection={true}
         />
-      </ChartControlsWrapper>
+      </div>
     </EcosystemWidget>
   )
 }

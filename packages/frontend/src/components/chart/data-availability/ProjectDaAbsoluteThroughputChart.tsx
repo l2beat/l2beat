@@ -17,6 +17,7 @@ import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGr
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
@@ -35,8 +36,6 @@ interface Props {
     | undefined
   projectId: ProjectId
   isLoading: boolean
-  showMax: boolean
-  showTarget: boolean
   milestones: Milestone[]
   syncedUntil: UnixTime | undefined
   resolution: DaThroughputResolution
@@ -46,12 +45,15 @@ export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
   isLoading,
   projectId,
-  showMax,
-  showTarget,
   milestones,
   syncedUntil,
   resolution,
 }: Props) {
+  const projectChartMeta = getProjectChartMeta(projectId)
+
+  const { dataKeys, toggleDataKey } = useChartDataKeys(projectChartMeta, [
+    'projectMax',
+  ])
   const max = useMemo(() => {
     return dataWithConfiguredThroughputs
       ? Math.max(
@@ -76,14 +78,16 @@ export function ProjectDaAbsoluteThroughputChart({
     )
   }, [dataWithConfiguredThroughputs, denominator])
 
-  const projectChartMeta = getProjectChartMeta(projectId)
-
   return (
     <ChartContainer
       meta={projectChartMeta}
       data={chartData}
       className="mb-2"
       isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
@@ -106,35 +110,34 @@ export function ProjectDaAbsoluteThroughputChart({
           strokeWidth={2}
           isAnimationActive={false}
           dot={false}
+          hide={!dataKeys.includes('project')}
         />
-        {showTarget && (
-          <Area
-            dataKey="projectTarget"
-            isAnimationActive={false}
-            fillOpacity={0}
-            stroke={projectChartMeta.projectTarget?.color}
-            strokeWidth={2}
-            strokeDasharray={
-              projectChartMeta.projectTarget?.indicatorType.strokeDasharray
-            }
-            type="stepAfter"
-            dot={false}
-          />
-        )}
-        {showMax && (
-          <Area
-            dataKey="projectMax"
-            isAnimationActive={false}
-            fillOpacity={0}
-            stroke={projectChartMeta.projectMax?.color}
-            strokeWidth={2}
-            strokeDasharray={
-              projectChartMeta.projectMax?.indicatorType.strokeDasharray
-            }
-            type="stepAfter"
-            dot={false}
-          />
-        )}
+        <Area
+          dataKey="projectTarget"
+          isAnimationActive={false}
+          fillOpacity={0}
+          stroke={projectChartMeta.projectTarget?.color}
+          strokeWidth={2}
+          strokeDasharray={
+            projectChartMeta.projectTarget?.indicatorType.strokeDasharray
+          }
+          type="stepAfter"
+          dot={false}
+          hide={!dataKeys.includes('projectTarget')}
+        />
+        <Area
+          dataKey="projectMax"
+          isAnimationActive={false}
+          fillOpacity={0}
+          stroke={projectChartMeta.projectMax?.color}
+          strokeWidth={2}
+          strokeDasharray={
+            projectChartMeta.projectMax?.indicatorType.strokeDasharray
+          }
+          type="stepAfter"
+          dot={false}
+          hide={!dataKeys.includes('projectMax')}
+        />
         <ChartTooltip
           filterNull={false}
           content={
@@ -188,7 +191,7 @@ export function ProjectDaThroughputCustomTooltip({
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
           const configEntry = entry.name ? config[entry.name] : undefined
-          if (!configEntry) return null
+          if (!configEntry || entry.hide) return null
 
           return (
             <div
