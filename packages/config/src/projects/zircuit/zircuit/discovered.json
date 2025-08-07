@@ -311,5 +311,5 @@
     "opstack/Layer2/L1Block_depositExclusions": "0x107d6cf6271658715c823f2b65c94bb392c36941cba8f2a7e923275a2cec6cb2"
   },
   "usedBlockNumbers": { "zircuit": 17187016 },
-  "permissionsConfigHash": "0x09746112268d01a5544934017489fc0aa827bb2840230953dc985844f73f5b0d"
+  "permissionsConfigHash": "0x256290aef827d088cf2917fbf8e33249754d03b2c1aac90d8050f2da56b219b8"
 }
