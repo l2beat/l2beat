@@ -19,7 +19,7 @@ export function ThroughputSectionChart({
   customColors,
   milestones,
 }: Props) {
-  const [type, setType] = useState<'combined' | 'by-project'>('combined')
+  const [type, setType] = useState<'combined' | 'by-project'>('by-project')
   const [range, setRange] = useState<DaThroughputTimeRange>('1y')
 
   return (

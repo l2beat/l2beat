@@ -191,6 +191,7 @@ function ChartLegendContent({
   nameKey,
   reverse = false,
   disableOnboarding,
+  children,
 }: React.ComponentProps<'div'> &
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
     nameKey?: string
@@ -234,6 +235,7 @@ function ChartLegendContent({
           )}
           ref={contentRef}
         >
+          {children}
           {actualPayload.map((item) => {
             const key = `${nameKey ?? item.dataKey ?? 'value'}`
             const itemConfig = getPayloadConfigFromPayload(meta, item, key)

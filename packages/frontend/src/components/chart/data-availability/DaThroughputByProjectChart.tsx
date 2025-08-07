@@ -22,6 +22,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
+import { cn } from '~/utils/cn'
 import { formatRange } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { getDaDataParams } from './getDaDataParams'
@@ -91,7 +92,7 @@ export function DaThroughputByProjectChart({
     return allProjects.slice(5)
   }, [allProjects])
 
-  const { dataKeys, toggleDataKey } = useChartDataKeys(
+  const { dataKeys, toggleDataKey, toggleAllDataKeys } = useChartDataKeys(
     chartMeta,
     hiddenDataKeys,
   )
@@ -167,13 +168,29 @@ export function DaThroughputByProjectChart({
       isLoading={isLoading}
       milestones={milestones}
     >
-      <AreaChart
-        accessibilityLayer
-        data={chartData}
-        margin={{ top: 20 }}
-        barCategoryGap={0}
-      >
-        <ChartLegend content={<ChartLegendContent />} />
+      <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+        <ChartLegend
+          content={
+            <ChartLegendContent>
+              <div
+                className="group/legend-item flex cursor-pointer select-none items-center gap-[3px] transition-opacity [&>svg]:text-secondary"
+                onClick={toggleAllDataKeys}
+              >
+                <ChartDataIndicator
+                  type={{ shape: 'square' }}
+                  backgroundColor="var(--primary)"
+                />
+                <span
+                  className={cn(
+                    'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity group-hover/legend-item:opacity-50',
+                  )}
+                >
+                  All
+                </span>
+              </div>
+            </ChartLegendContent>
+          }
+        />
         {allProjects?.map((project) => (
           <Area
             key={project}
