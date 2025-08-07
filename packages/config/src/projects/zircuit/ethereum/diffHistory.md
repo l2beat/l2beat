@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x4482a12c0ae449877dddf442a46db76f3e1f8330
+Generated with discovered.json: 0x5d45c7d27be7e75e342e06625667a74f91e861e3
 
-# Diff at Thu, 07 Aug 2025 09:04:13 GMT:
+# Diff at Thu, 07 Aug 2025 10:15:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@524648be63b628cab1371b61d40517ac331e0e79 block: 1754310248
-- current timestamp: 1754543291
+- current timestamp: 1754561682
 
 ## Description
 
@@ -190,20 +190,8 @@ Escapes for ETH and ERC20s can be done with state / storage merkle proofs for ea
 +        "30d"
       values.withdrawalKeepalivePeriodSecondsFmt:
 +        "4h"
-      errors.computeL2Timestamp:
--        "Processing error occurred."
-      errors.getL2Output:
--        "Processing error occurred."
-      errors.getL2OutputAfter:
--        "Processing error occurred."
-      errors.getL2OutputEx:
--        "Processing error occurred."
-      errors.getL2OutputIndexAfter:
--        "Processing error occurred."
-      errors.getL2OutputRootWithFinalization:
--        "Processing error occurred."
-      errors.isL2OutputFinalized:
-+        "Processing error occurred."
+      errors:
+-        {"computeL2Timestamp":"Processing error occurred.","getL2Output":"Processing error occurred.","getL2OutputAfter":"Processing error occurred.","getL2OutputEx":"Processing error occurred.","getL2OutputIndexAfter":"Processing error occurred.","getL2OutputRootWithFinalization":"Processing error occurred."}
       implementationNames.eth:0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4:
 -        "L2OutputOracle"
       implementationNames.eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315:

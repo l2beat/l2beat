@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "timestamp": 1754543291,
+  "timestamp": 1754561682,
   "configHash": "0xf10901dfe14f54ba69cc8963f008b238f3b35a12b218550ec3160027b9c14e0e",
   "entries": [
     {
@@ -75,7 +75,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 312784,
-          "prevBlockNum": 23082694,
+          "prevBlockNum": 23087791,
           "prevTxCount": 1
         },
         "paused": false,
@@ -123,7 +123,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639301",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639303",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -664,8 +664,7 @@
         "latestBlockNumber",
         "latestOutputIndex",
         "nextBlockNumber",
-        "nextOutputIndex",
-        "isL2OutputFinalized"
+        "nextOutputIndex"
       ],
       "sinceTimestamp": 1719936515,
       "sinceBlock": 20219923,
@@ -710,14 +709,13 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 14400,
         "finalizationPeriodSeconds": 14400,
-        "isL2OutputFinalized": [true, true, true, true, true],
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 17297795,
-        "latestOutputIndex": 32688,
-        "nextBlockNumber": 17297796,
-        "nextOutputIndex": 32689,
+        "latestBlockNumber": 17308332,
+        "latestOutputIndex": 32690,
+        "nextBlockNumber": 17308333,
+        "nextOutputIndex": 32691,
         "proposer": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -733,7 +731,6 @@
         "withdrawalKeepalivePeriodSeconds": 14400,
         "withdrawalKeepalivePeriodSecondsFmt": "4h"
       },
-      "errors": { "isL2OutputFinalized": "Processing error occurred." },
       "fieldMeta": {
         "proposer": { "severity": "HIGH" },
         "challenger": { "severity": "HIGH" },
@@ -1650,12 +1647,12 @@
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "opstack/zircuit/L1StandardBridge": "0x2f9c34737989113306a892abba83353771734bbf57cae7245088154cbf90be77",
-    "opstack/zircuit/L2OutputOracle": "0x2e34f76cbdb0db49a3935ad6d256394c5bafe832a1fd2de5c0e04ca8b99f1314",
+    "opstack/zircuit/L2OutputOracle": "0xec3dcae61a974cd2dc7a6a3625a005e7eb605999b690bcca5b7c90008dc8b128",
     "opstack/zircuit/OptimismPortal": "0xc3cdbd0b6752833adcaa14487b9cfc1f863a5770d71a98ce9969ae1e4ccafefb",
     "opstack/zircuit/ResolverRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/zircuit/SuperchainConfig": "0x88333adf1f4e7a6bbd8da95cbcd6e91ee1dbda7da976597818c96c0dbef27421",
     "opstack/zircuit/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23086994 },
+  "usedBlockNumbers": { "ethereum": 23088519 },
   "permissionsConfigHash": "0x256290aef827d088cf2917fbf8e33249754d03b2c1aac90d8050f2da56b219b8"
 }

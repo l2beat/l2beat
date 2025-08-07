@@ -8,14 +8,14 @@
     "getL2Output",
     "computeL2Timestamp",
     "getL2OutputRootWithFinalization",
-    "getL2OutputEx"
+    "getL2OutputEx",
+    "isL2OutputFinalized"
   ],
   "ignoreInWatchMode": [
     "latestBlockNumber",
     "latestOutputIndex",
     "nextBlockNumber",
-    "nextOutputIndex",
-    "isL2OutputFinalized"
+    "nextOutputIndex"
   ],
   "fields": {
     "timeLimitOutputRootSubmissionSecondsFmt": {
