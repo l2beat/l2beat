@@ -11,7 +11,7 @@ import type { ActivityProjectFilter } from './utils/projectFilterUtils'
 import { createActivityProjectsFilter } from './utils/projectFilterUtils'
 import type { ActivityTimeRange } from './utils/range'
 
-type RecategorisedActivityChartData = {
+export type RecategorisedActivityChartData = {
   data: [
     timestamp: number,
     rollupsCount: number | null,
