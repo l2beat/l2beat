@@ -26,7 +26,7 @@ export const openvmprover: BaseProject = {
         'https://www.youtube.com/watch?v=NHwd-gJ8xg4',
       ],
       repositories: [
-        'https://github.com/scroll-tech/zkvm-prover/tree/master/crates/prover1',
+        'https://github.com/scroll-tech/zkvm-prover/tree/master/crates/prover',
       ],
     },
     badges: [],
