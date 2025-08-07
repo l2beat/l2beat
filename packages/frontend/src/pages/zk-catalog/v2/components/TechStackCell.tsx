@@ -7,7 +7,7 @@ export function TechStackCell({
 }: {
   techStack: ProjectZkCatalogInfo['techStack']
 }) {
-  if (!techStack.zkVM && !techStack.finalWrap) {
+  if (!techStack.zkVM && !techStack.finalWrap && !techStack.snark) {
     return <NoDataBadge />
   }
 
