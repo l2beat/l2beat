@@ -11,7 +11,7 @@ export function useChartDataKeys<T extends ChartMeta>(
       : Object.keys(chartMeta),
   )
 
-  const toggleDataKey = (dataKey: string) => {
+  const toggleDataKey = (dataKey: keyof T | (string & {})) => {
     setDataKeys((prev) => {
       if (prev.includes(dataKey)) {
         return prev.filter((key) => key !== dataKey)

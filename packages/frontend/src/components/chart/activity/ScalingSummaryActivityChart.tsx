@@ -102,9 +102,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
     )
   }, [data])
 
-  const stats = useMemo(() => {
-    return getStats(data?.data, dataKeys)
-  }, [data?.data, dataKeys])
+  const stats = getStats(data?.data, dataKeys)
 
   return (
     <div className="flex flex-col gap-4">

@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
@@ -86,7 +87,7 @@ export function ScalingSummaryTvsChart({
       },
     )
   }, [data])
-  const stats = getStats(chartData)
+  const stats = getStats(chartData, dataKeys)
 
   return (
     <div className="flex flex-col gap-4">
@@ -292,6 +293,7 @@ function getStats(
         others: number | null
       }[]
     | undefined,
+  dataKeys: (keyof typeof chartMeta)[],
 ) {
   if (!data) {
     return undefined
@@ -314,14 +316,29 @@ function getStats(
     return undefined
   }
 
-  const oldestTotal =
-    oldestDataPoint.rollups +
-    oldestDataPoint.validiumsAndOptimiums +
-    oldestDataPoint.others
-  const newestTotal =
-    newestDataPoint.rollups +
-    newestDataPoint.validiumsAndOptimiums +
-    newestDataPoint.others
+  const toSum = compact([
+    dataKeys.includes('rollups')
+      ? {
+          oldest: oldestDataPoint.rollups,
+          newest: newestDataPoint.rollups,
+        }
+      : undefined,
+    dataKeys.includes('validiumsAndOptimiums')
+      ? {
+          oldest: oldestDataPoint.validiumsAndOptimiums,
+          newest: newestDataPoint.validiumsAndOptimiums,
+        }
+      : undefined,
+    dataKeys.includes('others')
+      ? {
+          oldest: oldestDataPoint.others,
+          newest: newestDataPoint.others,
+        }
+      : undefined,
+  ])
+
+  const oldestTotal = toSum.reduce((acc, curr) => acc + curr.oldest, 0)
+  const newestTotal = toSum.reduce((acc, curr) => acc + curr.newest, 0)
   const change = newestTotal / oldestTotal - 1
 
   return {
