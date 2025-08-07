@@ -8,7 +8,6 @@ import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAtt
 import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
-import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import {
@@ -19,6 +18,11 @@ import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjec
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
+
+type TrustedSetupVerifierData = {
+  count: number
+  attesters: (ZkCatalogAttester & { icon: string })[]
+}
 
 export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
   name: string
@@ -33,12 +37,11 @@ export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
         proofSystem: ZkCatalogTag
       })[]
       verifiers: {
-        successfulCount: number
-        unsuccessfulCount: number
-        notVerifiedCount: number
+        successful?: TrustedSetupVerifierData
+        unsuccessful?: TrustedSetupVerifierData
+        notVerified?: TrustedSetupVerifierData
       }
       projectsUsedIn: UsedInProjectWithIcon[]
-      attesters: (ZkCatalogAttester & { icon: string })[]
     }
   >
 }
@@ -139,37 +142,47 @@ function getTrustedSetupsWithVerifiersAndAttesters(
         (v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`,
       )
 
+      const groupedByStatus = groupBy(
+        trustedSetupVerifiers,
+        (v) => v.verificationStatus,
+      )
+
       return [
         key,
         {
           trustedSetup: ts,
           verifiers: {
-            successfulCount: trustedSetupVerifiers.filter(
-              (v) => v.verificationStatus === 'successful',
-            ).length,
-            unsuccessfulCount: trustedSetupVerifiers.filter(
-              (v) => v.verificationStatus === 'unsuccessful',
-            ).length,
-            notVerifiedCount: trustedSetupVerifiers.filter(
-              (v) => v.verificationStatus === 'notVerified',
-            ).length,
+            successful: getVerifiers(groupedByStatus, 'successful'),
+            unsuccessful: getVerifiers(groupedByStatus, 'unsuccessful'),
+            notVerified: getVerifiers(groupedByStatus, 'notVerified'),
           },
           projectsUsedIn: getProjectsUsedIn(
             uniq(trustedSetupVerifiers.flatMap((v) => v.usedBy)),
             allProjects,
           ),
-          attesters: uniqBy(
-            project.zkCatalogInfo.verifierHashes
-              .flatMap((v) =>
-                v.attesters?.map((a) => ({ ...a, icon: getProjectIcon(a.id) })),
-              )
-              .filter(notUndefined),
-            (a) => a?.id,
-          ),
         },
       ]
     }),
   )
+}
+
+function getVerifiers(
+  verifiers: Record<string, ProjectZkCatalogInfo['verifierHashes']>,
+  key: 'successful' | 'unsuccessful' | 'notVerified',
+): TrustedSetupVerifierData | undefined {
+  const verifiersForStatus = verifiers[key]
+  if (!verifiersForStatus || verifiersForStatus.length === 0) return undefined
+
+  return {
+    count: verifiersForStatus.length,
+    attesters: verifiersForStatus
+      .flatMap((v) => v.attesters)
+      .filter(notUndefined)
+      .map((a) => ({
+        ...a,
+        icon: getProjectIcon(a.id),
+      })),
+  }
 }
 
 function getProjectsUsedIn(
