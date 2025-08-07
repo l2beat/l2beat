@@ -103,7 +103,9 @@ export function EcosystemsActivityChart({
         }}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend
+            content={<ChartLegendContent disableOnboarding={true} />}
+          />
           {getStrokeOverFillAreaComponents({
             data: [
               {
@@ -143,11 +145,13 @@ export function EcosystemsActivityChart({
           </defs>
         </AreaChart>
       </ChartContainer>
-      <ActivityTimeRangeControls
-        timeRange={timeRange}
-        setTimeRange={setTimeRange}
-        projectSection={true}
-      />
+      <div className="mt-2.5 ml-auto w-fit">
+        <ActivityTimeRangeControls
+          timeRange={timeRange}
+          setTimeRange={setTimeRange}
+          projectSection={true}
+        />
+      </div>
     </EcosystemWidget>
   )
 }
