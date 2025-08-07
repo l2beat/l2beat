@@ -252,6 +252,25 @@
     },
     {
       "mode": "auto",
+      "id": "portal-BADGER",
+      "priceId": "badger-dao",
+      "symbol": "BADGER",
+      "name": "Badger",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13287/large/badger_dao_logo.jpg?1696513059",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3472A5A71965499acd81997a54BBA8D852C6E53d",
+        "chain": "ethereum",
+        "escrowAddress": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
+        "decimals": 18,
+        "sinceTimestamp": 1631535967
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "portal-BAG",
       "priceId": "bag",
       "symbol": "BAG",
@@ -493,7 +512,7 @@
         "decimals": 8,
         "sinceTimestamp": 1726099200
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -2084,7 +2103,7 @@
         "decimals": 8,
         "sinceTimestamp": 1631535967
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -2464,7 +2483,7 @@
         "decimals": 18,
         "sinceTimestamp": 1631535967
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -2654,7 +2673,7 @@
         "decimals": 8,
         "sinceTimestamp": 1631535967
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
