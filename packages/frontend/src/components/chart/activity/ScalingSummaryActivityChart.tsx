@@ -34,7 +34,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { ActivityChartStats } from '~/server/features/scaling/activity/getActivityChartStats'
+import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
@@ -79,9 +79,7 @@ const chartMeta = {
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, ['others'])
-  const { data: stats } = api.activity.chartStats.useQuery({
-    filter: { type: 'withoutOthers' },
-  })
+
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'all' },
@@ -104,9 +102,13 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
     )
   }, [data])
 
+  const stats = useMemo(() => {
+    return getStats(data?.data, dataKeys)
+  }, [data?.data, dataKeys])
+
   return (
     <div className="flex flex-col gap-4">
-      <Header stats={stats} />
+      <Header latestUopsCount={stats} />
       <ChartContainer
         meta={chartMeta}
         data={chartData}
@@ -258,7 +260,7 @@ function CustomTooltip({
   )
 }
 
-function Header({ stats }: { stats: ActivityChartStats | undefined }) {
+function Header({ latestUopsCount }: { latestUopsCount: number | undefined }) {
   return (
     <div className="flex items-start justify-between">
       <div>
@@ -282,13 +284,10 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
         </CustomLink>
       </div>
       <div className="flex flex-col items-end">
-        {stats !== undefined ? (
+        {latestUopsCount !== undefined ? (
           <>
             <div className="whitespace-nowrap text-right font-bold text-xl">
-              {formatActivityCount(
-                countPerSecond(stats.uops.latestProjectsTxCount),
-              )}{' '}
-              UOPS
+              {formatActivityCount(countPerSecond(latestUopsCount))} UOPS
             </div>
             <div className="h-5" />
           </>
@@ -301,4 +300,34 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
       </div>
     </div>
   )
+}
+
+function getStats(
+  data: RecategorisedActivityChartData['data'] | undefined,
+  dataKeys: (keyof typeof chartMeta)[],
+) {
+  if (!data) {
+    return undefined
+  }
+
+  const pointsWithData = data.filter(
+    ([_, rollups, validiumsAndOptimiums, others, ethereum]) => {
+      return (
+        rollups !== null && validiumsAndOptimiums !== null && others !== null
+      )
+    },
+  ) as [number, number, number, number, number | null][]
+  const latestData = pointsWithData.at(-1)
+
+  if (!latestData) {
+    return undefined
+  }
+
+  const toSum = [
+    dataKeys.includes('rollups') ? latestData[1] : 0,
+    dataKeys.includes('validiumsAndOptimiums') ? latestData[2] : 0,
+    dataKeys.includes('others') ? latestData[3] : 0,
+  ]
+
+  return toSum.reduce((acc, curr) => acc + curr, 0)
 }
