@@ -2,10 +2,6 @@
 lastUpdated: '2025-07-23'
 ---
 
-# The Stages Framework
-
-This page is to be considered an extended explainer for the latest version of the Stages Framework, whose precise specification can be found [here](https://forum.l2beat.com/t/the-stages-framework/291).
-
 ## Introduction
 
 The Stages Framework has been [first introduced](https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-training-wheels/11571) in June 2023 to provide clear and simple indicators of the maturity of a rollup, measured through the level of decentralization and trust minimization achieved by the project. The idea was first proposed by Vitalik Buterin on [Ethereum Magicians](https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-training-wheels/11571) in Nov 2022 and later made consistent and precise by the L2BEAT team. The Framework has been updated a few times since its inception, and it is expected to continue evolving as the ecosystem matures and new requirements emerge.
