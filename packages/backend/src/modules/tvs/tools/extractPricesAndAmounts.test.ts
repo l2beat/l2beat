@@ -335,7 +335,7 @@ describe(extractPricesAndAmounts.name, () => {
           address,
           chain: 'chain',
           decimals: 18,
-          sinceTimestamp: 300,
+          sinceTimestamp: 50,
           untilTimestamp: undefined,
         },
       ],
