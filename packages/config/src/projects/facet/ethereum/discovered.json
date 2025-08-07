@@ -1,14 +1,48 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "timestamp": 1754564428,
-  "configHash": "0x58e569ea7ecf0220b7a8eab46731233b2a544cf1d75b0f20d69a06d8405af5b3",
+  "timestamp": 1754566470,
+  "configHash": "0x59b4541e61f37172f030e749786f3ce2f7e598319406d442263c4dfe657eeef3",
   "entries": [
     {
       "name": "Inbox",
       "address": "eth:0x00000000000000000000000000000000000FacE7",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "FastExternalBridge",
+      "address": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
+      "type": "Contract",
+      "template": "facet/FacetEtherBridge",
+      "sourceHashes": [
+        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2",
+        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing.",
+      "sinceTimestamp": 1734701579,
+      "sinceBlock": 21444055,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Facet Ether Bridge",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        }
+      },
+      "implementationNames": {
+        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "ERC1967Factory",
+        "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": "FacetEtherBridgeV6"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "eth:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
@@ -233,6 +267,33 @@
       "proxyType": "EOA"
     },
     {
+      "name": "L1ETHLockbox",
+      "address": "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
+      "type": "Contract",
+      "template": "opstack/L1StandardBridge_facet",
+      "sourceHashes": [
+        "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
+        "0x9060db4f3f7bf996f9a1db86c049a15d8a68dff34b2e9bdd31e9e53ba3e79c8f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.",
+      "sinceTimestamp": 1733855519,
+      "sinceBlock": 21373913,
+      "values": {
+        "$admin": "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
+        "$implementation": "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "paused": false,
+        "version": "2.2.0"
+      },
+      "implementationNames": {
+        "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1ChugSplashProxy",
+        "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9": "PausedL1StandardBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
       "name": "Facet Multisig",
       "address": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
       "type": "Contract",
@@ -306,6 +367,25 @@
     }
   ],
   "abis": {
+    "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": [
+      "error DeploymentFailed()",
+      "error SaltDoesNotStartWithCaller()",
+      "error Unauthorized()",
+      "error UpgradeFailed()",
+      "event AdminChanged(address indexed proxy, address indexed admin)",
+      "event Deployed(address indexed proxy, address indexed implementation, address indexed admin)",
+      "event Upgraded(address indexed proxy, address indexed implementation)",
+      "function adminOf(address proxy) view returns (address admin)",
+      "function changeAdmin(address proxy, address admin)",
+      "function deploy(address implementation, address admin) payable returns (address proxy)",
+      "function deployAndCall(address implementation, address admin, bytes data) payable returns (address proxy)",
+      "function deployDeterministic(address implementation, address admin, bytes32 salt) payable returns (address proxy)",
+      "function deployDeterministicAndCall(address implementation, address admin, bytes32 salt, bytes data) payable returns (address proxy)",
+      "function initCodeHash() view returns (bytes32 result)",
+      "function predictDeterministicAddress(bytes32 salt) view returns (address predicted)",
+      "function upgrade(address proxy, address implementation) payable",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
       "error InvalidProof()",
       "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
@@ -463,6 +543,30 @@
       "function version() view returns (string)",
       "function whitelistedProposer(address) view returns (bool)"
     ],
+    "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": [
+      "constructor()",
+      "error FeatureDisabled()",
+      "error InvalidAmount()",
+      "error InvalidInitialization()",
+      "error NotFactory()",
+      "error NotInitializing()",
+      "error ZeroAdminAddress()",
+      "event Initialized(uint64 version)",
+      "function adminMarkComplete(address recipient, bytes32 withdrawalId)",
+      "function adminWithdraw(address recipient, uint256 amount)",
+      "function adminWithdrawFCT(address recipient, uint256 amount)",
+      "function bridgeAndCall(address recipient, address dumbContractToCall, bytes functionCalldata, uint64) payable",
+      "function deposit() payable",
+      "function donateETH() payable",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getAdmin() view returns (address)",
+      "function getDumbContract() pure returns (address)",
+      "function getSigner() view returns (address)",
+      "function initialize()",
+      "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
+      "function setAdmin(address admin)",
+      "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
+    ],
     "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
@@ -481,6 +585,59 @@
       "function routes(bytes4) view returns (address verifier, bool frozen)",
       "function transferOwnership(address newOwner)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9": [
+      "constructor()",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event Initialized(uint8 version)",
+      "event L1ERC20DepositAttempted(bytes32 indexed depositId, address indexed l1Token, address indexed l2Token, address from, address to, uint256 amount, bytes extraData)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function admin() pure returns (address)",
+      "function adminWithdraw(address recipient, uint256 amount)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHToWETH(address _localWeth, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHToWETHTo(address _localWeth, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeERC20Replayable(bytes32 _depositId, address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function getDepositHash(bytes32 _depositId) view returns (bytes32)",
+      "function getFinalizedDeposit(bytes32 _depositId) view returns (bool)",
+      "function initialize(address _messenger, address _superchainConfig, address _systemConfig, address _otherBridge)",
+      "function l2TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
+      "function replayERC20Deposit(bytes32 _depositId, address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function version() view returns (string)",
+      "function weth() view returns (address)"
+    ],
+    "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": [
+      "constructor(address _owner)",
+      "function getImplementation() returns (address)",
+      "function getOwner() returns (address)",
+      "function setCode(bytes _code)",
+      "function setOwner(address _owner)",
+      "function setStorage(bytes32 _key, bytes32 _value)"
     ],
     "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": [
       "constructor(address _singleton)"
@@ -540,14 +697,16 @@
     ]
   },
   "usedTemplates": {
+    "facet/FacetEtherBridge": "0xe29f5262256de7e9ec78abe7c54cf5f6f24680b6d137c20633dbbb2d4f48b27f",
     "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/L1ETHBridge": "0x080a0d39ddf9da132bdff35b285e154b7198881dd715b34dfc820f0867c5672c",
     "facet/Rollup": "0x5f90d5f1f797bc179e7cefece5f58747e38c3404441d81b1a653d6f6ab628163",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "opstack/L1StandardBridge_facet": "0xf0b0a009b2460a496a4ba02e53c0b6f71714bca771cc0e657e83da6cc9a3de22",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23088748 },
-  "permissionsConfigHash": "0x71e75656cd060e2511ccd6f34f73b3ededfcd4d6dd1e96ad21cfcf8b6264d108"
+  "usedBlockNumbers": { "ethereum": 23088917 },
+  "permissionsConfigHash": "0x3497d7aaeb0fbd2d2f51d1a6d22587ec4e5d018f2a0dc848f8a31d0e214c3c85"
 }

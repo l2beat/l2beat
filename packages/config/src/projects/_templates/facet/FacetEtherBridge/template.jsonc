@@ -20,5 +20,6 @@
       ]
     }
   },
+  "ignoreMethods": ["initCodeHash", "getAdmin", "getDumbContract", "getSigner"],
   "category": "bridge-external"
 }

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xdedae41896cc438811dd1c97660200dba379d157
+Generated with discovered.json: 0x8361ccb69ced4641e0e08f8a12cba6d6d81cee10
 
-# Diff at Thu, 07 Aug 2025 11:00:35 GMT:
+# Diff at Thu, 07 Aug 2025 11:34:38 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@3b461c4e9ab6af411ff23d3e19ddd42c0b1c052d block: 1745840699
-- current timestamp: 1754564428
+- current timestamp: 1754566470
 
 ## Description
 
@@ -126,9 +126,23 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1745840699 (main branch discovery), not current.
 
 ```diff
--   Status: DELETED
-    contract FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C)
-    +++ description: Official Facet implementation of the Ether Bridge.
+    contract FastExternalBridge (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      name:
+-        "FacetEtherBridgeV6"
++        "FastExternalBridge"
+      description:
+-        "Official Facet implementation of the Ether Bridge."
++        "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing."
+      values.getAdmin:
+-        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
+      values.getDumbContract:
+-        "eth:0x1673540243E793B0e77C038D4a88448efF524DcE"
+      values.getSigner:
+-        "eth:0x314d660b083675f415cCAA9c545FeedF377d1006"
+      category:
++        {"name":"External Bridges","priority":1}
+    }
 ```
 
 ```diff
@@ -150,9 +164,33 @@ discovery. Values are for block 1745840699 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909)
-    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+    contract L1ETHLockbox (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
+    +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.
+      name:
+-        "L1StandardBridge"
++        "L1ETHLockbox"
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
++        "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw."
+      values.admin:
+-        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
+      values.l2TokenBridge:
+-        "eth:0xaCde2ce9a9Bc89ED083FaA80685E2bA2c9ec72E9"
+      values.messenger:
+-        "eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
+      values.MESSENGER:
+-        "eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
+      values.OTHER_BRIDGE:
+-        "eth:0xaCde2ce9a9Bc89ED083FaA80685E2bA2c9ec72E9"
+      values.otherBridge:
+-        "eth:0xaCde2ce9a9Bc89ED083FaA80685E2bA2c9ec72E9"
+      values.superchainConfig:
+-        "eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
+      values.systemConfig:
+-        "eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
+      values.weth:
+-        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    }
 ```
 
 ```diff
