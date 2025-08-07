@@ -1,6 +1,10 @@
 import type { json } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import { GetBlobResponseSchema, GetBlockResultsResponseSchema } from './types'
+import {
+  type CelestiaEvent,
+  GetBlobResponseSchema,
+  GetBlockResultsResponseSchema,
+} from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -16,15 +20,13 @@ export class CelestiaApiClient extends ClientCore {
     super($)
   }
 
-  async getBlockResultLogs(height: number) {
-    const response = await this.fetch(
-      `${this.$.url}/block_results?height=${height}`,
-      {},
-    )
+  async getBlockResultEvents(height: number): Promise<CelestiaEvent[]> {
+    const url = `${this.$.url}/block_results?height=${height}`
+    const response = await this.fetch(url, {})
 
     const json = GetBlockResultsResponseSchema.parse(response)
 
-    return json.result.txs_results.map((tx) => tx.log)
+    return json.result.txs_results.flatMap((tx) => tx.events)
   }
 
   async blobExists(height: number, namespace: string, commitment: string) {
