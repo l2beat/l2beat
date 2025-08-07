@@ -35,7 +35,7 @@ export const layer2financezk: ScalingProject = {
     warning:
       'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
     description:
-      'Celer\'s Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
+      "Celer's Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.",
     purposes: ['Exchange'],
     stacks: ['StarkEx'],
     category: 'Validium',
