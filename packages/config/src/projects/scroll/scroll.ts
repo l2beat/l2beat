@@ -103,7 +103,7 @@ export const scroll: ScalingProject = {
           'Transaction data batches that have not yet been proven can be reverted.',
       },
       explanation:
-        'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet be confirmed.',
+        'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet been confirmed.',
     },
   },
   scopeOfAssessment: {
@@ -670,7 +670,7 @@ export const scroll: ScalingProject = {
       url: 'https://status.scroll.io/incidents/44k6s4qg6kcs',
       date: '2024-07-05T00:00:00Z',
       description:
-        'To fix a bug in the compression for batches 55 previously committed batches are reverted.',
+        'To fix a bug in the compression, 55 previously committed batches are reverted.',
       type: 'incident',
     },
     {
