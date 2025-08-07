@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ChartMeta } from '../Chart'
 
 export function useChartDataKeys<T extends ChartMeta>(
@@ -10,6 +10,14 @@ export function useChartDataKeys<T extends ChartMeta>(
       ? Object.keys(chartMeta).filter((key) => !hiddenDataKeys.includes(key))
       : Object.keys(chartMeta),
   )
+
+  useEffect(() => {
+    setDataKeys(
+      hiddenDataKeys
+        ? Object.keys(chartMeta).filter((key) => !hiddenDataKeys.includes(key))
+        : Object.keys(chartMeta),
+    )
+  }, [chartMeta, hiddenDataKeys])
 
   const toggleDataKey = (dataKey: keyof T | (string & {})) => {
     setDataKeys((prev) => {
