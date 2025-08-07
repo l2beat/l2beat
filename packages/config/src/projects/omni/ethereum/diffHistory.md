@@ -1481,7 +1481,7 @@ discovery. Values are for block 22337861 (main branch discovery), not current.
     contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
     +++ description: Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.
       issuedPermissions:
--        [{"permission":"interact","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","description":"change external validation logic refered to by this contract (e.g. Hashi).","via":[]},{"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]},{"permission":"validateBridge3","to":"0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064","via":[]}]
+-        [{"permission":"interact","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","description":"change external validation logic referred to by this contract (e.g. Hashi).","via":[]},{"permission":"upgrade","to":"0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6","via":[]},{"permission":"validateBridge3","to":"0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064","via":[]}]
     }
 ```
 
