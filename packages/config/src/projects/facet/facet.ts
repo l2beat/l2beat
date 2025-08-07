@@ -111,6 +111,20 @@ export const facet: ScalingProject = {
         tokens: ['ETH'],
         description: 'Escrow for ETH bridge.',
       }),
+      // discovery.getEscrowDetails({
+      //   address: ChainSpecificAddress(
+      //     'eth:0x0000000000000b07ED001607f5263D85bf28Ce4C',
+      //   ),
+      //   tokens: ['ETH'],
+      //   description: 'Fast external bridge contract.',
+      // }),
+      // discovery.getEscrowDetails({
+      //   address: ChainSpecificAddress(
+      //     'eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909',
+      //   ),
+      //   tokens: ['ETH', 'WETH'],
+      //   description: 'L1ETHLockbox (deprecated).',
+      // }),
     ],
     trackedTxs: [
       {

@@ -13,9 +13,9 @@
         "type": "balanceOfEscrow",
         "address": "native",
         "chain": "ethereum",
-        "escrowAddress": "0x13D21988F08997d20822d247A5015C4D13102F88",
+        "escrowAddress": "0x4E2eBa30a786c0643699b92234d74a71e958C08E",
         "decimals": 18,
-        "sinceTimestamp": 1753397063
+        "sinceTimestamp": 1754512679
       },
       "category": "ether",
       "source": "canonical",
