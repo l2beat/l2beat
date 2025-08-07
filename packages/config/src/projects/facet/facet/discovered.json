@@ -1,18 +1,35 @@
 {
   "name": "facet",
   "chain": "facet",
-  "timestamp": 1754411666,
-  "configHash": "0xedc152611d3045e925529a6069b3e4ff3541449bfe3c5ffb4fdf8ec532fab6e6",
+  "timestamp": 1754562805,
+  "configHash": "0x56d70d9b0f7490587b9e9e551be1327ac6a80ae5612f72f988305305087a246d",
   "entries": [
     {
-      "address": "facet:0x13D21988F08997d20822d247A5015C4D13102F88",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "facet:0x24e31988F08997D20822D247A5015C4D13104099",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "L2Bridge",
+      "address": "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
+      "type": "Contract",
+      "template": "facet/L2ERC20Bridge",
+      "sourceHashes": [
+        "0x414ac7953be12604a6d533900a5bdffa100737e6f29bd553d88d5631817d37b5"
+      ],
+      "proxyType": "immutable",
+      "description": "L2Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
+      "sinceTimestamp": 1754512691,
+      "sinceBlock": 1722346,
+      "values": {
+        "$immutable": true,
+        "aliasedL1Bridge": "facet:0x5F3fbA30A786C0643699b92234d74A71E958D19F",
+        "decimals": 18,
+        "l1Bridge": "facet:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+        "MESSAGE_PASSER": "facet:0x4200000000000000000000000000000000000016",
+        "name": "Bluebird WETH",
+        "symbol": "BBWETH",
+        "totalSupply": 1000000000000000
+      },
+      "implementationNames": {
+        "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": "L2Bridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "L2ToL1MessagePasser",
@@ -43,51 +60,25 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "L2WETHBridge",
-      "address": "facet:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850",
-      "type": "Contract",
-      "template": "facet/L2ERC20Bridge",
-      "sourceHashes": [
-        "0x0ae2befecd05c40f439454b1c6b4a3173f71da052548e4f04bb99ab7470eb332"
-      ],
-      "proxyType": "immutable",
-      "description": "L2ERC20Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
-      "sinceTimestamp": 1753397075,
-      "sinceBlock": 1629378,
-      "values": {
-        "$immutable": true,
-        "aliasedL1Bridge": "facet:0x24e31988F08997D20822D247A5015C4D13104099",
-        "decimals": 18,
-        "l1Bridge": "facet:0x13D21988F08997d20822d247A5015C4D13102F88",
-        "MESSAGE_PASSER": "facet:0x4200000000000000000000000000000000000016",
-        "name": "Albatross WETH",
-        "symbol": "AWETH",
-        "totalSupply": 999999999999999
-      },
-      "implementationNames": {
-        "facet:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850": "L2Bridge"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "address": "facet:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "facet:0x5F3fbA30A786C0643699b92234d74A71E958D19F",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
-    "facet:0x4200000000000000000000000000000000000016": [
-      "constructor(address _admin)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address _admin)",
-      "function implementation() returns (address)",
-      "function upgradeTo(address _implementation)",
-      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "facet:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850": [
+    "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": [
       "constructor(string name_, string symbol_, address _l1Bridge)",
+      "error DepositAlreadyFinalized()",
       "error InvalidL1Bridge()",
       "error InvalidWithdrawalAmount()",
       "error UnauthorizedBridge()",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event DepositFinalized(address indexed to, uint256 amount)",
+      "event DepositFinalized(uint256 indexed nonce, address indexed to, uint256 amount)",
       "event Transfer(address indexed from, address indexed to, uint256 value)",
       "event WithdrawalInitiated(address indexed from, address indexed to, uint256 amount)",
       "function MESSAGE_PASSER() view returns (address)",
@@ -97,7 +88,8 @@
       "function balanceOf(address account) view returns (uint256)",
       "function decimals() view returns (uint8)",
       "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function finalizeDeposit(address to, uint256 amount)",
+      "function finalizeDeposit(tuple(uint256 nonce, address to, uint256 amount) deposit)",
+      "function finalizedDeposits(uint256) view returns (bool)",
       "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
       "function initiateWithdrawal(address to, uint256 amount)",
       "function l1Bridge() view returns (address)",
@@ -106,6 +98,16 @@
       "function totalSupply() view returns (uint256)",
       "function transfer(address to, uint256 amount) returns (bool)",
       "function transferFrom(address from, address to, uint256 amount) returns (bool)"
+    ],
+    "facet:0x4200000000000000000000000000000000000016": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": [
       "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
@@ -119,9 +121,9 @@
     ]
   },
   "usedTemplates": {
-    "facet/L2ERC20Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "facet/L2ERC20Bridge": "0xdabbf407e0534e147b8f55fa8354ab880ad52bee712fe59838a8645c0d15fb24",
     "facet/L2ToL1MessagePasser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "facet": 1713926 },
-  "permissionsConfigHash": "0xca4442f35d48306dfa54ab1dcb8035b9f2c017911a82ca39e1ce4c6793f19930"
+  "usedBlockNumbers": { "facet": 1726521 },
+  "permissionsConfigHash": "0x71e75656cd060e2511ccd6f34f73b3ededfcd4d6dd1e96ad21cfcf8b6264d108"
 }

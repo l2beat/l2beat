@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x63c69d30b660ce5da77734e0683106e095b5fe5e
+Generated with discovered.json: 0xde21592970b0b031fc14cc25307b6d25d86aa27f
 
-# Diff at Tue, 05 Aug 2025 16:34:33 GMT:
+# Diff at Thu, 07 Aug 2025 10:33:32 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@102320c86f8441c4ad97dd092d898f3142ff4433 block: 1745840699
-- current timestamp: 1754411666
+- comparing to: main@3b461c4e9ab6af411ff23d3e19ddd42c0b1c052d block: 1745840699
+- current timestamp: 1754562805
 
 ## Description
 
@@ -13,8 +13,8 @@ Discovery rerun on the same block number with only config-related changes.
 ## Watched changes
 
 ```diff
-    contract L1ETHBridge (0x13D21988F08997d20822d247A5015C4D13102F88) {
-    +++ description: L1ETHBridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
+    contract L1Bridge (0x4E2eBa30a786c0643699b92234d74a71e958C08E) {
+    +++ description: L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
       type:
 -        "EOA"
 +        "Contract"
@@ -24,24 +24,24 @@ Discovery rerun on the same block number with only config-related changes.
       template:
 +        "facet/L1ETHBridge"
       sourceHashes:
-+        ["0x69944b23a896634033db21c6cc3f25d885368fb5c81ff579eb5433bafb47fc68"]
++        ["0x2428a7345462c1359eba9d5cf1d2749c05cb9419787b7e2914c411bb0c244867"]
       description:
-+        "L1ETHBridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
++        "L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
       sinceTimestamp:
-+        1753397063
++        1754512679
       sinceBlock:
-+        22992074
++        23084460
       values:
-+        {"$immutable":true,"l2Bridge":"eth:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850","owner":"eth:0x0000000000000000000000000000000000000000","paused":false,"rollup":"eth:0xd0E3721bba691d3735b0827edBe893789cA1486D","withdrawalDelay":0}
++        {"$immutable":true,"depositNonce":1,"l2Bridge":"eth:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4","owner":"eth:0x0000000000000000000000000000000000000000","paused":false,"rollup":"eth:0x686E7d01C7BFCB563721333A007699F154C04eb4","withdrawalDelay":0}
       implementationNames:
-+        {"eth:0x13D21988F08997d20822d247A5015C4D13102F88":"L1Bridge"}
++        {"eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E":"L1Bridge"}
       category:
 +        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
 ```diff
-    contract Rollup (0xd0E3721bba691d3735b0827edBe893789cA1486D) {
+    contract Rollup (0x686E7d01C7BFCB563721333A007699F154C04eb4) {
     +++ description: Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.
       type:
 -        "EOA"
@@ -52,17 +52,17 @@ Discovery rerun on the same block number with only config-related changes.
       template:
 +        "facet/Rollup"
       sourceHashes:
-+        ["0x10b46b3a5fd93432baa3a1ae6ca022b0295206b71e75b9d5ded7d050ff31c12e"]
++        ["0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"]
       description:
 +        "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system."
       sinceTimestamp:
-+        1753123523
++        1754512643
       sinceBlock:
-+        22969440
++        23084457
       values:
-+        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorL2BlockNumber":1661982,"anchorProposalId":32,"anchorRoot":"0x7ba05cac12025bbf522ecad8ceb230a6e5d3b082c81e4a8ffb99b962566c0dba","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorRoot":["0x7ba05cac12025bbf522ecad8ceb230a6e5d3b082c81e4a8ffb99b962566c0dba",1661982],"getProposalsLength":61,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1753097123,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","renouncedOwner":"eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","sequencerInbox":"eth:0x00000000000000000000000000000000000face7","VERIFIER":"eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0","whitelistedProposers":["eth:0x615452db5467849689E98a8C5C242A96cF768a94"]}
++        {"$immutable":true,"AGG_VKEY":"0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2","anchorL2BlockNumber":1721260,"anchorProposalId":0,"anchorRoot":"0x88b54f3a73b2cbb7f29caae53a780a8b4974c5e0bd157ad3c7bb122b72939bcc","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"10000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorRoot":["0x88b54f3a73b2cbb7f29caae53a780a8b4974c5e0bd157ad3c7bb122b72939bcc",1721260],"getProposalsLength":1,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1754499659,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":604800,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":5000000000000000,"RANGE_VKEY_COMMITMENT":"0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829","renouncedOwner":"eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","sequencerInbox":"eth:0x00000000000000000000000000000000000face7","VERIFIER":"eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0","whitelistedProposers":["eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"]}
       implementationNames:
-+        {"eth:0xd0E3721bba691d3735b0827edBe893789cA1486D":"Rollup"}
++        {"eth:0x686E7d01C7BFCB563721333A007699F154C04eb4":"Rollup"}
       category:
 +        {"name":"Local Infrastructure","priority":5}
     }
@@ -107,16 +107,16 @@ Discovery rerun on the same block number with only config-related changes.
 ## Source code changes
 
 ```diff
-.../ethereum/.flat/Facet Multisig/GnosisSafe.sol   |  953 ++++++++
+.../ethereum/.flat/Facet Multisig/GnosisSafe.sol   |  953 +++++++
  .../.flat/Facet Multisig/GnosisSafeProxy.p.sol     |   35 +
  .../facet/ethereum/.flat/FacetSafeModule.sol       |   29 +
  .../facet/ethereum/.flat/FacetSafeProxy.sol        |  488 ++++
- .../projects/facet/ethereum/.flat/L1ETHBridge.sol  | 2517 ++++++++++++++++++++
- .../src/projects/facet/ethereum/.flat/Rollup.sol   | 1199 ++++++++++
+ .../src/projects/facet/ethereum/.flat/L1Bridge.sol | 2650 ++++++++++++++++++++
+ .../src/projects/facet/ethereum/.flat/Rollup.sol   | 1192 +++++++++
  ...:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol | 1396 +++++++++++
  ...:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol |  602 +++++
  .../facet/ethereum/.flat/SP1VerifierGateway.sol    |  231 ++
- 9 files changed, 7450 insertions(+)
+ 9 files changed, 7576 insertions(+)
 ```
 
 ## Config/verification related changes

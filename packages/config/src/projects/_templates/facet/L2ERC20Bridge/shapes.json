@@ -10,5 +10,11 @@
     "address": "0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850",
     "chain": "facet",
     "blockNumber": 1632336
+  },
+  "L2ERC20Bridge_bluebird": {
+    "hash": "0x414ac7953be12604a6d533900a5bdffa100737e6f29bd553d88d5631817d37b5",
+    "address": "0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
+    "chain": "facet",
+    "blockNumber": 1726398
   }
 }

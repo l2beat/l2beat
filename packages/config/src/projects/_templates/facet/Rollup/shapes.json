@@ -10,5 +10,11 @@
     "address": "0xd0E3721bba691d3735b0827edBe893789cA1486D",
     "chain": "ethereum",
     "blockNumber": 22980731
+  },
+  "Rollup_bluebird": {
+    "hash": "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732",
+    "address": "0x686E7d01C7BFCB563721333A007699F154C04eb4",
+    "chain": "ethereum",
+    "blockNumber": 23088587
   }
 }

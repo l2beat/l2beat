@@ -49,7 +49,7 @@ export const facet: ScalingProject = {
     ],
     notInScope: [
       'Ability to deposit, spend, and withdraw ETH from any bridge other than the selected bridge (L1ETHBridge)',
-      'Bridged token compatibility with other DeFi applications e.g., Albatross WETH (AWETH)',
+      'Bridged token compatibility with other DeFi applications e.g., Bluebird WETH (BBWETH)',
       'The soundness of the ZK proof system of Rollup',
       'Upgradability of the external bridge contracts (e.g., FacetEtherBridgeV6)',
     ],
@@ -85,9 +85,9 @@ export const facet: ScalingProject = {
     name: 'Facet',
     slug: 'facet',
     description:
-      'Facet is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by spending gas on L1.',
+      'Facet is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by burning ETH on L1.',
     headerWarning:
-      'The vast majority of funds bridged to Facet are bridged through external non-canonical bridges. Note that external bridges may introduce additional trust assumptions and the Stage and risk rosette assessment on this page apply to the canonical bridge.',
+      `The vast majority of funds bridged to Facet are bridged through external non-canonical bridges. Note that external bridges may introduce additional trust assumptions and the Stage and risk rosette assessment on this page apply to the canonical bridge. L2BEAT is working on a TVS and asset framework to assess the risks of individual tokens, you can follow the latest updates [here](https://forum.l2beat.com/t/assets-bridges-and-tvs/388).`,
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
@@ -106,7 +106,7 @@ export const facet: ScalingProject = {
     escrows: [
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
-          'eth:0x13D21988F08997d20822d247A5015C4D13102F88',
+          'eth:0x4e2eba30a786c0643699b92234d74a71e958c08e',
         ),
         tokens: ['ETH'],
         description: 'Escrow for ETH bridge.',
@@ -226,27 +226,35 @@ export const facet: ScalingProject = {
         name: 'Multi-bridging',
         description:
           'Facet does not designate a canonical bridge and allows multiple bridges to be deployed that use the same Rollup state for depositing and withdrawing assets. Each bridge has its own smart contract counterpart on the L2, meaning the same L1 tokens bridged through different bridges will result in different L2 token representations. The risk analysis presented in this page is based on an arbitrarily selected ETH bridge built on top of Rollup.sol that does not introduce additional trust assumptions. However, there can be multiple other bridges to Facet that introduce additional trust assumptions, such as the FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) fast bridge that relies on a permissioned EOA as operator for withdrawal processing.',
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'the fast bridge EOA operator signs an invalid withdrawal request.',
-          },
-        ],
+        risks: [],
         references: [
           {
             title: 'L1 ETH Bridge - Etherscan',
-            url: 'https://etherscan.io/address/0x13D21988F08997d20822d247A5015C4D13102F88',
+            url: 'https://etherscan.io/address/0x4e2eba30a786c0643699b92234d74a71e958c08e',
           },
           {
-            title: 'L2 ETH (AWETH) Bridge - Facet Explorer',
-            url: 'https://explorer.facet.org/address/0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850',
+            title: 'L2 ETH (BBWETH) Bridge - Facet Explorer',
+            url: 'https://explorer.facet.org/address/0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4',
           },
         ],
       },
       {
         name: 'Gas Token Minting',
         description:
-          'Facet uses FCT as its native gas token, which is minted through L1 gas consumption rather than being pre-minted. FCT issuance is directly tied to the amount of calldata used in Ethereum transactions, calculated as: FCT minted = calldata gas used × mint rate. The mint rate starts at 800,000 gwei and dynamically adjusts every 10,000 Facet blocks (~1.4 days) based on a target issuance of 40 FCT per block. The system also includes annual halvings (every 2,630,000 blocks) to regulate total supply growth over time. Note that this mechanism differs from standard OP Stack guaranteed gas markets, where L1 gas is burned to purchase L2 gas for deposits through an EIP-1559-style fee market. In Facet, FCT tokens are directly minted based on L1 calldata usage rather than using a burn-to-purchase model for cross-chain gas payment. \n\n![Facet Token Minting and Bridging](/images/other-considerations/facet.png#center).',
+          `Facet uses FCT as its native gas token, which is minted through L1 gas consumption rather than being pre-minted. FCT issuance is directly tied to the amount of L1 ETH burned to pay calldata gas in Ethereum transactions, calculated as:
+
+FCT minted = ETH burned for calldata × mint rate
+
+ETH burned for calldata = L1 base fee × (total L1 gas cost - 21,000)
+
+The system targets issuing ~78,300 FCT every 500 Facet blocks. If less than the target is minted in 500 blocks, the mint rate increases proportionally (up to a maximum 4x increase). If the target is reached in fewer than 500 blocks, the mint rate decreases proportionally (up to a maximum 75% decrease).
+
+The maximum supply of FCT is ~1.65B. Once 50% of the supply is minted, the per-period target (now ~78,300) will be halved. It will be halved again at 75%, then at 87.5%, and so forth. The period target and period length are selected so that halvings will occur approximately every 5,256,000 blocks.
+
+This mechanism is similar to standard OP Stack guaranteed gas markets, where L1 gas is burned to purchase L2 gas for deposits through an EIP-1559-style fee market. However, on Facet, gas purchased in this way accrues to the purchaser's native balance on the L2, whereas in the OP Stack it can only be used for a single transaction.
+
+![Facet Token Minting and Bridging](/images/other-considerations/facet.png#center)
+`,
         risks: [],
         references: [
           {

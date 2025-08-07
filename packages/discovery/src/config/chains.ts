@@ -359,4 +359,14 @@ export const chains: ChainConfig[] = [
       url: 'https://block-explorer-api.era-gateway-mainnet.zksync.dev/api',
     },
   },
+  {
+      name: 'facet',
+      chainId: 1027303,
+      shortName: 'facet',
+      multicall: undefined,
+      explorer: {
+        type: 'blockscout',
+        url: 'https://explorer.facet.org',
+      },
+  },
 ] as const satisfies ChainConfig[]

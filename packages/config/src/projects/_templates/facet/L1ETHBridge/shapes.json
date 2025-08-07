@@ -10,5 +10,11 @@
     "address": "0x13D21988F08997d20822d247A5015C4D13102F88",
     "chain": "ethereum",
     "blockNumber": 22995010
+  },
+  "L1ETHBridge_replay": {
+    "hash": "0x2428a7345462c1359eba9d5cf1d2749c05cb9419787b7e2914c411bb0c244867",
+    "address": "0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+    "chain": "ethereum",
+    "blockNumber": 23088587
   }
 }

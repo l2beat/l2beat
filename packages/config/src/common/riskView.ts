@@ -577,7 +577,7 @@ export function PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY(
   const delayString = formatSeconds(delay)
   return {
     value: 'Self propose',
-    description: `Only the whitelisted proposers can propose state roots for recent blocks. Anyone can propose for L2 blocks that are older than ${delayString}.`,
+    description: `Anyone can propose blocks if accompanied by a validity proof. Only the whitelisted proposers can propose state roots for recent blocks optimistically. Anyone can propose optimistically for L2 blocks that are older than ${delayString}.`,
     sentiment: 'good',
     orderHint: delay,
   }
