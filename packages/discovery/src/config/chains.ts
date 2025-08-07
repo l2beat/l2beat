@@ -360,13 +360,13 @@ export const chains: ChainConfig[] = [
     },
   },
   {
-      name: 'facet',
-      chainId: 1027303,
-      shortName: 'facet',
-      multicall: undefined,
-      explorer: {
-        type: 'blockscout',
-        url: 'https://explorer.facet.org',
-      },
+    name: 'facet',
+    chainId: 1027303,
+    shortName: 'facet',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.facet.org',
+    },
   },
 ] as const satisfies ChainConfig[]
