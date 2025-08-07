@@ -99,4 +99,55 @@ export class Decoder {
     }
     return { messages, assets }
   }
+
+  async executeMany(
+    protocols: string[],
+    chainConfig: { name: string; block: number },
+  ) {
+    const messages: Message[] = []
+    const assets: Asset[] = []
+
+    const chain = this.chains.find((c) => c.name === chainConfig.name)
+    assert(chain, `${chainConfig.name}: Chain not found`)
+
+    const block = await chain.rpc.getBlockWithTransactions(chainConfig.block)
+    const logs = await chain.rpc.getLogs(chainConfig.block, chainConfig.block)
+    const logsByTx = groupBy(logs, 'transactionHash')
+
+    for (const transaction of block.transactions) {
+      assert(transaction.hash)
+      for (const log of logsByTx[transaction.hash] ?? []) {
+        for (const protocol of protocols) {
+          const decoder = this.protocols.find(
+            (p) => p.name === protocol,
+          )?.decoder
+          assert(decoder, `${protocol}: Protocol not found`)
+          const decoded = await decoder(
+            chain,
+            {
+              log: logToViemLog(log),
+              transactionHash: transaction.hash,
+              blockNumber: block.number,
+              blockTimestamp: block.timestamp,
+              transactionLogs: (logsByTx[transaction.hash] ?? []).map(
+                logToViemLog,
+              ),
+              transactionTo: transaction.to
+                ? EthereumAddress(transaction.to)
+                : undefined,
+            },
+            chain.rpc,
+          )
+          if (decoded?.type === 'message') {
+            messages.push(decoded)
+          }
+
+          if (decoded?.type === 'asset') {
+            assets.push(decoded)
+          }
+        }
+      }
+    }
+    return { messages, assets }
+  }
 }
