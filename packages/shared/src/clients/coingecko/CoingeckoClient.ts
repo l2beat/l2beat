@@ -36,7 +36,7 @@ export class CoingeckoClient extends ClientCore {
     from: UnixTime,
     to: UnixTime,
   ): Promise<CoinMarketChartRangeData> {
-    const adjustedTo = to > UnixTime.now() ? UnixTime.now() : to
+    const adjustedTo = Math.min(to, UnixTime.now())
 
     const data = await this.query(
       `/coins/${coinId.toString()}/market_chart/range`,
