@@ -66,6 +66,11 @@ function CountWithAttesters({
         {count}
       </span>
       <Icon className="size-4" />
+      {attesters && attesters.length > 0 && (
+        <span className="font-medium text-label-value-14 text-secondary leading-none">
+          by
+        </span>
+      )}
       {attesters?.map((attester) => (
         <Tooltip key={attester.id}>
           <TooltipTrigger>
