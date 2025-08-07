@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
+  CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   REASON_FOR_BEING_OTHER,
@@ -8,6 +9,10 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('xlayer')
@@ -24,11 +29,11 @@ export const xlayer: ScalingProject = {
     name: 'X Layer',
     slug: 'xlayer',
     description:
-      'X Layer is a layer 2 by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
+      'X Layer is a Layer 2 by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
     links: {
       websites: ['https://okx.com/xlayer'],
       documentation: [
-        'https://okx.com/xlayer/docs/users/welcome/about-x-layer',
+        'https://web3.okx.com/xlayer/docs/users/welcome/about-x-layer',
       ],
       explorers: ['https://okx.com/explorer/xlayer'],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
@@ -118,6 +123,11 @@ export const xlayer: ScalingProject = {
   },
   stage: {
     stage: 'NotApplicable',
+  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
 }
