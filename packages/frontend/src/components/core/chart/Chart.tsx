@@ -134,7 +134,9 @@ function ChartContainer<T extends { timestamp: number }>({
           />
         )}
         {!hasData && !isLoading && <ChartNoDataState size={size} />}
-        {noDataSourcesSelected && !isLoading && <ChartNoDataSourceState />}
+        {noDataSourcesSelected && !isLoading && isClient && (
+          <ChartNoDataSourceState />
+        )}
         {isClient && size !== 'small' && (
           <Logo
             animated={false}
