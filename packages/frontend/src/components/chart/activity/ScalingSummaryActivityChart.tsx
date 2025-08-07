@@ -23,13 +23,18 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
+import {
+  YellowFillGradientDef,
+  YellowStrokeGradientDef,
+} from '~/components/core/chart/defs/YellowGradientDef'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { ActivityChartStats } from '~/server/features/scaling/activity/getActivityChartStats'
+import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
@@ -56,6 +61,13 @@ const chartMeta = {
       shape: 'line',
     },
   },
+  others: {
+    label: 'Others',
+    color: 'var(--chart-yellow)',
+    indicatorType: {
+      shape: 'line',
+    },
+  },
   ethereum: {
     label: 'Ethereum',
     color: 'var(--chart-ethereum)',
@@ -66,9 +78,8 @@ const chartMeta = {
 } satisfies ChartMeta
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
-  const { data: stats } = api.activity.chartStats.useQuery({
-    filter: { type: 'withoutOthers' },
-  })
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, ['others'])
+
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'all' },
@@ -76,7 +87,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
 
   const chartData = useMemo(() => {
     return data?.data.map(
-      ([timestamp, rollups, validiumsAndOptimiums, ethereum]) => {
+      ([timestamp, rollups, validiumsAndOptimiums, others, ethereum]) => {
         return {
           timestamp,
           rollups: rollups !== null ? countPerSecond(rollups) : null,
@@ -84,42 +95,66 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             validiumsAndOptimiums !== null
               ? countPerSecond(validiumsAndOptimiums)
               : null,
+          others: others !== null ? countPerSecond(others) : null,
           ethereum: ethereum !== null ? countPerSecond(ethereum) : null,
         }
       },
     )
   }, [data])
 
+  const stats = getStats(data?.data, dataKeys)
+
   return (
     <div className="flex flex-col gap-4">
-      <Header stats={stats} />
-      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
+      <Header latestUopsCount={stats} />
+      <ChartContainer
+        meta={chartMeta}
+        data={chartData}
+        isLoading={isLoading}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+        }}
+      >
         <AreaChart data={chartData} margin={{ top: 20 }}>
           <defs>
             <PinkFillGradientDef id="rollups-fill" />
             <PinkStrokeGradientDef id="rollups-stroke" />
             <CyanFillGradientDef id="validiums-and-optimiums-fill" />
             <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
+            <YellowFillGradientDef id="others-fill" />
+            <YellowStrokeGradientDef id="others-stroke" />
             <EthereumFillGradientDef id="ethereum-fill" />
             <EthereumStrokeGradientDef id="ethereum-stroke" />
           </defs>
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend
+            content={<ChartLegendContent disableOnboarding={true} />}
+          />
           {getStrokeOverFillAreaComponents({
             data: [
               {
                 dataKey: 'rollups',
                 stroke: 'url(#rollups-stroke)',
                 fill: 'url(#rollups-fill)',
+                hide: !dataKeys.includes('rollups'),
               },
               {
                 dataKey: 'validiumsAndOptimiums',
                 stroke: 'url(#validiums-and-optimiums-stroke)',
                 fill: 'url(#validiums-and-optimiums-fill)',
+                hide: !dataKeys.includes('validiumsAndOptimiums'),
+              },
+              {
+                dataKey: 'others',
+                stroke: 'url(#others-stroke)',
+                fill: 'url(#others-fill)',
+                hide: !dataKeys.includes('others'),
               },
               {
                 dataKey: 'ethereum',
                 stroke: 'url(#ethereum-stroke)',
                 fill: 'url(#ethereum-fill)',
+                hide: !dataKeys.includes('ethereum'),
               },
             ],
           })}
@@ -223,7 +258,7 @@ function CustomTooltip({
   )
 }
 
-function Header({ stats }: { stats: ActivityChartStats | undefined }) {
+function Header({ latestUopsCount }: { latestUopsCount: number | undefined }) {
   return (
     <div className="flex items-start justify-between">
       <div>
@@ -247,13 +282,10 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
         </CustomLink>
       </div>
       <div className="flex flex-col items-end">
-        {stats !== undefined ? (
+        {latestUopsCount !== undefined ? (
           <>
             <div className="whitespace-nowrap text-right font-bold text-xl">
-              {formatActivityCount(
-                countPerSecond(stats.uops.latestProjectsTxCount),
-              )}{' '}
-              UOPS
+              {formatActivityCount(countPerSecond(latestUopsCount))} UOPS
             </div>
             <div className="h-5" />
           </>
@@ -266,4 +298,34 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
       </div>
     </div>
   )
+}
+
+function getStats(
+  data: RecategorisedActivityChartData['data'] | undefined,
+  dataKeys: (keyof typeof chartMeta)[],
+) {
+  if (!data) {
+    return undefined
+  }
+
+  const pointsWithData = data.filter(
+    ([_, rollups, validiumsAndOptimiums, others, ethereum]) => {
+      return (
+        rollups !== null && validiumsAndOptimiums !== null && others !== null
+      )
+    },
+  ) as [number, number, number, number, number | null][]
+  const latestData = pointsWithData.at(-1)
+
+  if (!latestData) {
+    return undefined
+  }
+
+  const toSum = [
+    dataKeys.includes('rollups') ? latestData[1] : 0,
+    dataKeys.includes('validiumsAndOptimiums') ? latestData[2] : 0,
+    dataKeys.includes('others') ? latestData[3] : 0,
+  ]
+
+  return toSum.reduce((acc, curr) => acc + curr, 0)
 }

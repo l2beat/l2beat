@@ -8,6 +8,7 @@ export async function getAppLayoutProps(): Promise<AppLayoutProps> {
     terms: getCollection('glossary').map((term) => ({
       id: term.id,
       matches: [term.data.term, ...(term.data.match ?? [])],
+      description: term.data.definition,
     })),
     searchBarProjects,
   }

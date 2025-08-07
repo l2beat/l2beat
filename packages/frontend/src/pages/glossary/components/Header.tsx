@@ -16,22 +16,16 @@ export function Header<T extends { id: string }>({
             understanding the terms and concepts of the L2 ecosystem. Find here
             all essential definitions and insights.
           </p>
-          <div className="transition-all duration-300">
-            <p className="font-normal text-lg leading-[150%]">
-              Designed for everyone from developers to enthusiasts, this
-              resource simplifies the complexities of L2, helping you navigate
-              Ethereum&apos;s advanced landscape with ease.
-            </p>
-          </div>
+          <p className="font-normal text-lg leading-[150%]">
+            Designed for everyone from developers to enthusiasts, this resource
+            simplifies the complexities of L2, helping you navigate
+            Ethereum&apos;s advanced landscape with ease.
+          </p>
         </div>
         <div className="-bottom-2 absolute left-0 h-2 w-full bg-surface-primary" />
       </PrimaryCard>
       <div className="fixed top-0 z-1 hidden h-8 w-full bg-background md:block" />
-      <PrimaryCard
-        className={cn(
-          'sticky top-0 z-10 w-full bg-surface-primary py-4 transition-all md:top-6 md:rounded-t-xl',
-        )}
-      >
+      <PrimaryCard className="sticky top-0 z-10 w-full bg-surface-primary py-4 md:top-6 md:rounded-t-xl">
         <AlphabetSelector entries={glossaryEntries} />
         {/* Mobile gradient */}
         <div

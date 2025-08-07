@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x67d63c0bc913306634e8c5e959df23eb147cb90e
+
+# Diff at Wed, 06 Aug 2025 13:35:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1702d91eebfba5d614c3470bbe1babe10fbe4c2b block: 1754054572
+- current timestamp: 1754486452
+
+## Description
+
+config: add description
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754054572 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.CONSENSUS_TYPE:
++        {"description":"0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"}
+    }
+```
+
 Generated with discovered.json: 0x931b50b0738f7df8ea39eca00aeebcf7afbb33f6
 
 # Diff at Fri, 01 Aug 2025 13:23:05 GMT:

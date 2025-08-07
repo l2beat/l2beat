@@ -158,6 +158,7 @@ export interface ProjectLinks {
   explorers?: string[]
   repositories?: string[]
   socialMedia?: string[]
+  other?: string[]
   rollupCodes?: string
 }
 export interface Badge {
