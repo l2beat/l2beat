@@ -25,6 +25,18 @@ export function TechStackCell({
           </div>
         </div>
       )}
+      {techStack.snark && (
+        <div className="flex flex-col gap-0.5">
+          <span className="font-medium text-[11px] text-secondary leading-none">
+            SNARK
+          </span>
+          <div className="flex flex-nowrap gap-x-[5px] gap-y-1 overflow-x-auto md:max-h-[50px] md:min-w-[250px] md:flex-wrap">
+            {techStack.snark.map((snark, i) => (
+              <TechStackTag key={`${snark.name}-${i}`} tag={snark} />
+            ))}
+          </div>
+        </div>
+      )}
       {techStack.finalWrap && (
         <div className="flex flex-col gap-0.5">
           <span className="font-medium text-[11px] text-secondary leading-none">
