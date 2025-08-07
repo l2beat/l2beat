@@ -1,7 +1,9 @@
 import type { Milestone } from '@l2beat/config'
+import compact from 'lodash/compact'
 import { useMemo, useState } from 'react'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import { Checkbox } from '~/components/core/Checkbox'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
@@ -14,7 +16,7 @@ import { getChartRange } from '../../../core/chart/utils/getChartRangeFromColumn
 import type { ChartUnit } from '../../types'
 import { TvsChartHeader } from '../TvsChartHeader'
 import { TvsChartTimeRangeControls } from '../TvsChartTimeRangeControls'
-import { StackedTvsChart } from './StackedTvsChart'
+import { StackedTvsChart, scalingStackedTvsChartMeta } from './StackedTvsChart'
 
 interface Props {
   milestones: Milestone[]
@@ -23,6 +25,9 @@ interface Props {
 }
 
 export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
+  const { dataKeys, toggleDataKey } = useChartDataKeys(
+    scalingStackedTvsChartMeta,
+  )
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
 
@@ -72,7 +77,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
     [data, unit],
   )
   const chartRange = getChartRange(chartData)
-  const stats = getStats(chartData)
+  const stats = getStats(chartData, dataKeys)
 
   return (
     <div>
@@ -90,6 +95,8 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
         unit={unit}
         isLoading={isLoading}
         syncedUntil={data?.syncedUntil}
+        dataKeys={dataKeys}
+        toggleDataKey={toggleDataKey}
       />
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
@@ -119,6 +126,7 @@ function getStats(
         external: number | null
       }[]
     | undefined,
+  dataKeys: (keyof typeof scalingStackedTvsChartMeta)[],
 ) {
   const pointsWithData = data?.filter(
     (point) =>
@@ -137,14 +145,29 @@ function getStats(
     return undefined
   }
 
-  const total =
-    newestDataPoint.native +
-    newestDataPoint.canonical +
-    newestDataPoint.external
-  const oldestTotal =
-    oldestDataPoint.native +
-    oldestDataPoint.canonical +
-    oldestDataPoint.external
+  const toSum = compact([
+    dataKeys.includes('native')
+      ? {
+          oldest: oldestDataPoint.native,
+          newest: newestDataPoint.native,
+        }
+      : undefined,
+    dataKeys.includes('canonical')
+      ? {
+          oldest: oldestDataPoint.canonical,
+          newest: newestDataPoint.canonical,
+        }
+      : undefined,
+    dataKeys.includes('external')
+      ? {
+          oldest: oldestDataPoint.external,
+          newest: newestDataPoint.external,
+        }
+      : undefined,
+  ])
+
+  const total = toSum.reduce((acc, curr) => acc + curr.newest, 0)
+  const oldestTotal = toSum.reduce((acc, curr) => acc + curr.oldest, 0)
   const change = total / oldestTotal - 1
 
   return {
