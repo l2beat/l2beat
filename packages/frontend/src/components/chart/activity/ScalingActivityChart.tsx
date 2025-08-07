@@ -101,7 +101,7 @@ export function ScalingActivityChart({
         hideScalingFactor={hideScalingFactor}
       />
       <ActivityChart
-        className="mt-4 mb-2"
+        className="mt-4 mb-3"
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
