@@ -609,7 +609,7 @@ Generated with discovered.json: 0xacd04eb2dc80b00a09f219689691d71f949272b1
 
 ## Description
 
-Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
+Config: Kailua added to OptimismPortal2 and DisputeGameFactory.
 
 ## Config/verification related changes
 

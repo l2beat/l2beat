@@ -504,7 +504,7 @@ Generated with discovered.json: 0xdb7b65667f80e7bb2b884fdde74478cda930ee9b
 
 ## Description
 
-Initial cartesi fault proofs disco.
+Initial cartesi fault proofs discovery.
 
 ## Initial discovery
 
