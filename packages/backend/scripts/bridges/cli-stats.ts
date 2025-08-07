@@ -1,3 +1,6 @@
+// TODO: add envio
+// TODO: add error handling to Decoder if decoding fails
+
 import { getEnv, Logger, type LoggerOptions } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
@@ -20,17 +23,26 @@ const cmd = command({
     const inbound: Map<string, Asset> = new Map()
     const matching: Map<string, { outbound: Asset; inbound: Asset }> = new Map()
 
-    const counts: Map<string, number> = new Map()
+    const transfers: Map<string, Asset[]> = new Map()
     const delays: Map<string, number[]> = new Map()
 
     const promises = []
 
+    logger.info(
+      `Running script for configured protocols [${CONFIG.protocols.length}]`,
+      { protocols: CONFIG.protocols },
+    )
+
     for (const chain of chains) {
+      logger.info(`Fetching ${chain.name} blocks`, {
+        from: chain.from,
+        to: chain.to,
+        range: chain.to - chain.from,
+        estimatedTimeInMinutes: Math.ceil(
+          ((chain.to - chain.from) * 2) / chain.rpcCallsPerMinute,
+        ),
+      })
       for (let block = chain.from; block <= chain.to; block++) {
-        logger.info('Executing', {
-          network: chain.name,
-          blockNumber: block,
-        })
         promises.push(
           (async () => {
             const { assets } = await decoder.executeMany(CONFIG.protocols, {
@@ -39,7 +51,7 @@ const cmd = command({
             })
 
             for (const asset of assets) {
-              logger.debug('Decoded', {
+              logger.info('Decoded', {
                 protocol: asset.application,
                 direction: asset.direction,
                 network:
@@ -56,34 +68,31 @@ const cmd = command({
 
                 const matchingInbound = inbound.get(asset.matchingId)
                 if (matchingInbound) {
+                  logger.info(`${asset.application} matched`, {
+                    from: asset.origin,
+                    to: asset.destination,
+                    amount: asset.amount,
+                    delay:
+                      matchingInbound.blockTimestamp - asset.blockTimestamp,
+                  })
+
                   matching.set(asset.matchingId, {
                     outbound: asset,
                     inbound: matchingInbound,
                   })
-                  counts.set(
+                  const previousTransfers = transfers.get(asset.application)
+                  transfers.set(
                     asset.application,
-                    (counts.get(asset.application) ?? 0) + 1,
+                    previousTransfers ? [...previousTransfers, asset] : [asset],
                   )
                   const delay =
                     matchingInbound.blockTimestamp - asset.blockTimestamp
+                  if (delay === 0) continue
                   const previousDelays = delays.get(asset.application)
                   delays.set(
                     asset.application,
                     previousDelays ? [...previousDelays, delay] : [delay],
                   )
-
-                  logger.info(`${asset.application} matched`, {
-                    from: asset.origin,
-                    to: asset.destination,
-                    amount: asset.amount,
-                    delay,
-                  })
-
-                  logger.info(`${asset.application} stats`, {
-                    count: counts.get(asset.application),
-                    averageDelay: average(delays.get(asset.application) ?? []),
-                    medianDelay: median(delays.get(asset.application) ?? []),
-                  })
                 }
               }
               if (asset.direction === 'inbound') {
@@ -95,34 +104,32 @@ const cmd = command({
 
                 const matchingOutbound = outbound.get(asset.matchingId)
                 if (matchingOutbound) {
+                  logger.info(`${asset.application} matched`, {
+                    from: asset.origin,
+                    to: asset.destination,
+                    amount: asset.amount,
+                    delay:
+                      asset.blockTimestamp - matchingOutbound.blockTimestamp,
+                  })
+
                   matching.set(asset.matchingId, {
                     outbound: matchingOutbound,
                     inbound: asset,
                   })
-                  counts.set(
+                  const previousTransfers = transfers.get(asset.application)
+                  transfers.set(
                     asset.application,
-                    (counts.get(asset.application) ?? 0) + 1,
+                    previousTransfers ? [...previousTransfers, asset] : [asset],
                   )
+
                   const delay =
                     asset.blockTimestamp - matchingOutbound.blockTimestamp
+                  if (delay === 0) continue
                   const previousDelays = delays.get(asset.application)
                   delays.set(
                     asset.application,
                     previousDelays ? [...previousDelays, delay] : [delay],
                   )
-
-                  logger.info(`${asset.application} matched`, {
-                    from: asset.origin,
-                    to: asset.destination,
-                    amount: asset.amount,
-                    delay,
-                  })
-
-                  logger.info(`${asset.application} stats`, {
-                    count: counts.get(asset.application),
-                    averageDelay: average(delays.get(asset.application) ?? []),
-                    medianDelay: median(delays.get(asset.application) ?? []),
-                  })
                 }
               }
             }
@@ -133,19 +140,38 @@ const cmd = command({
 
     await Promise.all(promises)
 
-    console.log('COUNTS')
-    console.log(counts)
-    console.log('DELAYS')
-    console.log(delays)
+    for (const protocol of CONFIG.protocols) {
+      const cc = transfers.get(protocol)
+      if (!cc) continue
+      const dd = delays.get(protocol)
+      if (!dd) continue
+
+      logger.info(`${protocol} stats`, {
+        transfers: {
+          count: cc.length,
+          outbound: cc.filter((x) => x.direction === 'outbound').length,
+          inbound: cc.filter((x) => x.direction === 'inbound').length,
+        },
+        delays: {
+          min: Math.min(...dd),
+          max: Math.max(...dd),
+          average: average(dd),
+          median: median(dd),
+        },
+      })
+    }
+
+    logger.info('For more info go to ./scripts/bridges/matching.csv')
 
     writeFileSync(
-      './matching.csv',
-      Array.from(matching.entries())
-        .map(
-          ([id, { outbound, inbound }]) =>
-            `${outbound.application};${outbound.amount};${inbound.blockTimestamp - outbound.blockTimestamp}${id};`,
-        )
-        .join('\n'),
+      './scripts/bridges/matching.csv',
+      'protocol;delay;origin;originTx;destination;destinationTx\n' +
+        Array.from(matching.entries())
+          .map(
+            ([_, { outbound, inbound }]) =>
+              `${outbound.application};${inbound.blockTimestamp - outbound.blockTimestamp};${outbound.origin};${outbound.txHash};${inbound.destination};${inbound.txHash}`,
+          )
+          .join('\n'),
     )
   },
 })
@@ -194,21 +220,31 @@ const CONFIG: {
   chains: [
     {
       name: 'ethereum',
-      from: 23087218,
-      to: 23088218,
+      from: 23090032 - 1000, // 6th August 00:00
+      to: 23090032, // 7th August 00:00
     },
     {
       name: 'arbitrum',
-      from: 365871936,
-      to: 365873936,
+      from: 365952394 - 1000, // 6th August 00:00
+      to: 365952394, // 7th August 00:00
     },
     {
       name: 'base',
-      from: 33883542,
-      to: 33885542,
+      from: 33895327 - 1000, // 6th August 00:00
+      to: 33895327, // 7th August 00:00
     },
   ],
-  protocols: ['across'],
+  protocols: [
+    'across',
+    'agglayer',
+    'cctpv1',
+    'cctpv2',
+    'debridge',
+    'hyperlane',
+    'stargate',
+    'wormhole-cctp',
+    'wormhole-portal',
+  ],
 }
 
 const average = (arr: number[]) => arr.reduce((a, b) => a + b) / arr.length
@@ -222,3 +258,20 @@ function median(numbers: number[]) {
 
   return sorted[middle]
 }
+
+/*
+{
+  name: 'ethereum',
+  from: 23078306, // 6th August 00:00
+  to: 23085465, // 7th August 00:00
+},
+{
+  name: 'arbitrum',
+  from: 365386232, // 6th August 00:00
+  to: 365731025, // 7th August 00:00
+},
+{
+  name: 'base',
+  from: 33824526, // 6th August 00:00
+  to: 33867726, // 7th August 00:00
+},*/
