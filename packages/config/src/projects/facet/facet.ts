@@ -43,12 +43,12 @@ export const facet: ScalingProject = {
   ],
   scopeOfAssessment: {
     inScope: [
-      'Ability to deposit, spend, and withdraw ETH from the selected bridge (L1ETHBridge) built on top of Rollup',
+      'Ability to deposit, spend, and withdraw ETH from the selected bridge (L1Bridge) built on top of Rollup',
       'Sequencing mechanism via L1 through the Inbox and state validation mechanism via the Rollup proof system',
-      'Upgradability of contracts including the selected bridge (L1ETHBridge)',
+      'Upgradability of contracts including the selected bridge (L1Bridge)',
     ],
     notInScope: [
-      'Ability to deposit, spend, and withdraw ETH from any bridge other than the selected bridge (L1ETHBridge)',
+      'Ability to deposit, spend, and withdraw ETH from any bridge other than the selected bridge (L1Bridge)',
       'Bridged token compatibility with other DeFi applications e.g., Bluebird WETH (BBWETH)',
       'The soundness of the ZK proof system of Rollup',
       'Upgradability of the external bridge contracts (e.g., FacetEtherBridgeV6)',
@@ -87,7 +87,7 @@ export const facet: ScalingProject = {
     description:
       'Facet is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by burning ETH on L1.',
     headerWarning:
-      'The vast majority of funds bridged to Facet are bridged through external non-canonical bridges. Note that external bridges may introduce additional trust assumptions and the Stage and risk rosette assessment on this page apply to the canonical bridge. L2BEAT is working on a TVS and asset framework to assess the risks of individual tokens, you can follow the latest updates [here](https://forum.l2beat.com/t/assets-bridges-and-tvs/388).',
+      'The vast majority of funds bridged to Facet are bridged through external non-canonical bridges. Note that external bridges may introduce additional trust assumptions and the bridge-related aspects of the Stage and risk rosette assessment on this page apply only to bridges using the same proof system as the canonical bridge. L2BEAT is working on a TVS and asset framework to assess the risks of individual tokens, you can follow the latest updates [here](https://forum.l2beat.com/t/assets-bridges-and-tvs/388).',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
@@ -243,11 +243,11 @@ export const facet: ScalingProject = {
         risks: [],
         references: [
           {
-            title: 'L1 ETH Bridge - Etherscan',
+            title: 'L1 Bridge - Etherscan',
             url: 'https://etherscan.io/address/0x4e2eba30a786c0643699b92234d74a71e958c08e',
           },
           {
-            title: 'L2 ETH (BBWETH) Bridge - Facet Explorer',
+            title: 'L2 (BBWETH) Bridge - Facet Explorer',
             url: 'https://explorer.facet.org/address/0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4',
           },
         ],
@@ -293,7 +293,7 @@ export const facet: ScalingProject = {
       {
         title: 'Validity proofs',
         description:
-          "The system uses Succinct's SP1 zkVM and Prover Network to generate zero-knowledge proofs that verify L2 state transitions. Anyone can submit a validity proof through the proveBlock() function of the Rollup contract to bypass the optimistic flow and settle an anchor block. Submitting a validity proof during a challenge can settle disputes in a single transaction.",
+          "The system uses Succinct's SP1 zkVM and Prover Network to generate zero-knowledge proofs that verify L2 state transitions. Anyone can submit a validity proof through the proveBlock() function of the Rollup contract to bypass the optimistic flow and settle an anchor block. Submitting a validity proof during a challenge settles the dispute in a single transaction.",
         references: [
           {
             title: 'Facet ZK Fault Proofs - GitHub Repository',
