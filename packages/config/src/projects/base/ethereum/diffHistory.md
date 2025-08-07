@@ -10,7 +10,7 @@ Generated with discovered.json: 0x2ccaed346da171abcf0a5469e58b2fdbe52f11f0
 
 Base uses the same SuperchainConfig as OP mainnet, ink, unichain, soneium and swaps the DeputyGuardian Module for the DeputyPauser module in this gov upgrade.
 
-base is now principle compliant albeit with terrible liveness for the SC.
+base is now principally compliant albeit with terrible liveness for the SC.
 
 all other changes from upgrade 16 are not followed by base (see op mainnet diffHistory).
 
