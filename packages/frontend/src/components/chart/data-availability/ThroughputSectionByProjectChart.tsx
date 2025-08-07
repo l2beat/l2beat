@@ -89,7 +89,7 @@ export function ThroughputSectionByProjectChart({
 
   return (
     <div>
-      <div className="mt-4 mb-3 flex flex-col justify-between gap-1">
+      <div className="mt-2 mb-3 flex flex-col justify-between gap-1">
         <div className="flex flex-wrap items-center justify-between gap-x-1">
           <ProjectChartTimeRange range={chartRange} />
           {daLayer === 'eigenda' && <EigenDataSourceInfo />}

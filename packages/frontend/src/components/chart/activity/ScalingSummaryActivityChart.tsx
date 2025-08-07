@@ -23,6 +23,11 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
+import {
+  YellowFillGradientDef,
+  YellowStrokeGradientDef,
+} from '~/components/core/chart/defs/YellowGradientDef'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -56,6 +61,13 @@ const chartMeta = {
       shape: 'line',
     },
   },
+  others: {
+    label: 'Others',
+    color: 'var(--chart-yellow)',
+    indicatorType: {
+      shape: 'line',
+    },
+  },
   ethereum: {
     label: 'Ethereum',
     color: 'var(--chart-ethereum)',
@@ -66,6 +78,7 @@ const chartMeta = {
 } satisfies ChartMeta
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, ['others'])
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: { type: 'withoutOthers' },
   })
@@ -76,7 +89,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
 
   const chartData = useMemo(() => {
     return data?.data.map(
-      ([timestamp, rollups, validiumsAndOptimiums, ethereum]) => {
+      ([timestamp, rollups, validiumsAndOptimiums, others, ethereum]) => {
         return {
           timestamp,
           rollups: rollups !== null ? countPerSecond(rollups) : null,
@@ -84,6 +97,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             validiumsAndOptimiums !== null
               ? countPerSecond(validiumsAndOptimiums)
               : null,
+          others: others !== null ? countPerSecond(others) : null,
           ethereum: ethereum !== null ? countPerSecond(ethereum) : null,
         }
       },
@@ -93,33 +107,54 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <Header stats={stats} />
-      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
+      <ChartContainer
+        meta={chartMeta}
+        data={chartData}
+        isLoading={isLoading}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+        }}
+      >
         <AreaChart data={chartData} margin={{ top: 20 }}>
           <defs>
             <PinkFillGradientDef id="rollups-fill" />
             <PinkStrokeGradientDef id="rollups-stroke" />
             <CyanFillGradientDef id="validiums-and-optimiums-fill" />
             <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
+            <YellowFillGradientDef id="others-fill" />
+            <YellowStrokeGradientDef id="others-stroke" />
             <EthereumFillGradientDef id="ethereum-fill" />
             <EthereumStrokeGradientDef id="ethereum-stroke" />
           </defs>
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend
+            content={<ChartLegendContent disableOnboarding={true} />}
+          />
           {getStrokeOverFillAreaComponents({
             data: [
               {
                 dataKey: 'rollups',
                 stroke: 'url(#rollups-stroke)',
                 fill: 'url(#rollups-fill)',
+                hide: !dataKeys.includes('rollups'),
               },
               {
                 dataKey: 'validiumsAndOptimiums',
                 stroke: 'url(#validiums-and-optimiums-stroke)',
                 fill: 'url(#validiums-and-optimiums-fill)',
+                hide: !dataKeys.includes('validiumsAndOptimiums'),
+              },
+              {
+                dataKey: 'others',
+                stroke: 'url(#others-stroke)',
+                fill: 'url(#others-fill)',
+                hide: !dataKeys.includes('others'),
               },
               {
                 dataKey: 'ethereum',
                 stroke: 'url(#ethereum-stroke)',
                 fill: 'url(#ethereum-fill)',
+                hide: !dataKeys.includes('ethereum'),
               },
             ],
           })}
