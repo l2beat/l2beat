@@ -198,7 +198,7 @@ However, there is a mechanism that allows users to challenge unavailability of d
         },
         {
           category: 'Funds can be lost if',
-          text: 'the sequencer posts an invalid data availability commitment, and he is able to outspend the challengers.',
+          text: 'the sequencer posts an invalid data availability commitment, and they are able to outspend the challengers.',
         },
       ],
     },

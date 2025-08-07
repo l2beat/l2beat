@@ -17,7 +17,7 @@ export const ethernity: ScalingProject = opStackL2({
     name: 'Epic Chain',
     slug: 'epicchain',
     description:
-      'Epic chain, previously Ehternity, is a low-cost Layer 2 solution on the Superchain, designed to bring global entertainment franchises onto the blockchain.',
+      'Epic chain, previously Ethernity, is a low-cost Layer 2 solution on the Superchain, designed to bring global entertainment franchises onto the blockchain.',
     links: {
       websites: ['https://epicchain.io/'],
       bridges: [
