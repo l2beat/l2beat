@@ -1,3 +1,116 @@
+Generated with discovered.json: 0x5fe4d0fbab344c2ff817fe1f4943eefbc7e1020c
+
+# Diff at Wed, 06 Aug 2025 09:35:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1702d91eebfba5d614c3470bbe1babe10fbe4c2b block: 1753724531
+- current timestamp: 1754472899
+
+## Description
+
+New dispute game, no diff: https://disco.l2beat.com/diff/eth:0xD362F83945118dC953924Da1E30D7029b9Cf113d/eth:0x388DEfE576077257074F77c727aA5F2e3B815E21
+
+the state that we can see also did not change.
+
+all other changes are config related (i checked manually).
+
+## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.1:
++        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0xc1Ce5240B42AB158027095f658d530F9989b414F"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+      values.$pastUpgrades.2:
++        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0x61B220bbfeF9A94163764928B039d85e94A509d9"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.accessControl.GAME_CREATOR_ROLE.members.1:
++        "eth:0xAaaAA9A2e72753cE09915fee7c0AFa6f34745799"
+      values.gameCreator.1:
++        "eth:0xAaaAA9A2e72753cE09915fee7c0AFa6f34745799"
+      values.gameImpls.0:
+-        "eth:0xD362F83945118dC953924Da1E30D7029b9Cf113d"
++        "eth:0x388DEfE576077257074F77c727aA5F2e3B815E21"
+    }
+```
+
+```diff
+    contract FaultProofLockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb) {
+    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.
+      values.$pastUpgrades.2:
++        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0x1061528C33b8034952fb7355cC481e193b29FCa6"]]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0xD362F83945118dC953924Da1E30D7029b9Cf113d)
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x388DEfE576077257074F77c727aA5F2e3B815E21)
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753724531 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.1:
+-        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0xc1Ce5240B42AB158027095f658d530F9989b414F"]]
+      values.$upgradeCount:
+-        2
++        1
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+      values.$pastUpgrades.2:
+-        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0x61B220bbfeF9A94163764928B039d85e94A509d9"]]
+      values.$upgradeCount:
+-        3
++        2
+      values.accessControl.GAME_CREATOR_ROLE.members.1:
+-        "eth:0xAaaAA9A2e72753cE09915fee7c0AFa6f34745799"
+      values.gameCreator.1:
+-        "eth:0xAaaAA9A2e72753cE09915fee7c0AFa6f34745799"
+    }
+```
+
+```diff
+    contract FaultProofLockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb) {
+    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.
+      values.$pastUpgrades.2:
+-        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0x1061528C33b8034952fb7355cC481e193b29FCa6"]]
+      values.$upgradeCount:
+-        3
++        2
+    }
+```
+
 Generated with discovered.json: 0xed1558c85ada56f0d1f361c1786fe90edc0f3cbe
 
 # Diff at Mon, 28 Jul 2025 17:42:23 GMT:
