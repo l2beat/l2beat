@@ -25,6 +25,7 @@ type DaThroughputChartDataPoint = [
 export type DaThroughputChartDataByChart = {
   chart: DaThroughputChartDataPoint[]
   syncedUntil: number
+  sovereignProjects: string[]
 }
 
 export const DaThroughputChartByProjectParams = v.object({
@@ -62,6 +63,7 @@ const getDaThroughputChartByProjectData = async (
     return {
       chart: [],
       syncedUntil: UnixTime.now(),
+      sovereignProjects: [],
     }
   }
 
@@ -99,6 +101,9 @@ const getDaThroughputChartByProjectData = async (
   return {
     chart,
     syncedUntil,
+    sovereignProjects:
+      daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => p.name) ??
+      [],
   }
 }
 
@@ -210,5 +215,6 @@ async function getMockDaThroughputChartByProjectData({
       Object.fromEntries(projects.map((p) => [p, value()])),
     ]),
     syncedUntil: to,
+    sovereignProjects: [],
   }
 }
