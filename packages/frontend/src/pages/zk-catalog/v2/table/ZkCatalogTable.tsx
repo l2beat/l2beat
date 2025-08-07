@@ -139,7 +139,10 @@ function TrustedSetupCells({
             <p className="font-medium text-label-value-12 text-secondary">
               Used in
             </p>
-            <ProjectsUsedIn usedIn={trustedSetups.projectsUsedIn} />
+            <ProjectsUsedIn
+              noL2ClassName="text-label-value-12 font-medium text-secondary"
+              usedIn={trustedSetups.projectsUsedIn}
+            />
           </div>
         </div>
       </TableCell>
