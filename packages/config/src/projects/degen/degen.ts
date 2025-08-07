@@ -26,7 +26,7 @@ export const degen: ScalingProject = orbitStackL3({
     links: {
       websites: ['https://syndicate.io/blog/degen-chain'],
       bridges: ['https://bridge.degen.tips/', 'https://degen.tips/'],
-      documentation: ['https://docs.syndicate.io/get-started/introduction'],
+      documentation: ['https://docs.syndicate.io/docs/get-started/introduction'],
       explorers: ['https://explorer.degen.tips/'],
       socialMedia: [
         'https://twitter.com/degentokenbase',
