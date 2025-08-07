@@ -12,6 +12,7 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
@@ -34,10 +35,17 @@ export function DaPercentageThroughputChart({
   resolution,
 }: Props) {
   const chartMeta = getDaChartMeta({ shape: 'square' })
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
-      const total =
-        (ethereum ?? 0) + (celestia ?? 0) + (avail ?? 0) + (eigenda ?? 0)
+      const toSum = [
+        dataKeys.includes('ethereum') ? ethereum : 0,
+        dataKeys.includes('celestia') ? celestia : 0,
+        dataKeys.includes('avail') ? avail : 0,
+        dataKeys.includes('eigenda') ? eigenda : 0,
+      ].filter((e) => e !== null)
+
+      const total = toSum.reduce((acc, curr) => acc + curr, 0)
       if (total === 0) {
         return {
           timestamp: timestamp,
@@ -55,12 +63,20 @@ export function DaPercentageThroughputChart({
         eigenda: eigenda !== null ? round((eigenda / total) * 100, 2) : null,
       }
     })
-  }, [data])
+  }, [data, dataKeys])
 
   const syncedUntil = Math.max(...Object.values(syncStatus ?? {}))
 
   return (
-    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+    <ChartContainer
+      data={chartData}
+      meta={chartMeta}
+      isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
+    >
       <BarChart
         accessibilityLayer
         data={chartData}
@@ -73,24 +89,28 @@ export function DaPercentageThroughputChart({
           stackId="a"
           fill={chartMeta.ethereum.color}
           isAnimationActive={false}
+          hide={!dataKeys.includes('ethereum')}
         />
         <Bar
           dataKey="avail"
           stackId="a"
           fill={chartMeta.avail.color}
           isAnimationActive={false}
+          hide={!dataKeys.includes('avail')}
         />
         <Bar
           dataKey="celestia"
           stackId="a"
           fill={chartMeta.celestia.color}
           isAnimationActive={false}
+          hide={!dataKeys.includes('celestia')}
         />
         <Bar
           dataKey="eigenda"
           stackId="a"
           fill={chartMeta.eigenda.color}
           isAnimationActive={false}
+          hide={!dataKeys.includes('eigenda')}
         />
         {getCommonChartComponents({
           data: chartData,
@@ -154,7 +174,7 @@ function CustomTooltip({
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
-          if (!configEntry) return null
+          if (!configEntry || entry.hide) return null
 
           const projectSyncStatus = entry.name
             ? syncStatus?.[entry.name]

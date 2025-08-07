@@ -19,6 +19,7 @@ import {
   DrawerTrigger,
 } from '../Drawer'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
+import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
 
 type TimestampedMilestone = {
   timestamp: number
@@ -92,12 +93,16 @@ function ChartMilestone({
   const isMobile = useIsMobile()
   const triggerMilestone = allMilestones[milestoneIndex]
   assert(triggerMilestone)
+  const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
 
   const Icon =
     triggerMilestone.type === 'general' ? MilestoneIcon : IncidentIcon
 
-  const common =
-    'absolute bottom-5 group-has-[.recharts-legend-wrapper]:bottom-8'
+  const common = cn(
+    'absolute bottom-5 group-has-[.recharts-legend-wrapper]:bottom-[34px]',
+    !hasFinishedOnboardingInitial &&
+      'group-has-[.recharts-legend-wrapper]:bottom-[46px]',
+  )
   if (isMobile) {
     return (
       <Drawer>
