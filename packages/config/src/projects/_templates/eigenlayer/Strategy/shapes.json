@@ -22,5 +22,17 @@
     "address": "0x0EC17ef9c00F360DB28CA8008684a4796b11E456",
     "chain": "ethereum",
     "blockNumber": 22424645
+  },
+  "Strategy_2": {
+    "hash": "0x162ffe3ef6e872099c9fd14d63e6aa37922cde251b0e9af8360ccf20aa375274",
+    "address": "0xD4d1746142642Db4c1ab17b03B9c58baac913E5B",
+    "chain": "ethereum",
+    "blockNumber": 23083601
+  },
+  "Strategy_bEIGEN": {
+    "hash": "0xb58160c9903763d4c6dd724e3ce4e687fa5eeff34a50885a3a3b614aee688553",
+    "address": "0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be",
+    "chain": "ethereum",
+    "blockNumber": 23083608
   }
 }
