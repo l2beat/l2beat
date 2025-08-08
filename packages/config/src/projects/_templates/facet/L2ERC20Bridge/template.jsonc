@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2Bridge",
+  "description": "L2Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
+  "ignoreMethods": ["finalizedDeposits"],
+  "category": "bridge-canonical"
+}

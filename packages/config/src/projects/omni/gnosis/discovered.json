@@ -673,10 +673,12 @@
       "name": "SP1Verifier",
       "address": "gno:0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
       "sinceTimestamp": 1748854505,
       "sinceBlock": 40374619,
       "values": {
@@ -1614,7 +1616,8 @@
     "gnosisbridge/HashiManager": "0xa1138883de6a552d21b8e9078c9213aabe3c975dffc34d54f61c0f3c437ab1ff",
     "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "gnosis": 41434176 },
   "permissionsConfigHash": "0x59501709611c93965ad209722baf49b221b517759119304e98aacd9b0b2a0a3c"
