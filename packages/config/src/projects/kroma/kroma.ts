@@ -135,7 +135,7 @@ export const kroma: ScalingProject = {
         sinceTimestamp: UnixTime(1693880555),
         tokens: '*',
         description:
-          'Main entry point for users depositing ERC20 token that do not require custom gateway.',
+          'Main entry point for users depositing ERC20 tokens that do not require custom gateway.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(

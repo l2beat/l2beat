@@ -146,7 +146,7 @@ function DefaultChart({
         unit={unit}
         isLoading={isLoading}
         tickCount={4}
-        className="mt-4 mb-2"
+        className="mt-4 mb-3"
         syncedUntil={data?.syncedUntil}
         dataKeys={dataKeys}
         toggleDataKey={toggleDataKey}

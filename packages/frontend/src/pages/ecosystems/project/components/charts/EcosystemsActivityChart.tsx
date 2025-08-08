@@ -103,12 +103,11 @@ export function EcosystemsActivityChart({
         interactiveLegend={{
           dataKeys,
           onItemClick: toggleDataKey,
+          disableOnboarding: true,
         }}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-          <ChartLegend
-            content={<ChartLegendContent disableOnboarding={true} />}
-          />
+          <ChartLegend content={<ChartLegendContent />} />
           {getStrokeOverFillAreaComponents({
             data: [
               {

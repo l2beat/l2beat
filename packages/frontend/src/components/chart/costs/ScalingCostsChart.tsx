@@ -115,7 +115,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
         range={range}
         hasBlobs={!!data?.hasBlobs}
         hasPostedData={false}
-        className="mt-4 mb-2"
+        className="mt-4 mb-3"
       />
       <ChartControlsWrapper>
         <div className="flex flex-wrap gap-1">

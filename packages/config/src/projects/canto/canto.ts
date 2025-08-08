@@ -4,7 +4,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 
 export const canto: ScalingProject = upcomingL2({
   id: 'canto',
-  capability: 'universal', // this project should be deleted, because the team is no longer builiding the L2.
+  capability: 'universal', // this project should be deleted, because the team is no longer building the L2.
   addedAt: UnixTime(1690815262), // '2023-07-31T14:54:22Z'
   display: {
     name: 'Canto',

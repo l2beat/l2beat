@@ -317,7 +317,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       ])
     })
 
-    it('split time range to hours and get liveness data for each our', async () => {
+    it('split time range to hours and get liveness data for each hour', async () => {
       const mockLivenessRepository = mockObject<Database['liveness']>({
         getRecordsInRangeWithLatestBefore: mockFn().resolvesTo(MOCK_LIVENESS),
       })
