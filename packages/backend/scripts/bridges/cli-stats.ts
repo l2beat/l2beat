@@ -14,23 +14,25 @@ const CONFIG: {
   chains: { name: string; from: number; to: number }[]
   protocols: string[]
 } = {
+  // names have to be the same as in ./chains.ts
   chains: [
     {
       name: 'ethereum',
-      from: 23085465 - (2 * 60 * 60) / 12,
+      from: 23085465 - (2 * 60 * 60) / 12, // ~2 hours, block time is 12s
       to: 23085465, // 7th August 00:00
     },
     {
       name: 'arbitrum',
-      from: 365731025 - (2 * 60 * 60) / 0.25,
+      from: 365731025 - (2 * 60 * 60) / 0.25, // ~2 hours, block time is 250ms
       to: 365731025, // 7th August 00:00
     },
     {
       name: 'base',
-      from: 33867726 - (2 * 60 * 60) / 2,
+      from: 33867726 - (2 * 60 * 60) / 2, // ~2 hours, block time is 2s
       to: 33867726, // 7th August 00:00
     },
   ],
+  // names have to be the same as in decoders exports
   protocols: [
     'across',
     'agglayer',
