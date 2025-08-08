@@ -36,7 +36,6 @@ export class Decoder {
       for (const transaction of block.transactions) {
         assert(transaction.hash)
         for (const log of logsByTx[transaction.hash] ?? []) {
-          assert(transaction.to)
           const decoded = await decoder(
             chain,
             {
@@ -47,7 +46,9 @@ export class Decoder {
               transactionLogs: (logsByTx[transaction.hash] ?? []).map(
                 logToViemLog,
               ),
-              transactionTo: EthereumAddress(transaction.to),
+              transactionTo: transaction.to
+                ? EthereumAddress(transaction.to)
+                : undefined,
             },
             chain.rpc,
           )

@@ -11,8 +11,8 @@ export function logToViemLog(log: EVMLog): Log {
 
     // Unsupported values for now
     blockHash: 'UNSUPPORTED' as Hex,
-    logIndex: -1,
     transactionIndex: -1,
+    logIndex: -1,
     removed: false,
   }
 }
