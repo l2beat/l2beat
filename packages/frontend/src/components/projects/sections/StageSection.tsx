@@ -18,7 +18,6 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { StageOneRequirementsChangeStageSectionNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { CustomLink } from '~/components/link/CustomLink'
-import { externalLinks } from '~/consts/externalLinks'
 import { featureFlags } from '~/consts/featureFlags'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { InfoIcon } from '~/icons/Info'
@@ -295,10 +294,7 @@ export function StageSection({
           )
         })}
       </Accordion>
-      <CustomLink
-        href={externalLinks.articles.stages}
-        className="mt-3 block text-sm"
-      >
+      <CustomLink href="/stages" className="mt-3 block text-sm">
         Learn more about Rollup stages
       </CustomLink>
       <Callout
