@@ -105,9 +105,9 @@ function ChartContainer<T extends { timestamp: number }>({
   const isClient = useIsClient()
 
   const hasData = data && data.length > 1
-  console.log(Object.keys(meta), interactiveLegend)
+
   const noDataSourcesSelected = Object.keys(meta).every(
-    (key) => interactiveLegend && !interactiveLegend.dataKeys.includes(key),
+    (key) => interactiveLegend && !interactiveLegend?.dataKeys.includes(key),
   )
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
