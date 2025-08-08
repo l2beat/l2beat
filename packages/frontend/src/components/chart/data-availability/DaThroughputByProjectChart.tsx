@@ -19,10 +19,10 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
-import { cn } from '~/utils/cn'
 import { formatRange } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { getDaDataParams } from './getDaDataParams'
@@ -95,10 +95,8 @@ export function DaThroughputByProjectChart({
     return allProjects.slice(5)
   }, [allProjects])
 
-  const { dataKeys, toggleDataKey, toggleAllDataKeys } = useChartDataKeys(
-    chartMeta,
-    hiddenDataKeys,
-  )
+  const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
+    useChartDataKeys(chartMeta, hiddenDataKeys)
 
   const max = useMemo(() => {
     return data
@@ -175,21 +173,14 @@ export function DaThroughputByProjectChart({
         <ChartLegend
           content={
             <ChartLegendContent>
-              <div
-                className="group/legend-item flex cursor-pointer select-none items-center gap-[3px] transition-opacity [&>svg]:text-secondary"
-                onClick={toggleAllDataKeys}
-              >
-                <ChartDataIndicator
-                  type={{ shape: 'square' }}
-                  backgroundColor="var(--primary)"
-                />
-                <span
-                  className={cn(
-                    'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity group-hover/legend-item:opacity-50',
-                  )}
+              <div className="flex items-center">
+                <button
+                  className="w-11 cursor-pointer select-none text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity hover:opacity-50 [&>svg]:text-secondary"
+                  onClick={toggleAllDataKeys}
                 >
-                  All
-                </span>
+                  {showAllSelected ? 'Hide' : 'Show'} all
+                </button>
+                <VerticalSeparator className="mx-2 h-3" />
               </div>
             </ChartLegendContent>
           }

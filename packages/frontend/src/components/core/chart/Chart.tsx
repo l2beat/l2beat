@@ -223,14 +223,15 @@ function ChartLegendContent({
   return (
     <div
       className={cn(
-        'relative',
+        'relative flex items-center',
         isInteractive &&
           !hasFinishedOnboardingInitial &&
           !disableOnboarding &&
           'mb-3',
       )}
     >
-      <OverflowWrapper childrenRef={contentRef}>
+      {children}
+      <OverflowWrapper childrenRef={contentRef} className="min-w-0">
         <div
           className={cn(
             'mx-auto flex h-3.5 w-fit items-center gap-2',
@@ -239,7 +240,6 @@ function ChartLegendContent({
           )}
           ref={contentRef}
         >
-          {children}
           {actualPayload.map((item) => {
             const key = `${nameKey ?? item.dataKey ?? 'value'}`
             const itemConfig = getPayloadConfigFromPayload(meta, item, key)

@@ -1,15 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ChartMeta } from '../Chart'
 
 export function useChartDataKeys<T extends ChartMeta>(
   chartMeta: T,
   hiddenDataKeys?: (keyof T)[],
 ) {
-  const showAllDataKeys = useRef(false)
+  const [showAllSelected, setShowAllSelected] = useState(false)
   const [dataKeys, setDataKeys] = useState<(keyof T)[] | null>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: do not re-run this effect when showAllDataKeys changes
   useEffect(() => {
-    if (showAllDataKeys.current) {
+    if (showAllSelected) {
       setDataKeys(Object.keys(chartMeta))
       return
     }
@@ -30,8 +31,8 @@ export function useChartDataKeys<T extends ChartMeta>(
   }, [chartMeta, hiddenDataKeys])
 
   const toggleDataKey = (dataKey: keyof T | (string & {})) => {
-    if (showAllDataKeys.current) {
-      showAllDataKeys.current = false
+    if (showAllSelected) {
+      setShowAllSelected(false)
     }
 
     setDataKeys((prev) => {
@@ -40,22 +41,19 @@ export function useChartDataKeys<T extends ChartMeta>(
       }
       const result = [...(prev ?? []), dataKey]
       if (result.length === Object.keys(chartMeta).length) {
-        showAllDataKeys.current = true
+        setShowAllSelected(true)
       }
       return result
     })
   }
 
   const toggleAllDataKeys = () => {
-    showAllDataKeys.current = !showAllDataKeys.current
-    if (showAllDataKeys.current) {
-      setDataKeys(Object.keys(chartMeta))
-    } else {
-      setDataKeys([])
-    }
+    setDataKeys(showAllSelected ? [] : Object.keys(chartMeta))
+    setShowAllSelected((prev) => !prev)
   }
 
   return {
+    showAllSelected,
     dataKeys: dataKeys ?? [],
     toggleDataKey,
     toggleAllDataKeys,
