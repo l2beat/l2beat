@@ -1,7 +1,9 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, ChainConverter } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { readFileSync } from 'fs'
 import { bridges } from '../processing/bridges'
 import { chains } from '../processing/chains'
+import { generateTokenNames, getTokenNamesFilePath } from './generateTokenNames'
 import {
   getDiscoveryTokenList,
   getGeneratedTokenList,
@@ -85,6 +87,43 @@ describe('tokens', () => {
       }
 
       expect(duplicates).toEqual([])
+    })
+  })
+
+  describe('globalTokens.jsonc', () => {
+    it('is up to date', async () => {
+      const globalTokens = JSON.parse(
+        readFileSync(getTokenNamesFilePath(), 'utf8'),
+      ).names
+
+      const chainConverter = new ChainConverter(chains)
+
+      const upToDateTokenList = tokenList.map((x) => ({
+        name: x.name,
+        chain: chainConverter.toName(x.chainId),
+        address: x.address,
+      }))
+
+      const upToDateGenerated = generateTokenNames(upToDateTokenList)
+
+      // Array comparison to have meaningful error messages
+      const missingInGlobal = Object.entries(upToDateGenerated).filter(
+        ([key]) => !Object.keys(globalTokens).includes(key),
+      )
+
+      if (missingInGlobal.length > 0) {
+        const missingTokensPretty = missingInGlobal
+          .map(([address, name]) => `- ${address} (${name})`)
+          .join(', \n')
+
+        throw new Error(
+          `
+            Following tokens are missing:
+            \n${missingTokensPretty}
+            \nRun 'pnpm tokens:generate-names' in config folder and then 'l2b colorize' to apply new names.
+          `,
+        )
+      }
     })
   })
 })
