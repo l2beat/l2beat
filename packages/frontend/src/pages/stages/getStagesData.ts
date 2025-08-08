@@ -20,7 +20,6 @@ export async function getStagesData(
       manifest,
       metadata: getMetadata(manifest, {
         title: 'Stages - L2BEAT',
-        description: 'Page explaining the L2BEAT Stages framework.',
         openGraph: {
           url,
           image: '/meta-images/stages/opengraph-image.png',
