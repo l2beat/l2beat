@@ -46,7 +46,7 @@ export function DaThroughputByProjectChart({
 
   const allProjects = useMemo(() => {
     // We want to get latest top projects.
-    const result = data
+    let result = data
       ? uniq(
           [...data.chart]
             .reverse()
@@ -60,7 +60,10 @@ export function DaThroughputByProjectChart({
       : []
 
     if (includeScalingOnly) {
-      result.pop()
+      result = result.filter(
+        (project) =>
+          !data?.sovereignProjects.includes(project) && project !== 'Unknown',
+      )
     }
     return result
   }, [data, includeScalingOnly])

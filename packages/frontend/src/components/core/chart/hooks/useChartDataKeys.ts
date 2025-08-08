@@ -55,5 +55,9 @@ export function useChartDataKeys<T extends ChartMeta>(
     }
   }
 
-  return { dataKeys: dataKeys ?? [], toggleDataKey, toggleAllDataKeys }
+  return {
+    dataKeys: dataKeys ?? [],
+    toggleDataKey,
+    toggleAllDataKeys,
+  }
 }
