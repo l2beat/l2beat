@@ -12,7 +12,7 @@ export interface ProgressEvent {
   eta: number
 }
 
-interface EmitedEvents {
+interface EmittedEvents {
   progress: (progress: ProgressEvent) => void
   finish: (progress: ProgressEvent) => void
 }
@@ -22,16 +22,16 @@ export class ResponseProgress extends EventEmitter {
   private done: number
   private startedAt: number
 
-  override emit<K extends keyof EmitedEvents>(
+  override emit<K extends keyof EmittedEvents>(
     event: K,
-    ...args: Parameters<EmitedEvents[K]>
+    ...args: Parameters<EmittedEvents[K]>
   ): boolean {
     return super.emit(event, ...args)
   }
 
-  override on<K extends keyof EmitedEvents>(
+  override on<K extends keyof EmittedEvents>(
     event: K,
-    listener: EmitedEvents[K],
+    listener: EmittedEvents[K],
   ): this {
     return super.on(event, listener)
   }

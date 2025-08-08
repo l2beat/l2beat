@@ -70,7 +70,7 @@ function toToken(
   chains: ChainConfig[],
 ): LegacyToken {
   const chain = chains.find((c) => c.chainId === +generated.chainId)
-  assert(chain, `Chain nor found for ${generated.symbol}`)
+  assert(chain, `Chain not found for ${generated.symbol}`)
   assert(
     chain.sinceTimestamp,
     `Token added for chain without sinceTimestamp ${chain.name}`,

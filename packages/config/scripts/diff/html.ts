@@ -9,7 +9,7 @@ export function diffsToHtml(props: {
   const hashBefore = props.commitBefore.slice(0, 8)
   const hashAfter = props.commitAfter.slice(0, 8)
   const linkBefore = `https://github.com/l2beat/l2beat/tree/${props.commitBefore}`
-  const linkAfter = `https://github.com/l2beat/l2beat/tree/${props.commitBefore}`
+  const linkAfter = `https://github.com/l2beat/l2beat/tree/${props.commitAfter}`
 
   const alpineSource = readFileSync(
     require.resolve('alpinejs/dist/cdn.min.js'),
