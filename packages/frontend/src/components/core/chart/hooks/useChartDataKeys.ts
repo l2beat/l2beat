@@ -31,20 +31,12 @@ export function useChartDataKeys<T extends ChartMeta>(
   }, [chartMeta, hiddenDataKeys])
 
   const toggleDataKey = (dataKey: keyof T | (string & {})) => {
-    if (showAllSelected) {
-      setShowAllSelected(false)
-    }
+    const newDataKeys = dataKeys?.includes(dataKey)
+      ? dataKeys.filter((key) => key !== dataKey)
+      : [...(dataKeys ?? []), dataKey]
 
-    setDataKeys((prev) => {
-      if (prev?.includes(dataKey)) {
-        return prev.filter((key) => key !== dataKey)
-      }
-      const result = [...(prev ?? []), dataKey]
-      if (result.length === Object.keys(chartMeta).length) {
-        setShowAllSelected(true)
-      }
-      return result
-    })
+    setShowAllSelected(newDataKeys.length === Object.keys(chartMeta).length)
+    setDataKeys(newDataKeys)
   }
 
   const toggleAllDataKeys = () => {

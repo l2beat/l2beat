@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -71,24 +72,27 @@ export function ActivityChart({
   className,
   tickCount,
 }: Props) {
-  const chartMeta = {
-    projects: {
-      label:
-        projectName ??
-        (type === 'ValidiumsAndOptimiums' ? 'Validiums & Optimiums' : type),
-      color: typeToColor(type),
-      indicatorType: {
-        shape: 'line',
+  const chartMeta = useMemo(
+    () => ({
+      projects: {
+        label:
+          projectName ??
+          (type === 'ValidiumsAndOptimiums' ? 'Validiums & Optimiums' : type),
+        color: typeToColor(type),
+        indicatorType: {
+          shape: 'line',
+        },
       },
-    },
-    ethereum: {
-      label: 'Ethereum',
-      color: 'var(--chart-ethereum)',
-      indicatorType: {
-        shape: 'line',
+      ethereum: {
+        label: 'Ethereum',
+        color: 'var(--chart-ethereum)',
+        indicatorType: {
+          shape: 'line',
+        },
       },
-    },
-  } satisfies ChartMeta
+    }),
+    [projectName, type],
+  ) satisfies ChartMeta
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
 
