@@ -50,44 +50,47 @@ export function scheduleBatchPlugin(
     }
 
     const target = targets.decoded.values[i]
-    if (
-      target?.decoded?.type !== 'address' ||
-      target.decoded.value !== RETRYABLE_TICKET_MAGIC
-    ) {
+    if (target?.decoded?.type !== 'address') {
       continue
     }
 
-    const parsed = decodePayload(item, chain)
-    if (parsed) {
+    if (target.decoded.value === RETRYABLE_TICKET_MAGIC) {
+      const parsed = decodePayload(item, chain)
+      if (!parsed) {
+        continue
+      }
       payloads.decoded.values[i] = parsed
-      if (parsed.decoded?.type === 'array') {
-        const inbox = parsed.decoded.values[0]?.decoded
-        if (inbox?.type !== 'address') {
-          return false
-        }
-        const destinationShortChainName = L2Inboxes[inbox.value]
-        if (destinationShortChainName === undefined) {
-          return false
-        }
-        const destinationChain = chains.find(
-          (x) => x.shortName === destinationShortChainName,
-        )
-        if (destinationChain === undefined) {
-          return false
-        }
+      if (parsed.decoded?.type !== 'array') {
+        continue
+      }
+      const inbox = parsed.decoded.values[0]?.decoded
+      if (inbox?.type !== 'address') {
+        return false
+      }
+      const destinationShortChainName = L2Inboxes[inbox.value]
+      if (destinationShortChainName === undefined) {
+        return false
+      }
+      const destinationChain = chains.find(
+        (x) => x.shortName === destinationShortChainName,
+      )
+      if (destinationChain === undefined) {
+        return false
+      }
 
-        let to: Address | undefined
-        if (parsed.decoded.values[1]?.decoded?.type === 'address') {
-          to = parsed.decoded.values[1]?.decoded.value
-          if (to !== undefined) {
-            to = addressSwitchChain(to, destinationChain)
-            parsed.decoded.values[1].decoded.value = to
-          }
-        }
-        if (parsed.decoded.values[5]) {
-          calls.push({ to, data: parsed.decoded.values[5] })
+      let to: Address | undefined
+      if (parsed.decoded.values[1]?.decoded?.type === 'address') {
+        to = parsed.decoded.values[1]?.decoded.value
+        if (to !== undefined) {
+          to = addressSwitchChain(to, destinationChain)
+          parsed.decoded.values[1].decoded.value = to
         }
       }
+      if (parsed.decoded.values[5]) {
+        calls.push({ to, data: parsed.decoded.values[5] })
+      }
+    } else {
+      calls.push({ to: target.decoded.value, data: item })
     }
   }
   return calls
