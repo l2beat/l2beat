@@ -228,6 +228,7 @@ import { zkswap2 } from '../projects/zkswap2/zkswap2'
 import { zksync } from '../projects/zksync/zksync'
 import { zksync2 } from '../projects/zksync2/zksync2'
 import { zora } from '../projects/zora/zora'
+import { soonbase } from '../projects/soonbase/soonbase'
 
 export const layer2s: ScalingProject[] = [
   abstract,
@@ -409,6 +410,7 @@ export const layer2s: ScalingProject[] = [
   solo,
   soneium,
   soon,
+  soonbase,
   sophon,
   sorare,
   sovrun,
