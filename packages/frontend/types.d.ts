@@ -2,6 +2,7 @@ import '@tanstack/react-table'
 import type { CellContext } from '@tanstack/react-table'
 import type { ReactNode } from 'react'
 import type { SsrData } from '../pages/ClientPageRouter'
+
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
     cellClassName?: string
@@ -24,6 +25,7 @@ declare module '@tanstack/react-table' {
      * Columns marked as virtual will not be rendered in the table and must be rendered by the parent row spans
      */
     virtual?: boolean
+    additionalRows?: (cell: CellContext<TData, TValue>) => ReactNode[]
   }
 }
 
