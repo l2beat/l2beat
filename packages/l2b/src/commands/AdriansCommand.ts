@@ -164,8 +164,8 @@ function generateMissingContractSuggestion(
   relation: TemplateFieldRelation,
 ): string {
   let suggestion = `\nContract ${entry.name} (${entry.address}, template: ${entry.template}):\n`
-  suggestion += `  - field "${relation.sourceField}" is not pointing to a entry,\n`
-  suggestion += `  - but in these projects points at a entry with template ${relation.targetTemplate}. Please investigate.\n`
+  suggestion += `  - field "${relation.sourceField}" is not pointing to an entry,\n`
+  suggestion += `  - but in these projects points at an entry with template ${relation.targetTemplate}. Please investigate.\n`
   suggestion += relation.foundIn
     .map(({ project, chain }) => `    - ${project} on ${chain}`)
     .join('\n')
@@ -179,7 +179,7 @@ function generateMismatchedTemplateSuggestion(
 ): string {
   let suggestion = `\nContract ${entry.name} (${entry.address}, template: ${entry.template}):\n`
   suggestion += `  - field "${relation.sourceField}" points at ${targetContract.name} with template ${targetContract.template}\n`
-  suggestion += `  - but in these projects it points at a entry with template ${relation.targetTemplate}. Please investigate.\n`
+  suggestion += `  - but in these projects it points at an entry with template ${relation.targetTemplate}. Please investigate.\n`
   suggestion += relation.foundIn
     .map(({ project, chain }) => `    - ${project} on ${chain}`)
     .join('\n')

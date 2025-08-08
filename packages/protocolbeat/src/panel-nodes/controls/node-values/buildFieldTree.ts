@@ -27,21 +27,21 @@ export type ExpandedField = SimpleField | ComplexField
 
 export function buildFieldTree(
   fields: Field[],
-  staringPath?: string,
+  startingPath?: string,
 ): ExpandedField[] {
   const [simpleFields, complexFields] = partition(fields, isSimpleField)
 
   const simple: SimpleField[] = simpleFields.map((field) => ({
     type: 'simple',
     property: field.name,
-    fullKey: normalizePath(staringPath, field.name),
+    fullKey: normalizePath(startingPath, field.name),
   }))
 
   const grouped = groupByFirstKey(complexFields)
 
   const complex: ComplexField[] = Object.entries(grouped).map(
     ([key, group]) => {
-      const fullKey = normalizePath(staringPath, key)
+      const fullKey = normalizePath(startingPath, key)
       return {
         type: 'complex',
         property: key,
