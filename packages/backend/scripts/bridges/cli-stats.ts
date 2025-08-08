@@ -82,66 +82,34 @@ const cmd = command({
               })
 
               for (const asset of assets) {
-                logger.debug('Decoded', {
-                  protocol: asset.application,
-                  direction: asset.direction,
-                  network:
-                    asset.direction === 'outbound'
-                      ? asset.origin
-                      : asset.destination,
-                })
+                logAsset(logger, asset)
+                const matchingId = `${asset.application}_${asset.matchingId}`
                 if (asset.direction === 'outbound') {
-                  if (asset.matchingId === undefined) {
-                    logger.warn('Missing matchingId')
-                    continue
-                  }
-                  outbound.set(asset.matchingId, asset)
+                  outbound.set(matchingId, asset)
                   saveOutboundToFile(outbound)
 
-                  const matchingInbound = inbound.get(asset.matchingId)
+                  const matchingInbound = inbound.get(matchingId)
                   if (matchingInbound) {
-                    logger.debug(`${asset.application} matched`, {
-                      from: asset.origin,
-                      to: asset.destination,
-                      amount: asset.amount,
-                      delay:
-                        matchingInbound.blockTimestamp - asset.blockTimestamp,
-                    })
-
-                    matching.set(asset.matchingId, {
+                    logMatching(logger, asset, matchingInbound)
+                    matching.set(matchingId, {
                       outbound: asset,
                       inbound: matchingInbound,
                     })
-                    inbound.delete(asset.matchingId)
-                    outbound.delete(asset.matchingId)
                     saveMatchingToFile(matching)
                   }
                 }
 
                 if (asset.direction === 'inbound') {
-                  if (asset.matchingId === undefined) {
-                    logger.warn('Missing matchingId')
-                    continue
-                  }
-                  inbound.set(asset.matchingId, asset)
+                  inbound.set(matchingId, asset)
                   saveInboundToFile(inbound)
 
-                  const matchingOutbound = outbound.get(asset.matchingId)
+                  const matchingOutbound = outbound.get(matchingId)
                   if (matchingOutbound) {
-                    logger.debug(`${asset.application} matched`, {
-                      from: asset.origin,
-                      to: asset.destination,
-                      amount: asset.amount,
-                      delay:
-                        asset.blockTimestamp - matchingOutbound.blockTimestamp,
-                    })
-
-                    matching.set(asset.matchingId, {
+                    logMatching(logger, matchingOutbound, asset)
+                    matching.set(matchingId, {
                       outbound: matchingOutbound,
                       inbound: asset,
                     })
-                    inbound.delete(asset.matchingId)
-                    outbound.delete(asset.matchingId)
                     saveMatchingToFile(matching)
                   }
                 }
@@ -165,64 +133,54 @@ const cmd = command({
         console.log('Failed batches:', failedPromises)
     })
 
-    for (const protocol of CONFIG.protocols) {
-      const delays = Array.from(matching.values()).map(
-        (m) => m.inbound.blockTimestamp - m.outbound.blockTimestamp,
-      )
+    printStats(matching, logger, inbound)
 
-      logger.info(`${protocol} stats`, {
-        transfers: {
-          outbound: Array.from(inbound.values()).filter(
-            (x) => x.application === protocol,
-          ).length,
-          inbound: Array.from(inbound.values()).filter(
-            (x) => x.application === protocol,
-          ).length,
-        },
-        delays: {
-          min: Math.min(...delays),
-          max: Math.max(...delays),
-          average: average(delays),
-          median: median(delays),
-        },
-      })
-    }
+    saveMatchingToFile(matching)
+    saveInboundToFile(inbound)
+    saveOutboundToFile(outbound)
 
     logger.info(
       'For more info go to ./scripts/bridges/matching.csv and ./scripts/bridges/transfers.csv',
     )
 
     console.log('Decoder Errors', decoder.errors)
-
-    saveMatchingToFile(matching)
   },
 })
 run(cmd, process.argv.slice(2))
 
-function logBatchProcessing(
-  logger: Logger,
-  chain: {
-    from: number
-    to: number
-    rpc: RpcClient
-    name: string
-    shortName: string
-    rpcCallsPerMinute: number
-    getTxUrl: (hash: string) => string
-    getAddressUrl: (hash: string) => string
-    envioUrl?: string
-    envioCallsPerMinute?: number
-    envioBatchSize?: number
-  },
-  start: number,
-  BATCH_SIZE: number,
-) {
-  logger.info(`[${chain.name}] Processing batch`, {
-    from: start,
-    to: Math.min(start + BATCH_SIZE, chain.to),
-    status:
-      (((start - chain.from) * 100) / (chain.to - chain.from)).toFixed(2) + '%',
+function setupLogger() {
+  return Logger.INFO.configure({
+    logLevel:
+      (getEnv().string('LOG_LEVEL') as LoggerOptions['logLevel']) ?? 'INFO',
   })
+}
+
+function setupChains(
+  chainsConfig: { name: string; from: number; to: number }[],
+  options: { disableRpcLogging: boolean },
+) {
+  const http = new HttpClient()
+  const env = getEnv()
+
+  const chains = chainsConfig.map(({ name, from, to }) => {
+    const chain = CHAINS.find((c) => c.name === name)
+    assert(chain, `${name}: Chain not found`)
+
+    return {
+      ...chain,
+      from,
+      to,
+      rpc: new RpcClient({
+        url: env.string(`${chain.name.toUpperCase()}_RPC_URL`),
+        sourceName: chain.name,
+        http,
+        logger: options.disableRpcLogging ? Logger.SILENT : Logger.INFO,
+        callsPerMinute: chain.rpcCallsPerMinute,
+        retryStrategy: 'RELIABLE',
+      }),
+    }
+  })
+  return chains
 }
 
 function printScriptSummaryAndConfirmation(
@@ -271,6 +229,37 @@ function printScriptSummaryAndConfirmation(
   )
 }
 
+function logBatchProcessing(
+  logger: Logger,
+  chain: Chain & { from: number; to: number },
+  start: number,
+  batchSize: number,
+) {
+  logger.info(`[${chain.name}] Processing batch`, {
+    from: start,
+    to: Math.min(start + batchSize, chain.to),
+    status:
+      (((start - chain.from) * 100) / (chain.to - chain.from)).toFixed(2) + '%',
+  })
+}
+
+function logMatching(logger: Logger, outbound: Asset, inbound: Asset) {
+  logger.debug(`${outbound.application} matched`, {
+    from: outbound.origin,
+    to: outbound.destination,
+    amount: outbound.amount,
+    delay: inbound.blockTimestamp - outbound.blockTimestamp,
+  })
+}
+
+function logAsset(logger: Logger, asset: Asset) {
+  logger.debug('Decoded', {
+    protocol: asset.application,
+    direction: asset.direction,
+    network: asset.direction === 'outbound' ? asset.origin : asset.destination,
+  })
+}
+
 function saveMatchingToFile(
   matching: Map<string, { outbound: Asset; inbound: Asset }>,
 ) {
@@ -312,39 +301,33 @@ function saveInboundToFile(inbound: Map<string, Asset>) {
   )
 }
 
-function setupLogger() {
-  return Logger.INFO.configure({
-    logLevel:
-      (getEnv().string('LOG_LEVEL') as LoggerOptions['logLevel']) ?? 'INFO',
-  })
-}
-
-function setupChains(
-  chainsConfig: { name: string; from: number; to: number }[],
-  options: { disableRpcLogging: boolean },
+function printStats(
+  matching: Map<string, { outbound: Asset; inbound: Asset }>,
+  logger: Logger,
+  inbound: Map<string, Asset>,
 ) {
-  const http = new HttpClient()
-  const env = getEnv()
+  for (const protocol of CONFIG.protocols) {
+    const delays = Array.from(matching.values()).map(
+      (m) => m.inbound.blockTimestamp - m.outbound.blockTimestamp,
+    )
 
-  const chains = chainsConfig.map(({ name, from, to }) => {
-    const chain = CHAINS.find((c) => c.name === name)
-    assert(chain, `${name}: Chain not found`)
-
-    return {
-      ...chain,
-      from,
-      to,
-      rpc: new RpcClient({
-        url: env.string(`${chain.name.toUpperCase()}_RPC_URL`),
-        sourceName: chain.name,
-        http,
-        logger: options.disableRpcLogging ? Logger.SILENT : Logger.INFO,
-        callsPerMinute: chain.rpcCallsPerMinute,
-        retryStrategy: 'RELIABLE',
-      }),
-    }
-  })
-  return chains
+    logger.info(`${protocol} stats`, {
+      transfers: {
+        outbound: Array.from(inbound.values()).filter(
+          (x) => x.application === protocol,
+        ).length,
+        inbound: Array.from(inbound.values()).filter(
+          (x) => x.application === protocol,
+        ).length,
+      },
+      delays: {
+        min: Math.min(...delays),
+        max: Math.max(...delays),
+        average: average(delays),
+        median: median(delays),
+      },
+    })
+  }
 }
 
 function average(arr: number[]) {
