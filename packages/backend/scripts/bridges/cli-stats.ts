@@ -75,15 +75,7 @@ const cmd = command({
       promises.push(
         (async () => {
           for (let start = chain.from; start <= chain.to; start += BATCH_SIZE) {
-            logger.info(`[${chain.name}] Processing batch`, {
-              from: start,
-              to: Math.min(start + BATCH_SIZE, chain.to),
-              status:
-                (
-                  ((start - chain.from) * 100) /
-                  (chain.to - chain.from)
-                ).toFixed(2) + '%',
-            })
+            logBatchProcessing(logger, chain, start, BATCH_SIZE)
             try {
               const { assets } = await decoder.executeMany(CONFIG.protocols, {
                 name: chain.name,
@@ -121,6 +113,8 @@ const cmd = command({
                       outbound: asset,
                       inbound: matchingInbound,
                     })
+                    inbound.delete(asset.matchingId)
+                    outbound.delete(asset.matchingId)
                     saveMatchingToFile(matching)
                     const previousTransfers = transfers.get(asset.application)
                     transfers.set(
@@ -140,6 +134,7 @@ const cmd = command({
                     )
                   }
                 }
+
                 if (asset.direction === 'inbound') {
                   if (asset.matchingId === undefined) {
                     logger.warn('Missing matchingId')
@@ -161,6 +156,8 @@ const cmd = command({
                       outbound: matchingOutbound,
                       inbound: asset,
                     })
+                    inbound.delete(asset.matchingId)
+                    outbound.delete(asset.matchingId)
                     saveMatchingToFile(matching)
                     const previousTransfers = transfers.get(asset.application)
                     transfers.set(
@@ -232,6 +229,32 @@ const cmd = command({
   },
 })
 run(cmd, process.argv.slice(2))
+
+function logBatchProcessing(
+  logger: Logger,
+  chain: {
+    from: number
+    to: number
+    rpc: RpcClient
+    name: string
+    shortName: string
+    rpcCallsPerMinute: number
+    getTxUrl: (hash: string) => string
+    getAddressUrl: (hash: string) => string
+    envioUrl?: string
+    envioCallsPerMinute?: number
+    envioBatchSize?: number
+  },
+  start: number,
+  BATCH_SIZE: number,
+) {
+  logger.info(`[${chain.name}] Processing batch`, {
+    from: start,
+    to: Math.min(start + BATCH_SIZE, chain.to),
+    status:
+      (((start - chain.from) * 100) / (chain.to - chain.from)).toFixed(2) + '%',
+  })
+}
 
 function printScriptSummaryAndConfirmation(
   chains: (Chain & { from: number; to: number })[],
