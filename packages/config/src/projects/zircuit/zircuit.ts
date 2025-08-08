@@ -84,6 +84,7 @@ export const zircuit: ScalingProject = opStackL2({
   addedAt: UnixTime(1712559704), // 2024-04-08T07:01:44Z
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reviewStatus: 'inReview',
   display: {
     name: 'Zircuit',
     slug: 'zircuit',
