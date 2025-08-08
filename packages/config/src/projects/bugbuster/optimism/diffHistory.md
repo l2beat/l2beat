@@ -273,7 +273,7 @@ Generated with discovered.json: 0xa5f15b4ed10bd06bfa754fc05d5a8cf72d0be2c6
 
 ## Description
 
-Bug buster was redeployed to bring a bounty for the latest solidity compiler version(v0.8.27). New CartesiDAPP(Bugbuster) added to discovery (code-identical except for compiler version).
+BugBuster was redeployed to bring a bounty for the latest solidity compiler version (v0.8.27). New CartesiDAPP(Bugbuster) added to discovery (code-identical except for compiler version).
 
 ## Watched changes
 
