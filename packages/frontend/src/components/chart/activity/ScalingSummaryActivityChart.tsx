@@ -114,6 +114,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
         interactiveLegend={{
           dataKeys,
           onItemClick: toggleDataKey,
+          disableOnboarding: true,
         }}
       >
         <AreaChart data={chartData} margin={{ top: 20 }}>
@@ -127,9 +128,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             <EthereumFillGradientDef id="ethereum-fill" />
             <EthereumStrokeGradientDef id="ethereum-stroke" />
           </defs>
-          <ChartLegend
-            content={<ChartLegendContent disableOnboarding={true} />}
-          />
+          <ChartLegend content={<ChartLegendContent />} />
           {getStrokeOverFillAreaComponents({
             data: [
               {

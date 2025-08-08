@@ -1852,7 +1852,7 @@ Generated with discovered.json: 0x24304eef943273ff60a79585b7cc8e34165b60ec
 Discovery rerun on the same block number with only config-related changes.
 
 FacetSafeModule and EthscriptionsSafeModule where configured as 
-`canActIndependetnly: false` because they don't give ability to
+`canActIndependently: false` because they don't give ability to
 act on behalf on the GnosisSafe.
 
 ## Config/verification related changes

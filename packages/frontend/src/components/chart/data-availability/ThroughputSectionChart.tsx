@@ -21,7 +21,6 @@ export function ThroughputSectionChart({
 }: Props) {
   const [type, setType] = useState<'combined' | 'by-project'>('combined')
   const [range, setRange] = useState<DaThroughputTimeRange>('1y')
-  const [selectedProjects, setSelectedProjects] = useState<string[]>()
 
   return (
     <div>
@@ -51,8 +50,6 @@ export function ThroughputSectionChart({
           daLayer={daLayer}
           range={range}
           setRange={setRange}
-          selectedProjects={selectedProjects}
-          setSelectedProjects={setSelectedProjects}
           customColors={customColors}
           milestones={milestones}
         />

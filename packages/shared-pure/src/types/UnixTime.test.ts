@@ -103,7 +103,7 @@ describe(UnixTime.name, () => {
       expect(UnixTime.toDate(end)).toEqual(new Date('2021-09-08T00:00:00Z'))
     })
 
-    it('begging of a day', () => {
+    it('beginning of a day', () => {
       const time = UnixTime.fromDate(new Date('2021-09-08T00:00:00Z'))
       const end = UnixTime.toNext(time, 'day')
       expect(UnixTime.toDate(end)).toEqual(new Date('2021-09-09T00:00:00Z'))

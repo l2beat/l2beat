@@ -25,6 +25,7 @@ type DaThroughputChartDataPoint = [
 export type DaThroughputChartDataByChart = {
   chart: DaThroughputChartDataPoint[]
   syncedUntil: number
+  sovereignProjects: string[]
 }
 
 export const DaThroughputChartByProjectParams = v.object({
@@ -62,6 +63,7 @@ const getDaThroughputChartByProjectData = async (
     return {
       chart: [],
       syncedUntil: UnixTime.now(),
+      sovereignProjects: [],
     }
   }
 
@@ -99,6 +101,9 @@ const getDaThroughputChartByProjectData = async (
   return {
     chart,
     syncedUntil,
+    sovereignProjects:
+      daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => p.name) ??
+      [],
   }
 }
 
@@ -190,29 +195,26 @@ function groupByTimestampAndProjectId(
   }
 }
 
-function getMockDaThroughputChartByProjectData({
+async function getMockDaThroughputChartByProjectData({
   range,
-}: DaThroughputChartByProjectParams): DaThroughputChartDataByChart {
+}: DaThroughputChartByProjectParams): Promise<DaThroughputChartDataByChart> {
   const days = rangeToDays({ type: range }) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
-  return {
-    chart: timestamps.map((timestamp) => {
-      const values = {
-        base: Math.random() * 900_000_000 + 90_000_000,
-        optimism: Math.random() * 900_000_000 + 90_000_000,
-        arbitrum: Math.random() * 900_000_000 + 90_000_000,
-        polygon: Math.random() * 900_000_000 + 90_000_000,
-        zkSync: Math.random() * 900_000_000 + 90_000_000,
-        zkSyncEra: Math.random() * 900_000_000 + 90_000_000,
-        gnosis: Math.random() * 900_000_000 + 90_000_000,
-        linea: Math.random() * 900_000_000 + 90_000_000,
-      }
+  const value = () => Math.random() * 900_000_000 + 90_000_000
 
-      return [timestamp, values]
-    }),
+  const projects = (await ps.getProjects({ where: ['isScaling'] }))
+    .map((p) => p.name)
+    .slice(0, 50)
+
+  return {
+    chart: timestamps.map((timestamp) => [
+      timestamp,
+      Object.fromEntries(projects.map((p) => [p, value()])),
+    ]),
     syncedUntil: to,
+    sovereignProjects: [],
   }
 }
