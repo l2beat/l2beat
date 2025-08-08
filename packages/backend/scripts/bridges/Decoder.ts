@@ -155,7 +155,7 @@ export class Decoder {
                 }
               } catch (_) {
                 this.logger.error(
-                  `${protocol}: Failed to decode ${transaction.hash}`,
+                  `${protocol}: Failed to decode on ${chainConfig.name} in tx ${transaction.hash}`,
                 )
                 this.errors.set(protocol, (this.errors.get(protocol) ?? 0) + 1)
               }
