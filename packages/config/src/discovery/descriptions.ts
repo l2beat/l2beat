@@ -84,12 +84,12 @@ export const RoleDescriptions: {
   validateBridge: {
     name: 'Validator',
     description:
-      'Permissoned to sign messages (state roots) encoding transfer information or governance actions such as updates to a new validator set, which are decoded onchain with signature checks.',
+      'Permissioned to sign messages (state roots) encoding transfer information or governance actions such as updates to a new validator set, which are decoded onchain with signature checks.',
   },
   validateBridge2: {
     name: 'Validator',
     description:
-      'Permissoned to sign crosschain messages encoding transfer information, which are decoded onchain with signature checks. The validators listed here are the default validators for Ethereum and can be overridden by a custom configuration.',
+      'Permissioned to sign crosschain messages encoding transfer information, which are decoded onchain with signature checks. The validators listed here are the default validators for Ethereum and can be overridden by a custom configuration.',
   },
   validateBridge3: {
     name: 'Validator',

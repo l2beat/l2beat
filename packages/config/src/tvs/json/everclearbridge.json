@@ -257,7 +257,8 @@
         "chain": "linea",
         "escrowAddress": "0xc24dC29774fD2c1c0c5FA31325Bb9cbC11D8b751",
         "decimals": 6,
-        "sinceTimestamp": 1737656378
+        "sinceTimestamp": 1737656378,
+        "untilTimestamp": 1754470800
       },
       "valueForSummary": {
         "type": "value",
@@ -265,7 +266,8 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1737656378
+          "sinceTimestamp": 1737656378,
+          "untilTimestamp": 1754470800
         },
         "priceId": "bridged-tether-linea"
       },

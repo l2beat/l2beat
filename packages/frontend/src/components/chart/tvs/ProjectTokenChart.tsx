@@ -107,7 +107,7 @@ export function ProjectTokenChart({
         />
       </ChartControlsWrapper>
       <ChartContainer
-        className="mt-4 mb-2"
+        className="mt-4 mb-3"
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}

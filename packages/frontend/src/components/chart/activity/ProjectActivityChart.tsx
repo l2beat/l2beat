@@ -93,7 +93,7 @@ export function ProjectActivityChart({
         metric={metric}
         isLoading={isLoading}
         syncedUntil={chart?.syncedUntil}
-        className="mt-4 mb-2"
+        className="mt-4 mb-3"
         type={type}
         projectName={projectName}
         tickCount={4}
