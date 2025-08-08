@@ -105,7 +105,9 @@ function ChartContainer<T extends { timestamp: number }>({
   const isClient = useIsClient()
 
   const hasData = data && data.length > 1
-  const noDataSourcesSelected = interactiveLegend?.dataKeys.length === 0
+  const noDataSourcesSelected = Object.keys(meta).every(
+    (key) => !interactiveLegend?.dataKeys.includes(key),
+  )
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div
@@ -136,7 +138,9 @@ function ChartContainer<T extends { timestamp: number }>({
           />
         )}
         {!hasData && !isLoading && <ChartNoDataState size={size} />}
-        {noDataSourcesSelected && <ChartNoDataSourceState />}
+        {noDataSourcesSelected && !isLoading && isClient && (
+          <ChartNoDataSourceState />
+        )}
         {isClient && size !== 'small' && (
           <Logo
             animated={false}
@@ -192,6 +196,7 @@ function ChartLegendContent({
   verticalAlign = 'bottom',
   nameKey,
   reverse = false,
+  children,
 }: React.ComponentProps<'div'> &
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
     nameKey?: string
@@ -217,17 +222,18 @@ function ChartLegendContent({
   return (
     <div
       className={cn(
-        'relative',
+        'relative mx-auto flex w-max max-w-full items-center',
         interactiveLegend &&
           !hasFinishedOnboardingInitial &&
           !interactiveLegend.disableOnboarding &&
           'mb-3',
       )}
     >
-      <OverflowWrapper childrenRef={contentRef}>
+      {children}
+      <OverflowWrapper childrenRef={contentRef} className="min-w-0">
         <div
           className={cn(
-            'mx-auto flex h-3.5 w-fit items-center gap-2',
+            'flex h-3.5 w-max items-center gap-2',
             verticalAlign === 'top' && 'pb-3',
             className,
           )}
