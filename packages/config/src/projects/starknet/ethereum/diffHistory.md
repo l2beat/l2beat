@@ -9850,7 +9850,7 @@ There are now 9 roles:
 6. Upgrade Governor: not used?
 7. Security Admin: can disable withdrawal limits. Can update the Security Agent role and itself.
 8. Security Agent: can enable withdrawal limits.
-9. Manager: can initiate the "enrollement" of a token or deactivate a token.
+9. Manager: can initiate the "enrollment" of a token or deactivate a token.
 
 Also the bridge implementation for ERC20 and Ether are different but overall very similar.
 
