@@ -188,7 +188,7 @@ export function DaThroughputByProjectChart({
         <ChartLegend
           content={
             <ChartLegendContent>
-              <div className="flex items-center">
+              <div className="flex shrink-0 items-center">
                 <button
                   className="w-11 cursor-pointer select-none text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity hover:opacity-50 [&>svg]:text-secondary"
                   onClick={toggleAllDataKeys}

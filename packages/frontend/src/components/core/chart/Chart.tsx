@@ -222,7 +222,7 @@ function ChartLegendContent({
   return (
     <div
       className={cn(
-        'relative flex items-center',
+        'relative mx-auto flex w-max max-w-full items-center',
         interactiveLegend &&
           !hasFinishedOnboardingInitial &&
           !interactiveLegend.disableOnboarding &&
@@ -233,7 +233,7 @@ function ChartLegendContent({
       <OverflowWrapper childrenRef={contentRef} className="min-w-0">
         <div
           className={cn(
-            'mx-auto flex h-3.5 w-fit items-center gap-2',
+            'flex h-3.5 w-max items-center gap-2',
             verticalAlign === 'top' && 'pb-3',
             className,
           )}
