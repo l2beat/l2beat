@@ -122,7 +122,7 @@ export function generateIntermediateConfig(config: MultichainConfig) {
         address: x.address,
         tokens: x.tokens.map((t) => t.address).sort(),
       }))
-      .sort((a, b) => a.address.localeCompare(b.address.toString())),
+      .sort((a, b) => a.address.toString().localeCompare(b.address.toString())),
   }
 }
 
