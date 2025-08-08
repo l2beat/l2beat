@@ -182,6 +182,7 @@ import { soneium } from '../projects/soneium/soneium'
 import { soon } from '../projects/soon/soon'
 import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
+import { sova } from '../projects/sova/sova'
 import { sovrun } from '../projects/sovrun/sovrun'
 import { spire } from '../projects/spire/spire'
 import { starknet } from '../projects/starknet/starknet'
@@ -411,6 +412,7 @@ export const layer2s: ScalingProject[] = [
   soon,
   sophon,
   sorare,
+  sova,
   sovrun,
   spire,
   starknet,
