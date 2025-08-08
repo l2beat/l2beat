@@ -8,7 +8,7 @@ Generated with discovered.json: 0xaa74771f9b0f9ccfddfd1a0fff6c0b9cd16b4806
 
 ## Description
 
-Conduit: Optiportal2 upgrade (permissioned gametype). All contracts are using standard implementations.
+Conduit: OptimismPortal2 upgrade (permissioned gametype). All contracts are using standard implementations.
 
 absolute prestate: v1.6.0 (cannon64) - does not use alt-DA commitments
 

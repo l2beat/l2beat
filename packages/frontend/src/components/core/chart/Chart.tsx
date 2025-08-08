@@ -33,6 +33,7 @@ type ChartContextProps = {
   interactiveLegend?: {
     dataKeys: string[]
     onItemClick: (dataKey: string) => void
+    disableOnboarding?: boolean
   }
 }
 
@@ -92,6 +93,7 @@ function ChartContainer<T extends { timestamp: number }>({
   interactiveLegend?: {
     dataKeys: string[]
     onItemClick: (dataKey: string) => void
+    disableOnboarding?: boolean
   }
   milestones?: Milestone[]
   loaderClassName?: string
@@ -194,20 +196,17 @@ function ChartLegendContent({
   verticalAlign = 'bottom',
   nameKey,
   reverse = false,
-  disableOnboarding,
   children,
 }: React.ComponentProps<'div'> &
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
     nameKey?: string
     reverse?: boolean
-    disableOnboarding?: boolean
   }) {
   const id = React.useId()
 
   const contentRef = React.useRef<HTMLDivElement>(null)
   const { meta, interactiveLegend } = useChart()
 
-  const isInteractive = interactiveLegend?.dataKeys !== undefined
   const {
     currentLegendOnboardingId,
     hasFinishedOnboarding,
@@ -224,9 +223,9 @@ function ChartLegendContent({
     <div
       className={cn(
         'relative flex items-center',
-        isInteractive &&
+        interactiveLegend &&
           !hasFinishedOnboardingInitial &&
-          !disableOnboarding &&
+          !interactiveLegend.disableOnboarding &&
           'mb-3',
       )}
     >
@@ -247,20 +246,20 @@ function ChartLegendContent({
             if (!itemConfig || item.type === 'none') return null
 
             const isHidden =
-              isInteractive && !interactiveLegend?.dataKeys?.includes(key)
+              interactiveLegend && !interactiveLegend?.dataKeys?.includes(key)
             return (
               <div
                 key={item.value}
                 className={cn(
                   'group/legend-item flex items-center gap-[3px] transition-opacity [&>svg]:text-secondary',
-                  isInteractive && 'cursor-pointer select-none',
+                  interactiveLegend && 'cursor-pointer select-none',
                   isHidden && 'opacity-50',
                 )}
                 onClick={
-                  interactiveLegend?.onItemClick
+                  interactiveLegend
                     ? () => {
                         interactiveLegend.onItemClick(key)
-                        if (!disableOnboarding) {
+                        if (!interactiveLegend.disableOnboarding) {
                           setHasFinishedOnboarding(true)
                         }
                       }
@@ -275,7 +274,7 @@ function ChartLegendContent({
                   className={cn(
                     'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
                     !isHidden &&
-                      isInteractive &&
+                      interactiveLegend &&
                       'group-hover/legend-item:opacity-50',
                     isHidden && 'line-through',
                   )}
@@ -287,19 +286,21 @@ function ChartLegendContent({
           })}
         </div>
       </OverflowWrapper>
-      {!hasFinishedOnboarding && isInteractive && !disableOnboarding && (
-        <div
-          id={id}
-          className={cn(
-            '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-12 italic transition-[opacity,scale] ease-out group-hover:scale-[1.15]',
-            currentLegendOnboardingId !== id && 'opacity-0',
-          )}
-          data-role="legend-onboarding"
-        >
-          <CursorClickIcon className="-top-0.5 relative inline-block fill-current" />
-          Try clicking legend items to toggle data
-        </div>
-      )}
+      {!hasFinishedOnboarding &&
+        interactiveLegend &&
+        !interactiveLegend.disableOnboarding && (
+          <div
+            id={id}
+            className={cn(
+              '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-12 italic transition-[opacity,scale] ease-out group-hover:scale-[1.15]',
+              currentLegendOnboardingId !== id && 'opacity-0',
+            )}
+            data-role="legend-onboarding"
+          >
+            <CursorClickIcon className="-top-0.5 relative inline-block fill-current" />
+            Try clicking legend items to toggle data
+          </div>
+        )}
     </div>
   )
 }

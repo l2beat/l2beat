@@ -17293,7 +17293,7 @@ discovery. Values are for block 18691623 (main branch discovery), not current.
 
 ## Description
 
-New scheduled transaction - there is a DAC update about to be executed by the Upgrade Executer with a delay of 72 hours. It will call the perform() function of the AddNovaKeysetAction (0xDef5CfE3246882BC7f65F9346a8b974BA27D3F4E) contract to add a new keyset as valid batch submitter for Arbitrum Nova. That's related to Security Council's decision to remove Reddit from the Data Availability Committee (DAC) since they plan on winding down their Arbitrum Nova DAC infrastructure, and also remove Offchain Labs secondary key from the DAC.
+New scheduled transaction - there is a DAC update about to be executed by the Upgrade Executor with a delay of 72 hours. It will call the perform() function of the AddNovaKeysetAction (0xDef5CfE3246882BC7f65F9346a8b974BA27D3F4E) contract to add a new keyset as valid batch submitter for Arbitrum Nova. That's related to Security Council's decision to remove Reddit from the Data Availability Committee (DAC) since they plan on winding down their Arbitrum Nova DAC infrastructure, and also remove Offchain Labs secondary key from the DAC.
 
 ## Watched changes
 

@@ -688,7 +688,7 @@ Generated with discovered.json: 0x2f5ff9403f5b0ceba03cfcc60518cca1105fba5f
 
 ## Description
 
-Discovery refresh. 
+Discovery refresh.
 
 ## Config/verification related changes
 
