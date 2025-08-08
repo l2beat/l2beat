@@ -74,7 +74,7 @@
         "decimals": 8,
         "sinceTimestamp": 1641899423
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -93,7 +93,7 @@
         "decimals": 18,
         "sinceTimestamp": 1641899423
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

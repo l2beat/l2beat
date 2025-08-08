@@ -78,7 +78,7 @@ describe(AnomalyNotifier.name, () => {
       ])
     })
 
-    it('does not notify if duration lest than configured', async () => {
+    it('does not notify if duration less than configured', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
         insertMany: mockFn().resolvesTo(undefined),
       })
@@ -245,7 +245,7 @@ describe(AnomalyNotifier.name, () => {
       ])
     })
 
-    it('does not notify if duration lest than configured', async () => {
+    it('does not notify if duration less than configured', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
         insertMany: mockFn().resolvesTo(undefined),
       })

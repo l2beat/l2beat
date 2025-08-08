@@ -115,7 +115,7 @@ export function ProjectCostsChart({
         hasPostedData={hasPostedData}
         hasBlobs={!!data?.hasBlobs}
         tickCount={4}
-        className="mt-4 mb-2"
+        className="mt-4 mb-3"
       />
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
       <HorizontalSeparator className="my-4" />

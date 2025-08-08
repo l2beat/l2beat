@@ -515,7 +515,7 @@
         "sinceTimestamp": 1613135194,
         "untilTimestamp": 1752062400
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
