@@ -36,7 +36,7 @@ Generated with discovered.json: 0xb74ec2373881c5581514daffc14019c45ae977c0
 
 stateUpdateProgramImageId update.
 
-Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
+Config: Kailua added to OptimismPortal2 and DisputeGameFactory.
 
 ## Watched changes
 

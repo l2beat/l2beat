@@ -62,7 +62,7 @@ export const connext: Bridge = {
         },
         {
           category: 'Funds can be frozen if',
-          text: "liquidity provider (Router) decides to not cooperate, living user's funds locked for a limited period of time (e.g. 72 hours).",
+          text: "liquidity provider (Router) decides to not cooperate, leaving user's funds locked for a limited period of time (e.g. 72 hours).",
         },
       ],
     },

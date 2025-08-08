@@ -1,3 +1,4 @@
+import { EM_DASH } from '~/consts/characters'
 import { TrendArrowDownIcon, TrendArrowUpIcon } from '~/icons/TrendArrow'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -34,7 +35,7 @@ export function PercentChange({ value, className, textClassName }: Props) {
           textClassName,
         )}
       >
-        {formatPercent(Math.abs(value))}
+        {isNaN(value) ? EM_DASH : formatPercent(Math.abs(value))}
       </span>
     </span>
   )

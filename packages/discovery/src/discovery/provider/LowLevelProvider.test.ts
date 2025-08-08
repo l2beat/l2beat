@@ -106,7 +106,7 @@ describe(LowLevelProvider.name, () => {
 
   const outOfGasMessage = [
     'out of gas', // normal
-    'out of gas: out of gas', // whatever QucikNode is doing...
+    'out of gas: out of gas', // whatever QuickNode is doing...
     'execution reverted',
     'gas uint64 overflow',
     'invalid opcode: INVALID',

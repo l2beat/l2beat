@@ -1,8 +1,8 @@
 {
   "SuperchainConfig": {
-    "hash": "0x39037837abcc5e06ffe85b07ad5f5ce901ed8551155a1b3b81cfd181bd683593",
-    "address": "0xA47314C96ab9572af656788e15143B459F99AE0f",
+    "hash": "0xf69fa98cc18afd5754767df58a79532b52dab119b14df252fbea558da850139a",
+    "address": "0x70D688D4Bd6B1b195aE51040b54ab501278D1d31",
     "chain": "ethereum",
-    "blockNumber": 22188285
+    "blockNumber": 23086994
   }
 }

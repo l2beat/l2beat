@@ -116,7 +116,7 @@ export const blast: ScalingProject = opStackL2({
       tokens: ['ETH', 'stETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
-        'Escrow for ETH that is invested into a yield-bearing contracts such as stETH.',
+        'Escrow for ETH that is invested into yield-bearing contracts such as stETH.',
     }),
   ],
   isNodeAvailable: true,

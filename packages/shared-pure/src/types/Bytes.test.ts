@@ -39,7 +39,7 @@ describe(Bytes.name, () => {
       expect(() => Bytes.fromNumber(-2)).toThrow(TypeError)
     })
 
-    it('encodes 0 as a empty', () => {
+    it('encodes 0 as empty', () => {
       const bytes = Bytes.fromNumber(0)
       expect(bytes.toString()).toEqual('0x')
     })

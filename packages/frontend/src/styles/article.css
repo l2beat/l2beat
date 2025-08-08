@@ -32,11 +32,11 @@
 }
 
 .article blockquote {
-  @apply border-l-2 border-pink-200 bg-pink-200/10 px-7 py-6 text-sm md:text-[17px] leading-[1.6] font-light;
+  @apply border-l-2 border-brand bg-brand/10 px-7 py-6 text-sm md:text-[17px] leading-[1.6] font-light;
 }
 
 .article blockquote p {
-  @apply text-pink-200 dark:text-pink-200;
+  @apply text-brand;
 }
 
 .article blockquote > p:last-child {

@@ -2898,7 +2898,7 @@ for block 18968776 (main branch discovery), not current.
 
 ## Description
 
-PolygonZkEVM has changed it's implementation because PolygonZkEVMUpgraded - the
+PolygonZkEVM has changed its implementation because PolygonZkEVMUpgraded - the
 contract at the implementation address - needed to be redeployed. This is
 because PolygonZkEVMUpgraded has FflonkVerifier hardcoded and because it was
 also redeployed to change two circuit parameters (C_0x and C0y) to update to the

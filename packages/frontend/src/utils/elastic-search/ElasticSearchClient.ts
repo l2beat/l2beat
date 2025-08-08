@@ -24,7 +24,7 @@ type BulkResponse =
       errors: DocumentError[]
     }
 
-// hides complexity of ElastiSearch client API
+// hides complexity of ElasticSearch client API
 export class ElasticSearchClient {
   private readonly client: Client
 
