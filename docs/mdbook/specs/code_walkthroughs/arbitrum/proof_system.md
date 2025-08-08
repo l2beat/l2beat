@@ -679,7 +679,7 @@ This contract is used as the entry point to execute one-step proofs onchain.
 
 ### `proveOneStep` function
 
-This function is used called from the `confirmEdgeByOneStepProof` function in the `EdgeChallengeManager` contract.
+This function is called from the `confirmEdgeByOneStepProof` function in the `EdgeChallengeManager` contract.
 
 ```solidity
 function proveOneStep(

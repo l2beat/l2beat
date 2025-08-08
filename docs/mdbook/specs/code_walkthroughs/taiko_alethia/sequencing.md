@@ -129,7 +129,7 @@ struct State {
 }
 ```
 
-where `Stats1` and `State2` are defined as follows:
+where `Stats1` and `Stats2` are defined as follows:
 
 ```solidity
 struct Stats1 {

@@ -63,7 +63,7 @@ const descriptions: Record<string, string> = {
     'Dispute window (in blocks) during which it is required to respond to a challenge',
 }
 
-export function analyseAllOrbitChains(paths: DiscoveryPaths) {
+export function analyzeAllOrbitChains(paths: DiscoveryPaths) {
   const configReader = new ConfigReader(paths.discovery)
   const rollups: EntryParameters[] = []
   for (const [chain, mapping] of Object.entries(chainMapping)) {
