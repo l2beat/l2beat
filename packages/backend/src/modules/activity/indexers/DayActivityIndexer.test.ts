@@ -54,14 +54,14 @@ describe(DayActivityIndexer.name, () => {
         upsertMany: mockFn().resolvesTo(undefined),
       })
 
-      const mockActvityRecords = [
+      const mockActivityRecords = [
         activityRecord('a', START, 5),
         activityRecord('a', START + 1 * UnixTime.DAY, 4),
         activityRecord('a', START + 2 * UnixTime.DAY, 2),
       ]
 
       const txsCountService = mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo(mockActvityRecords),
+        getTxsCount: mockFn().resolvesTo(mockActivityRecords),
       })
 
       const indexer = createIndexer({
@@ -74,7 +74,7 @@ describe(DayActivityIndexer.name, () => {
 
       expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 10)
       expect(activityRepository.upsertMany).toHaveBeenCalledWith(
-        mockActvityRecords,
+        mockActivityRecords,
       )
       expect(newSafeHeight).toEqual(10)
     })
