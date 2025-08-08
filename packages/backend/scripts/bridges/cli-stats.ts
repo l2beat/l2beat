@@ -1,15 +1,62 @@
 // TODO: add envio
-// TODO: add error handling to Decoder if decoding fails
 
 import { getEnv, Logger, type LoggerOptions } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { command, run } from 'cmd-ts'
 import { writeFileSync } from 'fs'
-import { CHAINS } from './chains'
+import readline from 'readline'
+import { CHAINS, type Chain } from './chains'
 import { Decoder } from './Decoder'
 import { PROTOCOLS } from './protocols/protocols'
+
 import type { Asset } from './types/Asset'
+
+function askQuestion(
+  chains: (Chain & { from: number; to: number })[],
+  protocols: string[],
+  logger: Logger,
+): Promise<string> {
+  let maxEstimatedTime = 0
+  let rpcCalls = 0
+
+  logger.info('Configured decoders', { protocols })
+
+  chains.forEach((chain) => {
+    const range = chain.to - chain.from
+    rpcCalls += range
+    const estimatedTime = Math.ceil(
+      (chain.to - chain.from) / chain.rpcCallsPerMinute,
+    )
+    maxEstimatedTime = Math.max(maxEstimatedTime, estimatedTime)
+
+    logger.info(`${chain.name} config`, {
+      from: chain.from,
+      to: chain.to,
+      range,
+      estimatedFetchingTimeInMinutes: estimatedTime,
+    })
+  })
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  })
+
+  logger.info(
+    `Script will make ~${rpcCalls} RPC calls and take ~${maxEstimatedTime} minutes`,
+  )
+  logger.info(
+    'Output will be saved continuously to ./scripts/bridges/matching.csv (File will be cleared in the beginning)',
+  )
+
+  return new Promise((resolve) =>
+    rl.question('Do you want to run the script? [yes] ', (ans) => {
+      rl.close()
+      resolve(ans)
+    }),
+  )
+}
 
 const cmd = command({
   name: 'bridges:cli-stats',
@@ -28,117 +75,146 @@ const cmd = command({
 
     const promises = []
 
+    const answer = await askQuestion(chains, CONFIG.protocols, logger)
+    if (answer.toLowerCase() !== 'yes') {
+      logger.error('Execution aborted')
+      return
+    }
+
     logger.info(
       `Running script for configured protocols [${CONFIG.protocols.length}]`,
       { protocols: CONFIG.protocols },
     )
 
+    const BATCH_SIZE = 100
+
     for (const chain of chains) {
-      logger.info(`Fetching ${chain.name} blocks`, {
-        from: chain.from,
-        to: chain.to,
-        range: chain.to - chain.from,
-        estimatedTimeInMinutes: Math.ceil(
-          ((chain.to - chain.from) * 2) / chain.rpcCallsPerMinute,
-        ),
-      })
-      for (let block = chain.from; block <= chain.to; block++) {
-        promises.push(
-          (async () => {
-            const { assets } = await decoder.executeMany(CONFIG.protocols, {
-              name: chain.name,
-              block: block,
+      promises.push(
+        (async () => {
+          for (let start = chain.from; start <= chain.to; start += BATCH_SIZE) {
+            logger.info(`[${chain.name}] Processing batch`, {
+              from: start,
+              to: Math.min(start + BATCH_SIZE, chain.to),
+              status:
+                (
+                  ((start - chain.from) * 100) /
+                  (chain.to - chain.from)
+                ).toFixed(2) + '%',
             })
-
-            for (const asset of assets) {
-              logger.info('Decoded', {
-                protocol: asset.application,
-                direction: asset.direction,
-                network:
-                  asset.direction === 'outbound'
-                    ? asset.origin
-                    : asset.destination,
+            try {
+              const { assets } = await decoder.executeMany(CONFIG.protocols, {
+                name: chain.name,
+                from: start,
+                to: Math.min(start + BATCH_SIZE, chain.to),
               })
-              if (asset.direction === 'outbound') {
-                if (asset.matchingId === undefined) {
-                  logger.warn('Missing matchingId')
-                  continue
+
+              for (const asset of assets) {
+                logger.debug('Decoded', {
+                  protocol: asset.application,
+                  direction: asset.direction,
+                  network:
+                    asset.direction === 'outbound'
+                      ? asset.origin
+                      : asset.destination,
+                })
+                if (asset.direction === 'outbound') {
+                  if (asset.matchingId === undefined) {
+                    logger.warn('Missing matchingId')
+                    continue
+                  }
+                  outbound.set(asset.matchingId, asset)
+
+                  const matchingInbound = inbound.get(asset.matchingId)
+                  if (matchingInbound) {
+                    logger.debug(`${asset.application} matched`, {
+                      from: asset.origin,
+                      to: asset.destination,
+                      amount: asset.amount,
+                      delay:
+                        matchingInbound.blockTimestamp - asset.blockTimestamp,
+                    })
+
+                    matching.set(asset.matchingId, {
+                      outbound: asset,
+                      inbound: matchingInbound,
+                    })
+                    saveMatchingToFile(matching)
+                    const previousTransfers = transfers.get(asset.application)
+                    transfers.set(
+                      asset.application,
+                      previousTransfers
+                        ? [...previousTransfers, asset]
+                        : [asset],
+                    )
+                    const delay =
+                      matchingInbound.blockTimestamp - asset.blockTimestamp
+                    if (delay === 0) continue
+                    const previousDelays = delays.get(asset.application)
+                    delays.set(
+                      asset.application,
+                      previousDelays ? [...previousDelays, delay] : [delay],
+                    )
+                  }
                 }
-                outbound.set(asset.matchingId, asset)
+                if (asset.direction === 'inbound') {
+                  if (asset.matchingId === undefined) {
+                    logger.warn('Missing matchingId')
+                    continue
+                  }
+                  inbound.set(asset.matchingId, asset)
 
-                const matchingInbound = inbound.get(asset.matchingId)
-                if (matchingInbound) {
-                  logger.info(`${asset.application} matched`, {
-                    from: asset.origin,
-                    to: asset.destination,
-                    amount: asset.amount,
-                    delay:
-                      matchingInbound.blockTimestamp - asset.blockTimestamp,
-                  })
+                  const matchingOutbound = outbound.get(asset.matchingId)
+                  if (matchingOutbound) {
+                    logger.debug(`${asset.application} matched`, {
+                      from: asset.origin,
+                      to: asset.destination,
+                      amount: asset.amount,
+                      delay:
+                        asset.blockTimestamp - matchingOutbound.blockTimestamp,
+                    })
 
-                  matching.set(asset.matchingId, {
-                    outbound: asset,
-                    inbound: matchingInbound,
-                  })
-                  const previousTransfers = transfers.get(asset.application)
-                  transfers.set(
-                    asset.application,
-                    previousTransfers ? [...previousTransfers, asset] : [asset],
-                  )
-                  const delay =
-                    matchingInbound.blockTimestamp - asset.blockTimestamp
-                  if (delay === 0) continue
-                  const previousDelays = delays.get(asset.application)
-                  delays.set(
-                    asset.application,
-                    previousDelays ? [...previousDelays, delay] : [delay],
-                  )
+                    matching.set(asset.matchingId, {
+                      outbound: matchingOutbound,
+                      inbound: asset,
+                    })
+                    saveMatchingToFile(matching)
+                    const previousTransfers = transfers.get(asset.application)
+                    transfers.set(
+                      asset.application,
+                      previousTransfers
+                        ? [...previousTransfers, asset]
+                        : [asset],
+                    )
+
+                    const delay =
+                      asset.blockTimestamp - matchingOutbound.blockTimestamp
+                    if (delay === 0) continue
+                    const previousDelays = delays.get(asset.application)
+                    delays.set(
+                      asset.application,
+                      previousDelays ? [...previousDelays, delay] : [delay],
+                    )
+                  }
                 }
               }
-              if (asset.direction === 'inbound') {
-                if (asset.matchingId === undefined) {
-                  logger.warn('Missing matchingId')
-                  continue
-                }
-                inbound.set(asset.matchingId, asset)
-
-                const matchingOutbound = outbound.get(asset.matchingId)
-                if (matchingOutbound) {
-                  logger.info(`${asset.application} matched`, {
-                    from: asset.origin,
-                    to: asset.destination,
-                    amount: asset.amount,
-                    delay:
-                      asset.blockTimestamp - matchingOutbound.blockTimestamp,
-                  })
-
-                  matching.set(asset.matchingId, {
-                    outbound: matchingOutbound,
-                    inbound: asset,
-                  })
-                  const previousTransfers = transfers.get(asset.application)
-                  transfers.set(
-                    asset.application,
-                    previousTransfers ? [...previousTransfers, asset] : [asset],
-                  )
-
-                  const delay =
-                    asset.blockTimestamp - matchingOutbound.blockTimestamp
-                  if (delay === 0) continue
-                  const previousDelays = delays.get(asset.application)
-                  delays.set(
-                    asset.application,
-                    previousDelays ? [...previousDelays, delay] : [delay],
-                  )
-                }
-              }
+            } catch (_) {
+              throw new Error(
+                `[${chain.name}] Failed batch <${start},${Math.min(start + BATCH_SIZE, chain.to)}>`,
+              )
             }
-          })(),
-        )
-      }
+          }
+        })(),
+      )
     }
 
-    await Promise.all(promises)
+    await Promise.allSettled(promises).then((results) => {
+      const failedPromises = results
+        .filter((result) => result.status === 'rejected')
+        .map((result) => result.reason)
+
+      if (failedPromises.length > 0)
+        console.log('Failed batches:', failedPromises)
+    })
 
     for (const protocol of CONFIG.protocols) {
       const cc = transfers.get(protocol)
@@ -163,18 +239,26 @@ const cmd = command({
 
     logger.info('For more info go to ./scripts/bridges/matching.csv')
 
-    writeFileSync(
-      './scripts/bridges/matching.csv',
-      'protocol;delay;origin;originTx;destination;destinationTx\n' +
-        Array.from(matching.entries())
-          .map(
-            ([_, { outbound, inbound }]) =>
-              `${outbound.application};${inbound.blockTimestamp - outbound.blockTimestamp};${outbound.origin};${outbound.txHash};${inbound.destination};${inbound.txHash}`,
-          )
-          .join('\n'),
-    )
+    console.log('Decoder Errors', decoder.errors)
+
+    saveMatchingToFile(matching)
   },
 })
+
+function saveMatchingToFile(
+  matching: Map<string, { outbound: Asset; inbound: Asset }>,
+) {
+  writeFileSync(
+    './scripts/bridges/matching.csv',
+    'protocol;delay;origin;originTx;destination;destinationTx\n' +
+      Array.from(matching.entries())
+        .map(
+          ([_, { outbound, inbound }]) =>
+            `${outbound.application};${inbound.blockTimestamp - outbound.blockTimestamp};${outbound.origin};${outbound.txHash};${inbound.destination};${inbound.txHash}`,
+        )
+        .join('\n'),
+  )
+}
 
 function setupLogger() {
   return Logger.INFO.configure({
@@ -202,9 +286,9 @@ function setupChains(
         url: env.string(`${chain.name.toUpperCase()}_RPC_URL`),
         sourceName: chain.name,
         http,
-        logger,
+        logger: Logger.SILENT,
         callsPerMinute: chain.rpcCallsPerMinute,
-        retryStrategy: 'SCRIPT',
+        retryStrategy: 'RELIABLE',
       }),
     }
   })
@@ -220,18 +304,18 @@ const CONFIG: {
   chains: [
     {
       name: 'ethereum',
-      from: 23090032 - 1000, // 6th August 00:00
-      to: 23090032, // 7th August 00:00
+      from: 23085465 - (12 * 60 * 60) / 12,
+      to: 23085465, // 7th August 00:00
     },
     {
       name: 'arbitrum',
-      from: 365952394 - 1000, // 6th August 00:00
-      to: 365952394, // 7th August 00:00
+      from: 365731025 - (2 * 60 * 60) / 0.25,
+      to: 365731025, // 7th August 00:00
     },
     {
       name: 'base',
-      from: 33895327 - 1000, // 6th August 00:00
-      to: 33895327, // 7th August 00:00
+      from: 33867726 - (6 * 60 * 60) / 2,
+      to: 33867726, // 7th August 00:00
     },
   ],
   protocols: [
@@ -274,4 +358,5 @@ function median(numbers: number[]) {
   name: 'base',
   from: 33824526, // 6th August 00:00
   to: 33867726, // 7th August 00:00
-},*/
+},
+*/

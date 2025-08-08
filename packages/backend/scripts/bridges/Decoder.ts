@@ -15,6 +15,8 @@ export class Decoder {
     private readonly logger: Logger,
   ) {}
 
+  readonly errors: Map<string, number> = new Map()
+
   async execute(protocol: string, configs: { chain: string; block: number }[]) {
     const decoder = this.protocols.find((p) => p.name === protocol)?.decoder
     assert(decoder, `${protocol}: Protocol not found`)
@@ -102,7 +104,7 @@ export class Decoder {
 
   async executeMany(
     protocols: string[],
-    chainConfig: { name: string; block: number },
+    chainConfig: { name: string; from: number; to: number },
   ) {
     const messages: Message[] = []
     const assets: Asset[] = []
@@ -110,51 +112,58 @@ export class Decoder {
     const chain = this.chains.find((c) => c.name === chainConfig.name)
     assert(chain, `${chainConfig.name}: Chain not found`)
 
-    const block = await chain.rpc.getBlockWithTransactions(chainConfig.block)
-    const logs = await chain.rpc.getLogs(chainConfig.block, chainConfig.block)
-    const logsByTx = groupBy(logs, 'transactionHash')
+    const logs = await chain.rpc.getLogs(chainConfig.from, chainConfig.to)
 
-    for (const transaction of block.transactions) {
-      assert(transaction.hash)
-      for (const log of logsByTx[transaction.hash] ?? []) {
-        for (const protocol of protocols) {
-          try {
-            const decoder = this.protocols.find(
-              (p) => p.name === protocol,
-            )?.decoder
-            assert(decoder, `${protocol}: Protocol not found`)
-            const decoded = await decoder(
-              chain,
-              {
-                log: logToViemLog(log),
-                transactionHash: transaction.hash,
-                blockNumber: block.number,
-                blockTimestamp: block.timestamp,
-                transactionLogs: (logsByTx[transaction.hash] ?? []).map(
-                  logToViemLog,
-                ),
-                transactionTo: transaction.to
-                  ? EthereumAddress(transaction.to)
-                  : undefined,
-              },
-              chain.rpc,
-            )
-            if (decoded?.type === 'message') {
-              messages.push(decoded)
-            }
+    const x = chainConfig.from
+    const y = chainConfig.to
+    await Promise.all(
+      Array.from({ length: y - x + 1 }, (_, i) => x + i).map(async (b) => {
+        const block = await chain.rpc.getBlockWithTransactions(b)
+        const logsByTx = groupBy(logs, 'transactionHash')
 
-            if (decoded?.type === 'asset') {
-              assets.push(decoded)
+        for (const transaction of block.transactions) {
+          assert(transaction.hash)
+          for (const log of logsByTx[transaction.hash] ?? []) {
+            for (const protocol of protocols) {
+              try {
+                const decoder = this.protocols.find(
+                  (p) => p.name === protocol,
+                )?.decoder
+                assert(decoder, `${protocol}: Protocol not found`)
+                const decoded = await decoder(
+                  chain,
+                  {
+                    log: logToViemLog(log),
+                    transactionHash: transaction.hash,
+                    blockNumber: block.number,
+                    blockTimestamp: block.timestamp,
+                    transactionLogs: (logsByTx[transaction.hash] ?? []).map(
+                      logToViemLog,
+                    ),
+                    transactionTo: transaction.to
+                      ? EthereumAddress(transaction.to)
+                      : undefined,
+                  },
+                  chain.rpc,
+                )
+                if (decoded?.type === 'message') {
+                  messages.push(decoded)
+                }
+
+                if (decoded?.type === 'asset') {
+                  assets.push(decoded)
+                }
+              } catch (_) {
+                this.logger.error(
+                  `${protocol}: Failed to decode ${transaction.hash}`,
+                )
+                this.errors.set(protocol, (this.errors.get(protocol) ?? 0) + 1)
+              }
             }
-          } catch (error) {
-            this.logger.error(`${protocol}: Failed to decode`, {
-              error,
-              tx: transaction.hash,
-            })
           }
         }
-      }
-    }
+      }),
+    )
     return { messages, assets }
   }
 }
