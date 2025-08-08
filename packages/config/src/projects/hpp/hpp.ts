@@ -18,6 +18,7 @@ export const hpp: ScalingProject = upcomingL2({
       websites: ['https://hpp.io/'],
       explorers: ['https://sepolia-explorer.hpp.io/'],
       documentation: ['https://docs.hpp.io/'],
+      repositories: ['https://github.com/hpp-io'],
       socialMedia: [
         'https://x.com/aergo_io',
         'https://medium.com/aergo',
