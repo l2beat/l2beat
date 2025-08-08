@@ -80,7 +80,7 @@ export interface ContractCategory {
 }
 
 export type StructureEntry = {
-  type: 'Contract' | 'EOA'
+  type: 'Contract' | 'EOA' | 'Reference'
   address: ChainSpecificAddress
   name?: string
   implementationNames?: Record<ChainSpecificAddress, string>
