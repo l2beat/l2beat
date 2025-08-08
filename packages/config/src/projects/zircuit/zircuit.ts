@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import {
   ESCROW,
+  EXITS,
   OPERATOR,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
@@ -13,7 +14,10 @@ import {
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
-import { safeGetImplementation } from '../../templates/utils'
+import {
+  explorerReferences,
+  safeGetImplementation,
+} from '../../templates/utils'
 import type { ProjectScalingStateValidationCategory } from '../../types'
 
 const discovery = new ProjectDiscovery('zircuit')
@@ -50,7 +54,7 @@ const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
     {
       title:
         'L2OutputOracle.sol - Etherscan source code - bootstrapV2() function',
-      url: 'https://etherscan.io/address//0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4#code#F1#L302',
+      url: 'https://etherscan.io/address/0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315#code#F1#L320',
     },
     {
       title: 'VerifierV2.sol - Etherscan source code',
@@ -66,6 +70,13 @@ const sequencerInbox = discovery.getContractValue<ChainSpecificAddress>(
   'SystemConfig',
   'sequencerInbox',
 )
+const timeLimitOutputRootSubmissionSeconds = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'timeLimitOutputRootSubmissionSeconds',
+)
+const portal = discovery.getContract('OptimismPortal')
+const l2OutputOracle = discovery.getContract('L2OutputOracle')
+const explorerUrl = 'https://explorer.zircuit.com'
 
 const genesisTimestamp = UnixTime(1719936217)
 
@@ -82,7 +93,7 @@ export const zircuit: ScalingProject = opStackL2({
       websites: ['https://zircuit.com/'],
       bridges: ['https://bridge.zircuit.com/', 'https://app.zircuit.com/'],
       documentation: ['https://docs.zircuit.com/'],
-      explorers: ['https://explorer.zircuit.com/'],
+      explorers: [explorerUrl],
       repositories: ['https://github.com/zircuit-labs'],
       socialMedia: [
         'https://x.com/ZircuitL2',
@@ -130,7 +141,7 @@ export const zircuit: ScalingProject = opStackL2({
         chainId: 48900,
       },
     ],
-    explorerUrl: 'https://explorer.zircuit.com',
+    explorerUrl,
   },
   nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
   l1StandardBridgePremintedTokens: ['ZRC'],
@@ -152,6 +163,12 @@ export const zircuit: ScalingProject = opStackL2({
       description:
         RISK_VIEW.SEQUENCER_NO_MECHANISM().description +
         ' The L2 code has been modified to allow the sequencer to explicitly censor selected L1->L2 transactions.',
+    },
+    proposerFailure: {
+      value: 'Use escape hatch',
+      sentiment: 'bad',
+      orderHint: Number.NEGATIVE_INFINITY,
+      description: `Users are able to trustlessly exit by submitting a Merkle proof of funds after ${formatSeconds(timeLimitOutputRootSubmissionSeconds)} with no new state proposals have passed. The escape of ETH and ERC-20 balances is permissionless while the escape of DeFi contract balances is trusted.`,
     },
   },
   nonTemplateTrackedTxs: [
@@ -211,8 +228,67 @@ export const zircuit: ScalingProject = opStackL2({
         },
       ],
     },
+    exitMechanisms: [
+      {
+        ...EXITS.REGULAR_MESSAGING(
+          'optimistic',
+          discovery.getContractValue<number>(
+            l2OutputOracle.name ?? l2OutputOracle.address,
+            'FINALIZATION_PERIOD_SECONDS',
+          ),
+        ),
+        references: explorerReferences(explorerUrl, [
+          {
+            title: `${portal.name}.sol - source code, proveWithdrawalTransaction function`,
+            address: safeGetImplementation(portal),
+          },
+          {
+            title: `${portal.name}.sol - source code, finalizeWithdrawalTransaction function`,
+            address: safeGetImplementation(portal),
+          },
+          {
+            title: 'L2OutputOracle.sol - source code, PROPOSER check',
+            address: safeGetImplementation(l2OutputOracle),
+          },
+        ]),
+        risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+      },
+      {
+        ...EXITS.FORCED_MESSAGING('all-messages'),
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'the operator explicitly censors their forced transaction, possible through a modification in the smart contracts.',
+          },
+        ],
+        references: [
+          {
+            title: 'Forced withdrawal from an OP Stack blockchain',
+            url: 'https://docs.optimism.io/stack/transactions/forced-transaction',
+          },
+        ],
+      },
+      {
+        name: 'Escape mechanism',
+        description: `Zircuit employs a custom escape mechanism that can help users exit the system in certain situations. If the operator disappears or is down for more than ${formatSeconds(timeLimitOutputRootSubmissionSeconds)}, users can submit a merkle proof to the L1 contracts to withdraw any ETH or ERC-20 balance they have on L2. L2 DeFi contracts and their deployers can manually distribute their pooled L2 balance using 'Resolver' contracts on L1 in case of an escape. In contrast to individual account escapes, the redistribution of these contract balances to users is permissioned.`,
+        references: [
+          {
+            title: 'Etherscan - OptimismPortal - escapeEth() function',
+            url: 'https://etherscan.io/address/0xA0A36095A2258568759fb41CAE4934BBd2d04E26#code#F1#L456',
+          },
+        ],
+        risks: [],
+      },
+    ],
   },
   milestones: [
+    {
+      title: 'Escape mechanism',
+      url: 'https://www.zircuit.com/blog/mainnet-phase-1-is-live',
+      date: '2025-08-05T00:00:00.00Z',
+      description: 'Zircuit introduces a custom escape mechanism.',
+      type: 'general',
+    },
     {
       title: 'Mainnet Launch',
       url: 'https://www.zircuit.com/blog/mainnet-phase-1-is-live',

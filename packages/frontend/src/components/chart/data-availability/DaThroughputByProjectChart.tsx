@@ -4,7 +4,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import sum from 'lodash/sum'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
-import { Bar, BarChart } from 'recharts'
+import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -33,6 +33,8 @@ interface Props {
   resolution: DaThroughputResolution
 }
 
+const colorsCache = new Map<string, string>()
+
 export function DaThroughputByProjectChart({
   daLayer,
   data,
@@ -43,7 +45,10 @@ export function DaThroughputByProjectChart({
   resolution,
 }: Props) {
   const colors = useMemo(
-    () => generateAccessibleColors(projectsToShow.length),
+    () =>
+      generateAccessibleColors(projectsToShow.length).filter(
+        (color) => !colorsCache.values().toArray().includes(color),
+      ),
     [projectsToShow],
   )
 
@@ -68,13 +73,23 @@ export function DaThroughputByProjectChart({
     let colorIndex = 0
     return projectsToShow?.reduce((acc, project) => {
       if (!acc[project]) {
+        let color: string
+        const colorFromCache = colorsCache.get(project)
+        if (colorFromCache) {
+          color = colorFromCache
+        } else if (project === 'Unknown') {
+          color = 'var(--secondary)'
+        } else if (customColors?.[project]) {
+          color = customColors[project]
+        } else {
+          // biome-ignore lint/style/noNonNullAssertion: we know it's there
+          color = colors[colorIndex++]!
+          colorsCache.set(project, color)
+        }
+
         acc[project] = {
           label: project,
-          color:
-            project === 'Unknown'
-              ? 'var(--secondary)'
-              : // biome-ignore lint/style/noNonNullAssertion: we know it's there
-                (customColors?.[project] ?? colors[colorIndex++]!),
+          color,
           indicatorType: { shape: 'square' },
         }
       }
@@ -129,7 +144,7 @@ export function DaThroughputByProjectChart({
       isLoading={isLoading}
       milestones={milestones}
     >
-      <BarChart
+      <AreaChart
         accessibilityLayer
         data={chartData}
         margin={{ top: 20 }}
@@ -137,12 +152,16 @@ export function DaThroughputByProjectChart({
       >
         <ChartLegend content={<ChartLegendContent />} />
         {projectsToShow?.map((project) => (
-          <Bar
+          <Area
             key={project}
             dataKey={project}
             stackId="a"
             fill={chartMeta?.[project]?.color}
+            fillOpacity={1}
+            activeDot={false}
             isAnimationActive={false}
+            strokeWidth={0}
+            type="step"
           />
         ))}
 
@@ -154,7 +173,6 @@ export function DaThroughputByProjectChart({
             tickCount: 4,
           },
           syncedUntil,
-          chartType: 'bar',
         })}
         <ChartTooltip
           filterNull={false}
@@ -162,7 +180,7 @@ export function DaThroughputByProjectChart({
             <CustomTooltip denominator={denominator} resolution={resolution} />
           }
         />
-      </BarChart>
+      </AreaChart>
     </ChartContainer>
   )
 }
