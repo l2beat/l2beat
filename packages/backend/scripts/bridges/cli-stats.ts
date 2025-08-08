@@ -9,53 +9,40 @@ import readline from 'readline'
 import { CHAINS, type Chain } from './chains'
 import { Decoder } from './Decoder'
 import { PROTOCOLS } from './protocols/protocols'
-
 import type { Asset } from './types/Asset'
 
-function askQuestion(
-  chains: (Chain & { from: number; to: number })[],
-  protocols: string[],
-  logger: Logger,
-): Promise<string> {
-  let maxEstimatedTime = 0
-  let rpcCalls = 0
-
-  logger.info('Configured decoders', { protocols })
-
-  chains.forEach((chain) => {
-    const range = chain.to - chain.from
-    rpcCalls += range
-    const estimatedTime = Math.ceil(
-      (chain.to - chain.from) / chain.rpcCallsPerMinute,
-    )
-    maxEstimatedTime = Math.max(maxEstimatedTime, estimatedTime)
-
-    logger.info(`${chain.name} config`, {
-      from: chain.from,
-      to: chain.to,
-      range,
-      estimatedFetchingTimeInMinutes: estimatedTime,
-    })
-  })
-
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  })
-
-  logger.info(
-    `Script will make ~${rpcCalls} RPC calls and take ~${maxEstimatedTime} minutes`,
-  )
-  logger.info(
-    'Output will be saved continuously to ./scripts/bridges/matching.csv (File will be cleared in the beginning)',
-  )
-
-  return new Promise((resolve) =>
-    rl.question('Do you want to run the script? [yes] ', (ans) => {
-      rl.close()
-      resolve(ans)
-    }),
-  )
+const CONFIG: {
+  chains: { name: string; from: number; to: number }[]
+  protocols: string[]
+} = {
+  chains: [
+    {
+      name: 'ethereum',
+      from: 23085465 - (12 * 60 * 60) / 12,
+      to: 23085465, // 7th August 00:00
+    },
+    {
+      name: 'arbitrum',
+      from: 365731025 - (2 * 60 * 60) / 0.25,
+      to: 365731025, // 7th August 00:00
+    },
+    {
+      name: 'base',
+      from: 33867726 - (6 * 60 * 60) / 2,
+      to: 33867726, // 7th August 00:00
+    },
+  ],
+  protocols: [
+    'across',
+    'agglayer',
+    'cctpv1',
+    'cctpv2',
+    'debridge',
+    'hyperlane',
+    'stargate',
+    'wormhole-cctp',
+    'wormhole-portal',
+  ],
 }
 
 const cmd = command({
@@ -63,31 +50,27 @@ const cmd = command({
   args: {},
   handler: async (_) => {
     const logger = setupLogger()
-    const chains = setupChains(CONFIG.chains, logger)
+    const chains = setupChains(CONFIG.chains, { disableRpcLogging: true })
+    const confirmation = await printScriptSummaryAndConfirmation(
+      chains,
+      CONFIG.protocols,
+      logger,
+    )
+    if (confirmation.toLowerCase() !== 'yes') {
+      logger.error('Execution aborted')
+      return
+    }
+
     const decoder = new Decoder(PROTOCOLS, chains, logger)
 
     const outbound: Map<string, Asset> = new Map()
     const inbound: Map<string, Asset> = new Map()
     const matching: Map<string, { outbound: Asset; inbound: Asset }> = new Map()
-
     const transfers: Map<string, Asset[]> = new Map()
     const delays: Map<string, number[]> = new Map()
 
-    const promises = []
-
-    const answer = await askQuestion(chains, CONFIG.protocols, logger)
-    if (answer.toLowerCase() !== 'yes') {
-      logger.error('Execution aborted')
-      return
-    }
-
-    logger.info(
-      `Running script for configured protocols [${CONFIG.protocols.length}]`,
-      { protocols: CONFIG.protocols },
-    )
-
     const BATCH_SIZE = 100
-
+    const promises = []
     for (const chain of chains) {
       promises.push(
         (async () => {
@@ -146,6 +129,7 @@ const cmd = command({
                         ? [...previousTransfers, asset]
                         : [asset],
                     )
+                    saveTransfersToFile(transfers)
                     const delay =
                       matchingInbound.blockTimestamp - asset.blockTimestamp
                     if (delay === 0) continue
@@ -185,6 +169,7 @@ const cmd = command({
                         ? [...previousTransfers, asset]
                         : [asset],
                     )
+                    saveTransfersToFile(transfers)
 
                     const delay =
                       asset.blockTimestamp - matchingOutbound.blockTimestamp
@@ -237,13 +222,62 @@ const cmd = command({
       })
     }
 
-    logger.info('For more info go to ./scripts/bridges/matching.csv')
+    logger.info(
+      'For more info go to ./scripts/bridges/matching.csv and ./scripts/bridges/transfers.csv',
+    )
 
     console.log('Decoder Errors', decoder.errors)
 
     saveMatchingToFile(matching)
   },
 })
+run(cmd, process.argv.slice(2))
+
+function printScriptSummaryAndConfirmation(
+  chains: (Chain & { from: number; to: number })[],
+  protocols: string[],
+  logger: Logger,
+): Promise<string> {
+  let maxEstimatedTime = 0
+  let rpcCalls = 0
+
+  logger.info('Configured decoders', { protocols })
+
+  chains.forEach((chain) => {
+    const range = chain.to - chain.from
+    rpcCalls += range
+    const estimatedTime = Math.ceil(
+      (chain.to - chain.from) / chain.rpcCallsPerMinute,
+    )
+    maxEstimatedTime = Math.max(maxEstimatedTime, estimatedTime)
+
+    logger.info(`${chain.name} config`, {
+      from: chain.from,
+      to: chain.to,
+      range,
+      estimatedFetchingTimeInMinutes: estimatedTime,
+    })
+  })
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  })
+
+  logger.info(
+    `Script will make ~${rpcCalls} RPC calls and take ~${maxEstimatedTime} minutes`,
+  )
+  logger.info(
+    'Output will be saved continuously to ./scripts/bridges/matching.csv and ./scripts/bridges/transfers.csv (Files will be cleared in the beginning)',
+  )
+
+  return new Promise((resolve) =>
+    rl.question('Do you want to run the script? [yes] ', (ans) => {
+      rl.close()
+      resolve(ans)
+    }),
+  )
+}
 
 function saveMatchingToFile(
   matching: Map<string, { outbound: Asset; inbound: Asset }>,
@@ -260,6 +294,20 @@ function saveMatchingToFile(
   )
 }
 
+function saveTransfersToFile(transfers: Map<string, Asset[]>) {
+  writeFileSync(
+    './scripts/bridges/transfers.csv',
+    'protocol;chain;direction;amount;token;tx\n' +
+      Array.from(transfers.entries())
+        .flatMap(([_, transfers]) => transfers)
+        .map(
+          (transfer) =>
+            `${transfer.application};${transfer.direction === 'outbound' ? transfer.origin : transfer.destination};${transfer.direction};${transfer.amount};${transfer.token};${transfer.txHash}`,
+        )
+        .join('\n'),
+  )
+}
+
 function setupLogger() {
   return Logger.INFO.configure({
     logLevel:
@@ -269,7 +317,7 @@ function setupLogger() {
 
 function setupChains(
   chainsConfig: { name: string; from: number; to: number }[],
-  logger: Logger,
+  options: { disableRpcLogging: boolean },
 ) {
   const http = new HttpClient()
   const env = getEnv()
@@ -286,7 +334,7 @@ function setupChains(
         url: env.string(`${chain.name.toUpperCase()}_RPC_URL`),
         sourceName: chain.name,
         http,
-        logger: Logger.SILENT,
+        logger: options.disableRpcLogging ? Logger.SILENT : Logger.INFO,
         callsPerMinute: chain.rpcCallsPerMinute,
         retryStrategy: 'RELIABLE',
       }),
@@ -295,43 +343,10 @@ function setupChains(
   return chains
 }
 
-run(cmd, process.argv.slice(2))
-
-const CONFIG: {
-  chains: { name: string; from: number; to: number }[]
-  protocols: string[]
-} = {
-  chains: [
-    {
-      name: 'ethereum',
-      from: 23085465 - (12 * 60 * 60) / 12,
-      to: 23085465, // 7th August 00:00
-    },
-    {
-      name: 'arbitrum',
-      from: 365731025 - (2 * 60 * 60) / 0.25,
-      to: 365731025, // 7th August 00:00
-    },
-    {
-      name: 'base',
-      from: 33867726 - (6 * 60 * 60) / 2,
-      to: 33867726, // 7th August 00:00
-    },
-  ],
-  protocols: [
-    'across',
-    'agglayer',
-    'cctpv1',
-    'cctpv2',
-    'debridge',
-    'hyperlane',
-    'stargate',
-    'wormhole-cctp',
-    'wormhole-portal',
-  ],
+function average(arr: number[]) {
+  return arr.reduce((a, b) => a + b) / arr.length
 }
 
-const average = (arr: number[]) => arr.reduce((a, b) => a + b) / arr.length
 function median(numbers: number[]) {
   const sorted = Array.from(numbers).sort((a, b) => a - b)
   const middle = Math.floor(sorted.length / 2)
@@ -342,21 +357,3 @@ function median(numbers: number[]) {
 
   return sorted[middle]
 }
-
-/*
-{
-  name: 'ethereum',
-  from: 23078306, // 6th August 00:00
-  to: 23085465, // 7th August 00:00
-},
-{
-  name: 'arbitrum',
-  from: 365386232, // 6th August 00:00
-  to: 365731025, // 7th August 00:00
-},
-{
-  name: 'base',
-  from: 33824526, // 6th August 00:00
-  to: 33867726, // 7th August 00:00
-},
-*/
