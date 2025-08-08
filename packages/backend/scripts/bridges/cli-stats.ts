@@ -66,7 +66,6 @@ const cmd = command({
     const outbound: Map<string, Asset> = new Map()
     const inbound: Map<string, Asset> = new Map()
     const matching: Map<string, { outbound: Asset; inbound: Asset }> = new Map()
-    const delays: Map<string, number[]> = new Map()
 
     const BATCH_SIZE = 100
     const promises = []
@@ -116,14 +115,6 @@ const cmd = command({
                     inbound.delete(asset.matchingId)
                     outbound.delete(asset.matchingId)
                     saveMatchingToFile(matching)
-                    const delay =
-                      matchingInbound.blockTimestamp - asset.blockTimestamp
-                    if (delay === 0) continue
-                    const previousDelays = delays.get(asset.application)
-                    delays.set(
-                      asset.application,
-                      previousDelays ? [...previousDelays, delay] : [delay],
-                    )
                   }
                 }
 
@@ -152,15 +143,6 @@ const cmd = command({
                     inbound.delete(asset.matchingId)
                     outbound.delete(asset.matchingId)
                     saveMatchingToFile(matching)
-
-                    const delay =
-                      asset.blockTimestamp - matchingOutbound.blockTimestamp
-                    if (delay === 0) continue
-                    const previousDelays = delays.get(asset.application)
-                    delays.set(
-                      asset.application,
-                      previousDelays ? [...previousDelays, delay] : [delay],
-                    )
                   }
                 }
               }
@@ -184,8 +166,9 @@ const cmd = command({
     })
 
     for (const protocol of CONFIG.protocols) {
-      const dd = delays.get(protocol)
-      if (!dd) continue
+      const delays = Array.from(matching.values()).map(
+        (m) => m.inbound.blockTimestamp - m.outbound.blockTimestamp,
+      )
 
       logger.info(`${protocol} stats`, {
         transfers: {
@@ -197,10 +180,10 @@ const cmd = command({
           ).length,
         },
         delays: {
-          min: Math.min(...dd),
-          max: Math.max(...dd),
-          average: average(dd),
-          median: median(dd),
+          min: Math.min(...delays),
+          max: Math.max(...delays),
+          average: average(delays),
+          median: median(delays),
         },
       })
     }
