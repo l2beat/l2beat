@@ -21,9 +21,9 @@ export async function findCelestiaNamespace(url: string, commitment: string) {
   Byte derivation version: ${byteDerivationVersion}
   `)
 
-  const logs = await client.getBlockResultLogs(blockHeight)
+  const events = await client.getBlockResultEvents(blockHeight)
 
-  const possibleNamespaces = celestiaTools.extractNamespacesFromLogs(logs)
+  const possibleNamespaces = celestiaTools.extractNamespacesFromEvents(events)
 
   console.log(`
   Possible namespaces:

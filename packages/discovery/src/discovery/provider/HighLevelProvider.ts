@@ -337,8 +337,8 @@ export class HighLevelProvider implements IProvider {
     return this.provider.celestiaBlobExists(height, namespace, commitment)
   }
 
-  getCelestiaBlockResultLogs(height: number) {
-    return this.provider.getCelestiaBlockResultLogs(height)
+  getCelestiaBlockResultEvents(height: number) {
+    return this.provider.getCelestiaBlockResultEvents(height)
   }
 
   private safeGetRawAddress(address: ChainSpecificAddress): EthereumAddress {

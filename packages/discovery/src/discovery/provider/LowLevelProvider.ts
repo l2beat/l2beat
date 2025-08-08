@@ -275,12 +275,12 @@ export class LowLevelProvider {
     )
   }
 
-  async getCelestiaBlockResultLogs(height: number) {
+  async getCelestiaBlockResultEvents(height: number) {
     assert(
       this.celestiaApiClient,
       'CelestiaApiClient is not available, configure the .env to include celestia API url.',
     )
-    return await this.celestiaApiClient.getBlockResultLogs(height)
+    return await this.celestiaApiClient.getBlockResultEvents(height)
   }
 
   private async measure<T>(fn: () => Promise<T>, key: number): Promise<T> {

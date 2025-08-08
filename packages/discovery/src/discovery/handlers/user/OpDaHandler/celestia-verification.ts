@@ -49,9 +49,9 @@ export async function getNamespaceFromCommitment(
   height: number,
   commitment: string,
 ) {
-  const logs = await provider.getCelestiaBlockResultLogs(height)
+  const events = await provider.getCelestiaBlockResultEvents(height)
 
-  const possibleNamespaces = celestiaTools.extractNamespacesFromLogs(logs)
+  const possibleNamespaces = celestiaTools.extractNamespacesFromEvents(events)
 
   for (const namespace of possibleNamespaces) {
     const blobExists = await provider.celestiaBlobExists(
