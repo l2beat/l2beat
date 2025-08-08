@@ -33,6 +33,8 @@ interface Props {
   resolution: DaThroughputResolution
 }
 
+const colorsCache = new Map<string, string>()
+
 export function DaThroughputByProjectChart({
   daLayer,
   data,
@@ -43,7 +45,10 @@ export function DaThroughputByProjectChart({
   resolution,
 }: Props) {
   const colors = useMemo(
-    () => generateAccessibleColors(projectsToShow.length),
+    () =>
+      generateAccessibleColors(projectsToShow.length).filter(
+        (color) => !colorsCache.values().toArray().includes(color),
+      ),
     [projectsToShow],
   )
 
@@ -68,13 +73,23 @@ export function DaThroughputByProjectChart({
     let colorIndex = 0
     return projectsToShow?.reduce((acc, project) => {
       if (!acc[project]) {
+        let color: string
+        const colorFromCache = colorsCache.get(project)
+        if (colorFromCache) {
+          color = colorFromCache
+        } else if (project === 'Unknown') {
+          color = 'var(--secondary)'
+        } else if (customColors?.[project]) {
+          color = customColors[project]
+        } else {
+          // biome-ignore lint/style/noNonNullAssertion: we know it's there
+          color = colors[colorIndex++]!
+          colorsCache.set(project, color)
+        }
+
         acc[project] = {
           label: project,
-          color:
-            project === 'Unknown'
-              ? 'var(--secondary)'
-              : // biome-ignore lint/style/noNonNullAssertion: we know it's there
-                (customColors?.[project] ?? colors[colorIndex++]!),
+          color,
           indicatorType: { shape: 'square' },
         }
       }
