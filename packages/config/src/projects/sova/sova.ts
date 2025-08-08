@@ -10,7 +10,7 @@ export const sova: ScalingProject = upcomingL2({
     name: 'Sova',
     slug: 'sova',
     description:
-      "Sova is an Ethereum L2 running the OP rollup stack. The network's key innovation is providing native Bitcoin integration at the network level enabling smart contracts to directly interact with Bitcoin. ",
+      "Sova is an Ethereum L2 running the OP rollup stack. The network's key innovation is providing native Bitcoin integration at the network level enabling smart contracts to directly interact with Bitcoin.",
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
@@ -21,7 +21,7 @@ export const sova: ScalingProject = upcomingL2({
       socialMedia: [
         'https://x.com/sovabtc',
         'https://t.me/+I54xZyHrNbUyYmMx',
-        'https://discord.com/invite/sovabtc',    
+        'https://discord.com/invite/sovabtc',
       ],
     },
   },
