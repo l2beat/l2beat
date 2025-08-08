@@ -1,5 +1,4 @@
 // TODO: add envio
-
 import { getEnv, Logger, type LoggerOptions } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
@@ -18,7 +17,7 @@ const CONFIG: {
   chains: [
     {
       name: 'ethereum',
-      from: 23085465 - (12 * 60 * 60) / 12,
+      from: 23085465 - (2 * 60 * 60) / 12,
       to: 23085465, // 7th August 00:00
     },
     {
@@ -28,7 +27,7 @@ const CONFIG: {
     },
     {
       name: 'base',
-      from: 33867726 - (6 * 60 * 60) / 2,
+      from: 33867726 - (2 * 60 * 60) / 2,
       to: 33867726, // 7th August 00:00
     },
   ],
@@ -133,14 +132,14 @@ const cmd = command({
         console.log('Failed batches:', failedPromises)
     })
 
-    printStats(matching, logger, inbound)
+    printStats(matching, logger, inbound, outbound)
 
     saveMatchingToFile(matching)
     saveInboundToFile(inbound)
     saveOutboundToFile(outbound)
 
     logger.info(
-      'For more info go to ./scripts/bridges/matching.csv and ./scripts/bridges/transfers.csv',
+      'For more info go to ./scripts/bridges/matching.csv and ./scripts/bridges/inbound.csv and ./scripts/bridges/outbound.csv',
     )
 
     console.log('Decoder Errors', decoder.errors)
@@ -218,7 +217,7 @@ function printScriptSummaryAndConfirmation(
     `Script will make ~${rpcCalls} RPC calls and take ~${maxEstimatedTime} minutes`,
   )
   logger.info(
-    'Output will be saved continuously to ./scripts/bridges/matching.csv and ./scripts/bridges/transfers.csv (Files will be cleared in the beginning)',
+    'Output will be saved continuously to ./scripts/bridges/matching.csv and ./scripts/bridges/inbound.csv and ./scripts/bridges/outbound.csv (Files will be cleared in the beginning)',
   )
 
   return new Promise((resolve) =>
@@ -305,27 +304,31 @@ function printStats(
   matching: Map<string, { outbound: Asset; inbound: Asset }>,
   logger: Logger,
   inbound: Map<string, Asset>,
+  outbound: Map<string, Asset>,
 ) {
   for (const protocol of CONFIG.protocols) {
-    const delays = Array.from(matching.values()).map(
-      (m) => m.inbound.blockTimestamp - m.outbound.blockTimestamp,
-    )
+    const delays = Array.from(matching.values())
+      .filter((x) => x.inbound.application === protocol)
+      .map((m) => m.inbound.blockTimestamp - m.outbound.blockTimestamp)
 
     logger.info(`${protocol} stats`, {
       transfers: {
-        outbound: Array.from(inbound.values()).filter(
+        outbound: Array.from(outbound.values()).filter(
           (x) => x.application === protocol,
         ).length,
         inbound: Array.from(inbound.values()).filter(
           (x) => x.application === protocol,
         ).length,
       },
-      delays: {
-        min: Math.min(...delays),
-        max: Math.max(...delays),
-        average: average(delays),
-        median: median(delays),
-      },
+      delays:
+        delays.length > 0
+          ? {
+              min: Math.min(...delays),
+              max: Math.max(...delays),
+              average: average(delays),
+              median: median(delays),
+            }
+          : 'empty',
     })
   }
 }
