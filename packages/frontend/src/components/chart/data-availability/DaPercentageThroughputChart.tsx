@@ -34,7 +34,7 @@ export function DaPercentageThroughputChart({
   syncStatus,
   resolution,
 }: Props) {
-  const chartMeta = getDaChartMeta({ shape: 'square' })
+  const chartMeta = useMemo(() => getDaChartMeta({ shape: 'square' }), [])
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
