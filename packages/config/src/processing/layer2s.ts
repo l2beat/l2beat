@@ -180,6 +180,7 @@ import { snaxchain } from '../projects/snaxchain/snaxchain'
 import { solo } from '../projects/solo/solo'
 import { soneium } from '../projects/soneium/soneium'
 import { soon } from '../projects/soon/soon'
+import { soonbase } from '../projects/soonbase/soonbase'
 import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
 import { sovrun } from '../projects/sovrun/sovrun'
@@ -228,7 +229,6 @@ import { zkswap2 } from '../projects/zkswap2/zkswap2'
 import { zksync } from '../projects/zksync/zksync'
 import { zksync2 } from '../projects/zksync2/zksync2'
 import { zora } from '../projects/zora/zora'
-import { soonbase } from '../projects/soonbase/soonbase'
 
 export const layer2s: ScalingProject[] = [
   abstract,
