@@ -66,7 +66,6 @@ const cmd = command({
     const outbound: Map<string, Asset> = new Map()
     const inbound: Map<string, Asset> = new Map()
     const matching: Map<string, { outbound: Asset; inbound: Asset }> = new Map()
-    const transfers: Map<string, Asset[]> = new Map()
     const delays: Map<string, number[]> = new Map()
 
     const BATCH_SIZE = 100
@@ -98,6 +97,7 @@ const cmd = command({
                     continue
                   }
                   outbound.set(asset.matchingId, asset)
+                  saveOutboundToFile(outbound)
 
                   const matchingInbound = inbound.get(asset.matchingId)
                   if (matchingInbound) {
@@ -116,14 +116,6 @@ const cmd = command({
                     inbound.delete(asset.matchingId)
                     outbound.delete(asset.matchingId)
                     saveMatchingToFile(matching)
-                    const previousTransfers = transfers.get(asset.application)
-                    transfers.set(
-                      asset.application,
-                      previousTransfers
-                        ? [...previousTransfers, asset]
-                        : [asset],
-                    )
-                    saveTransfersToFile(transfers)
                     const delay =
                       matchingInbound.blockTimestamp - asset.blockTimestamp
                     if (delay === 0) continue
@@ -141,6 +133,7 @@ const cmd = command({
                     continue
                   }
                   inbound.set(asset.matchingId, asset)
+                  saveInboundToFile(inbound)
 
                   const matchingOutbound = outbound.get(asset.matchingId)
                   if (matchingOutbound) {
@@ -159,14 +152,6 @@ const cmd = command({
                     inbound.delete(asset.matchingId)
                     outbound.delete(asset.matchingId)
                     saveMatchingToFile(matching)
-                    const previousTransfers = transfers.get(asset.application)
-                    transfers.set(
-                      asset.application,
-                      previousTransfers
-                        ? [...previousTransfers, asset]
-                        : [asset],
-                    )
-                    saveTransfersToFile(transfers)
 
                     const delay =
                       asset.blockTimestamp - matchingOutbound.blockTimestamp
@@ -199,16 +184,17 @@ const cmd = command({
     })
 
     for (const protocol of CONFIG.protocols) {
-      const cc = transfers.get(protocol)
-      if (!cc) continue
       const dd = delays.get(protocol)
       if (!dd) continue
 
       logger.info(`${protocol} stats`, {
         transfers: {
-          count: cc.length,
-          outbound: cc.filter((x) => x.direction === 'outbound').length,
-          inbound: cc.filter((x) => x.direction === 'inbound').length,
+          outbound: Array.from(inbound.values()).filter(
+            (x) => x.application === protocol,
+          ).length,
+          inbound: Array.from(inbound.values()).filter(
+            (x) => x.application === protocol,
+          ).length,
         },
         delays: {
           min: Math.min(...dd),
@@ -317,15 +303,27 @@ function saveMatchingToFile(
   )
 }
 
-function saveTransfersToFile(transfers: Map<string, Asset[]>) {
+function saveOutboundToFile(outbound: Map<string, Asset>) {
   writeFileSync(
-    './scripts/bridges/transfers.csv',
+    './scripts/bridges/outbound.csv',
     'protocol;chain;direction;amount;token;tx\n' +
-      Array.from(transfers.entries())
-        .flatMap(([_, transfers]) => transfers)
+      Array.from(outbound.entries())
         .map(
-          (transfer) =>
-            `${transfer.application};${transfer.direction === 'outbound' ? transfer.origin : transfer.destination};${transfer.direction};${transfer.amount};${transfer.token};${transfer.txHash}`,
+          ([_, transfer]) =>
+            `${transfer.application};${transfer.origin};${transfer.direction};${transfer.amount};${transfer.token};${transfer.txHash}`,
+        )
+        .join('\n'),
+  )
+}
+
+function saveInboundToFile(inbound: Map<string, Asset>) {
+  writeFileSync(
+    './scripts/bridges/inbound.csv',
+    'protocol;chain;direction;amount;token;tx\n' +
+      Array.from(inbound.entries())
+        .map(
+          ([_, transfer]) =>
+            `${transfer.application};${transfer.origin};${transfer.direction};${transfer.amount};${transfer.token};${transfer.txHash}`,
         )
         .join('\n'),
   )
