@@ -29,6 +29,16 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getAtOrBefore(timestamp: UnixTime): Promise<TokenValueRecord[]> {
+    const rows = await this.db
+      .selectFrom('TokenValue')
+      .selectAll()
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getByTokenIdInTimeRange(
     tokenId: string,
     fromInclusive: UnixTime | null,
