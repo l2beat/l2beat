@@ -181,7 +181,12 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         (a) => a.projectId === group.projectId && a.subtype === group.subtype,
       )
 
-      if (!latestRecord || !latestStat) {
+      const isLatestStatStale =
+        latestStat &&
+        latestStat.timestamp <
+          UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
+
+      if (!latestRecord || !latestStat || isLatestStatStale) {
         continue
       }
 
