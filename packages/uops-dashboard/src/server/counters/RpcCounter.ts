@@ -263,7 +263,7 @@ export class RpcCounter implements Counter {
       countedOperation,
       batchOperations,
       (operation, batchOperations) => {
-        // for EIP-712 batching can occur starting form level 0
+        // for EIP-712 batching can occur starting from level 0
         // for all the other cases it should start from level 1
         if (
           (isEip712(tx) || operation.level > 0) &&
