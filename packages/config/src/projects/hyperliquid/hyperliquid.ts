@@ -105,7 +105,7 @@ export const hyperliquid: Bridge = {
     },
     validation: {
       name: 'Transfers are externally verified',
-      description: `Hyperliquid is composed of two sets of permissioned validators, one being a "hot" validator set, and the other being a "cold" one. The hot validator set is responsible for initiating withdrawals upon user requests, while cold validators can invalide them during the ${challengePeriod}s challenge period and/or rotate both validator sets after an emergency pause. Both sets are currently composed of ${validatorSetSize} validators with equal power. The system accepts a request if signed by 2/3+1 of validators power.`,
+      description: `Hyperliquid is composed of two sets of permissioned validators, one being a "hot" validator set, and the other being a "cold" one. The hot validator set is responsible for initiating withdrawals upon user requests, while cold validators can invalidate them during the ${challengePeriod}s challenge period and/or rotate both validator sets after an emergency pause. Both sets are currently composed of ${validatorSetSize} validators with equal power. The system accepts a request if signed by 2/3+1 of validators power.`,
       references: [
         {
           title: 'Bridge2 contract: function checkValidatorSignatures()',

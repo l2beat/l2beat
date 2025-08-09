@@ -738,7 +738,7 @@ export const v = {
   lazy,
 }
 
-// biome-ignore lint/style/noNamespace: Needed to mimick z.infer
+// biome-ignore lint/style/noNamespace: Needed to mimic z.infer
 export namespace v {
   export type infer<T> = Infer<T>
 }
