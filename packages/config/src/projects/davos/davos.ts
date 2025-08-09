@@ -21,7 +21,6 @@ export const davos: Bridge = {
         'https://t.me/davosprotocol',
         'https://discord.gg/davos-protocol-978896437612019722',
         'https://medium.com/@Davos_Protocol',
-        'https://linkedin.com/company/davosprotocol',
       ],
     },
     description:
