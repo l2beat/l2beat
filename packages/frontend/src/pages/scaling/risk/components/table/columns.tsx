@@ -44,6 +44,7 @@ export const getScalingRiskColumns = (opts?: CommonProjectColumnsOptions) => [
     header: 'Data\nAvailability',
     meta: {
       tooltip: 'Is the data needed to reconstruct the state available?',
+      additionalRows: (ctx) => ['Dupa', 'Dupa2', ctx.row.original.id],
     },
     cell: (ctx) => (
       <TableValueCell
@@ -68,6 +69,15 @@ export const getScalingRiskColumns = (opts?: CommonProjectColumnsOptions) => [
     meta: {
       tooltip:
         'How much time do users have to exit the system in case of an unwanted upgrade?',
+      additionalRows: (ctx) => [
+        'Test',
+        'Test',
+        'Test',
+        'Test',
+        'Test',
+        'Test',
+        'Test',
+      ],
     },
     cell: (ctx) => (
       <TableValueCell

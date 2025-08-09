@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, unique } from '@l2beat/shared-pure'
 import type {
   Column,
   Header,
@@ -182,6 +182,22 @@ export function BasicTableRow<T extends CommonProjectEntry>({
   const rowType = getRowType(row.original, props.rowColoringMode)
   const { highlightedSlug } = useHighlightedTableRowContext()
 
+  const uniqueRowsCount = unique(
+    row
+      .getVisibleCells()
+      .map(
+        (cell) =>
+          (cell.column.columnDef.meta?.additionalRows?.(cell.getContext())
+            .length ?? 0) + 1,
+      ),
+  )
+
+  const denominator = commonDenominator(uniqueRowsCount)
+  assert(
+    denominator === Math.max(...uniqueRowsCount),
+    'Incorrect row configuration',
+  )
+
   return (
     <>
       <TableRow
@@ -206,9 +222,16 @@ export function BasicTableRow<T extends CommonProjectEntry>({
             ? meta.colSpan(cell.getContext())
             : undefined
 
+          const rowSpan =
+            denominator /
+            ((cell.column.columnDef.meta?.additionalRows?.(cell.getContext())
+              ?.length ?? 0) +
+              1)
+
           return (
             <React.Fragment key={`${row.id}-${cell.id}`}>
               <TableCell
+                rowSpan={rowSpan}
                 align={meta?.align}
                 className={cn(
                   groupParams?.isFirstInGroup && 'pl-6',
@@ -235,6 +258,43 @@ export function BasicTableRow<T extends CommonProjectEntry>({
           )
         })}
       </TableRow>
+      {range(denominator - 1).map((additionalRowIndex) => {
+        return (
+          <TableRow
+            key={`additional-row-${additionalRowIndex}`}
+            slug={undefined}
+          >
+            {row.getVisibleCells().map((cell) => {
+              const additionalRows =
+                cell.column.columnDef.meta?.additionalRows?.(cell.getContext())
+              if (!additionalRows) {
+                return null
+              }
+
+              const rowSpan = denominator / (additionalRows.length + 1)
+
+              const actualIndex = (additionalRowIndex + 1) / rowSpan - 1
+              if (!Number.isInteger(actualIndex)) {
+                return null
+              }
+
+              const additionalRow = additionalRows[actualIndex]
+              if (!additionalRow) {
+                return null
+              }
+
+              return (
+                <TableCell
+                  key={`${cell.id}-${additionalRowIndex}`}
+                  rowSpan={rowSpan}
+                >
+                  {additionalRow}
+                </TableCell>
+              )
+            })}
+          </TableRow>
+        )
+      })}
       {row.getIsExpanded() &&
         props.renderSubComponent &&
         (props.rawSubComponent ? (
@@ -326,4 +386,16 @@ function getTableRows<T extends CommonProjectEntry>(table: TanstackTable<T>) {
   }
 
   return { ethereumEntry, rest }
+}
+
+function greatestCommonDivisor(a: number, b: number): number {
+  return b === 0 ? a : greatestCommonDivisor(b, a % b)
+}
+
+function leastCommonMultiple(a: number, b: number): number {
+  return (a * b) / greatestCommonDivisor(a, b)
+}
+
+function commonDenominator(numbers: number[]): number {
+  return numbers.reduce((acc, num) => leastCommonMultiple(acc, num))
 }
