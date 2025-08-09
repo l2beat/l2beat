@@ -333,7 +333,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
       url: 'https://zircuit1-mainnet.p2pify.com',
     },
     getBlockLink: (blockNumber: number) =>
-      `https://explorer.zircuit.com//blocks/${blockNumber}`,
+      `https://explorer.zircuit.com/blocks/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.zircuit.com/tx/${txHash}`,
     getContractLink: (address: string) =>
       `https://explorer.zircuit.com/address/${address}`,
@@ -347,11 +347,11 @@ export const SUPPORTED_CHAINS: Chain[] = [
     },
     etherscanApiUrl: 'https://api-era.zksync.network',
     getBlockLink: (blockNumber: number) =>
-      `https://era.zksync.network//block/${blockNumber}`,
+      `https://era.zksync.network/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
       `https://app.blocksec.com/explorer/tx/zksync-era/${txHash}`,
     getContractLink: (address: string) =>
-      `https://era.zksync.network//address/${address}`,
+      `https://era.zksync.network/address/${address}`,
   },
   {
     id: 'zora',

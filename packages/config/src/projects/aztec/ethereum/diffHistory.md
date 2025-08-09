@@ -644,8 +644,8 @@ On Jan 14, 2024 TurboVerifier contract has been replaced with AlwaysReverting
 contract effectively halting verification process. On Feb 15, 2024 the verifier
 has been updated to an unverified contract. After 3 minutes it was again
 updated to a new TurboVerifier. The unverified contract is not similar in any
-way to the new TurboVerifier. While the new TurobVerifier has basically the
-same source code as the historical one expect some hardcoded values.
+way to the new TurboVerifier. While the new TurboVerifier has basically the
+same source code as the historical one except some hardcoded values.
 
 - the "3 minute" verifier (0xf3761b450571a49fa8e2af6e37e1eb3516209d56)
 - the new verifier (0x48cb7ba00d087541dc8e2b3738f80fdd1fee8ce8)

@@ -180,6 +180,7 @@ import { snaxchain } from '../projects/snaxchain/snaxchain'
 import { solo } from '../projects/solo/solo'
 import { soneium } from '../projects/soneium/soneium'
 import { soon } from '../projects/soon/soon'
+import { soonbase } from '../projects/soonbase/soonbase'
 import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
 import { sovrun } from '../projects/sovrun/sovrun'
@@ -409,6 +410,7 @@ export const layer2s: ScalingProject[] = [
   solo,
   soneium,
   soon,
+  soonbase,
   sophon,
   sorare,
   sovrun,

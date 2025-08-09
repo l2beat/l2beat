@@ -106,7 +106,7 @@
         "decimals": 8,
         "sinceTimestamp": 1725879531
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -151,7 +151,7 @@
         "decimals": 8,
         "sinceTimestamp": 1724889600
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -216,7 +216,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684"
@@ -234,7 +234,7 @@
         "decimals": 18,
         "sinceTimestamp": 1724924787
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640"
@@ -273,7 +273,7 @@
         "decimals": 18,
         "sinceTimestamp": 1712862107
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -351,7 +351,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false
     },
@@ -442,7 +442,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false,
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
