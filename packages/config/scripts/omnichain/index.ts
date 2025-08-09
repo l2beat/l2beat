@@ -17,7 +17,7 @@ async function main() {
   const libs = await getInboundLibraries(provider)
 
   writeFileSync(
-    './scripts/omnichain/libraries.csv',
+    './scripts/omnichain/libraries.json',
     JSON.stringify(libs, null, 2),
   )
 
