@@ -7,5 +7,5 @@ export type DecoderInput = {
   blockTimestamp: UnixTime
   transactionHash: string
   transactionLogs: Log[]
-  transactionTo: EthereumAddress
+  transactionTo?: EthereumAddress
 }

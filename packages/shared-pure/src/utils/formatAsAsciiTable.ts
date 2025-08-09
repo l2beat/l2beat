@@ -38,7 +38,7 @@ export function formatAsAsciiTable(
 }
 
 export function stripAnsiEscapeCodes(str: string): string {
-  // biome-ignore lint/suspicious/noControlCharactersInRegex: ansii escape codes are control characters
+  // biome-ignore lint/suspicious/noControlCharactersInRegex: ansi escape codes are control characters
   const ansiEscapeCodesPattern = /\x1b\[[0-9;]*m/g
   return str.replace(ansiEscapeCodesPattern, '')
 }

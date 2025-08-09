@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "timestamp": 1754310248,
+  "timestamp": 1754567136,
   "configHash": "0xf10901dfe14f54ba69cc8963f008b238f3b35a12b218550ec3160027b9c14e0e",
   "entries": [
     {
@@ -18,19 +18,19 @@
       "name": "OptimismPortal",
       "address": "eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
       "type": "Contract",
-      "template": "opstack/OptimismPortal",
+      "template": "opstack/zircuit/OptimismPortal",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x67780cfd4e258f37c824b516a488799359ec5e535fb56f62fbd71765730fa32b"
+        "0xb800094cbe5da9b7c7fb14d9f851fabc0adb88151044c80334d6c6f9cc27cc4b"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "description": "The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4.",
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1719936491,
       "sinceBlock": 20219921,
       "values": {
         "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "eth:0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a",
+        "$implementation": "eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26",
         "$pastUpgrades": [
           [
             "2024-07-02T16:13:23.000Z",
@@ -56,26 +56,37 @@
             "2025-04-23T14:46:59.000Z",
             "0xe9ed64d1dc4bf02f583f912b831f46ae873996b36901c3b1180ac56c710e1d6f",
             ["eth:0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a"]
+          ],
+          [
+            "2025-08-05T13:35:59.000Z",
+            "0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",
+            ["eth:0xE14b12F4843447114A093D99Dc9322b93a967DE6"]
+          ],
+          [
+            "2025-08-05T13:35:59.000Z",
+            "0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",
+            ["eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 7,
         "guardian": "eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
         "l2Oracle": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 312784,
-          "prevBlockNum": 23067204,
+          "prevBlockNum": 23087791,
           "prevTxCount": 1
         },
         "paused": false,
+        "resolverRegistry": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
         "superchainConfig": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "systemConfig": "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
-        "version": "2.1.0"
+        "version": "2.2.0"
       },
       "implementationNames": {
         "eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1": "Proxy",
-        "eth:0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a": "OptimismPortal"
+        "eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26": "OptimismPortal"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -112,7 +123,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639283",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639303",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -289,18 +300,18 @@
       "name": "L1StandardBridge",
       "address": "eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
       "type": "Contract",
-      "template": "opstack/L1StandardBridge",
+      "template": "opstack/zircuit/L1StandardBridge",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x4da64b64aa2ba04837c58c90080a550f82596377659251b91ef703b0acdb49da"
+        "0x2ffe3729df0a4fa39ab88f1451d7d0023e7f6d680f4a8d025a68111673392470"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "description": "The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time.",
       "sinceTimestamp": 1719936539,
       "sinceBlock": 20219925,
       "values": {
         "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "eth:0x506aadcb7bF93E892a43208d879BAc076eBC97Ef",
+        "$implementation": "eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb",
         "$pastUpgrades": [
           [
             "2024-07-02T16:11:59.000Z",
@@ -331,9 +342,14 @@
             "2025-04-23T14:46:59.000Z",
             "0xe9ed64d1dc4bf02f583f912b831f46ae873996b36901c3b1180ac56c710e1d6f",
             ["eth:0x506aadcb7bF93E892a43208d879BAc076eBC97Ef"]
+          ],
+          [
+            "2025-08-05T13:35:59.000Z",
+            "0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",
+            ["eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb"]
           ]
         ],
-        "$upgradeCount": 6,
+        "$upgradeCount": 7,
         "accessController": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "messenger": "eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091",
         "MESSENGER": "eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091",
@@ -341,11 +357,11 @@
         "otherBridge": "eth:0x4200000000000000000000000000000000000010",
         "paused": false,
         "superchainConfig": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-        "version": "2.2.0"
+        "version": "2.3.0"
       },
       "implementationNames": {
         "eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8": "Proxy",
-        "eth:0x506aadcb7bF93E892a43208d879BAc076eBC97Ef": "L1StandardBridge"
+        "eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb": "L1StandardBridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
@@ -388,6 +404,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
           "role": "admin"
         },
         {
@@ -488,13 +509,45 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "name": "ResolverRegistry",
+      "address": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
+      "type": "Contract",
+      "template": "opstack/zircuit/ResolverRegistry",
+      "sourceHashes": [
+        "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
+        "0xaf3dfb2d731a0031df7fce45e164a2730f66ed2997bc3081932341a0ad0f2155"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registers 'resolvers' which are allowed to supply authoritative data for blockchain balances to support escapes without merkle proofs from e.g. DeFi smart contracts on L2. A resolver can either be registered directly by the respective contract on L2 or by its deployer from L1, using deterministic deployment derivation.",
+      "sinceTimestamp": 1753355723,
+      "sinceBlock": 22988652,
+      "values": {
+        "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+        "$implementation": "eth:0xC82fB8FB873b0c56E1aeb9238d79b27e3d67f155",
+        "$pastUpgrades": [
+          [
+            "2025-08-05T13:35:59.000Z",
+            "0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",
+            ["eth:0xC82fB8FB873b0c56E1aeb9238d79b27e3d67f155"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "messenger": "eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091",
+        "version": "1.0.0"
+      },
+      "implementationNames": {
+        "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E": "Proxy",
+        "eth:0xC82fB8FB873b0c56E1aeb9238d79b27e3d67f155": "ResolverRegistry"
+      }
+    },
+    {
       "name": "ZircuitSuperchainConfig",
       "address": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
       "type": "Contract",
       "template": "opstack/zircuit/SuperchainConfig",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x39037837abcc5e06ffe85b07ad5f5ce901ed8551155a1b3b81cfd181bd683593"
+        "0xf69fa98cc18afd5754767df58a79532b52dab119b14df252fbea558da850139a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.",
@@ -502,15 +555,20 @@
       "sinceBlock": 20219917,
       "values": {
         "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "eth:0xA47314C96ab9572af656788e15143B459F99AE0f",
+        "$implementation": "eth:0x70D688D4Bd6B1b195aE51040b54ab501278D1d31",
         "$pastUpgrades": [
           [
             "2024-07-02T16:08:11.000Z",
             "0xb5e745182a810d657ce620881623f4109ba08309028552c87519442deef98a13",
             ["eth:0xA47314C96ab9572af656788e15143B459F99AE0f"]
+          ],
+          [
+            "2025-08-05T13:35:59.000Z",
+            "0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",
+            ["eth:0x70D688D4Bd6B1b195aE51040b54ab501278D1d31"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -532,16 +590,17 @@
         "owner": "eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
         "paused": false,
         "PAUSED_SLOT": "0xee35723ac350a69d2a92d3703f17439cbaadf2f093a21ba5bf5f1a53eb2a14d8",
+        "pausedTimestamp": 0,
         "pendingDefaultAdmin": {
           "newAdmin": "eth:0x0000000000000000000000000000000000000000",
           "schedule": 0
         },
         "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
-        "version": "1.1.0"
+        "version": "1.2.0"
       },
       "implementationNames": {
         "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0": "Proxy",
-        "eth:0xA47314C96ab9572af656788e15143B459F99AE0f": "SuperchainConfig"
+        "eth:0x70D688D4Bd6B1b195aE51040b54ab501278D1d31": "SuperchainConfig"
       },
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -597,10 +656,10 @@
       "template": "opstack/zircuit/L2OutputOracle",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x60e391caee355fef81909391d0660c897c79e6ba836e46f45d51968313188073"
+        "0x5c9c6bf3e729a43f2616db0dda98893b4011faf62a7ce137ee88e758028f8047"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h.",
+      "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 30d of no state updates by supplying merkle proofs or using a resolver.",
       "ignoreInWatchMode": [
         "latestBlockNumber",
         "latestOutputIndex",
@@ -611,7 +670,7 @@
       "sinceBlock": 20219923,
       "values": {
         "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "eth:0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4",
+        "$implementation": "eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315",
         "$pastUpgrades": [
           [
             "2024-07-02T16:12:59.000Z",
@@ -632,9 +691,19 @@
             "2025-03-11T01:01:59.000Z",
             "0x82c8840f615a9681634471d0ca91ae7ab00e483dbc01dbf4b16a0efe042c7e2a",
             ["eth:0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4"]
+          ],
+          [
+            "2025-08-05T13:35:59.000Z",
+            "0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",
+            ["eth:0xE14b12F4843447114A093D99Dc9322b93a967DE6"]
+          ],
+          [
+            "2025-08-05T13:35:59.000Z",
+            "0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",
+            ["eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 6,
         "challenger": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "CHALLENGER": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "deletedOutputs": [],
@@ -643,19 +712,22 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 17178646,
-        "latestOutputIndex": 32666,
-        "nextBlockNumber": 17178647,
-        "nextOutputIndex": 32667,
+        "latestBlockNumber": 17308332,
+        "latestOutputIndex": 32690,
+        "nextBlockNumber": 17308333,
+        "nextOutputIndex": 32691,
         "proposer": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
         "startingTimestamp": 1719935831,
+        "superchainConfig": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "systemOwner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
+        "timeLimitOutputRootSubmissionSeconds": 2592000,
+        "timeLimitOutputRootSubmissionSecondsFmt": "30d",
         "verifier": "eth:0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
         "VERIFIER": "eth:0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
         "verifierV2": "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
-        "version": "2.0.0",
+        "version": "2.1.0",
         "withdrawalKeepalivePeriodSeconds": 14400,
         "withdrawalKeepalivePeriodSecondsFmt": "4h"
       },
@@ -666,7 +738,7 @@
       },
       "implementationNames": {
         "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4": "Proxy",
-        "eth:0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4": "L2OutputOracle"
+        "eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315": "L2OutputOracle"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -847,6 +919,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
           "role": "admin",
           "via": [
@@ -914,7 +994,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1034,36 +1114,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "eth:0x506aadcb7bF93E892a43208d879BAc076eBC97Ef": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error AddressInsufficientBalance(address account)",
-      "error FailedInnerCall()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error SafeERC20FailedOperation(address token)",
-      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event Initialized(uint64 version)",
-      "function MESSENGER() view returns (address)",
-      "function OTHER_BRIDGE() view returns (address)",
-      "function accessController() view returns (address)",
-      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
-      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function deposits(address, address) view returns (uint256)",
-      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function initialize(address _messenger, address _superchainConfig)",
-      "function messenger() view returns (address)",
-      "function otherBridge() view returns (address)",
-      "function paused() view returns (bool)",
-      "function superchainConfig() view returns (address)",
-      "function version() view returns (string)"
-    ],
     "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257": [
       "constructor(address _owner)",
       "error OwnableInvalidOwner(address owner)",
@@ -1082,34 +1132,6 @@
     ],
     "eth:0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0": [
       "function digest() view returns (bytes32)"
-    ],
-    "eth:0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a": [
-      "constructor()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error OutOfGas()",
-      "event GasBurned(uint256 gasAmount, address indexed sender)",
-      "event Initialized(uint64 version)",
-      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
-      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
-      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
-      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
-      "function donateETH() payable",
-      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
-      "function finalizedWithdrawals(bytes32) view returns (bool)",
-      "function guardian() view returns (address)",
-      "function initialize(address _l2Oracle, address _systemConfig, address _superchainConfig)",
-      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
-      "function l2Oracle() view returns (address)",
-      "function l2Sender() view returns (address)",
-      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
-      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum, uint16 prevTxCount)",
-      "function paused() view returns (bool paused_)",
-      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
-      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
-      "function superchainConfig() view returns (address)",
-      "function systemConfig() view returns (address)",
-      "function version() view returns (string)"
     ],
     "eth:0x69f4D1788e39c87893C980c06EdF4b7f686e2938": [
       "constructor()",
@@ -1220,6 +1242,67 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "eth:0x70D688D4Bd6B1b195aE51040b54ab501278D1d31": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlEnforcedDefaultAdminDelay(uint48 schedule)",
+      "error AccessControlEnforcedDefaultAdminRules()",
+      "error AccessControlInvalidDefaultAdmin(address defaultAdmin)",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "event DefaultAdminDelayChangeCanceled()",
+      "event DefaultAdminDelayChangeScheduled(uint48 newDelay, uint48 effectSchedule)",
+      "event DefaultAdminTransferCanceled()",
+      "event DefaultAdminTransferScheduled(address indexed newAdmin, uint48 acceptSchedule)",
+      "event Initialized(uint64 version)",
+      "event Paused(string identifier)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused()",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MONITOR_ROLE() view returns (bytes32)",
+      "function OPERATOR_ROLE() view returns (bytes32)",
+      "function PAUSED_SLOT() view returns (bytes32)",
+      "function acceptDefaultAdminTransfer()",
+      "function beginDefaultAdminTransfer(address newAdmin)",
+      "function cancelDefaultAdminTransfer()",
+      "function changeDefaultAdminDelay(uint48 newDelay)",
+      "function defaultAdmin() view returns (address)",
+      "function defaultAdminDelay() view returns (uint48)",
+      "function defaultAdminDelayIncreaseWait() view returns (uint48)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function guardian() view returns (address)",
+      "function hasMonitorCapabilities(address _address) view returns (bool)",
+      "function hasOperatorCapabilities(address _address) view returns (bool)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _admin, bool _paused)",
+      "function owner() view returns (address)",
+      "function pause(string _identifier)",
+      "function paused() view returns (bool paused_)",
+      "function pausedTimestamp() view returns (uint256 pausedSince_)",
+      "function pendingDefaultAdmin() view returns (address newAdmin, uint48 schedule)",
+      "function pendingDefaultAdminDelay() view returns (uint48 newDelay, uint48 schedule)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rollbackDefaultAdminDelay()",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function version() view returns (string)"
+    ],
     "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1317,57 +1400,47 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "eth:0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e": [
-      "function version() view returns (string)"
-    ],
-    "eth:0xA47314C96ab9572af656788e15143B459F99AE0f": [
+    "eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26": [
       "constructor()",
-      "error AccessControlBadConfirmation()",
-      "error AccessControlEnforcedDefaultAdminDelay(uint48 schedule)",
-      "error AccessControlEnforcedDefaultAdminRules()",
-      "error AccessControlInvalidDefaultAdmin(address defaultAdmin)",
-      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
       "error InvalidInitialization()",
       "error NotInitializing()",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "event DefaultAdminDelayChangeCanceled()",
-      "event DefaultAdminDelayChangeScheduled(uint48 newDelay, uint48 effectSchedule)",
-      "event DefaultAdminTransferCanceled()",
-      "event DefaultAdminTransferScheduled(address indexed newAdmin, uint48 acceptSchedule)",
+      "error OutOfGas()",
+      "error ReentrancyGuardReentrantCall()",
+      "event ETHEscaped(address indexed user, uint256 amount)",
+      "event ETHEscapedResolver(address indexed l2Contract, address indexed user, uint256 amount)",
+      "event GasBurned(uint256 gasAmount, address indexed sender)",
       "event Initialized(uint64 version)",
-      "event Paused(string identifier)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Unpaused()",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MONITOR_ROLE() view returns (bytes32)",
-      "function OPERATOR_ROLE() view returns (bytes32)",
-      "function PAUSED_SLOT() view returns (bytes32)",
-      "function acceptDefaultAdminTransfer()",
-      "function beginDefaultAdminTransfer(address newAdmin)",
-      "function cancelDefaultAdminTransfer()",
-      "function changeDefaultAdminDelay(uint48 newDelay)",
-      "function defaultAdmin() view returns (address)",
-      "function defaultAdminDelay() view returns (uint48)",
-      "function defaultAdminDelayIncreaseWait() view returns (uint48)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
+      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
+      "event WETHEscaped(address indexed user, uint256 amount)",
+      "event WETHEscapedResolver(address indexed l2Contract, address indexed user, uint256 amount)",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
+      "function amountEscaped(address) view returns (uint256)",
+      "function amountWETHEscaped(address) view returns (uint256)",
+      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function donateETH() payable",
+      "function escapeETH(tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _accountState, bytes[] _proof)",
+      "function escapeETHThroughResolver(tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _accountstate, bytes[] _proof, address _l2Contract, bytes _data)",
+      "function escapeWETH(tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _accountState, bytes[] _stateProof, uint256 _wethBalance, bytes[] _storageProof)",
+      "function escapeWETHThroughResolver(tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _wethState, bytes[] _stateProof, uint256 _tokenBalance, bytes[] _storageProof, tuple(address l2Contract, bytes data) _resolverData)",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
       "function guardian() view returns (address)",
-      "function hasMonitorCapabilities(address _address) view returns (bool)",
-      "function hasOperatorCapabilities(address _address) view returns (bool)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _admin, bool _paused)",
-      "function owner() view returns (address)",
-      "function pause(string _identifier)",
+      "function initialize(address _l2Oracle, address _systemConfig, address _superchainConfig, address _resolverRegistry)",
+      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
+      "function l2Oracle() view returns (address)",
+      "function l2Sender() view returns (address)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum, uint16 prevTxCount)",
       "function paused() view returns (bool paused_)",
-      "function pendingDefaultAdmin() view returns (address newAdmin, uint48 schedule)",
-      "function pendingDefaultAdminDelay() view returns (uint48 newDelay, uint48 schedule)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function rollbackDefaultAdminDelay()",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function unpause()",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
+      "function resolverRegistry() view returns (address)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function version() view returns (string)"
+    ],
+    "eth:0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e": [
       "function version() view returns (string)"
     ],
     "eth:0xA5B66A9FBCE3d57dA2b3Bd764d0a05B95052f73F": [
@@ -1406,6 +1479,55 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
+    "eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315": [
+      "constructor()",
+      "error BlockNotProposed()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "event Initialized(uint64 version)",
+      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
+      "event OutputProposedV2(bytes32 indexed poseidonStateRoot, uint256 indexed l2OutputIndex, uint256 batchIndex, bytes32 batchHash)",
+      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
+      "function CHALLENGER() view returns (address)",
+      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function PROPOSER() view returns (address)",
+      "function VERIFIER() view returns (address)",
+      "function bootstrapV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)",
+      "function challenger() view returns (address)",
+      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
+      "function deleteL2Outputs(uint256 _l2OutputIndex)",
+      "function finalizationPeriodSeconds() view returns (uint256)",
+      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputEx(uint256 _l2OutputIndex) view returns (tuple(uint256 batchIndex, bytes32 batchHash, bytes32 poseidonStateRoot))",
+      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
+      "function getL2OutputRootWithFinalization(uint256 _l2OutputIndex) view returns (bytes32 outputRoot, uint256 finalizedTimestamp)",
+      "function initialize(tuple(uint256 l2ChainId, uint256 l2BlockTime, uint256 startingBlockNumber, uint256 startingTimestamp, address proposer, address challenger, address verifier, address verifierV2, uint256 finalizationPeriodSeconds, uint256 withdrawalKeepalivePeriodSeconds, address systemOwner, address superchainConfig, uint256 timeLimitOutputRootSubmissionSeconds) _initParams)",
+      "function isL2OutputFinalized(uint256 _l2OutputIndex) view returns (bool isFinalized)",
+      "function l2BlockTime() view returns (uint256)",
+      "function l2ChainId() view returns (uint256)",
+      "function latestBlockNumber() view returns (uint256)",
+      "function latestOutputIndex() view returns (uint256)",
+      "function nextBlockNumber() view returns (uint256)",
+      "function nextOutputIndex() view returns (uint256)",
+      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _proof) payable",
+      "function proposeL2OutputV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _aggrProof) payable",
+      "function proposer() view returns (address)",
+      "function setFinalizationPeriodSeconds(uint256 newFinalizationPeriodLength)",
+      "function setTimeLimitOutputRootSubmissionSeconds(uint256 _timeLimitOutputRootSubmissionSeconds)",
+      "function setWithdrawalKeepalivePeriodSeconds(uint256 _withdrawalKeepalivePeriodSeconds)",
+      "function startingBlockNumber() view returns (uint256)",
+      "function startingTimestamp() view returns (uint256)",
+      "function superchainConfig() view returns (address)",
+      "function systemOwner() view returns (address)",
+      "function timeLimitOutputRootSubmissionSeconds() view returns (uint256)",
+      "function verifier() view returns (address)",
+      "function verifierV2() view returns (address)",
+      "function verifyV2(bytes bundleProof, bytes publicInput) view",
+      "function version() view returns (string)",
+      "function withdrawalKeepalivePeriodSeconds() view returns (uint256)"
+    ],
     "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1429,6 +1551,21 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "eth:0xC82fB8FB873b0c56E1aeb9238d79b27e3d67f155": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "event Initialized(uint64 version)",
+      "event ResolverAdded(address indexed l2Contract, address indexed newResolver)",
+      "function initialize(address _messenger)",
+      "function messenger() view returns (address)",
+      "function resolvers(address) view returns (address)",
+      "function setResolver(address _resolver)",
+      "function setResolverByDeployer(address _resolver, address _l2Contract, uint64 _nonce)",
+      "function setResolverByDeployer2(address _resolver, address _l2Contract, address _factory, bytes32 _salt, bytes32 _byteCodeHash)",
+      "function setResolverByDeployer3(address _resolver, address _l2Contract, address _factory, bytes32 _salt)",
+      "function version() view returns (string)"
+    ],
     "eth:0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb": [
       "constructor()",
       "error InvalidInitialization()",
@@ -1449,50 +1586,6 @@
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
     ],
-    "eth:0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4": [
-      "constructor()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "event Initialized(uint64 version)",
-      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
-      "event OutputProposedV2(bytes32 indexed poseidonStateRoot, uint256 indexed l2OutputIndex, uint256 batchIndex, bytes32 batchHash)",
-      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
-      "function CHALLENGER() view returns (address)",
-      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
-      "function L2_BLOCK_TIME() view returns (uint256)",
-      "function PROPOSER() view returns (address)",
-      "function VERIFIER() view returns (address)",
-      "function bootstrapV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)",
-      "function challenger() view returns (address)",
-      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
-      "function deleteL2Outputs(uint256 _l2OutputIndex)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputEx(uint256 _l2OutputIndex) view returns (tuple(uint256 batchIndex, bytes32 batchHash, bytes32 poseidonStateRoot))",
-      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
-      "function getL2OutputRootWithFinalization(uint256 _l2OutputIndex) view returns (bytes32 outputRoot, uint256 finalizedTimestamp)",
-      "function initialize(uint256 _l2ChainId, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, address _verifier, address _verifierV2, uint256 _finalizationPeriodSeconds, uint256 _withdrawalKeepalivePeriodSeconds, address _systemOwner)",
-      "function l2BlockTime() view returns (uint256)",
-      "function l2ChainId() view returns (uint256)",
-      "function latestBlockNumber() view returns (uint256)",
-      "function latestOutputIndex() view returns (uint256)",
-      "function nextBlockNumber() view returns (uint256)",
-      "function nextOutputIndex() view returns (uint256)",
-      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _proof) payable",
-      "function proposeL2OutputV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _aggrProof) payable",
-      "function proposer() view returns (address)",
-      "function setFinalizationPeriodSeconds(uint256 newFinalizationPeriodLength)",
-      "function setWithdrawalKeepalivePeriodSeconds(uint256 _withdrawalKeepalivePeriodSeconds)",
-      "function startingBlockNumber() view returns (uint256)",
-      "function startingTimestamp() view returns (uint256)",
-      "function systemOwner() view returns (address)",
-      "function verifier() view returns (address)",
-      "function verifierV2() view returns (address)",
-      "function verifyV2(bytes bundleProof, bytes publicInput) view",
-      "function version() view returns (string)",
-      "function withdrawalKeepalivePeriodSeconds() view returns (uint256)"
-    ],
     "eth:0xf885DA6A3B4c93905b02f36f9a13680922A554b0": [
       "constructor()",
       "error InvalidInitialization()",
@@ -1507,6 +1600,42 @@
       "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
       "function initialize(address _bridge)",
       "function version() view returns (string)"
+    ],
+    "eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20Escape(address indexed user, address indexed localToken, address indexed remoteToken, uint256 amount)",
+      "event ERC20EscapeResolver(address indexed user, address indexed l2Contract, address indexed localToken, address remoteToken, uint256 amount)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event Initialized(uint64 version)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function accessController() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function escapeERC20(address _localToken, address _remoteToken, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _accountState, bytes[] _stateProof, uint256 _tokenBalance, bytes[] _storageProof)",
+      "function escapeERC20ThroughResolver(address _localToken, address _remoteToken, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _accountState, bytes[] _stateProof, uint256 _tokenBalance, bytes[] _storageProof, tuple(address l2Contract, bytes data) _resolverData)",
+      "function escapedAmount(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function initialize(address _messenger, address _superchainConfig)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
+      "function superchainConfig() view returns (address)",
+      "function version() view returns (string)"
     ]
   },
   "usedTemplates": {
@@ -1515,14 +1644,15 @@
     "lido/L1ERC20TokenBridge": "0x1dbfb76725d8a5de94df533062c2232ad27f9bd9988b137706333c26e2ffc4d7",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "opstack/zircuit/L2OutputOracle": "0x94d3eb3f5212e94aaa7fd5cf9c0451b6056c129b867e1c1a09b407d129d31a56",
+    "opstack/zircuit/L1StandardBridge": "0x2f9c34737989113306a892abba83353771734bbf57cae7245088154cbf90be77",
+    "opstack/zircuit/L2OutputOracle": "0xec3dcae61a974cd2dc7a6a3625a005e7eb605999b690bcca5b7c90008dc8b128",
+    "opstack/zircuit/OptimismPortal": "0xc3cdbd0b6752833adcaa14487b9cfc1f863a5770d71a98ce9969ae1e4ccafefb",
+    "opstack/zircuit/ResolverRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/zircuit/SuperchainConfig": "0x88333adf1f4e7a6bbd8da95cbcd6e91ee1dbda7da976597818c96c0dbef27421",
     "opstack/zircuit/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23067678 },
-  "permissionsConfigHash": "0x09746112268d01a5544934017489fc0aa827bb2840230953dc985844f73f5b0d"
+  "usedBlockNumbers": { "ethereum": 23088973 },
+  "permissionsConfigHash": "0x256290aef827d088cf2917fbf8e33249754d03b2c1aac90d8050f2da56b219b8"
 }
