@@ -17,7 +17,7 @@ export const haust: ScalingProject = upcomingL2({
     links: {
       websites: ['https://haust.network/'],
       documentation: ['https://docs.haust.network/'],
-      explorers: ['https://explorer-test.haust.network'],
+      explorers: ['https://explorer-testnet.haust.app/'],
       repositories: ['https://github.com/Haust-Labs'],
       socialMedia: [
         'https://twitter.com/HaustNetwork',
