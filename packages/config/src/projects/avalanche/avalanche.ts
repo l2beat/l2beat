@@ -159,7 +159,7 @@ export const avalanche: Bridge = {
         },
         {
           category: 'Funds can be lost if',
-          text: 'wardens loose the private key.',
+          text: 'wardens lose the private key.',
         },
         {
           category: 'Funds can be frozen if',
