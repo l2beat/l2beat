@@ -358,7 +358,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                 principle: false,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
-                securityCouncilProperlySetUp: null,
+                securityCouncilProperlySetUp: true,
               },
               stage2: {
                 proofSystemOverriddenOnlyInCaseOfABug: null,
@@ -368,6 +368,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
             },
             {
               rollupNodeLink: 'https://github.com/matter-labs/zksync-era',
+              stage1PrincipleDescription:
+                'While the Security Council is properly set up and is able to recover from a misbehaving operator, the majority is required, meaning that a compromised quorum-blocking minority can prevent users from exiting. Recovery actions are not straightforward and require complex protocol upgrades.',
             },
           )),
     technology: {
