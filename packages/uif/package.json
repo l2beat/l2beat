@@ -19,7 +19,7 @@
     "!dist/test"
   ],
   "scripts": {
-    "test": "mocha",
+    "test": "NODE_OPTIONS='--no-experimental-strip-types' mocha",
     "clean": "rm -rf dist",
     "build": "tsc",
     "start": "node -r esbuild-register src/",
