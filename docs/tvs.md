@@ -27,7 +27,7 @@ TVS configuration is represented as a set of JSON documents (one for each projec
    - `priceId` - id of a token in 3rd party API (currently it's Coingecko)
    - `symbol` - symbol of a token
    - `name` - display name
-   - `iconUrl`- url to toke icon (optional)
+   - `iconUrl`- url to token icon (optional)
    - `amount` - formula to capture the amount of the token on a given chain along with it's value (amount * price)
    - `valueForProject` - formula to calculate value of the token within project's total (i.e. to prevent double counting when token was used for lock-minting some other token)
    - `valueForSummary` - formula to calculate value of the token within total of all projects (i.e. to prevent double counting when token was bridged from L2 to L3)
