@@ -298,7 +298,7 @@ export function adjustDiscoveryInfo(
 function getTvsConfig(
   project: ScalingProject | Bridge,
 ): TvsToken[] | undefined {
-  const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
+  const fileName = `${project.id.replace(/[=;]/g, '')}.json`
   const filePath = join(__dirname, `../../src/tvs/json/${fileName}`)
 
   if (!existsSync(filePath)) {
