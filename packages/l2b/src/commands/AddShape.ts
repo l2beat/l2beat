@@ -87,7 +87,7 @@ export const AddShape = command({
 
     assert(sources.length > 0, 'No sources found')
 
-    await templateService.addToShape(
+    templateService.addToShape(
       args.template,
       args.chain,
       args.addresses,
