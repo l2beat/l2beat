@@ -1,6 +1,6 @@
 # L2BEAT 💓
 
-L2BEAT (Layer 2 Beat) is a website dedicated to providing research and statistics about the very exciting layer 2 technology on Ethereum.
+L2BEAT (Layer 2 Beat) is a website dedicated to providing research and statistics about the fascinating layer 2 technology on Ethereum.
 
 You can visit the site yourself at https://www.l2beat.com/.
 
