@@ -93,8 +93,8 @@ export const facet: ScalingProject = {
     links: {
       websites: ['https://facet.org/'],
       bridges: [
-        'https://facetswap.com/bridge',
         'https://facet-zk-fault-proofs.vercel.app/',
+        'https://facetswap.com/bridge',
       ],
       documentation: ['https://docs.facet.org/'],
       explorers: ['https://explorer.facet.org/'],
