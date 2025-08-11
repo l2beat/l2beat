@@ -294,7 +294,7 @@ export class TestRootIndexer extends RootIndexer {
   ticking = false
 
   constructor(
-    private testSafeHeight: number,
+    testSafeHeight: number,
     name?: string,
     retryStrategy?: { tickRetryStrategy?: RetryStrategy },
   ) {
@@ -384,7 +384,7 @@ class TestChildIndexer extends ChildIndexer {
 
   constructor(
     parents: Indexer[],
-    private testSafeHeight: number,
+    testSafeHeight: number,
     name?: string,
     retryStrategy?: {
       invalidateRetryStrategy?: RetryStrategy
