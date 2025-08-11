@@ -1,7 +1,7 @@
 {
   "name": "snaxchain",
   "chain": "ethereum",
-  "timestamp": 1753462283,
+  "timestamp": 1754911726,
   "configHash": "0x795a2ad0b79104094fdc585ccd98933dd3fabac57c31ee60c0db62cfa04b6fb6",
   "entries": [
     {
@@ -88,7 +88,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3,
+        "gameCount": 32,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x1B780edfb393CB9f07Dcd7C699CBDF0fd663572b",
@@ -98,7 +98,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 3,
+        "permissionedGamesTotal": 32,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -581,7 +581,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 143,
+        "nonce": 149,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -747,8 +747,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 22504793
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 23078899
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -832,7 +832,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "basefeeScalar": 684000,
+        "basefeeScalar": 6840000,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0x060b915cA4904b56adA63565626b9c97F6CaD212",
         "batchInbox": "eth:0xFeC57BD3729a5F930d4Ee8ac5992Fdc8988426e4",
@@ -879,7 +879,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279131187530911346656",
+        "scalar": "452312848583266388373324160190187140051835877600158453279131187530917502656",
         "sequencerInbox": "eth:0xFeC57BD3729a5F930d4Ee8ac5992Fdc8988426e4",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 20520549,
@@ -1815,6 +1815,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22997466 },
+  "usedBlockNumbers": { "ethereum": 23117510 },
   "permissionsConfigHash": "0x3b5fcd77c0c0ad600bc4bd1d4d407d8635ec4dfb4a1df156af4272137e141278"
 }
