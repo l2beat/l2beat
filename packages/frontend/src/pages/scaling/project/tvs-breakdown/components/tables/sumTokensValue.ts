@@ -1,7 +1,7 @@
-export function sumTokensValue<T extends { usdValue: number }>(
+export function sumTokensValue<T extends { valueForProject: number }>(
   tokens: T[],
 ): number {
   return tokens.reduce((acc, token) => {
-    return acc + token.usdValue
+    return acc + token.valueForProject
   }, 0)
 }

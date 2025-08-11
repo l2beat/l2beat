@@ -1,9 +1,4 @@
-import type {
-  ChainConfig,
-  Formula,
-  Project,
-  ProjectContract,
-} from '@l2beat/config'
+import type { ChainConfig, Project, ProjectContract } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import {
@@ -46,10 +41,9 @@ export function getTvsBreakdown(
     const tokenWithValues: BaseAssetBreakdownData = {
       ...token,
       address,
-      formula: token.amount as Formula,
+      formula: token.valueForProject ?? token.amount,
       iconUrl: token.iconUrl ?? '',
-      usdValue: tokenValue.value,
-      amount: tokenValue.amount,
+      valueForProject: tokenValue.valueForProject,
       isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
       syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
       bridgedUsing: token.bridgedUsing,
