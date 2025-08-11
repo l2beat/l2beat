@@ -18,7 +18,6 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { StageOneRequirementsChangeStageSectionNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { CustomLink } from '~/components/link/CustomLink'
-import { externalLinks } from '~/consts/externalLinks'
 import { featureFlags } from '~/consts/featureFlags'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { InfoIcon } from '~/icons/Info'
@@ -145,7 +144,6 @@ export function StageSection({
       {stageConfig.downgradePending && (
         <StageOneRequirementsChangeStageSectionNotice
           downgradePending={stageConfig.downgradePending}
-          stage1PrincipleDescription={stageConfig.stage1PrincipleDescription}
         />
       )}
       {stageConfig.message && (
@@ -243,6 +241,11 @@ export function StageSection({
                           {stage.principle.description}
                         </Markdown>
                       </div>
+                      {stageConfig.stage1PrincipleDescription && (
+                        <p className="mt-2 pl-6 leading-[125%] max-md:text-base">
+                          {stageConfig.stage1PrincipleDescription}
+                        </p>
+                      )}
                     </div>
                   </>
                 )}
@@ -291,10 +294,7 @@ export function StageSection({
           )
         })}
       </Accordion>
-      <CustomLink
-        href={externalLinks.articles.stages}
-        className="mt-3 block text-sm"
-      >
+      <CustomLink href="/stages" className="mt-3 block text-sm">
         Learn more about Rollup stages
       </CustomLink>
       <Callout

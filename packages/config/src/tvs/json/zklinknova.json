@@ -863,7 +863,7 @@
         "decimals": 18,
         "sinceTimestamp": 1715322228
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -1476,7 +1476,7 @@
         },
         "priceId": "solv-btc"
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -1501,7 +1501,7 @@
         "decimals": 18,
         "sinceTimestamp": 1715238151
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -2417,7 +2417,7 @@
         "decimals": 8,
         "sinceTimestamp": 1709295323
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false,
       "bridgedUsing": {
@@ -2501,7 +2501,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -2537,7 +2537,7 @@
         },
         "priceId": "bridged-wrapped-bitcoin-manta-pacific"
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -2573,7 +2573,7 @@
         },
         "priceId": "wrapped-bitcoin"
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

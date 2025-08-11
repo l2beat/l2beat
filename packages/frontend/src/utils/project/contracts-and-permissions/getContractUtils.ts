@@ -91,10 +91,13 @@ async function getContractUsageMap() {
 
     for (const chain in project.contracts.addresses) {
       for (const contract of project.contracts.addresses[chain] ?? []) {
+        const isMutable =
+          contract.upgradeability && !contract.upgradeability.immutable
+
         addUsage(chain, ChainSpecificAddress.address(contract.address), {
           ...basic,
           targetName: contract.name,
-          type: contract.upgradeability ? 'proxy' : 'implementation',
+          type: isMutable ? 'proxy' : 'implementation',
         })
         for (const impl of contract.upgradeability?.implementations ?? []) {
           addUsage(chain, ChainSpecificAddress.address(impl), {

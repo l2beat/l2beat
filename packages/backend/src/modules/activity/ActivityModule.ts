@@ -52,7 +52,7 @@ export function initActivityModule(
         const txsCountService = new BlockTxsCountService({
           provider,
           projectId: project.id,
-          assessCount: assesCount(project.activityConfig.adjustCount),
+          assessCount: assessCount(project.activityConfig.adjustCount),
           uopsAnalyzer: analyzer,
           logger,
         })
@@ -137,7 +137,7 @@ export function initActivityModule(
   }
 }
 
-function assesCount(
+function assessCount(
   adjustCount: AdjustCount | undefined,
 ): (count: number, block: number) => number {
   if (!adjustCount) {

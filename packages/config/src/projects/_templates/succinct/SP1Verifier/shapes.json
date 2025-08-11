@@ -10,5 +10,11 @@
     "address": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
     "chain": "arbitrum",
     "blockNumber": 343837105
+  },
+  "SP1Verifier_Groth16": {
+    "hash": "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582",
+    "address": "0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
+    "chain": "ethereum",
+    "blockNumber": 22985449
   }
 }

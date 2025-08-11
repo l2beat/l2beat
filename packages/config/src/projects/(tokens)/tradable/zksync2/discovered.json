@@ -25,6 +25,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618680,
       "sinceBlock": 48952941,
       "values": {
@@ -291,6 +292,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618949,
       "sinceBlock": 48953173,
       "values": {
@@ -646,6 +648,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1736528714,
       "sinceBlock": 53365728,
       "values": {
@@ -1296,6 +1299,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618711,
       "sinceBlock": 48952964,
       "values": {
@@ -1501,7 +1505,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1741042761,
       "sinceBlock": 56988301,
       "values": {
@@ -1526,7 +1530,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -1604,7 +1608,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618862,
       "sinceBlock": 48953095,
       "values": {
@@ -1629,7 +1633,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -1746,6 +1750,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618787,
       "sinceBlock": 48953033,
       "values": {
@@ -2030,7 +2035,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618829,
       "sinceBlock": 48953067,
       "values": {
@@ -2055,7 +2060,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2155,6 +2160,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618906,
       "sinceBlock": 48953132,
       "values": {
@@ -2317,7 +2323,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1736528714,
       "sinceBlock": 53365728,
       "values": {
@@ -2342,7 +2348,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2478,6 +2484,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618938,
       "sinceBlock": 48953163,
       "values": {
@@ -2795,7 +2802,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1744144140,
       "sinceBlock": 58856904,
       "values": {
@@ -2820,7 +2827,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2887,7 +2894,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618895,
       "sinceBlock": 48953121,
       "values": {
@@ -2912,7 +2919,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -3013,6 +3020,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618884,
       "sinceBlock": 48953111,
       "values": {
@@ -3498,6 +3506,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1736528949,
       "sinceBlock": 53365961,
       "values": {
@@ -3932,7 +3941,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618680,
       "sinceBlock": 48952941,
       "values": {
@@ -3957,7 +3966,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4043,7 +4052,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1747927037,
       "sinceBlock": 60781371,
       "values": {
@@ -4068,7 +4077,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4126,7 +4135,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1744144112,
       "sinceBlock": 58856886,
       "values": {
@@ -4151,7 +4160,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4240,7 +4249,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1741042455,
       "sinceBlock": 56988065,
       "values": {
@@ -4265,7 +4274,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4343,6 +4352,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618852,
       "sinceBlock": 48953087,
       "values": {
@@ -4411,7 +4421,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618756,
       "sinceBlock": 48953004,
       "values": {
@@ -4436,7 +4446,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4559,7 +4569,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618852,
       "sinceBlock": 48953087,
       "values": {
@@ -4584,7 +4594,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4651,7 +4661,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618906,
       "sinceBlock": 48953132,
       "values": {
@@ -4676,7 +4686,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4733,6 +4743,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618809,
       "sinceBlock": 48953047,
       "values": {
@@ -4801,7 +4812,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618744,
       "sinceBlock": 48952992,
       "values": {
@@ -4826,7 +4837,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4986,6 +4997,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618928,
       "sinceBlock": 48953154,
       "values": {
@@ -5303,7 +5315,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618928,
       "sinceBlock": 48953154,
       "values": {
@@ -5328,7 +5340,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5449,6 +5461,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618766,
       "sinceBlock": 48953014,
       "values": {
@@ -5738,7 +5751,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618711,
       "sinceBlock": 48952964,
       "values": {
@@ -5763,7 +5776,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5832,6 +5845,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618917,
       "sinceBlock": 48953143,
       "values": {
@@ -6121,6 +6135,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618895,
       "sinceBlock": 48953121,
       "values": {
@@ -6354,7 +6369,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1741042129,
       "sinceBlock": 56987839,
       "values": {
@@ -6379,7 +6394,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -6457,7 +6472,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618842,
       "sinceBlock": 48953078,
       "values": {
@@ -6482,7 +6497,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -6603,6 +6618,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618744,
       "sinceBlock": 48952992,
       "values": {
@@ -7126,6 +7142,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1741042129,
       "sinceBlock": 56987839,
       "values": {
@@ -7364,7 +7381,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618734,
       "sinceBlock": 48952985,
       "values": {
@@ -7389,7 +7406,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -7467,6 +7484,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618797,
       "sinceBlock": 48953040,
       "values": {
@@ -7799,6 +7817,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1747927037,
       "sinceBlock": 60781371,
       "values": {
@@ -7948,6 +7967,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618734,
       "sinceBlock": 48952985,
       "values": {
@@ -8021,6 +8041,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1753198755,
       "sinceBlock": 63225178,
       "values": {
@@ -8089,6 +8110,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1753489414,
       "sinceBlock": 63374351,
       "values": {
@@ -8378,6 +8400,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618829,
       "sinceBlock": 48953067,
       "values": {
@@ -8616,6 +8639,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618842,
       "sinceBlock": 48953078,
       "values": {
@@ -9004,7 +9028,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618960,
       "sinceBlock": 48953183,
       "values": {
@@ -9029,7 +9053,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -9113,7 +9137,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618917,
       "sinceBlock": 48953143,
       "values": {
@@ -9138,7 +9162,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -9231,6 +9255,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1744144140,
       "sinceBlock": 58856904,
       "values": {
@@ -9441,6 +9466,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618756,
       "sinceBlock": 48953004,
       "values": {
@@ -9842,6 +9868,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618862,
       "sinceBlock": 48953095,
       "values": {
@@ -10187,7 +10214,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618809,
       "sinceBlock": 48953047,
       "values": {
@@ -10212,7 +10239,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10269,7 +10296,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1736528949,
       "sinceBlock": 53365961,
       "values": {
@@ -10294,7 +10321,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10413,6 +10440,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618819,
       "sinceBlock": 48953057,
       "values": {
@@ -10595,7 +10623,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618722,
       "sinceBlock": 48952974,
       "values": {
@@ -10620,7 +10648,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10731,7 +10759,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618949,
       "sinceBlock": 48953173,
       "values": {
@@ -10756,7 +10784,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10867,7 +10895,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618777,
       "sinceBlock": 48953025,
       "values": {
@@ -10892,7 +10920,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -11020,6 +11048,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618777,
       "sinceBlock": 48953025,
       "values": {
@@ -11477,6 +11506,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618691,
       "sinceBlock": 48952950,
       "values": {
@@ -11743,7 +11773,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618787,
       "sinceBlock": 48953033,
       "values": {
@@ -11768,7 +11798,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -11838,6 +11868,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618960,
       "sinceBlock": 48953183,
       "values": {
@@ -12058,6 +12089,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1744144112,
       "sinceBlock": 58856886,
       "values": {
@@ -12324,7 +12356,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618766,
       "sinceBlock": 48953014,
       "values": {
@@ -12349,7 +12381,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12444,6 +12476,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1753901543,
       "sinceBlock": 63546535,
       "values": {
@@ -12733,7 +12766,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1753489414,
       "sinceBlock": 63374351,
       "values": {
@@ -12758,7 +12791,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12850,6 +12883,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618873,
       "sinceBlock": 48953104,
       "values": {
@@ -13243,7 +13277,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618700,
       "sinceBlock": 48952957,
       "values": {
@@ -13268,7 +13302,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13422,7 +13456,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1753901543,
       "sinceBlock": 63546535,
       "values": {
@@ -13447,7 +13481,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13526,7 +13560,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618819,
       "sinceBlock": 48953057,
       "values": {
@@ -13551,7 +13585,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13614,6 +13648,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618722,
       "sinceBlock": 48952974,
       "values": {
@@ -13979,7 +14014,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618691,
       "sinceBlock": 48952950,
       "values": {
@@ -14004,7 +14039,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14086,7 +14121,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618938,
       "sinceBlock": 48953163,
       "values": {
@@ -14111,7 +14146,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14217,7 +14252,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618797,
       "sinceBlock": 48953040,
       "values": {
@@ -14242,7 +14277,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14337,6 +14372,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1741042455,
       "sinceBlock": 56988065,
       "values": {
@@ -14575,7 +14611,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1753198755,
       "sinceBlock": 63225178,
       "values": {
@@ -14600,7 +14636,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [],
@@ -14645,7 +14681,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618884,
       "sinceBlock": 48953111,
       "values": {
@@ -14670,7 +14706,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14813,6 +14849,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618700,
       "sinceBlock": 48952957,
       "values": {
@@ -15247,7 +15284,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618873,
       "sinceBlock": 48953104,
       "values": {
@@ -15272,7 +15309,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1753949758,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -15388,6 +15425,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1741042761,
       "sinceBlock": 56988301,
       "values": {
@@ -16018,11 +16056,11 @@
   },
   "usedTemplates": {
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
-    "tradable/Deal": "0x043d0f7d015daca42a4cecc63b58e7d041a64b9f245e9812ae54fd6c7939fe1d",
+    "tradable/Deal": "0xd6f2266e990f7fdccaff6578af0e1aacd28c11810beeb63450053295f8160370",
     "tradable/DealFactory": "0xe4d94d3217fe1624dcb9054de5d69ad9bdf57797e618201af04eed9c10061ca7",
-    "tradable/DealManager": "0x48838ef8da5e8218b480b5b04b5c299da88b0a75ef95f3bf6789513e381cc20d",
+    "tradable/DealManager": "0x97aad4d43c4d3012e4f422bd12a8407e28b602da351ab2be57ee9d27ac4912ba",
     "tradable/DealRegistry": "0x80492a8b01b07c7eb3c5cebc3a4c692ef4abb2da9faf34b0d838d7d21d76e23f"
   },
-  "usedBlockNumbers": { "zksync2": 63566528 },
+  "usedBlockNumbers": { "zksync2": 63566529 },
   "permissionsConfigHash": "0x32819bef24fd7268ed3838dd2f26b25355a8a8e529811999255ec79e906564eb"
 }

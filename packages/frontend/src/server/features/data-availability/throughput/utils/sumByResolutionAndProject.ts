@@ -13,7 +13,7 @@ export function sumByResolutionAndProject(
   for (const [projectId, projectRecords] of Object.entries(
     groupedByProjectId,
   )) {
-    const groupedByDay = groupBy(projectRecords, (r) =>
+    const groupedByResolution = groupBy(projectRecords, (r) =>
       UnixTime.toStartOf(
         r.timestamp,
         resolution === 'hourly'
@@ -23,13 +23,19 @@ export function sumByResolutionAndProject(
             : 'day',
       ),
     )
+
     const daLayer = projectRecords[0]?.daLayer
     assert(daLayer, 'DaLayer not found')
-    for (const [day, dayRecords] of Object.entries(groupedByDay)) {
-      const totalSize = dayRecords.reduce((acc, r) => acc + r.totalSize, 0n)
+    for (const [timestamp, recordsByTimestamp] of Object.entries(
+      groupedByResolution,
+    )) {
+      const totalSize = recordsByTimestamp.reduce(
+        (acc, r) => acc + r.totalSize,
+        0n,
+      )
       result.push({
         projectId,
-        timestamp: Number(day),
+        timestamp: Number(timestamp),
         totalSize,
         daLayer,
       })

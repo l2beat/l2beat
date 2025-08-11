@@ -6,7 +6,7 @@ export function getActivityConfig(
   fallback: ProjectActivityConfig,
 ) {
   const hasRpc = chainConfig?.apis.some(
-    (x) => x.type === 'rpc' || x.type === 'starknet',
+    (x) => x.type === 'rpc' || x.type === 'starknet' || x.type === 'svm-rpc',
   )
   if (!hasRpc) {
     if (activityConfig) {
