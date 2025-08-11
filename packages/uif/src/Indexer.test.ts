@@ -289,6 +289,7 @@ export class InitTestIndexer extends RootIndexer {
 export class TestRootIndexer extends RootIndexer {
   public resolveTick: (height: number) => void = () => {}
   public rejectTick: (error: unknown) => void = () => {}
+  private testSafeHeight: number
 
   dispatchCounter = 0
   ticking = false
@@ -299,6 +300,7 @@ export class TestRootIndexer extends RootIndexer {
     retryStrategy?: { tickRetryStrategy?: RetryStrategy },
   ) {
     super(Logger.SILENT.tag({ tag: name }), retryStrategy ?? {})
+    this.testSafeHeight = testSafeHeight
 
     const oldDispatch = Reflect.get(this, 'dispatch')
     Reflect.set(this, 'dispatch', (action: IndexerAction) => {
@@ -356,6 +358,7 @@ class TestChildIndexer extends ChildIndexer {
   public updateTo = 0
 
   public dispatchCounter = 0
+  private testSafeHeight: number
 
   async finishUpdate(result: number | Error): Promise<void> {
     await waitUntil(() => this.updating)
@@ -392,6 +395,7 @@ class TestChildIndexer extends ChildIndexer {
     },
   ) {
     super(Logger.SILENT.tag({ tag: name }), parents, retryStrategy ?? {})
+    this.testSafeHeight = testSafeHeight
 
     const oldDispatch = Reflect.get(this, 'dispatch')
     Reflect.set(this, 'dispatch', (action: IndexerAction) => {
