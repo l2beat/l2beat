@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "timestamp": 1754910994,
-  "configHash": "0xa6c1196cd1937bec094db301961d1487845a767d071226fa4ae6777d91ec77e0",
+  "timestamp": 1754921961,
+  "configHash": "0xa37c216f153fe997dc31387bd7eee21a339d2a41e2a954a6ece0887f69c61bac",
   "entries": [
     {
       "address": "scr:0x0000000000000000000000000000000000000000",
@@ -911,9 +911,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x8081d84c4497c99311a750f326cfde087f15115eac9c11fbba1ea1c4475664f8",
+        "messageRoot": "0x1d2767515ca68dac0fdc2c3ebce67082ce7e85c074ce64066691a533daedf943",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 207463,
+        "nextMessageIndex": 207472,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -3088,6 +3088,6 @@
     "scroll/ScrollOwnerL2": "0x77eb1863ff595be1f6d216e4eb34cc75c37aae99c08c2cd56f8adaa13c218141",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "scroll": 18918997 },
+  "usedBlockNumbers": { "scroll": 18929964 },
   "permissionsConfigHash": "0x6026e9d5cd2befcf9d6ce6f3a1484a20c9d9cbb7eefe920713e0b8b385097c3f"
 }
