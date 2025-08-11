@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const fhenix: ScalingProject = upcomingL2({
   id: 'fhenix',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1719225560), // 2024-06-24T10:39:20Z
   display: {
     name: 'Fhenix',

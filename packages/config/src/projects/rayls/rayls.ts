@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const rayls: ScalingProject = upcomingL2({
   id: 'rayls',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1753947052),
   hasTestnet: true,
   display: {

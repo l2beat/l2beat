@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const memento: ScalingProject = upcomingL2({
   id: 'memento',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1730879100), // 2024-11-6T07:45:00Z
   display: {
     name: 'Memento ZK Chain',
