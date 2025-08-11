@@ -57,7 +57,7 @@ export const soon: ScalingProject = opStackL2({
     startSlot: 1,
   },
   chainConfig: {
-    name: 'eclipse',
+    name: 'soon',
     chainId: undefined,
     apis: [
       {

@@ -25,7 +25,7 @@ export const soonbase: ScalingProject = underReviewL2({
     },
   },
   chainConfig: {
-    name: 'eclipse',
+    name: 'soonbase',
     chainId: undefined,
     apis: [
       {
