@@ -105,7 +105,10 @@ function ChartContainer<T extends { timestamp: number }>({
   const isClient = useIsClient()
 
   const hasData = data && data.length > 1
-  const noDataSourcesSelected = interactiveLegend?.dataKeys.length === 0
+
+  const noDataSourcesSelected = Object.keys(meta).every(
+    (key) => interactiveLegend && !interactiveLegend?.dataKeys.includes(key),
+  )
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div
@@ -136,7 +139,9 @@ function ChartContainer<T extends { timestamp: number }>({
           />
         )}
         {!hasData && !isLoading && <ChartNoDataState size={size} />}
-        {noDataSourcesSelected && <ChartNoDataSourceState />}
+        {noDataSourcesSelected && !isLoading && isClient && (
+          <ChartNoDataSourceState />
+        )}
         {isClient && size !== 'small' && (
           <Logo
             animated={false}
@@ -192,6 +197,7 @@ function ChartLegendContent({
   verticalAlign = 'bottom',
   nameKey,
   reverse = false,
+  children,
 }: React.ComponentProps<'div'> &
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
     nameKey?: string
@@ -224,62 +230,65 @@ function ChartLegendContent({
           'mb-3',
       )}
     >
-      <OverflowWrapper childrenRef={contentRef}>
-        <div
-          className={cn(
-            'mx-auto flex h-3.5 w-fit items-center gap-2',
-            verticalAlign === 'top' && 'pb-3',
-            className,
-          )}
-          ref={contentRef}
-        >
-          {actualPayload.map((item) => {
-            const key = `${nameKey ?? item.dataKey ?? 'value'}`
-            const itemConfig = getPayloadConfigFromPayload(meta, item, key)
+      <div className="mx-auto flex w-max max-w-full items-center">
+        {children}
+        <OverflowWrapper childrenRef={contentRef} className="min-w-0">
+          <div
+            className={cn(
+              'flex h-3.5 w-max items-center gap-2',
+              verticalAlign === 'top' && 'pb-3',
+              className,
+            )}
+            ref={contentRef}
+          >
+            {actualPayload.map((item) => {
+              const key = `${nameKey ?? item.dataKey ?? 'value'}`
+              const itemConfig = getPayloadConfigFromPayload(meta, item, key)
 
-            if (!itemConfig || item.type === 'none') return null
+              if (!itemConfig || item.type === 'none') return null
 
-            const isHidden =
-              interactiveLegend && !interactiveLegend?.dataKeys?.includes(key)
-            return (
-              <div
-                key={item.value}
-                className={cn(
-                  'group/legend-item flex items-center gap-[3px] transition-opacity [&>svg]:text-secondary',
-                  interactiveLegend && 'cursor-pointer select-none',
-                  isHidden && 'opacity-50',
-                )}
-                onClick={
-                  interactiveLegend
-                    ? () => {
-                        interactiveLegend.onItemClick(key)
-                        if (!interactiveLegend.disableOnboarding) {
-                          setHasFinishedOnboarding(true)
-                        }
-                      }
-                    : undefined
-                }
-              >
-                <ChartDataIndicator
-                  type={itemConfig.indicatorType}
-                  backgroundColor={itemConfig.color}
-                />
-                <span
+              const isHidden =
+                interactiveLegend && !interactiveLegend?.dataKeys?.includes(key)
+              return (
+                <div
+                  key={item.value}
                   className={cn(
-                    'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
-                    !isHidden &&
-                      interactiveLegend &&
-                      'group-hover/legend-item:opacity-50',
-                    isHidden && 'line-through',
+                    'group/legend-item flex items-center gap-[3px] transition-opacity [&>svg]:text-secondary',
+                    interactiveLegend && 'cursor-pointer select-none',
+                    isHidden && 'opacity-50',
                   )}
+                  onClick={
+                    interactiveLegend
+                      ? () => {
+                          interactiveLegend.onItemClick(key)
+                          if (!interactiveLegend.disableOnboarding) {
+                            setHasFinishedOnboarding(true)
+                          }
+                        }
+                      : undefined
+                  }
                 >
-                  {itemConfig.legendLabel ?? itemConfig.label}
-                </span>
-              </div>
-            )
-          })}
-        </div>
-      </OverflowWrapper>
+                  <ChartDataIndicator
+                    type={itemConfig.indicatorType}
+                    backgroundColor={itemConfig.color}
+                  />
+                  <span
+                    className={cn(
+                      'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
+                      !isHidden &&
+                        interactiveLegend &&
+                        'group-hover/legend-item:opacity-50',
+                      isHidden && 'line-through',
+                    )}
+                  >
+                    {itemConfig.legendLabel ?? itemConfig.label}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        </OverflowWrapper>
+      </div>
       {!hasFinishedOnboarding &&
         interactiveLegend &&
         !interactiveLegend.disableOnboarding && (

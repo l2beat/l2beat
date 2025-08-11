@@ -21,6 +21,6 @@ export interface Asset {
   /** Custom property to differentiate between events from the same bridge */
   customType?: string
   /** Custom id used (by given protocol) to identify other part of the transfer */
-  matchingId?: string
+  matchingId: string
   // #endregion
 }

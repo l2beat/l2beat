@@ -90,14 +90,14 @@ export async function updateDiffHistoryForChain(
   let codeDiff
   let configRelatedDiff
 
-  // TDDO(radomski): Use timestamp after the merge
+  // TODO(radomski): Use timestamp after the merge
   if ((discoveryFromMainBranch?.timestamp ?? 0) > curDiscovery.timestamp) {
     throw new Error(
       `Main branch discovery timestamp (${discoveryFromMainBranch?.timestamp}) is higher than current discovery timestamp (${curDiscovery.timestamp})`,
     )
   }
 
-  // TDDO(radomski): Use timestamp after the merge
+  // TODO(radomski): Use timestamp after the merge
   if ((discoveryFromMainBranch?.timestamp ?? 0) < curDiscovery.timestamp) {
     const rerun = await performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       discoveryFolder,
