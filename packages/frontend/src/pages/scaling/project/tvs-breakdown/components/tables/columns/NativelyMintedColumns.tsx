@@ -3,7 +3,6 @@ import capitalize from 'lodash/capitalize'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { TokenAddressCell } from '../cells/TokenAddressCell'
-import { TokenAmountCell } from '../cells/TokenAmountCell'
 import { TokenNameCell } from '../cells/TokenNameCell'
 import { TokenValueCell } from '../cells/TokenValueCell'
 import type { NativelyMintedTokenEntry } from '../NativelyMintedTable'
@@ -40,19 +39,13 @@ export const nativelyMintedColumns = [
   }),
   columnHelper.display({
     id: 'value',
-    header: 'Value',
+    header: 'TVS-Adjusted Value',
     meta: {
       align: 'right',
+      tooltip:
+        'The value is calculated by multiplying the amount by the token price for most tokens. For some tokens, we use custom calculations to avoid double counting. Expand the section to learn more.',
     },
     cell: (ctx) => <TokenValueCell {...ctx.row.original} />,
-  }),
-  columnHelper.display({
-    id: 'amount',
-    header: 'Amount',
-    meta: {
-      align: 'right',
-    },
-    cell: (ctx) => <TokenAmountCell {...ctx.row.original} />,
   }),
   columnHelper.display({
     id: 'expand',
