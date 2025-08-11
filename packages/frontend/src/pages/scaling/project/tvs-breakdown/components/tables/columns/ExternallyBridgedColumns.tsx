@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import capitalize from 'lodash/capitalize'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
+import { categoryToLabel } from '../categoryToLabel'
 import { BridgedUsingCell } from '../cells/BridgedUsingCell'
 import { TokenAddressCell } from '../cells/TokenAddressCell'
 import { TokenNameCell } from '../cells/TokenNameCell'
@@ -21,7 +21,7 @@ export const externallyBridgedColumns = [
     header: 'Category',
     cell: (ctx) => (
       <div className="font-medium text-xs">
-        {capitalize(ctx.row.original.category)}
+        {categoryToLabel(ctx.row.original.category)}
       </div>
     ),
   }),

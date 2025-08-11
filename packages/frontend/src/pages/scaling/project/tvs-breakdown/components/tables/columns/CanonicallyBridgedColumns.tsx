@@ -1,8 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import capitalize from 'lodash/capitalize'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import type { CanonicallyBridgedTokenEntry } from '../CanonicallyBridgedTable'
+import { categoryToLabel } from '../categoryToLabel'
 import { TokenAddressCell } from '../cells/TokenAddressCell'
 import { TokenNameCell } from '../cells/TokenNameCell'
 import { TokenValueCell } from '../cells/TokenValueCell'
@@ -21,7 +21,7 @@ export const canonicallyBridgedColumns = [
     header: 'Category',
     cell: (ctx) => (
       <div className="font-medium text-xs">
-        {capitalize(ctx.row.original.category)}
+        {categoryToLabel(ctx.row.original.category)}
       </div>
     ),
   }),
