@@ -84,7 +84,6 @@ export const zircuit: ScalingProject = opStackL2({
   addedAt: UnixTime(1712559704), // 2024-04-08T07:01:44Z
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  reviewStatus: 'inReview',
   display: {
     name: 'Zircuit',
     slug: 'zircuit',
@@ -167,7 +166,7 @@ export const zircuit: ScalingProject = opStackL2({
     },
     proposerFailure: {
       value: 'Use escape hatch',
-      sentiment: 'bad',
+      sentiment: 'warning',
       orderHint: Number.NEGATIVE_INFINITY,
       description: `Users are able to trustlessly exit by submitting a Merkle proof of funds after ${formatSeconds(timeLimitOutputRootSubmissionSeconds)} with no new state proposals have passed. The escape of ETH and ERC-20 balances is permissionless while the escape of DeFi contract balances is trusted.`,
     },
