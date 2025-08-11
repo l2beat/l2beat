@@ -8,10 +8,14 @@ export function recordToSortedBreakdown(breakdown: BreakdownRecord) {
   }
 
   result.canonical = breakdown.canonical.sort(
-    (a, b) => +b.usdValue - +a.usdValue,
+    (a, b) => +b.valueForProject - +a.valueForProject,
   )
-  result.external = breakdown.external.sort((a, b) => +b.usdValue - +a.usdValue)
-  result.native = breakdown.native.sort((a, b) => +b.usdValue - +a.usdValue)
+  result.external = breakdown.external.sort(
+    (a, b) => +b.valueForProject - +a.valueForProject,
+  )
+  result.native = breakdown.native.sort(
+    (a, b) => +b.valueForProject - +a.valueForProject,
+  )
 
   return result
 }
