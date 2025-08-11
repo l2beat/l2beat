@@ -320,7 +320,7 @@ export class RpcClient extends ClientCore implements BlockClient {
 
     return queries.map((q) => {
       const r = results.get(q.id)
-      assert(r, `Request with with ${q.id} not found`)
+      assert(r, `Request with ${q.id} not found`)
       return r
     })
   }
