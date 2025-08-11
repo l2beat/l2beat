@@ -164,7 +164,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
 
     this.logger.info('Fetching rpc total supplies', {
       blockNumber,
-      balances: tokens.length,
+      supplies: tokens.length,
     })
 
     const totalSupplies = await this.$.totalSupplyProvider.getTotalSupplies(

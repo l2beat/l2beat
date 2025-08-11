@@ -67,10 +67,10 @@ function decodeLastEvent(events: providers.Log[]): {
 
   // NOTE(radomski): Schema is not public, but we know that the first 8 bytes are the threshold and the next 8 are the keyCount
   const keysetBytes = Bytes.fromHex(decodedEvent.keysetBytes as string)
-  const assummedHonestMembers = keysetBytes.slice(0, 8).toNumber()
+  const assumedHonestMembers = keysetBytes.slice(0, 8).toNumber()
   const membersCount = keysetBytes.slice(8, 16).toNumber()
 
-  const requiredSignatures = membersCount - assummedHonestMembers + 1
+  const requiredSignatures = membersCount - assumedHonestMembers + 1
 
   const blsSignatures: string[] = []
   let head = 16
