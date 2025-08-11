@@ -231,7 +231,7 @@ This script uses two inputs:
 - Token list -  manually maintained list of tokens to track - `/packages/config/src/tokens/generated.json`
 - Project configuration - `.ts` files with project definition (especially escrows and apis like RPC)
 
-This two-step config generation script will be soon replace by Token Discovery
+This two-step config generation script will be soon replaced by Token Discovery
 
 
 ### Local execution
