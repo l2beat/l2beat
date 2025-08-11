@@ -6,5 +6,5 @@
     "calculateServiceFee",
     "payoutPeriodStartTime"
   ],
-  "ignoreInWatchmode": ["availableForInvestment", "previewPrincipalPayout"]
+  "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"]
 }
