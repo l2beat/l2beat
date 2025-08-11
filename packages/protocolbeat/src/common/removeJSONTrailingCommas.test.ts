@@ -34,7 +34,7 @@ describe('removeJSONTrailingCommas', () => {
     )
   })
 
-  it('preserves non‑trailing commas even with whitespace', () => {
+  it('preserves non-trailing commas even with whitespace', () => {
     const input = '{"a":1, "b":2 }'
     expect(removeJSONTrailingCommas(input)).toEqual(input)
   })

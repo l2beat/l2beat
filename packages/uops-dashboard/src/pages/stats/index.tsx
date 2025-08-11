@@ -70,7 +70,7 @@ export default function StatsPage() {
           Select the chain and provide the number of blocks to analyze. The tool
           will fetch the data and generate statistics by comparing overall
           number of transactions to user operations. Subsequent clicks on Go!
-          button will result in fetching more block on top of the previous ones
+          button will result in fetching more blocks on top of the previous ones
           and aggregating the statistics.
         </p>
         <StatsForm

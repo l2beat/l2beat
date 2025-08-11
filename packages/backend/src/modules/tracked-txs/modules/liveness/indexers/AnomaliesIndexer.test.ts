@@ -191,7 +191,7 @@ describe(AnomaliesIndexer.name, () => {
   })
 
   describe(AnomaliesIndexer.prototype.invalidate.name, () => {
-    it('should return new safeHeigh and not delete data', async () => {
+    it('should return new safeHeight and not delete data', async () => {
       const livenessRepositoryMock = mockObject<Database['liveness']>({
         deleteAll: mockFn().resolvesTo(1),
       })

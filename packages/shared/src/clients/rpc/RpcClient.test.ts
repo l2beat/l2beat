@@ -82,7 +82,7 @@ describe(RpcClient.name, () => {
   })
 
   describe(RpcClient.prototype.getTransaction.name, () => {
-    it('fetches tx from rpc and parsers response', async () => {
+    it('fetches tx from rpc and parses response', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: mockRawTx('0x1'),
@@ -106,7 +106,7 @@ describe(RpcClient.name, () => {
   })
 
   describe(RpcClient.prototype.getTransactionReceipt.name, () => {
-    it('fetches tx receipt from rpc and parsers response', async () => {
+    it('fetches tx receipt from rpc and parses response', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: mockReceipt,
@@ -152,7 +152,7 @@ describe(RpcClient.name, () => {
   })
 
   describe(RpcClient.prototype.getLogs.name, () => {
-    it('fetches logs from rpc and parsers response', async () => {
+    it('fetches logs from rpc and parses response', async () => {
       const mockAddresses = [EthereumAddress.random(), EthereumAddress.random()]
       const mockTopics = ['0xabcd', '0xdcba']
       const mockFromBlock = 100

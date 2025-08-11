@@ -42,7 +42,7 @@ export class QuickNodeClient {
     status,
   }: {
     id?: (number | Hex)[]
-    stateId: 'head' | 'gensis' | 'finalized' | 'justified' | 'slot' | Hex
+    stateId: 'head' | 'genesis' | 'finalized' | 'justified' | 'slot' | Hex
     status?: string[]
   }) {
     const response = await this.httpClient.fetchRaw(

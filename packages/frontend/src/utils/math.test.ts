@@ -16,7 +16,7 @@ describe('math', () => {
       ).toEqual([72, 4, 24])
     })
 
-    it('works for one thirds ', () => {
+    it('works for one third', () => {
       expect(unifyPercentagesAsIntegers([100 / 3, 100 / 3, 100 / 3])).toEqual([
         34, 33, 33,
       ])
