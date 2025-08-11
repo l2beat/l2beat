@@ -7,12 +7,12 @@ export class UopsAnalyzers {
   private analyzers = new Map<string, UopsAnalyzer>()
 
   constructor(chains: ChainApi[]) {
-    const rpcAnalyer = new RpcUopsAnalyzer()
+    const rpcAnalyzer = new RpcUopsAnalyzer()
     const starknetAnalyzer = new StarknetUopsAnalyzer()
 
     for (const chain of chains) {
       if (chain.blockApis.some((x) => x.type === 'rpc')) {
-        this.analyzers.set(chain.name, rpcAnalyer)
+        this.analyzers.set(chain.name, rpcAnalyzer)
       } else if (chain.blockApis.some((x) => x.type === 'starknet')) {
         this.analyzers.set(chain.name, starknetAnalyzer)
       }

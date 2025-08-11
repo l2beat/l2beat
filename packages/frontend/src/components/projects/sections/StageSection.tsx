@@ -145,7 +145,6 @@ export function StageSection({
       {stageConfig.downgradePending && (
         <StageOneRequirementsChangeStageSectionNotice
           downgradePending={stageConfig.downgradePending}
-          stage1PrincipleDescription={stageConfig.stage1PrincipleDescription}
         />
       )}
       {stageConfig.message && (
@@ -243,6 +242,11 @@ export function StageSection({
                           {stage.principle.description}
                         </Markdown>
                       </div>
+                      {stageConfig.stage1PrincipleDescription && (
+                        <p className="mt-2 pl-6 leading-[125%] max-md:text-base">
+                          {stageConfig.stage1PrincipleDescription}
+                        </p>
+                      )}
                     </div>
                   </>
                 )}
