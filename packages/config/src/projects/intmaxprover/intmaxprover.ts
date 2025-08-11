@@ -33,7 +33,7 @@ export const intmaxprover: BaseProject = {
     creator: 'INTMAX',
     techStack: {
       snark: [
-        ZK_CATALOG_TAGS.Plonk.Plonky2,
+        ZK_CATALOG_TAGS.STARK.Plonky2,
         ZK_CATALOG_TAGS.Field.Goldilocks,
         ZK_CATALOG_TAGS.Other.CustomCircuits,
       ],
