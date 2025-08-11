@@ -20,7 +20,10 @@ type ProjectDaThroughputChart = {
   range: [UnixTime | null, UnixTime]
   syncedUntil: UnixTime
 }
-type ProjectDaThroughputChartPoint = [timestamp: number, value: number | null]
+export type ProjectDaThroughputChartPoint = [
+  timestamp: number,
+  value: number | null,
+]
 
 export const ProjectDaThroughputChartParams = v.object({
   range: v.union([
@@ -46,7 +49,30 @@ export async function getProjectDaThroughputChart(
   if (env.MOCK) {
     return getMockProjectDaThroughputChart(params)
   }
+  const resolution = rangeToResolution(params.range)
 
+  const data = await getProjectDaThroughputChartData(params)
+  if (!data) {
+    return undefined
+  }
+  const { grouped, from, to, maxTimestamp, syncedUntil } = data
+
+  const timestamps = generateTimestamps([from, to], resolution)
+
+  return {
+    chart: timestamps.map((timestamp) => {
+      const posted =
+        timestamp <= maxTimestamp ? (grouped[timestamp] ?? 0) : null
+      return [timestamp, posted]
+    }),
+    range: [from, maxTimestamp],
+    syncedUntil,
+  }
+}
+
+export async function getProjectDaThroughputChartData(
+  params: ProjectDaThroughputChartParams,
+) {
   const db = getDb()
   const resolution = rangeToResolution(params.range)
   const range = getThroughputRange(params.range)
@@ -90,15 +116,11 @@ export async function getProjectDaThroughputChart(
     ? maxTimestamp
     : expectedTo
 
-  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
-
   return {
-    chart: timestamps.map((timestamp) => {
-      const posted =
-        timestamp <= maxTimestamp ? (grouped[timestamp] ?? 0) : null
-      return [timestamp, posted]
-    }),
-    range: [minTimestamp, maxTimestamp],
+    grouped,
+    from: minTimestamp,
+    to: adjustedTo,
+    maxTimestamp,
     syncedUntil,
   }
 }
