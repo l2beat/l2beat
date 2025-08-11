@@ -8,7 +8,7 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import type { ProjectDaThroughputChartParams } from './getProjectDaThroughtputChart'
+import type { ProjectDaThroughputChartParams } from './getProjectDaThroughputChart'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 import {
@@ -171,10 +171,14 @@ function groupByTimestampAndProjectId(
       sovereignProjects.get(record.projectId as ProjectId)
     assert(projectName, `Project ${record.projectId} not found`)
 
-    result[timestamp] = {
-      ...result[timestamp],
-      [projectName]: Number(value),
+    if (result[timestamp]) {
+      result[timestamp][projectName] = Number(value)
+    } else {
+      result[timestamp] = {
+        [projectName]: Number(value),
+      }
     }
+
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
@@ -199,10 +203,6 @@ function groupByTimestampAndProjectId(
         result[timestamp] = {
           ['Unknown']: Number(value) - restSummed,
         }
-      }
-      // FINISH
-      if (Number(value) - restSummed < 0) {
-        console.log(timestamp, result[timestamp])
       }
 
       minTimestamp = Math.min(minTimestamp, timestamp)

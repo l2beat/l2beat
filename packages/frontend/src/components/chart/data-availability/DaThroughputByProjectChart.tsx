@@ -39,6 +39,7 @@ const colorsCache = new Map<string, string>()
 
 export function DaThroughputByProjectChart({
   data,
+  syncedUntil,
   isLoading,
   customColors,
   milestones,
@@ -155,15 +156,6 @@ export function DaThroughputByProjectChart({
       }) ?? []
     )
   }, [data, allProjects, denominator])
-
-  const syncedUntil = useMemo(
-    () =>
-      chartData.findLast((r) => {
-        const [_, ...values] = Object.values(r)
-        return values.every((v) => v !== null)
-      })?.timestamp,
-    [chartData],
-  )
 
   return (
     <ChartContainer

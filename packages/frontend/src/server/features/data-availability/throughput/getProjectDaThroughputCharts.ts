@@ -12,7 +12,7 @@ import {
   getProjectDaThroughputChartData,
   ProjectDaThroughputChartParams,
   type ProjectDaThroughputChartPoint,
-} from './getProjectDaThroughtputChart'
+} from './getProjectDaThroughputChart'
 import { rangeToResolution } from './utils/range'
 
 export type getProjectDaThroughputChartsData = {
