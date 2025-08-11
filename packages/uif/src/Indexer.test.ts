@@ -270,12 +270,11 @@ export async function waitUntil(predicate: () => boolean): Promise<void> {
 }
 
 export class InitTestIndexer extends RootIndexer {
-  constructor(
-    private readonly initState:
-      | { safeHeight: number; configHash?: string }
-      | undefined,
-  ) {
+  private readonly initState?: { safeHeight: number; configHash?: string }
+
+  constructor(initState?: { safeHeight: number; configHash?: string }) {
     super(Logger.SILENT)
+    this.initState = initState
   }
 
   override async tick(): Promise<number> {
