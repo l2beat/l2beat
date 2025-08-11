@@ -52,6 +52,21 @@ export const soon: ScalingProject = opStackL2({
       },
     ],
   },
+  activityConfig: {
+    type: 'slot',
+    startSlot: 1,
+  },
+  chainConfig: {
+    name: 'eclipse',
+    chainId: undefined,
+    apis: [
+      {
+        type: 'svm-rpc',
+        url: 'https://rpc.mainnet.soo.network/rpc',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: UnixTime(1696566432), // TODO: update
   isNodeAvailable: false,
   nonTemplateDaTracking: [

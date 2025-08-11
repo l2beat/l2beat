@@ -24,6 +24,21 @@ export const soonbase: ScalingProject = underReviewL2({
       ],
     },
   },
+  chainConfig: {
+    name: 'eclipse',
+    chainId: undefined,
+    apis: [
+      {
+        type: 'svm-rpc',
+        url: 'https://rpc.soonbase.soo.network/rpc',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'slot',
+    startSlot: 1,
+  },
   escrows: [
     {
       address: EthereumAddress('0x77E1064021182066eF94A2C8eEAd051eaD08D161'),
