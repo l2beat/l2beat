@@ -25,6 +25,7 @@ export const sova: ScalingProject = upcomingL2({
       ],
     },
   },
+  hasTestnet: true,
   ecosystemInfo: {
     id: ProjectId('superchain'),
   },
