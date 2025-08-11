@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
   "chain": "ethereum",
-  "timestamp": 1753687645,
+  "timestamp": 1754908695,
   "configHash": "0x42c1375ef4adc20f46ca456718adc1138e9a8956fe62509b9aab261c71dcf404",
   "entries": [
     {
@@ -155,7 +155,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 49,
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -164,13 +164,13 @@
       }
     },
     {
-      "name": "EverclearSpokeV4",
+      "name": "EverclearSpokeV5",
       "address": "eth:0xa05A3380889115bf313f1Db9d5f335157Be4D816",
       "type": "Contract",
       "unverified": true,
       "sourceHashes": [
         null,
-        "0x45c33a33554c896aa6b125b932ea82f27e4c3bca281ad0d8c5c36a077a762bda"
+        "0x183579075859d89358960a3d0a89ae170c5b81c70cb81f7e4b72e5ff310afb7f"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["intentQueue", "nonce"],
@@ -178,7 +178,7 @@
       "sinceBlock": 20760959,
       "values": {
         "$admin": "eth:0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
-        "$implementation": "eth:0xd18C19169e7C87e7d84f27AD412a56C5D743D560",
+        "$implementation": "eth:0xb0CE951eF4655C73E42E3c7D85eF166E7c615Af7",
         "$pastUpgrades": [
           [
             "2024-09-16T05:00:59.000Z",
@@ -199,9 +199,14 @@
             "2025-04-29T11:43:35.000Z",
             "0x268194204aceb79917b36ea1388c32aea7467aafe8592a320d52fcc09985b6a6",
             ["eth:0xd18C19169e7C87e7d84f27AD412a56C5D743D560"]
+          ],
+          [
+            "2025-08-08T10:47:47.000Z",
+            "0xdf6c967f149d75daef55e22dd9d164b5db17524aa520d60d438528ada4717036",
+            ["eth:0xb0CE951eF4655C73E42E3c7D85eF166E7c615Af7"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "callExecutor": "eth:0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99",
         "DOMAIN": 1,
         "EVERCLEAR": 25327,
@@ -209,22 +214,22 @@
         "FILL_INTENT_FOR_SOLVER_TYPEHASH": "0xce47b2c080dbcd8e420dc92bcf58f25f73f2e008a3b34ac41b9d468d1fb45d5a",
         "fillQueue": { "first": 1, "last": 0 },
         "gateway": "eth:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
-        "intentQueue": { "first": 11888, "last": 11887 },
+        "intentQueue": { "first": 13618, "last": 13617 },
         "lighthouse": "eth:0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
-        "messageGasLimit": 2000000,
+        "messageGasLimit": 5000000,
         "messageReceiver": "eth:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
-        "nonce": 11887,
+        "nonce": 13617,
         "owner": "eth:0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
         "paused": false,
         "PERMIT2": "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3",
-        "PROCESS_FILL_QUEUE_VIA_RELAYER_TYPEHASH": "0x0afae807991f914b71165fd92589f1dc28648cb9fb1f8558f3a6c7507d56deff",
-        "PROCESS_INTENT_QUEUE_VIA_RELAYER_TYPEHASH": "0x8104c8a42e1531612796e696e327ea52a475d9583ee6d64ffdefcafad22c0b24",
+        "PROCESS_FILL_QUEUE_VIA_RELAYER_TYPEHASH": "0xfff2306b4d1a2b16ba8a4ba32d8ed8136d2cc882aea58ada6b2baedcde647f57",
+        "PROCESS_INTENT_QUEUE_VIA_RELAYER_TYPEHASH": "0x87c42ffc42ddf0cd52b5e8a0b1fa6c45338db7d6e7c93f9d2943eb42b2706aca",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "watchtower": "eth:0x6281ea3060B26352b558C4F45767C90db482c4fd"
       },
       "implementationNames": {
         "eth:0xa05A3380889115bf313f1Db9d5f335157Be4D816": "",
-        "eth:0xd18C19169e7C87e7d84f27AD412a56C5D743D560": "EverclearSpokeV4"
+        "eth:0xb0CE951eF4655C73E42E3c7D85eF166E7c615Af7": "EverclearSpokeV5"
       }
     },
     {
@@ -351,7 +356,7 @@
     "eth:0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6": [
       "constructor(address _singleton)"
     ],
-    "eth:0xd18C19169e7C87e7d84f27AD412a56C5D743D560": [
+    "eth:0xb0CE951eF4655C73E42E3c7D85eF166E7c615Af7": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -380,6 +385,7 @@
       "error EverclearSpoke_ProcessFillViaRelayer_TTLExpired()",
       "error EverclearSpoke_ProcessFillViaRelayer_WrongDomain()",
       "error EverclearSpoke_ProcessIntentQueue_NotFound(bytes32 _intentId, uint256 _position)",
+      "error EverclearSpoke_ProcessQueue_ExceedsGasLimit(uint256 _dynamicGasLimit)",
       "error EverclearSpoke_ProcessQueue_InvalidAmount(uint256 _first, uint256 _last, uint256 _amount)",
       "error EverclearSpoke_ProcessQueue_ZeroAmount()",
       "error EverclearSpoke_Unauthorized()",
@@ -434,7 +440,6 @@
       "function fillIntentForSolver(address _solver, tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data) _intent, uint256 _nonce, uint24 _fee, bytes _signature) returns (tuple(bytes32 intentId, bytes32 solver, bytes32 initiator, uint24 fee, uint48 executionTimestamp) _fillMessage)",
       "function fillQueue() view returns (uint256 first, uint256 last)",
       "function gateway() view returns (address)",
-      "function initialize(address _feeAdapter)",
       "function intentQueue() view returns (uint256 first, uint256 last)",
       "function lighthouse() view returns (address)",
       "function messageGasLimit() view returns (uint256)",
@@ -448,10 +453,10 @@
       "function owner() view returns (address)",
       "function pause()",
       "function paused() view returns (bool)",
-      "function processFillQueue(uint32 _amount) payable",
-      "function processFillQueueViaRelayer(uint32 _domain, uint32 _amount, address _relayer, uint256 _ttl, uint256 _nonce, uint256 _bufferDBPS, bytes _signature)",
-      "function processIntentQueue(tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data)[] _intents) payable",
-      "function processIntentQueueViaRelayer(uint32 _domain, tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data)[] _intents, address _relayer, uint256 _ttl, uint256 _nonce, uint256 _bufferDBPS, bytes _signature)",
+      "function processFillQueue(uint32 _amount, uint256 _dynamicGasLimit) payable",
+      "function processFillQueueViaRelayer(uint32 _domain, uint32 _amount, address _relayer, uint256 _ttl, uint256 _nonce, uint256 _dynamicGasLimit, bytes _signature)",
+      "function processIntentQueue(tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data)[] _intents, uint256 _dynamicGasLimit) payable",
+      "function processIntentQueueViaRelayer(uint32 _domain, tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data)[] _intents, address _relayer, uint256 _ttl, uint256 _nonce, uint256 _dynamicGasLimit, bytes _signature)",
       "function proxiableUUID() view returns (bytes32)",
       "function receiveMessage(bytes)",
       "function renounceOwnership()",
@@ -536,6 +541,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23016150 },
-  "permissionsConfigHash": "0x1efa5fa1b02859f115192edb25c16a8e516f34dbcd0ec06a4fbd2b8b0118d368"
+  "usedBlockNumbers": { "ethereum": 23117260 },
+  "permissionsConfigHash": "0xb2a08bfe600cd501406e6f2a49b12a26efcaefedc30c2d503c88db9f16c82bd5"
 }

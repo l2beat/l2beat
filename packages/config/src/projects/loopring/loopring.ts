@@ -437,6 +437,13 @@ export const loopring: ScalingProject = {
   },
   milestones: [
     {
+      title: 'DeFi Closure Announcement',
+      url: 'https://medium.com/loopring-protocol/loopring-defi-closure-announcement-e9270cccba4d',
+      date: '2025-07-31T00:00:00Z',
+      description: 'Loopring sunsets DeFi features to focus on the L2.',
+      type: 'general',
+    },
+    {
       title: 'Loopring ZK Rollup is live',
       url: 'https://medium.com/loopring-protocol/loopring-protocol-3-0-zksnarks-for-scalability-845b35a8b75b',
       date: '2019-12-04T00:00:00Z',

@@ -248,7 +248,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false,
       "valueForSummary": {
@@ -1573,7 +1573,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -1614,7 +1614,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

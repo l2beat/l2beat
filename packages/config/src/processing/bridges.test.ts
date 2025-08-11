@@ -165,7 +165,7 @@ describe('bridges', () => {
           }
         }
       })
-      describe('no longer that 100 characters', () => {
+      describe('no longer than 100 characters', () => {
         for (const project of bridges) {
           if (project.milestones === undefined) {
             continue

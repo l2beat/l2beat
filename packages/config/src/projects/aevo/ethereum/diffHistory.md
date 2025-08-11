@@ -8,7 +8,7 @@ Generated with discovered.json: 0x57253bc4083373787d0168fb90f6f7741632c5cf
 
 ## Description
 
-Conduit: Optiportal2 upgrade (permissioned gametype). All contracts are using standard implementations.
+Conduit: OptimismPortal2 upgrade (permissioned gametype). All contracts are using standard implementations.
 
 absolute prestate: v1.6.0 (cannon64) - does not use alt-DA commitments
 
@@ -373,7 +373,7 @@ Generated with discovered.json: 0xad2837fa5e402192aa66c74e60b314a15a244bce
 
 ## Description
 
-Conduit: Upgrade to known OP stack contracts. (no OptiPortal2 yet)
+Conduit: Upgrade to known OP stack contracts. (no OptimismPortal2 yet)
 
 ## Watched changes
 
@@ -1838,7 +1838,7 @@ Generated with discovered.json: 0xff4c9ee33f97a1ee1c2cddce2f4b3ce3ba414651
 
 ## Description
 
-config related: added categories for all opstack, op stack and polygoncdk stack templates.
+config related: added categories for opstack, op stack and polygoncdk stack templates.
 
 ## Config/verification related changes
 
@@ -3678,7 +3678,7 @@ Ignoring multisig nonce.
 
 ## Description
 
-One owner is removed and another is added to AevoMultiSig.
+One owner is removed and another is added to AevoMultisig.
 
 ## Watched changes
 
