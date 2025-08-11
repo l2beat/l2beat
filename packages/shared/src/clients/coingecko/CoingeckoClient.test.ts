@@ -196,7 +196,7 @@ describe(CoingeckoClient.name, () => {
       await coingeckoClient.query('/a/b', { foo: 'bar', baz: '123' })
     })
 
-    it('constructs a correct when there are no options', async () => {
+    it('constructs a correct URL when there are no options', async () => {
       const http = mockObject<HttpClient>({
         async fetch(url) {
           expect(url).toEqual('https://api.coingecko.com/api/v3/a/b')

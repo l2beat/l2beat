@@ -82,7 +82,7 @@ export const TRUSTED_SETUPS = {
     `,
   },
   PolygonZkEVM: {
-    id: 'PolyonZkEVM',
+    id: 'PolygonZkEVM',
     risk: 'yellow',
     shortDescription:
       'Trusted setup for KZG commitments over BN254 curve used by Polygon zkEVM. Is a subset of Perpetual Powers of Tau ceremony.',
@@ -102,7 +102,7 @@ export const TRUSTED_SETUPS = {
     id: 'Risc0',
     risk: 'green',
     shortDescription:
-      'Circuit-specific trusted setup for Risc0 final wrap Groth16 onchain verifeir.',
+      'Circuit-specific trusted setup for Risc0 final wrap Groth16 onchain verifier.',
     longDescription: `
     
     ## Risc0 Groth16

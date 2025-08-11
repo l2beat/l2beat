@@ -49,11 +49,19 @@ export function ProjectDaAbsoluteThroughputChart({
   syncedUntil,
   resolution,
 }: Props) {
-  const projectChartMeta = getProjectChartMeta(projectId)
+  const projectChartMeta = useMemo(
+    () => getProjectChartMeta(projectId),
+    [projectId],
+  )
+  const hiddenDataKeys = useMemo(
+    () => ['projectMax'],
+    [],
+  ) as (keyof typeof projectChartMeta)[]
 
-  const { dataKeys, toggleDataKey } = useChartDataKeys(projectChartMeta, [
-    'projectMax',
-  ])
+  const { dataKeys, toggleDataKey } = useChartDataKeys(
+    projectChartMeta,
+    hiddenDataKeys,
+  )
   const max = useMemo(() => {
     return dataWithConfiguredThroughputs
       ? Math.max(

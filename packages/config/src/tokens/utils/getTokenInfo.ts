@@ -41,8 +41,8 @@ export async function getTokenInfo(
   ])
 
   logger.assert(
-    symbolFromConfig === symbolFromConfig,
-    ` symbol mismatch  ${symbolFromConfig} !== ${symbolFromConfig}`,
+    symbol === symbolFromConfig,
+    ` symbol mismatch  ${symbol} !== ${symbolFromConfig}`,
   )
 
   return {
