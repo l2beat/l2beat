@@ -321,6 +321,10 @@ export const facet: ScalingProject = {
         url: 'https://mainnet.facet.org/',
         callsPerMinute: 1500,
       },
+      {
+        type: 'blockscout',
+        url: 'https://explorer.facet.org/api',
+      },
     ],
   },
   milestones: [
