@@ -20,15 +20,15 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
-import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
-import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
+import type { DaThroughputChartDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { getDaDataParams } from './getDaDataParams'
 
 interface Props {
-  data: DaThroughputChartDataByChart | undefined
+  data: DaThroughputChartDataPoint[] | undefined
+  syncedUntil: UnixTime | undefined
   isLoading: boolean
   customColors: Record<string, string> | undefined
   milestones: Milestone[]
@@ -44,13 +44,11 @@ export function DaThroughputByProjectChart({
   milestones,
   resolution,
 }: Props) {
-  const { includeScalingOnly } = useIncludeScalingOnly()
-
   const allProjects = useMemo(() => {
     // We want to get latest top projects.
-    let result = data
+    const result = data
       ? uniq(
-          [...data.chart]
+          [...data]
             .reverse()
             .flatMap(([_, values]) => Object.keys(values ?? {}))
             .sort((a, b) => {
@@ -61,14 +59,8 @@ export function DaThroughputByProjectChart({
         )
       : []
 
-    if (includeScalingOnly) {
-      result = result.filter(
-        (project) =>
-          !data?.sovereignProjects.includes(project) && project !== 'Unknown',
-      )
-    }
     return result
-  }, [data, includeScalingOnly])
+  }, [data])
 
   const colors = useMemo(
     () =>
@@ -116,7 +108,7 @@ export function DaThroughputByProjectChart({
   const max = useMemo(() => {
     return data
       ? Math.max(
-          ...data.chart.map(([_, values]) =>
+          ...data.map(([_, values]) =>
             sum(
               Object.entries(values ?? {}).map(([project, value]) => {
                 if (!allProjects.includes(project)) return 0
@@ -135,14 +127,14 @@ export function DaThroughputByProjectChart({
       return []
     }
 
-    const lastProjectsDataTimestamp = data?.chart.findLast(([_, values]) => {
+    const lastProjectsDataTimestamp = data?.findLast(([_, values]) => {
       return Object.entries(values ?? {}).some(
         ([name, value]) => name !== 'Unknown' && value > 0,
       )
     })?.[0]
 
     return (
-      data?.chart.map(([timestamp, values]) => {
+      data?.map(([timestamp, values]) => {
         const isSynced =
           lastProjectsDataTimestamp && timestamp <= lastProjectsDataTimestamp
 
