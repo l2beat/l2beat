@@ -248,7 +248,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false,
       "valueForSummary": {
@@ -1407,8 +1407,7 @@
         "chain": "linea",
         "escrowAddress": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
         "decimals": 6,
-        "sinceTimestamp": 1709742598,
-        "untilTimestamp": 1754028000
+        "sinceTimestamp": 1709742598
       },
       "valueForSummary": {
         "type": "value",
@@ -1416,8 +1415,7 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1709742598,
-          "untilTimestamp": 1754028000
+          "sinceTimestamp": 1709742598
         },
         "priceId": "bridged-tether-linea"
       },
@@ -1575,7 +1573,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -1616,7 +1614,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

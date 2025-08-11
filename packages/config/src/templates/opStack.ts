@@ -23,7 +23,11 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { formatChallengePeriod, formatDelay } from '../common/formatDelays'
+import {
+  formatChallengeAndExecutionDelay,
+  formatChallengePeriod,
+  formatDelay,
+} from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -865,7 +869,6 @@ function getRiskViewStateValidation(
   templateVars: OpStackConfigCommon,
 ): TableReadyValue {
   const fraudProofType = getFraudProofType(templateVars)
-
   switch (fraudProofType) {
     case 'None': {
       return {
@@ -875,24 +878,31 @@ function getRiskViewStateValidation(
     }
     case 'Permissioned': {
       return {
-        ...RISK_VIEW.STATE_FP_INT,
+        ...RISK_VIEW.STATE_FP_INT(
+          getChallengePeriod(templateVars),
+          getExecutionDelay(templateVars),
+        ),
         description:
-          RISK_VIEW.STATE_FP_INT.description +
+          RISK_VIEW.STATE_FP_INT().description +
           ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
     case 'Permissionless': {
       return {
-        ...RISK_VIEW.STATE_FP_INT,
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
+        ...RISK_VIEW.STATE_FP_INT(
+          getChallengePeriod(templateVars),
+          getExecutionDelay(templateVars),
+        ),
       }
     }
     case 'Kailua': {
       return {
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
+        secondLine: formatChallengeAndExecutionDelay(
+          getChallengePeriod(templateVars) +
+            Number(getExecutionDelay(templateVars)),
+        ),
       }
     }
   }
@@ -1530,6 +1540,25 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
         'MAX_CLOCK_DURATION',
       )
     }
+  }
+}
+
+function getExecutionDelay(
+  templateVars: OpStackConfigCommon,
+): number | undefined {
+  const fraudProofType = getFraudProofType(templateVars)
+  const portal = getOptimismPortal(templateVars)
+  switch (fraudProofType) {
+    case 'Permissioned':
+    case 'Permissionless':
+    case 'Kailua': {
+      return templateVars.discovery.getContractValue<number>(
+        portal.name ?? portal.address,
+        'disputeGameFinalityDelaySeconds',
+      )
+    }
+    default:
+      return undefined
   }
 }
 

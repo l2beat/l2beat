@@ -18,7 +18,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'ethereum',
     shortName: 'eth',
-    rpcCallsPerMinute: 120,
+    rpcCallsPerMinute: 600,
     getTxUrl: (hash: string) => `https://etherscan.io/tx/${hash}`,
     getAddressUrl: (hash: string) => `https://etherscan.io/address/${hash}`,
     envioUrl: 'https://eth.hypersync.xyz/query', //🏅
@@ -28,7 +28,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'arbitrum',
     shortName: 'arb1',
-    rpcCallsPerMinute: 120,
+    rpcCallsPerMinute: 600,
     getTxUrl: (hash: string) => `https://arbiscan.io/tx/${hash}`,
     getAddressUrl: (hash: string) => `https://arbiscan.io/address/${hash}`,
     envioUrl: 'https://arbitrum.hypersync.xyz/query', //🥈
@@ -49,7 +49,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'base',
     shortName: 'base',
-    rpcCallsPerMinute: 120,
+    rpcCallsPerMinute: 600,
     getTxUrl: (hash: string) => `https://basescan.org/tx/${hash}`,
     getAddressUrl: (hash: string) => `https://basescan.org/address/${hash}`,
     envioUrl: 'https://base.hypersync.xyz/query', //🏅
@@ -81,8 +81,8 @@ export const CHAINS: Chain[] = [
     name: 'scroll',
     shortName: 'scr',
     rpcCallsPerMinute: 120,
-    getTxUrl: (hash: string) => `hhttps://scrollscan.com/tx/${hash}`,
-    getAddressUrl: (hash: string) => `hhttps://scrollscan.com/address/${hash}`,
+    getTxUrl: (hash: string) => `https://scrollscan.com/tx/${hash}`,
+    getAddressUrl: (hash: string) => `https://scrollscan.com/address/${hash}`,
     envioUrl: 'https://scroll.hypersync.xyz/query', //🥉
     envioCallsPerMinute: 120,
     envioBatchSize: 2000,

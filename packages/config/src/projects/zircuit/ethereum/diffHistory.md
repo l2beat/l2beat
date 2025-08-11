@@ -1,4 +1,329 @@
-Generated with discovered.json: 0x5197674bc428f741d2c06335d809465d8703d26a
+Generated with discovered.json: 0xd2b0f39ef0eaefc9328e29f2fdbcaf08f831c642
+
+# Diff at Thu, 07 Aug 2025 11:45:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@524648be63b628cab1371b61d40517ac331e0e79 block: 1754310248
+- current timestamp: 1754567136
+
+## Description
+
+Major upgrade. New escape hatch in case there are no state updates for 30d. Unverified state roots by the operator are allowed after 4h of no new proposed state roots.
+
+Escapes for ETH and ERC20s can be done with state / storage merkle proofs for each account / erc20 balanceOf. DeFi contracts can register 'Resolvers' directly from L2 or by their deployer on L1 who are permissioned to partition a pooled balance of a single L2 contract between multiple users.
+
+[OptimismPortal](https://disco.l2beat.com/diff/eth:0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a/eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26)
+- deposit Exclusions in `encodeSetL1BlockValuesEcotoneExclusions()`
+- `escapeETH()` and -WETH added: allows withdrawing full balance after 30 day state update liveness failure (`timeLimitOutputRootSubmissionSeconds`) with state and storage (merkle-) proofs.
+
+[L1StandardBridge](https://disco.l2beat.com/diff/eth:0x506aadcb7bF93E892a43208d879BAc076eBC97Ef/eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb)
+- escapeERC20: escape function after 30d liveness fail for ERC20 tokens
+
+[L2OutputOracle](https://disco.l2beat.com/diff/eth:0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4/eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315)
+- `setTimeLimitOutputRootSubmissionSeconds()` onlyOwner, set escape threshold
+- bootstrapV2() still exists (allowing permissioned state proposal without proof after short liveness fail)
+- new output root proposal disallowed after `timeLimitOutputRootSubmissionSeconds` has passed
+- finality logic for deleting outputs is now `block.timestamp >= finalizationTimestamp && (pausedTimestamp == 0 || pausedTimestamp >= finalizationTimestamp)`
+
+[SuperchainConfig](https://disco.l2beat.com/diff/eth:0xA47314C96ab9572af656788e15143B459F99AE0f/eth:0x70D688D4Bd6B1b195aE51040b54ab501278D1d31)
+- support paused timeslot and pausedSince()
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4.
+      template:
+-        "opstack/OptimismPortal"
++        "opstack/zircuit/OptimismPortal"
+      sourceHashes.1:
+-        "0x67780cfd4e258f37c824b516a488799359ec5e535fb56f62fbd71765730fa32b"
++        "0xb800094cbe5da9b7c7fb14d9f851fabc0adb88151044c80334d6c6f9cc27cc4b"
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4."
+      values.$implementation:
+-        "eth:0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a"
++        "eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26"
+      values.$pastUpgrades.5:
++        ["2025-08-05T13:35:59.000Z","0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",["eth:0xE14b12F4843447114A093D99Dc9322b93a967DE6"]]
+      values.$pastUpgrades.6:
++        ["2025-08-05T13:35:59.000Z","0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",["eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26"]]
+      values.$upgradeCount:
+-        5
++        7
+      values.version:
+-        "2.1.0"
++        "2.2.0"
+      values.resolverRegistry:
++        "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E"
+      implementationNames.eth:0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a:
+-        "OptimismPortal"
+      implementationNames.eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26:
++        "OptimismPortal"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 2 (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"guard","from":"eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0","role":".defaultAdmin"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0","description":"manage roles including the guardian role.","role":".defaultAdmin"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time.
+      template:
+-        "opstack/L1StandardBridge"
++        "opstack/zircuit/L1StandardBridge"
+      sourceHashes.1:
+-        "0x4da64b64aa2ba04837c58c90080a550f82596377659251b91ef703b0acdb49da"
++        "0x2ffe3729df0a4fa39ab88f1451d7d0023e7f6d680f4a8d025a68111673392470"
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
++        "The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time."
+      values.$implementation:
+-        "eth:0x506aadcb7bF93E892a43208d879BAc076eBC97Ef"
++        "eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb"
+      values.$pastUpgrades.6:
++        ["2025-08-05T13:35:59.000Z","0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",["eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.version:
+-        "2.2.0"
++        "2.3.0"
+      implementationNames.eth:0x506aadcb7bF93E892a43208d879BAc076eBC97Ef:
+-        "L1StandardBridge"
+      implementationNames.eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E","role":"admin"}
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+      sourceHashes.1:
+-        "0x39037837abcc5e06ffe85b07ad5f5ce901ed8551155a1b3b81cfd181bd683593"
++        "0xf69fa98cc18afd5754767df58a79532b52dab119b14df252fbea558da850139a"
+      values.$implementation:
+-        "eth:0xA47314C96ab9572af656788e15143B459F99AE0f"
++        "eth:0x70D688D4Bd6B1b195aE51040b54ab501278D1d31"
+      values.$pastUpgrades.1:
++        ["2025-08-05T13:35:59.000Z","0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",["eth:0x70D688D4Bd6B1b195aE51040b54ab501278D1d31"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.1.0"
++        "1.2.0"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276"]},"MONITOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5"]}}
+      values.monitorAC:
++        ["eth:0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5"]
+      values.pausedTimestamp:
++        0
+      implementationNames.eth:0xA47314C96ab9572af656788e15143B459F99AE0f:
+-        "SuperchainConfig"
+      implementationNames.eth:0x70D688D4Bd6B1b195aE51040b54ab501278D1d31:
++        "SuperchainConfig"
+      template:
++        "opstack/zircuit/SuperchainConfig"
+      description:
++        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system."
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 30d of no state updates by supplying merkle proofs or using a resolver.
+      sourceHashes.1:
+-        "0x60e391caee355fef81909391d0660c897c79e6ba836e46f45d51968313188073"
++        "0x5c9c6bf3e729a43f2616db0dda98893b4011faf62a7ce137ee88e758028f8047"
+      values.$implementation:
+-        "eth:0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4"
++        "eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315"
+      values.$pastUpgrades.4:
++        ["2025-08-05T13:35:59.000Z","0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",["eth:0xE14b12F4843447114A093D99Dc9322b93a967DE6"]]
+      values.$pastUpgrades.5:
++        ["2025-08-05T13:35:59.000Z","0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",["eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315"]]
+      values.$upgradeCount:
+-        4
++        6
+      values.computeL2Timestamp:
+-        [1719935831,1719935833,1719935835,1719935837,1719935839]
+      values.getL2Output:
+-        [["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26],["0x6377018657879415a6e998472dc6a28b263a8d6dffdb20f8754d4e3944bc7ee7",1719997259,28],["0x5b51d6381ef6f819d7134be5323374781f3d3f591c552ca39893732df2127984",1719997283,6952],["0xeb12340cbcbc7af2fca27ce389d0162a0cfde9d134bea78a2e538b83ef0faabf",1719997319,6954],["0x55b30b87e1b913e3af502ebe5e12d5df6d4cfd3771b2a3deff43504f9abc8d5f",1719997367,9198]]
+      values.getL2OutputAfter:
+-        [["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26],["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26],["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26],["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26],["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26]]
+      values.getL2OutputEx:
+-        [[0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]]
+      values.getL2OutputIndexAfter:
+-        [0,0,0,0,0]
+      values.getL2OutputRootWithFinalization:
+-        [["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719963923],["0x6377018657879415a6e998472dc6a28b263a8d6dffdb20f8754d4e3944bc7ee7",1720011659],["0x5b51d6381ef6f819d7134be5323374781f3d3f591c552ca39893732df2127984",1720011683],["0xeb12340cbcbc7af2fca27ce389d0162a0cfde9d134bea78a2e538b83ef0faabf",1720011719],["0x55b30b87e1b913e3af502ebe5e12d5df6d4cfd3771b2a3deff43504f9abc8d5f",1720011767]]
+      values.version:
+-        "2.0.0"
++        "2.1.0"
++++ severity: HIGH
+      values.deletedOutputs:
++        []
+      values.superchainConfig:
++        "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
+      values.timeLimitOutputRootSubmissionSeconds:
++        2592000
+      values.timeLimitOutputRootSubmissionSecondsFmt:
++        "30d"
+      values.withdrawalKeepalivePeriodSecondsFmt:
++        "4h"
+      errors:
+-        {"computeL2Timestamp":"Processing error occurred.","getL2Output":"Processing error occurred.","getL2OutputAfter":"Processing error occurred.","getL2OutputEx":"Processing error occurred.","getL2OutputIndexAfter":"Processing error occurred.","getL2OutputRootWithFinalization":"Processing error occurred."}
+      implementationNames.eth:0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4:
+-        "L2OutputOracle"
+      implementationNames.eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315:
++        "L2OutputOracle"
+      template:
++        "opstack/zircuit/L2OutputOracle"
+      description:
++        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 30d of no state updates by supplying merkle proofs or using a resolver."
+      fieldMeta:
++        {"proposer":{"severity":"HIGH"},"challenger":{"severity":"HIGH"},"deletedOutputs":{"severity":"HIGH"}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Zircuit Multisig 1 (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"challenge","from":"eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4","role":".challenger"}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E","role":"admin","via":[{"address":"eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+    }
+```
+
+```diff
+    EOA  (0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4","role":".proposer"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ResolverRegistry (0x6c89104690452AD7e209f0ab72287C2561d5cF0E)
+    +++ description: Registers 'resolvers' which are allowed to supply authoritative data for blockchain balances to support escapes without merkle proofs from e.g. DeFi smart contracts on L2. A resolver can either be registered directly by the respective contract on L2 or by its deployer from L1, using deterministic deployment derivation.
+```
+
+## Source code changes
+
+```diff
+.../L1StandardBridge/L1StandardBridge.sol          | 1680 +++++++++++++++++++-
+ .../L2OutputOracle/L2OutputOracle.sol              |  202 ++-
+ .../OptimismPortal/OptimismPortal.sol              |  685 +++++++-
+ .../ethereum/.flat/ResolverRegistry/Proxy.p.sol    |  201 +++
+ .../.flat/ResolverRegistry/ResolverRegistry.sol    |  670 ++++++++
+ .../ZircuitSuperchainConfig/SuperchainConfig.sol   |   20 +-
+ 6 files changed, 3370 insertions(+), 88 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754310248 (main branch discovery), not current.
+
+```diff
+    contract Zircuit Multisig 2 (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"guard","from":"eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0","role":".defaultAdmin"}
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0","description":"manage roles including the guardian role.","role":".defaultAdmin"}
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: None
+      template:
+-        "opstack/zircuit/SuperchainConfig"
+      description:
+-        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system."
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276"]},"MONITOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5"]}}
+      values.monitorAC:
+-        ["eth:0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5"]
+      category:
+-        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: None
+      template:
+-        "opstack/zircuit/L2OutputOracle"
+      description:
+-        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h."
+      values.deletedOutputs:
+-        []
+      values.withdrawalKeepalivePeriodSecondsFmt:
+-        "4h"
+      values.computeL2Timestamp:
++        [1719935831,1719935833,1719935835,1719935837,1719935839]
+      values.getL2Output:
++        [["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26],["0x6377018657879415a6e998472dc6a28b263a8d6dffdb20f8754d4e3944bc7ee7",1719997259,28],["0x5b51d6381ef6f819d7134be5323374781f3d3f591c552ca39893732df2127984",1719997283,6952],["0xeb12340cbcbc7af2fca27ce389d0162a0cfde9d134bea78a2e538b83ef0faabf",1719997319,6954],["0x55b30b87e1b913e3af502ebe5e12d5df6d4cfd3771b2a3deff43504f9abc8d5f",1719997367,9198]]
+      values.getL2OutputAfter:
++        [["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26],["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26],["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26],["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26],["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719949523,26]]
+      values.getL2OutputEx:
++        [[0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]]
+      values.getL2OutputIndexAfter:
++        [0,0,0,0,0]
+      values.getL2OutputRootWithFinalization:
++        [["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719963923],["0x6377018657879415a6e998472dc6a28b263a8d6dffdb20f8754d4e3944bc7ee7",1720011659],["0x5b51d6381ef6f819d7134be5323374781f3d3f591c552ca39893732df2127984",1720011683],["0xeb12340cbcbc7af2fca27ce389d0162a0cfde9d134bea78a2e538b83ef0faabf",1720011719],["0x55b30b87e1b913e3af502ebe5e12d5df6d4cfd3771b2a3deff43504f9abc8d5f",1720011767]]
+      fieldMeta:
+-        {"proposer":{"severity":"HIGH"},"challenger":{"severity":"HIGH"},"deletedOutputs":{"severity":"HIGH"}}
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"computeL2Timestamp":"Processing error occurred.","getL2Output":"Processing error occurred.","getL2OutputAfter":"Processing error occurred.","getL2OutputEx":"Processing error occurred.","getL2OutputIndexAfter":"Processing error occurred.","getL2OutputRootWithFinalization":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract Zircuit Multisig 1 (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4","role":".challenger"}
+    }
+```
+
+```diff
+    EOA  (0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4","role":".proposer"}]
+    }
+```
+
+Generated with discovered.json: 0xcae768c9c273570cae79fc38d2ad8dfcdac30cbd
 
 # Diff at Wed, 16 Jul 2025 15:01:15 GMT:
 

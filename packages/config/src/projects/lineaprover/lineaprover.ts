@@ -35,13 +35,15 @@ export const lineaprover: BaseProject = {
   zkCatalogInfo: {
     creator: 'Consensys',
     techStack: {
-      finalWrap: [
+      zkVM: [
         ZK_CATALOG_TAGS.Plonk.linea,
-        ZK_CATALOG_TAGS.Plonk.Gnark,
         ZK_CATALOG_TAGS.ISA.EVM,
         ZK_CATALOG_TAGS.curve['BLS12-377'],
-        ZK_CATALOG_TAGS.curve.BN254,
         ZK_CATALOG_TAGS.curve['BW6-761'],
+      ],
+      finalWrap: [
+        ZK_CATALOG_TAGS.Plonk.Gnark,
+        ZK_CATALOG_TAGS.curve.BN254,
         // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
@@ -68,7 +70,7 @@ export const lineaprover: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('linea')],
         description:
-          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract abi packed in the same order they are defined',
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
     ],
   },

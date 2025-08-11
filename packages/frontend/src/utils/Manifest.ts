@@ -3,7 +3,7 @@ import { imageSize } from 'image-size'
 import path from 'path'
 import { env } from '~/env'
 
-export interface ManifestJson {
+interface ManifestJson {
   names: Record<string, string>
   images: Record<string, { src: string; width: number; height: number }>
 }
@@ -21,7 +21,7 @@ export const manifest = getManifest(
   path.join(process.cwd()),
 )
 
-export function getManifest(isProduction: boolean, rootDir: string) {
+function getManifest(isProduction: boolean, rootDir: string) {
   if (isProduction) {
     const content = fs.readFileSync('dist/manifest.json', 'utf-8')
     const json = JSON.parse(content) as ManifestJson

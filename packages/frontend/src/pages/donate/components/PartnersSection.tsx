@@ -40,7 +40,7 @@ export function PartnersSection({ partners }: Props) {
   )
 }
 
-export function EcosystemTierCard({
+function EcosystemTierCard({
   partner,
 }: {
   partner: Partners['ecosystem'][number]
@@ -54,7 +54,7 @@ export function EcosystemTierCard({
           '--ecosystem-secondary': partner.project.colors.secondary,
         } as React.CSSProperties
       }
-      className="group hover:-translate-y-1 transform transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98]"
+      className="group hover:-translate-y-1 transition-[translate,scale] duration-300 ease-out hover:scale-[1.02] active:scale-[0.98]"
     >
       <a href={`/ecosystems/${partner.slug}`} className="block">
         <div className="relative h-40 cursor-pointer overflow-hidden rounded bg-radial-[closest-side] from-branding-secondary to-branding-primary shadow-lg transition-shadow duration-300 group-hover:shadow-xl md:h-[260px] lg:h-[272px]">
@@ -102,7 +102,7 @@ export function EcosystemTierCard({
   )
 }
 
-export function InnovatorTierCard({
+function InnovatorTierCard({
   partner,
 }: {
   partner: Partners['innovator'][number]
@@ -125,7 +125,7 @@ export function InnovatorTierCard({
   )
 }
 
-export function SupporterTierCard({
+function SupporterTierCard({
   partner,
 }: {
   partner: Partners['supporter'][number]

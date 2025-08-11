@@ -164,7 +164,7 @@
         "sinceTimestamp": 1637882522
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -399,7 +399,7 @@
         "decimals": 8,
         "sinceTimestamp": 1628793901
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

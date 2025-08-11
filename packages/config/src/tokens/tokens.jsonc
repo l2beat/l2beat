@@ -477,6 +477,7 @@
     },
     {
       "symbol": "FBTC",
+      "category": "btc",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364"
     },
     {
@@ -491,10 +492,12 @@
     },
     {
       "symbol": "SolvBTC",
+      "category": "btc",
       "address": "0x7a56e1c57c7475ccf742a1832b028f0456652f97"
     },
     {
       "symbol": "SolvBTC.BBN",
+      "category": "btc",
       "address": "0xd9D920AA40f578ab794426F5C90F6C731D159DEf"
     },
     {
@@ -757,6 +760,7 @@
     },
     {
       "symbol": "cbBTC",
+      "category": "btc",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
     },
     {
@@ -863,6 +867,7 @@
     },
     {
       "symbol": "cWBTC",
+      "category": "btc",
       "address": "0xccF4429DB6322D5C611ee964527D42E5d685DD6a"
     },
     {
@@ -920,6 +925,7 @@
     },
     {
       "symbol": "eBTC",
+      "category": "btc",
       "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642"
     },
     {
@@ -1202,6 +1208,7 @@
     },
     {
       "symbol": "LBTC",
+      "category": "btc",
       "address": "0x8236a87084f8B84306f72007F36F2618A5634494"
     },
     {
@@ -1300,7 +1307,8 @@
       "address": "0x8CdF550C04Bc9B9F10938368349C9c8051A772b6"
     },
     {
-      "symbol": "mBTC", // manta btc, needed for fuel tvl (OFT)
+      "symbol": "mBTC",
+      "category": "btc", // manta btc, needed for fuel tvl (OFT)
       "coingeckoId": "manta-mbtc",
       "address": "0x4041381e947CFD3D483d67a25C6aa9Dc924250c5"
     },
@@ -1574,6 +1582,7 @@
     },
     {
       "symbol": "renBTC",
+      "category": "btc",
       "address": "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D"
     },
     {
@@ -1771,6 +1780,7 @@
     },
     {
       "symbol": "tBTC",
+      "category": "btc",
       "address": "0x18084fbA666a33d37592fA2633fD49a74DD93a88"
     },
     {
@@ -1906,6 +1916,7 @@
     },
     {
       "symbol": "WBTC",
+      "category": "btc",
       "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
     },
     {
@@ -2132,6 +2143,7 @@
     },
     {
       "symbol": "pumpBTC",
+      "category": "btc",
       "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
       "coingeckoId": "pumpbtc",
       "source": "external",
@@ -2300,6 +2312,7 @@
     },
     {
       "symbol": "xSolvBTC",
+      "category": "btc",
       "address": "0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB",
       "source": "external",
       "supply": "totalSupply",
@@ -2314,6 +2327,7 @@
     },
     {
       "symbol": "SolvBTC",
+      "category": "btc",
       "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
       "source": "external",
       "supply": "totalSupply",
@@ -2334,6 +2348,7 @@
     },
     {
       "symbol": "tBTC",
+      "category": "btc",
       "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
       "source": "external",
       "supply": "totalSupply",
@@ -2485,6 +2500,7 @@
     },
     {
       "symbol": "cbBTC",
+      "category": "btc",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
       "source": "native",
       "supply": "totalSupply"
@@ -2675,6 +2691,7 @@
     },
     {
       "symbol": "wBTC",
+      "category": "btc",
       "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
       "coingeckoId": "wrapped-bitcoin",
       "source": "canonical",
@@ -2691,7 +2708,7 @@
       "symbol": "FRAX",
       "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -2817,6 +2834,7 @@
     },
     {
       "symbol": "BTC.b",
+      "category": "btc",
       "address": "0x2297aEbD383787A160DD0d9F71508148769342E3",
       "source": "external",
       "supply": "totalSupply",
@@ -2860,7 +2878,6 @@
     {
       "symbol": "GMX",
       "address": "0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
-      "category": "stablecoin",
       "source": "native",
       "supply": "circulatingSupply"
     },
@@ -3164,6 +3181,7 @@
     },
     {
       "symbol": "kBTC",
+      "category": "btc",
       "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
       "source": "external",
       "supply": "totalSupply",
@@ -3258,6 +3276,7 @@
     },
     {
       "symbol": "wBTC",
+      "category": "btc",
       "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
       "source": "canonical",
       "supply": "zero"
@@ -3293,6 +3312,7 @@
     },
     {
       "symbol": "wBTC",
+      "category": "btc",
       "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
       "source": "canonical",
       "supply": "zero"
@@ -3307,7 +3327,7 @@
       "symbol": "FRAX",
       "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -3527,6 +3547,7 @@
     },
     {
       "symbol": "tBTC",
+      "category": "btc",
       "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
       "source": "external",
       "supply": "totalSupply",
@@ -3591,6 +3612,7 @@
     },
     {
       "symbol": "pumpBTC",
+      "category": "btc",
       "coingeckoId": "pumpbtc",
       "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
       "source": "external",
@@ -3681,6 +3703,7 @@
     },
     {
       "symbol": "LBTC",
+      "category": "btc",
       "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
       "source": "external",
       "supply": "totalSupply",
@@ -3973,15 +3996,22 @@
       "symbol": "EURC",
       "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
       "category": "stablecoin",
-      "source": "native",
-      "supply": "totalSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "symbol": "cbBTC",
+      "category": "btc",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
       "source": "native",
-      "supply": "totalSupply",
-      "category": "stablecoin"
+      "supply": "totalSupply"
     },
     {
       "symbol": "DAI",
@@ -4233,6 +4263,7 @@
   "mantapacific": [
     {
       "symbol": "mBTC",
+      "category": "btc",
       "address": "0x1468177dbcb2a772f3d182d2f1358d442b553089",
       "source": "external",
       "supply": "totalSupply",
@@ -4261,6 +4292,7 @@
     },
     {
       "symbol": "wBTC",
+      "category": "btc",
       "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
       "source": "canonical",
       "supply": "zero"
@@ -4419,6 +4451,7 @@
     },
     {
       "symbol": "FBTC",
+      "category": "btc",
       "coingeckoId": "ignition-fbtc",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
       "source": "external",
@@ -4533,6 +4566,7 @@
     },
     {
       "symbol": "M-BTC",
+      "category": "btc",
       "address": "0xe4D584ae9b753e549cAE66200A6475d2f00705f7",
       "coingeckoId": "merlin-s-seal-btc",
       "source": "external",
@@ -4547,6 +4581,7 @@
     },
     {
       "symbol": "BBTC",
+      "category": "btc",
       "address": "0x93C12084dCFC08c759ad96B94234D9C39705689f",
       "coingeckoId": "bouncebit-btc",
       "source": "external",
@@ -4561,6 +4596,7 @@
     },
     {
       "symbol": "SolvBTC.m",
+      "category": "btc",
       "address": "0x5FFcE65A40f6d3de5332766ffF6A28BF491C868c",
       "coingeckoId": "solv-btc",
       "source": "external",
@@ -4575,6 +4611,7 @@
     },
     {
       "symbol": "SolvBTC.b",
+      "category": "btc",
       "address": "0x96155858A02c410c3C814BB32Fdc413b3241b62E",
       "coingeckoId": "solv-btc",
       "source": "external",
@@ -4589,6 +4626,7 @@
     },
     {
       "symbol": "wBTC",
+      "category": "btc",
       "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
       "coingeckoId": "wrapped-bitcoin",
       "source": "canonical",
@@ -4789,6 +4827,7 @@
     },
     {
       "symbol": "M-BTC",
+      "category": "btc",
       "address": "0x0F921c39eFd98809FE6D20a88A4357454578987a",
       "coingeckoId": "merlin-s-seal-btc",
       "source": "external",
@@ -5010,6 +5049,7 @@
     },
     {
       "symbol": "SolvBTC",
+      "category": "btc",
       "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
       "coingeckoId": "solv-btc",
       "source": "external",
@@ -5040,6 +5080,7 @@
     },
     {
       "symbol": "aBTC",
+      "category": "btc",
       "address": "0x7A087e75807F2E5143C161a817E64dF6dC5EAFe0",
       "excludeFromTotal": true,
       "coingeckoId": "xlink-bridged-btc-stacks",
@@ -5118,6 +5159,7 @@
     },
     {
       "symbol": "M-BTC",
+      "category": "btc",
       "address": "0x59889b7021243dB5B1e065385F918316cD90D46c",
       "coingeckoId": "merlin-s-seal-btc",
       "source": "external",
@@ -5217,6 +5259,7 @@
     },
     {
       "symbol": "SolvBTC",
+      "category": "btc",
       "address": "0x3Ba89d490AB1C0c9CC2313385b30710e838370a4",
       "supply": "totalSupply",
       "coingeckoId": "solv-btc",
@@ -5391,6 +5434,7 @@
     },
     {
       "symbol": "wBTC",
+      "category": "btc",
       "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
       "source": "canonical",
       "supply": "zero"
@@ -5440,7 +5484,7 @@
       "symbol": "FRAX",
       "address": "0xb4C1544cb4163f4C2ECa1aE9Ce999F63892d912A",
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -5566,7 +5610,7 @@
       "symbol": "FRAX",
       "address": "0x7562F525106F5d54E891e005867Bf489B5988CD9",
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -5584,7 +5628,7 @@
       "symbol": "FRAX",
       "address": "0xFf8544feD5379D9ffa8D47a74cE6b91e632AC44D",
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -5758,6 +5802,7 @@
     // },
     {
       "symbol": "SolvBTC.m",
+      "category": "btc",
       "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
       "source": "external",
       "supply": "totalSupply",
@@ -5772,6 +5817,7 @@
     },
     {
       "symbol": "M-BTC",
+      "category": "btc",
       "address": "0x85D431A3a56FDf2d2970635fF627f386b4ae49CC",
       "source": "external",
       "supply": "totalSupply",
@@ -5868,6 +5914,7 @@
   "taiko": [
     {
       "symbol": "SolvBTC.BBN",
+      "category": "btc",
       "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
       "coingeckoId": "solv-protocol-solvbtc-bbn",
       "source": "external",
@@ -5882,6 +5929,7 @@
     },
     {
       "symbol": "SolvBTC",
+      "category": "btc",
       "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
       "coingeckoId": "solv-btc",
       "source": "external",
@@ -6014,6 +6062,7 @@
     },
     {
       "symbol": "SolvBTC.BBN",
+      "category": "btc",
       "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
       "source": "external",
       "supply": "totalSupply", // doublecounting the underlying solvBTC 24/12/06
@@ -6028,6 +6077,7 @@
     },
     {
       "symbol": "SolvBTC",
+      "category": "btc",
       "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
       "source": "external",
       "supply": "totalSupply", // doublecounting the underlying wBTC 24/12/06
@@ -6042,6 +6092,7 @@
     },
     {
       "symbol": "uniBTC",
+      "category": "btc",
       "address": "0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894",
       "source": "external",
       "supply": "totalSupply", // doublecounting the underlying wBTC 24/12/06
@@ -6056,6 +6107,7 @@
     },
     {
       "symbol": "FBTC",
+      "category": "btc",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
       "source": "external",
       "supply": "totalSupply",
@@ -6168,6 +6220,7 @@
     },
     {
       "symbol": "swBTC",
+      "category": "btc",
       "address": "0x1cf7b5f266a0f39d6f9408b90340e3e71df8bf7b",
       "coingeckoId": "swell-restaked-btc",
       "source": "external",
@@ -6213,6 +6266,7 @@
     },
     {
       "symbol": "stBTC",
+      "category": "btc",
       "address": "0xf6718b2701d4a6498ef77d7c152b2137ab28b8a3",
       "coingeckoId": "lorenzo-stbtc",
       "source": "native",
@@ -6323,6 +6377,7 @@
     },
     {
       "symbol": "uBTC",
+      "category": "btc",
       "address": "0xfa3198ecf05303a6d96e57a45e6c815055d255b1",
       "coingeckoId": "wrapped-bitcoin-universal",
       "source": "external", // from b2 (bsquared) bitcoin l2 via lockbox
@@ -6371,6 +6426,7 @@
     },
     {
       "symbol": "SolvBTC",
+      "category": "btc",
       "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
       "coingeckoId": "solv-btc",
       "source": "external",
@@ -6386,6 +6442,7 @@
     },
     {
       "symbol": "LBTC",
+      "category": "btc",
       "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
       "coingeckoId": "lombard-staked-btc",
       "source": "external",
@@ -6401,6 +6458,7 @@
     },
     {
       "symbol": "SolvBTC.BBN",
+      "category": "btc",
       "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
       "coingeckoId": "solv-protocol-solvbtc-bbn",
       "source": "external",
@@ -6416,6 +6474,7 @@
     },
     {
       "symbol": "eBTC",
+      "category": "btc",
       "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
       "coingeckoId": "ether-fi-staked-btc",
       "source": "external",
@@ -6479,6 +6538,7 @@
     },
     {
       "symbol": "stBTC",
+      "category": "btc",
       "address": "0xf6718b2701D4a6498eF77D7c152b2137Ab28b8A3",
       "source": "external",
       "coingeckoId": "lorenzo-stbtc",
@@ -6496,6 +6556,7 @@
   "ink": [
     {
       "symbol": "kBTC",
+      "category": "btc",
       "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
       "source": "external",
       "supply": "totalSupply",
@@ -6604,6 +6665,7 @@
     },
     {
       "symbol": "uBTC",
+      "category": "btc",
       "address": "0x61F2993a644762A345b483ADF0d6351C5EdFB3b5",
       "coingeckoId": "wrapped-bitcoin-universal",
       "source": "external", // from b2 (bsquared) bitcoin l2 via lockbox
@@ -6639,6 +6701,7 @@
     },
     {
       "symbol": "SolvBTC.JUP",
+      "category": "btc",
       "address": "0xAffEb8576b927050f5a3B6fbA43F360D2883A118",
       "source": "external",
       "supply": "totalSupply",
@@ -6713,6 +6776,7 @@
     },
     {
       "symbol": "WBTC",
+      "category": "btc",
       "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
       "source": "external",
       "coingeckoId": "wrapped-bitcoin",
@@ -6728,6 +6792,7 @@
     },
     {
       "symbol": "SolvBTC.BBN",
+      "category": "btc",
       "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
       "coingeckoId": "solv-protocol-solvbtc-bbn",
       "source": "external",
@@ -6743,6 +6808,7 @@
     },
     {
       "symbol": "SolvBTC",
+      "category": "btc",
       "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
       "coingeckoId": "solv-btc",
       "source": "external",
@@ -6884,6 +6950,7 @@
     },
     {
       "symbol": "WBTC",
+      "category": "btc",
       "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
       "source": "external",
       "coingeckoId": "wrapped-bitcoin",
@@ -6899,6 +6966,7 @@
     },
     {
       "symbol": "kBTC",
+      "category": "btc",
       "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
       "source": "external",
       "supply": "totalSupply",
@@ -7056,6 +7124,7 @@
     },
     {
       "symbol": "pumpBTC",
+      "category": "btc",
       "coingeckoId": "pumpbtc",
       "address": "0x1fCca65fb6Ae3b2758b9b2B394CB227eAE404e1E",
       "source": "external",
@@ -7349,6 +7418,7 @@
     },
     {
       "symbol": "M-BTC",
+      "category": "btc",
       "address": "0x9BFA177621119e64CecbEabE184ab9993E2ef727",
       "source": "external",
       "supply": "totalSupply",
@@ -7455,6 +7525,7 @@
     },
     {
       "symbol": "LBTC",
+      "category": "btc",
       "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
       "source": "external",
       "supply": "totalSupply",
@@ -7499,6 +7570,7 @@
     },
     {
       "symbol": "vbWBTC",
+      "category": "btc",
       "coingeckoId": "wrapped-bitcoin",
       "address": "0x0913DA6Da4b42f538B445599b46Bb4622342Cf52",
       "source": "external",

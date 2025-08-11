@@ -221,7 +221,7 @@ export const starknet: ScalingProject = {
     },
     liveness: {
       explanation:
-        'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
+        'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and a validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
     },
     costsWarning: {
       sentiment: 'warning',
@@ -285,6 +285,8 @@ export const starknet: ScalingProject = {
       rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
       securityCouncilReference:
         'https://governance.starknet.io/learn/security_council',
+      stage1PrincipleDescription:
+        'While Starknet is considered Stage 1, the Security Council minority is employed to enforce censorship resistance in case the permissioned operator fails to include transactions. The process through which a censored user can contact the Security Council is not defined and currently unclear.',
     },
   ),
   technology: {

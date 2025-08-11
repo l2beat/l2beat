@@ -6,7 +6,7 @@ import { useTable } from '~/hooks/useTable'
 import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
 import { getScalingDataAvailabilityColumns } from './columns'
 
-export interface Props {
+interface Props {
   entries: ScalingDaEntry[]
   rollups?: boolean
   hideType?: boolean

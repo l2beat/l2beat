@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -29,10 +29,11 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
@@ -51,7 +52,6 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   milestones: Milestone[]
-  showMainnet: boolean
   scale: ChartScale
   metric: ActivityMetric
   type: ActivityChartType
@@ -65,7 +65,6 @@ export function ActivityChart({
   syncedUntil,
   milestones,
   isLoading,
-  showMainnet,
   scale,
   type,
   metric,
@@ -73,24 +72,29 @@ export function ActivityChart({
   className,
   tickCount,
 }: Props) {
-  const chartMeta = {
-    projects: {
-      label:
-        projectName ??
-        (type === 'ValidiumsAndOptimiums' ? 'Validiums & Optimiums' : type),
-      color: typeToColor(type),
-      indicatorType: {
-        shape: 'line',
+  const chartMeta = useMemo(
+    () => ({
+      projects: {
+        label:
+          projectName ??
+          (type === 'ValidiumsAndOptimiums' ? 'Validiums & Optimiums' : type),
+        color: typeToColor(type),
+        indicatorType: {
+          shape: 'line',
+        },
       },
-    },
-    ethereum: {
-      label: 'Ethereum',
-      color: 'var(--chart-ethereum)',
-      indicatorType: {
-        shape: 'line',
+      ethereum: {
+        label: 'Ethereum',
+        color: 'var(--chart-ethereum)',
+        indicatorType: {
+          shape: 'line',
+        },
       },
-    },
-  } satisfies ChartMeta
+    }),
+    [projectName, type],
+  ) satisfies ChartMeta
+
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
 
   return (
     <ChartContainer
@@ -98,23 +102,29 @@ export function ActivityChart({
       className={className}
       meta={chartMeta}
       isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         {getStrokeOverFillAreaComponents({
-          data: compact([
-            showMainnet && {
+          data: [
+            {
               dataKey: 'ethereum',
               stroke: 'url(#strokeEthereum)',
               fill: 'url(#fillEthereum)',
+              hide: !dataKeys.includes('ethereum'),
             },
             {
               dataKey: 'projects',
               stroke: 'url(#strokeProjects)',
               fill: 'url(#fillProjects)',
+              hide: !dataKeys.includes('projects'),
             },
-          ]),
+          ],
         })}
         {getCommonChartComponents({
           data,
@@ -166,15 +176,14 @@ export function ActivityCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
-            longMonthName: true,
-          })}
+          {formatRange(timestamp, timestamp + UnixTime.DAY)}
         </div>
         <span className="text-heading-16">Average UOPS</span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.name === undefined || entry.type === 'none') return null
+            if (entry.name === undefined || entry.type === 'none' || entry.hide)
+              return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -209,7 +218,8 @@ export function ActivityCustomTooltip({
             if (
               entry.name === undefined ||
               entry.value === undefined ||
-              entry.type === 'none'
+              entry.type === 'none' ||
+              entry.hide
             )
               return null
             const config = meta[entry.name]

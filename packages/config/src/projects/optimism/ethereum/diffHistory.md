@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x3660d38cfe22df9f59f7123802884df59950ea9a
+Generated with discovered.json: 0x5b2ac51f9e66bc6e3e888ee22e0db69a71390a73
 
 # Diff at Fri, 25 Jul 2025 17:48:24 GMT:
 
@@ -382,7 +382,7 @@ ETHLockbox
 +        "0x025be6415d31a7c8f475bf94e05a8288787b4adb41562108a42d0574c9af9543"
       description:
 -        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
-+        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The state root respected for withdrawals comnes from the FaultDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The state root respected for withdrawals comes from the FaultDisputeGame."
       values.$implementation:
 -        "eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"
 +        "eth:0xEFEd7F38BB9BE74bBa583a1A5B7D0fe7C9D5787a"
@@ -609,7 +609,7 @@ Generated with discovered.json: 0xacd04eb2dc80b00a09f219689691d71f949272b1
 
 ## Description
 
-Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
+Config: Kailua added to OptimismPortal2 and DisputeGameFactory.
 
 ## Config/verification related changes
 

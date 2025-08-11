@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract handling withdrawal requests, which require a validity proof of sufficient balance. It tracks amount of funds already withdrawn to prevent double withdrawals.",
+  "ignoreRelatives": ["l2ScrollMessenger"],
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "liquidity": {
+      "edit": ["format", "EthereumAddress"]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the verifier address and the list of tokens that can be withdrawn automatically, in contrast to those that have to be actively claimed."
+        }
+      ]
+    }
+  }
+}

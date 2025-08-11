@@ -29,10 +29,15 @@ export const muster: ScalingProject = orbitStackL3({
       bridges: [
         'https://bridge.arbitrum.io/?destinationChain=muster&sourceChain=arbitrum-one',
       ],
-      documentation: ['https://docs.cometh.io/marketplace'],
+      documentation: ['https://docs.cometh.io'],
       explorers: ['https://muster-explorer.alt.technology/'],
       repositories: ['https://github.com/cometh-hq'],
-      socialMedia: ['https://x.com/Cometh', 'https://blog.cometh.io/'],
+      socialMedia: [
+        'https://x.com/Cometh',
+        'https://blog.cometh.io/',
+        'https://linkedin.com/company/comethstudio',
+        'https://youtube.com/@comethio',
+      ],
     },
   },
   chainConfig: {

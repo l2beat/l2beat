@@ -1,7 +1,6 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { useMemo, useState } from 'react'
-import { Checkbox } from '~/components/core/Checkbox'
+import { useMemo } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
@@ -10,6 +9,7 @@ import type { ProjectDaThroughputChartPoint } from '~/server/features/data-avail
 import {
   type DaThroughputTimeRange,
   DaThroughputTimeRangeValues,
+  rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { EigenDataSourceInfo } from './EigenDataSourceInfo'
@@ -33,8 +33,6 @@ export function ThroughputSectionAbsoluteChart({
   setRange,
 }: Props) {
   const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
-  const [showMax, setShowMax] = useState(false)
-  const [showTarget, setShowTarget] = useState(true)
 
   const { data, isLoading } = api.da.projectChart.useQuery({
     range: { type: range },
@@ -52,6 +50,8 @@ export function ThroughputSectionAbsoluteChart({
     configuredThroughputs,
     range,
   )
+
+  const resolution = rangeToResolution({ type: range })
 
   return (
     <div>
@@ -74,34 +74,15 @@ export function ThroughputSectionAbsoluteChart({
         projectId={daLayer}
         dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
         isLoading={isLoading}
-        showMax={showMax}
-        showTarget={showTarget}
         milestones={milestones}
         syncedUntil={data?.syncedUntil}
+        resolution={resolution}
       />
-      <div className="flex flex-wrap items-center gap-2">
-        <EthereumProjectsOnlyCheckbox
-          name="projectThroughputIncludeScalingOnly"
-          checked={includeScalingOnly}
-          onCheckedChange={setIncludeScalingOnly}
-        />
-        {daLayer === 'ethereum' && (
-          <Checkbox
-            name="showTargetThroughput"
-            checked={showTarget}
-            onCheckedChange={(state) => setShowTarget(!!state)}
-          >
-            Show target
-          </Checkbox>
-        )}
-        <Checkbox
-          name="showMaximumThroughput"
-          checked={showMax}
-          onCheckedChange={(state) => setShowMax(!!state)}
-        >
-          Show maximum
-        </Checkbox>
-      </div>
+      <EthereumProjectsOnlyCheckbox
+        name="projectThroughputIncludeScalingOnly"
+        checked={includeScalingOnly}
+        onCheckedChange={setIncludeScalingOnly}
+      />
     </div>
   )
 }

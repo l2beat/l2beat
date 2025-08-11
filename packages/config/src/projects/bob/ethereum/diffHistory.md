@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x0cd169c99228834e7e06575c0c94176449bc6e47
+
+# Diff at Wed, 06 Aug 2025 12:09:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1702d91eebfba5d614c3470bbe1babe10fbe4c2b block: 1753375355
+- current timestamp: 1754482163
+
+## Description
+
+single MS member switched.
+
+## Watched changes
+
+```diff
+    contract Bob Multisig 1 (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+    }
+```
+
 Generated with discovered.json: 0x43c5d959245580ab3c4ad8e09c2d1a75589600bb
 
 # Diff at Thu, 24 Jul 2025 16:48:18 GMT:
@@ -136,7 +159,7 @@ summary:
   - how to compete against siblings:
     1. MAX_CLOCK_DURATION on a node (KailuaGame) expires without a fault proof or sibling's validity proof = node optimistically wins against all siblings
     2. a validity proof over the entire range (3600*6 blocks) of a proposal can be zk-proven at any stage, immediately winning the game (**eliminating all siblings**)
-    3. a 'fault proof' **eliminates a single sibling**: proves that a single intermediary state transition (6 blocks) in an opponents proposal results in a different (proven) state root than they commited to
+    3. a 'fault proof' **eliminates a single sibling**: proves that a single intermediary state transition (6 blocks) in an opponents proposal results in a different (proven) state root than they committed to
   - vanguard mode:
     - first child proposal (to progress the state) can only be made by the vanguard address for `vanguardAdvantage` period (30d)
       - `proveOutputFault()` and `proveValidity()` are always permissionless during that time (a vanguard's proposal can be (in)validated))

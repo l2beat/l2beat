@@ -2081,7 +2081,7 @@ Generated with discovered.json: 0x0bf4b7796c85f7f1c9e3aa37d977f8bd319452c5
 
 ## Description
 
-Initial discovery: standard orbit stack optimium with known shapes except for a slightly modified bridge that supports custom gastokens.
+Initial discovery: standard orbit stack Optimium with known shapes except for a slightly modified bridge that supports custom gas tokens.
 
 ## Config/verification related changes
 

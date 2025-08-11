@@ -22,7 +22,7 @@ The block time is set at 3 seconds and maintained on a best-effort basis, not en
 
 ## Forced transactions
 
-Messages appended to the message queue (`L1MessageQueueV2`) are expected to be included into a bundle by the centralized operator. Messages in the queue cannot be skipped or dropped, but the sequencer can choose to finalize a bundle without processing any queued messaged. Should a permissioned sequencer not process any queued messages within the `SystemConfig.maxDelayMessageQueue`, anyone can include queue messages as committing and finalizing bundles becomes permissionless.
+Messages appended to the message queue (`L1MessageQueueV2`) are expected to be included into a bundle by the centralized operator. Messages in the queue cannot be skipped or dropped, but the sequencer can choose to finalize a bundle without processing any queued messages. Should a permissioned sequencer not process any queued messages within the `SystemConfig.maxDelayMessageQueue`, anyone can include queue messages as committing and finalizing bundles becomes permissionless.
 
 
 ### High-level flow
@@ -36,7 +36,7 @@ To force transactions on Scroll through L1, the following steps are taken:
 Should messages not be processed by the permissioned sequencer, the EOA waits for either:
    - `SystemConfig.maxDelayEnterEnforcedMode` to pass since the last batch finalization, or
    - `SystemConfig.maxDelayMessageQueue` to pass since the first unfinalized message enqueue time.
-Then the EOA can finally call can submit a batch via `commitAndFinalizeBatch` and at the same time activate the permissionless sequencing mode (`UpdateEnforcedBatchMode`).
+Then the EOA can finally submit a batch via `commitAndFinalizeBatch` and at the same time activate the permissionless sequencing mode (`UpdateEnforcedBatchMode`).
 
 
 ## `EnforcedTxGateway`: the `sendTransaction` function

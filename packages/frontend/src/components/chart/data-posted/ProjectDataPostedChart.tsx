@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DataPostedTimeRangeControls } from '~/pages/scaling/data-posted/DataPostedTimeRangeControls'
+import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import type { DataPostedTimeRange } from '~/server/features/scaling/data-posted/range'
 import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
@@ -45,12 +47,14 @@ export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
         />
       </ChartControlsWrapper>
       <DataPostedChart
+        resolution={rangeToResolution({ type: timeRange })}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
-        className="mt-4 mb-2"
+        className="mt-4"
         tickCount={4}
       />
+      <HorizontalSeparator className="my-4" />
       <ProjectDataPostedChartStats
         data={data?.stats}
         isLoading={isLoading}

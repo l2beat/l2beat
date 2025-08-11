@@ -2,7 +2,7 @@ import type { Stage } from '@l2beat/config'
 
 import { cn } from '~/utils/cn'
 
-export interface StageBadgeProps {
+interface StageBadgeProps {
   stage: Stage | 'UnderReview' | 'NotApplicable'
   isAppchain: boolean
   inline?: boolean

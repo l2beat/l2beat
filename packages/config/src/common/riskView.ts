@@ -7,6 +7,10 @@ import type {
   WarningWithSentiment,
 } from '../types'
 import { getDacSentiment } from './dataAvailability'
+import {
+  formatChallengeAndExecutionDelay,
+  formatChallengePeriod,
+} from './formatDelays'
 
 // State validation
 
@@ -34,12 +38,22 @@ export const STATE_FP_1R: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_FP_INT: TableReadyValue = {
-  value: 'Fraud proofs (INT)',
-  description:
-    'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
-  sentiment: 'good',
-  orderHint: Number.POSITIVE_INFINITY,
+export function STATE_FP_INT(
+  challengePeriodSeconds?: number,
+  executionDelaySeconds?: number,
+): TableReadyValue {
+  return {
+    value: 'Fraud proofs (INT)',
+    description:
+      'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
+    secondLine: executionDelaySeconds
+      ? formatChallengeAndExecutionDelay(
+          executionDelaySeconds + Number(challengePeriodSeconds),
+        )
+      : formatChallengePeriod(challengePeriodSeconds),
+    sentiment: 'good',
+    orderHint: Number.POSITIVE_INFINITY,
+  }
 }
 
 export const STATE_FP_INT_ZK: TableReadyValue = {
@@ -67,15 +81,15 @@ export const STATE_FP_HYBRID_ZK: TableReadyValue = {
 }
 
 export const STATE_ZKP_SN: TableReadyValue = {
-  value: 'ZK proofs (SN)',
+  value: 'Validity proofs (SN)',
   description:
-    'SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+    'SNARKs are succinct zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const STATE_ZKP_ST: TableReadyValue = {
-  value: 'ZK proofs (ST)',
+  value: 'Validity proofs (ST)',
   description:
     'STARKs are zero knowledge proofs that ensure state correctness.',
   sentiment: 'good',
@@ -83,7 +97,7 @@ export const STATE_ZKP_ST: TableReadyValue = {
 }
 
 export const STATE_ZKP_ST_SN_WRAP: TableReadyValue = {
-  value: 'ZK proofs (ST, SN)',
+  value: 'Validity proofs (ST, SN)',
   description:
     'STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup.',
   sentiment: 'good',
@@ -92,7 +106,7 @@ export const STATE_ZKP_ST_SN_WRAP: TableReadyValue = {
 
 export function STATE_ZKP_L3(L2: string): TableReadyValue {
   return {
-    value: 'ZK proofs',
+    value: 'Validity proofs',
     description: `Zero knowledge cryptography is used to ensure state correctness. Proofs are first verified on ${L2} and finally on Ethereum.`,
     sentiment: 'good',
     orderHint: Number.POSITIVE_INFINITY,
@@ -111,6 +125,7 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   nOfChallengers: number,
   hasAtLeastFiveExternalChallengers?: boolean,
   challengeWindowSeconds?: number,
+  executionDelaySeconds?: number,
 ): TableReadyValue {
   const challengePeriod = challengeWindowSeconds
     ? ` There is a ${formatSeconds(challengeWindowSeconds)} challenge period.`
@@ -146,6 +161,11 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   return {
     value: 'Fraud proofs (INT)',
     description: descriptionBase + challengePeriod,
+    secondLine: executionDelaySeconds
+      ? formatChallengeAndExecutionDelay(
+          Number(challengeWindowSeconds) + executionDelaySeconds,
+        )
+      : formatChallengePeriod(challengeWindowSeconds),
     sentiment: sentiment,
     orderHint: nOfChallengers,
   }

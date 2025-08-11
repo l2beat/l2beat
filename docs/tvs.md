@@ -27,7 +27,7 @@ TVS configuration is represented as a set of JSON documents (one for each projec
    - `priceId` - id of a token in 3rd party API (currently it's Coingecko)
    - `symbol` - symbol of a token
    - `name` - display name
-   - `iconUrl`- url to toke icon (optional)
+   - `iconUrl`- url to token icon (optional)
    - `amount` - formula to capture the amount of the token on a given chain along with it's value (amount * price)
    - `valueForProject` - formula to calculate value of the token within project's total (i.e. to prevent double counting when token was used for lock-minting some other token)
    - `valueForSummary` - formula to calculate value of the token within total of all projects (i.e. to prevent double counting when token was bridged from L2 to L3)
@@ -224,14 +224,14 @@ pnpm tvs:generate [project] [--include-zero-amounts | --exclude | --help]
 
 - `project` - provide the id of a project for which you want to calculate TVS (if empty TVS will be calculated for all projects)
 - `include-zero-amounts` - by default config generation remove tokens which final value is zero, you can disable this 
-- `exclude` - coma delimited list of projects to exclude from config generation (in case of temporary issues) 
+- `exclude` - comma-delimited list of projects to exclude from config generation (in case of temporary issues) 
 
 This script uses two inputs:
 
 - Token list -  manually maintained list of tokens to track - `/packages/config/src/tokens/generated.json`
 - Project configuration - `.ts` files with project definition (especially escrows and apis like RPC)
 
-This two-step config generation script will be soon replace by Token Discovery
+This two-step config generation script will be soon replaced by Token Discovery
 
 
 ### Local execution

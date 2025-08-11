@@ -31,6 +31,11 @@ const challengeWindow = discovery.getContractValue<number>(
   'confirmPeriodBlocks',
 )
 const challengeWindowSeconds = challengeWindow * assumedBlockTime
+const challengeGracePeriodSeconds =
+  discovery.getContractValue<number>(
+    'RollupProxy',
+    'challengeGracePeriodBlocks',
+  ) * assumedBlockTime
 const l1TimelockDelay = discovery.getContractValue<number>(
   'L1Timelock',
   'getMinDelay',
@@ -276,7 +281,10 @@ export const arbitrum: ScalingProject = orbitStackL2({
       selfSequencingDelay,
       l1TimelockDelay,
     ),
-    stateValidation: RISK_VIEW.STATE_FP_INT,
+    stateValidation: RISK_VIEW.STATE_FP_INT(
+      challengeWindowSeconds,
+      challengeGracePeriodSeconds,
+    ),
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
@@ -391,7 +399,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       url: 'https://twitter.com/arbitrum/status/1542159109511847937',
       date: '2022-06-29T00:00:00Z',
       description:
-        'Due of the heavy load being put on the chain, Odyssey program got paused.',
+        'Due to the heavy load being put on the chain, Odyssey program got paused.',
       type: 'incident',
     },
     {

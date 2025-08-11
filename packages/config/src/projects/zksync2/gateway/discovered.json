@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "gateway",
-  "timestamp": 1753972594,
+  "timestamp": 1754308257,
   "configHash": "0xc98676f1b0cce81b2f52fa6e595546a58f08d1912868ea53427d0b02a475338f",
   "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
@@ -100,14 +100,14 @@
       ],
       "proxyType": "immutable",
       "description": "Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.",
-      "ignoreInWatchMode": ["sharedTree"],
+      "ignoreInWatchMode": ["sharedTree", "getAggregatedRoot"],
       "sinceTimestamp": 1750953821,
       "sinceBlock": 85,
       "values": {
         "$immutable": true,
         "BRIDGE_HUB": "gateway:0x0000000000000000000000000000000000010002",
         "chainCount": 2,
-        "getAggregatedRoot": "0x1efdc979c76a9e2208d0c0e633ddc43a7a675bbf6051a0e20fbc58aa8a716444",
+        "getAggregatedRoot": "0xa700121d6bf8e7c35d8aba6b0fb68c9a255f95fdf47d4bcf49faf5fab54c077a",
         "getChainRoot": [],
         "sharedTree": { "_height": 1, "_leafNumber": 2 }
       },
@@ -157,8 +157,39 @@
           "from": "gateway:0xcA027Fa98cdce4515E76ECf8dfb4189B16eE72A2",
           "description": "commit and revert batches but not prove nor execute them.",
           "role": ".validatorsPartialVTL"
+        },
+        {
+          "permission": "validateZkStack",
+          "from": "gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa",
+          "role": ".validatorsVTL"
         }
       ]
+    },
+    {
+      "name": "L1VerifierFflonk",
+      "address": "gateway:0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5",
+      "type": "Contract",
+      "template": "shared-zk-stack/L1VerifierFflonk",
+      "sourceHashes": [
+        "0xbdb60551820d621f81243ecaf8ec52d6fb937ab843ab674a3529b2bdefae7154"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "sinceTimestamp": 1753990140,
+      "sinceBlock": 15963,
+      "values": {
+        "$immutable": true,
+        "verificationKeyHash": "0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "severity": "HIGH",
+          "description": "keccak256 hash of the verification keys."
+        }
+      },
+      "implementationNames": {
+        "gateway:0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5": "L1VerifierFflonk"
+      }
     },
     {
       "name": "EraChainAdminProxy_l2Alias",
@@ -222,32 +253,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L1VerifierFflonk",
-      "address": "gateway:0x63825fc80a4B8d96EE99d37E958a3A5B01b995D9",
-      "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierFflonk",
-      "sourceHashes": [
-        "0xb5da71a3ae0b3e2d792830222a0478c730acc075103b898ec899436fcc04323b"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
-      "sinceTimestamp": 1747358229,
-      "sinceBlock": 47,
-      "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
-        }
-      },
-      "implementationNames": {
-        "gateway:0x63825fc80a4B8d96EE99d37E958a3A5B01b995D9": "L1VerifierFflonk"
-      }
-    },
-    {
       "name": "ServerNotifier",
       "address": "gateway:0x796b7bDba8B8027Aa79BE96a0D5368FB86df560a",
       "type": "Contract",
@@ -295,7 +300,7 @@
         "0x5462a6c55c6e9f2d98c21f2588b2b9a4de1dc41ba0c10906f8965e21849a3a52"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,0.",
+      "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,1.",
       "sinceTimestamp": 1747351626,
       "sinceBlock": 45,
       "values": {
@@ -316,13 +321,13 @@
         "$upgradeCount": 2,
         "admin": "gateway:0x3E04Bd6a9056b39999f3883955E183F655346174",
         "BRIDGE_HUB": "gateway:0x0000000000000000000000000000000000010002",
-        "getSemverProtocolVersion": [0, 28, 0],
-        "initialCutHash": "0x1d2a4ca6403b6266f7ba6b838d98e1e98f8eb4ae81e496b888d71011fb89870e",
+        "getSemverProtocolVersion": [0, 28, 1],
+        "initialCutHash": "0xd3891c3aee249d0a86bba7198ac35ffc02c7e54e8db6fdd3bd5ae43ea8cd5d06",
         "initialForceDeploymentHash": "0xed1057fbf858575d7348c4f2c82dd034534c62d97d0ac1d46f98ed197403f3d9",
         "l1GenesisUpgrade": "gateway:0x540E6ED9FC06dFCbf0a38Dcc7Ed7Ea3F56C551de",
         "owner": "gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4",
         "pendingOwner": "gateway:0x0000000000000000000000000000000000000000",
-        "protocolVersion": 120259084288,
+        "protocolVersion": 120259084289,
         "serverNotifierAddress": "gateway:0x796b7bDba8B8027Aa79BE96a0D5368FB86df560a",
         "storedBatchZero": "0x9629612e3685846dc5056347758c0f8286fc877383c762aa17b1411758a582d8",
         "validatorTimelock": "gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa"
@@ -334,47 +339,20 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "DualVerifier",
-      "address": "gateway:0xA7F2EDAcDcc54a9c711639eEe9d0b27C96F0F3B6",
-      "type": "Contract",
-      "template": "shared-zk-stack/DualVerifier",
-      "sourceHashes": [
-        "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"
-      ],
-      "proxyType": "immutable",
-      "description": "A router contract for verifiers. Routes verification requests to gateway:0x63825fc80a4B8d96EE99d37E958a3A5B01b995D9 or gateway:0xb742F4d52F6A5e98F11EAc60A7f75Acee534B831 depending on the supplied proof type.",
-      "sinceTimestamp": 1747358270,
-      "sinceBlock": 51,
-      "values": {
-        "$immutable": true,
-        "FFLONK_VERIFIER": "gateway:0x63825fc80a4B8d96EE99d37E958a3A5B01b995D9",
-        "PLONK_VERIFIER": "gateway:0xb742F4d52F6A5e98F11EAc60A7f75Acee534B831",
-        "verificationKeyHash": "0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
-        }
-      },
-      "implementationNames": {
-        "gateway:0xA7F2EDAcDcc54a9c711639eEe9d0b27C96F0F3B6": "DualVerifier"
-      }
-    },
-    {
       "name": "L1VerifierPlonk",
-      "address": "gateway:0xb742F4d52F6A5e98F11EAc60A7f75Acee534B831",
+      "address": "gateway:0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717",
       "type": "Contract",
       "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
-        "0xeacd5b06c59874d47b7685e8f5d715a03e25bae887e159251920b78b0c084387"
+        "0xeef6daabc71bf67f02da2eebec0939402f99a165f2c3f40225b4b804021b4962"
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
-      "sinceTimestamp": 1747358250,
-      "sinceBlock": 49,
+      "sinceTimestamp": 1753990142,
+      "sinceBlock": 15964,
       "values": {
         "$immutable": true,
-        "verificationKeyHash": "0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78"
+        "verificationKeyHash": "0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1"
       },
       "fieldMeta": {
         "verificationKeyHash": {
@@ -383,7 +361,7 @@
         }
       },
       "implementationNames": {
-        "gateway:0xb742F4d52F6A5e98F11EAc60A7f75Acee534B831": "L1VerifierPlonk"
+        "gateway:0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717": "L1VerifierPlonk"
       }
     },
     {
@@ -415,7 +393,10 @@
         "owner": "gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4",
         "pendingOwner": "gateway:0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
-        "validatorsVTL": ["gateway:0xcA027Fa98cdce4515E76ECf8dfb4189B16eE72A2"]
+        "validatorsVTL": [
+          "gateway:0xcA027Fa98cdce4515E76ECf8dfb4189B16eE72A2",
+          "gateway:0x30066439887C0a509Cb38E45c9262E6924a29BbD"
+        ]
       },
       "implementationNames": {
         "gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa": "ValidatorTimelock"
@@ -502,9 +483,19 @@
               "gateway:0x7f124F72fB4f978798ffdedAD3332b0ce750F399",
               "gateway:0x4659780be9E0863eFB2BAE5DD77E31e371f2d3C8"
             ]
+          ],
+          [
+            "2025-08-01T23:57:13.000Z",
+            "0x317f561c5cc2944ec00a48e69c538f79bb6f519f8cbdea88005f484cfdd8daa0",
+            [
+              "gateway:0xa365401Dc76d077c702965ECc39CfbfE436A6167",
+              "gateway:0xEE7f08400FDa3A46D32Ae78eBEC2D3841CeC53b7",
+              "gateway:0x7f124F72fB4f978798ffdedAD3332b0ce750F399",
+              "gateway:0x4659780be9E0863eFB2BAE5DD77E31e371f2d3C8"
+            ]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "baseTokenGasPriceMultiplierDenominator": 0,
         "baseTokenGasPriceMultiplierNominator": 0,
         "facetAddresses": [
@@ -616,7 +607,7 @@
           "gateway:0x595b8C88B9e5f3a4c596C3e81BE6e11D53Bb9200",
           "gateway:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3278738,
+        "getFirstUnprocessedPriorityTx": 3279109,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -624,23 +615,23 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "gateway:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 26,
-        "getPriorityTreeRoot": "0x65fb8715b3b363c2f18734b87aa0860199d1bd79911bfa4dfceee098106d39f8",
+        "getPriorityQueueSize": 12,
+        "getPriorityTreeRoot": "0x7b6457c0c6eae0e2db2f1882262abf1446208199a639f3809ef8cdeec8887c91",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
-        "getProtocolVersion": 120259084288,
+        "getProtocolVersion": 120259084289,
         "getPubdataPricingMode": 0,
-        "getSemverProtocolVersion": [0, 28, 0],
+        "getSemverProtocolVersion": [0, 28, 1],
         "getSettlementLayer": "gateway:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 501339,
-        "getTotalBatchesExecuted": 501326,
-        "getTotalBatchesVerified": 501326,
-        "getTotalBlocksCommitted": 501339,
-        "getTotalBlocksExecuted": 501326,
-        "getTotalBlocksVerified": 501326,
-        "getTotalPriorityTxs": 3278764,
+        "getTotalBatchesCommitted": 501439,
+        "getTotalBatchesExecuted": 501438,
+        "getTotalBatchesVerified": 501438,
+        "getTotalBlocksCommitted": 501439,
+        "getTotalBlocksExecuted": 501438,
+        "getTotalBlocksVerified": 501438,
+        "getTotalPriorityTxs": 3279121,
         "getTransactionFilterer": "gateway:0x0000000000000000000000000000000000000000",
-        "getVerifier": "gateway:0xA7F2EDAcDcc54a9c711639eEe9d0b27C96F0F3B6",
+        "getVerifier": "gateway:0xE841B98E524D827bBA664d19CB736C817707E730",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "recursionLeafLevelVkHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -698,6 +689,33 @@
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "DualVerifier",
+      "address": "gateway:0xE841B98E524D827bBA664d19CB736C817707E730",
+      "type": "Contract",
+      "template": "shared-zk-stack/DualVerifier",
+      "sourceHashes": [
+        "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"
+      ],
+      "proxyType": "immutable",
+      "description": "A router contract for verifiers. Routes verification requests to gateway:0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5 or gateway:0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717 depending on the supplied proof type.",
+      "sinceTimestamp": 1754054182,
+      "sinceBlock": 16487,
+      "values": {
+        "$immutable": true,
+        "FFLONK_VERIFIER": "gateway:0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5",
+        "PLONK_VERIFIER": "gateway:0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717",
+        "verificationKeyHash": "0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
+        }
+      },
+      "implementationNames": {
+        "gateway:0xE841B98E524D827bBA664d19CB736C817707E730": "DualVerifier"
+      }
     },
     {
       "name": "ProtocolUpgradeHandler_l2Alias",
@@ -978,6 +996,10 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "gateway:0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5": [
+      "function verificationKeyHash() pure returns (bytes32 vkHash)",
+      "function verify(uint256[], uint256[]) view returns (bool)"
+    ],
     "gateway:0x4659780be9E0863eFB2BAE5DD77E31e371f2d3C8": [
       "constructor(uint256 _l1ChainId)",
       "error BatchHashMismatch(bytes32 expected, bytes32 actual)",
@@ -1093,10 +1115,6 @@
       "error PubdataInputTooSmall(uint256 pubdataInputLength, uint256 totalBlobsCommitmentSize)",
       "error PubdataLengthTooBig(uint256 pubdataLength, uint256 totalBlobSizeBytes)",
       "function checkDA(uint256 _chainId, uint256 _batchNumber, bytes32 _l2DAValidatorOutputHash, bytes _operatorDAInput, uint256 _maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)"
-    ],
-    "gateway:0x63825fc80a4B8d96EE99d37E958a3A5B01b995D9": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
     ],
     "gateway:0x6655933e34d8FD8f6d2CC7d5175bFC06112B7474": [
       "constructor(address _bridgehub)",
@@ -1230,6 +1248,10 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "gateway:0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717": [
+      "function verificationKeyHash() pure returns (bytes32 vkHash)",
+      "function verify(uint256[], uint256[]) view returns (bool)"
+    ],
     "gateway:0xa365401Dc76d077c702965ECc39CfbfE436A6167": [
       "constructor(uint256 _l1ChainId, address _rollupDAManager)",
       "error AddressHasNoCode(address)",
@@ -1315,20 +1337,6 @@
       "function unfreezeDiamond()",
       "function upgradeChainFromVersion(uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
     ],
-    "gateway:0xA7F2EDAcDcc54a9c711639eEe9d0b27C96F0F3B6": [
-      "constructor(address _fflonkVerifier, address _plonkVerifier)",
-      "error EmptyProofLength()",
-      "error UnknownVerifierType()",
-      "function FFLONK_VERIFIER() view returns (address)",
-      "function PLONK_VERIFIER() view returns (address)",
-      "function verificationKeyHash() view returns (bytes32)",
-      "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
-      "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
-    ],
-    "gateway:0xb742F4d52F6A5e98F11EAc60A7f75Acee534B831": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
-    ],
     "gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa": [
       "constructor(address _initialOwner, uint32 _executionDelay)",
       "error AddressAlreadyValidator(uint256 _chainId)",
@@ -1404,6 +1412,16 @@
       "error UndefinedDiamondCutAction()",
       "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
     ],
+    "gateway:0xE841B98E524D827bBA664d19CB736C817707E730": [
+      "constructor(address _fflonkVerifier, address _plonkVerifier)",
+      "error EmptyProofLength()",
+      "error UnknownVerifierType()",
+      "function FFLONK_VERIFIER() view returns (address)",
+      "function PLONK_VERIFIER() view returns (address)",
+      "function verificationKeyHash() view returns (bytes32)",
+      "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
+      "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
+    ],
     "gateway:0xEE7f08400FDa3A46D32Ae78eBEC2D3841CeC53b7": [
       "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
       "function baseTokenGasPriceMultiplierNominator() view returns (uint128)",
@@ -1466,12 +1484,12 @@
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L2AssetRouter": "0x135f3f175975582aabfd47f5af1c6b1c153fe6813d69cfb72d631ba725379300",
-    "shared-zk-stack/MessageRoot": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
+    "shared-zk-stack/MessageRoot": "0x2c788525cb453dd86cf50fe9437ba488b1be3e698da9ccc0ae016598b93c48dd",
     "shared-zk-stack/PartialValidatorTimelock": "0xad56890aa1b84f78772b5886b726fe79be5da2152a9a65d5b67321bc69f41551",
     "shared-zk-stack/RelayedSLDAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "gateway": 15826 },
-  "permissionsConfigHash": "0xda51ad876d2585ba65e512021145e6a18565485032eb6777334f78cb362f131e"
+  "usedBlockNumbers": { "gateway": 18615 },
+  "permissionsConfigHash": "0x9c1fe20cab2350396904a94b0812d699200d8adce8d1746a4e18a45feb6f9d93"
 }

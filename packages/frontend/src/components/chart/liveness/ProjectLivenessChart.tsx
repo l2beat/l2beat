@@ -6,7 +6,10 @@ import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromCo
 import { LivenessChartSubtypeControls } from '~/pages/scaling/liveness/components/LivenessChartSubtypeControls'
 import { LivenessChartTimeRangeControls } from '~/pages/scaling/liveness/components/LivenessChartTimeRangeControls'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
-import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chartRange'
+import {
+  type LivenessChartTimeRange,
+  rangeToResolution,
+} from '~/server/features/scaling/liveness/utils/chartRange'
 import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getDefaultSubtype } from './getDefaultSubtype'
@@ -93,8 +96,9 @@ export function ProjectLivenessChart({
         milestones={milestones}
         lastValidTimestamp={lastValidTimestamp}
         anyAnomalyLive={anyAnomalyLive}
+        resolution={rangeToResolution(timeRange)}
         tickCount={4}
-        className="mt-4 mb-2"
+        className="mt-4 mb-3"
       />
       <LivenessChartStats
         timeRange={timeRange}

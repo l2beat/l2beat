@@ -158,6 +158,7 @@ export interface ProjectLinks {
   explorers?: string[]
   repositories?: string[]
   socialMedia?: string[]
+  other?: string[]
   rollupCodes?: string
 }
 export interface Badge {
@@ -742,6 +743,7 @@ export interface ProjectZkCatalogInfo {
   techStack: {
     zkVM?: ZkCatalogTag[]
     finalWrap?: ZkCatalogTag[]
+    snark?: ZkCatalogTag[]
   }
   proofSystemInfo: string
   trustedSetups: (TrustedSetup & {

@@ -1,3 +1,72 @@
+Generated with discovered.json: 0x67d63c0bc913306634e8c5e959df23eb147cb90e
+
+# Diff at Wed, 06 Aug 2025 13:35:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1702d91eebfba5d614c3470bbe1babe10fbe4c2b block: 1754054572
+- current timestamp: 1754486452
+
+## Description
+
+config: add description
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754054572 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.CONSENSUS_TYPE:
++        {"description":"0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"}
+    }
+```
+
+Generated with discovered.json: 0x931b50b0738f7df8ea39eca00aeebcf7afbb33f6
+
+# Diff at Fri, 01 Aug 2025 13:23:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@802242fc2209399893865092b1048d583aafc2bb block: 1753356947
+- current timestamp: 1754054572
+
+## Description
+
+op  stack operator fee constant set.
+
+three members added to multisig, threshold increased.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.operatorFeeConstant:
+-        0
++        1351351351351
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x2483A0d6a3Bd89D5C17aA80B3f8f6102ac053361"
+      values.$members.1:
++        "eth:0x73D8846324B30477EA3Ac055589e40F39DE497F8"
+      values.$members.2:
++        "eth:0x34d23C4fb6542B467cA8724bAD30AC811399b184"
+      values.$threshold:
+-        1
++        3
+      values.multisigThreshold:
+-        "1 of 2 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0xa91c32ac9e9a7e5b109b7094b0b8cb6daec8e3d3
 
 # Diff at Thu, 24 Jul 2025 16:55:25 GMT:
@@ -34,9 +103,9 @@ Generated with discovered.json: 0xb4ffe8a242a8b05c153c4f7d3aeab0d2f3bf1d2c
 
 ## Description
 
-Upgrade op stack contracts to known versions. The only abberant contract is the new OptiPortal2, which, like the old one, [disallows deposited transactions](https://disco.l2beat.com/diff/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4/eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc).
+Upgrade op stack contracts to known versions. The only aberrant contract is the new OptiPortal2, which, like the old one, [disallows deposited transactions](https://disco.l2beat.com/diff/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4/eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc).
 
-Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
+Config: Kailua added to OptimismPortal2 and DisputeGameFactory.
 
 ## Watched changes
 

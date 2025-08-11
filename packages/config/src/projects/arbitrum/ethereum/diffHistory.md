@@ -16136,7 +16136,7 @@ Generated with discovered.json: 0xa1e00fdc80fd5a87605ec534b24fed82c3d81449
 
 This timelock transaction is queued and executed, calling the `SwitchManagerRolesAction` on L2.
 
-Decription from the contract:
+Description from the contract:
 `Grant the non emergency council the MEMBER_ADDER_ROLE, MEMBER_REPLACER_ROLE, MEMBER_ROTATOR_ROLE and MEMBER_REMOVER_ROLE on the SecurityCouncilManager. Revoke those same roles from the emergency council.`
 
 Tx: https://app.blocksec.com/explorer/tx/arbitrum/0xf2929a5ee3c2a073de95293f91f163b4d743fdec38e4dceaa7c4796e090783c3
@@ -17293,7 +17293,7 @@ discovery. Values are for block 18691623 (main branch discovery), not current.
 
 ## Description
 
-New scheduled transaction - there is a DAC update about to be executed by the Upgrade Executer with a delay of 72 hours. It will call the perform() function of the AddNovaKeysetAction (0xDef5CfE3246882BC7f65F9346a8b974BA27D3F4E) contract to add a new keyset as valid batch submitter for Arbitrum Nova. That's related to Security Council's decision to remove Reddit from the Data Availability Committee (DAC) since they plan on winding down their Arbitrum Nova DAC infrastructure, and also remove Offchain Labs secondary key from the DAC.
+New scheduled transaction - there is a DAC update about to be executed by the Upgrade Executor with a delay of 72 hours. It will call the perform() function of the AddNovaKeysetAction (0xDef5CfE3246882BC7f65F9346a8b974BA27D3F4E) contract to add a new keyset as valid batch submitter for Arbitrum Nova. That's related to Security Council's decision to remove Reddit from the Data Availability Committee (DAC) since they plan on winding down their Arbitrum Nova DAC infrastructure, and also remove Offchain Labs secondary key from the DAC.
 
 ## Watched changes
 

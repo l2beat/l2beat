@@ -378,7 +378,7 @@ describe(mergeConfigurations.name, () => {
             toWipeDataAfterUpdate: [
               // this is slightly weird that it will return duplicate
               // but writing code to handle this edge case would introduce complexity
-              // so we we will trigger two deletes, second will do nothing
+              // so we will trigger two deletes, second will do nothing
               // situation like this is anyway very unlikely to happen
               removal('a', 100, 400),
               removal('a', 100, 400),

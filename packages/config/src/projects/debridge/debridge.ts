@@ -75,7 +75,7 @@ export const debridge: Bridge = {
     destinationToken: {
       name: 'Destination tokens',
       description:
-        'Tokens transferred end up a their wrapped representation (deTokens).',
+        'Tokens transferred end up as their wrapped representation (deTokens).',
       references: [],
       risks: [
         {

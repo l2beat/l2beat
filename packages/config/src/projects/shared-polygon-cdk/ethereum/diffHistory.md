@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x37596342bb2ea4228da8f6250b5e3154c988fbe5
+
+# Diff at Wed, 06 Aug 2025 12:22:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1702d91eebfba5d614c3470bbe1babe10fbe4c2b block: 1754056580
+- current timestamp: 1754482869
+
+## Description
+
+XLayer migrates from Validium to pessimistic proofs (no state transition proofs).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.5:
++        3
+      values.rollupsDataV2.2.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.rollupsDataV2.2.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.2.rollupTypeID:
+-        8
++        11
+      values.rollupsDataV2.2.forkID:
+-        13
++        12
+      values.rollupsDataV2.2.verifier:
+-        "eth:0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
++        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+    }
+```
+
+Generated with discovered.json: 0x3f2ea7eefaf6194e2379c38051f6a5395d82bc5f
+
+# Diff at Fri, 01 Aug 2025 14:10:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@802242fc2209399893865092b1048d583aafc2bb block: 1753686755
+- current timestamp: 1754056580
+
+## Description
+
+Upgrades [PolygonRollupManager](https://disco.l2beat.com/diff/eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab/eth:0x42B9fF0644741e3353162678596e7D6aA6a13240):
+- add support for migrating stateTransition chains to PP or ALGateway.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      sourceHashes.1:
+-        "0x05a5fd7dbd65634dc3a3eea806b01583e307d843c5fa9c7e6e01ffda1b1acb47"
++        "0xe1a044e355c430aefc18f156be2c4f677baa559d3fb102b60b836bb4e2b91220"
+      values.$implementation:
+-        "eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab"
++        "eth:0x42B9fF0644741e3353162678596e7D6aA6a13240"
+      values.$pastUpgrades.7:
++        ["2025-07-30T13:35:23.000Z","0x289865ea6d92cdf5be21123b6ce61447f500ba14c229f02153113f8419af1695",["eth:0x42B9fF0644741e3353162678596e7D6aA6a13240"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.ROLLUP_MANAGER_VERSION:
+-        "al-v0.3.0"
++        "al-v0.3.1"
+      implementationNames.eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab:
+-        "PolygonRollupManager"
+      implementationNames.eth:0x42B9fF0644741e3353162678596e7D6aA6a13240:
++        "PolygonRollupManager"
+    }
+```
+
+## Source code changes
+
+```diff
+.../PolygonRollupManager/PolygonRollupManager.sol  | 139 ++++++++++++++++++---
+ 1 file changed, 125 insertions(+), 14 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753686755 (main branch discovery), not current.
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions.5.description:
+-        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
++        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types, migrate to pessimistic proofs and rollback batches, connect existing rollups to the PolygonRollupManager."
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      directlyReceivedPermissions.4.description:
+-        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
++        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types, migrate to pessimistic proofs and rollback batches, connect existing rollups to the PolygonRollupManager."
+    }
+```
+
 Generated with discovered.json: 0x78b250e88782006f4f115dbeee6eb5bc13518215
 
 # Diff at Thu, 31 Jul 2025 13:14:36 GMT:
@@ -5554,7 +5662,7 @@ This upgrade introduces an enum `VerifierType` that replaces the old `rollupComp
 
 ### PolygonRollupManager
 
-- add `rollupIDToRollupDataV2()` in addition to the old v1 function to accomodate the new members of the RollupData struct:
+- add `rollupIDToRollupDataV2()` in addition to the old v1 function to accommodate the new members of the RollupData struct:
   - VerifierType rollupVerifierType: a rename of the old rollupCompatibilityID, `StateTransition` or `Pessimistic`
   - bytes32 lastPessimisticRoot
   - bytes32 programVKey: SP1 program vKey 
@@ -7769,7 +7877,7 @@ Generated with discovered.json: 0x6124ec4be2edb290f32c6def8e55cfc071ddc45e
 ## Description
 
 Changes related to improving the shared-polygon-cdk module.
-Verifier is no longer part of this shared module - each rollup discoveres it for themselfs.
+Verifier is no longer part of this shared module - each rollup discovers it for themselves.
 
 ## Config/verification related changes
 
