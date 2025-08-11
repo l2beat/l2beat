@@ -55,7 +55,7 @@
         "decimals": 8,
         "sinceTimestamp": 1726099200
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -258,7 +258,7 @@
         "decimals": 18,
         "sinceTimestamp": 1728887147
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -283,7 +283,7 @@
         "decimals": 18,
         "sinceTimestamp": 1728888227
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -437,7 +437,7 @@
         "decimals": 8,
         "sinceTimestamp": 1714550603
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

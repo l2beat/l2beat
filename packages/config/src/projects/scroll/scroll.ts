@@ -23,6 +23,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROOFS } from '../../common/proofSystems'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -41,6 +42,11 @@ const maxDelayMessageQueue = enforcedModeDelayParameters.maxDelayMessageQueue
 const minSelfSequenceDelay = Math.min(
   maxDelayMessageQueue,
   maxDelayEnterEnforcedMode,
+)
+
+const cooldownPeriod = discovery.getContractValue<number>(
+  'PauseController',
+  'pauseCooldownPeriod',
 )
 
 const upgradesSC = {
@@ -97,40 +103,45 @@ export const scroll: ScalingProject = {
           'Transaction data batches that have not yet been proven can be reverted.',
       },
       explanation:
-        'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet be confirmed.',
+        'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet been confirmed.',
     },
   },
-  stage: {
-    stage: 'UnderReview',
+  scopeOfAssessment: {
+    inScope: [
+      'Ability to deposit, spend, and withdraw the gas token (ETH)',
+      'Upgradability of L1 and L2 core contracts',
+      'Forced transaction mechanism via L1',
+    ],
+    notInScope: ['Upgradability of other external ERC20 token contracts'],
   },
-  // stage: getStage(
-  //   {
-  //     stage0: {
-  //       callsItselfRollup: true,
-  //       stateRootsPostedToL1: true,
-  //       dataAvailabilityOnL1: true,
-  //       rollupNodeSourceAvailable: true,
-  //       stateVerificationOnL1: true,
-  //       fraudProofSystemAtLeast5Outsiders: null,
-  //     },
-  //     stage1: {
-  //       principle: false,
-  //       usersHave7DaysToExit: true,
-  //       usersCanExitWithoutCooperation: true,
-  //       securityCouncilProperlySetUp: true,
-  //     },
-  //     stage2: {
-  //       proofSystemOverriddenOnlyInCaseOfABug: false,
-  //       fraudProofSystemIsPermissionless: null,
-  //       delayWith30DExitWindow: false,
-  //     },
-  //   },
-  //   {
-  //     rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
-  //     securityCouncilReference:
-  //       'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council',
-  //   },
-  // ),
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
+      securityCouncilReference:
+        'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council',
+    },
+  ),
   chainConfig: {
     name: 'scroll',
     chainId,
@@ -621,9 +632,16 @@ export const scroll: ScalingProject = {
   permissions: {
     ...discovery.getDiscoveredPermissions(),
   },
-  upgradesAndGovernance:
-    'All core contracts in the Scroll protocol are upgradable by the `ProxyAdmin`, which is controlled by the Security Council through the `ScrollOwner` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the `updateMessageQueueParameters` and `updateEnforcedBatchParameters` functions through the `TimelockFast`, or by pausing the `EnforcedTXGateway` through the `TimelockEmergency`. It also has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the `TimelockSCSlow`) and upgrading the affected contracts. SCR token holders perform onchain voting on governance proposals through the `AgoraGovernor` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.',
+  upgradesAndGovernance: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the Security Council through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the \`TimelockSCSlow\`) and upgrading the affected contracts. The Security Council can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the \`updateMessageQueueParameters\` and \`updateEnforcedBatchParameters\` functions or by pausing the \`EnforcedTXGateway\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the Security Council minority can unpause, while the Security Council majority is authorized to update and reset the cooldown period. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.`,
   milestones: [
+    {
+      title: 'Access control upgrade',
+      url: 'https://etherscan.io/tx/0x13c8a293bc6a367eb2510a2bd71cacefbe9705588a574696e790db820b3f520d',
+      date: '2025-08-01T00:00:00Z',
+      description:
+        'Scroll Security Council upgrades permissions to regain Stage 1 status.',
+      type: 'general',
+    },
     {
       title: 'Emergency upgrade',
       url: 'https://forum.scroll.io/t/security-council-report-scroll-mainnet-emergency-upgrade-on-2025-05-26/810',
@@ -652,7 +670,7 @@ export const scroll: ScalingProject = {
       url: 'https://status.scroll.io/incidents/44k6s4qg6kcs',
       date: '2024-07-05T00:00:00Z',
       description:
-        'To fix a bug in the compression for batches 55 previously committed batches are reverted.',
+        'To fix a bug in the compression, 55 previously committed batches are reverted.',
       type: 'incident',
     },
     {

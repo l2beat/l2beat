@@ -81,6 +81,7 @@ import { hypr } from '../projects/hypr/hypr'
 import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
+import { jovay } from '../projects/jovay/jovay'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
 import { kinto } from '../projects/kinto/kinto'
@@ -137,7 +138,6 @@ import { pandasea } from '../projects/pandasea/pandasea'
 import { paradex } from '../projects/paradex/paradex'
 import { parallel } from '../projects/parallel/parallel'
 import { patex } from '../projects/patex/patex'
-import { pay } from '../projects/pay/pay'
 import { payy } from '../projects/payy/payy'
 import { penchain } from '../projects/penchain/penchain'
 import { pepeunchained } from '../projects/pepeunchained/pepeunchained'
@@ -180,6 +180,7 @@ import { snaxchain } from '../projects/snaxchain/snaxchain'
 import { solo } from '../projects/solo/solo'
 import { soneium } from '../projects/soneium/soneium'
 import { soon } from '../projects/soon/soon'
+import { soonbase } from '../projects/soonbase/soonbase'
 import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
 import { sovrun } from '../projects/sovrun/sovrun'
@@ -309,6 +310,7 @@ export const layer2s: ScalingProject[] = [
   immutablex,
   immutablezkevm,
   ink,
+  jovay,
   karak,
   katana,
   kinto,
@@ -365,7 +367,6 @@ export const layer2s: ScalingProject[] = [
   paradex,
   parallel,
   patex,
-  pay,
   payy,
   penchain,
   pepeunchained,
@@ -409,6 +410,7 @@ export const layer2s: ScalingProject[] = [
   solo,
   soneium,
   soon,
+  soonbase,
   sophon,
   sorare,
   sovrun,

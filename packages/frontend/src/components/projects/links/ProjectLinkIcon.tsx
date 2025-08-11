@@ -5,6 +5,7 @@ import { GlobeIcon } from '~/icons/Globe'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { RollupCodesIcon } from '~/icons/products/RollupCodes'
 import { SearchIcon } from '~/icons/Search'
+import { ThreeHorizontalDotsIcon } from '~/icons/ThreeHorizontalDots'
 import { UserIcon } from '~/icons/User'
 import { cn } from '~/utils/cn'
 import type { LinkName } from './types'
@@ -31,6 +32,8 @@ export function ProjectLinkIcon(props: LinkNameIconProps) {
       return <UserIcon className={className} />
     case 'rollup.codes':
       return <RollupCodesIcon className={className} />
+    case 'Other':
+      return <ThreeHorizontalDotsIcon className={className} />
     default:
       assertUnreachable(props.name)
   }

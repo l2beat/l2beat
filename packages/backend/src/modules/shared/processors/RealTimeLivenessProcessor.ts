@@ -313,7 +313,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
   }
 
   private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {
-    const livenesConfigurations = trackedTxsConfig.projects
+    const livenessConfigurations = trackedTxsConfig.projects
       .filter((project) => !project.isArchived)
       .flatMap((project) => project.configurations)
       .filter(
@@ -322,7 +322,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           (!config.untilTimestamp || config.untilTimestamp > UnixTime.now()),
       )
 
-    this.transfers = livenesConfigurations.filter(
+    this.transfers = livenessConfigurations.filter(
       (
         c,
       ): c is TrackedTxLivenessConfig & {
@@ -330,7 +330,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       } => c.params.formula === 'transfer',
     )
 
-    this.functionCalls = livenesConfigurations.filter(
+    this.functionCalls = livenessConfigurations.filter(
       (
         c,
       ): c is TrackedTxLivenessConfig & {
@@ -338,7 +338,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       } => c.params.formula === 'functionCall',
     )
 
-    this.sharpSubmissions = livenesConfigurations.filter(
+    this.sharpSubmissions = livenessConfigurations.filter(
       (
         c,
       ): c is TrackedTxLivenessConfig & {
@@ -346,7 +346,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       } => c.params.formula === 'sharpSubmission',
     )
 
-    this.sharedBridges = livenesConfigurations.filter(
+    this.sharedBridges = livenessConfigurations.filter(
       (
         c,
       ): c is TrackedTxLivenessConfig & {

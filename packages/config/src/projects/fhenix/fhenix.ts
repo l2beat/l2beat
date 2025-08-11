@@ -10,7 +10,7 @@ export const fhenix: ScalingProject = upcomingL2({
     name: 'Fhenix',
     slug: 'fhenix',
     description:
-      'Fhenix is Fully Homomorphic Encryption rollup, build on top of Arbitrum Stack.',
+      'Fhenix is Fully Homomorphic Encryption rollup, built on top of Arbitrum Stack.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],

@@ -384,8 +384,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         ?.forceTransactions ?? {
         name: 'Users can force any transaction via L1',
         description:
-          'If a user is censored by the L2 Sequencer, they can try to force their transaction via an L1 queue. Right now there is no mechanism that forces L2 Sequencer to include\
-        transactions from the queue in an L2 block. The operator can implement a TransactionFilterer that censors forced transactions.',
+          'If a user is censored by the L2 Sequencer, they can try to force their transaction via an L1 queue. Right now there is no mechanism that forces L2 Sequencer to include transactions from the queue in an L2 block. The operator can implement a TransactionFilterer that censors forced transactions.',
         risks: [
           ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
           {

@@ -554,7 +554,7 @@ Generated with discovered.json: 0x662d7c5a9b5600e0a107a8c6a24812ff2eba2309
 
 ## Description
 
-Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
+Config: Kailua added to OptimismPortal2 and DisputeGameFactory.
 
 ## Config/verification related changes
 
@@ -5670,7 +5670,7 @@ Generated with discovered.json: 0xc48944feccc2d5061ce68955d5b231aeca0e7ecf
 
 Contracts verified (PermissionedDisputeGame, AnchorStateRegistry).
 
-Both contracts are unintented beta versions (see ink telegram chat) but contain mostly cosmetic changes and the diff is audited, according to ink. A brief review of the diff shows no logic changes and thus the standard templates are used here.
+Both contracts are unintended beta versions (see ink telegram chat) but contain mostly cosmetic changes and the diff is audited, according to ink. A brief review of the diff shows no logic changes and thus the standard templates are used here.
 
 ## Config/verification related changes
 

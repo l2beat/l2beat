@@ -1,25 +1,29 @@
 import { expect } from 'earl'
 import MarkdownIt from 'markdown-it'
-import type { GlossaryTermWithoutDescription } from '~/components/markdown/GlossaryContext'
+import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 import { glossaryPlugin, linkGlossaryTerms } from './glossaryPlugin'
 
 describe(linkGlossaryTerms.name, () => {
-  const glossary: GlossaryTermWithoutDescription[] = [
+  const glossary: GlossaryTerm[] = [
     {
       id: 'blob',
       matches: ['Blob', 'blobs'],
+      description: 'Blob description',
     },
     {
       id: 'node',
       matches: ['Node'],
+      description: 'Node description',
     },
     {
       id: 'dac',
       matches: ['Data Availability Committee (DAC)'],
+      description: 'DAC description',
     },
     {
       id: 'da',
       matches: ['Data availability'],
+      description: 'DA description',
     },
   ]
 
@@ -30,7 +34,11 @@ describe(linkGlossaryTerms.name, () => {
       'Data Availability Committee (DAC) is cooking. Data availability is spicy.'
     const output = linkTerms(input)
     expect(output).toEqual(
-      '[Data Availability Committee (DAC)](/glossary#dac) is cooking. [Data availability](/glossary#da) is spicy.',
+      `[Data Availability Committee (DAC)](/glossary#dac?description=${encodeURIComponent(
+        'DAC description',
+      )}) is cooking. [Data availability](/glossary#da?description=${encodeURIComponent(
+        'DA description',
+      )}) is spicy.`,
     )
   })
 
@@ -44,7 +52,9 @@ describe(linkGlossaryTerms.name, () => {
     const input = ':Data availability: is spicy. Also Blob is not spicy.'
     const output = linkTerms(input)
     expect(output).toEqual(
-      'Data availability is spicy. Also [Blob](/glossary#blob) is not spicy.',
+      `Data availability is spicy. Also [Blob](/glossary#blob?description=${encodeURIComponent(
+        'Blob description',
+      )}) is not spicy.`,
     )
   })
 
@@ -66,7 +76,7 @@ describe(glossaryPlugin.name, () => {
   md.use(glossaryPlugin)
 
   it('should add data-link-role attribute to glossary links', () => {
-    const input = '[Blob](/glossary#blob)'
+    const input = '[Blob](/glossary#blob?description=Blob%20description)'
     const output = md.render(input)
     expect(output).toInclude('data-link-role="glossary"')
   })

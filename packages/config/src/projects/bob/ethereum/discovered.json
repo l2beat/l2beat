@@ -1,7 +1,7 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "timestamp": 1753375355,
+  "timestamp": 1754482163,
   "configHash": "0x8783151623484da48be1f986ab9d83b4d14444d4dfb527f2e4e37f6663edc3b3",
   "entries": [
     {
@@ -525,6 +525,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OptimismMintableERC20Factory",
       "address": "eth:0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6",
       "type": "Contract",
@@ -683,7 +688,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 20239200,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x9C221D97B60134296F21961eD1025e035183a806",
+        "lastResolved": "eth:0xa0714e13c050B2731A521f8e3f589FC22AD65a93",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
@@ -795,7 +800,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 22989889
+          "prevBlockNum": 23081237
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -882,7 +887,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0xD5A72E5C2d8fC5e12cba6F81FA67d9A5F4A48B6a",
-        "gameCount": 16,
+        "gameCount": 42,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A",
@@ -907,11 +912,6 @@
     },
     {
       "address": "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1244,7 +1244,7 @@
           "eth:0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7",
           "eth:0x3C30D693b23F77d55e14b8e0CFB6C00075ff93aB",
           "eth:0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6",
-          "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
+          "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
         ],
@@ -1253,7 +1253,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 24,
+        "nonce": 25,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1487,7 +1487,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660498",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660534",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2741,6 +2741,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 22990276 },
-  "permissionsConfigHash": "0x596235e46c466ad522122116ceeef108189417ddf9be09f53c4e8769b4364b9a"
+  "usedBlockNumbers": { "ethereum": 23081931 },
+  "permissionsConfigHash": "0x02df85ed6810a68c0a107c5a05095d810ad9da17f2e762a784c832aee19cc98d"
 }

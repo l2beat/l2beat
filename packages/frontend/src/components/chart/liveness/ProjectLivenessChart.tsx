@@ -98,7 +98,7 @@ export function ProjectLivenessChart({
         anyAnomalyLive={anyAnomalyLive}
         resolution={rangeToResolution(timeRange)}
         tickCount={4}
-        className="mt-4 mb-2"
+        className="mt-4 mb-3"
       />
       <LivenessChartStats
         timeRange={timeRange}
