@@ -4,5 +4,11 @@
     "address": "0x2948690217F3C2fDD6166343da8A7Ac2B7f5c134",
     "chain": "ethereum",
     "blockNumber": 22622481
+  },
+  "SequencerInbox_Espresso_1": {
+    "hash": "0x724a7b4f0fa3a5ce6b00cc932e70b6b83a05d1a846a341cbf8477dc95f6c916c",
+    "address": "0x2C381da225148f7d6390f0EE4A162F958ec40e7A",
+    "chain": "ethereum",
+    "blockNumber": 23116694
   }
 }
