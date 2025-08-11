@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "timestamp": 1754475055,
+  "timestamp": 1754910994,
   "configHash": "0xc21763bf201b9b076291a3c0f4c38ebbb27e5b957d63d7bcdf5bb6d3bd6ff18c",
   "entries": [
     {
@@ -336,7 +336,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 12 (17%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -518,7 +518,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -585,7 +585,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 31,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -699,6 +699,19 @@
       "type": "EOA",
       "proxyType": "EOA",
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PlonkVerifierPostEuclid-2",
+      "address": "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1753339799,
+      "sinceBlock": 22987338,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": ""
+      }
     },
     {
       "name": "TimelockSCSlow",
@@ -916,11 +929,11 @@
             "verifier": "eth:0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3"
           },
           {
-            "startBatchIndex": 0,
-            "verifier": "eth:0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba"
+            "startBatchIndex": 364588,
+            "verifier": "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA"
           }
         ],
-        "legacyVerifiersLength": [0, 0, 0, 0, 0, 0, 0],
+        "legacyVerifiersLength": [0, 0, 0, 0, 0, 0, 1],
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "verifierVersions": [0, 1, 2, 3, 4, 6, 7]
       },
@@ -965,11 +978,11 @@
         "$upgradeCount": 2,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1754457635,
+        "getFirstUnfinalizedMessageEnqueueTime": 1754895635,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 959565,
-        "nextUnfinalizedQueueIndex": 959542,
+        "nextCrossDomainMessageIndex": 959990,
+        "nextUnfinalizedQueueIndex": 959970,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1553,27 +1566,6 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "PlonkVerifierPostEuclid-2",
-      "address": "eth:0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x26cd90e30199eed8d6c94ea4ffaf77c4b2a17f7e3ad9299ff6aaa482214bbb56"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747812251,
-      "sinceBlock": 22529760,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6": ""
-      },
-      "references": [
-        {
-          "text": "Source Code",
-          "href": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.4.2/bundle/verifier.bin"
-        }
-      ]
-    },
-    {
       "name": "L1ETHGateway",
       "address": "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
       "type": "Contract",
@@ -1834,7 +1826,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2044,15 +2036,15 @@
         "$upgradeCount": 7,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 363854,
+        "lastFinalizedBatchIndex": 365509,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 363864,
-          "lastFinalizedBatchIndex": 363854,
-          "lastFinalizeTimestamp": 1754461163,
+          "lastCommittedBatchIndex": 365551,
+          "lastFinalizedBatchIndex": 365509,
+          "lastFinalizeTimestamp": 1754898671,
           "flags": 1,
           "reserved": 0
         },
@@ -2225,26 +2217,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "ZkEvmVerifierPostEuclid-2",
-      "address": "eth:0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747812263,
-      "sinceBlock": 22529761,
-      "values": {
-        "$immutable": true,
-        "plonkVerifier": "eth:0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6",
-        "verifierDigest1": "0x0076388fb7de9cb4e4f0a73cf1dbf24a02a789d1cb83d7b23a7591e144d2f6d3",
-        "verifierDigest2": "0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909"
-      },
-      "implementationNames": {
-        "eth:0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba": "ZkEvmVerifierPostEuclid"
-      }
-    },
-    {
       "address": "eth:0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2348,6 +2320,26 @@
       }
     },
     {
+      "name": "ZkEvmVerifierPostEuclid-2",
+      "address": "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1754694995,
+      "sinceBlock": 23099560,
+      "values": {
+        "$immutable": true,
+        "plonkVerifier": "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4",
+        "verifierDigest1": "0x003ac2e012d8a7fb1495d94839fe36559b52fd6d60a532884c7558de2b88bf72",
+        "verifierDigest2": "0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909"
+      },
+      "implementationNames": {
+        "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA": "ZkEvmVerifierPostEuclid"
+      }
+    },
+    {
       "address": "eth:0xc1985e3712b33a5303e097e9CeD22E91338ba64d",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2374,7 +2366,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 8,
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2779,7 +2771,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 22765426847013,
+        "totalBridgedUSDC": 23286780747421,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3782,16 +3774,16 @@
       "function transferOwnership(address newOwner)",
       "function updateTokenMapping(address _l1Token, address _l2Token)"
     ],
-    "eth:0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba": [
+    "eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA": [
       "constructor(address _verifier, bytes32 _verifierDigest1, bytes32 _verifierDigest2)",
       "error VerificationFailed()",
       "function plonkVerifier() view returns (address)",
       "function verifierDigest1() view returns (bytes32)",
       "function verifierDigest2() view returns (bytes32)",
       "function verify(bytes bundleProof, bytes publicInput) view"
-    ],
-    "eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": [
-      "constructor(address _singleton)"
     ],
     "eth:0xC3eA7C657884BB380B66D79C36aDCb5658b01896": [
       "constructor(address _singleton)"
@@ -4038,6 +4030,6 @@
     "scroll/ScrollOwner": "0x14d7a582f7d39f4ed732aa56a3c9031c8fc613fa58dfaf42f4f572f19fae54b3",
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23081344 },
-  "permissionsConfigHash": "0xbe8342b7794290b5b1d792ba3e8cd7884ac7bdb5ba0eafbe8f313e558e6f1706"
+  "usedBlockNumbers": { "ethereum": 23117449 },
+  "permissionsConfigHash": "0x6026e9d5cd2befcf9d6ce6f3a1484a20c9d9cbb7eefe920713e0b8b385097c3f"
 }

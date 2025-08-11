@@ -3617,7 +3617,7 @@ Generated with discovered.json: 0xb96ca09ceb1ec8cb97c9551db7056e11394d3075
 
 ## Description
 
-Initial discovery: Token bridge with lane-specific confiuigurable security and chain-specific default security configs.
+Initial discovery: Token bridge with lane-specific configurable security and chain-specific default security configs.
 
 ## Initial discovery
 

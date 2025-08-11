@@ -12,7 +12,7 @@ import type {
 
 describe(FuelClient.name, () => {
   describe(FuelClient.prototype.getBlockWithTransactions.name, () => {
-    it('fetches block from api and parsers response', async () => {
+    it('fetches block from api and parses response', async () => {
       const mockTia64time = '4611686020155261080'
 
       const mockFuelBlock: Block = {

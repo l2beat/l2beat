@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
   "chain": "everclear",
-  "timestamp": 1753687645,
+  "timestamp": 1754908695,
   "configHash": "0xfb294695ab9535a4096f9afe1ca82c872710e9a4e4bbc79d170117e33b3a3413",
   "entries": [
     {
@@ -87,7 +87,7 @@
           "averageGasUnitsPerSettlement": 50000,
           "bufferDBPS": 10000
         },
-        "getCurrentEpoch": 224782,
+        "getCurrentEpoch": 229837,
         "hubGateway": "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
         "initialized": false,
         "lighthouse": "everclear:0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
@@ -102,7 +102,7 @@
         "supportedDomains": [
           1, 56, 10, 42161, 8453, 48900, 81457, 59144, 137, 43114, 534352,
           167000, 33139, 34443, 130, 324, 2020, 100, 80094, 5000, 146, 57073,
-          1399811149
+          1399811149, 728126428
         ],
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "watchtower": "everclear:0x6281ea3060B26352b558C4F45767C90db482c4fd"
@@ -160,7 +160,7 @@
         "getChainId": 25327,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 95,
+        "nonce": 98,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -756,6 +756,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "everclear": 2044435 },
-  "permissionsConfigHash": "0x1efa5fa1b02859f115192edb25c16a8e516f34dbcd0ec06a4fbd2b8b0118d368"
+  "usedBlockNumbers": { "everclear": 2176553 },
+  "permissionsConfigHash": "0xb2a08bfe600cd501406e6f2a49b12a26efcaefedc30c2d503c88db9f16c82bd5"
 }

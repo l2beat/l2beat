@@ -246,7 +246,7 @@ struct ChallengeEdge {
     ///         For a SmallStep edge the origin id is the 'mutual' id of the length one BigStep edge being claimed by the zero layer ancestors of this edge
     ///         For a BigStep edge the origin id is the 'mutual' id of the length one Block edge being claimed by the zero layer ancestors of this edge
     ///         For a Block edge the origin id is the assertion hash of the assertion that is the root of the challenge - all edges in this challenge agree
-    ///         that that assertion hash is valid.
+    ///         that assertion hash is valid.
     ///         The purpose of the origin id is to ensure that only edges that agree on a common start position
     ///         are being compared against one another.
     bytes32 originId;
@@ -679,7 +679,7 @@ This contract is used as the entry point to execute one-step proofs onchain.
 
 ### `proveOneStep` function
 
-This function is used called from the `confirmEdgeByOneStepProof` function in the `EdgeChallengeManager` contract.
+This function is called from the `confirmEdgeByOneStepProof` function in the `EdgeChallengeManager` contract.
 
 ```solidity
 function proveOneStep(

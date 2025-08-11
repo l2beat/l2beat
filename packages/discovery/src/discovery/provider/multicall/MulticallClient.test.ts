@@ -184,7 +184,7 @@ describe(MulticallClient.name, () => {
 
   const outOfGasMessage = [
     'out of gas', // normal
-    'out of gas: out of gas', // whatever QucikNode is doing...
+    'out of gas: out of gas', // whatever QuickNode is doing...
   ]
 
   for (const message of outOfGasMessage) {

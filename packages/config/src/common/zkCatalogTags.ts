@@ -26,13 +26,6 @@ export const zkCatalogTags = [
       'zkVM STARK proving system developed by Matter Labs for proving state transition of ZKsync Era.',
   },
   {
-    id: 'Plonky2',
-    type: ZkCatalogTagType.STARK,
-    name: 'Plonky2',
-    description:
-      'Toolkit for developing transparent SNARKs based on PLONK and FRI developed by Polygon Zero team.',
-  },
-  {
     id: 'Plonky3',
     type: ZkCatalogTagType.STARK,
     name: 'Plonky3',
@@ -140,6 +133,13 @@ export const zkCatalogTags = [
     name: 'linea',
     description:
       'Prover system of Linea written in Go, includes Vortex polynomial commitment and Arcane compiler.',
+  },
+  {
+    id: 'Plonky2',
+    type: ZkCatalogTagType.Plonk,
+    name: 'Plonky2',
+    description:
+      'Toolkit for developing transparent SNARKs based on PLONK and FRI developed by Polygon Zero team.',
   },
   // Fflonk
   {
