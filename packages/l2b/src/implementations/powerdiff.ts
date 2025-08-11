@@ -152,8 +152,8 @@ function processGitDiff(gitDiff: string): LeftRightPair[] {
     }) && matches.length % 2 === 0
   assert(validMatches, 'Failed to parse the git diff result')
 
-  const matchesTrimed = matches.map((match) => match.slice(4).trim())
-  const window = slidingWindow(matchesTrimed, 2, 2)
+  const matchesTrimmed = matches.map((match) => match.slice(4).trim())
+  const window = slidingWindow(matchesTrimmed, 2, 2)
 
   const result: LeftRightPair[] = []
   for (const element of window) {
