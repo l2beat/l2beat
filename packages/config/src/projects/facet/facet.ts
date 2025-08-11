@@ -92,7 +92,10 @@ export const facet: ScalingProject = {
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://facet.org/'],
-      bridges: ['https://facetswap.com/bridge'],
+      bridges: [
+        'https://facetswap.com/bridge',
+        'https://facet-zk-fault-proofs.vercel.app/',
+      ],
       documentation: ['https://docs.facet.org/'],
       explorers: ['https://explorer.facet.org/'],
       repositories: ['https://github.com/0xFacet'],
