@@ -270,12 +270,11 @@ export async function waitUntil(predicate: () => boolean): Promise<void> {
 }
 
 export class InitTestIndexer extends RootIndexer {
-  constructor(
-    private readonly initState:
-      | { safeHeight: number; configHash?: string }
-      | undefined,
-  ) {
+  private readonly initState?: { safeHeight: number; configHash?: string }
+
+  constructor(initState?: { safeHeight: number; configHash?: string }) {
     super(Logger.SILENT)
+    this.initState = initState
   }
 
   override async tick(): Promise<number> {
@@ -290,16 +289,18 @@ export class InitTestIndexer extends RootIndexer {
 export class TestRootIndexer extends RootIndexer {
   public resolveTick: (height: number) => void = () => {}
   public rejectTick: (error: unknown) => void = () => {}
+  private testSafeHeight: number
 
   dispatchCounter = 0
   ticking = false
 
   constructor(
-    private testSafeHeight: number,
+    testSafeHeight: number,
     name?: string,
     retryStrategy?: { tickRetryStrategy?: RetryStrategy },
   ) {
     super(Logger.SILENT.tag({ tag: name }), retryStrategy ?? {})
+    this.testSafeHeight = testSafeHeight
 
     const oldDispatch = Reflect.get(this, 'dispatch')
     Reflect.set(this, 'dispatch', (action: IndexerAction) => {
@@ -357,6 +358,7 @@ class TestChildIndexer extends ChildIndexer {
   public updateTo = 0
 
   public dispatchCounter = 0
+  private testSafeHeight: number
 
   async finishUpdate(result: number | Error): Promise<void> {
     await waitUntil(() => this.updating)
@@ -385,7 +387,7 @@ class TestChildIndexer extends ChildIndexer {
 
   constructor(
     parents: Indexer[],
-    private testSafeHeight: number,
+    testSafeHeight: number,
     name?: string,
     retryStrategy?: {
       invalidateRetryStrategy?: RetryStrategy
@@ -393,6 +395,7 @@ class TestChildIndexer extends ChildIndexer {
     },
   ) {
     super(Logger.SILENT.tag({ tag: name }), parents, retryStrategy ?? {})
+    this.testSafeHeight = testSafeHeight
 
     const oldDispatch = Reflect.get(this, 'dispatch')
     Reflect.set(this, 'dispatch', (action: IndexerAction) => {
