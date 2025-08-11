@@ -621,8 +621,9 @@ function getDaTracking(
   }
 
   if (templateVars.usesEthereumBlobs) {
-    const validatorTimelock =
-      templateVars.discovery.getContractDetails('ValidatorTimelock').address
+    const validatorTimelock = ChainSpecificAddress.address(
+      templateVars.discovery.getContractDetails('ValidatorTimelock').address,
+    )
 
     const validatorsVTL = templateVars.discovery.getContractValue<
       ChainSpecificAddress[]

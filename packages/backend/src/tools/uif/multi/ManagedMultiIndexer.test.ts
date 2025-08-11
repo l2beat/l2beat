@@ -596,6 +596,7 @@ class TestIndexer extends ManagedMultiIndexer<string> {
     super(options)
     this.options = options
   }
+
   multiUpdate = mockFn<ManagedMultiIndexer<string>['multiUpdate']>(
     async (_, targetHeight) => () => Promise.resolve(targetHeight),
   )
