@@ -8,7 +8,7 @@ Generated with discovered.json: 0x40cdd85ceb684d62332ada750e1f11a2eac6b24b
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added description to Contribution contract.
 
 ## Config/verification related changes
 
