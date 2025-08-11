@@ -25,12 +25,20 @@ export const openvmprover: BaseProject = {
         'https://book.openvm.dev',
         'https://www.youtube.com/watch?v=NHwd-gJ8xg4',
       ],
-      repositories: [
-        'https://github.com/scroll-tech/zkvm-prover/tree/master/crates/prover1',
-      ],
+      repositories: ['https://github.com/scroll-tech/zkvm-prover/tree/master'],
     },
     badges: [],
   },
+  milestones: [
+    {
+      title: 'Plonky3 final polynomial degree check vulnerability',
+      url: 'https://forum.scroll.io/t/security-council-report-scroll-mainnet-emergency-upgrade-on-2025-05-26/810',
+      date: '2025-05-26T00:00:00Z',
+      description:
+        'Fix of a bug in OpenVM that was analogous to an identified vulnerability in Plonky3 library.',
+      type: 'incident',
+    },
+  ],
   zkCatalogInfo: {
     creator: 'Scroll',
     techStack: {
@@ -58,7 +66,7 @@ export const openvmprover: BaseProject = {
         hash: '0xeea69613c0ab56b156122ce41ac52afc8434e8d2fa1b57cdd5e2c1491e06aaf9',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
-          'https://etherscan.io/address/0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6',
+          'https://etherscan.io/address/0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4',
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('scroll')],
