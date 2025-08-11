@@ -127,7 +127,7 @@ export const wirex: ScalingProject = polygonCDKStack({
   },
   milestones: [
     {
-      title: 'Relaunch',
+      title: 'Wirex Pay Relaunch',
       url: 'https://x.com/wirexpaychain/status/1894387229209895058',
       date: '2025-02-24',
       description:

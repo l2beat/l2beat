@@ -340,6 +340,16 @@ export const chains: ChainConfig[] = [
     coingeckoPlatform: 'katana',
   },
   {
+    name: 'facet',
+    chainId: 1027303,
+    shortName: 'facet',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.facet.org/api',
+    },
+  },
+  {
     name: 'gateway',
     chainId: 9075,
     shortName: 'gateway',
@@ -347,6 +357,16 @@ export const chains: ChainConfig[] = [
     explorer: {
       type: 'routescan',
       url: 'https://block-explorer-api.era-gateway-mainnet.zksync.dev/api',
+    },
+  },
+  {
+    name: 'facet',
+    chainId: 1027303,
+    shortName: 'facet',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.facet.org',
     },
   },
 ] as const satisfies ChainConfig[]
