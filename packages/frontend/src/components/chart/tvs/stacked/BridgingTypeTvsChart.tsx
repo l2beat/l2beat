@@ -10,7 +10,6 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
@@ -30,11 +29,13 @@ interface Props {
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
+  dataKeys: (keyof typeof bridgingTypeTvsChartMeta)[]
+  toggleDataKey: (dataKey: string) => void
   tickCount?: number
   className?: string
 }
 
-const chartMeta = {
+export const bridgingTypeTvsChartMeta = {
   canonical: {
     label: 'Canonically bridged',
     color: 'var(--chart-stacked-purple)',
@@ -60,13 +61,13 @@ export function BridgingTypeTvsChart({
   isLoading,
   className,
   tickCount,
+  dataKeys,
+  toggleDataKey,
 }: Props) {
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
-
   return (
     <ChartContainer
       data={data}
-      meta={chartMeta}
+      meta={bridgingTypeTvsChartMeta}
       isLoading={isLoading}
       milestones={milestones}
       interactiveLegend={{
@@ -80,7 +81,7 @@ export function BridgingTypeTvsChart({
         <Area
           dataKey="external"
           hide={!dataKeys.includes('external')}
-          fill={chartMeta.external.color}
+          fill={bridgingTypeTvsChartMeta.external.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -90,7 +91,7 @@ export function BridgingTypeTvsChart({
         <Area
           dataKey="native"
           hide={!dataKeys.includes('native')}
-          fill={chartMeta.native.color}
+          fill={bridgingTypeTvsChartMeta.native.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -100,7 +101,7 @@ export function BridgingTypeTvsChart({
         <Area
           dataKey="canonical"
           hide={!dataKeys.includes('canonical')}
-          fill={chartMeta.canonical.color}
+          fill={bridgingTypeTvsChartMeta.canonical.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -166,7 +167,10 @@ function CustomTooltip({
         <div className="mt-2 flex flex-col gap-2">
           {actualPayload.map((entry) => {
             if (entry.type === 'none') return null
-            const config = chartMeta[entry.name as keyof typeof chartMeta]
+            const config =
+              bridgingTypeTvsChartMeta[
+                entry.name as keyof typeof bridgingTypeTvsChartMeta
+              ]
             return (
               <div
                 key={entry.name}

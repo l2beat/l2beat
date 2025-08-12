@@ -21,6 +21,7 @@ import { TableSortingProvider } from '~/components/table/sorting/TableSortingCon
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { ScalingTvsCharts } from './ScalingTvsCharts'
+import { ScalingTvsDataKeysProvider } from './ScalingTvsDataKeysContext'
 import { ScalingTvsTable } from './table/ScalingTvsTable'
 
 type Props = TabbedScalingEntries<ScalingTvsEntry> & {
@@ -74,81 +75,83 @@ export function ScalingTvsTabs(props: Props) {
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
-        <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
-            <RollupsInfo />
-            <ScalingTvsCharts
-              tab="rollups"
-              entries={entries.rollups}
-              milestones={props.milestones}
-            />
-            <HorizontalSeparator className="mt-4 mb-3" />
-            <BreakdownTypeRadioGroup
-              breakdownType={breakdownType}
-              setBreakdownType={setBreakdownType}
-            />
-            <ScalingTvsTable
-              entries={entries.rollups}
-              rollups
-              breakdownType={breakdownType}
-            />
-          </DirectoryTabsContent>
-        </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent
-            value="validiumsAndOptimiums"
-            className="pt-4 sm:pt-3"
-          >
-            <ValidiumsAndOptimiumsInfo />
-            <ScalingTvsCharts
-              tab="validiumsAndOptimiums"
-              entries={entries.validiumsAndOptimiums}
-              milestones={props.milestones}
-            />
-            <HorizontalSeparator className="mt-4 mb-3" />
-            <BreakdownTypeRadioGroup
-              breakdownType={breakdownType}
-              setBreakdownType={setBreakdownType}
-            />
-            <ScalingTvsTable
-              entries={entries.validiumsAndOptimiums}
-              breakdownType={breakdownType}
-            />
-          </DirectoryTabsContent>
-        </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
-            <OthersInfo />
-            <ScalingTvsCharts
-              tab="others"
-              entries={entries.others}
-              milestones={props.milestones}
-            />
-            <HorizontalSeparator className="mt-4 mb-3" />
-            <BreakdownTypeRadioGroup
-              breakdownType={breakdownType}
-              setBreakdownType={setBreakdownType}
-            />
-            <ScalingTvsTable
-              entries={entries.others}
-              breakdownType={breakdownType}
-            />
-          </DirectoryTabsContent>
-        </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="notReviewed" className="pt-4 sm:pt-3">
-            <NotReviewedInfo />
-            <BreakdownTypeRadioGroup
-              breakdownType={breakdownType}
-              setBreakdownType={setBreakdownType}
-            />
-            <ScalingTvsTable
-              entries={entries.notReviewed}
-              notReviewed
-              breakdownType={breakdownType}
-            />
-          </DirectoryTabsContent>
-        </TableSortingProvider>
+        <ScalingTvsDataKeysProvider>
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
+              <RollupsInfo />
+              <ScalingTvsCharts
+                tab="rollups"
+                entries={entries.rollups}
+                milestones={props.milestones}
+              />
+              <HorizontalSeparator className="mt-4 mb-3" />
+              <BreakdownTypeRadioGroup
+                breakdownType={breakdownType}
+                setBreakdownType={setBreakdownType}
+              />
+              <ScalingTvsTable
+                entries={entries.rollups}
+                rollups
+                breakdownType={breakdownType}
+              />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent
+              value="validiumsAndOptimiums"
+              className="pt-4 sm:pt-3"
+            >
+              <ValidiumsAndOptimiumsInfo />
+              <ScalingTvsCharts
+                tab="validiumsAndOptimiums"
+                entries={entries.validiumsAndOptimiums}
+                milestones={props.milestones}
+              />
+              <HorizontalSeparator className="mt-4 mb-3" />
+              <BreakdownTypeRadioGroup
+                breakdownType={breakdownType}
+                setBreakdownType={setBreakdownType}
+              />
+              <ScalingTvsTable
+                entries={entries.validiumsAndOptimiums}
+                breakdownType={breakdownType}
+              />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
+              <OthersInfo />
+              <ScalingTvsCharts
+                tab="others"
+                entries={entries.others}
+                milestones={props.milestones}
+              />
+              <HorizontalSeparator className="mt-4 mb-3" />
+              <BreakdownTypeRadioGroup
+                breakdownType={breakdownType}
+                setBreakdownType={setBreakdownType}
+              />
+              <ScalingTvsTable
+                entries={entries.others}
+                breakdownType={breakdownType}
+              />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="notReviewed" className="pt-4 sm:pt-3">
+              <NotReviewedInfo />
+              <BreakdownTypeRadioGroup
+                breakdownType={breakdownType}
+                setBreakdownType={setBreakdownType}
+              />
+              <ScalingTvsTable
+                entries={entries.notReviewed}
+                notReviewed
+                breakdownType={breakdownType}
+              />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
+        </ScalingTvsDataKeysProvider>
       </DirectoryTabs>
     </>
   )

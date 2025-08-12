@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
+import { useScalingTvsDataKeys } from '~/pages/scaling/tvs/components/ScalingTvsDataKeysContext'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
@@ -21,6 +22,9 @@ export function ScalingBridgingTypeTvsChart({
   range,
   excludeAssociatedTokens,
 }: Props) {
+  const { bridgingTypeDataKeys, bridgingTypeToggleDataKey } =
+    useScalingTvsDataKeys()
+
   const { data, isLoading } = api.tvs.detailedChart.useQuery({
     range,
     excludeAssociatedTokens,
@@ -57,6 +61,8 @@ export function ScalingBridgingTypeTvsChart({
       unit={unit}
       isLoading={isLoading}
       syncedUntil={data?.syncedUntil}
+      dataKeys={bridgingTypeDataKeys}
+      toggleDataKey={bridgingTypeToggleDataKey}
     />
   )
 }

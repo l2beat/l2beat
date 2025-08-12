@@ -1,14 +1,11 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
-import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useScalingTvsDataKeys } from '~/pages/scaling/tvs/components/ScalingTvsDataKeysContext'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import type { ChartUnit } from '../../types'
-import {
-  TokenCategoryTvsChart,
-  tokenCategoryTvsChartMeta,
-} from './TokenCategoryTvsChart'
+import { TokenCategoryTvsChart } from './TokenCategoryTvsChart'
 
 interface Props {
   filter: TvsProjectFilter
@@ -25,9 +22,8 @@ export function ScalingTokenCategoryTvsChart({
   unit,
   excludeAssociatedTokens,
 }: Props) {
-  const { dataKeys, toggleDataKey } = useChartDataKeys(
-    tokenCategoryTvsChartMeta,
-  )
+  const { tokenCategoryDataKeys, tokenCategoryToggleDataKey } =
+    useScalingTvsDataKeys()
 
   const { data, isLoading } = api.tvs.detailedChart.useQuery({
     range,
@@ -71,8 +67,8 @@ export function ScalingTokenCategoryTvsChart({
       unit={unit}
       isLoading={isLoading}
       syncedUntil={data?.syncedUntil}
-      dataKeys={dataKeys}
-      toggleDataKey={toggleDataKey}
+      dataKeys={tokenCategoryDataKeys}
+      toggleDataKey={tokenCategoryToggleDataKey}
     />
   )
 }
