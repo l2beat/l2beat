@@ -124,7 +124,7 @@ const bridgingColumns = [
 const tokenColumns = [
   columnHelper.accessor('tvs.data.breakdown.ether', {
     id: 'ether',
-    header: 'Ether',
+    header: 'ETH & derivatives',
     cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="ether" />,
     sortUndefined: 'last',
     meta: {
@@ -146,7 +146,7 @@ const tokenColumns = [
   }),
   columnHelper.accessor('tvs.data.breakdown.btc', {
     id: 'btc',
-    header: 'BTC',
+    header: 'BTC & derivatives',
     cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="btc" />,
     sortUndefined: 'last',
     meta: {
@@ -185,7 +185,6 @@ function BreakdownCell({
     return <NoDataBadge />
   }
 
-  console.log(dataKey, data.breakdown[dataKey], data.change[dataKey])
   return (
     <TableLink
       href={

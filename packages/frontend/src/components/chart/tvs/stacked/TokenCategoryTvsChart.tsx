@@ -38,7 +38,7 @@ interface Props {
 
 export const tokenCategoryTvsChartMeta = {
   ether: {
-    label: 'Ether',
+    label: 'ETH & derivatives',
     color: 'var(--chart-ethereum)',
     indicatorType: { shape: 'square' },
   },
@@ -48,7 +48,7 @@ export const tokenCategoryTvsChartMeta = {
     indicatorType: { shape: 'square' },
   },
   btc: {
-    label: 'Bitcoin',
+    label: 'BTC & derivatives',
     color: 'var(--chart-orange)',
     indicatorType: { shape: 'square' },
   },
