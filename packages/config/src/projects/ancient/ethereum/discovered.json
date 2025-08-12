@@ -1,7 +1,7 @@
 {
   "name": "ancient",
   "chain": "ethereum",
-  "timestamp": 1753428383,
+  "timestamp": 1754569855,
   "configHash": "0x8ed9dcfba38c53a9287a76666e5fdf25a49553308965f5788ecf30d8616a42be",
   "entries": [
     {
@@ -73,7 +73,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620751",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620774",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -413,7 +413,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 2,
+        "gameCount": 28,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xF91357dCa2abDB3388600792d51CAe6644632Cd5",
@@ -423,7 +423,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 2,
+        "permissionedGamesTotal": 28,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -687,8 +687,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 22988802
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 23067406
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1909,6 +1909,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22994665 },
+  "usedBlockNumbers": { "ethereum": 23089195 },
   "permissionsConfigHash": "0xd82c6ccb59a3493d59d58d29e93a8a4a54d2adc023f6ec9555d2f4be1af498dc"
 }
