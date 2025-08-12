@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xebe1ea4fb6a88e677e7f2e3e0b0f97036f07a4b3
+
+# Diff at Tue, 12 Aug 2025 17:02:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754307917
+- current timestamp: 1755018135
+
+## Description
+
+new operators/admin for PAXG (EOAs).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract SimpleMultiSig (0x137Dcd97872dE27a4d3bf36A4643c5e18FA40713)
+    +++ description: None
+```
+
+```diff
+    contract Paxos Gold Token (0x45804880De22913dAFE09f4980848ECE6EcbAf78) {
+    +++ description: None
+      values.$admin:
+-        "eth:0x137Dcd97872dE27a4d3bf36A4643c5e18FA40713"
++        "eth:0xC94BcF6e1d8B3558E3B62e743630D50497E3851C"
+      values.assetProtectionRole:
+-        "eth:0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33"
++        "eth:0x3Af3e85f4f97De7AD0f000B724Fb77fE5ffc024B"
+      values.owner:
+-        "eth:0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33"
++        "eth:0x3Af3e85f4f97De7AD0f000B724Fb77fE5ffc024B"
+    }
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 98 ----------------------
+ 1 file changed, 98 deletions(-)
+```
+
 Generated with discovered.json: 0xd346a9ffd8d7bc7471c7d7fb64ff88f2f0b10010
 
 # Diff at Mon, 04 Aug 2025 11:45:48 GMT:
