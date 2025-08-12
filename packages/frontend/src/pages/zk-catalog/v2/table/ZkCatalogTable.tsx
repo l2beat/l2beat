@@ -108,8 +108,11 @@ function TrustedSetupCells({
                   worstRisk === 'green' && 'bg-positive',
                   worstRisk === 'yellow' && 'bg-warning',
                   worstRisk === 'red' && 'bg-negative',
+                  worstRisk === 'N/A' && 'size-full text-lg leading-none',
                 )}
-              />
+              >
+                {worstRisk === 'N/A' && '🤩'}
+              </div>
               <TechStackTag tag={proofSystem} withoutTooltip />
             </TooltipTrigger>
             <TooltipContent>
@@ -130,8 +133,11 @@ function TrustedSetupCells({
                         trustedSetup.risk === 'green' && 'bg-positive',
                         trustedSetup.risk === 'yellow' && 'bg-warning',
                         trustedSetup.risk === 'red' && 'bg-negative',
+                        worstRisk === 'N/A' && 'mt-0.5 text-base leading-none',
                       )}
-                    />
+                    >
+                      {worstRisk === 'N/A' && '🤩'}
+                    </div>
                     <span className="text-xs leading-normal">
                       {trustedSetup.shortDescription}
                     </span>
@@ -159,14 +165,11 @@ function TrustedSetupCells({
 }
 
 function pickWorstRisk(trustedSetups: TrustedSetup[]) {
-  return trustedSetups.reduce<'green' | 'yellow' | 'red'>(
-    (acc, trustedSetup) => {
-      if (acc === 'red') return acc
-      if (trustedSetup.risk === 'red') return 'red'
-      if (acc === 'yellow') return acc
-      if (trustedSetup.risk === 'yellow') return 'yellow'
-      return 'green'
-    },
-    'green',
-  )
+  const riskHierarchy = ['red', 'yellow', 'green', 'N/A']
+
+  for (const risk of riskHierarchy) {
+    if (trustedSetups.some((ts) => ts.risk === risk)) {
+      return risk
+    }
+  }
 }
