@@ -95,7 +95,10 @@ export function ScalingTvsTabs(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiumsAndOptimiums" className="pt-5">
+          <DirectoryTabsContent
+            value="validiumsAndOptimiums"
+            className="pt-4 sm:pt-3"
+          >
             <ValidiumsAndOptimiumsInfo />
             <ScalingTvsCharts
               tab="validiumsAndOptimiums"
@@ -114,7 +117,7 @@ export function ScalingTvsTabs(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="others" className="pt-5">
+          <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
             <OthersInfo />
             <ScalingTvsCharts
               tab="others"
@@ -133,7 +136,7 @@ export function ScalingTvsTabs(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="notReviewed" className="pt-5">
+          <DirectoryTabsContent value="notReviewed" className="pt-4 sm:pt-3">
             <NotReviewedInfo />
             <BreakdownTypeRadioGroup
               breakdownType={breakdownType}
@@ -163,7 +166,7 @@ function BreakdownTypeRadioGroup({
       name="breakdownType"
       value={breakdownType}
       onValueChange={(value) => setBreakdownType(value as 'bridging' | 'token')}
-      className="mb-2 w-full"
+      className="mb-2 h-10 w-full p-1.5"
     >
       <RadioGroupItem value="bridging" className="w-full">
         By bridging type
