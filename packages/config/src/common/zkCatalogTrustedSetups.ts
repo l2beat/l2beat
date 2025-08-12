@@ -5,13 +5,13 @@ export const TRUSTED_SETUPS = {
     id: 'AztecIgnition',
     risk: 'green',
     shortDescription:
-      'Aztec Ignition universal setup for KZG commitments over BN254 curve.',
+      'Aztec Ignition is a trusted setup ceremony that was run by Aztec for KZG commitment over BN254 curve in 2019. It included 176 participants and was publicly open for participation.',
     longDescription: `
               
     ## Aztec Ignition 
 
-    Aztec Ignition is a trusted setup ceremony that was run by Aztec for KZG commitment over BN254 curve in 2019. 
-    It included 176 participants and was open for participation.
+    Aztec Ignition is a trusted setup ceremony for KZG commitments over BN254 curve that was run by Aztec for KZG commitment over BN254 curve in 2019. 
+    It included 176 participants and was publicly open for participation.
     
     - Github repo to download and verify the ceremony artifacts: https://github.com/AztecProtocol/ignition-verification.
     - Github repo with instructions for ceremony participants: https://github.com/AztecProtocol/Setup.
@@ -34,7 +34,7 @@ export const TRUSTED_SETUPS = {
     id: 'SP1Groth16',
     risk: 'red',
     shortDescription:
-      "Succinct's internally run trusted setup for SP1 Groth16 final wrap circuits.",
+      "Succinct's internally run trusted setup for SP1 Groth16 final wrap circuits. Ceremony was run among 7 contributors to the SP1 project without public calls to participate.",
     longDescription: `
     
     ## SP1 Groth16 circuit-specific setup
@@ -51,7 +51,7 @@ export const TRUSTED_SETUPS = {
     id: 'CeloPlumo',
     risk: 'yellow',
     shortDescription:
-      'Trusted setup for KZG commitments over BW6-761 curve, initially run for Celo Plumo.',
+      'Trusted setup for KZG commitments over BW6-761 curve, initially run for Celo Plumo. Ceremony has 55 participants and was publicly open for participation.',
     longDescription: `
     
     ## Celo Plumo trusted setup 
@@ -67,25 +67,25 @@ export const TRUSTED_SETUPS = {
   },
   Aleo: {
     id: 'Aleo',
-    risk: 'red',
+    risk: 'yellow',
     shortDescription:
-      "Trusted setup for KZG commitments over BLS12-377 curve, initially run as Aleo's Stage I setup.",
+      "Trusted setup for KZG commitments over BLS12-377 curve, initially run as Aleo's Stage I setup. Ceremony has 106 participants and was publicly open for participation.",
     longDescription: `
     
     ## Aleo stage I trusted setup
 
     Ceremony generated trusted setup for KZG commitments over BLS12-377 curve, it was originally run as stage I setup
-    for Aleo blockchain and later reused for Linea prover. Ceremony contained 106 participants.
+    for Aleo blockchain and later reused for Linea prover. Ceremony has 106 participants.
 
     - Repo with ceremony instructions https://github.com/AleoNet/aleo-setup
     - Link to the ceremony details: [https://setup.aleo.org](https://setup.aleo.org/) (it is broken. Archived version here: https://web.archive.org/web/20240815052920/https://setup.aleo.org/)
     `,
   },
   PolygonZkEVM: {
-    id: 'PolyonZkEVM',
+    id: 'PolygonZkEVM',
     risk: 'yellow',
     shortDescription:
-      'Trusted setup for KZG commitments over BN254 curve used by Polygon zkEVM. Is a subset of Perpetual Powers of Tau ceremony.',
+      'Trusted setup for KZG commitments over BN254 curve used by Polygon zkEVM, includes 55 participants. Is a subset of Perpetual Powers of Tau ceremony.',
     longDescription: `
     
     ## Polygon zkEVM
@@ -102,7 +102,7 @@ export const TRUSTED_SETUPS = {
     id: 'Risc0',
     risk: 'green',
     shortDescription:
-      'Circuit-specific trusted setup for Risc0 final wrap Groth16 onchain verifeir.',
+      'Circuit-specific trusted setup for Risc0 final wrap Groth16 onchain verifier. It was publicly announced and run with 238 participants.',
     longDescription: `
     
     ## Risc0 Groth16
@@ -120,7 +120,7 @@ export const TRUSTED_SETUPS = {
     id: 'Halo2KZG',
     risk: 'yellow',
     shortDescription:
-      'Trusted setup for KZG commitments managed by Halo2 team on the base of Perpetual Powers of Tau contributions.',
+      'Trusted setup for KZG commitments managed by Halo2 team on the base of the first 71 contributions to the Perpetual Powers of Tau contributions.',
     longDescription: `
     
     ## Halo2 KZG over BN254
@@ -137,7 +137,7 @@ export const TRUSTED_SETUPS = {
     id: 'Zircuit',
     risk: 'yellow',
     shortDescription:
-      'Trusted setup for KZG commitments over BN254 curve run by Zircuit team for their proving system.',
+      'Trusted setup for KZG commitments over BN254 curve run by Zircuit team for their proving system. Zircuit ceremony took 85th contribution to pptau ceremony and added another 44 contributions, totalling to 129 participants.',
     longDescription: `
     
     ## Zircuit
@@ -154,7 +154,7 @@ export const TRUSTED_SETUPS = {
     id: 'Loopring',
     risk: 'red',
     shortDescription:
-      'Two circuit-specific trusted setups for Groth16 verifiers of two L2s built with Loopring zk rollup stack.',
+      'Two circuit-specific trusted setups for Groth16 verifiers of two L2s built with Loopring zk rollup stack. One contains 5 contributions, another 16 contributions.',
     longDescription: `
     
     ## Loopring Stack

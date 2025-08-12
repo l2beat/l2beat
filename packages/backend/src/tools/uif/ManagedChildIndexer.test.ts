@@ -116,8 +116,11 @@ describe(ManagedChildIndexer.name, () => {
 })
 
 class TestIndexer extends ManagedChildIndexer {
-  constructor(override readonly options: ManagedChildIndexerOptions) {
+  override readonly options: ManagedChildIndexerOptions
+
+  constructor(options: ManagedChildIndexerOptions) {
     super(options)
+    this.options = options
   }
 
   override update(_from: number, to: number): Promise<number> {

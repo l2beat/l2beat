@@ -420,7 +420,7 @@ describe('layer2s', () => {
           })
         }
       })
-      describe('no longer that 100 characters', () => {
+      describe('no longer than 100 characters', () => {
         for (const project of layer2s) {
           if (project.milestones === undefined) {
             continue

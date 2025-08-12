@@ -18,7 +18,7 @@ const RETRYABLE_TICKET_MAGIC: Address =
 // Inboxes are contracts on Ethereum used to send messages to
 // L2 to execute transactions there. We can't easily
 // read them from discovery and we need to keep historical
-// ones for ever, so we hardcode them here.
+// ones forever, so we hardcode them here.
 const L2Inboxes: Record<string, string> = {
   'eth:0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f': 'arb1',
   'eth:0xc4448b71118c9071bcb9734a0eac55d18a153949': 'arb-nova',
