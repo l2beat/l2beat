@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xe4aff01914f343654cdb84cac31b608f1dc388c6
+
+# Diff at Tue, 12 Aug 2025 12:08:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32a723ac08d08671a14307e26f7e27a0b92d39e7 block: 1754566470
+- current timestamp: 1755000507
+
+## Description
+
+Whitelisted Proposer changed. Config changes only (our side) for the bridge.
+
+## Watched changes
+
+```diff
+    contract Rollup (0x686E7d01C7BFCB563721333A007699F154C04eb4) {
+    +++ description: Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.
+      values.whitelistedProposers.0:
+-        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
++        "eth:0x615452db5467849689E98a8C5C242A96cF768a94"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754566470 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      sourceHashes.0:
+-        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2"
++        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
+      implementationNames.eth:0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        "ERC1967Factory"
++        "FacetEtherBridgeV6"
+    }
+```
+
 Generated with discovered.json: 0x8361ccb69ced4641e0e08f8a12cba6d6d81cee10
 
 # Diff at Thu, 07 Aug 2025 11:34:38 GMT:

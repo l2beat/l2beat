@@ -10,6 +10,7 @@
     "l1BlockHashes",
     "proposalIsCanonical"
   ],
+  "ignoreInWatchMode": ["getProposalsLength"],
   "fields": {
     "sequencerInbox": {
       "handler": {
@@ -44,11 +45,7 @@
           "where": ["=", "#allowed", false]
         }
       },
-      "permissions": [
-        {
-          "type": "propose"
-        }
-      ]
+      "permissions": [{ "type": "propose" }]
     }
   },
   "category": "core"
