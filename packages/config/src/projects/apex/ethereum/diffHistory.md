@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xa960daadde94b5fd85353d02181f2631e461122d
+
+# Diff at Tue, 12 Aug 2025 11:15:32 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a2bb35367d479bfbf08d335837cdae529dfd3df4 block: 1753200107
+- current timestamp: 1753200107
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753200107 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract TODO Reference (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x4de102dfdfede9c81fd3d1a7f5808804835f0cc5
 
 # Diff at Tue, 22 Jul 2025 16:06:31 GMT:
