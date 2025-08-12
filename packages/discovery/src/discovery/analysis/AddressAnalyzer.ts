@@ -25,7 +25,7 @@ import { codeIsEOA } from './codeIsEOA'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 import type { TemplateService } from './TemplateService'
 
-export type Analysis = AnalyzedContract | AnalyzedEOA
+export type Analysis = AnalyzedContract | AnalyzedEOA | Reference
 
 interface AnalyzedCommon {
   address: ChainSpecificAddress
@@ -49,6 +49,13 @@ export type AnalyzedContract = {
   type: 'Contract'
   name: string
 } & AnalyzedCommon
+
+export type Reference = {
+  type: 'Reference'
+  targetType: Exclude<Analysis['type'], Reference['type']>
+  address: ChainSpecificAddress
+  name: string | undefined
+}
 
 export interface ExtendedTemplate {
   template: string
