@@ -114,7 +114,6 @@ function TrustedSetupCells({
                   className="inline-block"
                   withoutTooltip
                 />
-                :
               </div>
               {trustedSetups.trustedSetup.map((trustedSetup, i) => {
                 return (
