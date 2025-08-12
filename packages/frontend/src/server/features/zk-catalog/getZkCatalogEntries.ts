@@ -57,9 +57,9 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
     get7dTvsBreakdown({ type: 'layer2' }),
   ])
 
-  return zkCatalogProjects.map((project) =>
-    getZkCatalogEntry(project, allProjects, tvs),
-  )
+  return zkCatalogProjects
+    .map((project) => getZkCatalogEntry(project, allProjects, tvs))
+    .sort((a, b) => b.tvs - a.tvs)
 }
 
 function getZkCatalogEntry(
