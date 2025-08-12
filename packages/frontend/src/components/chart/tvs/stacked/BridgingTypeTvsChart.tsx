@@ -52,7 +52,7 @@ const chartMeta = {
   },
 } satisfies ChartMeta
 
-export function StackedTvsChart({
+export function BridgingTypeTvsChart({
   data,
   syncedUntil,
   milestones,

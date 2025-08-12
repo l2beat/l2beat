@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
-import { ScalingStackedTvsChart } from '~/components/chart/tvs/stacked/ScalingStackedTvsChart'
+import { ScalingBridgingTypeTvsChart } from '~/components/chart/tvs/stacked/ScalingBridgingTypeTvsChart'
 import { ScalingTokenCategoryTvsChart } from '~/components/chart/tvs/stacked/ScalingTokenCategoryTvsChart'
 import { TvsChartHeader } from '~/components/chart/tvs/TvsChartHeader'
 import { TvsChartTimeRangeControls } from '~/components/chart/tvs/TvsChartTimeRangeControls'
@@ -65,7 +65,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
         timeRange={chartRange}
       />
       <div className="grid grid-cols-2 gap-x-6">
-        <ScalingStackedTvsChart
+        <ScalingBridgingTypeTvsChart
           unit={unit}
           filter={filter}
           range={timeRange}

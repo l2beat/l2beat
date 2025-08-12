@@ -1,4 +1,5 @@
 import type { ActivitySectionProps } from './ActivitySection'
+import type { BridgingTypeTvsSectionProps } from './BridgingTypeTvsSection'
 import type { ContractsSectionProps } from './contracts/ContractsSection'
 import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
@@ -15,7 +16,6 @@ import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
 import type { SequencingSectionProps } from './SequencingSection'
-import type { StackedTvsSectionProps } from './StackedTvsSection'
 import type { StageSectionProps } from './StageSection'
 import type { StateDerivationSectionProps } from './StateDerivationSection'
 import type { StateValidationSectionProps } from './StateValidationSection'
@@ -73,9 +73,9 @@ interface ProjectDetailsThroughputSection {
   props: ProjectDetailsProps<ThroughputSectionProps>
 }
 
-interface ProjectDetailsStackedTvsSection {
-  type: 'StackedTvsSection'
-  props: ProjectDetailsProps<StackedTvsSectionProps>
+interface ProjectDetailsBridgingTypeTvsSection {
+  type: 'BridgingTypeTvsSection'
+  props: ProjectDetailsProps<BridgingTypeTvsSectionProps>
 }
 
 interface ProjectDetailsTvsSection {
@@ -203,7 +203,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
-  | ProjectDetailsStackedTvsSection
+  | ProjectDetailsBridgingTypeTvsSection
   | ProjectDetailsTvsSection
   | ProjectDetailsActivitySection
 )

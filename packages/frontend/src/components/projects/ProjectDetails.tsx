@@ -1,5 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { ActivitySection } from './sections/ActivitySection'
+import { BridgingTypeTvsSection } from './sections/BridgingTypeTvsSection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
 import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
@@ -15,7 +16,6 @@ import { PermissionsSection } from './sections/permissions/PermissionsSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSummarySection } from './sections/RiskSummarySection'
 import { SequencingSection } from './sections/SequencingSection'
-import { StackedTvsSection } from './sections/StackedTvsSection'
 import { StageSection } from './sections/StageSection'
 import { StateDerivationSection } from './sections/StateDerivationSection'
 import { StateValidationSection } from './sections/StateValidationSection'
@@ -42,9 +42,9 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           : `${index + 1}`
 
         switch (item.type) {
-          case 'StackedTvsSection':
+          case 'BridgingTypeTvsSection':
             return (
-              <StackedTvsSection
+              <BridgingTypeTvsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

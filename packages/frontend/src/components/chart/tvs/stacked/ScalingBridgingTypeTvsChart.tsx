@@ -4,7 +4,7 @@ import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/proje
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import type { ChartUnit } from '../../types'
-import { StackedTvsChart } from './StackedTvsChart'
+import { BridgingTypeTvsChart } from './BridgingTypeTvsChart'
 
 interface Props {
   milestones: Milestone[]
@@ -14,7 +14,7 @@ interface Props {
   excludeAssociatedTokens: boolean
 }
 
-export function ScalingStackedTvsChart({
+export function ScalingBridgingTypeTvsChart({
   milestones,
   unit,
   filter,
@@ -51,7 +51,7 @@ export function ScalingStackedTvsChart({
   )
 
   return (
-    <StackedTvsChart
+    <BridgingTypeTvsChart
       className="mt-4 mb-3"
       data={chartData}
       milestones={milestones}
