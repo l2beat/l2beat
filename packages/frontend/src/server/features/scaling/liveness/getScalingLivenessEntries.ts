@@ -12,7 +12,7 @@ import { getProjectsChangeReport } from '../../projects-change-report/getProject
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
-import { compareStageAndTvs } from '../utils/compareStageAndTvs'
+import { compareTvs } from '../tvs/utils/compareTvs'
 import { getLiveness } from './getLiveness'
 import type { LivenessAnomaly, LivenessProject } from './types'
 import { getHasTrackedContractChanged } from './utils/getHasTrackedContractChanged'
@@ -51,7 +51,7 @@ export async function getScalingLivenessEntries() {
       ),
     )
     .filter((x) => x !== undefined)
-    .sort(compareStageAndTvs)
+    .sort(compareTvs)
 
   return groupByScalingTabs(entries)
 }
