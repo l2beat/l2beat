@@ -137,7 +137,6 @@ export const facet: ScalingProject = {
         ],
         query: {
           formula: 'transfer',
-          from: EthereumAddress('0x00000000000000000000000000000000000face7'), // how do I set anyone?
           to: EthereumAddress('0x00000000000000000000000000000000000face7'),
           sinceTimestamp: UnixTime(1715312711),
         },
@@ -150,7 +149,7 @@ export const facet: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0xd0E3721bba691d3735b0827edBe893789cA1486D',
+            '0x686E7d01C7BFCB563721333A007699F154C04eb4',
           ),
           selector: '0x45925013',
           functionSignature:
@@ -163,7 +162,7 @@ export const facet: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0xd0E3721bba691d3735b0827edBe893789cA1486D',
+            '0x686E7d01C7BFCB563721333A007699F154C04eb4',
           ),
           selector: '0x9eeeb214',
           functionSignature:
@@ -176,7 +175,7 @@ export const facet: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0xd0E3721bba691d3735b0827edBe893789cA1486D',
+            '0x686E7d01C7BFCB563721333A007699F154C04eb4',
           ),
           selector: '0x0075552a',
           functionSignature:
@@ -189,7 +188,7 @@ export const facet: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0xd0E3721bba691d3735b0827edBe893789cA1486D',
+            '0x686E7d01C7BFCB563721333A007699F154C04eb4',
           ),
           selector: '0x0062804e',
           functionSignature: 'function resolveProposal(uint256 id)',
