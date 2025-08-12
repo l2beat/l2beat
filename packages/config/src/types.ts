@@ -758,6 +758,7 @@ export interface ProjectZkCatalogInfo {
     verificationSteps?: string
     attesters?: ZkCatalogAttester[]
     description?: string
+    unsafe?: boolean
   }[]
 }
 

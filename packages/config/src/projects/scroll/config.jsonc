@@ -60,9 +60,9 @@
     "eth:0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": "ZkEvmVerifierV2-1",
     "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "PlonkVerifierV2-1",
     "eth:0xf5bABa891e6De03540ecfb1917B8F07112A45a83": "ZkEvmVerifierPostEuclid",
-    "eth:0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba": "ZkEvmVerifierPostEuclid-2",
+    "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA": "ZkEvmVerifierPostEuclid-2",
     "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": "PlonkVerifierPostEuclid",
-    "eth:0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6": "PlonkVerifierPostEuclid-2",
+    "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": "PlonkVerifierPostEuclid-2",
     "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
     "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "pufETHEscrow",
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow",
@@ -155,6 +155,11 @@
       "category": "spam",
       "manualSourcePaths": {
         "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
+      }
+    },
+    "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": {
+      "manualSourcePaths": {
+        "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.5.2/bundle/verifier.bin"
       }
     },
     "eth:0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": { "category": "spam" },

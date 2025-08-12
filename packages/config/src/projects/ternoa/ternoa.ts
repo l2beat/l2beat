@@ -142,7 +142,7 @@ export const ternoa: ScalingProject = polygonCDKStack({
       title: 'Ternoa Mainnet Launch',
       url: 'https://x.com/Ternoa_/status/1884519126812487828',
       date: '2025-01-29',
-      description: 'Ternoa 2.0 mainnet is live.',
+      description: 'Ternoa is live on mainnet, integrated with Agglayer.',
       type: 'general',
     },
   ],

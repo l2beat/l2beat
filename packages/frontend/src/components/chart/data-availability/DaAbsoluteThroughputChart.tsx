@@ -40,7 +40,7 @@ export function DaAbsoluteThroughputChart({
   syncStatus,
   resolution,
 }: Props) {
-  const chartMeta = getDaChartMeta({ shape: 'line' })
+  const chartMeta = useMemo(() => getDaChartMeta({ shape: 'line' }), [])
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const max = useMemo(() => {
     return data

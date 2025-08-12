@@ -167,7 +167,7 @@
       "symbol": "WBTC",
       "name": "Wrapped BTC",
       "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false,
       "amount": {

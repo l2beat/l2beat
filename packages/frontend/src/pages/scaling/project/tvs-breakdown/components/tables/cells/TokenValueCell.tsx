@@ -2,15 +2,15 @@ import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { formatNumberWithCommas } from '~/utils/number-format/formatNumber'
 
 interface Props {
-  usdValue: number
+  valueForProject: number
   syncStatus?: string
 }
 
-export function TokenValueCell({ usdValue, syncStatus }: Props) {
+export function TokenValueCell({ valueForProject, syncStatus }: Props) {
   return (
     <SyncStatusWrapper isSynced={syncStatus === undefined}>
       <div className="font-bold text-xs">
-        ${formatNumberWithCommas(+usdValue)}
+        ${formatNumberWithCommas(+valueForProject)}
       </div>
     </SyncStatusWrapper>
   )
