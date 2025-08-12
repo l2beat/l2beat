@@ -3,7 +3,7 @@ import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getMultisigReportData } from './getMultisigReportData'
 
-export function createMutlisigReportRouter(
+export function createMultisigReportRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {

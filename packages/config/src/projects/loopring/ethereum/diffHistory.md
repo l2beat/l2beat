@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x47a50dad05e4f9fba6bbaf2545011cca5629f76e
+
+# Diff at Mon, 11 Aug 2025 10:57:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32817e35c9fe0ba1a1c24a734c37d91068b1565d block: 1751871011
+- current timestamp: 1754909851
+
+## Description
+
+ms change. also added milestone for the DeFi sunset.
+
+## Watched changes
+
+```diff
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191"
+      values.$members.4:
+-        "eth:0x7414eA41bd1844f61e8990b209a1Dc301489baa9"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0x4cc5e55dec6cf363c4a6a3a20f0390d9633aae13
 
 # Diff at Mon, 14 Jul 2025 12:45:20 GMT:

@@ -92,7 +92,7 @@ export class EthereumTransactionAnalyzer {
     )
 
     const programHashes = this.extractProgramHashes(decodedDict.taskMetadata)
-    console.log('length of extracted programhashes:', programHashes.length)
+    console.log('length of extracted program hashes:', programHashes.length)
 
     const counter = this.countProgramHashes(programHashes)
     console.log('programHash counts:')
@@ -105,6 +105,6 @@ export class EthereumTransactionAnalyzer {
       const name = this.knownProgramHashes[key] || key
       console.log(`${name.padStart(80)}: ${value.toString().padStart(4)}`)
     }
-    console.log('number of unique programHashes:', counter.size)
+    console.log('number of unique program hashes:', counter.size)
   }
 }

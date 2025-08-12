@@ -20,7 +20,6 @@ type SupportedOPStackChains =
   | 'SUPERSEED'
   | 'POLYNOMIAL'
   | 'MINT'
-  | 'SNAXCHAIN'
 type OPStackInfo = [string, string] // [config, genesis file]
 
 const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {

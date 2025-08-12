@@ -50,7 +50,7 @@ const STARKNET_ON_CHAIN = (usesBlobs = false): ProjectTechnologyChoice => {
     references: [
       {
         title: 'On-Chain Data - Starknet documentation',
-        url: 'https://docs.starknet.io/documentation/architecture_and_concepts/Network_Architecture/on-chain-data/',
+        url: 'https://docs.starknet.io/architecture/data-availability/',
       },
     ],
   }

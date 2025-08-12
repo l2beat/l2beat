@@ -73,7 +73,7 @@ function ThroughputChartStats({
   }
 }) {
   const { includeScalingOnly } = useIncludeScalingOnly()
-  const { data, isLoading } = api.da.projectChart.useQuery({
+  const { data, isLoading } = api.da.projectCharts.useQuery({
     range: { type: '1y' },
     projectId,
     includeScalingOnly,

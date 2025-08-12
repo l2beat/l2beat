@@ -36,15 +36,15 @@ export const OverflowWrapper = ({
     if (!contentRef.current) return
     const content = contentRef.current
 
-    const contentWidth = content.getBoundingClientRect().width
+    const scrollByWidth = content.getBoundingClientRect().width * 0.8
     let scrollBy
     if (dir === 'left') {
-      scrollBy = -clamp(contentWidth, 0, content.scrollLeft)
+      scrollBy = -clamp(scrollByWidth, 0, content.scrollLeft)
     } else {
       scrollBy = clamp(
-        contentWidth,
+        scrollByWidth,
         0,
-        content.scrollWidth - contentWidth - content.scrollLeft,
+        content.scrollWidth - scrollByWidth - content.scrollLeft,
       )
     }
 
