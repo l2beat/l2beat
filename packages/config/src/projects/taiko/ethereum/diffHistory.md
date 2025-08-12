@@ -1,3 +1,145 @@
+Generated with discovered.json: 0xc185d24306bbba83c48e38ba64aba3585052bfd6
+
+# Diff at Tue, 12 Aug 2025 09:41:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@87f7f0547d8b44bb4d333c6cd6802916ea9606c6 block: 1753796542
+- current timestamp: 1754989781
+
+## Description
+
+Preconf Upgrade!
+
+[Fork Router](https://disco.l2beat.com/diff/eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319/eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F): no code diff
+
+Old fork: same address
+
+[New fork](https://disco.l2beat.com/diff/eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC/eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82): Minimal config changes: lower liveness bond,lower max batches per proposal, higher max anchor height.
+
+[TaikoWrapper](https://disco.l2beat.com/diff/eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b/eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61): proposing must be done via PreconfRouter now.
+
+## Watched changes
+
+```diff
+    contract TaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      sourceHashes.1:
+-        "0xd3d952e9a5655549b172292d82b0e6e7b2223cab5ef6819f2790ed53304f56a7"
++        "0x036f854f425618da3e66dad1cd29e352eda6ce3f728eb078bc043f82fe653157"
+      values.$implementation.0:
+-        "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319"
++        "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F"
+      values.$implementation.2:
+-        "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
++        "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
+      values.$pastUpgrades.27:
++        ["2025-08-11T13:45:11.000Z","0xbfd772cb4571eb6275f23d4fd8c7eb1502462b55821ee59dae0d15ab3325fc22",["eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F","eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264","eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"]]
+      values.$upgradeCount:
+-        27
++        28
+      values.impl:
+-        "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319"
++        "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F"
+      values.newFork:
+-        "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
++        "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
+      values.pacayaConfig.maxBatchesToVerify:
+-        16
++        8
+      values.pacayaConfig.livenessBondBase:
+-        "125000000000000000000"
++        "25000000000000000000"
+      values.pacayaConfig.maxAnchorHeightOffset:
+-        64
++        96
+      implementationNames.eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319:
+-        "PacayaForkRouter"
+      implementationNames.eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC:
+-        "MainnetInbox"
+      implementationNames.eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F:
++        "PacayaForkRouter"
+      implementationNames.eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82:
++        "MainnetInbox"
+    }
+```
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.17:
++        {"name":"0x707265636f6e665f77686974656c697374000000000000000000000000000000","address":"eth:0xFD019460881e6EeC632258222393d5821029b2ac"}
+      values.namedAddresses.18:
++        {"name":"0x707265636f6e665f726f75746572000000000000000000000000000000000000","address":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a"}
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","role":"admin"}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":"admin"}
+    }
+```
+
+```diff
+    contract TaikoWrapper (0x9F9D2fC7abe74C79f86F0D1212107692430eef72) {
+    +++ description: Entry point for proposing blocks. It enforces the inclusion of forced transactions after their deadline.
+      sourceHashes.1:
+-        "0x9cee3ca82b3cd60de871679b86db583cbf35a0a911ded84676f9fdcc1a77c8ca"
++        "0x6f1f57d97885434b7f6b769ef9377a6fa75456740c69110c6bb37fb53a7fc68f"
+      values.$implementation:
+-        "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b"
++        "eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61"
+      values.$pastUpgrades.1:
++        ["2025-08-11T13:45:11.000Z","0xbfd772cb4571eb6275f23d4fd8c7eb1502462b55821ee59dae0d15ab3325fc22",["eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.impl:
+-        "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b"
++        "eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61"
+      values.preconfRouter:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a"
+      implementationNames.eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b:
+-        "TaikoWrapper"
+      implementationNames.eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61:
++        "TaikoWrapper"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PreconfRouter (0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xf417cbb9b33F2B5d6C76B2371D35A3bE63979F9C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/PreconfRouter/ERC1967Proxy.p.sol         |  594 +++++++
+ .../ethereum/.flat/PreconfRouter/PreconfRouter.sol | 1438 +++++++++++++++
+ .../.flat/PreconfWhitelist/ERC1967Proxy.p.sol      |  594 +++++++
+ .../.flat/PreconfWhitelist/PreconfWhitelist.sol    | 1842 ++++++++++++++++++++
+ .../TaikoL1/MainnetInbox.3.sol                     |    6 +-
+ .../TaikoWrapper/TaikoWrapper.sol                  |   18 +-
+ 6 files changed, 4485 insertions(+), 7 deletions(-)
+```
+
 Generated with discovered.json: 0x28d2529708b2356dbbabf80805e933dd64d654fd
 
 # Diff at Tue, 29 Jul 2025 13:42:27 GMT:
