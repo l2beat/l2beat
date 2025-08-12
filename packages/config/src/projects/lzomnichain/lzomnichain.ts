@@ -32,7 +32,7 @@ export const lzOmnichain: Bridge = {
         'https://github.com/harmony-one/layerzero-bridge.frontend',
       ],
       documentation: [
-        'https://layerzero.gitbook.io/docs/technical-reference/mainnet/supported-chain-ids',
+        'https://docs.layerzero.network/v1/developers/evm/build/what-you-can-build',
       ],
       socialMedia: ['https://twitter.com/LayerZero_Labs'],
     },
