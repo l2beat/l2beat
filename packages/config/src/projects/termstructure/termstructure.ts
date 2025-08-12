@@ -47,6 +47,7 @@ const vaultWeight =
   ).vault / 100
 
 export const termstructure: ScalingProject = {
+  archivedAt: UnixTime(1754983642),
   id: ProjectId('termstructure'),
   capability: 'appchain',
   addedAt: UnixTime(1709724246), // 2024-03-06T11:24:06Z
