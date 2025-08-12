@@ -16,7 +16,7 @@ export const puffer: ScalingProject = upcomingL2({
     links: {
       websites: ['https://puffer.fi/'],
       bridges: ['https://quest.puffer.fi/unifi'],
-      documentation: ['https://docs.puffer.fi/unifi-based-rollup/'],
+      documentation: ['https://docs-unifi.puffer.fi/'],
       repositories: ['https://github.com/PufferFinance'],
       socialMedia: [
         'https://x.com/puffer_unifi',
