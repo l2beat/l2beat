@@ -44,6 +44,8 @@ export function getTvsBreakdown(
       formula: token.valueForProject ?? token.amount,
       iconUrl: token.iconUrl ?? '',
       valueForProject: tokenValue.valueForProject,
+      value: tokenValue.value,
+      amount: tokenValue.amount,
       isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
       syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
       bridgedUsing: token.bridgedUsing,
