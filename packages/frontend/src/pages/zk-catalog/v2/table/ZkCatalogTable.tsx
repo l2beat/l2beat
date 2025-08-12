@@ -5,6 +5,7 @@ import {
   type Row,
 } from '@tanstack/react-table'
 import { useMemo } from 'react'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -15,9 +16,9 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableCell, TableRow } from '~/components/table/Table'
 import { useTable } from '~/hooks/useTable'
-import { cn } from '~/utils/cn'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { TechStackTag } from '../components/TechStackTag'
+import { TrustedSetupRiskDot } from '../components/TrustedSetupRiskDot'
 import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
 import { BasicZkCatalogTable } from './BasicZkCatalogTable'
 import { zkCatalogColumns } from './Columns'
@@ -102,14 +103,7 @@ function TrustedSetupCells({
         <div className="flex flex-col items-start gap-2">
           <Tooltip>
             <TooltipTrigger className="flex items-center gap-2">
-              <div
-                className={cn(
-                  'size-6 rounded-full',
-                  worstRisk === 'green' && 'bg-positive',
-                  worstRisk === 'yellow' && 'bg-warning',
-                  worstRisk === 'red' && 'bg-negative',
-                )}
-              />
+              <TrustedSetupRiskDot risk={worstRisk} size="md" />
               <TechStackTag tag={proofSystem} withoutTooltip />
             </TooltipTrigger>
             <TooltipContent>
@@ -124,14 +118,15 @@ function TrustedSetupCells({
               {trustedSetups.trustedSetup.map((trustedSetup, i) => {
                 return (
                   <div key={trustedSetup.id} className="flex gap-2">
-                    <div
-                      className={cn(
-                        'size-5 shrink-0 rounded-full',
-                        trustedSetup.risk === 'green' && 'bg-positive',
-                        trustedSetup.risk === 'yellow' && 'bg-warning',
-                        trustedSetup.risk === 'red' && 'bg-negative',
-                      )}
-                    />
+                    {trustedSetup.risk === 'N/A' ? (
+                      <NotApplicableBadge />
+                    ) : (
+                      <TrustedSetupRiskDot
+                        risk={trustedSetup.risk}
+                        size="sm"
+                        className="shrink-0"
+                      />
+                    )}
                     <span className="text-xs leading-normal">
                       {trustedSetup.shortDescription}
                     </span>
