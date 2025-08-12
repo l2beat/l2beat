@@ -327,7 +327,7 @@ export const paradex: ScalingProject = {
       'Paradex uses [stateful compression since v0.13.4](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/#v0_13_4).',
     genesisState: 'There is no non-empty genesis state.',
     dataFormat:
-      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/).',
+      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/architecture/data-availability/).',
   },
   stateValidation: {
     categories: [STATE_VALIDATION.VALIDITY_PROOFS],
