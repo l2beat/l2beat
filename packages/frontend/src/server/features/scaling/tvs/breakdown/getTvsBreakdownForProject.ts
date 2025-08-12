@@ -56,6 +56,8 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
         {
           id: TokenId('1'),
           valueForProject: 100,
+          value: 100,
+          amount: 100,
           category: 'ether',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
@@ -78,6 +80,8 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
         {
           id: TokenId('4'),
           valueForProject: 100,
+          value: 100,
+          amount: 100,
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
@@ -102,6 +106,8 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
         {
           id: TokenId('2'),
           valueForProject: 100,
+          value: 100,
+          amount: 100,
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',
@@ -126,6 +132,8 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
         {
           id: TokenId('3'),
           valueForProject: 100,
+          value: 100,
+          amount: 100,
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',
