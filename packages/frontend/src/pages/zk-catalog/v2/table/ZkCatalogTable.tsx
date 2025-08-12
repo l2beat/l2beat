@@ -15,9 +15,9 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableCell, TableRow } from '~/components/table/Table'
 import { useTable } from '~/hooks/useTable'
-import { cn } from '~/utils/cn'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { TechStackTag } from '../components/TechStackTag'
+import { TrustedSetupRiskDot } from '../components/TrustedSetupRiskDot'
 import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
 import { BasicZkCatalogTable } from './BasicZkCatalogTable'
 import { zkCatalogColumns } from './Columns'
@@ -39,6 +39,12 @@ export function ZkCatalogTable({ entries }: { entries: ZkCatalogEntry[] }) {
       columnPinning: {
         left: ['#', 'logo'],
       },
+      sorting: [
+        {
+          id: '#',
+          desc: false,
+        },
+      ],
     },
   })
 
@@ -96,14 +102,11 @@ function TrustedSetupCells({
         <div className="flex flex-col items-start gap-2">
           <Tooltip>
             <TooltipTrigger className="flex items-center gap-2">
-              <div
-                className={cn(
-                  'size-6 rounded-full',
-                  worstRisk === 'green' && 'bg-positive',
-                  worstRisk === 'yellow' && 'bg-warning',
-                  worstRisk === 'red' && 'bg-negative',
-                )}
-              />
+              {worstRisk === 'N/A' ? (
+                <span className="text-2xl leading-none">🤩</span>
+              ) : (
+                <TrustedSetupRiskDot risk={worstRisk} size="md" />
+              )}
               <TechStackTag tag={proofSystem} withoutTooltip />
             </TooltipTrigger>
             <TooltipContent>
@@ -114,19 +117,19 @@ function TrustedSetupCells({
                   className="inline-block"
                   withoutTooltip
                 />
-                :
               </div>
               {trustedSetups.trustedSetup.map((trustedSetup, i) => {
                 return (
                   <div key={trustedSetup.id} className="flex gap-2">
-                    <div
-                      className={cn(
-                        'size-5 shrink-0 rounded-full',
-                        trustedSetup.risk === 'green' && 'bg-positive',
-                        trustedSetup.risk === 'yellow' && 'bg-warning',
-                        trustedSetup.risk === 'red' && 'bg-negative',
-                      )}
-                    />
+                    {trustedSetup.risk === 'N/A' ? (
+                      <div className="mt-px text-lg leading-none">🤩</div>
+                    ) : (
+                      <TrustedSetupRiskDot
+                        risk={trustedSetup.risk}
+                        size="sm"
+                        className="shrink-0"
+                      />
+                    )}
                     <span className="text-xs leading-normal">
                       {trustedSetup.shortDescription}
                     </span>
@@ -153,15 +156,13 @@ function TrustedSetupCells({
   )
 }
 
-function pickWorstRisk(trustedSetups: TrustedSetup[]) {
-  return trustedSetups.reduce<'green' | 'yellow' | 'red'>(
-    (acc, trustedSetup) => {
-      if (acc === 'red') return acc
-      if (trustedSetup.risk === 'red') return 'red'
-      if (acc === 'yellow') return acc
-      if (trustedSetup.risk === 'yellow') return 'yellow'
-      return 'green'
-    },
-    'green',
-  )
+function pickWorstRisk(trustedSetups: TrustedSetup[]): TrustedSetup['risk'] {
+  const riskHierarchy = ['red', 'yellow', 'green', 'N/A'] as const
+
+  for (const risk of riskHierarchy) {
+    if (trustedSetups.some((ts) => ts.risk === risk)) {
+      return risk
+    }
+  }
+  return 'N/A'
 }

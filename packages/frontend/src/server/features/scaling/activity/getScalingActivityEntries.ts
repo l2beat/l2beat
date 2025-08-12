@@ -105,8 +105,6 @@ function getEthereumEntry(
     icon: getProjectIcon('ethereum'),
     slug: 'ethereum',
     tab,
-    // Ethereum is always at the top so it is always stageOrder 3
-    stageOrder: 3,
     filterable: undefined,
     data: {
       tps: data.tps,

@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "timestamp": 1754910994,
-  "configHash": "0xc21763bf201b9b076291a3c0f4c38ebbb27e5b957d63d7bcdf5bb6d3bd6ff18c",
+  "timestamp": 1754921961,
+  "configHash": "0x9ab90762ab1fe2be54741263b30757e3bf40ba7957d26b545ee5adbbe346645a",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -518,7 +518,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -704,14 +704,22 @@
       "name": "PlonkVerifierPostEuclid-2",
       "address": "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x4ad50f22109a8ff91daad934d6d1519aa3d186c4d8ebc1ffdc165e0986aa23ae"
+      ],
       "proxyType": "immutable",
       "sinceTimestamp": 1753339799,
       "sinceBlock": 22987338,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": ""
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.5.2/bundle/verifier.bin"
+        }
+      ]
     },
     {
       "name": "TimelockSCSlow",
@@ -978,11 +986,11 @@
         "$upgradeCount": 2,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1754895635,
+        "getFirstUnfinalizedMessageEnqueueTime": 1754910035,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 959990,
-        "nextUnfinalizedQueueIndex": 959970,
+        "nextCrossDomainMessageIndex": 960001,
+        "nextUnfinalizedQueueIndex": 959988,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -2036,15 +2044,15 @@
         "$upgradeCount": 7,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 365509,
+        "lastFinalizedBatchIndex": 365551,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 365551,
-          "lastFinalizedBatchIndex": 365509,
-          "lastFinalizeTimestamp": 1754898671,
+          "lastCommittedBatchIndex": 365587,
+          "lastFinalizedBatchIndex": 365551,
+          "lastFinalizeTimestamp": 1754912471,
           "flags": 1,
           "reserved": 0
         },
@@ -2366,7 +2374,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2771,7 +2779,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 23286780747421,
+        "totalBridgedUSDC": 23326272217791,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -4030,6 +4038,6 @@
     "scroll/ScrollOwner": "0x14d7a582f7d39f4ed732aa56a3c9031c8fc613fa58dfaf42f4f572f19fae54b3",
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23117449 },
+  "usedBlockNumbers": { "ethereum": 23118358 },
   "permissionsConfigHash": "0x6026e9d5cd2befcf9d6ce6f3a1484a20c9d9cbb7eefe920713e0b8b385097c3f"
 }

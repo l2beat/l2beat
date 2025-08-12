@@ -1,6 +1,6 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { RollupsTable } from '~/components/table/RollupsTable'
+import { BasicTable } from '~/components/table/BasicTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
@@ -42,5 +42,5 @@ export function ScalingSummaryRollupsTable({ entries }: Props) {
     },
   })
 
-  return <RollupsTable table={table} />
+  return <BasicTable table={table} />
 }

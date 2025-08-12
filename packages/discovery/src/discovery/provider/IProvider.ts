@@ -5,6 +5,7 @@ import type {
   CelestiaApiClient,
   CoingeckoClient,
 } from '@l2beat/shared'
+import type { CelestiaEvent } from '@l2beat/shared/build/clients/api-celestia/types'
 import type {
   Bytes,
   ChainSpecificAddress,
@@ -107,5 +108,5 @@ export interface IProvider extends IStatelessProvider {
     namespace: string,
     commitment: string,
   ): Promise<boolean>
-  getCelestiaBlockResultLogs(height: number): Promise<string[]>
+  getCelestiaBlockResultEvents(height: number): Promise<CelestiaEvent[]>
 }
