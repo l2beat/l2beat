@@ -10,23 +10,25 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../../types'
 
-interface StackedTvsChartDataPoint {
+interface TokenCategoryTvsChartDataPoint {
   timestamp: number
-  native: number | null
-  canonical: number | null
-  external: number | null
+  ether: number | null
+  stablecoin: number | null
+  btc: number | null
+  other: number | null
 }
 
 interface Props {
-  data: StackedTvsChartDataPoint[] | undefined
+  data: TokenCategoryTvsChartDataPoint[] | undefined
   syncedUntil: number | undefined
+  dataKeys: (keyof typeof tokenCategoryTvsChartMeta)[]
+  toggleDataKey: (dataKey: string) => void
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
@@ -34,25 +36,30 @@ interface Props {
   className?: string
 }
 
-const chartMeta = {
-  canonical: {
-    label: 'Canonically bridged',
-    color: 'var(--chart-stacked-purple)',
+export const tokenCategoryTvsChartMeta = {
+  ether: {
+    label: 'Ether',
+    color: 'var(--chart-ethereum)',
     indicatorType: { shape: 'square' },
   },
-  native: {
-    label: 'Natively minted',
-    color: 'var(--chart-stacked-pink)',
+  stablecoin: {
+    label: 'Stablecoins',
+    color: 'var(--chart-teal)',
     indicatorType: { shape: 'square' },
   },
-  external: {
-    label: 'Externally bridged',
-    color: 'var(--chart-stacked-yellow)',
+  btc: {
+    label: 'Bitcoin',
+    color: 'var(--chart-orange)',
+    indicatorType: { shape: 'square' },
+  },
+  other: {
+    label: 'Other',
+    color: 'var(--chart-yellow-lime)',
     indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
 
-export function StackedTvsChart({
+export function TokenCategoryTvsChart({
   data,
   syncedUntil,
   milestones,
@@ -60,13 +67,13 @@ export function StackedTvsChart({
   isLoading,
   className,
   tickCount,
+  dataKeys,
+  toggleDataKey,
 }: Props) {
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
-
   return (
     <ChartContainer
       data={data}
-      meta={chartMeta}
+      meta={tokenCategoryTvsChartMeta}
       isLoading={isLoading}
       milestones={milestones}
       interactiveLegend={{
@@ -78,9 +85,27 @@ export function StackedTvsChart({
       <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
-          dataKey="external"
-          hide={!dataKeys.includes('external')}
-          fill={chartMeta.external.color}
+          dataKey="other"
+          hide={!dataKeys.includes('other')}
+          fill={tokenCategoryTvsChartMeta.other.color}
+          fillOpacity={1}
+          strokeWidth={0}
+          stackId="a"
+          isAnimationActive={false}
+        />
+        <Area
+          dataKey="btc"
+          hide={!dataKeys.includes('btc')}
+          fill={tokenCategoryTvsChartMeta.btc.color}
+          fillOpacity={1}
+          strokeWidth={0}
+          stackId="a"
+          isAnimationActive={false}
+        />
+        <Area
+          dataKey="stablecoin"
+          hide={!dataKeys.includes('stablecoin')}
+          fill={tokenCategoryTvsChartMeta.stablecoin.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -88,23 +113,14 @@ export function StackedTvsChart({
           activeDot={false}
         />
         <Area
-          dataKey="native"
-          hide={!dataKeys.includes('native')}
-          fill={chartMeta.native.color}
+          dataKey="ether"
+          hide={!dataKeys.includes('ether')}
+          fill={tokenCategoryTvsChartMeta.ether.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
           activeDot={false}
-        />
-        <Area
-          dataKey="canonical"
-          hide={!dataKeys.includes('canonical')}
-          fill={chartMeta.canonical.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId="a"
-          isAnimationActive={false}
         />
         {getCommonChartComponents({
           data,
@@ -166,7 +182,10 @@ function CustomTooltip({
         <div className="mt-2 flex flex-col gap-2">
           {actualPayload.map((entry) => {
             if (entry.type === 'none') return null
-            const config = chartMeta[entry.name as keyof typeof chartMeta]
+            const config =
+              tokenCategoryTvsChartMeta[
+                entry.name as keyof typeof tokenCategoryTvsChartMeta
+              ]
             return (
               <div
                 key={entry.name}

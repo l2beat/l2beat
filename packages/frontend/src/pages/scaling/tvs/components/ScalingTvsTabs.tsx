@@ -1,6 +1,5 @@
 import type { Milestone } from '@l2beat/config'
 import { CountBadge } from '~/components/badge/CountBadge'
-import { ScalingStackedTvsChart } from '~/components/chart/tvs/stacked/ScalingStackedTvsChart'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
@@ -19,6 +18,7 @@ import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
+import { ScalingTvsCharts } from './ScalingTvsCharts'
 import { ScalingTvsTable } from './table/ScalingTvsTable'
 
 type Props = TabbedScalingEntries<ScalingTvsEntry> & {
@@ -72,7 +72,7 @@ export function ScalingTvsTabs(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
             <RollupsInfo />
-            <ScalingStackedTvsChart
+            <ScalingTvsCharts
               tab="rollups"
               entries={entries.rollups}
               milestones={props.milestones}
@@ -84,7 +84,7 @@ export function ScalingTvsTabs(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums" className="pt-5">
             <ValidiumsAndOptimiumsInfo />
-            <ScalingStackedTvsChart
+            <ScalingTvsCharts
               tab="validiumsAndOptimiums"
               entries={entries.validiumsAndOptimiums}
               milestones={props.milestones}
@@ -96,7 +96,7 @@ export function ScalingTvsTabs(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others" className="pt-5">
             <OthersInfo />
-            <ScalingStackedTvsChart
+            <ScalingTvsCharts
               tab="others"
               entries={entries.others}
               milestones={props.milestones}

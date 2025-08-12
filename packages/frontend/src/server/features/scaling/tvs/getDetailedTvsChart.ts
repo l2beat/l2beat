@@ -15,51 +15,43 @@ import {
 } from './utils/projectFilterUtils'
 import { rangeToResolution, TvsChartRange } from './utils/range'
 
-export const TvsChartDataParams = v.object({
-  range: v.union([
-    v.object({
-      type: TvsChartRange,
-    }),
-    v.object({
-      type: v.literal('custom'),
-      from: v.number(),
-      to: v.number(),
-    }),
-  ]),
-  filter: TvsProjectFilter,
+export const DetailedTvsChartDataParams = v.object({
+  range: TvsChartRange,
   excludeAssociatedTokens: v.boolean(),
+  filter: TvsProjectFilter,
 })
 
-export type TvsChartDataParams = v.infer<typeof TvsChartDataParams>
+export type DetailedTvsChartDataParams = v.infer<
+  typeof DetailedTvsChartDataParams
+>
 
-export type TvsChartDataPoint = [
+type DetailedTvsChartDataPoint = [
   timestamp: number,
+  ethPrice: number | null,
   native: number | null,
   canonical: number | null,
   external: number | null,
-  ethPrice: number | null,
+  ether: number | null,
+  stablecoins: number | null,
+  bitcoin: number | null,
+  other: number | null,
 ]
-export type TvsChartData = {
-  chart: TvsChartDataPoint[]
+
+export type DetailedTvsChartData = {
+  chart: DetailedTvsChartDataPoint[]
   syncedUntil: number
 }
 
 /**
- * @returns {
- *  total: {
- *    usd: number
- *    eth: number
- *  }
- *  chart: [timestamp, native, canonical, external, ethPrice][] - all numbers
- * }
+ * @returns [timestamp, ethPrice, native, canonical, external, ether, stablecoins, bitcoin, other][]
  */
-export async function getTvsChart({
+export async function getDetailedTvsChart({
   range,
   excludeAssociatedTokens,
   filter,
-}: TvsChartDataParams): Promise<TvsChartData> {
+}: DetailedTvsChartDataParams): Promise<DetailedTvsChartData> {
   if (env.MOCK) {
-    return getMockTvsChartData({
+    return getMockDetailedTvsChartData({
       range,
       excludeAssociatedTokens,
       filter,
@@ -81,9 +73,11 @@ export async function getTvsChart({
     getEthPrices(),
     getSummedTvsValues(
       tvsProjects.map((p) => p.projectId),
-      range,
+      { type: range },
       !forSummary
-        ? 'PROJECT'
+        ? excludeAssociatedTokens
+          ? 'PROJECT_WA'
+          : 'PROJECT'
         : excludeAssociatedTokens
           ? 'SUMMARY_WA'
           : 'SUMMARY',
@@ -96,17 +90,31 @@ export async function getTvsChart({
 function getChartData(
   values: SummedTvsValues[],
   ethPrices: Record<number, number>,
-): TvsChartData {
+): DetailedTvsChartData {
   let syncedUntil = 0
-  const chart: TvsChartDataPoint[] = []
+  const chart: DetailedTvsChartDataPoint[] = []
 
   for (const value of values) {
     if (
       value.native === null &&
       value.canonical === null &&
-      value.external === null
+      value.external === null &&
+      value.ether === null &&
+      value.stablecoin === null &&
+      value.btc === null &&
+      value.other === null
     ) {
-      chart.push([value.timestamp, null, null, null, null] as const)
+      chart.push([
+        value.timestamp,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+      ] as const)
       continue
     }
 
@@ -115,10 +123,14 @@ function getChartData(
 
     chart.push([
       value.timestamp,
+      ethPrice,
       value.native,
       value.canonical,
       value.external,
-      ethPrice,
+      value.ether,
+      value.stablecoin,
+      value.btc,
+      value.other,
     ] as const)
 
     syncedUntil = value.timestamp
@@ -130,14 +142,16 @@ function getChartData(
   }
 }
 
-function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
-  const resolution = rangeToResolution(range)
-  const [from, to] = getTimestampedValuesRange(range, resolution)
+function getMockDetailedTvsChartData({
+  range,
+}: DetailedTvsChartDataParams): DetailedTvsChartData {
+  const resolution = rangeToResolution({ type: range })
+  const [from, to] = getTimestampedValuesRange({ type: range }, resolution)
   const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
   return {
     chart: timestamps.map((timestamp) => {
-      return [timestamp, 3000, 2000, 1000, 1200]
+      return [timestamp, 3000, 2000, 1000, 1200, 1000, 1000, 1000, 1000]
     }),
     syncedUntil: timestamps[timestamps.length - 1] ?? 0,
   }
