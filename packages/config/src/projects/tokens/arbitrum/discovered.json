@@ -1,7 +1,7 @@
 {
   "name": "tokens",
   "chain": "arbitrum",
-  "timestamp": 1754307917,
+  "timestamp": 1755011314,
   "configHash": "0xa6186a6135c321188e4eb4b573b6a66afcd380bb58ff72a8a9537845c4c6090e",
   "entries": [
     {
@@ -128,7 +128,7 @@
         "owner": "arb1:0x0000000000000000000000000000000000000000",
         "paused": false,
         "symbol": "EUTBL",
-        "totalSupply": 13251025805678,
+        "totalSupply": 13694954017212,
         "trustedForwarder": "arb1:0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -324,6 +324,6 @@
     "tokens/EUTBL": "0x81f0a4ba908b50bd6aeb98ad11d5d6a3e2983f1ae5079341231489456a5b84f8",
     "tokens/PermissionManager": "0x68a32dbe1505111ca8a93551d5ccd78d16a6aa3a631c6206c804f4ae8b405767"
   },
-  "usedBlockNumbers": { "arbitrum": 364865156 },
-  "permissionsConfigHash": "0x0d8dfcb2f463bc6c8d4ba85c41d70a5da10c54484d03e6a8f584d7eb5c9266b3"
+  "usedBlockNumbers": { "arbitrum": 367680683 },
+  "permissionsConfigHash": "0x7d346d89848c9776ec064c9cb072f1ab7310ba47fed16218ee7768eac453777a"
 }
