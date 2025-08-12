@@ -39,6 +39,12 @@ export function ZkCatalogTable({ entries }: { entries: ZkCatalogEntry[] }) {
       columnPinning: {
         left: ['#', 'logo'],
       },
+      sorting: [
+        {
+          id: '#',
+          desc: false,
+        },
+      ],
     },
   })
 
