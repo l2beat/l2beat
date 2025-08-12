@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -88,38 +89,44 @@ export function CostsChart({
   hasPostedData,
   hasBlobs,
 }: Props) {
-  const chartMeta = {
-    calldata: {
-      label: 'Calldata',
-      color: 'var(--chart-stacked-blue)',
-      indicatorType: { shape: 'square' },
-    },
-    ...(hasBlobs
-      ? {
-          blobs: {
-            label: 'Blobs',
-            color: 'var(--chart-stacked-yellow)',
-            indicatorType: { shape: 'square' },
-          },
-        }
-      : {}),
-    compute: {
-      label: 'Compute',
-      color: 'var(--chart-stacked-pink)',
-      indicatorType: { shape: 'square' },
-    },
-    overhead: {
-      label: 'Overhead',
-      color: 'var(--chart-stacked-purple)',
-      indicatorType: { shape: 'square' },
-    },
-    posted: {
-      label: 'Data posted',
-      color: 'var(--chart-emerald)',
-      indicatorType: { shape: 'line' },
-    },
-  } satisfies ChartMeta
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, ['posted'])
+  const chartMeta = useMemo(
+    () => ({
+      calldata: {
+        label: 'Calldata',
+        color: 'var(--chart-stacked-blue)',
+        indicatorType: { shape: 'square' },
+      },
+      ...(hasBlobs
+        ? {
+            blobs: {
+              label: 'Blobs',
+              color: 'var(--chart-stacked-yellow)',
+              indicatorType: { shape: 'square' },
+            },
+          }
+        : {}),
+      compute: {
+        label: 'Compute',
+        color: 'var(--chart-stacked-pink)',
+        indicatorType: { shape: 'square' },
+      },
+      overhead: {
+        label: 'Overhead',
+        color: 'var(--chart-stacked-purple)',
+        indicatorType: { shape: 'square' },
+      },
+      posted: {
+        label: 'Data posted',
+        color: 'var(--chart-emerald)',
+        indicatorType: { shape: 'line' },
+      },
+    }),
+    [hasBlobs],
+  ) satisfies ChartMeta
+
+  const hidden = useMemo<['posted']>(() => ['posted'], [])
+
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, hidden)
 
   const resolution = rangeToResolution({ type: range })
 

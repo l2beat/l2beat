@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registers 'resolvers' which are allowed to supply authoritative data for blockchain balances to support escapes without merkle proofs from e.g. DeFi smart contracts on L2. A resolver can either be registered directly by the respective contract on L2 or by its deployer from L1, using deterministic deployment derivation."
+}

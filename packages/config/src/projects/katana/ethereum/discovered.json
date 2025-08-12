@@ -1,7 +1,7 @@
 {
   "name": "katana",
   "chain": "ethereum",
-  "timestamp": 1754486452,
+  "timestamp": 1754909593,
   "configHash": "0xa29cce979f02451c6117d619654123a3e517735b29a6018de613fbc9eb92832c",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -88,11 +88,11 @@
         "lastAccInputHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
-        "latestBlockNumber": 7738088,
-        "latestOutputIndex": 862,
+        "latestBlockNumber": 8161688,
+        "latestOutputIndex": 977,
         "networkName": "katana",
-        "nextBlockNumber": 7738089,
-        "nextOutputIndex": 863,
+        "nextBlockNumber": 8161689,
+        "nextOutputIndex": 978,
         "optimisticMode": false,
         "optimisticModeManager": "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "pendingAdmin": "eth:0x0000000000000000000000000000000000000000",
@@ -241,7 +241,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 2939,
+        "nonce": 2945,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -576,6 +576,40 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Safe",
+      "address": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1752784955,
+      "sinceBlock": 22941387,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c",
+          "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
+          "eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xea6ba5f688ae1d624380528587c86ae988712e8745a1700ff52c9e4db29c8726",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 3 (33%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
       "name": "ProxyAdmin",
       "address": "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56",
       "type": "Contract",
@@ -612,7 +646,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -655,7 +689,7 @@
           }
         },
         "asset": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "backingDifference": { "positive": true, "difference": 2590 },
+        "backingDifference": { "positive": true, "difference": 2122 },
         "decimals": 8,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0x7317613d3079fd0c32c0dda038dce0e4bd277cdaa8af2d5aece3fd671e98171d",
@@ -680,15 +714,15 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 33124489038,
+        "stakedAssets": 37530460317,
         "symbol": "vbWBTC",
-        "totalAssets": 33124489038,
-        "totalSupply": 33124486448,
+        "totalAssets": 37530460317,
+        "totalSupply": 37530458195,
         "underlyingToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "version": "0.5.0",
-        "yield": 2590,
+        "yield": 2122,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
-        "yieldRecipient": "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
+        "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x812B2C6Ab3f4471c0E43D4BB61098a9211017427",
         "yieldVaultMaximumSlippagePercentage": "10000000000000000"
       },
@@ -713,7 +747,7 @@
         "0x4988be5ea9a1e587b7ad36189901d0e442b1905a12fcfb0f0896de5d089234cd"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -758,7 +792,7 @@
         "asset": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "backingDifference": {
           "positive": true,
-          "difference": "395775839316782355"
+          "difference": "321191560064135358"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -784,15 +818,15 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "12941050844038343151305",
+        "stakedAssets": "12797224619828997554373",
         "symbol": "vbETH",
-        "totalAssets": "12941050844038343151305",
-        "totalSupply": "12940655068199026368950",
+        "totalAssets": "12797224619828997554373",
+        "totalSupply": "12796903428268933419015",
         "underlyingToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "version": "0.5.0",
-        "yield": "395775839316782355",
+        "yield": "321191560064135358",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
-        "yieldRecipient": "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
+        "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x31A5684983EeE865d943A696AAC155363bA024f9",
         "yieldVaultMaximumSlippagePercentage": "10000000000000000"
       },
@@ -871,7 +905,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -982,7 +1016,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1027,7 +1061,7 @@
         "asset": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "backingDifference": {
           "positive": true,
-          "difference": 8494288091399591
+          "difference": 5601059359820065
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1053,15 +1087,15 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "68159770727763530450",
+        "stakedAssets": "55230128791127723099",
         "symbol": "vbUSDS",
-        "totalAssets": "68159770727763530450",
-        "totalSupply": "68151276439672130859",
+        "totalAssets": "55230128791127723099",
+        "totalSupply": "55224527731767903034",
         "underlyingToken": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "version": "0.5.0",
-        "yield": 8494288091399591,
+        "yield": 5601059359820065,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
-        "yieldRecipient": "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
+        "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x0868076663Bbc6638ceDd27704cc8F0Fa53d5b81",
         "yieldVaultMaximumSlippagePercentage": "10000000000000000"
       },
@@ -1188,7 +1222,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 143,
+        "nonce": 149,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1385,7 +1419,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1428,7 +1462,7 @@
           }
         },
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "backingDifference": { "positive": true, "difference": 5540444341 },
+        "backingDifference": { "positive": true, "difference": 5937945355 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xf208e01223892bb2dfb35c2d306f682552de4492b4e45dff4876243fc048a8c2",
@@ -1453,15 +1487,15 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 86484643285276,
+        "stakedAssets": 88397921512642,
         "symbol": "vbUSDC",
-        "totalAssets": 86484643285276,
-        "totalSupply": 86479102840935,
+        "totalAssets": 88397921512642,
+        "totalSupply": 88391983567287,
         "underlyingToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "version": "0.5.0",
-        "yield": 5540444341,
+        "yield": 5937945355,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
-        "yieldRecipient": "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
+        "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
         "yieldVaultMaximumSlippagePercentage": "10000000000000000"
       },
@@ -1473,6 +1507,11 @@
     },
     {
       "address": "eth:0x54DFA4B635E7eB98515fEBA81d360A3871739277",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x59cE4e1709c7E462F3b72Ca3e1256dFa7358FC29",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1614,6 +1653,16 @@
       }
     },
     {
+      "address": "eth:0x6B2Ba82994A1606605af1F11E50DA0b2B0cee6e6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52",
       "type": "Contract",
@@ -1651,7 +1700,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1694,7 +1743,7 @@
           }
         },
         "asset": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "backingDifference": { "positive": true, "difference": 1156903403 },
+        "backingDifference": { "positive": true, "difference": 5028683995 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xb80a4f7d2a2cc76fdaf2e936f017dddaca3e63f59cc318bc7506fafc54b81d3c",
@@ -1719,15 +1768,15 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 24439403047041,
+        "stakedAssets": 23219298962643,
         "symbol": "vbUSDT",
-        "totalAssets": 24439403047041,
-        "totalSupply": 24438246143638,
+        "totalAssets": 23219298962643,
+        "totalSupply": 23214270278648,
         "underlyingToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "version": "0.5.0",
-        "yield": 1156903403,
+        "yield": 5028683995,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
-        "yieldRecipient": "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
+        "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
         "yieldVaultMaximumSlippagePercentage": "10000000000000000"
       },
@@ -1942,7 +1991,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 21,
+        "nonce": 24,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2052,7 +2101,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2243,7 +2292,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 21,
+        "nonce": 24,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2437,13 +2486,55 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1730198999,
+      "sinceBlock": 21070804,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x6B2Ba82994A1606605af1F11E50DA0b2B0cee6e6",
+          "eth:0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b",
+          "eth:0x54DFA4B635E7eB98515fEBA81d360A3871739277",
+          "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1",
+          "eth:0x59cE4e1709c7E462F3b72Ca3e1256dFa7358FC29",
+          "eth:0xfd5E854b73a239c9052d89C53D1313f5AfB860ac"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x351a80af369845a1d7c52607cdd385b378bc661c149942b8eadfbeb20da78a32",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 83,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0xfd5E854b73a239c9052d89C53D1313f5AfB860ac",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -2608,6 +2699,9 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50": [
+      "constructor(address _singleton)"
     ],
     "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56": [
       "constructor(address initialOwner)",
@@ -3905,6 +3999,9 @@
     ],
     "eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E": [
       "constructor(address _singleton)"
+    ],
+    "eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb": [
+      "constructor(address _singleton)"
     ]
   },
   "usedTemplates": {
@@ -3928,6 +4025,6 @@
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "usedBlockNumbers": { "ethereum": 23082286 },
-  "permissionsConfigHash": "0xe3b24dc9d40320cf35a8cbac2122c7b1f69aa352f417f4c122bafef35ad29fc0"
+  "usedBlockNumbers": { "ethereum": 23117333 },
+  "permissionsConfigHash": "0x46b5a266a9e2f73db176953237223619dd7128692f996f6ed0e9488a6b2d22b9"
 }

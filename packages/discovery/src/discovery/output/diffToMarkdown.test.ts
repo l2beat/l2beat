@@ -232,7 +232,7 @@ describe(contractDiffToMarkdown.name, () => {
     )
   })
 
-  it('trucating, no meta', () => {
+  it('truncating, no meta', () => {
     const maxLength = 48
     const result = contractDiffToMarkdown(
       {

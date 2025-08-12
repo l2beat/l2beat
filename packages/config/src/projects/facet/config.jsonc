@@ -3,53 +3,46 @@
   "name": "facet",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
+    "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
+    "eth:0x4e2eba30a786c0643699b92234d74a71e958c08e",
+    "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
     "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
-    "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C"
+    "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4"
   ],
   "names": {
-    "eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e": "SystemConfig",
-    "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "FacetEtherBridgeV6",
-    "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1StandardBridge"
+    "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4": "Rollup",
+    "eth:0x4e2eba30a786c0643699b92234d74a71e958c08e": "L1Bridge",
+    "eth:0x00000000000000000000000000000000000face7": "Inbox",
+    "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1ETHLockbox", // deprecated
+    "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "FastExternalBridge",
+    "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": "L2Bridge" // (L1Bridge counterpart)
   },
+
   "overrides": {
-    "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": {
-      "ignoreMethods": ["initCodeHash"]
+    "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE": {
+      "ignoreDiscovery": true
     },
-    "eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e": {
-      "ignoreInWatchMode": ["scalar", "overhead"],
-      "ignoreRelatives": ["gasPayingToken"],
-      "fields": {
-        "sequencerInbox": {
-          "handler": {
-            "type": "hardcoded",
-            "value": "eth:0x00000000000000000000000000000000000FacE7"
-          }
-        },
-        "sequencerAddress": {
-          "handler": {
-            "type": "hardcoded",
-            "value": "eth:0x0000000000000000000000000000000000000000"
-          }
-        },
-        "batcherHash": {
-          "handler": {
-            "type": "hardcoded",
-            "value": "eth:0x0000000000000000000000000000000000000000"
-          }
-        },
-        "gasLimit": {
-          "description": "Gas limit for blocks on L2.",
-          "severity": "LOW"
-        },
-        "owner": {
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
-            }
-          ]
-        }
-      }
+    "facet:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001": {
+      "ignoreDiscovery": true
+    },
+    "facet:0x4200000000000000000000000000000000000018": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": {
+      "ignoreMethods": [
+        "admin",
+        "l2TokenBridge",
+        "OTHER_BRIDGE",
+        "otherBridge",
+        "weth",
+        "messenger",
+        "MESSENGER",
+        "superchainConfig",
+        "systemConfig"
+      ]
     }
   }
 }

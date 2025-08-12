@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xdbc9b7feab155628ae851b304d06611135723d06
+
+# Diff at Tue, 05 Aug 2025 16:35:17 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@102320c86f8441c4ad97dd092d898f3142ff4433 block: 1754307769
+- current timestamp: 1754307769
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754307769 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v5.0.0)."
+    }
+```
+
 Generated with discovered.json: 0x1742f06e96a83324afaa06245b5c558d28837716
 
 # Diff at Mon, 04 Aug 2025 11:43:14 GMT:

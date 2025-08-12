@@ -265,7 +265,7 @@
         },
         "priceId": "wrapped-bitcoin"
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

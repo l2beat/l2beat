@@ -30,6 +30,16 @@ export const risc0: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      title: 'rv32im circuit soundness vulnerability',
+      url: 'https://x.com/RiscZero/status/1935404812146725042',
+      date: '2024-06-18T00:00:00Z',
+      description:
+        'Release of Risc0 2.1.0 with a fix of a missing constraint in rv32im circuit that affected any 3-register RISC-V instruction.',
+      type: 'incident',
+    },
+  ],
   zkCatalogInfo: {
     creator: 'RISC Zero',
     techStack: {
