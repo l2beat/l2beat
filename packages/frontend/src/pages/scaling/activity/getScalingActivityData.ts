@@ -34,6 +34,9 @@ export async function getScalingActivityData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Activity - L2BEAT',
+        description:
+          'Track activity across Ethereum scaling projects with interactive charts.',
         openGraph: {
           url: req.originalUrl,
           image: '/meta-images/scaling/activity/opengraph-image.png',
