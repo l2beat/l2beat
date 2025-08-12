@@ -18,55 +18,39 @@ interface Entrypoint {
   name?: string
 }
 
-export async function generateEntrypoints(configReader: ConfigReader) {
-  // Temporarily we only create entrypoints for shared projects
-  const sharedProjects = configReader
-    .readAllDiscoveredProjects()
-    .filter(({ project }) => project.startsWith('shared-'))
-
-  for (const { project, chains } of sharedProjects) {
-    const entrypoints = generateEntrypointsForProject(
-      project,
-      chains,
-      configReader,
-    )
-    const projectDir = configReader.getProjectPath(project)
-    const outputFile = join(projectDir, ENTRYPOINTS_FILENAME)
-    await writeFile(outputFile, JSON.stringify(entrypoints, null, 2))
-  }
+export async function generateEntrypoints(
+  configReader: ConfigReader,
+  chain: string,
+  project: string,
+) {
+  const entrypoints = generateEntrypointsForProject(
+    project,
+    chain,
+    configReader,
+  )
+  const projectDir = configReader.getProjectPath(project)
+  const outputFile = join(projectDir, ENTRYPOINTS_FILENAME)
+  await writeFile(outputFile, JSON.stringify(entrypoints, null, 2))
 }
 
 function generateEntrypointsForProject(
   project: string,
-  chains: string[],
+  chain: string,
   configReader: ConfigReader,
 ): Entrypoints {
-  const entrypoints: Entrypoint[] = []
+  const discovery = configReader.readDiscovery(project, chain)
+  const entrypoints: Entrypoint[] = discovery.entries
+    .filter((e) => e.type !== 'Reference')
+    .map((e) => ({
+      address: e.address,
+      type: e.type,
+      ...(e.name && { name: e.name }),
+    }))
 
-  // TODO: this is temporary, until we have single disovered.json with one timestamp
-  let timestamp = 0 // see TODO above
-  const usedBlockNumbers: Record<string, number | undefined> = {}
-
-  for (const chain of chains) {
-    const discovery = configReader.readDiscovery(project, chain)
-
-    // TODO: this is temporary, until we have single disovered.json with one timestamp
-    timestamp = discovery.timestamp
-    usedBlockNumbers[chain] = discovery.usedBlockNumbers[chain]
-
-    discovery.entries
-      .filter((e) => e.type !== 'Reference')
-      .map((e) => ({
-        address: e.address,
-        type: e.type,
-        ...(e.name && { name: e.name }),
-      }))
-      .forEach((e) => entrypoints.push(e))
-  }
   return {
     project,
-    timestamp,
-    usedBlockNumbers,
+    timestamp: discovery.timestamp,
+    usedBlockNumbers: discovery.usedBlockNumbers,
     entrypoints,
   }
 }
