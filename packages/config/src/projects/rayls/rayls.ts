@@ -23,7 +23,6 @@ export const rayls: ScalingProject = upcomingL2({
         'https://discord.gg/6THZ96357r',
         'https://x.com/RaylsLabs',
         'https://linkedin.com/company/rayls/',
-        'https://youtube.com/@RaylsBlockchain',
       ],
     },
   },
