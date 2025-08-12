@@ -242,8 +242,8 @@ export const termstructure: ScalingProject = {
             url: 'https://etherscan.io/address/0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A#code',
           },
           {
-            title: 'Withdraw - Term Structure documentation',
-            url: 'https://docs.ts.finance/protocol-spec/general/withdraw',
+            title: 'Vault — TermMax Docs',
+            url: 'https://docs.ts.finance/protocol-mechanisms/components/vault',
           },
         ],
       },
