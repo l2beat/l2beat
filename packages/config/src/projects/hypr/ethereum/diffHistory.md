@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x22820bf50cd3bc5e85afd00b4994a775751c6184
+
+# Diff at Tue, 12 Aug 2025 14:39:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1752236915
+- current timestamp: 1755009465
+
+## Description
+
+Conduit Multisig 1 signer added.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 12 (33%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752236915 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xBB08cf90DEb93492b463f1Ee5DA9453e51643586) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA:
+-        {"isSequencerSendingBlobTx":false,"isUsingCelestia":true,"isUsingEigenDA":false}
+      errors:
++        {"opStackDA":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x20405bbf345a63a00d6a38217f4ad8d83c4c720c
 
 # Diff at Mon, 14 Jul 2025 12:45:12 GMT:
