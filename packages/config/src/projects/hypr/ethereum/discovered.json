@@ -2,7 +2,7 @@
   "name": "hypr",
   "chain": "ethereum",
   "timestamp": 1752236915,
-  "configHash": "0x0d27ae4341294e4eb2cd259699109656208f3ff3a6f986b64178563fb5afef7c",
+  "configHash": "0x6f52354601f11f67bc0066c4881f422eafddde6d97c74cf95170da2d056afad7",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -597,11 +597,6 @@
         "batcherHash": "eth:0x994c288de8418c8D3c5a4D21A69f35bF9641781C",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
-        "opStackDA": {
-          "isSequencerSendingBlobTx": false,
-          "isUsingCelestia": true,
-          "isUsingEigenDA": false
-        },
         "overhead": 188,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": {
@@ -619,6 +614,7 @@
         "version": "1.3.1",
         "VERSION": 0
       },
+      "errors": { "opStackDA": "Processing error occurred." },
       "fieldMeta": {
         "gasLimit": {
           "severity": "LOW",
