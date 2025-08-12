@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb379b0bb89c26107042dd2dc4b09ea9a23006010
+
+# Diff at Mon, 11 Aug 2025 11:28:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32817e35c9fe0ba1a1c24a734c37d91068b1565d block: 1753462283
+- current timestamp: 1754911726
+
+## Description
+
+basefeeScalar x10.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x9c9B78f798F821C2f6398f603825fd175e2427f9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        684000
++        6840000
+    }
+```
+
 Generated with discovered.json: 0xebfd33cdcaa65efe8171ae51a0d9301cc654d10f
 
 # Diff at Fri, 25 Jul 2025 15:49:56 GMT:

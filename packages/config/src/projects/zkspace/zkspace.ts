@@ -61,7 +61,6 @@ export const zkspace: ScalingProject = {
         'https://discord.gg/MJKtaYcYw8',
         'https://twitter.com/ZKBaseOfficial',
         'https://t.me/ZKSpaceOfficial',
-        'https://medium.com/zkswap',
       ],
     },
     liveness: {

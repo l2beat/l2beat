@@ -39,6 +39,12 @@ export function ZkCatalogTable({ entries }: { entries: ZkCatalogEntry[] }) {
       columnPinning: {
         left: ['#', 'logo'],
       },
+      sorting: [
+        {
+          id: '#',
+          desc: false,
+        },
+      ],
     },
   })
 
@@ -114,7 +120,6 @@ function TrustedSetupCells({
                   className="inline-block"
                   withoutTooltip
                 />
-                :
               </div>
               {trustedSetups.trustedSetup.map((trustedSetup, i) => {
                 return (

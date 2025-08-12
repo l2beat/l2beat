@@ -53,6 +53,14 @@ export const agglayer: BaseProject = {
       type: 'general',
     },
     {
+      title: 'Pessimistic Proof testnet goes live',
+      url: 'https://x.com/0xPolygon/status/1869867180415730130',
+      date: '2024-12-01T00:00:00Z',
+      description:
+        'Developers gain hands-on access to simulate cross-chain failover scenarios and test Agglayer’s fallback security model.',
+      type: 'general',
+    },
+    {
       title: 'AUSD becomes Agglayer’s stablecoin',
       url: 'https://x.com/0xPolygon/status/1855975301215658214',
       date: '2024-11-11T00:00:00Z',
