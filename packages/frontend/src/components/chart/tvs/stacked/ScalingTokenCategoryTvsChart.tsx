@@ -1,8 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
-import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
@@ -13,16 +11,14 @@ import {
 } from './TokenCategoryTvsChart'
 
 interface Props {
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
-  entries: ScalingTvsEntry[]
+  filter: TvsProjectFilter
   milestones: Milestone[]
   range: TvsChartRange
   unit: ChartUnit
 }
 
 export function ScalingTokenCategoryTvsChart({
-  tab,
-  entries,
+  filter,
   milestones,
   range,
   unit,
@@ -30,20 +26,6 @@ export function ScalingTokenCategoryTvsChart({
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     tokenCategoryTvsChartMeta,
   )
-
-  const { state: filters } = useTableFilterContext()
-
-  const filter = useMemo<TvsProjectFilter>(() => {
-    if (Object.keys(filters).length === 0) {
-      return {
-        type: tab,
-      }
-    }
-    return {
-      type: 'projects',
-      projectIds: entries.map((project) => project.id),
-    }
-  }, [entries, filters, tab])
 
   const { data, isLoading } = api.tvs.detailedChart.useQuery({
     range,
@@ -82,7 +64,6 @@ export function ScalingTokenCategoryTvsChart({
 
   return (
     <TokenCategoryTvsChart
-      className="mt-4 mb-3"
       data={chartData}
       milestones={milestones}
       unit={unit}

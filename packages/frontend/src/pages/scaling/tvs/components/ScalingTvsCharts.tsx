@@ -15,6 +15,7 @@ import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/proje
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { useScalingAssociatedTokensContext } from '../../components/ScalingAssociatedTokensContext'
+import { ChartTabs } from '../../summary/components/ChartTabs'
 
 interface Props {
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
@@ -55,6 +56,25 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
   )
   const stats = getStats(data?.chart)
 
+  const bridgingChart = (
+    <ScalingBridgingTypeTvsChart
+      unit={unit}
+      filter={filter}
+      range={timeRange}
+      excludeAssociatedTokens={excludeAssociatedTokens}
+      milestones={milestones}
+    />
+  )
+
+  const tokenChart = (
+    <ScalingTokenCategoryTvsChart
+      unit={unit}
+      filter={filter}
+      range={timeRange}
+      milestones={milestones}
+    />
+  )
+
   return (
     <div>
       <TvsChartHeader
@@ -64,22 +84,14 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
         range={timeRange}
         timeRange={chartRange}
       />
-      <div className="grid grid-cols-2 gap-x-6">
-        <ScalingBridgingTypeTvsChart
-          unit={unit}
-          filter={filter}
-          range={timeRange}
-          excludeAssociatedTokens={excludeAssociatedTokens}
-          milestones={milestones}
-        />
-        <ScalingTokenCategoryTvsChart
-          tab={tab}
-          entries={entries}
-          milestones={milestones}
-          range={timeRange}
-          unit={unit}
-        />
+      <div className="mt-4 mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
+        {bridgingChart}
+        {tokenChart}
       </div>
+      <ChartTabs
+        className="-mx-4 md:-mx-6 pb-1! lg:hidden"
+        charts={[bridgingChart, tokenChart]}
+      />
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
           <Checkbox

@@ -52,7 +52,6 @@ export function ScalingBridgingTypeTvsChart({
 
   return (
     <BridgingTypeTvsChart
-      className="mt-4 mb-3"
       data={chartData}
       milestones={milestones}
       unit={unit}
