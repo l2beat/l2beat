@@ -43,8 +43,8 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
     }
   }, [entries, filters, tab])
 
-  const { data } = api.tvs.chart.useQuery({
-    range: { type: timeRange },
+  const { data } = api.tvs.detailedChart.useQuery({
+    range: timeRange,
     excludeAssociatedTokens,
     filter,
   })
@@ -71,6 +71,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
       unit={unit}
       filter={filter}
       range={timeRange}
+      excludeAssociatedTokens={excludeAssociatedTokens}
       milestones={milestones}
     />
   )
@@ -113,13 +114,39 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
 
 function getStats(
   data:
-    | [number, number | null, number | null, number | null, number | null][]
+    | [
+        number,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+      ][]
     | undefined,
 ) {
   const pointsWithData = data?.filter(
-    ([_, __, native, canonical, external]) =>
-      native !== null && canonical !== null && external !== null,
-  ) as [number, number, number, number, number | null][]
+    ([_, __, native, canonical, external, ether, stablecoin, btc, other]) =>
+      native !== null &&
+      canonical !== null &&
+      external !== null &&
+      ether !== null &&
+      stablecoin !== null &&
+      btc !== null &&
+      other !== null,
+  ) as [
+    number,
+    number | null,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+  ][]
 
   const oldestDataPoint = pointsWithData?.at(0)
   const newestDataPoint = pointsWithData?.at(-1)
@@ -127,9 +154,9 @@ function getStats(
     return undefined
   }
 
-  const total = newestDataPoint[1] + newestDataPoint[2] + newestDataPoint[3]
+  const total = newestDataPoint[2] + newestDataPoint[3] + newestDataPoint[4]
   const oldestTotal =
-    oldestDataPoint[1] + oldestDataPoint[2] + oldestDataPoint[3]
+    oldestDataPoint[2] + oldestDataPoint[3] + oldestDataPoint[4]
   const change = (oldestTotal === 0 ? 0 : total / oldestTotal) - 1
 
   return {

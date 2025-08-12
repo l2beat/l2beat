@@ -120,7 +120,9 @@ const bridgingColumns = [
       align: 'right',
       tooltip:
         'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
-      headClassName: getColumnHeaderUnderline('before:bg-chart-stacked-yellow'),
+      headClassName: getColumnHeaderUnderline(
+        'before:bg-chart-stacked-yellow last:pr-3',
+      ),
     },
   }),
 ]
@@ -132,7 +134,7 @@ const tokenColumns = [
     cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="ether" />,
     sortUndefined: 'last',
     meta: {
-      cellClassName: 'w-1/4',
+      cellClassName: 'w-[40%]',
       align: 'right',
       headClassName: getColumnHeaderUnderline('before:bg-chart-ethereum'),
     },
@@ -145,7 +147,7 @@ const tokenColumns = [
     ),
     sortUndefined: 'last',
     meta: {
-      cellClassName: 'w-1/4',
+      cellClassName: 'w-[10%]',
       align: 'right',
       headClassName: getColumnHeaderUnderline('before:bg-chart-teal'),
     },
@@ -156,7 +158,7 @@ const tokenColumns = [
     cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="btc" />,
     sortUndefined: 'last',
     meta: {
-      cellClassName: 'w-1/4',
+      cellClassName: 'w-[40%]',
       align: 'right',
       headClassName: getColumnHeaderUnderline('before:bg-chart-orange'),
     },
@@ -167,9 +169,11 @@ const tokenColumns = [
     cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="other" />,
     sortUndefined: 'last',
     meta: {
-      cellClassName: 'w-1/4',
+      cellClassName: 'w-[10%] ',
       align: 'right',
-      headClassName: getColumnHeaderUnderline('before:bg-chart-yellow-lime'),
+      headClassName: getColumnHeaderUnderline(
+        'before:bg-chart-yellow-lime last:pr-3',
+      ),
     },
   }),
 ]

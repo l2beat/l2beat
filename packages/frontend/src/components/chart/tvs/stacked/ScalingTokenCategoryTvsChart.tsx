@@ -15,6 +15,7 @@ interface Props {
   milestones: Milestone[]
   range: TvsChartRange
   unit: ChartUnit
+  excludeAssociatedTokens: boolean
 }
 
 export function ScalingTokenCategoryTvsChart({
@@ -22,6 +23,7 @@ export function ScalingTokenCategoryTvsChart({
   milestones,
   range,
   unit,
+  excludeAssociatedTokens,
 }: Props) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     tokenCategoryTvsChartMeta,
@@ -29,7 +31,7 @@ export function ScalingTokenCategoryTvsChart({
 
   const { data, isLoading } = api.tvs.detailedChart.useQuery({
     range,
-    excludeAssociatedTokens: false,
+    excludeAssociatedTokens,
     filter,
   })
 
