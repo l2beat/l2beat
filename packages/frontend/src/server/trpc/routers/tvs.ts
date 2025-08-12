@@ -1,11 +1,11 @@
 import {
-  getRecategorisedTvsChart,
-  RecategorisedTvsChartDataParams,
-} from '~/server/features/scaling/tvs/getRecategorisedTvsChartData'
-import {
   DetailedTvsChartDataParams,
   getDetailedTvsChart,
 } from '~/server/features/scaling/tvs/getDetailedTvsChart'
+import {
+  getRecategorisedTvsChart,
+  RecategorisedTvsChartDataParams,
+} from '~/server/features/scaling/tvs/getRecategorisedTvsChartData'
 import {
   getTvsChart,
   TvsChartDataParams,
