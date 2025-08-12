@@ -78,7 +78,7 @@ export function ScalingTvsTabs(props: Props) {
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
-            <ScalingTvsTable entries={entries.rollups} rollups />
+            <ScalingTvsTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>

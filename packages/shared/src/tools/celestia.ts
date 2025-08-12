@@ -1,8 +1,9 @@
-import { v } from '@l2beat/validate'
+import { assert } from '@l2beat/shared-pure'
+import type { CelestiaEvent } from '../clients/api-celestia/types'
 
 export const celestiaTools = {
   decodeCommitment,
-  extractNamespacesFromLogs,
+  extractNamespacesFromEvents,
   isOpStackCelestiaCommitment,
 }
 
@@ -50,60 +51,18 @@ function decodeCommitment(commitment: string): CelestiaCommitmentData {
   throw new Error(`Unknown byteDerivationVersion: ${hexBody.slice(0, 8)}`)
 }
 
-function extractNamespacesFromLogs(logs: string[]) {
-  const extractedNamespaces = logs.flatMap((log) =>
-    extractNamespacesFromLog(log),
-  )
+function extractNamespacesFromEvents(events: CelestiaEvent[]) {
+  const extractedNamespaces = events.map((event) => {
+    if (event.type === 'celestia.blob.v1.EventPayForBlobs') {
+      return getEventAttributeValue<string[]>(event, 'namespaces')
+    }
+
+    return []
+  })
 
   // Might contain many submissions to the same namespace
-  return Array.from(new Set(extractedNamespaces))
+  return Array.from(new Set(extractedNamespaces.flat()))
 }
-
-function extractNamespacesFromLog(log: string) {
-  // We only care about pay for blobs, .includes pre-serialization
-  if (!log.includes('celestia.blob.v1.EventPayForBlobs')) {
-    return []
-  }
-
-  // Log is a raw string, not a JSON object
-  const parsedLog = MsgEventArray.parse(JSON.parse(log))
-
-  // Log itself has sub-events, now we need to find the proper ones
-  const payForBlobEvents = parsedLog
-    .flatMap((msgEvent) => msgEvent.events)
-    .filter((event) => event.type === 'celestia.blob.v1.EventPayForBlobs')
-
-  // Once again, attributes' values are strings, not JSON objects
-  const namespaceArrayStrings = payForBlobEvents
-    .map(
-      (event) =>
-        event.attributes.find((attr) => attr.key === 'namespaces')?.value,
-    )
-    .filter((namespace) => namespace !== undefined)
-
-  const namespaces: string[][] = namespaceArrayStrings.map((namespace) =>
-    JSON.parse(namespace),
-  )
-
-  return namespaces.flat()
-}
-
-const MsgEventArray = v.array(
-  v.object({
-    msg_index: v.number(),
-    events: v.array(
-      v.object({
-        type: v.string(),
-        attributes: v.array(
-          v.object({
-            key: v.string(),
-            value: v.string(),
-          }),
-        ),
-      }),
-    ),
-  }),
-)
 
 /**
  * OP
@@ -150,4 +109,10 @@ function decodeArbCommitment(hex: string): CelestiaCommitmentData {
     blockHeight,
     blobCommitment,
   }
+}
+
+function getEventAttributeValue<T>(event: CelestiaEvent, key: string): T {
+  const attribute = event.attributes.find((a) => a.key === key)
+  assert(attribute && attribute.value, `${key} should be defined`)
+  return JSON.parse(attribute.value) as T
 }
