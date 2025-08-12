@@ -11,7 +11,7 @@ import { ValueSecuredCell } from './ValueSecuredCell'
 const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 
 export const getScalingTvsColumns = (
-  opts?: CommonProjectColumnsOptions & {
+  opts: CommonProjectColumnsOptions & {
     breakdownType: 'bridging' | 'token'
   },
 ) => [
@@ -72,6 +72,7 @@ export const getScalingTvsColumns = (
           },
           sortUndefined: 'last',
           meta: {
+            cellClassName: 'w-[240px] min-w-[240px]',
             align: 'center',
             tooltip: 'Total = Canonical + External + Native',
           },
@@ -89,6 +90,7 @@ const bridgingColumns = [
     cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="canonical" />,
     sortUndefined: 'last',
     meta: {
+      cellClassName: 'w-1/3',
       align: 'right',
       tooltip:
         'These tokens use L1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
@@ -101,6 +103,7 @@ const bridgingColumns = [
     cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="native" />,
     sortUndefined: 'last',
     meta: {
+      cellClassName: 'w-1/3',
       align: 'right',
       tooltip:
         'These tokens are using L2 as their ledger and are minted directly on L2. Note that for some tokens (omnichain tokens) their ledger is distributed across many blockchains and they can be moved to L2 via a burn-mint bridge. The value is displayed together with a percentage change compared to 7D ago.',
@@ -113,6 +116,7 @@ const bridgingColumns = [
     cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="external" />,
     sortUndefined: 'last',
     meta: {
+      cellClassName: 'w-1/3',
       align: 'right',
       tooltip:
         'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
@@ -128,6 +132,7 @@ const tokenColumns = [
     cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="ether" />,
     sortUndefined: 'last',
     meta: {
+      cellClassName: 'w-1/4',
       align: 'right',
       headClassName: getColumnHeaderUnderline('before:bg-chart-ethereum'),
     },
@@ -140,6 +145,7 @@ const tokenColumns = [
     ),
     sortUndefined: 'last',
     meta: {
+      cellClassName: 'w-1/4',
       align: 'right',
       headClassName: getColumnHeaderUnderline('before:bg-chart-teal'),
     },
@@ -150,6 +156,7 @@ const tokenColumns = [
     cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="btc" />,
     sortUndefined: 'last',
     meta: {
+      cellClassName: 'w-1/4',
       align: 'right',
       headClassName: getColumnHeaderUnderline('before:bg-chart-orange'),
     },
@@ -160,6 +167,7 @@ const tokenColumns = [
     cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="other" />,
     sortUndefined: 'last',
     meta: {
+      cellClassName: 'w-1/4',
       align: 'right',
       headClassName: getColumnHeaderUnderline('before:bg-chart-yellow-lime'),
     },
