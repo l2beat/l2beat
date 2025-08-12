@@ -17,19 +17,14 @@ export interface SevenDayTvsBreakdown {
 }
 
 export interface ProjectSevenDayTvsBreakdown {
-  breakdown: BreakdownSplit & {
-    ether: number
-    stablecoin: number
-    btc: number
-  }
-  breakdown7d: BreakdownSplit & {
-    ether: number
-    stablecoin: number
-    btc: number
-  }
+  breakdown: BreakdownSplit
+  breakdown7d: BreakdownSplit
   associated: BreakdownSplit
   change: BreakdownSplit
-  changeExcludingAssociated: BreakdownSplit
+  changeExcludingAssociated: Pick<
+    BreakdownSplit,
+    'total' | 'canonical' | 'native' | 'external'
+  >
 }
 
 interface BreakdownSplit {
@@ -37,6 +32,10 @@ interface BreakdownSplit {
   canonical: number
   external: number
   native: number
+  ether: number
+  stablecoin: number
+  btc: number
+  other: number
 }
 
 // NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
@@ -96,6 +95,17 @@ export async function get7dTvsBreakdown(
     ) {
       continue
     }
+
+    const latestOther =
+      latestValue.value -
+      latestValue.ether -
+      latestValue.stablecoin -
+      latestValue.btc
+    const oldestOther =
+      oldestValue.value -
+      oldestValue.ether -
+      oldestValue.stablecoin -
+      oldestValue.btc
     projects[projectId] = {
       breakdown: {
         total: latestValue.value,
@@ -105,6 +115,7 @@ export async function get7dTvsBreakdown(
         ether: latestValue.ether,
         stablecoin: latestValue.stablecoin,
         btc: latestValue.btc,
+        other: latestOther,
       },
       breakdown7d: {
         total: oldestValue.value,
@@ -114,12 +125,17 @@ export async function get7dTvsBreakdown(
         ether: oldestValue.ether,
         stablecoin: oldestValue.stablecoin,
         btc: oldestValue.btc,
+        other: oldestOther,
       },
       associated: {
         total: latestValue.associated,
         native: latestValue.native - latestWithoutAssociated.native,
         canonical: latestValue.canonical - latestWithoutAssociated.canonical,
         external: latestValue.external - latestWithoutAssociated.external,
+        ether: latestValue.ether - latestWithoutAssociated.ether,
+        stablecoin: latestValue.stablecoin - latestWithoutAssociated.stablecoin,
+        btc: latestValue.btc - latestWithoutAssociated.btc,
+        other: latestOther - latestWithoutAssociated.other,
       },
       change: {
         total: calculatePercentageChange(latestValue.value, oldestValue.value),
@@ -135,6 +151,13 @@ export async function get7dTvsBreakdown(
           latestValue.external,
           oldestValue.external,
         ),
+        ether: calculatePercentageChange(latestValue.ether, oldestValue.ether),
+        stablecoin: calculatePercentageChange(
+          latestValue.stablecoin,
+          oldestValue.stablecoin,
+        ),
+        btc: calculatePercentageChange(latestValue.btc, oldestValue.btc),
+        other: calculatePercentageChange(latestOther, oldestOther),
       },
       changeExcludingAssociated: {
         total: calculatePercentageChange(
@@ -199,6 +222,7 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             ether: 30,
             stablecoin: 30,
             btc: 4,
+            other: 0,
           },
           breakdown7d: {
             total: 50,
@@ -208,24 +232,37 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             ether: 25,
             stablecoin: 25,
             btc: 5,
+            other: 0,
           },
           associated: {
             total: 6,
             native: 1,
             canonical: 2,
             external: 3,
+            ether: 0,
+            stablecoin: 0,
+            btc: 0,
+            other: 0,
           },
           change: {
             total: 0.4,
             canonical: 0.5,
             native: 0.25,
             external: 0.25,
+            ether: 0.25,
+            stablecoin: 0.25,
+            btc: 0.25,
+            other: 0.25,
           },
           changeExcludingAssociated: {
             total: 0.3,
             canonical: 0.4,
             native: 0.15,
             external: 0.15,
+            ether: 0.15,
+            stablecoin: 0.15,
+            btc: 0.15,
+            other: 0.15,
           },
         },
       ]),

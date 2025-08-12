@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { useState } from 'react'
 import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
@@ -7,6 +8,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import {
   NotReviewedInfo,
   OthersInfo,
@@ -27,6 +29,9 @@ type Props = TabbedScalingEntries<ScalingTvsEntry> & {
 
 export function ScalingTvsTabs(props: Props) {
   const filterEntries = useFilterEntries()
+  const [breakdownType, setBreakdownType] = useState<'bridging' | 'token'>(
+    'bridging',
+  )
 
   const entries = {
     rollups: props.rollups.filter(filterEntries),
@@ -77,8 +82,16 @@ export function ScalingTvsTabs(props: Props) {
               entries={entries.rollups}
               milestones={props.milestones}
             />
-            <HorizontalSeparator className="my-5" />
-            <ScalingTvsTable entries={entries.rollups} rollups />
+            <HorizontalSeparator className="mt-4 mb-3" />
+            <BreakdownTypeRadioGroup
+              breakdownType={breakdownType}
+              setBreakdownType={setBreakdownType}
+            />
+            <ScalingTvsTable
+              entries={entries.rollups}
+              rollups
+              breakdownType={breakdownType}
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
@@ -89,8 +102,15 @@ export function ScalingTvsTabs(props: Props) {
               entries={entries.validiumsAndOptimiums}
               milestones={props.milestones}
             />
-            <HorizontalSeparator className="my-5" />
-            <ScalingTvsTable entries={entries.validiumsAndOptimiums} />
+            <HorizontalSeparator className="mt-4 mb-3" />
+            <BreakdownTypeRadioGroup
+              breakdownType={breakdownType}
+              setBreakdownType={setBreakdownType}
+            />
+            <ScalingTvsTable
+              entries={entries.validiumsAndOptimiums}
+              breakdownType={breakdownType}
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
@@ -101,17 +121,56 @@ export function ScalingTvsTabs(props: Props) {
               entries={entries.others}
               milestones={props.milestones}
             />
-            <HorizontalSeparator className="my-5" />
-            <ScalingTvsTable entries={entries.others} />
+            <HorizontalSeparator className="mt-4 mb-3" />
+            <BreakdownTypeRadioGroup
+              breakdownType={breakdownType}
+              setBreakdownType={setBreakdownType}
+            />
+            <ScalingTvsTable
+              entries={entries.others}
+              breakdownType={breakdownType}
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="notReviewed" className="pt-5">
             <NotReviewedInfo />
-            <ScalingTvsTable entries={entries.notReviewed} notReviewed />
+            <BreakdownTypeRadioGroup
+              breakdownType={breakdownType}
+              setBreakdownType={setBreakdownType}
+            />
+            <ScalingTvsTable
+              entries={entries.notReviewed}
+              notReviewed
+              breakdownType={breakdownType}
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>
     </>
+  )
+}
+
+function BreakdownTypeRadioGroup({
+  breakdownType,
+  setBreakdownType,
+}: {
+  breakdownType: 'bridging' | 'token'
+  setBreakdownType: (value: 'bridging' | 'token') => void
+}) {
+  return (
+    <RadioGroup
+      name="breakdownType"
+      value={breakdownType}
+      onValueChange={(value) => setBreakdownType(value as 'bridging' | 'token')}
+      className="mb-2 w-full"
+    >
+      <RadioGroupItem value="bridging" className="w-full">
+        By bridging type
+      </RadioGroupItem>
+      <RadioGroupItem value="token" className="w-full">
+        By token category
+      </RadioGroupItem>
+    </RadioGroup>
   )
 }

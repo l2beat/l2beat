@@ -10,7 +10,11 @@ import { ValueSecuredCell } from './ValueSecuredCell'
 
 const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 
-export const getScalingTvsColumns = (opts?: CommonProjectColumnsOptions) => [
+export const getScalingTvsColumns = (
+  opts?: CommonProjectColumnsOptions & {
+    breakdownType: 'bridging' | 'token'
+  },
+) => [
   ...getScalingCommonProjectColumns(
     columnHelper,
     (row) => `/scaling/projects/${row.slug}#tvs`,
@@ -46,11 +50,22 @@ export const getScalingTvsColumns = (opts?: CommonProjectColumnsOptions) => [
               <TotalValueSecuredCell
                 href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown`}
                 tvsWarnings={ctx.row.original.tvs.warnings}
-                breakdown={{
-                  canonical: data.breakdown.canonical,
-                  external: data.breakdown.external,
-                  native: data.breakdown.native,
-                }}
+                breakdown={
+                  opts?.breakdownType === 'bridging'
+                    ? {
+                        type: 'bridging',
+                        canonical: data.breakdown.canonical,
+                        external: data.breakdown.external,
+                        native: data.breakdown.native,
+                      }
+                    : {
+                        type: 'token',
+                        ether: data.breakdown.ether,
+                        stablecoin: data.breakdown.stablecoin,
+                        btc: data.breakdown.btc,
+                        other: data.breakdown.other,
+                      }
+                }
                 change={data.change.total}
               />
             )
@@ -64,32 +79,14 @@ export const getScalingTvsColumns = (opts?: CommonProjectColumnsOptions) => [
       ),
     ],
   }),
+  ...(opts?.breakdownType === 'bridging' ? bridgingColumns : tokenColumns),
+]
+
+const bridgingColumns = [
   columnHelper.accessor('tvs.data.breakdown.canonical', {
     id: 'canonical',
     header: 'Canonically bridged',
-    cell: (ctx) => {
-      const data = ctx.row.original.tvs.data
-      if (!data) {
-        return <NoDataBadge />
-      }
-      const children = (
-        <ValueSecuredCell
-          value={data.breakdown.canonical}
-          change={data.change.canonical}
-        />
-      )
-      return (
-        <TableLink
-          href={
-            data.breakdown.canonical > 0
-              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#canonical`
-              : undefined
-          }
-        >
-          {children}
-        </TableLink>
-      )
-    },
+    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="canonical" />,
     sortUndefined: 'last',
     meta: {
       align: 'right',
@@ -101,29 +98,7 @@ export const getScalingTvsColumns = (opts?: CommonProjectColumnsOptions) => [
   columnHelper.accessor('tvs.data.breakdown.native', {
     id: 'native',
     header: 'Natively minted',
-    cell: (ctx) => {
-      const data = ctx.row.original.tvs.data
-      if (!data) {
-        return <NoDataBadge />
-      }
-      const children = (
-        <ValueSecuredCell
-          value={data.breakdown.native}
-          change={data.change.native}
-        />
-      )
-      return (
-        <TableLink
-          href={
-            data.breakdown.native > 0
-              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#native`
-              : undefined
-          }
-        >
-          {children}
-        </TableLink>
-      )
-    },
+    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="native" />,
     sortUndefined: 'last',
     meta: {
       align: 'right',
@@ -135,29 +110,7 @@ export const getScalingTvsColumns = (opts?: CommonProjectColumnsOptions) => [
   columnHelper.accessor('tvs.data.breakdown.external', {
     id: 'external',
     header: 'Externally bridged',
-    cell: (ctx) => {
-      const data = ctx.row.original.tvs.data
-      if (!data) {
-        return <NoDataBadge />
-      }
-      const children = (
-        <ValueSecuredCell
-          value={data.breakdown.external}
-          change={data.change.external}
-        />
-      )
-      return (
-        <TableLink
-          href={
-            data.breakdown.external > 0
-              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#external`
-              : undefined
-          }
-        >
-          {children}
-        </TableLink>
-      )
-    },
+    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="external" />,
     sortUndefined: 'last',
     meta: {
       align: 'right',
@@ -167,3 +120,84 @@ export const getScalingTvsColumns = (opts?: CommonProjectColumnsOptions) => [
     },
   }),
 ]
+
+const tokenColumns = [
+  columnHelper.accessor('tvs.data.breakdown.ether', {
+    id: 'ether',
+    header: 'Ether',
+    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="ether" />,
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      headClassName: getColumnHeaderUnderline('before:bg-chart-ethereum'),
+    },
+  }),
+  columnHelper.accessor('tvs.data.breakdown.stablecoin', {
+    id: 'stablecoin',
+    header: 'Stablecoin',
+    cell: (ctx) => (
+      <BreakdownCell row={ctx.row.original} dataKey="stablecoin" />
+    ),
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      headClassName: getColumnHeaderUnderline('before:bg-chart-teal'),
+    },
+  }),
+  columnHelper.accessor('tvs.data.breakdown.btc', {
+    id: 'btc',
+    header: 'BTC',
+    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="btc" />,
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      headClassName: getColumnHeaderUnderline('before:bg-chart-orange'),
+    },
+  }),
+  columnHelper.accessor('tvs.data.breakdown.other', {
+    id: 'other',
+    header: 'Other',
+    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="other" />,
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      headClassName: getColumnHeaderUnderline('before:bg-chart-yellow-lime'),
+    },
+  }),
+]
+
+function BreakdownCell({
+  row,
+  dataKey,
+}: {
+  row: ScalingTvsTableRow
+  dataKey:
+    | 'canonical'
+    | 'native'
+    | 'external'
+    | 'ether'
+    | 'stablecoin'
+    | 'btc'
+    | 'other'
+}) {
+  const data = row.tvs.data
+  if (!data) {
+    return <NoDataBadge />
+  }
+
+  console.log(dataKey, data.breakdown[dataKey], data.change[dataKey])
+  return (
+    <TableLink
+      href={
+        data.breakdown[dataKey] > 0
+          ? `/scaling/projects/${row.slug}/tvs-breakdown`
+          : undefined
+      }
+    >
+      <ValueSecuredCell
+        value={data.breakdown[dataKey]}
+        change={data.change[dataKey]}
+      />
+    </TableLink>
+  )
+}

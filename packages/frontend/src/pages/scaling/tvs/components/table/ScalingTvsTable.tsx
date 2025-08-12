@@ -13,9 +13,15 @@ interface Props {
   entries: ScalingTvsEntry[]
   rollups?: boolean
   notReviewed?: boolean
+  breakdownType: 'bridging' | 'token'
 }
 
-export function ScalingTvsTable({ entries, rollups, notReviewed }: Props) {
+export function ScalingTvsTable({
+  entries,
+  rollups,
+  notReviewed,
+  breakdownType,
+}: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -28,9 +34,16 @@ export function ScalingTvsTable({ entries, rollups, notReviewed }: Props) {
     [entries, excludeAssociatedTokens],
   )
 
+  const columns = useMemo(() => {
+    return getScalingTvsColumns({
+      ignoreUnderReviewIcon: true,
+      breakdownType,
+    })
+  }, [breakdownType])
+
   const table = useTable({
     data: allProjects,
-    columns: getScalingTvsColumns({ ignoreUnderReviewIcon: true }),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

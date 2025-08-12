@@ -444,6 +444,9 @@
   --color-chart-fuchsia: var(--chart-fuchsia);
   --color-chart-lime: var(--chart-lime);
   --color-chart-sky: var(--chart-sky);
+  --color-chart-teal: var(--chart-teal);
+  --color-chart-orange: var(--chart-orange);
+  --color-chart-yellow-lime: var(--chart-yellow-lime);
   --color-chart-stacked-blue: var(--chart-stacked-blue);
   --color-chart-stacked-yellow: var(--chart-stacked-yellow);
   --color-chart-stacked-pink: var(--chart-stacked-pink);

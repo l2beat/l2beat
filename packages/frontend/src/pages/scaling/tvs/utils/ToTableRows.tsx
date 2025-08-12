@@ -33,6 +33,7 @@ export function toTableRows({
               : { native: 0, canonical: 0, external: 0 },
           },
           change: {
+            ...project.tvs.data.change,
             total: excludeAssociatedTokens
               ? project.tvs.data.changeExcludingAssociated.total
               : project.tvs.data.change.total,
