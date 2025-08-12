@@ -25,9 +25,22 @@ export const GetBlobResponseSchema = v.union([
 
 export type GetBlobResponse = v.infer<typeof GetBlobResponseSchema>
 
+export const CelestiaEventSchema = v.object({
+  type: v.string(),
+  attributes: v.array(
+    v.object({
+      key: v.string(),
+      value: v.string(),
+      index: v.boolean(),
+    }),
+  ),
+})
+export type CelestiaEvent = v.infer<typeof CelestiaEventSchema>
+
 // partial - no data and code
 export const CelestiaTransactionResultSchema = v.object({
   log: v.string(),
+  events: v.array(CelestiaEventSchema),
 })
 
 export type CelestiaTransactionResult = v.infer<
