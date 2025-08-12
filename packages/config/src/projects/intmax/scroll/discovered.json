@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "scroll",
-  "timestamp": 1754378270,
+  "timestamp": 1754909083,
   "configHash": "0xbf5228d93d76a9815248f29132efc51f9d8b74a0bcb55653e1b01db58d64d062",
   "entries": [
     {
@@ -62,14 +62,14 @@
         ],
         "$upgradeCount": 1,
         "contribution": "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af",
-        "depositIndex": 6651,
-        "depositTreeRoot": "0x341374c06925c6fe07caaba3fb027676e648d51e26eb526c8d403b219eff444c",
+        "depositIndex": 7885,
+        "depositTreeRoot": "0x02aa387d08d7b7fd786a4b2e049c19131a0b73d447dec308022ba804c4b509b0",
         "FULL_ACCOUNT_IDS_BYTES": 640,
-        "getLatestBlockNumber": 7185,
+        "getLatestBlockNumber": 8609,
         "getPenalty": 0,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "lastProcessedDepositId": 6651,
+        "lastProcessedDepositId": 7885,
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "NUM_SENDERS_IN_BLOCK": 128,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
@@ -120,11 +120,11 @@
           "numPhases": 7,
           "phase0Period": 16
         },
-        "getCurrentPeriod": 45,
+        "getCurrentPeriod": 51,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
-        "nullifierNonce": 1998,
+        "nullifierNonce": 2392,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
         "RELAY_LIMIT": 100,
         "REWARD_TOKEN_INDEX": 1,
@@ -152,6 +152,8 @@
         "0x04d47a14538cc31c1d5699cd1ba8e634345861e576bb09735cacd8e7569495da"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).",
+      "ignoreInWatchMode": ["getCurrentPeriod"],
       "sinceTimestamp": 1750500006,
       "sinceBlock": 16627826,
       "values": {
@@ -167,7 +169,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 6,
+        "getCurrentPeriod": 7,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -633,10 +635,10 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "intmax/Claim": "0x96ba300a18f4cb6ac05e9c5f4fcc8b3916daca44ae2a839e88592b0a700c1638",
-    "intmax/Contribution": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "intmax/Contribution": "0x5b054bae35b8a718a705f49eb6b59b86926069d57f1a3a7b698ea12aad64e991",
     "intmax/Rollup": "0x9efdc4c4aebfdd09e6ab16141180d3f9fa8e1bfe833622003535a1d9b98836c6",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "usedBlockNumbers": { "scroll": 18386309 },
+  "usedBlockNumbers": { "scroll": 18917086 },
   "permissionsConfigHash": "0xf596c0d49109b82369a28ca6ee615a0f398f68fc5f5511120c267a29c74e2046"
 }

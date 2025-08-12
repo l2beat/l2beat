@@ -28,6 +28,24 @@ export const sp1: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      title: 'Plonky3 FRI size check vulnerability',
+      url: 'https://x.com/SuccinctLabs/status/1905818676848406801',
+      date: '2025-03-28T00:00:00Z',
+      description:
+        'Fix of a Plonky3 library soundness issue that affected the security of SP1 zkVM.',
+      type: 'incident',
+    },
+    {
+      title: 'Plonky3 final polynomial degree check vulnerability',
+      url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
+      date: '2025-06-03T00:00:00Z',
+      description:
+        'Release of SP1 V5.0.0 with a fix of a Plonky3 library issue that affected the security of SP1 zkVM.',
+      type: 'incident',
+    },
+  ],
   zkCatalogInfo: {
     creator: 'Succinct',
     techStack: {

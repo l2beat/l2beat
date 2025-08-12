@@ -23,11 +23,11 @@ import {
   type ScalingSummaryEntry,
 } from '../scaling/summary/getScalingSummaryEntries'
 import { get7dTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
+import { compareTvs } from '../scaling/tvs/utils/compareTvs'
 import {
   getScalingUpcomingEntry,
   type ScalingUpcomingEntry,
 } from '../scaling/upcoming/getScalingUpcomingEntries'
-import { compareStageAndTvs } from '../scaling/utils/compareStageAndTvs'
 import { getStaticAsset } from '../utils/getProjectIcon'
 import { type BlobsData, getBlobsData } from './getBlobsData'
 import { getEcosystemLogo } from './getEcosystemLogo'
@@ -226,7 +226,7 @@ export async function getEcosystemEntry(
           ),
         }
       })
-      .sort(compareStageAndTvs),
+      .sort(compareTvs),
     upcomingProjects: upcomingProjects.map(getScalingUpcomingEntry),
     allMilestones: getMilestones([ecosystem, ...ecosystemProjects]),
     ecosystemMilestones: getMilestones([ecosystem]),
