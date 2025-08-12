@@ -7,10 +7,10 @@ import pick from 'lodash/pick'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
-import { getLogger } from '~/server/utils/logger'
 
 export interface SevenDayTvsBreakdown {
   total: number
