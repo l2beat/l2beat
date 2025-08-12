@@ -10,6 +10,7 @@ import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
+import { getLogger } from '~/server/utils/logger'
 
 export interface SevenDayTvsBreakdown {
   total: number
@@ -56,6 +57,7 @@ export async function get7dTvsBreakdown(
   }
 
   const db = getDb()
+  const logger = getLogger().for('get7dTvsBreakdown')
   const target = customTarget ?? getTvsTargetTimestamp()
 
   const projectIds = props.type === 'projects' ? props.projectIds : undefined
@@ -106,6 +108,18 @@ export async function get7dTvsBreakdown(
       oldestValue.ether -
       oldestValue.stablecoin -
       oldestValue.btc
+
+    if (latestOther < 0) {
+      logger.warn(
+        `Project ${projectId} has negative other value: ${latestOther}`,
+      )
+    }
+    if (oldestOther < 0) {
+      logger.warn(
+        `Project ${projectId} has negative other value: ${oldestOther}`,
+      )
+    }
+
     projects[projectId] = {
       breakdown: {
         total: latestValue.value,
@@ -259,10 +273,6 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             canonical: 0.4,
             native: 0.15,
             external: 0.15,
-            ether: 0.15,
-            stablecoin: 0.15,
-            btc: 0.15,
-            other: 0.15,
           },
         },
       ]),

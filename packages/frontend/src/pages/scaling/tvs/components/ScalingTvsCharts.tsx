@@ -118,7 +118,7 @@ function getStats(
   const total = newestDataPoint[1] + newestDataPoint[2] + newestDataPoint[3]
   const oldestTotal =
     oldestDataPoint[1] + oldestDataPoint[2] + oldestDataPoint[3]
-  const change = total / oldestTotal - 1
+  const change = (oldestTotal === 0 ? 0 : total / oldestTotal) - 1
 
   return {
     total,

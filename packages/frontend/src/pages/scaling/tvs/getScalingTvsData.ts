@@ -83,11 +83,11 @@ async function getQueryState(
     return helpers.dehydrate()
   }
 
-  await helpers.tvs.chart.prefetch({
+  await helpers.tvs.detailedChart.prefetch({
     filter: {
       type: tab,
     },
-    range: { type: '1y' },
+    range: '1y',
     excludeAssociatedTokens: false,
   })
   return helpers.dehydrate()
