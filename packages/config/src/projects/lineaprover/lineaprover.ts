@@ -50,14 +50,16 @@ export const lineaprover: BaseProject = {
     proofSystemInfo: '',
     trustedSetups: [
       {
-        proofSystem: ZK_CATALOG_TAGS.Plonk.linea,
-        ...TRUSTED_SETUPS.Aleo,
-        ...TRUSTED_SETUPS.CeloPlumo,
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         ...TRUSTED_SETUPS.AztecIgnition,
       },
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-        ...TRUSTED_SETUPS.AztecIgnition,
+        ...TRUSTED_SETUPS.Aleo,
+      },
+      {
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        ...TRUSTED_SETUPS.CeloPlumo,
       },
     ],
     verifierHashes: [
