@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x472ef513b217c479073247476fbc544d03f2448a
+
+# Diff at Tue, 12 Aug 2025 15:57:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754921961
+- current timestamp: 1755014055
+
+## Description
+
+USDC rescuer added.
+
+## Watched changes
+
+```diff
+    contract Scroll USDC (0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4) {
+    +++ description: Contract of the USDC token on Scroll.
+      values.rescuer:
+-        "scr:0x0000000000000000000000000000000000000000"
++        "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
+    }
+```
+
 Generated with discovered.json: 0x2129e7de31b81bfd1c58f8801b75b76f35c39de5
 
 # Diff at Tue, 05 Aug 2025 14:17:53 GMT:

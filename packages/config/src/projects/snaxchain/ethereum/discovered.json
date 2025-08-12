@@ -1,7 +1,7 @@
 {
   "name": "snaxchain",
   "chain": "ethereum",
-  "timestamp": 1754911726,
+  "timestamp": 1755009465,
   "configHash": "0x795a2ad0b79104094fdc585ccd98933dd3fabac57c31ee60c0db62cfa04b6fb6",
   "entries": [
     {
@@ -88,7 +88,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 32,
+        "gameCount": 33,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x1B780edfb393CB9f07Dcd7C699CBDF0fd663572b",
@@ -98,7 +98,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 32,
+        "permissionedGamesTotal": 33,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -564,6 +564,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
           "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
@@ -580,8 +581,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 149,
+        "multisigThreshold": "4 of 12 (33%)",
+        "nonce": 152,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1120,6 +1121,11 @@
     },
     {
       "address": "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1815,6 +1821,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23117510 },
-  "permissionsConfigHash": "0x3b5fcd77c0c0ad600bc4bd1d4d407d8635ec4dfb4a1df156af4272137e141278"
+  "usedBlockNumbers": { "ethereum": 23125607 },
+  "permissionsConfigHash": "0x2a9e9c5a7107cb397cbab049de6251a0ad78023ed824d63060b01f2715e212ff"
 }
