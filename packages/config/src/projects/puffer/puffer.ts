@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const puffer: ScalingProject = upcomingL2({
   id: 'puffer',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1729172001), // 2024-10-17T15:33:21
   display: {
     name: 'Puffer UniFi',

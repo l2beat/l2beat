@@ -6,6 +6,7 @@ export const azchain: ScalingProject = upcomingL2({
   id: 'azchain',
   addedAt: UnixTime(1727519160), // 2024-09-27T17:09:00Z
   capability: 'universal',
+  hasTestnet: true,
   display: {
     name: 'AZ Chain',
     slug: 'azchain',
