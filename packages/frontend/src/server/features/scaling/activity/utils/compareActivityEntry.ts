@@ -1,4 +1,3 @@
-import { featureFlags } from '~/consts/featureFlags'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import type { ScalingActivityEntry } from '../getScalingActivityEntries'
 
@@ -9,13 +8,6 @@ export function compareActivityEntry(
     metric?: ActivityMetric
   },
 ) {
-  if (featureFlags.stageSorting) {
-    const stageDiff = b.stageOrder - a.stageOrder
-    if (stageDiff !== 0) {
-      return stageDiff
-    }
-  }
-
   if (a.slug === 'ethereum') {
     return -1
   }
