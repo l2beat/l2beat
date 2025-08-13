@@ -61,7 +61,7 @@ function TrustedSetupFrameworkLink() {
         track('trustedSetupFrameworkSelected')
       }}
     >
-      Trusted Setup Framework
+      Trusted Setups Risk Framework
     </a>
   )
 }
