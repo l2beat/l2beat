@@ -80,6 +80,9 @@ export const morph: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   stage: getStage({
     stage0: {
       callsItselfRollup: true,

@@ -85,6 +85,7 @@ export const metis: ScalingProject = {
       ],
     },
   },
+  proofSystem: undefined,
   stage: getStage(
     {
       stage0: {

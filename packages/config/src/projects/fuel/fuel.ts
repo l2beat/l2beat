@@ -77,6 +77,7 @@ export const fuel: ScalingProject = {
       ],
     },
   },
+  proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',
   },

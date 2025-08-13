@@ -54,6 +54,9 @@ export const facet: ScalingProject = {
       'Upgradability of the external bridge contracts (e.g., FacetEtherBridgeV6)',
     ],
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
   stage: getStage(
     {
       stage0: {

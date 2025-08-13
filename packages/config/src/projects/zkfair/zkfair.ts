@@ -141,6 +141,7 @@ export const zkfair: ScalingProject = {
       socialMedia: ['https://twitter.com/ZKFCommunity'],
     },
   },
+  proofSystem: undefined,
   config: {
     escrows: [
       discovery.getEscrowDetails({
