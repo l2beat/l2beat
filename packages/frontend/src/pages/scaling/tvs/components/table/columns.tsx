@@ -50,6 +50,7 @@ export const getScalingTvsColumns = (
               <TotalValueSecuredCell
                 href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown`}
                 tvsWarnings={ctx.row.original.tvs.warnings}
+                total={data.breakdown.total}
                 breakdown={
                   opts?.breakdownType === 'bridging'
                     ? {
@@ -61,6 +62,7 @@ export const getScalingTvsColumns = (
                     : {
                         type: 'token',
                         ether: data.breakdown.ether,
+                        associated: 0,
                         stablecoin: data.breakdown.stablecoin,
                         btc: data.breakdown.btc,
                         other: data.breakdown.other,
@@ -197,11 +199,16 @@ function BreakdownCell({
     return <NoDataBadge />
   }
 
+  const hash =
+    dataKey === 'canonical' || dataKey === 'native' || dataKey === 'external'
+      ? `#${dataKey}`
+      : ''
+
   return (
     <TableLink
       href={
         data.breakdown[dataKey] > 0
-          ? `/scaling/projects/${row.slug}/tvs-breakdown`
+          ? `/scaling/projects/${row.slug}/tvs-breakdown${hash}`
           : undefined
       }
     >

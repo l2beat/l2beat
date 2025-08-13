@@ -25,7 +25,7 @@ export function ScalingTvsTable({
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const allProjects = useMemo(
+  const data = useMemo(
     () =>
       toTableRows({
         projects: entries,
@@ -34,15 +34,17 @@ export function ScalingTvsTable({
     [entries, excludeAssociatedTokens],
   )
 
-  const columns = useMemo(() => {
-    return getScalingTvsColumns({
-      ignoreUnderReviewIcon: true,
-      breakdownType,
-    })
-  }, [breakdownType])
+  const columns = useMemo(
+    () =>
+      getScalingTvsColumns({
+        ignoreUnderReviewIcon: true,
+        breakdownType,
+      }),
+    [breakdownType],
+  )
 
   const table = useTable({
-    data: allProjects,
+    data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

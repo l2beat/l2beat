@@ -1,5 +1,6 @@
 import type {
   Project,
+  ProjectAssociatedToken,
   ProjectCustomColors,
   ProjectScalingCategory,
   ProjectScalingStage,
@@ -92,9 +93,10 @@ export interface ProjectScalingEntry {
           stablecoin: number
           associated: number
           btc: number
+          other: number
         }
         warnings: WarningWithSentiment[]
-        associatedTokens: string[]
+        associatedTokens: ProjectAssociatedToken[]
       }
     }
     activity?: {

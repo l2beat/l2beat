@@ -28,9 +28,21 @@ export function toTableRows({
               ? project.tvs.data.breakdown.native -
                 project.tvs.data.associated.native
               : project.tvs.data.breakdown.native,
-            associated: !excludeAssociatedTokens
-              ? project.tvs.data.associated
-              : { native: 0, canonical: 0, external: 0 },
+            ether: excludeAssociatedTokens
+              ? project.tvs.data.breakdown.ether -
+                project.tvs.data.associated.ether
+              : project.tvs.data.breakdown.ether,
+            stablecoin: excludeAssociatedTokens
+              ? project.tvs.data.breakdown.stablecoin -
+                project.tvs.data.associated.stablecoin
+              : project.tvs.data.breakdown.stablecoin,
+            btc: excludeAssociatedTokens
+              ? project.tvs.data.breakdown.btc - project.tvs.data.associated.btc
+              : project.tvs.data.breakdown.btc,
+            other: excludeAssociatedTokens
+              ? project.tvs.data.breakdown.other -
+                project.tvs.data.associated.other
+              : project.tvs.data.breakdown.other,
           },
           change: {
             ...project.tvs.data.change,
@@ -46,6 +58,18 @@ export function toTableRows({
             external: excludeAssociatedTokens
               ? project.tvs.data.changeExcludingAssociated.external
               : project.tvs.data.change.external,
+            ether: excludeAssociatedTokens
+              ? project.tvs.data.changeExcludingAssociated.ether
+              : project.tvs.data.change.ether,
+            stablecoin: excludeAssociatedTokens
+              ? project.tvs.data.changeExcludingAssociated.stablecoin
+              : project.tvs.data.change.stablecoin,
+            btc: excludeAssociatedTokens
+              ? project.tvs.data.changeExcludingAssociated.btc
+              : project.tvs.data.change.btc,
+            other: excludeAssociatedTokens
+              ? project.tvs.data.changeExcludingAssociated.other
+              : project.tvs.data.change.other,
           },
         },
       },

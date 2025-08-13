@@ -7,7 +7,6 @@ import pick from 'lodash/pick'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
@@ -22,10 +21,7 @@ export interface ProjectSevenDayTvsBreakdown {
   breakdown7d: BreakdownSplit
   associated: BreakdownSplit
   change: BreakdownSplit
-  changeExcludingAssociated: Pick<
-    BreakdownSplit,
-    'total' | 'canonical' | 'native' | 'external'
-  >
+  changeExcludingAssociated: BreakdownSplit
 }
 
 interface BreakdownSplit {
@@ -57,7 +53,6 @@ export async function get7dTvsBreakdown(
   }
 
   const db = getDb()
-  const logger = getLogger().for('get7dTvsBreakdown')
   const target = customTarget ?? getTvsTargetTimestamp()
 
   const projectIds = props.type === 'projects' ? props.projectIds : undefined
@@ -98,28 +93,6 @@ export async function get7dTvsBreakdown(
       continue
     }
 
-    const latestOther =
-      latestValue.value -
-      latestValue.ether -
-      latestValue.stablecoin -
-      latestValue.btc
-    const oldestOther =
-      oldestValue.value -
-      oldestValue.ether -
-      oldestValue.stablecoin -
-      oldestValue.btc
-
-    if (latestOther < 0) {
-      logger.warn(
-        `Project ${projectId} has negative other value: ${latestOther}`,
-      )
-    }
-    if (oldestOther < 0) {
-      logger.warn(
-        `Project ${projectId} has negative other value: ${oldestOther}`,
-      )
-    }
-
     projects[projectId] = {
       breakdown: {
         total: latestValue.value,
@@ -129,7 +102,7 @@ export async function get7dTvsBreakdown(
         ether: latestValue.ether,
         stablecoin: latestValue.stablecoin,
         btc: latestValue.btc,
-        other: latestOther,
+        other: latestValue.other,
       },
       breakdown7d: {
         total: oldestValue.value,
@@ -139,7 +112,7 @@ export async function get7dTvsBreakdown(
         ether: oldestValue.ether,
         stablecoin: oldestValue.stablecoin,
         btc: oldestValue.btc,
-        other: oldestOther,
+        other: oldestValue.other,
       },
       associated: {
         total: latestValue.associated,
@@ -149,7 +122,7 @@ export async function get7dTvsBreakdown(
         ether: latestValue.ether - latestWithoutAssociated.ether,
         stablecoin: latestValue.stablecoin - latestWithoutAssociated.stablecoin,
         btc: latestValue.btc - latestWithoutAssociated.btc,
-        other: latestOther - latestWithoutAssociated.other,
+        other: latestValue.other - latestWithoutAssociated.other,
       },
       change: {
         total: calculatePercentageChange(latestValue.value, oldestValue.value),
@@ -171,7 +144,7 @@ export async function get7dTvsBreakdown(
           oldestValue.stablecoin,
         ),
         btc: calculatePercentageChange(latestValue.btc, oldestValue.btc),
-        other: calculatePercentageChange(latestOther, oldestOther),
+        other: calculatePercentageChange(latestValue.other, oldestValue.other),
       },
       changeExcludingAssociated: {
         total: calculatePercentageChange(
@@ -189,6 +162,22 @@ export async function get7dTvsBreakdown(
         external: calculatePercentageChange(
           latestWithoutAssociated.external,
           oldestWithoutAssociated.external,
+        ),
+        ether: calculatePercentageChange(
+          latestWithoutAssociated.ether,
+          oldestWithoutAssociated.ether,
+        ),
+        stablecoin: calculatePercentageChange(
+          latestWithoutAssociated.stablecoin,
+          oldestWithoutAssociated.stablecoin,
+        ),
+        btc: calculatePercentageChange(
+          latestWithoutAssociated.btc,
+          oldestWithoutAssociated.btc,
+        ),
+        other: calculatePercentageChange(
+          latestWithoutAssociated.other,
+          oldestWithoutAssociated.other,
         ),
       },
     }
@@ -273,6 +262,10 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             canonical: 0.4,
             native: 0.15,
             external: 0.15,
+            ether: 0.15,
+            stablecoin: 0.15,
+            btc: 0.15,
+            other: 0.15,
           },
         },
       ]),

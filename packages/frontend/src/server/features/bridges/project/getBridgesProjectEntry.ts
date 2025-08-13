@@ -1,5 +1,6 @@
 import type {
   Project,
+  ProjectAssociatedToken,
   ProjectBridgeInfo,
   ProjectCustomColors,
   TableReadyValue,
@@ -56,8 +57,9 @@ export interface BridgesProjectEntry {
         stablecoin: number
         associated: number
         btc: number
+        other: number
         warnings: WarningWithSentiment[]
-        associatedTokens: string[]
+        associatedTokens: ProjectAssociatedToken[]
       }
     }
     destination: TableReadyValue

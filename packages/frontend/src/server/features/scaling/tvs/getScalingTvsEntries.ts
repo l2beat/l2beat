@@ -1,4 +1,8 @@
-import type { Project, WarningWithSentiment } from '@l2beat/config'
+import type {
+  Project,
+  ProjectAssociatedToken,
+  WarningWithSentiment,
+} from '@l2beat/config'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
@@ -37,7 +41,7 @@ export async function getScalingTvsEntries() {
 export interface ScalingTvsEntry extends CommonScalingEntry {
   tvs: {
     data: ProjectSevenDayTvsBreakdown | undefined
-    associatedTokens: string[]
+    associatedTokens: ProjectAssociatedToken[]
     warnings: WarningWithSentiment[]
   }
   tvsOrder: number

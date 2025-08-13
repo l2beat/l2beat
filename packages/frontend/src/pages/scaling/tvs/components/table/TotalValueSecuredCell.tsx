@@ -8,6 +8,7 @@ import { TableLink } from '../../../../../components/table/TableLink'
 
 interface TotalValueSecuredCellProps {
   href: string
+  total: number
   breakdown:
     | {
         type: 'bridging'
@@ -18,6 +19,7 @@ interface TotalValueSecuredCellProps {
     | {
         type: 'token'
         ether: number
+        associated: number
         stablecoin: number
         btc: number
         other: number
@@ -29,15 +31,6 @@ interface TotalValueSecuredCellProps {
 export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
   const tvsWarnings = props.tvsWarnings ?? []
   const anyBadWarnings = tvsWarnings.some((w) => w?.sentiment === 'bad')
-  const total =
-    props.breakdown.type === 'bridging'
-      ? props.breakdown.canonical +
-        props.breakdown.external +
-        props.breakdown.native
-      : props.breakdown.ether +
-        props.breakdown.stablecoin +
-        props.breakdown.btc +
-        props.breakdown.other
 
   return (
     <TableLink href={props.href}>
@@ -50,7 +43,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
             />
           ) : null}
           <ValueWithPercentageChange change={props.change}>
-            {formatDollarValueNumber(total)}
+            {formatDollarValueNumber(props.total)}
           </ValueWithPercentageChange>
         </div>
         {props.breakdown.type === 'bridging' ? (
@@ -62,11 +55,11 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
           />
         ) : (
           <TokenBreakdown
-            total={total}
-            associated={0}
+            total={props.total}
             ether={props.breakdown.ether}
             stablecoin={props.breakdown.stablecoin}
             btc={props.breakdown.btc}
+            other={props.breakdown.other}
             className="h-[3px] w-[180px]"
           />
         )}

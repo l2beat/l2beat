@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TvsBreakdownButton } from '~/components/projects/sections/BridgingTypeTvsSection'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import type {
@@ -15,7 +16,10 @@ import { getChartRange } from '../../../core/chart/utils/getChartRangeFromColumn
 import type { ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../ProjectTokenChart'
 import { TvsChartTimeRangeControls } from '../TvsChartTimeRangeControls'
-import { BridgingTypeTvsChart } from './BridgingTypeTvsChart'
+import {
+  BridgingTypeTvsChart,
+  bridgingTypeTvsChartMeta,
+} from './BridgingTypeTvsChart'
 
 interface Props {
   milestones: Milestone[]
@@ -96,6 +100,8 @@ function DefaultChart({
   setUnit,
   tvsBreakdownUrl,
 }: DefaultChartProps) {
+  const { dataKeys, toggleDataKey } = useChartDataKeys(bridgingTypeTvsChartMeta)
+
   const { data, isLoading } = api.tvs.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
     range: { type: timeRange },
@@ -144,6 +150,8 @@ function DefaultChart({
         tickCount={4}
         className="mt-4 mb-3"
         syncedUntil={data?.syncedUntil}
+        dataKeys={dataKeys}
+        toggleDataKey={toggleDataKey}
       />
       <div className="flex flex-wrap items-center justify-between gap-1">
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>

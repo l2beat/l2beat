@@ -20,7 +20,6 @@ export const tvsRouter = router({
   chart: procedure
     .input(TvsChartDataParams)
     .query(({ input }) => getTvsChart(input)),
-
   detailedChart: procedure
     .input(DetailedTvsChartDataParams)
     .query(({ input }) => getDetailedTvsChart(input)),
