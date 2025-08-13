@@ -4539,6 +4539,12 @@
   ],
   "linea": [
     {
+      "symbol": "REX",
+      "address": "0xEfD81eeC32B9A8222D1842ec3d99c7532C31e348",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "SOULS",
       "address": "0xeC859566fC5d7ED84Ac823509F3f7db06C461b20",
       "source": "external",

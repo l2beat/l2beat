@@ -13657,6 +13657,20 @@
       "supply": "zero"
     },
     {
+      "name": "Etherex",
+      "coingeckoId": "etherex",
+      "address": "0xEfD81eeC32B9A8222D1842ec3d99c7532C31e348",
+      "symbol": "REX",
+      "decimals": 18,
+      "deploymentTimestamp": 1754279726,
+      "coingeckoListingTimestamp": 1754524800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68009/large/etherex.jpg?1754560098",
+      "chainId": 59144,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Foxy",
       "coingeckoId": "foxy",
       "address": "0x5FBDF89403270a1846F5ae7D113A989F850d1566",
