@@ -941,6 +941,14 @@ export interface ProjectEcosystemConfig {
     tools?: string[]
     grants?: string
   }
+  firstBanner?: {
+    headlineText?: string
+    mainText?: string
+  }
+  secondBanner?: {
+    headlineText?: string
+    mainText?: string
+  }
 }
 // #endregion
 
