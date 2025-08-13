@@ -5,7 +5,6 @@ import {
   type Row,
 } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -103,7 +102,11 @@ function TrustedSetupCells({
         <div className="flex flex-col items-start gap-2">
           <Tooltip>
             <TooltipTrigger className="flex items-center gap-2">
-              <TrustedSetupRiskDot risk={worstRisk} size="md" />
+              {worstRisk === 'N/A' ? (
+                <span className="text-2xl leading-none">🤩</span>
+              ) : (
+                <TrustedSetupRiskDot risk={worstRisk} size="md" />
+              )}
               <TechStackTag tag={proofSystem} withoutTooltip />
             </TooltipTrigger>
             <TooltipContent>
@@ -119,7 +122,7 @@ function TrustedSetupCells({
                 return (
                   <div key={trustedSetup.id} className="flex gap-2">
                     {trustedSetup.risk === 'N/A' ? (
-                      <NotApplicableBadge />
+                      <div className="mt-px text-lg leading-none">🤩</div>
                     ) : (
                       <TrustedSetupRiskDot
                         risk={trustedSetup.risk}
@@ -153,15 +156,13 @@ function TrustedSetupCells({
   )
 }
 
-function pickWorstRisk(trustedSetups: TrustedSetup[]) {
-  return trustedSetups.reduce<'green' | 'yellow' | 'red'>(
-    (acc, trustedSetup) => {
-      if (acc === 'red') return acc
-      if (trustedSetup.risk === 'red') return 'red'
-      if (acc === 'yellow') return acc
-      if (trustedSetup.risk === 'yellow') return 'yellow'
-      return 'green'
-    },
-    'green',
-  )
+function pickWorstRisk(trustedSetups: TrustedSetup[]): TrustedSetup['risk'] {
+  const riskHierarchy = ['red', 'yellow', 'green', 'N/A'] as const
+
+  for (const risk of riskHierarchy) {
+    if (trustedSetups.some((ts) => ts.risk === risk)) {
+      return risk
+    }
+  }
+  return 'N/A'
 }

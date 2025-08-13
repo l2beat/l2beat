@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const fluent: ScalingProject = upcomingL2({
   id: 'fluent',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1721218971), // 2024-07-17T12:22:51Z
   display: {
     name: 'Fluent',
