@@ -36,11 +36,9 @@ export function generateAllSchemas(): Schema[] {
     fields: v.record(v.string(), MergedField).optional(),
   })
 
-  const { archived: _, ...ColorNoArchived } = _ColorConfig
-
   const ChainConfig = v.object({
     ..._StructureConfig,
-    ...ColorNoArchived,
+    ..._ColorConfig,
     ..._PermissionsConfig,
     overrides: v.record(v.string(), MergedContract).optional(),
     types: v.record(v.string(), DiscoveryCustomType).optional(),
