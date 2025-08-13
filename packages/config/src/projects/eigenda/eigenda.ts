@@ -91,8 +91,7 @@ export const eigenda: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description:
-      'EigenDA is a data availability solution built on EigenLayer.',
+    description: 'EigenDA is a data availability solution built on EigenLayer.',
     links: {
       websites: ['https://www.eigenda.xyz/'],
       documentation: ['https://docs.eigenda.xyz/overview'],
