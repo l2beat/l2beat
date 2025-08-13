@@ -1,6 +1,5 @@
 import type { ContractValue } from '@l2beat/discovery'
 import {
-  assert,
   ChainSpecificAddress,
   // assert,
   EthereumAddress,
@@ -77,16 +76,6 @@ const inclusionDelay = discovery.getContractValue<PacayaConfig>(
 )
 
 const chainId = 167000
-
-const preconfRouter = discovery.getContractValue(
-  'TaikoWrapper',
-  'preconfRouter',
-)
-
-assert(
-  preconfRouter === 'eth:0x0000000000000000000000000000000000000000',
-  'preconf router is set, update sequencing sections',
-) // also check this line:         require(p.blocks[0].signalSlots.length == 0, InvalidSignalSlots());
 
 export const taiko: ScalingProject = {
   id: ProjectId('taiko'),
@@ -369,7 +358,7 @@ export const taiko: ScalingProject = {
         references: [
           {
             title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-            url: 'https://etherscan.io/address/0x80d888ce11738196CfCf27E3b18F65bD4a331CEC#code',
+            url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
           },
         ],
         risks: [
@@ -398,7 +387,7 @@ export const taiko: ScalingProject = {
       references: [
         {
           title: 'TaikoL1.sol - Etherscan source code, proposeBatch function',
-          url: 'https://etherscan.io/address/0x80d888ce11738196CfCf27E3b18F65bD4a331CEC#code',
+          url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
         },
       ],
       risks: [],

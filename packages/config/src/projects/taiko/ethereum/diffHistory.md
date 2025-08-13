@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc185d24306bbba83c48e38ba64aba3585052bfd6
+Generated with discovered.json: 0x986863b747992c0c715e1ea3ab278f6411ecb81b
 
-# Diff at Tue, 12 Aug 2025 09:41:19 GMT:
+# Diff at Wed, 13 Aug 2025 15:08:59 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@87f7f0547d8b44bb4d333c6cd6802916ea9606c6 block: 1753796542
-- current timestamp: 1754989781
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@1e979707fa418afec7a866915add580481560520 block: 1753796542
+- current timestamp: 1755097717
 
 ## Description
 
@@ -113,19 +113,13 @@ Old fork: same address
 ```diff
 +   Status: CREATED
     contract PreconfRouter (0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0xf417cbb9b33F2B5d6C76B2371D35A3bE63979F9C)
-    +++ description: None
+    +++ description: Entry point for batch proposals under the pre-confirmation architecture. It allows batches to be proposed only by whitelisted addresses.
 ```
 
 ```diff
 +   Status: CREATED
     contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac)
-    +++ description: None
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 2 operators registered.
 ```
 
 ## Source code changes

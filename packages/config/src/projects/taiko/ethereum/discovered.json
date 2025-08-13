@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "timestamp": 1754989781,
+  "timestamp": 1755097717,
   "configHash": "0xa5a7561c9a7b7897626869db8c83e36f23fe27891ac222366f68b0e71e88de61",
   "entries": [
     {
@@ -383,68 +383,68 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1320856,
-          "blockId_": 1339506,
+          "batchId_": 1321088,
+          "blockId_": 1390445,
           "ts_": {
-            "parentHash": "0xff341e8509ce59b92778b1833a71fc263de1449eb275f166070897e1673c1c4a",
-            "blockHash": "0xdfe313f98d6fc3662113aef655879744b5ac254119971768b7f2be4378295944",
-            "stateRoot": "0x1f2e056d5614574b2a24f59b73e84e33112a145818500873fc5e24a6b911b6a8",
-            "prover": "eth:0xf417cbb9b33F2B5d6C76B2371D35A3bE63979F9C",
-            "inProvingWindow": false,
-            "createdAt": 1754981087
+            "parentHash": "0xd794bf867ae55fd476cbd83f13cd6c3a684df3ebbc4b80f05f0486a85ac2f608",
+            "blockHash": "0x0c942b668df37221a1498373b1c3a205c369fcba7edb58fff72550482ea82689",
+            "stateRoot": "0xa4ffd4ff1aeef98ca309f26be64dd36884d0a6fbf5930c5bab3b6bf5698d1062",
+            "prover": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+            "inProvingWindow": true,
+            "createdAt": 1755086159
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1320858,
-          "blockHash_": "0x3c98ab29bd1bfb33391b88d13126f7b12cdc5cc8fe1fdb5d8c96d175702f10ff",
+          "blockId_": 1321089,
+          "blockHash_": "0x468c9d8b433b1fd1076041e3d40350f148ed43412b4de812a18ced58f9e3684a",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1741735295
+          "verifiedAt_": 1741739915
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1320858,
-          "blockId_": 1340348,
+          "batchId_": 1321089,
+          "blockId_": 1390893,
           "ts_": {
-            "parentHash": "0x797d9921df26c8bcd2e4d2d165134bac8663694c6b43f3dd66f03b149f5f9dd0",
-            "blockHash": "0x3c98ab29bd1bfb33391b88d13126f7b12cdc5cc8fe1fdb5d8c96d175702f10ff",
+            "parentHash": "0x0c942b668df37221a1498373b1c3a205c369fcba7edb58fff72550482ea82689",
+            "blockHash": "0x468c9d8b433b1fd1076041e3d40350f148ed43412b4de812a18ced58f9e3684a",
             "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "prover": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+            "prover": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
             "inProvingWindow": true,
-            "createdAt": 1754979455
+            "createdAt": 1755084971
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1320856,
-            "lastSynecdAt": 1754988467
+            "lastSyncedBlockId": 1321088,
+            "lastSynecdAt": 1755095999
           },
           {
-            "numBlocks": 1320887,
-            "lastVerifiedBlockId": 1320858,
+            "numBlocks": 1321112,
+            "lastVerifiedBlockId": 1321089,
             "provingPaused": false,
-            "lastProposedIn": 23123933,
+            "lastProposedIn": 23132856,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1320856,
-          "lastSyncedAt": 1754988467
+          "lastSyncedBatchId": 1321088,
+          "lastSyncedAt": 1755095999
         },
         "getStats2": {
-          "numBatches": 1320887,
-          "lastVerifiedBatchId": 1320858,
+          "numBatches": 1321112,
+          "lastVerifiedBatchId": 1321089,
           "paused": false,
-          "lastProposedIn": 23123933,
+          "lastProposedIn": 23132856,
           "lastUnpausedAt": 1716571955
         },
         "impl": "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F",
         "inboxWrapper": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 23123933,
+        "lastProposedIn": 23132856,
         "newFork": "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82",
         "oldFork": "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -485,14 +485,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1320856,
-            "lastSyncedAt": 1754988467
+            "lastSyncedBatchId": 1321088,
+            "lastSyncedAt": 1755095999
           },
           "stats2": {
-            "numBatches": 1320887,
-            "lastVerifiedBatchId": 1320858,
+            "numBatches": 1321112,
+            "lastVerifiedBatchId": 1321089,
             "paused": false,
-            "lastProposedIn": 23123933,
+            "lastProposedIn": 23132856,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -706,7 +706,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1754989763,
+        "clock": 1755097703,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -956,7 +956,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 130,
+        "nonce": 131,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -978,18 +978,6 @@
       "address": "eth:0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x3f343543F95469e6e4A64a4aa65D1BB4B1BAF9e5",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf417cbb9b33F2B5d6C76B2371D35A3bE63979F9C",
-          "role": "admin"
-        }
-      ]
     },
     {
       "address": "eth:0x3ffe3F16d47A54b1C6A3f47c9E6Ff5C2C1B32859",
@@ -1512,7 +1500,7 @@
         "inNonReentrant": false,
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "nextInstanceId": 14,
+        "nextInstanceId": 15,
         "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2282,7 +2270,7 @@
         "inNonReentrant": false,
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "nextInstanceId": 14,
+        "nextInstanceId": 15,
         "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2570,11 +2558,13 @@
       "name": "PreconfRouter",
       "address": "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a",
       "type": "Contract",
+      "template": "taiko/PreconfRouter",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x7029286f91090d6d474c9bc0329436fed073038c547c5cd3db6c70045a7dccf8"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Entry point for batch proposals under the pre-confirmation architecture. It allows batches to be proposed only by whitelisted addresses.",
       "sinceTimestamp": 1753275179,
       "sinceBlock": 22981993,
       "values": {
@@ -2601,9 +2591,9 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "preconfWhitelist": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
         "proposeBatchEntrypoint": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
+        "proxiableUUID": "EXPECT_REVERT",
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a": "ERC1967Proxy",
         "eth:0xf571E2626E2CE68127852123A2cC6AA522C586A0": "PreconfRouter"
@@ -2731,7 +2721,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37697,
+        "nextMessageId": 37707,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2973,36 +2963,6 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "",
-      "address": "eth:0xf417cbb9b33F2B5d6C76B2371D35A3bE63979F9C",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1751005283,
-      "sinceBlock": 22793952,
-      "values": {
-        "$admin": "eth:0x3f343543F95469e6e4A64a4aa65D1BB4B1BAF9e5",
-        "$implementation": "eth:0x8D3A0F151EF08B16De9d960EC2dE3a57d7cab2AC",
-        "$pastUpgrades": [
-          [
-            "2025-06-27T06:21:23.000Z",
-            "0x0549409e20682ede69e1bc9b0c7cc0290f693d1aadfc2a5776bb572a04e973b7",
-            ["eth:0xbcF3DeAAbd99055AF3269402e0A07B25683D58C7"]
-          ],
-          [
-            "2025-07-07T04:25:59.000Z",
-            "0x14aeb44f68c3d4461883606f5d4bed73cd87a83f9a89ae8743adaae5212a2fe0",
-            ["eth:0x8D3A0F151EF08B16De9d960EC2dE3a57d7cab2AC"]
-          ]
-        ],
-        "$upgradeCount": 2
-      },
-      "implementationNames": {
-        "eth:0xf417cbb9b33F2B5d6C76B2371D35A3bE63979F9C": "",
-        "eth:0x8D3A0F151EF08B16De9d960EC2dE3a57d7cab2AC": ""
-      }
-    },
-    {
       "name": "TaikoDAOController",
       "address": "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
       "type": "Contract",
@@ -3044,11 +3004,13 @@
       "name": "PreconfWhitelist",
       "address": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
       "type": "Contract",
+      "template": "taiko/PreconfWhitelist",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0xf118d401839238cdc94b9476ab2149f7492c9653c489f80819102c4fe0b23fc3"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 2 operators registered.",
       "sinceTimestamp": 1753275179,
       "sinceBlock": 22981993,
       "values": {
@@ -3067,9 +3029,6 @@
           ]
         ],
         "$upgradeCount": 2,
-        "epochStartTimestamp": [
-          1754989655, 1754990039, 1754990423, 1754990807, 1754991191
-        ],
         "getOperatorCandidatesForCurrentEpoch": [
           "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
           "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
@@ -3085,23 +3044,11 @@
         "inNonReentrant": false,
         "operatorChangeDelay": 2,
         "operatorCount": 2,
-        "operatorMapping": [
-          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
-          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000"
-        ],
         "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "randomnessDelay": 2,
         "resolver": "eth:0x0000000000000000000000000000000000000000"
-      },
-      "errors": {
-        "epochStartTimestamp": "Processing error occurred.",
-        "operatorMapping": "Processing error occurred.",
-        "proxiableUUID": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0xFD019460881e6EeC632258222393d5821029b2ac": "ERC1967Proxy",
@@ -5055,6 +5002,8 @@
     "taiko/Multisig": "0x49a0b215fa16081fbf9c9d57b0632f3c40ca9576ed2f18a7ed5229a2411be66d",
     "taiko/OptimisticTokenVotingPlugin": "0x6a672d2ccf7819bd3003e4e2f21047fbad74dcfc72fcf6c89283ac0106156ec5",
     "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "taiko/PreconfRouter": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "taiko/PreconfWhitelist": "0x8bfcb2f87290f428cd88e0d03ea70fe1840e5ae29d18378b0de6c268efd27414",
     "taiko/ProverSet": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "taiko/QuotaManager": "0x60a9974b6da61ae37b06e2fc4839dece6d902b60d2baac895e8886d1609be020",
     "taiko/Risc0VerifierGateway": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
@@ -5072,6 +5021,6 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23123976 },
-  "permissionsConfigHash": "0x3fab4ae03ea6c258ad0563c086ff02b5ad1c632ea4e1badd97833a451d6529fb"
+  "usedBlockNumbers": { "ethereum": 23132925 },
+  "permissionsConfigHash": "0x4581bf26a5fcfdfc2ca55afc6053b88ce5f45d2f5da6710d4832607d4012682d"
 }
