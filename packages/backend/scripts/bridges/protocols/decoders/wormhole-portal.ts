@@ -38,7 +38,6 @@ async function decoder(
   if (!network) return undefined
 
   if (
-    input.transactionTo === network.tokenBridge &&
     EthereumAddress(input.log.address) === network.coreBridge &&
     input.log.topics[0] ===
       encodeEventTopics({ abi: ABI, eventName: 'LogMessagePublished' })[0]

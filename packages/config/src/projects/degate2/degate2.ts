@@ -93,6 +93,9 @@ export const degate2: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   config: {
     associatedTokens: ['DG'],
     escrows: [

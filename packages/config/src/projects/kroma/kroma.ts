@@ -102,6 +102,7 @@ export const kroma: ScalingProject = {
       )} after it has been posted.`,
     },
   },
+  proofSystem: undefined,
   ecosystemInfo: {
     id: ProjectId('superchain'),
   },

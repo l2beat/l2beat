@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const quarkchain: ScalingProject = upcomingL2({
   id: 'quarkchain',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1741609623),
   display: {
     name: 'QuarkChain',

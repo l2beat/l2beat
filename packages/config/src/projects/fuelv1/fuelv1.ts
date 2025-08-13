@@ -56,6 +56,9 @@ export const fuelv1: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
   config: {
     escrows: [
       {

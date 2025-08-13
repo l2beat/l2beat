@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const genlayer: ScalingProject = upcomingL2({
   id: 'genlayer',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1740073213), // 2025-01-20T17:40:13Z
   display: {
     name: 'GenLayer',
