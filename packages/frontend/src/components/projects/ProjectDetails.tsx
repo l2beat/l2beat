@@ -1,5 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { ActivitySection } from './sections/ActivitySection'
+import { BridgesTvsSection } from './sections/BridgesTvsSection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
 import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
@@ -14,13 +15,12 @@ import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidents
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSummarySection } from './sections/RiskSummarySection'
+import { ScalingTvsSection } from './sections/ScalingTvsSection'
 import { SequencingSection } from './sections/SequencingSection'
 import { StageSection } from './sections/StageSection'
 import { StateDerivationSection } from './sections/StateDerivationSection'
 import { StateValidationSection } from './sections/StateValidationSection'
 import { TechnologyChoicesSection } from './sections/TechnologyChoicesSection'
-import { TokenSourceTvsSection } from './sections/TokenSourceTvsSection'
-import { TvsSection } from './sections/TvsSection'
 import { ThroughputSection } from './sections/throughput/ThroughputSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
@@ -42,17 +42,17 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           : `${index + 1}`
 
         switch (item.type) {
-          case 'TokenSourceTvsSection':
+          case 'ScalingTvsSection':
             return (
-              <TokenSourceTvsSection
+              <ScalingTvsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
-          case 'TvsSection':
+          case 'BridgesTvsSection':
             return (
-              <TvsSection
+              <BridgesTvsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

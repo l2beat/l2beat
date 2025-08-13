@@ -1,13 +1,13 @@
 import { createContext, useContext } from 'react'
-import { tokenCategoryTvsChartMeta } from '~/components/chart/tvs/stacked/TokenCategoryTvsChart'
-import { tokenSourceTvsChartMeta } from '~/components/chart/tvs/stacked/TokenSourceTvsChart'
+import { assetCategoryTvsChartMeta } from '~/components/chart/tvs/stacked/AssetCategoryTvsChart'
+import { bridgeTypeTvsChartMeta } from '~/components/chart/tvs/stacked/BridgeTypeTvsChart'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 
 const ScalingTvsDataKeysContext = createContext<{
-  tokenSourceDataKeys: (keyof typeof tokenSourceTvsChartMeta)[]
-  tokenCategoryDataKeys: (keyof typeof tokenCategoryTvsChartMeta)[]
-  tokenSourceToggleDataKey: (dataKey: string) => void
-  tokenCategoryToggleDataKey: (dataKey: string) => void
+  tokenBridgeTypeDataKeys: (keyof typeof bridgeTypeTvsChartMeta)[]
+  assetCategoryDataKeys: (keyof typeof assetCategoryTvsChartMeta)[]
+  tokenBridgeTypeToggleDataKey: (dataKey: string) => void
+  assetCategoryToggleDataKey: (dataKey: string) => void
 } | null>(null)
 
 export function ScalingTvsDataKeysProvider({
@@ -16,21 +16,21 @@ export function ScalingTvsDataKeysProvider({
   children: React.ReactNode
 }) {
   const {
-    dataKeys: tokenSourceDataKeys,
-    toggleDataKey: tokenSourceToggleDataKey,
-  } = useChartDataKeys(tokenSourceTvsChartMeta)
+    dataKeys: tokenBridgeTypeDataKeys,
+    toggleDataKey: tokenBridgeTypeToggleDataKey,
+  } = useChartDataKeys(bridgeTypeTvsChartMeta)
   const {
-    dataKeys: tokenCategoryDataKeys,
-    toggleDataKey: tokenCategoryToggleDataKey,
-  } = useChartDataKeys(tokenCategoryTvsChartMeta)
+    dataKeys: assetCategoryDataKeys,
+    toggleDataKey: assetCategoryToggleDataKey,
+  } = useChartDataKeys(assetCategoryTvsChartMeta)
 
   return (
     <ScalingTvsDataKeysContext.Provider
       value={{
-        tokenSourceDataKeys,
-        tokenCategoryDataKeys,
-        tokenSourceToggleDataKey,
-        tokenCategoryToggleDataKey,
+        tokenBridgeTypeDataKeys,
+        assetCategoryDataKeys,
+        tokenBridgeTypeToggleDataKey,
+        assetCategoryToggleDataKey,
       }}
     >
       {children}

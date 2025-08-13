@@ -30,9 +30,9 @@ type Props = TabbedScalingEntries<ScalingTvsEntry> & {
 
 export function ScalingTvsTabs(props: Props) {
   const filterEntries = useFilterEntries()
-  const [breakdownType, setBreakdownType] = useState<'source' | 'category'>(
-    'source',
-  )
+  const [breakdownType, setBreakdownType] = useState<
+    'bridgeType' | 'assetCategory'
+  >('bridgeType')
 
   const entries = {
     rollups: props.rollups.filter(filterEntries),
@@ -160,23 +160,23 @@ function BreakdownTypeRadioGroup({
   breakdownType,
   setBreakdownType,
 }: {
-  breakdownType: 'source' | 'category'
-  setBreakdownType: (value: 'source' | 'category') => void
+  breakdownType: 'bridgeType' | 'assetCategory'
+  setBreakdownType: (value: 'bridgeType' | 'assetCategory') => void
 }) {
   return (
     <RadioGroup
       name="breakdownType"
       value={breakdownType}
       onValueChange={(value) =>
-        setBreakdownType(value as 'source' | 'category')
+        setBreakdownType(value as 'bridgeType' | 'assetCategory')
       }
       className="mb-2 h-10 w-full p-1.5"
     >
-      <RadioGroupItem value="source" className="w-full">
-        By token source
+      <RadioGroupItem value="bridgeType" className="w-full">
+        By bridge type
       </RadioGroupItem>
-      <RadioGroupItem value="category" className="w-full">
-        By token category
+      <RadioGroupItem value="assetCategory" className="w-full">
+        By asset category
       </RadioGroupItem>
     </RadioGroup>
   )

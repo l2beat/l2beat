@@ -160,7 +160,7 @@ export async function getBridgesProjectEntry(
 
   if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData.chart)) {
     sections.push({
-      type: 'TvsSection',
+      type: 'BridgesTvsSection',
       props: {
         id: 'tvs',
         title: 'Value Secured',

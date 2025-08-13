@@ -5,7 +5,7 @@ import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/proje
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import type { ChartUnit } from '../../types'
-import { TokenCategoryTvsChart } from './TokenCategoryTvsChart'
+import { AssetCategoryTvsChart } from './AssetCategoryTvsChart'
 
 interface Props {
   filter: TvsProjectFilter
@@ -15,14 +15,14 @@ interface Props {
   excludeAssociatedTokens: boolean
 }
 
-export function ScalingTokenCategoryTvsChart({
+export function ScalingAssetCategoryTvsChart({
   filter,
   milestones,
   range,
   unit,
   excludeAssociatedTokens,
 }: Props) {
-  const { tokenCategoryDataKeys, tokenCategoryToggleDataKey } =
+  const { assetCategoryDataKeys, assetCategoryToggleDataKey } =
     useScalingTvsDataKeys()
 
   const { data, isLoading } = api.tvs.detailedChart.useQuery({
@@ -61,14 +61,14 @@ export function ScalingTokenCategoryTvsChart({
   )
 
   return (
-    <TokenCategoryTvsChart
+    <AssetCategoryTvsChart
       data={chartData}
       milestones={milestones}
       unit={unit}
       isLoading={isLoading}
       syncedUntil={data?.syncedUntil}
-      dataKeys={tokenCategoryDataKeys}
-      toggleDataKey={tokenCategoryToggleDataKey}
+      dataKeys={assetCategoryDataKeys}
+      toggleDataKey={assetCategoryToggleDataKey}
     />
   )
 }

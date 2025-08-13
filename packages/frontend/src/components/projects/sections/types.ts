@@ -1,4 +1,5 @@
 import type { ActivitySectionProps } from './ActivitySection'
+import type { BridgesTvsSectionProps } from './BridgesTvsSection'
 import type { ContractsSectionProps } from './contracts/ContractsSection'
 import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
@@ -14,13 +15,12 @@ import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
+import type { ScalingTvsSectionProps } from './ScalingTvsSection'
 import type { SequencingSectionProps } from './SequencingSection'
 import type { StageSectionProps } from './StageSection'
 import type { StateDerivationSectionProps } from './StateDerivationSection'
 import type { StateValidationSectionProps } from './StateValidationSection'
 import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
-import type { TokenSourceTvsSectionProps } from './TokenSourceTvsSection'
-import type { TvsSectionProps } from './TvsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 
 type SectionId =
@@ -73,14 +73,14 @@ interface ProjectDetailsThroughputSection {
   props: ProjectDetailsProps<ThroughputSectionProps>
 }
 
-interface ProjectDetailsTokenSourceTvsSection {
-  type: 'TokenSourceTvsSection'
-  props: ProjectDetailsProps<TokenSourceTvsSectionProps>
+interface ProjectDetailsScalingTvsSection {
+  type: 'ScalingTvsSection'
+  props: ProjectDetailsProps<ScalingTvsSectionProps>
 }
 
-interface ProjectDetailsTvsSection {
-  type: 'TvsSection'
-  props: ProjectDetailsProps<TvsSectionProps>
+interface ProjectDetailsBridgesTvsSection {
+  type: 'BridgesTvsSection'
+  props: ProjectDetailsProps<BridgesTvsSectionProps>
 }
 
 interface ProjectDetailsActivitySection {
@@ -203,7 +203,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
-  | ProjectDetailsTokenSourceTvsSection
-  | ProjectDetailsTvsSection
+  | ProjectDetailsScalingTvsSection
+  | ProjectDetailsBridgesTvsSection
   | ProjectDetailsActivitySection
 )

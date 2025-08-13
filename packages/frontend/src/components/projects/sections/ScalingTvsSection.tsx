@@ -1,5 +1,5 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
-import { ProjectTokenSourceTvsChart } from '~/components/chart/tvs/stacked/ProjectTokenSourceTvsChart'
+import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TvsBreakdownSummaryBox } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
@@ -9,7 +9,7 @@ import { cn } from '~/utils/cn'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
-export interface TokenSourceTvsSectionProps extends ProjectSectionProps {
+export interface ScalingTvsSectionProps extends ProjectSectionProps {
   id: 'tvs'
   tokens?: ProjectTokens
   projectId: string
@@ -20,7 +20,7 @@ export interface TokenSourceTvsSectionProps extends ProjectSectionProps {
   defaultRange: TvsChartRange
 }
 
-export function TokenSourceTvsSection({
+export function ScalingTvsSection({
   projectId,
   milestones,
   tokens,
@@ -29,10 +29,10 @@ export function TokenSourceTvsSection({
   tvsBreakdownUrl,
   defaultRange,
   ...sectionProps
-}: TokenSourceTvsSectionProps) {
+}: ScalingTvsSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <ProjectTokenSourceTvsChart
+      <ProjectBridgeTypeTvsChart
         milestones={milestones}
         projectId={projectId}
         tokens={tokens}

@@ -16,44 +16,50 @@ import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../../types'
 
-interface StackedTvsChartDataPoint {
+interface TokenCategoryTvsChartDataPoint {
   timestamp: number
-  native: number | null
-  canonical: number | null
-  external: number | null
+  ether: number | null
+  stablecoin: number | null
+  btc: number | null
+  other: number | null
 }
 
 interface Props {
-  data: StackedTvsChartDataPoint[] | undefined
+  data: TokenCategoryTvsChartDataPoint[] | undefined
   syncedUntil: number | undefined
+  dataKeys: (keyof typeof assetCategoryTvsChartMeta)[]
+  toggleDataKey: (dataKey: string) => void
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
-  dataKeys: (keyof typeof tokenSourceTvsChartMeta)[]
-  toggleDataKey: (dataKey: string) => void
   tickCount?: number
   className?: string
 }
 
-export const tokenSourceTvsChartMeta = {
-  canonical: {
-    label: 'Canonically bridged',
-    color: 'var(--chart-stacked-purple)',
+export const assetCategoryTvsChartMeta = {
+  ether: {
+    label: 'ETH & derivatives',
+    color: 'var(--chart-ethereum)',
     indicatorType: { shape: 'square' },
   },
-  native: {
-    label: 'Natively minted',
-    color: 'var(--chart-stacked-pink)',
+  stablecoin: {
+    label: 'Stablecoins',
+    color: 'var(--chart-teal)',
     indicatorType: { shape: 'square' },
   },
-  external: {
-    label: 'Externally bridged',
-    color: 'var(--chart-stacked-yellow)',
+  btc: {
+    label: 'BTC & derivatives',
+    color: 'var(--chart-orange)',
+    indicatorType: { shape: 'square' },
+  },
+  other: {
+    label: 'Other',
+    color: 'var(--chart-yellow-lime)',
     indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
 
-export function TokenSourceTvsChart({
+export function AssetCategoryTvsChart({
   data,
   syncedUntil,
   milestones,
@@ -67,7 +73,7 @@ export function TokenSourceTvsChart({
   return (
     <ChartContainer
       data={data}
-      meta={tokenSourceTvsChartMeta}
+      meta={assetCategoryTvsChartMeta}
       isLoading={isLoading}
       milestones={milestones}
       interactiveLegend={{
@@ -79,9 +85,27 @@ export function TokenSourceTvsChart({
       <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
-          dataKey="external"
-          hide={!dataKeys.includes('external')}
-          fill={tokenSourceTvsChartMeta.external.color}
+          dataKey="other"
+          hide={!dataKeys.includes('other')}
+          fill={assetCategoryTvsChartMeta.other.color}
+          fillOpacity={1}
+          strokeWidth={0}
+          stackId="a"
+          isAnimationActive={false}
+        />
+        <Area
+          dataKey="btc"
+          hide={!dataKeys.includes('btc')}
+          fill={assetCategoryTvsChartMeta.btc.color}
+          fillOpacity={1}
+          strokeWidth={0}
+          stackId="a"
+          isAnimationActive={false}
+        />
+        <Area
+          dataKey="stablecoin"
+          hide={!dataKeys.includes('stablecoin')}
+          fill={assetCategoryTvsChartMeta.stablecoin.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -89,23 +113,14 @@ export function TokenSourceTvsChart({
           activeDot={false}
         />
         <Area
-          dataKey="native"
-          hide={!dataKeys.includes('native')}
-          fill={tokenSourceTvsChartMeta.native.color}
+          dataKey="ether"
+          hide={!dataKeys.includes('ether')}
+          fill={assetCategoryTvsChartMeta.ether.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
           activeDot={false}
-        />
-        <Area
-          dataKey="canonical"
-          hide={!dataKeys.includes('canonical')}
-          fill={tokenSourceTvsChartMeta.canonical.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId="a"
-          isAnimationActive={false}
         />
         {getCommonChartComponents({
           data,
@@ -168,8 +183,8 @@ function CustomTooltip({
           {actualPayload.map((entry) => {
             if (entry.type === 'none') return null
             const config =
-              tokenSourceTvsChartMeta[
-                entry.name as keyof typeof tokenSourceTvsChartMeta
+              assetCategoryTvsChartMeta[
+                entry.name as keyof typeof assetCategoryTvsChartMeta
               ]
             return (
               <div

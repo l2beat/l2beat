@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { TvsBreakdownButton } from '~/components/projects/sections/TokenSourceTvsSection'
+import { TvsBreakdownButton } from '~/components/projects/sections/ScalingTvsSection'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import type {
   ProjectToken,
@@ -17,9 +17,9 @@ import type { ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../ProjectTokenChart'
 import { TvsChartTimeRangeControls } from '../TvsChartTimeRangeControls'
 import {
-  TokenSourceTvsChart,
-  tokenSourceTvsChartMeta,
-} from './TokenSourceTvsChart'
+  BridgeTypeTvsChart,
+  bridgeTypeTvsChartMeta,
+} from './BridgeTypeTvsChart'
 
 interface Props {
   milestones: Milestone[]
@@ -29,7 +29,7 @@ interface Props {
   defaultRange: TvsChartRange
 }
 
-export function ProjectTokenSourceTvsChart({
+export function ProjectBridgeTypeTvsChart({
   milestones,
   projectId,
   tokens,
@@ -100,7 +100,7 @@ function DefaultChart({
   setUnit,
   tvsBreakdownUrl,
 }: DefaultChartProps) {
-  const { dataKeys, toggleDataKey } = useChartDataKeys(tokenSourceTvsChartMeta)
+  const { dataKeys, toggleDataKey } = useChartDataKeys(bridgeTypeTvsChartMeta)
 
   const { data, isLoading } = api.tvs.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
@@ -142,7 +142,7 @@ function DefaultChart({
           setTimeRange={setTimeRange}
         />
       </ChartControlsWrapper>
-      <TokenSourceTvsChart
+      <BridgeTypeTvsChart
         data={chartData}
         milestones={milestones}
         unit={unit}

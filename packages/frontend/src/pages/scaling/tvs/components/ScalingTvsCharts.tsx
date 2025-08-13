@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
-import { ScalingTokenCategoryTvsChart } from '~/components/chart/tvs/stacked/ScalingTokenCategoryTvsChart'
-import { ScalingTokenSourceTvsChart } from '~/components/chart/tvs/stacked/ScalingTokenSourceTvsChart'
+import { ScalingAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ScalingAssetCategoryTvsChart'
+import { ScalingBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ScalingBridgeTypeTvsChart'
 import { TvsChartHeader } from '~/components/chart/tvs/TvsChartHeader'
 import { TvsChartTimeRangeControls } from '~/components/chart/tvs/TvsChartTimeRangeControls'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
@@ -56,8 +56,8 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
   )
   const stats = getStats(data?.chart)
 
-  const bySourceChart = (
-    <ScalingTokenSourceTvsChart
+  const byBridgeTypeChart = (
+    <ScalingBridgeTypeTvsChart
       unit={unit}
       filter={filter}
       range={timeRange}
@@ -66,8 +66,8 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
     />
   )
 
-  const byCategoryChart = (
-    <ScalingTokenCategoryTvsChart
+  const byAssetSourceChart = (
+    <ScalingAssetCategoryTvsChart
       unit={unit}
       filter={filter}
       range={timeRange}
@@ -86,12 +86,12 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
         timeRange={chartRange}
       />
       <div className="mt-4 mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
-        {bySourceChart}
-        {byCategoryChart}
+        {byBridgeTypeChart}
+        {byAssetSourceChart}
       </div>
       <ChartTabs
         className="-mx-4 md:-mx-6 pb-1! lg:hidden"
-        charts={[bySourceChart, byCategoryChart]}
+        charts={[byBridgeTypeChart, byAssetSourceChart]}
       />
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>

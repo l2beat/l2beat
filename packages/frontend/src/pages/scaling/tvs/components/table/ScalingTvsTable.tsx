@@ -11,7 +11,7 @@ import { getScalingTvsColumns } from './columns'
 interface Props {
   entries: ScalingTvsEntry[]
   notReviewed?: boolean
-  breakdownType: 'source' | 'category'
+  breakdownType: 'bridgeType' | 'assetCategory'
 }
 
 export function ScalingTvsTable({
