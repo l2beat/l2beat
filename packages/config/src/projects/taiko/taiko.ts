@@ -420,6 +420,14 @@ export const taiko: ScalingProject = {
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
     {
+      title: 'Preconfs introduction',
+      url: 'https://taiko.mirror.xyz/rbgD_KM06QkDe1t0Gw1wI_MLvwobTS1PqEIfstZRo48',
+      date: '2025-08-11T00:00:00.00Z',
+      description:
+        'Taiko implements preconfs - whitelisted actors provide fast soft confirmations for L2 txs.',
+      type: 'general',
+    },
+    {
       title: 'Plonky3 vulnerability patch',
       url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
       date: '2025-06-04T00:00:00.00Z',

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x986863b747992c0c715e1ea3ab278f6411ecb81b
+Generated with discovered.json: 0x0bd792e6819c4d5116a8c3efb8cd67343a2787c6
 
-# Diff at Wed, 13 Aug 2025 15:08:59 GMT:
+# Diff at Wed, 13 Aug 2025 19:36:49 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@1e979707fa418afec7a866915add580481560520 block: 1753796542
-- current timestamp: 1755097717
+- comparing to: main@20325e19767a916f8b99b4ee5c90e82a0b7a7e16 block: 1753796542
+- current timestamp: 1755113796
 
 ## Description
 
@@ -119,7 +119,7 @@ Old fork: same address
 ```diff
 +   Status: CREATED
     contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac)
-    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 2 operators registered.
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered.
 ```
 
 ## Source code changes

@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently {{operatorCount}} operators registered.",
-  "ignoreMethods": ["epochStartTimestamp", "operatorMapping", "proxiableUUID"]
+  "ignoreMethods": ["epochStartTimestamp", "operatorMapping", "proxiableUUID"],
+  "ignoreInWatchMode": ["getOperatorCandidatesForCurrentEpoch", "getOperatorCandidatesForNextEpoch"]
 }
