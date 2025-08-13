@@ -1,12 +1,12 @@
 import type { Project } from '@l2beat/config'
-import type { StackedTvsSectionProps } from '~/components/projects/sections/StackedTvsSection'
+import type { ScalingTvsSectionProps } from '~/components/projects/sections/ScalingTvsSection'
 import { isTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
 import type { SsrHelpers } from '~/trpc/server'
 
-export async function getStackedTvsSection(
+export async function getScalingTvsSection(
   helpers: SsrHelpers,
   project: Project<never, 'archivedAt'>,
-): Promise<Pick<StackedTvsSectionProps, 'defaultRange'> | undefined> {
+): Promise<Pick<ScalingTvsSectionProps, 'defaultRange'> | undefined> {
   const range = project.archivedAt ? 'max' : '1y'
   const data = await helpers.tvs.chart.fetch({
     range: { type: range },

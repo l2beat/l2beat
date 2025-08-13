@@ -1,10 +1,14 @@
-import type { WarningWithSentiment } from '@l2beat/config'
+import type {
+  ProjectAssociatedToken,
+  WarningWithSentiment,
+} from '@l2beat/config'
 import { formatPercent } from '~/utils/calculatePercentageChange'
+import { languageJoin } from '~/utils/languageJoin'
 
 interface Params {
   name: string
   associatedRatio: number
-  associatedTokens: string[]
+  associatedTokens: ProjectAssociatedToken[]
 }
 
 export function getAssociatedTokenWarning({
@@ -17,17 +21,14 @@ export function getAssociatedTokenWarning({
 
   const percent = formatPercent(associatedRatio)
   if (associatedTokens.length === 1) {
-    const what = `The ${associatedTokens[0]} token associated with ${name}`
+    const what = `The ${associatedTokens[0]?.symbol} token associated with ${name}`
     return {
       value: `${what} accounts for ${percent} of the TVS!`,
       sentiment,
     }
   }
 
-  const withoutLast = associatedTokens.slice(0, -1)
-  const last = associatedTokens.at(-1)
-
-  const joined = withoutLast.join(', ') + ` and ${last}`
+  const joined = languageJoin(associatedTokens.map((t) => t.symbol))
   const what = `The ${joined} tokens associated with ${name}`
 
   return {

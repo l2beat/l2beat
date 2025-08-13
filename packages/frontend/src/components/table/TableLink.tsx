@@ -4,6 +4,7 @@ export function TableLink({
   href,
   children,
   className,
+  ...props
 }: {
   href: string | undefined
   children: React.ReactNode
@@ -18,6 +19,7 @@ export function TableLink({
           className,
         )}
         href={href}
+        {...props}
       >
         {children}
       </a>
