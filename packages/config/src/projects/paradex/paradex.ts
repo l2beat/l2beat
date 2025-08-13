@@ -324,7 +324,7 @@ export const paradex: ScalingProject = {
     nodeSoftware:
       'SN stack-compatible node software can be used, please find the Paradex-specific node setup guide [in their docs](https://docs.paradex.trade/documentation/paradex-chain/node-setup).The [Juno](https://github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
     compressionScheme:
-      'Paradex uses [stateful compression since v0.13.4](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/#v0_13_4).',
+      'Paradex uses [stateful compression since v0.13.4](https://docs.starknet.io/architecture/data-availability/#v0_13_4).',
     genesisState: 'There is no non-empty genesis state.',
     dataFormat:
       'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/architecture/data-availability/).',
