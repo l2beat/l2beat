@@ -113,11 +113,13 @@ export function TokenBreakdownTooltipContent({
                 {associatedTokens.map((t) => {
                   return (
                     <span className="flex items-center gap-1" key={t.symbol}>
-                      <img
-                        src={t.icon}
-                        alt={t.symbol}
-                        className="size-4 rounded-full"
-                      />
+                      {t.icon && (
+                        <img
+                          src={t.icon}
+                          alt={t.symbol}
+                          className="size-4 rounded-full"
+                        />
+                      )}
                       <span className="font-medium text-label-value-15 leading-0">
                         {t.symbol}
                       </span>
