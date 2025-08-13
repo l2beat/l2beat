@@ -23,6 +23,9 @@ export async function getDataAvailabilitySummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Data Availability Summary - L2BEAT',
+        description:
+          'Get an overview of the data availability solutions powering Ethereum scaling projects.',
         openGraph: {
           url,
           image: '/meta-images/data-availability/summary/opengraph-image.png',

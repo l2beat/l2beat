@@ -4539,6 +4539,12 @@
   ],
   "linea": [
     {
+      "symbol": "REX",
+      "address": "0xEfD81eeC32B9A8222D1842ec3d99c7532C31e348",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "SOULS",
       "address": "0xeC859566fC5d7ED84Ac823509F3f7db06C461b20",
       "source": "external",
@@ -7548,7 +7554,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -7563,7 +7569,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -7578,7 +7584,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -7593,7 +7599,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -7608,7 +7614,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -7619,6 +7625,68 @@
       "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
       "source": "native",
       "supply": "totalSupply" // minted like an RWA (backed by RWA)
+    }
+  ],
+  "ternoa": [
+    {
+      "symbol": "vbUSDC",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "address": "0xac8dDbc1f261eE4632518a1A62c23cD2b5a52BAd",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "vbUSDT",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "address": "0x5453e111aCE935Ba404b9474E14fe7a883B97519",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "vbWBTC",
+      "category": "btc",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x593A86cB824e0e3546fAE6bbC56e6f3f3EB6213E",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "vbETH",
+      "coingeckoId": "ethereum",
+      "category": "ether",
+      "address": "0xABb9adE1Bd2A3bDcCD4c91FB149685936aCb758E",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
     }
   ]
 }

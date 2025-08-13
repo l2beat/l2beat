@@ -259,6 +259,106 @@
     },
     {
       "mode": "auto",
+      "id": "ternoa-vbETH",
+      "priceId": "ethereum",
+      "symbol": "vbETH",
+      "name": "Vault Bridge ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xABb9adE1Bd2A3bDcCD4c91FB149685936aCb758E",
+        "chain": "ternoa",
+        "decimals": 18,
+        "sinceTimestamp": 1754133432
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-vbUSDC",
+      "priceId": "usd-coin",
+      "symbol": "vbUSDC",
+      "name": "Vault Bridge USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xac8dDbc1f261eE4632518a1A62c23cD2b5a52BAd",
+        "chain": "ternoa",
+        "decimals": 6,
+        "sinceTimestamp": 1753378509
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-vbUSDT",
+      "priceId": "tether",
+      "symbol": "vbUSDT",
+      "name": "Vault Bridge USDT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5453e111aCE935Ba404b9474E14fe7a883B97519",
+        "chain": "ternoa",
+        "decimals": 6,
+        "sinceTimestamp": 1752325126
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-vbWBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "vbWBTC",
+      "name": "Vault Bridge WBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x593A86cB824e0e3546fAE6bbC56e6f3f3EB6213E",
+        "chain": "ternoa",
+        "decimals": 8,
+        "sinceTimestamp": 1754132656
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "ternoa-WBTC",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",

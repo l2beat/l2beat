@@ -1,7 +1,7 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "timestamp": 1754911784,
+  "timestamp": 1755010717,
   "configHash": "0xd38e9c53b1775bb619aefecfa164c450b440ce77e1acd2928e28d4bfea9f134b",
   "entries": [
     {
@@ -229,8 +229,8 @@
       "values": {
         "$immutable": true,
         "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
-        "nominee": "eth:0x9B33306a655C07e15c917F95a8298131f652dA33",
-        "owner": "eth:0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
+        "nominee": "eth:0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x9B33306a655C07e15c917F95a8298131f652dA33"
       },
       "implementationNames": {
         "eth:0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB": "Vault"
@@ -946,11 +946,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "SNX Vault (Derive)",
       "address": "eth:0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
       "type": "Contract",
@@ -1071,7 +1066,7 @@
         "capacitorFactory__": "eth:0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "eth:0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 18161,
+        "globalMessageCount": 18229,
         "hasher__": "eth:0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "eth:0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -5145,6 +5140,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23117514 },
-  "permissionsConfigHash": "0xefd62348bbddbec53b6989b3eca0350902552333c184119f22b5d33eadeed302"
+  "usedBlockNumbers": { "ethereum": 23125710 },
+  "permissionsConfigHash": "0x842db57db66f087e5c03063034812c8b5132bcf8838f82018ea9cb923df60b97"
 }

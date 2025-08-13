@@ -369,7 +369,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -423,7 +423,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -477,7 +477,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -531,7 +531,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -585,7 +585,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }

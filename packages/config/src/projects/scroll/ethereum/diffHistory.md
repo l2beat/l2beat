@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xac1d4a521aa7099551b136489f3f49d6e830ab5d
+Generated with discovered.json: 0x1675a3c48ada4ccf97f25620eb2b67911bf9e5ff
 
 # Diff at Mon, 11 Aug 2025 14:21:53 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xac1d4a521aa7099551b136489f3f49d6e830ab5d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Verifier source verified.
 
 ## Config/verification related changes
 

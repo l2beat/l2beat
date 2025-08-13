@@ -5,6 +5,7 @@ import { upcomingL3 } from '../../templates/upcoming'
 export const unite: ScalingProject = upcomingL3({
   id: 'unite',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1722863398), // 2024-08-05T13:09:58Z
   hostChain: ProjectId('base'),
   display: {
