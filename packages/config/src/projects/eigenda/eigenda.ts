@@ -92,7 +92,7 @@ export const eigenda: BaseProject = {
   },
   display: {
     description:
-      'EigenDA is a data availability solution built on Eigen Layer.',
+      'EigenDA is a data availability solution built on EigenLayer.',
     links: {
       websites: ['https://www.eigenda.xyz/'],
       documentation: ['https://docs.eigenda.xyz/overview'],
