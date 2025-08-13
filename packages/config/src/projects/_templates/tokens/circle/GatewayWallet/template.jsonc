@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Exit point or burner of USDC on this chain for the Gateway protocol.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "attestationSigners": {
+      "description": "Brigde validators, trusted to sign each burning payload on an outbound bridge tx.",
+      "handler": {
+        "type": "event",
+        "select": "signer",
+        "add": { "event": "BurnSignerAdded" },
+        "remove": { "event": "BurnSignerRemoved" }
+      }
+    }
+  }
+}
