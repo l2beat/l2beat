@@ -35,7 +35,6 @@ export const game7: ScalingProject = orbitStackL3({
         'https://discord.gg/g7dao',
         'https://x.com/G7_DAO',
         'https://mirror.xyz/0x17D15C35b9c50032eE98f5730934ff85F9c16acA',
-        'https://youtube.com/@G7_DAO',
       ],
     },
   },
