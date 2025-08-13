@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "timestamp": 1752575723,
-  "configHash": "0x706fdf8e78b75599cef4c3696b25378fedc8a7137b53b4facbd531d666cafcaa",
+  "configHash": "0x6f8ad5219eca412507ebb2dd7d5b8b2479dda3add69d0656874e83597a4620ef",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {

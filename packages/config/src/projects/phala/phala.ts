@@ -83,6 +83,9 @@ export const phala: ScalingProject = {
       )} after it has been posted.`,
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   chainConfig: {
     name: 'phala',
     chainId: 2035,

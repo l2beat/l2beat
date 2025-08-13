@@ -30,6 +30,19 @@ pnpm bridges:cli agglayer ethereum 22980856 katana 6519624
 pnpm bridges:cli agglayer katana 5380874 ethereum 22914279
 ```
 
+### Axelar
+#### InterchainTransfer
+https://axelarscan.io/gmp/0xc23e108c402aac65cc39179ba8af547f6ca7259eb1ecad5ae797b8066470222c
+```bash
+pnpm bridges:cli axelar ethereum 23035804 base 33568393
+```
+
+#### ContractCallWithToken
+https://axelarscan.io/gmp/0x736bf135a7d38402488fd39b54b6a8844866a9ec3ec7f2b4156a68f5e6473921
+```bash
+pnpm bridges:cli axelar arbitrum 364838803 ethereum 23067066
+```
+
 ### CCTP v1
 ```bash
 pnpm bridges:cli cctpv1 arbitrum 363107844 base 33540292

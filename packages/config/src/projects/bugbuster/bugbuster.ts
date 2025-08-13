@@ -59,6 +59,7 @@ export const bugbuster: ScalingProject = {
       ],
     },
   },
+  proofSystem: undefined,
   config: {
     escrows: [
       discovery.getEscrowDetails({

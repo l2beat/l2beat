@@ -52,6 +52,7 @@ export const immutablezkevm: ScalingProject = {
       explorers: ['https://explorer.immutable.com/'],
     },
   },
+  proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',
   },

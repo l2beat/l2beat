@@ -73,11 +73,12 @@ async function decoder(
     )
     assert(sentTransferRemoteLog, 'SentTransferRemote not emitted')
 
-    const token = await getTokenWrappedAddress(
-      rpc,
-      EthereumAddress(sentTransferRemoteLog.address),
-      input.blockNumber,
-    )
+    const token =
+      (await getTokenWrappedAddress(
+        rpc,
+        EthereumAddress(sentTransferRemoteLog.address),
+        input.blockNumber,
+      )) ?? sentTransferRemoteLog.address
 
     const amount = decodeEventLog({
       abi: ABI,
@@ -140,11 +141,12 @@ async function decoder(
     )
     assert(receivedTransferRemoteLog, 'ReceivedTransferRemote not emitted')
 
-    const token = await getTokenWrappedAddress(
-      rpc,
-      EthereumAddress(receivedTransferRemoteLog.address),
-      input.blockNumber,
-    )
+    const token =
+      (await getTokenWrappedAddress(
+        rpc,
+        EthereumAddress(receivedTransferRemoteLog.address),
+        input.blockNumber,
+      )) ?? receivedTransferRemoteLog.address
 
     const amount = decodeEventLog({
       abi: ABI,
@@ -201,20 +203,24 @@ async function getTokenWrappedAddress(
   tokenWrapper: EthereumAddress,
   blockNumber: number,
 ) {
-  assert(rpc)
-  const tokenWrappedAddress = await rpc.call(
-    {
-      to: tokenWrapper,
-      data: Bytes.fromHex(
-        encodeFunctionData({
-          abi: ABI,
-          functionName: 'wrappedToken',
-        }),
-      ),
-    },
-    blockNumber,
-  )
+  try {
+    assert(rpc)
+    const tokenWrappedAddress = await rpc.call(
+      {
+        to: tokenWrapper,
+        data: Bytes.fromHex(
+          encodeFunctionData({
+            abi: ABI,
+            functionName: 'wrappedToken',
+          }),
+        ),
+      },
+      blockNumber,
+    )
 
-  const token = extractAddressFromPadded(tokenWrappedAddress.toString())
-  return token
+    const token = extractAddressFromPadded(tokenWrappedAddress.toString())
+    return token
+  } catch {
+    return undefined
+  }
 }

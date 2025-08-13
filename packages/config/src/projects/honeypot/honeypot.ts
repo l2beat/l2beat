@@ -72,6 +72,7 @@ export const honeypot: ScalingProject = {
       },
     },
   },
+  proofSystem: undefined,
   stage: getStage(
     {
       stage0: {

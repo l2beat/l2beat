@@ -110,6 +110,9 @@ export const apex: ScalingProject = {
     BADGES.Stack.StarkEx,
     BADGES.Infra.SHARP,
   ],
+  proofSystem: {
+    type: 'Optimistic',
+  },
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
     redWarning:

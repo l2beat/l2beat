@@ -24,6 +24,6 @@ export class ConfigRegistry {
   }
 
   get archived(): boolean {
-    return this.structure.archived ?? false
+    return this.color.archived ?? false
   }
 }
