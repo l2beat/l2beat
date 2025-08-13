@@ -89,6 +89,9 @@ export const deversifi: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   stage: {
     stage: 'NotApplicable',
   },

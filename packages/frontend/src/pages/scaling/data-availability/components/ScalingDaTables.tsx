@@ -58,7 +58,7 @@ export function ScalingDaTables(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <ScalingDaTable entries={entries.rollups} rollups />
+            <ScalingDaTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>

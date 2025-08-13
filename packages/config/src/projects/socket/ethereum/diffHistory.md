@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x9792b1fbe3be518a9171a5682c3c16dd897f4e82
+
+# Diff at Tue, 12 Aug 2025 15:01:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754911784
+- current timestamp: 1755010717
+
+## Description
+
+zora owner change part two.
+
+## Watched changes
+
+```diff
+    contract USDT Vault (Zora) (0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x9B33306a655C07e15c917F95a8298131f652dA33"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "eth:0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
++        "eth:0x9B33306a655C07e15c917F95a8298131f652dA33"
+    }
+```
+
+Generated with discovered.json: 0x6f3e23fa4cc52d2b050ae6df22c0aeb916b31dd0
+
+# Diff at Mon, 11 Aug 2025 11:30:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32817e35c9fe0ba1a1c24a734c37d91068b1565d block: 1754493282
+- current timestamp: 1754911784
+
+## Description
+
+owner change on zora vaults.
+
+## Watched changes
+
+```diff
+    contract USDT Vault (Zora) (0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x9B33306a655C07e15c917F95a8298131f652dA33"
+    }
+```
+
+```diff
+    contract USDC Vault (Zora) (0x58CDCf55f2c8660674F17561334F6370cbaDeEF8) {
+    +++ description: None
+      values.owner:
+-        "eth:0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
++        "eth:0x9B33306a655C07e15c917F95a8298131f652dA33"
+    }
+```
+
 Generated with discovered.json: 0x4f38b34a7cd4ac78aa2cb6ffe5d17d1b356d93a0
 
 # Diff at Wed, 06 Aug 2025 15:15:05 GMT:

@@ -82,6 +82,9 @@ export const myria: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   stage: {
     stage: 'NotApplicable',
   },

@@ -74,6 +74,9 @@ export const aztec: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   config: {
     escrows: [
       {

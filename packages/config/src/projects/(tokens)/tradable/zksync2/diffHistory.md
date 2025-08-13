@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x8760cc2d8ab274cc663aaa57ef6b9f0187523374
+
+# Diff at Tue, 12 Aug 2025 15:47:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1753949758
+- current timestamp: 1755013528
+
+## Description
+
+new eligible acc on deal!?
+
+## Watched changes
+
+```diff
+    contract Deal (0xC629D9E3d1A4325DBfAff85D5a61Da956cc5e32b) {
+    +++ description: None
+      values.eligibleAccounts.15:
++        "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559"
+    }
+```
+
 Generated with discovered.json: 0xe8eca5969cf0da2a6035a2a238b925eb642f8248
 
 # Diff at Thu, 31 Jul 2025 08:18:06 GMT:

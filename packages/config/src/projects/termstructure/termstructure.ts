@@ -47,6 +47,7 @@ const vaultWeight =
   ).vault / 100
 
 export const termstructure: ScalingProject = {
+  archivedAt: UnixTime(1754983642),
   id: ProjectId('termstructure'),
   capability: 'appchain',
   addedAt: UnixTime(1709724246), // 2024-03-06T11:24:06Z
@@ -85,6 +86,9 @@ export const termstructure: ScalingProject = {
       explanation:
         "Term Structure is a ZK rollup based on ZKsync Lite's code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and a validity proof should be generated, submitted, and verified.",
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
   config: {
     escrows: [

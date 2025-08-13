@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "timestamp": 1754475055,
-  "configHash": "0xa6c1196cd1937bec094db301961d1487845a767d071226fa4ae6777d91ec77e0",
+  "timestamp": 1755014055,
+  "configHash": "0xa37c216f153fe997dc31387bd7eee21a339d2a41e2a954a6ece0887f69c61bac",
   "entries": [
     {
       "address": "scr:0x0000000000000000000000000000000000000000",
@@ -46,7 +46,7 @@
         "pauser": "scr:0x0000000000000000000000000000000000000001",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
-        "rescuer": "scr:0x0000000000000000000000000000000000000000",
+        "rescuer": "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
         "symbol": "USDC",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
@@ -425,7 +425,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -582,7 +582,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 19,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -911,9 +911,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x81101bc5b40d122776a3e062773b73d6d1a88c959f60df2b005ecf28c1b12c4c",
+        "messageRoot": "0x1f99ec3d6c1b621a05721efc5a0c972f8b6fc4c3beef78f02d3a260180956aab",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 207197,
+        "nextMessageIndex": 207543,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -1060,7 +1060,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1307,7 +1307,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1687,7 +1687,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3088,6 +3088,6 @@
     "scroll/ScrollOwnerL2": "0x77eb1863ff595be1f6d216e4eb34cc75c37aae99c08c2cd56f8adaa13c218141",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "scroll": 18483059 },
-  "permissionsConfigHash": "0xbe8342b7794290b5b1d792ba3e8cd7884ac7bdb5ba0eafbe8f313e558e6f1706"
+  "usedBlockNumbers": { "scroll": 19022058 },
+  "permissionsConfigHash": "0x6026e9d5cd2befcf9d6ce6f3a1484a20c9d9cbb7eefe920713e0b8b385097c3f"
 }

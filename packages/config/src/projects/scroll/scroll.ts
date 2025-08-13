@@ -106,6 +106,9 @@ export const scroll: ScalingProject = {
         'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet been confirmed.',
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   scopeOfAssessment: {
     inScope: [
       'Ability to deposit, spend, and withdraw the gas token (ETH)',
@@ -634,6 +637,14 @@ export const scroll: ScalingProject = {
   },
   upgradesAndGovernance: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the Security Council through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the \`TimelockSCSlow\`) and upgrading the affected contracts. The Security Council can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the \`updateMessageQueueParameters\` and \`updateEnforcedBatchParameters\` functions or by pausing the \`EnforcedTXGateway\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the Security Council minority can unpause, while the Security Council majority is authorized to update and reset the cooldown period. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.`,
   milestones: [
+    {
+      title: 'Emergency verifier upgrade',
+      url: 'https://etherscan.io/tx/0x3367e24b6cb138cea321f4556259660f24aba1b79ccce8f798ed135e28905f17',
+      date: '2025-08-09T00:00:00Z',
+      description:
+        'The SecurityCouncil emergency upgrades to fix a bug in the verifier.',
+      type: 'incident',
+    },
     {
       title: 'Access control upgrade',
       url: 'https://etherscan.io/tx/0x13c8a293bc6a367eb2510a2bd71cacefbe9705588a574696e790db820b3f520d',

@@ -87,6 +87,9 @@ export const immutablex: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   stage: {
     stage: 'NotApplicable',
   },

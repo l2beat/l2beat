@@ -1,3 +1,113 @@
+Generated with discovered.json: 0xc98f96706d5955d5b0069fe40e45be049359eaa7
+
+# Diff at Mon, 11 Aug 2025 09:51:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32817e35c9fe0ba1a1c24a734c37d91068b1565d block: 1753200443
+- current timestamp: 1754901900
+
+## Description
+
+Espresso integration update (add aws TEE): 
+
+EspressoTEENitroVerifier: [diff to the previous one does not make sense due to new architecture](https://disco.l2beat.com/diff/eth:0x64189bd57B1b281C9EC3f5295B75797ddcB1572c/eth:0xDa72802AaF0a7af96d9FF7d0D94A7388B85f9f24), [diff to the one used in molten](https://disco.l2beat.com/diff/arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5/eth:0xDa72802AaF0a7af96d9FF7d0D94A7388B85f9f24) (minimal). This adds the AWS TEE as supported, like in Molten.
+
+[SequencerInbox](https://disco.l2beat.com/diff/eth:0x2948690217F3C2fDD6166343da8A7Ac2B7f5c134/eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A)
+- minor changes to integrate the new Espresso archi ([similar to the molten upgrade](https://disco.l2beat.com/diff/arb1:0x481863c96f949F5E13932ec2F65470C0CF83808d/eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A))
+
+the other contracts match the templates or are unverified
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.6:
+-        "eth:0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9"
+      values.$members.7:
+-        "eth:0xb004d94314a34627C09E4b8f83D9E7420d99BbFC"
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "4 of 7 (57%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoTEEVerifier (0x64189bd57B1b281C9EC3f5295B75797ddcB1572c)
+    +++ description: The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.
+```
+
+```diff
+    contract SequencerInbox (0x8045B2aa6b823CbA8f99ef3D3404F711619d3473) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x0a398182f2a6b3798d40b111a9b690e9e8dcd3203805d462cdd68b528c4807d5"
++        "0x724a7b4f0fa3a5ce6b00cc932e70b6b83a05d1a846a341cbf8477dc95f6c916c"
+      values.$implementation:
+-        "eth:0x2948690217F3C2fDD6166343da8A7Ac2B7f5c134"
++        "eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A"
+      values.$pastUpgrades.3:
++        ["2025-08-08T06:20:59.000Z","0xfb159898c69ee602cf7e18b6c24e60b05cddb75a74c11050dc3600650c0ab7f0",["eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.espressoTEEVerifier:
+-        "eth:0x64189bd57B1b281C9EC3f5295B75797ddcB1572c"
++        "eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0"
+      values.setIsBatchPosterCount:
+-        3
++        5
+      implementationNames.eth:0x2948690217F3C2fDD6166343da8A7Ac2B7f5c134:
+-        "SequencerInbox"
+      implementationNames.eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A:
++        "SequencerInbox"
+    }
+```
+
+```diff
+    EOA  (0xDA8E38FEf4d5cF1997061e51945775a393E4965B) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x98206aBE6bdB21765458f27F199fd813343a3C3b","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"},{"permission":"interact","from":"eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0","description":"change the modular TEE verifier contracts.","role":".owner"},{"permission":"interact","from":"eth:0xDa72802AaF0a7af96d9FF7d0D94A7388B85f9f24","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CertManager (0x1Ff280d8B34E97E2CcA0bdb461F4bA2CF9b8E494)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoSGXTEEVerifier (0x98206aBE6bdB21765458f27F199fd813343a3C3b)
+    +++ description: Verifies attestations of an Intel SGX TEE.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (0xcC758349CBd99bAA7fAD0558634dAaB176c777D0)
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (0xDa72802AaF0a7af96d9FF7d0D94A7388B85f9f24)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+## Source code changes
+
+```diff
+.../appchain/ethereum/.flat/CertManager.sol        | 1978 ++++++++++++++++++++
+ .../ethereum/.flat/EspressoNitroTEEVerifier.sol    | 1973 +++++++++++++++++++
+ .../ethereum/.flat/EspressoSGXTEEVerifier.sol      |  697 +++++++
+ .../EspressoTEEVerifier.sol                        | 1110 ++++++-----
+ .../SequencerInbox/SequencerInbox.sol              |   77 +-
+ 5 files changed, 5373 insertions(+), 462 deletions(-)
+```
+
 Generated with discovered.json: 0x4361d2c63395be7206bb2101a4089e7e9bdef594
 
 # Diff at Tue, 22 Jul 2025 16:08:00 GMT:

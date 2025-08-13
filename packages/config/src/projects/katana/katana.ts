@@ -75,6 +75,9 @@ export const katana: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   config: {
     trackedTxs: [
       {

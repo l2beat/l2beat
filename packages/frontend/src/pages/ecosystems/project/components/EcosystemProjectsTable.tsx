@@ -1,6 +1,6 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { RollupsTable } from '~/components/table/RollupsTable'
+import { BasicTable } from '~/components/table/BasicTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { EcosystemProjectEntry } from '~/server/features/ecosystems/getEcosystemEntry'
@@ -31,5 +31,5 @@ export function EcosystemProjectsTable({ entries, ecosystemId }: Props) {
     },
   })
 
-  return <RollupsTable table={table} />
+  return <BasicTable table={table} />
 }

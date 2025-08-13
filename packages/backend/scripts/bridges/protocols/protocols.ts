@@ -5,6 +5,7 @@ import type { DecoderInput } from '../types/DecoderInput'
 import type { Message } from '../types/Message'
 import { ACROSS } from './decoders/across'
 import { AGGLAYER } from './decoders/agglayer'
+import { AXELAR } from './decoders/axelar'
 import { CCTPV1 } from './decoders/cctpv1'
 import { CCTPV2 } from './decoders/cctpv2'
 import { DEBRIDGE } from './decoders/debridge'
@@ -36,4 +37,5 @@ export const PROTOCOLS: Protocol[] = [
   DEBRIDGE,
   WORMHOLE_PORTAL,
   WORMHOLE_CCTP,
+  AXELAR,
 ]

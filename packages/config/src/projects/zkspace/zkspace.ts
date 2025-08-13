@@ -61,13 +61,15 @@ export const zkspace: ScalingProject = {
         'https://discord.gg/MJKtaYcYw8',
         'https://twitter.com/ZKBaseOfficial',
         'https://t.me/ZKSpaceOfficial',
-        'https://medium.com/zkswap',
       ],
     },
     liveness: {
       explanation:
         "ZK Space is a ZK rollup based on ZKsync Lite's code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and a validity proof should be generated, submitted, and verified. ",
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
   config: {
     associatedTokens: ['ZKS'],

@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xc0b77375cc62c7ed47f9cc67a2e7a8e9984214dc
+
+# Diff at Mon, 11 Aug 2025 10:38:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32817e35c9fe0ba1a1c24a734c37d91068b1565d block: 1753687645
+- current timestamp: 1754908695
+
+## Description
+
+Small upgrade to the Spoke (dynamic gas limit added): https://disco.l2beat.com/diff/eth:0xd18C19169e7C87e7d84f27AD412a56C5D743D560/eth:0xb0CE951eF4655C73E42E3c7D85eF166E7c615Af7
+
+many unverified contracts, project not reviewed or on website.
+
+## Watched changes
+
+```diff
+    contract EverclearSpokeV5 (0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      name:
+-        "EverclearSpokeV4"
++        "EverclearSpokeV5"
+      sourceHashes.1:
+-        "0x45c33a33554c896aa6b125b932ea82f27e4c3bca281ad0d8c5c36a077a762bda"
++        "0x183579075859d89358960a3d0a89ae170c5b81c70cb81f7e4b72e5ff310afb7f"
+      values.$implementation:
+-        "eth:0xd18C19169e7C87e7d84f27AD412a56C5D743D560"
++        "eth:0xb0CE951eF4655C73E42E3c7D85eF166E7c615Af7"
+      values.$pastUpgrades.4:
++        ["2025-08-08T10:47:47.000Z","0xdf6c967f149d75daef55e22dd9d164b5db17524aa520d60d438528ada4717036",["eth:0xb0CE951eF4655C73E42E3c7D85eF166E7c615Af7"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.messageGasLimit:
+-        2000000
++        5000000
+      values.PROCESS_FILL_QUEUE_VIA_RELAYER_TYPEHASH:
+-        "0x0afae807991f914b71165fd92589f1dc28648cb9fb1f8558f3a6c7507d56deff"
++        "0xfff2306b4d1a2b16ba8a4ba32d8ed8136d2cc882aea58ada6b2baedcde647f57"
+      values.PROCESS_INTENT_QUEUE_VIA_RELAYER_TYPEHASH:
+-        "0x8104c8a42e1531612796e696e327ea52a475d9583ee6d64ffdefcafad22c0b24"
++        "0x87c42ffc42ddf0cd52b5e8a0b1fa6c45338db7d6e7c93f9d2943eb42b2706aca"
+      implementationNames.eth:0xd18C19169e7C87e7d84f27AD412a56C5D743D560:
+-        "EverclearSpokeV4"
+      implementationNames.eth:0xb0CE951eF4655C73E42E3c7D85eF166E7c615Af7:
++        "EverclearSpokeV5"
+    }
+```
+
+## Source code changes
+
+```diff
+.../EverclearSpokeV5/EverclearSpokeV5.sol}         | 182 ++++++++++-----------
+ 1 file changed, 91 insertions(+), 91 deletions(-)
+```
+
 Generated with discovered.json: 0xc360942414a9e947f8a511483c5c831cc2c954b8
 
 # Diff at Wed, 30 Jul 2025 11:52:37 GMT:

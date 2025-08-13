@@ -1,3 +1,121 @@
+Generated with discovered.json: 0x1675a3c48ada4ccf97f25620eb2b67911bf9e5ff
+
+# Diff at Mon, 11 Aug 2025 14:21:53 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@5240759eaee5dedb92fe72951feec7c70dca9b61 block: 1754910994
+- current timestamp: 1754921961
+
+## Description
+
+Verifier source verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754910994 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierPostEuclid-2 (0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0x4ad50f22109a8ff91daad934d6d1519aa3d186c4d8ebc1ffdc165e0986aa23ae"]
+      references:
++        [{"text":"Source Code","href":"https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.5.2/bundle/verifier.bin"}]
+    }
+```
+
+Generated with discovered.json: 0x363b0af47f1b8808392eef5bf2a4e23e935b9d22
+
+# Diff at Mon, 11 Aug 2025 11:23:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32817e35c9fe0ba1a1c24a734c37d91068b1565d block: 1754475055
+- current timestamp: 1754910994
+
+## Description
+
+Soundness bug and verifier emergency update. No postmortem yet.
+https://etherscan.io/tx/0x3367e24b6cb138cea321f4556259660f24aba1b79ccce8f798ed135e28905f17
+
+added incident.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.6.verifier:
+-        "eth:0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba"
++        "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA"
+      values.latestVerifier.6.startBatchIndex:
+-        0
++        364588
+      values.legacyVerifiersLength.6:
+-        0
++        1
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierPostEuclid (0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierPostEuclid-2 (0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostEuclid-2 (0xc084a6De8b0F2742396572d6f110eC87ca9329bA)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ZkEvmVerifierPostEuclid-2.sol}                                        | 0
+ .../ZkEvmVerifierPostEuclid.sol}                                          | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754475055 (main branch discovery), not current.
+
+```diff
+    contract  (0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6) {
+    +++ description: None
+      name:
+-        "PlonkVerifierPostEuclid-2"
++        ""
+    }
+```
+
+```diff
+    contract ZkEvmVerifierPostEuclid (0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba) {
+    +++ description: None
+      name:
+-        "ZkEvmVerifierPostEuclid-2"
++        "ZkEvmVerifierPostEuclid"
+    }
+```
+
 Generated with discovered.json: 0x702c1de2593846e5c1a811495641a1498ae1a084
 
 # Diff at Wed, 06 Aug 2025 10:12:58 GMT:
