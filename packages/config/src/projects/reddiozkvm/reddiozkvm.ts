@@ -36,6 +36,9 @@ export const reddiozkvm: ScalingProject = underReviewL2({
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   associatedTokens: ['RDO'],
   chainConfig: {
     name: 'reddiozkvm',
