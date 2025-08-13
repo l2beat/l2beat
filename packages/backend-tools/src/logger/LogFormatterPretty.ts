@@ -72,6 +72,8 @@ export class LogFormatterPretty implements LogFormatter {
           return chalk.yellow(chalk.bold(level.toUpperCase()))
         case 'INFO':
           return chalk.green(chalk.bold(level.toUpperCase()))
+        case 'METRIC':
+          return chalk.cyan(chalk.bold(level.toUpperCase()))
         case 'DEBUG':
           return chalk.magenta(chalk.bold(level.toUpperCase()))
         case 'TRACE':
