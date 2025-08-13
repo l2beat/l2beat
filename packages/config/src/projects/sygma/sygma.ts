@@ -16,36 +16,21 @@ export const sygma: Bridge = {
   id: ProjectId('sygma'),
   addedAt: UnixTime(1711107103), // 2024-03-22T11:31:43Z
   display: {
-    name: 'Sygma',
+    name: 'Sprinter',
     slug: 'sygma',
     category: 'Hybrid',
     description:
-      'Sygma is an interoperability protocol enabling asset transfers, non-fungible tokens, and cross-chain execution. With Sygma, developers can extend their applications across Ethereum mainnet, Base, Cronos, Polygon, Gnosis, Polkadot, Kusama, and other Substrate-based chains with active work on Bitcoin and Cosmos SDK interoperability.',
-    detailedDescription: `Sygma in its current version is an interoperability protocol relying, from the Ethereum's point-of-view, on a \
-    single EOA address' signature. This address is meant to represent MPC validators. There are plans in the future to extend the protocol and \
-    add zk verifiers for block header oracle verification and optimistic routes that can be tailored to users' needs, however at the moment these capabilities are not deployed.`,
+      'Sprinter is next-generation solver-based infrastructure designed to optimize crosschain transactions.',
     links: {
-      websites: [
-        'https://buildwithsygma.com/',
-        'https://blog.buildwithsygma.com',
-      ],
-      documentation: ['https://docs.buildwithsygma.com'],
-      explorers: [
-        'https://scan.buildwithsygma.com',
-        'https://scan.test.buildwithsygma.com',
-      ],
+      websites: ['https://sprinter.tech'],
+      documentation: ['https://docs.sprinter.tech/'],
+      explorers: [],
       repositories: ['https://github.com/sprintertech/'],
       socialMedia: [
-        'https://discord.gg/Qdf6GyNB5J',
-        'https://twitter.com/buildwithsygma',
-        'https://t.me/buildwithsygma',
+        'https://twitter.com/sprinter_ux',
+        'https://t.me/sprinter_tech',
       ],
-      bridges: [
-        'https://subbridge.io',
-        'https://docs.buildwithsygma.com/resources/environments/testnet/#testnet-faucet',
-        'https://sygma-react-widget.pages.dev/',
-        'https://validator.faucet.chainsafe.dev/upload',
-      ],
+      bridges: ['https://app.sprinter.tech/stash'],
     },
   },
   riskView: {
