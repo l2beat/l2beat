@@ -20,6 +20,9 @@ export async function getDataAvailabilityThroughputData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Data Availability Throughput - L2BEAT',
+        description:
+          'Explore metrics related to the data posted to data availability solutions.',
         openGraph: {
           url,
           image:
