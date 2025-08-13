@@ -6,6 +6,7 @@ export const spire: ScalingProject = upcomingL2({
   id: 'spire',
   addedAt: UnixTime(1745421141), // '2025-04-23T17:12:38Z'
   capability: 'universal',
+  hasTestnet: true,
   display: {
     name: 'Spire',
     slug: 'spire',

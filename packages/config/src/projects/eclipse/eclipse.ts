@@ -58,6 +58,7 @@ export const eclipse: ScalingProject = {
       ],
     },
   },
+  proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',
   },

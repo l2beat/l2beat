@@ -79,6 +79,9 @@ export const brine: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   stage: {
     stage: 'NotApplicable',
   },

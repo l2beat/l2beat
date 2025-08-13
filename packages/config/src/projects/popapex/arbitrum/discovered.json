@@ -1,7 +1,7 @@
 {
   "name": "popapex",
   "chain": "arbitrum",
-  "timestamp": 1752237546,
+  "timestamp": 1755013885,
   "configHash": "0xdb712ae345998b121ac8049c80c72bf97128c8e871ec8b22a0f5260c38de6ee1",
   "entries": [
     {
@@ -67,7 +67,7 @@
         "allowedOutboxList": [
           "arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"
         ],
-        "delayedMessageCount": 56652,
+        "delayedMessageCount": 56921,
         "inboxHistory": [
           "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
           "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
@@ -75,8 +75,8 @@
         "outboxHistory": ["arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"],
         "rollup": "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerInbox": "arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1",
-        "sequencerMessageCount": 55470,
-        "sequencerReportedSubMessageCount": 131309013
+        "sequencerMessageCount": 55738,
+        "sequencerReportedSubMessageCount": 134562896
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -403,13 +403,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2714,
+        "firstUnresolvedNode": 2778,
         "inbox": "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22746218,
-        "latestConfirmed": 2713,
-        "latestNodeCreated": 2724,
+        "latestConfirmed": 2777,
+        "latestNodeCreated": 2788,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2",
@@ -641,6 +641,7 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "arb1:0x860e06Fe384D1A3340111e7D142E02642178c053",
           "arb1:0x50930d652266EF4127FA3A1906B7Cb9951076628",
@@ -657,8 +658,8 @@
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 83,
+        "multisigThreshold": "4 of 12 (33%)",
+        "nonce": 86,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -828,7 +829,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 55470,
+        "batchCount": 55738,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
@@ -873,7 +874,7 @@
         "rollup": "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 56651,
+        "totalDelayedMessagesRead": 56920,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1272,6 +1273,11 @@
       "implementationNames": {
         "arb1:0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881": "OneStepProverMemory"
       }
+    },
+    {
+      "address": "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1910,6 +1916,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 356573980 },
-  "permissionsConfigHash": "0x227eb92bca25217d6a00ccabe7c67d41de2c77a423a048de3f88978387a62517"
+  "usedBlockNumbers": { "arbitrum": 367690984 },
+  "permissionsConfigHash": "0x171f99bc5bc0497a1a20ceee12b827d00e03ba616bc415f5ab97d7d290b77879"
 }

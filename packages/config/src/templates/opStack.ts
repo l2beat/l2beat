@@ -17,6 +17,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   pickWorseRisk,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -35,6 +36,7 @@ import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
+  ProjectScalingProofSystem,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -139,6 +141,7 @@ interface OpStackConfigCommon {
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   milestones?: Milestone[]
+  nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
@@ -264,6 +267,11 @@ function opStackCommon(
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
   ]
+
+  const hasNoProofs = templateVars.reasonsForBeingOther?.some(
+    (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
+  )
+
   return {
     archivedAt: templateVars.archivedAt,
     id: ProjectId(templateVars.discovery.projectName),
@@ -301,6 +309,9 @@ function opStackCommon(
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
+    proofSystem:
+      templateVars.nonTemplateProofSystem ??
+      (hasNoProofs ? undefined : { type: 'Optimistic' }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
@@ -724,7 +735,7 @@ A single remaining child in a tournament can be 'resolved' and will be finalized
 The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
             references: [
               {
-                url: 'https://risc0.github.io/kailua/introduction.html',
+                url: 'https://risczero.com/blog/kailua-how-it-works',
                 title: 'Risc0 Kailua Docs',
               },
               {

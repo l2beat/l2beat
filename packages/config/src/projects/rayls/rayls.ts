@@ -5,8 +5,8 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const rayls: ScalingProject = upcomingL2({
   id: 'rayls',
   capability: 'universal',
-  addedAt: UnixTime(1753947052),
   hasTestnet: true,
+  addedAt: UnixTime(1753947052),
   display: {
     name: 'Rayls',
     slug: 'rayls',
@@ -23,7 +23,6 @@ export const rayls: ScalingProject = upcomingL2({
         'https://discord.gg/6THZ96357r',
         'https://x.com/RaylsLabs',
         'https://linkedin.com/company/rayls/',
-        'https://youtube.com/@RaylsBlockchain',
       ],
     },
   },

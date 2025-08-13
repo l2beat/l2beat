@@ -92,7 +92,6 @@ export const _StructureConfig = {
 export const StructureConfig = v.object({
   name: v.string().check((v) => v.length >= 1),
   chain: v.string().check((v) => v.length >= 1),
-  archived: v.boolean().optional(),
   import: v.array(v.string()).optional(),
   ..._StructureConfig,
 })

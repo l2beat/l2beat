@@ -36,6 +36,9 @@ export const layer2finance: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
   config: {
     escrows: [
       {

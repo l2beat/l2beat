@@ -16,7 +16,8 @@ export async function getGlossaryData(
       manifest,
       metadata: getMetadata(manifest, {
         title: 'Glossary - L2BEAT',
-        description: "A glossary of terms for Ethereum's Layer 2 ecosystem",
+        description:
+          'Understand key terms in Ethereum’s scaling ecosystem with L2BEAT’s glossary.',
         openGraph: {
           url,
           image: '/meta-images/glossary/opengraph-image.png',

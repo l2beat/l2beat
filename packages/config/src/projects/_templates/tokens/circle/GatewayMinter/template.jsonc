@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Entrypoint or minter of USDC on this chain for the Gateway protocol.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "attestationSigners": {
+      "description": "Brigde validators, trusted to sign each minting payload on an incoming bridge tx.",
+      "handler": {
+        "type": "event",
+        "select": "signer",
+        "add": { "event": "AttestationSignerAdded" },
+        "remove": { "event": "AttestationSignerRemoved" }
+      }
+    }
+  }
+}
