@@ -1,6 +1,5 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
-import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/getScalingRiskEntries'
@@ -8,11 +7,9 @@ import { getScalingRiskColumns } from './columns'
 
 export function ScalingRiskTable({
   entries,
-  rollups,
   notReviewed,
 }: {
   entries: ScalingRiskEntry[]
-  rollups?: boolean
   notReviewed?: boolean
 }) {
   const { sorting, setSorting } = useTableSorting()
@@ -33,9 +30,7 @@ export function ScalingRiskTable({
     },
   })
 
-  return rollups ? (
-    <RollupsTable table={table} />
-  ) : (
+  return (
     <BasicTable
       table={table}
       rowColoringMode={notReviewed ? 'ignore-colors' : undefined}

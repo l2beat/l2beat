@@ -57,7 +57,7 @@ export const bob: ScalingProject = opStackL2({
     },
     {
       title: 'Phase 1: Optimistic BOB',
-      url: 'https://docs.gobob.xyz/docs/bob-chain/roadmap/#-phase-1-bootstrapping-as-an-ethereum-l2',
+      url: 'https://x.com/build_on_bob/status/1763642185101004914',
       date: '2024-05-01T00:00:00Z',
       description: 'BOB bootstrapping as an Optimistic Rollup on Ethereum.',
       type: 'general',

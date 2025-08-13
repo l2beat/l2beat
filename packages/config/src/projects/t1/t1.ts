@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const t1: ScalingProject = upcomingL2({
   id: 't1',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1729678881), // 2024-10-23T12:21:33
   display: {
     name: 't1',
