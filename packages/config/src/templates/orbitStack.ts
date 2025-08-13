@@ -19,6 +19,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   pickWorseRisk,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -32,6 +33,7 @@ import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
+  ProjectScalingProofSystem,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -125,6 +127,7 @@ interface OrbitStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ProjectScalingDisplay['category']
   }
+  nonTemplateProofSystem?: ProjectScalingProofSystem
   bridge: EntryParameters
   blockNumberOpcodeTimeSeconds?: number
   rollupProxy: EntryParameters
@@ -458,6 +461,10 @@ function orbitStackCommon(
     )
   }
 
+  const hasNoProofs = templateVars.reasonsForBeingOther?.some(
+    (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
+  )
+
   return {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
@@ -482,6 +489,9 @@ function orbitStackCommon(
             ? 'Optimium'
             : 'Optimistic Rollup'),
     },
+    proofSystem:
+      templateVars.nonTemplateProofSystem ??
+      (hasNoProofs ? undefined : { type: 'Optimistic' }),
     riskView: getRiskView(templateVars, daProvider, isPostBoLD),
     stage: computedStage(templateVars),
     config: {

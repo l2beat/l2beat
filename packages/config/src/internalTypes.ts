@@ -120,23 +120,14 @@ export interface ProjectScalingConfig {
   liveness?: ProjectLivenessConfig
 }
 
-export type ProjectScalingProofSystem = {
+export interface ProjectScalingProofSystem {
   /** Type of proof system */
   type: 'Optimistic' | 'Validity'
-} & (
-  | {
-      /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
-      name: string
-      /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
-      zkCatalogId?: never
-    }
-  | {
-      /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
-      name?: never
-      /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
-      zkCatalogId: ProjectId
-    }
-)
+  /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
+  name?: string
+  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
+  zkCatalogId?: string
+}
 
 export interface ProjectScalingDisplay {
   /** Name of the scaling project, will be used as a display name on the website */

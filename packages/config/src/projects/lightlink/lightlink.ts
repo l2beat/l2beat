@@ -68,6 +68,7 @@ export const lightlink: ScalingProject = {
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
+  proofSystem: undefined,
   display: {
     name: 'LightLink',
     slug: 'lightlink',
