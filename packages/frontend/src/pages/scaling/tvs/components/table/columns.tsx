@@ -144,8 +144,8 @@ const tokenCategoryColumns = [
     },
   }),
   columnHelper.accessor('tvs.data.breakdown.stablecoin', {
-    id: 'stablecoin',
-    header: 'Stablecoin',
+    id: 'stablecoins',
+    header: 'Stablecoins',
     cell: (ctx) => (
       <BreakdownCell row={ctx.row.original} dataKey="stablecoin" />
     ),
