@@ -53,5 +53,10 @@ describe('math', () => {
         'Array has to contain at least two elements',
       )
     })
+
+    it('handles edge case with empty decimal parts gracefully', () => {
+      // This test verifies our fix for the potential undefined issue
+      expect(unifyPercentagesAsIntegers([50, 50])).toEqual([50, 50])
+    })
   })
 })
