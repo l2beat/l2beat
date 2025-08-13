@@ -7,7 +7,6 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 import { TableLink } from '../../../../../components/table/TableLink'
@@ -40,7 +39,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild>
+      <TooltipTrigger asChild disabled={tvsWarnings.length === 0}>
         <TableLink href={props.href}>
           <div className="flex flex-col items-end">
             <div className="flex items-center gap-1">
@@ -74,18 +73,15 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
           </div>
         </TableLink>
       </TooltipTrigger>
-      <TooltipContent className="p-0!">
+      <TooltipContent className="flex flex-col gap-2">
         {tvsWarnings?.map((warning, i) => (
-          <WarningBar
-            key={`tvs-warning-${i}`}
-            icon={RoundedWarningIcon}
-            text={warning.value}
-            color={sentimentToWarningBarColor(warning.sentiment)}
-            // Cell itself is a href.
-            // Markdown might contain links - nesting them in a tooltip
-            // breaks semantics apart causing significant layout shifts.
-            ignoreMarkdown
-          />
+          <div key={i} className="flex gap-2">
+            <RoundedWarningIcon
+              className="size-4 shrink-0"
+              sentiment={warning.sentiment}
+            />
+            <span>{warning.value}</span>
+          </div>
         ))}
       </TooltipContent>
     </Tooltip>
