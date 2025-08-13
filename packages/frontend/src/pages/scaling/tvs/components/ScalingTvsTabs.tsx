@@ -91,7 +91,6 @@ export function ScalingTvsTabs(props: Props) {
               />
               <ScalingTvsTable
                 entries={entries.rollups}
-                rollups
                 breakdownType={breakdownType}
               />
             </DirectoryTabsContent>

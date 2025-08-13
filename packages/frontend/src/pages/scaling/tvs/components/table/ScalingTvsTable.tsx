@@ -1,7 +1,6 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
-import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
@@ -11,14 +10,13 @@ import { getScalingTvsColumns } from './columns'
 
 interface Props {
   entries: ScalingTvsEntry[]
-  rollups?: boolean
   notReviewed?: boolean
   breakdownType: 'source' | 'category'
 }
 
 export function ScalingTvsTable({
   entries,
-  rollups,
+
   notReviewed,
   breakdownType,
 }: Props) {
@@ -60,9 +58,7 @@ export function ScalingTvsTable({
     },
   })
 
-  return rollups ? (
-    <RollupsTable table={table} />
-  ) : (
+  return (
     <BasicTable
       table={table}
       insideMainPageCard

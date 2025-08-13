@@ -25,7 +25,7 @@ import { getProjectsChangeReport } from '../../projects-change-report/getProject
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
-import { compareStageAndTvs } from '../utils/compareStageAndTvs'
+import { compareTvs } from '../tvs/utils/compareTvs'
 
 export async function getScalingDaEntries() {
   const [
@@ -77,7 +77,7 @@ export async function getScalingDaEntries() {
       )
     })
     .filter((entry) => entry !== undefined)
-    .sort(compareStageAndTvs)
+    .sort(compareTvs)
 
   return groupByScalingTabs(entries)
 }

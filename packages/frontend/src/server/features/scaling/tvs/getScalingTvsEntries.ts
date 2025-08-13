@@ -10,9 +10,9 @@ import type { ProjectChanges } from '../../projects-change-report/getProjectsCha
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { compareStageAndTvs } from '../utils/compareStageAndTvs'
 import type { ProjectSevenDayTvsBreakdown } from './get7dTvsBreakdown'
 import { get7dTvsBreakdown } from './get7dTvsBreakdown'
+import { compareTvs } from './utils/compareTvs'
 import { getAssociatedTokenWarning } from './utils/getAssociatedTokenWarning'
 
 export async function getScalingTvsEntries() {
@@ -35,7 +35,7 @@ export async function getScalingTvsEntries() {
       ),
     )
     .filter((entry) => entry !== undefined)
-    .sort(compareStageAndTvs)
+    .sort(compareTvs)
 
   return groupByScalingTabs(entries)
 }

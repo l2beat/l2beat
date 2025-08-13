@@ -21,6 +21,7 @@ import { FindUnusedShapes } from './FindUnusedShapes'
 import { FixDiscoverySchemaPaths } from './FixDiscoverySchemaPaths'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
+import { GenerateEntrypoints } from './GenerateEntrypoints'
 import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
@@ -66,6 +67,7 @@ export function getSubcommands() {
     Flatten,
     FlattenAndDiff,
     GetTokenMinters,
+    GenerateEntrypoints,
     Init,
     InitTemplate,
     MatchFlat,
