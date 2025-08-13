@@ -29,13 +29,13 @@ interface Props {
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
-  dataKeys: (keyof typeof bridgingTypeTvsChartMeta)[]
+  dataKeys: (keyof typeof tokenSourceTvsChartMeta)[]
   toggleDataKey: (dataKey: string) => void
   tickCount?: number
   className?: string
 }
 
-export const bridgingTypeTvsChartMeta = {
+export const tokenSourceTvsChartMeta = {
   canonical: {
     label: 'Canonically bridged',
     color: 'var(--chart-stacked-purple)',
@@ -53,7 +53,7 @@ export const bridgingTypeTvsChartMeta = {
   },
 } satisfies ChartMeta
 
-export function BridgingTypeTvsChart({
+export function TokenSourceTvsChart({
   data,
   syncedUntil,
   milestones,
@@ -67,7 +67,7 @@ export function BridgingTypeTvsChart({
   return (
     <ChartContainer
       data={data}
-      meta={bridgingTypeTvsChartMeta}
+      meta={tokenSourceTvsChartMeta}
       isLoading={isLoading}
       milestones={milestones}
       interactiveLegend={{
@@ -81,7 +81,7 @@ export function BridgingTypeTvsChart({
         <Area
           dataKey="external"
           hide={!dataKeys.includes('external')}
-          fill={bridgingTypeTvsChartMeta.external.color}
+          fill={tokenSourceTvsChartMeta.external.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -91,7 +91,7 @@ export function BridgingTypeTvsChart({
         <Area
           dataKey="native"
           hide={!dataKeys.includes('native')}
-          fill={bridgingTypeTvsChartMeta.native.color}
+          fill={tokenSourceTvsChartMeta.native.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -101,7 +101,7 @@ export function BridgingTypeTvsChart({
         <Area
           dataKey="canonical"
           hide={!dataKeys.includes('canonical')}
-          fill={bridgingTypeTvsChartMeta.canonical.color}
+          fill={tokenSourceTvsChartMeta.canonical.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -168,8 +168,8 @@ function CustomTooltip({
           {actualPayload.map((entry) => {
             if (entry.type === 'none') return null
             const config =
-              bridgingTypeTvsChartMeta[
-                entry.name as keyof typeof bridgingTypeTvsChartMeta
+              tokenSourceTvsChartMeta[
+                entry.name as keyof typeof tokenSourceTvsChartMeta
               ]
             return (
               <div

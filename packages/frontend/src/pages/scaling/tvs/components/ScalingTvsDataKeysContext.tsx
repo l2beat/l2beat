@@ -1,12 +1,12 @@
 import { createContext, useContext } from 'react'
-import { bridgingTypeTvsChartMeta } from '~/components/chart/tvs/stacked/BridgingTypeTvsChart'
 import { tokenCategoryTvsChartMeta } from '~/components/chart/tvs/stacked/TokenCategoryTvsChart'
+import { tokenSourceTvsChartMeta } from '~/components/chart/tvs/stacked/TokenSourceTvsChart'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 
 const ScalingTvsDataKeysContext = createContext<{
-  bridgingTypeDataKeys: (keyof typeof bridgingTypeTvsChartMeta)[]
+  tokenSourceDataKeys: (keyof typeof tokenSourceTvsChartMeta)[]
   tokenCategoryDataKeys: (keyof typeof tokenCategoryTvsChartMeta)[]
-  bridgingTypeToggleDataKey: (dataKey: string) => void
+  tokenSourceToggleDataKey: (dataKey: string) => void
   tokenCategoryToggleDataKey: (dataKey: string) => void
 } | null>(null)
 
@@ -16,9 +16,9 @@ export function ScalingTvsDataKeysProvider({
   children: React.ReactNode
 }) {
   const {
-    dataKeys: bridgingTypeDataKeys,
-    toggleDataKey: bridgingTypeToggleDataKey,
-  } = useChartDataKeys(bridgingTypeTvsChartMeta)
+    dataKeys: tokenSourceDataKeys,
+    toggleDataKey: tokenSourceToggleDataKey,
+  } = useChartDataKeys(tokenSourceTvsChartMeta)
   const {
     dataKeys: tokenCategoryDataKeys,
     toggleDataKey: tokenCategoryToggleDataKey,
@@ -27,9 +27,9 @@ export function ScalingTvsDataKeysProvider({
   return (
     <ScalingTvsDataKeysContext.Provider
       value={{
-        bridgingTypeDataKeys,
+        tokenSourceDataKeys,
         tokenCategoryDataKeys,
-        bridgingTypeToggleDataKey,
+        tokenSourceToggleDataKey,
         tokenCategoryToggleDataKey,
       }}
     >

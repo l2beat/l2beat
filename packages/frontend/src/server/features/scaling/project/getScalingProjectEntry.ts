@@ -32,7 +32,7 @@ import { getOperatorSection } from '~/utils/project/technology/getOperatorSectio
 import { getOtherConsiderationsSection } from '~/utils/project/technology/getOtherConsiderationsSection'
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
-import { getBridgingTypeTvsSection } from '~/utils/project/tvs/getBridgingTypeTvsSection'
+import { getTokenSourceTvsSection } from '~/utils/project/tvs/getTokenSourceTvsSection'
 import {
   getUnderReviewStatus,
   type UnderReviewStatus,
@@ -149,7 +149,7 @@ export async function getScalingProjectEntry(
     tokens,
     liveness,
     contractUtils,
-    bridgingTypeTvsSection,
+    tokenSourceTvsSection,
     activitySection,
     costsSection,
     dataPostedSection,
@@ -160,7 +160,7 @@ export async function getScalingProjectEntry(
     getTokensForProject(project),
     getLiveness(project.id),
     getContractUtils(),
-    getBridgingTypeTvsSection(helpers, project),
+    getTokenSourceTvsSection(helpers, project),
     getActivitySection(helpers, project),
     project.scalingInfo.layer === 'layer2'
       ? getCostsSection(helpers, project)
@@ -306,9 +306,9 @@ export async function getScalingProjectEntry(
         }
       : undefined
 
-  if (!project.isUpcoming && bridgingTypeTvsSection && tvsProjectStats) {
+  if (!project.isUpcoming && tokenSourceTvsSection && tvsProjectStats) {
     sections.push({
-      type: 'BridgingTypeTvsSection',
+      type: 'TokenSourceTvsSection',
       props: {
         id: 'tvs',
         title: 'Value Secured',
@@ -318,7 +318,7 @@ export async function getScalingProjectEntry(
         tokens,
         tvsProjectStats,
         tvsInfo: project.tvsInfo,
-        ...bridgingTypeTvsSection,
+        ...tokenSourceTvsSection,
       },
     })
   }

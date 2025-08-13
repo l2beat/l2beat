@@ -12,7 +12,7 @@ const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 
 export const getScalingTvsColumns = (
   opts: CommonProjectColumnsOptions & {
-    breakdownType: 'bridging' | 'token'
+    breakdownType: 'source' | 'category'
   },
 ) => [
   ...getScalingCommonProjectColumns(
@@ -52,15 +52,15 @@ export const getScalingTvsColumns = (
                 tvsWarnings={ctx.row.original.tvs.warnings}
                 total={data.breakdown.total}
                 breakdown={
-                  opts?.breakdownType === 'bridging'
+                  opts?.breakdownType === 'source'
                     ? {
-                        type: 'bridging',
+                        type: 'source',
                         canonical: data.breakdown.canonical,
                         external: data.breakdown.external,
                         native: data.breakdown.native,
                       }
                     : {
-                        type: 'token',
+                        type: 'category',
                         ether: data.breakdown.ether,
                         associated: 0,
                         stablecoin: data.breakdown.stablecoin,
@@ -82,10 +82,12 @@ export const getScalingTvsColumns = (
       ),
     ],
   }),
-  ...(opts?.breakdownType === 'bridging' ? bridgingColumns : tokenColumns),
+  ...(opts?.breakdownType === 'source'
+    ? tokenSourceColumns
+    : tokenCategoryColumns),
 ]
 
-const bridgingColumns = [
+const tokenSourceColumns = [
   columnHelper.accessor('tvs.data.breakdown.canonical', {
     id: 'canonical',
     header: 'Canonically bridged',
@@ -129,7 +131,7 @@ const bridgingColumns = [
   }),
 ]
 
-const tokenColumns = [
+const tokenCategoryColumns = [
   columnHelper.accessor('tvs.data.breakdown.ether', {
     id: 'ether',
     header: 'ETH & derivatives',

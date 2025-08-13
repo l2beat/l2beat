@@ -1,12 +1,12 @@
 import type { Project } from '@l2beat/config'
-import type { BridgingTypeTvsSectionProps } from '~/components/projects/sections/BridgingTypeTvsSection'
+import type { TokenSourceTvsSectionProps } from '~/components/projects/sections/TokenSourceTvsSection'
 import { isTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
 import type { SsrHelpers } from '~/trpc/server'
 
-export async function getBridgingTypeTvsSection(
+export async function getTokenSourceTvsSection(
   helpers: SsrHelpers,
   project: Project<never, 'archivedAt'>,
-): Promise<Pick<BridgingTypeTvsSectionProps, 'defaultRange'> | undefined> {
+): Promise<Pick<TokenSourceTvsSectionProps, 'defaultRange'> | undefined> {
   const range = project.archivedAt ? 'max' : '1y'
   const data = await helpers.tvs.chart.fetch({
     range: { type: range },

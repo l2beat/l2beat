@@ -11,13 +11,13 @@ interface TotalValueSecuredCellProps {
   total: number
   breakdown:
     | {
-        type: 'bridging'
+        type: 'source'
         external: number
         canonical: number
         native: number
       }
     | {
-        type: 'token'
+        type: 'category'
         ether: number
         associated: number
         stablecoin: number
@@ -46,7 +46,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
             {formatDollarValueNumber(props.total)}
           </ValueWithPercentageChange>
         </div>
-        {props.breakdown.type === 'bridging' ? (
+        {props.breakdown.type === 'source' ? (
           <ValueSecuredBreakdown
             canonical={props.breakdown.canonical}
             external={props.breakdown.external}

@@ -5,7 +5,7 @@ import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/proje
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import type { ChartUnit } from '../../types'
-import { BridgingTypeTvsChart } from './BridgingTypeTvsChart'
+import { TokenSourceTvsChart } from './TokenSourceTvsChart'
 
 interface Props {
   milestones: Milestone[]
@@ -15,14 +15,14 @@ interface Props {
   excludeAssociatedTokens: boolean
 }
 
-export function ScalingBridgingTypeTvsChart({
+export function ScalingTokenSourceTvsChart({
   milestones,
   unit,
   filter,
   range,
   excludeAssociatedTokens,
 }: Props) {
-  const { bridgingTypeDataKeys, bridgingTypeToggleDataKey } =
+  const { tokenSourceDataKeys, tokenSourceToggleDataKey } =
     useScalingTvsDataKeys()
 
   const { data, isLoading } = api.tvs.detailedChart.useQuery({
@@ -55,14 +55,14 @@ export function ScalingBridgingTypeTvsChart({
   )
 
   return (
-    <BridgingTypeTvsChart
+    <TokenSourceTvsChart
       data={chartData}
       milestones={milestones}
       unit={unit}
       isLoading={isLoading}
       syncedUntil={data?.syncedUntil}
-      dataKeys={bridgingTypeDataKeys}
-      toggleDataKey={bridgingTypeToggleDataKey}
+      dataKeys={tokenSourceDataKeys}
+      toggleDataKey={tokenSourceToggleDataKey}
     />
   )
 }

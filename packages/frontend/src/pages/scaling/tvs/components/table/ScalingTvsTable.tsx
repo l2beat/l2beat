@@ -13,7 +13,7 @@ interface Props {
   entries: ScalingTvsEntry[]
   rollups?: boolean
   notReviewed?: boolean
-  breakdownType: 'bridging' | 'token'
+  breakdownType: 'source' | 'category'
 }
 
 export function ScalingTvsTable({
