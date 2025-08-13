@@ -62,7 +62,7 @@ export function ScalingCostsTabs(props: Props) {
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
-            <ScalingCostsTable entries={entries.rollups} rollups />
+            <ScalingCostsTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>

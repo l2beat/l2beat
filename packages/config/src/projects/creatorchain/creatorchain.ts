@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const creatorchain: ScalingProject = upcomingL2({
   id: 'creatorchain',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1740170319),
   display: {
     name: 'Creator Chain',

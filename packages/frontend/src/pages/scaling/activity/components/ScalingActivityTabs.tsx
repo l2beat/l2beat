@@ -83,7 +83,7 @@ export function ScalingActivityTabs(props: Props) {
             />
 
             <HorizontalSeparator className="mt-5 mb-3" />
-            <ScalingActivityTable entries={entries.rollups} rollups />
+            <ScalingActivityTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
