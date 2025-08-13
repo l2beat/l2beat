@@ -2,7 +2,7 @@
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
   "timestamp": 1752237035,
-  "configHash": "0xededce77cbee4b7e459d7de938d5f29898de337389688e6b09aa8b555577c1d0",
+  "configHash": "0x779bb26252150cb75712154255617c46f99986963c6269fc696369b4c44d39e5",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -310,6 +310,11 @@
         "batcherHash": "eth:0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
+        "opStackDA": {
+          "isSequencerSendingBlobTx": false,
+          "isUsingCelestia": true,
+          "isUsingEigenDA": false
+        },
         "overhead": 188,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": {
@@ -327,7 +332,6 @@
         "version": "1.3.0",
         "VERSION": 0
       },
-      "errors": { "opStackDA": "Processing error occurred." },
       "fieldMeta": {
         "gasLimit": {
           "severity": "LOW",

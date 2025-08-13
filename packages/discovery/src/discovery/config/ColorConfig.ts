@@ -47,6 +47,9 @@ export const ColorContract = v.object(_ColorContract)
 
 export type ColorConfig = v.infer<typeof ColorConfig>
 export const _ColorConfig = {
+  // Marks the whole project as archived (no longer maintained). Discovery and
+  // monitoring tooling should skip such projects.
+  archived: v.boolean().optional(),
   categories: v.record(v.string(), DiscoveryCategory).optional(),
   names: v
     .record(
