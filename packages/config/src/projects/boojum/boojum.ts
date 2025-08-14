@@ -87,7 +87,11 @@ export const boojum: BaseProject = {
           'https://gateway.explorer.zksync.io/address/0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('zksync2')],
+        usedBy: [
+          ProjectId('zksync2'),
+          ProjectId('abstract'),
+          ProjectId('sophon'),
+        ],
       },
       {
         hash: '0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7',
@@ -97,10 +101,9 @@ export const boojum: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         usedBy: [
-          ProjectId('abstract'),
           ProjectId('grvt'),
           ProjectId('lens'),
-          ProjectId('sophon'),
+
           ProjectId('wonder'),
           ProjectId('zkcandy'),
         ],
@@ -127,7 +130,11 @@ export const boojum: BaseProject = {
           'https://gateway.explorer.zksync.io/address/0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('zksync2')],
+        usedBy: [
+          ProjectId('zksync2'),
+          ProjectId('abstract'),
+          ProjectId('sophon'),
+        ],
       },
       {
         hash: '0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78',
@@ -137,10 +144,9 @@ export const boojum: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         usedBy: [
-          ProjectId('abstract'),
           ProjectId('grvt'),
           ProjectId('lens'),
-          ProjectId('sophon'),
+
           ProjectId('wonder'),
           ProjectId('zkcandy'),
         ],
