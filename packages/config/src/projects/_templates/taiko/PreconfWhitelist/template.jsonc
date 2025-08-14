@@ -5,5 +5,11 @@
   "ignoreInWatchMode": [
     "getOperatorCandidatesForCurrentEpoch",
     "getOperatorCandidatesForNextEpoch"
-  ]
+  ],
+  "fields": {
+    "getOperatorCandidatesForCurrentEpoch": {
+      "permissions": [{ "type": "sequence" }, { "type": "propose" }],
+      
+    }
+  }
 }

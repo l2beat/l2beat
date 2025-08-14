@@ -380,7 +380,7 @@ export const taiko: ScalingProject = {
     },
     operator: {
       name: 'The system uses a whitelist-based sequencing mechanism',
-      description: `The system uses a whitelist-based sequencing mechanism. Whitelisted preconfirmer operators (or the fallback operator) can sequence Taiko L2 blocks by proposing them on the TaikoL1 contract.
+      description: `The system uses a whitelist-based sequencing mechanism to allow for fast preconfirmations on the L2. On the L1, whitelisted preconfirmers (or the fallback operator) can sequence Taiko L2 blocks by proposing them on the TaikoL1 contract.
         The whitelist is managed by the PreconfWhitelist contract, which currently has ${preconfWhitelist.operatorCount} operators registered.
         The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the ${formatSeconds(taikoChainConfig.provingWindow)} proving window.
         Currently, proving a block requires the block proposer to run a SGX instance with Geth, plus either SGX (Reth), SP1, or RISC0 to prove the block.
@@ -390,15 +390,24 @@ export const taiko: ScalingProject = {
           title: 'TaikoL1.sol - Etherscan source code, proposeBatch function',
           url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
         },
+        {
+          title: 'PreconfWhitelist.sol - Etherscan source code',
+          url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
+        },
       ],
       risks: [],
     },
     forceTransactions: {
       name: 'Users can force any transaction',
-      description: `Users can submit a blob containing a standalone transaction by calling the storeForcedInclusion() function on the ForcedInclusionStore contract. 
+      description: `Users can submit a blob containing a standalone transaction by calling the \`storeForcedInclusion()\` function on the ForcedInclusionStore contract. 
         This forced transaction mechanism allows users to submit a transaction without running a prover.
         This mechanism ensures that at least one forced transaction from the queue is processed every ${inclusionDelay} batches. However, if many transactions (k) are added to the queue, an individual transaction could experience a worst-case delay of up to k * ${inclusionDelay} batches while waiting for its turn.`,
-      references: [],
+      references: [
+        {
+          title: 'ForcedInclusionStore.sol - Etherscan source code, storeForcedInclusion function',
+          url: 'https://etherscan.io/address/0xcdb25e201ad3fdcfe16730a6ca2cc0b1ce2137a2#code',
+        },
+      ],
       risks: [],
     },
     exitMechanisms: [

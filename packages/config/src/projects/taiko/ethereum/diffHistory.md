@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x0bd792e6819c4d5116a8c3efb8cd67343a2787c6
+Generated with discovered.json: 0xd0f7dd0d50890a4f381038ec88ac410acc5d0bf1
 
-# Diff at Wed, 13 Aug 2025 19:36:49 GMT:
+# Diff at Thu, 14 Aug 2025 11:18:31 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@20325e19767a916f8b99b4ee5c90e82a0b7a7e16 block: 1753796542
-- current timestamp: 1755113796
+- current timestamp: 1755170296
 
 ## Description
 
@@ -74,8 +74,26 @@ Old fork: same address
 ```
 
 ```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.16:
++        "0xca349ba0dfeced0bd837a56c97417c11e51d490eec4ff08321dd130776a413bd"
+      values.mrEnclaves.17:
++        "0xe2375b778ee5700a73c7fcf449abb4a62e00127d324b6694898073ba5aff4f5c"
+    }
+```
+
+```diff
     contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
     +++ description: None
+      values.$members.0:
++        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "5 of 7 (71%)"
       receivedPermissions.22:
 +        {"permission":"upgrade","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","role":"admin"}
       receivedPermissions.24:
