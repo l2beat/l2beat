@@ -8,7 +8,7 @@ Generated with discovered.json: 0x1770a53928ac28479d73ffff0b80022fd2c0fbb6
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Fee pricing update.
 
 ## Watched changes
 
