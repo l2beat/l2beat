@@ -75,6 +75,11 @@ const inclusionDelay = discovery.getContractValue<PacayaConfig>(
   'inclusionDelay',
 )
 
+const preconfWhitelist = discovery.getContractValue<PacayaConfig>(
+  'PreconfWhitelist',
+  'operatorCount',
+)
+
 const chainId = 167000
 
 export const taiko: ScalingProject = {
@@ -89,7 +94,7 @@ export const taiko: ScalingProject = {
   badges: [
     BADGES.VM.EVM,
     BADGES.DA.EthereumBlobs,
-    BADGES.Other.BasedSequencing,
+    // BADGES.Other.BasedSequencing, // NOTE: add this back when preconfs whitelist is removed
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   proofSystem: undefined,
@@ -311,17 +316,12 @@ export const taiko: ScalingProject = {
       sentiment: 'bad',
       value: 'None',
     },
-    sequencerFailure: {
-      description: `The system uses a based (or L1-sequenced) rollup sequencing mechanism, meaning that users can propose L2 blocks directly on the Taiko L1 contract. Proposers are required to also prove blocks within ${formatSeconds(taikoChainConfig.provingWindow)}, or forfeit half of their liveness bond (${livenessBond} TAIKO).`,
-      sentiment: 'good',
-      value: 'Self sequence',
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: {
+      ...RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE,
       description:
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS.description +
+        RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE.description +
         ' Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the proposer fails to prove the block within the proving window, they forfeit half of their liveness bond.',
-      sentiment: 'good',
-      value: 'Self propose',
     },
   },
   stage: getStage(
@@ -379,8 +379,9 @@ export const taiko: ScalingProject = {
       risks: [],
     },
     operator: {
-      name: 'The system uses a based sequencing mechanism',
-      description: `The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract.
+      name: 'The system uses a whitelist-based sequencing mechanism',
+      description: `The system uses a whitelist-based sequencing mechanism. Whitelisted preconfirmer operators (or the fallback operator) can sequence Taiko L2 blocks by proposing them on the TaikoL1 contract.
+        The whitelist is managed by the PreconfWhitelist contract, which currently has ${preconfWhitelist.operatorCount} operators registered.
         The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the ${formatSeconds(taikoChainConfig.provingWindow)} proving window.
         Currently, proving a block requires the block proposer to run a SGX instance with Geth, plus either SGX (Reth), SP1, or RISC0 to prove the block.
         Unless the block proposer proves the block within the proving window, it will forfeit half of its liveness bond to the TaikoL1 smart contract.`,
@@ -394,9 +395,7 @@ export const taiko: ScalingProject = {
     },
     forceTransactions: {
       name: 'Users can force any transaction',
-      description: `The system is designed to allow users to propose L2 blocks directly on L1.
-        Note that this would require the user to run two of the available proving systems, or forfeit half the liveness bond of ${livenessBond} TAIKO.
-        Moreover, users can submit a blob containing a standalone transaction by calling the storeForcedInclusion() function on the ForcedInclusionStore contract. 
+      description: `Users can submit a blob containing a standalone transaction by calling the storeForcedInclusion() function on the ForcedInclusionStore contract. 
         This forced transaction mechanism allows users to submit a transaction without running a prover.
         This mechanism ensures that at least one forced transaction from the queue is processed every ${inclusionDelay} batches. However, if many transactions (k) are added to the queue, an individual transaction could experience a worst-case delay of up to k * ${inclusionDelay} batches while waiting for its turn.`,
       references: [],
