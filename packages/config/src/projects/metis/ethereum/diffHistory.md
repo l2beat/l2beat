@@ -17,6 +17,8 @@ Compare disco for the ~5 critical roles still held by the old multisig ('Metis M
 - [Lib_AddressManager](https://etherscan.io/address/0x918778e825747a892b17C66fe7D24C618262867d) manager
 - [MVM_Verifier](https://etherscan.io/address/0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) admin
 
+security council reference: https://docs.metis.io/andromeda/network/council
+
 ## Watched changes
 
 ```diff
