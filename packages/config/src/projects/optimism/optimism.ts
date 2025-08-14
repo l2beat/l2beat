@@ -319,7 +319,7 @@ export const optimism: ScalingProject = opStackL2({
     },
     {
       title: 'Fault Proof System is live on OP Goerli',
-      url: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
+      url: 'https://optimism.io/blog/the-op-stack-s-fault-proof-system-is-live-on-op-goerli',
       date: '2023-10-03T00:00:00Z',
       description: 'Fraud Proof system is live on Goerli.',
       type: 'general',
