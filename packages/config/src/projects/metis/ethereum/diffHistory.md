@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf6e5fa0e19835eff13c0354aa6c098604c41543a
+Generated with discovered.json: 0xd80e67b43f36a98b5f501df6f9c69d5d4c7d5def
 
-# Diff at Thu, 14 Aug 2025 08:41:48 GMT:
+# Diff at Thu, 14 Aug 2025 13:18:25 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1754472899
@@ -136,15 +136,15 @@ security council reference: https://docs.metis.io/andromeda/network/council
 
 ```diff
 +   Status: CREATED
-    contract Metis Multisig 2 (0xbf1752DE62d825aF0634F514226F881a449874b6)
+    contract Metis Security Council (0xbf1752DE62d825aF0634F514226F881a449874b6)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../metis/ethereum/.flat/Metis Multisig 2/Safe.sol | 1088 ++++++++++++++++++++
- .../.flat/Metis Multisig 2/SafeProxy.p.sol         |   37 +
+.../ethereum/.flat/Metis Security Council/Safe.sol | 1088 ++++++++++++++++++++
+ .../.flat/Metis Security Council/SafeProxy.p.sol   |   37 +
  2 files changed, 1125 insertions(+)
 ```
 

@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "timestamp": 1755157627,
-  "configHash": "0xdd1f1fe2866bd38e9a86575374215cb7f4f5e57f683311fe14e9971cf0821807",
+  "configHash": "0x6b00d93cb85cdf97a0b39a5ecddc34bebb5d6b73bbef07cfe4586a2077ac0996",
   "entries": [
     {
       "address": "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -970,7 +970,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Metis Multisig 2",
+      "name": "Metis Security Council",
       "address": "eth:0xbf1752DE62d825aF0634F514226F881a449874b6",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1076,7 +1076,13 @@
       "implementationNames": {
         "eth:0xbf1752DE62d825aF0634F514226F881a449874b6": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "references": [
+        {
+          "text": "Security Council members - Metis Docs",
+          "href": "https://docs.metis.io/andromeda/network/council"
+        }
+      ]
     },
     {
       "address": "eth:0xc27896E7b4172D6B1C21177D91fd64A935EEc4EA",
@@ -2343,5 +2349,5 @@
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
   "usedBlockNumbers": { "ethereum": 23137894 },
-  "permissionsConfigHash": "0x4d63918e48bbde89509f2c204b405afdbd55aaf5081c3f7fc2ec3f1eecb4d6e2"
+  "permissionsConfigHash": "0xcf47b2001af63febe38b6c23cc0c02405dfa5290bb40cf15f8b74aded4b56851"
 }
