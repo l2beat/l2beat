@@ -78,7 +78,6 @@ export const paradex: ScalingProject = {
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://paradex.trade/'],
       bridges: ['https://app.paradex.trade', 'https://paradex.trade/stats'],

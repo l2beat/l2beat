@@ -13,7 +13,6 @@ export const azchain: ScalingProject = upcomingL2({
     description:
       'AZ Chain is an Ethereum L2 chain designed to enhance gaming performance and scalability.',
     purposes: ['Universal', 'Gaming'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://arena-z.gg/'],
@@ -25,5 +24,8 @@ export const azchain: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

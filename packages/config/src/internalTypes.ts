@@ -26,7 +26,6 @@ import type {
   ProjectPermissions,
   ProjectReviewStatus,
   ProjectScalingCapability,
-  ProjectScalingCategory,
   ProjectScalingDa,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
@@ -136,8 +135,6 @@ export interface ProjectScalingDisplay {
   shortName?: string
   /** Url friendly scaling project name, will be used in website urls */
   slug: string
-  /** Name of the category the scaling project belongs to */
-  category: ProjectScalingCategory
   /** Technological stacks */
   stacks?: ProjectScalingStack[]
   /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */

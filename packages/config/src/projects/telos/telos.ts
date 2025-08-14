@@ -13,7 +13,6 @@ export const telos: ScalingProject = upcomingL2({
     description:
       'Telos zkEVM is an upcoming ZK-based scaling solution on Ethereum, powered by SNARKtor decentralized proof aggregation and developed by Telos.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://zkevm.telos.net/'],
       documentation: [
@@ -26,5 +25,8 @@ export const telos: ScalingProject = upcomingL2({
         'https://youtube.com/@TheTelosNetwork',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

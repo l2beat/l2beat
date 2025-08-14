@@ -12,7 +12,6 @@ export const logx: ScalingProject = underReviewL2({
     description:
       "LogX is building the world\'s first modular derivatives infrastructure, enabling infinite scalability across all blockchain networks.",
     purposes: ['Exchange'],
-    category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://logx.network/'],
@@ -27,5 +26,8 @@ export const logx: ScalingProject = underReviewL2({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

@@ -13,7 +13,6 @@ export const status: ScalingProject = upcomingL2({
     description:
       'Status is a free network with sustainable funding for public apps, games and protocols.',
     purposes: ['Social'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://status.network/'],
       bridges: ['https://bridge.status.network/'],
@@ -21,5 +20,8 @@ export const status: ScalingProject = upcomingL2({
       repositories: ['https://github.com/status-im'],
       socialMedia: ['https://x.com/StatusL2'],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

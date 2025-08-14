@@ -21,7 +21,6 @@ export const onyx: ScalingProject = underReviewL3({
     description:
       'Onyx is a modular blockchain designed for financial-grade applications, offering near-instant confirmations and low fees.',
     purposes: ['Universal'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://onyx.org/'],
@@ -35,6 +34,9 @@ export const onyx: ScalingProject = underReviewL3({
         'https://blog.onyx.org/',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
   chainConfig: {
     name: 'onyx',

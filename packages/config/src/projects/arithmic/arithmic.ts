@@ -12,7 +12,6 @@ export const arithmic: ScalingProject = upcomingL2({
     description:
       'Arithmic is an upcoming zero-knowledge Layer-2 powered by universal native (re)staking at a protocol-level.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://arithmic.com'],
       documentation: [
@@ -20,5 +19,8 @@ export const arithmic: ScalingProject = upcomingL2({
       ],
       socialMedia: ['https://x.com/ArithmicNetwork'],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

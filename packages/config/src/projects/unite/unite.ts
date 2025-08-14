@@ -14,7 +14,6 @@ export const unite: ScalingProject = upcomingL3({
     description:
       'Unite Blockchain is a revolutionary Layer 3 (L3) EVM-compatible blockchain, designed to transform the landscape of mobile web3 gaming. It is the first L3 blockchain solution for Mass-Market Mobile Games.',
     purposes: ['Gaming'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       documentation: ['https://unite-1.gitbook.io/unite-docs'],
@@ -24,5 +23,8 @@ export const unite: ScalingProject = upcomingL3({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

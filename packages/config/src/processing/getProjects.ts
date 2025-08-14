@@ -13,6 +13,7 @@ import {
   type ProjectCostsInfo,
   type ProjectDiscoveryInfo,
   type ProjectLivenessInfo,
+  type ProjectScalingCategory,
   ProjectTvsConfigSchema,
   type TvsToken,
 } from '../types'
@@ -80,7 +81,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     discoveryInfo: adjustDiscoveryInfo(p),
     scalingInfo: {
       layer: p.type,
-      type: p.display.category,
+      type: getType(p),
       capability: p.capability,
       hostChain: getHostChain(p.hostChain ?? ProjectId.ETHEREUM),
       reasonsForBeingOther: p.reasonsForBeingOther,
@@ -143,6 +144,24 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     hasActivity: p.config.activityConfig ? true : undefined,
     escrows: p.config.escrows,
   }
+}
+
+function getType(p: ScalingProject): ProjectScalingCategory | undefined {
+  if (p.isUpcoming) return undefined
+  if (p.reasonsForBeingOther) return 'Other'
+
+  const isEnshrined = p.dataAvailability?.bridge.value === 'Enshrined'
+  const proofType = p.proofSystem?.type
+
+  if (proofType === 'Optimistic') {
+    return isEnshrined ? 'Optimistic Rollup' : 'Optimium'
+  }
+
+  if (proofType === 'Validity') {
+    return isEnshrined ? 'ZK Rollup' : 'Validium'
+  }
+
+  return 'Plasma'
 }
 
 function getLivenessInfo(p: ScalingProject): ProjectLivenessInfo | undefined {

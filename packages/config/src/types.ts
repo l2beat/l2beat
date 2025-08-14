@@ -332,7 +332,7 @@ export interface ProjectBridgeTechnology {
 // #region scaling data
 export interface ProjectScalingInfo {
   layer: 'layer2' | 'layer3'
-  type: ProjectScalingCategory
+  type: ProjectScalingCategory | undefined
   capability: ProjectScalingCapability
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   hostChain: {

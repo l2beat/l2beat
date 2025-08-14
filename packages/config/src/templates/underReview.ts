@@ -24,7 +24,7 @@ interface UnderReviewConfigCommon {
   capability: ProjectScalingCapability
   ecosystemInfo?: ProjectEcosystemInfo
   activityConfig?: ProjectActivityConfig
-  proofSystem?: ProjectScalingProofSystem
+  proofSystem: ProjectScalingProofSystem | undefined
   escrows?: ProjectEscrow[]
   chainConfig?: ChainConfig
   badges?: Badge[]
@@ -57,11 +57,7 @@ export function underReviewL2(
     display: templateVars.display,
     proofSystem: templateVars.proofSystem,
     stage: {
-      stage:
-        templateVars.display.category === 'Optimistic Rollup' ||
-        templateVars.display.category === 'ZK Rollup'
-          ? 'UnderReview'
-          : 'NotApplicable',
+      stage: 'UnderReview',
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -114,11 +110,7 @@ export function underReviewL3(
       ),
     },
     stage: {
-      stage:
-        templateVars.display.category === 'Optimistic Rollup' ||
-        templateVars.display.category === 'ZK Rollup'
-          ? 'UnderReview'
-          : 'NotApplicable',
+      stage: 'UnderReview',
     },
     ecosystemInfo: templateVars.ecosystemInfo,
     riskView: UNDER_REVIEW_RISK_VIEW,

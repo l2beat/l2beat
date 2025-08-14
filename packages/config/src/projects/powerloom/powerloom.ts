@@ -12,7 +12,6 @@ export const powerloom: ScalingProject = underReviewL2({
     description:
       'Powerloom Mainnet is the Layer-2 chain supporting Powerloom’s composable data network where devs, orgs, and end-users get access to ready-to-consume, affordable, and verifiable onchain datasets.',
     purposes: ['Universal'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://powerloom.io/'],
@@ -28,6 +27,9 @@ export const powerloom: ScalingProject = underReviewL2({
         'https://discord.com/invite/powerloom',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
   associatedTokens: ['POWER'],
   chainConfig: {

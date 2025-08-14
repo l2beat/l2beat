@@ -280,11 +280,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
           : settlesOnGateway
             ? 'zkstack-rollup-gateway'
             : 'zkstack-rollup',
-      category: templateVars.reasonsForBeingOther
-        ? 'Other'
-        : daProvider !== undefined
-          ? 'Validium'
-          : 'ZK Rollup',
       liveness: {
         explanation: executionDelay
           ? `${templateVars.display.name} is a ${

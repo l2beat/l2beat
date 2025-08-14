@@ -12,7 +12,6 @@ export const lootchain: ScalingProject = upcomingL2({
     description:
       'Loot Chain is a high-performance, customizable L2 blockchain deployed with Caldera. It provides specialized support for builders on Lootverse and Autonomous Worlds.',
     purposes: ['NFT'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://lootchain.com/'],
@@ -29,5 +28,8 @@ export const lootchain: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

@@ -9,7 +9,6 @@ export const rarimo: ScalingProject = underReviewL2({
   display: {
     name: 'Rarimo',
     slug: 'rarimo',
-    category: 'ZK Rollup',
     description:
       "Rarimo is building a permissionless ZK Registry that is a ZK Rollup. It enables proving the system's state without revealing details about individual statements and redefines how identities, interactions, and social graphs are managed.",
     purposes: ['Universal', 'Privacy'],

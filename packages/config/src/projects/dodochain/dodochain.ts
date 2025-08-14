@@ -11,7 +11,6 @@ export const dodochain: ScalingProject = underReviewL3({
   display: {
     name: 'Birdlayer',
     slug: 'dodochain',
-    category: 'Optimium',
     description:
       'Birdlayer is an Omni-Trading Layer-3 connecting liquidity from all chains including BTC and ETH L2s.',
     purposes: ['Universal', 'Interoperability'],
@@ -34,6 +33,9 @@ export const dodochain: ScalingProject = underReviewL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
   chainConfig: {
     name: 'dodochain',

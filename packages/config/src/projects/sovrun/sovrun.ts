@@ -12,7 +12,6 @@ export const sovrun: ScalingProject = upcomingL2({
     description:
       'Shaping the future of gaming through AI, Blockchain & Autonomous Worlds.',
     purposes: ['AI', 'Gaming'],
-    category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://sovrun.org/'],
@@ -28,5 +27,8 @@ export const sovrun: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

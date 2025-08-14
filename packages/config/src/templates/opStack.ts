@@ -52,7 +52,6 @@ import type {
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
-  ProjectScalingCategory,
   ProjectScalingDa,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
@@ -162,9 +161,7 @@ interface OpStackConfigCommon {
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hasSuperchainScUpgrades?: boolean
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingCategory
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   /** Set to true if projects posts blobs to Ethereum */
   usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
@@ -186,9 +183,7 @@ interface OpStackConfigCommon {
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   upgradesAndGovernance?: string
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingDisplay['category']
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
@@ -208,7 +203,6 @@ function opStackCommon(
     | 'architectureImage'
     | 'purposes'
     | 'stacks'
-    | 'category'
     | 'warning'
   >
 } {
@@ -293,13 +287,6 @@ function opStackCommon(
             ? 'kailua'
             : undefined,
       stacks: ['OP Stack'],
-      category:
-        templateVars.display.category ??
-        (templateVars.reasonsForBeingOther
-          ? 'Other'
-          : postsToEthereum(templateVars)
-            ? 'Optimistic Rollup'
-            : 'Optimium'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'

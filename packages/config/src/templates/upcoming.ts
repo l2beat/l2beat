@@ -1,6 +1,10 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { UPCOMING_RISK_VIEW } from '../common'
-import type { ProjectScalingDisplay, ScalingProject } from '../internalTypes'
+import type {
+  ProjectScalingDisplay,
+  ProjectScalingProofSystem,
+  ScalingProject,
+} from '../internalTypes'
 import type {
   Badge,
   ChainConfig,
@@ -17,6 +21,7 @@ interface UpcomingConfigCommon {
   capability: ProjectScalingCapability
   badges?: Badge[]
   ecosystemInfo?: ProjectEcosystemInfo
+  proofSystem: ProjectScalingProofSystem | undefined
 }
 export interface UpcomingConfigL2 extends UpcomingConfigCommon {
   chainConfig?: ChainConfig
@@ -35,7 +40,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
     capability: templateVars.capability,
     hasTestnet: templateVars.hasTestnet,
     display: templateVars.display,
-    proofSystem: undefined,
+    proofSystem: templateVars.proofSystem,
     stage: {
       stage: 'NotApplicable',
     },
@@ -62,7 +67,7 @@ export function upcomingL3(templateVars: UpcomingConfigL3): ScalingProject {
       ...templateVars.display,
     },
     hostChain: templateVars.hostChain,
-    proofSystem: undefined,
+    proofSystem: templateVars.proofSystem,
     config: {
       escrows: [],
     },

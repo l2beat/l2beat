@@ -27,7 +27,6 @@ export const intmax: ScalingProject = {
     description:
       'INTMAX is a stateless Plasma-like ZK Rollup that enables private payments and minimal onchain costs.',
     purposes: ['Payments'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://intmax.io/'],
       explorers: ['https://explorer.intmax.io/'],

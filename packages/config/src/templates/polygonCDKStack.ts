@@ -181,11 +181,6 @@ export function polygonCDKStack(
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
       ],
-      category: templateVars.reasonsForBeingOther
-        ? 'Other'
-        : templateVars.daProvider !== undefined
-          ? 'Validium'
-          : 'ZK Rollup',
       architectureImage:
         (templateVars.architectureImage ??
         templateVars.daProvider !== undefined)

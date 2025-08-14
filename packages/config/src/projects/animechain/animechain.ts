@@ -13,7 +13,6 @@ export const animechain: ScalingProject = upcomingL3({
     description:
       'AnimeChain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It aims to provide the infrastructure to enable the global anime network to live onchain, governed by creators and participants.',
     purposes: ['Gaming', 'Universal'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://anime.xyz/'],
@@ -22,5 +21,8 @@ export const animechain: ScalingProject = upcomingL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

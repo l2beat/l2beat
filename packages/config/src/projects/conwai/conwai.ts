@@ -20,7 +20,6 @@ export const conwai: ScalingProject = underReviewL3({
     description:
       'Conwai is an Optimium using the Orbit stack. It is focused on supporting AI-driven applications.',
     purposes: ['AI'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://conwai.net'],
@@ -33,6 +32,9 @@ export const conwai: ScalingProject = underReviewL3({
         'https://t.me/conwainet',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
