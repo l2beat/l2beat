@@ -164,6 +164,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             data: chartData,
             isLoading,
             yAxis: {
+              domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
               unit: ' UOPS',
             },
             syncedUntil: data?.syncedUntil,
