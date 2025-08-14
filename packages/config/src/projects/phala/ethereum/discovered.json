@@ -1,7 +1,7 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "timestamp": 1755009465,
+  "timestamp": 1755161649,
   "configHash": "0xdc09a119ba9b96e10c51f6389a16a0f0c1ee8e9a8074ce1007bb776ec199afec",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -310,7 +310,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 152,
+        "nonce": 153,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -621,7 +621,7 @@
         "additionalProposers": [
           "eth:0xb6c7448Ad01AfAF34217FFd0eCaCf2c29bdc38fE"
         ],
-        "aggregationVkey": "0x009db7eba2814292b350d8b18e3861fcf8cb387de821c3d4546b79552ee2afa5",
+        "aggregationVkey": "0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e",
         "challenger": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "CHALLENGER": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "FINALIZATION_PERIOD_SECONDS": 28800,
@@ -629,15 +629,15 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 2059860,
-        "latestOutputIndex": 483,
-        "nextBlockNumber": 2064180,
-        "nextOutputIndex": 484,
+        "latestBlockNumber": 2076060,
+        "latestOutputIndex": 486,
+        "nextBlockNumber": 2080380,
+        "nextOutputIndex": 487,
         "optimisticMode": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "eth:0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
         "PROPOSER": "eth:0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
-        "rangeVkeyCommitment": "0x0ea16a87731757ad1753d1906cb006de1fdd6a760add547c0c691bcd0914de7e",
+        "rangeVkeyCommitment": "0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872",
         "rollupConfigHash": "0x2aee88f2b7f9f1edfab6c535edeb8a7d969c162fe974650fc3c1e4d3c75ecb8b",
         "startingBlockNumber": 0,
         "startingTimestamp": 1734387239,
@@ -1342,6 +1342,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x23a763ed39c139851f257aef8c5edb090d6cbf04040b6f63dace0d3e157a3ab0"
   },
-  "usedBlockNumbers": { "ethereum": 23125607 },
+  "usedBlockNumbers": { "ethereum": 23138224 },
   "permissionsConfigHash": "0xf53ea44e19c0ab7c787fbf595b762043f4fc7f04dce28d01d5f809793e61a299"
 }
