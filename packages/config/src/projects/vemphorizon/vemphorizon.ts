@@ -1,4 +1,3 @@
-
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL3 } from '../../templates/underReview'
