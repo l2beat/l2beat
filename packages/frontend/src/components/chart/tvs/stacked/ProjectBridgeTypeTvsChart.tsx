@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { TvsBreakdownButton } from '~/components/projects/sections/StackedTvsSection'
+import { TvsBreakdownButton } from '~/components/projects/sections/ScalingTvsSection'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import type {
   ProjectToken,
@@ -16,7 +16,10 @@ import { getChartRange } from '../../../core/chart/utils/getChartRangeFromColumn
 import type { ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../ProjectTokenChart'
 import { TvsChartTimeRangeControls } from '../TvsChartTimeRangeControls'
-import { StackedTvsChart, scalingStackedTvsChartMeta } from './StackedTvsChart'
+import {
+  BridgeTypeTvsChart,
+  bridgeTypeTvsChartMeta,
+} from './BridgeTypeTvsChart'
 
 interface Props {
   milestones: Milestone[]
@@ -26,7 +29,7 @@ interface Props {
   defaultRange: TvsChartRange
 }
 
-export function ProjectStackedTvsChart({
+export function ProjectBridgeTypeTvsChart({
   milestones,
   projectId,
   tokens,
@@ -97,9 +100,8 @@ function DefaultChart({
   setUnit,
   tvsBreakdownUrl,
 }: DefaultChartProps) {
-  const { dataKeys, toggleDataKey } = useChartDataKeys(
-    scalingStackedTvsChartMeta,
-  )
+  const { dataKeys, toggleDataKey } = useChartDataKeys(bridgeTypeTvsChartMeta)
+
   const { data, isLoading } = api.tvs.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
     range: { type: timeRange },
@@ -140,7 +142,7 @@ function DefaultChart({
           setTimeRange={setTimeRange}
         />
       </ChartControlsWrapper>
-      <StackedTvsChart
+      <BridgeTypeTvsChart
         data={chartData}
         milestones={milestones}
         unit={unit}

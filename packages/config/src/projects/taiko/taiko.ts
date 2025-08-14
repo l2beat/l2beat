@@ -103,6 +103,7 @@ export const taiko: ScalingProject = {
     BADGES.Other.BasedSequencing,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  proofSystem: undefined,
   display: {
     name: 'Taiko Alethia',
     slug: 'taiko',

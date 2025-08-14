@@ -23,6 +23,9 @@ export const rarimo: ScalingProject = underReviewL2({
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   chainConfig: {
     name: 'rarimo',
     chainId: 7368,

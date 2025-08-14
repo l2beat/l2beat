@@ -61,6 +61,8 @@ export interface ScalingProject {
   reviewStatus?: ProjectReviewStatus
   /** Colors used in the project's branding. E.g. ecosystem gradient, project page accents */
   colors?: ProjectCustomColors
+  /** Proof system of the project */
+  proofSystem: ProjectScalingProofSystem | undefined
   /** Information displayed about the project on the frontend */
   display: ProjectScalingDisplay
   /** Information required to calculate the stats of the project */
@@ -116,6 +118,15 @@ export interface ProjectScalingConfig {
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
   liveness?: ProjectLivenessConfig
+}
+
+export interface ProjectScalingProofSystem {
+  /** Type of proof system */
+  type: 'Optimistic' | 'Validity'
+  /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
+  name?: string
+  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
+  zkCatalogId?: string
 }
 
 export interface ProjectScalingDisplay {

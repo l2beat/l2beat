@@ -16,7 +16,7 @@ export function getLegacyConfig(
   return {
     escrows: project.escrows.map((e) => toLegacyEscrow(e, tokenList)),
     tokens,
-    associatedTokens: project.tvsInfo.associatedTokens ?? [],
+    associatedTokens: project.tvsInfo.associatedTokens.map((t) => t.symbol),
   }
 }
 

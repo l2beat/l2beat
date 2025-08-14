@@ -45,6 +45,13 @@ export function getProjects(): BaseProject[] {
 }
 
 function layer2Or3ToProject(p: ScalingProject): BaseProject {
+  const tvsConfig = getTvsConfig(p)
+
+  const associatedTokens = p.config.associatedTokens?.map((associated) => ({
+    symbol: associated,
+    icon: tvsConfig?.find((t) => t.symbol === associated)?.iconUrl,
+  }))
+
   return {
     id: p.id,
     name: p.display.name,
@@ -111,10 +118,10 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     },
     customDa: p.customDa,
     tvsInfo: {
-      associatedTokens: p.config.associatedTokens ?? [],
+      associatedTokens: associatedTokens ?? [],
       warnings: [p.display.tvsWarning].filter((x) => x !== undefined),
     },
-    tvsConfig: getTvsConfig(p),
+    tvsConfig,
     activityConfig: p.config.activityConfig,
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
@@ -157,6 +164,12 @@ function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
 }
 
 function bridgeToProject(p: Bridge): BaseProject {
+  const tvsConfig = getTvsConfig(p)
+  const associatedTokens = p.config.associatedTokens?.map((associated) => ({
+    symbol: associated,
+    icon: tvsConfig?.find((t) => t.symbol === associated)?.iconUrl,
+  }))
+
   return {
     id: p.id,
     name: p.display.name,
@@ -192,10 +205,10 @@ function bridgeToProject(p: Bridge): BaseProject {
     discoveryInfo: adjustDiscoveryInfo(p),
     bridgeRisks: p.riskView,
     tvsInfo: {
-      associatedTokens: p.config.associatedTokens ?? [],
+      associatedTokens: associatedTokens ?? [],
       warnings: [],
     },
-    tvsConfig: getTvsConfig(p),
+    tvsConfig,
     chainConfig: p.chainConfig,
     milestones: p.milestones,
     // tags

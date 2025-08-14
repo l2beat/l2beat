@@ -16,7 +16,7 @@ import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../../types'
 
-interface StackedTvsChartDataPoint {
+interface BridgeTypeChartDataPoint {
   timestamp: number
   native: number | null
   canonical: number | null
@@ -24,18 +24,18 @@ interface StackedTvsChartDataPoint {
 }
 
 interface Props {
-  data: StackedTvsChartDataPoint[] | undefined
+  data: BridgeTypeChartDataPoint[] | undefined
   syncedUntil: number | undefined
-  dataKeys: (keyof typeof scalingStackedTvsChartMeta)[]
-  toggleDataKey: (dataKey: string) => void
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
+  dataKeys: (keyof typeof bridgeTypeTvsChartMeta)[]
+  toggleDataKey: (dataKey: string) => void
   tickCount?: number
   className?: string
 }
 
-export const scalingStackedTvsChartMeta = {
+export const bridgeTypeTvsChartMeta = {
   canonical: {
     label: 'Canonically bridged',
     color: 'var(--chart-stacked-purple)',
@@ -53,7 +53,7 @@ export const scalingStackedTvsChartMeta = {
   },
 } satisfies ChartMeta
 
-export function StackedTvsChart({
+export function BridgeTypeTvsChart({
   data,
   syncedUntil,
   milestones,
@@ -67,7 +67,7 @@ export function StackedTvsChart({
   return (
     <ChartContainer
       data={data}
-      meta={scalingStackedTvsChartMeta}
+      meta={bridgeTypeTvsChartMeta}
       isLoading={isLoading}
       milestones={milestones}
       interactiveLegend={{
@@ -81,7 +81,7 @@ export function StackedTvsChart({
         <Area
           dataKey="external"
           hide={!dataKeys.includes('external')}
-          fill={scalingStackedTvsChartMeta.external.color}
+          fill={bridgeTypeTvsChartMeta.external.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -91,7 +91,7 @@ export function StackedTvsChart({
         <Area
           dataKey="native"
           hide={!dataKeys.includes('native')}
-          fill={scalingStackedTvsChartMeta.native.color}
+          fill={bridgeTypeTvsChartMeta.native.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -101,7 +101,7 @@ export function StackedTvsChart({
         <Area
           dataKey="canonical"
           hide={!dataKeys.includes('canonical')}
-          fill={scalingStackedTvsChartMeta.canonical.color}
+          fill={bridgeTypeTvsChartMeta.canonical.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -168,8 +168,8 @@ function CustomTooltip({
           {actualPayload.map((entry) => {
             if (entry.type === 'none') return null
             const config =
-              scalingStackedTvsChartMeta[
-                entry.name as keyof typeof scalingStackedTvsChartMeta
+              bridgeTypeTvsChartMeta[
+                entry.name as keyof typeof bridgeTypeTvsChartMeta
               ]
             return (
               <div

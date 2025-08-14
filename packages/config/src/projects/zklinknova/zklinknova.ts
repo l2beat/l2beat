@@ -108,6 +108,9 @@ export const zklinknova: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   chainConfig: {
     name: 'zklinknova',
     chainId,

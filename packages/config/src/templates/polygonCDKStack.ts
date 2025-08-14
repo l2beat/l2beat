@@ -15,6 +15,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_VALIDATION,
@@ -28,6 +29,7 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
+  ProjectScalingProofSystem,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -75,6 +77,7 @@ export interface PolygonCDKStackConfig {
   activityConfig?: ProjectActivityConfig
   chainConfig?: ChainConfig
   stateDerivation?: ProjectScalingStateDerivation
+  nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateContracts?: ProjectContract[]
   nonTemplateEscrows: ProjectEscrow[]
@@ -157,6 +160,11 @@ export function polygonCDKStack(
   const finalizationPeriod = 0
 
   const discoveries = [templateVars.discovery, shared]
+
+  const hasNoProofs = templateVars.reasonsForBeingOther?.some(
+    (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
+  )
+
   return {
     type: 'layer2',
     addedAt: templateVars.addedAt,
@@ -186,6 +194,9 @@ export function polygonCDKStack(
       stacks: ['Agglayer CDK'],
       tvsWarning: templateVars.display.tvsWarning,
     },
+    proofSystem:
+      templateVars.nonTemplateProofSystem ??
+      (hasNoProofs ? undefined : { type: 'Validity' }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.nonTemplateEscrows,

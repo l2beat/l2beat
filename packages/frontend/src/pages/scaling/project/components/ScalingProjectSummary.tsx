@@ -81,14 +81,12 @@ export function ProjectScalingSummary({ project }: Props) {
                   >
                     <TokenBreakdown
                       total={project.header.tvs?.tokens.breakdown?.total ?? 0}
-                      associated={
-                        project.header.tvs?.tokens.breakdown?.associated ?? 0
-                      }
                       ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
                       stablecoin={
                         project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
                       }
                       btc={project.header.tvs?.tokens.breakdown?.btc ?? 0}
+                      other={project.header.tvs?.tokens.breakdown?.other ?? 0}
                       className="h-1.5 w-full"
                     />
                     {hasTokenWarnings && (
@@ -110,7 +108,8 @@ export function ProjectScalingSummary({ project }: Props) {
                       project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
                     }
                     btc={project.header.tvs?.tokens.breakdown?.btc ?? 0}
-                    associatedTokenSymbols={
+                    other={project.header.tvs?.tokens.breakdown?.other ?? 0}
+                    associatedTokens={
                       project.header.tvs?.tokens.associatedTokens ?? []
                     }
                     tvsWarnings={project.header.tvs?.tokens.warnings ?? []}

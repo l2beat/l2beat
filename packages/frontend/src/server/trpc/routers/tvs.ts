@@ -1,4 +1,8 @@
 import {
+  DetailedTvsChartDataParams,
+  getDetailedTvsChart,
+} from '~/server/features/scaling/tvs/getDetailedTvsChart'
+import {
   getRecategorisedTvsChart,
   RecategorisedTvsChartDataParams,
 } from '~/server/features/scaling/tvs/getRecategorisedTvsChartData'
@@ -16,6 +20,9 @@ export const tvsRouter = router({
   chart: procedure
     .input(TvsChartDataParams)
     .query(({ input }) => getTvsChart(input)),
+  detailedChart: procedure
+    .input(DetailedTvsChartDataParams)
+    .query(({ input }) => getDetailedTvsChart(input)),
   recategorisedChart: procedure
     .input(RecategorisedTvsChartDataParams)
     .query(({ input }) => getRecategorisedTvsChart(input)),

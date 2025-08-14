@@ -1,6 +1,10 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../common'
-import type { ProjectScalingDisplay, ScalingProject } from '../internalTypes'
+import type {
+  ProjectScalingDisplay,
+  ProjectScalingProofSystem,
+  ScalingProject,
+} from '../internalTypes'
 import type {
   Badge,
   ChainConfig,
@@ -20,6 +24,7 @@ interface UnderReviewConfigCommon {
   capability: ProjectScalingCapability
   ecosystemInfo?: ProjectEcosystemInfo
   activityConfig?: ProjectActivityConfig
+  proofSystem?: ProjectScalingProofSystem
   escrows?: ProjectEscrow[]
   chainConfig?: ChainConfig
   badges?: Badge[]
@@ -50,6 +55,7 @@ export function underReviewL2(
     capability: templateVars.capability,
     archivedAt: templateVars.archivedAt ?? undefined,
     display: templateVars.display,
+    proofSystem: templateVars.proofSystem,
     stage: {
       stage:
         templateVars.display.category === 'Optimistic Rollup' ||
@@ -94,6 +100,7 @@ export function underReviewL3(
     display: {
       ...templateVars.display,
     },
+    proofSystem: templateVars.proofSystem,
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.escrows ?? [],

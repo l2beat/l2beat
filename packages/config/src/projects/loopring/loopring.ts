@@ -84,6 +84,9 @@ export const loopring: ScalingProject = {
         'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   chainConfig: {
     name: 'loopring',
     chainId: undefined,
