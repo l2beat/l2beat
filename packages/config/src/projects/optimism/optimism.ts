@@ -219,7 +219,7 @@ export const optimism: ScalingProject = opStackL2({
   stateDerivation: {
     ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
-      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://docs.optimism.io/builders/node-operators/management/snapshots). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
+      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://docs.optimism.io/builders/node-operators/management/snapshots). To reproduce the migration itself, see this [guide](https://optimism.io/blog/here-s-how-you-can-reproduce-op-mainnet-s-migration-to-bedrock).',
   },
   hasProperSecurityCouncil: true,
   nodeSourceLink:
