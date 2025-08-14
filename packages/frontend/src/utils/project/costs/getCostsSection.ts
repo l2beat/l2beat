@@ -6,7 +6,10 @@ import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getCostsSection(
   helpers: SsrHelpers,
-  project: Project<never | 'scalingInfo', 'archivedAt' | 'trackedTxsConfig'>,
+  project: Project<
+    never | 'scalingInfo',
+    'costsInfo' | 'archivedAt' | 'trackedTxsConfig'
+  >,
 ): Promise<
   | Pick<
       CostsSectionProps,
@@ -14,6 +17,8 @@ export async function getCostsSection(
     >
   | undefined
 > {
+  if (!project.costsInfo) return undefined
+
   const trackedTransactions = getTrackedTransactions(project, 'l2costs')
 
   if (!trackedTransactions) return undefined
