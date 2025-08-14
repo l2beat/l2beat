@@ -46,7 +46,11 @@ export const omgnetwork: ScalingProject = {
     },
   },
   proofSystem: undefined,
-
+  dataAvailability: {
+    layer: DA_LAYERS.NONE,
+    bridge: DA_BRIDGES.PLASMA,
+    mode: DA_MODES.BALANCE_PROOF,
+  },
   stage: {
     stage: 'NotApplicable',
   },

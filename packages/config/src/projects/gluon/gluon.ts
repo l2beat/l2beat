@@ -8,6 +8,9 @@ import {
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -47,6 +50,11 @@ export const gluon: ScalingProject = {
     },
   },
   proofSystem: undefined,
+  dataAvailability: {
+    layer: DA_LAYERS.NONE,
+    bridge: DA_BRIDGES.PLASMA,
+    mode: DA_MODES.BALANCE_PROOF,
+  },
   stage: {
     stage: 'NotApplicable',
   },
