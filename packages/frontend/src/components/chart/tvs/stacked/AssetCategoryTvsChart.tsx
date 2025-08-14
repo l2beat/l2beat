@@ -92,6 +92,11 @@ export function AssetCategoryTvsChart({
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
+          activeDot={
+            !dataKeys.includes('ether') &&
+            !dataKeys.includes('stablecoin') &&
+            !dataKeys.includes('btc')
+          }
         />
         <Area
           dataKey="btc"
@@ -101,6 +106,9 @@ export function AssetCategoryTvsChart({
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
+          activeDot={
+            !dataKeys.includes('ether') && !dataKeys.includes('stablecoin')
+          }
         />
         <Area
           dataKey="stablecoin"
@@ -110,7 +118,7 @@ export function AssetCategoryTvsChart({
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
-          activeDot={false}
+          activeDot={!dataKeys.includes('ether')}
         />
         <Area
           dataKey="ether"
@@ -120,7 +128,6 @@ export function AssetCategoryTvsChart({
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
-          activeDot={false}
         />
         {getCommonChartComponents({
           data,

@@ -86,7 +86,9 @@ export function BridgeTypeTvsChart({
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
-          activeDot={false}
+          activeDot={
+            !dataKeys.includes('canonical') && !dataKeys.includes('native')
+          }
         />
         <Area
           dataKey="native"
@@ -96,7 +98,7 @@ export function BridgeTypeTvsChart({
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
-          activeDot={false}
+          activeDot={!dataKeys.includes('canonical')}
         />
         <Area
           dataKey="canonical"
