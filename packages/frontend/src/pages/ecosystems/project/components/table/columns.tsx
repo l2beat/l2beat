@@ -39,19 +39,17 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
         align: 'center',
       },
     }),
-    columnHelper.accessor('category', {
-      header: 'Type',
+    columnHelper.accessor('proofSystem', {
+      header: 'Proof system',
       cell: (ctx) => (
         <TwoRowCell>
           <TwoRowCell.First>
             <TypeInfo stacks={ctx.row.original.stacks}>
-              {ctx.getValue()}
+              {ctx.getValue()?.type}
             </TypeInfo>
           </TwoRowCell.First>
-          {ctx.row.original.capability === 'appchain' && (
-            <TwoRowCell.Second>
-              {ctx.row.original.purposes.sort().join(', ')}
-            </TwoRowCell.Second>
+          {ctx.getValue()?.name && (
+            <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
           )}
         </TwoRowCell>
       ),
@@ -59,6 +57,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
         tooltip: <TypeExplanationTooltip />,
       },
     }),
+    ,
     columnHelper.accessor(
       (e) => {
         if (
