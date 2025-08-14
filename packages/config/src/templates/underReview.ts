@@ -1,10 +1,6 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../common'
-import type {
-  ProjectScalingDisplay,
-  ProjectScalingProofSystem,
-  ScalingProject,
-} from '../internalTypes'
+import type { ProjectScalingDisplay, ScalingProject } from '../internalTypes'
 import type {
   Badge,
   ChainConfig,
@@ -14,6 +10,7 @@ import type {
   ProjectEscrow,
   ProjectScalingCapability,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
 } from '../types'
 import { getActivityConfig } from './activity'
 import { getDiscoveryInfo } from './getDiscoveryInfo'

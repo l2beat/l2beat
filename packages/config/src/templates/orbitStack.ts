@@ -33,7 +33,6 @@ import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
-  ProjectScalingProofSystem,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -49,6 +48,7 @@ import type {
   ProjectRisk,
   ProjectScalingCapability,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,

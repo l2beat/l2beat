@@ -27,6 +27,7 @@ import type {
   ProjectReviewStatus,
   ProjectScalingCapability,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
@@ -117,15 +118,6 @@ export interface ProjectScalingConfig {
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
   liveness?: ProjectLivenessConfig
-}
-
-export interface ProjectScalingProofSystem {
-  /** Type of proof system */
-  type: 'Optimistic' | 'Validity'
-  /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
-  name?: string
-  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
-  zkCatalogId?: string
 }
 
 export interface ProjectScalingDisplay {

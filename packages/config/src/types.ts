@@ -349,6 +349,7 @@ export interface ProjectScalingInfo {
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]
   scopeOfAssessment: ProjectScalingScopeOfAssessment | undefined
+  proofSystem: ProjectScalingProofSystem | undefined
 }
 
 export type ProjectScalingCategory =
@@ -358,6 +359,15 @@ export type ProjectScalingCategory =
   | 'Validium'
   | 'Optimium'
   | 'Other'
+
+export interface ProjectScalingProofSystem {
+  /** Type of proof system */
+  type: 'Optimistic' | 'Validity'
+  /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
+  name?: string
+  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
+  zkCatalogId?: string
+}
 
 export type ProjectScalingCapability = 'universal' | 'appchain'
 

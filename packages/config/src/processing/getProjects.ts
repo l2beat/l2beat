@@ -93,6 +93,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       stage: getStage(p.stage),
       purposes: p.display.purposes,
       scopeOfAssessment: p.scopeOfAssessment,
+      proofSystem: p.proofSystem,
     },
     scalingStage: p.stage,
     scalingRisks: {

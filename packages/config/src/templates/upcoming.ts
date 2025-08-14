@@ -1,15 +1,12 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { UPCOMING_RISK_VIEW } from '../common'
-import type {
-  ProjectScalingDisplay,
-  ProjectScalingProofSystem,
-  ScalingProject,
-} from '../internalTypes'
+import type { ProjectScalingDisplay, ScalingProject } from '../internalTypes'
 import type {
   Badge,
   ChainConfig,
   ProjectEcosystemInfo,
   ProjectScalingCapability,
+  ProjectScalingProofSystem,
 } from '../types'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
 
