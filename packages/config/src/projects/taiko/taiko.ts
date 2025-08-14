@@ -320,10 +320,10 @@ export const taiko: ScalingProject = {
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: {
-      ...RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE,
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
       description:
-        RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE.description +
-        ' Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the proposer fails to prove the block within the proving window, they forfeit half of their liveness bond.',
+        RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS.description +
+        ' Proofs can only be submitted for blocks sequenced by whitelisted operators. Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the initial proposer fails to prove the block within the proving window, they forfeit half of their liveness bond.',
     },
   },
   stage: getStage(
