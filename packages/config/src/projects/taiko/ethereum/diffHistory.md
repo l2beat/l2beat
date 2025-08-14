@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd0f7dd0d50890a4f381038ec88ac410acc5d0bf1
+Generated with discovered.json: 0x4767f4cfc200b7d4d01e1f6e42842ea9c15ddc8f
 
-# Diff at Thu, 14 Aug 2025 11:18:31 GMT:
+# Diff at Thu, 14 Aug 2025 11:58:53 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@20325e19767a916f8b99b4ee5c90e82a0b7a7e16 block: 1753796542
-- current timestamp: 1755170296
+- current timestamp: 1755172721
 
 ## Description
 
@@ -80,6 +80,10 @@ Old fork: same address
 +        "0xca349ba0dfeced0bd837a56c97417c11e51d490eec4ff08321dd130776a413bd"
       values.mrEnclaves.17:
 +        "0xe2375b778ee5700a73c7fcf449abb4a62e00127d324b6694898073ba5aff4f5c"
+      values.mrEnclaves.18:
++        "0x67742ab222790e20ba3656b3b294645a3384a5df5a770b86f8c06529523d990e"
+      values.mrEnclaves.19:
++        "0xddda8ba9c9153e3d2f680f2f53adbc774a9753cc55d40dde4cb02aef38c42109"
     }
 ```
 
