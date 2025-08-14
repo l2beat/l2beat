@@ -39,7 +39,6 @@ export const xlayer: ScalingProject = {
       explorers: ['https://okx.com/explorer/xlayer'],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
     },
-    category: 'Other',
     purposes: ['Universal'],
   },
   dataAvailability: {

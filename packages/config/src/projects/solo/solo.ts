@@ -12,7 +12,6 @@ export const solo: ScalingProject = upcomingL2({
     description:
       'SoloChain is a programmable, variable-cost, user-centric Ethereum L2 built to allow users to mine and launch projects with seamless DePIN integrations, equitable mining curves, and AI agentic mechanisms to redefine the internet.',
     purposes: ['AI'],
-    category: 'Optimium',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://solo.tech'],
@@ -24,5 +23,8 @@ export const solo: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

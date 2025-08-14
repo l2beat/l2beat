@@ -73,7 +73,6 @@ export const zksync: ScalingProject = {
       'ZKsync Lite (formerly ZKsync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
     purposes: ['Payments', 'Exchange', 'NFT'],
     stacks: ['ZKsync Lite'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://zksync.io/'],
       bridges: ['https://lite.zksync.io/'],

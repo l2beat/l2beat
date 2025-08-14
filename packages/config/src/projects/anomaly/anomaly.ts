@@ -13,7 +13,6 @@ export const anomaly: ScalingProject = upcomingL3({
     description:
       'Anomaly Chain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It focuses on reimagining a decentralized AI gaming world and cultivates an ecosystem where boundless development results in players experiencing games that are as intelligent as they are thrilling.',
     purposes: ['Gaming', 'AI'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://anomalygames.ai/'],
@@ -23,5 +22,8 @@ export const anomaly: ScalingProject = upcomingL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

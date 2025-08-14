@@ -12,7 +12,6 @@ export const soonbase: ScalingProject = underReviewL2({
   display: {
     name: 'soonBase',
     slug: 'soonbase',
-    category: 'Optimium',
     description:
       "soonBase is a Layer 2 chain built on top of the SOON Stack. It innovates with a Decoupled SVM that separates Solana's execution from its consensus, yielding performance and flexibility improvements.",
     purposes: ['Universal'],
@@ -27,6 +26,7 @@ export const soonbase: ScalingProject = underReviewL2({
       ],
     },
   },
+  dataAvailability: undefined,
   chainConfig: {
     name: 'soonbase',
     chainId: undefined,

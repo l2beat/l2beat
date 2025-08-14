@@ -12,7 +12,6 @@ export const koi: ScalingProject = upcomingL2({
     description:
       'Koi Finance is a DEX, farming platform, and Bond platform built on zkRollup and zkSync.',
     purposes: ['Exchange'],
-    category: 'ZK Rollup',
     stacks: ['ZK Stack'],
     links: {
       websites: ['https://koi.finance/'],
@@ -28,5 +27,8 @@ export const koi: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

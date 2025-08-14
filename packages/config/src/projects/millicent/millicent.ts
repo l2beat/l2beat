@@ -12,7 +12,6 @@ export const millicent: ScalingProject = upcomingL2({
     description:
       'Millicent is an upcoming Layer 2 on Ethereum, built on the Orbit stack. It is focused on tokenized Real World Assets (RWAs) and digital currencies like tokenized bank deposits, stablecoins, and central bank assets.',
     purposes: ['RWA'],
-    category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://millicent.io/'],
@@ -22,5 +21,8 @@ export const millicent: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

@@ -12,7 +12,6 @@ export const hook: ScalingProject = underReviewL3({
   display: {
     name: 'Hook',
     slug: 'hook',
-    category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     description:
       'Hook is an Orbit stack L3 Appchain on Arbitrum powering a perpetuals DEX for tokens and NFTs.',
@@ -31,6 +30,10 @@ export const hook: ScalingProject = underReviewL3({
         'https://warpcast.com/hookprotocol',
       ],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Optimistic',
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),

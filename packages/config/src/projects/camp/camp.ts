@@ -12,7 +12,6 @@ export const camp: ScalingProject = upcomingL2({
     description:
       'Camp is an Ethereum layer 2 designed for entertainment applications, based on the OP stack and utilizing Celestia for data availability.',
     purposes: ['Universal'],
-    category: 'Optimium',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://campnetwork.xyz/'],
@@ -27,5 +26,8 @@ export const camp: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

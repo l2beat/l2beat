@@ -15,7 +15,6 @@ export const nums: ScalingProject = upcomingL3({
       "Nums is a sequential game built off of Starknet's technology and is the first layer-3 to settle on the network.",
     purposes: ['Gaming'],
     stacks: ['SN Stack'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://nums.gg/'],
       bridges: [],
@@ -24,5 +23,8 @@ export const nums: ScalingProject = upcomingL3({
       repositories: [],
       socialMedia: ['https://x.com/numsgg'],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

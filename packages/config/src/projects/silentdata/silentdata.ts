@@ -12,7 +12,6 @@ export const silentData: ScalingProject = upcomingL2({
     description:
       'Silent Data is an OP Stack L2 combining programmable privacy with lightning-fast throughput, built for institutional scale and web3 innovation.',
     purposes: ['Privacy'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://silentdata.com'],
@@ -24,5 +23,8 @@ export const silentData: ScalingProject = upcomingL2({
         'https://podcasts.apple.com/podcast/applied-blockchain-podcast/id1653098459',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

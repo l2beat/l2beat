@@ -91,7 +91,6 @@ export const linea: ScalingProject = {
     description:
       'Linea is a ZK Rollup powered by a zkEVM developed at Consensys, designed to scale the Ethereum network.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://linea.build/'],
       bridges: ['https://bridge.linea.build/'],

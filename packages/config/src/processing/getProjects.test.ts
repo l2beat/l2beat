@@ -136,25 +136,25 @@ describe('getProjects', () => {
 
   describe('synchronization with scaling projects - layer2s and layer3s', () => {
     it('each scaling project should have a corresponding entry in the DA-BEAT', () => {
+      const daLayers = projects.filter((x) => x.daLayer !== undefined)
+      const daBridges = projects.filter((x) => x.daBridge !== undefined)
+
       // It can be squashed, but it's more readable this way
       const target = [...layer2s, ...layer3s].filter(
         (project) =>
           !project.isUpcoming &&
           !project.reviewStatus &&
           !project.archivedAt &&
-          // TODO: Ideally the category check should be removed, but
-          // hyperliquid and polygon-pos are exceptions that would fail the test
-          (project.display.category === 'Optimium' ||
-            project.display.category === 'Validium') &&
           // It makes no sense to list them on the DA-BEAT
           project.dataAvailability &&
           project.dataAvailability.layer.value !== 'None' &&
+          project.dataAvailability.bridge.projectId &&
+          daBridges
+            .map((x) => x.id)
+            .includes(project.dataAvailability.bridge.projectId) &&
           // Will be listed on the DA-BEAT automatically
           !project.customDa,
       )
-
-      const daLayers = projects.filter((x) => x.daLayer !== undefined)
-      const daBridges = projects.filter((x) => x.daBridge !== undefined)
 
       const daBeatProjectIds = daLayers
         .flatMap((project) => project.daLayer?.usedWithoutBridgeIn ?? [])

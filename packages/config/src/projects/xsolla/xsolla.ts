@@ -11,7 +11,6 @@ export const xsolla: ScalingProject = upcomingL2({
     slug: 'xsolla',
     description: 'Xsolla ZK is a Layer 2 gaming platform powered by ZKsync.',
     purposes: ['Gaming'],
-    category: 'ZK Rollup',
     stacks: ['ZK Stack'],
     links: {
       websites: ['https://xsolla.com/zk'],
@@ -21,5 +20,8 @@ export const xsolla: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

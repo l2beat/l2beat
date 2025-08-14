@@ -13,7 +13,6 @@ export const t1: ScalingProject = upcomingL2({
     description:
       'T1 is an upcoming Layer 2 focused on low latency proving and cross-chain interoperability to create composable scalability on Ethereum.',
     purposes: ['Universal', 'Interoperability'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://t1protocol.com'],
       repositories: ['https://github.com/t1protocol'],
@@ -22,5 +21,8 @@ export const t1: ScalingProject = upcomingL2({
         'https://discord.com/invite/nbvyXZHgke',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

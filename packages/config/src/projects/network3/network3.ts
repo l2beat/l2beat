@@ -12,7 +12,6 @@ export const network3: ScalingProject = upcomingL2({
     description:
       'An AIoT ScalingProject Empowering Efficient Model Training & Validation.',
     purposes: ['AI', 'Privacy'],
-    category: 'Validium',
     links: {
       websites: ['https://network3.io/'],
       documentation: [
@@ -24,5 +23,8 @@ export const network3: ScalingProject = upcomingL2({
         'https://t.me/network3official',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

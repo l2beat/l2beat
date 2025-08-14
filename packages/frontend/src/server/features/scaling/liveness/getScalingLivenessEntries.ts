@@ -1,6 +1,7 @@
 import type {
   Project,
   ProjectScalingCategory,
+  ProjectScalingProofSystem,
   ProjectScalingStack,
   TableReadyValue,
 } from '@l2beat/config'
@@ -57,7 +58,8 @@ export async function getScalingLivenessEntries() {
 }
 
 export interface ScalingLivenessEntry extends CommonScalingEntry {
-  category: ProjectScalingCategory
+  proofSystem: ProjectScalingProofSystem | undefined
+  category: ProjectScalingCategory | undefined
   stacks: ProjectScalingStack[] | undefined
   data: LivenessData
   explanation: string | undefined
@@ -100,8 +102,9 @@ function getScalingLivenessEntry(
       syncWarning,
       ongoingAnomaly: liveness.anomalies.some((a) => a.end === undefined),
     }),
-    category: project.scalingInfo.type,
     stacks: project.scalingInfo.stacks,
+    proofSystem: project.scalingInfo.proofSystem,
+    category: project.scalingInfo.type,
     data,
     explanation: project.livenessInfo?.explanation,
     anomalies: liveness.anomalies,

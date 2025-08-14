@@ -18,7 +18,6 @@ export const onchain: ScalingProject = underReviewL3({
   display: {
     name: 'Onchain Chain',
     slug: 'onchain',
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     description:
       'Onchain Chain is an Orbit stack L3 with AnyTrust DA powering the ONCHAIN score system that evaluates addresses connected to a farcaster profile based on their onchain activity.',
@@ -33,6 +32,10 @@ export const onchain: ScalingProject = underReviewL3({
         'https://t.me/onchaincoin_portal',
       ],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Optimistic',
   },
   chainConfig: {
     name: 'onchain',

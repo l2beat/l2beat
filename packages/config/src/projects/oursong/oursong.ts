@@ -13,7 +13,6 @@ export const oursong: ScalingProject = upcomingL3({
     description:
       'Oursong is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It aims to transform the music industry with an automated copyright management system designed for the AI era, streamlining registration, licensing, and royalty distribution for creators.',
     purposes: ['Music'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://oursong.com/'],
@@ -22,5 +21,8 @@ export const oursong: ScalingProject = upcomingL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

@@ -198,8 +198,6 @@ export const starknet: ScalingProject = {
     description:
       'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
-
     links: {
       bridges: ['https://starkgate.starknet.io/'],
       websites: [

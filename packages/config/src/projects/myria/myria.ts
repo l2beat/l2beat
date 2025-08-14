@@ -67,7 +67,6 @@ export const myria: ScalingProject = {
       'Myria is an expansive blockchain gaming ecosystem, comprised of a blockchain gaming hub and Myriaverse metaverse.',
     purposes: ['NFT', 'Exchange', 'Gaming'],
     stacks: ['StarkEx'],
-    category: 'Other',
     links: {
       websites: ['https://myria.com/'],
       bridges: ['https://hub.immutable.com/'],

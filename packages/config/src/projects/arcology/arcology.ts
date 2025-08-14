@@ -12,7 +12,6 @@ export const arcology: ScalingProject = upcomingL2({
     description:
       'Powered by its parallel execution engine with STM (Software Transactional Memory) based concurrency control, Arcology Network is the first Rollup to process transactions fully in parallel. With EVM equivalence and horizontal scaling, it’s perfect for developers building high-performance, resource-intensive decentralized apps.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://arcology.network/'],
       documentation: ['https://doc.arcology.network/main'],
@@ -22,5 +21,8 @@ export const arcology: ScalingProject = upcomingL2({
         'https://chatgpt.com/g/g-lkeB0ZG52-solidity-concurrent-programming-gpt',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

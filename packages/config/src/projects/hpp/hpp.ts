@@ -13,7 +13,6 @@ export const hpp: ScalingProject = upcomingL2({
     description:
       'HPP is an AI-ready Layer 2 for agents, data, and decentralized infrastructure — composable and verifiable by design.',
     purposes: ['AI'],
-    category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://hpp.io/'],
@@ -26,5 +25,8 @@ export const hpp: ScalingProject = upcomingL2({
         'https://t.me/aergoofficial',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

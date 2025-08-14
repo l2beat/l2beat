@@ -55,7 +55,6 @@ export const polygonpos: ScalingProject = {
     name: 'Polygon PoS',
     slug: 'polygon-pos',
     purposes: ['Universal'],
-    category: 'Other',
     links: {
       websites: ['https://polygon.technology'],
       explorers: ['https://polygonscan.com'],

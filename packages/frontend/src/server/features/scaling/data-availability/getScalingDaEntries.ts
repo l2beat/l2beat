@@ -1,7 +1,7 @@
 import type {
   Project,
-  ProjectScalingCategory,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingStack,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
@@ -83,7 +83,7 @@ export async function getScalingDaEntries() {
 }
 
 export interface ScalingDaEntry extends CommonScalingEntry {
-  category: ProjectScalingCategory
+  proofSystem: ProjectScalingProofSystem | undefined
   dataAvailability: ProjectScalingDa
   stacks: ProjectScalingStack[] | undefined
   tvsOrder: number
@@ -108,8 +108,8 @@ function getScalingDaEntry(
 ): ScalingDaEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
-    category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
+    proofSystem: project.scalingInfo.proofSystem,
     daHref: getDaHref(project, daLayers),
     stacks: project.scalingInfo.stacks,
     risks,

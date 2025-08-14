@@ -12,7 +12,6 @@ export const leaf: ScalingProject = upcomingL2({
     description:
       'Leaf is an upcoming OP Stack L2 focused on DeFi and MEV protection.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://leafprotocol.com/'],
@@ -21,5 +20,8 @@ export const leaf: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

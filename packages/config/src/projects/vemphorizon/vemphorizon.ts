@@ -10,7 +10,6 @@ export const vemphorizon: ScalingProject = underReviewL3({
   display: {
     name: 'VEMP Horizon',
     slug: 'vemphorizon',
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     description:
       'VEMP Horizon is a specialist blockchain designed by VEMP Studios to empower community-driven game economies, particularly for indie and smaller game developers.',
@@ -30,4 +29,8 @@ export const vemphorizon: ScalingProject = underReviewL3({
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
+  dataAvailability: undefined,
 })

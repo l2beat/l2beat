@@ -5,6 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import {
   TypeExplanationTooltip,
   TypeInfo,
@@ -18,7 +19,7 @@ import type { ScalingLivenessTableEntry } from './toTableEntry'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
-export function getScalingLivenessColumns(hideType?: boolean) {
+export function getScalingLivenessColumns(hideProofSystem?: boolean) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,
@@ -69,14 +70,23 @@ export function getScalingLivenessColumns(hideType?: boolean) {
         }),
       ],
     }),
-    !hideType &&
-      columnHelper.accessor('category', {
-        header: 'Type',
+    !hideProofSystem &&
+      columnHelper.accessor('proofSystem', {
+        header: 'Proof system',
         cell: (ctx) => (
-          <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
+          <TwoRowCell>
+            <TwoRowCell.First>
+              <TypeInfo stacks={ctx.row.original.stacks}>
+                {ctx.getValue()?.type}
+              </TypeInfo>
+            </TwoRowCell.First>
+            {ctx.getValue()?.name && (
+              <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
+            )}
+          </TwoRowCell>
         ),
         meta: {
-          tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
+          tooltip: <TypeExplanationTooltip />,
         },
       }),
     columnHelper.display({

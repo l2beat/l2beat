@@ -13,7 +13,6 @@ export const jetstreamchain: ScalingProject = underReviewL3({
     description:
       'Jetstream Chain is a decentralized trading protocol powered by Arbitrum Orbit, offering ultra-low fees and a smoother trading experience on its own dedicated chain.',
     purposes: ['Exchange'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://jetstream.trade/'],
@@ -26,7 +25,11 @@ export const jetstreamchain: ScalingProject = underReviewL3({
       ],
     },
   },
+  dataAvailability: undefined,
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

@@ -30,7 +30,6 @@ export const aztecconnect: ScalingProject = {
     description:
       'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
     purposes: ['Payments', 'Privacy'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],
       bridges: ['https://zk.money'],

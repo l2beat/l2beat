@@ -12,7 +12,6 @@ export const align: ScalingProject = upcomingL2({
     description:
       'Align Network is an upcoming Layer 2 on Ethereum, built on the Orbit stack. It focuses on providing a decentralized identity and verification layer for social interactions.',
     purposes: ['Social'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://align.network/'],
@@ -27,5 +26,8 @@ export const align: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

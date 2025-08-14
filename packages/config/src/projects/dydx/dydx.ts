@@ -100,7 +100,6 @@ export const dydx: ScalingProject = {
       'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purposes: ['Exchange'],
     stacks: ['StarkEx'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://dydx.exchange/'],
       bridges: [

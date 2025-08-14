@@ -12,7 +12,6 @@ export const tusima: ScalingProject = upcomingL2({
     description:
       'Tusima is an infrastructure that bridges Web3.0 and real-world business. It aims to be a consumer payment network for any asset.',
     purposes: ['Universal', 'Payments'],
-    category: 'Validium',
     links: {
       websites: ['https://tusima.network/'],
       bridges: ['https://tusima.network/Galactic/Withdraw'],
@@ -26,5 +25,8 @@ export const tusima: ScalingProject = upcomingL2({
         'https://medium.com/@TusimaNetwork',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

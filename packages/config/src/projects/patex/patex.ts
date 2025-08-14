@@ -8,7 +8,6 @@ export const patex: ScalingProject = upcomingL2({
   hasTestnet: true,
   addedAt: UnixTime(1707313169), // 2024-02-07T13:39:29Z
   display: {
-    category: 'Optimistic Rollup',
     name: 'Patex Network',
     slug: 'patex',
     description:
@@ -27,6 +26,9 @@ export const patex: ScalingProject = upcomingL2({
         'https://youtube.com/channel/UCLmHyM6kZ5bViyh7my6ZkpA',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })
 //for once it goes live again
