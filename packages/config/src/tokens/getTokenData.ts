@@ -21,7 +21,6 @@ import {
   readGeneratedFile,
   readTokensFile,
   saveResults,
-  saveTokenNames,
 } from './utils/fsIntegration'
 import { getCoingeckoId } from './utils/getCoingeckoId'
 import { getTokenInfo } from './utils/getTokenInfo'
@@ -202,7 +201,6 @@ export async function getTokenData(
   }
 
   // removeDeleted()
-  saveTokenNames(result, chainConverter)
 }
 
 function getCoingeckoClient() {
