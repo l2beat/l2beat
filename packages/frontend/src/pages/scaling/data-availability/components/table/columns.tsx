@@ -3,6 +3,7 @@ import compact from 'lodash/compact'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { CombinedGrissiniCell } from '~/components/rosette/grissini/CombinedGrissiniCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import {
   TypeExplanationTooltip,
   TypeInfo,
@@ -17,33 +18,29 @@ import type { ScalingDaEntry } from '~/server/features/scaling/data-availability
 
 const columnHelper = createColumnHelper<ScalingDaEntry>()
 
-export function getScalingDataAvailabilityColumns(hideType?: boolean) {
+export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,
       (row) => `/scaling/projects/${row.slug}`,
     ),
-    !hideType &&
-      columnHelper.accessor('category', {
-        header: 'Type',
+    !hideProofSystem &&
+      columnHelper.accessor('proofSystem', {
+        header: 'Proof system',
+        cell: (ctx) => (
+          <TwoRowCell>
+            <TwoRowCell.First>
+              <TypeInfo stacks={ctx.row.original.stacks}>
+                {ctx.getValue()?.type}
+              </TypeInfo>
+            </TwoRowCell.First>
+            {ctx.getValue()?.name && (
+              <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
+            )}
+          </TwoRowCell>
+        ),
         meta: {
           tooltip: <TypeExplanationTooltip />,
-        },
-        cell: (ctx) => (
-          <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
-        ),
-        sortingFn: (a, b) => {
-          const categoryCompare = a.original.category.localeCompare(
-            b.original.category,
-          )
-          if (categoryCompare !== 0) {
-            return categoryCompare
-          }
-
-          const stackCompare = (a.original.stacks?.[0] ?? '').localeCompare(
-            b.original.stacks?.[0] ?? '',
-          )
-          return stackCompare
         },
       }),
     columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.layer), {
