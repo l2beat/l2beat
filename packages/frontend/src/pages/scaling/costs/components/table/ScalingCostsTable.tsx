@@ -90,7 +90,6 @@ function mapToTableEntry(
   return {
     ...entry,
     data: {
-      ...projectData,
       type: 'available',
       isSynced: projectData.isSynced,
       total: projectData[unit].total,
@@ -98,6 +97,7 @@ function mapToTableEntry(
       blobs: projectData[unit].blobs,
       compute: projectData[unit].compute,
       overhead: projectData[unit].overhead,
+      uopsCount: projectData.uopsCount,
     },
   }
 }
@@ -134,7 +134,7 @@ function calculateDataByType(
         data: {
           ...e.data,
           total: e.data.total / e.data.uopsCount,
-          blobs: e.data.blobs ? e.data.blobs / e.data.uopsCount : undefined,
+          blobs: e.data.blobs !== null ? e.data.blobs / e.data.uopsCount : null,
           compute: e.data.compute / e.data.uopsCount,
           calldata: e.data.calldata / e.data.uopsCount,
           overhead: e.data.overhead / e.data.uopsCount,
