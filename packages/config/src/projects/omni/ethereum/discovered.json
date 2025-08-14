@@ -1,8 +1,8 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "timestamp": 1755160940,
-  "configHash": "0x88938a2c9d7af8afcb80ee249bc3c8dbdce0ff9adb3baba1105eaa6470301458",
+  "timestamp": 1755171830,
+  "configHash": "0xc1d881edb7c8d8fc680f70e735ea952988522dae4975e5ead9866f653bce7bcf",
   "entries": [
     {
       "name": "Giveth EOA 2",
@@ -250,10 +250,10 @@
         "hashiManager": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299",
         "isInitialized": true,
-        "maxAvailablePerTx": "9987972332365907112461781",
+        "maxAvailablePerTx": "9948790916878907112461780",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 1741,
+        "nonce": 1746,
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -326,8 +326,7 @@
       "implementationNames": {
         "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      },
-      "category": { "name": "Spam", "priority": -1 }
+      }
     },
     {
       "name": "ForeignAMB",
@@ -1553,6 +1552,6 @@
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23138166 },
+  "usedBlockNumbers": { "ethereum": 23139062 },
   "permissionsConfigHash": "0x5e1db316d1473e7c712fafb8a396b733a20090a1d1dbca783ad499e657dab8fb"
 }

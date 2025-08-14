@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x3b629f2d5fd1f32d95fce2d75e96bbb6637dd311
+Generated with discovered.json: 0x5cc679ced2b05c4f7b4926dc7b3038782e9d600a
 
-# Diff at Thu, 14 Aug 2025 08:52:25 GMT:
+# Diff at Thu, 14 Aug 2025 11:43:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1754307769
-- current timestamp: 1755160940
+- current timestamp: 1755171830
 
 ## Description
 
@@ -81,6 +81,8 @@ discovery. Values are for block 1754307769 (main branch discovery), not current.
       name:
 -        "GnosisSafe"
 +        "Hashi Multisig"
+      category:
+-        {"name":"Spam","priority":-1}
     }
 ```
 

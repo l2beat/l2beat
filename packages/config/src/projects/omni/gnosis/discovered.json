@@ -1,8 +1,8 @@
 {
   "name": "omni",
   "chain": "gnosis",
-  "timestamp": 1755160940,
-  "configHash": "0x371d8b32076639b4b43e89defc75544fd9ca4e42d870063c710aa6a309609e9b",
+  "timestamp": 1755171830,
+  "configHash": "0xf38842e2482516344564512f0881069b022f5a01ea808a41c2c26f6d22af8f8f",
   "entries": [
     {
       "address": "gno:0x0000000000000000000000000000000000000000",
@@ -1511,6 +1511,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "gnosis": 41597180 },
+  "usedBlockNumbers": { "gnosis": 41599272 },
   "permissionsConfigHash": "0x5e1db316d1473e7c712fafb8a396b733a20090a1d1dbca783ad499e657dab8fb"
 }
