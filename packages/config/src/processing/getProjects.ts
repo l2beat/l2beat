@@ -147,21 +147,25 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
 }
 
 function getType(p: ScalingProject): ProjectScalingCategory | undefined {
-  if (p.isUpcoming) return undefined
+  if (p.isUpcoming || (!p.proofSystem && !p.dataAvailability)) return undefined
   if (p.reasonsForBeingOther) return 'Other'
 
-  const isEnshrined = p.dataAvailability?.bridge.value === 'Enshrined'
+  const isEthereumBridge =
+    p.dataAvailability?.bridge.value === 'Enshrined' ||
+    p.dataAvailability?.bridge.value === 'Self Custodied'
   const proofType = p.proofSystem?.type
 
   if (proofType === 'Optimistic') {
-    return isEnshrined ? 'Optimistic Rollup' : 'Optimium'
+    return isEthereumBridge ? 'Optimistic Rollup' : 'Optimium'
   }
 
   if (proofType === 'Validity') {
-    return isEnshrined ? 'ZK Rollup' : 'Validium'
+    return isEthereumBridge ? 'ZK Rollup' : 'Validium'
   }
 
-  return 'Plasma'
+  if (p.dataAvailability?.bridge.value === 'Plasma') {
+    return 'Plasma'
+  }
 }
 
 function getLivenessInfo(p: ScalingProject): ProjectLivenessInfo | undefined {
