@@ -35,6 +35,7 @@ export const onyx: ScalingProject = underReviewL3({
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },

@@ -45,6 +45,7 @@ export const gluon: ScalingProject = {
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',

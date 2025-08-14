@@ -51,6 +51,7 @@ export const layer2financezk: ScalingProject = {
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Validity',
   },

@@ -22,6 +22,7 @@ export const nal: ScalingProject = underReviewL2({
       socialMedia: ['https://x.com/nal_network'],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },

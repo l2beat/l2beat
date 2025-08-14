@@ -30,4 +30,5 @@ export const logx: ScalingProject = underReviewL2({
   proofSystem: {
     type: 'Optimistic',
   },
+  dataAvailability: undefined,
 })

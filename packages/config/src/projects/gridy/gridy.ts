@@ -29,6 +29,7 @@ export const gridy: ScalingProject = underReviewL3({
       socialMedia: ['https://twitter.com/karnotxyz'],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Validity',
   },

@@ -15,6 +15,7 @@ export const xrone: ScalingProject = underReviewL3({
     BADGES.Stack.Orbit,
     BADGES.VM.EVM,
   ],
+  dataAvailability: undefined,
   display: {
     name: 'XR One',
     slug: 'xrone',

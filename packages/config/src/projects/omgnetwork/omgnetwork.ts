@@ -40,6 +40,7 @@ export const omgnetwork: ScalingProject = {
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',

@@ -28,6 +28,7 @@ export const powerloom: ScalingProject = underReviewL2({
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },

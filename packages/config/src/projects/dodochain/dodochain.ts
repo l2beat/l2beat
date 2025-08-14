@@ -31,6 +31,7 @@ export const dodochain: ScalingProject = underReviewL3({
       ],
     },
   },
+  dataAvailability: undefined,
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
   },

@@ -35,6 +35,7 @@ export const cheese: ScalingProject = underReviewL3({
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },

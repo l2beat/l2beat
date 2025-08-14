@@ -57,6 +57,7 @@ export const facet: ScalingProject = {
   proofSystem: {
     type: 'Optimistic',
   },
+  dataAvailability: undefined,
   stage: getStage(
     {
       stage0: {

@@ -32,6 +32,7 @@ export const clique: ScalingProject = underReviewL3({
       socialMedia: ['https://x.com/STP_Network', 'https://t.me/STPofficial'],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },

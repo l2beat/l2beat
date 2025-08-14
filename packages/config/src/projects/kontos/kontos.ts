@@ -26,6 +26,7 @@ export const kontos: ScalingProject = underReviewL2({
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Validity',
   },

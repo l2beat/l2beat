@@ -36,6 +36,7 @@ export const moonchain: ScalingProject = underReviewL3({
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },

@@ -25,6 +25,7 @@ export const jetstreamchain: ScalingProject = underReviewL3({
       ],
     },
   },
+  dataAvailability: undefined,
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
   },

@@ -22,6 +22,7 @@ export const rarimo: ScalingProject = underReviewL2({
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Validity',
   },

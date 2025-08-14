@@ -22,6 +22,7 @@ export const pandasea: ScalingProject = underReviewL2({
       bridges: ['https://bridge.pandasea.io/'],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },

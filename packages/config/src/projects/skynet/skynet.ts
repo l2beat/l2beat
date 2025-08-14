@@ -30,6 +30,7 @@ export const skynet: ScalingProject = underReviewL3({
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },

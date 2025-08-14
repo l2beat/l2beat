@@ -40,6 +40,7 @@ export const huddle01: ScalingProject = underReviewL3({
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },

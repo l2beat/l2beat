@@ -14,6 +14,7 @@ export const openzk: ScalingProject = underReviewL2({
     BADGES.VM.EVM,
     BADGES.RaaS.Caldera,
   ],
+  dataAvailability: undefined,
   display: {
     name: 'OpenZK',
     slug: 'openzk',

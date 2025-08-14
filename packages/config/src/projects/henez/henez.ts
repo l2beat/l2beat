@@ -15,6 +15,7 @@ export const henez: ScalingProject = underReviewL3({
     BADGES.Stack.Orbit,
     BADGES.VM.EVM,
   ],
+  dataAvailability: undefined,
   display: {
     name: 'Henez',
     slug: 'henez',

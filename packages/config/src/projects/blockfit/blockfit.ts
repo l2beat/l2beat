@@ -28,6 +28,7 @@ export const blockfit: ScalingProject = underReviewL3({
       socialMedia: ['https://x.com/Fit24updates', 'https://t.me/fit24updates'],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },

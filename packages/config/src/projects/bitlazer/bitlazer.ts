@@ -36,6 +36,7 @@ export const bitlazer: ScalingProject = underReviewL3({
   proofSystem: {
     type: 'Optimistic',
   },
+  dataAvailability: undefined,
   chainConfig: {
     name: 'bitlazer',
     gasTokens: ['lzrBTC'],

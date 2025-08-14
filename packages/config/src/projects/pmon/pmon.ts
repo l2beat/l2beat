@@ -38,6 +38,7 @@ export const pmon: ScalingProject = underReviewL3({
   proofSystem: {
     type: 'Optimistic',
   },
+  dataAvailability: undefined,
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
   },

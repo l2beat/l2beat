@@ -25,6 +25,7 @@ export const forta: ScalingProject = underReviewL3({
       socialMedia: ['https://x.com/FortaNetwork'],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },
