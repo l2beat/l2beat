@@ -1,5 +1,6 @@
 import type {
   Project,
+  ProjectScalingCategory,
   ProjectScalingProofSystem,
   ProjectScalingStack,
   TableReadyValue,
@@ -58,6 +59,7 @@ export async function getScalingLivenessEntries() {
 
 export interface ScalingLivenessEntry extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem | undefined
+  category: ProjectScalingCategory | undefined
   stacks: ProjectScalingStack[] | undefined
   data: LivenessData
   explanation: string | undefined
@@ -102,6 +104,7 @@ function getScalingLivenessEntry(
     }),
     stacks: project.scalingInfo.stacks,
     proofSystem: project.scalingInfo.proofSystem,
+    category: project.scalingInfo.type,
     data,
     explanation: project.livenessInfo?.explanation,
     anomalies: liveness.anomalies,
