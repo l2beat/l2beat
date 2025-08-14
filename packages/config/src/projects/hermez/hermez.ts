@@ -60,7 +60,7 @@ export const hermez: ScalingProject = {
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    mode: DA_MODES.TRANSACTION_DATA,
   },
   stage: {
     stage: 'NotApplicable',
