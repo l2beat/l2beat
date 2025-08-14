@@ -130,7 +130,7 @@ export const blast: ScalingProject = opStackL2({
     genesisState:
       'The genesis file can be found [here](https://github.com/blast-io/deployment/blob/master/mainnet/genesis.json).',
     dataFormat:
-      "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/).",
+      "The format specification of Sequencer's data batches can be found [here](https://optimism.io/blog/here-s-how-you-can-reproduce-op-mainnet-s-migration-to-bedrock).",
   },
   milestones: [
     {
