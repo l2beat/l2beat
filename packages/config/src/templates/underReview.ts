@@ -13,6 +13,7 @@ import type {
   ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectScalingCapability,
+  ProjectScalingDa,
 } from '../types'
 import { getActivityConfig } from './activity'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
@@ -30,6 +31,7 @@ interface UnderReviewConfigCommon {
   badges?: Badge[]
   archivedAt?: UnixTime
   discoveryInfo?: ProjectDiscoveryInfo
+  dataAvailability: ProjectScalingDa | undefined
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
@@ -78,6 +80,7 @@ export function underReviewL2(
     chainConfig: templateVars.chainConfig,
     badges: templateVars.badges,
     discoveryInfo: templateVars.discoveryInfo ?? getDiscoveryInfo([]),
+    dataAvailability: templateVars.dataAvailability,
   }
 }
 
@@ -120,5 +123,6 @@ export function underReviewL3(
     chainConfig: templateVars.chainConfig,
     badges: templateVars.badges,
     discoveryInfo: templateVars.discoveryInfo ?? getDiscoveryInfo([]),
+    dataAvailability: templateVars.dataAvailability,
   }
 }

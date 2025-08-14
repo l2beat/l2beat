@@ -52,6 +52,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
     badges: templateVars.badges,
     discoveryInfo: getDiscoveryInfo([]),
     ecosystemInfo: templateVars.ecosystemInfo,
+    dataAvailability: undefined,
   }
 }
 
@@ -77,5 +78,6 @@ export function upcomingL3(templateVars: UpcomingConfigL3): ScalingProject {
     badges: templateVars.badges,
     discoveryInfo: getDiscoveryInfo([]),
     ecosystemInfo: templateVars.ecosystemInfo,
+    dataAvailability: undefined,
   }
 }

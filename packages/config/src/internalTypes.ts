@@ -71,7 +71,7 @@ export interface ScalingProject {
   /** Ecosystem information */
   ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */
-  dataAvailability?: ProjectScalingDa
+  dataAvailability: ProjectScalingDa | undefined
   /** Details about the custom availability solution */
   customDa?: ProjectCustomDa
   /** Risk view values for this project */
