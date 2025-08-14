@@ -1,4 +1,101 @@
-Generated with discovered.json: 0x2eea3ad5016a890e7cd18fd9cafcb16489ba1400
+Generated with discovered.json: 0x522c3b43535b57b00203156a51ed4d99ddf5c2df
+
+# Diff at Fri, 01 Aug 2025 13:14:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@802242fc2209399893865092b1048d583aafc2bb block: 1753944518
+- current timestamp: 1754054035
+
+## Description
+
+Minter added([TPP](https://www.tally.xyz/gov/zksync/proposal/103009526770705342015760257902601847378333885610277726776315709127806766289886?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746)).
+
+## Watched changes
+
+```diff
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.12:
++        "zksync:0x496c401f5764D137a448C991D95B10125375AC08"
+    }
+```
+
+Generated with discovered.json: 0x76f6cbb0e4e49c26ab996406ebdffd2dd6b9cedc
+
+# Diff at Thu, 31 Jul 2025 10:24:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fc6aee0100bcf523dbfb20b1884ed98a8717207a block: 1753346675
+- current timestamp: 1753944518
+
+## Description
+
+Changes are config related, ignore (an earlier config resolved incorrect permissions).
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        2
++        3
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753346675 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ZkTokenGovernor_deprecated (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89)
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+```
+
+```diff
+-   Status: DELETED
+    contract ProtocolTimelockController_deprecated (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenTimelockController_deprecated (0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkGovOpsGovernor_deprecated (0x496869a7575A1f907D1C5B1eca28e4e9E382afAb)
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+```
+
+```diff
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      receivedPermissions.4:
+-        {"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"cancel queued transactions.","role":".Canceller"}
+      receivedPermissions.5:
+-        {"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"execute transactions that are ready.","role":".Executor"}
+      receivedPermissions.6:
+-        {"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"}]}
+      receivedPermissions.7:
+-        {"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"propose transactions.","role":".Proposer"}
+      directlyReceivedPermissions.1:
+-        {"permission":"act","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","role":".Executor"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GovOpsTimelockController_deprecated (0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+```
+
+Generated with discovered.json: 0x32a53c40ad4ad5dfa11742e92c57427f5f2fefe5
 
 # Diff at Mon, 14 Jul 2025 12:47:17 GMT:
 

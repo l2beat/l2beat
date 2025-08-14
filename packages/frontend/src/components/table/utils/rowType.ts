@@ -3,7 +3,7 @@ import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/compo
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import type { BasicTableProps } from '../BasicTable'
 
-export type RowType = ReturnType<typeof getRowType>
+type RowType = ReturnType<typeof getRowType>
 export function getRowType(
   entry: CommonProjectEntry,
   rowColoringMode: BasicTableProps<CommonProjectEntry>['rowColoringMode'],

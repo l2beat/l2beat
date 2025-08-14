@@ -36,10 +36,10 @@ export async function executeCompareSourceOnSource(
     (e) => e.name !== name || e.chain !== chain,
   )
   for (const source of base.sources) {
-    const mostSimmilar = findMostSimmilarContract(source, projects)
+    const mostSimilar = findMostSimilarContract(source, projects)
     command.logger.info(`${path.basename(source.path)}`)
-    for (const [i, e] of mostSimmilar.entries()) {
-      const prefix = i === mostSimmilar.length - 1 ? '└─' : '├─'
+    for (const [i, e] of mostSimilar.entries()) {
+      const prefix = i === mostSimilar.length - 1 ? '└─' : '├─'
       command.logger.info(
         `${prefix} [${colorMap(e.similarity)}] in ${e.chain}:${
           e.projectName
@@ -56,7 +56,7 @@ interface ResultEntry {
   path: string
 }
 
-function findMostSimmilarContract(
+function findMostSimilarContract(
   source: HashedFileContent,
   projects: Project[],
 ): ResultEntry[] {

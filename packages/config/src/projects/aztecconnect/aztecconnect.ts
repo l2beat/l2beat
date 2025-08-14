@@ -45,6 +45,9 @@ export const aztecconnect: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   config: {
     escrows: [
       {
@@ -212,7 +215,7 @@ export const aztecconnect: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('RollupProcessorV3', {
           description:
             'Main Rollup contract (immutable) responsible for withdrawals and accepting transaction batches alongside a ZK proof.',

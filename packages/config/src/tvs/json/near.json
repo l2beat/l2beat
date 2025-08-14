@@ -239,7 +239,7 @@
         "escrowAddress": "0x23Ddd3e3692d1861Ed57EDE224608875809e127f",
         "decimals": 18,
         "sinceTimestamp": 1615826693,
-        "untilTimestamp": 1749103200
+        "untilTimestamp": 1744070400
       },
       "category": "other",
       "source": "canonical",
@@ -526,7 +526,7 @@
         "decimals": 8,
         "sinceTimestamp": 1615826693
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

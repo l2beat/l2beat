@@ -1,5 +1,5 @@
 import {
-  EthereumAddress,
+  ChainSpecificAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -95,13 +95,18 @@ export const reddioex: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   stage: {
     stage: 'NotApplicable',
   },
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xB62BcD40A24985f560b5a9745d478791d8F1945C'),
+        address: ChainSpecificAddress(
+          'eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C',
+        ),
         tokens: ['ETH', 'USDC', 'USDT'],
         description: 'Main StarkEx contract, used also as an escrow.',
       }),
@@ -147,7 +152,7 @@ export const reddioex: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('StarkExchange'),
         discovery.getContractDetails(
           'DACommittee',
@@ -163,7 +168,7 @@ export const reddioex: ScalingProject = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Governor',

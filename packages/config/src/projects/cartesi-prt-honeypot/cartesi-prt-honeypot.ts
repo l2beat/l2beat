@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -88,6 +89,9 @@ export const cartesiprthoneypot: ScalingProject = {
         'The current PRT implementation uses three tournament levels, which creates liveness risks in the event of Sybil attacks. Furthermore, it lacks the planned economic layer (bonds and rewards). As a result: (1) honest defenders must cover their own gas costs without compensation, and (2) a well-funded adversary can cheaply create Sybil challengers to keep the dispute tree alive, delaying finality. Safety and decentralization are unaffected, but withdrawals can be significantly delayed until every branch is resolved.',
     },
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
   scopeOfAssessment: {
     inScope: [
       'Ability to deposit and withdraw CTSI by the permissioned address',
@@ -104,7 +108,9 @@ export const cartesiprthoneypot: ScalingProject = {
     associatedTokens: ['CTSI'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c'),
+        address: ChainSpecificAddress(
+          'eth:0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c',
+        ),
         tokens: '*',
         description: 'Contract storing bounty funds.',
       }),
@@ -150,10 +156,7 @@ export const cartesiprthoneypot: ScalingProject = {
     mode: DA_MODES.TRANSACTION_DATA,
   },
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_FP_INT,
-      secondLine: formatSeconds(minChallengePeriodSeconds),
-    },
+    stateValidation: RISK_VIEW.STATE_FP_INT(minChallengePeriodSeconds),
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
       value: 'Not applicable',

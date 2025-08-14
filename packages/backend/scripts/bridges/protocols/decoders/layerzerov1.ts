@@ -1,14 +1,20 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
+import type { Asset } from '../../types/Asset'
+import type { DecoderInput } from '../../types/DecoderInput'
 import type { Message } from '../../types/Message'
-import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 import {
   createLayerZeroGuid,
   createV1PacketId,
   decodeV1Packet,
   decodeV1SendUln301Packet,
 } from '../../utils/layerzero'
+
+export const LAYERZEROV1 = {
+  name: 'layerzerov1',
+  decoder: decoder,
+}
 
 const ABI = parseAbi([
   // UltraLightNodeV2
@@ -20,182 +26,176 @@ const ABI = parseAbi([
   'event PacketDelivered((uint32 srcEid, bytes32 sender, uint64 nonce) origin, address receiver)',
 ])
 
-export const LAYERZEROV1 = {
-  name: 'layerzerov1',
-  decoder: decoder,
-}
-
 function decoder(
   chain: Chain,
-  transaction: TransactionWithLogs,
-): Message | undefined {
-  for (const log of transaction.logs) {
-    const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
-    if (!network) continue
+  input: DecoderInput,
+): Message | Asset | undefined {
+  const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
+  if (!network) return undefined
 
-    if (
-      EthereumAddress(log.address) === network.ultraLightNode &&
-      log.topics[0] === encodeEventTopics({ abi: ABI, eventName: 'Packet' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'Packet',
-      })
+  if (
+    EthereumAddress(input.log.address) === network.ultraLightNode &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'Packet' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'Packet',
+    })
 
-      const decodedPacket = decodeV1Packet(data.args.payload)
-      if (!decodedPacket) {
-        console.error(`Failed to decode packet (tx ${transaction.hash})`)
-        continue
-      }
-
-      const packetId = createV1PacketId(
-        decodedPacket.nonce,
-        decodedPacket.localChainId,
-        decodedPacket.ua,
-        decodedPacket.dstChainId,
-        decodedPacket.dstAddress,
-      )
-
-      const destination = NETWORKS.find(
-        (b) => b.eid === decodedPacket.dstChainId,
-      )?.chainShortName
-
-      return {
-        direction: 'outbound',
-        protocol: LAYERZEROV1.name,
-        origin: chain.shortName,
-        destination: destination ?? decodedPacket.dstChainId.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'Packet',
-        matchingId: packetId,
-      }
+    const decodedPacket = decodeV1Packet(data.args.payload)
+    if (!decodedPacket) {
+      console.error(`Failed to decode packet (tx ${input.transactionHash})`)
+      return undefined
     }
 
-    if (
-      EthereumAddress(log.address) === network.ultraLightNode &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'PacketReceived' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'PacketReceived',
-      })
+    const packetId = createV1PacketId(
+      decodedPacket.nonce,
+      decodedPacket.localChainId,
+      decodedPacket.ua,
+      decodedPacket.dstChainId,
+      decodedPacket.dstAddress,
+    )
 
-      const dstChainId = network.eid
-      assert(dstChainId)
+    const destination = NETWORKS.find(
+      (b) => b.eid === decodedPacket.dstChainId,
+    )?.chainShortName
 
-      const packetId = createV1PacketId(
-        data.args.nonce,
-        data.args.srcChainId,
-        data.args.dstAddress, // This is actually the UA (User Application)
-        dstChainId,
-        data.args.dstAddress,
-      )
+    return {
+      type: 'message',
+      direction: 'outbound',
+      protocol: LAYERZEROV1.name,
+      origin: chain.shortName,
+      destination: destination ?? decodedPacket.dstChainId.toString(),
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'Packet',
+      matchingId: packetId,
+    }
+  }
 
-      const origin = NETWORKS.find(
-        (c) => c.eid === data.args.srcChainId,
-      )?.chainShortName
+  if (
+    EthereumAddress(input.log.address) === network.ultraLightNode &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'PacketReceived' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'PacketReceived',
+    })
 
-      return {
-        direction: 'inbound',
-        protocol: LAYERZEROV1.name,
-        origin: origin ?? data.args.srcChainId.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'PacketReceived',
-        matchingId: packetId,
-      }
+    const dstChainId = network.eid
+    assert(dstChainId)
+
+    const packetId = createV1PacketId(
+      data.args.nonce,
+      data.args.srcChainId,
+      data.args.dstAddress, // This is actually the UA (User Application)
+      dstChainId,
+      data.args.dstAddress,
+    )
+
+    const origin = NETWORKS.find(
+      (c) => c.eid === data.args.srcChainId,
+    )?.chainShortName
+
+    return {
+      type: 'message',
+      direction: 'inbound',
+      protocol: LAYERZEROV1.name,
+      origin: origin ?? data.args.srcChainId.toString(),
+      destination: chain.shortName,
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'PacketReceived',
+      matchingId: packetId,
+    }
+  }
+
+  if (
+    EthereumAddress(input.log.address) === network.sendUln &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'PacketSent' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'PacketSent',
+    })
+
+    const decodedPacket = decodeV1SendUln301Packet(data.args.encodedPayload)
+    if (!decodedPacket) {
+      console.error(`Failed to decode packet (tx ${input.transactionHash})`)
+      return undefined
     }
 
-    if (
-      EthereumAddress(log.address) === network.sendUln &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'PacketSent' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'PacketSent',
-      })
+    const guid = createLayerZeroGuid(
+      decodedPacket.header.nonce,
+      decodedPacket.header.srcEid,
+      decodedPacket.header.sender,
+      decodedPacket.header.dstEid,
+      decodedPacket.header.receiver,
+    )
 
-      const decodedPacket = decodeV1SendUln301Packet(data.args.encodedPayload)
-      if (!decodedPacket) {
-        console.error(`Failed to decode packet (tx ${transaction.hash})`)
-        continue
-      }
+    const destination = NETWORKS.find(
+      (b) => b.eid === decodedPacket.header.dstEid,
+    )?.chainShortName
 
-      const guid = createLayerZeroGuid(
-        decodedPacket.header.nonce,
-        decodedPacket.header.srcEid,
-        decodedPacket.header.sender,
-        decodedPacket.header.dstEid,
-        decodedPacket.header.receiver,
-      )
-
-      const destination = NETWORKS.find(
-        (b) => b.eid === decodedPacket.header.dstEid,
-      )?.chainShortName
-
-      return {
-        direction: 'outbound',
-        protocol: LAYERZEROV1.name,
-        origin: chain.shortName,
-        destination: destination ?? decodedPacket.header.dstEid.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'PacketSent',
-        matchingId: guid,
-      }
+    return {
+      type: 'message',
+      direction: 'outbound',
+      protocol: LAYERZEROV1.name,
+      origin: chain.shortName,
+      destination: destination ?? decodedPacket.header.dstEid.toString(),
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'PacketSent',
+      matchingId: guid,
     }
+  }
 
-    if (
-      EthereumAddress(log.address) === network.receiveUln &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'PacketDelivered' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'PacketDelivered',
-      })
+  if (
+    EthereumAddress(input.log.address) === network.receiveUln &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'PacketDelivered' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'PacketDelivered',
+    })
 
-      const dstChainId = network.eid
-      assert(dstChainId)
+    const dstChainId = network.eid
+    assert(dstChainId)
 
-      const packetId = createLayerZeroGuid(
-        BigInt(data.args.origin.srcEid),
-        Number(data.args.origin.sender),
-        data.args.origin.nonce.toString(),
-        dstChainId,
-        data.args.receiver,
-      )
+    const packetId = createLayerZeroGuid(
+      BigInt(data.args.origin.srcEid),
+      Number(data.args.origin.sender),
+      data.args.origin.nonce.toString(),
+      dstChainId,
+      data.args.receiver,
+    )
 
-      const origin = NETWORKS.find(
-        (c) => c.eid === data.args.origin.srcEid,
-      )?.chainShortName
+    const origin = NETWORKS.find(
+      (c) => c.eid === data.args.origin.srcEid,
+    )?.chainShortName
 
-      return {
-        direction: 'inbound',
-        protocol: LAYERZEROV1.name,
-        origin: origin ?? data.args.origin.srcEid.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'PacketDelivered',
-        matchingId: packetId,
-      }
+    return {
+      type: 'message',
+      direction: 'inbound',
+      protocol: LAYERZEROV1.name,
+      origin: origin ?? data.args.origin.srcEid.toString(),
+      destination: chain.shortName,
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'PacketDelivered',
+      matchingId: packetId,
     }
   }
 

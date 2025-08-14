@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -6,10 +10,11 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('sanko', 'arbitrum')
+const discovery = new ProjectDiscovery('sanko')
 
 export const sanko: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1716163200), // 2024-05-20T00:00:00Z
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['Gaming', 'Social'],
@@ -65,7 +70,9 @@ export const sanko: ScalingProject = orbitStackL3({
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
-      address: EthereumAddress('0xb4951c0C41CFceB0D195A95FE66280457A80a990'),
+      address: ChainSpecificAddress(
+        'arb1:0xb4951c0C41CFceB0D195A95FE66280457A80a990',
+      ),
       tokens: '*',
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
@@ -79,7 +86,7 @@ export const sanko: ScalingProject = orbitStackL3({
     },
     CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
       title: 'Mainnet Launch',

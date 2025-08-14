@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -80,6 +80,10 @@ export const sorare: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('stone'),
+  },
   stage: {
     stage: 'NotApplicable',
   },
@@ -91,7 +95,9 @@ export const sorare: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xF5C9F957705bea56a7e806943f98F7777B995826'),
+        address: ChainSpecificAddress(
+          'eth:0xF5C9F957705bea56a7e806943f98F7777B995826',
+        ),
         sinceTimestamp: UnixTime(1626352527),
         tokens: ['ETH'],
       }),

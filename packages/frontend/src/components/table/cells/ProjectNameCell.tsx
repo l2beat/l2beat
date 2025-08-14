@@ -1,7 +1,6 @@
 import {
   Tooltip,
   TooltipContent,
-  TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { LiveIndicator } from '~/components/LiveIndicator'
@@ -13,10 +12,10 @@ import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { getUnderReviewText } from '~/utils/project/underReview'
-import { NotSyncedIcon } from '../../not-synced/NotSyncedIcon'
+import { NoDataIcon } from '../../NoDataIcon'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
-export interface ProjectCellProps {
+interface ProjectCellProps {
   project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'>
   className?: string
   withInfoTooltip?: boolean
@@ -79,7 +78,7 @@ export function ProjectNameCell({
           </Tooltip>
         )}
         {project.statuses?.syncWarning && (
-          <NotSyncedIcon content={project.statuses.syncWarning} />
+          <NoDataIcon content={project.statuses.syncWarning} />
         )}
       </div>
       {project.nameSecondLine && (
@@ -122,17 +121,15 @@ function NameWithProjectInfoTooltip({
   return (
     <Tooltip>
       <TooltipTrigger>{projectName}</TooltipTrigger>
-      <TooltipPortal>
-        <TooltipContent className="flex flex-col gap-2">
-          <span className="text-heading-18">What is {projectName}?</span>
-          <p>{project.description}</p>
-          <div className="flex max-w-(--breakpoint-xs)! flex-row flex-wrap">
-            {project.badges?.map((badge, key) => (
-              <ProjectBadge key={key} badge={badge} className="h-16!" />
-            ))}
-          </div>
-        </TooltipContent>
-      </TooltipPortal>
+      <TooltipContent className="flex flex-col gap-2">
+        <span className="text-heading-18">What is {projectName}?</span>
+        <p>{project.description}</p>
+        <div className="flex max-w-(--breakpoint-xs)! flex-row flex-wrap">
+          {project.badges?.map((badge, key) => (
+            <ProjectBadge key={key} badge={badge} className="h-16!" />
+          ))}
+        </div>
+      </TooltipContent>
     </Tooltip>
   )
 }

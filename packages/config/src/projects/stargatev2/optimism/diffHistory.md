@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x62937a642c78e9c24c967ffae1deb81223a734a9
+Generated with discovered.json: 0x3225174c9e9c00b9e68b5e8cd8c886b38b0291df
+
+# Diff at Thu, 31 Jul 2025 10:51:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1752074075
+- current timestamp: 1752074075
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752074075 (main branch discovery), not current.
+
+```diff
+    contract TokenMessagingOptimism (0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6) {
+    +++ description: None
+      name:
+-        "TokenMessaging"
++        "TokenMessagingOptimism"
+    }
+```
+
+Generated with discovered.json: 0x32d230e19c47e0b01c47f186bece970b31c52ef2
 
 # Diff at Mon, 14 Jul 2025 12:47:12 GMT:
 
@@ -417,7 +444,7 @@ Generated with discovered.json: 0x6c1efd0b8352484276f7aee323d18962af735f0a
 
 ## Description
 
-Deficit config adjustements affecting fee calculation.
+Deficit config adjustments affecting fee calculation.
 
 ## Watched changes
 

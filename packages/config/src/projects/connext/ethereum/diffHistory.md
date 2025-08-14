@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x50b8c24f62aaf11054cc1906afeec6cf8de52050
+
+# Diff at Mon, 28 Jul 2025 06:06:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 21285557
+- current block number: 23015739
+
+## Description
+
+New owner proposed.
+
+archive disco (this is connect - legacy which is long archived).
+
+## Watched changes
+
+```diff
+    contract TransactionManager (0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09) {
+    +++ description: None
+      values.proposed:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xed7c5FEfE0790DB355b0316F41269006ecd87653"
+      values.proposedTimestamp:
+-        0
++        1753521239
+    }
+```
+
 Generated with discovered.json: 0x97d2ac286bdd00c7718d87d12c3101c9f5b09e77
 
 # Diff at Mon, 14 Jul 2025 12:44:55 GMT:

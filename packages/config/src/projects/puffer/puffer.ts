@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const puffer: ScalingProject = upcomingL2({
   id: 'puffer',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1729172001), // 2024-10-17T15:33:21
   display: {
     name: 'Puffer UniFi',
@@ -16,7 +17,7 @@ export const puffer: ScalingProject = upcomingL2({
     links: {
       websites: ['https://puffer.fi/'],
       bridges: ['https://quest.puffer.fi/unifi'],
-      documentation: ['https://docs.puffer.fi/unifi-based-rollup/'],
+      documentation: ['https://docs-unifi.puffer.fi/'],
       repositories: ['https://github.com/PufferFinance'],
       socialMedia: [
         'https://x.com/puffer_unifi',

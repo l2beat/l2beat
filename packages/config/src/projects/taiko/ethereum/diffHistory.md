@@ -1,4 +1,258 @@
-Generated with discovered.json: 0x9f3927e20e67129cb687f673b20d0a8a4a30d740
+Generated with discovered.json: 0x4767f4cfc200b7d4d01e1f6e42842ea9c15ddc8f
+
+# Diff at Thu, 14 Aug 2025 11:58:53 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@20325e19767a916f8b99b4ee5c90e82a0b7a7e16 block: 1753796542
+- current timestamp: 1755172721
+
+## Description
+
+Preconf Upgrade!
+
+[Fork Router](https://disco.l2beat.com/diff/eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319/eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F): no code diff
+
+Old fork: same address
+
+[New fork](https://disco.l2beat.com/diff/eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC/eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82): Minimal config changes: lower liveness bond,lower max batches per proposal, higher max anchor height.
+
+[TaikoWrapper](https://disco.l2beat.com/diff/eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b/eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61): proposing must be done via PreconfRouter now.
+
+## Watched changes
+
+```diff
+    contract TaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      sourceHashes.1:
+-        "0xd3d952e9a5655549b172292d82b0e6e7b2223cab5ef6819f2790ed53304f56a7"
++        "0x036f854f425618da3e66dad1cd29e352eda6ce3f728eb078bc043f82fe653157"
+      values.$implementation.0:
+-        "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319"
++        "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F"
+      values.$implementation.2:
+-        "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
++        "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
+      values.$pastUpgrades.27:
++        ["2025-08-11T13:45:11.000Z","0xbfd772cb4571eb6275f23d4fd8c7eb1502462b55821ee59dae0d15ab3325fc22",["eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F","eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264","eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"]]
+      values.$upgradeCount:
+-        27
++        28
+      values.impl:
+-        "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319"
++        "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F"
+      values.newFork:
+-        "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
++        "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
+      values.pacayaConfig.maxBatchesToVerify:
+-        16
++        8
+      values.pacayaConfig.livenessBondBase:
+-        "125000000000000000000"
++        "25000000000000000000"
+      values.pacayaConfig.maxAnchorHeightOffset:
+-        64
++        96
+      implementationNames.eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319:
+-        "PacayaForkRouter"
+      implementationNames.eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC:
+-        "MainnetInbox"
+      implementationNames.eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F:
++        "PacayaForkRouter"
+      implementationNames.eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82:
++        "MainnetInbox"
+    }
+```
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.17:
++        {"name":"0x707265636f6e665f77686974656c697374000000000000000000000000000000","address":"eth:0xFD019460881e6EeC632258222393d5821029b2ac"}
+      values.namedAddresses.18:
++        {"name":"0x707265636f6e665f726f75746572000000000000000000000000000000000000","address":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a"}
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.16:
++        "0xca349ba0dfeced0bd837a56c97417c11e51d490eec4ff08321dd130776a413bd"
+      values.mrEnclaves.17:
++        "0xe2375b778ee5700a73c7fcf449abb4a62e00127d324b6694898073ba5aff4f5c"
+      values.mrEnclaves.18:
++        "0x67742ab222790e20ba3656b3b294645a3384a5df5a770b86f8c06529523d990e"
+      values.mrEnclaves.19:
++        "0xddda8ba9c9153e3d2f680f2f53adbc774a9753cc55d40dde4cb02aef38c42109"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "5 of 7 (71%)"
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","role":"admin"}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":"admin"}
+    }
+```
+
+```diff
+    contract TaikoWrapper (0x9F9D2fC7abe74C79f86F0D1212107692430eef72) {
+    +++ description: Entry point for proposing blocks. It enforces the inclusion of forced transactions after their deadline.
+      sourceHashes.1:
+-        "0x9cee3ca82b3cd60de871679b86db583cbf35a0a911ded84676f9fdcc1a77c8ca"
++        "0x6f1f57d97885434b7f6b769ef9377a6fa75456740c69110c6bb37fb53a7fc68f"
+      values.$implementation:
+-        "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b"
++        "eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61"
+      values.$pastUpgrades.1:
++        ["2025-08-11T13:45:11.000Z","0xbfd772cb4571eb6275f23d4fd8c7eb1502462b55821ee59dae0d15ab3325fc22",["eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.impl:
+-        "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b"
++        "eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61"
+      values.preconfRouter:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a"
+      implementationNames.eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b:
+-        "TaikoWrapper"
+      implementationNames.eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61:
++        "TaikoWrapper"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PreconfRouter (0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a)
+    +++ description: Entry point for batch proposals under the pre-confirmation architecture. It allows batches to be proposed only by whitelisted addresses.
+```
+
+```diff
++   Status: CREATED
+    contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac)
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered.
+```
+
+## Source code changes
+
+```diff
+.../.flat/PreconfRouter/ERC1967Proxy.p.sol         |  594 +++++++
+ .../ethereum/.flat/PreconfRouter/PreconfRouter.sol | 1438 +++++++++++++++
+ .../.flat/PreconfWhitelist/ERC1967Proxy.p.sol      |  594 +++++++
+ .../.flat/PreconfWhitelist/PreconfWhitelist.sol    | 1842 ++++++++++++++++++++
+ .../TaikoL1/MainnetInbox.3.sol                     |    6 +-
+ .../TaikoWrapper/TaikoWrapper.sol                  |   18 +-
+ 6 files changed, 4485 insertions(+), 7 deletions(-)
+```
+
+Generated with discovered.json: 0x28d2529708b2356dbbabf80805e933dd64d654fd
+
+# Diff at Tue, 29 Jul 2025 13:42:27 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@985826fe73e93650e4402d9ab61540358802d73e block: 1752565811
+- current timestamp: 1753796542
+
+## Description
+
+Updated RISC0 Groth16 verifier version for Taiko batch proofs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752565811 (main branch discovery), not current.
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.0.address:
+-        "eth:0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.namedAddresses.1.address:
+-        "eth:0xFF5Adab685362DC4C33536a65aF5873738D1216B"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE) {
+    +++ description: Entry contract to verify batches using RISC Zero.
+      sourceHashes.1:
+-        "0xbf2f7f196a5a1b3990b49d6d86c282eedd22259e4e1c970138b25b38cced4ac6"
++        "0xd24723da846efa982924d892e9d3e52d38b6d85eab9d8e2f0a298ff07d18d994"
+      values.$implementation:
+-        "eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
++        "eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614"
+      values.$pastUpgrades.2:
++        ["2025-07-24T03:56:11.000Z","0x95d0cfffe42dc984ce8b24104a28d1083100ab638bb4fe396d1a145c17460db9",["eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.impl:
+-        "eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
++        "eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614"
+      values.riscoGroth16Verifier:
+-        "eth:0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
++        "eth:0x34Eda8BfFb539AeC33078819847B36D221c6641c"
+      implementationNames.eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be:
+-        "TaikoRisc0Verifier"
+      implementationNames.eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614:
++        "Risc0Verifier"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.1.0).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0x34Eda8BfFb539AeC33078819847B36D221c6641c)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+Generated with discovered.json: 0xa14d0b5804b0b13aa300d9e4913b17ccbac8a1c6
+
+# Diff at Tue, 22 Jul 2025 15:40:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d5d65d1883c757ae790bbd0a6f785c98310d2516 block: 22923197
+- current block number: 22923197
+
+## Description
+
+Config: add version to verifier description.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22923197 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a) {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.1.0).
+      description:
+-        "Verifier contract for RISC Zero Groth16 proofs."
++        "Verifier contract for RISC Zero Groth16 proofs (version 2.1.0)."
+    }
+```
+
+Generated with discovered.json: 0x122a95c45ad7254441535d5785cdf2d32647a3eb
 
 # Diff at Wed, 16 Jul 2025 15:00:31 GMT:
 
@@ -3036,7 +3290,7 @@ Generated with discovered.json: 0x375f6b8891b6a923cdfe2360c4becc0eb11bc870
 
 ## Description
 
-Some core upgrade permissions transfered to DAOController.
+Some core upgrade permissions transferred to DAOController.
 
 ## Watched changes
 

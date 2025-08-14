@@ -1,5 +1,6 @@
 import {
   ChainId,
+  ChainSpecificAddress,
   CoingeckoId,
   EthereumAddress,
   UnixTime,
@@ -10,7 +11,15 @@ export type GeneratedToken = z.infer<typeof GeneratedToken>
 export const GeneratedToken = z.object({
   name: z.string(),
   coingeckoId: z.string().transform(CoingeckoId),
-  address: z.string().transform(EthereumAddress).optional(),
+  address: z
+    .string()
+    .transform((address) => {
+      if (ChainSpecificAddress.check(address)) {
+        return ChainSpecificAddress.address(address)
+      }
+      return EthereumAddress(address)
+    })
+    .optional(),
   symbol: z.string(),
   decimals: z.number(),
   deploymentTimestamp: z.number().transform(UnixTime),
@@ -18,7 +27,14 @@ export const GeneratedToken = z.object({
   coingeckoListingTimestamp: z.number().transform(UnixTime),
   untilTimestamp: z.number().transform(UnixTime).optional(),
   /** @deprecated */
-  category: z.enum(['ether', 'stablecoin', 'other']),
+  category: z.enum([
+    'ether',
+    'stablecoin',
+    'btc',
+    'rwaRestricted',
+    'rwaPublic',
+    'other',
+  ]),
   iconUrl: z.string().optional(),
   chainId: z.number().transform(ChainId),
   source: z.enum(['canonical', 'external', 'native']),
@@ -43,7 +59,9 @@ export const SourceEntry = z.object({
   symbol: z.string(),
   address: z.string().transform(EthereumAddress).optional(),
   coingeckoId: z.string().transform(CoingeckoId).optional(),
-  category: z.enum(['ether', 'stablecoin', 'other']).optional(),
+  category: z
+    .enum(['ether', 'stablecoin', 'btc', 'rwaRestricted', 'rwaPublic', 'other'])
+    .optional(),
   source: z.enum(['canonical', 'external', 'native']).optional(),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
   bridgedUsing: z

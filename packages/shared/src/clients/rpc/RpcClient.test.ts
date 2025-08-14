@@ -82,7 +82,7 @@ describe(RpcClient.name, () => {
   })
 
   describe(RpcClient.prototype.getTransaction.name, () => {
-    it('fetches tx from rpc and parsers response', async () => {
+    it('fetches tx from rpc and parses response', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: mockRawTx('0x1'),
@@ -106,7 +106,7 @@ describe(RpcClient.name, () => {
   })
 
   describe(RpcClient.prototype.getTransactionReceipt.name, () => {
-    it('fetches tx receipt from rpc and parsers response', async () => {
+    it('fetches tx receipt from rpc and parses response', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: mockReceipt,
@@ -152,8 +152,8 @@ describe(RpcClient.name, () => {
   })
 
   describe(RpcClient.prototype.getLogs.name, () => {
-    it('fetches logs from rpc and parsers response', async () => {
-      const mockAdresses = [EthereumAddress.random(), EthereumAddress.random()]
+    it('fetches logs from rpc and parses response', async () => {
+      const mockAddresses = [EthereumAddress.random(), EthereumAddress.random()]
       const mockTopics = ['0xabcd', '0xdcba']
       const mockFromBlock = 100
       const mockToBlock = 200
@@ -162,7 +162,7 @@ describe(RpcClient.name, () => {
         fetch: async () => ({
           result: [
             {
-              address: mockAdresses[0],
+              address: mockAddresses[0],
               topics: mockTopics,
               blockNumber: `0x${mockFromBlock.toString(16)}`,
               transactionHash:
@@ -177,13 +177,13 @@ describe(RpcClient.name, () => {
       const result = await rpc.getLogs(
         mockFromBlock,
         mockToBlock,
-        mockAdresses,
+        mockAddresses,
         mockTopics,
       )
 
       expect(result).toEqual([
         {
-          address: mockAdresses[0],
+          address: mockAddresses[0],
           topics: mockTopics,
           blockNumber: mockFromBlock,
           transactionHash:
@@ -197,7 +197,7 @@ describe(RpcClient.name, () => {
           method: 'eth_getLogs',
           params: [
             {
-              address: mockAdresses,
+              address: mockAddresses,
               topics: [mockTopics],
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
@@ -207,6 +207,124 @@ describe(RpcClient.name, () => {
           jsonrpc: '2.0',
         }),
       )
+    })
+
+    it('splits in half when limit exceeded', async () => {
+      const mockAddresses = [EthereumAddress.random(), EthereumAddress.random()]
+      const mockTopics = ['0xabcd', '0xdcba']
+      const mockFromBlock = 100
+      const mockToBlock = 200
+      const mockMiddleBlock = 150
+
+      const http = mockObject<HttpClient>({
+        fetch: mockFn()
+          .resolvesToOnce({
+            error: {
+              code: -32602,
+              message:
+                'Log response size exceeded. You can make eth_getLogs requests with up to a 10,000 block range and no limit on the response size, or you can request any block range with a cap of 10K logs in the response. Based on your parameters and the response size limit, this block range should work: [0x148aa7a, 0x148aa86]',
+            },
+          })
+          .resolvesToOnce({
+            result: [
+              {
+                address: mockAddresses[0],
+                topics: mockTopics,
+                blockNumber: `0x${mockFromBlock.toString(16)}`,
+                transactionHash:
+                  '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
+                data: '0xdata',
+              },
+            ],
+          })
+          .resolvesToOnce({
+            result: [
+              {
+                address: mockAddresses[1],
+                topics: mockTopics,
+                blockNumber: `0x${mockFromBlock.toString(16)}`,
+                transactionHash:
+                  '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
+                data: '0xdata',
+              },
+            ],
+          }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getLogs(
+        mockFromBlock,
+        mockToBlock,
+        mockAddresses,
+        mockTopics,
+      )
+
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getLogs',
+          params: [
+            {
+              address: mockAddresses,
+              topics: [mockTopics],
+              fromBlock: `0x${mockFromBlock.toString(16)}`,
+              toBlock: `0x${mockToBlock.toString(16)}`,
+            },
+          ],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+
+      expect(http.fetch.calls[1].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getLogs',
+          params: [
+            {
+              address: mockAddresses,
+              topics: [mockTopics],
+              fromBlock: `0x${mockFromBlock.toString(16)}`,
+              toBlock: `0x${mockMiddleBlock.toString(16)}`,
+            },
+          ],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+
+      expect(http.fetch.calls[2].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getLogs',
+          params: [
+            {
+              address: mockAddresses,
+              topics: [mockTopics],
+              fromBlock: `0x${(mockMiddleBlock + 1).toString(16)}`,
+              toBlock: `0x${mockToBlock.toString(16)}`,
+            },
+          ],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+
+      expect(result).toEqualUnsorted([
+        {
+          address: mockAddresses[0],
+          topics: mockTopics,
+          blockNumber: mockFromBlock,
+          transactionHash:
+            '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
+          data: '0xdata',
+        },
+        {
+          address: mockAddresses[1],
+          topics: mockTopics,
+          blockNumber: mockFromBlock,
+          transactionHash:
+            '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
+          data: '0xdata',
+        },
+      ])
     })
   })
 

@@ -534,6 +534,58 @@
                   "type": { "const": "polygoncdkScheduledTransactions" }
                 },
                 "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "ERC20Data" },
+                  "overrides": {
+                    "type": "object",
+                    "properties": {
+                      "coingeckoId": { "type": "string" },
+                      "category": {
+                        "enum": [
+                          "ether",
+                          "stablecoin",
+                          "btc",
+                          "rwaRestricted",
+                          "rwaPublic",
+                          "other"
+                        ]
+                      },
+                      "source": { "enum": ["canonical", "external", "native"] },
+                      "supply": {
+                        "enum": ["totalSupply", "circulatingSupply", "zero"]
+                      },
+                      "bridgedUsing": {
+                        "type": "object",
+                        "properties": {
+                          "bridges": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": { "type": "string" },
+                                "slug": { "type": "string" }
+                              },
+                              "required": ["name"]
+                            }
+                          },
+                          "warning": { "type": "string" }
+                        },
+                        "required": ["bridges"]
+                      },
+                      "deploymentTimestamp": { "type": "number" },
+                      "excludeFromTotal": { "const": true }
+                    }
+                  }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": { "type": { "const": "tradable" } },
+                "required": ["type"]
               }
             ]
           },

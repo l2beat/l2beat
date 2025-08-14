@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,7 +13,7 @@ export const lisk: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1714728793),
   associatedTokens: ['LSK'],
   additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Lisk',
     slug: 'lisk',
@@ -21,10 +21,7 @@ export const lisk: ScalingProject = opStackL2({
       'Lisk is an OP stack rollup on Ethereum that migrated from the L1 blockchain of the same name.',
     links: {
       websites: ['https://lisk.com/'],
-      bridges: [
-        'https://bridge.lisk.com/bridge/lisk',
-        'https://portal.lisk.com/',
-      ],
+      bridges: ['https://bridge.lisk.com/', 'https://portal.lisk.com/'],
       documentation: ['https://docs.lisk.com/'],
       explorers: ['https://blockscout.lisk.com/'],
       repositories: ['https://github.com/LiskHQ/lisk-node'],
@@ -69,7 +66,9 @@ export const lisk: ScalingProject = opStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xE3622468Ea7dD804702B56ca2a4f88C0936995e6'),
+      address: ChainSpecificAddress(
+        'eth:0xE3622468Ea7dD804702B56ca2a4f88C0936995e6',
+      ),
       name: 'External USDC Vault',
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
@@ -77,7 +76,9 @@ export const lisk: ScalingProject = opStackL2({
       tokens: ['USDC'],
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677'),
+      address: ChainSpecificAddress(
+        'eth:0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677',
+      ),
       name: 'External EURC Vault',
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
@@ -85,7 +86,9 @@ export const lisk: ScalingProject = opStackL2({
       tokens: ['EURC'],
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf'),
+      address: ChainSpecificAddress(
+        'eth:0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:

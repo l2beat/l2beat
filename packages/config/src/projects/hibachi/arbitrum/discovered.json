@@ -1,7 +1,7 @@
 {
   "name": "hibachi",
   "chain": "arbitrum",
-  "blockNumber": 351073243,
+  "timestamp": 1754411762,
   "configHash": "0x4e1db2bd50baa98b17b8b4b24a341d32486bacc73d51a2caa4287450de89c6f6",
   "entries": [
     {
@@ -20,10 +20,12 @@
       "name": "RiscZeroVerifierRouter",
       "address": "arb1:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
       "type": "Contract",
+      "template": "risc0/RiscZeroVerifierRouter",
       "sourceHashes": [
         "0x09d9c9ba25591eb4e658e547eb5f5cc798449477bf745e6fa9f516a339f88364"
       ],
       "proxyType": "immutable",
+      "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (arb1:0xDC986a09728F76110FF666eE7b20d99086501d15).",
       "sinceTimestamp": 1719439379,
       "sinceBlock": 226048409,
       "values": {
@@ -93,10 +95,10 @@
             "members": ["arb1:0x420eee5B429664F08f001786541acbE0F59feF5c"]
           }
         },
-        "accountsRoot": "0xa5c8f8e5bf9d9abb1c2b02814edd8cf70c97dd489839f77a2ae971c83e491c0e",
+        "accountsRoot": "0x4e06223a4e18d4d483a1176e785043b5ab3be36d499fdd20e42a63c31af113b3",
         "activeHibachiChainIds": [1],
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
-        "contractsRoot": "0xf5647e0cc9e373b151703a1d72fc280cd2d4bc7d772c300373e03f30edab91d2",
+        "contractsRoot": "0xa8dda9dc4117ffd1077625d45e9b29426330ec6fe2af8a9827ed16ee39f80d47",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositReclaimTimeout": 86400,
         "exchangeVerificationAddress": "arb1:0x4aF802A931CADb2aF3a9Ec4C810A0485a2eF3610",
@@ -136,14 +138,14 @@
         ],
         "oracleQuorum": 1,
         "oracles": ["arb1:0x735d77411693F244d35192d95D8804B6b371a553"],
-        "ordersRoot": "0xb12e52e2e06f9a19ce69b809c66d49e35f07fce1ec5325382c36c5713a5ac012",
+        "ordersRoot": "0xee224266e0a8751d1f49aece045d30fb7adf7a461cd82e7279adea6850c03909",
         "PROVER_ROLE": "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2",
         "risc0Verifier": "arb1:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
-        "stateUpdateProgramImageId": "0x624424e8cfb1478de0bbd5b2dbdb1a19a2dd235c3f7997b9d585d7f2e87879c4",
-        "stateUpdateProgramVKey": "0x00202b4f9c0e94c5915fcb43369795fd30f35491b4017ceecf876199d6b26163",
-        "stateVersion": 18945,
+        "stateUpdateProgramImageId": "0xe36df63187239cb11fc29356c18dd9996c19ef4668379f72956f648fbb7c72f2",
+        "stateUpdateProgramVKey": "0x00761079b58d6d09fea47ee455238cae478986d76fc2c778e293f3c846a148b3",
+        "stateVersion": 37310,
         "succinctVerifier": "arb1:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
-        "systemTimestamp": 1750859102715,
+        "systemTimestamp": 1754411499813,
         "wormhole": "arb1:0xa5f208e072434bC67592E4C49C1B991BA79BCA46",
         "wormholeConsistency": 0,
         "X_CHAIN_ADMIN_ROLE": "0x7f4e9d34561a2b0f5c5e4baeaa912930e44a73596dda16054a63f3c24a574197"
@@ -273,10 +275,12 @@
       "name": "SP1Verifier",
       "address": "arb1:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
       "sinceTimestamp": 1748550121,
       "sinceBlock": 341867739,
       "values": {
@@ -503,23 +507,119 @@
       "name": "TimelockController",
       "address": "arb1:0xDC986a09728F76110FF666eE7b20d99086501d15",
       "type": "Contract",
+      "template": "global/TimelockController",
       "sourceHashes": [
         "0x5b8836fe706f4142d9d19316f7ae849ba43b55173015f72bc3f9216f7a86cf0d"
       ],
       "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 3d.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "description": "add/remove verifiers and the selectors they are mapped to.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xDC986a09728F76110FF666eE7b20d99086501d15",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        }
+      ],
       "sinceTimestamp": 1719439371,
       "sinceBlock": 226048377,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["arb1:0xDC986a09728F76110FF666eE7b20d99086501d15"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+          }
+        },
+        "Canceller": ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["arb1:0xDC986a09728F76110FF666eE7b20d99086501d15"],
+        "Executor": ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
+        "getMinDelayFormatted": "3d",
+        "Proposer": ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
       "implementationNames": {
         "arb1:0xDC986a09728F76110FF666eE7b20d99086501d15": "TimelockController"
       }
+    },
+    {
+      "address": "arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "description": "add/remove verifiers and the selectors they are mapped to.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "arb1:0xDC986a09728F76110FF666eE7b20d99086501d15",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xDC986a09728F76110FF666eE7b20d99086501d15",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xDC986a09728F76110FF666eE7b20d99086501d15",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xDC986a09728F76110FF666eE7b20d99086501d15",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "arb1:0xDC986a09728F76110FF666eE7b20d99086501d15",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xDC986a09728F76110FF666eE7b20d99086501d15",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0xDC986a09728F76110FF666eE7b20d99086501d15",
+          "delay": 259200,
+          "role": ".Executor"
+        }
+      ]
     }
   ],
   "abis": {
@@ -994,11 +1094,15 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "hibachi/Hibachi": "0x3a32f94bd067707675239403b6066a4ef372d07752f0fe4e42283a9c7baddbc3",
     "hibachi/HibachiEscape": "0x8c07546a9915614b8f2fbb99d21c17bebe3af8b84e7aaca3abf5b0a40347642e",
+    "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "wormhole": "0x5a6ef2aca99ae337de77c543a9fe799d22ea71925a551ec8314b9ed552a8a71c"
   },
-  "permissionsConfigHash": "0x8f124b634e76fdfbd96893f2622b8b9e9530fef85da020dbc510146dd80a4101"
+  "usedBlockNumbers": { "arbitrum": 365280108 },
+  "permissionsConfigHash": "0xe9a525d80996f3bce4d5cd1a7430d896ede903fbb5ba3f0948447f9c64c0108b"
 }

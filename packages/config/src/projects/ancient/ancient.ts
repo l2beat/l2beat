@@ -19,7 +19,7 @@ export const ancient: ScalingProject = opStackL2({
   discovery,
   associatedTokens: ['A8'],
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
@@ -29,7 +29,7 @@ export const ancient: ScalingProject = opStackL2({
       'Ancient8 Chain is a gaming-focused community-driven Ethereum Layer 2 built using OP Stack.',
     links: {
       websites: ['https://ancient8.gg/'],
-      bridges: ['https://bridge.ancient8.gg/', 'https://space3.gg/A8Layer2'],
+      bridges: ['https://app.ancient8.gg/bridge', 'https://space3.gg/A8Layer2'],
       documentation: ['https://docs.ancient8.gg/'],
       explorers: ['https://scan.ancient8.gg/'],
       socialMedia: [

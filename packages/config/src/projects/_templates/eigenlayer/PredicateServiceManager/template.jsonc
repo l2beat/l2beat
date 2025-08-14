@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PredicateServiceManager",
+  "ignoreRelatives": [
+    "avsDirectory",
+    "stakeRegistry",
+    "delegationManager",
+    "strategies",
+    "getRestakeableStrategies"
+  ],
+  "ignoreMethods": ["deployedPolicyIDs", "strategies"],
+  "ignoreInWatchMode": ["getDeployedPolicies"],
+  "fields": {
+    "intmaxThreshold": {
+      "handler": {
+        "type": "call",
+        "method": "policyIdToThreshold",
+        "args": ["x-intmax-42efa3d6c0609ea6"]
+      }
+    },
+    "permissionedOperators": {
+      "handler": {
+        "type": "event",
+        "select": "operators",
+        "add": { "event": "PermissionedOperatorsAdded" },
+        "remove": { "event": "PermissionedOperatorsRemoved" }
+      }
+    },
+    "operators": {
+      "handler": {
+        "type": "event",
+        "select": "operator",
+        "add": { "event": "OperatorRegistered" },
+        "remove": { "event": "OperatorRemoved" },
+        "ignoreRelative": true
+      },
+      "permissions": [{ "type": "act" }]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer."
+        }
+      ]
+    }
+  }
+}

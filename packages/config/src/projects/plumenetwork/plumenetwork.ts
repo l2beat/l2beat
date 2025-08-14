@@ -1,11 +1,15 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('plumenetwork', 'ethereum')
+const discovery = new ProjectDiscovery('plumenetwork')
 
 export const plumenetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1719224239), // 2024-06-24T10:17:19Z
@@ -37,7 +41,9 @@ export const plumenetwork: ScalingProject = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xE2C902BC61296531e556962ffC81A082b82f5F28'),
+      address: ChainSpecificAddress(
+        'eth:0xE2C902BC61296531e556962ffC81A082b82f5F28',
+      ),
       name: 'ERC20Gateway',
       description:
         'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.',

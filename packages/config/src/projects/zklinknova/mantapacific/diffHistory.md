@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x33a3d00b60a7b15ce13c4bff2e90572224c0165d
+
+# Diff at Thu, 31 Jul 2025 10:58:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract MantaL1ERC20Bridge (0x44a65dc12865A1e5249b45b4868f32b0E37168FF) {
+    +++ description: None
+      name:
+-        "L1ERC20Bridge"
++        "MantaL1ERC20Bridge"
+    }
+```
+
+```diff
+    contract MantazkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      name:
+-        "zkLink"
++        "MantazkLink"
+    }
+```
+
+Generated with discovered.json: 0x780d662c8ff502abd844edbd9df13ffed02211c1
+
+# Diff at Mon, 28 Jul 2025 07:30:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 4745686
+- current block number: 5946384
+
+## Description
+
+mantaOwner verified as Safe.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 4745686 (main branch discovery), not current.
+
+```diff
+    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) {
+    +++ description: None
+      unverified:
+-        true
+      values.domainSeparator:
++        "0x18545ad9a8a62c02c41b6d1d5de3b7341bc049e1fd253978d8d7e6ec7faecfa1"
+      values.getChainId:
++        169
+      values.VERSION:
++        "1.3.0"
+      implementationNames.manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3:
+-        ""
++        "GnosisSafeProxy"
+      implementationNames.manta:0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
+-        ""
++        "GnosisSafeL2"
+      template:
++        "GnosisSafe"
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
 Generated with discovered.json: 0x06dafcae6b87407f4cffee23f7575f2edfa51b90
 
 # Diff at Mon, 14 Jul 2025 12:47:20 GMT:

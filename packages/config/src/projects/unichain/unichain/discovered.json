@@ -1,7 +1,7 @@
 {
   "name": "unichain",
   "chain": "unichain",
-  "blockNumber": 17837889,
+  "timestamp": 1753451183,
   "configHash": "0x0a0b1f66fb22eb36ea46a12431a609e640a61da77ef962382aa8e39b4048df9d",
   "entries": [
     {
@@ -60,7 +60,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621018",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621543",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -113,7 +113,7 @@
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 1329892833,
+        "l1BaseFee": 911289677,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -300,7 +300,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 1329892833,
+        "basefee": 911289677,
         "baseFeeScalar": 2000,
         "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
         "blobBaseFee": 1,
@@ -312,15 +312,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xc8a804e966cef48cf84f1fb803644f0309b89d21b0198a29ece6bf8f5a10a9b6",
+        "hash": "0xd97e025968649beabcab99f65ea8770db5634d748f69c79286eba5c5b571ae3b",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 22593738,
+        "number": 22996541,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 2,
-        "timestamp": 1748586191,
+        "sequenceNumber": 0,
+        "timestamp": 1753451123,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -1443,10 +1443,10 @@
     "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
-    "opstack/Layer2/L2CrossDomainMessenger": "0xb7ee74a7975557a4cb112aeefa14add6fc9aef2aa7cbced5db8d919cdc196dcc",
+    "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L2ProxyAdmin": "0xd86564ec3c7e3195dd10abf37058aeeb801c6cb63d35c2b81df15ec0b67ea5ff",
-    "opstack/Layer2/L2StandardBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1454,5 +1454,6 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "permissionsConfigHash": "0x386e9c4e991ecc4eea78341f31b91e09f2e3cc50b37560ff0f17df8c649f5032"
+  "usedBlockNumbers": { "unichain": 22702824 },
+  "permissionsConfigHash": "0x3f03680df8ea185bc9435f75e33cbea99cd9184a68e764acbcb97ee8ffb6de97"
 }

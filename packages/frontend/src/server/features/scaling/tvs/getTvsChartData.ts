@@ -1,14 +1,14 @@
-import type { ProjectValueRecord } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getRangeWithMax } from '~/utils/range/range'
+import { getTimestampedValuesRange } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
-import { getSummedTvsValues } from './utils/getSummedTvsValues'
+import {
+  getSummedTvsValues,
+  type SummedTvsValues,
+} from './utils/getSummedTvsValues'
 import { getTvsProjects } from './utils/getTvsProjects'
-import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 import {
   createTvsProjectsFilter,
   TvsProjectFilter,
@@ -32,14 +32,17 @@ export const TvsChartDataParams = v.object({
 
 export type TvsChartDataParams = v.infer<typeof TvsChartDataParams>
 
-type TvsChartDataPoint = readonly [
+export type TvsChartDataPoint = [
   timestamp: number,
-  native: number,
-  canonical: number,
-  external: number,
-  ethPrice: number,
+  native: number | null,
+  canonical: number | null,
+  external: number | null,
+  ethPrice: number | null,
 ]
-export type TvsChartData = TvsChartDataPoint[]
+export type TvsChartData = {
+  chart: TvsChartDataPoint[]
+  syncedUntil: number
+}
 
 /**
  * @returns {
@@ -72,7 +75,7 @@ export async function getTvsChart({
     withoutArchivedAndUpcoming: forSummary,
   })
   if (tvsProjects.length === 0) {
-    return []
+    return { chart: [], syncedUntil: UnixTime.now() }
   }
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
@@ -86,40 +89,56 @@ export async function getTvsChart({
           : 'SUMMARY',
     ),
   ])
+
   return getChartData(values, ethPrices)
 }
 
 function getChartData(
-  values: Omit<ProjectValueRecord, 'type' | 'project'>[],
+  values: SummedTvsValues[],
   ethPrices: Record<number, number>,
-) {
-  return values.map((value) => {
+): TvsChartData {
+  let syncedUntil = 0
+  const chart: TvsChartDataPoint[] = []
+
+  for (const value of values) {
+    if (
+      value.native === null &&
+      value.canonical === null &&
+      value.external === null
+    ) {
+      chart.push([value.timestamp, null, null, null, null] as const)
+      continue
+    }
+
     const ethPrice = ethPrices[value.timestamp]
     assert(ethPrice, 'No ETH price for ' + value.timestamp)
 
-    return [
+    chart.push([
       value.timestamp,
       value.native,
       value.canonical,
       value.external,
       ethPrice,
-    ] as const
-  })
+    ] as const)
+
+    syncedUntil = value.timestamp
+  }
+
+  return {
+    chart,
+    syncedUntil,
+  }
 }
 
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
   const resolution = rangeToResolution(range)
-  const target = getTvsTargetTimestamp()
-  const adjustedTarget = range.type === 'custom' ? range.to : target
-  const [from, to] = getRangeWithMax(range, resolution, {
-    now: adjustedTarget,
-  })
-  const timestamps = generateTimestamps(
-    [from ?? MIN_TIMESTAMPS.tvs, to],
-    resolution,
-  )
+  const [from, to] = getTimestampedValuesRange(range, resolution)
+  const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
-  return timestamps.map((timestamp) => {
-    return [timestamp, 3000, 2000, 1000, 1200]
-  })
+  return {
+    chart: timestamps.map((timestamp) => {
+      return [timestamp, 3000, 2000, 1000, 1200]
+    }),
+    syncedUntil: timestamps[timestamps.length - 1] ?? 0,
+  }
 }

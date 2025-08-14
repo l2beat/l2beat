@@ -1,75 +1,41 @@
-import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { v } from '@l2beat/validate'
 import { RLP } from 'ethers/lib/utils'
 import type { Transaction } from '../../../../utils/IEtherscanClient'
 import type { IProvider } from '../../../provider/IProvider'
-
-/**
- * https://specs.optimism.io/experimental/alt-da.html#input-commitment-submission
- * These versioning prefixes are super weird.
- */
-const EIGEN_DA_CONSTANTS = {
-  COMMITMENT_FIRST_BYTE: '01',
-  COMMITMENT_THIRD_BYTE: '00',
-  EIGEN_AVS: ChainSpecificAddress(
-    'eth:0x870679e138bcdf293b7ff14dd44b70fc97e12fc0',
-  ),
-} as const
+import {
+  EIGEN_DA_CONSTANTS,
+  type EigenCommitment,
+  EigenV1BlobInfo,
+  EigenV2BlobInfo,
+} from './eigen-types'
 
 export async function checkForEigenDA(
   provider: IProvider,
   sequencerTxs: Transaction[],
 ) {
-  const possibleCommitments = sequencerTxs.map(({ input }) =>
-    reduceUntil(input),
-  )
+  const possibleCommitments = sequencerTxs
+    .map(({ input }) => extractCommitment(input))
+    .filter((c) => c !== undefined)
 
-  // Byte-check step + RLP decode attempt
-  const eigenBlobInfos =
-    possibleCommitments.length > 0 &&
-    possibleCommitments.flatMap((input) => {
-      if (!input) {
-        return []
-      }
-
-      const eigenBlobInfo = tryParsingEigenDaBlobInfo(input)
-
-      if (!eigenBlobInfo) {
-        return []
-      }
-
-      return { eigenBlobInfo }
-    })
-
-  // If we have no Eigen-like transactions, we can return false immediately
-  if (!eigenBlobInfos || eigenBlobInfos.length === 0) {
+  if (
+    possibleCommitments.length === 0 ||
+    possibleCommitments.length !== sequencerTxs.length
+  ) {
     return false
   }
 
-  // Decode step - decode the commitment from the transaction input
-  const outgoingBatchHeaderHashes = eigenBlobInfos.map(({ eigenBlobInfo }) =>
-    extractBlobBatchHeaderHash(eigenBlobInfo),
-  )
+  const v1Commitments = possibleCommitments.filter((c) => c.version === 'v1')
+  const v2Commitments = possibleCommitments.filter((c) => c.version === 'v2')
 
-  // Get step - get the confirmed batch header hashes from ethereum
-  const confirmedBatchHeaderHashes =
-    await getConfirmedBatchHeaderHashes(provider)
+  const v1Verification = await verifyV1Commitments(provider, v1Commitments)
+  const v2Verification = verifyV2Commitments(v2Commitments)
 
-  // Filter step - filter out the confirmed batch header hashes that are not in the list of outgoing batch header hashes
-  const successfulVerificationsCount = outgoingBatchHeaderHashes.filter(
-    (hash) => confirmedBatchHeaderHashes.includes(hash),
-  ).length
-
-  // require 100% success rate
-  return successfulVerificationsCount === sequencerTxs.length
+  return v1Verification || v2Verification
 }
 
 async function getConfirmedBatchHeaderHashes(
   provider: IProvider,
 ): Promise<string[]> {
-  const blockToSwitch = await getEthereumBlock(provider)
-
-  const ethereumProvider = provider.switchChain('ethereum', blockToSwitch)
+  const ethereumProvider = await provider.switchChain('ethereum')
 
   const logs = await ethereumProvider.getEvents(
     EIGEN_DA_CONSTANTS.EIGEN_AVS,
@@ -80,32 +46,7 @@ async function getConfirmedBatchHeaderHashes(
   return logs.map((log) => log.event.batchHeaderHash.toLowerCase())
 }
 
-async function getEthereumBlock(provider: IProvider) {
-  if (provider.chain === 'ethereum') {
-    return provider.blockNumber
-  }
-
-  const currentBlock = await provider.getBlock(provider.blockNumber)
-  assert(currentBlock, 'Current block is undefined')
-
-  const timestamp = UnixTime(currentBlock.timestamp)
-
-  // We need to switch to ethereum to get the block number.
-  // Eigen AVS lives there.
-  // Yet we need to pass 'some' block number to the provider to perform the switch.
-  // Can't do. You get the idea. That's why we pass 0. It doesn't matter.
-  const ethereumProvider = provider.switchChain('ethereum', 0)
-
-  const correspondingEthereumBlock = await ethereumProvider.raw(
-    `optimism_eigen_cross_chain_translate_${provider.blockNumber}_${provider.chain}`,
-    ({ etherscanClient }) =>
-      etherscanClient.getBlockNumberAtOrBefore(timestamp),
-  )
-
-  return correspondingEthereumBlock
-}
-
-function extractBlobBatchHeaderHash(decoded: EigenDaBlobInfo): string {
+function extractBlobBatchHeaderHash(decoded: EigenV1BlobInfo): string {
   /**
    * @see https://github.com/Layr-Labs/eigenda/blob/master/api/proto/disperser/disperser.proto
    * @commit 733bcbe
@@ -128,7 +69,7 @@ function extractBlobBatchHeaderHash(decoded: EigenDaBlobInfo): string {
 
 // Some projects (yghm Mantle) prefixes commitment with some data
 // So we reduce until we find the commitment start point.
-function reduceUntil(input: string) {
+function extractCommitment(input: string): EigenCommitment | undefined {
   for (let i = 0; i < input.length; i++) {
     const slice = input.slice(i, input.length)
 
@@ -140,69 +81,83 @@ function reduceUntil(input: string) {
       thirdByte === EIGEN_DA_CONSTANTS.COMMITMENT_THIRD_BYTE
     ) {
       const commitment = slice.slice(6)
-      // sometimes we still have 00 remaining
-      return commitment.startsWith('00') ? commitment.slice(2) : commitment
+      const commitmentVersionByte = commitment.slice(0, 2)
+
+      if (commitmentVersionByte === EIGEN_DA_CONSTANTS.VERSION_BYTE_V1) {
+        return {
+          body: commitment.slice(2),
+          version: 'v1',
+        }
+      }
+
+      if (commitmentVersionByte === EIGEN_DA_CONSTANTS.VERSION_BYTE_V2) {
+        return {
+          body: commitment.slice(2),
+          version: 'v2',
+        }
+      }
+
+      // legacy
+      return {
+        body: commitment,
+        version: 'v1',
+      }
     }
   }
 }
 
-function tryParsingEigenDaBlobInfo(
-  possibleCommitment: string,
-): EigenDaBlobInfo | null {
+async function verifyV1Commitments(
+  provider: IProvider,
+  v1Commitments: EigenCommitment[],
+) {
+  const eigenBlobInfos = v1Commitments.flatMap((input) => {
+    const eigenBlobInfo = parseEigenV1(input.body)
+
+    if (!eigenBlobInfo) {
+      return []
+    }
+
+    return { eigenBlobInfo }
+  })
+
+  if (eigenBlobInfos.length === 0) {
+    return false
+  }
+
+  const outgoingBatchHeaderHashes = eigenBlobInfos.map(({ eigenBlobInfo }) =>
+    extractBlobBatchHeaderHash(eigenBlobInfo),
+  )
+
+  const confirmedBatchHeaderHashes =
+    await getConfirmedBatchHeaderHashes(provider)
+
+  return (
+    outgoingBatchHeaderHashes.filter((hash) =>
+      confirmedBatchHeaderHashes.includes(hash),
+    ).length === v1Commitments.length
+  )
+}
+
+function verifyV2Commitments(v2Commitments: EigenCommitment[]) {
+  return v2Commitments.every((input) => parseEigenV2(input.body) !== null)
+}
+
+function parseEigenV1(possibleCommitment: string): EigenV1BlobInfo | null {
   try {
     const rlp = RLP.decode('0x' + possibleCommitment)
 
-    return EigenDaBlobInfo.parse(rlp)
+    return EigenV1BlobInfo.parse(rlp)
   } catch {
     return null
   }
 }
 
-/**
- * @see https://github.com/Layr-Labs/eigenda/blob/master/api/proto/disperser/disperser.proto
- * @commit 733bcbe
- */
-type EigenDaBlobInfo = v.infer<typeof EigenDaBlobInfo>
-const EigenDaBlobInfo = v.tuple([
-  // Blob header
-  v.tuple([
-    // KZG commitment
-    v.tuple([
-      v.string(), // x
-      v.string(), // y
-    ]),
-    v.string(), // data length
-    // repeated BlobQuorumParams
-    v.array(
-      v.tuple([
-        v.string(), // quorum number
-        v.string(), // adversary threshold percentage
-        v.string(), // confirmation threshold percentage
-        v.string(), // chunk length
-      ]),
-    ),
-  ]),
-  // Blob verification proof
-  v.tuple([
-    v.string(), // batch id
-    v.string(), // blob index
-    // Batch metadata
-    v.tuple([
-      // Batch header
-      v.tuple([
-        v.string(), // batch root
-        v.string(), // quorum numbers
-        v.string(), // quorum signed
-        v.string(), // reference block number
-      ]),
-      v.string(), // signatory record hash
-      v.string(), // fee
-      v.string(), // confirmation height
-      v
-        .string()
-        .check((v) => v.length === 64 + 2), // batch header hash <---
-    ]),
-    v.string(), // inclusion proof
-    v.string(), // quorum index
-  ]),
-])
+function parseEigenV2(possibleCommitment: string): EigenV2BlobInfo | null {
+  try {
+    const rlp = RLP.decode('0x' + possibleCommitment)
+
+    return EigenV2BlobInfo.parse(rlp)
+  } catch {
+    return null
+  }
+}

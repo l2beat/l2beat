@@ -142,7 +142,7 @@ struct AssertionNode {
     bool isFirstChild;
     // Status of the Assertion
     AssertionStatus status;
-    // A hash of the context available at the time of this assertions creation. It should contain information that is not specific
+    // A hash of the context available at the time of this assertion's creation. It should contain information that is not specific
     // to this assertion, but instead to the environment at the time of creation. This is necessary to store on the assertion
     // as this environment can change and we need to know what it was like at the time this assertion was created. An example
     // of this is the wasm module root which determines the state transition function on the L2. If the wasm module root
@@ -155,7 +155,7 @@ struct AssertionNode {
 
 The function will check that such previous assertion hash already exists in the `_assertions` mapping by verifying that the `status` is different than `NoAssertion`. The possible statuses are `NoAssertion`, `Pending` or `Confirmed`.
 
-To effectively move their stake, the function then checks that the `msg.sender`'s last assertion their staked on is the previous assertion hash claimed during this call, or that the last assertion their staked on has at least one child by checking the `firstChildBlock` field, meaning that someone else has decided to back the claim with another assertion.
+To effectively move their stake, the function then checks that the `msg.sender`'s last assertion they're staked on is the previous assertion hash claimed during this call, or that the last assertion they're staked on has at least one child by checking the `firstChildBlock` field, meaning that someone else has decided to back the claim with another assertion.
 
 Before creating the new assertion, it is made sure that the config data of the claimed previous state matches the one that is already stored in the `_assertions` mapping. This is necessary because the assertion hashes do not contain the config data and the previous check does not cover this case. It is then checked that the final machine status is either `FINISHED` or `ERRORED` as a sanity check [^2]. The possible machine statuses are `RUNNING`, `FINISHED` or `ERRORED`. An `ERRORED` state is considered valid because it proves that something went wrong during execution and governance has to intervene to resolve the issue.
 
@@ -174,7 +174,7 @@ struct GlobalState {
 
 where `u64Vals[0]` represents a inbox position, `u64Vals[1]` represents a position in message, `bytes32Vals[0]` represents a block hash, and `bytes32Vals[1]` represents a send root. It is checked that the position of the `afterState` is greater than the position of the `beforeState`, where the position is first checked against the inbox position, and, if equal, against the message position, to verify that the claim processes at least some new messages. It is then verified that the `beforeStateData`'s `nextInboxPosition` is greater or equal than the `afterState`'s inbox position. The `nextInboxPosition` can be seen as a "target" for the next assertion to process messages up to. If the current assertion didn't manage to process all messages up to the target, it is considered a "overflow" assertion. It is also checked that the current assertion doesn't claim to process more messages than currently posted by the sequencer.
 
-The `nextInboxPosition` is prepared for the next assertion to be either the current sequencer message count (as per `bridge.sequencerMessageCount()`), or, if the current assertion already processed all messages, to the current sequencer message count plus one. In this way, all assertions are forced to process at least one message, and in this case, the next assertion will process exactly one message before updating the `nextInboxPosition` again. The `afterInboxPosition` is then checked to be non-zero. The `newAssertionHash` is calculated given the `previousAssertionHash` already checked, the `afterState` and the `sequencerBatchAcc` calculated given the `afterState`'s inbox position in its `globalState`. It is check that this calculated hash is equal to the `expectedAssertionHash`, and that it doesn't already exist in the `_assertions` mapping.
+The `nextInboxPosition` is prepared for the next assertion to be either the current sequencer message count (as per `bridge.sequencerMessageCount()`), or, if the current assertion already processed all messages, to the current sequencer message count plus one. In this way, all assertions are forced to process at least one message, and in this case, the next assertion will process exactly one message before updating the `nextInboxPosition` again. The `afterInboxPosition` is then checked to be non-zero. The `newAssertionHash` is calculated given the `previousAssertionHash` already checked, the `afterState` and the `sequencerBatchAcc` calculated given the `afterState`'s inbox position in its `globalState`. It is checked that this calculated hash is equal to the `expectedAssertionHash`, and that it doesn't already exist in the `_assertions` mapping.
 
 The new assertion is then created using the `AssertionNodeLib.createAssertion` function, which properly constructs the `AssertionNode` struct. The `isFirstChild` field is set to `true` only if the `prevAssertion`'s `firstChildBlock` is zero, meaning that there is none. The assertion status will be `Pending`, the `createdAtBlock` at the current block number, and the `configHash` will contain the current onchain wasm module root, the current onchain base stake, the current onchain challenge period length (`confirmPeriodBlocks`), the current onchain challenge manager contract reference and the `nextInboxPosition` as previously calculated. It is then saved in the previous assertion that a child has been created, and that the `_assertions` mapping is updated with the new assertion hash. 
 
@@ -246,7 +246,7 @@ struct ChallengeEdge {
     ///         For a SmallStep edge the origin id is the 'mutual' id of the length one BigStep edge being claimed by the zero layer ancestors of this edge
     ///         For a BigStep edge the origin id is the 'mutual' id of the length one Block edge being claimed by the zero layer ancestors of this edge
     ///         For a Block edge the origin id is the assertion hash of the assertion that is the root of the challenge - all edges in this challenge agree
-    ///         that that assertion hash is valid.
+    ///         that assertion hash is valid.
     ///         The purpose of the origin id is to ensure that only edges that agree on a common start position
     ///         are being compared against one another.
     bytes32 originId;
@@ -316,7 +316,7 @@ function returnOldDepositFor(
 ) external override onlyValidator(stakerAddress) whenNotPaused
 ```
 
-In the first case, it is checked than the `msg.sender` is the validator itself, while in the second case that the sender is the designated withdrawal address for the staker. Then it is verified that the staker is actively staked, and that it is "inactive". A staker is defined as inactive when their latest assertion is either confirmed or has at least one child, meaning that there is some other stake backing it.
+In the first case, it is checked that the `msg.sender` is the validator itself, while in the second case that the sender is the designated withdrawal address for the staker. Then it is verified that the staker is actively staked, and that it is "inactive". A staker is defined as inactive when their latest assertion is either confirmed or has at least one child, meaning that there is some other stake backing it.
 
 At this point the `_withdrawableFunds` mapping value is increased by the staker's deposit for its withdrawal address, as well as the `totalWithdrawableFunds` value. The staker is then deleted from the `_stakerList` and `_stakerMap` mappings. The funds are not actually transferred at this point.
 
@@ -414,7 +414,7 @@ function fastConfirmNewAssertion(
 ) external whenNotPaused
 ```
 
-Both functions, in practice, act very similar to the admin-gated `forceCreateAssertion` and `forceConfirmAsserton` functions in the `RollupAdminLogic` contract, see [Admin operations](./admin_ops.md) for more details.
+Both functions, in practice, act very similar to the admin-gated `forceCreateAssertion` and `forceConfirmAssertion` functions in the `RollupAdminLogic` contract, see [Admin operations](./admin_ops.md) for more details.
 
 ## The `EdgeChallengeManager` contract
 
@@ -612,7 +612,7 @@ struct ExecutionContext {
 
 where the `maxInboxMessagesRead` is filled with the `nextInboxPosition` of the config of the previous assertion, the `bridge` reference is taken from `assertionChain`, and the `initialWasmModuleRoot` is again taken from the config of the previous assertion. It is checked that the edge exists, that its type is `SmallStep`, and that its length is one.
 
-Then the appropriate data to pass to the `oneStepProofEntry` contract for the onchain one step execution is prepared. In particular, the machine step correspondingto the start height of this edge is computed. Machine steps reset to zero with new blocks, so there's no need to fetch the corresponding `Block` level edge. The machine step of a `SmallStep` edge corresponds to its `startHeight` plus the `startHeight` of its `BigStep` edge. Previous level edges are fetched through the `originId` field stored in each edge and the `firstRivals` mapping. It is necessary to go through the `firstRivals` mapping as the `originId` stores a mutual id of the edge and not an edge id, which is needed to fetch the `startHeight`.
+Then the appropriate data to pass to the `oneStepProofEntry` contract for the onchain one step execution is prepared. In particular, the machine step corresponding to the start height of this edge is computed. Machine steps reset to zero with new blocks, so there's no need to fetch the corresponding `Block` level edge. The machine step of a `SmallStep` edge corresponds to its `startHeight` plus the `startHeight` of its `BigStep` edge. Previous level edges are fetched through the `originId` field stored in each edge and the `firstRivals` mapping. It is necessary to go through the `firstRivals` mapping as the `originId` stores a mutual id of the edge and not an edge id, which is needed to fetch the `startHeight`.
 
 It is made sure that the `beforeHash` inside `oneStepData` is included in the `startHistoryRoot` at position `machineStep`. The `OneStepData` struct is defined as:
 
@@ -645,7 +645,7 @@ If the edge is unrivaled, then the time between the current block number and its
 
 If the edge has been bisected, i.e. it has children, then the minimum children unrivaled time is counted. The rationale is that if a child is correct but the parent is not, it would be incorrect to count the unrivaled time of the correct child towards the parent. If the honest party acts as fast as possible, then an incorrect claim's unrivaled time would always be close to zero. If an edge is confirmed by a one step proof, then it's unrivaled time is set to infinity (in practice `type(uint64).max`).
 
-Finally, if the total time unrivaled is greater than the challenge period (espressed with `confirmationThresholdBlock`), then the edge is confirmed. Note that this value is a different variable compared to the `confirmPeriodBlocks` in the `RollupProxy` contract, which determines when an assertion can be confirmed if not challenged.
+Finally, if the total time unrivaled is greater than the challenge period (expressed with `confirmationThresholdBlock`), then the edge is confirmed. Note that this value is a different variable compared to the `confirmPeriodBlocks` in the `RollupProxy` contract, which determines when an assertion can be confirmed if not challenged.
 
 The way that timers across different levels affect each other is explained in the following section.
 
@@ -679,7 +679,7 @@ This contract is used as the entry point to execute one-step proofs onchain.
 
 ### `proveOneStep` function
 
-This function is used called from the `confirmEdgeByOneStepProof` function in the `EdgeChallengeManager` contract.
+This function is called from the `confirmEdgeByOneStepProof` function in the `EdgeChallengeManager` contract.
 
 ```solidity
 function proveOneStep(

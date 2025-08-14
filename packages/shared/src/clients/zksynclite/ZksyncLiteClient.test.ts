@@ -110,7 +110,7 @@ describe(ZksyncLiteClient.name, () => {
   })
 
   describe(ZksyncLiteClient.prototype.validateResponse.name, () => {
-    it('retruns false when error is present', () => {
+    it('returns false when error is present', () => {
       const zksyncClient = mockClient({})
 
       const result = zksyncClient.validateResponse({

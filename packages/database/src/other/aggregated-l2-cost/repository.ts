@@ -60,17 +60,23 @@ export class AggregatedL2CostRepository extends BaseRepository {
 
   async getByProjectAndTimeRange(
     projectId: ProjectId,
-    timeRange: [UnixTime, UnixTime],
+    timeRange: [UnixTime | null, UnixTime],
   ): Promise<AggregatedL2CostRecord[]> {
     const [from, to] = timeRange
-    const rows = await this.db
+    let query = this.db
       .selectFrom('AggregatedL2Cost')
       .selectAll()
       .where('projectId', '=', projectId.toString())
-      .where('timestamp', '>=', UnixTime.toDate(from))
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    query = query
       .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
-      .execute()
+
+    const rows = await query.execute()
     return rows.map(toRecord)
   }
 

@@ -19,7 +19,7 @@ if [ ! "$(docker ps -q -f name=${name})" ]; then
         fi
     else
         echo "${name} container doesn't exist. Creating it and setting up databases."
-        docker run -d --name=${name} -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:14
+        docker run -d --name=${name} -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:15
         
         echo "Waiting for db container..."
         sleep 5
@@ -29,4 +29,3 @@ if [ ! "$(docker ps -q -f name=${name})" ]; then
 else
     echo "${name} container already running."
 fi
-

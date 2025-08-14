@@ -1,5 +1,6 @@
 import type {
   Project,
+  ProjectAssociatedToken,
   ProjectCustomColors,
   ProjectScalingCategory,
   ProjectScalingStage,
@@ -20,6 +21,7 @@ import { getContractsSection } from '~/utils/project/contracts-and-permissions/g
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getCostsSection } from '~/utils/project/costs/getCostsSection'
+import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedSection'
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
@@ -30,7 +32,7 @@ import { getOperatorSection } from '~/utils/project/technology/getOperatorSectio
 import { getOtherConsiderationsSection } from '~/utils/project/technology/getOtherConsiderationsSection'
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
-import { getStackedTvsSection } from '~/utils/project/tvs/getStackedTvsSection'
+import { getScalingTvsSection } from '~/utils/project/tvs/getScalingTvsSection'
 import {
   getUnderReviewStatus,
   type UnderReviewStatus,
@@ -90,9 +92,11 @@ export interface ProjectScalingEntry {
           ether: number
           stablecoin: number
           associated: number
+          btc: number
+          other: number
         }
         warnings: WarningWithSentiment[]
-        associatedTokens: string[]
+        associatedTokens: ProjectAssociatedToken[]
       }
     }
     activity?: {
@@ -129,36 +133,41 @@ export async function getScalingProjectEntry(
     | 'archivedAt'
     | 'milestones'
     | 'trackedTxsConfig'
+    | 'livenessInfo'
     | 'livenessConfig'
+    | 'costsInfo'
+    | 'hasActivity'
     | 'colors'
     | 'ecosystemColors'
     | 'discoveryInfo'
+    | 'daTrackingConfig'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectScalingEntry> {
+  const daSolution = await getScalingDaSolution(project)
   const [
     projectsChangeReport,
     activityProjectStats,
     tvsStats,
     tokens,
     liveness,
-    daSolution,
     contractUtils,
-    stackedTvsSection,
+    scalingTvsSection,
     activitySection,
     costsSection,
+    dataPostedSection,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
     getTokensForProject(project),
     getLiveness(project.id),
-    getScalingDaSolution(project),
     getContractUtils(),
-    getStackedTvsSection(helpers, project),
+    getScalingTvsSection(helpers, project),
     getActivitySection(helpers, project),
+    getCostsSection(helpers, project),
     project.scalingInfo.layer === 'layer2'
-      ? getCostsSection(helpers, project)
+      ? await getDataPostedSection(helpers, project, daSolution)
       : undefined,
   ])
 
@@ -298,9 +307,9 @@ export async function getScalingProjectEntry(
         }
       : undefined
 
-  if (!project.isUpcoming && stackedTvsSection && tvsProjectStats) {
+  if (!project.isUpcoming && scalingTvsSection && tvsProjectStats) {
     sections.push({
-      type: 'StackedTvsSection',
+      type: 'ScalingTvsSection',
       props: {
         id: 'tvs',
         title: 'Value Secured',
@@ -310,7 +319,7 @@ export async function getScalingProjectEntry(
         tokens,
         tvsProjectStats,
         tvsInfo: project.tvsInfo,
-        ...stackedTvsSection,
+        ...scalingTvsSection,
       },
     })
   }
@@ -339,6 +348,19 @@ export async function getScalingProjectEntry(
         projectId: project.id,
         milestones: sortedMilestones,
         ...costsSection,
+      },
+    })
+  }
+
+  if (dataPostedSection) {
+    sections.push({
+      type: 'DataPostedSection',
+      props: {
+        id: 'data-posted',
+        title: 'Data posted',
+        projectId: project.id,
+        milestones: sortedMilestones,
+        ...dataPostedSection,
       },
     })
   }

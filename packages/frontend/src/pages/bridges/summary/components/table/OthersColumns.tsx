@@ -5,8 +5,8 @@ import {
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/BridgesCommonProjectColumns'
-import { TotalCell } from '~/pages/scaling/summary/components/table/TotalCell'
 import type { BridgesSummaryEntry } from '~/server/features/bridges/getBridgesSummaryEntries'
+import { TotalCellWithTokenBreakdown } from './TotalCellWithTokenBreakdown'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 
@@ -36,9 +36,9 @@ export const bridgesSummaryOthersColumns = [
     cell: (ctx) => {
       const value = ctx.row.original.tvs
       return (
-        <TotalCell
+        <TotalCellWithTokenBreakdown
           href={`/bridges/projects/${ctx.row.original.slug}#tvs`}
-          associatedTokenSymbols={value.associatedTokens}
+          associatedTokens={value.associatedTokens}
           tvsWarnings={value.warnings}
           breakdown={value.breakdown}
           change={value.change}

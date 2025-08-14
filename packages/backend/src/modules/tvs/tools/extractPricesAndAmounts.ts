@@ -165,7 +165,7 @@ function setAmount(
     ...existingAmount,
     sinceTimestamp: Math.min(
       amountToAdd.sinceTimestamp,
-      amountToAdd.sinceTimestamp,
+      existingAmount.sinceTimestamp,
     ),
   }
 

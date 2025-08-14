@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "optimism",
-  "blockNumber": 133041012,
+  "timestamp": 1753687799,
   "configHash": "0x1974fa6aad0595fb3641efd98517c3e4a4d05c7d260251573c465af394447365",
   "entries": [
     {
@@ -83,7 +83,7 @@
       ]
     },
     {
-      "name": "zkLink",
+      "name": "OptimismzkLink",
       "address": "oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
@@ -132,12 +132,12 @@
         "getGateway": "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
         "getGovernor": "oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 50873,
+        "getTotalBatchesExecuted": 69385,
         "getTotalPriorityTxs": 14249,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
         "paused": true,
-        "totalBatchesExecuted": 50873,
+        "totalBatchesExecuted": 69385,
         "totalPriorityTxs": 14249,
         "totalSyncedPriorityTxs": 14249,
         "totalValidatorForwardFee": "8488908701833923342",
@@ -155,7 +155,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L1ERC20Bridge",
+      "name": "OptimismL1ERC20Bridge",
       "address": "oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA",
       "type": "Contract",
       "sourceHashes": [
@@ -507,5 +507,6 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0xb8d05cf7178d9d52ec51987ae809f1297e20fe9412d460ff7b11d2ecd6bd2b2c"
+  "usedBlockNumbers": { "optimism": 139044511 },
+  "permissionsConfigHash": "0xa52d924a2d1677aa8315bc14d2d2615ca2ff6a066d62370a3b3d9fd78a2dbb5e"
 }

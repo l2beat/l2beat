@@ -101,10 +101,6 @@ export class TemplateService {
     sources: ContractSources,
     address: ChainSpecificAddress,
   ): string[] {
-    if (!sources.isVerified) {
-      return []
-    }
-
     const sourceHash = getHashForMatchingFromSources(sources.sources)
 
     if (sourceHash === undefined) {

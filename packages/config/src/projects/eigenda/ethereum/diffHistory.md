@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x5b6346a8ea0720df42f49abe826ed6501334406b
+
+# Diff at Mon, 28 Jul 2025 06:07:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 22823842
+- current block number: 23015750
+
+## Description
+
+ms member added.
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xc201C95e809292c6ad242F4bbD8B342AD06571FB"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xfb4596b9bb5c3943a91023214543137831d1612a
 
 # Diff at Mon, 14 Jul 2025 12:45:00 GMT:
@@ -5570,7 +5595,7 @@ Generated with discovered.json: 0xf57bca95bc2f9c5a0ff66a0694131823eb2943bd
 
 ## Description
 
-Added shapes to strategy template to automatically apply the template. Templetized ignoring eigen() token method to prevent custom strategy from spamming.
+Added shapes to strategy template to automatically apply the template. Templated ignoring eigen() token method to prevent custom strategy from spamming.
 
 ## Config/verification related changes
 
@@ -5753,7 +5778,7 @@ Generated with discovered.json: 0x8e81bf69871f9c75df3876cc95e439c7edc13416
 
 ## Description
 
-A third quorum is added. (added config) This new quorum uses a yet unverified strategy to count its stake. (Probbaly related to restaked ALT)
+A third quorum is added. (added config) This new quorum uses a yet unverified strategy to count its stake. (Probably related to restaked ALT)
 
 source: [StakeRegistry.strategyParams(2,0)](https://etherscan.io/address/0x006124Ae7976137266feeBFb3F4D2BE4C073139D#readProxyContract#F20)
 

@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -32,7 +32,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 
 export const silicon: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1725027256), // 2024-08-30T14:14:16Z
-  additionalBadges: [BADGES.DA.DAC],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
@@ -93,7 +93,7 @@ export const silicon: ScalingProject = polygonCDKStack({
   nonTemplateEscrows: [
     // shared
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(bridge.address),
+      address: bridge.address,
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',
@@ -104,11 +104,10 @@ export const silicon: ScalingProject = polygonCDKStack({
   ],
   milestones: [
     {
-      title: 'Mainnet Launch',
+      title: 'Silicon Mainnet Launch',
       url: 'https://x.com/0xSilicon/status/1828704079687917908',
       date: '2024-08-28',
-      description:
-        'Silicon Mainnet launches officially, integrated with Polygon AggLayer.',
+      description: 'Silicon is live on mainnet, integrated with Agglayer.',
       type: 'general',
     },
   ],

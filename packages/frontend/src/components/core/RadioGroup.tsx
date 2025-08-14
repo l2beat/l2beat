@@ -49,7 +49,7 @@ const RadioGroupItem = ({
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        'h-6 rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+        'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
         'group-data-[variant=highlighted]/radio-group:data-[state=checked]:bg-linear-to-r group-data-[variant=highlighted]/radio-group:data-[state=checked]:from-purple-100 group-data-[variant=highlighted]/radio-group:data-[state=checked]:to-pink-100 group-data-[variant=highlighted]/radio-group:data-[state=checked]:text-white',
         'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',

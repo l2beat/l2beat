@@ -392,7 +392,7 @@ export const badges = [
     },
   },
   {
-    id: 'AggLayer',
+    id: 'Agglayer',
     type: BadgeType.Infra,
     name: 'Part of the Agglayer',
     description:
@@ -400,7 +400,7 @@ export const badges = [
     action: {
       type: 'scalingFilter',
       id: 'infrastructure',
-      value: 'AggLayer',
+      value: 'Agglayer',
     },
   },
   {
@@ -494,6 +494,13 @@ export const badges = [
       id: 'stack',
       value: 'Cartesi Rollups',
     },
+  },
+  {
+    id: 'OPKailua',
+    type: BadgeType.Stack,
+    name: 'Built on the OP Kailua stack',
+    description: 'The project is built on the OP Kailua stack',
+    action: undefined,
   },
   {
     id: 'SNStack',

@@ -164,17 +164,17 @@ describe(NameService.name, () => {
   describe(NameService.prototype.fillImplementationName.name, () => {
     it('should fill contract names and save new signatures to DB', async () => {
       const mockImplementationName = 'name1'
-      const mocCodeHash = 'codeHash1'
+      const mockCodeHash = 'codeHash1'
       const mockAddress = 'address1'
 
       const mockDB: DB = {
         METHODS: new Map(),
         CONTRACTS: new Map(),
-        IMPLEMENTATIONS: new Map([[mocCodeHash, mockImplementationName]]),
+        IMPLEMENTATIONS: new Map([[mockCodeHash, mockImplementationName]]),
       }
 
       const mockCodeClient = mockObject<RpcCodeClient>({
-        getCodeHash: mockFn().resolvesToOnce(mocCodeHash),
+        getCodeHash: mockFn().resolvesToOnce(mockCodeHash),
       })
 
       const mockTransaction = mockObject<CountedTransaction>({

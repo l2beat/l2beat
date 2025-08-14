@@ -41,7 +41,7 @@ export function ChartStatsItem({
   return (
     <div
       className={cn(
-        'flex items-center justify-between gap-2 md:flex-col md:items-start',
+        'flex flex-col items-start justify-between gap-2 max-md:flex-row max-md:items-center',
         className,
       )}
     >
@@ -58,14 +58,14 @@ export function ChartStatsItem({
           </Tooltip>
         )}
       </div>
-      {children ? (
+      {isLoading ? (
+        <Skeleton className="h-[22px] xs:h-7 w-20 xs:w-24" />
+      ) : children ? (
         <SyncStatusWrapper isSynced={isSynced}>
           <span className="font-medium text-primary text-sm xs:text-lg md:font-bold">
             {children}
           </span>
         </SyncStatusWrapper>
-      ) : isLoading ? (
-        <Skeleton className="h-[22px] xs:h-7 w-20 xs:w-24" />
       ) : (
         <NoDataBadge />
       )}

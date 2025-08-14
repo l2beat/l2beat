@@ -1,3 +1,4 @@
+import type { CoingeckoClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
@@ -10,6 +11,8 @@ const TIMEOUT = 'TIMEOUT'
 
 describe(LowLevelProvider.name, () => {
   const ETHERSCAN_PROVIDER = mockObject<IEtherscanClient>()
+  const COINGECKO_CLIENT = mockObject<CoingeckoClient>()
+
   let time: InstalledClock
   let originalConsole: {
     log: typeof console.log
@@ -53,6 +56,7 @@ describe(LowLevelProvider.name, () => {
       ethersProvider,
       ethersProvider,
       ETHERSCAN_PROVIDER,
+      COINGECKO_CLIENT,
     )
 
     const result = await provider.call(EthereumAddress.random(), bytes, 10)
@@ -72,6 +76,7 @@ describe(LowLevelProvider.name, () => {
       ethersProvider,
       ethersProvider,
       ETHERSCAN_PROVIDER,
+      COINGECKO_CLIENT,
     )
 
     const result = await provider.call(EthereumAddress.random(), bytes, 10)
@@ -91,6 +96,7 @@ describe(LowLevelProvider.name, () => {
       ethersProvider,
       ethersProvider,
       ETHERSCAN_PROVIDER,
+      COINGECKO_CLIENT,
     )
 
     await expect(
@@ -100,7 +106,7 @@ describe(LowLevelProvider.name, () => {
 
   const outOfGasMessage = [
     'out of gas', // normal
-    'out of gas: out of gas', // whatever QucikNode is doing...
+    'out of gas: out of gas', // whatever QuickNode is doing...
     'execution reverted',
     'gas uint64 overflow',
     'invalid opcode: INVALID',
@@ -115,6 +121,7 @@ describe(LowLevelProvider.name, () => {
         ethersProvider,
         ethersProvider,
         ETHERSCAN_PROVIDER,
+        COINGECKO_CLIENT,
       )
 
       await expect(
@@ -146,6 +153,7 @@ describe(LowLevelProvider.name, () => {
       ethersProvider,
       ethersProvider,
       ETHERSCAN_PROVIDER,
+      COINGECKO_CLIENT,
     )
 
     await expect(
@@ -215,6 +223,7 @@ describe(LowLevelProvider.name, () => {
         ethersProvider,
         ethersProvider,
         ETHERSCAN_PROVIDER,
+        COINGECKO_CLIENT,
       )
       const result = await provider.call(EthereumAddress.random(), bytes, 10)
       expect(result).toEqual(bytes)

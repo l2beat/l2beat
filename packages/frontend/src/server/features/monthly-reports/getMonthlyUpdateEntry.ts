@@ -1,6 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { CollectionEntry } from '~/content/getCollection'
-import type { UpcomingProjectUpdate } from '~/content/monthly-updates'
 import { ps } from '~/server/projects'
 import { formatPublicationDate } from '~/utils/dates'
 import { getActivityLatestUops } from '../scaling/activity/getActivityLatestTps'
@@ -13,9 +12,12 @@ import {
   type EcosystemMonthlyUpdateEntry,
   getEcosystemMonthlyUpdateEntries,
 } from './getEcosystemEntries'
-import { getUpcomingProjectUpdateEntries } from './getUpcomingEntries'
+import {
+  getUpcomingProjectUpdateEntries,
+  type UpcomingProjectUpdateEntry,
+} from './getUpcomingEntries'
 
-export interface MonthlyUpdateEntry {
+interface MonthlyUpdateEntry {
   id: string
   title: string
   publishedOn: string
@@ -23,7 +25,7 @@ export interface MonthlyUpdateEntry {
   to: UnixTime
   ecosystemsUpdatesEntries: EcosystemMonthlyUpdateEntry[]
   daUpdatesEntries: DaMonthlyUpdateEntry[]
-  upcomingProjectsUpdatesEntries: UpcomingProjectUpdate[]
+  upcomingProjectsUpdatesEntries: UpcomingProjectUpdateEntry[]
 }
 
 export async function getMonthlyUpdateEntry(

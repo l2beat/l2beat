@@ -1,11 +1,12 @@
 {
   "name": "zksync2",
   "chain": "zksync2",
-  "blockNumber": 54952335,
-  "configHash": "0x12a77f47dbf830f6b99b486830507974577493e81c4b7e8295e46e317827fc1f",
-  "sharedModules": ["shared-zk-stack"],
+  "timestamp": 1754308257,
+  "configHash": "0x2bd4865a7e7afb083ebe96b9132e7fd0041fc45f9ea91c99f94b65d487cc80e1",
+  "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [],
   "abis": {},
   "usedTemplates": {},
-  "permissionsConfigHash": "0xb8aa724763da66abbc580a31e82ad158e19755f194b52d89e9876064062ec4a0"
+  "usedBlockNumbers": { "zksync2": 63705051 },
+  "permissionsConfigHash": "0x9c1fe20cab2350396904a94b0812d699200d8adce8d1746a4e18a45feb6f9d93"
 }

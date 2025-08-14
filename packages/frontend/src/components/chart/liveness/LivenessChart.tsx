@@ -2,6 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import {
   assertUnreachable,
   type TrackedTxsConfigSubtype,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart, ReferenceArea } from 'recharts'
@@ -13,17 +14,19 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
+import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatTimestamp } from '~/utils/dates'
+import type { LivenessChartResolution } from '~/server/features/scaling/liveness/utils/chartRange'
+import { formatRange } from '~/utils/dates'
 
 interface LivenessChartDataPoint {
   timestamp: number
-  range: (number | null)[]
+  range: readonly [number | null, number | null] | null
   avg: number | null
 }
 
@@ -33,6 +36,10 @@ interface Props {
   className?: string
   subtype: TrackedTxsConfigSubtype
   milestones: Milestone[]
+  tickCount?: number
+  lastValidTimestamp: number | undefined
+  anyAnomalyLive: boolean
+  resolution: LivenessChartResolution
 }
 
 export function LivenessChart({
@@ -41,6 +48,10 @@ export function LivenessChart({
   className,
   subtype,
   milestones,
+  tickCount,
+  lastValidTimestamp,
+  anyAnomalyLive,
+  resolution,
 }: Props) {
   const chartMeta = {
     range: {
@@ -56,9 +67,6 @@ export function LivenessChart({
       indicatorType: { shape: 'line', strokeDasharray: '3 3' },
     },
   } satisfies ChartMeta
-
-  const lastValidTimestamp = data?.findLast((d) => d.avg !== null)?.timestamp
-  const lastTimestamp = data?.at(-1)?.timestamp
 
   return (
     <ChartContainer
@@ -94,33 +102,52 @@ export function LivenessChart({
           yAxis: {
             tickFormatter: (value: number) => formatDuration(value),
             domain: ['auto', 'auto'],
+            tickCount,
           },
+          // We want to show custom ReferenceArea for this chart
+          syncedUntil: undefined,
         })}
-        <ReferenceArea
-          x1={lastValidTimestamp}
-          x2={lastTimestamp}
-          fill="var(--negative)"
-          fillOpacity={0.2}
+        {lastValidTimestamp && (
+          <ReferenceArea
+            x1={lastValidTimestamp}
+            fill={anyAnomalyLive ? 'var(--negative)' : 'url(#noDataFill)'}
+            fillOpacity={anyAnomalyLive ? 0.2 : undefined}
+          />
+        )}
+        <ChartTooltip
+          filterNull={false}
+          content={
+            <LivenessCustomTooltip
+              subtype={subtype}
+              anyAnomalyLive={anyAnomalyLive}
+              resolution={resolution}
+            />
+          }
         />
-        <ChartTooltip content={<LivenessCustomTooltip subtype={subtype} />} />
         <defs>
           <PinkFillGradientDef id="fillRange" />
           <PinkStrokeGradientDef id="strokeRange" />
+          <NoDataPatternDef />
         </defs>
       </AreaChart>
     </ChartContainer>
   )
 }
 
-export function LivenessCustomTooltip({
+function LivenessCustomTooltip({
   active,
   payload,
   label: timestamp,
   subtype,
+  anyAnomalyLive,
+  resolution,
 }: TooltipProps<number, string> & {
   subtype: TrackedTxsConfigSubtype
+  anyAnomalyLive: boolean
+  resolution: LivenessChartResolution
 }) {
   if (!active || !payload || typeof timestamp !== 'number') return null
+
   const filteredPayload = payload.filter(
     (p) => p.name !== undefined && p.value !== undefined && p.type !== 'none',
   )
@@ -131,7 +158,7 @@ export function LivenessCustomTooltip({
   if (!range?.value || !avg?.value) {
     content = (
       <div className="mt-2 font-medium text-label-value-16">
-        {getTooltipContent(subtype)}
+        {anyAnomalyLive ? getTooltipContent(subtype) : 'No data'}
       </div>
     )
   } else {
@@ -148,10 +175,15 @@ export function LivenessCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-fit flex-col">
         <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
-            longMonthName: true,
-            mode: 'datetime',
-          })}
+          {formatRange(
+            timestamp,
+            timestamp +
+              (resolution === 'hourly'
+                ? UnixTime.HOUR
+                : resolution === 'sixHourly'
+                  ? UnixTime.SIX_HOURS
+                  : UnixTime.DAY),
+          )}
         </div>
         <HorizontalSeparator className="mt-1.5" />
         {content}

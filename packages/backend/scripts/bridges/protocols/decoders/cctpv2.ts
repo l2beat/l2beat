@@ -1,114 +1,13 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
+import type { Asset } from '../../types/Asset'
+import type { DecoderInput } from '../../types/DecoderInput'
 import type { Message } from '../../types/Message'
-import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 
 export const CCTPV2 = {
   name: 'cctpv2',
   decoder: decoder,
-}
-
-function decoder(
-  chain: Chain,
-  transaction: TransactionWithLogs,
-): Message | undefined {
-  for (const log of transaction.logs) {
-    const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
-
-    if (!bridge) {
-      continue
-    }
-
-    if (
-      EthereumAddress(log.address) === bridge.tokenMessenger &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'DepositForBurn' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'DepositForBurn',
-      })
-
-      const nonce = computeV2DeterministicNonce(
-        bridge.domain,
-        data.args.destinationDomain,
-        data.args.burnToken,
-        data.args.mintRecipient,
-        data.args.amount,
-        data.args.depositor,
-        data.args.maxFee,
-        data.args.hookData,
-      )
-
-      const destination = BRIDGES.find(
-        (b) => b.domain === data.args.destinationDomain,
-      )?.chainShortName
-
-      return {
-        direction: 'outbound',
-        protocol: CCTPV2.name,
-        origin: chain.shortName,
-        destination: destination ?? data.args.destinationDomain.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'DepositForBurn',
-        matchingId: idFor(bridge.domain, nonce),
-      }
-    }
-
-    if (
-      EthereumAddress(log.address) === bridge.messageTransmitter &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'MessageReceived' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'MessageReceived',
-      })
-
-      const decodedMessage = decodeV2MessageBody(data.args.messageBody)
-      if (!decodedMessage) {
-        console.error(
-          'Failed to decode message body for v2 MessageReceived event',
-        )
-        continue
-      }
-      const nonce = computeV2DeterministicNonce(
-        data.args.sourceDomain,
-        bridge.domain,
-        decodedMessage.burnToken,
-        decodedMessage.mintRecipient,
-        decodedMessage.amount,
-        decodedMessage.messageSender,
-        decodedMessage.maxFee,
-        decodedMessage.hookData,
-      )
-
-      const origin = BRIDGES.find(
-        (b) => b.domain === data.args.sourceDomain,
-      )?.chainShortName
-
-      return {
-        direction: 'inbound',
-        protocol: CCTPV2.name,
-        origin: origin ?? data.args.sourceDomain.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'MessageReceived',
-        matchingId: idFor(data.args.sourceDomain, nonce),
-      }
-    }
-  }
-
-  return undefined
 }
 
 const ABI = parseAbi([
@@ -117,7 +16,128 @@ const ABI = parseAbi([
   'event MintAndWithdraw(address indexed mintRecipient, uint256 amount, address indexed mintToken, uint256 feeCollected)',
 ])
 
-const BRIDGES = [
+function decoder(
+  chain: Chain,
+  input: DecoderInput,
+): Message | Asset | undefined {
+  const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
+
+  if (!network) {
+    return undefined
+  }
+
+  if (
+    EthereumAddress(input.log.address) === network.tokenMessenger &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'DepositForBurn' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'DepositForBurn',
+    })
+
+    const nonce = computeV2DeterministicNonce(
+      network.domain,
+      data.args.destinationDomain,
+      data.args.burnToken,
+      data.args.mintRecipient,
+      data.args.amount,
+      data.args.depositor,
+      data.args.maxFee,
+      data.args.hookData,
+    )
+
+    const destination = NETWORKS.find(
+      (b) => b.domain === data.args.destinationDomain,
+    )?.chainShortName
+
+    return {
+      type: 'asset',
+      direction: 'outbound',
+      application: CCTPV2.name,
+      origin: chain.shortName,
+      destination: destination ?? data.args.destinationDomain.toString(),
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'DepositForBurn',
+      matchingId: idFor(network.domain, nonce),
+      amount: data.args.amount,
+      token: network.usdc,
+      // messageProtocol?: string
+      // messageId?: string
+    }
+  }
+
+  if (
+    EthereumAddress(input.log.address) === network.messageTransmitter &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'MessageReceived' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'MessageReceived',
+    })
+
+    const decodedMessage = decodeV2MessageBody(data.args.messageBody)
+    if (!decodedMessage) {
+      console.error(
+        'Failed to decode message body for v2 MessageReceived event',
+      )
+      return undefined
+    }
+    const nonce = computeV2DeterministicNonce(
+      data.args.sourceDomain,
+      network.domain,
+      decodedMessage.burnToken,
+      decodedMessage.mintRecipient,
+      decodedMessage.amount,
+      decodedMessage.messageSender,
+      decodedMessage.maxFee,
+      decodedMessage.hookData,
+    )
+
+    const origin = NETWORKS.find(
+      (b) => b.domain === data.args.sourceDomain,
+    )?.chainShortName
+
+    const mintEvent = input.transactionLogs.find(
+      (l) =>
+        l.topics[0] ===
+        encodeEventTopics({ abi: ABI, eventName: 'MintAndWithdraw' })[0],
+    )
+    assert(mintEvent, `Mint event not found ${input.transactionHash}`)
+    const mintEventData = decodeEventLog({
+      abi: ABI,
+      data: mintEvent.data,
+      topics: mintEvent.topics,
+      eventName: 'MintAndWithdraw',
+    })
+
+    return {
+      type: 'asset',
+      direction: 'inbound',
+      application: CCTPV2.name,
+      origin: origin ?? data.args.sourceDomain.toString(),
+      destination: chain.shortName,
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'MessageReceived',
+      matchingId: idFor(data.args.sourceDomain, nonce),
+      amount: mintEventData.args.amount,
+      token: network.usdc,
+      // messageProtocol?: string
+      // messageId?: string
+    }
+  }
+
+  return undefined
+}
+
+const NETWORKS = [
   {
     domain: 0,
     chainShortName: 'eth',
@@ -127,6 +147,7 @@ const BRIDGES = [
     messageTransmitter: EthereumAddress(
       '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
     ),
+    usdc: EthereumAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'),
   },
   {
     domain: 3,
@@ -137,6 +158,7 @@ const BRIDGES = [
     messageTransmitter: EthereumAddress(
       '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
     ),
+    usdc: EthereumAddress('0xaf88d065e77c8cC2239327C5EDb3A432268e5831'),
   },
   {
     domain: 2,
@@ -147,6 +169,7 @@ const BRIDGES = [
     messageTransmitter: EthereumAddress(
       '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
     ),
+    usdc: EthereumAddress('0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85'),
   },
   {
     domain: 6,
@@ -157,6 +180,7 @@ const BRIDGES = [
     messageTransmitter: EthereumAddress(
       '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
     ),
+    usdc: EthereumAddress('0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'),
   },
   {
     domain: 10,
@@ -167,6 +191,7 @@ const BRIDGES = [
     messageTransmitter: EthereumAddress(
       '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
     ),
+    usdc: EthereumAddress('0x078D782b760474a361dDA0AF3839290b0EF57AD6'),
   },
   {
     domain: 11,
@@ -177,6 +202,7 @@ const BRIDGES = [
     messageTransmitter: EthereumAddress(
       '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
     ),
+    usdc: EthereumAddress('0x176211869cA2b568f2A7D4EE941E073a821EE1ff'),
   },
 ]
 

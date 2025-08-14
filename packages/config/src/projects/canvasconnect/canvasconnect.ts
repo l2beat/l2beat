@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -69,13 +69,18 @@ export const canvasconnect: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   stage: {
     stage: 'NotApplicable',
   },
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d'),
+        address: ChainSpecificAddress(
+          'eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d',
+        ),
         sinceTimestamp: UnixTime(1675209600),
         tokens: ['ETH', 'USDC'],
       }),

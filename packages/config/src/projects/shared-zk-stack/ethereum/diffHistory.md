@@ -1,3 +1,126 @@
+Generated with discovered.json: 0xab8951630eb80e12c7d5255e1ea7a988bb97470e
+
+# Diff at Sat, 02 Aug 2025 07:37:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3d59e2b466fd3c111ff4d5621a7f80de65b0b3d5 block: 1754054035
+- current timestamp: 1754120227
+
+## Description
+
+Emergency upgrade to [protocol version v28.1](https://app.blocksec.com/explorer/tx/eth/0x3c27a371dbd4f6b0d97a87f950065eb48db3c51ae4e962d1b6b4d4e32d2fbdb1), which only affects the verifiers and is only activated for zksync era and gateway so far.
+
+diff fflonk: https://disco.l2beat.com/diff/eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b/eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911
+diff plonk: https://disco.l2beat.com/diff/eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1/eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6
+
+## Watched changes
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.5:
++        {"_protocolVersion":120259084289,"_upgradeTimestamp":0}
+    }
+```
+
+```diff
+    contract ChainTypeManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,1.
+      description:
+-        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,0."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,1."
+      values.getSemverProtocolVersion.2:
+-        0
++        1
+      values.initialCutHash:
+-        "0xf5e92e1f82b7dcec41aad4bfbbd238b89380f311b2b65956d2073f59b4f9a58f"
++        "0x1ba089adbb5d0a9aa3f96947db5b1fd831e17ab789f1147883d891e1e7951605"
+      values.protocolVersion:
+-        120259084288
++        120259084289
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.2:
++        "0x9566d2c3ede4eb9a53f71f5f94bdf0e07db77ed92e421f399868d1db1a5622c6"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.3:
++        "0x820d3989346828f564c6322b3b47631996ea66f7a826213d95ad69ded62adcdc"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.4:
++        "0x8902737c0457ffdc1623387ed17201ccd6184b4cfef9c62dd5f00208e4b6e563"
+    }
+```
+
+Generated with discovered.json: 0x6495479a11641512f68f8ce436eca328ec0a6122
+
+# Diff at Thu, 31 Jul 2025 10:24:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fc6aee0100bcf523dbfb20b1884ed98a8717207a block: 1753346675
+- current timestamp: 1753944518
+
+## Description
+
+Era migrates to the Gateway! permissions stay the same and diagrams remain correct.
+
+config: renamed EraAdminProxy to EraChainAdminProxy to be consistent with the text and diagram.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: zk chain migrations that were started
++++ severity: HIGH
+      values.migrations.0:
++        {"chainId":324,"assetId":"0x4322964cbd328346d5f59803d2974742a54a69e59fd8b8d4ca5c64773646bf7a","settlementLayerChainId":9075}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753346675 (main branch discovery), not current.
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      name:
+-        "EraAdminProxy"
++        "EraChainAdminProxy"
+    }
+```
+
+Generated with discovered.json: 0xb3a9b1f7871727dcd32d8fa65577ba180373643b
+
+# Diff at Thu, 24 Jul 2025 08:45:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e68e856ed444c9f5c0e702b0c18473a575f2e74a block: 22779828
+- current block number: 22987909
+
+## Description
+
+ms signer change.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x8A23548a640De1137e58e2D9600e1c5913E3D674"
++        "eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1"
+    }
+```
+
 Generated with discovered.json: 0x0ae1a76b02db42231983c2297a12a99dea7f8c64
 
 # Diff at Mon, 14 Jul 2025 12:47:17 GMT:
@@ -5976,7 +6099,7 @@ Generated with discovered.json: 0x7a9585ff0df7f4aa277f5502d867069cae9ccba3
 
 ## Description
 
-update 03/11: old owner (PUH) is fully transfered, new contracts are governing.
+update 03/11: old owner (PUH) is fully transferred, new contracts are governing.
 
 Onchain execution of [[ZIP-5] Upgrade Governance Contracts](https://www.tally.xyz/gov/zksync/proposal/32477831455745537024214395992964479454779258818502397012096084176779102554510?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f).
 

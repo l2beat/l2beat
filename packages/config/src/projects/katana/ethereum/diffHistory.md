@@ -1,3 +1,607 @@
+Generated with discovered.json: 0xaa81c969a22f2d5fc8e7b7045f01ffdb18ad02ae
+
+# Diff at Thu, 14 Aug 2025 07:33:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1755009465
+- current timestamp: 1755156807
+
+## Description
+
+signer change.
+
+## Watched changes
+
+```diff
+    contract Safe (0x261a25ec6c396389B75B6b22BD4A8227070E3B50) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 4 (25%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+Generated with discovered.json: 0xe75ccf8ecc3587a3f653de33137e903bd5440ea5
+
+# Diff at Tue, 12 Aug 2025 14:40:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754909593
+- current timestamp: 1755009465
+
+## Description
+
+Conduit Multisig 1 signer added.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 12 (33%)"
+    }
+```
+
+Generated with discovered.json: 0xfb1b07e5a70f01bdcf7b811a556c09b25e6091a3
+
+# Diff at Mon, 11 Aug 2025 10:53:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32817e35c9fe0ba1a1c24a734c37d91068b1565d block: 1754486452
+- current timestamp: 1754909593
+
+## Description
+
+yield recipient changed.
+
+## Watched changes
+
+```diff
+    contract vbWBTC (0x2C24B57e2CCd1f273045Af6A5f632504C432374F) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50."
+    }
+```
+
+```diff
+    contract vbETH (0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50."
+    }
+```
+
+```diff
+    contract vbUSDS (0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50."
+    }
+```
+
+```diff
+    contract vbUSDC (0x53E82ABbb12638F09d9e624578ccB666217a765e) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50."
+    }
+```
+
+```diff
+    contract vbUSDT (0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x261a25ec6c396389B75B6b22BD4A8227070E3B50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 4 files changed, 2250 insertions(+)
+```
+
+Generated with discovered.json: 0x67d63c0bc913306634e8c5e959df23eb147cb90e
+
+# Diff at Wed, 06 Aug 2025 13:35:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1702d91eebfba5d614c3470bbe1babe10fbe4c2b block: 1754054572
+- current timestamp: 1754486452
+
+## Description
+
+config: add description
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754054572 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.CONSENSUS_TYPE:
++        {"description":"0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"}
+    }
+```
+
+Generated with discovered.json: 0x931b50b0738f7df8ea39eca00aeebcf7afbb33f6
+
+# Diff at Fri, 01 Aug 2025 13:23:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@802242fc2209399893865092b1048d583aafc2bb block: 1753356947
+- current timestamp: 1754054572
+
+## Description
+
+op  stack operator fee constant set.
+
+three members added to multisig, threshold increased.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.operatorFeeConstant:
+-        0
++        1351351351351
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x2483A0d6a3Bd89D5C17aA80B3f8f6102ac053361"
+      values.$members.1:
++        "eth:0x73D8846324B30477EA3Ac055589e40F39DE497F8"
+      values.$members.2:
++        "eth:0x34d23C4fb6542B467cA8724bAD30AC811399b184"
+      values.$threshold:
+-        1
++        3
+      values.multisigThreshold:
+-        "1 of 2 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0xa91c32ac9e9a7e5b109b7094b0b8cb6daec8e3d3
+
+# Diff at Thu, 24 Jul 2025 16:55:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a3f740c0fd51a5745c45d8f349ab01f4f33f7770 block: 22988752
+- current block number: 22988752
+
+## Description
+
+config: set dispute game impl changes to high severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22988752 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta:
++        {"gameImpls":{"severity":"HIGH"},"game1337":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xb4ffe8a242a8b05c153c4f7d3aeab0d2f3bf1d2c
+
+# Diff at Thu, 24 Jul 2025 11:38:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daf9b4c0c3e0cc879ae7e4d12a2a3cc6a78da2a5 block: 22966867
+- current block number: 22988752
+
+## Description
+
+Upgrade op stack contracts to known versions. The only aberrant contract is the new OptiPortal2, which, like the old one, [disallows deposited transactions](https://disco.l2beat.com/diff/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4/eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc).
+
+Config: Kailua added to OptimismPortal2 and DisputeGameFactory.
+
+## Watched changes
+
+```diff
+    contract L1ERC721Bridge (0x15a32FCeA89617Ff450F094cDE102CCa46598B7F) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
++        "0x28669b49da3effd51f0f9424ca9cdd455c5b9327c09a40c65fc06f114a6eb837"
+      values.$implementation:
+-        "eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
++        "eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013"
+      values.$pastUpgrades.1:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x276d3730f219f7ec22274f7263180b8452B46d47"]]
+      values.$pastUpgrades.2:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "2.1.0"
++        "2.4.0"
+      implementationNames.eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d:
+-        "L1ERC721Bridge"
+      implementationNames.eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013:
++        "L1ERC721Bridge"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x1AaA08d577cbC3da3b955DC1B7a281D7b8fE3372","role":"admin"}
+      directlyReceivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5","role":"admin"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
++        "0x03bcdc719cb7bd0a1377c01bb50b30a6122b308f673b7d7b15a3bb8628e6bd8c"
+      values.$implementation:
+-        "eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
++        "eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B"
+      values.$pastUpgrades.1:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231"]]
+      values.$pastUpgrades.2:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "2.3.0"
++        "2.6.0"
+      values.ENCODING_OVERHEAD:
++        260
+      values.FLOOR_CALLDATA_OVERHEAD:
++        40
+      values.TX_BASE_GAS:
++        21000
+      implementationNames.eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      sourceHashes.1:
+-        "0x1e6e48895b45b98acfe8b9c9f4568d3662e2932d82019f4ea721e2f7b57a58fc"
++        "0x9cf3cb8a68c82a3a8328495d5f019daa51e9098a69b69ee8e349e3058b789338"
+      values.$implementation:
+-        "eth:0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb"
++        "eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc"
+      values.$pastUpgrades.2:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd"]]
+      values.$pastUpgrades.3:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"]]
+      values.$pastUpgrades.4:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc"]]
+      values.$upgradeCount:
+-        2
++        5
+      values.version:
+-        "3.11.0-beta.6"
++        "3.14.0"
+      implementationNames.eth:0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb:
+-        "OptimismPortal2"
+      implementationNames.eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract SuperchainConfig (0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3f0bcc82f3184c1cb2e9aa6d3ecdd7c863186eea851dda56dd7e100d9174b840"
++        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
+      values.$implementation:
+-        "eth:0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A"
++        "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
+      values.$pastUpgrades.3:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.1.1-beta.1"
++        "1.2.0"
+      implementationNames.eth:0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A:
+-        "SuperchainConfig"
+      implementationNames.eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7:
++        "SuperchainConfig"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x1AaA08d577cbC3da3b955DC1B7a281D7b8fE3372","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"eth:0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+    contract DelayedWETH (0x74034597d29613CC8C0BDc8780e1d292A553Bd32) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes.1:
+-        "0xfff6f4cca21febd4323222e2ca87ec8b78edfdeeca942468fbf331e537815484"
++        "0x1c7d0fda5ed6d8fc7f5b5f7df5e307f0fcfd173fa5833ea9fce8875d5d44d86a"
+      values.$implementation:
+-        "eth:0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"
++        "eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e"
+      values.$pastUpgrades.1:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.delay:
+-        604800
++        302400
+      values.version:
+-        "1.1.0"
++        "1.3.0"
+      implementationNames.eth:0x71e966Ae981d1ce531a7b6d23DC0f27B38409087:
+-        "DelayedWETH"
+      implementationNames.eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e:
++        "DelayedWETH"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AnchorStateRegistry (0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
+    contract L1StandardBridge (0x98906C3f90A06B5484DD67bf32938815d2993dBC) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
++        "0x4e15d99844dc5a4304c2396a66c95ec41218ea311c8e524b118fad7beed0bb53"
+      values.$implementation:
+-        "eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"
++        "eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A"
+      values.version:
+-        "2.1.0"
++        "2.3.0"
+      implementationNames.eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF:
+-        "L1StandardBridge"
+      implementationNames.eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
++        "0x9650b4bba6299e410f01a369a95a2c57e1c3ca35f0d80c13f4f59fc468f370e5"
+      values.$implementation:
+-        "eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"
++        "eth:0x5493f4677A186f64805fe7317D6993ba4863988F"
+      values.$pastUpgrades.1:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x5493f4677A186f64805fe7317D6993ba4863988F"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.9.0"
++        "1.10.1"
+      implementationNames.eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846:
+-        "OptimismMintableERC20Factory"
+      implementationNames.eth:0x5493f4677A186f64805fe7317D6993ba4863988F:
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+    contract SystemConfig (0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
++        "0x921de6fc906d159fdcef862d2b9559063f5e7b9b7588fa5f33153360ddf296e7"
+      values.$implementation:
+-        "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
++        "eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647"
+      values.$pastUpgrades.2:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc"]]
+      values.$pastUpgrades.3:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647"]]
+      values.$upgradeCount:
+-        2
++        4
+      values.gasPayingToken:
+-        {"addr_":"eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
+-        "Ether"
+      values.gasPayingTokenSymbol:
+-        "ETH"
+      values.isCustomGasToken:
+-        false
+      values.version:
+-        "2.3.0"
++        "2.5.0"
+      values.getAddresses:
++        {"l1CrossDomainMessenger":"eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E","l1ERC721Bridge":"eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F","l1StandardBridge":"eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC","disputeGameFactory":"eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe","optimismPortal":"eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E","optimismMintableERC20Factory":"eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E"}
+      values.operatorFeeConstant:
++        0
+      values.operatorFeeScalar:
++        0
+      implementationNames.eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375:
+-        "SystemConfig"
+      implementationNames.eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14"
++        "0x85ca17941ef36ac6b28a4f8f89803d0d41ef419c47586dcd3acdb47ee9617285"
+      values.$implementation:
+-        "eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"
++        "eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0"
+      values.$pastUpgrades.1:
++        ["2025-07-23T17:04:59.000Z","0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",["eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.gameImpls.1:
+-        "eth:0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4"
++        "eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793"
+      values.version:
+-        "1.0.0"
++        "1.0.1"
+      implementationNames.eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (0x1AaA08d577cbC3da3b955DC1B7a281D7b8fE3372)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x667b7DA73DA7B2A75286378FF45637eEaE9B4793)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0xF027F4A985560fb13324e943edf55ad6F1d15Dc1)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |  270 ++-
+ .../DelayedWETH/DelayedWETH.sol                    |  231 +--
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  240 +--
+ .../L1CrossDomainMessenger.sol                     |  736 ++++++--
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  418 +++--
+ .../L1StandardBridge/L1StandardBridge.sol          |  508 ++++--
+ .../ethereum/{.flat@22966867 => .flat}/MIPS.sol    | 1922 ++++++++++++++------
+ .../OptimismMintableERC20Factory.sol               |   30 +-
+ .../OptimismPortal2/OptimismPortal2.sol            |  529 ++----
+ .../PermissionedDisputeGame.sol                    |  267 ++-
+ .../{.flat@22966867 => .flat}/PreimageOracle.sol   |  216 +--
+ .../SuperchainConfig/SuperchainConfig.sol          |    8 +-
+ .../SystemConfig/SystemConfig.sol                  | 1439 +--------------
+ 13 files changed, 3410 insertions(+), 3404 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22966867 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.game1337:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xcc3793504351cb584ce330874f8995ff7b6bac5e
 
 # Diff at Mon, 21 Jul 2025 10:08:59 GMT:

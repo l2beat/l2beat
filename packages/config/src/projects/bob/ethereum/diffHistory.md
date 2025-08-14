@@ -1,3 +1,624 @@
+Generated with discovered.json: 0x0cd169c99228834e7e06575c0c94176449bc6e47
+
+# Diff at Wed, 06 Aug 2025 12:09:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1702d91eebfba5d614c3470bbe1babe10fbe4c2b block: 1753375355
+- current timestamp: 1754482163
+
+## Description
+
+single MS member switched.
+
+## Watched changes
+
+```diff
+    contract Bob Multisig 1 (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+    }
+```
+
+Generated with discovered.json: 0x43c5d959245580ab3c4ad8e09c2d1a75589600bb
+
+# Diff at Thu, 24 Jul 2025 16:48:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a3f740c0fd51a5745c45d8f349ab01f4f33f7770 block: 22988923
+- current block number: 22990276
+
+## Description
+
+set dispute game impl changes to high severity.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (0x0fbC22B052f4745Bc9F80760D2D47E4993F36746)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d.
+```
+
+```diff
+    EOA  (0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0x0fbC22B052f4745Bc9F80760D2D47E4993F36746"
++        "eth:0x72284bbB177B13db6F7b703846EEDfB24914B764"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb"
++        "eth:0xD5A72E5C2d8fC5e12cba6F81FA67d9A5F4A48B6a"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (0x72284bbB177B13db6F7b703846EEDfB24914B764)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (0xD5A72E5C2d8fC5e12cba6F81FA67d9A5F4A48B6a)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22988923 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      fieldMeta.respectedGameType:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta:
++        {"gameImpls":{"severity":"HIGH"},"game1337":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xfa99e90b94d041702d2993969e737a18c819eb96
+
+# Diff at Thu, 24 Jul 2025 12:21:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8ea8c4bdec260dd5774704d85ceb7d7dbf9bbd48 block: 22979976
+- current block number: 22988923
+
+## Description
+
+ignore `lastResolved` in watch mode and push some more info into the contract description.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22979976 (main branch discovery), not current.
+
+```diff
+    contract KailuaTreasury (0x0fbC22B052f4745Bc9F80760D2D47E4993F36746) {
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d.
+      description:
+-        "Entrypoint for state root proposals. Manages bonds and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory."
++        "Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d."
+      values.participationBondFmt:
++        "0.5"
+      values.vanguardAdvantageFmt:
++        "30d"
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+Generated with discovered.json: 0x062861cee1e1bf6aa963ec55b86fe36d2c4e03cc
+
+# Diff at Wed, 23 Jul 2025 06:06:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b127194ffb9a32e4b6fde08f1602fbf66f1843fc block: 22665980
+- current block number: 22979976
+
+## Description
+
+07-23: Upgrade OptimismPortal2 again to change the finality delays ([no code changes](https://disco.l2beat.com/diff/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4/eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273)). 
+- proofMaturityDelaySeconds: 7d->1d
+- disputeGameFinalityDelaySeconds: 3.5d->1d 
+
+Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://risc0.github.io/kailua/design.html) as respected dispute game. Kailua is configured in [Vanguard mode](https://risc0.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
+
+summary:
+- standard op stack contracts
+- standard op stack DisputeGameFactory with **custom** game1337 dispute game implementation
+- state validation: hybrid optimistic + zk proven proposal tree:
+  - a proposal must include a bond and a blob with intermediate state roots (3600)
+  - any new proposal under the same parent state root implicitly challenges its siblings
+    - but to eliminate siblings, such a new proposer needs to actively prove something after making their proposal (since the older siblings would win by their challenge window expiring first)
+  - how to compete against siblings:
+    1. MAX_CLOCK_DURATION on a node (KailuaGame) expires without a fault proof or sibling's validity proof = node optimistically wins against all siblings
+    2. a validity proof over the entire range (3600*6 blocks) of a proposal can be zk-proven at any stage, immediately winning the game (**eliminating all siblings**)
+    3. a 'fault proof' **eliminates a single sibling**: proves that a single intermediary state transition (6 blocks) in an opponents proposal results in a different (proven) state root than they committed to
+  - vanguard mode:
+    - first child proposal (to progress the state) can only be made by the vanguard address for `vanguardAdvantage` period (30d)
+      - `proveOutputFault()` and `proveValidity()` are always permissionless during that time (a vanguard's proposal can be (in)validated))
+      - siblings can be created as soon as the vanguard has proposed the first, meaning the vanguard only has the 'optimistic' advantage, giving the 'burden of proof' to other actors
+  - DISPUTE_GAME_FINALITY_DELAY_SECONDS (execution delay) = 3.5d
+    - for everyone incl vanguard this delays finalization of a winning (resolved) state root (for example to have time to blacklist the winning dispute game by the guardian)
+
+some code:
+- diff PermissionedDisputeGame/KailuaGame: https://disco.l2beat.com/diff/eth:0xF27d54dB0587442b01d6036C0F7f67CDaaBa1743/eth:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb
+- moved TimelockController of the RiscZeroVerifierRouter to standard template ([diff](https://disco.l2beat.com/diff/eth:0x45828180bbE489350D621d002968A0585406d487/eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711)): 3d delay, EOA-controlled
+- superchainconfigFake: added v1.2.0 template (same code as opstack superchainconf, different gov addresses): https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0) {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x3a1D54496cf461fFc96d3b1a8A0B43B091ea3c13","role":"admin"}
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6","role":"admin"}
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x5fF93263D5181b2A826f8c51d54BC0da2d20D50a","role":"admin"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079","role":"admin"}
+      directlyReceivedPermissions.4:
+-        {"permission":"upgrade","from":"eth:0xdDa53E23f8a32640b04D7256e651C1db98dB11C1","role":"admin"}
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0xeBA14d52F1b19cA65455E5ECaB72D2FfD9e43fEF","role":"admin"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x79abdbd90460fe2ac0535b5cb7b4c45284322b49a0a090d1c509cdaf35dbc87e"
++        "0x4e15d99844dc5a4304c2396a66c95ec41218ea311c8e524b118fad7beed0bb53"
+      values.$implementation:
+-        "eth:0xEEAfA156A5dd3811Ee0D9F91db57A77eA53A8d31"
++        "eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A"
+      values.version:
+-        "1.1.1"
++        "2.3.0"
+      values.otherBridge:
++        "eth:0x4200000000000000000000000000000000000010"
+      values.paused:
++        false
+      values.superchainConfig:
++        "eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46"
+      implementationNames.eth:0xEEAfA156A5dd3811Ee0D9F91db57A77eA53A8d31:
+-        "L1StandardBridge"
+      implementationNames.eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    EOA  (0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "propose new state roots before anyone else, giving a first-mover advantage on the optimistic clock."
+      receivedPermissions.0.role:
+-        ".PROPOSER"
++        ".vanguard"
+      receivedPermissions.0.from:
+-        "eth:0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"
++        "eth:0x0fbC22B052f4745Bc9F80760D2D47E4993F36746"
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      name:
+-        "OptimismPortal"
++        "OptimismPortal2"
+      template:
+-        "opstack/OptimismPortal"
++        "opstack/OptimismPortal2"
+      sourceHashes.1:
+-        "0xd7fe53899c31d6d8e73b6724694736dc3c3c4ebc8f4ddbe989fe9d3dba26692d"
++        "0xc483ef9e0a5ec2a0450732e743b3784de0cd3876b8fadfce14c0805a0846d26b"
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame."
+      values.$implementation:
+-        "eth:0x994e3B01D130944a3E67BFd3B8Fc73069b959FEc"
++        "eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273"
+      values.$pastUpgrades.1:
++        ["2025-07-17T13:28:47.000Z","0x1d93c182527e3c738f03ffb7baf66bbddfb29e1e60bbd9f5457c7de1a90eaaf1",["eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"]]
+      values.$pastUpgrades.2:
++        ["2025-07-17T13:28:47.000Z","0x1d93c182527e3c738f03ffb7baf66bbddfb29e1e60bbd9f5457c7de1a90eaaf1",["eth:0x2D778797049FE9259d947D1ED8e5442226dFB589"]]
+      values.$pastUpgrades.3:
++        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.4:
++        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B"]]
+      values.$pastUpgrades.5:
++        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd"]]
+      values.$pastUpgrades.6:
++        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"]]
+      values.$pastUpgrades.7:
++        ["2025-07-22T19:58:23.000Z","0xa7881069c54f1028d42b83406ac5a768154f8ff34ad37ec7641b4d45766e77c3",["eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273"]]
+      values.$upgradeCount:
+-        1
++        8
+      values.GUARDIAN:
+-        "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E"
+      values.L2_ORACLE:
+-        "eth:0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"
+      values.SYSTEM_CONFIG:
+-        "eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393"
+      values.version:
+-        "1.7.2"
++        "3.14.0"
+      values.disputeGameFactory:
++        "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079"
+      values.disputeGameFinalityDelaySeconds:
++        86400
+      values.guardian:
++        "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E"
+      values.proofMaturityDelaySeconds:
++        86400
+      values.RespectedGameString:
++        "KailuaGame"
+      values.respectedGameType:
++        1337
+      values.respectedGameTypeUpdatedAt:
++        1752761915
+      values.superchainConfig:
++        "eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46"
+      values.systemConfig:
++        "eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393"
+      implementationNames.eth:0x994e3B01D130944a3E67BFd3B8Fc73069b959FEc:
+-        "OptimismPortal"
+      implementationNames.eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273:
++        "OptimismPortal2"
+      fieldMeta:
++        {"paused":{"severity":"HIGH","description":"Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"FaultDisputeGame","1":"PermissionedDisputeGame","1337":"KailuaGame"}}]
+    }
+```
+
+```diff
+    contract SystemConfig (0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x29908eb7685943ff431cd384af851ce36a30997bbad880f9b4385bfc3abb86a2"
++        "0x921de6fc906d159fdcef862d2b9559063f5e7b9b7588fa5f33153360ddf296e7"
+      values.$implementation:
+-        "eth:0xaa0A1EfD35d6578ea6B5704dbc2c40B36A55B590"
++        "eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647"
+      values.$pastUpgrades.1:
++        ["2025-07-17T13:28:47.000Z","0x1d93c182527e3c738f03ffb7baf66bbddfb29e1e60bbd9f5457c7de1a90eaaf1",["eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"]]
+      values.$pastUpgrades.2:
++        ["2025-07-17T13:28:47.000Z","0x1d93c182527e3c738f03ffb7baf66bbddfb29e1e60bbd9f5457c7de1a90eaaf1",["eth:0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]]
+      values.$pastUpgrades.3:
++        ["2025-07-17T13:38:47.000Z","0xfdd53dea057419dee4a1f773029c57925865a0db916df2eddf1dbc988e6f3d56",["eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$pastUpgrades.4:
++        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.5:
++        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$pastUpgrades.6:
++        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc"]]
+      values.$pastUpgrades.7:
++        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647"]]
+      values.$upgradeCount:
+-        1
++        8
+      values.version:
+-        "1.3.1"
++        "2.5.0"
+      values.basefeeScalar:
++        10000000
+      values.BATCH_INBOX_SLOT:
++        "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597"
+      values.batchInbox:
++        "eth:0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83"
+      values.blobbasefeeScalar:
++        611590
+      values.DISPUTE_GAME_FACTORY_SLOT:
++        "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906"
+      values.disputeGameFactory:
++        "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079"
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      values.getAddresses:
++        {"l1CrossDomainMessenger":"eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA","l1ERC721Bridge":"eth:0x5fF93263D5181b2A826f8c51d54BC0da2d20D50a","l1StandardBridge":"eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7","disputeGameFactory":"eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079","optimismPortal":"eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E","optimismMintableERC20Factory":"eth:0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6"}
+      values.L1_CROSS_DOMAIN_MESSENGER_SLOT:
++        "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636"
+      values.L1_ERC_721_BRIDGE_SLOT:
++        "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7"
+      values.L1_STANDARD_BRIDGE_SLOT:
++        "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376"
+      values.l1CrossDomainMessenger:
++        "eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA"
+      values.l1ERC721Bridge:
++        "eth:0x5fF93263D5181b2A826f8c51d54BC0da2d20D50a"
+      values.l1StandardBridge:
++        "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7"
+      values.maximumGasLimit:
++        200000000
+      values.operatorFeeConstant:
++        0
+      values.operatorFeeScalar:
++        0
+      values.OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT:
++        "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c"
+      values.OPTIMISM_PORTAL_SLOT:
++        "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac"
+      values.optimismMintableERC20Factory:
++        "eth:0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6"
+      values.optimismPortal:
++        "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E"
+      values.START_BLOCK_SLOT:
++        "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f"
+      values.startBlock:
++        19634330
+      implementationNames.eth:0xaa0A1EfD35d6578ea6B5704dbc2c40B36A55B590:
+-        "SystemConfig"
+      implementationNames.eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".CHALLENGER"
++        ".guardian"
+      receivedPermissions.0.from:
+-        "eth:0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"
++        "eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46"
+      receivedPermissions.0.permission:
+-        "challenge"
++        "guard"
+      receivedPermissions.1.description:
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.1.role:
+-        ".GUARDIAN"
++        ".owner"
+      receivedPermissions.1.from:
+-        "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E"
++        "eth:0x3a1D54496cf461fFc96d3b1a8A0B43B091ea3c13"
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x3a1D54496cf461fFc96d3b1a8A0B43B091ea3c13","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0x5fF93263D5181b2A826f8c51d54BC0da2d20D50a","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0xdDa53E23f8a32640b04D7256e651C1db98dB11C1","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46","role":"admin","via":[{"address":"eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0xeBA14d52F1b19cA65455E5ECaB72D2FfD9e43fEF","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c","role":".owner"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0xdDa53E23f8a32640b04D7256e651C1db98dB11C1)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xE3d981643b806FB8030CDB677D6E60892E547EdA) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xebfb36a18bcaa176678925149b43fdc5f9f943d98a6405ae1cbc26f4c168ff88"
++        "0x03bcdc719cb7bd0a1377c01bb50b30a6122b308f673b7d7b15a3bb8628e6bd8c"
+      values.$implementation:
+-        "eth:0x237853621998a33Fa5B9B820592F4c6f4c158c12"
++        "eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B"
+      values.$pastUpgrades.2:
++        ["2025-07-17T13:28:47.000Z","0x1d93c182527e3c738f03ffb7baf66bbddfb29e1e60bbd9f5457c7de1a90eaaf1",["eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"]]
+      values.$pastUpgrades.3:
++        ["2025-07-17T13:28:47.000Z","0x1d93c182527e3c738f03ffb7baf66bbddfb29e1e60bbd9f5457c7de1a90eaaf1",["eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]]
+      values.$pastUpgrades.4:
++        ["2025-07-17T13:38:47.000Z","0xfdd53dea057419dee4a1f773029c57925865a0db916df2eddf1dbc988e6f3d56",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.5:
++        ["2025-07-17T13:38:47.000Z","0xfdd53dea057419dee4a1f773029c57925865a0db916df2eddf1dbc988e6f3d56",["eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]]
+      values.$pastUpgrades.6:
++        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231"]]
+      values.$pastUpgrades.7:
++        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B"]]
+      values.$upgradeCount:
+-        2
++        8
+      values.version:
+-        "1.4.1"
++        "2.6.0"
+      values.ENCODING_OVERHEAD:
++        260
+      values.FLOOR_CALLDATA_OVERHEAD:
++        40
+      values.otherMessenger:
++        "eth:0x4200000000000000000000000000000000000007"
+      values.paused:
++        false
+      values.portal:
++        "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E"
+      values.superchainConfig:
++        "eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46"
+      values.TX_BASE_GAS:
++        21000
+      implementationNames.eth:0x237853621998a33Fa5B9B820592F4c6f4c158c12:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x0b144E07A0826182B6b59788c34b32Bfa86Fb711)
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (0x0fbC22B052f4745Bc9F80760D2D47E4993F36746)
+    +++ description: Entrypoint for state root proposals. Manages bonds and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (0x1efDd13f831ceeEa14940806705A53D3211CD698)
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x3a1D54496cf461fFc96d3b1a8A0B43B091ea3c13)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x5fF93263D5181b2A826f8c51d54BC0da2d20D50a)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierRouter (0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319)
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (0x96123dbFC3253185B594c6a7472EE5A21E9B1079)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xa70ddfb3e00fCFD083E64B200FE867104f703E1c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0xe3BD00F57B44E7aa4A6C212878427c85D638702A)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0xE925205ad05D8d612Ac205C4941CCd61Fc965C46)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (0xeBA14d52F1b19cA65455E5ECaB72D2FfD9e43fEF)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0xF027F4A985560fb13324e943edf55ad6F1d15Dc1)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |  568 +++
+ .../ethereum/.flat/AnchorStateRegistry/Proxy.p.sol |  200 +
+ .../bob/ethereum/.flat/DelayedWETH/DelayedWETH.sol |  608 +++
+ .../bob/ethereum/.flat/DelayedWETH/Proxy.p.sol     |  200 +
+ .../DisputeGameFactory/DisputeGameFactory.sol      | 1482 +++++++
+ .../ethereum/.flat/DisputeGameFactory/Proxy.p.sol  |  200 +
+ .../src/projects/bob/ethereum/.flat/KailuaGame.sol | 1414 +++++++
+ .../projects/bob/ethereum/.flat/KailuaTreasury.sol | 1568 ++++++++
+ .../L1CrossDomainMessenger.sol                     | 2108 +++++-----
+ .../.flat/L1ERC721Bridge/L1ERC721Bridge.sol        |  791 ++++
+ .../L1ERC721Bridge}/Proxy.p.sol                    |    0
+ .../L1StandardBridge/L1StandardBridge.sol          | 1713 ++++----
+ .../L2OutputOracle/L2OutputOracle.sol => /dev/null |  833 ----
+ .../src/projects/bob/ethereum/.flat/MIPS.sol       | 2515 ++++++++++++
+ .../OptimismMintableERC20Factory.sol               |  441 +++
+ .../OptimismMintableERC20Factory}/Proxy.p.sol      |    0
+ .../OptimismPortal2/OptimismPortal2.sol}           | 1982 +++++-----
+ .../bob/ethereum/.flat/OptimismPortal2/Proxy.p.sol |  211 +
+ .../bob/ethereum/.flat/PermissionedDisputeGame.sol | 4121 ++++++++++++++++++++
+ .../projects/bob/ethereum/.flat/PreimageOracle.sol | 1311 +++++++
+ ...0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0.sol} |    0
+ ...:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c.sol |  298 ++
+ .../bob/ethereum/.flat/RiscZeroGroth16Verifier.sol | 1699 ++++++++
+ .../.flat/RiscZeroVerifierEmergencyStop.sol        |  315 ++
+ .../bob/ethereum/.flat/RiscZeroVerifierRouter.sol  |  240 ++
+ .../ethereum/.flat/SuperchainConfig/Proxy.p.sol    |  200 +
+ .../.flat/SuperchainConfig/SuperchainConfig.sol    |  477 +++
+ .../SystemConfig/SystemConfig.sol                  |  715 ++--
+ .../bob/ethereum/.flat/TimelockController.sol      | 1000 +++++
+ 29 files changed, 23417 insertions(+), 3793 deletions(-)
+```
+
 Generated with discovered.json: 0x8b55c0d14f76f0f19015fe74f09c905cbdbc2c45
 
 # Diff at Mon, 14 Jul 2025 12:44:50 GMT:

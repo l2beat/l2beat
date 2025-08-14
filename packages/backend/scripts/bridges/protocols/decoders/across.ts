@@ -1,83 +1,14 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
+import type { Asset } from '../../types/Asset'
+import type { DecoderInput } from '../../types/DecoderInput'
 import type { Message } from '../../types/Message'
-import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
+import { extractAddressFromPadded } from '../../utils/viem'
 
 export const ACROSS = {
   name: 'across',
   decoder: decoder,
-}
-
-function decoder(
-  chain: Chain,
-  transaction: TransactionWithLogs,
-): Message | undefined {
-  for (const log of transaction.logs) {
-    const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
-
-    if (!bridge || EthereumAddress(log.address) !== bridge.address) continue
-
-    if (
-      EthereumAddress(log.address) === bridge.address &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'FundsDeposited' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'FundsDeposited',
-      })
-
-      const destination = BRIDGES.find(
-        (b) => b.chainId === +data.args.destinationChainId.toString(),
-      )?.chainShortName
-
-      return {
-        direction: 'outbound',
-        protocol: ACROSS.name,
-        origin: chain.shortName,
-        destination: destination ?? data.args.destinationChainId.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'FundsDeposited',
-        matchingId: data.args.depositId.toString(),
-      }
-    }
-
-    if (
-      EthereumAddress(log.address) === bridge.address &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'FilledRelay' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'FilledRelay',
-      })
-
-      const origin = BRIDGES.find(
-        (c) => c.chainId === +data.args.originChainId.toString(),
-      )?.chainShortName
-
-      return {
-        direction: 'inbound',
-        protocol: ACROSS.name,
-        origin: origin ?? data.args.originChainId.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'FilledRelay',
-        matchingId: data.args.depositId.toString(),
-      }
-    }
-  }
-
-  return undefined
 }
 
 const ABI = parseAbi([
@@ -85,7 +16,84 @@ const ABI = parseAbi([
   'event FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, (bytes32 updatedRecipient, bytes32 updatedMessageHash, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)',
 ])
 
-const BRIDGES = [
+function decoder(
+  chain: Chain,
+  input: DecoderInput,
+): Message | Asset | undefined {
+  const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
+
+  if (!network) return undefined
+
+  if (
+    EthereumAddress(input.log.address) === network.address &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'FundsDeposited' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'FundsDeposited',
+    })
+
+    const destination = NETWORKS.find(
+      (b) => b.chainId === +data.args.destinationChainId.toString(),
+    )?.chainShortName
+
+    return {
+      type: 'asset',
+      direction: 'outbound',
+      application: ACROSS.name,
+      origin: chain.shortName,
+      destination: destination ?? data.args.destinationChainId.toString(),
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'FundsDeposited',
+      matchingId: data.args.depositId.toString(),
+      amount: data.args.inputAmount,
+      token: extractAddressFromPadded(data.args.inputToken),
+      // messageProtocol?: string
+      // messageId?: string
+    }
+  }
+
+  if (
+    EthereumAddress(input.log.address) === network.address &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'FilledRelay' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'FilledRelay',
+    })
+
+    const origin = NETWORKS.find(
+      (c) => c.chainId === +data.args.originChainId.toString(),
+    )?.chainShortName
+
+    return {
+      type: 'asset',
+      direction: 'inbound',
+      application: ACROSS.name,
+      origin: origin ?? data.args.originChainId.toString(),
+      destination: chain.shortName,
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'FilledRelay',
+      matchingId: data.args.depositId.toString(),
+      amount: data.args.outputAmount,
+      token: extractAddressFromPadded(data.args.outputToken),
+      // messageProtocol?: string
+      // messageId?: string
+    }
+  }
+
+  return undefined
+}
+
+const NETWORKS = [
   {
     chainId: 1,
     chainShortName: 'eth',

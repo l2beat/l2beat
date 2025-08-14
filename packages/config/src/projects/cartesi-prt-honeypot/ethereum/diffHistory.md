@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x7d9f10fa60ab49c9e1d760d9f386f6c5cf5180c4
+Generated with discovered.json: 0x7f2de29437ff2d8c970bc0ddb41860eb8b3d9721
 
 # Diff at Mon, 14 Jul 2025 12:44:51 GMT:
 
@@ -504,7 +504,7 @@ Generated with discovered.json: 0xdb7b65667f80e7bb2b884fdde74478cda930ee9b
 
 ## Description
 
-Initial cartesi fault proofs disco.
+Initial cartesi fault proofs discovery.
 
 ## Initial discovery
 

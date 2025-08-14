@@ -10,20 +10,7 @@
   scrollbar-color: var(--scrollbar) transparent;
 }
 
-html:has(.smooth-scroll) {
-  scroll-behavior: smooth;
-}
-
-body {
-  @apply bg-background text-base text-primary md:text-lg font-roboto selection:bg-brand/30 dark:selection:bg-brand/50;
-}
-
-body:has(.reading) {
-  @apply bg-background-reading;
-}
-
 /* cursor: pointer by default for buttons */
-
 @layer base {
   button:not(:disabled),
   [role="button"]:not(:disabled) {
@@ -40,6 +27,8 @@ body:has(.reading) {
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  overscroll-behavior-x: none;
+
   --primary: #131215;
   --primary-invert: #fafafa;
   --secondary: #5f6470;
@@ -48,7 +37,6 @@ body:has(.reading) {
   --negative: #d70000;
   --brand: #9621bf;
   --background: #e6e7ec;
-  --background-reading: #fafafa;
   --surface-primary: #fafafa;
   --surface-secondary: #e6e7ec;
   --surface-tertiary: #ccd0da;
@@ -77,6 +65,9 @@ body:has(.reading) {
   --chart-fuchsia: #ce66f4;
   --chart-lime: #a9f964;
   --chart-sky: #50bfff;
+  --chart-teal: #2ec4b6;
+  --chart-orange: #f98a24;
+  --chart-yellow-lime: #d6db5b;
 
   --chart-stacked-pink: #ff45b5;
   --chart-stacked-yellow: #ffc300;
@@ -116,7 +107,6 @@ body:has(.reading) {
   --negative: #ff0000;
   --brand: #ecb0fb;
   --background: #000000;
-  --background-reading: #000000;
   --surface-primary: #17191f;
   --surface-secondary: #3b3f45;
   --surface-tertiary: #484d54;
@@ -437,7 +427,6 @@ body:has(.reading) {
   --color-negative: var(--negative);
   --color-brand: var(--brand);
   --color-background: var(--background);
-  --color-background-reading: var(--background-reading);
   --color-surface-primary: var(--surface-primary);
   --color-surface-secondary: var(--surface-secondary);
   --color-surface-tertiary: var(--surface-tertiary);
@@ -455,6 +444,9 @@ body:has(.reading) {
   --color-chart-fuchsia: var(--chart-fuchsia);
   --color-chart-lime: var(--chart-lime);
   --color-chart-sky: var(--chart-sky);
+  --color-chart-teal: var(--chart-teal);
+  --color-chart-orange: var(--chart-orange);
+  --color-chart-yellow-lime: var(--chart-yellow-lime);
   --color-chart-stacked-blue: var(--chart-stacked-blue);
   --color-chart-stacked-yellow: var(--chart-stacked-yellow);
   --color-chart-stacked-pink: var(--chart-stacked-pink);

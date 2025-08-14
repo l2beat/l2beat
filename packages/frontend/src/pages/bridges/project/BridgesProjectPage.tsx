@@ -38,6 +38,7 @@ export function BridgesProjectPage({
         <SideNavLayout childrenWrapperClassName="md:pt-0">
           <div
             className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
+            data-project-page
             style={
               projectEntry.colors
                 ? ({
@@ -58,7 +59,7 @@ export function BridgesProjectPage({
 
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
-              <div className="pt-6 max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-5">
+              <div className="pt-6 max-md:px-4 lg:w-[calc(100%-196px)] lg:pt-4">
                 <ProjectHeader project={projectEntry} />
                 <ProjectSummaryBars project={projectEntry} showBridgesWarning />
 

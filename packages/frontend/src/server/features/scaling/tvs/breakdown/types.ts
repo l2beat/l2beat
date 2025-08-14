@@ -12,8 +12,10 @@ export type BaseAssetBreakdownData = {
   id: TvsToken['id']
   symbol: TvsToken['symbol']
   iconUrl: string
+  valueForProject: number
+  value: number
   amount: number
-  usdValue: number
+  category: TvsToken['category']
   source: TvsToken['source']
   isAssociated: TvsToken['isAssociated']
   isGasToken?: boolean
@@ -32,11 +34,9 @@ export type BaseAssetBreakdownData = {
 export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
   escrow?: AddressData
 }
-export type ExternalAssetBreakdownData = BaseAssetBreakdownData
-export type NativeAssetBreakdownData = BaseAssetBreakdownData
 
 export type BreakdownRecord = {
   canonical: CanonicalAssetBreakdownData[]
-  external: ExternalAssetBreakdownData[]
-  native: NativeAssetBreakdownData[]
+  external: BaseAssetBreakdownData[]
+  native: BaseAssetBreakdownData[]
 }

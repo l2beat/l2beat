@@ -38,7 +38,7 @@ async function getLivenessData(projectId?: ProjectId) {
   const [configurations, livenessProjects] = await Promise.all([
     db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
     ps.getProjects({
-      select: ['trackedTxsConfig'],
+      select: ['trackedTxsConfig', 'livenessInfo'],
       optional: ['livenessConfig'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -52,7 +52,9 @@ async function getLivenessData(projectId?: ProjectId) {
   const projectIds = trackedTxsProjects.map((p) => p.id)
 
   const targetTimestamp =
-    UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
+    UnixTime.toStartOf(UnixTime.now(), 'hour') -
+    UnixTime.HOUR -
+    15 * UnixTime.MINUTE
 
   const last30Days = UnixTime.toStartOf(
     UnixTime.now() - 30 * UnixTime.DAY,
@@ -319,7 +321,7 @@ function getMockLivenessData(): LivenessResponse {
         '90d': generateDataPoint(),
         max: generateDataPoint(),
         syncedUntil: UnixTime.toStartOf(
-          UnixTime.now() - 2 * UnixTime.HOUR,
+          UnixTime.now() - UnixTime.HOUR - 15 * UnixTime.MINUTE,
           'hour',
         ),
       },
@@ -337,7 +339,7 @@ function getMockLivenessData(): LivenessResponse {
         '90d': generateDataPoint(),
         max: generateDataPoint(),
         syncedUntil: UnixTime.toStartOf(
-          UnixTime.now() - 2 * UnixTime.HOUR,
+          UnixTime.now() - UnixTime.HOUR - 15 * UnixTime.MINUTE,
           'hour',
         ),
       },

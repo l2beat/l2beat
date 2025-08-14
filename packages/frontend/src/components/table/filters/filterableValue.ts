@@ -3,7 +3,7 @@ import { v } from '@l2beat/validate'
 export interface FilterableEntry {
   filterable: FilterableValue[] | undefined
 }
-export type FilterableValue = {
+type FilterableValue = {
   id: FilterableValueId
   value: string
 }
@@ -20,6 +20,7 @@ export const FilterableValueId = v.enum([
   'infrastructure',
   'vm',
   'other',
+  'techStack',
 ])
 
 export const filterIdToLabel: Record<FilterableValueId, string> = {
@@ -34,6 +35,7 @@ export const filterIdToLabel: Record<FilterableValueId, string> = {
   infrastructure: 'Infrastructure',
   vm: 'VM',
   other: 'Other properties',
+  techStack: 'Tech Stack',
 }
 
 export const filterIdToValues: Record<FilterableValueId, string> = {
@@ -48,6 +50,7 @@ export const filterIdToValues: Record<FilterableValueId, string> = {
   infrastructure: 'infras',
   vm: 'VMs',
   other: 'other',
+  techStack: 'tech stacks',
 }
 
 export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {

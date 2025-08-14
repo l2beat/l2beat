@@ -10,19 +10,59 @@ visible benefits.
 You can check the detailed steps on how to add new tokens in the tvl.md file in the repository.
 */
 
+import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
 import {
   AssetId,
   assert,
   type LegacyToken,
   UnixTime,
 } from '@l2beat/shared-pure'
-
+import uniqBy from 'lodash/uniqBy'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ChainConfig } from '../types'
 import generated from './generated.json'
 import { GeneratedToken } from './types'
 
 export function getTokenList(chains: ChainConfig[]): LegacyToken[] {
+  const tokens: LegacyToken[] = []
+
+  tokens.push(...getGeneratedTokenList(chains))
+  tokens.push(...getDiscoveryTokenList(chains))
+
+  return tokens
+}
+
+export function getGeneratedTokenList(chains: ChainConfig[]): LegacyToken[] {
   return generated.tokens.map((t) => toToken(GeneratedToken.parse(t), chains))
+}
+
+export function getDiscoveryTokenList(chains: ChainConfig[]): LegacyToken[] {
+  const tokens: LegacyToken[] = []
+  const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
+
+  const tokensDiscoveryProjects = configReader.getProjectsInGroup('tokens')
+
+  for (const tokenDiscovery of tokensDiscoveryProjects) {
+    const chainsSupportedByToken =
+      configReader.readAllDiscoveredChainsForProject(tokenDiscovery)
+
+    for (const chain of chains) {
+      if (!chainsSupportedByToken.includes(chain.name)) {
+        continue
+      }
+
+      const discovery = new ProjectDiscovery(tokenDiscovery)
+      const tokensFromDiscovery = discovery.get$TokenData()
+      for (const token of tokensFromDiscovery) {
+        const generatedToken = GeneratedToken.parse(token)
+        const formattedToken = toToken(generatedToken, chains)
+        tokens.push(formattedToken)
+      }
+    }
+  }
+
+  return uniqBy(tokens, (t) => t.id)
 }
 
 function toToken(
@@ -30,7 +70,7 @@ function toToken(
   chains: ChainConfig[],
 ): LegacyToken {
   const chain = chains.find((c) => c.chainId === +generated.chainId)
-  assert(chain, `Chain nor found for ${generated.symbol}`)
+  assert(chain, `Chain not found for ${generated.symbol}`)
   assert(
     chain.sinceTimestamp,
     `Token added for chain without sinceTimestamp ${chain.name}`,

@@ -1,4 +1,29 @@
-Generated with discovered.json: 0xb46a13144122d82a91c76e2122a48b77f6164306
+Generated with discovered.json: 0xbb944583f2d486d4984ab2bef706fde8e96ecafd
+
+# Diff at Thu, 31 Jul 2025 06:48:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1752577115
+- current timestamp: 1753944490
+
+## Description
+
+ms singer removed.
+
+## Watched changes
+
+```diff
+    contract zkCandy Multisig (0x8eb156588D2FAD21dE0066BAA5BfDcd940695196) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x45Aabee36135FacD909166249f85569b13C72DD5"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
+    }
+```
+
+Generated with discovered.json: 0x65f3f605f01e38c67c6e1c6588bb5314b1e10572
 
 # Diff at Tue, 15 Jul 2025 10:59:46 GMT:
 

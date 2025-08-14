@@ -1,4 +1,4 @@
-import { getDiscoveryPaths } from '@l2beat/discovery'
+import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import {
   command,
@@ -127,7 +127,8 @@ const PowerdiffDiscovery = command({
     diffContext,
   }) => {
     const paths = getDiscoveryPaths()
-    const projectPath = path.join(paths.discovery, project, chain)
+    const configReader = new ConfigReader(paths.discovery)
+    const projectPath = configReader.getProjectChainPath(project, chain)
     const contents = readdirSync(projectPath)
 
     const flatAt = contents.filter((f) => f.startsWith('.flat@'))

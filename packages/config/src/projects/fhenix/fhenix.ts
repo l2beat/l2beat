@@ -5,12 +5,13 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const fhenix: ScalingProject = upcomingL2({
   id: 'fhenix',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1719225560), // 2024-06-24T10:39:20Z
   display: {
     name: 'Fhenix',
     slug: 'fhenix',
     description:
-      'Fhenix is Fully Homomorphic Encryption rollup, build on top of Arbitrum Stack.',
+      'Fhenix is Fully Homomorphic Encryption rollup, built on top of Arbitrum Stack.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],

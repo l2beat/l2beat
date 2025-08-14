@@ -26,4 +26,5 @@ export const EXPLORER_URLS: Record<string, string> = {
   ink: 'https://explorer.inkonchain.com/address',
   everclear: 'https://scan.everclear.org/address',
   taiko: 'https://taikoscan.io/address',
+  gateway: 'https://gateway.explorer.zksync.io/address',
 }

@@ -15,11 +15,13 @@ import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGr
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
+import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
-import { formatTimestamp } from '~/utils/dates'
+import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
+import { formatRange } from '~/utils/dates'
 import { getDaDataParams } from './getDaDataParams'
 import { getDaChartMeta } from './meta'
 
@@ -28,6 +30,7 @@ interface Props {
   isLoading: boolean
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
+  resolution: DaThroughputResolution
 }
 
 export function DaAbsoluteThroughputChart({
@@ -35,8 +38,10 @@ export function DaAbsoluteThroughputChart({
   isLoading,
   includeScalingOnly,
   syncStatus,
+  resolution,
 }: Props) {
-  const chartMeta = getDaChartMeta({ shape: 'line' })
+  const chartMeta = useMemo(() => getDaChartMeta({ shape: 'line' }), [])
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const max = useMemo(() => {
     return data
       ? Math.max(
@@ -51,16 +56,29 @@ export function DaAbsoluteThroughputChart({
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
       return {
         timestamp,
-        ethereum: ethereum / denominator,
-        celestia: celestia / denominator,
-        avail: avail / denominator,
-        eigenda: eigenda / denominator,
+        ethereum: ethereum !== null ? ethereum / denominator : null,
+        celestia: celestia !== null ? celestia / denominator : null,
+        avail: avail !== null ? avail / denominator : null,
+        eigenda: eigenda !== null ? eigenda / denominator : null,
       }
     })
   }, [data, denominator])
 
+  const syncedUntil = useMemo(
+    () => Math.max(...Object.values(syncStatus ?? {})),
+    [syncStatus],
+  )
+
   return (
-    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+    <ChartContainer
+      data={chartData}
+      meta={chartMeta}
+      isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
+    >
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <defs>
           <EthereumFillGradientDef id="ethereum-fill" />
@@ -75,21 +93,25 @@ export function DaAbsoluteThroughputChart({
               dataKey: 'ethereum',
               stroke: chartMeta.ethereum.color,
               fill: 'url(#ethereum-fill)',
+              hide: !dataKeys.includes('ethereum'),
             },
             {
               dataKey: 'celestia',
               stroke: chartMeta.celestia.color,
               fill: 'url(#celestia-fill)',
+              hide: !dataKeys.includes('celestia'),
             },
             {
               dataKey: 'avail',
               stroke: chartMeta.avail.color,
               fill: 'url(#avail-fill)',
+              hide: !dataKeys.includes('avail'),
             },
             {
               dataKey: 'eigenda',
               stroke: chartMeta.eigenda.color,
               fill: 'url(#eigenda-fill)',
+              hide: !dataKeys.includes('eigenda'),
             },
           ],
         })}
@@ -97,16 +119,20 @@ export function DaAbsoluteThroughputChart({
           data: chartData,
           isLoading,
           yAxis: {
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: ` ${unit}`,
             tickCount: 3,
           },
+          syncedUntil,
         })}
         <ChartTooltip
+          filterNull={false}
           content={
             <CustomTooltip
               unit={unit}
               includeScalingOnly={includeScalingOnly}
               syncStatus={syncStatus}
+              resolution={resolution}
             />
           }
         />
@@ -122,10 +148,12 @@ function CustomTooltip({
   unit,
   includeScalingOnly,
   syncStatus,
+  resolution,
 }: TooltipProps<number, string> & {
   unit: string
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
+  resolution: DaThroughputResolution
 }) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
@@ -135,12 +163,20 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+        {formatRange(
+          label,
+          label +
+            (resolution === 'daily'
+              ? UnixTime.DAY
+              : resolution === 'sixHourly'
+                ? UnixTime.HOUR * 6
+                : UnixTime.HOUR),
+        )}
       </div>
       <HorizontalSeparator className="my-1" />
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
-          if (entry.type === 'none') return null
+          if (entry.type === 'none' || entry.hide) return null
           const configEntry = entry.name ? config[entry.name] : undefined
           if (!configEntry) return null
 
@@ -164,7 +200,9 @@ function CustomTooltip({
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {isEstimated ? 'est. ' : ''} {entry.value?.toFixed(2)} {unit}
+                {entry.value !== null && entry.value !== undefined
+                  ? `${isEstimated ? 'est. ' : ''} ${entry.value?.toFixed(2)} ${unit}`
+                  : 'No data'}
               </span>
             </div>
           )

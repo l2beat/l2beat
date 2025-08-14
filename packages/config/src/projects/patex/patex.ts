@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const patex: ScalingProject = upcomingL2({
   id: 'patex',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1707313169), // 2024-02-07T13:39:29Z
   display: {
     category: 'Optimistic Rollup',

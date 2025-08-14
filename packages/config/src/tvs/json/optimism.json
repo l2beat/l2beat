@@ -175,6 +175,25 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-BTRST",
+      "priceId": "braintrust",
+      "symbol": "BTRST",
+      "name": "BTRST",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18100/large/braintrust.PNG?1696517605",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x799ebfABE77a6E34311eeEe9825190B9ECe32824",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1631664000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "optimism-BUIDL",
       "priceId": "blackrock-usd-institutional-digital-liquidity-fund",
       "symbol": "BUIDL",
@@ -243,6 +262,25 @@
         "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
         "decimals": 18,
         "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-COW",
+      "priceId": "cow-protocol",
+      "symbol": "COW",
+      "name": "CoW Protocol Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24384/large/CoW-token_logo.png?1719524382",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1648425600
       },
       "category": "other",
       "source": "canonical",
@@ -379,7 +417,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -496,7 +541,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "optimism-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -518,9 +563,9 @@
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
-            "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+            "escrowAddress": "0x322b47Ff1FA8D5611F761e3E275C45B71b294D43",
             "decimals": 18,
-            "sinceTimestamp": 1624401464
+            "sinceTimestamp": 1753379243
           }
         ]
       },
@@ -697,7 +742,7 @@
         "sinceTimestamp": 1641759454
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -907,7 +952,7 @@
         "decimals": 8,
         "sinceTimestamp": 1730160000
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -1681,7 +1726,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1900,7 +1952,7 @@
         "decimals": 18,
         "sinceTimestamp": 1681389587
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -2108,8 +2160,15 @@
         ]
       },
       "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2234,7 +2293,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2308,7 +2374,7 @@
         "decimals": 8,
         "sinceTimestamp": 1624401464
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -2450,7 +2516,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

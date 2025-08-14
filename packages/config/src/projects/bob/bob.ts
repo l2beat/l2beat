@@ -1,5 +1,5 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -10,9 +10,8 @@ const discovery = new ProjectDiscovery('bob')
 export const bob: ScalingProject = opStackL2({
   addedAt: UnixTime(1714521600), // 2024-05-01T00:00:00Z
   discovery,
-  additionalBadges: [BADGES.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPKailua],
   additionalPurposes: ['Bitcoin DApps'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'BOB',
     slug: 'bob',
@@ -29,7 +28,9 @@ export const bob: ScalingProject = opStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x091dF5E1284E49fA682407096aD34cfD42B95B72'),
+      address: ChainSpecificAddress(
+        'eth:0x091dF5E1284E49fA682407096aD34cfD42B95B72',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
     }),
@@ -39,8 +40,24 @@ export const bob: ScalingProject = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
+      title: 'Proof System Intervention',
+      url: 'https://app.blocksec.com/explorer/tx/eth/0xa065f636adfc7cdf08007ee81303028fa4daf291279a75a5ae1d3a975acce806?line=7',
+      date: '2025-07-24T00:00:00Z',
+      description:
+        'A state root proposal is manually resolved after changing the finalization config.',
+      type: 'incident',
+    },
+    {
+      title: 'OP Kailua Upgrade',
+      url: 'https://x.com/build_on_bob/status/1948369793796689925',
+      date: '2025-07-17T00:00:00Z',
+      description:
+        'BOB returns to the rollup section by using a hybrid zk fault proof system.',
+      type: 'general',
+    },
+    {
       title: 'Phase 1: Optimistic BOB',
-      url: 'https://docs.gobob.xyz/docs/learn/bob-stack/op-stack',
+      url: 'https://x.com/build_on_bob/status/1763642185101004914',
       date: '2024-05-01T00:00:00Z',
       description: 'BOB bootstrapping as an Optimistic Rollup on Ethereum.',
       type: 'general',

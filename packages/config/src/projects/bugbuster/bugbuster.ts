@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -17,7 +17,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
-const discovery = new ProjectDiscovery('bugbuster', 'optimism')
+const discovery = new ProjectDiscovery('bugbuster')
 
 export const bugbuster: ScalingProject = {
   type: 'layer3',
@@ -59,10 +59,13 @@ export const bugbuster: ScalingProject = {
       ],
     },
   },
+  proofSystem: undefined,
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x3ff5c7383f614256053c3f6b86a47ba974937299'),
+        address: ChainSpecificAddress(
+          'oeth:0x3ff5c7383f614256053c3f6b86a47ba974937299',
+        ),
         tokens: '*',
         description: 'DApp Contract storing bounties funds.',
       }),
@@ -177,7 +180,7 @@ export const bugbuster: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   permissions: {
-    [discovery.chain]: {
+    optimism: {
       actors: [
         discovery.getPermissionDetails(
           'BugBuster Owner',
@@ -194,7 +197,7 @@ export const bugbuster: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      optimism: [
         discovery.getContractDetails('BugBuster', {
           description:
             'CartesiDApp instance for the Bug Buster DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',

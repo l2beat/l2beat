@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
@@ -13,22 +13,28 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
-import { formatTimestamp } from '~/utils/dates'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
+import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 
 interface ActivityRatioChartDataPoint {
   timestamp: number
-  ratio: number
+  ratio: number | null
 }
 
 interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
+  syncedUntil: number | undefined
   isLoading: boolean
   className?: string
 }
 
-export function ActivityRatioChart({ data, isLoading, className }: Props) {
+export function ActivityRatioChart({
+  data,
+  isLoading,
+  syncedUntil,
+  className,
+}: Props) {
   const chartMeta = {
     ratio: {
       label: 'UOPS/TPS Ratio',
@@ -57,6 +63,7 @@ export function ActivityRatioChart({ data, isLoading, className }: Props) {
           dot={false}
           isAnimationActive={false}
         />
+
         {getCommonChartComponents({
           data,
           isLoading,
@@ -64,11 +71,10 @@ export function ActivityRatioChart({ data, isLoading, className }: Props) {
             tickFormatter: (value) => `${round(value, 2)}x`,
             domain: ([_, dataMax]) => [1, dataMax + (dataMax - 1) * 0.1],
           },
+          syncedUntil,
         })}
 
-        <ChartTooltip
-          content={<ActivityCustomTooltip syncedUntil={undefined} />}
-        />
+        <ChartTooltip filterNull={false} content={<ActivityCustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <defs>
           <EmeraldFillGradientDef id="fillRatio" />
@@ -78,21 +84,19 @@ export function ActivityRatioChart({ data, isLoading, className }: Props) {
   )
 }
 
-export function ActivityCustomTooltip({
+function ActivityCustomTooltip({
   active,
   payload,
   label: timestamp,
-  syncedUntil,
-}: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
+}: TooltipProps<number, string>) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
-            longMonthName: true,
-          })}
+          {formatRange(timestamp, timestamp + UnixTime.DAY)}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
@@ -120,8 +124,8 @@ export function ActivityCustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
-                    ? 'Not synced'
+                  {entry.value === null
+                    ? 'No data'
                     : formatActivityCount(entry.value)}
                 </span>
               </div>

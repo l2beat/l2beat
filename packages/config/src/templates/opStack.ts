@@ -17,13 +17,18 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   pickWorseRisk,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { formatChallengePeriod, formatDelay } from '../common/formatDelays'
+import {
+  formatChallengeAndExecutionDelay,
+  formatChallengePeriod,
+  formatDelay,
+} from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -31,6 +36,7 @@ import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
+  ProjectScalingProofSystem,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -135,6 +141,7 @@ interface OpStackConfigCommon {
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   milestones?: Milestone[]
+  nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
@@ -186,6 +193,7 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   stackedRiskView?: ProjectScalingRiskView
+  hostChain: string
 }
 
 function opStackCommon(
@@ -241,6 +249,9 @@ function opStackCommon(
   if (fraudProofType === 'Permissionless') {
     architectureImage.push('permissionless')
   }
+  if (fraudProofType === 'Kailua') {
+    architectureImage.push('kailua')
+  }
 
   const nativeContractRisks: ProjectRisk[] = [
     templateVars.nonTemplateContractRisks ??
@@ -256,6 +267,11 @@ function opStackCommon(
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
   ]
+
+  const hasNoProofs = templateVars.reasonsForBeingOther?.some(
+    (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
+  )
+
   return {
     archivedAt: templateVars.archivedAt,
     id: ProjectId(templateVars.discovery.projectName),
@@ -273,7 +289,9 @@ function opStackCommon(
         (templateVars.stateValidationImage ??
         fraudProofType === 'Permissionless')
           ? 'opfp'
-          : undefined,
+          : fraudProofType === 'Kailua'
+            ? 'kailua'
+            : undefined,
       stacks: ['OP Stack'],
       category:
         templateVars.display.category ??
@@ -291,6 +309,9 @@ function opStackCommon(
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
+    proofSystem:
+      templateVars.nonTemplateProofSystem ??
+      (hasNoProofs ? undefined : { type: 'Optimistic' }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
@@ -303,19 +324,30 @@ function opStackCommon(
         },
       ),
       escrows: [
+        migratedToLockbox(templateVars)
+          ? templateVars.discovery.getEscrowDetails({
+              includeInTotal: type === 'layer2',
+              address: templateVars.discovery.getContract('ETHLockbox').address,
+              tokens: optimismPortalTokens,
+              premintedTokens: templateVars.optimismPortalPremintedTokens,
+              description: `Main escrow for users depositing ${optimismPortalTokens.join(
+                ', ',
+              )}.`,
+              ...upgradeability,
+            })
+          : templateVars.discovery.getEscrowDetails({
+              includeInTotal: type === 'layer2',
+              address: portal.address,
+              tokens: optimismPortalTokens,
+              premintedTokens: templateVars.optimismPortalPremintedTokens,
+              description: `Main entry point for users depositing ${optimismPortalTokens.join(
+                ', ',
+              )}.`,
+              ...upgradeability,
+            }),
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: ChainSpecificAddress.address(portal.address),
-          tokens: optimismPortalTokens,
-          premintedTokens: templateVars.optimismPortalPremintedTokens,
-          description: `Main entry point for users depositing ${optimismPortalTokens.join(
-            ', ',
-          )}.`,
-          ...upgradeability,
-        }),
-        templateVars.discovery.getEscrowDetails({
-          includeInTotal: type === 'layer2',
-          address: ChainSpecificAddress.address(l1StandardBridgeEscrow),
+          address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           premintedTokens: templateVars.l1StandardBridgePremintedTokens,
           excludedTokens: templateVars.nonTemplateExcludedTokens,
@@ -450,7 +482,7 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
 
 export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   const layer2s = require('../processing/layer2s').layer2s as ScalingProject[]
-  const hostChain = templateVars.discovery.chain
+  const hostChain = templateVars.hostChain
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
@@ -625,6 +657,114 @@ function getStateValidation(
         isPermissionless: true,
       })
     }
+    case 'Kailua': {
+      const kailuaBond = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'participationBond',
+      )
+      const proposalOutputCount =
+        templateVars.discovery.getContractValue<number>(
+          'KailuaTreasury',
+          'PROPOSAL_OUTPUT_COUNT',
+        )
+      const outputBlockSpan = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'OUTPUT_BLOCK_SPAN',
+      )
+      const vanguardAdvantage = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'vanguardAdvantage',
+      )
+      const disputeGameFinalityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          'OptimismPortal2',
+          'disputeGameFinalityDelaySeconds',
+        )
+      const maxClockDuration = templateVars.discovery.getContractValue<number>(
+        'KailuaGame',
+        'MAX_CLOCK_DURATION',
+      )
+      return {
+        categories: [
+          {
+            title: 'State root proposals',
+            description: `Proposers submit state roots as children of any (possibly unresolved) previous state root proposal, by calling the \`propose()\` function in the KailuaTreasury. A parent state root can have multiple conflicting children, composing a tournament. Each proposer requires to lock a bond, currently set to ${formatEther(
+              kailuaBond,
+            )} ETH, that can be slashed if any proposal made by them is proven incorrect via a fault proof or a conflicting validity proof. The bond can be withdrawn once the proposer has no more pending proposals that need to be resolved and was not eliminated.
+
+Proposals consist of a state root and a reference to their parent and implicitly challenge any sibling proposals who have the same parent. A proposal asserts that the proposed state root constitutes a valid state transition from the parent's state root. To offer efficient zk fault proofs, each proposal must include ${proposalOutputCount} intermediate state commitments, each spanning ${outputBlockSpan} L2 blocks. 
+
+Proposals target sequential tournament epochs of currently ${proposalOutputCount} * ${outputBlockSpan} L2 blocks. A tournament with a resolved parent tournament, a single child- and no conflicting sibling proposals can be resolved after ${formatSeconds(maxClockDuration)}. 
+
+The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`,
+            references: [
+              {
+                title: "'Sequencing' - Kailua Docs",
+                url: 'https://risc0.github.io/kailua/design.html#sequencing',
+              },
+              {
+                title: 'Vanguard - Kailua Docs',
+                url: 'https://risc0.github.io/kailua/parameters.html#vanguard-advantage',
+              },
+            ],
+          },
+          {
+            title: 'Challenges',
+            description: `
+Any conflicting sibling proposals within a tournament that are made within the ${formatSeconds(maxClockDuration)} challenge period of a proposal they are challenging, delay resolving the tournament until sufficient ZK proofs are published to leave one single tournament survivor.
+
+In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other in a tournament, which can only be resolved if but a single child survives. A state root can be resolved if it is **the only remaining proposal** due to any combination of the following elimination methods: 
+1. the proposal's challenge period of ${formatSeconds(maxClockDuration)} has ended before a conflicting proposal was made
+2. the proposal is proven correct with a full validity proof (invalidates all conflicting proposals)
+3. a conflicting sibling proposal is proven faulty
+
+Proving any of the ${proposalOutputCount} intermediate state commitments in a proposal faulty invalidates the entire proposal. Proving a proposal valid invalidates all conflicting siblings. Pruning of a tournament's children happens strictly chronologically, which guarantees that the first faulty proposal of a given proposer is always pruned first. When pruned, an invalid proposal leads to the elimination of its proposer, which invalidates all their subsequent proposals, slashes their bond, and disallows future proposals by the same address. A slashed bond is transferred to an address chosen by the prover who caused the slashing.
+
+A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
+            references: [
+              {
+                url: 'https://risc0.github.io/kailua/design.html#disputes',
+                title: 'Disputes - Kailua Docs',
+              },
+            ],
+          },
+          {
+            title: 'Validity proofs',
+            description: `Validity proofs and fault proofs both must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
+
+The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
+            references: [
+              {
+                url: 'https://risczero.com/blog/kailua-how-it-works',
+                title: 'Risc0 Kailua Docs',
+              },
+              {
+                url: 'https://github.com/risc0/risc0-ethereum/blob/main/contracts/version-management-design.md',
+                title: 'Verifier upgrade and deprecation - Kailua Docs',
+              },
+            ],
+            risks: [
+              {
+                category: 'Funds can be stolen if',
+                text: 'the validity proof cryptography is broken or implemented incorrectly.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'no challenger checks the published state',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route selector.',
+              },
+              {
+                category: 'Funds can be frozen if',
+                text: 'a verifier needed for a given proof is paused by its permissioned owner.',
+              },
+            ],
+          },
+        ],
+      }
+    }
   }
 }
 
@@ -740,7 +880,6 @@ function getRiskViewStateValidation(
   templateVars: OpStackConfigCommon,
 ): TableReadyValue {
   const fraudProofType = getFraudProofType(templateVars)
-
   switch (fraudProofType) {
     case 'None': {
       return {
@@ -750,18 +889,31 @@ function getRiskViewStateValidation(
     }
     case 'Permissioned': {
       return {
-        ...RISK_VIEW.STATE_FP_INT,
+        ...RISK_VIEW.STATE_FP_INT(
+          getChallengePeriod(templateVars),
+          getExecutionDelay(templateVars),
+        ),
         description:
-          RISK_VIEW.STATE_FP_INT.description +
+          RISK_VIEW.STATE_FP_INT().description +
           ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
     case 'Permissionless': {
       return {
-        ...RISK_VIEW.STATE_FP_INT,
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
+        ...RISK_VIEW.STATE_FP_INT(
+          getChallengePeriod(templateVars),
+          getExecutionDelay(templateVars),
+        ),
+      }
+    }
+    case 'Kailua': {
+      return {
+        ...RISK_VIEW.STATE_FP_HYBRID_ZK,
+        secondLine: formatChallengeAndExecutionDelay(
+          getChallengePeriod(templateVars) +
+            Number(getExecutionDelay(templateVars)),
+        ),
       }
     }
   }
@@ -794,6 +946,13 @@ function getRiskViewProposerFailure(
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     case 'Permissionless':
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
+    case 'Kailua':
+      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
+        templateVars.discovery.getContractValue<number>(
+          'KailuaTreasury',
+          'vanguardAdvantage',
+        ),
+      )
   }
 }
 
@@ -810,6 +969,7 @@ function computedStage(
     None: null,
     Permissioned: false,
     Permissionless: true,
+    Kailua: true,
   }
 
   return getStage(
@@ -823,14 +983,20 @@ function computedStage(
         fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
       },
       stage1: {
-        principle: false,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
+        principle:
+          fraudProofType === 'Permissionless' &&
+          (templateVars.hasProperSecurityCouncil ?? false),
+        usersHave7DaysToExit:
+          fraudProofType === 'Permissionless' &&
+          (templateVars.hasProperSecurityCouncil ?? false),
+        usersCanExitWithoutCooperation:
+          fraudProofType === 'Permissionless' || fraudProofType === 'Kailua',
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: null,
+        proofSystemOverriddenOnlyInCaseOfABug:
+          fraudProofType === 'None' ? null : false,
         fraudProofSystemIsPermissionless: fraudProofMapping[fraudProofType],
         delayWith30DExitWindow: false,
       },
@@ -950,6 +1116,7 @@ function getTechnologyOperator(
     }
     case 'Permissioned':
     case 'Permissionless':
+    case 'Kailua':
       return OPERATOR.CENTRALIZED_OPERATOR
   }
 }
@@ -1017,6 +1184,53 @@ function getTechnologyExitMechanism(
       const maxClockDuration = templateVars.discovery.getContractValue<number>(
         disputeGameName,
         'maxClockDuration',
+      )
+
+      result.push({
+        name: 'Regular exits',
+        description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after ${formatSeconds(
+          disputeGameFinalityDelaySeconds,
+        )}. Withdrawal inclusion can be proven before state root settlement, but a ${formatSeconds(
+          proofMaturityDelaySeconds,
+        )} period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least ${formatSeconds(
+          maxClockDuration,
+        )} to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
+        risks: [],
+        references: [
+          {
+            title: `${portal.name}.sol - Etherscan source code, proveWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+          {
+            title: `${portal.name}.sol - Etherscan source code, finalizeWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+        ],
+      })
+      break
+    }
+    case 'Kailua': {
+      const disputeGameFinalityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          portal.name ?? portal.address,
+          'disputeGameFinalityDelaySeconds',
+        )
+
+      const proofMaturityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          portal.name ?? portal.address,
+          'proofMaturityDelaySeconds',
+        )
+
+      const disputeGameName = 'KailuaGame'
+
+      const maxClockDuration = templateVars.discovery.getContractValue<number>(
+        disputeGameName,
+        'MAX_CLOCK_DURATION',
       )
 
       result.push({
@@ -1207,7 +1421,8 @@ function getTrackedTxs(
       ]
     }
     case 'Permissioned':
-    case 'Permissionless': {
+    case 'Permissionless':
+    case 'Kailua': {
       const disputeGameFactory =
         templateVars.disputeGameFactory ??
         templateVars.discovery.getContract('DisputeGameFactory')
@@ -1294,7 +1509,8 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
       )
     }
     case 'Permissioned':
-    case 'Permissionless': {
+    case 'Permissionless':
+    case 'Kailua': {
       return templateVars.discovery.getContractValue<number>(
         'OptimismPortal2',
         'proofMaturityDelaySeconds',
@@ -1329,10 +1545,35 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
         'maxClockDuration',
       )
     }
+    case 'Kailua': {
+      return templateVars.discovery.getContractValue<number>(
+        'KailuaGame',
+        'MAX_CLOCK_DURATION',
+      )
+    }
   }
 }
 
-type FraudProofType = 'None' | 'Permissioned' | 'Permissionless'
+function getExecutionDelay(
+  templateVars: OpStackConfigCommon,
+): number | undefined {
+  const fraudProofType = getFraudProofType(templateVars)
+  const portal = getOptimismPortal(templateVars)
+  switch (fraudProofType) {
+    case 'Permissioned':
+    case 'Permissionless':
+    case 'Kailua': {
+      return templateVars.discovery.getContractValue<number>(
+        portal.name ?? portal.address,
+        'disputeGameFinalityDelaySeconds',
+      )
+    }
+    default:
+      return undefined
+  }
+}
+
+type FraudProofType = 'None' | 'Permissioned' | 'Permissionless' | 'Kailua'
 
 function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   const portal = getOptimismPortal(templateVars)
@@ -1351,11 +1592,18 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   if (respectedGameType === 1) {
     return 'Permissioned'
   }
+  if (respectedGameType === 1337) {
+    return 'Kailua'
+  }
   throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
 
 function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('SuperchainConfig')
+}
+
+function migratedToLockbox(templateVars: OpStackConfigCommon): boolean {
+  return templateVars.discovery.hasContract('ETHLockbox')
 }
 
 function hostChainDAProvider(hostChain: ScalingProject): DAProvider {

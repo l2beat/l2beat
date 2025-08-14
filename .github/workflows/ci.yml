@@ -1,5 +1,8 @@
 name: CI
 
+permissions:
+  contents: read
+
 on:
   pull_request:
   push:
@@ -172,7 +175,7 @@ jobs:
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
     services:
       postgres:
-        image: postgres:14
+        image: postgres:15
         env:
           POSTGRES_PASSWORD: postgres
         options: >-
@@ -217,3 +220,50 @@ jobs:
 
       - name: Run Biome
         run: biome ci
+
+  test-all-pages:
+    name: Test All Pages
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build dependencies
+        run: pnpm build:dependencies
+
+      - name: Start mock server and test pages
+        run: |
+          cd packages/frontend 
+
+          pnpm build
+          
+          # Start the mock server in the background and redirect output to /dev/null
+          pnpm start:mock > /dev/null 2>&1 &
+          SERVER_PID=$!
+          
+          # Wait for server to start
+          sleep 3
+          
+          # Test all pages
+          pnpm test-all-pages
+          
+          # Kill the server
+          echo "Stopping server..."
+          kill $SERVER_PID

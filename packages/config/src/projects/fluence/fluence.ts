@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -23,7 +23,7 @@ export const fluence: ScalingProject = orbitStackL2({
       'Fluence is an Optimium on Ethereum, built on the Orbit stack. It enables a decentralized serverless platform & computing marketplace powered by blockchain economics.',
     links: {
       websites: ['https://fluence.network/'],
-      bridges: ['https://bridge.fluence.network/bridge/fluence'],
+      bridges: ['https://bridge.fluence.network/'],
       documentation: ['https://fluence.dev/docs/learn/overview'],
       explorers: ['https://blockscout.mainnet.fluence.dev/'],
       repositories: ['https://github.com/fluencelabs'],
@@ -38,7 +38,9 @@ export const fluence: ScalingProject = orbitStackL2({
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       //standardGateway
-      address: EthereumAddress('0x5d436201d1fD53Dc9ECeA4268f257C6fC87c598D'),
+      address: ChainSpecificAddress(
+        'eth:0x5d436201d1fD53Dc9ECeA4268f257C6fC87c598D',
+      ),
       tokens: '*',
     }),
   ],
@@ -67,5 +69,5 @@ export const fluence: ScalingProject = orbitStackL2({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
 })

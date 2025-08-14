@@ -41,6 +41,8 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   zircuit: 'zircuit',
   katana: 'katana',
   taiko: 'taiko',
+  facet: 'facet',
+  gateway: 'gateway',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
@@ -78,7 +80,9 @@ export function ChainSpecificAddress(value: string): ChainSpecificAddress {
   return `${chain}:${result.address}` as unknown as ChainSpecificAddress
 }
 
-ChainSpecificAddress.check = function check(value: string) {
+ChainSpecificAddress.check = function check(
+  value: string,
+): value is ChainSpecificAddress {
   try {
     return ChainSpecificAddress(value).toString() === value
   } catch {

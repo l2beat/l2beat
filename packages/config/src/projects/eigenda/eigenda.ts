@@ -91,8 +91,7 @@ export const eigenda: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description:
-      'EigenDA is a data availability solution built on Eigen Layer.',
+    description: 'EigenDA is a data availability solution built on EigenLayer.',
     links: {
       websites: ['https://www.eigenda.xyz/'],
       documentation: ['https://docs.eigenda.xyz/overview'],
@@ -119,7 +118,7 @@ export const eigenda: BaseProject = {
     EigenDA is composed by three types of off-chain entities: node operators, a disperser and a retriever.
     - EigenDA **operators** are node operators running the EigenDA node software and are registered to the EigenDA AVS in EigenLayer.
     - The **disperser** is the entity responsible for collecting the blobs from the sequencer, erasure coding them and generating the encoded blob's KZG commitments for each chunk. Although the disperser could be rollup-operated, it is currently a centralised entity operated by Eigen Labs.
-    - Lastly, the **retriever** client is responsible for querying the EigenDA operators to retrieve blob chunks, verifying their integrity and reconstructs the original blob. 
+    - Lastly, the **retriever** client is responsible for querying the EigenDA operators to retrieve blob chunks, verifying their integrity and reconstructing the original blob. 
     
     ### Operators Registration 
     Operators register with the EigenDAServiceManager via the registerOperatorToAVS() function, enabling them to participate in the data availability network. They are responsible for holding and serving blobs data, and earn rewards for their participation in the network.
@@ -184,6 +183,92 @@ export const eigenda: BaseProject = {
       },
     ],
     finality: 600, // ~10 minutes
+    sovereignProjectsTrackingConfig: [
+      {
+        projectId: ProjectId('mantle-testnet'),
+        name: 'Mantle-testnet',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 0,
+            customerId: '0xc16267ecb2297f8a98fce214686e80697da91198',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('matter-labs-wonderfi'),
+        name: 'Matter Labs - WonderFi',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 0,
+            customerId: '0xdaf4b26d608d58f53ab6f0758a12de01296ce5bf',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('altlayer'),
+        name: 'AltLayer',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 0,
+            customerId: '0x4fdbd273b8d2c1c429a7e3078063c49528aa8264',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('altlayer-2'),
+        name: 'AltLayer-2',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 0,
+            customerId: '0x1359fbd4b9bc9441a90436719426157526742c9a',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('altlayer-cyber'),
+        name: 'Altlayer Cyber',
+        daTrackingConfig: [
+          { type: 'eigen-da', sinceTimestamp: 0, customerId: '35.167.254.127' },
+        ],
+      },
+      {
+        projectId: ProjectId('conduit'),
+        name: 'Conduit',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 0,
+            customerId: '0x8dc6f0bd2ce3c40d633f5541e21e7574598f7c75',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('layer-n'),
+        name: 'Layer N',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 0,
+            customerId: '0xd697219f32129f4544a554be015386fac9445507',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('treasure'),
+        name: 'Treasure',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 0,
+            customerId: '0x96561d11f55f99f7cda780b77e524195bde1dcde',
+          },
+        ],
+      },
+    ],
   },
   daBridge: {
     name: 'Service Manager',
@@ -253,9 +338,7 @@ An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown
     },
   },
   contracts: {
-    addresses: {
-      ethereum: discovery.getDiscoveredContracts(),
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [
       {
         category: 'Funds can be lost if',
@@ -279,9 +362,7 @@ An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown
       },
     ],
   },
-  permissions: {
-    ethereum: discovery.getDiscoveredPermissions(),
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   milestones: [
     {
       title: 'EigenDA launch on mainnet',

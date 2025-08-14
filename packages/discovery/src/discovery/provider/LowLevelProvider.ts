@@ -3,6 +3,7 @@ import type {
   BlobClient,
   BlobsInBlock,
   CelestiaApiClient,
+  CoingeckoClient,
 } from '@l2beat/shared'
 import {
   assert,
@@ -36,6 +37,7 @@ export class LowLevelProvider {
     private readonly provider: providers.JsonRpcProvider,
     private readonly eventProvider: providers.JsonRpcProvider,
     private readonly etherscanClient: IEtherscanClient,
+    private readonly coingeckoClient: CoingeckoClient,
     private readonly celestiaApiClient?: CelestiaApiClient,
     private readonly blobClient?: BlobClient,
     private readonly logger: Logger = Logger.SILENT,
@@ -48,6 +50,7 @@ export class LowLevelProvider {
       etherscanClient: this.etherscanClient,
       blobClient: this.blobClient,
       celestiaApiClient: this.celestiaApiClient,
+      coingeckoClient: this.coingeckoClient,
     }
   }
 
@@ -236,6 +239,18 @@ export class LowLevelProvider {
     }, ProviderMeasurement.GET_BLOCKNUMBER)
   }
 
+  getBlockNumberAtOrBeforeExplorer(timestamp: UnixTime): Promise<number> {
+    return this.measure(() => {
+      return rpcWithRetries(
+        async () => {
+          return await this.etherscanClient.getBlockNumberAtOrBefore(timestamp)
+        },
+        this.logger,
+        'getBlockNumberAtOrBefore',
+      )
+    }, ProviderMeasurement.GET_BLOCK_NUMBER_AT_OR_BEFORE)
+  }
+
   async getBlobs(txHash: string): Promise<BlobsInBlock> {
     assert(
       this.blobClient,
@@ -260,12 +275,12 @@ export class LowLevelProvider {
     )
   }
 
-  async getCelestiaBlockResultLogs(height: number) {
+  async getCelestiaBlockResultEvents(height: number) {
     assert(
       this.celestiaApiClient,
       'CelestiaApiClient is not available, configure the .env to include celestia API url.',
     )
-    return await this.celestiaApiClient.getBlockResultLogs(height)
+    return await this.celestiaApiClient.getBlockResultEvents(height)
   }
 
   private async measure<T>(fn: () => Promise<T>, key: number): Promise<T> {

@@ -1,7 +1,7 @@
 {
   "name": "multichain",
   "chain": "ethereum",
-  "blockNumber": 21322825,
+  "timestamp": 1733239115,
   "configHash": "0x8140325b08c8afbd7d4ff7aa005de5132e5ce76fc05308f14f84993c39cec2df",
   "entries": [
     {
@@ -147,5 +147,6 @@
     ]
   },
   "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 21322825 },
   "permissionsConfigHash": "0xb981dc7cfeb6f87d6d9dfab17e747e0e022a77b261291e4642634b8c3ade6e5f"
 }

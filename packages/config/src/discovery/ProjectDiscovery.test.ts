@@ -4,7 +4,7 @@ import {
   type DiscoveryConfig,
 } from '@l2beat/discovery'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery } from './ProjectDiscovery'
 
@@ -14,9 +14,10 @@ describe(ProjectDiscovery.name, () => {
     readConfig: (projectName: string, chain: string) =>
       mockConfig(projectName, chain),
     readDiscovery: () => discoveredJsonStub,
+    readAllDiscoveredChainsForProject: mockFn().returns(['ethereum']),
   })
 
-  const discovery = new ProjectDiscovery(projectName, 'ethereum', configReader)
+  const discovery = new ProjectDiscovery(projectName, configReader)
 
   describe(ProjectDiscovery.prototype.getContract.name, () => {
     it('should return contract for given address', () => {
@@ -80,11 +81,7 @@ describe(ProjectDiscovery.name, () => {
   })
 
   it('reads configurations for different chainIds', () => {
-    const discovery = new ProjectDiscovery(
-      'ExampleProject',
-      'arbitrum',
-      configReader,
-    )
+    const discovery = new ProjectDiscovery('ExampleProject', configReader)
     const contract = discovery.getContract(contractStub.address.toString())
 
     expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
@@ -92,11 +89,7 @@ describe(ProjectDiscovery.name, () => {
 
   describe(ProjectDiscovery.prototype.getPermissionsByRole.name, () => {
     it('should find contracts and eoas by role', () => {
-      const discovery = new ProjectDiscovery(
-        'ExampleProject',
-        'ethereum',
-        configReader,
-      )
+      const discovery = new ProjectDiscovery('ExampleProject', configReader)
       const sequencers = discovery.getPermissionsByRole('sequence')
       expect(sequencers).toEqual([
         {

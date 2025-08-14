@@ -182,7 +182,7 @@ const groups = compact<NavGroup>([
     preventTitleNavigation: true,
     links: [
       {
-        name: 'AggLayer',
+        name: 'Agglayer',
         slug: 'agglayer',
       },
       {

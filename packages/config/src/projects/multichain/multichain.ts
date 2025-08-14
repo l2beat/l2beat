@@ -109,7 +109,7 @@ export const multichain: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'AnyswapV4Router',
           'Multichain Liquidity Network Router V4.',
@@ -123,7 +123,7 @@ export const multichain: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Multichain "Liquidity Tool"',

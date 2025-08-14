@@ -72,7 +72,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -162,7 +162,7 @@
         "decimals": 8,
         "sinceTimestamp": 1727654400
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -257,7 +257,7 @@
         "decimals": 8,
         "sinceTimestamp": 1725056027
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -581,7 +581,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -649,7 +649,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -894,7 +894,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

@@ -16,10 +16,13 @@ export const scalingUpcomingColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
+      <div className="font-medium">
+        <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
+      </div>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip />,
+      cellClassName: 'pr-5',
     },
   }),
   columnHelper.display({

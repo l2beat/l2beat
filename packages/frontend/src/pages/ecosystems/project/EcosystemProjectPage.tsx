@@ -23,6 +23,7 @@ import { EcosystemProjectsByRaas } from './components/widgets/EcosystemProjectsB
 import { EcosystemToken } from './components/widgets/EcosystemToken'
 import { EcosystemTvsByStage } from './components/widgets/EcosystemTvsByStage'
 import { EcosystemTvsByTokenType } from './components/widgets/EcosystemTvsByTokenType'
+import { EcosystemUpdateLink } from './components/widgets/EcosystemUpdateLink'
 
 interface Props extends AppLayoutProps {
   ecosystem: EcosystemEntry
@@ -61,6 +62,7 @@ export function EcosystemProjectPage({
                   className="col-span-12"
                 />
                 <EcosystemsTvsChart
+                  id={ecosystem.id}
                   name={ecosystem.name}
                   entries={ecosystem.liveProjects}
                   allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
@@ -68,6 +70,7 @@ export function EcosystemProjectPage({
                   className="col-span-12 md:col-span-6"
                 />
                 <EcosystemsActivityChart
+                  id={ecosystem.id}
                   name={ecosystem.name}
                   entries={ecosystem.liveProjects}
                   allScalingProjectsUops={ecosystem.allScalingProjects.uops}
@@ -117,6 +120,8 @@ export function EcosystemProjectPage({
                     slug={ecosystem.slug}
                     href={ecosystem.links.buildOn}
                     backgroundImage={ecosystem.images.buildOn}
+                    headlineText={ecosystem.banners.firstBanner?.headlineText}
+                    mainText={ecosystem.banners.firstBanner?.mainText}
                     className={cn(
                       ecosystem.slug === 'superchain' && 'text-primary',
                     )}
@@ -124,6 +129,8 @@ export function EcosystemProjectPage({
                   <EcosystemLearnMoreLink
                     name={ecosystem.name}
                     href={ecosystem.links.learnMore}
+                    headlineText={ecosystem.banners.secondBanner?.headlineText}
+                    mainText={ecosystem.banners.secondBanner?.mainText}
                   />
                 </div>
                 <EcosystemMilestonesAndIncidents
@@ -140,6 +147,10 @@ export function EcosystemProjectPage({
                     ecosystem.images.delegateToL2BEAT
                   }
                   className="col-span-12 lg:col-span-8"
+                />
+                <EcosystemUpdateLink
+                  className="col-span-12"
+                  href={ecosystem.links.ecosystemUpdate}
                 />
               </main>
               <HorizontalSeparator className="my-4 max-md:hidden" />

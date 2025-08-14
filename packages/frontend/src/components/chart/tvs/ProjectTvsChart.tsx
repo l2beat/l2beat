@@ -96,20 +96,27 @@ function DefaultChart({
     excludeAssociatedTokens: false,
   })
 
-  const chartData: TvsChartDataPoint[] | undefined = data?.map(
+  const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
     ([timestamp, native, canonical, external, ethPrice]) => {
-      const total = native + canonical + external
+      const total =
+        native !== null && canonical !== null && external !== null
+          ? native + canonical + external
+          : null
       const divider = unit === 'usd' ? 1 : ethPrice
       return {
         timestamp,
-        value: total / divider,
+        value:
+          total !== null && divider !== null && divider !== 0
+            ? total / divider
+            : null,
       }
     },
   )
+
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
-    <section className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <ChartControlsWrapper>
         <ProjectChartTimeRange range={chartRange} />
         <TvsChartTimeRangeControls
@@ -122,7 +129,9 @@ function DefaultChart({
         data={chartData}
         unit={unit}
         isLoading={isLoading}
+        syncedUntil={data?.syncedUntil}
         milestones={milestones}
+        tickCount={4}
       />
       <TvsChartUnitControls unit={unit} setUnit={setUnit}>
         {tokens && (
@@ -134,6 +143,6 @@ function DefaultChart({
           />
         )}
       </TvsChartUnitControls>
-    </section>
+    </div>
   )
 }

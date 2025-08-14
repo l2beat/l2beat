@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x5a7bad2a664c4993e3c14b07ba4d6f21fcbf363f
+
+# Diff at Mon, 28 Jul 2025 07:11:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 22673062
+- current block number: 23015753
+
+## Description
+
+Linea Multisig 2: one member changed and delay module added.
+
+## Watched changes
+
+```diff
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436","description":"enable/disable the module, set delays and expiration of transactions, set the target.","role":".owner","via":[{"address":"eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"},{"address":"eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436","delay":7776000}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0xd6B95c960779c72B8C6752119849318E5d550574","description":"propose transactions.","role":".proposerAC","via":[{"address":"eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"},{"address":"eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436","delay":7776000}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436","delay":7776000,"role":".ZodiacModule_modules"}
+    }
+```
+
+```diff
+    contract Linea Multisig 2 (0xB8F5524D73f549Cf14A0587a3C7810723f9c0051) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xF112a2438a4e08836046D587350f9315C0eAE300"
++        "eth:0x7E55b79A01BD9125CD213Bc9F533d21Eb3bD68c5"
+      values.GnosisSafe_modules.0:
++        "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436"
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436","description":"enable/disable the module, set delays and expiration of transactions, set the target.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Delay (0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436)
+    +++ description: A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 90d, if registered as a module there.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/linea/ethereum/.flat/Delay.sol    | 600 +++++++++++++++++++++
+ 1 file changed, 600 insertions(+)
+```
+
 Generated with discovered.json: 0x6418dcbe0cbc8e4ecee265d24fc387958daed07b
 
 # Diff at Mon, 14 Jul 2025 12:45:19 GMT:
@@ -3657,7 +3709,7 @@ Generated with discovered.json: 0xf601728a00dd36fda7e9e790618e91b1f1b4b7a2
 ## Description
 
 Deleted two verifiers at `proofType = [6, 7]`. Both of them are identical and
-only differ in the intial setup parameters.
+only differ in the initial setup parameters.
 
 ## Watched changes
 

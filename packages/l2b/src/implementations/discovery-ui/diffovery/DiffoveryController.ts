@@ -39,7 +39,7 @@ export class DiffoveryController {
   async getClient(shortChain: string): Promise<IProvider> {
     const chain = getChainFullName(shortChain)
     const blockNumber = await this.allProviders.getLatestBlockNumber(chain)
-    return this.allProviders.get(chain, blockNumber)
+    return this.allProviders.getByBlockNumber(chain, blockNumber)
   }
 
   async handle(

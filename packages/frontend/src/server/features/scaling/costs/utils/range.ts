@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
+import { getBucketValuesRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export const CostsTimeRange = v.union([
@@ -14,26 +14,23 @@ export const CostsTimeRange = v.union([
 ])
 export type CostsTimeRange = v.infer<typeof CostsTimeRange>
 
-/**
- * Returns a range of days that are fully synced.
- *
- * Fully synced means that the day is synced to the midnight. Current day is not included.
- */
-export function getFullySyncedCostsRange(
-  range: CostsTimeRange,
-): [UnixTime, UnixTime] {
-  const days = rangeToDays({ type: range })
-
-  const startOfDay = UnixTime.toStartOf(UnixTime.now(), 'day')
-
-  const end = startOfDay
-  const start = days !== null ? end - days * UnixTime.DAY : MIN_TIMESTAMPS.costs
-  return [start, end]
+export function getCostsRange(
+  range:
+    | { type: CostsTimeRange }
+    | { type: 'custom'; from: number; to: number },
+): [UnixTime | null, UnixTime] {
+  return getBucketValuesRange(range, rangeToResolution(range), {
+    offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
+  })
 }
 
 export type CostsResolution = ReturnType<typeof rangeToResolution>
-export function rangeToResolution(value: CostsTimeRange) {
-  const days = rangeToDays({ type: value })
+export function rangeToResolution(
+  value:
+    | { type: CostsTimeRange }
+    | { type: 'custom'; from: number; to: number },
+) {
+  const days = rangeToDays(value)
   if (days && days < 30) {
     return 'hourly'
   }

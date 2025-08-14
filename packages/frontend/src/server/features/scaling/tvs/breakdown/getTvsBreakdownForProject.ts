@@ -35,7 +35,7 @@ export async function getTvsBreakdownForProject(
     tokenValues.map((x) => [TokenId(x.tokenId), x]),
   )
 
-  const breakdown = await getTvsBreakdown(
+  const breakdown = getTvsBreakdown(
     project,
     tokenValuesMap,
     chains,
@@ -54,9 +54,11 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
     breakdown: {
       canonical: [
         {
-          amount: 100,
           id: TokenId('1'),
-          usdValue: 100,
+          valueForProject: 100,
+          value: 100,
+          amount: 100,
+          category: 'ether',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
@@ -76,15 +78,16 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           },
         },
         {
-          amount: 100,
           id: TokenId('4'),
-          usdValue: 100,
+          valueForProject: 100,
+          value: 100,
+          amount: 100,
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
           source: 'canonical',
           isAssociated: true,
-
+          category: 'ether',
           formula: {
             type: 'balanceOfEscrow',
             address: EthereumAddress(
@@ -101,14 +104,16 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
       ],
       native: [
         {
-          amount: 100,
           id: TokenId('2'),
-          usdValue: 100,
+          valueForProject: 100,
+          value: 100,
+          amount: 100,
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',
           source: 'native',
           isAssociated: true,
+          category: 'other',
           formula: {
             type: 'balanceOfEscrow',
             address: EthereumAddress(
@@ -125,14 +130,16 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
       ],
       external: [
         {
-          amount: 100,
           id: TokenId('3'),
-          usdValue: 100,
+          valueForProject: 100,
+          value: 100,
+          amount: 100,
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',
           source: 'external',
           isAssociated: true,
+          category: 'stablecoin',
           formula: {
             type: 'balanceOfEscrow',
             address: EthereumAddress(

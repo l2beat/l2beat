@@ -1,4 +1,87 @@
-Generated with discovered.json: 0x136f81ce2439701949d2389e724eeea46abe414f
+Generated with discovered.json: 0xca7f926c175dfd83727d63cae7e91b5f03ba2266
+
+# Diff at Tue, 12 Aug 2025 14:56:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754482796
+- current timestamp: 1755010596
+
+## Description
+
+vali set +1.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        103
++        104
+    }
+```
+
+Generated with discovered.json: 0x62b3ff9e22c96504ffd1d81cb518477909259fc5
+
+# Diff at Wed, 06 Aug 2025 12:20:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1702d91eebfba5d614c3470bbe1babe10fbe4c2b block: 1752576395
+- current timestamp: 1754482796
+
+## Description
+
+polygon multisig members rotated.
+
+## Watched changes
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc"
++        "eth:0xAB4045C93e4eFFa9b325F706C9a690Ed00d08958"
+      values.$members.2:
+-        "eth:0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      values.$members.3:
+-        "eth:0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a"
++        "eth:0x342EBaca3ACC54d6f5Ee78073FeC4af07f42B94e"
+      values.$members.6:
+-        "eth:0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25"
++        "eth:0x10cb290Fc4a5473460572ECF67B4C0cf06Da99A3"
+      values.$members.7:
+-        "eth:0x80D63799b1e08a80f73FB7a83264b5c31600bF3a"
++        "eth:0x06f2caFB5276B11bAA6679ABE49D5A5C0A911f5B"
+      values.$members.8:
+-        "eth:0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
++        "eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Katana Foundation Engineering/Security Multisig (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Polygon Labs Engineering/Security Multisig (0x9d851f8b8751c5FbC09b9E74E6e68E9950949052)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Security Multisig/GnosisSafeL2.sol             | 1032 +++++++++++++++++++
+ .../Security Multisig/GnosisSafeProxy.p.sol        |   35 +
+ .../Security Multisig/Safe.sol                     | 1088 ++++++++++++++++++++
+ .../Security Multisig/SafeProxy.p.sol              |   37 +
+ 4 files changed, 2192 insertions(+)
+```
+
+Generated with discovered.json: 0x098c182881657bff3d30af9cd81019acb4439a73
 
 # Diff at Tue, 15 Jul 2025 10:46:55 GMT:
 

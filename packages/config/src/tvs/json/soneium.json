@@ -29,7 +29,7 @@
       }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "soneium-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -51,9 +51,9 @@
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
-            "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+            "escrowAddress": "0x67B4de6FfA66EF201Ea6099A89cA397D56622E31",
             "decimals": 18,
-            "sinceTimestamp": 1733134751
+            "sinceTimestamp": 1753380095
           }
         ]
       },
@@ -158,6 +158,32 @@
       }
     },
     {
+      "mode": "auto",
+      "id": "soneium-RLP",
+      "priceId": "resolv-rlp",
+      "symbol": "RLP",
+      "name": "Resolv Liquidity Provider Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40017/large/orangeLogo..png?1725344586",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x35533f54740F1F1aA4179E57bA37039dfa16868B",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1750851847
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "mode": "custom",
       "id": "soneium-SolvBTC-1",
       "priceId": "solv-btc",
@@ -200,7 +226,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false
     },
@@ -247,7 +273,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false
     },
@@ -265,7 +291,7 @@
         "decimals": 18,
         "sinceTimestamp": 1743033600
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -304,6 +330,25 @@
     },
     {
       "mode": "auto",
+      "id": "soneium-SUPER",
+      "priceId": "superfarm",
+      "symbol": "SUPER",
+      "name": "SuperFarm",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14040/large/SV-Logo-200x200.png?1706880312",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xe53EC727dbDEB9E2d5456c3be40cFF031AB40A55",
+        "chain": "ethereum",
+        "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+        "decimals": 18,
+        "sinceTimestamp": 1733134751
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "soneium-TRALA",
       "priceId": "trala-token",
       "symbol": "TRALA",
@@ -335,7 +380,7 @@
         "decimals": 18,
         "sinceTimestamp": 1742262373
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -390,7 +435,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -410,6 +462,32 @@
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-USR",
+      "priceId": "resolv-usr",
+      "symbol": "USR",
+      "name": "Resolv USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb1b385542B6E80F77B94393Ba8342c3Af699f15c",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1750860741
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -451,7 +529,7 @@
         "decimals": 8,
         "sinceTimestamp": 1737044211
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -525,7 +603,40 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-wstUSR",
+      "priceId": "resolv-wstusr",
+      "symbol": "wstUSR",
+      "name": "Wrapped Staked USR",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51880/large/USR_LOGO.png?1732098841",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2a52B289bA68bBd02676640aA9F605700c9e5699",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1750861045
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

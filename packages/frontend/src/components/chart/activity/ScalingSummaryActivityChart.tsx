@@ -23,17 +23,22 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
+import {
+  YellowFillGradientDef,
+  YellowStrokeGradientDef,
+} from '~/components/core/chart/defs/YellowGradientDef'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
+import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { ActivityChartStats } from '~/server/features/scaling/activity/getActivityChartStats'
+import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
@@ -56,6 +61,13 @@ const chartMeta = {
       shape: 'line',
     },
   },
+  others: {
+    label: 'Others',
+    color: 'var(--chart-yellow)',
+    indicatorType: {
+      shape: 'line',
+    },
+  },
   ethereum: {
     label: 'Ethereum',
     color: 'var(--chart-ethereum)',
@@ -66,9 +78,8 @@ const chartMeta = {
 } satisfies ChartMeta
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
-  const { data: stats } = api.activity.chartStats.useQuery({
-    filter: { type: 'withoutOthers' },
-  })
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, ['others'])
+
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'all' },
@@ -76,27 +87,44 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
 
   const chartData = useMemo(() => {
     return data?.data.map(
-      ([timestamp, rollups, validiumsAndOptimiums, ethereum]) => {
+      ([timestamp, rollups, validiumsAndOptimiums, others, ethereum]) => {
         return {
           timestamp,
-          rollups: countPerSecond(rollups),
-          validiumsAndOptimiums: countPerSecond(validiumsAndOptimiums),
-          ethereum: countPerSecond(ethereum),
+          rollups: rollups !== null ? countPerSecond(rollups) : null,
+          validiumsAndOptimiums:
+            validiumsAndOptimiums !== null
+              ? countPerSecond(validiumsAndOptimiums)
+              : null,
+          others: others !== null ? countPerSecond(others) : null,
+          ethereum: ethereum !== null ? countPerSecond(ethereum) : null,
         }
       },
     )
   }, [data])
 
+  const stats = getStats(data?.data, dataKeys)
+
   return (
-    <section className="flex flex-col gap-4">
-      <Header stats={stats} />
-      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
+    <div className="flex flex-col gap-4">
+      <Header latestUopsCount={stats} />
+      <ChartContainer
+        meta={chartMeta}
+        data={chartData}
+        isLoading={isLoading}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+          disableOnboarding: true,
+        }}
+      >
         <AreaChart data={chartData} margin={{ top: 20 }}>
           <defs>
             <PinkFillGradientDef id="rollups-fill" />
             <PinkStrokeGradientDef id="rollups-stroke" />
             <CyanFillGradientDef id="validiums-and-optimiums-fill" />
             <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
+            <YellowFillGradientDef id="others-fill" />
+            <YellowStrokeGradientDef id="others-stroke" />
             <EthereumFillGradientDef id="ethereum-fill" />
             <EthereumStrokeGradientDef id="ethereum-stroke" />
           </defs>
@@ -107,16 +135,25 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
                 dataKey: 'rollups',
                 stroke: 'url(#rollups-stroke)',
                 fill: 'url(#rollups-fill)',
+                hide: !dataKeys.includes('rollups'),
               },
               {
                 dataKey: 'validiumsAndOptimiums',
                 stroke: 'url(#validiums-and-optimiums-stroke)',
                 fill: 'url(#validiums-and-optimiums-fill)',
+                hide: !dataKeys.includes('validiumsAndOptimiums'),
+              },
+              {
+                dataKey: 'others',
+                stroke: 'url(#others-stroke)',
+                fill: 'url(#others-fill)',
+                hide: !dataKeys.includes('others'),
               },
               {
                 dataKey: 'ethereum',
                 stroke: 'url(#ethereum-stroke)',
                 fill: 'url(#ethereum-fill)',
+                hide: !dataKeys.includes('ethereum'),
               },
             ],
           })}
@@ -127,35 +164,36 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             data: chartData,
             isLoading,
             yAxis: {
+              domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
               unit: ' UOPS',
             },
+            syncedUntil: data?.syncedUntil,
           })}
         </AreaChart>
       </ChartContainer>
-    </section>
+    </div>
   )
 }
 
 function CustomTooltip({
   active,
   payload,
-  label: timestamp,
+  label,
   syncedUntil,
 }: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!active || !payload || typeof label !== 'number') return null
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
-            longMonthName: true,
-          })}
+          {formatRange(label, label + UnixTime.DAY)}
         </div>
         <span className="text-heading-16">Average UOPS</span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
+            if (entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -172,9 +210,9 @@ function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
-                    ? 'Not synced'
-                    : formatActivityCount(entry.value)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatActivityCount(entry.value)
+                    : 'No data'}
                 </span>
               </div>
             )
@@ -185,7 +223,12 @@ function CustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
+            if (
+              entry.value === undefined ||
+              entry.value === null ||
+              entry.type === 'none'
+            )
+              return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -202,8 +245,8 @@ function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
-                    ? 'Not synced'
+                  {syncedUntil && syncedUntil < label
+                    ? 'No data'
                     : formatInteger(entry.value * UnixTime.DAY)}
                 </span>
               </div>
@@ -215,7 +258,7 @@ function CustomTooltip({
   )
 }
 
-function Header({ stats }: { stats: ActivityChartStats | undefined }) {
+function Header({ latestUopsCount }: { latestUopsCount: number | undefined }) {
   return (
     <div className="flex items-start justify-between">
       <div>
@@ -239,13 +282,10 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
         </CustomLink>
       </div>
       <div className="flex flex-col items-end">
-        {stats !== undefined ? (
+        {latestUopsCount !== undefined ? (
           <>
             <div className="whitespace-nowrap text-right font-bold text-xl">
-              {formatActivityCount(
-                countPerSecond(stats.uops.latestProjectsTxCount),
-              )}{' '}
-              UOPS
+              {formatActivityCount(countPerSecond(latestUopsCount))} UOPS
             </div>
             <div className="h-5" />
           </>
@@ -258,4 +298,34 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
       </div>
     </div>
   )
+}
+
+function getStats(
+  data: RecategorisedActivityChartData['data'] | undefined,
+  dataKeys: (keyof typeof chartMeta)[],
+) {
+  if (!data) {
+    return undefined
+  }
+
+  const pointsWithData = data.filter(
+    ([_, rollups, validiumsAndOptimiums, others, ethereum]) => {
+      return (
+        rollups !== null && validiumsAndOptimiums !== null && others !== null
+      )
+    },
+  ) as [number, number, number, number, number | null][]
+  const latestData = pointsWithData.at(-1)
+
+  if (!latestData) {
+    return undefined
+  }
+
+  const toSum = [
+    dataKeys.includes('rollups') ? latestData[1] : 0,
+    dataKeys.includes('validiumsAndOptimiums') ? latestData[2] : 0,
+    dataKeys.includes('others') ? latestData[3] : 0,
+  ]
+
+  return toSum.reduce((acc, curr) => acc + curr, 0)
 }

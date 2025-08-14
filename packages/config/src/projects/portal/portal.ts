@@ -135,7 +135,7 @@ export const portal: Bridge = {
 
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'WormholeCore',
           'Governance contract storing the current Guardian set and providing a facility to verify cross-chain messages by verifying Guardians signatures. \
@@ -163,7 +163,7 @@ export const portal: Bridge = {
   },
 
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Guardian Network',

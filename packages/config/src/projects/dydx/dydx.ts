@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -131,6 +132,10 @@ export const dydx: ScalingProject = {
         'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('stone'),
+  },
   chainConfig: {
     name: 'dydx',
     chainId: undefined,
@@ -140,7 +145,9 @@ export const dydx: ScalingProject = {
     associatedTokens: ['DYDX'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xD54f502e184B6B739d7D27a6410a67dc462D69c8'),
+        address: ChainSpecificAddress(
+          'eth:0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
+        ),
         sinceTimestamp: UnixTime(1613033682),
         tokens: ['USDC'],
         ...priorityExecutorUpgradeability,
@@ -298,7 +305,7 @@ export const dydx: ScalingProject = {
   ),
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('StarkPerpetual', {
           description:
             'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
@@ -380,7 +387,7 @@ export const dydx: ScalingProject = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         // TODO: detailed breakdown of permissions
         discovery.getPermissionDetails(

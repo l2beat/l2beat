@@ -1,7 +1,7 @@
 {
   "name": "hop",
   "chain": "ethereum",
-  "blockNumber": 19531595,
+  "timestamp": 1711616603,
   "configHash": "0xca72e1d9dba4fd93d568355fd67908ae86a6e525a8b6ad4855c4b9e9de2b7686",
   "entries": [
     {
@@ -1003,5 +1003,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
+  "usedBlockNumbers": { "ethereum": 19531595 },
   "permissionsConfigHash": "0x165a481239508da26304328fb198647ede8490aec429e605521c0318a1863c46"
 }

@@ -109,7 +109,9 @@ export const swell = opStackL2({
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xecf3376512EDAcA4FBB63d2c67d12a0397d24121'),
+      address: ChainSpecificAddress(
+        'eth:0xecf3376512EDAcA4FBB63d2c67d12a0397d24121',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:

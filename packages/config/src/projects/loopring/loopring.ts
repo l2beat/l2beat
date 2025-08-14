@@ -84,6 +84,10 @@ export const loopring: ScalingProject = {
         'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('loopringprover'),
+  },
   chainConfig: {
     name: 'loopring',
     chainId: undefined,
@@ -311,7 +315,7 @@ export const loopring: ScalingProject = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'LoopringMultisig',
@@ -336,7 +340,7 @@ export const loopring: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ExchangeV3', {
           description: 'Main Loopring contract.',
           ...upgrades,
@@ -436,6 +440,13 @@ export const loopring: ScalingProject = {
     },
   },
   milestones: [
+    {
+      title: 'DeFi Closure Announcement',
+      url: 'https://medium.com/loopring-protocol/loopring-defi-closure-announcement-e9270cccba4d',
+      date: '2025-07-31T00:00:00Z',
+      description: 'Loopring sunsets DeFi features to focus on the L2.',
+      type: 'general',
+    },
     {
       title: 'Loopring ZK Rollup is live',
       url: 'https://medium.com/loopring-protocol/loopring-protocol-3-0-zksnarks-for-scalability-845b35a8b75b',

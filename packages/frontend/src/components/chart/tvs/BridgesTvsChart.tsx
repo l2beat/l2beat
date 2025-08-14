@@ -29,13 +29,19 @@ export function BridgesTvsChart() {
     excludeAssociatedTokens: false,
   })
 
-  const chartData: TvsChartDataPoint[] | undefined = data?.map(
+  const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
     ([timestamp, native, canonical, external, ethPrice]) => {
-      const total = native + canonical + external
+      const total =
+        native !== null && canonical !== null && external !== null
+          ? native + canonical + external
+          : null
       const divider = unit === 'usd' ? 1 : ethPrice
       return {
         timestamp,
-        value: total / divider,
+        value:
+          total !== null && divider !== null && divider !== 0
+            ? total / divider
+            : null,
       }
     },
   )
@@ -43,7 +49,7 @@ export function BridgesTvsChart() {
   const stats = getStats(chartData)
 
   return (
-    <section className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <BridgesChartHeader
         unit={unit}
         value={stats?.total}
@@ -56,6 +62,7 @@ export function BridgesTvsChart() {
         data={chartData}
         unit={unit}
         milestones={undefined}
+        syncedUntil={data?.syncedUntil}
       />
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit} />
@@ -64,7 +71,7 @@ export function BridgesTvsChart() {
           setTimeRange={setTimeRange}
         />
       </ChartControlsWrapper>
-    </section>
+    </div>
   )
 }
 
@@ -118,8 +125,12 @@ function getStats(data: TvsChartDataPoint[] | undefined) {
   if (!data) {
     return undefined
   }
-  const oldestDataPoint = data.at(0)
-  const newestDataPoint = data.at(-1)
+  const pointsWithData = data.filter((point) => point.value !== null) as {
+    timestamp: number
+    value: number
+  }[]
+  const oldestDataPoint = pointsWithData.at(0)
+  const newestDataPoint = pointsWithData.at(-1)
   if (!oldestDataPoint || !newestDataPoint) {
     return undefined
   }

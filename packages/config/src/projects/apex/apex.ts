@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -110,6 +110,9 @@ export const apex: ScalingProject = {
     BADGES.Stack.StarkEx,
     BADGES.Infra.SHARP,
   ],
+  proofSystem: {
+    type: 'Optimistic',
+  },
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
     redWarning:
@@ -153,12 +156,16 @@ export const apex: ScalingProject = {
     associatedTokens: ['APEX'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb'),
+        address: ChainSpecificAddress(
+          'eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb',
+        ),
         sinceTimestamp: UnixTime(1660252039),
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b'),
+        address: ChainSpecificAddress(
+          'eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b',
+        ),
         tokens: ['USDT'],
       }),
     ],

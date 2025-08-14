@@ -7,7 +7,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { PercentChange } from '../../PercentChange'
 
-export interface NumberCellProps {
+interface NumberCellProps {
   signed?: boolean
   children: ReactNode
   className?: string

@@ -1,6 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -41,6 +44,12 @@ export const omgnetwork: ScalingProject = {
         'https://t.me/omgnetwork',
       ],
     },
+  },
+  proofSystem: undefined,
+  dataAvailability: {
+    layer: DA_LAYERS.NONE,
+    bridge: DA_BRIDGES.PLASMA,
+    mode: DA_MODES.BALANCE_PROOF,
   },
   stage: {
     stage: 'NotApplicable',
@@ -117,7 +126,7 @@ export const omgnetwork: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('EthVault'),
         discovery.getContractDetails('Erc20Vault'),
         discovery.getContractDetails('ETHDepositVerifier'),

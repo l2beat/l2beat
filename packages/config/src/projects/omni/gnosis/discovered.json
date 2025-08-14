@@ -1,16 +1,11 @@
 {
   "name": "omni",
   "chain": "gnosis",
-  "blockNumber": 40494132,
-  "configHash": "0x371d8b32076639b4b43e89defc75544fd9ca4e42d870063c710aa6a309609e9b",
+  "timestamp": 1755171830,
+  "configHash": "0xf38842e2482516344564512f0881069b022f5a01ea808a41c2c26f6d22af8f8f",
   "entries": [
     {
       "address": "gno:0x0000000000000000000000000000000000000000",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "gno:0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -98,18 +93,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "gno:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
-          "role": "admin"
-        }
-      ]
-    },
-    {
       "address": "gno:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
       "type": "EOA",
       "proxyType": "EOA"
@@ -128,11 +111,6 @@
     },
     {
       "address": "gno:0x4701f5F0b1aE73d018F91C38808c3058925cA526",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "gno:0x4743BA328C28dbC2b8B4e083b92cB4baA047494b",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -270,7 +248,7 @@
       "sinceTimestamp": 1726022850,
       "sinceBlock": 35939330,
       "values": {
-        "$admin": "gno:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
+        "$admin": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
         "$implementation": "gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5",
         "$pastUpgrades": [
           [
@@ -287,12 +265,12 @@
         "expectedThreshold": 1,
         "implementation": "gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5",
         "isInitialized": true,
-        "owner": "gno:0xb1F43dc8B57562e7FA48157D73102a8e4a94975A",
+        "owner": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
         "reporters": ["eth:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B"],
         "targetAddress": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
         "targetChainId": 1,
         "threshold": 1,
-        "upgradeabilityOwner": "gno:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
+        "upgradeabilityOwner": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
         "version": 1,
         "yaho": "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
         "yaru": "gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5"
@@ -530,9 +508,9 @@
         "$immutable": true,
         "GENESIS_TIME": 1606824023,
         "GENESIS_VALIDATORS_ROOT": "0x4b363db94e286120d76eb905340fdd4e54bfe9f06bf33ff6cf5ad27f511bfe95",
-        "getCurrentEpoch": 371455,
+        "getCurrentEpoch": 386242,
         "guardian": "gno:0x4f34c5F8e9F07a409a59dbbb8e80Ab6D5f43bd72",
-        "head": 11886560,
+        "head": 12359744,
         "heliosProgramVkey": "0x00cd47e188eeeab95c3c666088b928ff8243f8dd8d6e94f49795013bcd6231f0",
         "SECONDS_PER_SLOT": 12,
         "SLOTS_PER_EPOCH": 32,
@@ -562,11 +540,6 @@
     },
     {
       "address": "gno:0x8fd960F1B9D68BAD2B97bD232FB75CC1f186B064",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "gno:0x9bd93c5ad5e0a6be890c82FD77eE42ce8B642eF8",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -678,10 +651,12 @@
       "name": "SP1Verifier",
       "address": "gno:0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
       "sinceTimestamp": 1748854505,
       "sinceBlock": 40374619,
       "values": {
@@ -706,54 +681,6 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": "Hashi"
-      }
-    },
-    {
-      "address": "gno:0xB1dD1828794075f7521365163A93DE9e68e3c49f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "SafeL2",
-      "address": "gno:0xb1F43dc8B57562e7FA48157D73102a8e4a94975A",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
-          "role": ".owner"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1729072540,
-      "sinceBlock": 36532291,
-      "values": {
-        "$immutable": false,
-        "$implementation": "gno:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
-        "$members": [
-          "gno:0xeca6EAa2C77d8f0aA9247e681C64455deAae51aC",
-          "gno:0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
-          "gno:0xB1dD1828794075f7521365163A93DE9e68e3c49f",
-          "gno:0x9bd93c5ad5e0a6be890c82FD77eE42ce8B642eF8"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0x185cae3bcc0e0de1cb9889c466a7909383cc8b348de76d79ce1662c0fe2e110c",
-        "getChainId": 100,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 7,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "gno:0xb1F43dc8B57562e7FA48157D73102a8e4a94975A": "SafeProxy",
-        "gno:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
       }
     },
     {
@@ -839,6 +766,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "gno:0xd722EC6853e6EbAaf8664602A37855FAe872E482",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "gno:0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992",
       "type": "EOA",
       "proxyType": "EOA"
@@ -874,11 +806,6 @@
       }
     },
     {
-      "address": "gno:0xeca6EAa2C77d8f0aA9247e681C64455deAae51aC",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "GnosisSafeL2",
       "address": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
       "type": "Contract",
@@ -888,6 +815,19 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
+          "role": "admin"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686041905,
       "sinceBlock": 28315765,
@@ -895,8 +835,8 @@
         "$immutable": false,
         "$implementation": "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "gno:0xd722EC6853e6EbAaf8664602A37855FAe872E482",
           "gno:0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
-          "gno:0x4743BA328C28dbC2b8B4e083b92cB4baA047494b",
           "gno:0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf"
         ],
         "$threshold": 2,
@@ -904,7 +844,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 25,
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -981,7 +921,7 @@
         "gasLimitManager": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20248,
+        "getCurrentDay": 20314,
         "implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "gno:0x88ad09518695c6c3712AC10a214bE5109a655671",
@@ -1070,55 +1010,6 @@
       "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Transfer(address indexed from, address indexed to, uint256 value)"
-    ],
-    "gno:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
-      "event AddedOwner(address indexed owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address indexed handler)",
-      "event ChangedGuard(address indexed guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address indexed module)",
-      "event EnabledModule(address indexed module)",
-      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
-      "event RemovedOwner(address indexed owner)",
-      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
-      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92": [
       "constructor(string _suffix)",
@@ -1507,9 +1398,6 @@
       "event RequiredSignaturesChanged(uint256 requiredSignatures)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ],
-    "gno:0xb1F43dc8B57562e7FA48157D73102a8e4a94975A": [
-      "constructor(address _singleton)"
-    ],
     "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": [
       "error InvalidMessage(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message)",
       "error InvalidThreshold(uint256 threshold, uint256 maxThreshold)",
@@ -1620,7 +1508,9 @@
     "gnosisbridge/HashiManager": "0xa1138883de6a552d21b8e9078c9213aabe3c975dffc34d54f61c0f3c437ab1ff",
     "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x052d6352604ac6ec6fb5a8a880a86ca59f07a26158fc68cb68187136537e8d03"
+  "usedBlockNumbers": { "gnosis": 41599272 },
+  "permissionsConfigHash": "0x5e1db316d1473e7c712fafb8a396b733a20090a1d1dbca783ad499e657dab8fb"
 }

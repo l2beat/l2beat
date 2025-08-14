@@ -1,9 +1,4 @@
-import type {
-  ChainConfig,
-  Formula,
-  Project,
-  ProjectContract,
-} from '@l2beat/config'
+import type { ChainConfig, Project, ProjectContract } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import {
@@ -43,13 +38,13 @@ export function getTvsBreakdown(
 
     const { addresses, escrows } = extractAddressesFromTokenConfig(token)
     const address = processAddresses(addresses, chains)
-
     const tokenWithValues: BaseAssetBreakdownData = {
       ...token,
       address,
-      formula: token.amount as Formula,
+      formula: token.valueForProject ?? token.amount,
       iconUrl: token.iconUrl ?? '',
-      usdValue: tokenValue.value,
+      valueForProject: tokenValue.valueForProject,
+      value: tokenValue.value,
       amount: tokenValue.amount,
       isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
       syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
@@ -108,7 +103,7 @@ function processAddresses(
 
 function getSyncStatus(valueTimestamp: UnixTime, targetTimestamp: UnixTime) {
   if (valueTimestamp < targetTimestamp) {
-    return `Token data is not synced since ${formatTimestamp(valueTimestamp, {
+    return `No token data since ${formatTimestamp(valueTimestamp, {
       mode: 'datetime',
       longMonthName: true,
     })}.`

@@ -34,7 +34,8 @@
         "chain": "ethereum",
         "escrowAddress": "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
         "decimals": 18,
-        "sinceTimestamp": 1716263903
+        "sinceTimestamp": 1716263903,
+        "untilTimestamp": 1752213600
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -93,7 +94,7 @@
         "decimals": 8,
         "sinceTimestamp": 1716263903
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -110,7 +111,8 @@
         "chain": "ethereum",
         "escrowAddress": "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
         "decimals": 18,
-        "sinceTimestamp": 1716263903
+        "sinceTimestamp": 1716263903,
+        "untilTimestamp": 1752451200
       },
       "category": "ether",
       "source": "canonical",
@@ -148,7 +150,8 @@
         "chain": "ethereum",
         "escrowAddress": "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
         "decimals": 18,
-        "sinceTimestamp": 1716263903
+        "sinceTimestamp": 1716263903,
+        "untilTimestamp": 1752451200
       },
       "category": "ether",
       "source": "canonical",

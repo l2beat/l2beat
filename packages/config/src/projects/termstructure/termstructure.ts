@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { CONTRACTS, DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
 import { BADGES } from '../../common/badges'
 import { EXITS } from '../../common/exits'
@@ -42,6 +47,7 @@ const vaultWeight =
   ).vault / 100
 
 export const termstructure: ScalingProject = {
+  archivedAt: UnixTime(1754983642),
   id: ProjectId('termstructure'),
   capability: 'appchain',
   addedAt: UnixTime(1709724246), // 2024-03-06T11:24:06Z
@@ -78,13 +84,18 @@ export const termstructure: ScalingProject = {
     },
     liveness: {
       explanation:
-        'Term Structure is a ZK rollup based on ZKsync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+        "Term Structure is a ZK rollup based on ZKsync Lite's code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and a validity proof should be generated, submitted, and verified.",
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x09E01425780094a9754B2bd8A3298f73ce837CF9'),
+        address: ChainSpecificAddress(
+          'eth:0x09E01425780094a9754B2bd8A3298f73ce837CF9',
+        ),
         sinceTimestamp: UnixTime(1716263903),
         tokens: '*',
       }),
@@ -287,7 +298,7 @@ export const termstructure: ScalingProject = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Admins',
@@ -338,7 +349,7 @@ export const termstructure: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ZkTrueUp', {
           description:
             'Main contract of the system. It manages deposits, withdrawals, verification, permissions and DeFi operations.',

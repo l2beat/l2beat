@@ -3,29 +3,21 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getTrackedTxsProject } from '../../utils/getTrackedTxsProjects'
-import type { LatestCostsValues } from './types'
+import type { LatestCostsProjectResponse } from './types'
 import type { CostsTimeRange } from './utils/range'
-import { getFullySyncedCostsRange } from './utils/range'
+import { getCostsRange } from './utils/range'
 import { sumCostValues } from './utils/sumCostValues'
-
-interface CostsForProject {
-  syncedUntil: number
-  range: [UnixTime, UnixTime]
-  gas: LatestCostsValues
-  eth: LatestCostsValues
-  usd: LatestCostsValues
-}
 
 export async function getCostsForProject(
   projectId: string,
   timeRange: CostsTimeRange,
-): Promise<CostsForProject | undefined> {
+): Promise<LatestCostsProjectResponse | undefined> {
   if (env.MOCK) {
     return getMockedCostsForProject()
   }
 
   const db = getDb()
-  const fullySyncedRange = getFullySyncedCostsRange(timeRange)
+  const costsRange = getCostsRange({ type: timeRange })
 
   const project = await ps.getProject({
     id: ProjectId(projectId),
@@ -34,7 +26,7 @@ export async function getCostsForProject(
   if (!project) return undefined
   const [configurations, records] = await Promise.all([
     db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
-    db.aggregatedL2Cost.getByProjectAndTimeRange(project.id, fullySyncedRange),
+    db.aggregatedL2Cost.getByProjectAndTimeRange(project.id, costsRange),
   ])
 
   const trackedTxsProject = getTrackedTxsProject(
@@ -57,7 +49,7 @@ export async function getCostsForProject(
   }
 }
 
-function getMockedCostsForProject(): CostsForProject {
+function getMockedCostsForProject(): LatestCostsProjectResponse {
   return {
     gas: {
       overhead: 1_000_000,

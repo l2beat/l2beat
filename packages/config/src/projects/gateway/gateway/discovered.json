@@ -1,0 +1,49 @@
+{
+  "name": "gateway",
+  "chain": "gateway",
+  "timestamp": 1754119529,
+  "configHash": "0x746fb628cfff16b3807b215300b467d2974872eef29ce279726c64d6b16212a2",
+  "sharedModules": ["shared-zk-stack"],
+  "entries": [
+    {
+      "name": "L1Messenger",
+      "address": "gateway:0x0000000000000000000000000000000000008008",
+      "type": "Contract",
+      "template": "shared-zk-stack/L1Messenger",
+      "sourceHashes": [
+        "0xd2ecfc7e11d1c2bd428a0170a09a7734dd4640ef3291609ddf62dbdb4c344f14"
+      ],
+      "proxyType": "immutable",
+      "description": "System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge.",
+      "sinceTimestamp": 1750953821,
+      "sinceBlock": 85,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "gateway:0x0000000000000000000000000000000000008008": "L1Messenger"
+      }
+    }
+  ],
+  "abis": {
+    "gateway:0x0000000000000000000000000000000000008008": [
+      "error CallerMustBeBootloader()",
+      "error CallerMustBeSystemContract()",
+      "error FailedToChargeGas()",
+      "error Keccak256InvalidReturnData()",
+      "error Overflow()",
+      "error ReconstructionMismatch(uint8, bytes32 expected, bytes32 actual)",
+      "error Unauthorized(address)",
+      "event BytecodeL1PublicationRequested(bytes32 _bytecodeHash)",
+      "event L1MessageSent(address indexed _sender, bytes32 indexed _hash, bytes _message)",
+      "event L2ToL1LogSent(tuple(uint8 l2ShardId, bool isService, uint16 txNumberInBlock, address sender, bytes32 key, bytes32 value) _l2log)",
+      "function publishPubdataAndClearState(address _l2DAValidator, bytes _operatorInput)",
+      "function requestBytecodeL1Publication(bytes32 _bytecodeHash)",
+      "function sendL2ToL1Log(bool _isService, bytes32 _key, bytes32 _value) returns (uint256 logIdInMerkleTree)",
+      "function sendToL1(bytes _message) returns (bytes32 hash)"
+    ]
+  },
+  "usedTemplates": {
+    "shared-zk-stack/L1Messenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+  },
+  "usedBlockNumbers": { "gateway": 17031 },
+  "permissionsConfigHash": "0xa5764f349b55e9ebde03cc0ed3d732daa90a61d28835ca17bcdba1e1e8d1b675"
+}

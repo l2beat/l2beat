@@ -74,13 +74,14 @@ import { haust } from '../projects/haust/haust'
 import { hemi } from '../projects/hemi/hemi'
 import { hermez } from '../projects/hermez/hermez'
 import { honeypot } from '../projects/honeypot/honeypot'
+import { hpp } from '../projects/hpp/hpp'
 import { hybrid } from '../projects/hybrid/hybrid'
 import { hychain } from '../projects/hychain/hychain'
 import { hypr } from '../projects/hypr/hypr'
 import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
-import { intmax } from '../projects/intmax/intmax'
+import { jovay } from '../projects/jovay/jovay'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
 import { kinto } from '../projects/kinto/kinto'
@@ -99,6 +100,7 @@ import { liftchain } from '../projects/liftchain/liftchain'
 import { lightlink } from '../projects/lightlink/lightlink'
 import { linea } from '../projects/linea/linea'
 import { lisk } from '../projects/lisk/lisk'
+import { logx } from '../projects/logx/logx'
 import { loopring } from '../projects/loopring/loopring'
 import { lootchain } from '../projects/lootchain/lootchain'
 import { lumia } from '../projects/lumia/lumia'
@@ -136,7 +138,6 @@ import { pandasea } from '../projects/pandasea/pandasea'
 import { paradex } from '../projects/paradex/paradex'
 import { parallel } from '../projects/parallel/parallel'
 import { patex } from '../projects/patex/patex'
-import { pay } from '../projects/pay/pay'
 import { payy } from '../projects/payy/payy'
 import { penchain } from '../projects/penchain/penchain'
 import { pepeunchained } from '../projects/pepeunchained/pepeunchained'
@@ -156,6 +157,7 @@ import { quarkchain } from '../projects/quarkchain/quarkchain'
 import { r0ar } from '../projects/r0ar/r0ar'
 import { race } from '../projects/race/race'
 import { rarimo } from '../projects/rarimo/rarimo'
+import { rayls } from '../projects/rayls/rayls'
 import { real } from '../projects/real/real'
 import { reddioex } from '../projects/reddioex/reddioex'
 import { reddiozkvm } from '../projects/reddiozkvm/reddiozkvm'
@@ -169,15 +171,19 @@ import { scroll } from '../projects/scroll/scroll'
 import { settlus } from '../projects/settlus/settlus'
 import { shape } from '../projects/shape/shape'
 import { shibarium } from '../projects/shibarium/shibarium'
+import { silentData } from '../projects/silentdata/silentdata'
 import { silicon } from '../projects/silicon/silicon'
 import { singularityfinance } from '../projects/singularityfinance/singularityfinance'
+import { sischain } from '../projects/sischain/sischain'
 import { skatechain } from '../projects/skatechain/skatechain'
 import { snaxchain } from '../projects/snaxchain/snaxchain'
 import { solo } from '../projects/solo/solo'
 import { soneium } from '../projects/soneium/soneium'
 import { soon } from '../projects/soon/soon'
+import { soonbase } from '../projects/soonbase/soonbase'
 import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
+import { sova } from '../projects/sova/sova'
 import { sovrun } from '../projects/sovrun/sovrun'
 import { spire } from '../projects/spire/spire'
 import { starknet } from '../projects/starknet/starknet'
@@ -298,13 +304,14 @@ export const layer2s: ScalingProject[] = [
   hemi,
   hermez,
   honeypot,
+  hpp,
   hybrid,
   hychain,
   hypr,
   immutablex,
   immutablezkevm,
   ink,
-  intmax,
+  jovay,
   karak,
   katana,
   kinto,
@@ -323,6 +330,7 @@ export const layer2s: ScalingProject[] = [
   lightlink,
   linea,
   lisk,
+  logx,
   loopring,
   lootchain,
   lumia,
@@ -360,7 +368,6 @@ export const layer2s: ScalingProject[] = [
   paradex,
   parallel,
   patex,
-  pay,
   payy,
   penchain,
   pepeunchained,
@@ -380,6 +387,7 @@ export const layer2s: ScalingProject[] = [
   r0ar,
   race,
   rarimo,
+  rayls,
   real,
   reddioex,
   reddiozkvm,
@@ -394,15 +402,19 @@ export const layer2s: ScalingProject[] = [
   settlus,
   shape,
   shibarium,
+  silentData,
   silicon,
   singularityfinance,
+  sischain,
   skatechain,
   snaxchain,
   solo,
   soneium,
   soon,
+  soonbase,
   sophon,
   sorare,
+  sova,
   sovrun,
   spire,
   starknet,

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "calculateOriginationFee",
+    "calculateRedemptionFee",
+    "calculateServiceFee",
+    "payoutPeriodStartTime"
+  ],
+  "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"]
+}

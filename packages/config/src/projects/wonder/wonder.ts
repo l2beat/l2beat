@@ -1,9 +1,4 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -31,7 +26,7 @@ export const wonder: ScalingProject = zkStackL2({
       "Wonder provides access to DeFi through ZKsync's Ethereum-level security, with scalability and cost-efficiency.",
     links: {
       websites: ['https://wonderchain.org'],
-      bridges: ['https://wonderchain.org/bridge/'],
+      bridges: ['https://portal.wonderchain.org/bridge'],
       documentation: ['https://docs.wonderchain.org'],
       explorers: ['https://explorer.mainnet.wonderchain.org'],
       socialMedia: ['https://x.com/WonderFiLabs'],
@@ -57,7 +52,7 @@ export const wonder: ScalingProject = zkStackL2({
   diamondContract: discovery.getContract('zkVmDiamond'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(bridge.address),
+      address: bridge.address,
       tokens: ['ETH', 'USDC'],
       description:
         'Shared bridge for depositing tokens to Wonder and other ZK stack chains.',

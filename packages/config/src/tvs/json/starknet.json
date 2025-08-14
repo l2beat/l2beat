@@ -19,7 +19,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -336,7 +343,7 @@
         "decimals": 8,
         "sinceTimestamp": 1657137600
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -357,7 +364,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -373,7 +387,7 @@
         "escrowAddress": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
         "decimals": 18,
         "sinceTimestamp": 1710460800,
-        "untilTimestamp": 1750942800
+        "untilTimestamp": 1750939200
       },
       "category": "other",
       "source": "canonical",

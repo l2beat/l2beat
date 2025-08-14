@@ -18,9 +18,7 @@ type Props = {
 
 export function EditorView(props: Props) {
   const [dirtyFiles, setDirtyFiles] = useState<Record<string, boolean>>({})
-  const [activeFileIndex, setActiveFileIndex] = useState(
-    props.initialFileIndex ?? 0,
-  )
+  const [activeFileIndex, setActiveFileIndex] = useState(0)
 
   const editor = useCodeStore((store) => store.editors[props.editorId])
   const { resetRange } = useCodeStore()
@@ -36,8 +34,10 @@ export function EditorView(props: Props) {
       if (activeFile) {
         if (!activeFile.readOnly) {
           editor.onSave((content) => {
-            props.callbacks?.onSave?.(content)
+            const result = props.callbacks?.onSave?.(content)
             setDirtyFile(activeFile.id, false)
+            activeFile.content = result ?? content
+            return activeFile.content
           })
 
           editor.onChange((content) => {
@@ -50,6 +50,22 @@ export function EditorView(props: Props) {
       }
     }
   }, [editor, props.files, activeFileIndex])
+
+  useEffect(() => {
+    if (
+      props.files.length > 0 &&
+      props.initialFileIndex !== undefined &&
+      props.range?.index === undefined &&
+      props.range?.data === undefined
+    ) {
+      setActiveFileIndex(props.initialFileIndex)
+    }
+  }, [
+    props.files,
+    props.initialFileIndex,
+    props.range?.index,
+    props.range?.data,
+  ])
 
   useEffect(() => {
     if (

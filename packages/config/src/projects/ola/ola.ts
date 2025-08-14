@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const ola: ScalingProject = upcomingL2({
   id: 'ola',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1705060311), // 2024-01-12T11:51:51Z
   display: {
     name: 'Ola',

@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "blockNumber": 17024223,
-  "configHash": "0xa12f1f1e79c0de5d9f5176e9543d52e93842debbdd7f17315a6c3d1e9c2c1b23",
+  "timestamp": 1755014055,
+  "configHash": "0xa37c216f153fe997dc31387bd7eee21a339d2a41e2a954a6ece0887f69c61bac",
   "entries": [
     {
       "address": "scr:0x0000000000000000000000000000000000000000",
@@ -46,7 +46,7 @@
         "pauser": "scr:0x0000000000000000000000000000000000000001",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
-        "rescuer": "scr:0x0000000000000000000000000000000000000000",
+        "rescuer": "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
         "symbol": "USDC",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
@@ -132,7 +132,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 12 (17%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -190,7 +190,7 @@
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": []
             },
-            "TIMELOCK_1DAY_DELAY_TOLE": {
+            "TIMELOCK_1DAY_DELAY_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": []
             },
@@ -205,6 +205,14 @@
             "ops-fast": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"]
+            },
+            "PAUSE_CONTROLLER_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": ["scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd"]
+            },
+            "SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": ["scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"]
             }
           },
           "targets": {
@@ -223,9 +231,6 @@
             "scr:0x5300000000000000000000000000000000000003": {
               "updateWhitelistStatus(address[],bool)": ["emergency-nodelay"]
             },
-            "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": {
-              "setPause(bool)": ["emergency-nodelay"]
-            },
             "scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142": {
               "pauseDeposit(bool)": ["emergency-nodelay"],
               "pauseWithdraw(bool)": ["emergency-nodelay"],
@@ -234,7 +239,9 @@
             "scr:0x5300000000000000000000000000000000000002": {
               "setOverhead(uint256)": ["ops-fast"],
               "setCommitScalar(uint256)": ["ops-fast"],
-              "setBlobScalar(uint256)": ["ops-fast"]
+              "setBlobScalar(uint256)": ["ops-fast"],
+              "0xaa5e9334": ["ops-fast"],
+              "0xc63b9e2d": ["ops-fast"]
             },
             "scr:0x5300000000000000000000000000000000000005": {
               "updateMinWithdrawAmount(uint256)": ["ops-fast"],
@@ -262,6 +269,29 @@
               "withdrawFailedAmount(address,address)": ["ops-fast"],
               "grantRole(bytes32,address)": ["ops-fast"],
               "revokeRole(bytes32,address)": ["ops-fast"]
+            },
+            "scr:0x331A873a2a85219863d80d248F9e2978fE88D0Ea": {
+              "updateBaseFeeOverhead(uint256)": ["ops-fast"],
+              "updateBaseFeeScalar(uint256)": ["ops-fast"]
+            },
+            "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": {
+              "setPause(bool)": [
+                "SECURITY_COUNCIL_NO_DELAY_ROLE",
+                "PAUSE_CONTROLLER_ROLE"
+              ]
+            },
+            "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd": {
+              "pause(address)": ["emergency-nodelay"],
+              "updatePauseCooldownPeriod(uint256)": [
+                "SECURITY_COUNCIL_NO_DELAY_ROLE"
+              ],
+              "resetPauseCooldownPeriod(address)": [
+                "SECURITY_COUNCIL_NO_DELAY_ROLE"
+              ],
+              "unpause(address)": [
+                "emergency-nodelay",
+                "SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE"
+              ]
             }
           }
         },
@@ -395,7 +425,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 2,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -409,7 +439,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "TimelockSCEmergency",
+      "name": "TimelockSCEmergencyScroll",
       "address": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
       "type": "Contract",
       "template": "scroll/L1Timelock",
@@ -552,7 +582,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 17,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -711,7 +741,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 10,
+        "nonce": 19,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -761,8 +791,8 @@
         "token": "scr:0xd29687c813D741E2F938F4aC377128810E217b1b",
         "version": "1",
         "VERSION": 1,
-        "votingDelay": 86400,
-        "votingPeriod": 201600
+        "votingDelay": 3600,
+        "votingPeriod": 432000
       },
       "implementationNames": {
         "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0": "TransparentUpgradeableProxy",
@@ -786,6 +816,49 @@
       "type": "EOA",
       "proxyType": "EOA",
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "Scroll Security Council Minority",
+      "address": "scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1752663598,
+      "sinceBlock": 17260969,
+      "values": {
+        "$immutable": false,
+        "$implementation": "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
+          "scr:0x0f50874f227621Dea72482004639a9fFe440A4dA",
+          "scr:0xE47D966E2c7e94fC20ffAf5119d1926381C40f2a",
+          "scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC",
+          "scr:0x9479ABfebefEea3c846163012a472b44F305b3d7",
+          "scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825",
+          "scr:0x383C148ba96956F985F6141B2D119add1C34e3B7",
+          "scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896",
+          "scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F",
+          "scr:0x30315233090F675520eef5CBd7A6cf7d185af443",
+          "scr:0x9B2C2Bc80C209c9C5D7f26F57b1Bb3B1699281D4",
+          "scr:0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x72b9ce1a1b5b22bf5b31051c66af18612964c2bad3cae7661c2b5e569c8af8a9",
+        "getChainId": 534352,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 12 (25%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE": "SafeProxy",
+        "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
     },
     {
       "address": "scr:0x498C0c17e26EEEC63375A4A20Ba8A91Aa357CbcD",
@@ -838,9 +911,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x3f747bdc3d9e6d824287f89135886c02dc8a47d1c349ebba4bdc3b8560c05fc7",
+        "messageRoot": "0x1f99ec3d6c1b621a05721efc5a0c972f8b6fc4c3beef78f02d3a260180956aab",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 205650,
+        "nextMessageIndex": 207543,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -987,7 +1060,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1234,7 +1307,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 2,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1350,6 +1423,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
           "role": "admin"
         }
@@ -1436,6 +1514,39 @@
         "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f": "TimelockController"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "L2PauseController",
+      "address": "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd",
+      "type": "Contract",
+      "template": "scroll/PauseController",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xb77c71261ba124ec5867a07a7ea820670c5142e6878b94bb7c4d74e3de75b1bc"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1753067278,
+      "sinceBlock": 17428392,
+      "values": {
+        "$admin": "scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026",
+        "$implementation": "scr:0x105B9baaF75dA556c0206159481243163fAea1c9",
+        "$pastUpgrades": [
+          [
+            "2025-07-21T03:07:58.000Z",
+            "0x00b655406a3deb852f16f951030e57119d4b49d018f61718f4784f7fdc325880",
+            ["scr:0x105B9baaF75dA556c0206159481243163fAea1c9"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
+        "PAUSE_CONTROLLER_ROLE": "0x906ae24cd9cf7cacfca327d94b093e52e6751face5c051d8ff21f5c1c3c2de23",
+        "pauseCooldownPeriod": 2592000,
+        "SCROLL_OWNER": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      },
+      "implementationNames": {
+        "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd": "TransparentUpgradeableProxy",
+        "scr:0x105B9baaF75dA556c0206159481243163fAea1c9": "PauseController"
+      }
     },
     {
       "address": "scr:0xaFb4c32eCb8e4a86363a2fb2Fa27982fbd21ac32",
@@ -1576,7 +1687,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 3,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1878,7 +1989,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 18,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1992,6 +2103,32 @@
       "function updateTokenMapping(address _l2Token, address _l1Token)",
       "function withdrawERC721(address _token, uint256 _tokenId, uint256 _gasLimit) payable",
       "function withdrawERC721(address _token, address _to, uint256 _tokenId, uint256 _gasLimit) payable"
+    ],
+    "scr:0x105B9baaF75dA556c0206159481243163fAea1c9": [
+      "constructor(address _scrollOwner)",
+      "error ErrorComponentAlreadyPaused()",
+      "error ErrorComponentNotPaused()",
+      "error ErrorCooldownPeriodNotPassed()",
+      "error ErrorExecutePauseFailed()",
+      "error ErrorExecuteUnpauseFailed()",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Pause(address indexed component)",
+      "event ResetPauseCooldownPeriod(address indexed component)",
+      "event Unpause(address indexed component)",
+      "event UpdatePauseCooldownPeriod(uint256 oldPauseCooldownPeriod, uint256 newPauseCooldownPeriod)",
+      "function PAUSE_CONTROLLER_ROLE() view returns (bytes32)",
+      "function SCROLL_OWNER() view returns (address)",
+      "function getLastUnpauseTime(address component) view returns (uint256)",
+      "function initialize(uint256 _pauseCooldownPeriod)",
+      "function owner() view returns (address)",
+      "function pause(address component)",
+      "function pauseCooldownPeriod() view returns (uint256)",
+      "function renounceOwnership()",
+      "function resetPauseCooldownPeriod(address component)",
+      "function transferOwnership(address newOwner)",
+      "function unpause(address component)",
+      "function updatePauseCooldownPeriod(uint256 newPauseCooldownPeriod)"
     ],
     "scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": [
       "constructor(address _singleton)"
@@ -2319,6 +2456,9 @@
       "function withdrawERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
       "function withdrawERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
       "function withdrawERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable"
+    ],
+    "scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE": [
+      "constructor(address _singleton)"
     ],
     "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2702,6 +2842,12 @@
       "function withdrawERC1155(address _token, uint256 _tokenId, uint256 _amount, uint256 _gasLimit) payable",
       "function withdrawERC1155(address _token, address _to, uint256 _tokenId, uint256 _amount, uint256 _gasLimit) payable"
     ],
+    "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "scr:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE": [
       "constructor(address _minterManager)",
       "event ControllerConfigured(address indexed _controller, address indexed _worker)",
@@ -2938,8 +3084,10 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "scroll/L1Timelock": "0xc4536a7cf375a15d151b85dc3ad86b0863657cead6f5cd7d03c28275c562df0b",
-    "scroll/ScrollOwnerL2": "0x7e77245231051fbc6f335852afd5305e4b1c493b1005a7826e24aa54340b2ad4",
+    "scroll/PauseController": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/ScrollOwnerL2": "0x77eb1863ff595be1f6d216e4eb34cc75c37aae99c08c2cd56f8adaa13c218141",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xc84f9f9508ee08bcf352d35aa1cf9d6915f5519d4fcce4779b91091ec8a617e8"
+  "usedBlockNumbers": { "scroll": 19022058 },
+  "permissionsConfigHash": "0x6026e9d5cd2befcf9d6ce6f3a1484a20c9d9cbb7eefe920713e0b8b385097c3f"
 }

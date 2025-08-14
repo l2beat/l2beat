@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "ez-eth",
+  "import": ["../../globalConfig.jsonc"],
+  "maxDepth": 0,
+  "initialAddresses": ["eth:0xbf5495efe5db9ce00f80364c8b423567e58d2110"],
+  "overrides": {
+    "eth:0xbf5495efe5db9ce00f80364c8b423567e58d2110": {
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "fields": {
+        "$tokenData": {
+          "handler": {
+            "type": "ERC20Data",
+            "overrides": {
+              "category": "ether"
+            }
+          }
+        }
+      }
+    }
+  }
+}

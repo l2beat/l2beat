@@ -82,6 +82,7 @@ export class DataAvailabilityRepository extends BaseRepository {
   async getSummedProjectsByDaLayersAndTimeRange(
     daLayers: string[],
     timeRange: [UnixTime | null, UnixTime],
+    excludedProjectIds?: string[],
   ): Promise<ProjectsSummedDataAvailabilityRecord[]> {
     const [from, to] = timeRange
     let query = this.db
@@ -102,6 +103,10 @@ export class DataAvailabilityRepository extends BaseRepository {
       query = query.where('timestamp', '>=', UnixTime.toDate(from))
     }
 
+    if (excludedProjectIds && excludedProjectIds.length > 0) {
+      query = query.where('projectId', 'not in', excludedProjectIds)
+    }
+
     const rows = await query.execute()
 
     return rows.map((row) =>
@@ -115,6 +120,7 @@ export class DataAvailabilityRepository extends BaseRepository {
   async getByDaLayersAndTimeRange(
     daLayers: string[],
     timeRange: [UnixTime | null, UnixTime],
+    excludedProjectIds?: string[],
   ): Promise<DataAvailabilityRecord[]> {
     const [from, to] = timeRange
     let query = this.db
@@ -126,6 +132,10 @@ export class DataAvailabilityRepository extends BaseRepository {
 
     if (from !== null) {
       query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    if (excludedProjectIds && excludedProjectIds.length > 0) {
+      query = query.where('projectId', 'not in', excludedProjectIds)
     }
 
     const rows = await query.execute()

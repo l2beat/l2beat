@@ -1,5 +1,6 @@
 import type {
   Project,
+  ProjectAssociatedToken,
   ProjectScalingCapability,
   ProjectScalingCategory,
   ProjectScalingDa,
@@ -24,8 +25,8 @@ import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnomalies'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
+import { compareTvs } from '../tvs/utils/compareTvs'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
-import { compareStageAndTvs } from '../utils/compareStageAndTvs'
 
 export async function getScalingSummaryEntries() {
   const projects = await ps.getProjects({
@@ -57,7 +58,7 @@ export async function getScalingSummaryEntries() {
         !!projectsOngoingAnomalies[project.id.toString()],
       ),
     )
-    .sort(compareStageAndTvs)
+    .sort(compareTvs)
 
   return groupByScalingTabs(entries)
 }
@@ -72,16 +73,13 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvs: {
     breakdown:
-      | {
-          total: number
-          ether: number
-          stablecoin: number
+      | (ProjectSevenDayTvsBreakdown['breakdown'] & {
           associated: number
-        }
+        })
       | undefined
     change: number | undefined
     associatedTokensExcludedChange: number | undefined
-    associatedTokens: string[]
+    associatedTokens: ProjectAssociatedToken[]
     warnings: WarningWithSentiment[]
     associatedTokensExcludedWarnings: WarningWithSentiment[]
   }

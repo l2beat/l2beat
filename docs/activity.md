@@ -1,4 +1,4 @@
-# How to add activity tracking for existing project? ?
+# How to add activity tracking for an existing project ?
 
 ## Introduction
 
@@ -45,12 +45,12 @@ The `chainConfig` also needs a `name` and `chainId`. If you're adding a Starknet
 4. (Only if you are using private RPC) - if you are using private RPC, fill in the `url`
    property with something like `https://replace.me`. After that, remember to add these variables to the Heroku config vars before merging them into the main branch. If you're an external contributor, contact the team.
 
-### Starkex type project
+### StarkEx type project
 
 1. Go to this page:
    https://app.swaggerhub.com/apis-docs/StarkExBI/StarkExAggregations/0.3#/Queries/post_aggregations_count
    and check if your project is listed in `product` array in endpoint description section. If it is,
-   you can go to the next step. If not, you need to talk to starkex devs to add support for your
+   you can go to the next step. If not, you need to talk to StarkEx devs to add support for your
    project.
 
 2. In project config file add `chainConfig` property

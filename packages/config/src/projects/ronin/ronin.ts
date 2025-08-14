@@ -147,7 +147,7 @@ export const ronin: Bridge = {
   contracts: {
     // TODO: we need all contracts (check roles on escrows) and a diagram
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         {
           ...discovery.getContractDetails(
             'MainchainGateway',
@@ -171,7 +171,7 @@ export const ronin: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'MainchainBridgeManager Operators',

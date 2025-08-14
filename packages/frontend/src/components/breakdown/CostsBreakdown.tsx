@@ -3,10 +3,10 @@ import compact from 'lodash/compact'
 import { Breakdown } from './Breakdown'
 
 interface CostsBreakdownProps {
-  blobs: number | undefined
-  calldata: number | undefined
-  compute: number | undefined
-  overhead: number | undefined
+  blobs: number | null
+  calldata: number
+  compute: number
+  overhead: number
 }
 
 export function CostsBreakdown(props: CostsBreakdownProps) {

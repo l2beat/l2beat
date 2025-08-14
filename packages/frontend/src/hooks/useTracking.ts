@@ -7,6 +7,7 @@ export const PlausibleEvents = v.object({
   directoryTabsChanged: v.object({ value: v.string() }),
   searchBarProjectSelected: v.object({ name: v.string() }),
   uopsExplorerSelected: v.undefined().optional(),
+  trustedSetupFrameworkSelected: v.undefined().optional(),
 
   // Filters
   filtersOpened: v.undefined().optional(),
@@ -22,7 +23,7 @@ export const PlausibleEvents = v.object({
 })
 export type PlausibleEvents = v.infer<typeof PlausibleEvents>
 
-export type Plausible = {
+type Plausible = {
   <T extends keyof PlausibleEvents>(
     event: T,
     ...args: PlausibleEvents[T] extends undefined

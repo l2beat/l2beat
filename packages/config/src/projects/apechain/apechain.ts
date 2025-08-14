@@ -6,7 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('apechain', 'arbitrum')
+const discovery = new ProjectDiscovery('apechain')
 
 export const apechain: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1729296000), // 2024-10-19
@@ -32,6 +32,7 @@ export const apechain: ScalingProject = orbitStackL3({
       ],
     },
   },
+  hostChain: 'arbitrum',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
@@ -51,7 +52,7 @@ export const apechain: ScalingProject = orbitStackL3({
     gasTokens: ['APE'],
   },
   associatedTokens: ['APE'],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
       title: 'Mainnet Launch',

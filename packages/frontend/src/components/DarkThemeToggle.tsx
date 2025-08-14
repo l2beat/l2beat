@@ -3,7 +3,7 @@ import { MoonIcon } from '~/icons/Moon'
 import { SunIcon } from '~/icons/Sun'
 import { cn } from '~/utils/cn'
 
-export interface DarkThemeToggleProps {
+interface DarkThemeToggleProps {
   className?: string
 }
 

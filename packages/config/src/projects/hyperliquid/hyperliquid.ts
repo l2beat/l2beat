@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  type EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
@@ -8,7 +13,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
-const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
+const discovery = new ProjectDiscovery('hyperliquid')
 
 const challengePeriod = discovery.getContractValue<number>(
   'HyperliquidBridge',
@@ -52,7 +57,9 @@ export const hyperliquid: Bridge = {
     escrows: [
       discovery.getEscrowDetails({
         includeInTotal: false,
-        address: EthereumAddress('0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7'),
+        address: ChainSpecificAddress(
+          'arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7',
+        ),
         sinceTimestamp: UnixTime(1701389130),
         tokens: ['USDC'],
         description: 'Hyperliquid bridge escrow on Arbitrum.',
@@ -98,7 +105,7 @@ export const hyperliquid: Bridge = {
     },
     validation: {
       name: 'Transfers are externally verified',
-      description: `Hyperliquid is composed of two sets of permissioned validators, one being a "hot" validator set, and the other being a "cold" one. The hot validator set is responsible for initiating withdrawals upon user requests, while cold validators can invalide them during the ${challengePeriod}s challenge period and/or rotate both validator sets after an emergency pause. Both sets are currently composed of ${validatorSetSize} validators with equal power. The system accepts a request if signed by 2/3+1 of validators power.`,
+      description: `Hyperliquid is composed of two sets of permissioned validators, one being a "hot" validator set, and the other being a "cold" one. The hot validator set is responsible for initiating withdrawals upon user requests, while cold validators can invalidate them during the ${challengePeriod}s challenge period and/or rotate both validator sets after an emergency pause. Both sets are currently composed of ${validatorSetSize} validators with equal power. The system accepts a request if signed by 2/3+1 of validators power.`,
       references: [
         {
           title: 'Bridge2 contract: function checkValidatorSignatures()',

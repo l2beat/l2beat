@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xbb8e04c9b622ac47c0aa77dfbcb5b4267dd8c1fa
+Generated with discovered.json: 0xc0d8d043d355df81c3a3d2c34521d0e26954b265
 
 # Diff at Mon, 14 Jul 2025 12:44:59 GMT:
 
@@ -3040,7 +3040,7 @@ intended to bridge ethDYDX tokens from Treasury on Ethereum to dYdX Chain.
 
 Proposal: <https://dydx.community/dashboard/proposal/15>
 
-TLDR: added wethDYDX in the calculation of governance power. wethDYDX is a token minted by locking Ethereum DYDX tokens (called ethDYDX) permanently which will be later bridged to the dYdX Chain. wethDYDX is a transferrable ERC20. Does this mean that tokens will get duplicated?
+TLDR: added wethDYDX in the calculation of governance power. wethDYDX is a token minted by locking Ethereum DYDX tokens (called ethDYDX) permanently which will be later bridged to the dYdX Chain. wethDYDX is a transferable ERC20. Does this mean that tokens will get duplicated?
 
 We don't have a specific section on the website to specify this information, but we will soon with the Governance section, so I'll wait before adding anything to the project page.
 
