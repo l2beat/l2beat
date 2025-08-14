@@ -1,11 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
-  TECHNOLOGY,
-  UNDER_REVIEW_RISK_VIEW,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  TECHNOLOGY,
+  UNDER_REVIEW_RISK_VIEW,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'

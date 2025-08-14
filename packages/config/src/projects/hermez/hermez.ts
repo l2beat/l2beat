@@ -2,15 +2,15 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
-  DA_BRIDGES,
-  DA_LAYERS,
-  DA_MODES,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
