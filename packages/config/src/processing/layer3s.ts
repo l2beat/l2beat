@@ -43,6 +43,7 @@ import { muster } from '../projects/muster/muster'
 import { mvchain } from '../projects/mvchain/mvchain'
 import { novastro } from '../projects/novastro/novastro'
 import { nums } from '../projects/nums/nums'
+import { oceanum } from '../projects/oceanum/oceanum'
 import { onchain } from '../projects/onchain/onchain'
 import { onyx } from '../projects/onyx/onyx'
 import { oursong } from '../projects/oursong/oursong'
@@ -110,6 +111,7 @@ export const layer3s: ScalingProject[] = [
   zklinknova,
   ungaii,
   xai,
+  oceanum,
   onchain,
   onyx,
   popapex,
