@@ -8,10 +8,10 @@ export type UnixTime = number
 
 export function UnixTime(timestamp: number): UnixTime {
   if (!Number.isInteger(timestamp)) {
-    throw new TypeError('timestamp must be an integer')
+    throw new TypeError('Timestamp must be an integer')
   }
   if (timestamp > YEAR_3000_TIMESTAMP) {
-    throw new TypeError('timestamp too large!')
+    throw new TypeError('Timestamp too large!')
   }
   return timestamp
 }

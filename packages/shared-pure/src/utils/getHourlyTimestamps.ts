@@ -1,7 +1,7 @@
 import { UnixTime } from '../types'
 
 export function getHourlyTimestamps(from: UnixTime, to: UnixTime): UnixTime[] {
-  if (from > to) throw new Error('FROM cannot be greater than TO')
+  if (from > to) throw new Error('From cannot be greater than to')
 
   from = UnixTime.toEndOf(from, 'hour')
   to = UnixTime.toStartOf(to, 'hour')
