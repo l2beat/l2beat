@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x9ce2aad65f6b70b35ff04610bf894216b4612edc
+Generated with discovered.json: 0x18e0dc7d99d565d7c723e033f273c8117cc1c1db
 
-# Diff at Wed, 23 Jul 2025 12:55:54 GMT:
+# Diff at Thu, 14 Aug 2025 22:44:40 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 1276319
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- current timestamp: 1755211438
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Initial discovery
 

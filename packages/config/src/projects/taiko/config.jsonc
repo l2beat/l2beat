@@ -1,9 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "taiko",
-  "import": [
-    "../globalConfig.jsonc"
-  ],
+  "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
     "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
@@ -25,9 +23,7 @@
       "proxyType": "TaikoFork proxy"
     },
     "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": {
-      "ignoreMethods": [
-        "proxiableUUID"
-      ]
+      "ignoreMethods": ["proxiableUUID"]
     },
     // SC members below
     "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": {
@@ -56,6 +52,9 @@
     },
     "eth:0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487": {
       "category": "spam"
+    },
+    "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C": {
+      "ignoreMethods": ["proxiableUUID"]
     }
   }
 }
