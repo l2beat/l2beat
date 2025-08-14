@@ -66,6 +66,16 @@ export interface EcosystemEntry {
     tvs: number
     uops: number
   }
+  banners: {
+    firstBanner?: {
+      headlineText?: string
+      mainText?: string
+    }
+    secondBanner?: {
+      headlineText?: string
+      mainText?: string
+    }
+  }
   tvsByStage: TvsByStage
   tvsByTokenType: TvsByTokenType
   projectsByDaLayer: ProjectsByDaLayer
@@ -207,6 +217,10 @@ export async function getEcosystemEntry(
       liveProjects,
       allScalingProjects.length,
     ),
+    banners: {
+      firstBanner: ecosystem.ecosystemConfig.firstBanner,
+      secondBanner: ecosystem.ecosystemConfig.secondBanner,
+    },
     liveProjects: liveProjects
       .filter((p) => !p.archivedAt)
       .map((project) => {

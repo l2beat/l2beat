@@ -49,6 +49,13 @@ const VECTOR: DaProjectTableValue = {
   projectId: ProjectId('vector'),
 }
 
+const PLASMA: DaProjectTableValue = {
+  value: 'Plasma',
+  sentiment: 'good',
+  description:
+    'Data is not posted to Ethereum but to a plasma chain. There is a guarantee that if data is unavailable you can still exit using latest available state root.',
+}
+
 function DAC_MEMBERS({
   requiredSignatures,
   membersCount,
@@ -103,4 +110,5 @@ export const DA_BRIDGES = {
   DAC_MEMBERS,
   STAKED_OPERATORS,
   SELF_ATTESTED_INTMAX,
+  PLASMA,
 }

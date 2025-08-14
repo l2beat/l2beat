@@ -150,8 +150,8 @@ export function CostsChart({
             dataKey="posted"
             strokeWidth={2}
             stroke={chartMeta.posted.color}
-            dot={false}
             isAnimationActive={false}
+            dot={false}
             hide={!dataKeys.includes('posted')}
           />
         )}
@@ -162,8 +162,11 @@ export function CostsChart({
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
-          dot={false}
-          activeDot={false}
+          activeDot={
+            !dataKeys.includes('calldata') &&
+            (!chartMeta.blobs || !dataKeys.includes('blobs')) &&
+            !dataKeys.includes('compute')
+          }
           isAnimationActive={false}
           hide={!dataKeys.includes('overhead')}
         />
@@ -174,8 +177,10 @@ export function CostsChart({
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
-          dot={false}
-          activeDot={false}
+          activeDot={
+            !dataKeys.includes('calldata') &&
+            (!chartMeta.blobs || !dataKeys.includes('blobs'))
+          }
           isAnimationActive={false}
           hide={!dataKeys.includes('compute')}
         />
@@ -187,8 +192,7 @@ export function CostsChart({
             fillOpacity={1}
             strokeWidth={0}
             stackId="a"
-            dot={false}
-            activeDot={false}
+            activeDot={!dataKeys.includes('calldata')}
             isAnimationActive={false}
             hide={!dataKeys.includes('blobs')}
           />
@@ -200,7 +204,6 @@ export function CostsChart({
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
-          dot={false}
           isAnimationActive={false}
           hide={!dataKeys.includes('calldata')}
         />

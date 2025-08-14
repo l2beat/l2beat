@@ -61,7 +61,7 @@ export function BridgesProjectStats({ project }: Props) {
               <TooltipContent>
                 <TokenBreakdownTooltipContent
                   {...project.header.tvs.tokenBreakdown}
-                  associatedTokenSymbols={
+                  associatedTokens={
                     project.header.tvs.tokenBreakdown.associatedTokens
                   }
                   tvsWarnings={project.header.tvs.tokenBreakdown.warnings}

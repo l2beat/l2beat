@@ -38,7 +38,7 @@ export const bridgesSummaryOthersColumns = [
       return (
         <TotalCellWithTokenBreakdown
           href={`/bridges/projects/${ctx.row.original.slug}#tvs`}
-          associatedTokenSymbols={value.associatedTokens}
+          associatedTokens={value.associatedTokens}
           tvsWarnings={value.warnings}
           breakdown={value.breakdown}
           change={value.change}

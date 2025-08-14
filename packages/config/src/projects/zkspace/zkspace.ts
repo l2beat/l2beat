@@ -70,6 +70,7 @@ export const zkspace: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
+    zkCatalogId: ProjectId('zksyncprover'),
   },
   config: {
     associatedTokens: ['ZKS'],
