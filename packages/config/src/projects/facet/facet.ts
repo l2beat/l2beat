@@ -5,6 +5,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   DATA_ON_CHAIN,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -204,6 +207,11 @@ export const facet: ScalingProject = {
       startBlock: 1,
       adjustCount: { type: 'SubtractOne' },
     },
+  },
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
   },
   riskView: {
     stateValidation: {
