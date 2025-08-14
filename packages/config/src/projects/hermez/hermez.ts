@@ -8,6 +8,9 @@ import {
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -53,6 +56,11 @@ export const hermez: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
+  },
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   },
   stage: {
     stage: 'NotApplicable',
