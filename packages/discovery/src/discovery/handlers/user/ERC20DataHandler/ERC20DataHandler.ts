@@ -7,6 +7,10 @@ import { v } from '@l2beat/validate'
 import { chains } from '../../../../config/chains'
 import type { IProvider } from '../../../provider/IProvider'
 import type { Handler, HandlerResult } from '../../Handler'
+import {
+  type ERC20MintersDefinition,
+  ERC20MintersHandler,
+} from './ERC20MintersHandler'
 import { getCoingeckoId } from './getCoingeckoId'
 import { getTokenInfo } from './getTokenInfo'
 import { SourceEntry } from './types'
@@ -56,7 +60,9 @@ export class ERC20DataHandler implements Handler {
       entry?.deploymentTimestamp,
     )
 
-    return Promise.resolve({
+    const minters = await getMinters(provider, address)
+
+    return {
       field: '$tokenData',
       value: {
         name: info.name,
@@ -73,9 +79,24 @@ export class ERC20DataHandler implements Handler {
         source,
         bridgedUsing: entry?.bridgedUsing,
         excludeFromTotal: entry?.excludeFromTotal,
+        minters: minters.value,
       },
-    })
+      ignoreRelative: true,
+    }
   }
+}
+
+async function getMinters(provider: IProvider, address: ChainSpecificAddress) {
+  const mintersHandler: ERC20MintersDefinition = {
+    type: 'ERC20Minters',
+    noLimit: false,
+  }
+
+  const handler = new ERC20MintersHandler('$minters', mintersHandler)
+
+  const result = await handler.execute(provider, address)
+
+  return result
 }
 
 function getSource(chain: string, entry: SourceEntry) {

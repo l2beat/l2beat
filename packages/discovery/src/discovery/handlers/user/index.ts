@@ -40,6 +40,10 @@ import {
   ERC20DataHandler,
 } from './ERC20DataHandler/ERC20DataHandler'
 import {
+  ERC20MintersDefinition,
+  ERC20MintersHandler,
+} from './ERC20DataHandler/ERC20MintersHandler'
+import {
   EventCountHandler,
   EventCountHandlerDefinition,
 } from './EventCountHandler'
@@ -129,6 +133,7 @@ export const UserHandlerDefinition = v.union([
   PolygonCDKScheduledTransactionsHandlerDefinition,
   ERC20DataDefinition,
   TradableDefinition,
+  ERC20MintersDefinition,
 ])
 
 export function getUserHandler(
@@ -193,5 +198,7 @@ export function getUserHandler(
       return new ERC20DataHandler(field, definition)
     case 'tradable':
       return new TradableHandler(field)
+    case 'ERC20Minters':
+      return new ERC20MintersHandler(field, definition)
   }
 }
