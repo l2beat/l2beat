@@ -381,7 +381,7 @@ export const taiko: ScalingProject = {
       risks: [],
     },
     operator: {
-      name: 'The system uses whitelist-based sequencing rotating operators',
+      name: 'The system uses whitelist-based rotating operators',
       description: `The system uses a whitelist-based sequencing mechanism to allow for fast preconfirmations on the L2. On the L1, whitelisted preconfirmers (or the fallback operator) can sequence Taiko L2 blocks by proposing them on the TaikoL1 contract.
         The whitelist is managed by the \`PreconfWhitelist\` contract, which currently has ${whitelistedOperatorsCount} operators registered.
         The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the ${formatSeconds(taikoChainConfig.provingWindow)} proving window.
