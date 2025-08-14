@@ -312,9 +312,7 @@ export const facet: ScalingProject = {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
   },
-  permissions: {
-    addresses: discovery.getDiscoveredPermissions(),
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {
     name: 'facet',
     chainId: 1027303,
