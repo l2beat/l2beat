@@ -5,7 +5,7 @@ import { ProjectTvsChart } from '../../chart/tvs/ProjectTvsChart'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
-export interface TvsSectionProps extends ProjectSectionProps {
+export interface BridgesTvsSectionProps extends ProjectSectionProps {
   id: 'tvs'
   tokens?: ProjectTokens
   projectId: string
@@ -13,13 +13,13 @@ export interface TvsSectionProps extends ProjectSectionProps {
   defaultRange: TvsChartRange
 }
 
-export function TvsSection({
+export function BridgesTvsSection({
   projectId,
   milestones,
   tokens,
   defaultRange,
   ...sectionProps
-}: TvsSectionProps) {
+}: BridgesTvsSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
       <ProjectTvsChart

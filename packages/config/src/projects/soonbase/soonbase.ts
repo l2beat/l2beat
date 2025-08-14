@@ -6,6 +6,9 @@ export const soonbase: ScalingProject = underReviewL2({
   id: 'soonbase',
   capability: 'universal',
   addedAt: UnixTime(1754641504),
+  proofSystem: {
+    type: 'Optimistic',
+  },
   display: {
     name: 'soonBase',
     slug: 'soonbase',

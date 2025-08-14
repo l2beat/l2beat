@@ -22,7 +22,7 @@ import {
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
-import { TvsBreakdownButton } from '~/components/projects/sections/StackedTvsSection'
+import { TvsBreakdownButton } from '~/components/projects/sections/ScalingTvsSection'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import { useIsClient } from '~/hooks/useIsClient'
 import type {

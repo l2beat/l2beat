@@ -1,5 +1,6 @@
 import type {
   Project,
+  ProjectAssociatedToken,
   ProjectCustomColors,
   ProjectScalingCategory,
   ProjectScalingStage,
@@ -31,7 +32,7 @@ import { getOperatorSection } from '~/utils/project/technology/getOperatorSectio
 import { getOtherConsiderationsSection } from '~/utils/project/technology/getOtherConsiderationsSection'
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
-import { getStackedTvsSection } from '~/utils/project/tvs/getStackedTvsSection'
+import { getScalingTvsSection } from '~/utils/project/tvs/getScalingTvsSection'
 import {
   getUnderReviewStatus,
   type UnderReviewStatus,
@@ -92,9 +93,10 @@ export interface ProjectScalingEntry {
           stablecoin: number
           associated: number
           btc: number
+          other: number
         }
         warnings: WarningWithSentiment[]
-        associatedTokens: string[]
+        associatedTokens: ProjectAssociatedToken[]
       }
     }
     activity?: {
@@ -147,7 +149,7 @@ export async function getScalingProjectEntry(
     tokens,
     liveness,
     contractUtils,
-    stackedTvsSection,
+    scalingTvsSection,
     activitySection,
     costsSection,
     dataPostedSection,
@@ -158,7 +160,7 @@ export async function getScalingProjectEntry(
     getTokensForProject(project),
     getLiveness(project.id),
     getContractUtils(),
-    getStackedTvsSection(helpers, project),
+    getScalingTvsSection(helpers, project),
     getActivitySection(helpers, project),
     project.scalingInfo.layer === 'layer2'
       ? getCostsSection(helpers, project)
@@ -304,9 +306,9 @@ export async function getScalingProjectEntry(
         }
       : undefined
 
-  if (!project.isUpcoming && stackedTvsSection && tvsProjectStats) {
+  if (!project.isUpcoming && scalingTvsSection && tvsProjectStats) {
     sections.push({
-      type: 'StackedTvsSection',
+      type: 'ScalingTvsSection',
       props: {
         id: 'tvs',
         title: 'Value Secured',
@@ -316,7 +318,7 @@ export async function getScalingProjectEntry(
         tokens,
         tvsProjectStats,
         tvsInfo: project.tvsInfo,
-        ...stackedTvsSection,
+        ...scalingTvsSection,
       },
     })
   }

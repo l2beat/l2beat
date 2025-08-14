@@ -27,6 +27,9 @@ export const kontos: ScalingProject = underReviewL2({
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   escrows: [
     {
       address: EthereumAddress('0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD'),

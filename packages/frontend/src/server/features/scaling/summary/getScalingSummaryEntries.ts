@@ -1,5 +1,6 @@
 import type {
   Project,
+  ProjectAssociatedToken,
   ProjectScalingCapability,
   ProjectScalingCategory,
   ProjectScalingDa,
@@ -78,7 +79,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
       | undefined
     change: number | undefined
     associatedTokensExcludedChange: number | undefined
-    associatedTokens: string[]
+    associatedTokens: ProjectAssociatedToken[]
     warnings: WarningWithSentiment[]
     associatedTokensExcludedWarnings: WarningWithSentiment[]
   }
