@@ -103,7 +103,6 @@ export const boojum: BaseProject = {
         usedBy: [
           ProjectId('grvt'),
           ProjectId('lens'),
-
           ProjectId('wonder'),
           ProjectId('zkcandy'),
         ],
@@ -146,7 +145,6 @@ export const boojum: BaseProject = {
         usedBy: [
           ProjectId('grvt'),
           ProjectId('lens'),
-
           ProjectId('wonder'),
           ProjectId('zkcandy'),
         ],
@@ -173,6 +171,15 @@ export const boojum: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('treasure')],
+      },
+      {
+        hash: '0x8574e152c41dc39a2ecab984545e1cf21cb3ec250b919018a8053f2fa270784f',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+        knownDeployments: [
+          'https://lineascan.build/address/0x902C3806A84f4e855a8746e92d7F1C9a51400458',
+        ],
+        verificationStatus: 'notVerified',
+        usedBy: [ProjectId('zklinknova')],
       },
     ],
   },
