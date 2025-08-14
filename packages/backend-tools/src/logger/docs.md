@@ -30,7 +30,7 @@ The logger can be configured using the following options, all of them optional:
 - `cwd` - current working directory, used to shorten error stack traces. Defaults to `process.cwd()`.
 - `getTime` - callback that returns the current time. Defaults to `() => new Date()`.
 - `reportError` - callback called when a message is logged at the `ERROR` or `CRITICAL` level. See more in the [Error reporting](#error-reporting) section.
-- `transports` - a set of pairs ([transport](#transports) + [formatter](#formatters)) which define where and in what form logs are being outputted. Defaults to `console` and `pretty` formatter
+- `transports` - a set of pairs ([transport](#transports) + [formatter](#formatters)) which define where and in what form logs are being outputted. Defaults to `console` and JSON formatter
 
 ### Services
 
@@ -89,8 +89,8 @@ class FamilyGreeter {
 }
 
 const logger = Logger.INFO
-const capuletGreeter = new FamilyGreeter(logger.tag('Capulet'))
-const montagueGreeter = new FamilyGreeter(logger.tag('Montague'))
+const capuletGreeter = new FamilyGreeter(logger.tag({ tag: 'Capulet' }))
+const montagueGreeter = new FamilyGreeter(logger.tag({ tag: 'Montague' }))
 
 capuletGreeter.sayHello()
 
@@ -137,7 +137,7 @@ In this format every message is logged on one or more lines with another newline
 This formatter accepts two params:
 
 - `utc` - when set to true time is logged in UTC, otherwise in local time. Defaults to `false`.
-- `colors` - when set to true colors are used in the `pretty` format, otherwise they are not. Defaults to `false`.
+- `colors` - when set to true colors are used in the `pretty` format, otherwise they are not. Defaults to `true`.
 
 Below is an example log output:
 

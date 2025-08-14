@@ -1432,6 +1432,8 @@
   "static/meta-images/scaling/projects/ethereal/opengraph-image.png": "72df626106a7b5f9bbf173b7188bd9e6",
   "static/icons/jovay.png": "7558d03673680e3a92bf78f6bc61aae3",
   "static/meta-images/scaling/projects/jovay/opengraph-image.png": "1b862558eddf339cb4f2eb5fcb9450f9",
+  "static/icons/oceanum.png": "d98cf1cd69e622f2f8e568e0f20b70f8",
+  "static/meta-images/scaling/projects/oceanum/opengraph-image.png": "37d2f45f4a0a391588c0f8b7ad5da480",
   "static/icons/sischain.png": "d254c7a8ec519a841247e9a54d1a9879",
   "static/images/architecture/zkstack-rollup-gateway.png": "4e931f370dd3aa2233db88a6e681e8aa",
   "static/icons/silentdata.png": "8c733546edac5157efecccf8c4db18e9",
@@ -1444,6 +1446,10 @@
   "static/icons/sova.png": "20f644f30b847b37e79df870724271a3",
   "static/meta-images/scaling/projects/sova/opengraph-image.png": "76b5760002478337428f421a493e0a51",
   "static/icons/soonbase.png": "dbbcc5e51d9f203bcbb9491ce232116d",
+  "static/icons/flynet.png": "f4632bbe0267bfc9076e101bd6c41033",
+  "static/meta-images/scaling/projects/flynet/opengraph-image.png": "1549d5fc42d72424ba1071278aa6c525",
   "static/meta-images/scaling/projects/soonbase/opengraph-image.png": "2c5293480211c730856fd018566dac2e",
-  "static/meta-images/governance/publications/governance-review-64.png": "46572cca81445244be24184c2d336dfb"
+  "static/meta-images/governance/publications/governance-review-64.png": "46572cca81445244be24184c2d336dfb",
+  "static/icons/vemphorizon.png": "40e642c1e9b1908e0387ac6a8620f781",
+  "static/meta-images/scaling/projects/vemphorizon/opengraph-image.png": "a1b7b7362c111337b0b48aeaff349b0c"
 }

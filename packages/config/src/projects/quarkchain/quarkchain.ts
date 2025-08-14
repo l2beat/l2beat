@@ -21,6 +21,7 @@ export const quarkchain: ScalingProject = upcomingL2({
       ],
       documentation: ['https://docs.quarkchain.io/'],
       explorers: ['https://explorer.beta.testnet.l2.quarkchain.io/'],
+      repositories: ['https://github.com/QuarkChain'],
       socialMedia: [
         'https://x.com/quark_chain',
         'https://discord.com/invite/GbkGhY3qkh',
