@@ -2,8 +2,8 @@ import type {
   Project,
   ProjectAssociatedToken,
   ProjectScalingCapability,
-  ProjectScalingCategory,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingStack,
   ProjectScalingStage,
@@ -66,7 +66,7 @@ export async function getScalingSummaryEntries() {
 export interface ScalingSummaryEntry extends CommonScalingEntry {
   capability: ProjectScalingCapability
   stage: ProjectScalingStage
-  category: ProjectScalingCategory
+  proofSystem: ProjectScalingProofSystem | undefined
   purposes: ProjectScalingPurpose[]
   stacks: ProjectScalingStack[] | undefined
   dataAvailability: ProjectScalingDa | undefined
@@ -131,7 +131,7 @@ export function getScalingSummaryEntry(
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
     capability: project.scalingInfo.capability,
-    category: project.scalingInfo.type,
+    proofSystem: project.scalingInfo.proofSystem,
     stacks: project.scalingInfo.stacks,
     dataAvailability: project.scalingDa,
     purposes: project.scalingInfo.purposes,
