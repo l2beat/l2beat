@@ -2,6 +2,9 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -45,6 +48,12 @@ export const gluon: ScalingProject = {
         'https://youtube.com/channel/UCGor-eEpq0ObqN9u3jutq2w',
       ],
     },
+  },
+  proofSystem: undefined,
+  dataAvailability: {
+    layer: DA_LAYERS.NONE,
+    bridge: DA_BRIDGES.PLASMA,
+    mode: DA_MODES.BALANCE_PROOF,
   },
   stage: {
     stage: 'NotApplicable',

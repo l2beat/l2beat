@@ -46,6 +46,9 @@ export const zkswap2: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   stage: {
     stage: 'NotApplicable',
   },

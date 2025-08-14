@@ -120,6 +120,8 @@ export function EcosystemProjectPage({
                     slug={ecosystem.slug}
                     href={ecosystem.links.buildOn}
                     backgroundImage={ecosystem.images.buildOn}
+                    headlineText={ecosystem.banners.firstBanner?.headlineText}
+                    mainText={ecosystem.banners.firstBanner?.mainText}
                     className={cn(
                       ecosystem.slug === 'superchain' && 'text-primary',
                     )}
@@ -127,6 +129,8 @@ export function EcosystemProjectPage({
                   <EcosystemLearnMoreLink
                     name={ecosystem.name}
                     href={ecosystem.links.learnMore}
+                    headlineText={ecosystem.banners.secondBanner?.headlineText}
+                    mainText={ecosystem.banners.secondBanner?.mainText}
                   />
                 </div>
                 <EcosystemMilestonesAndIncidents

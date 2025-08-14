@@ -19,6 +19,7 @@ export type SummedTvsValues = {
   native: number | null
   ether: number | null
   stablecoin: number | null
+  btc: number | null
   other: number | null
   associated: number | null
 }
@@ -79,6 +80,10 @@ export async function getSummedTvsValues(
           (acc, curr) => acc + curr.stablecoin,
           0,
         )
+        record.btc += delayedRecordsForTimestamp.reduce(
+          (acc, curr) => acc + curr.btc,
+          0,
+        )
         record.other += delayedRecordsForTimestamp.reduce(
           (acc, curr) => acc + curr.other,
           0,
@@ -113,6 +118,7 @@ export async function getSummedTvsValues(
         stablecoin: null,
         other: null,
         associated: null,
+        btc: null,
       }
     }
     return record

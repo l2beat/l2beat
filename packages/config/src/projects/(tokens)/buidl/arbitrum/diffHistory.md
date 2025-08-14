@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xee33475452afbb9aa69ab670b81cecc4983b0170
+Generated with discovered.json: 0xdb29cde898fce21d00aac15a506a34475556885c
 
 # Diff at Fri, 18 Jul 2025 10:03:31 GMT:
 
@@ -7,7 +7,7 @@ Generated with discovered.json: 0xee33475452afbb9aa69ab670b81cecc4983b0170
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+initial discovery (adrian).
 
 ## Initial discovery
 

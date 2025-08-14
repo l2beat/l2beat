@@ -25,6 +25,9 @@ export const gasp: ScalingProject = underReviewL2({
       ],
     },
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
   escrows: [
     {
       address: EthereumAddress('0x79d968d9017B96f202aD4673A2c1BBbdc905A4ca'), // core contract ant multi asset escrow

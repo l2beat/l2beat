@@ -17,6 +17,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
@@ -28,6 +29,7 @@ import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
+  ProjectScalingProofSystem,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -77,6 +79,7 @@ export interface ZkStackConfigCommon {
   l1StandardBridgePremintedTokens?: string[]
   diamondContract: EntryParameters
   activityConfig?: ProjectActivityConfig
+  nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   l2OutputOracle?: EntryParameters
   portal?: EntryParameters
@@ -245,6 +248,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   const scThresholdString = `${scMainThreshold}/${scMemberCount}`
   const guardiansThresholdString = `${guardiansMainThreshold}/${guardiansMemberCount}`
 
+  const hasNoProofs = templateVars.reasonsForBeingOther?.some(
+    (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
+  )
+
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
@@ -290,6 +297,11 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       tvsWarning: templateVars.display.tvsWarning,
       ...templateVars.display,
     },
+    proofSystem:
+      templateVars.nonTemplateProofSystem ??
+      (hasNoProofs
+        ? undefined
+        : { type: 'Validity', zkCatalogId: ProjectId('boojum') }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [

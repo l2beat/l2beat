@@ -25,6 +25,7 @@ export const xlayer: ScalingProject = {
     REASON_FOR_BEING_OTHER.SMALL_DAC,
     REASON_FOR_BEING_OTHER.NO_PROOFS,
   ],
+  proofSystem: undefined,
   display: {
     name: 'X Layer',
     slug: 'xlayer',

@@ -117,6 +117,10 @@ export const linea: ScalingProject = {
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Proofs and state roots are currently posted in the same transaction.',
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('lineaprover'),
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({

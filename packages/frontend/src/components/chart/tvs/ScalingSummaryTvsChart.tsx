@@ -146,6 +146,7 @@ export function ScalingSummaryTvsChart({
             data: chartData,
             isLoading,
             yAxis: {
+              domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },
             syncedUntil: data?.syncedUntil,

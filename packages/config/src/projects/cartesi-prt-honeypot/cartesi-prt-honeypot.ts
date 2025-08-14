@@ -89,6 +89,9 @@ export const cartesiprthoneypot: ScalingProject = {
         'The current PRT implementation uses three tournament levels, which creates liveness risks in the event of Sybil attacks. Furthermore, it lacks the planned economic layer (bonds and rewards). As a result: (1) honest defenders must cover their own gas costs without compensation, and (2) a well-funded adversary can cheaply create Sybil challengers to keep the dispute tree alive, delaying finality. Safety and decentralization are unaffected, but withdrawals can be significantly delayed until every branch is resolved.',
     },
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
   scopeOfAssessment: {
     inScope: [
       'Ability to deposit and withdraw CTSI by the permissioned address',

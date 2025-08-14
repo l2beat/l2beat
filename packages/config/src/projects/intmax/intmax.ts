@@ -42,6 +42,10 @@ export const intmax: ScalingProject = {
       bridges: ['https://app.intmax.io/bridge'],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('intmaxprover'),
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({

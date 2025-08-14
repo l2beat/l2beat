@@ -106,6 +106,10 @@ export const scroll: ScalingProject = {
         'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet been confirmed.',
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('openvmprover'),
+  },
   scopeOfAssessment: {
     inScope: [
       'Ability to deposit, spend, and withdraw the gas token (ETH)',

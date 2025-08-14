@@ -196,7 +196,7 @@ export const starknet: ScalingProject = {
     slug: 'starknet',
     stacks: ['SN Stack'],
     description:
-      'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
+      'Starknet is a ZK rollup that uses STARK proofs to securely scale Ethereum and Ethereum blobs for data availability. Starknet is also actively engaged in bringing Bitcoin users the same scale, UX, and liquidity through a variety of products and programs.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
 
@@ -228,6 +228,10 @@ export const starknet: ScalingProject = {
       value:
         "The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Due to this complexity, Starknet's SHARP costs represent an estimate based on self-reported costs by the Starkware team.",
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('stone'),
   },
   chainConfig: {
     name: 'starknet',

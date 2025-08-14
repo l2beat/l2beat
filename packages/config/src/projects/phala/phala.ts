@@ -83,6 +83,10 @@ export const phala: ScalingProject = {
       )} after it has been posted.`,
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('sp1'),
+  },
   chainConfig: {
     name: 'phala',
     chainId: 2035,

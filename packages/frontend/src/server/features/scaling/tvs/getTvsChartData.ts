@@ -32,7 +32,7 @@ export const TvsChartDataParams = v.object({
 
 export type TvsChartDataParams = v.infer<typeof TvsChartDataParams>
 
-type TvsChartDataPoint = [
+export type TvsChartDataPoint = [
   timestamp: number,
   native: number | null,
   canonical: number | null,

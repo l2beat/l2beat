@@ -138,6 +138,10 @@ export const degate3: ScalingProject = {
         'DeGate is a ZK rollup based on Loopring’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('loopringprover'),
+  },
   chainConfig: {
     name: 'degate3',
     chainId: undefined,

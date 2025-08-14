@@ -35,6 +35,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
     capability: templateVars.capability,
     hasTestnet: templateVars.hasTestnet,
     display: templateVars.display,
+    proofSystem: undefined,
     stage: {
       stage: 'NotApplicable',
     },
@@ -61,6 +62,7 @@ export function upcomingL3(templateVars: UpcomingConfigL3): ScalingProject {
       ...templateVars.display,
     },
     hostChain: templateVars.hostChain,
+    proofSystem: undefined,
     config: {
       escrows: [],
     },
