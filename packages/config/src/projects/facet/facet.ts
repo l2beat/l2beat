@@ -199,6 +199,11 @@ export const facet: ScalingProject = {
         },
       },
     ],
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
+      adjustCount: { type: 'SubtractOne' },
+    },
   },
   riskView: {
     stateValidation: {
