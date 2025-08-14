@@ -63,6 +63,7 @@ import { syndicateframe } from '../projects/syndicateframe/syndicateframe'
 import { syndr } from '../projects/syndr/syndr'
 import { ungaii } from '../projects/ungaii/ungaii'
 import { unite } from '../projects/unite/unite'
+import { vemphorizon } from '../projects/vemphorizon/vemphorizon'
 import { vessel } from '../projects/vessel/vessel'
 import { winr } from '../projects/winr/winr'
 import { xai } from '../projects/xai/xai'
@@ -130,6 +131,7 @@ export const layer3s: ScalingProject[] = [
   novastro,
   nums,
   unite,
+  vemphorizon,
   vessel,
   l3x,
   lumiterra,
