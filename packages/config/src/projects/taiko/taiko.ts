@@ -404,7 +404,8 @@ export const taiko: ScalingProject = {
         This mechanism ensures that at least one forced transaction from the queue is processed every ${inclusionDelay} batches. However, if many transactions (k) are added to the queue, an individual transaction could experience a worst-case delay of up to k * ${inclusionDelay} batches while waiting for its turn.`,
       references: [
         {
-          title: 'ForcedInclusionStore.sol - Etherscan source code, storeForcedInclusion function',
+          title:
+            'ForcedInclusionStore.sol - Etherscan source code, storeForcedInclusion function',
           url: 'https://etherscan.io/address/0xcdb25e201ad3fdcfe16730a6ca2cc0b1ce2137a2#code',
         },
       ],

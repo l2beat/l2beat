@@ -8,8 +8,7 @@
   ],
   "fields": {
     "getOperatorCandidatesForCurrentEpoch": {
-      "permissions": [{ "type": "sequence" }, { "type": "propose" }],
-      
+      "permissions": [{ "type": "sequence" }, { "type": "propose" }]
     }
   }
 }
