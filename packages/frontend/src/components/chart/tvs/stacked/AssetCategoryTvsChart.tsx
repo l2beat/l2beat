@@ -16,17 +16,18 @@ import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../../types'
 
-interface StackedTvsChartDataPoint {
+interface TokenCategoryTvsChartDataPoint {
   timestamp: number
-  native: number | null
-  canonical: number | null
-  external: number | null
+  ether: number | null
+  stablecoin: number | null
+  btc: number | null
+  other: number | null
 }
 
 interface Props {
-  data: StackedTvsChartDataPoint[] | undefined
+  data: TokenCategoryTvsChartDataPoint[] | undefined
   syncedUntil: number | undefined
-  dataKeys: (keyof typeof scalingStackedTvsChartMeta)[]
+  dataKeys: (keyof typeof assetCategoryTvsChartMeta)[]
   toggleDataKey: (dataKey: string) => void
   milestones: Milestone[]
   unit: ChartUnit
@@ -35,25 +36,30 @@ interface Props {
   className?: string
 }
 
-export const scalingStackedTvsChartMeta = {
-  canonical: {
-    label: 'Canonically bridged',
-    color: 'var(--chart-stacked-purple)',
+export const assetCategoryTvsChartMeta = {
+  ether: {
+    label: 'ETH & derivatives',
+    color: 'var(--chart-ethereum)',
     indicatorType: { shape: 'square' },
   },
-  native: {
-    label: 'Natively minted',
-    color: 'var(--chart-stacked-pink)',
+  stablecoin: {
+    label: 'Stablecoins',
+    color: 'var(--chart-teal)',
     indicatorType: { shape: 'square' },
   },
-  external: {
-    label: 'Externally bridged',
-    color: 'var(--chart-stacked-yellow)',
+  btc: {
+    label: 'BTC & derivatives',
+    color: 'var(--chart-orange)',
+    indicatorType: { shape: 'square' },
+  },
+  other: {
+    label: 'Other',
+    color: 'var(--chart-yellow-lime)',
     indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
 
-export function StackedTvsChart({
+export function AssetCategoryTvsChart({
   data,
   syncedUntil,
   milestones,
@@ -67,7 +73,7 @@ export function StackedTvsChart({
   return (
     <ChartContainer
       data={data}
-      meta={scalingStackedTvsChartMeta}
+      meta={assetCategoryTvsChartMeta}
       isLoading={isLoading}
       milestones={milestones}
       interactiveLegend={{
@@ -79,29 +85,45 @@ export function StackedTvsChart({
       <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
-          dataKey="external"
-          hide={!dataKeys.includes('external')}
-          fill={scalingStackedTvsChartMeta.external.color}
+          dataKey="other"
+          hide={!dataKeys.includes('other')}
+          fill={assetCategoryTvsChartMeta.other.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
-          activeDot={false}
+          activeDot={
+            !dataKeys.includes('ether') &&
+            !dataKeys.includes('stablecoin') &&
+            !dataKeys.includes('btc')
+          }
         />
         <Area
-          dataKey="native"
-          hide={!dataKeys.includes('native')}
-          fill={scalingStackedTvsChartMeta.native.color}
+          dataKey="btc"
+          hide={!dataKeys.includes('btc')}
+          fill={assetCategoryTvsChartMeta.btc.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
-          activeDot={false}
+          activeDot={
+            !dataKeys.includes('ether') && !dataKeys.includes('stablecoin')
+          }
         />
         <Area
-          dataKey="canonical"
-          hide={!dataKeys.includes('canonical')}
-          fill={scalingStackedTvsChartMeta.canonical.color}
+          dataKey="stablecoin"
+          hide={!dataKeys.includes('stablecoin')}
+          fill={assetCategoryTvsChartMeta.stablecoin.color}
+          fillOpacity={1}
+          strokeWidth={0}
+          stackId="a"
+          isAnimationActive={false}
+          activeDot={!dataKeys.includes('ether')}
+        />
+        <Area
+          dataKey="ether"
+          hide={!dataKeys.includes('ether')}
+          fill={assetCategoryTvsChartMeta.ether.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -168,8 +190,8 @@ function CustomTooltip({
           {actualPayload.map((entry) => {
             if (entry.type === 'none') return null
             const config =
-              scalingStackedTvsChartMeta[
-                entry.name as keyof typeof scalingStackedTvsChartMeta
+              assetCategoryTvsChartMeta[
+                entry.name as keyof typeof assetCategoryTvsChartMeta
               ]
             return (
               <div

@@ -16,6 +16,7 @@ export const namechain: ScalingProject = upcomingL2({
     links: {
       websites: ['https://app.ens.domains/ens-v2'],
       documentation: ['https://roadmap.ens.domains/l2-roadmap/'],
+      repositories: ['https://github.com/ensdomains/namechain'],
       socialMedia: [
         'https://x.com/ensdomains',
         'https://discord.com/invite/TZmGtEP',

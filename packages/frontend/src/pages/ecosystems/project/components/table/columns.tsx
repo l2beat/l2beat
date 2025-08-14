@@ -107,7 +107,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
           return (
             <TotalCellWithTvsBreakdown
               href={`/scaling/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
-              associatedTokenSymbols={value.associatedTokens}
+              associatedTokens={value.associatedTokens}
               tvsWarnings={value.warnings}
               breakdown={value.breakdown}
               change={value.change}

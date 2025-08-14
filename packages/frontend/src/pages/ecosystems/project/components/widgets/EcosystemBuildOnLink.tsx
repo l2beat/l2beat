@@ -8,6 +8,8 @@ interface Props {
   href: string
   backgroundImage: string
   className?: string
+  headlineText?: string
+  mainText?: string
 }
 
 export function EcosystemBuildOnLink({
@@ -15,6 +17,8 @@ export function EcosystemBuildOnLink({
   href,
   backgroundImage,
   className,
+  headlineText,
+  mainText,
 }: Props) {
   return (
     <EcosystemWidget asChild>
@@ -33,10 +37,10 @@ export function EcosystemBuildOnLink({
         />
         <div className="relative flex h-full flex-col justify-center">
           <div className="font-medium text-2xs uppercase transition-opacity group-hover:opacity-0">
-            Ready to join {name}?
+            {headlineText ?? `Ready to join ${name}?`}
           </div>
           <div className="group-hover:-translate-y-2 origin-left text-balance font-bold text-lg leading-tight! transition-[translate,scale] ease-in-out group-hover:translate-x-4 group-hover:scale-125 sm:text-xl">
-            Build own chain on {name}
+            {mainText ?? `Build own chain on ${name}`}
           </div>
         </div>
       </CustomLink>

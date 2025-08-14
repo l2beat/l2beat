@@ -780,8 +780,13 @@ export interface TrustedSetup {
 
 // #region feature configs
 export interface ProjectTvsInfo {
-  associatedTokens: string[]
+  associatedTokens: ProjectAssociatedToken[]
   warnings: WarningWithSentiment[]
+}
+
+export interface ProjectAssociatedToken {
+  symbol: string
+  icon: string | undefined
 }
 
 export type ProjectEscrowSource = 'canonical' | 'external' | 'native'
@@ -940,6 +945,14 @@ export interface ProjectEcosystemConfig {
     governanceProposals: string
     tools?: string[]
     grants?: string
+  }
+  firstBanner?: {
+    headlineText?: string
+    mainText?: string
+  }
+  secondBanner?: {
+    headlineText?: string
+    mainText?: string
   }
 }
 // #endregion

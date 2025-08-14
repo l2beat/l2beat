@@ -1,4 +1,9 @@
-import type { Project, WarningWithSentiment } from '@l2beat/config'
+import type {
+  Project,
+  ProjectAssociatedToken,
+  WarningWithSentiment,
+} from '@l2beat/config'
+import compact from 'lodash/compact'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
@@ -8,6 +13,7 @@ import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import type { ProjectSevenDayTvsBreakdown } from './get7dTvsBreakdown'
 import { get7dTvsBreakdown } from './get7dTvsBreakdown'
 import { compareTvs } from './utils/compareTvs'
+import { getAssociatedTokenWarning } from './utils/getAssociatedTokenWarning'
 
 export async function getScalingTvsEntries() {
   const [projectsChangeReport, tvs, projects] = await Promise.all([
@@ -37,7 +43,7 @@ export async function getScalingTvsEntries() {
 export interface ScalingTvsEntry extends CommonScalingEntry {
   tvs: {
     data: ProjectSevenDayTvsBreakdown | undefined
-    associatedTokens: string[]
+    associatedTokens: ProjectAssociatedToken[]
     warnings: WarningWithSentiment[]
   }
   tvsOrder: number
@@ -48,12 +54,24 @@ function getScalingTvsEntry(
   changes: ProjectChanges,
   data: ProjectSevenDayTvsBreakdown | undefined,
 ): ScalingTvsEntry | undefined {
+  const associatedTokenWarning =
+    data?.breakdown && data.breakdown.total > 0
+      ? getAssociatedTokenWarning({
+          associatedRatio: data.associated.total / data.breakdown.total,
+          name: project.name,
+          associatedTokens: project.tvsInfo?.associatedTokens ?? [],
+        })
+      : undefined
+
   return {
     ...getCommonScalingEntry({ project, changes }),
     tvs: {
       data,
       associatedTokens: project.tvsInfo.associatedTokens,
-      warnings: project.tvsInfo.warnings,
+      warnings: compact([
+        ...project.tvsInfo.warnings,
+        associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
+      ]),
     },
     tvsOrder: data?.breakdown.total ?? -1,
   }
