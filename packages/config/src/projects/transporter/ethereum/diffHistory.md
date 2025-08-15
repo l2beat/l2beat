@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x576d315c750d73d9b799c93541145868774a564a
+Generated with discovered.json: 0x1c98c83f17016d7ae2f58ccca8cc38a8c9637f5c
 
-# Diff at Fri, 15 Aug 2025 15:35:58 GMT:
+# Diff at Fri, 15 Aug 2025 15:53:24 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c3e90302baa55a4ba6e093cc5d28fae579abf41d block: 1734023903
-- current timestamp: 1755271801
+- current timestamp: 1755273081
 
 ## Description
 
@@ -445,16 +445,45 @@ https://disco.l2beat.com/diff/eth:0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5/eth
       values.getConfig.groupParents.15:
 -        0
 +        12
-      template:
-+        "transporter/ManyChainMultiSig"
+      values.getOpCount:
+-        49
++        56
+      values.getRoot.root:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x52caa8278ae09a931dbe00ec7fbf7334db4914cb4f251a4360aff6d5d69abd7f"
+      values.getRoot.validUntil:
+-        0
++        1752511697
+      values.getRootMetadata.preOpCount:
+-        49
++        54
+      values.getRootMetadata.postOpCount:
+-        49
++        58
     }
 ```
 
 ```diff
     contract ManyChainMultiSig (0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B) {
     +++ description: None
-      template:
-+        "transporter/ManyChainMultiSig"
+      values.getOpCount:
+-        291
++        410
+      values.getRoot.root:
+-        "0xd9b2a8f556f05e8d43a6b13063ea5497f0fb296de0ed889bc2bbf86cc38fc0ae"
++        "0xbafaee046e4a87af28aedc8b20e74c748c6382b58d09ada4c8f1e0ce4ada3ad7"
+      values.getRoot.validUntil:
+-        1733654497
++        1744904812
+      values.getRootMetadata.preOpCount:
+-        272
++        409
+      values.getRootMetadata.postOpCount:
+-        291
++        458
+      values.getRootMetadata.overridePreviousRoot:
+-        false
++        true
     }
 ```
 
@@ -789,8 +818,6 @@ https://disco.l2beat.com/diff/eth:0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5/eth
       values.getConfig.signers.1.addr:
 -        "eth:0x2CD36141d4AEFb8e57209770b965043Ed3129D9F"
 +        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
-      template:
-+        "transporter/ManyChainMultiSig"
     }
 ```
 
@@ -977,8 +1004,6 @@ https://disco.l2beat.com/diff/eth:0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5/eth
       values.getConfig.groupParents.10:
 -        0
 +        1
-      template:
-+        "transporter/ManyChainMultiSig"
     }
 ```
 
@@ -1191,8 +1216,21 @@ https://disco.l2beat.com/diff/eth:0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5/eth
       values.getConfig.groupQuorums.2:
 -        1
 +        2
-      template:
-+        "transporter/ManyChainMultiSig"
+      values.getOpCount:
+-        1634
++        2536
+      values.getRoot.root:
+-        "0x1436f41821f52f6fe546734d343d2ec53c85bf89634d588bc3ffa0820cb7746e"
++        "0x235a702dc866198f23ebc126f8575e3d7dba0053f2b4cca049eb03dc8a2ab2db"
+      values.getRoot.validUntil:
+-        1734235210
++        1755360827
+      values.getRootMetadata.preOpCount:
+-        1633
++        2534
+      values.getRootMetadata.postOpCount:
+-        1634
++        2536
     }
 ```
 
@@ -1310,6 +1348,12 @@ https://disco.l2beat.com/diff/eth:0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5/eth
 ```diff
 +   Status: CREATED
     contract EVM2EVMOnRamp (0x31ee106a4585a796caacC645172B9F7e9c2f8D37)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E)
     +++ description: None
 ```
 
@@ -1741,12 +1785,6 @@ https://disco.l2beat.com/diff/eth:0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5/eth
 
 ```diff
 +   Status: CREATED
-    contract Wrapped Ether Token (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract CommitStore (0xc46890D248a389A40725dbd9fa5e13548B56Ad8d)
     +++ description: None
 ```
@@ -2001,8 +2039,7 @@ https://disco.l2beat.com/diff/eth:0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5/eth
  .../projects/transporter/ethereum/.flat/OnRamp.sol | 1853 +++++++++++
  .../ethereum/.flat@1734023903/RMN.sol => /dev/null | 1376 --------
  .../transporter/ethereum/.flat/RMNRemote.sol       | 1230 +++++++
- .../ethereum/.flat/Wrapped Ether Token.sol         |   63 +
- 116 files changed, 278693 insertions(+), 1376 deletions(-)
+ 115 files changed, 278630 insertions(+), 1376 deletions(-)
 ```
 
 ## Config/verification related changes

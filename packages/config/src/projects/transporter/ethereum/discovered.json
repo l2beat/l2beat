@@ -1,8 +1,8 @@
 {
   "name": "transporter",
   "chain": "ethereum",
-  "timestamp": 1755271801,
-  "configHash": "0x04eded90723c0292c11c09c8eb91272179c4abd808353f1a1bf638063e443550",
+  "timestamp": 1755273081,
+  "configHash": "0xe95cf3f08a84452be390cd20650f7e927320b5ab30aedf708ff927eccf920244",
   "entries": [
     {
       "address": "eth:0x00348860Cb152Aa20617a1265343D1989C976575",
@@ -840,7 +840,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 654,
+        "getExpectedNextSequenceNumber": 656,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -1106,12 +1106,10 @@
       "name": "ManyChainMultiSig",
       "address": "eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc",
       "type": "Contract",
-      "template": "transporter/ManyChainMultiSig",
       "sourceHashes": [
         "0x15b33604a10bda5235da68c98629cc8246b96e86c931a23c296ae08f1eb691cb"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1689096839,
       "sinceBlock": 17671884,
       "values": {
@@ -1574,8 +1572,8 @@
           "defaultTokenDestGasOverhead": 90000,
           "enforceOutOfOrder": false
         },
-        "getExpectedNextSequenceNumber": 1280,
-        "getNopFeesJuels": "23555133825536813514",
+        "getExpectedNextSequenceNumber": 1285,
+        "getNopFeesJuels": "23670558044635664304",
         "getStaticConfig": {
           "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
           "chainSelector": "5009297550715157269",
@@ -1587,7 +1585,7 @@
           "tokenAdminRegistry": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6"
         },
         "getTokenLimitAdmin": "eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "-13277422404147553144",
+        "linkAvailableForPayment": "-13392846623246403934",
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": {
@@ -2342,6 +2340,58 @@
       "sinceBlock": 22277111,
       "values": {
         "$immutable": true,
+        "getAllSourceChainConfigs": [
+          [
+            "11344663589394136015",
+            "15971525489660198786",
+            "4949039107694359620",
+            "124615329519749607",
+            "13624601974233774587"
+          ],
+          [
+            {
+              "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+              "isEnabled": true,
+              "minSeqNr": 9,
+              "isRMNVerificationDisabled": true,
+              "onRamp": "0x000000000000000000000000f09afe78d3c7d359b334d7cb88995751f7ec5e13"
+            },
+            {
+              "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+              "isEnabled": true,
+              "minSeqNr": 32,
+              "isRMNVerificationDisabled": true,
+              "onRamp": "0x000000000000000000000000ee85aefb15b9489563a6a29891ebe0750aa1a7ae"
+            },
+            {
+              "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+              "isEnabled": true,
+              "minSeqNr": 23,
+              "isRMNVerificationDisabled": true,
+              "onRamp": "0x00000000000000000000000076a443768a5e3b8d1aed0105fc250877841deb40"
+            },
+            {
+              "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+              "isEnabled": true,
+              "minSeqNr": 123,
+              "isRMNVerificationDisabled": true,
+              "onRamp": "0xac972977e1bab5fff6c686291f994ff52f34abed1bc7df88f76f43f926592c8f"
+            },
+            {
+              "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+              "isEnabled": false,
+              "minSeqNr": 5,
+              "isRMNVerificationDisabled": false,
+              "onRamp": "0x000000000000000000000000d4d2841ac332075833ae86eb49ce7af9f353cd21"
+            }
+          ]
+        ],
+        "getDynamicConfig": {
+          "feeQuoter": "eth:0x40858070814a57FdF33a613ae84fE0a8b4a874f7",
+          "permissionLessExecutionThresholdSeconds": 3600,
+          "messageInterceptor": "eth:0x0000000000000000000000000000000000000000"
+        },
+        "getLatestPriceSequenceNumber": 927376,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
           "gasForCallExactCheck": 5000,
@@ -2549,12 +2599,10 @@
       "name": "ManyChainMultiSig",
       "address": "eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
       "type": "Contract",
-      "template": "transporter/ManyChainMultiSig",
       "sourceHashes": [
         "0x15b33604a10bda5235da68c98629cc8246b96e86c931a23c296ae08f1eb691cb"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1695826667,
       "sinceBlock": 18227834,
       "values": {
@@ -2798,6 +2846,19 @@
           }
         }
       ]
+    },
+    {
+      "name": "",
+      "address": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1744752947,
+      "sinceBlock": 22277106,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E": ""
+      }
     },
     {
       "address": "eth:0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89",
@@ -5582,8 +5643,8 @@
           "defaultTokenDestGasOverhead": 90000,
           "enforceOutOfOrder": false
         },
-        "getExpectedNextSequenceNumber": 1322,
-        "getNopFeesJuels": "30377209557067251633",
+        "getExpectedNextSequenceNumber": 1323,
+        "getNopFeesJuels": "30400190533273298697",
         "getStaticConfig": {
           "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
           "chainSelector": "5009297550715157269",
@@ -5595,7 +5656,7 @@
           "tokenAdminRegistry": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6"
         },
         "getTokenLimitAdmin": "eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "-28206211781189732719",
+        "linkAvailableForPayment": "-28229192757395779783",
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": {
@@ -11798,8 +11859,8 @@
           "defaultTokenDestGasOverhead": 90000,
           "enforceOutOfOrder": false
         },
-        "getExpectedNextSequenceNumber": 4585,
-        "getNopFeesJuels": "269048821381928832785",
+        "getExpectedNextSequenceNumber": 4586,
+        "getNopFeesJuels": "269072916820269934974",
         "getStaticConfig": {
           "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
           "chainSelector": "5009297550715157269",
@@ -11811,7 +11872,7 @@
           "tokenAdminRegistry": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6"
         },
         "getTokenLimitAdmin": "eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "-266355476022448050221",
+        "linkAvailableForPayment": "-266379571460789152410",
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": {
@@ -13419,12 +13480,10 @@
       "name": "ManyChainMultiSig",
       "address": "eth:0xa8D5E1daA6D8B94f11D77B7E09DE846292ef69FF",
       "type": "Contract",
-      "template": "transporter/ManyChainMultiSig",
       "sourceHashes": [
         "0x15b33604a10bda5235da68c98629cc8246b96e86c931a23c296ae08f1eb691cb"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1689394931,
       "sinceBlock": 17696402,
       "values": {
@@ -13527,7 +13586,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1868,
+        "getExpectedNextSequenceNumber": 1869,
         "getLatestPriceEpochAndRound": 24235267,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -13650,12 +13709,10 @@
       "name": "ManyChainMultiSig",
       "address": "eth:0xAD97C0270a243270136E40278155C12ce7C7F87B",
       "type": "Contract",
-      "template": "transporter/ManyChainMultiSig",
       "sourceHashes": [
         "0x15b33604a10bda5235da68c98629cc8246b96e86c931a23c296ae08f1eb691cb"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1689096875,
       "sinceBlock": 17671887,
       "values": {
@@ -13943,8 +14000,8 @@
           "defaultTokenDestGasOverhead": 90000,
           "enforceOutOfOrder": false
         },
-        "getExpectedNextSequenceNumber": 1706,
-        "getNopFeesJuels": "41912720416163272766",
+        "getExpectedNextSequenceNumber": 1708,
+        "getNopFeesJuels": "41963270578774482694",
         "getStaticConfig": {
           "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
           "chainSelector": "5009297550715157269",
@@ -13956,7 +14013,7 @@
           "tokenAdminRegistry": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6"
         },
         "getTokenLimitAdmin": "eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "-37138891158861438214",
+        "linkAvailableForPayment": "-37189441321472648142",
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": {
@@ -14774,8 +14831,8 @@
           "defaultTokenDestGasOverhead": 90000,
           "enforceOutOfOrder": false
         },
-        "getExpectedNextSequenceNumber": 1205,
-        "getNopFeesJuels": "31745653571148243345",
+        "getExpectedNextSequenceNumber": 1206,
+        "getNopFeesJuels": "31768185980530782445",
         "getStaticConfig": {
           "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
           "chainSelector": "5009297550715157269",
@@ -14787,7 +14844,7 @@
           "tokenAdminRegistry": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6"
         },
         "getTokenLimitAdmin": "eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "-28588500543069919719",
+        "linkAvailableForPayment": "-28611032952452458819",
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": {
@@ -14825,27 +14882,6 @@
           }
         }
       ]
-    },
-    {
-      "name": "Wrapped Ether Token",
-      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1513077455,
-      "sinceBlock": 4719568,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "name": "Wrapped Ether",
-        "symbol": "WETH",
-        "totalSupply": "2273004352037886795810375"
-      },
-      "implementationNames": {
-        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
-      }
     },
     {
       "name": "EVM2EVMOffRamp",
@@ -16303,10 +16339,12 @@
       "name": "ManyChainMultiSig",
       "address": "eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e",
       "type": "Contract",
+      "template": "transporter/ManyChainMultiSig",
       "sourceHashes": [
         "0x4f59b9eb3c499a0ce481e88fbdca49583b553c9ae00db33bfcc9e38132a82b86"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1744208183,
       "sinceBlock": 22231886,
       "values": {
@@ -17895,12 +17933,10 @@
       "name": "ManyChainMultiSig",
       "address": "eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
       "type": "Contract",
-      "template": "transporter/ManyChainMultiSig",
       "sourceHashes": [
         "0x15b33604a10bda5235da68c98629cc8246b96e86c931a23c296ae08f1eb691cb"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1689096911,
       "sinceBlock": 17671890,
       "values": {
@@ -19198,7 +19234,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 6429,
+        "getExpectedNextSequenceNumber": 6431,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -31942,23 +31978,6 @@
       "function typeAndVersion() view returns (string)",
       "function withdrawNonLinkFees(address feeToken, address to)"
     ],
-    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
-      "function name() view returns (string)",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function withdraw(uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function balanceOf(address) view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function deposit() payable",
-      "function allowance(address, address) view returns (uint256)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event Withdrawal(address indexed src, uint256 wad)"
-    ],
     "eth:0xc1EcCE580B2C96f4fd202fB7c2a259ECe19a1bF2": [
       "constructor(tuple(address commitStore, uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address prevOffRamp, address rmnProxy, address tokenAdminRegistry) staticConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig)",
       "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
@@ -35992,13 +36011,13 @@
     "transporter/ManyChainMultiSig": "0x21581960386f06fc34963035830a3ca548780df8068db571d08450196a3a0d15",
     "transporter/OffRampV1": "0x728a2acf1dc05efa76c7d11920525e16aadf1ac9448875c17eeeaf351416e090",
     "transporter/OfframpV2": "0x728a2acf1dc05efa76c7d11920525e16aadf1ac9448875c17eeeaf351416e090",
-    "transporter/OfframpV3": "0x399306bceafc3ff424e42aceeed11e0c8dbf1f16097edb9aa366cf10f36494f2",
+    "transporter/OfframpV3": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "transporter/OnRampV1": "0xcc8428194e26169a3cd1cd63731820f4c409a83c37c7ff6e1dc60a2ca546a291",
     "transporter/OnRampV3": "0x49fc7dbebec4a000c681301b944f8abe47c22e5699d44b6b030f986133da4d15",
     "transporter/PriceRegistry": "0x1446d2e81e0804c808246c6c31122a8823aa7c974e2487647d7502d530d9b46f",
     "transporter/RouterV1_0_0": "0xf8d34f96cc84ee703e4b5e8abae8b3836dd27a2f239144af40b3dcf1ff6fb8af",
     "transporter/RouterV1_2_0": "0x3015fdf1e7a78e71377f5cdd6e0b0cd46de5678925d8342e711c92db79e48ead"
   },
-  "usedBlockNumbers": { "ethereum": 23147339 },
-  "permissionsConfigHash": "0x3c6a77e2dc0b827cd188f1ae6afbbfbde23d168a152ef0edea609284f2d2237e"
+  "usedBlockNumbers": { "ethereum": 23147446 },
+  "permissionsConfigHash": "0x5bcd484dba1b1942d1a0d0b54f0797b22fa932da52b8950247d60a811d0c37f6"
 }
