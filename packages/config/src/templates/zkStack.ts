@@ -299,7 +299,9 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Validity' }),
+      (hasNoProofs
+        ? undefined
+        : { type: 'Validity', zkCatalogId: ProjectId('boojum') }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [

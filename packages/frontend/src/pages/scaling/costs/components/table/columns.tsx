@@ -1,6 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { Skeleton } from '~/components/core/Skeleton'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { TableLink } from '~/components/table/TableLink'
@@ -99,16 +100,28 @@ export function getScalingCostsColumns(metric: CostsMetric) {
     }),
     columnHelper.accessor('data.blobs', {
       header: 'Blobs',
-      cell: (ctx) => (
-        <SyncStatusWrapper
-          isSynced={
-            ctx.row.original.data.type === 'available' &&
-            ctx.row.original.data.isSynced
-          }
-        >
-          <CostsBreakdownValueCell data={ctx.row.original.data} type="blobs" />
-        </SyncStatusWrapper>
-      ),
+      cell: (ctx) => {
+        if (
+          ctx.row.original.data.type === 'available' &&
+          ctx.row.original.data.blobs === null
+        ) {
+          return <NotApplicableBadge />
+        }
+
+        return (
+          <SyncStatusWrapper
+            isSynced={
+              ctx.row.original.data.type === 'available' &&
+              ctx.row.original.data.isSynced
+            }
+          >
+            <CostsBreakdownValueCell
+              data={ctx.row.original.data}
+              type="blobs"
+            />
+          </SyncStatusWrapper>
+        )
+      },
       sortUndefined: 'last',
       meta: {
         align: 'right',
