@@ -141,6 +141,13 @@ export const zkCatalogTags = [
     description:
       'Toolkit for developing transparent SNARKs based on PLONK and FRI developed by Polygon Zero team.',
   },
+  {
+    id: 'AztecV1',
+    type: ZkCatalogTagType.Plonk,
+    name: 'AztecV1',
+    description:
+      'First version of Aztec implementation of Plonk proving system, originally developed for zk.money (AZTEC v1).',
+  },
   // Fflonk
   {
     id: 'Zksync',

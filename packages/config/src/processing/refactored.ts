@@ -1,4 +1,5 @@
 import { avail } from '../projects/avail/avail'
+import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
@@ -54,6 +55,7 @@ export const refactored: BaseProject[] = [
   loopringprover,
   zksyncprover,
   intmaxprover,
+  aztecv1prover,
   // da-beat
   ethereum,
   avail,
