@@ -16,7 +16,7 @@ export const happychain: ScalingProject = upcomingL2({
     category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
-      websites: ['https://linktr.ee/happychaindevs', 'demo.happy.tech'],
+      websites: ['https://linktr.ee/happychaindevs', 'https://demo.happy.tech'],
       socialMedia: [
         'https://x.com/HappyChainDevs',
         'https://mirror.xyz/0x20Af38e22e1722F97f5A1b5afc96c00EECd566b2',

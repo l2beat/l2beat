@@ -5,7 +5,6 @@ import { aevo } from '../projects/aevo/aevo'
 import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
 import { alienx } from '../projects/alienx/alienx'
-import { align } from '../projects/align/align'
 import { allo } from '../projects/allo/allo'
 import { ancient } from '../projects/ancient/ancient'
 import { apex } from '../projects/apex/apex'
@@ -23,7 +22,6 @@ import { blast } from '../projects/blast/blast'
 import { bob } from '../projects/bob/bob'
 import { bobanetwork } from '../projects/bobanetwork/bobanetwork'
 import { brine } from '../projects/brine/brine'
-import { camp } from '../projects/camp/camp'
 import { canvasconnect } from '../projects/canvasconnect/canvasconnect'
 import { capx } from '../projects/capx/capx'
 import { cartesiprthoneypot } from '../projects/cartesi-prt-honeypot/cartesi-prt-honeypot'
@@ -116,8 +114,6 @@ import { myria } from '../projects/myria/myria'
 import { myshell } from '../projects/myshell/myshell'
 import { nal } from '../projects/nal/nal'
 import { namechain } from '../projects/namechain/namechain'
-import { network3 } from '../projects/network3/network3'
-import { neva } from '../projects/neva/neva'
 import { nil } from '../projects/nil/nil'
 import { nova } from '../projects/nova/nova'
 import { oevnetwork } from '../projects/oevnetwork/oevnetwork'
@@ -227,7 +223,6 @@ export const layer2s: ScalingProject[] = [
   airas,
   alephzero,
   alienx,
-  align,
   allo,
   ancient,
   apex,
@@ -244,7 +239,6 @@ export const layer2s: ScalingProject[] = [
   blast,
   bob,
   bobanetwork,
-  camp,
   canvasconnect,
   capx,
   cartesiprthoneypot,
@@ -336,8 +330,6 @@ export const layer2s: ScalingProject[] = [
   myshell,
   nal,
   namechain,
-  network3,
-  neva,
   nil,
   nova,
   oevnetwork,
