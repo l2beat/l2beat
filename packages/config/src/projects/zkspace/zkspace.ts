@@ -230,7 +230,7 @@ export const zkspace: ScalingProject = {
     },
     {
       title: 'ZKSpace launched',
-      url: 'https://medium.com/zkswap/l2-labs-launches-all-in-one-layer2-platform-zkspace-featuring-zkswap-v3-0-nfts-payments-82dae7d9207c',
+      url: 'https://x.com/ZKBaseOfficial/status/1465943738157465605',
       date: '2021-12-20T00:00:00Z',
       description:
         'All-in-One ScalingProject Platform ZKSpace, Featuring ZKSwap v3.0, NFTs, & Payments is launched.',
