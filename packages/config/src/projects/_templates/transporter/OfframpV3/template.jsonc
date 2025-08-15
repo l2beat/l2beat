@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "getTransmitters",
+    "getSupportedTokens",
+    "getDestinationTokens",
+    "getAllowList",
+    "currentRateLimiterState",
+    "lastUpdated",
+    "getAllSourceChainConfigs",
+    "getLatestPriceSequenceNumber",
+    "getDynamicConfig"
+  ],
+  "ignoreRelatives": ["owner"]
+}
