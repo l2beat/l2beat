@@ -154,7 +154,7 @@
     "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": {
       "category": "spam",
       "manualSourcePaths": {
-        "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
+        "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/v0.13-stable/release-v0.13.0/evm_verifier.yul"
       }
     },
     "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": {
