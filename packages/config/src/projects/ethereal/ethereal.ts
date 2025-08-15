@@ -7,6 +7,7 @@ export const ethereal: ScalingProject = upcomingL3({
   capability: 'universal',
   addedAt: UnixTime(1753781100),
   hostChain: ProjectId('arbitrum'),
+  hasTestnet: true,
   display: {
     name: 'Ethereal',
     slug: 'ethereal',
@@ -16,7 +17,7 @@ export const ethereal: ScalingProject = upcomingL3({
     category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
-      websites: ['https://ethereal.trade'],
+      websites: ['https://ethereal.trade', ' https://testnet.ethereal.trade'],
       explorers: ['https://explorer.etherealtest.net/'],
       documentation: ['https://docs.ethereal.trade/'],
       socialMedia: [
