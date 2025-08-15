@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "taiko",
-  "timestamp": 1755211438,
+  "timestamp": 1755212383,
   "configHash": "0xefa1cc1d7be231aaa8cfbb3f77b6ddb6742c19f6b3e14425388be58a6577e483",
   "entries": [
     {
@@ -232,6 +232,7 @@
         "0xd2bffd1aa4016a982cb8f166de6b32cfa89406896b754e2f5abb2f63e7defd5a"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.",
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
       "values": {
@@ -266,16 +267,16 @@
         "inNonReentrant": false,
         "isOnL1": false,
         "l1ChainId": 1,
-        "lastSyncedBlock": 23142279,
+        "lastSyncedBlock": 23142409,
         "owner": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
         "pacayaForkHeight": 1166000,
         "parentGasExcess": 1344899430,
         "parentGasTarget": 40000000,
-        "parentTimestamp": 1755211437,
+        "parentTimestamp": 1755212383,
         "paused": false,
         "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT",
-        "publicInputHash": "0xc688fa5b14c74a927ca8361bacefbd7a70db5b6e9b7d3518a011c433aec3ef9d",
+        "publicInputHash": "0xba37b9e2e1c66e4398dcdbdd8ebf6d8ee0609de9110089dfb0f1b5e2cdbe46c9",
         "resolver": "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8",
         "signalService": "taiko:0x1670000000000000000000000000000000000005",
         "skipFeeCheck": false
@@ -958,6 +959,6 @@
     "taiko/L2SignalService": "0xffde50e04578cf8884bebd7692fc22e6a1129f7edfac3dc7b8763cbd88a6b194",
     "taiko/TaikoAnchor": "0xf93d5067f9f2e4027795b117d5fddd8797f8847ee625aa7582821176a2cc46b6"
   },
-  "usedBlockNumbers": { "taiko": 1442698 },
+  "usedBlockNumbers": { "taiko": 1443043 },
   "permissionsConfigHash": "0x829b1a4eaf0dc71e79d83d61d34d180efd8fe20e355f246236bb9fe9ff5145c1"
 }

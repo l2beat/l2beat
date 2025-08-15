@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x18e0dc7d99d565d7c723e033f273c8117cc1c1db
+Generated with discovered.json: 0xed0e574ef7eaf8445a31e17a60fae92585b5150e
 
-# Diff at Thu, 14 Aug 2025 22:44:40 GMT:
+# Diff at Thu, 14 Aug 2025 23:00:23 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current timestamp: 1755211438
+- current timestamp: 1755212383
 
 ## Description
 
@@ -32,7 +32,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract TaikoAnchor (0x1670000000000000000000000000000000010001)
-    +++ description: None
+    +++ description: Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.
 ```
 
 ```diff

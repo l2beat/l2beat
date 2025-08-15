@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5bcfcca5fba168a05fb1bc5136985333bd0a9bca
+Generated with discovered.json: 0x8b8ae6869bbda3c17a5093880da5e749d161324a
 
-# Diff at Thu, 14 Aug 2025 22:44:40 GMT:
+# Diff at Thu, 14 Aug 2025 23:00:23 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@4f587a59296d1379430ccb7a3b8122c0594f7dfa block: 1755172721
-- current timestamp: 1755211438
+- current timestamp: 1755212383
 
 ## Description
 
@@ -18,12 +18,9 @@ Taiko L2 side initial discovery.
       description:
 -        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
 +        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
-      values.getOperatorForCurrentEpoch:
--        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
-+        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
       values.getOperatorForNextEpoch:
 -        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
-+        "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
++        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
       values.operatorCount:
 -        3
 +        4
