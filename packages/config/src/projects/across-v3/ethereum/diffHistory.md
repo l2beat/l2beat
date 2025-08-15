@@ -9,6 +9,7 @@ Generated with discovered.json: 0xf7aa00b0dc7705ec09a018c3539ca2cd840abffa
 ## Description
 
 Arbitrum adapter updated to include cctp v2 handling plus OFTTransportAdapter.
+https://disco.l2beat.com/diff/eth:0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210/eth:0x5eC9844936875E27eBF22172f4d92E107D35B57C
 
 ## Watched changes
 
