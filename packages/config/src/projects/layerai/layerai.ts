@@ -1,11 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL2 } from '../../templates/upcoming'
+import { underReviewL2 } from '../../templates/underReview'
 
-export const layerai: ScalingProject = upcomingL2({
+export const layerai: ScalingProject = underReviewL2({
   id: 'layerai',
   capability: 'universal',
-  hasTestnet: true,
   addedAt: UnixTime(1722861199), // 2024-08-05T12:33:19Z
   display: {
     name: 'LayerAI',
@@ -16,9 +15,10 @@ export const layerai: ScalingProject = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://layerai.org/'],
-      bridges: ['https://kyotox.com/', 'https://layervpn.com/'],
+      bridges: ['https://bridge.layerai.org/'],
       documentation: ['https://docs.layerai.org/'],
       socialMedia: ['https://t.me/LayerAI_org', 'https://x.com/LayerAIorg'],
+      explorers: ['https://explorer.layerai.org/'],
     },
   },
 })
