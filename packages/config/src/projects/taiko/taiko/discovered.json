@@ -408,7 +408,7 @@
       ]
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "Taiko L2 Multisig",
       "address": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -960,5 +960,5 @@
     "taiko/TaikoAnchor": "0xf93d5067f9f2e4027795b117d5fddd8797f8847ee625aa7582821176a2cc46b6"
   },
   "usedBlockNumbers": { "taiko": 1443043 },
-  "permissionsConfigHash": "0x829b1a4eaf0dc71e79d83d61d34d180efd8fe20e355f246236bb9fe9ff5145c1"
+  "permissionsConfigHash": "0xcc4af5cbca8365882875608df8570a72448bc92ab3a89be0d8e0af4d2f6579ea"
 }

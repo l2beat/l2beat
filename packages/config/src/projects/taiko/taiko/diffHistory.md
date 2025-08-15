@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xed0e574ef7eaf8445a31e17a60fae92585b5150e
+Generated with discovered.json: 0x8b3be1f2a9eed12773d1c1a22d8cf9dbb272d2a3
 
-# Diff at Thu, 14 Aug 2025 23:00:23 GMT:
+# Diff at Fri, 15 Aug 2025 08:50:57 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - current timestamp: 1755212383
@@ -43,7 +43,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8)
+    contract Taiko L2 Multisig (0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8)
     +++ description: None
 ```
 
