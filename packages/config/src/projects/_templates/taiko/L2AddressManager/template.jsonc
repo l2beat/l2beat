@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2AddressManager",
   "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
-  "ignoreMethods": ["proxiableUUID"],
   "types": {
     "Bytes32ToName": {
       "typeCaster": "Mapping",
@@ -17,11 +17,19 @@
         "0x627269646765645f657263323000000000000000000000000000000000000000": "bridged_erc20",
         "0x627269646765645f657263373231000000000000000000000000000000000000": "bridged_erc721",
         "0x627269646765645f657263313135350000000000000000000000000000000000": "bridged_erc1155",
-        "0x7461696b6f000000000000000000000000000000000000000000000000000000": "taiko"
+        "0x71756f74615f6d616e6167657200000000000000000000000000000000000000": "quota_manager"
       }
     }
   },
   "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    },
     "owner": {
       "permissions": [
         {
@@ -31,12 +39,13 @@
       ]
     },
     "namedAddresses": {
+      "description": "Don't necessarily trust because inconsistencies have been found, e.g. signal service",
       "handler": {
         "type": "event",
         "select": "newAddress",
         "groupBy": "name",
         "set": {
-          "event": "AddressRegistered"
+          "event": "AddressSet"
         },
         "ignoreRelative": true
       },

@@ -30,6 +30,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   ink: 'https://explorer.inkonchain.com',
   everclear: 'https://scan.everclear.org',
   kinto: 'https://explorer.kinto.xyz',
+  taiko: 'https://taikoscan.io',
   facet: 'https://explorer.facet.org',
   gateway: 'https://gateway.explorer.zksync.io/address',
   gnosis: 'https://gnosisscan.io/address',

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "signalService": {
+      "handler": {
+        "type": "call",
+        "method": "resolve",
+        "args": [
+          "0x7369676e616c5f73657276696365000000000000000000000000000000000000",
+          0
+        ]
+      }
+    }
+  },
+  "ignoreMethods": ["context", "getMessageMinGasLimit", "proxiableUUID"]
+}
