@@ -16,6 +16,7 @@ export const t1: ScalingProject = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://t1protocol.com'],
+      documentation: ['https://docs.t1protocol.com'],
       repositories: ['https://github.com/t1protocol'],
       socialMedia: [
         'https://x.com/t1protocol',

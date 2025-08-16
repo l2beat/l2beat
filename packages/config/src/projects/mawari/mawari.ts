@@ -17,6 +17,7 @@ export const mawari: ScalingProject = upcomingL2({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://mawari.net/'],
+      documentation: ['https://docs.mawari.net'],
       explorers: ['https://mawari-network-testnet.explorer.caldera.xyz/'],
       socialMedia: [
         'https://t.me/mawarinet',

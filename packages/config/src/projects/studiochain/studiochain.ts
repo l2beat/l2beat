@@ -17,6 +17,7 @@ export const studiochain: ScalingProject = upcomingL2({
     links: {
       websites: ['https://karratcoin.com/'],
       explorers: ['https://studio-chain.explorer.caldera.xyz'],
+      documentation: ['https://docs.karratcoin.com'],
       socialMedia: ['https://twitter.com/karratcoin'],
     },
   },
