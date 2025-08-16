@@ -90,7 +90,7 @@ export class CoingeckoClient extends ClientCore {
     return parsed.image.large
   }
 
-  /** Fetches latest prices, uses */
+  /** Fetches market data for specified coins using CoinGecko /coins/markets endpoint */
   async getCoinsMarket(
     coinIds: CoingeckoId[],
     vs_currency: string,
