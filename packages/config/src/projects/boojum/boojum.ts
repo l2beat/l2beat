@@ -91,6 +91,7 @@ export const boojum: BaseProject = {
           ProjectId('zksync2'),
           ProjectId('abstract'),
           ProjectId('sophon'),
+          ProjectId('lens'),
         ],
       },
       {
@@ -100,12 +101,7 @@ export const boojum: BaseProject = {
           'https://etherscan.io/address/0xD5dBE903F5382B052317D326FA1a7B63710C6a5b',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('grvt'),
-          ProjectId('lens'),
-          ProjectId('wonder'),
-          ProjectId('zkcandy'),
-        ],
+        usedBy: [ProjectId('grvt'), ProjectId('wonder'), ProjectId('zkcandy')],
       },
       {
         hash: '0x941fd36f78a5ba753dbbe65b9123a43ae833405fafd03b5149b959eee766e03c',
@@ -133,6 +129,7 @@ export const boojum: BaseProject = {
           ProjectId('zksync2'),
           ProjectId('abstract'),
           ProjectId('sophon'),
+          ProjectId('lens'),
         ],
       },
       {
@@ -142,12 +139,7 @@ export const boojum: BaseProject = {
           'https://etherscan.io/address/0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('grvt'),
-          ProjectId('lens'),
-          ProjectId('wonder'),
-          ProjectId('zkcandy'),
-        ],
+        usedBy: [ProjectId('grvt'), ProjectId('wonder'), ProjectId('zkcandy')],
       },
       {
         hash: '0xf688611ad4e0ef20184a89e7b593493dffcefe92071f85c1a0b94d4852c4f82f',
