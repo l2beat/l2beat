@@ -22,7 +22,7 @@ export type EtherAndStablecoinsChartsDataParams = v.infer<
 >
 
 /**
- * @returns
+ * @returns [timestamp: number, ether: Record<string, number>, stablecoin: Record<string, number>]
  */
 export async function getEtherAndStablecoinsCharts({
   range,
@@ -101,24 +101,32 @@ export async function getEtherAndStablecoinsCharts({
 
   const timestamps = generateTimestamps([minTimestamp, to], resolution)
 
-  const stablecoinsChart: Record<number, Record<string, number>> = {}
+  const chart: Record<
+    number,
+    Record<'stablecoins' | 'ether', Record<string, number>>
+  > = {}
   for (const id of top10Stablecoins) {
     const values = stablecoinsEntries.find((e) => e[0] === id)?.[1]
     const groupedByTimestamp = groupBy(values, (e) => e.timestamp)
+
     for (const timestamp of timestamps) {
       const value =
         groupedByTimestamp[timestamp]?.reduce(
           (acc, e) => acc + e.valueForSummary,
           0,
         ) ?? 0
-      if (!stablecoinsChart[timestamp]) {
-        stablecoinsChart[timestamp] = {}
+
+      if (!chart[timestamp]) {
+        chart[timestamp] = {
+          stablecoins: {},
+          ether: {},
+        }
       }
-      stablecoinsChart[timestamp][id] = value
+
+      chart[timestamp].stablecoins[id] = value
     }
   }
 
-  const etherChart: Record<number, Record<string, number>> = {}
   for (const id of top10Ether) {
     const values = etherEntries.find((e) => e[0] === id)?.[1]
     const groupedByTimestamp = groupBy(values, (e) => e.timestamp)
@@ -128,23 +136,20 @@ export async function getEtherAndStablecoinsCharts({
           (acc, e) => acc + e.valueForSummary,
           0,
         ) ?? 0
-      if (!etherChart[timestamp]) {
-        etherChart[timestamp] = {}
+      if (!chart[timestamp]) {
+        chart[timestamp] = {
+          stablecoins: {},
+          ether: {},
+        }
       }
-      etherChart[timestamp][id] = value
+      chart[timestamp].ether[id] = value
     }
   }
 
   return {
-    stablecoins: Object.entries(stablecoinsChart).map(
-      ([timestamp, values]) => ({
-        timestamp,
-        values,
-      }),
-    ),
-    ether: Object.entries(etherChart).map(([timestamp, values]) => ({
-      timestamp,
-      values,
-    })),
+    chart: Object.entries(chart).map(([timestamp, values]) => {
+      return [+timestamp, values.stablecoins, values.ether] as const
+    }),
+    syncedUntil: UnixTime.now(),
   }
 }
