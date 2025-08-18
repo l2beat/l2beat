@@ -53,5 +53,5 @@ export const perennial: ScalingProject = underReviewL3({
     type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
-  }, 
+  },
 }) //seems like they use external bridges? https://bridges.perennial.foundation/ to be checked
