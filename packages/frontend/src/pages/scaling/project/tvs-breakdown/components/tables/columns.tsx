@@ -3,12 +3,12 @@ import capitalize from 'lodash/capitalize'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
-import { categoryToLabel } from '../categoryToLabel'
-import { BridgedUsingCell } from '../cells/BridgedUsingCell'
-import { TokenAddressCell } from '../cells/TokenAddressCell'
-import { TokenNameCell } from '../cells/TokenNameCell'
-import { TokenValueCell } from '../cells/TokenValueCell'
-import type { TokenRow } from '../TvsBreakdownTokenTable'
+import { categoryToLabel } from './categoryToLabel'
+import { BridgedUsingCell } from './cells/BridgedUsingCell'
+import { TokenAddressCell } from './cells/TokenAddressCell'
+import { TokenNameCell } from './cells/TokenNameCell'
+import { TokenValueCell } from './cells/TokenValueCell'
+import type { TokenRow } from './TvsBreakdownTokenTable'
 
 const columnHelper = createColumnHelper<TokenRow>()
 export const columns = [
@@ -20,8 +20,8 @@ export const columns = [
     },
   }),
   columnHelper.display({
-    id: 'bridgeType',
-    header: 'Bridge Type',
+    id: 'bridgingType',
+    header: 'Bridging Type',
     cell: (ctx) => {
       return (
         <TwoRowCell>

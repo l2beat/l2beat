@@ -12,8 +12,10 @@ import {
   TokenId,
   type UnixTime,
 } from '@l2beat/shared-pure'
+import capitalize from 'lodash/capitalize'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import { env } from '~/env'
+import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { formatTimestamp } from '~/utils/dates'
@@ -112,12 +114,19 @@ function getEntries(
       bridgedUsing: token.bridgedUsing,
       filterable: [
         {
-          id: 'category',
-          value: token.category,
-        },
-        {
           id: 'bridgingType',
-          value: token.source,
+          value: capitalize(token.source),
+        },
+        ...(token.bridgedUsing?.bridges.map(
+          (b) =>
+            ({
+              id: 'bridgedUsing',
+              value: b.name,
+            }) as const,
+        ) ?? []),
+        {
+          id: 'category',
+          value: categoryToLabel(token.category),
         },
       ],
     }

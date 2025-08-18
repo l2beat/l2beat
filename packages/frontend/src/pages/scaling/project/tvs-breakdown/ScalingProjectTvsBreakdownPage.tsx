@@ -2,9 +2,9 @@ import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { HighlightablePrimaryCard } from '~/components/primary-card/HighlightablePrimaryCard'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -66,12 +66,9 @@ export function ScalingProjectTvsBreakdownPage({
                 warning={project.tvsInfo?.warnings[0]}
               />
             </PrimaryCard>
-
-            {entries.length > 0 && (
-              <HighlightablePrimaryCard>
-                <TvsBreakdownTokenTable entries={entries} />
-              </HighlightablePrimaryCard>
-            )}
+            <TableFilterContextProvider>
+              <TvsBreakdownTokenTable entries={entries} />
+            </TableFilterContextProvider>
           </div>
           <RequestTokenBox />
           <ScrollToTopButton />
