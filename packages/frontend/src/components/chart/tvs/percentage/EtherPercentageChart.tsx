@@ -40,7 +40,7 @@ export function EtherPercentageChart({ data, isLoading, syncedUntil }: Props) {
       acc[token] = {
         label: token,
         color:
-          token === 'Ether'
+          token === 'ETH'
             ? 'var(--chart-ethereum)'
             : `var(--chart-ether-${index++})`,
         indicatorType: { shape: 'square' },

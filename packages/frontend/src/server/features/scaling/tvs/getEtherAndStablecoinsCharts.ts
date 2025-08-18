@@ -1,3 +1,4 @@
+import type { TokenValueRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
@@ -48,10 +49,12 @@ export async function getEtherAndStablecoinsCharts({
 
   const tvsConfigs = tvsProjects.flatMap((p) => p.tvsConfig)
 
-  const tokenIdToPriceId = new Map(
-    tvsConfigs.map((c) => [c.id as string, c.name]),
+  const tokenIdToSymbol = new Map(
+    tvsConfigs.map((c) => [c.id as string, c.symbol]),
   )
-  const priceIdToCategory = new Map(tvsConfigs.map((c) => [c.name, c.category]))
+  const symbolToCategory = new Map(
+    tvsConfigs.map((c) => [c.symbol, c.category]),
+  )
 
   const data = await db.tvsTokenValue.getByTokenIdsInTimeRange(
     tvsConfigs
@@ -61,43 +64,44 @@ export async function getEtherAndStablecoinsCharts({
     to,
   )
 
-  const withPriceId = data.map((d) => {
-    const priceId = tokenIdToPriceId.get(d.tokenId)
-    assert(priceId, 'Metadata not found')
+  const withSymbol = data.map((d) => {
+    const symbol = tokenIdToSymbol.get(d.tokenId)
+    assert(symbol, 'Metadata not found')
     return {
       ...d,
-      priceId,
+      symbol,
     }
   })
 
-  const groupedByPriceId = groupBy(withPriceId, (e) => e.priceId)
+  const summedBySymbol = sumBySymbol(withSymbol)
 
   const [stablecoinsEntries, etherEntries] = partition(
-    Object.entries(groupedByPriceId),
-    ([priceId]) => priceIdToCategory.get(priceId) === 'stablecoin',
+    Object.entries(summedBySymbol),
+    ([symbol]) => symbolToCategory.get(symbol) === 'stablecoin',
   )
 
   const latestStablecoins: Record<string, number> = {}
-  for (const [priceId, values] of stablecoinsEntries) {
-    latestStablecoins[priceId] = values.at(-1)?.valueForSummary ?? 0
+  for (const [symbol, values] of stablecoinsEntries) {
+    latestStablecoins[symbol] = values.at(-1)?.value ?? 0
   }
 
   const latestEther: Record<string, number> = {}
-  for (const [priceId, values] of etherEntries) {
-    latestEther[priceId] = values.at(-1)?.valueForSummary ?? 0
+  for (const [symbol, values] of etherEntries) {
+    latestEther[symbol] = values.at(-1)?.value ?? 0
   }
 
   const top10Stablecoins = Object.entries(latestStablecoins)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10)
     .map((e) => e[0])
+
   const top10Ether = Object.entries(latestEther)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10)
     .map((e) => e[0])
 
-  // biome-ignore lint/style/noNonNullAssertion: <explanation>
-  const minTimestamp = data.at(0)?.timestamp!
+  const minTimestamp = data.at(0)?.timestamp
+  assert(minTimestamp, 'No data')
 
   const timestamps = generateTimestamps([minTimestamp, to], resolution)
 
@@ -111,10 +115,7 @@ export async function getEtherAndStablecoinsCharts({
 
     for (const timestamp of timestamps) {
       const value =
-        groupedByTimestamp[timestamp]?.reduce(
-          (acc, e) => acc + e.valueForSummary,
-          0,
-        ) ?? 0
+        groupedByTimestamp[timestamp]?.reduce((acc, e) => acc + e.value, 0) ?? 0
 
       if (!chart[timestamp]) {
         chart[timestamp] = {
@@ -132,10 +133,7 @@ export async function getEtherAndStablecoinsCharts({
     const groupedByTimestamp = groupBy(values, (e) => e.timestamp)
     for (const timestamp of timestamps) {
       const value =
-        groupedByTimestamp[timestamp]?.reduce(
-          (acc, e) => acc + e.valueForSummary,
-          0,
-        ) ?? 0
+        groupedByTimestamp[timestamp]?.reduce((acc, e) => acc + e.value, 0) ?? 0
       if (!chart[timestamp]) {
         chart[timestamp] = {
           stablecoins: {},
@@ -152,4 +150,21 @@ export async function getEtherAndStablecoinsCharts({
     }),
     syncedUntil: UnixTime.now(),
   }
+}
+
+function sumBySymbol(values: (TokenValueRecord & { symbol: string })[]) {
+  const groupedBySymbol = groupBy(values, (e) => e.symbol)
+  const result: Record<string, { timestamp: number; value: number }[]> = {}
+  for (const [symbol, values] of Object.entries(groupedBySymbol)) {
+    const valuesResult: Record<number, number> = {}
+    for (const value of values) {
+      valuesResult[value.timestamp] =
+        (valuesResult[value.timestamp] ?? 0) + value.valueForSummary
+    }
+    result[symbol] = Object.entries(valuesResult).map(([timestamp, value]) => ({
+      timestamp: +timestamp,
+      value,
+    }))
+  }
+  return result
 }
