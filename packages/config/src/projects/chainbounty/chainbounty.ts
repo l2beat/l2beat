@@ -53,7 +53,7 @@ export const chainbounty: ScalingProject = underReviewL3({
     {
       address: EthereumAddress('0xd46AB997110a91C4CB6f4576ffE6769a3033622A'), // bridge
       sinceTimestamp: UnixTime(1735778707),
-      tokens: ['*'],
+      tokens: '*',
       chain: 'arbitrum',
     },
     {
