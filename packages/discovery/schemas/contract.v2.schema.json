@@ -578,13 +578,23 @@
                       "deploymentTimestamp": { "type": "number" },
                       "excludeFromTotal": { "const": true }
                     }
-                  }
+                  },
+                  "discoverMinters": { "type": "boolean" },
+                  "noMintersLimit": { "type": "boolean" }
                 },
                 "required": ["type"]
               },
               {
                 "type": "object",
                 "properties": { "type": { "const": "tradable" } },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "ERC20Minters" },
+                  "noLimit": { "type": "boolean" }
+                },
                 "required": ["type"]
               }
             ]
