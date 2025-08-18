@@ -46,6 +46,7 @@ import { nums } from '../projects/nums/nums'
 import { oceanum } from '../projects/oceanum/oceanum'
 import { onchain } from '../projects/onchain/onchain'
 import { onyx } from '../projects/onyx/onyx'
+import { ouroboro } from '../projects/ouroboro/ouroboro'
 import { oursong } from '../projects/oursong/oursong'
 import { playblock } from '../projects/playblock/playblock'
 import { pmon } from '../projects/pmon/pmon'
@@ -136,6 +137,7 @@ export const layer3s: ScalingProject[] = [
   vessel,
   l3x,
   lumiterra,
+  ouroboro,
   oursong,
   playblock,
   spheron,
