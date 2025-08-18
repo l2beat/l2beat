@@ -37,7 +37,4 @@ export const perennial: ScalingProject = underReviewL3({
       ],
     },
   },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
 })
