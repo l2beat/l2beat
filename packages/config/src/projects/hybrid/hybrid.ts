@@ -16,6 +16,7 @@ export const hybrid: ScalingProject = upcomingL2({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://buildonhybrid.com/'],
+      explorers: ['https://explorer.buildonhybrid.com'],
       documentation: ['https://docs.buildonhybrid.com'],
       repositories: ['https://github.com/buildonhybrid'],
       socialMedia: [
