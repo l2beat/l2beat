@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1c98c83f17016d7ae2f58ccca8cc38a8c9637f5c
+Generated with discovered.json: 0x339cd3cc637ecb3284c56c4998dc7b952fe73c88
 
-# Diff at Fri, 15 Aug 2025 15:53:24 GMT:
+# Diff at Mon, 18 Aug 2025 09:48:51 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c3e90302baa55a4ba6e093cc5d28fae579abf41d block: 1734023903
-- current timestamp: 1755273081
+- current timestamp: 1755509879
 
 ## Description
 
@@ -1348,12 +1348,6 @@ https://disco.l2beat.com/diff/eth:0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5/eth
 ```diff
 +   Status: CREATED
     contract EVM2EVMOnRamp (0x31ee106a4585a796caacC645172B9F7e9c2f8D37)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E)
     +++ description: None
 ```
 
