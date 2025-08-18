@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { ScalingEtherPercentageChart } from '~/components/chart/tvs/percentage/ScalingEtherPercentageChart'
+import { ScalingStablecoinPercentageChart } from '~/components/chart/tvs/percentage/ScalingStablecoinPercentageChart'
 import { ScalingAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ScalingAssetCategoryTvsChart'
 import { ScalingBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ScalingBridgeTypeTvsChart'
 import { TvsChartHeader } from '~/components/chart/tvs/TvsChartHeader'
@@ -81,6 +82,10 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
     <ScalingEtherPercentageChart filter={filter} range={timeRange} />
   )
 
+  const stablecoinPercentageChart = (
+    <ScalingStablecoinPercentageChart filter={filter} range={timeRange} />
+  )
+
   return (
     <div>
       <TvsChartHeader
@@ -100,11 +105,11 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
       />
       <div className="mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
         {etherPercentageChart}
-        {byAssetSourceChart}
+        {stablecoinPercentageChart}
       </div>
       <ChartTabs
         className="-mx-4 md:-mx-6 pb-1! lg:hidden"
-        charts={[etherPercentageChart, byAssetSourceChart]}
+        charts={[etherPercentageChart, stablecoinPercentageChart]}
       />
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
