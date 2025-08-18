@@ -398,7 +398,7 @@ export const scroll: ScalingProject = {
         {
           title:
             'ScrollChain.sol - Etherscan source code commitBatches() function',
-          url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
+          url: 'https://etherscan.io/address/0x0a20703878E68E587c59204cc0EA86098B8c3bA7#code',
         },
       ],
     },
@@ -408,7 +408,7 @@ export const scroll: ScalingProject = {
         {
           title:
             'ScrollChain.sol - Etherscan source code, finalizeBundlePostEuclidV2() function modifier',
-          url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
+          url: 'https://etherscan.io/address/0x0a20703878E68E587c59204cc0EA86098B8c3bA7#code',
         },
       ],
     },
@@ -428,7 +428,7 @@ export const scroll: ScalingProject = {
         },
         {
           title: 'L1MessageQueueV2 - Etherscan proxy contract',
-          url: 'https://etherscan.io/address/0xEfA158006b072793a49E622B26761cD0eC38591d',
+          url: 'https://etherscan.io/address/0x39C36c9026ac18104839A50c61a4507ea5052ECa',
         },
       ],
     },
@@ -440,7 +440,7 @@ export const scroll: ScalingProject = {
           {
             title:
               'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
-            url: 'https://etherscan.io/address/0x546E0bF31FB6e7babD493452e4e6999191367B42#code',
+            url: 'https://etherscan.io/address/0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0#code',
           },
         ],
       },
@@ -481,7 +481,7 @@ export const scroll: ScalingProject = {
           {
             title:
               'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
-            url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
+            url: 'https://etherscan.io/address/0x0a20703878E68E587c59204cc0EA86098B8c3bA7#code',
           },
         ],
       },
