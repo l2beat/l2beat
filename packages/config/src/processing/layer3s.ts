@@ -43,6 +43,7 @@ import { novastro } from '../projects/novastro/novastro'
 import { oceanum } from '../projects/oceanum/oceanum'
 import { onchain } from '../projects/onchain/onchain'
 import { onyx } from '../projects/onyx/onyx'
+import { perennial } from '../projects/perennial/perennial'
 import { playblock } from '../projects/playblock/playblock'
 import { pmon } from '../projects/pmon/pmon'
 import { popapex } from '../projects/popapex/popapex'
@@ -107,6 +108,7 @@ export const layer3s: ScalingProject[] = [
   oceanum,
   onchain,
   onyx,
+  perennial,
   popapex,
   popboss,
   pmon,
