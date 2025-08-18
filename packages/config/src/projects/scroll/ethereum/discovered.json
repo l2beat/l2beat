@@ -1803,7 +1803,7 @@
       "references": [
         {
           "text": "Source Code",
-          "href": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
+          "href": "https://github.com/scroll-tech/scroll-prover/blob/v0.13-stable/release-v0.13.0/evm_verifier.yul"
         }
       ],
       "category": { "name": "Spam", "priority": -1 }

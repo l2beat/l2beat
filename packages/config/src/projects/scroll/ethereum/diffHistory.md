@@ -6402,7 +6402,7 @@ discovery. Values are for block 21579385 (main branch discovery), not current.
       sourceHashes:
 +        ["0xdd6da115b0a4c879746bcca2a71fa1daa79f7e3a074369d9246f614b327e9322"]
       references:
-+        [{"text":"Source Code","href":"https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"}]
++        [{"text":"Source Code","href":"https://github.com/scroll-tech/scroll-prover/blob/v0.13-stable/release-v0.13.0/evm_verifier.yul"}]
     }
 ```
 
