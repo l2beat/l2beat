@@ -1,40 +1,27 @@
-import {
-  getCoreRowModel,
-  getExpandedRowModel,
-  useReactTable,
-} from '@tanstack/react-table'
-import { useMemo } from 'react'
-import { TokenTable } from '~/components/table/TokenBreakdownTable'
+import { getCoreRowModel, getExpandedRowModel } from '@tanstack/react-table'
+import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
+import { useTable } from '~/hooks/useTable'
 import type { BaseAssetBreakdownData } from '~/server/features/scaling/tvs/breakdown/types'
 import { columns } from './columns/columns'
 import { renderFormulaSubComponent } from './FormulaSubRow'
-import { sumTokensValue } from './sumTokensValue'
-import { TableSum } from './TableSum'
 
 interface Props {
-  tokens: BaseAssetBreakdownData[]
+  tokens: TokenRow[]
 }
 
-export function TvsBreakdownTokenTable(props: Props) {
-  const usdSum = useMemo(() => sumTokensValue(props.tokens), [props.tokens])
+export type TokenRow = BaseAssetBreakdownData & BasicTableRow
 
-  const table = useReactTable({
-    enableSortingRemoval: false,
+export function TvsBreakdownTokenTable(props: Props) {
+  const table = useTable({
     sortDescFirst: true,
     data: props.tokens,
-    columns: columns,
+    columns,
     getRowCanExpand: (row) => !!row.original.formula,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
   })
 
   return (
-    <div className="flex flex-col">
-      <TokenTable
-        table={table}
-        renderSubComponent={renderFormulaSubComponent}
-      />
-      <TableSum amount={usdSum} />
-    </div>
+    <BasicTable table={table} renderSubComponent={renderFormulaSubComponent} />
   )
 }

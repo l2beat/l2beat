@@ -2,15 +2,15 @@ import { createColumnHelper } from '@tanstack/react-table'
 import capitalize from 'lodash/capitalize'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { BaseAssetBreakdownData } from '~/server/features/scaling/tvs/breakdown/types'
 import { cn } from '~/utils/cn'
 import { categoryToLabel } from '../categoryToLabel'
 import { BridgedUsingCell } from '../cells/BridgedUsingCell'
 import { TokenAddressCell } from '../cells/TokenAddressCell'
 import { TokenNameCell } from '../cells/TokenNameCell'
 import { TokenValueCell } from '../cells/TokenValueCell'
+import type { TokenRow } from '../TvsBreakdownTokenTable'
 
-const columnHelper = createColumnHelper<BaseAssetBreakdownData>()
+const columnHelper = createColumnHelper<TokenRow>()
 export const columns = [
   columnHelper.display({
     id: 'token',
