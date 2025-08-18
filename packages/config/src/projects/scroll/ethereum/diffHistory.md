@@ -8,7 +8,27 @@ Generated with discovered.json: 0xab03744291c952b0e707579cb865d83daf33c4e8
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+[L1MessageQueueV2](https://disco.l2beat.com/diff/eth:0xEfA158006b072793a49E622B26761cD0eC38591d/eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa): Change `APPROPRIATE_INTRINSIC_GAS_PER_BYTE` from `16` to `40` to account for EIP-7623 floor gas
+
+[SystemConfig](https://disco.l2beat.com/diff/eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A/eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE): Add three new events: `MessageQueueParametersUpdated`, `EnforcedBatchParametersUpdated`, `SignerUpdated`
+
+[ScrollChain](https://disco.l2beat.com/diff/eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f/eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7): Remove blob proof methods and internal functions, restrict `commitAndFinalizeBatch` to top-level EOA calls only
+
+[L1ScrollMessenger](https://disco.l2beat.com/diff/eth:0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b/eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69): Remove message dropping and replay functionality
+
+[L1ETHGateway](https://disco.l2beat.com/diff/eth:0x546E0bF31FB6e7babD493452e4e6999191367B42/eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0): Stop implementing `IMessageDropCallback` and remove `onDropMessage`
+
+[L1WETHGateway](https://disco.l2beat.com/diff/eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49/eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24): Stop implementing `IMessageDropCallback` and remove `onDropMessage`
+
+[L1StandardERC20Gateway](https://disco.l2beat.com/diff/eth:0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c/eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9): Stop implementing `IMessageDropCallback` and remove `onDropMessage`
+
+[L1CustomERC20Gateway](https://disco.l2beat.com/diff/eth:0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c/eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97): Stop implementing `IMessageDropCallback`, remove `onDropMessage`, `updateTokenMapping` now calls L2 counterpart
+
+[L1ERC721Gateway](https://disco.l2beat.com/diff/eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb/eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A): Stop implementing `IMessageDropCallback` and remove `onDropMessage`
+
+[L1ERC1155Gateway](https://disco.l2beat.com/diff/eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7/eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E): Stop implementing `IMessageDropCallback` and remove `onDropMessage`
+
+[Verifier](https://disco.l2beat.com/diff/eth:0xbb08c87a2e871fcf3d86c4f7ed03dec8b66297ba/eth:0xa8d4702aa5c09af5dd1323e1842a43789021f485): New constructor parameter: `protocolVersion = 8`. Used to calculate `publicInputHash` used in proof verification.
 
 ## Watched changes
 
