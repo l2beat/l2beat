@@ -101,7 +101,7 @@ export const unichain: ScalingProject = opStackL2({
     {
       title: 'Unichain flashblocks are live',
       url: 'https://blog.uniswap.org/flashblocks-are-live',
-      description: 
+      description:
         'Unichain hits 200ms sub-blocks inside Trusted Execution Environments.',
       date: '2025-08-14T00:00:00Z',
       type: 'general',
