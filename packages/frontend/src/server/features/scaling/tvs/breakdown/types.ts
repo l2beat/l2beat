@@ -10,6 +10,7 @@ type AddressData =
 
 export type BaseAssetBreakdownData = {
   id: TvsToken['id']
+  name: string
   symbol: TvsToken['symbol']
   iconUrl: string
   valueForProject: number

@@ -6,8 +6,6 @@ import { getTvsBreakdownForProject } from '../tvs/breakdown/getTvsBreakdownForPr
 import type { BaseAssetBreakdownData } from '../tvs/breakdown/types'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
-import type { ProjectToken } from '../tvs/tokens/getTokensForProject'
-import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 
 export interface ScalingProjectTvsBreakdown {
   project: Project<
@@ -18,7 +16,6 @@ export interface ScalingProjectTvsBreakdown {
   dataTimestamp: number
   breakdown: BaseAssetBreakdownData[]
   project7dData: ProjectSevenDayTvsBreakdown
-  projectTokens: ProjectToken[] | undefined
 }
 
 export async function getScalingProjectTvsBreakdown(
@@ -35,15 +32,13 @@ export async function getScalingProjectTvsBreakdown(
     return undefined
   }
 
-  const [projects7dData, { dataTimestamp, breakdown }, projectTokens] =
-    await Promise.all([
-      get7dTvsBreakdown({
-        type: 'projects',
-        projectIds: [project.id.toString()],
-      }),
-      getTvsBreakdownForProject(project),
-      getTokensForProject(project),
-    ])
+  const [projects7dData, { dataTimestamp, breakdown }] = await Promise.all([
+    get7dTvsBreakdown({
+      type: 'projects',
+      projectIds: [project.id.toString()],
+    }),
+    getTvsBreakdownForProject(project),
+  ])
 
   const project7dData = projects7dData.projects[project.id.toString()]
   if (!project7dData) {
@@ -56,6 +51,5 @@ export async function getScalingProjectTvsBreakdown(
     dataTimestamp,
     breakdown,
     project7dData,
-    projectTokens,
   }
 }

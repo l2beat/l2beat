@@ -54,6 +54,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
     breakdown: [
       {
         id: TokenId('1'),
+        name: 'Token 1',
         valueForProject: 100,
         value: 100,
         amount: 100,
@@ -78,6 +79,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
       },
       {
         id: TokenId('2'),
+        name: 'Token 2',
         valueForProject: 100,
         value: 100,
         amount: 100,
@@ -102,6 +104,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
       },
       {
         id: TokenId('3'),
+        name: 'Token 3',
         valueForProject: 100,
         value: 100,
         amount: 100,
@@ -126,6 +129,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
       },
       {
         id: TokenId('4'),
+        name: 'Token 4',
         valueForProject: 100,
         value: 100,
         amount: 100,

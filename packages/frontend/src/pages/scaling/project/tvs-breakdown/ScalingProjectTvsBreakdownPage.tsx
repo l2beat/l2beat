@@ -22,14 +22,7 @@ interface Props extends AppLayoutProps {
 }
 
 export function ScalingProjectTvsBreakdownPage({
-  tvsBreakdownData: {
-    project,
-    icon,
-    dataTimestamp,
-    breakdown,
-    projectTokens,
-    project7dData,
-  },
+  tvsBreakdownData: { project, icon, dataTimestamp, breakdown, project7dData },
   queryState,
   defaultRange,
   ...props
@@ -50,7 +43,7 @@ export function ScalingProjectTvsBreakdownPage({
                 <ProjectBridgeTypeTvsChart
                   projectId={project.id}
                   milestones={project.milestones ?? []}
-                  tokens={projectTokens}
+                  tokens={breakdown}
                   defaultRange={defaultRange}
                 />
                 <HorizontalSeparator className="my-4" />

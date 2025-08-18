@@ -1,12 +1,16 @@
 import type { Project, TvsToken } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
+import { notUndefined, type TokenId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
 
-export type ProjectToken = TvsToken & {
-  usdValue: number
+export type ProjectToken = {
+  id: TokenId
+  name: string
+  symbol: string
+  source: TvsToken['source']
+  value: number
   iconUrl: string
 }
 
@@ -27,21 +31,24 @@ export async function getTokensForProject(
   const tokenValuesMap = new Map(tokenValues.map((x) => [x.tokenId, x]))
   const placeholderIcon = getStaticAsset('/images/token-placeholder.png')
 
-  const withUsdValue: ProjectToken[] = project.tvsConfig
+  const projectTokeens: ProjectToken[] = project.tvsConfig
     .map((t) => {
       const tokenValue = tokenValuesMap.get(t.id)
       if (!tokenValue) return undefined
       return {
-        ...t,
-        usdValue: tokenValue.valueForProject,
+        id: t.id,
+        name: t.name,
+        symbol: t.symbol,
+        source: t.source,
+        value: tokenValue.valueForProject,
         iconUrl: t.iconUrl ?? placeholderIcon,
       }
     })
     .filter(notUndefined)
 
-  withUsdValue.sort((a, b) => b.usdValue - a.usdValue)
+  projectTokeens.sort((a, b) => b.value - a.value)
 
-  return withUsdValue
+  return projectTokeens
 }
 
 function getMockTokensForProject(project: Project<never, 'tvsConfig'>) {
@@ -49,6 +56,6 @@ function getMockTokensForProject(project: Project<never, 'tvsConfig'>) {
   return project.tvsConfig.map((t) => ({
     ...t,
     iconUrl: t.iconUrl ?? getStaticAsset('/images/token-placeholder.png'),
-    usdValue: 1000,
+    value: 1000,
   }))
 }
