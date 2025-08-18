@@ -146,7 +146,9 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label)}
+        {formatTimestamp(label, {
+          mode: 'datetime',
+        })}
       </div>
       <HorizontalSeparator className="my-1" />
       <div className="flex flex-col gap-2">

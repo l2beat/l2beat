@@ -63,7 +63,7 @@ export function EtherPercentageChart({ data, isLoading, syncedUntil }: Props) {
       if (total === 0) {
         return {
           timestamp: timestamp,
-          // Can this be null?
+          // TODO: Can this be null?
           ...Object.fromEntries(
             Object.entries(etherValues).map(([token, value]) => {
               return [token, value !== null ? 0 : null]
@@ -146,7 +146,9 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label)}
+        {formatTimestamp(label, {
+          mode: 'datetime',
+        })}
       </div>
       <HorizontalSeparator className="my-1" />
       <div className="flex flex-col gap-2">

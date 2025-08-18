@@ -82,12 +82,18 @@ export async function getEtherAndStablecoinsCharts({
 
   const latestStablecoins: Record<string, number> = {}
   for (const [symbol, values] of stablecoinsEntries) {
-    latestStablecoins[symbol] = values.at(-1)?.value ?? 0
+    const latestRecord = values.at(-1)
+    if (latestRecord?.timestamp === to) {
+      latestStablecoins[symbol] = latestRecord.value
+    }
   }
 
   const latestEther: Record<string, number> = {}
   for (const [symbol, values] of etherEntries) {
-    latestEther[symbol] = values.at(-1)?.value ?? 0
+    const latestRecord = values.at(-1)
+    if (latestRecord?.timestamp === to) {
+      latestEther[symbol] = latestRecord.value
+    }
   }
 
   const top10Stablecoins = Object.entries(latestStablecoins)
