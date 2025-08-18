@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "timestamp": 1755507657,
+  "timestamp": 1755525868,
   "configHash": "0xec1b556cb6b1e632388e76e2ee4c28d9606c021ef494798dd077b94e86a4ab49",
   "entries": [
     {
@@ -611,7 +611,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 6974,
+        "gameCount": 6979,
         "gameImpls": [
           "eth:0xAB91FB6cef84199145133f75cBD96B8a31F184ED",
           "eth:0x7344Da3A618b86cdA67f8260C0cc2027D99F5B49",
@@ -705,8 +705,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 514422,
-          "prevBlockNum": 23166910
+          "prevBoughtGas": 516982,
+          "prevBlockNum": 23168373
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -770,11 +770,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x570400E37D64e78109bb82251e695c0Cbd17d138",
+        "anchorGame": "eth:0x84dD19522ffE57C9847b93022fef587388A94484",
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "getAnchorRoot": [
-          "0x0a38ee40af920cb5fa070d3f0458da7d26690b9bff2461ad0e114ca931bb6db2",
-          34054245
+          "0xaaf7365d6ef38e46d5dacfb41e99e270d229f05c579eb7619f53bebb992f6f0e",
+          34065200
         ],
         "portal": "eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
         "respectedGameType": 0,
@@ -1591,7 +1591,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293068209",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293068253",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -3397,6 +3397,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23166913 },
+  "usedBlockNumbers": { "ethereum": 23168419 },
   "permissionsConfigHash": "0x2e5de7c6727a927413418c89b4a12fab49446f93697ed3c22554952631140b8b"
 }
