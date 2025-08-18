@@ -2,10 +2,13 @@ import type { Project } from '@l2beat/config'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getProjectIcon } from '../../utils/getProjectIcon'
-import { getTvsBreakdownForProject } from '../tvs/breakdown/getTvsBreakdownForProject'
-import type { BaseAssetBreakdownData } from '../tvs/breakdown/types'
+import {
+  getProjectTokensEntries as getProjectTokensEntries,
+  type TvsBreakdownTokenEntry,
+} from '../tvs/breakdown/getProjectTokensEntries'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
+import { getTvsTargetTimestamp } from '../tvs/utils/getTvsTargetTimestamp'
 
 export interface ScalingProjectTvsBreakdown {
   project: Project<
@@ -14,7 +17,7 @@ export interface ScalingProjectTvsBreakdown {
   >
   icon: string
   dataTimestamp: number
-  breakdown: BaseAssetBreakdownData[]
+  entries: TvsBreakdownTokenEntry[]
   project7dData: ProjectSevenDayTvsBreakdown
 }
 
@@ -32,12 +35,12 @@ export async function getScalingProjectTvsBreakdown(
     return undefined
   }
 
-  const [projects7dData, { dataTimestamp, breakdown }] = await Promise.all([
+  const [projects7dData, entries] = await Promise.all([
     get7dTvsBreakdown({
       type: 'projects',
       projectIds: [project.id.toString()],
     }),
-    getTvsBreakdownForProject(project),
+    getProjectTokensEntries(project),
   ])
 
   const project7dData = projects7dData.projects[project.id.toString()]
@@ -48,8 +51,8 @@ export async function getScalingProjectTvsBreakdown(
   return {
     project,
     icon: getProjectIcon(project.slug),
-    dataTimestamp,
-    breakdown,
+    dataTimestamp: getTvsTargetTimestamp(),
+    entries,
     project7dData,
   }
 }

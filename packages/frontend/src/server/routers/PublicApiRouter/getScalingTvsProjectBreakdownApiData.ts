@@ -1,4 +1,4 @@
-import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/getTvsBreakdownForProject'
+import { getProjectTokensEntries } from '~/server/features/scaling/tvs/breakdown/getProjectTokensEntries'
 import { ps } from '~/server/projects'
 
 export async function getScalingTvsProjectBreakdownApiData(slug: string) {
@@ -12,6 +12,6 @@ export async function getScalingTvsProjectBreakdownApiData(slug: string) {
     return { success: false, error: 'Project not found.' } as const
   }
 
-  const data = await getTvsBreakdownForProject(project)
+  const data = await getProjectTokensEntries(project)
   return { success: true, data } as const
 }

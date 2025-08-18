@@ -22,7 +22,7 @@ interface Props extends AppLayoutProps {
 }
 
 export function ScalingProjectTvsBreakdownPage({
-  tvsBreakdownData: { project, icon, dataTimestamp, breakdown, project7dData },
+  tvsBreakdownData: { project, icon, dataTimestamp, entries, project7dData },
   queryState,
   defaultRange,
   ...props
@@ -31,52 +31,50 @@ export function ScalingProjectTvsBreakdownPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
-          <div className="smooth-scroll">
-            <TvsBreakdownPageHeader
-              title={project.name}
-              slug={project.slug}
-              icon={icon}
-              tvsBreakdownTimestamp={dataTimestamp}
-            />
-            <div className="md:space-y-6">
-              <PrimaryCard>
-                <ProjectBridgeTypeTvsChart
-                  projectId={project.id}
-                  milestones={project.milestones ?? []}
-                  tokens={breakdown}
-                  defaultRange={defaultRange}
-                />
-                <HorizontalSeparator className="my-4" />
-                <TvsBreakdownSummaryBox
-                  total={{
-                    value: project7dData.breakdown.total,
-                    change: project7dData.change.total,
-                  }}
-                  canonical={{
-                    value: project7dData.breakdown.canonical,
-                    change: project7dData.change.canonical,
-                  }}
-                  external={{
-                    value: project7dData.breakdown.external,
-                    change: project7dData.change.external,
-                  }}
-                  native={{
-                    value: project7dData.breakdown.native,
-                    change: project7dData.change.native,
-                  }}
-                  warning={project.tvsInfo?.warnings[0]}
-                />
-              </PrimaryCard>
+          <TvsBreakdownPageHeader
+            title={project.name}
+            slug={project.slug}
+            icon={icon}
+            tvsBreakdownTimestamp={dataTimestamp}
+          />
+          <div className="md:space-y-6">
+            <PrimaryCard>
+              <ProjectBridgeTypeTvsChart
+                projectId={project.id}
+                milestones={project.milestones ?? []}
+                tokens={entries}
+                defaultRange={defaultRange}
+              />
+              <HorizontalSeparator className="my-4" />
+              <TvsBreakdownSummaryBox
+                total={{
+                  value: project7dData.breakdown.total,
+                  change: project7dData.change.total,
+                }}
+                canonical={{
+                  value: project7dData.breakdown.canonical,
+                  change: project7dData.change.canonical,
+                }}
+                external={{
+                  value: project7dData.breakdown.external,
+                  change: project7dData.change.external,
+                }}
+                native={{
+                  value: project7dData.breakdown.native,
+                  change: project7dData.change.native,
+                }}
+                warning={project.tvsInfo?.warnings[0]}
+              />
+            </PrimaryCard>
 
-              {breakdown.length > 0 && (
-                <HighlightablePrimaryCard>
-                  <TvsBreakdownTokenTable tokens={breakdown} />
-                </HighlightablePrimaryCard>
-              )}
-            </div>
-            <RequestTokenBox />
-            <ScrollToTopButton />
+            {entries.length > 0 && (
+              <HighlightablePrimaryCard>
+                <TvsBreakdownTokenTable entries={entries} />
+              </HighlightablePrimaryCard>
+            )}
           </div>
+          <RequestTokenBox />
+          <ScrollToTopButton />
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>
