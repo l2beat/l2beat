@@ -6,7 +6,7 @@ import { getTvsBreakdownForProject } from '../tvs/breakdown/getTvsBreakdownForPr
 import type { BaseAssetBreakdownData } from '../tvs/breakdown/types'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
-import type { ProjectTokens } from '../tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '../tvs/tokens/getTokensForProject'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 
 export interface ScalingProjectTvsBreakdown {
@@ -18,7 +18,7 @@ export interface ScalingProjectTvsBreakdown {
   dataTimestamp: number
   breakdown: BaseAssetBreakdownData[]
   project7dData: ProjectSevenDayTvsBreakdown
-  projectTokens: ProjectTokens | undefined
+  projectTokens: ProjectToken[] | undefined
 }
 
 export async function getScalingProjectTvsBreakdown(
