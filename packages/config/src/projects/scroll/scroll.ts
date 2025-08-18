@@ -643,7 +643,7 @@ export const scroll: ScalingProject = {
       url: 'https://forum.scroll.io/t/proposal-feynman-upgrade/957',
       date: '2025-08-18T00:00:00Z',
       description:
-        'Scroll Feynman upgrade to improve the fee model and EVM compatibility.',
+        'Feynman upgrade to improve the fee model and EVM compatibility.',
       type: 'general',
     },
     {

@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "timestamp": 1755523636,
+  "timestamp": 1755523806,
   "configHash": "0x9ab90762ab1fe2be54741263b30757e3bf40ba7957d26b545ee5adbbe346645a",
   "entries": [
     {
@@ -1390,6 +1390,12 @@
           "permission": "act",
           "from": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
+          "description": "update the minimum delay message queue parameters and enforced mode parameters.",
+          "role": ".owner"
         }
       ],
       "sinceTimestamp": 1696782479,
@@ -1733,11 +1739,13 @@
       "name": "SystemConfig",
       "address": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
       "type": "Contract",
+      "template": "scroll/SystemConfig",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x94a50a4d5efa2113acdaae7b769298f0c8c17e01bc6c6efeebdb7d8a7b0bec10"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.",
       "sinceTimestamp": 1742476115,
       "sinceBlock": 22088274,
       "values": {
@@ -1776,7 +1784,8 @@
       "implementationNames": {
         "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D": "TransparentUpgradeableProxy",
         "eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE": "SystemConfig"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae",
@@ -2078,7 +2087,7 @@
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 368101,
+          "lastCommittedBatchIndex": 368107,
           "lastFinalizedBatchIndex": 368071,
           "lastFinalizeTimestamp": 1755519395,
           "flags": 1,
@@ -4079,8 +4088,9 @@
     "scroll/MultipleVersionRollupVerifier": "0x12467348254718ddb1d7be2b7f101262147f9dc3ba171fa3d37fe21409f6d797",
     "scroll/PauseController": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "scroll/ScrollChain": "0x047807130722fa3643ff477006ffca1906f79e3d9d198aee0e769485785f65b8",
-    "scroll/ScrollOwner": "0x14d7a582f7d39f4ed732aa56a3c9031c8fc613fa58dfaf42f4f572f19fae54b3"
+    "scroll/ScrollOwner": "0x14d7a582f7d39f4ed732aa56a3c9031c8fc613fa58dfaf42f4f572f19fae54b3",
+    "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23168232 },
-  "permissionsConfigHash": "0x10d8f7034680baf1b515daeded5814ed5b8ba166ad989ef03838e11cb1be2dbe"
+  "usedBlockNumbers": { "ethereum": 23168247 },
+  "permissionsConfigHash": "0x07a45d1282efaf20b2490aed46c1d2b715a7b2973d2797005cd10373ee3fe0ae"
 }

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2ba31125d9ea756555029592dea8c76d9d3f28b9
+Generated with discovered.json: 0xe239eec7b90b0b7c516f24bb4ff64b1fddcd6d28
 
-# Diff at Mon, 18 Aug 2025 13:28:12 GMT:
+# Diff at Mon, 18 Aug 2025 13:31:33 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@335655f4527d4008046b61acfb5c017f56f8b51d block: 1755014055
-- current timestamp: 1755523636
+- current timestamp: 1755523806
 
 ## Description
 
@@ -110,14 +110,6 @@ Generated with discovered.json: 0x2ba31125d9ea756555029592dea8c76d9d3f28b9
 ```
 
 ```diff
-    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
-    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
-      directlyReceivedPermissions.1:
--        {"permission":"interact","from":"eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D","description":"update the minimum delay message queue parameters and enforced mode parameters.","role":".owner"}
-    }
-```
-
-```diff
     contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
     +++ description: Contract used to bridge WETH from L1 to L2.
       sourceHashes.1:
@@ -161,14 +153,10 @@ Generated with discovered.json: 0x2ba31125d9ea756555029592dea8c76d9d3f28b9
 
 ```diff
     contract SystemConfig (0x8432728A257646449245558B8b7Dbe51A16c7a4D) {
-    +++ description: None
-      template:
--        "scroll/SystemConfig"
+    +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
       sourceHashes.1:
 -        "0xc6b44b4f580a4675d79b547ed6eef62882f9be3e0c86e18360e9ba5ead33755a"
 +        "0x94a50a4d5efa2113acdaae7b769298f0c8c17e01bc6c6efeebdb7d8a7b0bec10"
-      description:
--        "System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode."
       values.$implementation:
 -        "eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A"
 +        "eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE"
@@ -181,8 +169,6 @@ Generated with discovered.json: 0x2ba31125d9ea756555029592dea8c76d9d3f28b9
 -        "SystemConfig"
       implementationNames.eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE:
 +        "SystemConfig"
-      category:
--        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
