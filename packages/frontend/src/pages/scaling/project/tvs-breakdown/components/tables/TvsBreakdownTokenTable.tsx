@@ -1,4 +1,8 @@
-import { getCoreRowModel, getExpandedRowModel } from '@tanstack/react-table'
+import {
+  getCoreRowModel,
+  getExpandedRowModel,
+  getSortedRowModel,
+} from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
@@ -29,7 +33,11 @@ export function TvsBreakdownTokenTable(props: Props) {
     columns,
     getRowCanExpand: (row) => !!row.original.formula,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
+    initialState: {
+      sorting: [{ id: 'value', desc: true }],
+    },
   })
 
   return (
