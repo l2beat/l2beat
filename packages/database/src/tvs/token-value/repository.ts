@@ -30,10 +30,22 @@ export class TokenValueRepository extends BaseRepository {
   }
 
   async getAtOrBefore(timestamp: UnixTime): Promise<TokenValueRecord[]> {
+    const latestPerToken = this.db
+      .selectFrom('TokenValue')
+      .select(['tokenId'])
+      .select(this.db.fn.max('timestamp').as('maxTimestamp'))
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .groupBy(['tokenId'])
+      .as('latest')
+
     const rows = await this.db
       .selectFrom('TokenValue')
-      .selectAll()
-      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .innerJoin(latestPerToken, (join) =>
+        join
+          .onRef('TokenValue.tokenId', '=', 'latest.tokenId')
+          .onRef('TokenValue.timestamp', '=', 'latest.maxTimestamp'),
+      )
+      .selectAll('TokenValue')
       .execute()
 
     return rows.map(toRecord)
