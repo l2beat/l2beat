@@ -3,7 +3,7 @@ import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getTvsBreakdownForProject } from '../tvs/breakdown/getTvsBreakdownForProject'
-import type { BreakdownRecord } from '../tvs/breakdown/types'
+import type { BaseAssetBreakdownData } from '../tvs/breakdown/types'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import type { ProjectTokens } from '../tvs/tokens/getTokensForProject'
@@ -16,7 +16,7 @@ export interface ScalingProjectTvsBreakdown {
   >
   icon: string
   dataTimestamp: number
-  breakdown: BreakdownRecord
+  breakdown: BaseAssetBreakdownData[]
   project7dData: ProjectSevenDayTvsBreakdown
   projectTokens: ProjectTokens | undefined
 }

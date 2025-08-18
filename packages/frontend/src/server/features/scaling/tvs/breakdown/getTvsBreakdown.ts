@@ -1,20 +1,11 @@
 import type { ChainConfig, Project, ProjectContract } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
-import {
-  assertUnreachable,
-  ChainSpecificAddress,
-  type TokenId,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type TokenId } from '@l2beat/shared-pure'
 import { formatTimestamp } from '~/utils/dates'
 import type { Address } from './extractAddressesFromTokenConfig'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
-import { recordToSortedBreakdown } from './recordToSortedBreakdown'
-import type {
-  BaseAssetBreakdownData,
-  BreakdownRecord,
-  CanonicalAssetBreakdownData,
-} from './types'
+import type { BaseAssetBreakdownData } from './types'
 
 export function getTvsBreakdown(
   project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
@@ -22,21 +13,16 @@ export function getTvsBreakdown(
   chains: ChainConfig[],
   targetTimestamp: UnixTime,
 ) {
-  const breakdown: BreakdownRecord = {
-    canonical: [],
-    external: [],
-    native: [],
-  }
+  const breakdown: BaseAssetBreakdownData[] = []
 
   const projectTokens = project.tvsConfig
   const gasTokens = project.chainConfig?.gasTokens
-  const projectContracts = project.contracts?.addresses
 
   for (const token of projectTokens) {
     const tokenValue = tokenValuesMap.get(token.id)
     if (!tokenValue) continue
 
-    const { addresses, escrows } = extractAddressesFromTokenConfig(token)
+    const { addresses } = extractAddressesFromTokenConfig(token)
     const address = processAddresses(addresses, chains)
     const tokenWithValues: BaseAssetBreakdownData = {
       ...token,
@@ -51,28 +37,10 @@ export function getTvsBreakdown(
       bridgedUsing: token.bridgedUsing,
     }
 
-    switch (token.source) {
-      case 'canonical': {
-        const escrow = processAddresses(escrows, chains, projectContracts)
-        const canonicalTokenWithValues: CanonicalAssetBreakdownData = {
-          ...tokenWithValues,
-          escrow,
-        }
-        breakdown.canonical.push(canonicalTokenWithValues)
-        break
-      }
-      case 'external':
-        breakdown.external.push(tokenWithValues)
-        break
-      case 'native':
-        breakdown.native.push(tokenWithValues)
-        break
-      default:
-        assertUnreachable(token.source)
-    }
+    breakdown.push(tokenWithValues)
   }
 
-  return recordToSortedBreakdown(breakdown)
+  return breakdown.sort((a, b) => +b.valueForProject - +a.valueForProject)
 }
 
 function processAddresses(

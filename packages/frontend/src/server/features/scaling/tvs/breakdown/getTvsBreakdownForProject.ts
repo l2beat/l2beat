@@ -5,12 +5,12 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
 import { getTvsBreakdown } from './getTvsBreakdown'
-import type { BreakdownRecord } from './types'
+import type { BaseAssetBreakdownData } from './types'
 
 export type ProjectTvsBreakdown = Awaited<ReturnType<typeof getTvsBreakdown>>
 type TvsBreakdownForProject = {
   dataTimestamp: number
-  breakdown: BreakdownRecord
+  breakdown: BaseAssetBreakdownData[]
 }
 
 export async function getTvsBreakdownForProject(
@@ -51,109 +51,103 @@ export async function getTvsBreakdownForProject(
 function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
   return {
     dataTimestamp: UnixTime.now(),
-    breakdown: {
-      canonical: [
-        {
-          id: TokenId('1'),
-          valueForProject: 100,
-          value: 100,
-          amount: 100,
-          category: 'ether',
-          iconUrl:
-            'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-          symbol: 'ETH',
-          source: 'canonical',
-          isAssociated: true,
-          formula: {
-            type: 'balanceOfEscrow',
-            sinceTimestamp: 0,
-            decimals: 18,
-            address: EthereumAddress(
-              '0x0000000000000000000000000000000000000000',
-            ),
-            escrowAddress: EthereumAddress(
-              '0x0000000000000000000000000000000000000000',
-            ),
-            chain: 'ethereum',
-          },
+    breakdown: [
+      {
+        id: TokenId('1'),
+        valueForProject: 100,
+        value: 100,
+        amount: 100,
+        category: 'ether',
+        iconUrl:
+          'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+        symbol: 'ETH',
+        source: 'canonical',
+        isAssociated: true,
+        formula: {
+          type: 'balanceOfEscrow',
+          sinceTimestamp: 0,
+          decimals: 18,
+          address: EthereumAddress(
+            '0x0000000000000000000000000000000000000000',
+          ),
+          escrowAddress: EthereumAddress(
+            '0x0000000000000000000000000000000000000000',
+          ),
+          chain: 'ethereum',
         },
-        {
-          id: TokenId('4'),
-          valueForProject: 100,
-          value: 100,
-          amount: 100,
-          iconUrl:
-            'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-          symbol: 'ETH',
-          source: 'canonical',
-          isAssociated: true,
-          category: 'ether',
-          formula: {
-            type: 'balanceOfEscrow',
-            address: EthereumAddress(
-              '0x0000000000000000000000000000000000000000',
-            ),
-            sinceTimestamp: 0,
-            decimals: 18,
-            escrowAddress: EthereumAddress(
-              '0x0000000000000000000000000000000000000000',
-            ),
-            chain: 'ethereum',
-          },
+      },
+      {
+        id: TokenId('2'),
+        valueForProject: 100,
+        value: 100,
+        amount: 100,
+        iconUrl:
+          'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+        symbol: 'TKN',
+        source: 'native',
+        isAssociated: true,
+        category: 'other',
+        formula: {
+          type: 'balanceOfEscrow',
+          address: EthereumAddress(
+            '0x0000000000000000000000000000000000000000',
+          ),
+          escrowAddress: EthereumAddress(
+            '0x0000000000000000000000000000000000000000',
+          ),
+          sinceTimestamp: 0,
+          decimals: 18,
+          chain: 'ethereum',
         },
-      ],
-      native: [
-        {
-          id: TokenId('2'),
-          valueForProject: 100,
-          value: 100,
-          amount: 100,
-          iconUrl:
-            'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-          symbol: 'TKN',
-          source: 'native',
-          isAssociated: true,
-          category: 'other',
-          formula: {
-            type: 'balanceOfEscrow',
-            address: EthereumAddress(
-              '0x0000000000000000000000000000000000000000',
-            ),
-            escrowAddress: EthereumAddress(
-              '0x0000000000000000000000000000000000000000',
-            ),
-            sinceTimestamp: 0,
-            decimals: 18,
-            chain: 'ethereum',
-          },
+      },
+      {
+        id: TokenId('3'),
+        valueForProject: 100,
+        value: 100,
+        amount: 100,
+        iconUrl:
+          'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+        symbol: 'TKN',
+        source: 'external',
+        isAssociated: true,
+        category: 'stablecoin',
+        formula: {
+          type: 'balanceOfEscrow',
+          address: EthereumAddress(
+            '0x0000000000000000000000000000000000000000',
+          ),
+          escrowAddress: EthereumAddress(
+            '0x0000000000000000000000000000000000000000',
+          ),
+          sinceTimestamp: 0,
+          decimals: 18,
+          chain: 'ethereum',
         },
-      ],
-      external: [
-        {
-          id: TokenId('3'),
-          valueForProject: 100,
-          value: 100,
-          amount: 100,
-          iconUrl:
-            'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-          symbol: 'TKN',
-          source: 'external',
-          isAssociated: true,
-          category: 'stablecoin',
-          formula: {
-            type: 'balanceOfEscrow',
-            address: EthereumAddress(
-              '0x0000000000000000000000000000000000000000',
-            ),
-            escrowAddress: EthereumAddress(
-              '0x0000000000000000000000000000000000000000',
-            ),
-            sinceTimestamp: 0,
-            decimals: 18,
-            chain: 'ethereum',
-          },
+      },
+      {
+        id: TokenId('4'),
+        valueForProject: 100,
+        value: 100,
+        amount: 100,
+        iconUrl:
+          'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+        symbol: 'ETH',
+        source: 'canonical',
+        isAssociated: true,
+        category: 'ether',
+        formula: {
+          type: 'balanceOfEscrow',
+          address: EthereumAddress(
+            '0x0000000000000000000000000000000000000000',
+          ),
+          sinceTimestamp: 0,
+          decimals: 18,
+          escrowAddress: EthereumAddress(
+            '0x0000000000000000000000000000000000000000',
+          ),
+          chain: 'ethereum',
         },
-      ],
-    },
+      },
+    ],
   }
 }

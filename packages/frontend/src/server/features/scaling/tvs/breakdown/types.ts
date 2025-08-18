@@ -30,13 +30,3 @@ export type BaseAssetBreakdownData = {
     warning?: string
   }
 }
-
-export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
-  escrow?: AddressData
-}
-
-export type BreakdownRecord = {
-  canonical: CanonicalAssetBreakdownData[]
-  external: BaseAssetBreakdownData[]
-  native: BaseAssetBreakdownData[]
-}
