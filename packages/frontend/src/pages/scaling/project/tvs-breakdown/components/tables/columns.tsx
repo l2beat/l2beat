@@ -86,7 +86,7 @@ export const columns = [
       return <TokenAddressCell address={address.address} url={address.url} />
     },
   }),
-  columnHelper.accessor('value', {
+  columnHelper.accessor('valueForProject', {
     id: 'value',
     header: 'TVS-Adjusted Value',
     meta: {

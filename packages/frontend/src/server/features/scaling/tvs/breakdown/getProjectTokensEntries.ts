@@ -102,7 +102,12 @@ function getEntries(
     const { addresses } = extractAddressesFromTokenConfig(token)
     const address = processAddresses(addresses, chains)
     const tokenWithValues: TvsBreakdownTokenEntry = {
-      ...token,
+      id: token.id,
+      name: token.name,
+      symbol: token.symbol,
+      category: token.category,
+      source: token.source,
+      isAssociated: token.isAssociated,
       address,
       formula: token.valueForProject ?? token.amount,
       iconUrl: token.iconUrl ?? '',
