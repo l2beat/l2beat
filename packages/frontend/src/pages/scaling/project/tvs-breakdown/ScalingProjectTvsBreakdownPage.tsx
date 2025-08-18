@@ -13,9 +13,7 @@ import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { RequestTokenBox } from './components/RequestTokenBox'
 import { TvsBreakdownPageHeader } from './components/TvsBreakdownPageHeader'
 import { TvsBreakdownSummaryBox } from './components/TvsBreakdownSummaryBox'
-import { CanonicallyBridgedTable } from './components/tables/CanonicallyBridgedTable'
-import { ExternallyBridgedTable } from './components/tables/ExternallyBridgesTable'
-import { NativelyMintedTable } from './components/tables/NativelyMintedTable'
+import { TvsBreakdownTokenTable } from './components/tables/TvsBreakdownTokenTable'
 
 interface Props extends AppLayoutProps {
   tvsBreakdownData: ScalingProjectTvsBreakdown
@@ -77,34 +75,9 @@ export function ScalingProjectTvsBreakdownPage({
                 />
               </PrimaryCard>
 
-              {breakdown.canonical.length > 0 && (
-                <HighlightablePrimaryCard
-                  id="canonical"
-                  className="md:scroll-mt-6"
-                >
-                  <CanonicallyBridgedTable
-                    tokens={breakdown.canonical}
-                    id="canonical"
-                  />
-                </HighlightablePrimaryCard>
-              )}
-              {breakdown.native.length > 0 && (
-                <HighlightablePrimaryCard
-                  id="native"
-                  className="md:scroll-mt-6"
-                >
-                  <NativelyMintedTable tokens={breakdown.native} id="native" />
-                </HighlightablePrimaryCard>
-              )}
-              {breakdown.external.length > 0 && (
-                <HighlightablePrimaryCard
-                  id="external"
-                  className="md:scroll-mt-6"
-                >
-                  <ExternallyBridgedTable
-                    tokens={breakdown.external}
-                    id="external"
-                  />
+              {breakdown.length > 0 && (
+                <HighlightablePrimaryCard>
+                  <TvsBreakdownTokenTable tokens={breakdown} />
                 </HighlightablePrimaryCard>
               )}
             </div>

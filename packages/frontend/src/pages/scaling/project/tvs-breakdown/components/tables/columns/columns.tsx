@@ -1,20 +1,39 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import capitalize from 'lodash/capitalize'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
+import type { BaseAssetBreakdownData } from '~/server/features/scaling/tvs/breakdown/types'
 import { cn } from '~/utils/cn'
 import { categoryToLabel } from '../categoryToLabel'
 import { BridgedUsingCell } from '../cells/BridgedUsingCell'
 import { TokenAddressCell } from '../cells/TokenAddressCell'
 import { TokenNameCell } from '../cells/TokenNameCell'
 import { TokenValueCell } from '../cells/TokenValueCell'
-import type { ExternallyBridgedTokenEntry } from '../ExternallyBridgesTable'
 
-const columnHelper = createColumnHelper<ExternallyBridgedTokenEntry>()
-
-export const externallyBridgedColumns = [
+const columnHelper = createColumnHelper<BaseAssetBreakdownData>()
+export const columns = [
   columnHelper.display({
-    id: 'Token',
+    id: 'token',
     header: 'Token',
-    cell: (ctx) => <TokenNameCell {...ctx.row.original} />,
+    cell: (ctx) => {
+      return <TokenNameCell {...ctx.row.original} />
+    },
+  }),
+  columnHelper.display({
+    id: 'bridgeType',
+    header: 'Bridge Type',
+    cell: (ctx) => {
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>
+            {capitalize(ctx.row.original.source)}
+          </TwoRowCell.First>
+          <TwoRowCell.Second>
+            <BridgedUsingCell {...ctx.row.original} />
+          </TwoRowCell.Second>
+        </TwoRowCell>
+      )
+    },
   }),
   columnHelper.display({
     id: 'category',
@@ -39,15 +58,6 @@ export const externallyBridgedColumns = [
     },
   }),
   columnHelper.display({
-    id: 'bridge',
-    header: 'Bridged Using',
-    meta: {
-      headClassName: 'md:pl-6',
-      cellClassName: 'md:pl-6',
-    },
-    cell: (ctx) => <BridgedUsingCell {...ctx.row.original} />,
-  }),
-  columnHelper.display({
     id: 'value',
     header: 'TVS-Adjusted Value',
     meta: {
@@ -55,7 +65,9 @@ export const externallyBridgedColumns = [
       tooltip:
         'The value is calculated by multiplying the amount by the token price for most tokens. For some tokens, we use custom calculations to avoid double counting. Expand the section to learn more.',
     },
-    cell: (ctx) => <TokenValueCell {...ctx.row.original} />,
+    cell: (ctx) => {
+      return <TokenValueCell {...ctx.row.original} />
+    },
   }),
   columnHelper.display({
     id: 'expand',

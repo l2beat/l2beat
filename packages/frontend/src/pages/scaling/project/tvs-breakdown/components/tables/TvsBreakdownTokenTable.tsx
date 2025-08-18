@@ -5,28 +5,24 @@ import {
 } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { TokenTable } from '~/components/table/TokenBreakdownTable'
-import type { ProjectTvsBreakdown } from '~/server/features/scaling/tvs/breakdown/getTvsBreakdownForProject'
-import { canonicallyBridgedColumns } from './columns/CanonicallyBridgedColumns'
+import type { BaseAssetBreakdownData } from '~/server/features/scaling/tvs/breakdown/types'
+import { columns } from './columns/columns'
 import { renderFormulaSubComponent } from './FormulaSubRow'
 import { sumTokensValue } from './sumTokensValue'
 import { TableSum } from './TableSum'
 
-export type CanonicallyBridgedTokenEntry =
-  ProjectTvsBreakdown['canonical'][number]
-
 interface Props {
-  tokens: CanonicallyBridgedTokenEntry[]
-  id: string
+  tokens: BaseAssetBreakdownData[]
 }
 
-export function CanonicallyBridgedTable(props: Props) {
+export function TvsBreakdownTokenTable(props: Props) {
   const usdSum = useMemo(() => sumTokensValue(props.tokens), [props.tokens])
 
   const table = useReactTable({
     enableSortingRemoval: false,
     sortDescFirst: true,
     data: props.tokens,
-    columns: canonicallyBridgedColumns,
+    columns: columns,
     getRowCanExpand: (row) => !!row.original.formula,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
@@ -34,10 +30,6 @@ export function CanonicallyBridgedTable(props: Props) {
 
   return (
     <div className="flex flex-col">
-      <h2 className="mb-3 font-bold text-xl md:mb-4 md:text-2xl">
-        <a href={`#${props.id}`}>Canonically Bridged Value</a>
-      </h2>
-
       <TokenTable
         table={table}
         renderSubComponent={renderFormulaSubComponent}
