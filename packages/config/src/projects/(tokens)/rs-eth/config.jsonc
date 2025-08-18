@@ -24,7 +24,9 @@
                   }
                 ]
               }
-            }
+            },
+            "discoverMinters": true,
+            "noMintersLimit": true
           }
         }
       }

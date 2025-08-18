@@ -1,8 +1,8 @@
 {
   "name": "usdy",
   "chain": "arbitrum",
-  "timestamp": 1752830574,
-  "configHash": "0xdbd8faaf81f843bcb3a069bf26b2b8f581c1590601c5cf54f3b728b107623422",
+  "timestamp": 1755513296,
+  "configHash": "0x326521d10dbaa09a2580c4cbda021131c606465252d102a6618f036525b27e0b",
   "entries": [
     {
       "name": "USDY",
@@ -43,7 +43,20 @@
             "bridges": [
               { "name": "Layer Zero v2 OFT", "slug": "layerzerov2oft" }
             ]
-          }
+          },
+          "minters": [
+            "arb1:0x71B11397Cd43dB712d36FE519a32352101f147A1",
+            "arb1:0x189D409b807aC1949Fe82c143270992FE9457607",
+            "arb1:0xe93685f3bBA03016F02bD1828BaDD6195988D950",
+            "arb1:0x13116E8b4FfC8125B859ec60917FBa540e59E55e",
+            "arb1:0x680fC6eB31A99704360A30418Df6a4eED92506FF",
+            "arb1:0x4A15f6BdEFbe6320809Fe0D3F087e233E24dA2D7",
+            "arb1:0x0E183f1d7286cc260761D15FC07514a39B5a36c2",
+            "arb1:0x2858e8628327aB695bb751a328CFb3d5dFd762F4",
+            "arb1:0xd0dcACD0135d463b553Bf7aC8c68f32FA178C279",
+            "arb1:0x73A063C96B5d67863deAA7B163207e769A7C2CeE",
+            "arb1:0x7DDb0773E979CD36ef0dc8b6E594A6eBC876e654"
+          ]
         },
         "$upgradeCount": 1,
         "blocklist": "arb1:0xb9123f09D44e6DF568726835233727A6e0FF16A2",
@@ -58,7 +71,7 @@
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
         "sanctionsList": "arb1:0x40C57923924B5c5c5455c48D93317139ADDaC8fb",
         "symbol": "USDY",
-        "totalSupply": "5378803101380110000000000"
+        "totalSupply": "5033952245959110000000000"
       },
       "implementationNames": {
         "arb1:0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D": "TokenProxy",
@@ -137,6 +150,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "arbitrum": 358948576 },
+  "usedBlockNumbers": { "arbitrum": 369691416 },
   "permissionsConfigHash": "0xd067c445cd74713df85f8897c7294426a2df8417b4c512c45817474ba22fff9a"
 }

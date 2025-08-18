@@ -1,7 +1,7 @@
 {
   "name": "buidl",
   "chain": "arbitrum",
-  "timestamp": 1752830492,
+  "timestamp": 1755511423,
   "configHash": "0x2fe51bb3beee3d291f87c0894b147bdf4e3fc5ad5066a4c64b4dbab86118ff34",
   "entries": [
     {
@@ -38,7 +38,14 @@
           "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
           "chainId": 42161,
           "supply": "totalSupply",
-          "source": "native"
+          "source": "native",
+          "minters": [
+            "arb1:0x5072Ed40EBa6bE38C2370cAD1Cb1df0202924e53",
+            "arb1:0x6EbDeED7CA1A3761c9D94E2fe6F7F505fF0C9793",
+            "arb1:0x9954bAEfaa49446d80923BBaC65064ebcBb7Bdb2",
+            "arb1:0x990EF5d2adCa4a2ccf1811f54e4b5506977504cC",
+            "arb1:0xa17aD080F9C696E424E649A3433486bEF8E6A212"
+          ]
         },
         "$upgradeCount": 1,
         "cap": 0,
@@ -49,10 +56,10 @@
         "getImplementationAddress": "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7",
         "getInitializedVersion": 1,
         "getWalletAt": [
-          "arb1:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
+          "arb1:0x7f4e4384137b6aF7732e4e0951832b4152082fbB",
           "arb1:0x54FE3425f09854E15081fa5B3276afCB4C46FCa2",
           "arb1:0xC8abbd5bC34C943C908D99581e77D0A91b104515",
-          "arb1:0x7f4e4384137b6aF7732e4e0951832b4152082fbB"
+          "arb1:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69"
         ],
         "isPaused": false,
         "ISSUER_MULTICALL": 8194,
@@ -73,8 +80,8 @@
         "TA_MULTICALL": 8195,
         "TOKEN_ISSUER": 512,
         "TOKEN_REALLOCATOR": 8192,
-        "totalIssued": 44160780060000,
-        "totalSupply": 30622999980000,
+        "totalIssued": 47399126860000,
+        "totalSupply": 30715509890000,
         "TRANSACTION_RELAYER": 4096,
         "TRUST_SERVICE": 1,
         "UNUSED_1": 16,
@@ -204,6 +211,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "arbitrum": 358948249 },
+  "usedBlockNumbers": { "arbitrum": 369683897 },
   "permissionsConfigHash": "0xf0603d8ef61478ca7a44794b8dac43959228882ef6aecd40dbe7ebbe65d064c8"
 }

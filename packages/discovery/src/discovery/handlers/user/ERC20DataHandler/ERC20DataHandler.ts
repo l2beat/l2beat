@@ -20,6 +20,8 @@ export type ERC20DataDefinition = v.infer<typeof ERC20DataDefinition>
 export const ERC20DataDefinition = v.strictObject({
   type: v.literal('ERC20Data'),
   overrides: SourceEntry,
+  discoverMinters: v.boolean().optional(),
+  noMintersLimit: v.boolean().optional(),
 })
 
 export class ERC20DataHandler implements Handler {
@@ -60,7 +62,13 @@ export class ERC20DataHandler implements Handler {
       entry?.deploymentTimestamp,
     )
 
-    const minters = await getMinters(provider, address)
+    const minters = this.definition.discoverMinters
+      ? await getMinters(
+          provider,
+          address,
+          this.definition.noMintersLimit ?? false,
+        )
+      : undefined
 
     return {
       field: '$tokenData',
@@ -79,17 +87,21 @@ export class ERC20DataHandler implements Handler {
         source,
         bridgedUsing: entry?.bridgedUsing,
         excludeFromTotal: entry?.excludeFromTotal,
-        minters: minters.value,
+        minters: minters?.value,
       },
       ignoreRelative: true,
     }
   }
 }
 
-async function getMinters(provider: IProvider, address: ChainSpecificAddress) {
+async function getMinters(
+  provider: IProvider,
+  address: ChainSpecificAddress,
+  noLimit: boolean,
+) {
   const mintersHandler: ERC20MintersDefinition = {
     type: 'ERC20Minters',
-    noLimit: false,
+    noLimit,
   }
 
   const handler = new ERC20MintersHandler('$minters', mintersHandler)

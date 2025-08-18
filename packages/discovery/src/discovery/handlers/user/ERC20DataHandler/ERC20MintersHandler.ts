@@ -16,6 +16,7 @@ const iface = new utils.Interface(abi)
 const topics = iface.encodeFilterTopics('Transfer', [EthereumAddress.ZERO])
 
 const limit = 1000
+const batchSize = 100
 
 export type ERC20MintersDefinition = v.infer<typeof ERC20MintersDefinition>
 export const ERC20MintersDefinition = v.strictObject({
@@ -39,14 +40,15 @@ export class ERC20MintersHandler implements Handler {
     const txHashes = logs.map((l) => l.transactionHash)
     if (!this.definition.noLimit && txHashes.length > limit) {
       throw new Error(
-        `ERC20MintersHandler: too many transactions, use "noLimit" to override: ${txHashes.length} > ${limit}`,
+        `ERC20MintersHandler: too many transactions, ignore limit explicitly to override: ${txHashes.length} > ${limit}`,
       )
     }
 
-    const batches = toBatches(txHashes, 100)
+    const batches = toBatches(txHashes, batchSize)
+
     const origins = new Set<string>()
-    for (const [i, batch] of batches.entries()) {
-      console.log(`${i}/${batches.length}`)
+
+    for (const batch of batches) {
       const txs = await Promise.all(
         batch.map((h) => provider.getTransaction(Hash256(h))),
       )
@@ -57,10 +59,10 @@ export class ERC20MintersHandler implements Handler {
       }
     }
 
-    return Promise.resolve({
+    return {
       field: this.field,
       value: Array.from(origins),
-    })
+    }
   }
 }
 

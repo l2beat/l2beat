@@ -22,7 +22,8 @@
                   }
                 ]
               }
-            }
+            },
+            "discoverMinters": true
           }
         }
       }

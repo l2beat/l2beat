@@ -15,7 +15,8 @@
             "overrides": {
               "source": "native",
               "supply": "totalSupply" // minted by operators on each chain
-            }
+            },
+            "discoverMinters": true
           }
         }
       }

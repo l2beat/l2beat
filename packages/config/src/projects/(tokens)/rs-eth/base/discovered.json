@@ -1,8 +1,8 @@
 {
   "name": "rs-eth",
   "chain": "base",
-  "timestamp": 1752830527,
-  "configHash": "0x2b540159bb11769533b9cb89a2235f165d9414a774f330bef5bae3d77f9d21de",
+  "timestamp": 1755512755,
+  "configHash": "0xe74f7d63c05c82f9a14f40654bcd79e2e5be0871f90f57ebbd1b1e82364f8c8e",
   "entries": [
     {
       "name": "RSETH_OFT",
@@ -34,7 +34,8 @@
             "bridges": [
               { "name": "Layer Zero v2 OFT", "slug": "layerzerov2oft" }
             ]
-          }
+          },
+          "minters": ["base:0xe93685f3bBA03016F02bD1828BaDD6195988D950"]
         },
         "approvalRequired": false,
         "decimalConversionRate": 1000000000000,
@@ -52,7 +53,7 @@
         "sharedDecimals": 6,
         "symbol": "rsETH",
         "token": "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993",
-        "totalSupply": "2452996597000000000000"
+        "totalSupply": "3677600998000000000000"
       },
       "implementationNames": {
         "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993": "RSETH_OFT"
@@ -140,6 +141,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "base": 33020590 },
+  "usedBlockNumbers": { "base": 34361700 },
   "permissionsConfigHash": "0x92da27ecd6708d675fe4d33353e209fd03e381f8a4cfe1bb7fb4c1e0c2a4369d"
 }
