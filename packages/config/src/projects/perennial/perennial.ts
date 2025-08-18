@@ -37,4 +37,21 @@ export const perennial: ScalingProject = underReviewL3({
       ],
     },
   },
-})
+  chainConfig: {
+    name: 'perennial',
+    gasTokens: ['ETH'],
+    chainId: 1424,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.perennial.foundation',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
+  }, 
+}) //seems like they use external bridges? https://bridges.perennial.foundation/ to be checked
