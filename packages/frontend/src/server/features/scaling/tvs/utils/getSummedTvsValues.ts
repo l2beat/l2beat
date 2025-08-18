@@ -45,7 +45,7 @@ export async function getSummedTvsValues(
   ])
 
   const latestTimestamp = latest.at(-1)?.timestamp
-  if (!latestTimestamp) {
+  if (!latestTimestamp || valueRecords.length === 0) {
     return []
   }
   const delayedRecords = latest.filter((v) => v.timestamp < latestTimestamp)
@@ -102,7 +102,7 @@ export async function getSummedTvsValues(
   const groupedByTimestamp = keyBy(valueRecords, (v) => v.timestamp)
 
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : to
-
+  console.log(timestamps)
   return generateTimestamps([fromTimestamp, adjustedTo], resolution, {
     addTarget: true,
   }).flatMap((timestamp) => {
