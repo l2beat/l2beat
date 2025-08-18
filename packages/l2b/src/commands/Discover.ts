@@ -91,28 +91,31 @@ function logProjectsToDiscover(
   }
 }
 
-function resolveProjects(projectQuery: string) {
+function resolveProjects(projectQuery: string): Record<string, string[]> {
   const result: Record<string, string[]> = {}
   const entries = configReader.readAllConfiguredProjects()
 
-  const predicate: Predicate = EthereumAddress.check(projectQuery)
+  const isAddressPredicate = EthereumAddress.check(projectQuery)
+  const predicate: Predicate = isAddressPredicate
     ? addressPredicate
     : projectPredicate
 
   for (const { project, chains } of entries) {
-    const matchingChains = chains.filter((chain) => {
-      const query = EthereumAddress.check(projectQuery)
+    const projectMatches = chains.some((chain) => {
+      const query = isAddressPredicate
         ? ChainSpecificAddress.from(getChainShortName(chain), projectQuery)
         : projectQuery
 
       return predicate(query, project)
     })
 
-    for (const chain of matchingChains) {
-      if (!result[chain]) {
-        result[chain] = []
+    if (projectMatches) {
+      for (const chain of chains) {
+        if (!result[chain]) {
+          result[chain] = []
+        }
+        result[chain].push(project)
       }
-      result[chain].push(project)
     }
   }
 

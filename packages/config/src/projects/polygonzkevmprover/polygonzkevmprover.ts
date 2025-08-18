@@ -62,10 +62,10 @@ export const polygonzkevmprover: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         usedBy: [
-          ProjectId('astarzkevm'),
-          ProjectId('gpt'),
+          // ProjectId('astarzkevm'),
+          // ProjectId('gpt'),
           ProjectId('wirex'),
-          ProjectId('witness'),
+          // ProjectId('witness'),
         ],
         description:
           'Custom verifier ID: SHA256 hash of the following values from the verifier smart contract, abi packed in the same order they are defined: verification key data, omegas, verifier preprocessed inputs (all values from k1 to X2y2).',
