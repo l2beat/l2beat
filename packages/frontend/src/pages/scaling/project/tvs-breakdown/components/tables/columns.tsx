@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import capitalize from 'lodash/capitalize'
+import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
@@ -12,6 +13,15 @@ import type { TokenRow } from './TvsBreakdownTokenTable'
 
 const columnHelper = createColumnHelper<TokenRow>()
 export const columns = [
+  columnHelper.accessor((_, index) => index + 1, {
+    header: '#',
+    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
+    sortDescFirst: false,
+    meta: {
+      headClassName: 'w-0',
+    },
+    size: 44,
+  }),
   columnHelper.display({
     id: 'token',
     header: 'Token',
