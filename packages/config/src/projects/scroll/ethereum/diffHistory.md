@@ -1,3 +1,537 @@
+Generated with discovered.json: 0xab03744291c952b0e707579cb865d83daf33c4e8
+
+# Diff at Mon, 18 Aug 2025 12:36:21 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@335655f4527d4008046b61acfb5c017f56f8b51d block: 1755014055
+- current timestamp: 1755520428
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.7:
++        {"startBatchIndex":0,"verifier":"eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485"}
+      values.legacyVerifiersLength.7:
++        0
+      values.verifierVersions.7:
++        8
+    }
+```
+
+```diff
+    contract L1MessageQueueV2 (0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a) {
+    +++ description: None
+      template:
+-        "scroll/L1MessageQueue"
+      sourceHashes.1:
+-        "0x99f1e9baeea6fd1f7773c90a40e71adfcfd2e28d14a59208a79323b7e36281a0"
++        "0x92b35ff3d05522053ea72bc1d79ad52bc1aa4f5fb8afeea039c1f7d26a18b59c"
+      description:
+-        "Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway."
+      values.$implementation:
+-        "eth:0xEfA158006b072793a49E622B26761cD0eC38591d"
++        "eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.getFirstUnfinalizedMessageEnqueueTime:
+-        1755006179
++        1755514847
+      values.nextCrossDomainMessageIndex:
+-        960099
++        960609
+      values.nextUnfinalizedQueueIndex:
+-        960089
++        960601
+      values.estimateCrossDomainMessageFee:
++        [0,120000,240000,360000,480000]
+      values.estimateL2BaseFee:
++        120000
+      values.getMessageEnqueueTimestamp:
++        [0,0,0,0,0]
+      values.getMessageRollingHash:
++        ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
+      implementationNames.eth:0xEfA158006b072793a49E622B26761cD0eC38591d:
+-        "L1MessageQueueV2"
+      implementationNames.eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa:
++        "L1MessageQueueV2"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"estimateCrossDomainMessageFee":"Processing error occurred.","getMessageEnqueueTimestamp":"Processing error occurred.","getMessageRollingHash":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
+    +++ description: None
+      template:
+-        "scroll/L1ERC721Gateway"
+      sourceHashes.1:
+-        "0x2a543ae77e08fc2293b99836986b16db46b713eb958556cd1c95fcabce559b4b"
++        "0x8a8d5a6804c708dac3077a6dc3205f8c0ef2f6afab6f82c622a4b7e4b1cdda5d"
+      description:
+-        "Contract used to bridge ERC721 tokens from L1 to L2."
+      values.$implementation:
+-        "eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb"
++        "eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.counterpart:
+-        "scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582"
++        "eth:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582"
+      implementationNames.eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb:
+-        "L1ERC721Gateway"
+      implementationNames.eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A:
++        "L1ERC721Gateway"
+      usedTypes:
+-        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+    +++ description: None
+      template:
+-        "scroll/L1ScrollMessenger"
+      sourceHashes.1:
+-        "0x0a1aa34da20ecb18034b84d08a6f6c0a3b5f5b865aaf9fbd37ef7c766dfdc5a8"
++        "0x1b2015473e07e2c05d22065439354cd227773c699f24fd62a8c67b381a9e970d"
+      description:
+-        "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender."
+      values.$implementation:
+-        "eth:0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b"
++        "eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69"
+      values.$pastUpgrades.4:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.counterpart:
+-        "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
++        "eth:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
+      values.maxReplayTimes:
+-        3
+      values.xDomainMessageSender:
+-        "scr:0x0000000000000000000000000000000000000001"
++        "eth:0x0000000000000000000000000000000000000001"
+      values.prevReplayIndex:
++        [0,0,0,0,0]
+      implementationNames.eth:0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b:
+-        "L1ScrollMessenger"
+      implementationNames.eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69:
++        "L1ScrollMessenger"
+      usedTypes:
+-        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"prevReplayIndex":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      directlyReceivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D","description":"update the minimum delay message queue parameters and enforced mode parameters.","role":".owner"}
+    }
+```
+
+```diff
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
+    +++ description: None
+      template:
+-        "scroll/L1WETHGateway"
+      sourceHashes.1:
+-        "0xb90cab5924c6894e3047536242125cdface40857b9c70a6551210bc6de166b42"
++        "0x85541d2f37f32a3d9fe2cd14f01e794d21a323e3f67041c89a7293f790f85668"
+      description:
+-        "Contract used to bridge WETH from L1 to L2."
+      values.$implementation:
+-        "eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49"
++        "eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.counterpart:
+-        "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9"
++        "eth:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9"
+      values.l2WETH:
+-        "scr:0x5300000000000000000000000000000000000004"
++        "eth:0x5300000000000000000000000000000000000004"
+      values.WETH:
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      implementationNames.eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49:
+-        "L1WETHGateway"
+      implementationNames.eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24:
++        "L1WETHGateway"
+      usedTypes:
+-        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
+-        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
+    +++ description: None
+      template:
+-        "scroll/L1ETHGateway"
+      sourceHashes.1:
+-        "0xa874514fbf17dc321480a8270dcdc3a5a0d9b8e37ff5de1187df641cd4a2f6e4"
++        "0x09dcca0374ada70701a459984dc3deae5816e1b6db9dd9596007c28ce5b389e2"
+      description:
+-        "Contract used to bridge ETH from L1 to L2."
+      values.$implementation:
+-        "eth:0x546E0bF31FB6e7babD493452e4e6999191367B42"
++        "eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.counterpart:
+-        "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
++        "eth:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
+      implementationNames.eth:0x546E0bF31FB6e7babD493452e4e6999191367B42:
+-        "L1ETHGateway"
+      implementationNames.eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0:
++        "L1ETHGateway"
+      usedTypes:
+-        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract SystemConfig (0x8432728A257646449245558B8b7Dbe51A16c7a4D) {
+    +++ description: None
+      template:
+-        "scroll/SystemConfig"
+      sourceHashes.1:
+-        "0xc6b44b4f580a4675d79b547ed6eef62882f9be3e0c86e18360e9ba5ead33755a"
++        "0x94a50a4d5efa2113acdaae7b769298f0c8c17e01bc6c6efeebdb7d8a7b0bec10"
+      description:
+-        "System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode."
+      values.$implementation:
+-        "eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A"
++        "eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A:
+-        "SystemConfig"
+      implementationNames.eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE:
++        "SystemConfig"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      template:
+-        "scroll/ScrollChain"
+      sourceHashes.1:
+-        "0x73386ff4d9fbaf9cba78ae1e91ee43f11ff39acb8bcf332085ec42d7da6c2306"
++        "0xdccc4e7f3d13677c2f3cb12f608b3aa0a8bacb59c54feb3dc21fc3f42c4d4e25"
+      description:
+-        "The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated."
+      values.$implementation:
+-        "eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f"
++        "eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7"
+      values.$pastUpgrades.7:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.lastFinalizedBatchIndex:
+-        365833
++        368071
+      values.maxNumTxInChunk:
+-        100
+      values.miscData.lastCommittedBatchIndex:
+-        365869
++        368089
+      values.miscData.lastFinalizedBatchIndex:
+-        365833
++        368071
+      values.miscData.lastFinalizeTimestamp:
+-        1755006755
++        1755519395
+      values.provers:
+-        ["eth:0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c","eth:0x74b286304576625557629C47E9E8702383D9eF92"]
+      values.revertedBatches:
+-        [275119,275120,275121,275122,275123,275124,275125,275126,275127,275128,275129,275130,275131,275132,275133,275134,275135,275136,275137,275138,275139,275140,275141,275142,275143,275144,275145,275146,275147,275148,275149,275150,275151,275152,275153,275154,275155,275156,275157,275158,275159,275160,275161,275162,275163,275164,275165,275166,275167,275168,275169,275170,275171,275172,275173,346818,346817,346816,346815]
+      values.sequencers:
+-        ["eth:0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B","eth:0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858"]
+      values.committedBatches:
++        ["0x5aaeb6101a47fc16866e80d77ffe090b6a7b3cf7d988be981646ab6aedfa2c42","0xaa8181f04f8e305328a6117fa6bc13fa2093a3c4c990c5281df95a1cb85ca18f","0x30d13ec2a06074f2048d64d85b62e1b4fb8f461d43bbd26099ef86d903c97399","0xe4bf15441d44aec723eff1ba7e80f9f5c6dbc46312471d0b23e297310870012f","0xcb24a337233a0d9a335e71a33637a8e42d71422c08ca6338572eb1e25e0f989a"]
+      values.finalizedStateRoots:
++        ["0x08d535cc60f40af5dd3b31e0998d7567c2d568b224bed2ba26070aeb078d1339","0x2b3219c3d89d50b5aa4e56743c4e22501d34b885e468365ba3b1cc818297db74","0x2494e7866ed0b6e8cf87024c0036e53cf3d4a7cbe22f11d80f8fff36392463a0","0x18a3423e924e332986d81b32fbec1f1d21b1f7a8a706267fdf87ed18bc6dfff6","0x2d0336979e3bcd0ef4c4cde61d5ab5b14ee57b5f533152c459dc0e63bb1a7e1f"]
+      values.isBatchFinalized:
++        [true,true,true,true,true]
+      values.withdrawRoots:
++        ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x42b111e4bf3652280b54a2f4a5195aeab5db8f647e93d1725566be3f2f9aedc0","0x42b111e4bf3652280b54a2f4a5195aeab5db8f647e93d1725566be3f2f9aedc0"]
+      implementationNames.eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f:
+-        "ScrollChain"
+      implementationNames.eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7:
++        "ScrollChain"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"committedBatches":"Processing error occurred.","finalizedStateRoots":"Processing error occurred.","isBatchFinalized":"Processing error occurred.","withdrawRoots":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
+    +++ description: None
+      template:
+-        "scroll/L1CustomERC20Gateway"
+      sourceHashes.1:
+-        "0xe564c04903b37a6ee36ca18aeb567c15ce70fe0a8022621e7c93c833bc2fbbf3"
++        "0x5d802344cb0c2d20f6e366ef83eee38cb2d561b6ad26ed596111f84a4cf3aa80"
+      description:
+-        "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings."
+      values.$implementation:
+-        "eth:0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c"
++        "eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.counterpart:
+-        "scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988"
++        "eth:0x64CCBE37c9A82D85A1F2E74649b7A42923067988"
+      implementationNames.eth:0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c:
+-        "L1CustomERC20Gateway"
+      implementationNames.eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97:
++        "L1CustomERC20Gateway"
+      usedTypes:
+-        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
+    +++ description: None
+      template:
+-        "scroll/L1ERC1155Gateway"
+      sourceHashes.1:
+-        "0x35e9a9e7a691f357e642a73662c88a202224b73a44fc022f833ccc8aff9a4a64"
++        "0x3e82df6b3c4997362507d8f73c6fff945dedcee0aeaf99f8369b433dc82c0bca"
+      description:
+-        "Contract used to bridge ERC1155 tokens from L1 to L2."
+      values.$implementation:
+-        "eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7"
++        "eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.counterpart:
+-        "scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc"
++        "eth:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc"
+      implementationNames.eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7:
+-        "L1ERC1155Gateway"
+      implementationNames.eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E:
++        "L1ERC1155Gateway"
+      usedTypes:
+-        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
+    +++ description: None
+      template:
+-        "scroll/L1StandardERC20Gateway"
+      sourceHashes.1:
+-        "0x93fe70d828e5646f5acb7768083ab2e5b9cfb5b6691a5dff48ff3c188ffd05a7"
++        "0x13d0dc38cdff2a957bfc9939cc28d16112c2052a699bc3bc9231879a79ff81e2"
+      description:
+-        "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list."
+      values.$implementation:
+-        "eth:0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c"
++        "eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.counterpart:
+-        "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
++        "eth:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
+      values.l2TokenFactory:
+-        "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484"
++        "eth:0x66e5312EDeEAef6e80759A0F789e7914Fb401484"
+      values.l2TokenImplementation:
+-        "scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69"
++        "eth:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69"
+      implementationNames.eth:0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c:
+-        "L1StandardERC20Gateway"
+      implementationNames.eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9:
++        "L1StandardERC20Gateway"
+      usedTypes:
+-        [{"typeCaster":"ChainPrefix","arg":{"prefix":"scr"}}]
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      directlyReceivedPermissions.0:
++        {"permission":"upgrade","from":"eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B","role":"admin"}
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x987e300fDfb06093859358522a79098848C33852","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1MessageQueueWithGasPriceOracle (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC1155GatewayFallback (0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2CustomERC20GatewayFallback (0x64CCBE37c9A82D85A1F2E74649b7A42923067988)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2TokenFactoryFallback (0x66e5312EDeEAef6e80759A0F789e7914Fb401484)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ETHGatewayFallback (0x6EA73e05AdC79974B931123675ea8F78FfdacDF0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WETHGatewayFallback (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ScrollMessengerFallback (0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC721GatewayFallback (0x7bC08E1c04fb41d75F1410363F0c5746Eae80582)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (0xa8d4702Aa5c09AF5dD1323E1842a43789021F485)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Wrapped Ether Token (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2TokenImplementationFallback (0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2StandardERC20GatewayFallback (0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../L1CustomERC20Gateway/L1CustomERC20Gateway.sol  |   35 +-
+ .../L1ERC1155Gateway/L1ERC1155Gateway.sol          |   37 +-
+ .../L1ERC721Gateway/L1ERC721Gateway.sol            |   38 +-
+ .../L1ETHGateway/L1ETHGateway.sol                  |   26 +-
+ .../L1MessageQueueV2/L1MessageQueueV2.sol          |    3 +-
+ .../L1MessageQueueWithGasPriceOracle.sol           | 1294 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++++
+ .../L1ScrollMessenger/L1ScrollMessenger.sol        |  111 +-
+ .../L1StandardERC20Gateway.sol                     |   27 +-
+ .../L1WETHGateway/L1WETHGateway.sol                |   31 +-
+ .../.flat/L2CustomERC20GatewayFallback.sol         |  469 +++++++
+ .../ethereum/.flat/L2ERC1155GatewayFallback.sol    |  469 +++++++
+ .../ethereum/.flat/L2ERC721GatewayFallback.sol     |  469 +++++++
+ .../scroll/ethereum/.flat/L2ETHGatewayFallback.sol |  469 +++++++
+ .../.flat/L2GasPriceOracle/L2GasPriceOracle.sol    |  625 ++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++++
+ .../ethereum/.flat/L2ScrollMessengerFallback.sol   |  469 +++++++
+ .../.flat/L2StandardERC20GatewayFallback.sol       |  469 +++++++
+ .../ethereum/.flat/L2TokenFactoryFallback.sol      |  469 +++++++
+ .../.flat/L2TokenImplementationFallback.sol        |  469 +++++++
+ .../ethereum/.flat/L2WETHGatewayFallback.sol       |  469 +++++++
+ .../ScrollChain/ScrollChain.sol                    |  918 ++------------
+ .../SystemConfig/SystemConfig.sol                  |   25 +
+ .../projects/scroll/ethereum/.flat/Whitelist.sol   |   97 ++
+ .../scroll/ethereum/.flat/Wrapped Ether Token.sol  |   63 +
+ .../ethereum/.flat/ZkEvmVerifierPostFeynman.sol    |  107 ++
+ 26 files changed, 8005 insertions(+), 1111 deletions(-)
+```
+
 Generated with discovered.json: 0x1675a3c48ada4ccf97f25620eb2b67911bf9e5ff
 
 # Diff at Mon, 11 Aug 2025 14:21:53 GMT:

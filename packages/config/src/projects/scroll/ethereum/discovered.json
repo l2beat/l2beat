@@ -1,9 +1,14 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "timestamp": 1755014055,
+  "timestamp": 1755520428,
   "configHash": "0x9ab90762ab1fe2be54741263b30757e3bf40ba7957d26b545ee5adbbe346645a",
   "entries": [
+    {
+      "address": "eth:0x0000000000000000000000000000000000000001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "ZkEvmVerifierPostEuclid",
       "address": "eth:0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3",
@@ -46,11 +51,6 @@
         }
       ],
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
@@ -209,6 +209,81 @@
         "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": "TimelockController"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "L1MessageQueueWithGasPriceOracle",
+      "address": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x3e38728c8eff2d4e99a76036010214e6ece1aebfa85496f776910c3e674d90e0"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1696782311,
+      "sinceBlock": 18306933,
+      "values": {
+        "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+        "$implementation": "eth:0x137CC585F607EDeBBc3CA6360AffCFeab507B374",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:11.000Z",
+            "0xdd4c82f4c38c76c6bb222f2b319e870ed48d8d4dc2a73e0baa5d560a286924b2",
+            ["eth:0xBC9D741501A20F962756C95BF906b4abffadcf8F"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826",
+            ["eth:0xeBaed7A81c298B24EE6d59c22698A951dc448E01"]
+          ],
+          [
+            "2024-08-20T23:36:35.000Z",
+            "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7",
+            ["eth:0x137CC585F607EDeBBc3CA6360AffCFeab507B374"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+        "estimateCrossDomainMessageFee": [
+          0, 100000000, 200000000, 300000000, 400000000
+        ],
+        "gasOracle": "eth:0x987e300fDfb06093859358522a79098848C33852",
+        "getCrossDomainMessage": [
+          "0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320",
+          "0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894",
+          "0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae",
+          "0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6",
+          "0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28"
+        ],
+        "isMessageDropped": [false, false, false, false, false],
+        "isMessageSkipped": [false, false, false, false, false],
+        "l2BaseFee": 100000000,
+        "maxGasLimit": 10000000,
+        "messageQueue": [
+          "0x8aa0f1f4e9ca81e9263a62ad3543600dbd50a8a7ca6ad3456f4d19b01b2f4320",
+          "0xa52c3a1943be02ca2ccba4ca7000af0ef89bb0114fc781f70df88d0dc2a3c894",
+          "0x244042e9244ca7cba571bb4443b5522d9cea30221fcdcb1feba0356740a675ae",
+          "0x5e7b7df9dfa789d115c10a8d902437c326190f6d1aa8a213bd10b3021b86a0e6",
+          "0x2e8ecf1f39268e939bc8275beb7a1a7d808da0701239087ea1597c91125efe28"
+        ],
+        "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "nextCrossDomainMessageIndex": 953885,
+        "nextUnfinalizedQueueIndex": 953885,
+        "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "pendingQueueIndex": 953885,
+        "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+        "whitelistChecker": "eth:0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
+      },
+      "errors": {
+        "estimateCrossDomainMessageFee": "Processing error occurred.",
+        "getCrossDomainMessage": "Processing error occurred.",
+        "isMessageDropped": "Processing error occurred.",
+        "isMessageSkipped": "Processing error occurred.",
+        "messageQueue": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": "TransparentUpgradeableProxy",
+        "eth:0x137CC585F607EDeBBc3CA6360AffCFeab507B374": "L1MessageQueueWithGasPriceOracle"
+      }
     },
     {
       "name": "TimelockFast",
@@ -585,7 +660,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 32,
+        "nonce": 33,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -619,6 +694,24 @@
         }
       ],
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "Whitelist",
+      "address": "eth:0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x118a84c5ed8e5625f8df5325e4bd028d66a65a2d08b9b7d3b72b6c9f7a955e95"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696782311,
+      "sinceBlock": 18306933,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      },
+      "implementationNames": {
+        "eth:0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37": "Whitelist"
+      }
     },
     {
       "address": "eth:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
@@ -939,11 +1032,15 @@
           {
             "startBatchIndex": 364588,
             "verifier": "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA"
+          },
+          {
+            "startBatchIndex": 0,
+            "verifier": "eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485"
           }
         ],
-        "legacyVerifiersLength": [0, 0, 0, 0, 0, 0, 1],
+        "legacyVerifiersLength": [0, 0, 0, 0, 0, 0, 1, 0],
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "verifierVersions": [0, 1, 2, 3, 4, 6, 7]
+        "verifierVersions": [0, 1, 2, 3, 4, 6, 7, 8]
       },
       "implementationNames": {
         "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F": "MultipleVersionRollupVerifier"
@@ -951,26 +1048,24 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "eth:0x5300000000000000000000000000000000000004",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1MessageQueueV2",
       "address": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
       "type": "Contract",
-      "template": "scroll/L1MessageQueue",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x99f1e9baeea6fd1f7773c90a40e71adfcfd2e28d14a59208a79323b7e36281a0"
+        "0x92b35ff3d05522053ea72bc1d79ad52bc1aa4f5fb8afeea039c1f7d26a18b59c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.",
-      "ignoreInWatchMode": [
-        "getFirstUnfinalizedMessageEnqueueTime",
-        "nextCrossDomainMessageIndex",
-        "nextUnfinalizedQueueIndex"
-      ],
       "sinceTimestamp": 1742476139,
       "sinceBlock": 22088276,
       "values": {
         "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "eth:0xEfA158006b072793a49E622B26761cD0eC38591d",
+        "$implementation": "eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa",
         "$pastUpgrades": [
           [
             "2025-03-20T13:08:59.000Z",
@@ -981,25 +1076,44 @@
             "2025-04-22T06:01:35.000Z",
             "0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21",
             ["eth:0xEfA158006b072793a49E622B26761cD0eC38591d"]
+          ],
+          [
+            "2025-08-18T02:46:23.000Z",
+            "0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",
+            ["eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+        "estimateCrossDomainMessageFee": [0, 120000, 240000, 360000, 480000],
+        "estimateL2BaseFee": 120000,
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1755006179,
+        "getFirstUnfinalizedMessageEnqueueTime": 1755514847,
+        "getMessageEnqueueTimestamp": [0, 0, 0, 0, 0],
+        "getMessageRollingHash": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ],
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 960099,
-        "nextUnfinalizedQueueIndex": 960089,
+        "nextCrossDomainMessageIndex": 960609,
+        "nextUnfinalizedQueueIndex": 960601,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
       },
+      "errors": {
+        "estimateCrossDomainMessageFee": "Processing error occurred.",
+        "getMessageEnqueueTimestamp": "Processing error occurred.",
+        "getMessageRollingHash": "Processing error occurred."
+      },
       "implementationNames": {
         "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a": "TransparentUpgradeableProxy",
-        "eth:0xEfA158006b072793a49E622B26761cD0eC38591d": "L1MessageQueueV2"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+        "eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa": "L1MessageQueueV2"
+      }
     },
     {
       "name": "ZkEvmVerifierV0",
@@ -1027,21 +1141,37 @@
       "proxyType": "EOA"
     },
     {
+      "name": "L2ERC1155GatewayFallback",
+      "address": "eth:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696927307,
+      "sinceBlock": 18318929,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      },
+      "implementationNames": {
+        "eth:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": "Fallback"
+      }
+    },
+    {
       "name": "L1ERC721Gateway",
       "address": "eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
       "type": "Contract",
-      "template": "scroll/L1ERC721Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x2a543ae77e08fc2293b99836986b16db46b713eb958556cd1c95fcabce559b4b"
+        "0x8a8d5a6804c708dac3077a6dc3205f8c0ef2f6afab6f82c622a4b7e4b1cdda5d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used to bridge ERC721 tokens from L1 to L2.",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
         "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb",
+        "$implementation": "eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A",
         "$pastUpgrades": [
           [
             "2023-10-08T16:25:23.000Z",
@@ -1052,22 +1182,23 @@
             "2024-02-22T08:20:23.000Z",
             "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826",
             ["eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb"]
+          ],
+          [
+            "2025-08-18T02:46:23.000Z",
+            "0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",
+            ["eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A"]
           ]
         ],
-        "$upgradeCount": 2,
-        "counterpart": "scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
+        "$upgradeCount": 3,
+        "counterpart": "eth:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
         "eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": "TransparentUpgradeableProxy",
-        "eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb": "L1ERC721Gateway"
-      },
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
-      ],
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+        "eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A": "L1ERC721Gateway"
+      }
     },
     {
       "name": "ZkEvmVerifierV1-1",
@@ -1087,6 +1218,24 @@
         "eth:0x63FB51C55d9605a75F8872C80De260a00fACfaA2": "ZkEvmVerifierV1"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "L2CustomERC20GatewayFallback",
+      "address": "eth:0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696927307,
+      "sinceBlock": 18318929,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      },
+      "implementationNames": {
+        "eth:0x64CCBE37c9A82D85A1F2E74649b7A42923067988": "Fallback"
+      }
     },
     {
       "name": "wstETHescrowLido",
@@ -1141,6 +1290,24 @@
       "proxyType": "EOA"
     },
     {
+      "name": "L2TokenFactoryFallback",
+      "address": "eth:0x66e5312EDeEAef6e80759A0F789e7914Fb401484",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696927307,
+      "sinceBlock": 18318929,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      },
+      "implementationNames": {
+        "eth:0x66e5312EDeEAef6e80759A0F789e7914Fb401484": "Fallback"
+      }
+    },
+    {
       "name": "DaiEscrow",
       "address": "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
       "type": "Contract",
@@ -1180,18 +1347,16 @@
       "name": "L1ScrollMessenger",
       "address": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
       "type": "Contract",
-      "template": "scroll/L1ScrollMessenger",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x0a1aa34da20ecb18034b84d08a6f6c0a3b5f5b865aaf9fbd37ef7c766dfdc5a8"
+        "0x1b2015473e07e2c05d22065439354cd227773c699f24fd62a8c67b381a9e970d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
         "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "eth:0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b",
+        "$implementation": "eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69",
         "$pastUpgrades": [
           [
             "2023-10-08T16:25:23.000Z",
@@ -1212,28 +1377,30 @@
             "2025-04-25T07:06:59.000Z",
             "0x783703d4e94de48edb75261149a540cbf7abb7ef077865c11080e622a508ab86",
             ["eth:0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b"]
+          ],
+          [
+            "2025-08-18T02:46:23.000Z",
+            "0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",
+            ["eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69"]
           ]
         ],
-        "$upgradeCount": 4,
-        "counterpart": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
+        "$upgradeCount": 5,
+        "counterpart": "eth:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "feeVault": "eth:0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
-        "maxReplayTimes": 3,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "paused": false,
+        "prevReplayIndex": [0, 0, 0, 0, 0],
         "rollup": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
-        "xDomainMessageSender": "scr:0x0000000000000000000000000000000000000001"
+        "xDomainMessageSender": "eth:0x0000000000000000000000000000000000000001"
       },
+      "errors": { "prevReplayIndex": "Processing error occurred." },
       "implementationNames": {
         "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "TransparentUpgradeableProxy",
-        "eth:0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b": "L1ScrollMessenger"
-      },
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
-      ],
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+        "eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69": "L1ScrollMessenger"
+      }
     },
     {
       "address": "eth:0x68bA95fb5108CFFd9608e8d9d54320acC531Ebe3",
@@ -1276,14 +1443,45 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "name": "L2ETHGatewayFallback",
+      "address": "eth:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696927307,
+      "sinceBlock": 18318929,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      },
+      "implementationNames": {
+        "eth:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0": "Fallback"
+      }
+    },
+    {
       "address": "eth:0x6F166508d423169A3C7cb3e7856Ba4bf9Fb2cCed",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "L2WETHGatewayFallback",
+      "address": "eth:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696927307,
+      "sinceBlock": 18318929,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      },
+      "implementationNames": {
+        "eth:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": "Fallback"
+      }
     },
     {
       "address": "eth:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
@@ -1348,14 +1546,27 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0x74b286304576625557629C47E9E8702383D9eF92",
+      "address": "eth:0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "L2ScrollMessengerFallback",
+      "address": "eth:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696927307,
+      "sinceBlock": 18318929,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      },
+      "implementationNames": {
+        "eth:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": "Fallback"
+      }
     },
     {
       "name": "ScrollOwner",
@@ -1371,12 +1582,6 @@
         {
           "permission": "act",
           "from": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
-          "description": "update the minimum delay message queue parameters and enforced mode parameters.",
           "role": ".owner"
         }
       ],
@@ -1533,18 +1738,16 @@
       "name": "L1WETHGateway",
       "address": "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
       "type": "Contract",
-      "template": "scroll/L1WETHGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xb90cab5924c6894e3047536242125cdface40857b9c70a6551210bc6de166b42"
+        "0x85541d2f37f32a3d9fe2cd14f01e794d21a323e3f67041c89a7293f790f85668"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used to bridge WETH from L1 to L2.",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
         "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49",
+        "$implementation": "eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24",
         "$pastUpgrades": [
           [
             "2023-10-08T16:25:23.000Z",
@@ -1555,40 +1758,58 @@
             "2024-02-22T08:20:23.000Z",
             "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826",
             ["eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49"]
+          ],
+          [
+            "2025-08-18T02:46:23.000Z",
+            "0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",
+            ["eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24"]
           ]
         ],
-        "$upgradeCount": 2,
-        "counterpart": "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9",
-        "l2WETH": "scr:0x5300000000000000000000000000000000000004",
+        "$upgradeCount": 3,
+        "counterpart": "eth:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9",
+        "l2WETH": "eth:0x5300000000000000000000000000000000000004",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+        "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
+        "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "implementationNames": {
         "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "TransparentUpgradeableProxy",
-        "eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49": "L1WETHGateway"
-      },
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
+        "eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24": "L1WETHGateway"
+      }
+    },
+    {
+      "name": "L2ERC721GatewayFallback",
+      "address": "eth:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
       ],
-      "category": { "name": "External Bridges", "priority": 1 }
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696927307,
+      "sinceBlock": 18318929,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      },
+      "implementationNames": {
+        "eth:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582": "Fallback"
+      }
     },
     {
       "name": "L1ETHGateway",
       "address": "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
       "type": "Contract",
-      "template": "scroll/L1ETHGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xa874514fbf17dc321480a8270dcdc3a5a0d9b8e37ff5de1187df641cd4a2f6e4"
+        "0x09dcca0374ada70701a459984dc3deae5816e1b6db9dd9596007c28ce5b389e2"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used to bridge ETH from L1 to L2.",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
         "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "eth:0x546E0bF31FB6e7babD493452e4e6999191367B42",
+        "$implementation": "eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0",
         "$pastUpgrades": [
           [
             "2023-10-08T16:25:23.000Z",
@@ -1599,22 +1820,23 @@
             "2024-02-22T08:20:23.000Z",
             "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826",
             ["eth:0x546E0bF31FB6e7babD493452e4e6999191367B42"]
+          ],
+          [
+            "2025-08-18T02:46:23.000Z",
+            "0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",
+            ["eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0"]
           ]
         ],
-        "$upgradeCount": 2,
-        "counterpart": "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
+        "$upgradeCount": 3,
+        "counterpart": "eth:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
       "implementationNames": {
         "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905": "TransparentUpgradeableProxy",
-        "eth:0x546E0bF31FB6e7babD493452e4e6999191367B42": "L1ETHGateway"
-      },
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
-      ],
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+        "eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0": "L1ETHGateway"
+      }
     },
     {
       "name": "TimelockEmergency",
@@ -1711,18 +1933,16 @@
       "name": "SystemConfig",
       "address": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
       "type": "Contract",
-      "template": "scroll/SystemConfig",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xc6b44b4f580a4675d79b547ed6eef62882f9be3e0c86e18360e9ba5ead33755a"
+        "0x94a50a4d5efa2113acdaae7b769298f0c8c17e01bc6c6efeebdb7d8a7b0bec10"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.",
       "sinceTimestamp": 1742476115,
       "sinceBlock": 22088274,
       "values": {
         "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A",
+        "$implementation": "eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE",
         "$pastUpgrades": [
           [
             "2025-03-20T13:08:35.000Z",
@@ -1733,9 +1953,14 @@
             "2025-04-22T06:01:35.000Z",
             "0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21",
             ["eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A"]
+          ],
+          [
+            "2025-08-18T02:46:23.000Z",
+            "0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",
+            ["eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "enforcedBatchParameters": {
           "maxDelayEnterEnforcedMode": 604800,
           "maxDelayMessageQueue": 604800
@@ -1750,9 +1975,8 @@
       },
       "implementationNames": {
         "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D": "TransparentUpgradeableProxy",
-        "eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A": "SystemConfig"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+        "eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE": "SystemConfig"
+      }
     },
     {
       "address": "eth:0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae",
@@ -1929,6 +2153,49 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "name": "L2GasPriceOracle",
+      "address": "eth:0x987e300fDfb06093859358522a79098848C33852",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x5987f713ef726c459b82ad7473f780457f91510e0d04802551136d8133e531d1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1696782311,
+      "sinceBlock": 18306933,
+      "values": {
+        "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+        "$implementation": "eth:0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:11.000Z",
+            "0xf25a4fbbd1569b188ce8855ff12760904d976be976c35afeb4abd9566db5ca38",
+            ["eth:0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "estimateCrossDomainMessageFee": [
+          0, 460000000, 920000000, 1380000000, 1840000000
+        ],
+        "intrinsicParams": {
+          "txGas": 21000,
+          "txGasContractCreation": 53000,
+          "zeroGas": 4,
+          "nonZeroGas": 16
+        },
+        "l2BaseFee": 460000000,
+        "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "whitelist": "eth:0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
+      },
+      "errors": {
+        "estimateCrossDomainMessageFee": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0x987e300fDfb06093859358522a79098848C33852": "TransparentUpgradeableProxy",
+        "eth:0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E": "L2GasPriceOracle"
+      }
+    },
+    {
       "address": "eth:0x9B2C2Bc80C209c9C5D7f26F57b1Bb3B1699281D4",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1991,19 +2258,16 @@
       "name": "ScrollChain",
       "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
       "type": "Contract",
-      "template": "scroll/ScrollChain",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x73386ff4d9fbaf9cba78ae1e91ee43f11ff39acb8bcf332085ec42d7da6c2306"
+        "0xdccc4e7f3d13677c2f3cb12f608b3aa0a8bacb59c54feb3dc21fc3f42c4d4e25"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.",
-      "ignoreInWatchMode": ["miscData", "lastFinalizedBatchIndex"],
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
         "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f",
+        "$implementation": "eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7",
         "$pastUpgrades": [
           [
             "2023-10-08T16:25:23.000Z",
@@ -2039,56 +2303,90 @@
             "2025-04-22T06:01:35.000Z",
             "0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21",
             ["eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f"]
+          ],
+          [
+            "2025-08-18T02:46:23.000Z",
+            "0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",
+            ["eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7"]
           ]
         ],
-        "$upgradeCount": 7,
+        "$upgradeCount": 8,
+        "committedBatches": [
+          "0x5aaeb6101a47fc16866e80d77ffe090b6a7b3cf7d988be981646ab6aedfa2c42",
+          "0xaa8181f04f8e305328a6117fa6bc13fa2093a3c4c990c5281df95a1cb85ca18f",
+          "0x30d13ec2a06074f2048d64d85b62e1b4fb8f461d43bbd26099ef86d903c97399",
+          "0xe4bf15441d44aec723eff1ba7e80f9f5c6dbc46312471d0b23e297310870012f",
+          "0xcb24a337233a0d9a335e71a33637a8e42d71422c08ca6338572eb1e25e0f989a"
+        ],
+        "finalizedStateRoots": [
+          "0x08d535cc60f40af5dd3b31e0998d7567c2d568b224bed2ba26070aeb078d1339",
+          "0x2b3219c3d89d50b5aa4e56743c4e22501d34b885e468365ba3b1cc818297db74",
+          "0x2494e7866ed0b6e8cf87024c0036e53cf3d4a7cbe22f11d80f8fff36392463a0",
+          "0x18a3423e924e332986d81b32fbec1f1d21b1f7a8a706267fdf87ed18bc6dfff6",
+          "0x2d0336979e3bcd0ef4c4cde61d5ab5b14ee57b5f533152c459dc0e63bb1a7e1f"
+        ],
         "initialEuclidBatchIndex": 357915,
+        "isBatchFinalized": [true, true, true, true, true],
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 365833,
+        "lastFinalizedBatchIndex": 368071,
         "layer2ChainId": 534352,
-        "maxNumTxInChunk": 100,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 365869,
-          "lastFinalizedBatchIndex": 365833,
-          "lastFinalizeTimestamp": 1755006755,
+          "lastCommittedBatchIndex": 368089,
+          "lastFinalizedBatchIndex": 368071,
+          "lastFinalizeTimestamp": 1755519395,
           "flags": 1,
           "reserved": 0
         },
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "paused": false,
-        "provers": [
-          "eth:0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c",
-          "eth:0x74b286304576625557629C47E9E8702383D9eF92"
-        ],
-        "revertedBatches": [
-          275119, 275120, 275121, 275122, 275123, 275124, 275125, 275126,
-          275127, 275128, 275129, 275130, 275131, 275132, 275133, 275134,
-          275135, 275136, 275137, 275138, 275139, 275140, 275141, 275142,
-          275143, 275144, 275145, 275146, 275147, 275148, 275149, 275150,
-          275151, 275152, 275153, 275154, 275155, 275156, 275157, 275158,
-          275159, 275160, 275161, 275162, 275163, 275164, 275165, 275166,
-          275167, 275168, 275169, 275170, 275171, 275172, 275173, 346818,
-          346817, 346816, 346815
-        ],
-        "sequencers": [
-          "eth:0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B",
-          "eth:0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858"
-        ],
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
-        "verifier": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F"
+        "verifier": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+        "withdrawRoots": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x42b111e4bf3652280b54a2f4a5195aeab5db8f647e93d1725566be3f2f9aedc0",
+          "0x42b111e4bf3652280b54a2f4a5195aeab5db8f647e93d1725566be3f2f9aedc0"
+        ]
+      },
+      "errors": {
+        "committedBatches": "Processing error occurred.",
+        "finalizedStateRoots": "Processing error occurred.",
+        "isBatchFinalized": "Processing error occurred.",
+        "withdrawRoots": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556": "TransparentUpgradeableProxy",
-        "eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f": "ScrollChain"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+        "eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7": "ScrollChain"
+      }
     },
     {
       "address": "eth:0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ZkEvmVerifierPostFeynman",
+      "address": "eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1753339811,
+      "sinceBlock": 22987339,
+      "values": {
+        "$immutable": true,
+        "plonkVerifier": "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4",
+        "protocolVersion": 8,
+        "verifierDigest1": "0x003ac2e012d8a7fb1495d94839fe36559b52fd6d60a532884c7558de2b88bf72",
+        "verifierDigest2": "0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909"
+      },
+      "implementationNames": {
+        "eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485": "ZkEvmVerifierPostFeynman"
+      }
     },
     {
       "address": "eth:0xaFb4c32eCb8e4a86363a2fb2Fa27982fbd21ac32",
@@ -2104,18 +2402,16 @@
       "name": "L1CustomERC20Gateway",
       "address": "eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
       "type": "Contract",
-      "template": "scroll/L1CustomERC20Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xe564c04903b37a6ee36ca18aeb567c15ce70fe0a8022621e7c93c833bc2fbbf3"
+        "0x5d802344cb0c2d20f6e366ef83eee38cb2d561b6ad26ed596111f84a4cf3aa80"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
         "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "eth:0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c",
+        "$implementation": "eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97",
         "$pastUpgrades": [
           [
             "2023-10-08T16:25:23.000Z",
@@ -2126,22 +2422,23 @@
             "2024-02-22T08:20:23.000Z",
             "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826",
             ["eth:0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c"]
+          ],
+          [
+            "2025-08-18T02:46:23.000Z",
+            "0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",
+            ["eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97"]
           ]
         ],
-        "$upgradeCount": 2,
-        "counterpart": "scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
+        "$upgradeCount": 3,
+        "counterpart": "eth:0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
       "implementationNames": {
         "eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff": "TransparentUpgradeableProxy",
-        "eth:0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c": "L1CustomERC20Gateway"
-      },
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
-      ],
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+        "eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97": "L1CustomERC20Gateway"
+      }
     },
     {
       "address": "eth:0xb3dd2CA3F575FCDd79F5Cd45c5a6c9db860F3E4d",
@@ -2185,18 +2482,16 @@
       "name": "L1ERC1155Gateway",
       "address": "eth:0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
       "type": "Contract",
-      "template": "scroll/L1ERC1155Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x35e9a9e7a691f357e642a73662c88a202224b73a44fc022f833ccc8aff9a4a64"
+        "0x3e82df6b3c4997362507d8f73c6fff945dedcee0aeaf99f8369b433dc82c0bca"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used to bridge ERC1155 tokens from L1 to L2.",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
         "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7",
+        "$implementation": "eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E",
         "$pastUpgrades": [
           [
             "2023-10-08T16:25:23.000Z",
@@ -2207,22 +2502,23 @@
             "2024-02-22T08:20:23.000Z",
             "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826",
             ["eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7"]
+          ],
+          [
+            "2025-08-18T02:46:23.000Z",
+            "0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",
+            ["eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E"]
           ]
         ],
-        "$upgradeCount": 2,
-        "counterpart": "scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
+        "$upgradeCount": 3,
+        "counterpart": "eth:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
         "eth:0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6": "TransparentUpgradeableProxy",
-        "eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7": "L1ERC1155Gateway"
-      },
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
-      ],
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+        "eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E": "L1ERC1155Gateway"
+      }
     },
     {
       "address": "eth:0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3",
@@ -2328,6 +2624,27 @@
       }
     },
     {
+      "name": "Wrapped Ether Token",
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1513077455,
+      "sinceBlock": 4719568,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+        "totalSupply": "2239747946935891709881610"
+      },
+      "implementationNames": {
+        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
+      }
+    },
+    {
       "name": "ZkEvmVerifierPostEuclid-2",
       "address": "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA",
       "type": "Contract",
@@ -2384,6 +2701,24 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "name": "L2TokenImplementationFallback",
+      "address": "eth:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696927307,
+      "sinceBlock": 18318929,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      },
+      "implementationNames": {
+        "eth:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": "Fallback"
+      }
+    },
+    {
       "address": "eth:0xc8B6bF89877337188Ea84eA93547687225389553",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2436,18 +2771,16 @@
       "name": "L1StandardERC20Gateway",
       "address": "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
       "type": "Contract",
-      "template": "scroll/L1StandardERC20Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x93fe70d828e5646f5acb7768083ab2e5b9cfb5b6691a5dff48ff3c188ffd05a7"
+        "0x13d0dc38cdff2a957bfc9939cc28d16112c2052a699bc3bc9231879a79ff81e2"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
         "$admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "eth:0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c",
+        "$implementation": "eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9",
         "$pastUpgrades": [
           [
             "2023-10-08T16:25:23.000Z",
@@ -2458,24 +2791,25 @@
             "2024-02-22T08:20:23.000Z",
             "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826",
             ["eth:0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c"]
+          ],
+          [
+            "2025-08-18T02:46:23.000Z",
+            "0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",
+            ["eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9"]
           ]
         ],
-        "$upgradeCount": 2,
-        "counterpart": "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
-        "l2TokenFactory": "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484",
-        "l2TokenImplementation": "scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69",
+        "$upgradeCount": 3,
+        "counterpart": "eth:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
+        "l2TokenFactory": "eth:0x66e5312EDeEAef6e80759A0F789e7914Fb401484",
+        "l2TokenImplementation": "eth:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
       "implementationNames": {
         "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9": "TransparentUpgradeableProxy",
-        "eth:0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c": "L1StandardERC20Gateway"
-      },
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
-      ],
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+        "eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9": "L1StandardERC20Gateway"
+      }
     },
     {
       "address": "eth:0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC",
@@ -2483,15 +2817,28 @@
       "proxyType": "EOA"
     },
     {
+      "name": "L2StandardERC20GatewayFallback",
+      "address": "eth:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1696927307,
+      "sinceBlock": 18318929,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      },
+      "implementationNames": {
+        "eth:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": "Fallback"
+      }
+    },
+    {
       "address": "eth:0xE47D966E2c7e94fC20ffAf5119d1926381C40f2a",
       "type": "EOA",
       "proxyType": "EOA",
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xe515cD19E8a67BF367a1d20dA6f21035913a2897",
@@ -2508,6 +2855,11 @@
       ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
+          "role": "admin"
+        },
         {
           "permission": "upgrade",
           "from": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
@@ -2546,6 +2898,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x987e300fDfb06093859358522a79098848C33852",
           "role": "admin"
         },
         {
@@ -2779,7 +3136,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 23849127102372,
+        "totalBridgedUSDC": 23682221311555,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -2832,6 +3189,11 @@
         "eth:0xb93Ac04010Bd61F45BF492022A5b49a902F798F3": "L1GatewayRouter"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf",
@@ -2925,6 +3287,78 @@
       "function transferOwnership(address newOwner)",
       "function updateTokenMapping(address _l1Token, address _l2Token)"
     ],
+    "eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7": [
+      "constructor(uint64 _chainId, address _messageQueueV1, address _messageQueueV2, address _verifier, address _systemConfig)",
+      "error ErrorAccountIsNotEOA()",
+      "error ErrorBatchHeaderV0LengthTooSmall()",
+      "error ErrorBatchHeaderV1LengthTooSmall()",
+      "error ErrorBatchHeaderV3LengthMismatch()",
+      "error ErrorBatchHeaderV7LengthMismatch()",
+      "error ErrorBatchIsAlreadyVerified()",
+      "error ErrorBatchIsEmpty()",
+      "error ErrorBatchNotCommitted()",
+      "error ErrorCallerIsNotProver()",
+      "error ErrorCallerIsNotSequencer()",
+      "error ErrorGenesisBatchHasNonZeroField()",
+      "error ErrorGenesisBatchImported()",
+      "error ErrorGenesisDataHashIsZero()",
+      "error ErrorGenesisParentBatchHashIsNonZero()",
+      "error ErrorInEnforcedBatchMode()",
+      "error ErrorIncorrectBatchHash()",
+      "error ErrorIncorrectBatchVersion()",
+      "error ErrorIncorrectBitmapLengthV0()",
+      "error ErrorIncorrectBitmapLengthV1()",
+      "error ErrorNotAllV1MessagesAreFinalized()",
+      "error ErrorNotInEnforcedBatchMode()",
+      "error ErrorRevertFinalizedBatch()",
+      "error ErrorStateRootIsZero()",
+      "error ErrorTopLevelCallRequired()",
+      "error ErrorZeroAddress()",
+      "error InconsistentBatchHash(uint256 batchIndex, bytes32 expected, bytes32 actual)",
+      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event RevertBatch(uint256 indexed startBatchIndex, uint256 indexed finishBatchIndex)",
+      "event Unpaused(address account)",
+      "event UpdateEnforcedBatchMode(bool enabled, uint256 lastCommittedBatchIndex)",
+      "event UpdateProver(address indexed account, bool status)",
+      "event UpdateSequencer(address indexed account, bool status)",
+      "function addProver(address _account)",
+      "function addSequencer(address _account)",
+      "function commitAndFinalizeBatch(uint8 version, bytes32 parentBatchHash, tuple(bytes batchHeader, uint256 totalL1MessagesPoppedOverall, bytes32 postStateRoot, bytes32 withdrawRoot, bytes zkProof) finalizeStruct)",
+      "function commitBatches(uint8 version, bytes32 parentBatchHash, bytes32 lastBatchHash)",
+      "function committedBatches(uint256) view returns (bytes32)",
+      "function disableEnforcedBatchMode()",
+      "function finalizeBundlePostEuclidV2(bytes batchHeader, uint256 totalL1MessagesPoppedOverall, bytes32 postStateRoot, bytes32 withdrawRoot, bytes aggrProof)",
+      "function finalizedStateRoots(uint256) view returns (bytes32)",
+      "function importGenesisBatch(bytes _batchHeader, bytes32 _stateRoot)",
+      "function initialEuclidBatchIndex() view returns (uint256)",
+      "function initialize(address _messageQueue, address _verifier, uint256 _maxNumTxInChunk)",
+      "function initializeV2()",
+      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
+      "function isEnforcedModeEnabled() view returns (bool)",
+      "function isProver(address) view returns (bool)",
+      "function isSequencer(address) view returns (bool)",
+      "function lastFinalizedBatchIndex() view returns (uint256)",
+      "function layer2ChainId() view returns (uint64)",
+      "function messageQueueV1() view returns (address)",
+      "function messageQueueV2() view returns (address)",
+      "function miscData() view returns (uint64 lastCommittedBatchIndex, uint64 lastFinalizedBatchIndex, uint32 lastFinalizeTimestamp, uint8 flags, uint88 reserved)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function removeProver(address _account)",
+      "function removeSequencer(address _account)",
+      "function renounceOwnership()",
+      "function revertBatch(bytes batchHeader)",
+      "function setPause(bool _status)",
+      "function systemConfig() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function verifier() view returns (address)",
+      "function withdrawRoots(uint256) view returns (bytes32)"
+    ],
     "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
@@ -2963,6 +3397,12 @@
       "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
+    ],
+    "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
@@ -3006,46 +3446,93 @@
     "eth:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": [
       "constructor(address _singleton)"
     ],
+    "eth:0x137CC585F607EDeBBc3CA6360AffCFeab507B374": [
+      "constructor(address _messenger, address _scrollChain, address _enforcedTxGateway)",
+      "error ErrorNotWhitelistedSender()",
+      "error ErrorZeroAddress()",
+      "event DequeueTransaction(uint256 startIndex, uint256 count, uint256 skippedBitmap)",
+      "event DropTransaction(uint256 index)",
+      "event FinalizedDequeuedTransaction(uint256 finalizedIndex)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event QueueTransaction(address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data)",
+      "event ResetDequeuedTransaction(uint256 startIndex)",
+      "event UpdateGasOracle(address indexed _oldGasOracle, address indexed _newGasOracle)",
+      "event UpdateL2BaseFee(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
+      "event UpdateMaxGasLimit(uint256 _oldMaxGasLimit, uint256 _newMaxGasLimit)",
+      "event UpdateWhitelistChecker(address indexed _oldWhitelistChecker, address indexed _newWhitelistChecker)",
+      "function appendCrossDomainMessage(address _target, uint256 _gasLimit, bytes _data)",
+      "function appendEnforcedTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)",
+      "function calculateIntrinsicGasFee(bytes _calldata) pure returns (uint256)",
+      "function computeTransactionHash(address _sender, uint256 _queueIndex, uint256 _value, address _target, uint256 _gasLimit, bytes _data) pure returns (bytes32)",
+      "function dropCrossDomainMessage(uint256 _index)",
+      "function enforcedTxGateway() view returns (address)",
+      "function estimateCrossDomainMessageFee(uint256 _gasLimit) view returns (uint256)",
+      "function finalizePoppedCrossDomainMessage(uint256 _newFinalizedQueueIndexPlusOne)",
+      "function gasOracle() view returns (address)",
+      "function getCrossDomainMessage(uint256 _queueIndex) view returns (bytes32)",
+      "function initialize(address _messenger, address _scrollChain, address _enforcedTxGateway, address _gasOracle, uint256 _maxGasLimit)",
+      "function initializeV2()",
+      "function initializeV3()",
+      "function isMessageDropped(uint256 _queueIndex) view returns (bool)",
+      "function isMessageSkipped(uint256 _queueIndex) view returns (bool)",
+      "function l2BaseFee() view returns (uint256)",
+      "function maxGasLimit() view returns (uint256)",
+      "function messageQueue(uint256) view returns (bytes32)",
+      "function messenger() view returns (address)",
+      "function nextCrossDomainMessageIndex() view returns (uint256)",
+      "function nextUnfinalizedQueueIndex() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingQueueIndex() view returns (uint256)",
+      "function popCrossDomainMessage(uint256 _startIndex, uint256 _count, uint256 _skippedBitmap)",
+      "function renounceOwnership()",
+      "function resetPoppedCrossDomainMessage(uint256 _startIndex)",
+      "function scrollChain() view returns (address)",
+      "function setL2BaseFee(uint256 _newL2BaseFee)",
+      "function transferOwnership(address newOwner)",
+      "function updateGasOracle(address _newGasOracle)",
+      "function updateMaxGasLimit(uint256 _newMaxGasLimit)",
+      "function updateWhitelistChecker(address _newWhitelistChecker)",
+      "function whitelistChecker() view returns (address)"
+    ],
     "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": [
       "constructor(address _singleton)"
     ],
-    "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7": [
-      "constructor(address _counterpart, address _messenger)",
+    "eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0": [
+      "constructor(address _counterpart, address _router, address _messenger)",
       "error ErrorCallerIsNotCounterpartGateway()",
       "error ErrorCallerIsNotMessenger()",
       "error ErrorNotInDropMessageContext()",
       "error ErrorZeroAddress()",
-      "event BatchDepositERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds, uint256[] _amounts)",
-      "event BatchRefundERC1155(address indexed token, address indexed recipient, uint256[] tokenIds, uint256[] amounts)",
-      "event DepositERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId, uint256 _amount)",
-      "event FinalizeBatchWithdrawERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds, uint256[] _amounts)",
-      "event FinalizeWithdrawERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId, uint256 _amount)",
+      "event DepositETH(address indexed from, address indexed to, uint256 amount, bytes data)",
+      "event FinalizeWithdrawETH(address indexed from, address indexed to, uint256 amount, bytes data)",
       "event Initialized(uint8 version)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RefundERC1155(address indexed token, address indexed recipient, uint256 tokenId, uint256 amount)",
-      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
-      "function batchDepositERC1155(address _token, uint256[] _tokenIds, uint256[] _amounts, uint256 _gasLimit) payable",
-      "function batchDepositERC1155(address _token, address _to, uint256[] _tokenIds, uint256[] _amounts, uint256 _gasLimit) payable",
+      "event RefundETH(address indexed recipient, uint256 amount)",
       "function counterpart() view returns (address)",
-      "function depositERC1155(address _token, address _to, uint256 _tokenId, uint256 _amount, uint256 _gasLimit) payable",
-      "function depositERC1155(address _token, uint256 _tokenId, uint256 _amount, uint256 _gasLimit) payable",
-      "function finalizeBatchWithdrawERC1155(address _l1Token, address _l2Token, address _from, address _to, uint256[] _tokenIds, uint256[] _amounts)",
-      "function finalizeWithdrawERC1155(address _l1Token, address _l2Token, address _from, address _to, uint256 _tokenId, uint256 _amount)",
-      "function initialize(address _counterpart, address _messenger)",
+      "function depositETH(uint256 _amount, uint256 _gasLimit) payable",
+      "function depositETH(address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositETHAndCall(address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function finalizeWithdrawETH(address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function initialize(address _counterpart, address _router, address _messenger)",
       "function messenger() view returns (address)",
-      "function onDropMessage(bytes _message) payable",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
       "function owner() view returns (address)",
       "function renounceOwnership()",
       "function router() view returns (address)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function tokenMapping(address) view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function updateTokenMapping(address _l1Token, address _l2Token)"
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37": [
+      "constructor(address _owner)",
+      "event OwnershipTransferred(address indexed _oldOwner, address indexed _newOwner)",
+      "event WhitelistStatusChanged(address indexed _account, bool _status)",
+      "function isSenderAllowed(address _sender) view returns (bool)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address _newOwner)",
+      "function updateWhitelistStatus(address[] _accounts, bool _status)"
     ],
     "eth:0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": [
       "constructor(address _verifier, bytes32 _verifierDigest)",
@@ -3053,6 +3540,42 @@
       "function plonkVerifier() view returns (address)",
       "function verifierDigest() view returns (bytes32)",
       "function verify(bytes bundleProof, bytes publicInput) view"
+    ],
+    "eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa": [
+      "constructor(address _messenger, address _scrollChain, address _enforcedTxGateway, address _messageQueueV1, address _systemConfig)",
+      "error ErrorCallerIsNotEnforcedTxGateway()",
+      "error ErrorCallerIsNotMessenger()",
+      "error ErrorCallerIsNotScrollChain()",
+      "error ErrorFinalizedIndexTooLarge()",
+      "error ErrorFinalizedIndexTooSmall()",
+      "error ErrorGasLimitBelowIntrinsicGas()",
+      "error ErrorGasLimitExceeded()",
+      "event FinalizedDequeuedTransaction(uint256 finalizedIndex)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event QueueTransaction(address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data)",
+      "function appendCrossDomainMessage(address _target, uint256 _gasLimit, bytes _data)",
+      "function appendEnforcedTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)",
+      "function calculateIntrinsicGasFee(bytes _calldata) pure returns (uint256)",
+      "function computeTransactionHash(address _sender, uint256 _queueIndex, uint256 _value, address _target, uint256 _gasLimit, bytes _data) pure returns (bytes32)",
+      "function enforcedTxGateway() view returns (address)",
+      "function estimateCrossDomainMessageFee(uint256 _gasLimit) view returns (uint256)",
+      "function estimateL2BaseFee() view returns (uint256)",
+      "function finalizePoppedCrossDomainMessage(uint256 _nextUnfinalizedQueueIndex)",
+      "function firstCrossDomainMessageIndex() view returns (uint256)",
+      "function getFirstUnfinalizedMessageEnqueueTime() view returns (uint256 timestamp)",
+      "function getMessageEnqueueTimestamp(uint256 queueIndex) view returns (uint256 timestamp)",
+      "function getMessageRollingHash(uint256 queueIndex) view returns (bytes32 hash)",
+      "function initialize()",
+      "function messageQueueV1() view returns (address)",
+      "function messenger() view returns (address)",
+      "function nextCrossDomainMessageIndex() view returns (uint256)",
+      "function nextUnfinalizedQueueIndex() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function scrollChain() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function transferOwnership(address newOwner)"
     ],
     "eth:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
@@ -3143,8 +3666,11 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "eth:0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c": [
-      "constructor(address _counterpart, address _router, address _messenger, address _l2TokenImplementation, address _l2TokenFactory)",
+    "eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97": [
+      "constructor(address _counterpart, address _router, address _messenger)",
       "error ErrorCallerIsNotCounterpartGateway()",
       "error ErrorCallerIsNotMessenger()",
       "error ErrorNotInDropMessageContext()",
@@ -3154,24 +3680,21 @@
       "event Initialized(uint8 version)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
       "function counterpart() view returns (address)",
       "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
       "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
       "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
       "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
       "function getL2ERC20Address(address _l1Token) view returns (address)",
-      "function initialize(address _counterpart, address _router, address _messenger, address, address)",
-      "function l2TokenFactory() view returns (address)",
-      "function l2TokenImplementation() view returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
       "function messenger() view returns (address)",
-      "function onDropMessage(bytes _message) payable",
       "function owner() view returns (address)",
       "function renounceOwnership()",
       "function router() view returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
-    "eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE": [
-      "constructor(address _singleton)"
+      "function tokenMapping(address) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateTokenMapping(address _l1Token, address _l2Token) payable"
     ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -3244,30 +3767,6 @@
       "function verifyAggregateProof(uint256 _version, uint256 _batchIndex, bytes _aggrProof, bytes32 _publicInputHash) view",
       "function verifyAggregateProof(uint256 _batchIndex, bytes _aggrProof, bytes32 _publicInputHash) view",
       "function verifyBundleProof(uint256 _version, uint256 _batchIndex, bytes _bundleProof, bytes _publicInput) view"
-    ],
-    "eth:0x546E0bF31FB6e7babD493452e4e6999191367B42": [
-      "constructor(address _counterpart, address _router, address _messenger)",
-      "error ErrorCallerIsNotCounterpartGateway()",
-      "error ErrorCallerIsNotMessenger()",
-      "error ErrorNotInDropMessageContext()",
-      "error ErrorZeroAddress()",
-      "event DepositETH(address indexed from, address indexed to, uint256 amount, bytes data)",
-      "event FinalizeWithdrawETH(address indexed from, address indexed to, uint256 amount, bytes data)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RefundETH(address indexed recipient, uint256 amount)",
-      "function counterpart() view returns (address)",
-      "function depositETH(uint256 _amount, uint256 _gasLimit) payable",
-      "function depositETH(address _to, uint256 _amount, uint256 _gasLimit) payable",
-      "function depositETHAndCall(address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
-      "function finalizeWithdrawETH(address _from, address _to, uint256 _amount, bytes _data) payable",
-      "function initialize(address _counterpart, address _router, address _messenger)",
-      "function messenger() view returns (address)",
-      "function onDropMessage(bytes _message) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function router() view returns (address)",
-      "function transferOwnership(address newOwner)"
     ],
     "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3342,6 +3841,14 @@
       "function plonkVerifier() view returns (address)",
       "function verify(bytes aggrProof, bytes32 publicInputHash) view"
     ],
+    "eth:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
     "eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3354,11 +3861,27 @@
       "function plonkVerifier() view returns (address)",
       "function verify(bytes aggrProof, bytes32 publicInputHash) view"
     ],
+    "eth:0x64CCBE37c9A82D85A1F2E74649b7A42923067988": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
     "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x66e5312EDeEAef6e80759A0F789e7914Fb401484": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3375,26 +3898,35 @@
     "eth:0x69C2eD64171bF5737c2B78bdF722e68a032B2825": [
       "constructor(address _singleton)"
     ],
-    "eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A": [
-      "constructor()",
-      "event Initialized(uint8 version)",
+    "eth:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function enforcedBatchParameters() view returns (uint24 maxDelayEnterEnforcedMode, uint24 maxDelayMessageQueue)",
-      "function getSigner() view returns (address)",
-      "function initialize(address _owner, address _signer, tuple(uint32 maxGasLimit, uint112 baseFeeOverhead, uint112 baseFeeScalar) _messageQueueParameters, tuple(uint24 maxDelayEnterEnforcedMode, uint24 maxDelayMessageQueue) _enforcedBatchParameters)",
-      "function messageQueueParameters() view returns (uint32 maxGasLimit, uint112 baseFeeOverhead, uint112 baseFeeScalar)",
+      "function execute(address _target, bytes _data) payable",
       "function owner() view returns (address)",
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
-      "function updateEnforcedBatchParameters(tuple(uint24 maxDelayEnterEnforcedMode, uint24 maxDelayMessageQueue) _params)",
-      "function updateMessageQueueParameters(tuple(uint32 maxGasLimit, uint112 baseFeeOverhead, uint112 baseFeeScalar) _params)",
-      "function updateSigner(address _newSigner)"
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
+    "eth:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
     "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
     "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6": [
       "constructor()",
@@ -3416,11 +3948,86 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateAccess(address _target, bytes4[] _selectors, bytes32 _role, bool _status)"
     ],
+    "eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69": [
+      "constructor(address _counterpart, address _rollup, address _messageQueueV1, address _messageQueueV2, address _enforcedTxGateway)",
+      "error ErrorForbidToCallMessageQueue()",
+      "error ErrorZeroAddress()",
+      "event FailedRelayedMessage(bytes32 indexed messageHash)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RelayedMessage(bytes32 indexed messageHash)",
+      "event SentMessage(address indexed sender, address indexed target, uint256 value, uint256 messageNonce, uint256 gasLimit, bytes message)",
+      "event Unpaused(address account)",
+      "event UpdateFeeVault(address _oldFeeVault, address _newFeeVault)",
+      "function counterpart() view returns (address)",
+      "function enforcedTxGateway() view returns (address)",
+      "function feeVault() view returns (address)",
+      "function initialize(address _counterpart, address _feeVault, address _rollup, address _messageQueue)",
+      "function isL2MessageExecuted(bytes32) view returns (bool)",
+      "function messageQueueV1() view returns (address)",
+      "function messageQueueV2() view returns (address)",
+      "function messageSendTimestamp(bytes32) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function prevReplayIndex(uint256) view returns (uint256)",
+      "function relayMessageWithProof(address _from, address _to, uint256 _value, uint256 _nonce, bytes _message, tuple(uint256 batchIndex, bytes merkleProof) _proof)",
+      "function renounceOwnership()",
+      "function replayMessage(address _from, address _to, uint256 _value, uint256 _messageNonce, bytes _message, uint32 _newGasLimit, address _refundAddress) payable",
+      "function replayStates(bytes32) view returns (uint128 times, uint128 lastIndex)",
+      "function rollup() view returns (address)",
+      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit, address _refundAddress) payable",
+      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit) payable",
+      "function setPause(bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function updateFeeVault(address _newFeeVault)",
+      "function xDomainMessageSender() view returns (address)"
+    ],
+    "eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A": [
+      "constructor(address _counterpart, address _messenger)",
+      "error ErrorCallerIsNotCounterpartGateway()",
+      "error ErrorCallerIsNotMessenger()",
+      "error ErrorNotInDropMessageContext()",
+      "error ErrorZeroAddress()",
+      "event BatchDepositERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds)",
+      "event BatchRefundERC721(address indexed token, address indexed recipient, uint256[] tokenIds)",
+      "event DepositERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId)",
+      "event FinalizeBatchWithdrawERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds)",
+      "event FinalizeWithdrawERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC721(address indexed token, address indexed recipient, uint256 tokenId)",
+      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
+      "function batchDepositERC721(address _token, address _to, uint256[] _tokenIds, uint256 _gasLimit) payable",
+      "function batchDepositERC721(address _token, uint256[] _tokenIds, uint256 _gasLimit) payable",
+      "function counterpart() view returns (address)",
+      "function depositERC721(address _token, address _to, uint256 _tokenId, uint256 _gasLimit) payable",
+      "function depositERC721(address _token, uint256 _tokenId, uint256 _gasLimit) payable",
+      "function finalizeBatchWithdrawERC721(address _l1Token, address _l2Token, address _from, address _to, uint256[] _tokenIds)",
+      "function finalizeWithdrawERC721(address _l1Token, address _l2Token, address _from, address _to, uint256 _tokenId)",
+      "function initialize(address _counterpart, address _messenger)",
+      "function messenger() view returns (address)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function tokenMapping(address) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateTokenMapping(address _l1Token, address _l2Token)"
+    ],
     "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
     "eth:0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc": [
       "constructor(address _messageQueue, address _feeVault)",
@@ -3449,34 +4056,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c": [
-      "constructor(address _counterpart, address _router, address _messenger)",
-      "error ErrorCallerIsNotCounterpartGateway()",
-      "error ErrorCallerIsNotMessenger()",
-      "error ErrorNotInDropMessageContext()",
-      "error ErrorZeroAddress()",
-      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
-      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
-      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
-      "function counterpart() view returns (address)",
-      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
-      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
-      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
-      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
-      "function getL2ERC20Address(address _l1Token) view returns (address)",
-      "function initialize(address _counterpart, address _router, address _messenger)",
-      "function messenger() view returns (address)",
-      "function onDropMessage(bytes _message) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function router() view returns (address)",
-      "function tokenMapping(address) view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function updateTokenMapping(address _l1Token, address _l2Token)"
     ],
     "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
@@ -3523,46 +4102,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b": [
-      "constructor(address _counterpart, address _rollup, address _messageQueueV1, address _messageQueueV2, address _enforcedTxGateway)",
-      "error ErrorForbidToCallMessageQueue()",
-      "error ErrorZeroAddress()",
-      "event FailedRelayedMessage(bytes32 indexed messageHash)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event RelayedMessage(bytes32 indexed messageHash)",
-      "event SentMessage(address indexed sender, address indexed target, uint256 value, uint256 messageNonce, uint256 gasLimit, bytes message)",
-      "event Unpaused(address account)",
-      "event UpdateFeeVault(address _oldFeeVault, address _newFeeVault)",
-      "event UpdateMaxReplayTimes(uint256 oldMaxReplayTimes, uint256 newMaxReplayTimes)",
-      "function counterpart() view returns (address)",
-      "function dropMessage(address _from, address _to, uint256 _value, uint256 _messageNonce, bytes _message)",
-      "function enforcedTxGateway() view returns (address)",
-      "function feeVault() view returns (address)",
-      "function initialize(address _counterpart, address _feeVault, address _rollup, address _messageQueue)",
-      "function isL1MessageDropped(bytes32) view returns (bool)",
-      "function isL2MessageExecuted(bytes32) view returns (bool)",
-      "function maxReplayTimes() view returns (uint256)",
-      "function messageQueueV1() view returns (address)",
-      "function messageQueueV2() view returns (address)",
-      "function messageSendTimestamp(bytes32) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function prevReplayIndex(uint256) view returns (uint256)",
-      "function relayMessageWithProof(address _from, address _to, uint256 _value, uint256 _nonce, bytes _message, tuple(uint256 batchIndex, bytes merkleProof) _proof)",
-      "function renounceOwnership()",
-      "function replayMessage(address _from, address _to, uint256 _value, uint256 _messageNonce, bytes _message, uint32 _newGasLimit, address _refundAddress) payable",
-      "function replayStates(bytes32) view returns (uint128 times, uint128 lastIndex)",
-      "function rollup() view returns (address)",
-      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit, address _refundAddress) payable",
-      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit) payable",
-      "function setPause(bool _status)",
-      "function transferOwnership(address newOwner)",
-      "function updateFeeVault(address _newFeeVault)",
-      "function updateMaxReplayTimes(uint256 _newMaxReplayTimes)",
-      "function xDomainMessageSender() view returns (address)"
-    ],
     "eth:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC": [
       "constructor(address _singleton)"
     ],
@@ -3571,6 +4110,12 @@
     ],
     "eth:0x9479ABfebefEea3c846163012a472b44F305b3d7": [
       "constructor(address _singleton)"
+    ],
+    "eth:0x987e300fDfb06093859358522a79098848C33852": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3584,131 +4129,20 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49": [
-      "constructor(address _WETH, address _l2WETH, address _counterpart, address _router, address _messenger)",
-      "error ErrorCallerIsNotCounterpartGateway()",
-      "error ErrorCallerIsNotMessenger()",
-      "error ErrorNotInDropMessageContext()",
-      "error ErrorZeroAddress()",
-      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
-      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
-      "function WETH() view returns (address)",
-      "function counterpart() view returns (address)",
-      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
-      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
-      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
-      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
-      "function getL2ERC20Address(address) view returns (address)",
-      "function initialize(address _counterpart, address _router, address _messenger)",
-      "function l2WETH() view returns (address)",
-      "function messenger() view returns (address)",
-      "function onDropMessage(bytes _message) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function router() view returns (address)",
-      "function transferOwnership(address newOwner)"
+    "eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485": [
+      "constructor(address _verifier, bytes32 _verifierDigest1, bytes32 _verifierDigest2, uint256 _protocolVersion)",
+      "error VerificationFailed()",
+      "function plonkVerifier() view returns (address)",
+      "function protocolVersion() view returns (uint256)",
+      "function verifierDigest1() view returns (bytes32)",
+      "function verifierDigest2() view returns (bytes32)",
+      "function verify(bytes bundleProof, bytes publicInput) view"
     ],
     "eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f": [
-      "constructor(uint64 _chainId, address _messageQueueV1, address _messageQueueV2, address _verifier, address _systemConfig)",
-      "error ErrorAccountIsNotEOA()",
-      "error ErrorBatchHeaderV0LengthTooSmall()",
-      "error ErrorBatchHeaderV1LengthTooSmall()",
-      "error ErrorBatchHeaderV3LengthMismatch()",
-      "error ErrorBatchHeaderV7LengthMismatch()",
-      "error ErrorBatchIsAlreadyCommitted()",
-      "error ErrorBatchIsAlreadyVerified()",
-      "error ErrorBatchIsEmpty()",
-      "error ErrorBatchNotCommitted()",
-      "error ErrorCallPointEvaluationPrecompileFailed()",
-      "error ErrorCallerIsNotProver()",
-      "error ErrorCallerIsNotSequencer()",
-      "error ErrorCannotDowngradeVersion()",
-      "error ErrorEuclidForkEnabled()",
-      "error ErrorFinalizePreAndPostEuclidBatchInOneBundle()",
-      "error ErrorFoundMultipleBlobs()",
-      "error ErrorGenesisBatchHasNonZeroField()",
-      "error ErrorGenesisBatchImported()",
-      "error ErrorGenesisDataHashIsZero()",
-      "error ErrorGenesisParentBatchHashIsNonZero()",
-      "error ErrorInEnforcedBatchMode()",
-      "error ErrorIncorrectBatchHash()",
-      "error ErrorIncorrectBatchVersion()",
-      "error ErrorIncorrectBitmapLength()",
-      "error ErrorIncorrectBitmapLengthV0()",
-      "error ErrorIncorrectBitmapLengthV1()",
-      "error ErrorIncorrectChunkLengthV1()",
-      "error ErrorLastL1MessageSkipped()",
-      "error ErrorNoBlobFound()",
-      "error ErrorNoBlockInChunkV1()",
-      "error ErrorNotAllV1MessagesAreFinalized()",
-      "error ErrorNotInEnforcedBatchMode()",
-      "error ErrorNumTxsLessThanNumL1Msgs()",
-      "error ErrorRevertFinalizedBatch()",
-      "error ErrorStateRootIsZero()",
-      "error ErrorTooManyTxsInOneChunk()",
-      "error ErrorUnexpectedPointEvaluationPrecompileOutput()",
-      "error ErrorV5BatchContainsTransactions()",
-      "error ErrorV5BatchNotContainsOnlyOneBlock()",
-      "error ErrorV5BatchNotContainsOnlyOneChunk()",
-      "error ErrorZeroAddress()",
-      "error InconsistentBatchHash(uint256 batchIndex, bytes32 expected, bytes32 actual)",
-      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event RevertBatch(uint256 indexed startBatchIndex, uint256 indexed finishBatchIndex)",
-      "event Unpaused(address account)",
-      "event UpdateEnforcedBatchMode(bool enabled, uint256 lastCommittedBatchIndex)",
-      "event UpdateMaxNumTxInChunk(uint256 oldMaxNumTxInChunk, uint256 newMaxNumTxInChunk)",
-      "event UpdateProver(address indexed account, bool status)",
-      "event UpdateSequencer(address indexed account, bool status)",
-      "function addProver(address _account)",
-      "function addSequencer(address _account)",
-      "function commitAndFinalizeBatch(uint8 version, bytes32 parentBatchHash, tuple(bytes batchHeader, uint256 totalL1MessagesPoppedOverall, bytes32 postStateRoot, bytes32 withdrawRoot, bytes zkProof) finalizeStruct)",
-      "function commitBatchWithBlobProof(uint8 _version, bytes _parentBatchHeader, bytes[] _chunks, bytes _skippedL1MessageBitmap, bytes _blobDataProof)",
-      "function commitBatches(uint8 version, bytes32 parentBatchHash, bytes32 lastBatchHash)",
-      "function committedBatches(uint256) view returns (bytes32)",
-      "function disableEnforcedBatchMode()",
-      "function finalizeBundlePostEuclidV2(bytes batchHeader, uint256 totalL1MessagesPoppedOverall, bytes32 postStateRoot, bytes32 withdrawRoot, bytes aggrProof)",
-      "function finalizeBundleWithProof(bytes batchHeader, bytes32 postStateRoot, bytes32 withdrawRoot, bytes aggrProof)",
-      "function finalizedStateRoots(uint256) view returns (bytes32)",
-      "function importGenesisBatch(bytes _batchHeader, bytes32 _stateRoot)",
-      "function initialEuclidBatchIndex() view returns (uint256)",
-      "function initialize(address _messageQueue, address _verifier, uint256 _maxNumTxInChunk)",
-      "function initializeV2()",
-      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
-      "function isEnforcedModeEnabled() view returns (bool)",
-      "function isProver(address) view returns (bool)",
-      "function isSequencer(address) view returns (bool)",
-      "function lastFinalizedBatchIndex() view returns (uint256)",
-      "function layer2ChainId() view returns (uint64)",
-      "function maxNumTxInChunk() view returns (uint256)",
-      "function messageQueueV1() view returns (address)",
-      "function messageQueueV2() view returns (address)",
-      "function miscData() view returns (uint64 lastCommittedBatchIndex, uint64 lastFinalizedBatchIndex, uint32 lastFinalizeTimestamp, uint8 flags, uint88 reserved)",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function removeProver(address _account)",
-      "function removeSequencer(address _account)",
-      "function renounceOwnership()",
-      "function revertBatch(bytes batchHeader)",
-      "function setPause(bool _status)",
-      "function systemConfig() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function updateMaxNumTxInChunk(uint256 _maxNumTxInChunk)",
-      "function verifier() view returns (address)",
-      "function withdrawRoots(uint256) view returns (bytes32)"
     ],
     "eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3785,6 +4219,23 @@
     "eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": [
       "constructor(address _singleton)"
     ],
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
+      "function name() view returns (string)",
+      "function approve(address guy, uint256 wad) returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
+      "function withdraw(uint256 wad)",
+      "function decimals() view returns (uint8)",
+      "function balanceOf(address) view returns (uint256)",
+      "function symbol() view returns (string)",
+      "function transfer(address dst, uint256 wad) returns (bool)",
+      "function deposit() payable",
+      "function allowance(address, address) view returns (uint256)",
+      "event Approval(address indexed src, address indexed guy, uint256 wad)",
+      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
+      "event Deposit(address indexed dst, uint256 wad)",
+      "event Withdrawal(address indexed src, uint256 wad)"
+    ],
     "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA": [
       "constructor(address _verifier, bytes32 _verifierDigest1, bytes32 _verifierDigest2)",
       "error VerificationFailed()",
@@ -3796,45 +4247,54 @@
     "eth:0xC3eA7C657884BB380B66D79C36aDCb5658b01896": [
       "constructor(address _singleton)"
     ],
+    "eth:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
+    "eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E": [
+      "constructor(address _counterpart, address _messenger)",
+      "error ErrorCallerIsNotCounterpartGateway()",
+      "error ErrorCallerIsNotMessenger()",
+      "error ErrorNotInDropMessageContext()",
+      "error ErrorZeroAddress()",
+      "event BatchDepositERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds, uint256[] _amounts)",
+      "event BatchRefundERC1155(address indexed token, address indexed recipient, uint256[] tokenIds, uint256[] amounts)",
+      "event DepositERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId, uint256 _amount)",
+      "event FinalizeBatchWithdrawERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds, uint256[] _amounts)",
+      "event FinalizeWithdrawERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId, uint256 _amount)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC1155(address indexed token, address indexed recipient, uint256 tokenId, uint256 amount)",
+      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
+      "function batchDepositERC1155(address _token, uint256[] _tokenIds, uint256[] _amounts, uint256 _gasLimit) payable",
+      "function batchDepositERC1155(address _token, address _to, uint256[] _tokenIds, uint256[] _amounts, uint256 _gasLimit) payable",
+      "function counterpart() view returns (address)",
+      "function depositERC1155(address _token, address _to, uint256 _tokenId, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC1155(address _token, uint256 _tokenId, uint256 _amount, uint256 _gasLimit) payable",
+      "function finalizeBatchWithdrawERC1155(address _l1Token, address _l2Token, address _from, address _to, uint256[] _tokenIds, uint256[] _amounts)",
+      "function finalizeWithdrawERC1155(address _l1Token, address _l2Token, address _from, address _to, uint256 _tokenId, uint256 _amount)",
+      "function initialize(address _counterpart, address _messenger)",
+      "function messenger() view returns (address)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function tokenMapping(address) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateTokenMapping(address _l1Token, address _l2Token)"
+    ],
     "eth:0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": [
       "constructor(address _verifier, bytes32 _verifierDigest)",
       "error VerificationFailed()",
       "function plonkVerifier() view returns (address)",
       "function verifierDigest() view returns (bytes32)",
       "function verify(bytes bundleProof, bytes publicInput) view"
-    ],
-    "eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb": [
-      "constructor(address _counterpart, address _messenger)",
-      "error ErrorCallerIsNotCounterpartGateway()",
-      "error ErrorCallerIsNotMessenger()",
-      "error ErrorNotInDropMessageContext()",
-      "error ErrorZeroAddress()",
-      "event BatchDepositERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds)",
-      "event BatchRefundERC721(address indexed token, address indexed recipient, uint256[] tokenIds)",
-      "event DepositERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId)",
-      "event FinalizeBatchWithdrawERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds)",
-      "event FinalizeWithdrawERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RefundERC721(address indexed token, address indexed recipient, uint256 tokenId)",
-      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
-      "function batchDepositERC721(address _token, address _to, uint256[] _tokenIds, uint256 _gasLimit) payable",
-      "function batchDepositERC721(address _token, uint256[] _tokenIds, uint256 _gasLimit) payable",
-      "function counterpart() view returns (address)",
-      "function depositERC721(address _token, address _to, uint256 _tokenId, uint256 _gasLimit) payable",
-      "function depositERC721(address _token, uint256 _tokenId, uint256 _gasLimit) payable",
-      "function finalizeBatchWithdrawERC721(address _l1Token, address _l2Token, address _from, address _to, uint256[] _tokenIds)",
-      "function finalizeWithdrawERC721(address _l1Token, address _l2Token, address _from, address _to, uint256 _tokenId)",
-      "function initialize(address _counterpart, address _messenger)",
-      "function messenger() view returns (address)",
-      "function onDropMessage(bytes _message) payable",
-      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function router() view returns (address)",
-      "function tokenMapping(address) view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function updateTokenMapping(address _l1Token, address _l2Token)"
     ],
     "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3891,6 +4351,40 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24": [
+      "constructor(address _WETH, address _l2WETH, address _counterpart, address _router, address _messenger)",
+      "error ErrorCallerIsNotCounterpartGateway()",
+      "error ErrorCallerIsNotMessenger()",
+      "error ErrorNotInDropMessageContext()",
+      "error ErrorZeroAddress()",
+      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "function WETH() view returns (address)",
+      "function counterpart() view returns (address)",
+      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL2ERC20Address(address) view returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
+      "function l2WETH() view returns (address)",
+      "function messenger() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
     "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -3902,44 +4396,26 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "eth:0xEfA158006b072793a49E622B26761cD0eC38591d": [
-      "constructor(address _messenger, address _scrollChain, address _enforcedTxGateway, address _messageQueueV1, address _systemConfig)",
-      "error ErrorCallerIsNotEnforcedTxGateway()",
-      "error ErrorCallerIsNotMessenger()",
-      "error ErrorCallerIsNotScrollChain()",
-      "error ErrorFinalizedIndexTooLarge()",
-      "error ErrorFinalizedIndexTooSmall()",
-      "error ErrorGasLimitBelowIntrinsicGas()",
-      "error ErrorGasLimitExceeded()",
-      "event FinalizedDequeuedTransaction(uint256 finalizedIndex)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event QueueTransaction(address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data)",
-      "function appendCrossDomainMessage(address _target, uint256 _gasLimit, bytes _data)",
-      "function appendEnforcedTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)",
-      "function calculateIntrinsicGasFee(bytes _calldata) pure returns (uint256)",
-      "function computeTransactionHash(address _sender, uint256 _queueIndex, uint256 _value, address _target, uint256 _gasLimit, bytes _data) pure returns (bytes32)",
-      "function enforcedTxGateway() view returns (address)",
-      "function estimateCrossDomainMessageFee(uint256 _gasLimit) view returns (uint256)",
-      "function estimateL2BaseFee() view returns (uint256)",
-      "function finalizePoppedCrossDomainMessage(uint256 _nextUnfinalizedQueueIndex)",
-      "function firstCrossDomainMessageIndex() view returns (uint256)",
-      "function getFirstUnfinalizedMessageEnqueueTime() view returns (uint256 timestamp)",
-      "function getMessageEnqueueTimestamp(uint256 queueIndex) view returns (uint256 timestamp)",
-      "function getMessageRollingHash(uint256 queueIndex) view returns (bytes32 hash)",
-      "function initialize()",
-      "function messageQueueV1() view returns (address)",
-      "function messenger() view returns (address)",
-      "function nextCrossDomainMessageIndex() view returns (uint256)",
-      "function nextUnfinalizedQueueIndex() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function scrollChain() view returns (address)",
-      "function systemConfig() view returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
     "eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": [
       "constructor(address _singleton)"
+    ],
+    "eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE": [
+      "constructor()",
+      "event EnforcedBatchParametersUpdated(tuple(uint24 maxDelayEnterEnforcedMode, uint24 maxDelayMessageQueue) oldParams, tuple(uint24 maxDelayEnterEnforcedMode, uint24 maxDelayMessageQueue) newParams)",
+      "event Initialized(uint8 version)",
+      "event MessageQueueParametersUpdated(tuple(uint32 maxGasLimit, uint112 baseFeeOverhead, uint112 baseFeeScalar) oldParams, tuple(uint32 maxGasLimit, uint112 baseFeeOverhead, uint112 baseFeeScalar) newParams)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SignerUpdated(address oldSigner, address newSigner)",
+      "function enforcedBatchParameters() view returns (uint24 maxDelayEnterEnforcedMode, uint24 maxDelayMessageQueue)",
+      "function getSigner() view returns (address)",
+      "function initialize(address _owner, address _signer, tuple(uint32 maxGasLimit, uint112 baseFeeOverhead, uint112 baseFeeScalar) _messageQueueParameters, tuple(uint24 maxDelayEnterEnforcedMode, uint24 maxDelayMessageQueue) _enforcedBatchParameters)",
+      "function messageQueueParameters() view returns (uint32 maxGasLimit, uint112 baseFeeOverhead, uint112 baseFeeScalar)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function updateEnforcedBatchParameters(tuple(uint24 maxDelayEnterEnforcedMode, uint24 maxDelayMessageQueue) _params)",
+      "function updateMessageQueueParameters(tuple(uint32 maxGasLimit, uint112 baseFeeOverhead, uint112 baseFeeScalar) _params)",
+      "function updateSigner(address _newSigner)"
     ],
     "eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -4015,6 +4491,52 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E": [
+      "constructor()",
+      "event Initialized(uint8 version)",
+      "event IntrinsicParamsUpdated(uint256 txGas, uint256 txGasContractCreation, uint256 zeroGas, uint256 nonZeroGas)",
+      "event L2BaseFeeUpdated(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event UpdateWhitelist(address _oldWhitelist, address _newWhitelist)",
+      "function calculateIntrinsicGasFee(bytes _message) view returns (uint256)",
+      "function estimateCrossDomainMessageFee(uint256 _gasLimit) view returns (uint256)",
+      "function initialize(uint64 _txGas, uint64 _txGasContractCreation, uint64 _zeroGas, uint64 _nonZeroGas)",
+      "function intrinsicParams() view returns (uint64 txGas, uint64 txGasContractCreation, uint64 zeroGas, uint64 nonZeroGas)",
+      "function l2BaseFee() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setIntrinsicParams(uint64 _txGas, uint64 _txGasContractCreation, uint64 _zeroGas, uint64 _nonZeroGas)",
+      "function setL2BaseFee(uint256 _newL2BaseFee)",
+      "function transferOwnership(address newOwner)",
+      "function updateWhitelist(address _newWhitelist)",
+      "function whitelist() view returns (address)"
+    ],
+    "eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9": [
+      "constructor(address _counterpart, address _router, address _messenger, address _l2TokenImplementation, address _l2TokenFactory)",
+      "error ErrorCallerIsNotCounterpartGateway()",
+      "error ErrorCallerIsNotMessenger()",
+      "error ErrorNotInDropMessageContext()",
+      "error ErrorZeroAddress()",
+      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "function counterpart() view returns (address)",
+      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL2ERC20Address(address _l1Token) view returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger, address, address)",
+      "function l2TokenFactory() view returns (address)",
+      "function l2TokenImplementation() view returns (address)",
+      "function messenger() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function transferOwnership(address newOwner)"
     ]
   },
   "usedTemplates": {
@@ -4022,22 +4544,13 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "scroll/EnforcedTxGateway": "0x135f3f175975582aabfd47f5af1c6b1c153fe6813d69cfb72d631ba725379300",
     "scroll/L1CustomERC20Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
-    "scroll/L1ERC1155Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
-    "scroll/L1ERC721Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
-    "scroll/L1ETHGateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
     "scroll/L1GatewayRouter": "0x174e26104220ab271c8fc9bd5407a0bcb515974cf8bb7adc401a9bccfef460e1",
-    "scroll/L1MessageQueue": "0x5cec50d36f5c888cc9815ba4ee94ec48f3df987dc9b5ee78fbd46bd166e014b2",
-    "scroll/L1ScrollMessenger": "0x56886461e1db51e3de8f8c9967c4888b7866eb7dfbd67fd7658e5c06256c8d0f",
-    "scroll/L1StandardERC20Gateway": "0xa33e3df7e4fe83cb3d6299d79361bfa1ee10e2a4c4085ae4dc4d8557f2c264c3",
     "scroll/L1Timelock": "0xc4536a7cf375a15d151b85dc3ad86b0863657cead6f5cd7d03c28275c562df0b",
     "scroll/L1USDCGateway": "0x0268dfcc7e4608b1b82280182004ae135e28bcb5c0ff8ade11d5f29a98b436d5",
-    "scroll/L1WETHGateway": "0x2c64a4c320f500b832923b84ecefc7492ad8cb1a8cbf178924c774b75fd7ffe8",
     "scroll/MultipleVersionRollupVerifier": "0x12467348254718ddb1d7be2b7f101262147f9dc3ba171fa3d37fe21409f6d797",
     "scroll/PauseController": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/ScrollChain": "0x047807130722fa3643ff477006ffca1906f79e3d9d198aee0e769485785f65b8",
-    "scroll/ScrollOwner": "0x14d7a582f7d39f4ed732aa56a3c9031c8fc613fa58dfaf42f4f572f19fae54b3",
-    "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+    "scroll/ScrollOwner": "0x14d7a582f7d39f4ed732aa56a3c9031c8fc613fa58dfaf42f4f572f19fae54b3"
   },
-  "usedBlockNumbers": { "ethereum": 23125987 },
-  "permissionsConfigHash": "0x6026e9d5cd2befcf9d6ce6f3a1484a20c9d9cbb7eefe920713e0b8b385097c3f"
+  "usedBlockNumbers": { "ethereum": 23167969 },
+  "permissionsConfigHash": "0x9d05fa212da6fc70a4c68caa2a64641da947282b8f0ca64a9cd07573faea2f16"
 }
