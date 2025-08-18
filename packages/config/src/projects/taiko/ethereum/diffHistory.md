@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xb50d1b74749190bba47a2ce6f7d59e8916c5fea8
+
+# Diff at Fri, 15 Aug 2025 08:50:57 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@4f587a59296d1379430ccb7a3b8122c0594f7dfa block: 1755172721
+- current timestamp: 1755212383
+
+## Description
+
+Taiko L2 side initial discovery.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.
+      description:
+-        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
++        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
+      values.getOperatorForNextEpoch:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
+      values.operatorCount:
+-        3
++        4
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755172721 (main branch discovery), not current.
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.11.name:
+-        "0x7461696b6f000000000000000000000000000000000000000000000000000000"
++        "taiko"
+      usedTypes.0.arg.0x7461696b6f000000000000000000000000000000000000000000000000000000:
++        "taiko"
+    }
+```
+
+```diff
+    contract DefaultResolver (0x8Efa01564425692d0a0838DC10E300BD310Cb43e) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      usedTypes.0.arg.0x7461696b6f000000000000000000000000000000000000000000000000000000:
++        "taiko"
+    }
+```
+
 Generated with discovered.json: 0x4767f4cfc200b7d4d01e1f6e42842ea9c15ddc8f
 
 # Diff at Thu, 14 Aug 2025 11:58:53 GMT:
