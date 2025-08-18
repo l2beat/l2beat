@@ -177,9 +177,14 @@ export const eigenda: BaseProject = {
     pruningWindow: 86400 * 14, // 14 days in seconds
     throughput: [
       {
-        size: 104857600, // 100 MB
+        size: 15728640, // 15 MB
         frequency: 1, // x second
         sinceTimestamp: 1719187200, // 2024-06-24
+      },
+      {
+        size: 104857600, // 100 MB
+        frequency: 1, // x second
+        sinceTimestamp: 1753833600, // 2025-07-30
       },
     ],
     finality: 600, // ~10 minutes
