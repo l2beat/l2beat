@@ -21,6 +21,7 @@ import { educhain } from '../projects/educhain/educhain'
 import { ethereal } from '../projects/ethereal/ethereal'
 import { evedex } from '../projects/evedex/evedex'
 import { fiefdom } from '../projects/fiefdom/fiefdom'
+import { flynet } from '../projects/flynet/flynet'
 import { forta } from '../projects/forta/forta'
 import { game7 } from '../projects/game7/game7'
 import { geist } from '../projects/geist/geist'
@@ -42,6 +43,7 @@ import { muster } from '../projects/muster/muster'
 import { mvchain } from '../projects/mvchain/mvchain'
 import { novastro } from '../projects/novastro/novastro'
 import { nums } from '../projects/nums/nums'
+import { oceanum } from '../projects/oceanum/oceanum'
 import { onchain } from '../projects/onchain/onchain'
 import { onyx } from '../projects/onyx/onyx'
 import { oursong } from '../projects/oursong/oursong'
@@ -59,8 +61,10 @@ import { stack } from '../projects/stack/stack'
 import { superposition } from '../projects/superposition/superposition'
 import { syndicateframe } from '../projects/syndicateframe/syndicateframe'
 import { syndr } from '../projects/syndr/syndr'
+import { toy } from '../projects/toy/toy'
 import { ungaii } from '../projects/ungaii/ungaii'
 import { unite } from '../projects/unite/unite'
+import { vemphorizon } from '../projects/vemphorizon/vemphorizon'
 import { vessel } from '../projects/vessel/vessel'
 import { winr } from '../projects/winr/winr'
 import { xai } from '../projects/xai/xai'
@@ -91,6 +95,7 @@ export const layer3s: ScalingProject[] = [
   ethereal,
   evedex,
   fiefdom,
+  flynet,
   forta,
   game7,
   geist,
@@ -108,6 +113,7 @@ export const layer3s: ScalingProject[] = [
   zklinknova,
   ungaii,
   xai,
+  oceanum,
   onchain,
   onyx,
   popapex,
@@ -126,6 +132,7 @@ export const layer3s: ScalingProject[] = [
   novastro,
   nums,
   unite,
+  vemphorizon,
   vessel,
   l3x,
   lumiterra,
@@ -134,6 +141,7 @@ export const layer3s: ScalingProject[] = [
   spheron,
   superposition,
   syndr,
+  toy,
   winr,
   xrone,
   yellowstone,

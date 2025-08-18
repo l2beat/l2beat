@@ -4907,7 +4907,7 @@ Generated with discovered.json: 0x192ec46727290d3f2d3b8213fa58f007f2fd1280
 
 ## Description
 
-One SC signer swapped its EOA (Xangle): https://www.tally.xyz/gov/kroma-security-council-l2/proposal/66793954205565734871927487347209424383799739452575476193452192540588648719016.
+One SC signer swapped its EOA (Xangle): https://www.tally.xyz/gov/kroma-security-council-l1/proposal/14618493072102478268804770651956339471812434732135801604235762335024802800380.
 
 ## Watched changes
 

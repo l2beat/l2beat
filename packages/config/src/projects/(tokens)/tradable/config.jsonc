@@ -3,6 +3,7 @@
   "name": "tradable",
   "import": ["../../globalConfig.jsonc"],
   "initialAddresses": ["zksync:0x0ff03b6c9d30cbc4926c5773e7c72dfffd868809"], // Deal Factory
+  "archived": true,
   "overrides": {
     "zksync:0x0000000000000000000000000000000000000000": {
       "ignoreDiscovery": true

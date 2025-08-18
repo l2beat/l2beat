@@ -5,6 +5,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   DATA_ON_CHAIN,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -199,6 +202,16 @@ export const facet: ScalingProject = {
         },
       },
     ],
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
+      adjustCount: { type: 'SubtractOne' },
+    },
+  },
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
   },
   riskView: {
     stateValidation: {
@@ -312,9 +325,7 @@ export const facet: ScalingProject = {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
   },
-  permissions: {
-    addresses: discovery.getDiscoveredPermissions(),
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {
     name: 'facet',
     chainId: 1027303,

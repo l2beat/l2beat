@@ -1,34 +1,20 @@
-Generated with discovered.json: 0x87116c7514b9711de9730c43974bc6412386e26d
+Generated with discovered.json: 0xe4a00a2c9fd159a5620e935218bb92ebc03a6ca9
 
-# Diff at Mon, 18 Aug 2025 10:03:47 GMT:
+# Diff at Mon, 18 Aug 2025 10:40:27 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@20325e19767a916f8b99b4ee5c90e82a0b7a7e16 block: 1752830492
-- current timestamp: 1755511423
+- comparing to: main@fe24f7ff6ba877c67c4979d7e65d3cb7a45f1040 block: 1755163834
+- current timestamp: 1755513621
 
 ## Description
 
 Provide description of changes. This section will be preserved.
 
-## Watched changes
-
-```diff
-    contract DSToken (0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872) {
-    +++ description: None
-      values.getWalletAt.0:
--        "arb1:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69"
-+        "arb1:0x7f4e4384137b6aF7732e4e0951832b4152082fbB"
-      values.getWalletAt.3:
--        "arb1:0x7f4e4384137b6aF7732e4e0951832b4152082fbB"
-+        "arb1:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69"
-    }
-```
-
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1752830492 (main branch discovery), not current.
+discovery. Values are for block 1755163834 (main branch discovery), not current.
 
 ```diff
     contract DSToken (0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872) {
@@ -38,7 +24,7 @@ discovery. Values are for block 1752830492 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xee33475452afbb9aa69ab670b81cecc4983b0170
+Generated with discovered.json: 0xdb29cde898fce21d00aac15a506a34475556885c
 
 # Diff at Fri, 18 Jul 2025 10:03:31 GMT:
 
@@ -47,7 +33,7 @@ Generated with discovered.json: 0xee33475452afbb9aa69ab670b81cecc4983b0170
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+initial discovery (adrian).
 
 ## Initial discovery
 

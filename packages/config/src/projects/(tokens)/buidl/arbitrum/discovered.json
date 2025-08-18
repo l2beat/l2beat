@@ -1,8 +1,8 @@
 {
   "name": "buidl",
   "chain": "arbitrum",
-  "timestamp": 1755511423,
-  "configHash": "0x2fe51bb3beee3d291f87c0894b147bdf4e3fc5ad5066a4c64b4dbab86118ff34",
+  "timestamp": 1755513621,
+  "configHash": "0x40fd0e957cb7085cb5112cd7c585a0b871f46078147cb60e6c679bfe0bc00bb4",
   "entries": [
     {
       "name": "DSToken",
@@ -13,7 +13,12 @@
         "0x4da147a21f4ffb7200fcf55538dd6f35ace4e4b02cf21ea11b4a76328af14581"
       ],
       "proxyType": "EIP1967 proxy",
-      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "ignoreInWatchMode": [
+        "clock",
+        "totalIssued",
+        "totalSupply",
+        "getWalletAt"
+      ],
       "sinceTimestamp": 1730729689,
       "sinceBlock": 270969308,
       "values": {
@@ -211,6 +216,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "arbitrum": 369683897 },
+  "usedBlockNumbers": { "arbitrum": 369692717 },
   "permissionsConfigHash": "0xf0603d8ef61478ca7a44794b8dac43959228882ef6aecd40dbe7ebbe65d064c8"
 }
