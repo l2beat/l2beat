@@ -20,7 +20,26 @@ export const columns = [
     meta: {
       headClassName: 'w-0',
     },
-    size: 44,
+    size: 48,
+  }),
+  columnHelper.display({
+    id: 'logo',
+    cell: (ctx) => {
+      return (
+        <img
+          width={24}
+          height={24}
+          src={ctx.row.original.iconUrl}
+          className="size-6 min-w-6 rounded-full"
+          alt={`Icon of ${ctx.row.original.name}`}
+        />
+      )
+    },
+    size: 36,
+    meta: {
+      headClassName: 'w-0',
+      cellClassName: 'lg:pr-1.5! w-[30px]',
+    },
   }),
   columnHelper.display({
     id: 'token',

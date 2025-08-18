@@ -37,6 +37,9 @@ export function TvsBreakdownTokenTable(props: Props) {
     getExpandedRowModel: getExpandedRowModel(),
     initialState: {
       sorting: [{ id: 'value', desc: true }],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
