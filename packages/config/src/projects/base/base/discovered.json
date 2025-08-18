@@ -1289,5 +1289,5 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
   "usedBlockNumbers": { "base": 33634235 },
-  "permissionsConfigHash": "0xcdc33732face963e3d5f85b1a427fa929b6df90282178fc8251c676ac11f29ba"
+  "permissionsConfigHash": "0x2e5de7c6727a927413418c89b4a12fab49446f93697ed3c22554952631140b8b"
 }

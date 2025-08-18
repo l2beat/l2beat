@@ -1519,5 +1519,5 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
   "usedBlockNumbers": { "optimism": 138918037 },
-  "permissionsConfigHash": "0xfb3e1195e4777333549259e6fcdde01eaad19665e585978eb2c8ed47a088a5b5"
+  "permissionsConfigHash": "0x1d9b4c7504a579865331b07b87b04c9e041dda68c7d5dec190ea44471cb9b6c7"
 }
