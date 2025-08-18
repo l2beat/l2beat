@@ -4,10 +4,7 @@ import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControl
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TvsBreakdownButton } from '~/components/projects/sections/ScalingTvsSection'
 import { TokenCombobox } from '~/components/TokenCombobox'
-import type {
-  ProjectToken,
-  ProjectTokens,
-} from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../../core/chart/ChartControlsWrapper'
@@ -24,7 +21,7 @@ import {
 interface Props {
   milestones: Milestone[]
   projectId: string
-  tokens: ProjectTokens | undefined
+  tokens: ProjectToken[] | undefined
   tvsBreakdownUrl?: string
   defaultRange: TvsChartRange
 }
@@ -80,7 +77,7 @@ interface DefaultChartProps {
   milestones: Milestone[]
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
-  tokens: ProjectTokens | undefined
+  tokens: ProjectToken[] | undefined
   token: ProjectToken | undefined
   setToken: (token: ProjectToken | undefined) => void
   unit: ChartUnit

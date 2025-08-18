@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import type { ProjectTokens } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { ProjectTvsChart } from '../../chart/tvs/ProjectTvsChart'
 import { ProjectSection } from './ProjectSection'
@@ -7,7 +7,7 @@ import type { ProjectSectionProps } from './types'
 
 export interface BridgesTvsSectionProps extends ProjectSectionProps {
   id: 'tvs'
-  tokens?: ProjectTokens
+  tokens: ProjectToken[] | undefined
   projectId: string
   milestones: Milestone[]
   defaultRange: TvsChartRange
