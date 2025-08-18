@@ -214,6 +214,7 @@ export function BasicTableRow<T extends BasicTableRow>({
                       row.original.backgroundColor,
                     ),
                   cell.column.getIsPinned() &&
+                    row.original.slug &&
                     highlightedSlug === row.original.slug &&
                     'animate-row-highlight-no-opacity',
                   meta?.cellClassName,
