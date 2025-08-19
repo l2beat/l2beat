@@ -81,7 +81,6 @@ export function TokenChart({
           fillOpacity={1}
           stroke="url(#stroke)"
           strokeWidth={2}
-          isAnimationActive={false}
         />
         {getCommonChartComponents({
           data,
