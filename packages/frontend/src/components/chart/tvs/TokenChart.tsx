@@ -54,7 +54,7 @@ export function TokenChart({
         label: token.name,
         color: 'var(--chart-pink)',
         indicatorType: {
-          shape: 'square',
+          shape: 'line',
         },
       },
     }),
@@ -113,7 +113,7 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="flex min-w-28 flex-col gap-1">
+      <div className="flex min-w-48 flex-col gap-1">
         <div className="mb-1 font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>
