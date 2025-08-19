@@ -8,9 +8,15 @@
     "latestProposals",
     "needsDefense",
     "l1BlockHashes",
-    "proposalIsCanonical"
+    "proposalIsCanonical",
+    "getAnchorRoot"
   ],
-  "ignoreInWatchMode": ["getProposalsLength"],
+  "ignoreInWatchMode": [
+    "getProposalsLength",
+    "anchorL2BlockNumber",
+    "anchorProposalId",
+    "anchorRoot"
+  ],
   "fields": {
     "sequencerInbox": {
       "handler": {

@@ -33,6 +33,7 @@ export const ink: ScalingProject = opStackL2({
         'https://discord.com/invite/inkonchain',
         'https://t.me/inkonchain',
       ],
+      rollupCodes: 'https://rollup.codes/ink',
     },
   },
   genesisTimestamp,
