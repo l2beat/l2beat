@@ -23,7 +23,7 @@ https://github.com/l2beat/l2beat/fork
 To do any development work, even simple config changes you probably want to have the project running
 locally. To install dependencies do the following.
 
-1. Install [node.js](https://nodejs.org/en/) version 18. To easily manage node versions we recommend
+1. Install [node.js](https://nodejs.org/en/) version 22. To easily manage node versions we recommend
    [fnm](https://github.com/Schniz/fnm).
 2. In the repository root, run `node --version > .node-version` to set the node version. Please do not commit this file.
 3. Install [pnpm](https://pnpm.io/installation#using-corepack), preferably using Corepack
@@ -41,8 +41,8 @@ repository:
 
 ```
 pnpm install
-pnpm build:dependencies
 cd packages/frontend
+pnpm build:dependencies:frontend
 pnpm dev:mock
 ```
 

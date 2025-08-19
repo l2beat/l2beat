@@ -16,9 +16,9 @@ export const zentachain: ScalingProject = upcomingL2({
     stacks: ['OP Stack'],
     links: {
       websites: ['https://zentachain.io/'],
-      bridges: ['https://sepolia-bridge.zentachain.io/'],
+      bridges: [],
       documentation: ['https://docs.zentachain.io/'],
-      explorers: ['https://explorer-sepolia.zentachain.io/'],
+      explorers: [],
       repositories: ['https://github.com/ZentaChain'],
       socialMedia: [
         'https://twitter.com/zentachain',

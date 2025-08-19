@@ -64,6 +64,9 @@ export function BridgeTypeTvsChart({
   dataKeys,
   toggleDataKey,
 }: Props) {
+  // If only one data key is selected we want to change the domain
+  // Having it from 0 to MAX does make sense for stacked chart (better comparison)
+  // But for single data source it should not start from 0
   return (
     <ChartContainer
       data={data}
@@ -84,7 +87,7 @@ export function BridgeTypeTvsChart({
           fill={bridgeTypeTvsChartMeta.external.color}
           fillOpacity={1}
           strokeWidth={0}
-          stackId="a"
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
           activeDot={
             !dataKeys.includes('canonical') && !dataKeys.includes('native')
@@ -96,7 +99,7 @@ export function BridgeTypeTvsChart({
           fill={bridgeTypeTvsChartMeta.native.color}
           fillOpacity={1}
           strokeWidth={0}
-          stackId="a"
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
           activeDot={!dataKeys.includes('canonical')}
         />
@@ -106,13 +109,14 @@ export function BridgeTypeTvsChart({
           fill={bridgeTypeTvsChartMeta.canonical.color}
           fillOpacity={1}
           strokeWidth={0}
-          stackId="a"
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
         />
         {getCommonChartComponents({
           data,
           isLoading,
           yAxis: {
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             tickFormatter: (value: number) => formatCurrency(value, unit),
             tickCount,
           },

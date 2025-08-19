@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xaa81c969a22f2d5fc8e7b7045f01ffdb18ad02ae
+
+# Diff at Thu, 14 Aug 2025 07:33:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1755009465
+- current timestamp: 1755156807
+
+## Description
+
+signer change.
+
+## Watched changes
+
+```diff
+    contract Safe (0x261a25ec6c396389B75B6b22BD4A8227070E3B50) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 4 (25%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0xe75ccf8ecc3587a3f653de33137e903bd5440ea5
 
 # Diff at Tue, 12 Aug 2025 14:40:13 GMT:

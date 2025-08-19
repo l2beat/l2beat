@@ -119,6 +119,7 @@ export function DaAbsoluteThroughputChart({
           data: chartData,
           isLoading,
           yAxis: {
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: ` ${unit}`,
             tickCount: 3,
           },

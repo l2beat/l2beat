@@ -70,6 +70,9 @@ export function AssetCategoryTvsChart({
   dataKeys,
   toggleDataKey,
 }: Props) {
+  // If only one data key is selected we want to change the domain
+  // Having it from 0 to MAX does make sense for stacked chart (better comparison)
+  // But for single one it should not start from 0
   return (
     <ChartContainer
       data={data}
@@ -90,7 +93,7 @@ export function AssetCategoryTvsChart({
           fill={assetCategoryTvsChartMeta.other.color}
           fillOpacity={1}
           strokeWidth={0}
-          stackId="a"
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
           activeDot={
             !dataKeys.includes('ether') &&
@@ -104,7 +107,7 @@ export function AssetCategoryTvsChart({
           fill={assetCategoryTvsChartMeta.btc.color}
           fillOpacity={1}
           strokeWidth={0}
-          stackId="a"
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
           activeDot={
             !dataKeys.includes('ether') && !dataKeys.includes('stablecoin')
@@ -116,7 +119,7 @@ export function AssetCategoryTvsChart({
           fill={assetCategoryTvsChartMeta.stablecoin.color}
           fillOpacity={1}
           strokeWidth={0}
-          stackId="a"
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
           activeDot={!dataKeys.includes('ether')}
         />
@@ -126,13 +129,14 @@ export function AssetCategoryTvsChart({
           fill={assetCategoryTvsChartMeta.ether.color}
           fillOpacity={1}
           strokeWidth={0}
-          stackId="a"
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
         />
         {getCommonChartComponents({
           data,
           isLoading,
           yAxis: {
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             tickFormatter: (value: number) => formatCurrency(value, unit),
             tickCount,
           },
