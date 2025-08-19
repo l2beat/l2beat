@@ -90,7 +90,7 @@ export function ScalingTvsSection({
               <ChartStatsItem label="Amount">
                 {formatCurrency(selectedToken.amount, selectedToken.symbol)}
               </ChartStatsItem>
-              <ChartStatsItem label="Source">
+              <ChartStatsItem label="Bridging Type">
                 {capitalize(selectedToken.source)}
               </ChartStatsItem>
               <ChartStatsItem label="Category">
