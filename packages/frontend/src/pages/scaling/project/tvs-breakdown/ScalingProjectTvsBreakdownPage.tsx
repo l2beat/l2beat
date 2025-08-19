@@ -1,17 +1,15 @@
-import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import capitalize from 'lodash/capitalize'
 import { useMemo, useState } from 'react'
 import { ProjectTokenChart } from '~/components/chart/tvs/ProjectTokenChart'
 import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
+import { TokenSummaryBox } from '~/components/chart/tvs/TokenSummaryBox'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import {
   TvsChartControlsContextProvider,
   useTvsChartControlsContext,
 } from '~/components/chart/tvs/TvsChartControlsContext'
-import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -25,22 +23,22 @@ import type { ScalingProjectTvsBreakdown } from '~/server/features/scaling/proje
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { RequestTokenBox } from './components/RequestTokenBox'
 import { TvsBreakdownPageHeader } from './components/TvsBreakdownPageHeader'
 import { TvsBreakdownSummaryBox } from './components/TvsBreakdownSummaryBox'
-import { categoryToLabel } from './components/tables/categoryToLabel'
 import { TvsBreakdownTokenTable } from './components/tables/TvsBreakdownTokenTable'
 
-interface Props extends AppLayoutProps {
-  tvsBreakdownData: ScalingProjectTvsBreakdown
-  milestones: Milestone[]
+interface Props extends AppLayoutProps, ScalingProjectTvsBreakdown {
   queryState: DehydratedState
   defaultRange: TvsChartRange
 }
 
 export function ScalingProjectTvsBreakdownPage({
-  tvsBreakdownData: { project, icon, dataTimestamp, entries, project7dData },
+  project,
+  icon,
+  dataTimestamp,
+  entries,
+  project7dData,
   milestones,
   queryState,
   defaultRange,
@@ -91,17 +89,7 @@ export function ScalingProjectTvsBreakdownPage({
                       milestones={milestones}
                       token={selectedToken}
                     />
-                    <ChartStats className="mt-3 md:grid-cols-3 lg:grid-cols-3">
-                      <ChartStatsItem label="Value">
-                        {formatCurrency(selectedToken.value, 'usd')}
-                      </ChartStatsItem>
-                      <ChartStatsItem label="Bridging Type">
-                        {capitalize(selectedToken.source)}
-                      </ChartStatsItem>
-                      <ChartStatsItem label="Category">
-                        {categoryToLabel(selectedToken.category)}
-                      </ChartStatsItem>
-                    </ChartStats>
+                    <TokenSummaryBox token={selectedToken} />
                   </>
                 )}
               </TvsChartControlsContextProvider>

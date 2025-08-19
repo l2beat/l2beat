@@ -1,21 +1,18 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
-import capitalize from 'lodash/capitalize'
 import { useMemo, useState } from 'react'
 import { ProjectTokenChart } from '~/components/chart/tvs/ProjectTokenChart'
 import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
-import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
+import { TokenSummaryBox } from '~/components/chart/tvs/TokenSummaryBox'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import { TvsBreakdownSummaryBox } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
-import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TvsChartControls } from '../../chart/tvs/TvsChartControls'
 import {
   TvsChartControlsContextProvider,
@@ -88,17 +85,7 @@ export function ScalingTvsSection({
               milestones={milestones}
               token={selectedToken}
             />
-            <ChartStats className="mt-3 md:grid-cols-3 lg:grid-cols-3">
-              <ChartStatsItem label="Value">
-                {formatCurrency(selectedToken.value, 'usd')}
-              </ChartStatsItem>
-              <ChartStatsItem label="Bridging Type">
-                {capitalize(selectedToken.source)}
-              </ChartStatsItem>
-              <ChartStatsItem label="Category">
-                {categoryToLabel(selectedToken.category)}
-              </ChartStatsItem>
-            </ChartStats>
+            <TokenSummaryBox token={selectedToken} />
           </>
         )}
       </TvsChartControlsContextProvider>

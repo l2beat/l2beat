@@ -46,14 +46,14 @@ export function TokenChart({
   const chartMeta = useMemo(
     () => ({
       value: {
-        label: token.name,
+        label: token.symbol,
         color: 'var(--chart-pink)',
         indicatorType: {
           shape: 'line',
         },
       },
     }),
-    [token.name],
+    [token.symbol],
   ) satisfies ChartMeta
 
   return (

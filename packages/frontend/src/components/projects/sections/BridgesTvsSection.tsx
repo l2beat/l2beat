@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useState } from 'react'
 import { ProjectTokenChart } from '~/components/chart/tvs/ProjectTokenChart'
+import { TokenSummaryBox } from '~/components/chart/tvs/TokenSummaryBox'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
@@ -42,13 +43,16 @@ export function BridgesTvsSection({
         />
       )}
       {token && (
-        <TvsChartControlsContextProvider defaultRange={defaultRange}>
-          <ProjectTokenChart
-            projectId={projectId}
-            milestones={milestones}
-            token={token}
-          />
-        </TvsChartControlsContextProvider>
+        <>
+          <TvsChartControlsContextProvider defaultRange={defaultRange}>
+            <ProjectTokenChart
+              projectId={projectId}
+              milestones={milestones}
+              token={token}
+            />
+          </TvsChartControlsContextProvider>
+          <TokenSummaryBox token={token} />
+        </>
       )}
     </ProjectSection>
   )
