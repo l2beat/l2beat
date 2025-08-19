@@ -33,7 +33,7 @@ export function DaSummaryBoxes({
   )
 
   return (
-    <div className="flex max-md:flex-col md:gap-6">
+    <div className="grid md:grid-cols-2 md:gap-6">
       <SummaryTvsBox ethereum={ethereum} others={others} />
       <SummaryThroughputBox throughputSummaryData={throughputSummaryData} />
     </div>
@@ -74,7 +74,7 @@ function SummaryTvsBox({
   ]
 
   return (
-    <PrimaryCard className="flex w-full flex-col pt-6 pb-0 md:w-1/2 md:pt-[21px] md:pb-[29px]">
+    <PrimaryCard className="flex w-full flex-col pt-6 pb-0 md:pt-[21px] md:pb-[29px]">
       <span className="font-bold text-base leading-6! md:text-xl">
         Total Value Secured
       </span>
@@ -151,7 +151,7 @@ function SummaryThroughputBox({
   ]
 
   return (
-    <PrimaryCard className="flex w-full flex-col pt-4 pb-6 md:w-1/2 md:pt-4">
+    <PrimaryCard className="flex w-full flex-col pt-4 pb-6 md:pt-4">
       <div className="flex items-end gap-2">
         <span className="font-bold text-base leading-6! md:text-xl">
           Past Day Data Size
