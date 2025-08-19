@@ -220,7 +220,6 @@ export async function discover(
     cache,
     http,
     logger,
-    chain,
   )
   const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
   const provider = await allProviders.get(chain, timestamp)
