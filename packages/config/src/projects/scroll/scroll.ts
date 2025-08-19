@@ -76,7 +76,7 @@ export const scroll: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://scroll.io'],
-      bridges: ['https://portal.scroll.io/bridge'],
+      bridges: ['https://scroll.io/bridge'],
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',
