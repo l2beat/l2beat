@@ -13,7 +13,6 @@
     "new-project": "pnpm og-images && pnpm tinify",
     "performance-test": "tsx scripts/performance-tests/performanceTest.ts",
     "size-test": "tsx scripts/performance-tests/detailedDataSizeTest.ts",
-    "benchmark": "node -r esbuild-register scripts/benchmark.ts",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:frontend",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:frontend",
     "lint:fix": "biome check --formatter-enabled=false --write .",
