@@ -129,24 +129,28 @@ function SummaryThroughputBox({
       value: latest.ethereum,
       className: 'bg-chart-ethereum',
       percentage: round((latest.ethereum / total) * 100, 2),
+      estimated: throughputSummaryData.estimatedLayers.includes('ethereum'),
     },
     {
       label: 'Avail',
       value: latest.avail,
       className: 'bg-chart-sky',
       percentage: round((latest.avail / total) * 100, 2),
+      estimated: throughputSummaryData.estimatedLayers.includes('avail'),
     },
     {
       label: 'Celestia',
       value: latest.celestia,
       className: 'bg-chart-fuchsia',
       percentage: round((latest.celestia / total) * 100, 2),
+      estimated: throughputSummaryData.estimatedLayers.includes('celestia'),
     },
     {
       label: 'EigenDA',
       value: latest.eigenda,
       className: 'bg-chart-lime',
       percentage: round((latest.eigenda / total) * 100, 2),
+      estimated: throughputSummaryData.estimatedLayers.includes('eigenda'),
     },
   ]
 
@@ -188,6 +192,7 @@ interface BreakdownItem {
   value: number
   className: string
   percentage: number
+  estimated?: boolean
 }
 
 function BreakdownWithTooltip({ items }: { items: BreakdownItem[] }) {
@@ -207,6 +212,7 @@ function BreakdownWithTooltip({ items }: { items: BreakdownItem[] }) {
               <span className="font-medium text-label-value-14">{s.label}</span>
             </div>
             <span className="font-medium text-label-value-15">
+              {s.estimated ? 'est. ' : ''}
               {s.percentage.toFixed(1)}%
             </span>
           </div>
