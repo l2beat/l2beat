@@ -48,25 +48,45 @@ export class AvailDaProvider implements DaBlobProvider {
     const appIndex = block.header.extension.V3.appLookup.index
 
     if (
-      targetExtrinsics.length !==
-      block.header.extension.V3.appLookup.index.length
+      targetExtrinsics.length === 0
     ) {
       return []
     }
 
-    for (const index in appIndex) {
-      // actual data starts at byte ~236
-      const sizeInBytes =
-        (targetExtrinsics[index].length - DATA_EXTRINSIC_SHIFT) / 2
+    if (
+      targetExtrinsics.length !==
+      block.header.extension.V3.appLookup.index.length
+    ) {
+      // If there's a mismatch, all extrinsics belong to the first appId
+      const firstAppId = appIndex[0].appId.toString()
+      for (let i = 0; i < targetExtrinsics.length; i++) {
+        const sizeInBytes =
+          (targetExtrinsics[i].length - DATA_EXTRINSIC_SHIFT) / 2
 
-      blobs.push({
-        type: 'avail',
-        daLayer: this.daLayer,
-        blockTimestamp: timestamp,
-        blockNumber: number,
-        size: BigInt(sizeInBytes),
-        appId: appIndex[index].appId.toString(),
-      })
+        blobs.push({
+          type: 'avail',
+          daLayer: this.daLayer,
+          blockTimestamp: timestamp,
+          blockNumber: number,
+          size: BigInt(sizeInBytes),
+          appId: firstAppId,
+        })
+      }
+    } else {
+      for (const index in appIndex) {
+        // actual data starts at byte ~236
+        const sizeInBytes =
+          (targetExtrinsics[index].length - DATA_EXTRINSIC_SHIFT) / 2
+
+        blobs.push({
+          type: 'avail',
+          daLayer: this.daLayer,
+          blockTimestamp: timestamp,
+          blockNumber: number,
+          size: BigInt(sizeInBytes),
+          appId: appIndex[index].appId.toString(),
+        })
+      }
     }
 
     return blobs
