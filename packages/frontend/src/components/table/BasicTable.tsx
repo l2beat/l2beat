@@ -234,7 +234,7 @@ export function BasicTableRow<T extends BasicTableRow>({
         (props.rawSubComponent ? (
           props.renderSubComponent({ row })
         ) : (
-          <tr className="border-b">
+          <tr className="border-divider border-b">
             {/* 2nd row is a custom 1 cell row */}
             <td colSpan={row.getVisibleCells().length}>
               {props.renderSubComponent({ row })}
