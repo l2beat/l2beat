@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xca70d8fe3a1962541aba440189fba415cc39b485
+
+# Diff at Tue, 19 Aug 2025 09:02:29 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@0ed103f64e02fe332cd2478ee125c9e5f1d4c1d9 block: 1755212383
+- current timestamp: 1755594109
+
+## Description
+
+New operator count.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered.
+      description:
+-        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
++        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
+      values.havingPerfectOperators:
+-        false
++        true
+      values.operatorCount:
+-        4
++        3
+    }
+```
+
 Generated with discovered.json: 0xb50d1b74749190bba47a2ce6f7d59e8916c5fea8
 
 # Diff at Fri, 15 Aug 2025 08:50:57 GMT:
