@@ -140,6 +140,7 @@ export const degate3: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
+    zkCatalogId: ProjectId('loopringprover'),
   },
   chainConfig: {
     name: 'degate3',

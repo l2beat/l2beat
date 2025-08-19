@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x4ebea6888db7323b7c8dfb185e620d23969d8751
+
+# Diff at Mon, 18 Aug 2025 09:04:16 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0dd593b7eab607ddac1ba1df05212f23f79157e3 block: 1755162644
+- current timestamp: 1755507657
+
+## Description
+
+Security council members rotation.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa"
++        "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94"
+      values.$members.10:
+-        "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A"
++        "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6"
+    }
+```
+
+Generated with discovered.json: 0xe5293d0e14b16d9172002e7719e20792180bff0e
+
+# Diff at Thu, 14 Aug 2025 09:10:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1753681775
+- current timestamp: 1755162644
+
+## Description
+
+gas limit 42M->44M.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        42000000
++        44000000
+    }
+```
+
 Generated with discovered.json: 0x25d9e43e99b3d3d735ccb8d6e35e59aad00b313d
 
 # Diff at Mon, 28 Jul 2025 05:49:59 GMT:

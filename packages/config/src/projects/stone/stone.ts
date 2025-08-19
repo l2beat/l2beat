@@ -58,31 +58,31 @@ export const stone: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [
           ProjectId('starknet'),
-          ProjectId('apex'),
-          ProjectId('canvasconnect'),
+          // ProjectId('apex'),
+          // ProjectId('canvasconnect'),
           ProjectId('immutablex'),
-          ProjectId('layer2financezk'),
+          // ProjectId('layer2financezk'),
           ProjectId('myria'),
           ProjectId('paradex'),
-          ProjectId('reddioex'),
-          ProjectId('deversifi'),
+          // ProjectId('reddioex'),
+          // ProjectId('deversifi'),
           ProjectId('sorare'),
           ProjectId('brine'),
         ],
         description:
           "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
       },
-      {
-        hash: '0xe12a7131035327b1f54cf3163d124b71da052535e71f64bbd9c2a460ec3a43f0',
-        proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
-        knownDeployments: [
-          'https://etherscan.io/address/0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
-        ],
-        verificationStatus: 'notVerified',
-        usedBy: [ProjectId('dydx')],
-        description:
-          "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
-      },
+      // {
+      //   hash: '0xe12a7131035327b1f54cf3163d124b71da052535e71f64bbd9c2a460ec3a43f0',
+      //   proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
+      //   knownDeployments: [
+      //     'https://etherscan.io/address/0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   usedBy: [ProjectId('dydx')],
+      //   description:
+      //     "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
+      // },
     ],
   },
 }

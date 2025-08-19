@@ -133,7 +133,10 @@ export async function getScalingProjectEntry(
     | 'archivedAt'
     | 'milestones'
     | 'trackedTxsConfig'
+    | 'livenessInfo'
     | 'livenessConfig'
+    | 'costsInfo'
+    | 'hasActivity'
     | 'colors'
     | 'ecosystemColors'
     | 'discoveryInfo'
@@ -162,9 +165,7 @@ export async function getScalingProjectEntry(
     getContractUtils(),
     getScalingTvsSection(helpers, project),
     getActivitySection(helpers, project),
-    project.scalingInfo.layer === 'layer2'
-      ? getCostsSection(helpers, project)
-      : undefined,
+    getCostsSection(helpers, project),
     project.scalingInfo.layer === 'layer2'
       ? await getDataPostedSection(helpers, project, daSolution)
       : undefined,

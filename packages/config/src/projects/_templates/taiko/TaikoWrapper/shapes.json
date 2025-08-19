@@ -4,5 +4,11 @@
     "address": "0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b",
     "chain": "ethereum",
     "blockNumber": 22565516
+  },
+  "TaikoWrapper_preconfRouterObligatory": {
+    "hash": "0x6f1f57d97885434b7f6b769ef9377a6fa75456740c69110c6bb37fb53a7fc68f",
+    "address": "0xa2D216dD9c84cb2e738240aac0956BE98293be61",
+    "chain": "ethereum",
+    "blockNumber": 23123976
   }
 }

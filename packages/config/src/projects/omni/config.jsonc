@@ -11,7 +11,6 @@
     "gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf"
   ],
   "overrides": {
-    "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": { "category": "spam" },
     "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": {
       "category": "core",
       "description": "Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.",

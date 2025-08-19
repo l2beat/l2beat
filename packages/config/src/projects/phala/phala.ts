@@ -85,6 +85,7 @@ export const phala: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
+    zkCatalogId: ProjectId('sp1'),
   },
   chainConfig: {
     name: 'phala',

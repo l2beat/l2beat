@@ -9,7 +9,9 @@
     "eth:0x2affadeb2ef5e1f2a7f58964ee191f1e88317ecd", // SC: emrgMultisig
     "eth:0xd7da1c25e915438720692bc55eb3a7170ca90321", // SC: standardMultisig
     "eth:0x989E348275b659d36f8751ea1c10D146211650BE", // OptimisticTokenVotingPlugin
-    "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9" // TaikoLabs Prover
+    "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9", // TaikoLabs Prover
+    "taiko:0x1670000000000000000000000000000000000001",
+    "taiko:0x1670000000000000000000000000000000010001"
   ],
   "names": {},
   "overrides": {
@@ -50,6 +52,9 @@
     },
     "eth:0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487": {
       "category": "spam"
+    },
+    "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C": {
+      "ignoreMethods": ["proxiableUUID"]
     }
   }
 }

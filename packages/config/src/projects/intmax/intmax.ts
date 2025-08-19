@@ -44,6 +44,7 @@ export const intmax: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
+    zkCatalogId: ProjectId('intmaxprover'),
   },
   config: {
     escrows: [

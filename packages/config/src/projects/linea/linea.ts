@@ -119,6 +119,7 @@ export const linea: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
+    zkCatalogId: ProjectId('lineaprover'),
   },
   config: {
     escrows: [
