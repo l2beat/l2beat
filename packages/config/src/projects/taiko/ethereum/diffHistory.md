@@ -1,23 +1,29 @@
-Generated with discovered.json: 0xe495be7e6880a9be67f440b07e5794f6aaf89bd5
+Generated with discovered.json: 0xca70d8fe3a1962541aba440189fba415cc39b485
 
-# Diff at Mon, 18 Aug 2025 12:28:14 GMT:
+# Diff at Tue, 19 Aug 2025 09:02:29 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@c03ee7950e90b5ae118a7781f59ea26a0440c0f9 block: 1755212383
-- current timestamp: 1755519985
+- comparing to: main@0ed103f64e02fe332cd2478ee125c9e5f1d4c1d9 block: 1755212383
+- current timestamp: 1755594109
 
 ## Description
 
-New preconfirmer address added to the whitelist.
+Provide description of changes. This section will be preserved.
 
 ## Watched changes
 
 ```diff
     contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac) {
-    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.
-      values.getOperatorForNextEpoch:
--        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
-+        "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered.
+      description:
+-        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
++        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
+      values.havingPerfectOperators:
+-        false
++        true
+      values.operatorCount:
+-        4
++        3
     }
 ```
 
