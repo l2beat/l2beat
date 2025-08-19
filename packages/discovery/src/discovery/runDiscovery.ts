@@ -200,7 +200,7 @@ export async function discover(
   logger: Logger,
   timestampDate: Date | undefined,
   http: HttpClient,
-  overwriteChache: boolean,
+  overwriteCache: boolean,
 ): Promise<{
   result: Analysis[]
   timestamp: UnixTime
@@ -209,7 +209,7 @@ export async function discover(
 }> {
   const sqliteCache = new SQLiteCache(paths.cache)
 
-  const cache = overwriteChache
+  const cache = overwriteCache
     ? new OverwriteCacheWrapper(sqliteCache)
     : sqliteCache
 
