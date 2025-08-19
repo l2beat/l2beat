@@ -47,9 +47,7 @@ export class AvailDaProvider implements DaBlobProvider {
 
     const appIndex = block.header.extension.V3.appLookup.index
 
-    if (
-      targetExtrinsics.length === 0
-    ) {
+    if (targetExtrinsics.length === 0) {
       return []
     }
 
@@ -59,9 +57,8 @@ export class AvailDaProvider implements DaBlobProvider {
     ) {
       // If there's a mismatch, all extrinsics belong to the first appId
       const firstAppId = appIndex[0].appId.toString()
-      for (let i = 0; i < targetExtrinsics.length; i++) {
-        const sizeInBytes =
-          (targetExtrinsics[i].length - DATA_EXTRINSIC_SHIFT) / 2
+      for (const targetExtrinsic of targetExtrinsics) {
+        const sizeInBytes = (targetExtrinsic.length - DATA_EXTRINSIC_SHIFT) / 2
 
         blobs.push({
           type: 'avail',
