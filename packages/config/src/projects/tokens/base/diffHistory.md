@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x4fbf0a5d6e7efa0da3b2275c1e5543a92be52b31
+
+# Diff at Tue, 19 Aug 2025 14:19:34 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@dbab88cbeee540d8cfe30af097a9f0483585b86d block: 1755018135
+- current timestamp: 1755018135
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755018135 (main branch discovery), not current.
+
+```diff
+    contract Timelock (0xf817cb3092179083c48c014688D98B72fB61464f) {
+    +++ description: A standard timelock with access control. The current minimum delay is 2d.
+      name:
+-        "L1Timelock"
++        "Timelock"
+    }
+```
+
 Generated with discovered.json: 0x98ae2fa3d75b1c78871ba09526d81c14b1154f79
 
 # Diff at Tue, 12 Aug 2025 17:02:31 GMT:

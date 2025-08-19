@@ -965,7 +965,7 @@
       ]
     },
     {
-      "name": "L1Timelock",
+      "name": "Timelock",
       "address": "base:0xf817cb3092179083c48c014688D98B72fB61464f",
       "type": "Contract",
       "template": "global/Timelock",

@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x7c1b7c8340277c63880c62faef61e6e5749d4249
+
+# Diff at Tue, 19 Aug 2025 14:19:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@dbab88cbeee540d8cfe30af097a9f0483585b86d block: 1753682855
+- current timestamp: 1755613016
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@1753682855/Timelock.sol => .flat/L1Timelock.sol}      | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753682855 (main branch discovery), not current.
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      name:
+-        "L1Timelock"
++        "Timelock"
+    }
+```
+
 Generated with discovered.json: 0x5a7bad2a664c4993e3c14b07ba4d6f21fcbf363f
 
 # Diff at Mon, 28 Jul 2025 07:11:06 GMT:

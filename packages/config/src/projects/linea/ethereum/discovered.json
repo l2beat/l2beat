@@ -1,8 +1,8 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "timestamp": 1753682855,
-  "configHash": "0x05298ee2849cf50750a14ce653425c692151101b6a24c0d120f1ec3e468edaaa",
+  "timestamp": 1755613016,
+  "configHash": "0x61c8e47626bb7fc06534e6463f53228b61c07473008c26635560bcde0c96aed3",
   "entries": [
     {
       "name": "TokenBridge",
@@ -733,11 +733,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0xdb4f1ac51759540e6948b5585325b223079cf51492b6b9255a1b2b8807f0cdc3",
-        "currentFinalizedState": "0x83db020fc68c85e37e9027c768fe333f7617f912bdf1e8ac19914ffb5e73475a",
+        "currentFinalizedShnarf": "0x3f83107e5b1063b324f5e59c81291ae4429765f5a6c2638d3e90a4d769e147b6",
+        "currentFinalizedState": "0xa6a74bae0aa115e1f5e9107c06390bbf8481af41434b96a2d278a5bb008c75ad",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "242797681000000000000",
+        "currentPeriodAmountInWei": "507223233705261796000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -820,7 +820,7 @@
       }
     },
     {
-      "name": "L1Timelock",
+      "name": "Timelock",
       "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
       "type": "Contract",
       "template": "global/Timelock",
@@ -1581,6 +1581,6 @@
     "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23015753 },
-  "permissionsConfigHash": "0x773ff326c146c9f0de4cc0ba06cd29cedfc3440f60b6e705660620ebcc55faaf"
+  "usedBlockNumbers": { "ethereum": 23175659 },
+  "permissionsConfigHash": "0xf52a54eecacad14b827a5f277928e09878cf78bfc760a78a92a7cbf6e39f039a"
 }
