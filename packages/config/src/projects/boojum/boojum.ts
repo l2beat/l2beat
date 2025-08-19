@@ -155,15 +155,15 @@ export const boojum: BaseProject = {
           ProjectId('sxt'),
         ],
       },
-      {
-        hash: '0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
-        knownDeployments: [
-          'https://etherscan.io/address/0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5',
-        ],
-        verificationStatus: 'notVerified',
-        usedBy: [ProjectId('treasure')],
-      },
+      // {
+      //   hash: '0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+      //   knownDeployments: [
+      //     'https://etherscan.io/address/0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5',
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   usedBy: [ProjectId('treasure')],
+      // },
       {
         hash: '0x8574e152c41dc39a2ecab984545e1cf21cb3ec250b919018a8053f2fa270784f',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
