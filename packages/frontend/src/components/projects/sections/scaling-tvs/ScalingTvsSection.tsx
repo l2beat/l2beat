@@ -83,9 +83,12 @@ export function ScalingTvsSection({
               milestones={milestones}
               token={selectedToken}
             />
-            <ChartStats className="mt-3 md:grid-cols-3 lg:grid-cols-3">
-              <ChartStatsItem label="Total value secured">
+            <ChartStats className="mt-3">
+              <ChartStatsItem label="Value">
                 {formatCurrency(selectedToken.value, 'usd')}
+              </ChartStatsItem>
+              <ChartStatsItem label="Amount">
+                {formatCurrency(selectedToken.amount, selectedToken.symbol)}
               </ChartStatsItem>
               <ChartStatsItem label="Source">
                 {capitalize(selectedToken.source)}
