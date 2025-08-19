@@ -17,6 +17,7 @@ export const alphadune: ScalingProject = upcomingL3({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://alphadune.com/'],
+      bridges: ['https://bridge.testnet.alphadune.com'],
       documentation: ['https://docs.alphadune.com/'],
       socialMedia: [
         'https://x.com/alphadune',
