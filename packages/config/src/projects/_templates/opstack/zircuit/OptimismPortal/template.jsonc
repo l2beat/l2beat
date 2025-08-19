@@ -1,21 +1,9 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OptimismPortal",
-  "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.",
-  "ignoreMethods": ["isOutputFinalized", "balance"],
-  "ignoreInWatchMode": [
-    "params",
-    "getEthThrottleDepositsCredits",
-    "getEthThrottleWithdrawalsCredits"
-  ],
-  "fields": {
-    // would like to add the withdrawable eth per period with the Undecimal18 typecaster here to use it in the description but alas it is not possible because pickFields cannot fully extract a single value from a struct
-    "guardian": {
-      "permissions": [{ "type": "guard" }]
-    },
-    "GUARDIAN": {
-      "permissions": [{ "type": "guard" }]
-    }
-  },
+  "description": "The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the {{l2Oracle}}.",
+  "ignoreMethods": ["isOutputFinalized"],
+  "ignoreInWatchMode": ["params"],
+  "fields": { "guardian": { "permissions": [{ "type": "guard" }] } },
   "category": "core"
 }

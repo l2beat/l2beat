@@ -10,5 +10,11 @@
     "address": "0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e",
     "chain": "ethereum",
     "blockNumber": 22424645
+  },
+  "EigenPod_2": {
+    "hash": "0xde563a9e55789a1e2e556d02f4dd7eb0f5266ad6ff6816f3406321b92603eb14",
+    "address": "0xcb27A4819A64FBA93ABD4D480e4466aEc0503745",
+    "chain": "ethereum",
+    "blockNumber": 23083567
   }
 }

@@ -196,7 +196,7 @@ export const starknet: ScalingProject = {
     slug: 'starknet',
     stacks: ['SN Stack'],
     description:
-      'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
+      'Starknet is a ZK rollup that uses STARK proofs to securely scale Ethereum and Ethereum blobs for data availability. Starknet is also actively engaged in bringing Bitcoin users the same scale, UX, and liquidity through a variety of products and programs.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
 
@@ -221,13 +221,17 @@ export const starknet: ScalingProject = {
     },
     liveness: {
       explanation:
-        'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
+        'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and a validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
     },
     costsWarning: {
       sentiment: 'warning',
       value:
         "The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Due to this complexity, Starknet's SHARP costs represent an estimate based on self-reported costs by the Starkware team.",
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('stone'),
   },
   chainConfig: {
     name: 'starknet',
@@ -285,6 +289,8 @@ export const starknet: ScalingProject = {
       rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
       securityCouncilReference:
         'https://governance.starknet.io/learn/security_council',
+      stage1PrincipleDescription:
+        'While Starknet is considered Stage 1, the Security Council minority is employed to enforce censorship resistance in case the permissioned operator fails to include transactions. The process through which a censored user can contact the Security Council is not defined and currently unclear.',
     },
   ),
   technology: {
@@ -310,10 +316,10 @@ export const starknet: ScalingProject = {
     nodeSoftware:
       'The [Juno](https://github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
     compressionScheme:
-      'Starknet uses [stateful compression since v0.13.4](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/#v0_13_4).',
+      'Starknet uses [stateful compression since v0.13.4](https://docs.starknet.io/architecture/data-availability/#v0_13_4).',
     genesisState: 'There is no non-empty genesis state.',
     dataFormat:
-      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/).',
+      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/architecture/data-availability/).',
   },
   stateValidation: {
     description:
@@ -441,16 +447,16 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
     associatedTokens: ['STRK'],
     escrows: [
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_ETH_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_ETH_ADDRESS),
         sinceTimestamp: UnixTime(1647857148),
         tokens: ['ETH'],
         description:
           'StarkGate bridge for ETH.' + ' ' + escrowETHMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
+        address: ChainSpecificAddress(
+          'eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C',
+        ),
         sinceTimestamp: UnixTime(1652101033),
         tokens: ['DAI'],
         ...ESCROW.CANONICAL_EXTERNAL,
@@ -460,36 +466,28 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
           escrowDAIMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_WBTC_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_WBTC_ADDRESS),
         sinceTimestamp: UnixTime(1657137600),
         tokens: ['WBTC'],
         description:
           'StarkGate bridge for WBTC.' + ' ' + escrowWBTCMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_USDC_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_USDC_ADDRESS),
         sinceTimestamp: UnixTime(1657137639),
         tokens: ['USDC'],
         description:
           'StarkGate bridge for USDC.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_USDT_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_USDT_ADDRESS),
         sinceTimestamp: UnixTime(1657137615),
         tokens: ['USDT'],
         description:
           'StarkGate bridge for USDT.' + ' ' + escrowUSDTMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_WSTETH_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_WSTETH_ADDRESS),
         sinceTimestamp: UnixTime(1657137623),
         tokens: ['wstETH'],
         description:
@@ -499,42 +497,32 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         ...ESCROW.CANONICAL_EXTERNAL,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_RETH_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_RETH_ADDRESS),
         sinceTimestamp: UnixTime(1657137623),
         tokens: ['rETH'],
         description:
           'StarkGate bridge for rETH.' + ' ' + escrowRETHMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_UNI_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_UNI_ADDRESS),
         tokens: ['UNI'],
         description:
           'StarkGate bridge for UNI.' + ' ' + escrowUNIMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_FRAX_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_FRAX_ADDRESS),
         tokens: ['FRAX.legacy'],
         description:
           'StarkGate bridge for FRAX.' + ' ' + escrowFRAXMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_FXS_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_FXS_ADDRESS),
         tokens: ['FRAX'],
         description:
           'StarkGate bridge for FXS.' + ' ' + escrowFXSMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_SFRXETH_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_SFRXETH_ADDRESS),
         tokens: ['sfrxETH'],
         description:
           'StarkGate bridge for sfrxETH.' +
@@ -542,32 +530,24 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
           escrowSFRXETHMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_LUSD_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_LUSD_ADDRESS),
         tokens: ['LUSD'],
         description:
           'StarkGate bridge for LUSD.' + ' ' + escrowLUSDMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_LORDS_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_LORDS_ADDRESS),
         tokens: ['LORDS'],
         description: 'StarkGate bridge for LORDS.',
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_STRK_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_STRK_ADDRESS),
         tokens: ['STRK'],
         description:
           'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          ChainSpecificAddress(ESCROW_MULTIBRIDGE_ADDRESS),
-        ),
+        address: ChainSpecificAddress(ESCROW_MULTIBRIDGE_ADDRESS),
         tokens: ['EKUBO', 'ZEND', 'NSTR'],
         description:
           'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).',

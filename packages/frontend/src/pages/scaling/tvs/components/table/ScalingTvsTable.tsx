@@ -1,7 +1,6 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
-import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
@@ -11,15 +10,20 @@ import { getScalingTvsColumns } from './columns'
 
 interface Props {
   entries: ScalingTvsEntry[]
-  rollups?: boolean
   notReviewed?: boolean
+  breakdownType: 'bridgeType' | 'assetCategory'
 }
 
-export function ScalingTvsTable({ entries, rollups, notReviewed }: Props) {
+export function ScalingTvsTable({
+  entries,
+
+  notReviewed,
+  breakdownType,
+}: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const allProjects = useMemo(
+  const data = useMemo(
     () =>
       toTableRows({
         projects: entries,
@@ -28,9 +32,18 @@ export function ScalingTvsTable({ entries, rollups, notReviewed }: Props) {
     [entries, excludeAssociatedTokens],
   )
 
+  const columns = useMemo(
+    () =>
+      getScalingTvsColumns({
+        ignoreUnderReviewIcon: true,
+        breakdownType,
+      }),
+    [breakdownType],
+  )
+
   const table = useTable({
-    data: allProjects,
-    columns: getScalingTvsColumns({ ignoreUnderReviewIcon: true }),
+    data,
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -45,9 +58,7 @@ export function ScalingTvsTable({ entries, rollups, notReviewed }: Props) {
     },
   })
 
-  return rollups ? (
-    <RollupsTable table={table} />
-  ) : (
+  return (
     <BasicTable
       table={table}
       insideMainPageCard

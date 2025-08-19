@@ -402,6 +402,24 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-DIA-1",
+      "priceId": "dia-data",
+      "symbol": "DIA",
+      "name": "DIAToken",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11955/large/Token_Logo.png?1696511815",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa9114787910204c696C1C438f52A7cE7cC9F8bd7",
+        "chain": "zksync2",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-ELON-1",
       "priceId": "dogelon-mars",
       "symbol": "ELON",
@@ -478,7 +496,7 @@
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
-      "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -575,7 +593,7 @@
         "sinceTimestamp": 1682179985
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -1087,7 +1105,8 @@
         "address": "0x16895e45a73d2DfA36e07eD08008618fED423600",
         "chain": "zksync2",
         "decimals": 18,
-        "sinceTimestamp": 1739109131
+        "sinceTimestamp": 1739109131,
+        "untilTimestamp": 1753966800
       }
     },
     {
@@ -1284,6 +1303,24 @@
       "amount": {
         "type": "totalSupply",
         "address": "0x1CF8553Da5a75C20cdC33532cb19Ef7E3bFFf5BC",
+        "chain": "zksync2",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-RSC-1",
+      "priceId": "researchcoin",
+      "symbol": "RSC",
+      "name": "ResearchCoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28146/large/RH_BOTTLE_CLEAN_Aug_2024_1.png?1732742001",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xaBECe6D924E003816BCe65D9Bd20655303d0abc6",
         "chain": "zksync2",
         "decimals": 18,
         "sinceTimestamp": 1739109131
@@ -1492,7 +1529,7 @@
       "symbol": "tBTC",
       "name": "tBTC v2",
       "iconUrl": "https://assets.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false,
       "amount": {
@@ -1608,8 +1645,15 @@
         "sinceTimestamp": 1706644361
       },
       "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1789,7 +1833,7 @@
       "symbol": "WBTC",
       "name": "Wrapped BTC",
       "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false,
       "amount": {
@@ -1907,7 +1951,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Custom escrow"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

@@ -175,6 +175,25 @@ export class RpcClient extends ClientCore implements BlockClient {
 
     const logsResponse = EVMLogsResponse.safeParse(response)
     if (!logsResponse.success) {
+      // in EVM chains there can be a limit on the number of logs returned
+      const parsedError = RPCError.safeParse(response)
+      if (parsedError.success && isLimitExceededError(parsedError.data)) {
+        const midpoint = Math.floor((from + to) / 2)
+
+        this.$.logger.warn('Limit exceeded for logs. Splitting in half', {
+          from,
+          to,
+          midpoint,
+        })
+
+        const results = await Promise.all([
+          this.getLogs(from, midpoint, addresses, topics),
+          this.getLogs(midpoint + 1, to, addresses, topics),
+        ])
+
+        return results.flat()
+      }
+
       this.$.logger.warn('Invalid response', {
         method,
         response: JSON.stringify(response),
@@ -301,7 +320,7 @@ export class RpcClient extends ClientCore implements BlockClient {
 
     return queries.map((q) => {
       const r = results.get(q.id)
-      assert(r, `Request with with ${q.id} not found`)
+      assert(r, `Request with ${q.id} not found`)
       return r
     })
   }
@@ -313,7 +332,11 @@ export class RpcClient extends ClientCore implements BlockClient {
     const parsedError = RPCError.safeParse(response)
 
     if (parsedError.success) {
-      // TODO: based on error return differently
+      // no retry in this case
+      if (isLimitExceededError(parsedError.data)) {
+        return { success: true }
+      }
+
       this.$.logger.warn('Response validation error', {
         ...parsedError.data.error,
       })
@@ -339,4 +362,20 @@ function buildCallObject(callParams: CallParameters): Record<string, string> {
     to: callParams.to.toString(),
     data: callParams.data.toString(),
   }
+}
+
+function isLimitExceededError(response: RPCError) {
+  if (
+    response.error &&
+    (response.error.message.includes('Log response size exceeded') ||
+      response.error.message.includes('query exceeds max block range 100000') ||
+      response.error.message.includes(
+        'eth_getLogs is limited to a 10,000 range',
+      ) ||
+      response.error.message.includes('returned more than 10000'))
+  ) {
+    return true
+  }
+
+  return false
 }

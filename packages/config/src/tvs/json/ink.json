@@ -41,7 +41,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "ink-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -63,9 +63,9 @@
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
-            "escrowAddress": "0x88FF1e5b602916615391F55854588EFcBB7663f0",
+            "escrowAddress": "0xbd4AbB321138e8Eddc399cE64E66451294325a14",
             "decimals": 18,
-            "sinceTimestamp": 1733498411
+            "sinceTimestamp": 1753379243
           }
         ]
       },
@@ -87,7 +87,7 @@
         "decimals": 8,
         "sinceTimestamp": 1741953292
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {

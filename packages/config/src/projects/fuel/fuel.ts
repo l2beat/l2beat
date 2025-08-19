@@ -77,6 +77,7 @@ export const fuel: ScalingProject = {
       ],
     },
   },
+  proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',
   },
@@ -256,7 +257,7 @@ export const fuel: ScalingProject = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'ERC20Gateway pausers',
@@ -305,7 +306,7 @@ export const fuel: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('FuelERC20Gateway', {
           description: `Standard gateway to deposit and withdraw ERC20 tokens. It implements rate limits and a whitelist for tokens. The whitelist is currently ${isErc20whitelistActive ? 'active' : 'inactive'}.`,
           upgradableBy: [{ name: 'Fuel Security Council', delay: 'no' }],

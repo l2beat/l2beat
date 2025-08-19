@@ -11,6 +11,7 @@ import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import { getCollection } from '~/content/getCollection'
 import type { EcosystemGovernanceLinks } from '~/pages/ecosystems/project/components/widgets/EcosystemGovernanceLinks'
 import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
@@ -22,11 +23,11 @@ import {
   type ScalingSummaryEntry,
 } from '../scaling/summary/getScalingSummaryEntries'
 import { get7dTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
+import { compareTvs } from '../scaling/tvs/utils/compareTvs'
 import {
   getScalingUpcomingEntry,
   type ScalingUpcomingEntry,
 } from '../scaling/upcoming/getScalingUpcomingEntries'
-import { compareStageAndTvs } from '../scaling/utils/compareStageAndTvs'
 import { getStaticAsset } from '../utils/getProjectIcon'
 import { type BlobsData, getBlobsData } from './getBlobsData'
 import { getEcosystemLogo } from './getEcosystemLogo'
@@ -65,6 +66,16 @@ export interface EcosystemEntry {
     tvs: number
     uops: number
   }
+  banners: {
+    firstBanner?: {
+      headlineText?: string
+      mainText?: string
+    }
+    secondBanner?: {
+      headlineText?: string
+      mainText?: string
+    }
+  }
   tvsByStage: TvsByStage
   tvsByTokenType: TvsByTokenType
   projectsByDaLayer: ProjectsByDaLayer
@@ -93,6 +104,7 @@ export interface EcosystemProjectEntry extends ScalingSummaryEntry {
 
 export async function getEcosystemEntry(
   slug: string,
+  helpers: SsrHelpers,
 ): Promise<EcosystemEntry | undefined> {
   const ecosystem = await ps.getProject({
     slug,
@@ -131,30 +143,50 @@ export async function getEcosystemEntry(
     }),
   ])
 
+  const ecosystemProjects = projects.filter(
+    (p) => p.ecosystemInfo.id === ecosystem.id,
+  )
+
+  const [upcomingProjects, liveProjects] = partition(
+    ecosystemProjects,
+    (p) => p.isUpcoming,
+  )
+
   const [
     projectsChangeReport,
     tvs,
     projectsActivity,
     projectsOngoingAnomalies,
+    blobsData,
+    token,
   ] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'layer2' }),
     getActivityLatestUops(allScalingProjects),
     getApprovedOngoingAnomalies(),
+    getBlobsData(liveProjects),
+    getEcosystemToken(ecosystem, liveProjects),
+    helpers.tvs.chart.prefetch({
+      range: { type: '1y' },
+      excludeAssociatedTokens: false,
+      filter: {
+        type: 'projects',
+        projectIds: liveProjects.map((project) => project.id),
+      },
+    }),
+    helpers.activity.chart.prefetch({
+      range: { type: '1y' },
+      filter: {
+        type: 'projects',
+        projectIds: liveProjects.map((project) => project.id),
+      },
+    }),
   ])
 
-  const ecosystemProjects = projects.filter(
-    (p) => p.ecosystemInfo.id === ecosystem.id,
-  )
   const allScalingProjectsUops = allScalingProjects.reduce(
     (acc, curr) =>
       acc + (projectsActivity[curr.id.toString()]?.pastDayUops ?? 0),
     0,
-  )
-
-  const [upcomingProjects, liveProjects] = partition(
-    ecosystemProjects.filter((p) => !p.archivedAt),
-    (p) => p.isUpcoming,
   )
 
   return {
@@ -178,13 +210,17 @@ export async function getEcosystemEntry(
     tvsByStage: getTvsByStage(liveProjects, tvs),
     tvsByTokenType: getTvsByTokenType(liveProjects, tvs),
     projectsByDaLayer: getProjectsByDaLayer(liveProjects),
-    blobsData: await getBlobsData(liveProjects),
+    blobsData,
     projectsByRaas: getProjectsByRaas(liveProjects),
-    token: await getEcosystemToken(ecosystem, liveProjects),
+    token,
     projectsChartData: getEcosystemProjectsChartData(
       liveProjects,
       allScalingProjects.length,
     ),
+    banners: {
+      firstBanner: ecosystem.ecosystemConfig.firstBanner,
+      secondBanner: ecosystem.ecosystemConfig.secondBanner,
+    },
     liveProjects: liveProjects
       .filter((p) => !p.archivedAt)
       .map((project) => {
@@ -204,7 +240,7 @@ export async function getEcosystemEntry(
           ),
         }
       })
-      .sort(compareStageAndTvs),
+      .sort(compareTvs),
     upcomingProjects: upcomingProjects.map(getScalingUpcomingEntry),
     allMilestones: getMilestones([ecosystem, ...ecosystemProjects]),
     ecosystemMilestones: getMilestones([ecosystem]),

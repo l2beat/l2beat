@@ -34,7 +34,7 @@ export const sygma: Bridge = {
         'https://scan.buildwithsygma.com',
         'https://scan.test.buildwithsygma.com',
       ],
-      repositories: ['https://github.com/sygmaprotocol'],
+      repositories: ['https://github.com/sprintertech/'],
       socialMedia: [
         'https://discord.gg/Qdf6GyNB5J',
         'https://twitter.com/buildwithsygma',
@@ -120,7 +120,7 @@ export const sygma: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('Bridge', {
           description:
             'The contract that facilitates and manages the cross-chain transfer of assets by recording and verifying deposit and withdrawal events across different blockchain networks. The actual handling of the deposits/withdrawals is handled by a configured Handler contracts such as for example ERC20Handler.',
@@ -151,7 +151,7 @@ export const sygma: Bridge = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'Admin Multisig',

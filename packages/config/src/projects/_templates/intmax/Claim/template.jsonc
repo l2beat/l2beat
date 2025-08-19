@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["l2ScrollMessenger"],
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreInWatchMode": ["getCurrentPeriod", "nullifierNonce"],
+  "fields": {
+    "liquidity": {
+      "edit": ["format", "EthereumAddress"]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the verifier address."
+        }
+      ]
+    }
+  }
+}

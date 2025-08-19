@@ -111,7 +111,7 @@
         "decimals": 18,
         "sinceTimestamp": 1718170153
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -580,7 +580,7 @@
         "decimals": 18,
         "sinceTimestamp": 1715526671
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -665,6 +665,25 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "linea-REX",
+      "priceId": "etherex",
+      "symbol": "REX",
+      "name": "Etherex",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68009/large/etherex.jpg?1754560098",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "etherex",
+        "decimals": 18,
+        "sinceTimestamp": 1754524800,
+        "address": "0xEfD81eeC32B9A8222D1842ec3d99c7532C31e348",
+        "chain": "linea"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -783,7 +802,7 @@
         "decimals": 18,
         "sinceTimestamp": 1716875713
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -808,7 +827,7 @@
         "decimals": 18,
         "sinceTimestamp": 1715238002
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -987,8 +1006,15 @@
         "sinceTimestamp": 1692057600
       },
       "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1069,7 +1095,7 @@
         "decimals": 8,
         "sinceTimestamp": 1691060675
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

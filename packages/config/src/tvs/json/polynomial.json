@@ -17,9 +17,17 @@
         "decimals": 8,
         "sinceTimestamp": 1748903783
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -81,7 +89,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -100,7 +116,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -119,7 +143,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -150,9 +182,17 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -227,9 +267,17 @@
           }
         ]
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -296,7 +344,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -346,6 +402,14 @@
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -443,6 +507,14 @@
       "category": "ether",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -540,6 +612,14 @@
       "category": "ether",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -637,6 +717,14 @@
       "category": "ether",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",

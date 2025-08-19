@@ -158,6 +158,7 @@ export interface ProjectLinks {
   explorers?: string[]
   repositories?: string[]
   socialMedia?: string[]
+  other?: string[]
   rollupCodes?: string
 }
 export interface Badge {
@@ -570,6 +571,7 @@ export interface ProjectDaLayer {
   finality?: number
   dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
+  sovereignProjectsTrackingConfig?: SovereignProjectDaTrackingConfig[]
 }
 
 export interface AdjustableEconomicSecurityRisk {
@@ -741,6 +743,7 @@ export interface ProjectZkCatalogInfo {
   techStack: {
     zkVM?: ZkCatalogTag[]
     finalWrap?: ZkCatalogTag[]
+    snark?: ZkCatalogTag[]
   }
   proofSystemInfo: string
   trustedSetups: (TrustedSetup & {
@@ -754,6 +757,8 @@ export interface ProjectZkCatalogInfo {
     usedBy: ProjectId[]
     verificationSteps?: string
     attesters?: ZkCatalogAttester[]
+    description?: string
+    unsafe?: boolean
   }[]
 }
 
@@ -775,8 +780,13 @@ export interface TrustedSetup {
 
 // #region feature configs
 export interface ProjectTvsInfo {
-  associatedTokens: string[]
+  associatedTokens: ProjectAssociatedToken[]
   warnings: WarningWithSentiment[]
+}
+
+export interface ProjectAssociatedToken {
+  symbol: string
+  icon: string | undefined
 }
 
 export type ProjectEscrowSource = 'canonical' | 'external' | 'native'
@@ -860,6 +870,17 @@ export interface ProjectCostsInfo {
   warning?: WarningWithSentiment
 }
 
+export interface SovereignProjectDaTrackingConfig {
+  projectId: ProjectId
+  name: string
+  daTrackingConfig: (
+    | Omit<EthereumDaTrackingConfig, 'daLayer'>
+    | Omit<CelestiaDaTrackingConfig, 'daLayer'>
+    | Omit<AvailDaTrackingConfig, 'daLayer'>
+    | Omit<EigenDaTrackingConfig, 'daLayer'>
+  )[]
+}
+
 export type ProjectDaTrackingConfig =
   | BlockDaTrackingConfig
   | TimestampDaTrackingConfig
@@ -924,6 +945,14 @@ export interface ProjectEcosystemConfig {
     governanceProposals: string
     tools?: string[]
     grants?: string
+  }
+  firstBanner?: {
+    headlineText?: string
+    mainText?: string
+  }
+  secondBanner?: {
+    headlineText?: string
+    mainText?: string
   }
 }
 // #endregion
@@ -1056,7 +1085,7 @@ export interface ProjectDiscoveryInfo {
   isDiscoDriven: boolean
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
-  blockNumberPerChain: Record<string, number>
+  timestampPerChain: Record<string, number>
   hasDiscoUi: boolean
 }
 // #endregion
@@ -1211,7 +1240,14 @@ export const TvsTokenSchema = v.object({
   valueForSummary: v
     .union([CalculationFormulaSchema, ValueFormulaSchema])
     .optional(),
-  category: v.enum(['ether', 'stablecoin', 'other']),
+  category: v.enum([
+    'ether',
+    'stablecoin',
+    'btc',
+    'rwaRestricted',
+    'rwaPublic',
+    'other',
+  ]),
   source: v.enum(['canonical', 'external', 'native']),
   isAssociated: v.boolean(),
   bridgedUsing: v

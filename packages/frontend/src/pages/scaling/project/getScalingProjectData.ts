@@ -28,6 +28,7 @@ export async function getScalingProjectData(
       'permissions',
       'chainConfig',
       'scalingDa',
+      'livenessInfo',
       'livenessConfig',
       'customDa',
       'isUpcoming',
@@ -38,6 +39,9 @@ export async function getScalingProjectData(
       'colors',
       'ecosystemColors',
       'discoveryInfo',
+      'daTrackingConfig',
+      'costsInfo',
+      'hasActivity',
     ],
   })
   if (!project) return undefined

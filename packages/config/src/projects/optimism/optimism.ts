@@ -6,13 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('optimism')
-const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
 const genesisTimestamp = UnixTime(1636665399)
 const chainId = 10
 
@@ -21,7 +19,6 @@ export const optimism: ScalingProject = opStackL2({
   additionalBadges: [BADGES.Other.Governance],
   discovery,
   genesisTimestamp,
-  additionalDiscoveries: { ['optimism']: l2Discovery },
   display: {
     name: 'OP Mainnet',
     slug: 'op-mainnet',
@@ -56,7 +53,9 @@ export const optimism: ScalingProject = opStackL2({
   nonTemplateExcludedTokens: ['rsETH'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
+      address: ChainSpecificAddress(
+        'eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
+      ),
       sinceTimestamp: UnixTime(1625675779),
       ...ESCROW.CANONICAL_EXTERNAL,
       tokens: ['DAI', 'USDS', 'sUSDS'],
@@ -65,7 +64,9 @@ export const optimism: ScalingProject = opStackL2({
     }),
     discovery.getEscrowDetails({
       // current SNX bridge escrow
-      address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
+      address: ChainSpecificAddress(
+        'eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
+      ),
       sinceTimestamp: UnixTime(1620680982),
       tokens: ['SNX'],
       ...ESCROW.CANONICAL_EXTERNAL,
@@ -90,7 +91,9 @@ export const optimism: ScalingProject = opStackL2({
       chain: 'ethereum',
     },
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
+      address: ChainSpecificAddress(
+        'eth:0x76943C0D61395d8F2edF9060e1533529cAe05dE6',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
@@ -216,38 +219,22 @@ export const optimism: ScalingProject = opStackL2({
   stateDerivation: {
     ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
-      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://docs.optimism.io/builders/node-operators/management/snapshots). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
+      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://docs.optimism.io/builders/node-operators/management/snapshots). To reproduce the migration itself, see this [guide](https://optimism.io/blog/here-s-how-you-can-reproduce-op-mainnet-s-migration-to-bedrock).',
   },
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
-      },
-      stage1: {
-        principle: false,
-        usersHave7DaysToExit: true,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: true,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink:
-        'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
-    },
-  ),
+  hasProperSecurityCouncil: true,
+  nodeSourceLink:
+    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
   upgradesAndGovernance:
-    'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `OpFoundationOperationsSafe` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
+    'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that limits the Optimism Foundation to act through it to stop withdrawals in the whole Superchain or specific individual chains. Each pause automatically expires after 3 months if not extended or unpaused by the Security Council. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `OpFoundationOperationsSafe` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
+    {
+      title: 'Upgrade #16 Interop Contracts + Upgrades to Cannon',
+      url: 'https://vote.optimism.io/proposals/42233809968417684816035432917226202543057967150073565253597304573923844823222',
+      date: '2025-07-14T00:00:00Z',
+      description:
+        'Optimism readies Superchain interop and boosts security, scale, and Cannon.',
+      type: 'general',
+    },
     {
       title: 'Upgrade #15  Isthmus Hard Fork',
       url: 'https://vote.optimism.io/proposals/8705916809146420472067303211131851783087744913535435360574720946039078686841',
@@ -272,7 +259,7 @@ export const optimism: ScalingProject = opStackL2({
       type: 'general',
     },
     {
-      title: 'Maintainance Upgrade L1 Pectra Readiness',
+      title: 'Maintenance Upgrade L1 Pectra Readiness',
       url: 'https://vote.optimism.io/proposals/38506287861710446593663598830868940900144818754960277981092485594195671514829',
       date: '2025-03-05T00:00:00Z',
       description: "Optimism prepares for Ethereum's pectra upgrade.",
@@ -332,7 +319,7 @@ export const optimism: ScalingProject = opStackL2({
     },
     {
       title: 'Fault Proof System is live on OP Goerli',
-      url: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
+      url: 'https://optimism.io/blog/the-op-stack-s-fault-proof-system-is-live-on-op-goerli',
       date: '2023-10-03T00:00:00Z',
       description: 'Fraud Proof system is live on Goerli.',
       type: 'general',

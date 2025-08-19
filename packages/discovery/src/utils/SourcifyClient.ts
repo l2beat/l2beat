@@ -70,7 +70,7 @@ export class SourcifyClient implements IEtherscanClient {
       constructorArguments:
         result.creationBytecode.transformationValues?.constructorArguments ??
         '',
-      remappings: result.compilation.compilerSettings.remappings,
+      remappings: result.compilation.compilerSettings.remappings ?? [],
       files,
     }
   }
@@ -202,7 +202,7 @@ const SourcifySourceSchema = v.object({
     compiler: v.string(),
     compilerVersion: v.string(),
     compilerSettings: v.object({
-      remappings: v.array(v.string()),
+      remappings: v.array(v.string()).optional(),
     }),
     name: v.string(),
   }),

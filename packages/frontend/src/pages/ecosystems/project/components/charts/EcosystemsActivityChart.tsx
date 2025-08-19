@@ -1,9 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
 import { useMemo, useState } from 'react'
 import { AreaChart } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
-import { Checkbox } from '~/components/core/Checkbox'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -11,19 +9,16 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
-import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import {
   EthereumFillGradientDef,
   EthereumStrokeGradientDef,
 } from '~/components/core/chart/defs/EthereumGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
+import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
-import { useIsClient } from '~/hooks/useIsClient'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
-import { EthereumLineIcon } from '~/icons/EthereumLineIcon'
 import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
 import type {
   EcosystemEntry,
@@ -31,39 +26,27 @@ import type {
 } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
 
 export function EcosystemsActivityChart({
+  id,
   name,
   entries,
   allScalingProjectsUops,
   className,
   ecosystemMilestones,
 }: {
+  id: string
   name: string
   entries: EcosystemEntry['liveProjects']
   allScalingProjectsUops: number
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }) {
-  const isClient = useIsClient()
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
-  const [showMainnet, setShowMainnet] = useLocalStorage(
-    'ecosystems-activity-show-mainnet',
-    false,
-  )
-
-  const { data, isLoading } = api.activity.chart.useQuery({
-    range: { type: timeRange },
-    filter: {
-      type: 'projects',
-      projectIds: entries.map((project) => project.id),
-    },
-  })
-
   const chartMeta = useMemo(() => {
     return {
       projects: {
@@ -82,14 +65,24 @@ export function EcosystemsActivityChart({
       },
     } satisfies ChartMeta
   }, [name])
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
+  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
+
+  const { data, isLoading } = api.activity.chart.useQuery({
+    range: { type: timeRange },
+    filter: {
+      type: 'projects',
+      projectIds: entries.map((project) => project.id),
+    },
+  })
 
   const chartData = useMemo(
     () =>
       data?.data.map(([timestamp, _, __, projectsUops, ethereumUops]) => {
         return {
           timestamp,
-          projects: projectsUops / UnixTime.DAY,
-          ethereum: ethereumUops / UnixTime.DAY,
+          projects: projectsUops !== null ? projectsUops / UnixTime.DAY : null,
+          ethereum: ethereumUops !== null ? ethereumUops / UnixTime.DAY : null,
         }
       }),
     [data?.data],
@@ -100,29 +93,36 @@ export function EcosystemsActivityChart({
 
   return (
     <EcosystemWidget className={className}>
-      <Header range={range} stats={stats} />
+      <Header range={range} stats={stats} invert={id === 'superchain'} />
       <ChartContainer
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
         className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+          disableOnboarding: true,
+        }}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartLegend content={<ChartLegendContent />} />
           {getStrokeOverFillAreaComponents({
-            data: compact([
-              showMainnet && {
+            data: [
+              {
                 dataKey: 'ethereum',
                 stroke: 'url(#strokeEthereum)',
                 fill: 'url(#fillEthereum)',
+                hide: !dataKeys.includes('ethereum'),
               },
               {
                 dataKey: 'projects',
                 stroke: 'var(--ecosystem-primary)',
                 fill: 'url(#fillProjects)',
+                hide: !dataKeys.includes('projects'),
               },
-            ]),
+            ],
           })}
           {getCommonChartComponents({
             data: chartData,
@@ -131,10 +131,9 @@ export function EcosystemsActivityChart({
               scale: 'lin',
               unit: ' UOPS',
             },
+            syncedUntil: data?.syncedUntil,
           })}
-          <ChartTooltip
-            content={<ActivityCustomTooltip syncedUntil={undefined} />}
-          />
+          <ChartTooltip content={<ActivityCustomTooltip />} />
           <defs>
             <CustomFillGradientDef
               id="fillProjects"
@@ -148,28 +147,13 @@ export function EcosystemsActivityChart({
           </defs>
         </AreaChart>
       </ChartContainer>
-      <ChartControlsWrapper className="mt-2.5">
-        {isClient ? (
-          <Checkbox
-            name="showMainnetActivity"
-            checked={showMainnet}
-            onCheckedChange={(state) => setShowMainnet(!!state)}
-          >
-            <div className="flex flex-row items-center gap-2">
-              <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-              <span className="hidden 2xl:inline">ETH Mainnet Operations</span>
-              <span className="2xl:hidden">ETH UOPS</span>
-            </div>
-          </Checkbox>
-        ) : (
-          <Skeleton className="h-8 w-[114px] md:w-[230px]" />
-        )}
+      <div className="mt-2.5 ml-auto w-fit">
         <ActivityTimeRangeControls
           timeRange={timeRange}
           setTimeRange={setTimeRange}
           projectSection={true}
         />
-      </ChartControlsWrapper>
+      </div>
     </EcosystemWidget>
   )
 }
@@ -177,46 +161,70 @@ export function EcosystemsActivityChart({
 function Header({
   range,
   stats,
+  invert,
 }: {
   range: [number, number] | undefined
   stats: { latestUops: number; marketShare: number } | undefined
+  invert?: boolean
 }) {
   return (
-    <div className="mb-3 flex items-start justify-between">
-      <div>
+    <div className="mb-3">
+      <div className="flex justify-between">
         <div className="font-bold text-xl">Activity</div>
-        <div className="font-medium text-secondary text-xs">
-          <EcosystemChartTimeRange range={range} />
-        </div>
-      </div>
-      <div className="text-right">
-        {stats?.latestUops !== undefined ? (
-          <div className="font-bold text-xl">
+        {invert ? (
+          stats?.marketShare ? (
+            <div className="font-semibold text-xl">
+              {formatPercent(stats?.marketShare)} market share
+            </div>
+          ) : (
+            <Skeleton className="my-[5px] ml-auto h-5 w-20" />
+          )
+        ) : stats?.latestUops ? (
+          <div className="font-semibold text-xl">
             {formatActivityCount(stats.latestUops)} UOPS
           </div>
         ) : (
-          <Skeleton className="my-[5px] ml-auto h-5 w-32" />
+          <Skeleton className="my-[5px] ml-auto h-5 w-20" />
         )}
-        <EcosystemsMarketShare marketShare={stats?.marketShare} />
+      </div>
+      <div className="flex justify-between gap-1">
+        <EcosystemChartTimeRange range={range} />
+        {invert ? (
+          stats?.latestUops !== undefined ? (
+            <div className="font-medium text-branding-primary text-xs">
+              {formatActivityCount(stats.latestUops)} UOPS
+            </div>
+          ) : (
+            <Skeleton className="my-[3px] ml-auto h-[14px] w-36" />
+          )
+        ) : (
+          <div className="text-right">
+            <EcosystemsMarketShare marketShare={stats?.marketShare} />
+          </div>
+        )}
       </div>
     </div>
   )
 }
 
 function getStats(
-  chartData: { projects: number }[] | undefined,
+  chartData: { projects: number | null }[] | undefined,
   allScalingProjectsUops: number,
 ) {
   if (!chartData) {
     return undefined
   }
-  const last = chartData.at(-1)
-  if (!last) {
+  const lastWithData = chartData.filter((d) => d.projects !== null).at(-1) as
+    | {
+        projects: number
+      }
+    | undefined
+  if (!lastWithData) {
     return undefined
   }
 
   return {
-    latestUops: last.projects,
-    marketShare: last.projects / allScalingProjectsUops,
+    latestUops: lastWithData.projects,
+    marketShare: lastWithData.projects / allScalingProjectsUops,
   }
 }

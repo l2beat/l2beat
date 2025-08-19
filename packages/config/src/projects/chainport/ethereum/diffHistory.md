@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xa4dd1849d65f6b086c9eb2a0113e065df8d95e29
+Generated with discovered.json: 0x22adbc7cc1053cf78b50d69a7f02ce7766acdbf5
 
 # Diff at Tue, 15 Jul 2025 10:07:38 GMT:
 
@@ -616,7 +616,7 @@ Generated with discovered.json: 0x77908f6e1a3a728a0bf3d25092ad5f91724d4096
 
 ## Description
 
-Congress members (chainport bridge governance for e.g. upgrades) added (1  changed, one added). Quorum increased to 3/4.
+Congress members (chainport bridge governance for e.g. upgrades) added (1 changed, one added). Quorum increased to 3/4.
 
 ## Watched changes
 
@@ -1249,7 +1249,7 @@ Generated with discovered.json: 0x9e9cf8137ae4685c73b20e751b457741f4598a42
 
 ## Description
 
-A new proposal is made in the goveernance contract which has the description 'Unfreeze bridges' and targets a Chainport Vault (`0x763a0ca93af05ade98a52dc1e5b936b89bf8b89a`) of which the source code is unverified.
+A new proposal is made in the governance contract which has the description 'Unfreeze bridges' and targets a Chainport Vault (`0x763a0ca93af05ade98a52dc1e5b936b89bf8b89a`) of which the source code is unverified.
 
 ## Watched changes
 
@@ -1435,11 +1435,11 @@ Generated with discovered.json: 0x972c0ec8ccdd85cd61bd3520dbb2f78b1cab4165
 
 ## Description
 
-Executed two proposalas 46 and 47.
+Executed two proposals 46 and 47.
 The first one according to the description submitted by the Chainport Congress aims to: "Deploy Arbitrage, Upgrade Main and Side Bridge and add new Maintainer".
 While the second one wants to: "Refund HODL tokens".
 
-In the process the implementation of the Vault changed, since this contract is unverfied it's impossible to analyze what has really happened.
+In the process the implementation of the Vault changed, since this contract is unverified it's impossible to analyze what has really happened.
 
 ## Watched changes
 

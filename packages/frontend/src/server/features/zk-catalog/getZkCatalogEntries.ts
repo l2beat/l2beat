@@ -8,8 +8,8 @@ import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAtt
 import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
-import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
+import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import {
   get7dTvsBreakdown,
   type SevenDayTvsBreakdown,
@@ -17,23 +17,32 @@ import {
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 
-export interface ZkCatalogEntry extends CommonProjectEntry {
+type TrustedSetupVerifierData = {
+  count: number
+  attesters: (ZkCatalogAttester & { icon: string })[]
+}
+
+export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
   name: string
   icon: string
   creator?: string
   tvs: number
-  projectsUsedIn: UsedInProjectWithIcon[]
-  verifiers: {
-    successfulCount: number
-    unsuccessfulCount: number
-    notVerifiedCount: number
-  }
-  attesters: (ZkCatalogAttester & { icon: string })[]
   techStack: ProjectZkCatalogInfo['techStack']
   trustedSetups: Record<
     string,
-    (TrustedSetup & { proofSystem: ZkCatalogTag })[]
+    {
+      trustedSetup: (TrustedSetup & {
+        proofSystem: ZkCatalogTag
+      })[]
+      verifiers: {
+        successful?: TrustedSetupVerifierData
+        unsuccessful?: TrustedSetupVerifierData
+        notVerified?: TrustedSetupVerifierData
+      }
+      projectsUsedIn: UsedInProjectWithIcon[]
+    }
   >
 }
 
@@ -48,9 +57,9 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
     get7dTvsBreakdown({ type: 'layer2' }),
   ])
 
-  return zkCatalogProjects.map((project) =>
-    getZkCatalogEntry(project, allProjects, tvs),
-  )
+  return zkCatalogProjects
+    .map((project) => getZkCatalogEntry(project, allProjects, tvs))
+    .sort((a, b) => b.tvs - a.tvs)
 }
 
 function getZkCatalogEntry(
@@ -67,7 +76,11 @@ function getZkCatalogEntry(
   const projectsForTvs = uniq(
     usedInVerifiers.flatMap((vp) => {
       const project = allProjects.find((p) => p.id === vp)
-      assert(project, `Project ${vp} not found`)
+      if (!project) {
+        const logger = getLogger().for('getZkCatalogEntry')
+        logger.warn(`Project ${vp} not found`)
+        return []
+      }
 
       // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
       if (project.daBridge) {
@@ -85,9 +98,9 @@ function getZkCatalogEntry(
     return acc + projectTvs
   }, 0)
 
-  const trustedSetups = groupBy(
-    project.zkCatalogInfo.trustedSetups,
-    (e) => `${e.proofSystem.type}-${e.proofSystem.id}`,
+  const trustedSetups = getTrustedSetupsWithVerifiersAndAttesters(
+    project,
+    allProjects,
   )
 
   return {
@@ -98,28 +111,77 @@ function getZkCatalogEntry(
     icon: getProjectIcon(project.slug),
     creator: project.zkCatalogInfo.creator,
     tvs: tvsForProject,
-    verifiers: {
-      successfulCount: project.zkCatalogInfo.verifierHashes.filter(
-        (v) => v.verificationStatus === 'successful',
-      ).length,
-      unsuccessfulCount: project.zkCatalogInfo.verifierHashes.filter(
-        (v) => v.verificationStatus === 'unsuccessful',
-      ).length,
-      notVerifiedCount: project.zkCatalogInfo.verifierHashes.filter(
-        (v) => v.verificationStatus === 'notVerified',
-      ).length,
-    },
-    attesters: uniqBy(
-      project.zkCatalogInfo.verifierHashes
-        .flatMap((v) =>
-          v.attesters?.map((a) => ({ ...a, icon: getProjectIcon(a.id) })),
-        )
-        .filter(notUndefined),
-      (a) => a?.id,
-    ),
     techStack: project.zkCatalogInfo.techStack,
-    projectsUsedIn: getProjectsUsedIn(usedInVerifiers, allProjects),
     trustedSetups,
+    filterable: [
+      ...[
+        ...(project.zkCatalogInfo.techStack.finalWrap ?? []),
+        ...(project.zkCatalogInfo.techStack.zkVM ?? []),
+      ].map((techStack) => ({
+        id: 'techStack' as const,
+        value: `${techStack.type}: ${techStack.name}`,
+      })),
+    ],
+  }
+}
+
+function getTrustedSetupsWithVerifiersAndAttesters(
+  project: Project<'zkCatalogInfo'>,
+  allProjects: Project<
+    never,
+    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
+  >[],
+): ZkCatalogEntry['trustedSetups'] {
+  const grouped = groupBy(
+    project.zkCatalogInfo.trustedSetups,
+    (e) => `${e.proofSystem.type}-${e.proofSystem.id}`,
+  )
+  return Object.fromEntries(
+    Object.entries(grouped).map(([key, ts]) => {
+      const trustedSetupVerifiers = project.zkCatalogInfo.verifierHashes.filter(
+        (v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`,
+      )
+
+      const groupedByStatus = groupBy(
+        trustedSetupVerifiers,
+        (v) => v.verificationStatus,
+      )
+
+      return [
+        key,
+        {
+          trustedSetup: ts,
+          verifiers: {
+            successful: getVerifiers(groupedByStatus, 'successful'),
+            unsuccessful: getVerifiers(groupedByStatus, 'unsuccessful'),
+            notVerified: getVerifiers(groupedByStatus, 'notVerified'),
+          },
+          projectsUsedIn: getProjectsUsedIn(
+            uniq(trustedSetupVerifiers.flatMap((v) => v.usedBy)),
+            allProjects,
+          ),
+        },
+      ]
+    }),
+  )
+}
+
+function getVerifiers(
+  verifiers: Record<string, ProjectZkCatalogInfo['verifierHashes']>,
+  key: 'successful' | 'unsuccessful' | 'notVerified',
+): TrustedSetupVerifierData | undefined {
+  const verifiersForStatus = verifiers[key]
+  if (!verifiersForStatus || verifiersForStatus.length === 0) return undefined
+
+  return {
+    count: verifiersForStatus.length,
+    attesters: verifiersForStatus
+      .flatMap((v) => v.attesters)
+      .filter(notUndefined)
+      .map((a) => ({
+        ...a,
+        icon: getProjectIcon(a.id),
+      })),
   }
 }
 
@@ -130,20 +192,26 @@ function getProjectsUsedIn(
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
   >[],
 ): UsedInProjectWithIcon[] {
-  return usedInVerifiers.map((id) => {
-    const project = allProjects.find((p) => p.id === id)
-    assert(project, `Project ${id} not found`)
+  return usedInVerifiers
+    .map((id) => {
+      const project = allProjects.find((p) => p.id === id)
+      if (!project) {
+        const logger = getLogger().for('getProjectsUsedIn')
+        logger.warn(`Project ${id} not found`)
+        return undefined
+      }
 
-    const href = getProjectHref(project, allProjects)
+      const href = getProjectHref(project, allProjects)
 
-    return {
-      id: id,
-      name: project.name,
-      slug: project.slug,
-      icon: getProjectIcon(project.slug),
-      href,
-    }
-  })
+      return {
+        id: id,
+        name: project.name,
+        slug: project.slug,
+        icon: getProjectIcon(project.slug),
+        href,
+      }
+    })
+    .filter((e) => e !== undefined)
 }
 
 function getProjectHref(

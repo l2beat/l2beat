@@ -252,7 +252,7 @@
         "sinceTimestamp": 1695199499
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -551,7 +551,7 @@
         "sinceTimestamp": 1680642322
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -578,7 +578,7 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015,
-        "untilTimestamp": 1749103200
+        "untilTimestamp": 1682208000
       }
     },
     {
@@ -1049,6 +1049,24 @@
     },
     {
       "mode": "auto",
+      "id": "polygonzkevm-PC",
+      "priceId": "pentagon-chain",
+      "symbol": "PC",
+      "name": "PentagonChain",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66638/large/pentagon-chain-token-fcp.png?1750094674",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb9A729Aff228c28d7eB0548c8C0E4a3FFf0083A1",
+        "chain": "polygonzkevm",
+        "decimals": 18,
+        "sinceTimestamp": 1750032000
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polygonzkevm-PEPE",
       "priceId": "pepe",
       "symbol": "PEPE",
@@ -1243,7 +1261,7 @@
         "sinceTimestamp": 1696982400
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -1512,7 +1530,7 @@
         "sinceTimestamp": 1700125979
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -1558,7 +1576,7 @@
       "symbol": "WBTC",
       "name": "Wrapped BTC",
       "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false,
       "amount": {
@@ -1639,7 +1657,7 @@
         "sinceTimestamp": 1703945135
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {

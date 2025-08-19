@@ -234,10 +234,20 @@ function checkIfLineCountIsCorrect(input: string, lines: string[]): void {
 // Source hashes logic
 export function recalculateSourceHashes(
   sources: PerContractSource[],
-): string[] | undefined {
-  const hashes = sources.map((source) => source.hash as string)
+): (string | undefined)[] | undefined {
+  const hashes = sources.map((source) => source.hash)
 
   if (hashes.length === 0) {
+    return undefined
+  }
+
+  // if it's just one source, it must have hash defined
+  if (hashes.length === 1 && hashes[0] === undefined) {
+    return undefined
+  }
+
+  // If any source (except proxy) has undefined hash, return undefined
+  if (hashes.slice(1).some((hash) => hash === undefined)) {
     return undefined
   }
 
@@ -249,7 +259,7 @@ export function recalculateSourceHashes(
   // >2 - Diamonds and similar with multiple 'sub-implementations'
   const [proxy, ...implementations] = hashes
 
-  const masterHash = combineImplementationHashes(implementations)
+  const masterHash = combineImplementationHashes(implementations as string[])
 
   // biome-ignore lint/style/noNonNullAssertion: checked above
   return [proxy!, masterHash]

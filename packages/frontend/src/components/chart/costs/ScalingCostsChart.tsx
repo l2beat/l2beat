@@ -58,7 +58,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   })
 
   const chartData = useMemo(() => {
-    return data?.map(
+    return data?.chart.map(
       ([
         timestamp,
         overheadGas,
@@ -104,16 +104,18 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
-    <section>
+    <div>
       <Header chartRange={chartRange} />
       <CostsChart
         data={chartData}
+        syncedUntil={data?.syncedUntil}
         unit={unit}
         isLoading={isLoading}
         milestones={milestones}
         range={range}
-        showDataPosted={false}
-        className="mt-4 mb-2"
+        hasBlobs={!!data?.hasBlobs}
+        hasPostedData={false}
+        className="mt-4 mb-3"
       />
       <ChartControlsWrapper>
         <div className="flex flex-wrap gap-1">
@@ -126,7 +128,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
           metric={metric}
         />
       </ChartControlsWrapper>
-    </section>
+    </div>
   )
 }
 

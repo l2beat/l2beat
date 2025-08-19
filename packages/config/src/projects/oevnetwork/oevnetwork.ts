@@ -22,16 +22,15 @@ export const oevnetwork: ScalingProject = orbitStackL2({
     description:
       'OEV is an Orbit stack Optimium by API3, designed to capture oracle extractable value and return it to the dApps and users that generated it.',
     links: {
-      websites: ['https://api3.org/oev/'],
+      websites: ['https://api3.org/'],
       bridges: ['https://oev.bridge.api3.org/'],
       documentation: [
-        'https://docs.api3.org/reference/oev-network/',
+        'https://docs.api3.org/oev-searchers/',
         'https://medium.com/api3/api3-builds-oev-network-on-arbitrum-orbit-b29f8f5d7dcf',
       ],
       explorers: ['https://oev.explorer.api3.org/'],
       repositories: ['https://github.com/API3DAO'],
       socialMedia: [
-        'https://x.com/OEVNetwork',
         'https://discord.com/invite/api3dao',
         'https://medium.com/api3',
       ],
@@ -52,5 +51,5 @@ export const oevnetwork: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
 })

@@ -15,6 +15,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_VALIDATION,
@@ -28,6 +29,7 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
+  ProjectScalingProofSystem,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -75,6 +77,7 @@ export interface PolygonCDKStackConfig {
   activityConfig?: ProjectActivityConfig
   chainConfig?: ChainConfig
   stateDerivation?: ProjectScalingStateDerivation
+  nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateContracts?: ProjectContract[]
   nonTemplateEscrows: ProjectEscrow[]
@@ -157,6 +160,11 @@ export function polygonCDKStack(
   const finalizationPeriod = 0
 
   const discoveries = [templateVars.discovery, shared]
+
+  const hasNoProofs = templateVars.reasonsForBeingOther?.some(
+    (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
+  )
+
   return {
     type: 'layer2',
     addedAt: templateVars.addedAt,
@@ -186,6 +194,11 @@ export function polygonCDKStack(
       stacks: ['Agglayer CDK'],
       tvsWarning: templateVars.display.tvsWarning,
     },
+    proofSystem:
+      templateVars.nonTemplateProofSystem ??
+      (hasNoProofs
+        ? undefined
+        : { type: 'Validity', zkCatalogId: ProjectId('polygonzkevmprover') }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.nonTemplateEscrows,
@@ -339,7 +352,7 @@ export function polygonCDKStack(
             {
               title:
                 'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
-              url: 'https://etherscan.io/address/0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab#code#F1#L1210',
+              url: 'https://etherscan.io/address/0x42B9fF0644741e3353162678596e7D6aA6a13240#code#F1#L1280',
             },
           ],
         },
@@ -420,7 +433,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
         BADGES.Stack.CDKErigon,
         BADGES.VM.EVM,
         BADGES.DA.EthereumCalldata,
-        BADGES.Infra.AggLayer,
+        BADGES.Infra.Agglayer,
       ],
       templateVars.additionalBadges ?? [],
     ),

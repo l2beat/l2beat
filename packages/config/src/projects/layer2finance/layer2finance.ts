@@ -1,6 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../common'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
+  TECHNOLOGY,
+  UNDER_REVIEW_RISK_VIEW,
+} from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -36,6 +42,14 @@ export const layer2finance: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
+  },
   config: {
     escrows: [
       {
@@ -53,7 +67,7 @@ export const layer2finance: ScalingProject = {
   technology: TECHNOLOGY.UNDER_REVIEW,
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('RollupChain', {
           references: [
             {

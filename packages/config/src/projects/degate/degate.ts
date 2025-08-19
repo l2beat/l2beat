@@ -1,5 +1,6 @@
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -93,11 +94,16 @@ export const degate: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+  },
   config: {
     associatedTokens: ['DG'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA'),
+        address: ChainSpecificAddress(
+          'eth:0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA',
+        ),
         sinceTimestamp: UnixTime(1681991243),
         tokens: '*',
       }),
@@ -269,7 +275,7 @@ export const degate: ScalingProject = {
       'DeGate bundles off-chain transactions into [zkBlocks](https://github.com/degatedev/protocols/blob/degate_mainnet/Circuit%20Design.md#zkblock) and submits them to the blockchain. zkBlock data definition is documented [here](https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#zkblock-data-definition).',
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'DefaultDepositContract Owner',
@@ -294,7 +300,7 @@ export const degate: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ExchangeV3', 'Main ExchangeV3 contract.'),
         discovery.getContractDetails(
           'LoopringIOExchangeOwner',

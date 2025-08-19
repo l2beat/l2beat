@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 81058973,
+  "timestamp": 1753687799,
   "configHash": "0x35b675ae4426b0f1014d5722364f88a9d855577528eaebc441ea2a6b08870c26",
   "entries": [
     {
@@ -91,7 +91,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L1ERC20Bridge",
+      "name": "MantleL1ERC20Bridge",
       "address": "mantle:0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
       "type": "Contract",
       "sourceHashes": [
@@ -147,7 +147,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "zkLink",
+      "name": "MantlezkLink",
       "address": "mantle:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
@@ -206,11 +206,11 @@
         "getGateway": "mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "mantle:0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 65195,
+        "getTotalBatchesExecuted": 69385,
         "getTotalPriorityTxs": 880,
         "owner": "mantle:0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "paused": true,
-        "totalBatchesExecuted": 65195,
+        "totalBatchesExecuted": 69385,
         "totalPriorityTxs": 880,
         "totalSyncedPriorityTxs": 880,
         "totalValidatorForwardFee": "1145994696585755653058",
@@ -522,5 +522,6 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0xb8d05cf7178d9d52ec51987ae809f1297e20fe9412d460ff7b11d2ecd6bd2b2c"
+  "usedBlockNumbers": { "mantle": 82778743 },
+  "permissionsConfigHash": "0xa52d924a2d1677aa8315bc14d2d2615ca2ff6a066d62370a3b3d9fd78a2dbb5e"
 }

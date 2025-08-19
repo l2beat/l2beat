@@ -1,6 +1,5 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
-import capitalize from 'lodash/capitalize'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
@@ -10,6 +9,7 @@ import {
   ChartLegendContent,
   type ChartMeta,
   ChartTooltip,
+  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
@@ -19,17 +19,13 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
-import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
-import { TvsBreakdownButton } from '~/components/projects/sections/StackedTvsSection'
+import { TvsBreakdownButton } from '~/components/projects/sections/ScalingTvsSection'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import { useIsClient } from '~/hooks/useIsClient'
-import type {
-  ProjectToken,
-  ProjectTokens,
-} from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
@@ -45,7 +41,7 @@ interface Props {
   milestones: Milestone[]
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
-  tokens: ProjectTokens
+  tokens: ProjectToken[]
   token: ProjectToken
   setToken: (token: ProjectToken | undefined) => void
   unit: ChartUnit
@@ -81,7 +77,7 @@ export function ProjectTokenChart({
     value: {
       label: token.name,
       color: sourceToColor(token.source),
-      legendLabel: capitalize(token.source),
+      legendLabel: sourceToLabel(token.source),
       indicatorType: {
         shape: 'square',
       },
@@ -89,7 +85,7 @@ export function ProjectTokenChart({
   } satisfies ChartMeta
 
   const chartData = useMemo(() => {
-    return data?.map(([timestamp, amount, usdValue]) => ({
+    return data?.chart.map(([timestamp, amount, usdValue]) => ({
       timestamp,
       value: unit === 'usd' ? usdValue : amount,
     }))
@@ -98,7 +94,7 @@ export function ProjectTokenChart({
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
-    <section>
+    <div>
       <ChartControlsWrapper>
         <ProjectChartTimeRange range={chartRange} />
         <TvsChartTimeRangeControls
@@ -108,7 +104,7 @@ export function ProjectTokenChart({
         />
       </ChartControlsWrapper>
       <ChartContainer
-        className="mt-4 mb-2"
+        className="mt-4 mb-3"
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
@@ -136,9 +132,14 @@ export function ProjectTokenChart({
             yAxis: {
               tickFormatter: (value: number) =>
                 formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
+              tickCount: 4,
             },
+            syncedUntil: data?.syncedUntil,
           })}
-          <ChartTooltip content={<CustomTooltip unit={properUnit} />} />
+          <ChartTooltip
+            filterNull={false}
+            content={<CustomTooltip unit={properUnit} />}
+          />
         </AreaChart>
       </ChartContainer>
       <div
@@ -162,7 +163,7 @@ export function ProjectTokenChart({
           </div>
         )}
       </div>
-    </section>
+    </div>
   )
 }
 
@@ -174,16 +175,16 @@ function CustomTooltip({
 }: TooltipProps<number, string> & { unit: string }) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
+
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col gap-1">
         <div className="mb-1 font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { longMonthName: true })}
+          {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.name === undefined || entry.value === undefined)
-              return null
+            if (entry.name === undefined) return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -202,14 +203,16 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {formatCurrency(entry.value, unit)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatCurrency(entry.value, unit)
+                    : 'No data'}
                 </span>
               </div>
             )
           })}
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
 
@@ -217,13 +220,12 @@ interface ControlsProps {
   isBridge: boolean
   unit: ChartUnit
   setUnit: (value: ChartUnit) => void
-  tokens: ProjectTokens
+  tokens: ProjectToken[]
   token: ProjectToken
   setToken: (token: ProjectToken | undefined) => void
 }
 
 function TokenChartUnitControls({
-  isBridge,
   unit,
   setUnit,
   tokens,
@@ -242,12 +244,7 @@ function TokenChartUnitControls({
       ) : (
         <Skeleton className="h-8 w-[104.82px]" />
       )}
-      <TokenCombobox
-        tokens={tokens}
-        value={token}
-        setValue={setToken}
-        isBridge={isBridge}
-      />
+      <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
     </div>
   )
 }
@@ -260,6 +257,19 @@ function sourceToColor(source: ProjectToken['source']) {
       return 'var(--chart-stacked-purple)'
     case 'external':
       return 'var(--chart-stacked-yellow)'
+    default:
+      assertUnreachable(source)
+  }
+}
+
+function sourceToLabel(source: ProjectToken['source']) {
+  switch (source) {
+    case 'native':
+      return 'Natively minted'
+    case 'canonical':
+      return 'Canonically bridged'
+    case 'external':
+      return 'Externally bridged'
     default:
       assertUnreachable(source)
   }

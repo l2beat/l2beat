@@ -17,8 +17,8 @@ export async function getDaThroughputSection(
   )
     return undefined
 
-  const [throughputChart, projectsWithColors] = await Promise.all([
-    helpers.da.projectChart.fetch({
+  const [charts, projectsWithColors] = await Promise.all([
+    helpers.da.projectCharts.fetch({
       range: { type: '1y' },
       projectId: project.id,
       includeScalingOnly: true,
@@ -26,21 +26,18 @@ export async function getDaThroughputSection(
     ps.getProjects({ select: ['colors'] }),
   ])
 
-  if (!throughputChart || throughputChart.chart.length === 0) return undefined
+  if (!charts || charts.totalChart.data.length === 0) return undefined
 
-  const notSyncedStatus = getThroughputSyncWarning(
-    throughputChart.syncedUntil,
-    {
-      shorter: true,
-    },
-  )
+  const syncWarning = getThroughputSyncWarning(charts.syncedUntil, {
+    shorter: true,
+  })
 
   return {
     projectId: project.id,
     throughput: project.daLayer.throughput ?? [],
     syncStatus: {
-      warning: notSyncedStatus,
-      isSynced: !notSyncedStatus,
+      warning: syncWarning,
+      isSynced: !syncWarning,
     },
     customColors: env.CLIENT_SIDE_PARTNERS
       ? Object.fromEntries(

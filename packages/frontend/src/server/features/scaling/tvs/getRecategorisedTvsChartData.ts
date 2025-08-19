@@ -1,14 +1,15 @@
-import type { ProjectValueRecord } from '@l2beat/database'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
-import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getRangeWithMax } from '~/utils/range/range'
-import { getSummedTvsValues } from './utils/getSummedTvsValues'
+import { getTimestampedValuesRange } from '~/utils/range/range'
+import {
+  getSummedTvsValues,
+  type SummedTvsValues,
+} from './utils/getSummedTvsValues'
 import { getTvsProjects } from './utils/getTvsProjects'
-import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 import {
   createTvsProjectsFilter,
   TvsProjectFilter,
@@ -24,12 +25,17 @@ export type RecategorisedTvsChartDataParams = v.infer<
   typeof RecategorisedTvsChartDataParams
 >
 
-export type RecategorisedTvsChartData = (readonly [
+type RecategorisedTvsChartDataPoint = [
   timestamp: number,
-  rollups: number,
-  validiumsAndOptimiums: number,
-  others: number,
-])[]
+  rollups: number | null,
+  validiumsAndOptimiums: number | null,
+  others: number | null,
+]
+
+type RecategorisedTvsChartData = {
+  chart: RecategorisedTvsChartDataPoint[]
+  syncedUntil: number
+}
 
 /**
  * A function that computes values for chart data of the TVS over time.
@@ -52,7 +58,10 @@ export async function getRecategorisedTvsChart({
   })
 
   if (tvsProjects.length === 0) {
-    return []
+    return {
+      chart: [],
+      syncedUntil: UnixTime.now(),
+    }
   }
 
   const groupedByType = groupBy(tvsProjects, (p) => p.category)
@@ -68,14 +77,27 @@ export async function getRecategorisedTvsChart({
       getSummedTvsValues(others, { type: range }, 'SUMMARY'),
     ])
 
-  return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
+  const chart = getChartData(
+    rollupValues,
+    validiumAndOptimiumsValues,
+    othersValues,
+  )
+  const syncedUntil = chart.findLast(
+    ([_, r, v, o]) => r !== null || v !== null || o !== null,
+  )?.[0]
+  assert(syncedUntil, 'No synced until timestamp found')
+
+  return {
+    chart,
+    syncedUntil,
+  }
 }
 
 function getChartData(
-  rollupsValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
-  validiumAndOptimiumsValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
-  othersValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
-) {
+  rollupsValues: SummedTvsValues[],
+  validiumAndOptimiumsValues: SummedTvsValues[],
+  othersValues: SummedTvsValues[],
+): RecategorisedTvsChartDataPoint[] {
   const rolupsGroupedByTimestamp = groupBy(rollupsValues, (v) => v.timestamp)
   const validiumAndOptimiumsGroupedByTimestamp = groupBy(
     validiumAndOptimiumsValues,
@@ -89,45 +111,51 @@ function getChartData(
     ...othersValues.map((v) => v.timestamp),
   ]).sort()
 
-  return timestamps.map((timestamp) => {
-    const rVals = rolupsGroupedByTimestamp[timestamp]
-    const vVals = validiumAndOptimiumsGroupedByTimestamp[timestamp]
-    const oVals = othersGroupedByTimestamp[timestamp]
+  const data: [number, number | null, number | null, number | null][] =
+    timestamps.map((timestamp) => {
+      const rVals = rolupsGroupedByTimestamp[timestamp]
+      const vVals = validiumAndOptimiumsGroupedByTimestamp[timestamp]
+      const oVals = othersGroupedByTimestamp[timestamp]
 
-    const rTotal =
-      rVals?.reduce((acc, curr) => {
-        acc += curr.value
-        return acc
-      }, 0) ?? 0
-    const vTotal =
-      vVals?.reduce((acc, curr) => {
-        acc += curr.value
-        return acc
-      }, 0) ?? 0
-    const oTotal =
-      oVals?.reduce((acc, curr) => {
-        acc += curr.value
-        return acc
-      }, 0) ?? 0
+      const rTotal =
+        rVals?.reduce<number | null>((acc, curr) => {
+          if (curr.value !== null) {
+            acc = (acc ?? 0) + curr.value
+          }
+          return acc
+        }, null) ?? null
+      const vTotal =
+        vVals?.reduce<number | null>((acc, curr) => {
+          if (curr.value !== null) {
+            acc = (acc ?? 0) + curr.value
+          }
+          return acc
+        }, null) ?? null
+      const oTotal =
+        oVals?.reduce<number | null>((acc, curr) => {
+          if (curr.value !== null) {
+            acc = (acc ?? 0) + curr.value
+          }
+          return acc
+        }, null) ?? null
 
-    return [timestamp, rTotal, vTotal, oTotal] as const
-  })
+      return [timestamp, rTotal, vTotal, oTotal]
+    })
+
+  return data
 }
 
 function getMockTvsChartData({
   range,
 }: RecategorisedTvsChartDataParams): RecategorisedTvsChartData {
   const resolution = rangeToResolution({ type: range })
-  const target = getTvsTargetTimestamp()
-  const [from, to] = getRangeWithMax({ type: range }, resolution, {
-    now: target,
-  })
-  const timestamps = generateTimestamps(
-    [from ?? MIN_TIMESTAMPS.tvs, to],
-    resolution,
-  )
+  const [from, to] = getTimestampedValuesRange({ type: range }, resolution)
+  const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
-  return timestamps.map((timestamp) => {
-    return [timestamp, 3000, 2000, 1000]
-  })
+  return {
+    chart: timestamps.map((timestamp) => {
+      return [timestamp, 3000, 2000, 1000]
+    }),
+    syncedUntil: UnixTime.now(),
+  }
 }

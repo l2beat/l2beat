@@ -31,9 +31,17 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -80,7 +88,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -97,9 +113,17 @@
         "decimals": 8,
         "sinceTimestamp": 1727654400
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -149,9 +173,17 @@
         "decimals": 8,
         "sinceTimestamp": 1725056027
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -193,6 +225,14 @@
       "category": "ether",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -249,7 +289,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -268,7 +316,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -302,6 +358,14 @@
       "category": "other",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -376,9 +440,17 @@
           }
         ]
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -495,6 +567,14 @@
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -571,7 +651,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -600,7 +688,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -683,8 +779,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "name": "Socket bridge",
+            "slug": "socket"
           }
         ]
       }
@@ -721,6 +817,14 @@
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -777,7 +881,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -834,9 +946,17 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -853,7 +973,7 @@
         "decimals": 8,
         "sinceTimestamp": 1700021675
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -872,9 +992,17 @@
         "decimals": 8,
         "sinceTimestamp": 1705069499
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -957,8 +1085,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Socket bridge",
+            "slug": "socket"
           }
         ]
       }
@@ -1011,6 +1139,14 @@
       "category": "ether",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -1155,7 +1291,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     }
   ]
 }

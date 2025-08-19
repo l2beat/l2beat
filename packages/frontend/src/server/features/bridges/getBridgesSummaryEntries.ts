@@ -1,6 +1,7 @@
 import type {
   BridgeCategory,
   Project,
+  ProjectAssociatedToken,
   ProjectTechnologyChoice,
   TableReadyValue,
   WarningWithSentiment,
@@ -74,10 +75,12 @@ interface TvsData {
         ether: number
         stablecoin: number
         associated: number
+        btc: number
+        other: number
       }
     | undefined
   change: number | undefined
-  associatedTokens: string[]
+  associatedTokens: ProjectAssociatedToken[]
   associatedTokenWarning: WarningWithSentiment | undefined
   warnings: WarningWithSentiment[]
 }

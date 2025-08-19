@@ -1,4 +1,164 @@
-Generated with discovered.json: 0x04730c3e656f9d8e15bfdfca64490bd9b48d3a8e
+Generated with discovered.json: 0x2b5c035e6f0d98291d4ff6f7b2c533f19f9a1a2a
+
+# Diff at Tue, 19 Aug 2025 10:59:32 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e55d710ea6abb9c86ba4da7b9086061648f68fba block: 1755010717
+- current timestamp: 1755601095
+
+## Description
+
+EOA removed delegation to metamask 7702 delegator.
+
+## Watched changes
+
+```diff
+    EOA  (0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c) {
+    +++ description: None
+      sourceHashes:
+-        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      proxyType:
+-        "EIP7702 EOA"
++        "EOA"
+      values:
+-        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xda4b68659d2780fff93228d9db78cb1666fdb544e28cfd9764b8cbe0938d1407","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+Generated with discovered.json: 0x9792b1fbe3be518a9171a5682c3c16dd897f4e82
+
+# Diff at Tue, 12 Aug 2025 15:01:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754911784
+- current timestamp: 1755010717
+
+## Description
+
+zora owner change part two.
+
+## Watched changes
+
+```diff
+    contract USDT Vault (Zora) (0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x9B33306a655C07e15c917F95a8298131f652dA33"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "eth:0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
++        "eth:0x9B33306a655C07e15c917F95a8298131f652dA33"
+    }
+```
+
+Generated with discovered.json: 0x6f3e23fa4cc52d2b050ae6df22c0aeb916b31dd0
+
+# Diff at Mon, 11 Aug 2025 11:30:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32817e35c9fe0ba1a1c24a734c37d91068b1565d block: 1754493282
+- current timestamp: 1754911784
+
+## Description
+
+owner change on zora vaults.
+
+## Watched changes
+
+```diff
+    contract USDT Vault (Zora) (0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x9B33306a655C07e15c917F95a8298131f652dA33"
+    }
+```
+
+```diff
+    contract USDC Vault (Zora) (0x58CDCf55f2c8660674F17561334F6370cbaDeEF8) {
+    +++ description: None
+      values.owner:
+-        "eth:0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
++        "eth:0x9B33306a655C07e15c917F95a8298131f652dA33"
+    }
+```
+
+Generated with discovered.json: 0x4f38b34a7cd4ac78aa2cb6ffe5d17d1b356d93a0
+
+# Diff at Wed, 06 Aug 2025 15:15:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1702d91eebfba5d614c3470bbe1babe10fbe4c2b block: 1754311053
+- current timestamp: 1754493282
+
+## Description
+
+new plug.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.168:
++        "eth:0x5Ed056B2AA13E19c5CCd4624F3e93C1B621faD5A"
+    }
+```
+
+Generated with discovered.json: 0x667e2cbc7cfb762219e3c782c5623806ad25ffd5
+
+# Diff at Mon, 04 Aug 2025 12:37:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7cc919a780045cf2b13d42712da413a3bff12b3 block: 1754057499
+- current timestamp: 1754311053
+
+## Description
+
+new plugg (WETH, 0 tvs).
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.167:
++        "eth:0xDb39c6502e6DaaC4d9EFe6383029bda464ea043c"
+    }
+```
+
+Generated with discovered.json: 0x593d0cc62cbb2e227028e506187cb66285620bfa
+
+# Diff at Fri, 01 Aug 2025 14:12:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@802242fc2209399893865092b1048d583aafc2bb block: 1751617043
+- current timestamp: 1754057499
+
+## Description
+
+EOA owner of Kinto's socket escrows has 7702-delegated to the standard metamask 7702 delegation contract.
+
+## Watched changes
+
+```diff
+    EOA  (0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xda4b68659d2780fff93228d9db78cb1666fdb544e28cfd9764b8cbe0938d1407","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+Generated with discovered.json: 0xddfd7b7e6f3fc24c25e2b4702066242178b9d7b1
 
 # Diff at Mon, 14 Jul 2025 12:46:23 GMT:
 

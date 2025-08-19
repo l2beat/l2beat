@@ -29,7 +29,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -58,7 +66,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -87,7 +103,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -116,7 +140,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -149,8 +181,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
+            "name": "Socket bridge",
+            "slug": "socket"
           }
         ]
       }
@@ -182,7 +214,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

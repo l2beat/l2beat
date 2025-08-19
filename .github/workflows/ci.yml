@@ -175,7 +175,7 @@ jobs:
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
     services:
       postgres:
-        image: postgres:14
+        image: postgres:15
         env:
           POSTGRES_PASSWORD: postgres
         options: >-
@@ -246,7 +246,7 @@ jobs:
         run: pnpm install
 
       - name: Build dependencies
-        run: pnpm build:dependencies
+        run: pnpm build:dependencies:frontend
 
       - name: Start mock server and test pages
         run: |

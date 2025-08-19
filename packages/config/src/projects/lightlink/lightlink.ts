@@ -1,5 +1,5 @@
 import {
-  EthereumAddress,
+  ChainSpecificAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -68,6 +68,7 @@ export const lightlink: ScalingProject = {
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
+  proofSystem: undefined,
   display: {
     name: 'LightLink',
     slug: 'lightlink',
@@ -96,12 +97,16 @@ export const lightlink: ScalingProject = {
     associatedTokens: ['LL'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE'),
+        address: ChainSpecificAddress(
+          'eth:0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE',
+        ),
         sinceTimestamp: UnixTime(1725540839),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9'),
+        address: ChainSpecificAddress(
+          'eth:0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9',
+        ),
         sinceTimestamp: UnixTime(1692185219),
         tokens: '*',
       }),
@@ -141,7 +146,7 @@ export const lightlink: ScalingProject = {
   },
   stateValidation: {
     description:
-      'The project implements an incomplete and non-funcional proof system.',
+      'The project implements an incomplete and non-functional proof system.',
     categories: [
       {
         title: 'Challenges',
@@ -190,19 +195,20 @@ export const lightlink: ScalingProject = {
     ],
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: [...discovery.getDiscoveredContracts()],
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
-      ...discovery.getDiscoveredPermissions(),
-      ...discovery.getPermissionDetails(
-        'Validators',
-        discovery.formatPermissionedAccounts(validatorAddresses),
-        `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
-      ),
+    ...discovery.getDiscoveredPermissions(),
+    ethereum: {
+      ...discovery.getDiscoveredPermissions()['ethereum'],
+      roles: [
+        discovery.getPermissionDetails(
+          'Validators',
+          discovery.formatPermissionedAccounts(validatorAddresses),
+          `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
+        ),
+      ],
     },
   },
   technology: {},

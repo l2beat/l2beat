@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   DA_BRIDGES,
@@ -67,6 +72,7 @@ export const honeypot: ScalingProject = {
       },
     },
   },
+  proofSystem: undefined,
   stage: getStage(
     {
       stage0: {
@@ -100,7 +106,9 @@ export const honeypot: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366'),
+        address: ChainSpecificAddress(
+          'eth:0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366',
+        ),
         tokens: '*',
         description: 'Contract storing bounty funds.',
       }),
@@ -195,7 +203,7 @@ export const honeypot: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('Honeypot', {
           description:
             'CartesiDApp instance for the Honeypot DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',
@@ -220,7 +228,7 @@ export const honeypot: ScalingProject = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Authority owner',

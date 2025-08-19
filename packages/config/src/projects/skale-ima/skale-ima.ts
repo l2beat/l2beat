@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
@@ -38,12 +38,16 @@ export const skaleIMA: Bridge = {
     associatedTokens: ['SKL'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x49F583d263e4Ef938b9E09772D3394c71605Df94'),
+        address: ChainSpecificAddress(
+          'eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94',
+        ),
         sinceTimestamp: UnixTime(1626719733),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669'),
+        address: ChainSpecificAddress(
+          'eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669',
+        ),
         sinceTimestamp: UnixTime(1626719900),
         tokens: '*',
       }),
@@ -91,7 +95,7 @@ export const skaleIMA: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'MessageProxyForMainnet',
           'Contract responsible for sending and receiving messages. It is used internally by the DepositBox contracts to transfer value between chains. It supports gas reimbursement from the CommunityPool.',
@@ -125,7 +129,7 @@ export const skaleIMA: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'ProxyAdminOwner',

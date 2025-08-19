@@ -12,10 +12,12 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
-import { formatTimestamp } from '~/utils/dates'
+import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
+import { formatRange } from '~/utils/dates'
 import { getDaChartMeta } from './meta'
 
 interface Props {
@@ -23,38 +25,58 @@ interface Props {
   isLoading: boolean
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
+  resolution: DaThroughputResolution
 }
 export function DaPercentageThroughputChart({
   data,
   isLoading,
   includeScalingOnly,
   syncStatus,
+  resolution,
 }: Props) {
-  const chartMeta = getDaChartMeta({ shape: 'square' })
+  const chartMeta = useMemo(() => getDaChartMeta({ shape: 'square' }), [])
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
-      const total = ethereum + celestia + avail + eigenda
+      const toSum = [
+        dataKeys.includes('ethereum') ? ethereum : 0,
+        dataKeys.includes('celestia') ? celestia : 0,
+        dataKeys.includes('avail') ? avail : 0,
+        dataKeys.includes('eigenda') ? eigenda : 0,
+      ].filter((e) => e !== null)
+
+      const total = toSum.reduce((acc, curr) => acc + curr, 0)
       if (total === 0) {
         return {
           timestamp: timestamp,
-          ethereum: 0,
-          celestia: 0,
-          avail: 0,
-          eigenda: 0,
+          ethereum: ethereum !== null ? 0 : null,
+          celestia: celestia !== null ? 0 : null,
+          avail: avail !== null ? 0 : null,
+          eigenda: eigenda !== null ? 0 : null,
         }
       }
       return {
         timestamp: timestamp,
-        ethereum: round((ethereum / total) * 100, 2),
-        celestia: round((celestia / total) * 100, 2),
-        avail: round((avail / total) * 100, 2),
-        eigenda: round((eigenda / total) * 100, 2),
+        ethereum: ethereum !== null ? round((ethereum / total) * 100, 2) : null,
+        celestia: celestia !== null ? round((celestia / total) * 100, 2) : null,
+        avail: avail !== null ? round((avail / total) * 100, 2) : null,
+        eigenda: eigenda !== null ? round((eigenda / total) * 100, 2) : null,
       }
     })
-  }, [data])
+  }, [data, dataKeys])
+
+  const syncedUntil = Math.max(...Object.values(syncStatus ?? {}))
 
   return (
-    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+    <ChartContainer
+      data={chartData}
+      meta={chartMeta}
+      isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
+    >
       <BarChart
         accessibilityLayer
         data={chartData}
@@ -67,24 +89,28 @@ export function DaPercentageThroughputChart({
           stackId="a"
           fill={chartMeta.ethereum.color}
           isAnimationActive={false}
+          hide={!dataKeys.includes('ethereum')}
         />
         <Bar
           dataKey="avail"
           stackId="a"
           fill={chartMeta.avail.color}
           isAnimationActive={false}
+          hide={!dataKeys.includes('avail')}
         />
         <Bar
           dataKey="celestia"
           stackId="a"
           fill={chartMeta.celestia.color}
           isAnimationActive={false}
+          hide={!dataKeys.includes('celestia')}
         />
         <Bar
           dataKey="eigenda"
           stackId="a"
           fill={chartMeta.eigenda.color}
           isAnimationActive={false}
+          hide={!dataKeys.includes('eigenda')}
         />
         {getCommonChartComponents({
           data: chartData,
@@ -96,12 +122,16 @@ export function DaPercentageThroughputChart({
             // And allow data overflow to avoid Y Axis labels being off
             allowDataOverflow: true,
           },
+          chartType: 'bar',
+          syncedUntil,
         })}
         <ChartTooltip
+          filterNull={false}
           content={
             <CustomTooltip
               includeScalingOnly={includeScalingOnly}
               syncStatus={syncStatus}
+              resolution={resolution}
             />
           }
         />
@@ -116,9 +146,11 @@ function CustomTooltip({
   label,
   includeScalingOnly,
   syncStatus,
+  resolution,
 }: TooltipProps<number, string> & {
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
+  resolution: DaThroughputResolution
 }) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
@@ -128,13 +160,21 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+        {formatRange(
+          label,
+          label +
+            (resolution === 'daily'
+              ? UnixTime.DAY
+              : resolution === 'sixHourly'
+                ? UnixTime.HOUR * 6
+                : UnixTime.HOUR),
+        )}
       </div>
       <HorizontalSeparator className="my-1" />
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
-          if (!configEntry) return null
+          if (!configEntry || entry.hide) return null
 
           const projectSyncStatus = entry.name
             ? syncStatus?.[entry.name]
@@ -157,7 +197,9 @@ function CustomTooltip({
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {isEstimated ? 'est. ' : ''} {entry.value?.toFixed(2)}%
+                {entry.value !== null && entry.value !== undefined
+                  ? `${isEstimated ? 'est. ' : ''} ${entry.value?.toFixed(2)}%`
+                  : 'No data'}
               </span>
             </div>
           )

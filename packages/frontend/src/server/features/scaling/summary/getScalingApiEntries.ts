@@ -1,4 +1,4 @@
-import type { Badge } from '@l2beat/config'
+import type { Badge, ProjectAssociatedToken } from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
 import { getL2Risks } from '~/pages/scaling/utils/getL2Risks'
 import { ps } from '~/server/projects'
@@ -6,7 +6,7 @@ import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 
-export interface ScalingApiEntry {
+interface ScalingApiEntry {
   id: string
   name: string
   shortName: string | undefined
@@ -30,7 +30,7 @@ export interface ScalingApiEntry {
       associated: number
     }
     change7d: number
-    associatedTokens: string[]
+    associatedTokens: ProjectAssociatedToken[]
   }
 }
 

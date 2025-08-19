@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -42,9 +42,7 @@ export const beamerbridgev2: Bridge = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          discovery.getContractDetails('EthereumRequestManager').address,
-        ),
+        address: discovery.getContractDetails('EthereumRequestManager').address,
         sinceTimestamp: UnixTime(1678964183),
         tokens: ['USDC', 'WETH', 'DAI', 'USDT'],
       }),
@@ -102,11 +100,11 @@ export const beamerbridgev2: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('Resolver', {
           name: 'Resolver',
           description:
-            'This contract resides on the L1 chain and is tasked with receiving thefill or non-fill proofs from the target L2 chain and forwarding them to the RequestManager on the source L2 chain.',
+            'This contract resides on the L1 chain and is tasked with receiving the fill or non-fill proofs from the target L2 chain and forwarding them to the RequestManager on the source L2 chain.',
         }),
         discovery.getContractDetails('EthereumRequestManager', {
           name: 'RequestManager',
@@ -147,7 +145,7 @@ export const beamerbridgev2: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Owner',

@@ -1,5 +1,6 @@
 import type {
   Project,
+  ProjectAssociatedToken,
   ProjectBridgeInfo,
   ProjectCustomColors,
   TableReadyValue,
@@ -55,8 +56,10 @@ export interface BridgesProjectEntry {
         ether: number
         stablecoin: number
         associated: number
+        btc: number
+        other: number
         warnings: WarningWithSentiment[]
-        associatedTokens: string[]
+        associatedTokens: ProjectAssociatedToken[]
       }
     }
     destination: TableReadyValue
@@ -155,9 +158,9 @@ export async function getBridgesProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
+  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData.chart)) {
     sections.push({
-      type: 'TvsSection',
+      type: 'BridgesTvsSection',
       props: {
         id: 'tvs',
         title: 'Value Secured',

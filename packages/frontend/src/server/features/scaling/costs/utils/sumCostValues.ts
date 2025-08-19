@@ -38,19 +38,19 @@ export function sumCostValues(
         overhead: 0,
         calldata: 0,
         compute: 0,
-        blobs: undefined,
+        blobs: null,
       },
       eth: {
         overhead: 0,
         calldata: 0,
         compute: 0,
-        blobs: undefined,
+        blobs: null,
       },
       usd: {
         overhead: 0,
         calldata: 0,
         compute: 0,
-        blobs: undefined,
+        blobs: null,
       },
     },
   )

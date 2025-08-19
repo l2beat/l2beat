@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "pz-eth",
+  "import": ["../../globalConfig.jsonc"],
+  "maxDepth": 0,
+  "initialAddresses": ["eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811"],
+  "overrides": {
+    "eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811": {
+      "ignoreMethods": [
+        "convertToAssets",
+        "convertToShares",
+        "farmIdsContains",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "rewardData"
+      ],
+      "ignoreInWatchMode": [
+        "clock",
+        "totalIssued",
+        "totalSupply",
+        "totalAssets"
+      ],
+      "fields": {
+        "$tokenData": {
+          "handler": {
+            "type": "ERC20Data"
+          }
+        }
+      }
+    }
+  }
+}

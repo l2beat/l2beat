@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -44,7 +45,7 @@ export const katana: ScalingProject = {
     BADGES.VM.EVM,
     BADGES.DA.EthereumBlobs,
     BADGES.RaaS.Conduit,
-    BADGES.Infra.AggLayer,
+    BADGES.Infra.Agglayer,
     BADGES.Stack.OPStack,
   ],
   ecosystemInfo: {
@@ -61,7 +62,10 @@ export const katana: ScalingProject = {
     upgradesAndGovernanceImage: 'agglayer-algateway',
     links: {
       websites: ['https://katana.network/'],
-      bridges: ['https://app.katana.network/'],
+      bridges: [
+        'https://app.katana.network/',
+        'https://bridge.katana.network/',
+      ],
       explorers: ['https://explorer.katanarpc.com'],
       repositories: ['https://github.com/agglayer'],
       documentation: [
@@ -71,8 +75,13 @@ export const katana: ScalingProject = {
       socialMedia: [
         'https://x.com/katana',
         'https://discord.com/invite/KatanaNetwork',
+        'https://reddit.com/r/katana/',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('sp1'),
   },
   config: {
     trackedTxs: [
@@ -132,7 +141,9 @@ export const katana: ScalingProject = {
     },
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
+        address: ChainSpecificAddress(
+          'eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
+        ),
         tokens: '*',
         sharedEscrow: {
           type: 'AggLayer',
@@ -155,7 +166,7 @@ export const katana: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN,
+      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
       secondLine: formatExecutionDelay(0), // state root is published together with the pessimistic proof
     },
     dataAvailability: DATA_ON_CHAIN,
@@ -296,7 +307,7 @@ export const katana: ScalingProject = {
         'The mechanism for allowing users to submit their own transactions is currently disabled.',
       references: [
         {
-          url: 'https://etherscan.io/address/0x9a6c2dcc7e523f87716e17ba36d10ccffa0a60bb#code#F1#L578',
+          url: 'https://etherscan.io/address/0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc#code#F1#L578',
           title:
             '_depositTransaction() in OptimismPortal2 - Etherscan source code',
         },
@@ -322,7 +333,7 @@ export const katana: ScalingProject = {
           {
             title:
               'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
-            url: 'https://etherscan.io/address/0x9ab2cb2107d3e737f7977b2e5042c58de98326ab#code#F1#L1210',
+            url: 'https://etherscan.io/address/0x42B9fF0644741e3353162678596e7D6aA6a13240#code#F1#L1280',
           },
         ],
       },

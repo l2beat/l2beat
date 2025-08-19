@@ -93,6 +93,9 @@ export interface TvsBreakdown {
   category: {
     ether: number
     stablecoin: number
+    btc: number
+    rwaPublic: number
+    rwaRestricted: number
     other: number
     associated: number
   }

@@ -18,7 +18,7 @@ export const stone: BaseProject = {
   },
   display: {
     description:
-      'Stone is a proving systems for programs written with Cairo language. Originally build by Starkware for proving Starknet state transition.',
+      'Stone is a proving system for programs written with Cairo language. Originally built by Starkware for proving Starknet state transition.',
     links: {
       websites: [
         'https://starkware.co',
@@ -35,7 +35,7 @@ export const stone: BaseProject = {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Stone,
         ZK_CATALOG_TAGS.ISA.CASM,
-        ZK_CATALOG_TAGS.Arithmetization.AIR,
+        // ZK_CATALOG_TAGS.Arithmetization.AIR,
         ZK_CATALOG_TAGS.Field.felt252,
       ],
     },
@@ -58,28 +58,31 @@ export const stone: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [
           ProjectId('starknet'),
-          ProjectId('apex'),
-          ProjectId('canvasconnect'),
+          // ProjectId('apex'),
+          // ProjectId('canvasconnect'),
           ProjectId('immutablex'),
-          ProjectId('layer2financezk'),
+          // ProjectId('layer2financezk'),
           ProjectId('myria'),
           ProjectId('paradex'),
-          ProjectId('reddioex'),
-          ProjectId('deversifi'),
+          // ProjectId('reddioex'),
+          // ProjectId('deversifi'),
           ProjectId('sorare'),
           ProjectId('brine'),
         ],
+        description:
+          "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
       },
-      {
-        // Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier)
-        hash: '0xe12a7131035327b1f54cf3163d124b71da052535e71f64bbd9c2a460ec3a43f0',
-        proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
-        knownDeployments: [
-          'https://etherscan.io/address/0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
-        ],
-        verificationStatus: 'notVerified',
-        usedBy: [ProjectId('dydx')],
-      },
+      // {
+      //   hash: '0xe12a7131035327b1f54cf3163d124b71da052535e71f64bbd9c2a460ec3a43f0',
+      //   proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
+      //   knownDeployments: [
+      //     'https://etherscan.io/address/0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   usedBy: [ProjectId('dydx')],
+      //   description:
+      //     "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
+      // },
     ],
   },
 }

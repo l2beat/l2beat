@@ -75,6 +75,7 @@ export const polygonpos: ScalingProject = {
     description:
       'Polygon PoS is an EVM-compatible, proof of stake sidechain for Ethereum, planning to become a Validium with a state validating bridge. The bridge is currently validated by Polygon validators and allows for asset as well as data movement between Polygon and Ethereum.',
   },
+  proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',
   },
@@ -83,39 +84,51 @@ export const polygonpos: ScalingProject = {
     escrows: [
       discovery.getEscrowDetails({
         // DepositManager
-        address: EthereumAddress('0x401F6c983eA34274ec46f84D70b31C151321188b'),
+        address: ChainSpecificAddress(
+          'eth:0x401F6c983eA34274ec46f84D70b31C151321188b',
+        ),
         tokens: '*',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
         // ERC20Predicate
-        address: EthereumAddress('0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf'),
+        address: ChainSpecificAddress(
+          'eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
+        ),
         premintedTokens: ['TRADE'],
         tokens: '*',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
         // MintableERC20Predicate
-        address: EthereumAddress('0x9923263fA127b3d1484cFD649df8f1831c2A74e4'),
+        address: ChainSpecificAddress(
+          'eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4',
+        ),
         tokens: '*',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
         // EtherPredicate
-        address: EthereumAddress('0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30'),
+        address: ChainSpecificAddress(
+          'eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
+        ),
         tokens: ['ETH'],
         ...upgrades,
       }),
       discovery.getEscrowDetails({
         // ERC20EscrowPredicate for TOWER token
-        address: EthereumAddress('0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4'),
+        address: ChainSpecificAddress(
+          'eth:0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4',
+        ),
         tokens: '*',
         ...upgrades,
       }),
       // ...other predicates up until PolygonERC20MintBurnPredicate do not hold funds
       discovery.getEscrowDetails({
         // old MaticWETH contract escrowing ETH sent to Polygon
-        address: EthereumAddress('0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8'),
+        address: ChainSpecificAddress(
+          'eth:0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8',
+        ),
         tokens: ['ETH'],
       }),
     ],
@@ -238,7 +251,7 @@ export const polygonpos: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('RootChain', {
           description:
             'Contract storing Polygon PoS chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
@@ -304,7 +317,7 @@ export const polygonpos: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'PolygonMultisig',

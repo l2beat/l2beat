@@ -56,6 +56,9 @@ export const fuelv1: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
   config: {
     escrows: [
       {
@@ -185,7 +188,7 @@ export const fuelv1: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [discovery.getContractDetails('Fuel')],
+      ethereum: [discovery.getContractDetails('Fuel')],
     },
     risks: [],
   },

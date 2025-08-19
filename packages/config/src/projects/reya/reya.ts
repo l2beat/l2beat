@@ -25,7 +25,7 @@ export const reya: ScalingProject = orbitStackL2({
     links: {
       websites: ['https://reya.network/'],
       bridges: [
-        'https://reya.network/lge',
+        'https://app.reya.network/bridge',
         'https://bridge.gelato.network/bridge/reya-network',
       ],
       documentation: ['https://docs.reya.network/'],
@@ -102,5 +102,5 @@ export const reya: ScalingProject = orbitStackL2({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
 })

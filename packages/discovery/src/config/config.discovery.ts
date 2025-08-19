@@ -65,6 +65,10 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
       `${ENV_NAME}_REORG_SAFE_DEPTH`,
     ]),
+    coingeckoApiKey: env.optionalString([
+      'COINGECKO_API_KEY_FOR_DISCOVERY',
+      'COINGECKO_API_KEY',
+    ]),
     multicall: chainConfig.multicall,
     explorer:
       chainConfig.explorer.type === 'blockscout'
@@ -87,6 +91,7 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
                   'ETHERSCAN_API_KEY_FOR_DISCOVERY',
                   'ETHERSCAN_API_KEY',
                 ]),
+                unsupported: chainConfig.explorer.unsupported,
               }
             : ({
                 type: chainConfig.explorer.type,

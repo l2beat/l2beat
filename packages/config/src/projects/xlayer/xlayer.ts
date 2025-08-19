@@ -1,9 +1,6 @@
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
-import {
+  CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   REASON_FOR_BEING_OTHER,
@@ -12,60 +9,64 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { polygonCDKStack } from '../../templates/polygonCDKStack'
-import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('xlayer')
 const bridge = discovery.getContract('PolygonSharedBridge')
 
-const membersCountDAC = discovery.getContractValue<number>(
-  'PolygonDataCommittee',
-  'getAmountOfMembers',
-)
-
-const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'PolygonDataCommittee',
-  'requiredAmountOfSignatures',
-)
-
-const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
-  '0x0000000000000000000000000000000000000000'
-
-const rollupModuleContract = discovery.getContract('Validium')
-
-export const xlayer: ScalingProject = polygonCDKStack({
+export const xlayer: ScalingProject = {
   addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
-  discovery,
-  additionalBadges: [BADGES.DA.DAC, BADGES.Infra.AggLayer],
-  daProvider: {
-    layer: DA_LAYERS.DAC,
-    bridge: DA_BRIDGES.DAC_MEMBERS({
-      requiredSignatures: requiredSignaturesDAC,
-      membersCount: membersCountDAC,
-    }),
-    riskView: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: membersCountDAC,
-      requiredSignatures: requiredSignaturesDAC,
-    }),
-    technology: {
-      name: 'Data is not stored on chain',
-      description:
-        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the Sequencer, after being signed by the DAC members.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'the external data becomes unavailable.',
-          isCritical: true,
-        },
+  badges: [BADGES.DA.CustomDA, BADGES.Infra.Agglayer, BADGES.RaaS.Gateway],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+  ],
+  proofSystem: undefined,
+  display: {
+    name: 'X Layer',
+    slug: 'xlayer',
+    description:
+      'X Layer is a Layer 2 by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
+    links: {
+      websites: ['https://okx.com/xlayer'],
+      documentation: [
+        'https://web3.okx.com/xlayer/docs/users/welcome/about-x-layer',
       ],
-      references: [
-        {
-          title:
-            'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
-          url: 'https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
+      explorers: ['https://okx.com/explorer/xlayer'],
+      socialMedia: ['https://twitter.com/XLayerOfficial'],
+    },
+    category: 'Other',
+    purposes: ['Universal'],
+  },
+  dataAvailability: {
+    layer: DA_LAYERS.NONE,
+    bridge: DA_BRIDGES.NONE,
+    mode: { value: 'None' },
+  },
+  config: {
+    associatedTokens: ['OKB'],
+    escrows: [
+      discovery.getEscrowDetails({
+        address: bridge.address,
+        tokens: '*',
+        sinceTimestamp: UnixTime(1712620800),
+        sharedEscrow: {
+          type: 'AggLayer',
+          nativeAsset: 'etherWrapped',
+          wethAddress: EthereumAddress(
+            '0x5a77f1443d16ee5761d310e38b62f77f726bc71c',
+          ),
+          tokensToAssignFromL1: ['OKB'],
         },
-      ],
+      }),
+    ],
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
     },
   },
   chainConfig: {
@@ -90,70 +91,44 @@ export const xlayer: ScalingProject = polygonCDKStack({
       },
     ],
   },
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
-  display: {
-    name: 'X Layer',
-    slug: 'xlayer',
-    description:
-      'X Layer is Validium by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
-    links: {
-      websites: ['https://okx.com/xlayer'],
-      documentation: [
-        'https://okx.com/xlayer/docs/users/welcome/about-x-layer',
-      ],
-      explorers: ['https://okx.com/explorer/xlayer'],
-      socialMedia: ['https://twitter.com/XLayerOfficial'],
-    },
-  },
-  associatedTokens: ['OKB'],
-  nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(bridge.address),
-      tokens: '*',
-      sinceTimestamp: UnixTime(1712620800),
-      sharedEscrow: {
-        type: 'AggLayer',
-        nativeAsset: 'etherWrapped',
-        wethAddress: EthereumAddress(
-          '0x5a77f1443d16ee5761d310e38b62f77f726bc71c',
-        ),
-        tokensToAssignFromL1: ['OKB'],
-      },
-    }),
-  ],
-  // project-specific sequencer txs (can be listed when we are able to split the shared agglayer trackedTxs):
-  // nonTemplateTrackedTxs: [
-  //   {
-  //     uses: [
-  //       { type: 'liveness', subtype: 'batchSubmissions' },
-  //       { type: 'l2costs', subtype: 'batchSubmissions' },
-  //     ],
-  //     query: {
-  //       formula: 'functionCall',
-  //       address: rollupModuleContract.address,
-  //       selector: '0xb910e0f9',
-  //       functionSignature:
-  //         'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)',
-  //       sinceTimestamp: UnixTime(1736257283),
-  //     },
-  //   },
-  // ],
   milestones: [
+    {
+      title: 'Migration to Pessimistic Proofs',
+      url: 'https://etherscan.io/tx/0xab579dbf426db0badfaef925504105088f3300b51f1362a4084c57d7e13c0fb1#eventlog',
+      date: '2025-08-05',
+      description:
+        'X Layer stops validating the full L2 state and moves to bridge accounting proofs.',
+      type: 'general',
+    },
     {
       title: 'X Layer Public Launch',
       url: 'https://x.com/XLayerOfficial/status/1780056275898048562',
       date: '2024-04-16',
-      description: 'X Layer is now accessible to everyone.',
+      description: 'X Layer is live on mainnet, integrated with Agglayer.',
       type: 'general',
     },
   ],
-  rollupModuleContract,
-  rollupVerifierContract: discovery.getContract('Verifier'),
-  isForcedBatchDisallowed,
-  customDa: PolygoncdkDAC({
-    dac: {
-      requiredMembers: requiredSignaturesDAC,
-      membersCount: membersCountDAC,
+  type: 'layer2',
+  id: ProjectId('xlayer'),
+  capability: 'universal',
+  riskView: {
+    stateValidation: {
+      ...RISK_VIEW.STATE_NONE,
+      description:
+        "Currently the system permits invalid state roots. 'Pessimistic' proofs only validate the bridge accounting.",
     },
-  }),
-})
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  },
+  stage: {
+    stage: 'NotApplicable',
+  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  discoveryInfo: getDiscoveryInfo([discovery]),
+}

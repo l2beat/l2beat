@@ -16,11 +16,11 @@ pnpm build
 
 ### Database
 
-After the nodejs dependencies have been installed you should also install a Postgres database (v14).
+After the nodejs dependencies have been installed you should also install a Postgres database (v15).
 The recommended way is through docker using the commands below.
 
 ```
-docker run -d --name=l2beat_postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:14
+docker run -d --name=l2beat_postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:15
 docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_local'
 docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_test'
 ```
@@ -204,7 +204,17 @@ You can configure the log level by setting the `LOG_LEVEL` variable. The possibl
 - `pnpm tvs:generate` - regenerate TVS config from latest inputs (check --help for available
   options)
 - `pnpm tvs:execute` - executes TVS with latest config (check --help for available options)
-
+- `pnpm tvs:calculate-ids` - calculates IDs for amounts and prices. Examples:
+```bash
+pnpm tvs:calculate-ids --projects=unichain,arbitrum
+```
+```bash
+pnpm tvs:calculate-ids --tokens=unichain-ETH,unichain-USDC
+```
+- `pnpm tvs:translate-id` - find out which config corresponds to given ID. Examples:
+```bash
+pnpm tvs:translate-id 5da09aa91cbd
+```
 - `scripts/rediscoverRawDevAll.sh` - re-runs raw discovery --dev on all existing projects
 
 ## Maintenance endpoints

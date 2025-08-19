@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -40,7 +44,9 @@ export const corn: ScalingProject = orbitStackL2({
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       // wbtc vault backing the BTCN in the canonical bridge
-      address: EthereumAddress('0x00943b11764176C3a8323aEFCBd6fE70CFb6272d'),
+      address: ChainSpecificAddress(
+        'eth:0x00943b11764176C3a8323aEFCBd6fE70CFb6272d',
+      ),
       tokens: ['WBTC'],
       bridgedUsing: {
         bridges: [
@@ -56,7 +62,9 @@ export const corn: ScalingProject = orbitStackL2({
     }),
     discovery.getEscrowDetails({
       // cbBTC vault backing the BTCN in the canonical bridge
-      address: EthereumAddress('0x957c9dc25de6b8e46a7fa0d081ba749dd005b54f'),
+      address: ChainSpecificAddress(
+        'eth:0x957c9dc25de6b8e46a7fa0d081ba749dd005b54f',
+      ),
       tokens: ['cbBTC'],
       bridgedUsing: {
         bridges: [
@@ -109,5 +117,5 @@ export const corn: ScalingProject = orbitStackL2({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
 })

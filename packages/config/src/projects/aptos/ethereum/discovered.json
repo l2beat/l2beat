@@ -1,7 +1,7 @@
 {
   "name": "aptos",
   "chain": "ethereum",
-  "blockNumber": 22882445,
+  "timestamp": 1752073991,
   "configHash": "0x7902a788a72a1ff0553044dd35cf8a0de0f5db156c78ce54972f700aac33d003",
   "entries": [
     {
@@ -817,5 +817,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861"
   },
+  "usedBlockNumbers": { "ethereum": 22882445 },
   "permissionsConfigHash": "0xbd5120a7ee4a9d4d211861f39698b2d4c21cd927afd70a365a7a11479d2db1f5"
 }

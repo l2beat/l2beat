@@ -1,4 +1,149 @@
-Generated with discovered.json: 0xdbbf1966e919bcb4afd5c70d5ce35ac8c1433642
+Generated with discovered.json: 0x1d6acfe72c11fe05bd60410dec4bb4028323bf34
+
+# Diff at Tue, 12 Aug 2025 15:57:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754921961
+- current timestamp: 1755014055
+
+## Description
+
+USDC rescuer added.
+
+## Watched changes
+
+```diff
+    contract Scroll USDC (0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4) {
+    +++ description: Contract of the USDC token on Scroll.
+      values.rescuer:
+-        "scr:0x0000000000000000000000000000000000000000"
++        "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
+    }
+```
+
+Generated with discovered.json: 0x2129e7de31b81bfd1c58f8801b75b76f35c39de5
+
+# Diff at Tue, 05 Aug 2025 14:17:53 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
+- current timestamp: 1754403402
+
+## Description
+
+Access control changes.
+
+## Watched changes
+
+```diff
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.PAUSE_CONTROLLER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd"]}
+      values.accessControl.roles.SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"]}
+      values.accessControl.targets.scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC.setPause(bool).0:
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC.setPause(bool).0:
+-        "emergency-nodelay"
++        "PAUSE_CONTROLLER_ROLE"
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xaa5e9334:
++        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xc63b9e2d:
++        ["ops-fast"]
+      values.accessControl.targets.scr:0x331A873a2a85219863d80d248F9e2978fE88D0Ea:
++        {"updateBaseFeeOverhead(uint256)":["ops-fast"],"updateBaseFeeScalar(uint256)":["ops-fast"]}
+      values.accessControl.targets.scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd:
++        {"pause(address)":["emergency-nodelay"],"updatePauseCooldownPeriod(uint256)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"resetPauseCooldownPeriod(address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"unpause(address)":["emergency-nodelay","SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE"]}
+    }
+```
+
+```diff
+    contract AgoraGovernor (0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: Used to propose and manage onchain governance proposals.
+      values.votingDelay:
+-        86400
++        3600
+      values.votingPeriod:
+-        201600
++        432000
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA76acF000C890b0DD7AEEf57627d9899F955d026) {
+    +++ description: None
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Security Council Minority (0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2PauseController (0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/L2PauseController/PauseController.sol    |  619 +++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++++++
+ .../Scroll Security Council Minority/SafeL2.sol    | 1152 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 4 files changed, 2537 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753093859 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.TIMELOCK_1DAY_DELAY_TOLE:
+-        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
+      values.accessControl.roles.TIMELOCK_1DAY_DELAY_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
+    }
+```
+
+Generated with discovered.json: 0x9b36c271cfd6a020df8e88b2d9ad59a584a8a454
+
+# Diff at Thu, 31 Jul 2025 10:55:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1753093859
+- current timestamp: 1753093859
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753093859 (main branch discovery), not current.
+
+```diff
+    contract TimelockSCEmergencyScroll (0x1f807E2E8ab2e61230a0A9C271F90242831278b4) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      name:
+-        "TimelockSCEmergency"
++        "TimelockSCEmergencyScroll"
+    }
+```
+
+Generated with discovered.json: 0x16f3ff55675a5fbde37e84d4506b3ff4ff786461
 
 # Diff at Mon, 14 Jul 2025 12:47:11 GMT:
 

@@ -17,7 +17,6 @@ const CLIENT_CONFIG = {
     .enum(['development', 'test', 'production'])
     .default('development'),
   DEPLOYMENT_ENV: z.enum(['preview', 'production']).optional(),
-  CLIENT_SIDE_FEATURE_FLAG_STAGE_SORTING: featureFlag.default(false),
   CLIENT_SIDE_GITCOIN_ROUND_LIVE: featureFlag.default(false),
   CLIENT_SIDE_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
   CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
@@ -62,7 +61,7 @@ const SERVER_CONFIG = {
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
-export type Env = z.infer<typeof ServerEnv>
+type Env = z.infer<typeof ServerEnv>
 
 export const env = createEnv()
 
@@ -115,8 +114,6 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
 
     // Client
-    CLIENT_SIDE_FEATURE_FLAG_STAGE_SORTING:
-      process.env.CLIENT_SIDE_FEATURE_FLAG_STAGE_SORTING,
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
     CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,

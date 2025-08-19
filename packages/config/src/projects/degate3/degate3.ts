@@ -1,6 +1,7 @@
 import {
   assert,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -137,6 +138,10 @@ export const degate3: ScalingProject = {
         'DeGate is a ZK rollup based on Loopring’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('loopringprover'),
+  },
   chainConfig: {
     name: 'degate3',
     chainId: undefined,
@@ -152,7 +157,9 @@ export const degate3: ScalingProject = {
     associatedTokens: ['DG'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x54D7aE423Edb07282645e740C046B9373970a168'),
+        address: ChainSpecificAddress(
+          'eth:0x54D7aE423Edb07282645e740C046B9373970a168',
+        ),
         sinceTimestamp: UnixTime(1699746983),
         tokens: '*',
       }),
@@ -402,7 +409,7 @@ export const degate3: ScalingProject = {
     },
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'BlockVerifier Owner',
@@ -427,7 +434,7 @@ export const degate3: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ExchangeV3', {
           description: 'Main ExchangeV3 contract.',
           ...timelockUpgrades1,

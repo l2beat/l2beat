@@ -92,8 +92,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Connext (xERC20)",
-            "slug": "connext"
+            "name": "Custom escrow"
           }
         ]
       }
@@ -125,7 +124,14 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     }
   ]
 }

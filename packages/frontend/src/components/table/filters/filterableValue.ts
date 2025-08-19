@@ -20,6 +20,10 @@ export const FilterableValueId = v.enum([
   'infrastructure',
   'vm',
   'other',
+  'techStack',
+  'bridgingType',
+  'category',
+  'bridgedUsing',
 ])
 
 export const filterIdToLabel: Record<FilterableValueId, string> = {
@@ -34,6 +38,10 @@ export const filterIdToLabel: Record<FilterableValueId, string> = {
   infrastructure: 'Infrastructure',
   vm: 'VM',
   other: 'Other properties',
+  techStack: 'Tech Stack',
+  bridgingType: 'Bridging Type',
+  category: 'Category',
+  bridgedUsing: 'Bridged Using',
 }
 
 export const filterIdToValues: Record<FilterableValueId, string> = {
@@ -48,6 +56,10 @@ export const filterIdToValues: Record<FilterableValueId, string> = {
   infrastructure: 'infras',
   vm: 'VMs',
   other: 'other',
+  techStack: 'tech stacks',
+  bridgingType: 'bridging types',
+  category: 'categories',
+  bridgedUsing: 'bridged using',
 }
 
 export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {

@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xa20efa4e26635f6791610afe7dad4226ec13fa00
+Generated with discovered.json: 0xcdb182a862f630bb0313d04dece94d9b4f53cafd
+
+# Diff at Tue, 12 Aug 2025 14:47:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1753200467
+- current timestamp: 1755010019
+
+## Description
+
+caldera multisig: 2 signers removed.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.6:
+-        "eth:0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9"
+      values.$members.7:
+-        "eth:0xb004d94314a34627C09E4b8f83D9E7420d99BbFC"
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "4 of 7 (57%)"
+    }
+```
+
+Generated with discovered.json: 0x54c10d781e18eb5560ae0177a6ee11c046c2a1b8
 
 # Diff at Tue, 22 Jul 2025 16:08:30 GMT:
 

@@ -1,0 +1,115 @@
+{
+  "name": "usds",
+  "chain": "ethereum",
+  "timestamp": 1752830555,
+  "configHash": "0xf315ceeb3c0b36e05dbb79206249c02ff28f6a514e2ce90869ab20eb556e9a1a",
+  "entries": [
+    {
+      "name": "Usds",
+      "address": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x3511bc489974e8a833d7590187eaab4f8835886bdcb8fff1ea63b7b4caaab165"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "sinceTimestamp": 1725290327,
+      "sinceBlock": 20663730,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102",
+        "$pastUpgrades": [
+          [
+            "2024-09-02T15:18:47.000Z",
+            "0xdf7d4ba4114f654a4ef64f74099be3fc91358610078febe5be68af6cf257b21c",
+            ["eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102"]
+          ]
+        ],
+        "$tokenData": {
+          "name": "USDS Stablecoin",
+          "coingeckoId": "usds",
+          "address": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+          "symbol": "USDS",
+          "decimals": 18,
+          "deploymentTimestamp": 1725290327,
+          "coingeckoListingTimestamp": 1727136000,
+          "category": "stablecoin",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+          "chainId": 1,
+          "supply": "zero",
+          "source": "canonical"
+        },
+        "$upgradeCount": 1,
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0x2bc1b7e1bb385a0b6eeb599e6bf1dc875f0933b1a91bea26cf895ebdee2a5b56",
+        "getImplementation": "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102",
+        "name": "USDS Stablecoin",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "symbol": "USDS",
+        "totalSupply": "3762989808119323835942780598",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "version": "1"
+      },
+      "implementationNames": {
+        "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": "ERC1967Proxy",
+        "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102": "Usds"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Deny(address indexed usr)",
+      "event Initialized(uint64 version)",
+      "event Rely(address indexed usr)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Upgraded(address indexed implementation)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function allowance(address, address) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address) view returns (uint256)",
+      "function burn(address from, uint256 value)",
+      "function decimals() view returns (uint8)",
+      "function deny(address usr)",
+      "function getImplementation() view returns (address)",
+      "function initialize()",
+      "function mint(address to, uint256 value)",
+      "function name() view returns (string)",
+      "function nonces(address) view returns (uint256)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, bytes signature)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function rely(address usr)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function version() view returns (string)",
+      "function wards(address) view returns (uint256)"
+    ],
+    "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 22945160 },
+  "permissionsConfigHash": "0x5205dc96e8dbf0f049f36c160f3166e9a47683bc14df7b0432a6f4db8676ff2d"
+}

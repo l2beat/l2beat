@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -92,6 +93,10 @@ export const zksync: ScalingProject = {
         'ZKsync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('zksyncprover'),
+  },
   chainConfig: {
     name: 'zksync',
     chainId: undefined,
@@ -106,7 +111,9 @@ export const zksync: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xaBEA9132b05A70803a4E85094fD0e1800777fBEF'),
+        address: ChainSpecificAddress(
+          'eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+        ),
         sinceTimestamp: UnixTime(1592218707),
         tokens: '*',
       }),
@@ -340,7 +347,7 @@ export const zksync: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ZkSync', {
           description:
             'The main Rollup contract. Allows the operator to commit blocks, provide ZK proofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
@@ -394,7 +401,7 @@ export const zksync: ScalingProject = {
       'The data format documentations can be found [here](https://github.com/matter-labs/zksync/blob/master/docs/protocol.md#data-format).',
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'ZkSync Multisig',

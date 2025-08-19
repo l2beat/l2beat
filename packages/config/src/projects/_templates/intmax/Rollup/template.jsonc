@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main rollup contract used to submit blocks and process deposits. It saves block hashes to be then referenced by the Withdrawal contract.",
+  "ignoreRelatives": ["l2ScrollMessenger"],
+  "ignoreMethods": ["proxiableUUID", "blockHashes"],
+  "ignoreInWatchMode": [
+    "depositIndex",
+    "depositTreeRoot",
+    "getLatestBlockNumber",
+    "lastProcessedDepositId"
+  ],
+  "fields": {
+    "liquidity": {
+      "edit": ["format", "EthereumAddress"]
+    }
+  }
+}

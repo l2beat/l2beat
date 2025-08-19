@@ -85,11 +85,19 @@
         "address": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
         "chain": "worldchain",
         "decimals": 6,
-        "sinceTimestamp": 1729209600
+        "sinceTimestamp": 1729209600,
+        "untilTimestamp": 1753966800
       },
       "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -125,7 +133,7 @@
         "decimals": 8,
         "sinceTimestamp": 1719432959
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

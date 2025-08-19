@@ -1,7 +1,7 @@
 import type { SvgIconProps } from '~/icons/SvgIcon'
 import { cn } from '~/utils/cn'
 
-export interface LogoProps extends SvgIconProps {
+interface LogoProps extends SvgIconProps {
   animated?: boolean
   small?: boolean
 }

@@ -19,7 +19,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatChallengePeriod } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -86,6 +85,7 @@ export const metis: ScalingProject = {
       ],
     },
   },
+  proofSystem: undefined,
   stage: getStage(
     {
       stage0: {
@@ -218,12 +218,11 @@ export const metis: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...RISK_VIEW.STATE_FP_INT,
+      ...RISK_VIEW.STATE_FP_INT(CHALLENGE_PERIOD_SECONDS),
       description:
-        RISK_VIEW.STATE_FP_INT.description +
+        RISK_VIEW.STATE_FP_INT().description +
         ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
       sentiment: 'bad',
-      secondLine: formatChallengePeriod(CHALLENGE_PERIOD_SECONDS),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
@@ -239,19 +238,19 @@ export const metis: ScalingProject = {
         references: [
           {
             title: 'StateCommitmentChain - Etherscan source code',
-            url: 'https://etherscan.io/address/0xe6e2dff51b039c8eff0b21880e2fb008af10b365#code',
+            url: 'https://etherscan.io/address/0x49A4D7ae835eA21c919B363fa88614b61d7985E7#code',
           },
         ],
       },
       {
         title: 'Challenges',
-        description: `Games are created on demand by the permissioned GameCreator should a dispute arise. Users can signal the need for a dispute through the dispute() function of the \`DisputeGameFactory\`. Should a game not be created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
+        description: `Games are created on demand by the permissioned GameCreator should a dispute arise. Users can signal the need for a dispute through the dispute() function of the \`DisputeGameFactory\`. If a game is not created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
           DISPUTE_TIMEOUT_PERIOD,
-        )}, sequencer deposits in the \`FaultProofLockingPool\` can be slashed and transfered to the dispute creator. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Verifier contract address, which currently corresponds to the \`Metis Multisig\`.`,
+        )}, anyone can call \`disputeTimeout()\`. This function calls \`saveDisputedBatchTimeout()\` on the \`StateCommitmentChain\`, which marks the batch as disputed. This blocks L2->L1 messaging and withdrawals for the disputed batch and any subsequent batches until the dispute is deleted. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Verifier contract address, which currently corresponds to the \`Metis Multisig\`.`,
         risks: [
           {
-            category: 'Funds can be stolen if',
-            text: 'an invalid state root is submitted to the system and no dispute game is created by the permissioned GameCreator.',
+            category: 'Funds can be frozen if',
+            text: 'an invalid state root is successfully disputed but it is not deleted by the permissioned MVM_Verifier.',
             isCritical: true,
           },
         ],
@@ -332,13 +331,9 @@ export const metis: ScalingProject = {
       },
     ],
   },
-  permissions: {
-    [discovery.chain]: discovery.getDiscoveredPermissions(),
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   contracts: {
-    addresses: {
-      [discovery.chain]: discovery.getDiscoveredContracts(),
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [

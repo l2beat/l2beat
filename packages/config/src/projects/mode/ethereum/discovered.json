@@ -1,7 +1,7 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "blockNumber": 22895942,
+  "timestamp": 1755507657,
   "configHash": "0xbf52d99d8336c0508df4eaa3b9815b3d2c131da419543d0ba1b0308724e0b35c",
   "entries": [
     {
@@ -76,10 +76,10 @@
         "domainSeparator": "0x441442b08d4fdc9877b881d21b5394f2af9aa0f41ef7184f54e10664ea757773",
         "getChainId": 1,
         "GnosisSafe_modules": [
-          "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+          "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754"
         ],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 4,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -88,51 +88,14 @@
       }
     },
     {
-      "address": "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
+      "address": "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "DeputyPauseModule",
-      "address": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
-      "type": "Contract",
-      "template": "opstack/DeputyPauseModule",
-      "sourceHashes": [
-        "0x9ce85f452c217be52c8f91f907759e771e78bbcd9d8cda37e90e3cdd9a70cf15"
-      ],
-      "proxyType": "immutable",
-      "description": "Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
-      "sinceTimestamp": 1745572679,
-      "sinceBlock": 22345090,
-      "values": {
-        "$immutable": true,
-        "deputy": "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC",
-        "deputyAuthMessageTypehash": "0x92e47526b2e32be4f66cd2600e9cda9147735107631c0b241a067693f49b7f38",
-        "deputyGuardianModule": "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "DeputyPauseModule",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "foundationSafe": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-        "pauseMessageTypehash": "0xd64f31a1d64c5b7eede44a92f46995fef9325cb2533a7798a738932f156c4481",
-        "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-        "version": "1.0.0-beta.2"
-      },
-      "implementationNames": {
-        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C": "DeputyPauseModule"
-      }
+      "address": "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
@@ -143,10 +106,12 @@
       "name": "LivenessGuard",
       "address": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
       "type": "Contract",
+      "template": "gnosisSafeModules/LivenessGuard",
       "sourceHashes": [
         "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
       ],
       "proxyType": "immutable",
+      "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -241,31 +206,14 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0x75fa114D4286c7d1114CE773EfF0f1bDe0aF966a",
-          "role": ".challenger",
-          "via": [
-            { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
-            {
-              "address": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
-              "condition": "though restricted to the global pause function"
-            }
-          ]
-        },
-        {
           "permission": "guard",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": ".guardian",
           "via": [
             { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
             {
-              "address": "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-              "condition": "if not revoked by the Security Council"
-            },
-            { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
-            {
-              "address": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
-              "condition": "though restricted to the global pause function"
+              "address": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
+              "condition": "though restricted to the SuperchainConfig's `pause()` function"
             }
           ]
         }
@@ -273,14 +221,19 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
+          "from": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
           "role": ".deputy",
-          "condition": "though restricted to the global pause function"
+          "condition": "though restricted to the SuperchainConfig's `pause()` function"
         }
       ]
     },
     {
       "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -309,7 +262,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 75,
+        "nonce": 76,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -422,6 +375,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
           "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
@@ -438,8 +392,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 111,
+        "multisigThreshold": "4 of 12 (33%)",
+        "nonce": 153,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -487,11 +441,6 @@
         "eth:0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15": "AddressManager"
       },
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SuperchainProxyAdmin",
@@ -671,7 +620,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 20,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -918,7 +867,8 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 112,
+        "game1337": "eth:0x0000000000000000000000000000000000000000",
+        "gameCount": 263,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x75fa114D4286c7d1114CE773EfF0f1bDe0aF966a",
@@ -928,8 +878,12 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 112,
+        "permissionedGamesTotal": 263,
         "version": "1.0.0"
+      },
+      "fieldMeta": {
+        "gameImpls": { "severity": "HIGH" },
+        "game1337": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E": "Proxy",
@@ -1068,6 +1022,48 @@
       ]
     },
     {
+      "name": "DeputyPauseModule",
+      "address": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
+      "type": "Contract",
+      "template": "opstack/DeputyPauseModule",
+      "sourceHashes": [
+        "0x6d8659eec5f14dbbacd2c5fb2ebcfab040b98237fc8ea869b3317a9e425da7bf"
+      ],
+      "proxyType": "immutable",
+      "description": "Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+          "role": ".GnosisSafe_modules"
+        }
+      ],
+      "sinceTimestamp": 1748963099,
+      "sinceBlock": 22624903,
+      "values": {
+        "$immutable": true,
+        "deputy": "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC",
+        "deputyAuthMessageTypehash": "0x92e47526b2e32be4f66cd2600e9cda9147735107631c0b241a067693f49b7f38",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "DeputyPauseModule",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "foundationSafe": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+        "guardianSafe": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+        "pauseMessageTypehash": "0x0ad9a3778ba0f89045b0ba6e23129cdbd178a22b085d85b5dd8a48c8af831b54",
+        "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "version": "2.1.0"
+      },
+      "implementationNames": {
+        "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754": "DeputyPauseModule"
+      }
+    },
+    {
       "address": "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1136,7 +1132,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 32,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1221,7 +1217,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 489262,
-          "prevBlockNum": 22895595
+          "prevBlockNum": 23166910
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1233,6 +1229,7 @@
         "version": "3.10.0"
       },
       "fieldMeta": {
+        "respectedGameType": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
@@ -1245,7 +1242,11 @@
       "usedTypes": [
         {
           "typeCaster": "Mapping",
-          "arg": { "0": "FaultDisputeGame", "1": "PermissionedDisputeGame" }
+          "arg": {
+            "0": "FaultDisputeGame",
+            "1": "PermissionedDisputeGame",
+            "1337": "KailuaGame"
+          }
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -1259,18 +1260,18 @@
       "name": "SuperchainConfig",
       "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "type": "Contract",
-      "template": "opstack/SuperchainConfig",
+      "template": "opstack/SuperchainConfig_expiry",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
+        "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.",
       "sinceTimestamp": 1705954799,
       "sinceBlock": 19064589,
       "values": {
         "$admin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-        "$implementation": "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7",
+        "$implementation": "eth:0xCe28685EB204186b557133766eCA00334EB441E4",
         "$pastUpgrades": [
           [
             "2024-01-22T20:19:59.000Z",
@@ -1291,18 +1292,27 @@
             "2025-04-02T16:50:23.000Z",
             "0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",
             ["eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]
+          ],
+          [
+            "2025-07-24T17:47:23.000Z",
+            "0x46acdce174c8d83ebe2f208d8c76c867e75617483d64c3e407f69ae2f9868716",
+            ["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "guardian": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-        "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
+        "initVersion": 2,
         "paused": false,
-        "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
-        "version": "1.2.0"
+        "pauseExpiry": 7884000,
+        "pauseExpiryFmt": "91d 6h",
+        "proxyAdmin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+        "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+        "version": "2.3.0"
       },
+      "fieldMeta": { "paused": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "Proxy",
-        "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7": "SuperchainConfig"
+        "eth:0xCe28685EB204186b557133766eCA00334EB441E4": "SuperchainConfig"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -1358,7 +1368,7 @@
         ],
         "$upgradeCount": 6,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292835988",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292836785",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1409,26 +1419,6 @@
           "permission": "challenge",
           "from": "eth:0x75fa114D4286c7d1114CE773EfF0f1bDe0aF966a",
           "role": ".challenger"
-        },
-        {
-          "permission": "guard",
-          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "role": ".guardian",
-          "via": [
-            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
-            {
-              "address": "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-              "condition": "if not revoked by the Security Council"
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-          "role": ".deputyGuardian",
-          "condition": "if not revoked by the Security Council"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1448,13 +1438,11 @@
         ],
         "$threshold": 5,
         "domainSeparator": "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890",
-        "getModules": ["eth:0x126a736B18E0a64fBA19D421647A530E327E112C"],
-        "GnosisSafe_modules": [
-          "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
-        ],
+        "getModules": [],
+        "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 108,
+        "nonce": 109,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1494,11 +1482,6 @@
       "implementationNames": {
         "eth:0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277": "PreimageOracle"
       }
-    },
-    {
-      "address": "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -1639,13 +1622,13 @@
           "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
           "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
           "eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
-          "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
+          "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
           "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
           "eth:0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
           "eth:0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
           "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
           "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
-          "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
+          "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
           "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
           "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
         ],
@@ -1656,42 +1639,12 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 32,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
-    },
-    {
-      "name": "DeputyGuardianModule",
-      "address": "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-      "type": "Contract",
-      "template": "gnosisSafeModules/DeputyGuardianModule",
-      "sourceHashes": [
-        "0x9624d67fb3738cf1ce1e1f48e2cf433e9373345386943d12f1d751d6b8475cd6"
-      ],
-      "proxyType": "immutable",
-      "description": "allows the eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
-      "sinceTimestamp": 1724111315,
-      "sinceBlock": 20566057,
-      "values": {
-        "$immutable": true,
-        "deputyGuardian": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-        "safe": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-        "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-        "version": "2.0.0"
-      },
-      "implementationNames": {
-        "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B": "DeputyGuardianModule"
       }
     },
     {
@@ -1744,6 +1697,11 @@
       "address": "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1766,37 +1724,6 @@
     ],
     "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": [
       "constructor(address _singleton)"
-    ],
-    "eth:0x126a736B18E0a64fBA19D421647A530E327E112C": [
-      "constructor(address _foundationSafe, address _deputyGuardianModule, address _superchainConfig, address _deputy, bytes _deputySignature)",
-      "error DeputyPauseModule_ExecutionFailed(string)",
-      "error DeputyPauseModule_InvalidDeputy()",
-      "error DeputyPauseModule_InvalidDeputyGuardianModule()",
-      "error DeputyPauseModule_NonceAlreadyUsed()",
-      "error DeputyPauseModule_NotFromSafe()",
-      "error DeputyPauseModule_SuperchainNotPaused()",
-      "error DeputyPauseModule_Unauthorized()",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error InvalidShortString()",
-      "error StringTooLong(string str)",
-      "event DeputyGuardianModuleSet(address indexed deputyGuardianModule)",
-      "event DeputySet(address indexed deputy)",
-      "event EIP712DomainChanged()",
-      "event PauseTriggered(address indexed deputy, bytes32 nonce)",
-      "function deputy() view returns (address)",
-      "function deputyAuthMessageTypehash() pure returns (bytes32 deputyAuthMessageTypehash_)",
-      "function deputyGuardianModule() view returns (address)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function foundationSafe() view returns (address foundationSafe_)",
-      "function pause(bytes32 _nonce, bytes _signature)",
-      "function pauseMessageTypehash() pure returns (bytes32 pauseMessageTypehash_)",
-      "function setDeputy(address _deputy, bytes _deputySignature)",
-      "function setDeputyGuardianModule(address _deputyGuardianModule)",
-      "function superchainConfig() view returns (address superchainConfig_)",
-      "function usedNonces(bytes32) view returns (bool)",
-      "function version() view returns (string)"
     ],
     "eth:0x24424336F04440b1c28685a38303aC33C9D14a25": [
       "constructor(address _safe)",
@@ -1889,21 +1816,6 @@
     ],
     "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": [
       "constructor(address _singleton)"
-    ],
-    "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7": [
-      "constructor()",
-      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
-      "event Initialized(uint8 version)",
-      "event Paused(string identifier)",
-      "event Unpaused()",
-      "function GUARDIAN_SLOT() view returns (bytes32)",
-      "function PAUSED_SLOT() view returns (bytes32)",
-      "function guardian() view returns (address guardian_)",
-      "function initialize(address _guardian, bool _paused)",
-      "function pause(string _identifier)",
-      "function paused() view returns (bool paused_)",
-      "function unpause()",
-      "function version() view returns (string)"
     ],
     "eth:0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15": [
       "event AddressSet(string indexed name, address newAddress, address oldAddress)",
@@ -2139,6 +2051,34 @@
       "function vm() view returns (address vm_)",
       "function weth() view returns (address weth_)"
     ],
+    "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754": [
+      "constructor(address _guardianSafe, address _foundationSafe, address _superchainConfig, address _deputy, bytes _deputySignature)",
+      "error DeputyPauseModule_ExecutionFailed(string)",
+      "error DeputyPauseModule_InvalidDeputy()",
+      "error DeputyPauseModule_NonceAlreadyUsed()",
+      "error DeputyPauseModule_NotFromSafe()",
+      "error DeputyPauseModule_SuperchainNotPaused()",
+      "error DeputyPauseModule_Unauthorized()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error InvalidShortString()",
+      "error StringTooLong(string str)",
+      "event DeputySet(address indexed deputy)",
+      "event EIP712DomainChanged()",
+      "event PauseTriggered(address indexed deputy, bytes32 nonce, address identifier)",
+      "function deputy() view returns (address)",
+      "function deputyAuthMessageTypehash() pure returns (bytes32 deputyAuthMessageTypehash_)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function foundationSafe() view returns (address foundationSafe_)",
+      "function guardianSafe() view returns (address guardianSafe_)",
+      "function pause(bytes32 _nonce, address _identifier, bytes _signature)",
+      "function pauseMessageTypehash() pure returns (bytes32 pauseMessageTypehash_)",
+      "function setDeputy(address _deputy, bytes _deputySignature)",
+      "function superchainConfig() view returns (address superchainConfig_)",
+      "function usedNonces(bytes32) view returns (bool)",
+      "function version() view returns (string)"
+    ],
     "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": [
       "constructor(address _singleton)"
     ],
@@ -2336,22 +2276,37 @@
       "function transferOwnership(address newOwner)",
       "function version() view returns (string)"
     ],
-    "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B": [
-      "constructor(address _safe, address _superchainConfig, address _deputyGuardian)",
-      "error ExecutionFailed(string)",
-      "error Unauthorized()",
-      "event DisputeGameBlacklisted(address indexed game)",
-      "event Paused(string identifier)",
-      "event RespectedGameTypeSet(uint32 indexed gameType, uint64 indexed updatedAt)",
-      "event Unpaused()",
-      "function blacklistDisputeGame(address _portal, address _game)",
-      "function deputyGuardian() view returns (address deputyGuardian_)",
-      "function pause()",
-      "function safe() view returns (address safe_)",
-      "function setAnchorState(address _registry, address _game)",
-      "function setRespectedGameType(address _portal, uint32 _gameType)",
-      "function superchainConfig() view returns (address superchainConfig_)",
-      "function unpause()",
+    "eth:0xCe28685EB204186b557133766eCA00334EB441E4": [
+      "constructor()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "error ReinitializableBase_ZeroInitVersion()",
+      "error SuperchainConfig_AlreadyPaused(address identifier)",
+      "error SuperchainConfig_NotAlreadyPaused(address identifier)",
+      "error SuperchainConfig_OnlyGuardian()",
+      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
+      "event Initialized(uint8 version)",
+      "event Paused(address identifier)",
+      "event Unpaused(address identifier)",
+      "function expiration(address _identifier) view returns (uint256)",
+      "function extend(address _identifier)",
+      "function guardian() view returns (address)",
+      "function initVersion() view returns (uint8)",
+      "function initialize(address _guardian)",
+      "function pausable(address _identifier) view returns (bool)",
+      "function pause(address _identifier)",
+      "function pauseExpiry() pure returns (uint256)",
+      "function pauseTimestamps(address) view returns (uint256)",
+      "function paused(address _identifier) view returns (bool)",
+      "function paused() view returns (bool)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function unpause(address _identifier)",
+      "function upgrade()",
       "function version() view returns (string)"
     ],
     "eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65": [
@@ -2524,23 +2479,24 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "gnosisSafeModules/DeputyGuardianModule": "0x8da514975752668828a2c5aa3ed0719bbaac8af5a7835f307de80580ac13ea27",
+    "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0x67f69b090ef8ef37890cb4e7c28b9ee1844641f6c4eb75ff15cba998839606ed",
+    "opstack/DisputeGameFactory": "0xdec1700fd03bf991ef19b9aa3b5f992abf853de33e6ebae19b785a8d72b37356",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
+    "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
+    "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xd1eb4aa523b8a0f5268bf0e1ad18ff4fe46908717674ff0ffab8ef460ea4ce64"
+  "usedBlockNumbers": { "ethereum": 23166913 },
+  "permissionsConfigHash": "0xd4bc90a18106993173f038fd728d4f0d1d3c7fc88d19279b1b943566b93477ac"
 }

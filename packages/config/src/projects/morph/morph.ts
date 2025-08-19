@@ -57,6 +57,9 @@ export const morph: ScalingProject = {
   addedAt: UnixTime(1702295992), // 2023-12-11T11:59:52Z
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  proofSystem: {
+    type: 'Optimistic',
+  },
   display: {
     name: 'Morph',
     slug: 'morph',

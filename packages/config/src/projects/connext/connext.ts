@@ -62,7 +62,7 @@ export const connext: Bridge = {
         },
         {
           category: 'Funds can be frozen if',
-          text: "liquidity provider (Router) decides to not cooperate, living user's funds locked for a limited period of time (e.g. 72 hours).",
+          text: "liquidity provider (Router) decides to not cooperate, leaving user's funds locked for a limited period of time (e.g. 72 hours).",
         },
       ],
     },
@@ -92,7 +92,7 @@ export const connext: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'TransactionManager',
           'Escrow and logic for cross-chain transactions.',
@@ -106,7 +106,7 @@ export const connext: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Owner of TransactionManager',

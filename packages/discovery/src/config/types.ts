@@ -11,6 +11,7 @@ export interface DiscoveryModuleConfig {
   readonly verboseTemplatization?: boolean
   readonly saveSources?: boolean
   readonly blockNumber?: number
+  readonly timestamp?: number
   readonly sourcesFolder?: string
   readonly flatSourcesFolder?: string
   readonly discoveryFilename?: string
@@ -24,6 +25,7 @@ export interface DiscoveryChainConfig {
   eventRpcUrl?: string
   reorgSafeDepth?: number
   beaconApiUrl?: string
+  coingeckoApiKey?: string
   celestiaApiUrl?: string
   multicall: MulticallConfig | undefined
   explorer: ExplorerConfig

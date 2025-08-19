@@ -189,10 +189,12 @@ function TransactionDetails({
 
         {transaction.params.formula === 'transfer' && (
           <>
-            <div className="mb-1 text-sm">
-              <span className="text-secondary">From: </span>
-              <EtherscanLink address={transaction.params.from} />
-            </div>
+            {transaction.params.from && (
+              <div className="mb-1 text-sm">
+                <span className="text-secondary">From: </span>
+                <EtherscanLink address={transaction.params.from} />
+              </div>
+            )}
             <div className="mb-1 text-sm">
               <span className="text-secondary">To: </span>
               <EtherscanLink address={transaction.params.to} />

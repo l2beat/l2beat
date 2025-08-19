@@ -1,14 +1,16 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getRangeWithMax } from '~/utils/range/range'
+import { getBucketValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
-import { getActivitySyncWarning } from './utils/isActivitySynced'
+import {
+  getActivitySyncWarning,
+  isActivitySynced,
+} from './utils/isActivitySynced'
 import {
   ActivityProjectFilter,
   createActivityProjectsFilter,
@@ -30,14 +32,16 @@ export const ActivityChartParams = v.object({
   ]),
 })
 
+type ActivityChartDataPoint = [
+  timestamp: number,
+  projectsTxCount: number | null,
+  ethereumTxCount: number | null,
+  projectsUopsCount: number | null,
+  ethereumUopsCount: number | null,
+]
+
 export type ActivityChartData = {
-  data: [
-    timestamp: number,
-    projectsTxCount: number,
-    ethereumTxCount: number,
-    projectsUopsCount: number,
-    ethereumUopsCount: number,
-  ][]
+  data: ActivityChartDataPoint[]
   syncWarning: string | undefined
   syncedUntil: UnixTime
 }
@@ -60,7 +64,7 @@ export async function getActivityChart({
     .map((p) => p.id)
     .concat(ProjectId.ETHEREUM)
   const isSingleProject = projects.length === 2 // Ethereum + 1 other project
-  let adjustedRange = getFullySyncedActivityRange(range)
+  const adjustedRange = getFullySyncedActivityRange(range)
   const entries = await db.activity.getByProjectsAndTimeRange(
     projects,
     adjustedRange,
@@ -73,11 +77,12 @@ export async function getActivityChart({
   // ...but if we are looking at a single project, we check the last day we have data for,
   // and use that as the cutoff.
   if (isSingleProject) {
-    const lastProjectEntry = entries.findLast((entry) => entry.projectId)
+    const lastProjectEntry = entries.findLast(
+      (entry) => entry.projectId !== ProjectId.ETHEREUM,
+    )
     if (lastProjectEntry) {
       syncedUntil = lastProjectEntry.timestamp
       syncWarning = getActivitySyncWarning(syncedUntil)
-      adjustedRange = [adjustedRange[0], lastProjectEntry.timestamp]
     }
   }
 
@@ -87,26 +92,29 @@ export async function getActivityChart({
   }
 
   const startTimestamp = Math.min(...Object.keys(aggregatedEntries).map(Number))
-  const timestamps = generateTimestamps(
-    [UnixTime(startTimestamp), adjustedRange[1]],
-    'daily',
-  )
+  const endTimestamp = isActivitySynced(syncedUntil)
+    ? syncedUntil
+    : adjustedRange[1]
 
-  const data: [number, number, number, number, number][] = timestamps.map(
-    (timestamp) => {
-      const entry = aggregatedEntries[timestamp]
-      if (!entry) {
-        return [+timestamp, 0, 0, 0, 0]
-      }
-      return [
-        +timestamp,
-        entry.count,
-        entry.ethereumCount,
-        entry.uopsCount,
-        entry.ethereumUopsCount,
-      ]
-    },
-  )
+  const timestamps = generateTimestamps([startTimestamp, endTimestamp], 'daily')
+
+  const data: ActivityChartDataPoint[] = timestamps.map((timestamp) => {
+    const isSynced = syncedUntil >= timestamp
+    const fallbackValue = isSynced ? 0 : null
+
+    const entry = aggregatedEntries[timestamp]
+    if (!entry) {
+      return [timestamp, null, null, null, null]
+    }
+
+    return [
+      timestamp,
+      entry.count ?? fallbackValue,
+      entry.ethereumCount ?? fallbackValue,
+      entry.uopsCount ?? fallbackValue,
+      entry.ethereumUopsCount ?? fallbackValue,
+    ]
+  })
   return {
     data,
     syncWarning,
@@ -117,9 +125,9 @@ export async function getActivityChart({
 function getMockActivityChart({
   range,
 }: ActivityChartParams): ActivityChartData {
-  const [from, to] = getRangeWithMax(range, 'daily')
+  const [from, to] = getBucketValuesRange(range, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
-    range.type === 'custom' ? range.from : (from ?? MIN_TIMESTAMPS.activity),
+    range.type === 'custom' ? range.from : (from ?? 1590883200),
     range.type === 'custom' ? range.to : to,
   ]
   const timestamps = generateTimestamps(adjustedRange, 'daily')

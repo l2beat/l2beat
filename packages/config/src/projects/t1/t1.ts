@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const t1: ScalingProject = upcomingL2({
   id: 't1',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1729678881), // 2024-10-23T12:21:33
   display: {
     name: 't1',
@@ -15,6 +16,7 @@ export const t1: ScalingProject = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://t1protocol.com'],
+      documentation: ['https://docs.t1protocol.com'],
       repositories: ['https://github.com/t1protocol'],
       socialMedia: [
         'https://x.com/t1protocol',

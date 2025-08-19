@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
@@ -8,6 +9,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
@@ -22,11 +24,11 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
+import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
-import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -67,32 +69,44 @@ export function ScalingSummaryTvsChart({
   unit: ChartUnit
   timeRange: TvsChartRange
 }) {
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'layer2' },
   })
 
   const chartData = useMemo(() => {
-    return data?.map(([timestamp, rollups, validiumsAndOptimiums, others]) => {
-      return {
-        timestamp,
-        rollups,
-        validiumsAndOptimiums,
-        others,
-      }
-    })
+    return data?.chart.map(
+      ([timestamp, rollups, validiumsAndOptimiums, others]) => {
+        return {
+          timestamp,
+          rollups,
+          validiumsAndOptimiums,
+          others,
+        }
+      },
+    )
   }, [data])
-  const stats = getStats(chartData)
+  const stats = getStats(chartData, dataKeys)
 
   return (
-    <section className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <Header
         total={stats?.total}
         change={stats?.change}
         unit={unit}
         timeRange={timeRange}
       />
-      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
+      <ChartContainer
+        meta={chartMeta}
+        data={chartData}
+        isLoading={isLoading}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+          disableOnboarding: true,
+        }}
+      >
         <AreaChart
           data={chartData}
           margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
@@ -112,16 +126,19 @@ export function ScalingSummaryTvsChart({
                 dataKey: 'rollups',
                 stroke: 'url(#rollups-stroke)',
                 fill: 'url(#rollups-fill)',
+                hide: !dataKeys.includes('rollups'),
               },
               {
                 dataKey: 'validiumsAndOptimiums',
                 stroke: 'url(#validiums-and-optimiums-stroke)',
                 fill: 'url(#validiums-and-optimiums-fill)',
+                hide: !dataKeys.includes('validiumsAndOptimiums'),
               },
               {
                 dataKey: 'others',
                 stroke: 'url(#others-stroke)',
                 fill: 'url(#others-fill)',
+                hide: !dataKeys.includes('others'),
               },
             ],
           })}
@@ -129,13 +146,15 @@ export function ScalingSummaryTvsChart({
             data: chartData,
             isLoading,
             yAxis: {
+              domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },
+            syncedUntil: data?.syncedUntil,
           })}
-          <ChartTooltip content={<CustomTooltip />} />
+          <ChartTooltip content={<CustomTooltip />} filterNull={false} />
         </AreaChart>
       </ChartContainer>
-    </section>
+    </div>
   )
 }
 
@@ -145,28 +164,46 @@ function CustomTooltip({
   label,
 }: TooltipProps<number, string>) {
   if (!active || !payload || typeof label !== 'number') return null
-  const validPayload = payload.filter((p) => p.type !== 'none')
-  const total = validPayload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
+
+  const validPayload = payload.filter((p) => p.type !== 'none' && !p.hide)
+  const total = validPayload.reduce<number | null>((acc, curr) => {
+    if (curr.value === null || curr.value === undefined) {
+      return acc
+    }
+    if (acc === null) {
+      return curr?.value ?? null
+    }
+    return acc + curr.value
+  }, null)
   const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
-    <div className={tooltipContentVariants()}>
-      <div className="flex w-[158px]! flex-col [@media(min-width:600px)]:w-60!">
-        <div className="mb-3 font-medium text-label-value-14 text-secondary">
+    <ChartTooltipWrapper>
+      <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
+        <div className="font-medium text-label-value-14 text-secondary">
           {isFullDay
             ? formatTimestamp(label, { longMonthName: true })
-            : formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+            : formatTimestamp(label, {
+                longMonthName: true,
+                mode: 'datetime',
+              })}
         </div>
-        <div className="mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">
-          <span className="[@media(min-width:600px)]:hidden">Total</span>
-          <span className="hidden [@media(min-width:600px)]:inline">
-            Total value secured
-          </span>
-          <span className="text-primary">{formatCurrency(total, 'usd')}</span>
-        </div>
-        <HorizontalSeparator />
+        {validPayload.length > 1 && (
+          <>
+            <div className="mt-3 mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">
+              <span className="[@media(min-width:600px)]:hidden">Total</span>
+              <span className="hidden [@media(min-width:600px)]:inline">
+                Total value secured
+              </span>
+              <span className="text-primary">
+                {total !== null ? formatCurrency(total, 'usd') : 'No data'}
+              </span>
+            </div>
+            <HorizontalSeparator />
+          </>
+        )}
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
+            if (entry.type === 'none' || entry.hide) return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -183,14 +220,16 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {formatCurrency(entry.value, 'usd')}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatCurrency(entry.value, 'usd')
+                    : 'No data'}
                 </span>
               </div>
             )
           })}
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
 
@@ -249,29 +288,57 @@ function getStats(
   data:
     | {
         timestamp: number
-        rollups: number
-        validiumsAndOptimiums: number
-        others: number
+        rollups: number | null
+        validiumsAndOptimiums: number | null
+        others: number | null
       }[]
     | undefined,
+  dataKeys: (keyof typeof chartMeta)[],
 ) {
   if (!data) {
     return undefined
   }
-  const oldestDataPoint = data.at(0)
-  const newestDataPoint = data.at(-1)
+  const pointsWithData = data.filter(
+    (point) =>
+      point.rollups !== null &&
+      point.validiumsAndOptimiums !== null &&
+      point.others !== null,
+  ) as {
+    timestamp: number
+    rollups: number
+    validiumsAndOptimiums: number
+    others: number
+  }[]
+
+  const oldestDataPoint = pointsWithData.at(0)
+  const newestDataPoint = pointsWithData.at(-1)
   if (!oldestDataPoint || !newestDataPoint) {
     return undefined
   }
 
-  const oldestTotal =
-    oldestDataPoint.rollups +
-    oldestDataPoint.validiumsAndOptimiums +
-    oldestDataPoint.others
-  const newestTotal =
-    newestDataPoint.rollups +
-    newestDataPoint.validiumsAndOptimiums +
-    newestDataPoint.others
+  const toSum = compact([
+    dataKeys.includes('rollups')
+      ? {
+          oldest: oldestDataPoint.rollups,
+          newest: newestDataPoint.rollups,
+        }
+      : undefined,
+    dataKeys.includes('validiumsAndOptimiums')
+      ? {
+          oldest: oldestDataPoint.validiumsAndOptimiums,
+          newest: newestDataPoint.validiumsAndOptimiums,
+        }
+      : undefined,
+    dataKeys.includes('others')
+      ? {
+          oldest: oldestDataPoint.others,
+          newest: newestDataPoint.others,
+        }
+      : undefined,
+  ])
+
+  const oldestTotal = toSum.reduce((acc, curr) => acc + curr.oldest, 0)
+  const newestTotal = toSum.reduce((acc, curr) => acc + curr.newest, 0)
   const change = newestTotal / oldestTotal - 1
 
   return {

@@ -71,7 +71,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.use(express.json())
 
   app.get('/api/projects', (_req, res) => {
-    const response = getProjects(configReader)
+    const response = getProjects(configReader, readonly)
     res.json(response)
   })
 
@@ -179,10 +179,10 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
         res.status(400).json({ errors: queryValidation.message })
         return
       }
-      const { project, chain, devMode } = queryValidation.data
+      const { project, devMode } = queryValidation.data
 
       executeTerminalCommand(
-        `l2b discover ${chain} ${project} ${devMode ? '--dev' : ''}`,
+        `l2b discover ${project} ${devMode ? '--dev' : ''}`,
         res,
       )
     })

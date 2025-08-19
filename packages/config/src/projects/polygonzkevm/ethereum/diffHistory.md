@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xd3846c11f6d16e482aab6865d72a74a6b79c50e6
+Generated with discovered.json: 0x7ff47001acddbff68ec24a8930f311bd8096cfff
 
 # Diff at Tue, 22 Jul 2025 13:48:26 GMT:
 
@@ -2898,7 +2898,7 @@ for block 18968776 (main branch discovery), not current.
 
 ## Description
 
-PolygonZkEVM has changed it's implementation because PolygonZkEVMUpgraded - the
+PolygonZkEVM has changed its implementation because PolygonZkEVMUpgraded - the
 contract at the implementation address - needed to be redeployed. This is
 because PolygonZkEVMUpgraded has FflonkVerifier hardcoded and because it was
 also redeployed to change two circuit parameters (C_0x and C0y) to update to the

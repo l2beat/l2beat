@@ -6,10 +6,11 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('degen', 'base')
+const discovery = new ProjectDiscovery('degen')
 
 export const degen: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1711584000), // 2024-03-28T00:00:00Z
+  hostChain: 'base',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],
   additionalPurposes: ['Social'],
@@ -25,7 +26,9 @@ export const degen: ScalingProject = orbitStackL3({
     links: {
       websites: ['https://syndicate.io/blog/degen-chain'],
       bridges: ['https://bridge.degen.tips/', 'https://degen.tips/'],
-      documentation: ['https://docs.syndicate.io/get-started/introduction'],
+      documentation: [
+        'https://docs.syndicate.io/docs/get-started/introduction',
+      ],
       explorers: ['https://explorer.degen.tips/'],
       socialMedia: [
         'https://twitter.com/degentokenbase',
@@ -87,5 +90,5 @@ export const degen: ScalingProject = orbitStackL3({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'base' }),
 })

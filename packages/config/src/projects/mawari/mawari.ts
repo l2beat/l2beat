@@ -6,6 +6,7 @@ export const mawari: ScalingProject = upcomingL2({
   id: 'mawari',
   addedAt: UnixTime(1744635768), // 2025-04-14T14:42:48Z
   capability: 'universal',
+  hasTestnet: true,
   display: {
     name: 'Mawari',
     slug: 'mawari',
@@ -16,6 +17,7 @@ export const mawari: ScalingProject = upcomingL2({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://mawari.net/'],
+      documentation: ['https://docs.mawari.net'],
       explorers: ['https://mawari-network-testnet.explorer.caldera.xyz/'],
       socialMedia: [
         'https://t.me/mawarinet',

@@ -92,32 +92,69 @@
     },
     {
       "mode": "auto",
-      "id": "game7-USDC-2",
+      "id": "game7-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
       "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-        "chain": "arbitrum",
-        "escrowAddress": "0x404922a9B29b4a5205a6074AbA31A7392BD28944",
-        "decimals": 6,
-        "sinceTimestamp": 1730299307
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+            "chain": "arbitrum",
+            "escrowAddress": "0xe41363751bd1C305384375F428585C20e3dF516A",
+            "decimals": 6,
+            "sinceTimestamp": 1728557217
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+            "chain": "arbitrum",
+            "escrowAddress": "0x404922a9B29b4a5205a6074AbA31A7392BD28944",
+            "decimals": 6,
+            "sinceTimestamp": 1730299307
+          }
+        ]
       },
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1730299307
-        },
-        "priceId": "usd-coin"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1728557217
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1730299307
+            },
+            "priceId": "usd-coin"
+          }
+        ]
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

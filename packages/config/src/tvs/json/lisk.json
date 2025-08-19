@@ -52,7 +52,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Custom escrow"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -101,7 +108,7 @@
         "decimals": 18,
         "sinceTimestamp": 1734625977
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -200,7 +207,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Custom escrow"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -236,7 +250,7 @@
         "decimals": 8,
         "sinceTimestamp": 1714730063
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -257,7 +271,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Custom escrow"
+          }
+        ]
+      }
     }
   ]
 }

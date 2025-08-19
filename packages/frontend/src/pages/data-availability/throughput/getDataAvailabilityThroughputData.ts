@@ -13,13 +13,16 @@ export async function getDataAvailabilityThroughputData(
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
     getDaThroughputEntries(),
-    helpers.da.chart.prefetch({ range: '1y', includeScalingOnly: false }),
+    helpers.da.chart.prefetch({ range: '1y', includeScalingOnly: true }),
   ])
 
   return {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Data Availability Throughput - L2BEAT',
+        description:
+          'Explore metrics related to the data posted to data availability solutions.',
         openGraph: {
           url,
           image:

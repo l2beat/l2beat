@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xc0d59610ee173617024f4d94461719e37030c545
+Generated with discovered.json: 0xefb0ea089cebeed4a2fd5e44a2dccac078bb71cb
 
 # Diff at Mon, 14 Jul 2025 12:46:14 GMT:
 
@@ -5161,7 +5161,7 @@ Generated with discovered.json: 0xaff8a6ad66c53b2303b9c9c77d308de4890151ad
 
 ## Description
 
-Updated the names and references to new SHARP verfier contracts.
+Updated the names and references to new SHARP verifier contracts.
 
 ## Config/verification related changes
 

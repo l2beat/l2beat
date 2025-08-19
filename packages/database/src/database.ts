@@ -30,6 +30,7 @@ import { ProjectValueRepository } from './tvs/project-value/repository'
 import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
+import { getDatabaseStats } from './utils/getDatabaseStats'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
@@ -85,5 +86,8 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     tvsProjectValue: new ProjectValueRepository(db),
     // #endregion
     notifications: new NotificationsRepository(db),
+    // #region
+    stats: () => getDatabaseStats(db),
+    // #endregion
   }
 }

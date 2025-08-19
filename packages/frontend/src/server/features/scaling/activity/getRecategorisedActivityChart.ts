@@ -1,8 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getRangeWithMax } from '~/utils/range/range'
+import { getBucketValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
@@ -15,9 +14,10 @@ import type { ActivityTimeRange } from './utils/range'
 export type RecategorisedActivityChartData = {
   data: [
     timestamp: number,
-    rollupsCount: number,
-    validiumsAndOptimiumsCount: number,
-    ethereumCount: number,
+    rollupsCount: number | null,
+    validiumsAndOptimiumsCount: number | null,
+    othersCount: number | null,
+    ethereumCount: number | null,
   ][]
   syncWarning: string | undefined
   syncedUntil: number
@@ -54,19 +54,28 @@ export async function getRecategorisedActivityChart(
     )
     .map((p) => p.id)
 
+  const others = projects
+    .filter((p) => p.scalingInfo.type === 'Other')
+    .map((p) => p.id)
+
   const adjustedRange = getFullySyncedActivityRange({ type: range })
-  const [rollupsEntries, validiumsAndOptimiumsEntries, ethereumEntries] =
-    await Promise.all([
-      await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
-      await db.activity.getByProjectsAndTimeRange(
-        validiumsAndOptimiums,
-        adjustedRange,
-      ),
-      await db.activity.getByProjectsAndTimeRange(
-        [ProjectId.ETHEREUM],
-        adjustedRange,
-      ),
-    ])
+  const [
+    rollupsEntries,
+    validiumsAndOptimiumsEntries,
+    othersEntries,
+    ethereumEntries,
+  ] = await Promise.all([
+    await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
+    await db.activity.getByProjectsAndTimeRange(
+      validiumsAndOptimiums,
+      adjustedRange,
+    ),
+    await db.activity.getByProjectsAndTimeRange(others, adjustedRange),
+    await db.activity.getByProjectsAndTimeRange(
+      [ProjectId.ETHEREUM],
+      adjustedRange,
+    ),
+  ])
 
   const syncedUntil = adjustedRange[1]
   const syncWarning = getActivitySyncWarning(syncedUntil)
@@ -75,12 +84,14 @@ export async function getRecategorisedActivityChart(
     aggregateActivityRecords(rollupsEntries) ?? {}
   const aggregatedValidiumsAndOptimiumsEntries =
     aggregateActivityRecords(validiumsAndOptimiumsEntries) ?? {}
+  const aggregatedOthersEntries = aggregateActivityRecords(othersEntries) ?? {}
   const aggregatedEthereumEntries =
     aggregateActivityRecords(ethereumEntries, true) ?? {}
 
   if (
     Object.values(aggregatedRollupsEntries).length === 0 &&
     Object.values(aggregatedValidiumsAndOptimiumsEntries).length === 0 &&
+    Object.values(aggregatedOthersEntries).length === 0 &&
     Object.values(aggregatedEthereumEntries).length === 0
   ) {
     return { data: [], syncWarning, syncedUntil: syncedUntil }
@@ -89,6 +100,7 @@ export async function getRecategorisedActivityChart(
   const startTimestamp = Math.min(
     ...Object.keys(aggregatedRollupsEntries).map(Number),
     ...Object.keys(aggregatedValidiumsAndOptimiumsEntries).map(Number),
+    ...Object.keys(aggregatedOthersEntries).map(Number),
     ...Object.keys(aggregatedEthereumEntries).map(Number),
   )
   const timestamps = generateTimestamps(
@@ -96,22 +108,25 @@ export async function getRecategorisedActivityChart(
     'daily',
   )
 
-  const data: [number, number, number, number][] = timestamps.map(
+  const data: RecategorisedActivityChartData['data'] = timestamps.map(
     (timestamp) => {
       const rollupsEntry = aggregatedRollupsEntries[timestamp]
       const validiumsAndOptimiumsEntry =
         aggregatedValidiumsAndOptimiumsEntries[timestamp]
+      const othersEntry = aggregatedOthersEntries[timestamp]
       const ethereumEntry = aggregatedEthereumEntries[timestamp]
 
-      const rollupsCount = rollupsEntry?.uopsCount ?? 0
+      const rollupsCount = rollupsEntry?.uopsCount ?? null
       const validiumsAndOptimiumsCount =
-        validiumsAndOptimiumsEntry?.uopsCount ?? 0
-      const ethereumCount = ethereumEntry?.ethereumUopsCount ?? 0
+        validiumsAndOptimiumsEntry?.uopsCount ?? null
+      const othersCount = othersEntry?.uopsCount ?? null
+      const ethereumCount = ethereumEntry?.ethereumUopsCount ?? null
 
       return [
         +timestamp,
         rollupsCount,
         validiumsAndOptimiumsCount,
+        othersCount,
         ethereumCount,
       ]
     },
@@ -127,15 +142,18 @@ function getMockRecategorisedActivityChart(
   _: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
 ): RecategorisedActivityChartData {
-  const [from, to] = getRangeWithMax({ type: timeRange }, 'daily')
-  const adjustedRange: [UnixTime, UnixTime] = [
-    from ?? MIN_TIMESTAMPS.activity,
-    to,
-  ]
+  const [from, to] = getBucketValuesRange({ type: timeRange }, 'daily')
+  const adjustedRange: [UnixTime, UnixTime] = [from ?? 1590883200, to]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {
-    data: timestamps.map((timestamp) => [+timestamp, 15000, 11000, 12000]),
+    data: timestamps.map((timestamp) => [
+      +timestamp,
+      15000,
+      11000,
+      12000,
+      10000,
+    ]),
     syncWarning: getActivitySyncWarning(adjustedRange[1]),
     syncedUntil: adjustedRange[1],
   }

@@ -15,7 +15,7 @@ export const symbiosis: Bridge = {
     slug: 'symbiosis',
     category: 'Hybrid',
     description:
-      'Symbiosis is a cross-chain AMM DEX externally validated my an MPC relayers network.',
+      'Symbiosis is a cross-chain AMM DEX externally validated by an MPC relayers network.',
     links: {
       websites: [
         'https://symbiosis.finance/',
@@ -115,7 +115,7 @@ export const symbiosis: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'MetaRouter',
           'An upgradeable contract to process funds by provided route.',
@@ -133,7 +133,7 @@ export const symbiosis: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.contractAsPermissioned(
           discovery.getContract('Multisig'),

@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react'
 import type { CollectionEntry } from '~/content/getCollection'
 import { useCurrentSection } from '~/hooks/useCurrentSection'
 import { scrollVerticallyToItem } from '~/utils/scrollToItem'
-import { glossarySectionTreshold } from '../consts'
+import { glossarySectionThreshold } from '../consts'
 import { GlossarySideNavItem } from './GlossarySideNavItem'
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 export function GlossarySideNav(props: Props) {
   const overflowContainer = useRef<HTMLUListElement>(null)
-  const currentSection = useCurrentSection(glossarySectionTreshold)
+  const currentSection = useCurrentSection(glossarySectionThreshold)
 
   const scrollToItem = useCallback(
     (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
@@ -22,7 +22,7 @@ export function GlossarySideNav(props: Props) {
   return (
     <div className="sticky top-28 mt-5 hidden h-[calc(100vh-350px)] w-[246px] min-w-[246px] lg:block">
       <ul
-        className="flex h-full flex-col gap-4 overflow-y-scroll pr-6 pb-8"
+        className="flex h-full flex-col gap-4 overflow-y-scroll pr-6 pb-2"
         ref={overflowContainer}
       >
         {props.entries.map((entry) => {
@@ -42,7 +42,7 @@ export function GlossarySideNav(props: Props) {
           )
         })}
       </ul>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-linear-to-t from-background via-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 mr-2 h-8 bg-linear-to-t from-background via-transparent" />
     </div>
   )
 }

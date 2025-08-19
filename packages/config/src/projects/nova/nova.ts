@@ -1,4 +1,9 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  formatSeconds,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
@@ -18,8 +23,7 @@ import {
 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('nova')
-const l2Discovery = new ProjectDiscovery('nova', 'nova')
-const discovery_arbitrum = new ProjectDiscovery('arbitrum', 'arbitrum') // needed for governance section
+const discovery_arbitrum = new ProjectDiscovery('arbitrum') // needed for governance section
 
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 const validatorAfkBlocks = discovery.getContractValue<number>(
@@ -178,9 +182,6 @@ export const nova: ScalingProject = orbitStackL2({
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
   ),
-  additionalDiscoveries: {
-    nova: l2Discovery,
-  },
   nonTemplateRiskView: {
     exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
       l2TimelockDelay,
@@ -193,7 +194,9 @@ export const nova: ScalingProject = orbitStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3'),
+      address: ChainSpecificAddress(
+        'eth:0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3',
+      ),
       sinceTimestamp: UnixTime(1659620187),
       tokens: ['DAI'],
       ...ESCROW.CANONICAL_EXTERNAL,
@@ -202,7 +205,9 @@ export const nova: ScalingProject = orbitStackL2({
       ...upgradeExecutorUpgradeability,
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf'),
+      address: ChainSpecificAddress(
+        'eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf',
+      ),
       sinceTimestamp: UnixTime(1656305583),
       tokens: '*',
       description:
@@ -210,10 +215,11 @@ export const nova: ScalingProject = orbitStackL2({
       ...upgradeExecutorUpgradeability,
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x23122da8C581AA7E0d07A36Ff1f16F799650232f'),
+      address: ChainSpecificAddress(
+        'eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f',
+      ),
       sinceTimestamp: UnixTime(1659620187),
       tokens: '*',
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Main entry point for users depositing ERC20 tokens that require minting a custom token on the L2.',
       ...upgradeExecutorUpgradeability,

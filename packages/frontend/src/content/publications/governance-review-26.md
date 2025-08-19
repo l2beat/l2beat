@@ -267,9 +267,9 @@ Polygon has transitioned from MATIC to POL.
 Maxsam4 from Polygon [published a transparency report](https://forum.polygon.technology/t/matic-pol-migration-transparency-report/19703). After evaluating the efficacy, impact, execution specifications, and security considerations, the PC has reached a supermajority consensus of 10/13, thereby executing the change without timelock.
 
 
-### **AggLayer list of developer resources**
+### **Agglayer list of developer resources**
 
-Swader, DevRel at Polygon, [published a list of developer resources](https://forum.polygon.technology/t/agglayer-list-of-developer-resources/19692) for anyone interested in building on/for AggLayer. The list includes tutorials and explainers, developer tools, chain dev tools, and implementers.
+Swader, DevRel at Polygon, [published a list of developer resources](https://forum.polygon.technology/t/agglayer-list-of-developer-resources/19692) for anyone interested in building on/for Agglayer. The list includes tutorials and explainers, developer tools, chain dev tools, and implementers.
 
 
 ### **Upgrade to the Polygon Plasma and PoS Portal Smart Contracts**
@@ -383,8 +383,9 @@ The Constitution provides comprehensive information on voting, the Security Coun
 
 ### **Delegate to L2BEAT**
 
-If you’re holding $LSK and want to delegate your voting power, you must stake it to receive $vLSK. You can stake your tokens on the [Lisk Portal](https://portal.lisk.com/), and then you can delegate the $vLSK you’ll receive [on Tally](https://www.tally.xyz/gov/lisk/delegate/l2beatcom.eth).
+If you’re holding $LSK and want to delegate your voting power, you must stake it to receive $vLSK. You can stake your tokens on the [Lisk Portal](https://portal.lisk.com/), and then you can delegate the $vLSK you’ll receive [on Tally](https://www.tally.xyz/gov/lisk/delegate/0x1b686ee8e31c5959d9f5bbd8122a58682788eead).
 
 **Discuss with L2BEAT**
 
 We’re fairly new to Lisk’s governance, and we’d love to meet other delegates and stakeholders so we can better understand the ecosystem's dynamics and needs. If you’re interested in chatting, please [shoot us a message](https://t.me/sinkas5).
+

@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -60,19 +61,24 @@ export const zkspace: ScalingProject = {
         'https://discord.gg/MJKtaYcYw8',
         'https://twitter.com/ZKBaseOfficial',
         'https://t.me/ZKSpaceOfficial',
-        'https://medium.com/zkswap',
       ],
     },
     liveness: {
       explanation:
-        'ZK Space is a ZK rollup based on ZKsync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+        "ZK Space is a ZK rollup based on ZKsync Lite's code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and a validity proof should be generated, submitted, and verified. ",
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('zksyncprover'),
   },
   config: {
     associatedTokens: ['ZKS'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8'),
+        address: ChainSpecificAddress(
+          'eth:0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
+        ),
         sinceTimestamp: UnixTime(1639569183),
         tokens: '*',
       }),
@@ -162,7 +168,7 @@ export const zkspace: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ZkSync', {
           description:
             'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
@@ -199,7 +205,7 @@ export const zkspace: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'zkSpace Admin',
@@ -224,7 +230,7 @@ export const zkspace: ScalingProject = {
     },
     {
       title: 'ZKSpace launched',
-      url: 'https://medium.com/zkswap/l2-labs-launches-all-in-one-layer2-platform-zkspace-featuring-zkswap-v3-0-nfts-payments-82dae7d9207c',
+      url: 'https://x.com/ZKBaseOfficial/status/1465943738157465605',
       date: '2021-12-20T00:00:00Z',
       description:
         'All-in-One ScalingProject Platform ZKSpace, Featuring ZKSwap v3.0, NFTs, & Payments is launched.',

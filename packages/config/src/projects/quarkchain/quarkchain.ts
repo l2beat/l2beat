@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const quarkchain: ScalingProject = upcomingL2({
   id: 'quarkchain',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1741609623),
   display: {
     name: 'QuarkChain',
@@ -21,6 +22,7 @@ export const quarkchain: ScalingProject = upcomingL2({
       ],
       documentation: ['https://docs.quarkchain.io/'],
       explorers: ['https://explorer.beta.testnet.l2.quarkchain.io/'],
+      repositories: ['https://github.com/QuarkChain'],
       socialMedia: [
         'https://x.com/quark_chain',
         'https://discord.com/invite/GbkGhY3qkh',

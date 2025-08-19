@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -82,6 +82,10 @@ export const myria: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('stone'),
+  },
   stage: {
     stage: 'NotApplicable',
   },
@@ -94,7 +98,9 @@ export const myria: ScalingProject = {
     associatedTokens: ['MYRIA'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7'),
+        address: ChainSpecificAddress(
+          'eth:0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7',
+        ),
         sinceTimestamp: UnixTime(1659542607),
         tokens: ['ETH'],
       }),
@@ -153,7 +159,7 @@ export const myria: ScalingProject = {
       date: '2022-08-26T00:00:00Z',
       url: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
       description:
-        'Layer 2 scaling solution powered by Starware is live on Ethereum.',
+        'Layer 2 scaling solution powered by StarkWare is live on Ethereum.',
       type: 'general',
     },
     {

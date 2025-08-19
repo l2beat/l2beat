@@ -78,7 +78,7 @@ describe(AnomalyNotifier.name, () => {
       ])
     })
 
-    it('does not notify if duration lest than configured', async () => {
+    it('does not notify if duration less than configured', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
         insertMany: mockFn().resolvesTo(undefined),
       })
@@ -113,6 +113,69 @@ describe(AnomalyNotifier.name, () => {
       expect(mockSendDiscordNotification).not.toHaveBeenCalled()
 
       expect(notificationsRepository.insertMany).not.toHaveBeenCalled()
+    })
+
+    it('does notify if duration less than configured, but z-score is over 100', async () => {
+      const notificationsRepository = mockObject<Database['notifications']>({
+        insertMany: mockFn().resolvesTo(undefined),
+      })
+
+      const notifier = new AnomalyNotifier(
+        Logger.SILENT,
+        mockObject<Clock>(),
+        mockObject<DiscordWebhookClient>(),
+        mockDatabase({
+          notifications: notificationsRepository,
+        }),
+        60,
+      )
+
+      const messageId = '1234567890'
+      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      notifier.sendDiscordNotification = mockSendDiscordNotification
+
+      const projectId = 'project-1'
+      const subtype = 'batchSubmissions'
+      const block = mockObject<Block>({
+        number: 123456,
+        timestamp: 1234,
+      })
+      const lastRecord = mockObject<RealTimeLivenessRecord>({
+        txHash: '0x1234567890abcdef',
+        timestamp: 5678,
+      })
+      const stats = mockObject<AnomalyStatsRecord>({
+        mean: 60,
+        stdDev: 15,
+      })
+
+      const newAnomaly: RealTimeAnomalyRecord = {
+        start: lastRecord.timestamp,
+        projectId,
+        subtype,
+        status: 'ongoing',
+        isApproved: false,
+      }
+
+      await notifier.anomalyDetected(
+        newAnomaly,
+        10,
+        101,
+        block,
+        lastRecord,
+        stats,
+      )
+
+      expect(mockSendDiscordNotification).toHaveBeenCalled()
+      expect(notificationsRepository.insertMany).toHaveBeenCalledWith([
+        {
+          id: messageId,
+          channel: 'discord',
+          type: 'anomaly-detected',
+          relatedEntityId: `${newAnomaly.projectId}-${newAnomaly.subtype}-${lastRecord.timestamp}`,
+          timestamp: block.timestamp,
+        },
+      ])
     })
   })
 
@@ -182,7 +245,7 @@ describe(AnomalyNotifier.name, () => {
       ])
     })
 
-    it('does not notify if duration lest than configured', async () => {
+    it('does not notify if duration less than configured', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
         insertMany: mockFn().resolvesTo(undefined),
       })
@@ -270,12 +333,83 @@ describe(AnomalyNotifier.name, () => {
 
       expect(notificationsRepository.insertMany).not.toHaveBeenCalled()
     })
+
+    it('does notify if duration less than configured, but z-score is over 100', async () => {
+      const notificationsRepository = mockObject<Database['notifications']>({
+        insertMany: mockFn().resolvesTo(undefined),
+        getByRelatedEntityId: mockFn().resolvesTo([]),
+      })
+
+      const notifier = new AnomalyNotifier(
+        Logger.SILENT,
+        mockObject<Clock>(),
+        mockObject<DiscordWebhookClient>(),
+        mockDatabase({
+          notifications: notificationsRepository,
+        }),
+        60,
+      )
+
+      const messageId = '1234567890'
+      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      notifier.sendDiscordNotification = mockSendDiscordNotification
+
+      const projectId = 'project-1'
+      const subtype = 'batchSubmissions'
+      const block = mockObject<Block>({
+        number: 123456,
+        timestamp: 1234,
+      })
+      const lastRecord = mockObject<RealTimeLivenessRecord>({
+        txHash: '0x1234567890abcdef',
+        timestamp: 5678,
+      })
+      const stats = mockObject<AnomalyStatsRecord>({
+        mean: 60,
+        stdDev: 15,
+      })
+
+      const ongoingAnomaly = mockObject<RealTimeAnomalyRecord>({
+        projectId,
+        subtype,
+        status: 'ongoing',
+        isApproved: false,
+        start: lastRecord.timestamp,
+      })
+
+      await notifier.anomalyOngoing(
+        ongoingAnomaly,
+        10,
+        101,
+        block,
+        lastRecord,
+        stats,
+      )
+
+      expect(mockSendDiscordNotification).toHaveBeenCalled()
+
+      expect(notificationsRepository.insertMany).toHaveBeenCalledWith([
+        {
+          id: messageId,
+          channel: 'discord',
+          type: 'anomaly-detected',
+          relatedEntityId: `${ongoingAnomaly.projectId}-${ongoingAnomaly.subtype}-${ongoingAnomaly.start}`,
+          timestamp: block.timestamp,
+        },
+      ])
+    })
   })
 
   describe(AnomalyNotifier.prototype.anomalyRecovered.name, () => {
     it('notifies about recovered anomaly', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
         insertMany: mockFn().resolvesTo(undefined),
+        getByRelatedEntityId: mockFn().resolvesTo([
+          {
+            id: '123',
+            type: 'anomaly-detected',
+          },
+        ]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -326,9 +460,10 @@ describe(AnomalyNotifier.name, () => {
       ])
     })
 
-    it('does not notify if duration lest than configured', async () => {
+    it('does not notify if we did not send a notification about the detected anomaly', async () => {
       const notificationsRepository = mockObject<Database['notifications']>({
         insertMany: mockFn().resolvesTo(undefined),
+        getByRelatedEntityId: mockFn().resolvesTo([]),
       })
 
       const notifier = new AnomalyNotifier(
@@ -346,7 +481,11 @@ describe(AnomalyNotifier.name, () => {
 
       const block = mockObject<Block>()
       const lastRecord = mockObject<RealTimeLivenessRecord>()
-      const ongoingAnomaly = mockObject<RealTimeAnomalyRecord>()
+      const ongoingAnomaly = mockObject<RealTimeAnomalyRecord>({
+        projectId: 'project-1',
+        subtype: 'batchSubmissions',
+        start: 1234,
+      })
 
       await notifier.anomalyRecovered(ongoingAnomaly, 60, block, lastRecord)
 

@@ -12,7 +12,7 @@ export interface GroupSectionProps extends ProjectSectionProps {
 export function GroupSection({
   description,
   items,
-  as = 'div',
+  as = 'section',
   ...sectionProps
 }: GroupSectionProps) {
   return (

@@ -46,5 +46,11 @@
     "address": "0x7344Da3A618b86cdA67f8260C0cc2027D99F5B49",
     "chain": "ethereum",
     "blockNumber": 22437733
+  },
+  "PermissionedDisputeGame_v2_9_0": {
+    "hash": "0x6e19dedf2965b6aaae0af2c98a6df46b1caac3ffc191eaf1d10ca5570076252f",
+    "address": "0xEcca4BFbD017002abf25Aeebf2B21b903A5fC124",
+    "chain": "ethereum",
+    "blockNumber": 22995199
   }
 }

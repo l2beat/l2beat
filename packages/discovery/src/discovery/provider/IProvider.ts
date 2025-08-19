@@ -3,7 +3,9 @@ import type {
   BlobClient,
   BlobsInBlock,
   CelestiaApiClient,
+  CoingeckoClient,
 } from '@l2beat/shared'
+import type { CelestiaEvent } from '@l2beat/shared/build/clients/api-celestia/types'
 import type {
   Bytes,
   ChainSpecificAddress,
@@ -17,6 +19,7 @@ import type {
   IEtherscanClient,
 } from '../../utils/IEtherscanClient'
 import type { DebugTransactionCallResponse } from './DebugTransactionTrace'
+import type { IStatelessProvider } from './IStatelessProvider'
 
 export interface ContractDeployment {
   deployer: EthereumAddress
@@ -29,16 +32,19 @@ export interface RawProviders {
   baseProvider: providers.JsonRpcProvider
   eventProvider: providers.JsonRpcProvider
   etherscanClient: IEtherscanClient
+  coingeckoClient: CoingeckoClient
   celestiaApiClient?: CelestiaApiClient
   blobClient?: BlobClient
 }
 
-export interface IProvider {
+export interface IProvider extends IStatelessProvider {
+  readonly timestamp: UnixTime
   readonly blockNumber: number
   readonly chain: string
 
-  switchBlock(blockNumber: number): IProvider
-  switchChain(chain: string, blockNumber: number): IProvider
+  switchBlock(blockNumber: number): Promise<IProvider>
+  switchChain(chain: string): Promise<IProvider>
+  switchChain(chain: string, timestamp: UnixTime): Promise<IProvider>
 
   /** Needs to return values that survive JSON serialization! */
   raw<T>(
@@ -102,5 +108,5 @@ export interface IProvider {
     namespace: string,
     commitment: string,
   ): Promise<boolean>
-  getCelestiaBlockResultLogs(height: number): Promise<string[]>
+  getCelestiaBlockResultEvents(height: number): Promise<CelestiaEvent[]>
 }

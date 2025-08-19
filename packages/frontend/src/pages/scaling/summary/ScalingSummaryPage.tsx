@@ -23,29 +23,26 @@ interface Props extends AppLayoutProps {
 }
 
 export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
+  const tvsChart = (
+    <ScalingSummaryTvsChart
+      unit={SCALING_SUMMARY_UNIT}
+      timeRange={SCALING_SUMMARY_TIME_RANGE}
+    />
+  )
+  const activityChart = (
+    <ScalingSummaryActivityChart timeRange={SCALING_SUMMARY_TIME_RANGE} />
+  )
+
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <MainPageHeader>Summary</MainPageHeader>
           <div className="grid grid-cols-2 gap-4 max-lg:hidden ">
-            <PrimaryCard>
-              <ScalingSummaryTvsChart
-                unit={SCALING_SUMMARY_UNIT}
-                timeRange={SCALING_SUMMARY_TIME_RANGE}
-              />
-            </PrimaryCard>
-            <PrimaryCard>
-              <ScalingSummaryActivityChart
-                timeRange={SCALING_SUMMARY_TIME_RANGE}
-              />
-            </PrimaryCard>
+            <PrimaryCard>{tvsChart}</PrimaryCard>
+            <PrimaryCard>{activityChart}</PrimaryCard>
           </div>
-          <ChartTabs
-            className="lg:hidden"
-            unit={SCALING_SUMMARY_UNIT}
-            timeRange={SCALING_SUMMARY_TIME_RANGE}
-          />
+          <ChartTabs className="lg:hidden" charts={[tvsChart, activityChart]} />
           <ScalingAssociatedTokensContextProvider>
             <TableFilterContextProvider>
               <ScalingSummaryTables {...entries} />

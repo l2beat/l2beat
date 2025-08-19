@@ -15,7 +15,7 @@ let initialized = false
 export type EditorSupportedLanguage = 'solidity' | 'json'
 
 export type EditorCallbacks = {
-  onSave?: (content: string) => void
+  onSave?: (content: string) => string
   onChange?: (content: string) => void
 }
 
@@ -28,7 +28,7 @@ export class Editor {
     null
   private disposed = false
 
-  private onSaveCallback: ((content: string) => void) | null = null
+  private onSaveCallback: ((content: string) => string) | null = null
   private onChangeCallback: ((content: string) => void) | null = null
 
   constructor(element: HTMLElement) {
@@ -52,8 +52,17 @@ export class Editor {
 
     this.editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
       if (this.onSaveCallback) {
-        const value = this.editor.getModel()?.getValue() ?? ''
-        this.onSaveCallback(value)
+        const model = this.editor.getModel()
+        if (model === null) {
+          return
+        }
+        const value = model.getValue()
+        const newValue = this.onSaveCallback(value)
+        if (newValue !== value) {
+          this.saveViewState()
+          model.setValue(newValue)
+          this.restoreViewState()
+        }
       }
     })
 
@@ -81,7 +90,7 @@ export class Editor {
     this.restoreViewState()
   }
 
-  onSave(onSaveCallback: (content: string) => void) {
+  onSave(onSaveCallback: (content: string) => string) {
     this.onSaveCallback = onSaveCallback
   }
 
@@ -101,6 +110,13 @@ export class Editor {
     if (!existingModel) {
       return this.addFile(file)
     }
+
+    const currentContent = existingModel.getLinesContent().join('\n')
+    if (currentContent === file.content) {
+      return existingModel
+    }
+
+    existingModel.setValue(file.content)
 
     return existingModel
   }

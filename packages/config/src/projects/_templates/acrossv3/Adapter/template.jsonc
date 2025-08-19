@@ -43,7 +43,8 @@
     "SHARED_BRIDGE",
     "USDC_SHARED_BRIDGE",
     "cctpMessageTransmitter",
-    "SOLANA_USDC_ADDRESS"
+    "SOLANA_USDC_ADDRESS",
+    "OFT_ADAPTER_STORE"
   ],
   "ignoreMethods": ["getL1CallValue"],
   "ignoreInWatchMode": [

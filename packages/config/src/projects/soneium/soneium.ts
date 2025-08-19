@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from '../../templates/opStack'
@@ -28,6 +32,7 @@ export const soneium = opStackL2({
         'https://t.me/SoneiumOfficial',
         'https://discord.gg/rWWPBHug9w',
       ],
+      rollupCodes: 'https://rollup.codes/soneium',
     },
   },
   hasSuperchainScUpgrades: true,
@@ -55,7 +60,9 @@ export const soneium = opStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb'),
+      address: ChainSpecificAddress(
+        'eth:0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb',
+      ),
       name: 'Custom USDC Escrow',
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
@@ -63,7 +70,9 @@ export const soneium = opStackL2({
       tokens: ['USDC'],
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x2F543A7C9cc80Cc2427c892B96263098d23ee55a'),
+      address: ChainSpecificAddress(
+        'eth:0x2F543A7C9cc80Cc2427c892B96263098d23ee55a',
+      ),
       name: 'Custom (w)stETH Escrow.',
       ...ESCROW.CANONICAL_EXTERNAL,
       description:

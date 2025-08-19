@@ -60,7 +60,7 @@ Such grouping can be achieved by first grouping individual contracts by delay, a
 [SystemConfig] with [no <via6>]
 >>>
 [FoochainPortal <via1_or_via2>, L1StandardBridge <via3_or_via4>] with [7d, no] delay
-[L1ERC721Brige <via5>] with [7d] delay
+[L1ERC721Bridge <via5>] with [7d] delay
 [SystemConfig <via6>] with [no] delays
 ```
 
@@ -157,4 +157,4 @@ With the grouping, the permissions section would look like this:
 
 ## Possible future developments
 
-While still in the discussion phase, there's a will to show immediate permissioned given by each contract. For example, if a contract makes use of access control, each immediate role assignment would be shown, regardless of whether it is an intermediate contract or a permissioned actor. It is likely that this entries will be displayed in the contracts section under each contract rather than the permissions section.
+While still in the discussion phase, there's a will to show immediate permissioned given by each contract. For example, if a contract makes use of access control, each immediate role assignment would be shown, regardless of whether it is an intermediate contract or a permissioned actor. It is likely that these entries will be displayed in the contracts section under each contract rather than the permissions section.

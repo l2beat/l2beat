@@ -1,7 +1,7 @@
 {
   "name": "ebichain",
   "chain": "ethereum",
-  "blockNumber": 22895934,
+  "timestamp": 1755009465,
   "configHash": "0x70cff1d730ee41843d4497b8b27e4e99da052393a8a04f9617ee8e60df44d828",
   "entries": [
     {
@@ -338,6 +338,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
           "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
@@ -354,8 +355,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 111,
+        "multisigThreshold": "4 of 12 (33%)",
+        "nonce": 152,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -868,6 +869,11 @@
         "eth:0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43": "ChallengeManager"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1496,5 +1502,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xb6020b22484dcdc05398fe54c83ed80ac951b8c51dd3aa110a22a592f35ad715"
+  "usedBlockNumbers": { "ethereum": 23125607 },
+  "permissionsConfigHash": "0xfb393ab3d6d1cd66f1d9e1d5aae15bc147db69d43c9fef32fc16a821c08b8b15"
 }

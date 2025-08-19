@@ -1,3 +1,122 @@
+Generated with discovered.json: 0x8b1abe3136353c3c91bb2e5d80c8533cd50ef80a
+
+# Diff at Tue, 05 Aug 2025 16:36:07 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@102320c86f8441c4ad97dd092d898f3142ff4433 block: 1753687629
+- current timestamp: 1754411762
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687629 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v5.0.0)."
+    }
+```
+
+Generated with discovered.json: 0xb6e52cc51123d51f680f068994abc3d2baa7290e
+
+# Diff at Mon, 28 Jul 2025 07:27:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 361056917
+- current block number: 362381317
+
+## Description
+
+verifier changes.
+
+## Watched changes
+
+```diff
+    contract Hibachi (0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400) {
+    +++ description: Main contract handling deposits, withdrawals and state updates.
+      values.stateUpdateProgramImageId:
+-        "0x6c66cc03d0d50933ca4558a6513f51cded2f48dd8f1ea8929f86f553f35b2328"
++        "0xe36df63187239cb11fc29356c18dd9996c19ef4668379f72956f648fbb7c72f2"
+      values.stateUpdateProgramVKey:
+-        "0x00202b4f9c0e94c5915fcb43369795fd30f35491b4017ceecf876199d6b26163"
++        "0x00761079b58d6d09fea47ee455238cae478986d76fc2c778e293f3c846a148b3"
+    }
+```
+
+Generated with discovered.json: 0xb74ec2373881c5581514daffc14019c45ae977c0
+
+# Diff at Thu, 24 Jul 2025 11:35:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daf9b4c0c3e0cc879ae7e4d12a2a3cc6a78da2a5 block: 351073243
+- current block number: 361056917
+
+## Description
+
+stateUpdateProgramImageId update.
+
+Config: Kailua added to OptimismPortal2 and DisputeGameFactory.
+
+## Watched changes
+
+```diff
+    contract Hibachi (0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400) {
+    +++ description: Main contract handling deposits, withdrawals and state updates.
+      values.stateUpdateProgramImageId:
+-        "0x624424e8cfb1478de0bbd5b2dbdb1a19a2dd235c3f7997b9d585d7f2e87879c4"
++        "0x6c66cc03d0d50933ca4558a6513f51cded2f48dd8f1ea8929f86f553f35b2328"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 351073243 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierRouter (0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (arb1:0xDC986a09728F76110FF666eE7b20d99086501d15).
+      template:
++        "risc0/RiscZeroVerifierRouter"
+      description:
++        "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (arb1:0xDC986a09728F76110FF666eE7b20d99086501d15)."
+    }
+```
+
+```diff
+    contract TimelockController (0xDC986a09728F76110FF666eE7b20d99086501d15) {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xDC986a09728F76110FF666eE7b20d99086501d15"]},"PROPOSER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]},"CANCELLER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]}}
+      values.Canceller:
++        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+      values.defaultAdminAC:
++        ["arb1:0xDC986a09728F76110FF666eE7b20d99086501d15"]
+      values.Executor:
++        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+      values.getMinDelayFormatted:
++        "3d"
+      values.Proposer:
++        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+      template:
++        "global/TimelockController"
+      description:
++        "A timelock with access control. The current minimum delay is 3d."
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"arb1:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"add/remove verifiers and the selectors they are mapped to.","role":".owner"},{"permission":"interact","from":"arb1:0xDC986a09728F76110FF666eE7b20d99086501d15","description":"manage all access control roles.","role":".defaultAdminAC"}]
+    }
+```
+
 Generated with discovered.json: 0x4293bcdecdaca79f526667dcef172eb6d8d7bbb5
 
 # Diff at Mon, 14 Jul 2025 12:44:17 GMT:

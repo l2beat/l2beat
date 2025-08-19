@@ -33,9 +33,9 @@ export const layer2financezk: ScalingProject = {
     name: 'L2.Finance-zk',
     slug: 'layer2financezk',
     warning:
-      'ScalingProject.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
+      'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
     description:
-      'Celer’s ScalingProject.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
+      "Celer's Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.",
     purposes: ['Exchange'],
     stacks: ['StarkEx'],
     category: 'Validium',
@@ -51,6 +51,10 @@ export const layer2financezk: ScalingProject = {
         'https://twitter.com/CelerNetwork',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('stone'),
   },
   stage: {
     stage: 'NotApplicable',
@@ -101,7 +105,7 @@ export const layer2financezk: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('StarkExchange', {
           name: 'StarkExchange',
         }),
@@ -128,7 +132,7 @@ export const layer2financezk: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Governor',

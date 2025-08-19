@@ -48,8 +48,8 @@ export { combinePermissionsIntoDiscovery } from './discovery/modelling/combinePe
 export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry'
 export {
-  type DiscoveryBlockNumbers,
   DiscoveryRegistry,
+  type DiscoveryTimestamps as DiscoveryBlockNumbers,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
   getDependenciesToDiscoverForProject,
@@ -96,6 +96,7 @@ export {
   ProviderStats,
 } from './discovery/provider/Stats'
 export { ProxyDetector } from './discovery/proxies/ProxyDetector'
+export { generateEntrypoints } from './discovery/shared-modules/generateEntrypoints'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
 export { get$Implementations } from './discovery/utils/extractors'

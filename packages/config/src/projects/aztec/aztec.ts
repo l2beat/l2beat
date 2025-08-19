@@ -74,6 +74,10 @@ export const aztec: ScalingProject = {
       ],
     },
   },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('aztecv1prover'),
+  },
   config: {
     escrows: [
       {
@@ -309,7 +313,7 @@ export const aztec: ScalingProject = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Rollup Providers',

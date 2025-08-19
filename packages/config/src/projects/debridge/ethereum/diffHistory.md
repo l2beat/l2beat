@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xaef444f24f4b0cfe699baf99164c1b405f337739
+Generated with discovered.json: 0x754f25c56327a10501902c9d3563901decbe9915
 
 # Diff at Mon, 21 Jul 2025 10:11:14 GMT:
 
@@ -9,7 +9,7 @@ Generated with discovered.json: 0xaef444f24f4b0cfe699baf99164c1b405f337739
 ## Description
 
 SimpleFeeProxy [upgraded](https://disco.l2beat.com/diff/eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C/eth:0xa1cc7E623423169e1C10e6e5CC8Ae6f1d11042DE):
-- flashloans removed
+- flash loans removed
 - AMB function added (sends only message, no tokens)
 - treasury deprecated, fees can now be removed by a permissioned actor
 

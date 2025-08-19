@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ESCROW, EXITS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -27,6 +31,7 @@ export const blast: ScalingProject = opStackL2({
       ],
       repositories: ['https://github.com/blast-io'],
       socialMedia: ['https://twitter.com/blast', 'https://discord.gg/blast-l2'],
+      rollupCodes: 'https://rollup.codes/blast',
     },
     tvsWarning: {
       value: 'The TVS does account for rehypothecated tokens.',
@@ -95,7 +100,9 @@ export const blast: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1708825259), //First sequencer transaction
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d'),
+      address: ChainSpecificAddress(
+        'eth:0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d',
+      ),
       name: 'Pre-launch Blast Vault',
       description:
         'Pre-launch Blast Vault that keeps stETH. Funds from this Vault can be migrated to Blast bridge.',
@@ -103,12 +110,14 @@ export const blast: ScalingProject = opStackL2({
       ...ESCROW.CANONICAL_EXTERNAL,
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x98078db053902644191f93988341E31289E1C8FE'),
+      address: ChainSpecificAddress(
+        'eth:0x98078db053902644191f93988341E31289E1C8FE',
+      ),
       name: 'Interest-bearing ETH Vault',
       tokens: ['ETH', 'stETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
-        'Escrow for ETH that is invested into a yield-bearing contracts such as stETH.',
+        'Escrow for ETH that is invested into yield-bearing contracts such as stETH.',
     }),
   ],
   isNodeAvailable: true,
@@ -122,7 +131,7 @@ export const blast: ScalingProject = opStackL2({
     genesisState:
       'The genesis file can be found [here](https://github.com/blast-io/deployment/blob/master/mainnet/genesis.json).',
     dataFormat:
-      "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/).",
+      "The format specification of Sequencer's data batches can be found [here](https://optimism.io/blog/here-s-how-you-can-reproduce-op-mainnet-s-migration-to-bedrock).",
   },
   milestones: [
     {

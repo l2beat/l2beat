@@ -105,22 +105,23 @@ function MilestonesBase(props: {
                 />
               )}
               <Icon className="-left-8 absolute" />
-              <p className="font-bold text-lg leading-none">
+              <p className="font-bold text-label-value-16 md:text-label-value-18">
                 {milestone.title}
               </p>
-              <p className="text-sm dark:text-gray-400">
+              <p className="mt-1.5 font-medium text-label-value-14 text-secondary md:mt-1">
                 {formatDate(milestone.date)}
               </p>
-              <div className="mt-3">
-                {milestone.description && (
-                  <Markdown className="text-sm leading-none dark:text-gray-400">
-                    {milestone.description}
-                  </Markdown>
-                )}
-                <CustomLink className="text-sm" href={milestone.url}>
-                  Learn more
-                </CustomLink>
-              </div>
+              {milestone.description && (
+                <Markdown className="mt-2 font-normal text-paragraph-15 md:text-paragraph-16">
+                  {milestone.description}
+                </Markdown>
+              )}
+              <CustomLink
+                className="mt-2 text-label-value-15 md:text-label-value-16"
+                href={milestone.url}
+              >
+                Learn more
+              </CustomLink>
             </div>
           )
         })}

@@ -61,6 +61,8 @@ export interface ScalingProject {
   reviewStatus?: ProjectReviewStatus
   /** Colors used in the project's branding. E.g. ecosystem gradient, project page accents */
   colors?: ProjectCustomColors
+  /** Proof system of the project */
+  proofSystem: ProjectScalingProofSystem | undefined
   /** Information displayed about the project on the frontend */
   display: ProjectScalingDisplay
   /** Information required to calculate the stats of the project */
@@ -95,7 +97,7 @@ export interface ScalingProject {
   badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  /** Things we have or haven't checked while assesing the stage */
+  /** Things we have or haven't checked while assessing the stage */
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   /** Discodrive markers - shouldn't be configured by a user */
   discoveryInfo: ProjectDiscoveryInfo
@@ -116,6 +118,15 @@ export interface ProjectScalingConfig {
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
   liveness?: ProjectLivenessConfig
+}
+
+export interface ProjectScalingProofSystem {
+  /** Type of proof system */
+  type: 'Optimistic' | 'Validity'
+  /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
+  name?: string
+  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
+  zkCatalogId?: string
 }
 
 export interface ProjectScalingDisplay {
@@ -208,7 +219,7 @@ interface FunctionCall {
 
 interface Transfer {
   formula: 'transfer'
-  from: EthereumAddress
+  from?: EthereumAddress
   to: EthereumAddress
   /** Inclusive */
   sinceTimestamp: UnixTime

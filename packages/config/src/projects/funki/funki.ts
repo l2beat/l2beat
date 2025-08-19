@@ -27,12 +27,6 @@ const sequencerInbox = ChainSpecificAddress.address(
     'sequencerInbox',
   ),
 )
-const sequencerAddress = ChainSpecificAddress.address(
-  discovery.getContractValue<ChainSpecificAddress>(
-    'SystemConfig',
-    'batcherHash',
-  ),
-)
 
 const daChallengeWindow = formatSeconds(
   discovery.getContractValue<number>(
@@ -66,7 +60,7 @@ export const funki: ScalingProject = opStackL2({
     stacks: ['OP Stack'],
     links: {
       websites: ['https://funkichain.com'],
-      bridges: ['https://funkichain.com/bridge', 'https://swap.funkichain.com'],
+      bridges: ['https://funkichain.com/bridge', 'https://funkichain.com/swap'],
       documentation: ['https://docs.funkichain.com/'],
       explorers: ['https://funkiscan.io/'],
       repositories: ['https://github.com/funkichain'],
@@ -121,7 +115,6 @@ export const funki: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: sequencerAddress,
         to: sequencerInbox,
         sinceTimestamp: UnixTime(1743854015),
       },

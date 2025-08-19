@@ -95,7 +95,7 @@ function getEthereumEntry(
   data: ActivityProjectTableData,
   tab: CommonScalingEntry['tab'],
 ): ScalingActivityEntry {
-  const notSyncedStatus = data
+  const syncWarning = data
     ? getActivitySyncWarning(data.syncedUntil)
     : undefined
   return {
@@ -105,14 +105,12 @@ function getEthereumEntry(
     icon: getProjectIcon('ethereum'),
     slug: 'ethereum',
     tab,
-    // Ethereum is always at the top so it is always stageOrder 3
-    stageOrder: 3,
     filterable: undefined,
     data: {
       tps: data.tps,
       uops: data.uops,
       ratio: data.ratio,
-      isSynced: !notSyncedStatus,
+      isSynced: !syncWarning,
     },
     statuses: undefined,
   }

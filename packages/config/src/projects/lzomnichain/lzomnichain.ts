@@ -32,7 +32,7 @@ export const lzOmnichain: Bridge = {
         'https://github.com/harmony-one/layerzero-bridge.frontend',
       ],
       documentation: [
-        'https://layerzero.gitbook.io/docs/technical-reference/mainnet/supported-chain-ids',
+        'https://docs.layerzero.network/v1/developers/evm/build/what-you-can-build',
       ],
       socialMedia: ['https://twitter.com/LayerZero_Labs'],
     },
@@ -98,7 +98,7 @@ export const lzOmnichain: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'TSS Oracle',
           'Contract used to submit source chain block hashes. One of the default Oracles.',
@@ -135,7 +135,7 @@ export const lzOmnichain: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Default Relayer',

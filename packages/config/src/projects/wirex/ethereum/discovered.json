@@ -1,7 +1,7 @@
 {
   "name": "wirex",
   "chain": "ethereum",
-  "blockNumber": 22187530,
+  "timestamp": 1754397932,
   "configHash": "0x6a0d19487d139f81a239bf907239f74fd17863576d730203323edb945eb21d36",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -156,7 +156,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xab34a2a5393c8ddae1a7851478114360d330fef253b4f0f85c849a2bc3eb785e",
+        "lastAccInputHash": "0x5a4ce8884810e1571edfdf75586c668f57db43d4083bf5d76f4a8a0243f3ac47",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "pay-chain",
@@ -424,5 +424,6 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
+  "usedBlockNumbers": { "ethereum": 23074949 },
   "permissionsConfigHash": "0xe9be5f4b75740f13b418677d2d4ce188d4075e7fe5920aa8c90c34488f7568f1"
 }

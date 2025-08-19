@@ -143,6 +143,24 @@
     },
     {
       "mode": "auto",
+      "id": "silicon-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4B16e4752711A7ABEc32799C976F3CeFc0111f2B",
+        "chain": "silicon",
+        "decimals": 18,
+        "sinceTimestamp": 1724183531
+      }
+    },
+    {
+      "mode": "auto",
       "id": "silicon-MATIC",
       "priceId": "matic-network",
       "symbol": "MATIC",
@@ -310,7 +328,7 @@
       "symbol": "WBTC",
       "name": "Wrapped BTC",
       "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false,
       "amount": {

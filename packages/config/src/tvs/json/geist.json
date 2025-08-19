@@ -15,7 +15,8 @@
         "chain": "base",
         "escrowAddress": "0x9F904Fea0efF79708B37B99960e05900fE310A8E",
         "decimals": 18,
-        "sinceTimestamp": 1729718343
+        "sinceTimestamp": 1729718343,
+        "untilTimestamp": 1747440000
       },
       "valueForSummary": {
         "type": "value",
@@ -23,7 +24,8 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1729718343
+          "sinceTimestamp": 1729718343,
+          "untilTimestamp": 1747440000
         },
         "priceId": "aavegotchi"
       },

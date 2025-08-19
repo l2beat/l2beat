@@ -80,10 +80,10 @@ export function getCommonDaProjectStats(
     title: 'Economic security',
     value: // EC not set
       project.header.economicSecurity
-        ? // EC set but not synced
+        ? // EC set but no data
           project.header.economicSecurity !== undefined
           ? formatCurrency(project.header.economicSecurity, 'usd')
-          : 'Not synced'
+          : 'No data'
         : EM_DASH,
     tooltip:
       'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
@@ -91,7 +91,9 @@ export function getCommonDaProjectStats(
 
   // Duration of storage
   const durationOfStorage =
-    project.kind === 'DA Service'
+    project.kind === 'DA Service' &&
+    (project.header.durationStorage === 0 ||
+      project.header.durationStorage === undefined)
       ? {
           value: 'Flexible',
           tooltip:

@@ -153,7 +153,7 @@ You can find us to discuss the UNI onboarding packages as well as any other matt
 
 ### **[HIP 43] Proposal to create Head of DAO Operations Role**
 
-This[ proposal](https://forum.hop.exchange/t/rfc-renewal-of-the-hop-delegate-incentivization-trial-3rd-period/10963) is for the DAO to vote on whether to add a new role called the Head of DAO Operations to act as a liaison between the different participants and subgroups of the DAO such as; core developer team, grants committee, ambassadors, delegates, multisig signers and more.
+This[ proposal](https://forum.hop.exchange/t/rfc-renewal-of-the-hop-delegate-incentivization-trial-3rd-period/1097) is for the DAO to vote on whether to add a new role called the Head of DAO Operations to act as a liaison between the different participants and subgroups of the DAO such as; core developer team, grants committee, ambassadors, delegates, multisig signers and more.
 
 The[ Snapshot vote](https://snapshot.org/#/hop.eth/proposal/0xbab2b4ccc7634ac371e62fc910ca4a8b5376846f3b18146d65c35122bc8e5b30) ends on Monday, February 5th 2024, at 7:02 am UTC.
 

@@ -9,7 +9,7 @@ import type {
 
 export class MulticallClient {
   constructor(
-    private readonly rcpClient: RpcClient,
+    private readonly rpcClient: RpcClient,
     private readonly config: MulticallConfigEntry[],
   ) {}
 
@@ -57,7 +57,7 @@ export class MulticallClient {
   ): Promise<MulticallResponse[]> {
     const results = await Promise.all(
       requests.map((request) =>
-        this.rcpClient.call(
+        this.rpcClient.call(
           {
             to: request.address,
             data: request.data,
@@ -80,7 +80,7 @@ export class MulticallClient {
     blockNumber: number,
   ): Promise<MulticallResponse[]> {
     const encoded = config.encodeBatch(requests)
-    const result = await this.rcpClient.call(
+    const result = await this.rpcClient.call(
       { to: config.address, data: encoded },
       blockNumber,
     )
