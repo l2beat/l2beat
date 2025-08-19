@@ -1,5 +1,5 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
-import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
+import { ProjectBridgeTypeWithTokensTvsChart } from '~/components/chart/tvs/ProjectBridgeTypeWithTokensTvsChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TvsBreakdownSummaryBox } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
@@ -32,7 +32,7 @@ export function ScalingTvsSection({
 }: ScalingTvsSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <ProjectBridgeTypeTvsChart
+      <ProjectBridgeTypeWithTokensTvsChart
         milestones={milestones}
         projectId={projectId}
         tokens={tokens}

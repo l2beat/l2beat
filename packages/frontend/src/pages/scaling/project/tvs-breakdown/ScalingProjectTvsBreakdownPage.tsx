@@ -1,6 +1,6 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
+import { ProjectBridgeTypeWithTokensTvsChart } from '~/components/chart/tvs/ProjectBridgeTypeWithTokensTvsChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
@@ -39,7 +39,7 @@ export function ScalingProjectTvsBreakdownPage({
           />
           <div className="md:space-y-6">
             <PrimaryCard>
-              <ProjectBridgeTypeTvsChart
+              <ProjectBridgeTypeWithTokensTvsChart
                 projectId={project.id}
                 milestones={project.milestones ?? []}
                 tokens={entries}
