@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import type { ScalingTvsSectionProps } from '~/components/projects/sections/scaling-tvs/ScalingTvsSection'
+import type { ScalingTvsSectionProps } from '~/components/projects/sections/ScalingTvsSection'
 import { isDetailedTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
 import type { SsrHelpers } from '~/trpc/server'
 

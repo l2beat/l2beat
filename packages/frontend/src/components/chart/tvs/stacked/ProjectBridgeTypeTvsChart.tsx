@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { useScalingTvsChartControlsContext } from '~/components/projects/sections/scaling-tvs/ScalingTvsControlsContext'
+import { useTvsChartControlsContext } from '~/components/projects/sections/TvsChartControlsContext'
 import { api } from '~/trpc/React'
 import {
   BridgeTypeTvsChart,
@@ -17,7 +17,7 @@ export function ProjectBridgeTypeTvsChart({
   projectId,
   milestones,
 }: ProjectBridgeTypeTvsChartProps) {
-  const { range, unit } = useScalingTvsChartControlsContext()
+  const { range, unit } = useTvsChartControlsContext()
   const { dataKeys, toggleDataKey } = useChartDataKeys(bridgeTypeTvsChartMeta)
 
   const { data, isLoading } = api.tvs.detailedChart.useQuery({

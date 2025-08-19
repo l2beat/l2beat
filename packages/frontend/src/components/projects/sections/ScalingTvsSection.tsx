@@ -1,14 +1,10 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
 import capitalize from 'lodash/capitalize'
 import { useMemo, useState } from 'react'
-import { ProjectTokenChart2 } from '~/components/chart/tvs/ProjectTokenChart2'
+import { ProjectTokenChart } from '~/components/chart/tvs/ProjectTokenChart'
 import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
-import { TvsChartTimeRangeControls } from '~/components/chart/tvs/TvsChartTimeRangeControls'
-import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
-import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
-import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TokenCombobox } from '~/components/TokenCombobox'
@@ -20,12 +16,13 @@ import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { ProjectSection } from '../ProjectSection'
-import type { ProjectSectionProps } from '../types'
+import { ProjectSection } from './ProjectSection'
+import { TvsChartControls } from './TvsChartControls'
 import {
-  ScalingTvsChartControlsContextProvider,
-  useScalingTvsChartControlsContext,
-} from './ScalingTvsControlsContext'
+  TvsChartControlsContextProvider,
+  useTvsChartControlsContext,
+} from './TvsChartControlsContext'
+import type { ProjectSectionProps } from './types'
 
 export interface ScalingTvsSectionProps extends ProjectSectionProps {
   id: 'tvs'
@@ -60,7 +57,7 @@ export function ScalingTvsSection({
         )
       }
     >
-      <ScalingTvsChartControlsContextProvider defaultRange={defaultRange}>
+      <TvsChartControlsContextProvider defaultRange={defaultRange}>
         <Controls projectId={projectId} />
         <ProjectBridgeTypeTvsChart
           projectId={projectId}
@@ -70,8 +67,8 @@ export function ScalingTvsSection({
           milestones={milestones}
           projectId={projectId}
         />
-      </ScalingTvsChartControlsContextProvider>
-      <ScalingTvsChartControlsContextProvider defaultRange={defaultRange}>
+      </TvsChartControlsContextProvider>
+      <TvsChartControlsContextProvider defaultRange={defaultRange}>
         <TokenCombobox
           tokens={tokens ?? []}
           value={selectedToken}
@@ -86,7 +83,7 @@ export function ScalingTvsSection({
               projectId={projectId}
               className="mt-2"
             />
-            <ProjectTokenChart2
+            <ProjectTokenChart
               projectId={projectId}
               milestones={milestones}
               token={selectedToken}
@@ -104,7 +101,7 @@ export function ScalingTvsSection({
             </ChartStats>
           </>
         )}
-      </ScalingTvsChartControlsContextProvider>
+      </TvsChartControlsContextProvider>
       {tvsProjectStats && (
         <>
           <HorizontalSeparator className="my-4" />
@@ -139,7 +136,7 @@ export function ScalingTvsSection({
 }
 
 function Controls({ projectId }: { projectId: string }) {
-  const { range, unit, setUnit, setRange } = useScalingTvsChartControlsContext()
+  const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
   const { data } = api.tvs.detailedChart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
     range,
@@ -151,17 +148,17 @@ function Controls({ projectId }: { projectId: string }) {
     [data?.chart],
   )
   return (
-    <ChartControlsWrapper className="flex-wrap gap-y-0">
-      <ProjectChartTimeRange range={chartRange} />
-      <div className="flex items-center gap-1">
-        <TvsChartUnitControls unit={unit} setUnit={setUnit} />
-        <TvsChartTimeRangeControls
-          projectSection
-          timeRange={range}
-          setTimeRange={setRange}
-        />
-      </div>
-    </ChartControlsWrapper>
+    <TvsChartControls
+      chartRange={chartRange}
+      range={{
+        value: range,
+        setValue: setRange,
+      }}
+      unit={{
+        value: unit,
+        setValue: setUnit,
+      }}
+    />
   )
 }
 
@@ -174,7 +171,7 @@ function TokenControls({
   projectId: string
   className?: string
 }) {
-  const { range, setRange } = useScalingTvsChartControlsContext()
+  const { range, setRange } = useTvsChartControlsContext()
   const { data } = api.tvs.tokenChart.useQuery({
     token: {
       tokenId: token.id,
@@ -189,14 +186,14 @@ function TokenControls({
   )
 
   return (
-    <ChartControlsWrapper className={cn('flex-wrap gap-y-0', className)}>
-      <ProjectChartTimeRange range={chartRange} />
-      <TvsChartTimeRangeControls
-        projectSection
-        timeRange={range}
-        setTimeRange={setRange}
-      />
-    </ChartControlsWrapper>
+    <TvsChartControls
+      className={className}
+      chartRange={chartRange}
+      range={{
+        value: range,
+        setValue: setRange,
+      }}
+    />
   )
 }
 

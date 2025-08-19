@@ -47,11 +47,9 @@ export function TokenCombobox({
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className={cn('flex items-center gap-2', className)}>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger
-          className={cn('group/popover-trigger h-8 justify-between', className)}
-        >
+        <PopoverTrigger className="group/popover-trigger h-8 justify-between">
           {value ? <TokenItem token={value} /> : (placeholder ?? 'Tokens')}
           <ChevronIcon className="size-3 shrink-0 transition-transform group-data-[state=open]/popover-trigger:rotate-180" />
         </PopoverTrigger>

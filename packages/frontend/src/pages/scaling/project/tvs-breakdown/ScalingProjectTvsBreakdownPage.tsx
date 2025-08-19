@@ -1,32 +1,53 @@
+import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { ProjectBridgeTypeWithTokensTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeWithTokensTvsChart'
+import capitalize from 'lodash/capitalize'
+import { useMemo, useState } from 'react'
+import { ProjectTokenChart } from '~/components/chart/tvs/ProjectTokenChart'
+import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
+import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
+import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
+import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { TvsChartControls } from '~/components/projects/sections/TvsChartControls'
+import {
+  TvsChartControlsContextProvider,
+  useTvsChartControlsContext,
+} from '~/components/projects/sections/TvsChartControlsContext'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { TokenCombobox } from '~/components/TokenCombobox'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ScalingProjectTvsBreakdown } from '~/server/features/scaling/project/getScalingProjectTvsBreakdown'
+import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import { api } from '~/trpc/React'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { RequestTokenBox } from './components/RequestTokenBox'
 import { TvsBreakdownPageHeader } from './components/TvsBreakdownPageHeader'
 import { TvsBreakdownSummaryBox } from './components/TvsBreakdownSummaryBox'
+import { categoryToLabel } from './components/tables/categoryToLabel'
 import { TvsBreakdownTokenTable } from './components/tables/TvsBreakdownTokenTable'
 
 interface Props extends AppLayoutProps {
   tvsBreakdownData: ScalingProjectTvsBreakdown
+  milestones: Milestone[]
   queryState: DehydratedState
   defaultRange: TvsChartRange
 }
 
 export function ScalingProjectTvsBreakdownPage({
   tvsBreakdownData: { project, icon, dataTimestamp, entries, project7dData },
+  milestones,
   queryState,
   defaultRange,
   ...props
 }: Props) {
+  const [selectedToken, setSelectedToken] = useState<ProjectToken>()
+
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
@@ -39,12 +60,51 @@ export function ScalingProjectTvsBreakdownPage({
           />
           <div className="md:space-y-6">
             <PrimaryCard>
-              <ProjectBridgeTypeWithTokensTvsChart
-                projectId={project.id}
-                milestones={project.milestones ?? []}
-                tokens={entries}
-                defaultRange={defaultRange}
-              />
+              <TvsChartControlsContextProvider defaultRange={defaultRange}>
+                <Controls projectId={project.id} />
+                <ProjectBridgeTypeTvsChart
+                  projectId={project.id}
+                  milestones={milestones}
+                />
+                <ProjectAssetCategoryTvsChart
+                  projectId={project.id}
+                  milestones={milestones}
+                />
+              </TvsChartControlsContextProvider>
+              <TvsChartControlsContextProvider defaultRange={defaultRange}>
+                <TokenCombobox
+                  tokens={entries ?? []}
+                  value={selectedToken}
+                  setValue={setSelectedToken}
+                  placeholder="Select a token to preview chart"
+                />
+
+                {selectedToken && (
+                  <>
+                    <TokenControls
+                      token={selectedToken}
+                      projectId={project.id}
+                      className="mt-2"
+                    />
+                    <ProjectTokenChart
+                      projectId={project.id}
+                      milestones={milestones}
+                      token={selectedToken}
+                    />
+                    <ChartStats className="mt-3 md:grid-cols-3 lg:grid-cols-3">
+                      <ChartStatsItem label="Value">
+                        {formatCurrency(selectedToken.value, 'usd')}
+                      </ChartStatsItem>
+                      <ChartStatsItem label="Bridging Type">
+                        {capitalize(selectedToken.source)}
+                      </ChartStatsItem>
+                      <ChartStatsItem label="Category">
+                        {categoryToLabel(selectedToken.category)}
+                      </ChartStatsItem>
+                    </ChartStats>
+                  </>
+                )}
+              </TvsChartControlsContextProvider>
               <HorizontalSeparator className="my-4" />
               <TvsBreakdownSummaryBox
                 total={{
@@ -75,5 +135,68 @@ export function ScalingProjectTvsBreakdownPage({
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>
+  )
+}
+
+function Controls({ projectId }: { projectId: string }) {
+  const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
+
+  const { data } = api.tvs.detailedChart.useQuery({
+    filter: { type: 'projects', projectIds: [projectId] },
+    range,
+    excludeAssociatedTokens: false,
+  })
+
+  const chartRange = useMemo(
+    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
+    [data?.chart],
+  )
+
+  return (
+    <TvsChartControls
+      chartRange={chartRange}
+      range={{
+        value: range,
+        setValue: setRange,
+      }}
+      unit={{
+        value: unit,
+        setValue: setUnit,
+      }}
+    />
+  )
+}
+
+function TokenControls({
+  token,
+  projectId,
+  className,
+}: {
+  token: ProjectToken
+  projectId: string
+  className?: string
+}) {
+  const { range, setRange } = useTvsChartControlsContext()
+  const { data } = api.tvs.tokenChart.useQuery({
+    token: {
+      tokenId: token.id,
+      projectId,
+    },
+    range,
+  })
+
+  const chartRange = useMemo(
+    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
+    [data?.chart],
+  )
+  return (
+    <TvsChartControls
+      className={className}
+      chartRange={chartRange}
+      range={{
+        value: range,
+        setValue: setRange,
+      }}
+    />
   )
 }

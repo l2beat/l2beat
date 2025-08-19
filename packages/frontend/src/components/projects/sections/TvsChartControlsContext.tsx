@@ -2,29 +2,29 @@ import { createContext, useContext, useState } from 'react'
 import type { ChartUnit } from '~/components/chart/types'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 
-type ScalingTvsChartControlsContextValue = {
+type TvsChartControlsContextValue = {
   unit: ChartUnit
   setUnit: React.Dispatch<React.SetStateAction<ChartUnit>>
   range: TvsChartRange
   setRange: React.Dispatch<React.SetStateAction<TvsChartRange>>
 }
 
-const ScalingTvsChartControlsContext =
-  createContext<ScalingTvsChartControlsContextValue | null>(null)
+const TvsChartControlsContext =
+  createContext<TvsChartControlsContextValue | null>(null)
 
 interface Props {
   children: React.ReactNode
   defaultRange: TvsChartRange
 }
 
-export function ScalingTvsChartControlsContextProvider({
+export function TvsChartControlsContextProvider({
   children,
   defaultRange,
 }: Props) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
   const [range, setRange] = useState<TvsChartRange>(defaultRange)
   return (
-    <ScalingTvsChartControlsContext.Provider
+    <TvsChartControlsContext.Provider
       value={{
         unit,
         setUnit,
@@ -33,15 +33,15 @@ export function ScalingTvsChartControlsContextProvider({
       }}
     >
       {children}
-    </ScalingTvsChartControlsContext.Provider>
+    </TvsChartControlsContext.Provider>
   )
 }
 
-export function useScalingTvsChartControlsContext() {
-  const context = useContext(ScalingTvsChartControlsContext)
+export function useTvsChartControlsContext() {
+  const context = useContext(TvsChartControlsContext)
   if (!context) {
     throw new Error(
-      'ScalingTvsChartControlsContext must be used within a ScalingTvsChartControlsContextProvider',
+      'TvsChartControlsContext must be used within a TvsChartControlsContextProvider',
     )
   }
   return context
