@@ -132,12 +132,7 @@ function DefaultChart({
       />
       <TvsChartUnitControls unit={unit} setUnit={setUnit}>
         {tokens && (
-          <TokenCombobox
-            tokens={tokens}
-            setValue={setToken}
-            value={token}
-            isBridge={true}
-          />
+          <TokenCombobox tokens={tokens} setValue={setToken} value={token} />
         )}
       </TvsChartUnitControls>
     </div>

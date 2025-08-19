@@ -25,16 +25,9 @@ interface Props {
   value: ProjectToken | undefined
   setValue: (token: ProjectToken | undefined) => void
   className?: string
-  isBridge: boolean
 }
 
-export function TokenCombobox({
-  tokens,
-  value,
-  setValue,
-  className,
-  isBridge,
-}: Props) {
+export function TokenCombobox({ tokens, value, setValue, className }: Props) {
   const [open, setOpen] = React.useState(false)
 
   const onSelect = (currentValue: string) => {

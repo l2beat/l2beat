@@ -153,12 +153,7 @@ function DefaultChart({
       <div className="flex flex-wrap items-center justify-between gap-1">
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
           {tokens && (
-            <TokenCombobox
-              tokens={tokens}
-              value={token}
-              setValue={setToken}
-              isBridge={false}
-            />
+            <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
           )}
         </TvsChartUnitControls>
         {tvsBreakdownUrl && (

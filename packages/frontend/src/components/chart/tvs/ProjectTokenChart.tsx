@@ -226,7 +226,6 @@ interface ControlsProps {
 }
 
 function TokenChartUnitControls({
-  isBridge,
   unit,
   setUnit,
   tokens,
@@ -245,12 +244,7 @@ function TokenChartUnitControls({
       ) : (
         <Skeleton className="h-8 w-[104.82px]" />
       )}
-      <TokenCombobox
-        tokens={tokens}
-        value={token}
-        setValue={setToken}
-        isBridge={isBridge}
-      />
+      <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
     </div>
   )
 }
