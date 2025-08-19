@@ -8,7 +8,7 @@ Generated with discovered.json: 0x8353bceb9d6213c536f528dfb173ae38f2251a06
 
 ## Description
 
-Ingnor anchor values.
+Ignore anchor values.
 
 ## Config/verification related changes
 
