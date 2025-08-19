@@ -36,7 +36,7 @@ import type { ProjectPermissionedAccount } from '../../types'
 const discovery = new ProjectDiscovery('linea')
 
 const timelockDelay = discovery.getContractValue<number>(
-  'L1Timelock',
+  'Timelock',
   'getMinDelay',
 )
 const timelockDelayString = formatSeconds(timelockDelay)

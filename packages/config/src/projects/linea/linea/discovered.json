@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "linea",
-  "timestamp": 1755613016,
+  "timestamp": 1755613763,
   "configHash": "0x1e5bdf99afd2d87b4a8e2b6fe2d8ec3ee3f3c5e3a7022297882f161279411e71",
   "entries": [
     {
@@ -392,7 +392,7 @@
           "0x0000000000000000000000000000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000000000000000000000000000"
         ],
-        "lastAnchoredL1MessageNumber": 774814,
+        "lastAnchoredL1MessageNumber": 774816,
         "limitInWei": "15000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
@@ -1192,6 +1192,6 @@
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b"
   },
-  "usedBlockNumbers": { "linea": 22243412 },
-  "permissionsConfigHash": "0xf52a54eecacad14b827a5f277928e09878cf78bfc760a78a92a7cbf6e39f039a"
+  "usedBlockNumbers": { "linea": 22243784 },
+  "permissionsConfigHash": "0x1af6c2746e7c52580bdd04b3b2001301b4d90ae16f68c921089a1574b32cb67c"
 }

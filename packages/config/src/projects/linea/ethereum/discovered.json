@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "timestamp": 1755613016,
+  "timestamp": 1755613763,
   "configHash": "0x61c8e47626bb7fc06534e6463f53228b61c07473008c26635560bcde0c96aed3",
   "entries": [
     {
@@ -1581,6 +1581,6 @@
     "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23175659 },
-  "permissionsConfigHash": "0xf52a54eecacad14b827a5f277928e09878cf78bfc760a78a92a7cbf6e39f039a"
+  "usedBlockNumbers": { "ethereum": 23175720 },
+  "permissionsConfigHash": "0x1af6c2746e7c52580bdd04b3b2001301b4d90ae16f68c921089a1574b32cb67c"
 }
