@@ -18,7 +18,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from './core/Popover'
 import { linkVariants } from './link/CustomLink'
 
-const MAX_PER_SOURCE = 10
+const MAX_TOKENS = 25
 
 interface Props {
   tokens: ProjectToken[]
@@ -97,11 +97,11 @@ function TokenGroup({ tokens, value, onSelect }: TokenGroupProps) {
   if (filteredTokens.length === 0) {
     return null
   }
-  const moreCount = filteredTokens.length - MAX_PER_SOURCE
+  const moreCount = filteredTokens.length - MAX_TOKENS
   return (
     <>
       <CommandGroup>
-        {filteredTokens.slice(0, MAX_PER_SOURCE).map((token) => (
+        {filteredTokens.slice(0, MAX_TOKENS).map((token) => (
           <CommandItem
             key={token.id.toString()}
             value={token.id.toString()}
