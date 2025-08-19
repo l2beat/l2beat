@@ -118,7 +118,7 @@ export const agglayer: BaseProject = {
       governanceProposals: 'https://governance.polygon.technology/proposals/',
     },
     firstBanner: {
-      mainText: "Build an Agglayer chain",
+      mainText: 'Build an Agglayer chain',
     },
     token: {
       tokenId: 'polygonzkevm-POL',
