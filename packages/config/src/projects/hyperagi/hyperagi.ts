@@ -17,6 +17,7 @@ export const hyperagi: ScalingProject = upcomingL3({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://hyperagi.network/'],
+      bridges: ['https://bridge.hyperagi.ai'],
       documentation: ['https://hyperdust-foundation.gitbook.io/moss-ai-docs'],
       repositories: ['https://github.com/HyperdustLab/HyperdustProtocol'],
       explorers: ['https://explorer.hyperagi.network/'],
