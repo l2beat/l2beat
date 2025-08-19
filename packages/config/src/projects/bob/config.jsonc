@@ -1,9 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "bob",
-  "import": [
-    "../globalConfig.jsonc"
-  ],
+  "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
     "eth:0x091dF5E1284E49fA682407096aD34cfD42B95B72"
@@ -51,18 +49,14 @@
           "handler": {
             "type": "call",
             "method": "getVerifier",
-            "args": [
-              "0xbb001d44"
-            ]
+            "args": ["0xbb001d44"]
           }
         },
         "verifier6Manual": {
           "handler": {
             "type": "call",
             "method": "getVerifier",
-            "args": [
-              "0x73c457ba"
-            ]
+            "args": ["0x73c457ba"]
           }
         }
       }
