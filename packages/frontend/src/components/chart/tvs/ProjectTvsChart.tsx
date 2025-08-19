@@ -1,10 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import type {
-  ProjectToken,
-  ProjectTokens,
-} from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
@@ -20,7 +17,7 @@ import { TvsChartUnitControls } from './TvsChartUnitControls'
 interface Props {
   projectId: string
   milestones: Milestone[]
-  tokens: ProjectTokens | undefined
+  tokens: ProjectToken[] | undefined
   defaultRange: TvsChartRange
 }
 
@@ -72,7 +69,7 @@ interface DefaultChartProps {
   milestones: Milestone[]
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
-  tokens: ProjectTokens | undefined
+  tokens: ProjectToken[] | undefined
   token: ProjectToken | undefined
   setToken: (token: ProjectToken | undefined) => void
   unit: ChartUnit
@@ -135,12 +132,7 @@ function DefaultChart({
       />
       <TvsChartUnitControls unit={unit} setUnit={setUnit}>
         {tokens && (
-          <TokenCombobox
-            tokens={tokens}
-            setValue={setToken}
-            value={token}
-            isBridge={true}
-          />
+          <TokenCombobox tokens={tokens} setValue={setToken} value={token} />
         )}
       </TvsChartUnitControls>
     </div>

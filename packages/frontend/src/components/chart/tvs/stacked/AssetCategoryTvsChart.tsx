@@ -71,7 +71,7 @@ export function AssetCategoryTvsChart({
   toggleDataKey,
 }: Props) {
   // If only one data key is selected we want to change the domain
-  // Having it from 0 to MAX does make sense for stacked chart (better comparision)
+  // Having it from 0 to MAX does make sense for stacked chart (better comparison)
   // But for single one it should not start from 0
   return (
     <ChartContainer
