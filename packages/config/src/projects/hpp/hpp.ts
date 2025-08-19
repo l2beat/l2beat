@@ -17,6 +17,7 @@ export const hpp: ScalingProject = upcomingL2({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://hpp.io/'],
+      bridges: ['https://bridge.arbitrum.io/?sourceChain=ethereum&destinationChain=hpp-mainnet&tab=bridge'],
       explorers: ['https://sepolia-explorer.hpp.io/'],
       documentation: ['https://docs.hpp.io/'],
       repositories: ['https://github.com/hpp-io'],
