@@ -1,7 +1,7 @@
 {
   "name": "fuel",
   "chain": "ethereum",
-  "timestamp": 1736950439,
+  "timestamp": 1755508162,
   "configHash": "0x95b68e6fde20dde4ddb8fd8b2c485733a021261d94ad1b51e206b62e1ff623e2",
   "entries": [
     {
@@ -26,7 +26,6 @@
           "eth:0xAA52e167e8Ad426054DCF0fd5BD5481348F4FfC8",
           "eth:0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306",
           "eth:0xd4c29D8ddC7D3E326030270f35d9FD4973AbBE09",
-          "eth:0x5F5e0C904153789a9E978c286180b4191950d886",
           "eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc",
           "eth:0x515Fa9b26E195a043582377F51F9A9bAD2D10c7d",
           "eth:0x958470a2ADe72b7a01A2e160F3286767b9623Ad7",
@@ -35,12 +34,12 @@
           "eth:0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6",
           "eth:0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
         ],
-        "$threshold": 10,
+        "$threshold": 9,
         "domainSeparator": "0x28903eeea49a6c98614f0cf994eddf5eb5b63ffc10fb7f4277c1b7859b6f877a",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 42,
+        "multisigThreshold": "9 of 12 (75%)",
+        "nonce": 44,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -84,7 +83,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 7,
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -99,11 +98,6 @@
     },
     {
       "address": "eth:0x515Fa9b26E195a043582377F51F9A9bAD2D10c7d",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x5F5e0C904153789a9E978c286180b4191950d886",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -290,15 +284,15 @@
             "members": ["eth:0x32da601374b38154f05904B16F44A1911Aa6f314"]
           }
         },
-        "currentPeriodAmount": "81122095978000000000",
-        "currentPeriodEnd": 1737429947,
+        "currentPeriodAmount": "11863010566000000000",
+        "currentPeriodEnd": 1755719183,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositLimitGlobal": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "ETH_DECIMALS": 18,
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 245380,
+        "getNextOutgoingMessageNonce": 249154,
         "limitAmount": "7829000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
@@ -307,7 +301,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "14452843843978000000000",
+        "totalDeposited": "2628119081797000000000",
         "withdrawalsPaused": false
       },
       "implementationNames": {
@@ -721,6 +715,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 21630407 },
-  "permissionsConfigHash": "0x249a14f839a028ce3e5363b221379ea81c58d5c79e3aa91364a04d00491ec342"
+  "usedBlockNumbers": { "ethereum": 23166955 },
+  "permissionsConfigHash": "0x0a92f2152313dd0271b5c7cfe6613fb7e69a9a056676a08da03864bf27ceacbc"
 }

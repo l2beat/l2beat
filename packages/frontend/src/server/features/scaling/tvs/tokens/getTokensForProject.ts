@@ -31,7 +31,7 @@ export async function getTokensForProject(
   const tokenValuesMap = new Map(tokenValues.map((x) => [x.tokenId, x]))
   const placeholderIcon = getStaticAsset('/images/token-placeholder.png')
 
-  const projectTokeens: ProjectToken[] = project.tvsConfig
+  const projectTokens: ProjectToken[] = project.tvsConfig
     .map((t) => {
       const tokenValue = tokenValuesMap.get(t.id)
       if (!tokenValue) return undefined
@@ -46,9 +46,9 @@ export async function getTokensForProject(
     })
     .filter(notUndefined)
 
-  projectTokeens.sort((a, b) => b.value - a.value)
+  projectTokens.sort((a, b) => b.value - a.value)
 
-  return projectTokeens
+  return projectTokens
 }
 
 function getMockTokensForProject(project: Project<never, 'tvsConfig'>) {
