@@ -41,7 +41,7 @@ export class AvailDaProvider implements DaBlobProvider {
     const targetExtrinsics = block.extrinsics
       .filter((ex) => {
         // Get first 32 bytes (64 characters since hex is 2 chars per byte)
-        return ex.substring(0, 64).includes('008400')
+        return ex.substring(0, 64).includes('8400')
       })
       .reverse()
 
