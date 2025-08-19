@@ -76,7 +76,6 @@ export function ProjectTokenChart({
         data={chartData}
         isLoading={isLoading}
         milestones={milestones}
-        isBridge={isBridge}
         token={token}
         unit={unit}
         syncedUntil={data?.syncedUntil}

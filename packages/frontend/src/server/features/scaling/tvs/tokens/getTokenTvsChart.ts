@@ -92,7 +92,11 @@ export async function getTokenTvsChart({
   const data: TokenTvsChartPoint[] = []
   for (const timestamp of timestamps) {
     const value = tokenValuesByTimestamp[timestamp]
-    data.push([timestamp, value?.amount ?? null, value?.value ?? null])
+    data.push([
+      timestamp,
+      value?.amount ?? null,
+      value?.valueForProject ?? null,
+    ])
   }
 
   return {

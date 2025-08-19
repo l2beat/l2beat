@@ -22,12 +22,19 @@ const MAX_TOKENS = 25
 
 interface Props {
   tokens: ProjectToken[]
+  placeholder?: string
   value: ProjectToken | undefined
   setValue: (token: ProjectToken | undefined) => void
   className?: string
 }
 
-export function TokenCombobox({ tokens, value, setValue, className }: Props) {
+export function TokenCombobox({
+  tokens,
+  value,
+  setValue,
+  className,
+  placeholder,
+}: Props) {
   const [open, setOpen] = React.useState(false)
 
   const onSelect = (currentValue: string) => {
@@ -40,48 +47,43 @@ export function TokenCombobox({ tokens, value, setValue, className }: Props) {
   }
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        className={cn('group/popover-trigger h-8 justify-between', className)}
-      >
-        {value ? <TokenItem token={value} /> : 'Tokens'}
-        <ChevronIcon className="size-3 shrink-0 transition-transform group-data-[state=open]/popover-trigger:rotate-180" />
-      </PopoverTrigger>
-      <PopoverContent className="p-0" align="start">
-        <Command shouldFilter={false}>
-          <Input value={value} setValue={setValue} />
-          <CommandList>
-            <CommandEmpty>
-              <p>Can&apos;t find a token you&apos;re looking for?</p>
-              <a
-                className={linkVariants()}
-                href={externalLinks.tokenRequest}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Request it here
-              </a>
-            </CommandEmpty>
-            <TokenGroup value={value} tokens={tokens} onSelect={onSelect} />
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  )
-}
-
-function Input({ value, setValue }: Pick<Props, 'value' | 'setValue'>) {
-  return (
-    <CommandInput
-      placeholder="Start typing to find more..."
-      className="min-w-48"
-    >
-      <CommandInputActionButton
-        onClick={value !== undefined ? () => setValue(undefined) : undefined}
-      >
-        {value !== undefined ? 'Clear' : undefined}
-      </CommandInputActionButton>
-    </CommandInput>
+    <div className="flex items-center gap-2">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger
+          className={cn('group/popover-trigger h-8 justify-between', className)}
+        >
+          {value ? <TokenItem token={value} /> : (placeholder ?? 'Tokens')}
+          <ChevronIcon className="size-3 shrink-0 transition-transform group-data-[state=open]/popover-trigger:rotate-180" />
+        </PopoverTrigger>
+        <PopoverContent className="p-0" align="start">
+          <Command shouldFilter={false}>
+            <CommandInput
+              placeholder="Start typing to find more..."
+              className="min-w-48"
+            />
+            <CommandList>
+              <CommandEmpty>
+                <p>Can&apos;t find a token you&apos;re looking for?</p>
+                <a
+                  className={linkVariants()}
+                  href={externalLinks.tokenRequest}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Request it here
+                </a>
+              </CommandEmpty>
+              <TokenGroup value={value} tokens={tokens} onSelect={onSelect} />
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+      {value && (
+        <CommandInputActionButton onClick={() => setValue(undefined)}>
+          Clear
+        </CommandInputActionButton>
+      )}
+    </div>
   )
 }
 

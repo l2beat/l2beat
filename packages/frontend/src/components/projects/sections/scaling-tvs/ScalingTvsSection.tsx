@@ -1,19 +1,25 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
-import { useMemo } from 'react'
+import capitalize from 'lodash/capitalize'
+import { useMemo, useState } from 'react'
+import { ProjectTokenChart2 } from '~/components/chart/tvs/ProjectTokenChart2'
 import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
 import { TvsChartTimeRangeControls } from '~/components/chart/tvs/TvsChartTimeRangeControls'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TokenCombobox } from '~/components/TokenCombobox'
 import { TvsBreakdownSummaryBox } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
+import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import {
@@ -42,6 +48,9 @@ export function ScalingTvsSection({
   defaultRange,
   ...sectionProps
 }: ScalingTvsSectionProps) {
+  const [selectedToken, setSelectedToken] = useState<ProjectToken | undefined>(
+    undefined,
+  )
   return (
     <ProjectSection
       {...sectionProps}
@@ -61,6 +70,32 @@ export function ScalingTvsSection({
           milestones={milestones}
           projectId={projectId}
         />
+        <TokenCombobox
+          tokens={tokens ?? []}
+          value={selectedToken}
+          setValue={setSelectedToken}
+          placeholder="Select a token to preview chart"
+        />
+        {selectedToken && (
+          <>
+            <ProjectTokenChart2
+              projectId={projectId}
+              milestones={milestones}
+              token={selectedToken}
+            />
+            <ChartStats className="mt-3 md:grid-cols-3 lg:grid-cols-3">
+              <ChartStatsItem label="Total value secured">
+                {formatCurrency(selectedToken.value, 'usd')}
+              </ChartStatsItem>
+              <ChartStatsItem label="Source">
+                {capitalize(selectedToken.source)}
+              </ChartStatsItem>
+              <ChartStatsItem label="Category">
+                {categoryToLabel(selectedToken.category)}
+              </ChartStatsItem>
+            </ChartStats>
+          </>
+        )}
       </ScalingTvsChartControlsContextProvider>
       {tvsProjectStats && (
         <>

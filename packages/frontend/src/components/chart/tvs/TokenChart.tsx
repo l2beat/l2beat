@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { assert, assertUnreachable } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Area, AreaChart, type TooltipProps } from 'recharts'
 import {
@@ -32,7 +32,6 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   milestones: Milestone[]
-  isBridge: boolean
   token: ProjectToken
   unit: ChartUnit
   className?: string
@@ -42,7 +41,6 @@ export function TokenChart({
   data,
   isLoading,
   milestones,
-  isBridge,
   token,
   syncedUntil,
   unit,
@@ -54,14 +52,13 @@ export function TokenChart({
     () => ({
       value: {
         label: token.name,
-        color: sourceToColor(token.source),
-        legendLabel: sourceToLabel(token.source),
+        color: 'var(--chart-pink)',
         indicatorType: {
           shape: 'square',
         },
       },
     }),
-    [token.name, token.source],
+    [token.name],
   ) satisfies ChartMeta
 
   return (
@@ -73,18 +70,16 @@ export function TokenChart({
       milestones={milestones}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
-        {isBridge && (
-          <defs>
-            <PinkFillGradientDef id="fill" />
-            <PinkStrokeGradientDef id="stroke" />
-          </defs>
-        )}
-        {!isBridge && <ChartLegend content={<ChartLegendContent />} />}
+        <defs>
+          <PinkFillGradientDef id="fill" />
+          <PinkStrokeGradientDef id="stroke" />
+        </defs>
+        <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="value"
-          fill={isBridge ? 'url(#fill)' : chartMeta.value.color}
+          fill="url(#fill)"
           fillOpacity={1}
-          stroke={isBridge ? 'url(#stroke)' : 'none'}
+          stroke="url(#stroke)"
           strokeWidth={2}
           isAnimationActive={false}
         />
@@ -154,30 +149,4 @@ function CustomTooltip({
       </div>
     </ChartTooltipWrapper>
   )
-}
-
-function sourceToColor(source: ProjectToken['source']) {
-  switch (source) {
-    case 'native':
-      return 'var(--chart-stacked-pink)'
-    case 'canonical':
-      return 'var(--chart-stacked-purple)'
-    case 'external':
-      return 'var(--chart-stacked-yellow)'
-    default:
-      assertUnreachable(source)
-  }
-}
-
-function sourceToLabel(source: ProjectToken['source']) {
-  switch (source) {
-    case 'native':
-      return 'Natively minted'
-    case 'canonical':
-      return 'Canonically bridged'
-    case 'external':
-      return 'Externally bridged'
-    default:
-      assertUnreachable(source)
-  }
 }
