@@ -12,7 +12,6 @@ export type ProjectToken = {
   source: TvsToken['source']
   category: TvsToken['category']
   value: number
-  amount: number
   iconUrl: string
 }
 
@@ -44,7 +43,6 @@ export async function getTokensForProject(
         source: t.source,
         category: t.category,
         value: tokenValue.valueForProject,
-        amount: tokenValue.amount,
         iconUrl: t.iconUrl ?? placeholderIcon,
       }
     })
@@ -61,6 +59,5 @@ function getMockTokensForProject(project: Project<never, 'tvsConfig'>) {
     ...t,
     iconUrl: t.iconUrl ?? getStaticAsset('/images/token-placeholder.png'),
     value: 1000,
-    amount: 1000,
   }))
 }
