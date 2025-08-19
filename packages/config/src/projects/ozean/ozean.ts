@@ -6,6 +6,7 @@ export const ozean: ScalingProject = upcomingL2({
   id: 'ozean',
   capability: 'universal',
   addedAt: UnixTime(1739946099),
+  hasTestnet: true,
   display: {
     name: 'Ozean',
     slug: 'ozean',
@@ -17,8 +18,8 @@ export const ozean: ScalingProject = upcomingL2({
     links: {
       websites: ['https://ozean.finance/'],
       documentation: ['https://docs.ozean.finance/'],
-      bridges: ['https://app.ozean.finance/bridge'],
-      explorers: [],
+      bridges: ['https://poseidon-testnet.bridge.caldera.xyz/'],
+      explorers: ['https://poseidon-testnet.explorer.caldera.xyz/'],
       repositories: ['https://github.com/clearpool-finance'],
       socialMedia: [
         'https://twitter.com/ClearpoolFin',

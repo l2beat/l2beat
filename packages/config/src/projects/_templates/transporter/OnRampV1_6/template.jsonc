@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["getStaticConfig"],
+  "ignoreRelatives": ["getSupportedTokens", "owner"],
+  "ignoreInWatchMode": ["getExpectedNextSequenceNumber"],
+  "fields": {
+    "staticConfigAddresses": {
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig"
+      },
+      "edit": ["pick", "rmnRemote", "nonceManager", "tokenAdminRegistry"]
+    },
+    "staticConfigChains": {
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig"
+      },
+      "edit": [
+        "pipe",
+        ["set", "chainSelector", ["format", "ChainIdMap"]],
+        ["pick", "chainSelector"]
+      ]
+    }
+  }
+}
