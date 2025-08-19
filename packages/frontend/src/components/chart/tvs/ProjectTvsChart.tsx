@@ -35,14 +35,11 @@ export function ProjectTvsChart({
   if (tokens && token) {
     return (
       <ProjectTokenChart
-        isBridge={true}
         tokens={tokens}
         setToken={setToken}
         token={token}
         timeRange={timeRange}
         setTimeRange={setTimeRange}
-        unit={unit}
-        setUnit={setUnit}
         milestones={milestones}
         projectId={projectId}
       />

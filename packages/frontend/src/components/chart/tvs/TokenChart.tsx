@@ -20,7 +20,6 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/getCommo
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import type { ChartUnit } from '../types'
 
 type TokenChartDataPoint = {
   timestamp: number
@@ -33,7 +32,6 @@ interface Props {
   isLoading: boolean
   milestones: Milestone[]
   token: ProjectToken
-  unit: ChartUnit
   className?: string
 }
 
@@ -43,11 +41,8 @@ export function TokenChart({
   milestones,
   token,
   syncedUntil,
-  unit,
   className,
 }: Props) {
-  const properUnit = unit === 'usd' ? 'usd' : token.symbol
-
   const chartMeta = useMemo(
     () => ({
       value: {
@@ -87,16 +82,12 @@ export function TokenChart({
           data,
           isLoading,
           yAxis: {
-            tickFormatter: (value: number) =>
-              formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
+            tickFormatter: (value: number) => formatCurrency(value, 'usd'),
             tickCount: 4,
           },
           syncedUntil,
         })}
-        <ChartTooltip
-          filterNull={false}
-          content={<CustomTooltip unit={properUnit} />}
-        />
+        <ChartTooltip filterNull={false} content={<CustomTooltip />} />
       </AreaChart>
     </ChartContainer>
   )
@@ -106,8 +97,7 @@ function CustomTooltip({
   active,
   payload,
   label,
-  unit,
-}: TooltipProps<number, string> & { unit: string }) {
+}: TooltipProps<number, string>) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
@@ -139,7 +129,7 @@ function CustomTooltip({
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
                   {entry.value !== null && entry.value !== undefined
-                    ? formatCurrency(entry.value, unit)
+                    ? formatCurrency(entry.value, 'usd')
                     : 'No data'}
                 </span>
               </div>

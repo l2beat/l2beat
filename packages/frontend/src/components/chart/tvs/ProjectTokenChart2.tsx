@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function ProjectTokenChart2({ projectId, milestones, token }: Props) {
-  const { range, unit } = useScalingTvsChartControlsContext()
+  const { range } = useScalingTvsChartControlsContext()
 
   const { data, isLoading } = api.tvs.tokenChart.useQuery({
     token: {
@@ -23,11 +23,11 @@ export function ProjectTokenChart2({ projectId, milestones, token }: Props) {
   })
 
   const chartData = useMemo(() => {
-    return data?.chart.map(([timestamp, amount, usdValue]) => ({
+    return data?.chart.map(([timestamp, usdValue]) => ({
       timestamp,
-      value: unit === 'usd' ? usdValue : amount,
+      value: usdValue,
     }))
-  }, [data, unit])
+  }, [data])
 
   return (
     <TokenChart
@@ -35,7 +35,6 @@ export function ProjectTokenChart2({ projectId, milestones, token }: Props) {
       isLoading={isLoading}
       milestones={milestones}
       token={token}
-      unit={unit}
       syncedUntil={data?.syncedUntil}
       className="mt-4 mb-3"
     />

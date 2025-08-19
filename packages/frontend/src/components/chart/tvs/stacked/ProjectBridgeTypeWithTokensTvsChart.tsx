@@ -2,7 +2,6 @@ import type { Milestone } from '@l2beat/config'
 import { useState } from 'react'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
-import type { ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../ProjectTokenChart'
 import { ProjectBridgeTypeTvsChart } from './ProjectBridgeTypeTvsChart'
 
@@ -23,19 +22,15 @@ export function ProjectBridgeTypeWithTokensTvsChart({
 }: Props) {
   const [token, setToken] = useState<ProjectToken>()
   const [timeRange, setTimeRange] = useState<TvsChartRange>(defaultRange)
-  const [unit, setUnit] = useState<ChartUnit>('usd')
 
   if (tokens && token) {
     return (
       <ProjectTokenChart
-        isBridge={false}
         tokens={tokens}
         setToken={setToken}
         token={token}
         timeRange={timeRange}
         setTimeRange={setTimeRange}
-        unit={unit}
-        setUnit={setUnit}
         milestones={milestones}
         projectId={projectId}
         tvsBreakdownUrl={tvsBreakdownUrl}

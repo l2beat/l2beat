@@ -70,14 +70,22 @@ export function ScalingTvsSection({
           milestones={milestones}
           projectId={projectId}
         />
+      </ScalingTvsChartControlsContextProvider>
+      <ScalingTvsChartControlsContextProvider defaultRange={defaultRange}>
         <TokenCombobox
           tokens={tokens ?? []}
           value={selectedToken}
           setValue={setSelectedToken}
           placeholder="Select a token to preview chart"
         />
+
         {selectedToken && (
           <>
+            <TokenControls
+              token={selectedToken}
+              projectId={projectId}
+              className="mt-2"
+            />
             <ProjectTokenChart2
               projectId={projectId}
               milestones={milestones}
@@ -153,6 +161,41 @@ function Controls({ projectId }: { projectId: string }) {
           setTimeRange={setRange}
         />
       </div>
+    </ChartControlsWrapper>
+  )
+}
+
+function TokenControls({
+  token,
+  projectId,
+  className,
+}: {
+  token: ProjectToken
+  projectId: string
+  className?: string
+}) {
+  const { range, setRange } = useScalingTvsChartControlsContext()
+  const { data } = api.tvs.tokenChart.useQuery({
+    token: {
+      tokenId: token.id,
+      projectId,
+    },
+    range,
+  })
+
+  const chartRange = useMemo(
+    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
+    [data?.chart],
+  )
+
+  return (
+    <ChartControlsWrapper className={cn('flex-wrap gap-y-0', className)}>
+      <ProjectChartTimeRange range={chartRange} />
+      <TvsChartTimeRangeControls
+        projectSection
+        timeRange={range}
+        setTimeRange={setRange}
+      />
     </ChartControlsWrapper>
   )
 }
