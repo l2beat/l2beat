@@ -67,21 +67,19 @@ export function createUpdateMonitorModule(
   const http = new HttpClient()
 
   const { chains, cacheEnabled, cacheUri } = config.updateMonitor
-  const runners = chains.map((chainConfig) =>
-    createDiscoveryRunner(
-      paths,
-      http,
-      peripherals,
-      Logger.SILENT,
-      chains,
-      chainConfig.name,
-      !!cacheEnabled,
-      cacheUri,
-    ),
+  const runner = createDiscoveryRunner(
+    paths,
+    http,
+    peripherals,
+    Logger.SILENT,
+    chains,
+    !!cacheEnabled,
+    cacheUri,
   )
 
+  const chainNames = chains.map((c) => c.name)
   const updateMonitor = new UpdateMonitor(
-    runners,
+    runner,
     updateNotifier,
     updateDiffer,
     configReader,
@@ -91,6 +89,7 @@ export function createUpdateMonitorModule(
     discoveryOutputCache,
     logger,
     !!config.updateMonitor.runOnStart,
+    chainNames,
   )
 
   const updateMonitorController = new UpdateMonitorController(
