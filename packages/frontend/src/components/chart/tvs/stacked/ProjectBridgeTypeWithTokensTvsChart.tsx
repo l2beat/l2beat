@@ -2,9 +2,9 @@ import type { Milestone } from '@l2beat/config'
 import { useState } from 'react'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
-import type { ChartUnit } from '../types'
-import { ProjectTokenChart } from './ProjectTokenChart'
-import { ProjectBridgeTypeTvsChart } from './stacked/ProjectBridgeTypeTvsChart'
+import type { ChartUnit } from '../../types'
+import { ProjectTokenChart } from '../ProjectTokenChart'
+import { ProjectBridgeTypeTvsChart } from './ProjectBridgeTypeTvsChart'
 
 interface Props {
   milestones: Milestone[]
@@ -45,17 +45,6 @@ export function ProjectBridgeTypeWithTokensTvsChart({
   }
 
   return (
-    <ProjectBridgeTypeTvsChart
-      projectId={projectId}
-      milestones={milestones}
-      timeRange={timeRange}
-      setTimeRange={setTimeRange}
-      tokens={tokens}
-      token={token}
-      setToken={setToken}
-      unit={unit}
-      setUnit={setUnit}
-      tvsBreakdownUrl={tvsBreakdownUrl}
-    />
+    <ProjectBridgeTypeTvsChart projectId={projectId} milestones={milestones} />
   )
 }

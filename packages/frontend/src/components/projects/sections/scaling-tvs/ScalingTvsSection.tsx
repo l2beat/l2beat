@@ -1,13 +1,25 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
-import { ProjectBridgeTypeWithTokensTvsChart } from '~/components/chart/tvs/ProjectBridgeTypeWithTokensTvsChart'
+import { useMemo } from 'react'
+import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
+import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
+import { TvsChartTimeRangeControls } from '~/components/chart/tvs/TvsChartTimeRangeControls'
+import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
+import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TvsBreakdownSummaryBox } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import { ProjectSection } from './ProjectSection'
-import type { ProjectSectionProps } from './types'
+import { ProjectSection } from '../ProjectSection'
+import type { ProjectSectionProps } from '../types'
+import {
+  ScalingTvsChartControlsContextProvider,
+  useScalingTvsChartControlsContext,
+} from './ScalingTvsControlsContext'
 
 export interface ScalingTvsSectionProps extends ProjectSectionProps {
   id: 'tvs'
@@ -32,13 +44,17 @@ export function ScalingTvsSection({
 }: ScalingTvsSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <ProjectBridgeTypeWithTokensTvsChart
-        milestones={milestones}
-        projectId={projectId}
-        tokens={tokens}
-        tvsBreakdownUrl={tvsBreakdownUrl}
-        defaultRange={defaultRange}
-      />
+      <ScalingTvsChartControlsContextProvider defaultRange={defaultRange}>
+        <Controls projectId={projectId} />
+        <ProjectBridgeTypeTvsChart
+          projectId={projectId}
+          milestones={milestones}
+        />
+        <ProjectAssetCategoryTvsChart
+          milestones={milestones}
+          projectId={projectId}
+        />
+      </ScalingTvsChartControlsContextProvider>
       {tvsProjectStats && (
         <>
           <HorizontalSeparator className="my-4" />
@@ -69,6 +85,33 @@ export function ScalingTvsSection({
         </>
       )}
     </ProjectSection>
+  )
+}
+
+function Controls({ projectId }: { projectId: string }) {
+  const { range, unit, setUnit, setRange } = useScalingTvsChartControlsContext()
+  const { data } = api.tvs.detailedChart.useQuery({
+    filter: { type: 'projects', projectIds: [projectId] },
+    range,
+    excludeAssociatedTokens: false,
+  })
+
+  const chartRange = useMemo(
+    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
+    [data?.chart],
+  )
+  return (
+    <ChartControlsWrapper className="flex-wrap gap-y-0">
+      <ProjectChartTimeRange range={chartRange} />
+      <div className="flex items-center gap-1">
+        <TvsChartUnitControls unit={unit} setUnit={setUnit} />
+        <TvsChartTimeRangeControls
+          projectSection
+          timeRange={range}
+          setTimeRange={setRange}
+        />
+      </div>
+    </ChartControlsWrapper>
   )
 }
 

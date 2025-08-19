@@ -1,6 +1,6 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { ProjectBridgeTypeWithTokensTvsChart } from '~/components/chart/tvs/ProjectBridgeTypeWithTokensTvsChart'
+import { ProjectBridgeTypeWithTokensTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeWithTokensTvsChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
