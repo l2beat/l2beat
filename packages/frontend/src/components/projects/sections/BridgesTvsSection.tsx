@@ -5,8 +5,8 @@ import { TokenCombobox } from '~/components/TokenCombobox'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { ProjectTvsChart } from '../../chart/tvs/ProjectTvsChart'
+import { TvsChartControlsContextProvider } from '../../chart/tvs/TvsChartControlsContext'
 import { ProjectSection } from './ProjectSection'
-import { TvsChartControlsContextProvider } from './TvsChartControlsContext'
 import type { ProjectSectionProps } from './types'
 
 export interface BridgesTvsSectionProps extends ProjectSectionProps {

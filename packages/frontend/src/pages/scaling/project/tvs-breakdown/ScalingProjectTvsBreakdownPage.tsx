@@ -6,15 +6,15 @@ import { useMemo, useState } from 'react'
 import { ProjectTokenChart } from '~/components/chart/tvs/ProjectTokenChart'
 import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
+import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
+import {
+  TvsChartControlsContextProvider,
+  useTvsChartControlsContext,
+} from '~/components/chart/tvs/TvsChartControlsContext'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { TvsChartControls } from '~/components/projects/sections/TvsChartControls'
-import {
-  TvsChartControlsContextProvider,
-  useTvsChartControlsContext,
-} from '~/components/projects/sections/TvsChartControlsContext'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'

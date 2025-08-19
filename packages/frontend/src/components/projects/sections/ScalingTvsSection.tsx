@@ -16,12 +16,12 @@ import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { ProjectSection } from './ProjectSection'
-import { TvsChartControls } from './TvsChartControls'
+import { TvsChartControls } from '../../chart/tvs/TvsChartControls'
 import {
   TvsChartControlsContextProvider,
   useTvsChartControlsContext,
-} from './TvsChartControlsContext'
+} from '../../chart/tvs/TvsChartControlsContext'
+import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
 export interface ScalingTvsSectionProps extends ProjectSectionProps {
