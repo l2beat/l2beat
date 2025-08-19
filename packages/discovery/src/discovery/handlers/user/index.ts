@@ -90,6 +90,7 @@ import {
   TradableDefinition,
   TradableHandler,
 } from './TradableHandler/TradableHandler'
+import { YieldFiDefinition, YieldFiHandler } from './YieldFi/YieldFiHandler'
 import {
   ZKsyncEraScheduledTransactionHandler,
   ZKsyncEraScheduledTransactionsHandlerDefinition,
@@ -129,6 +130,7 @@ export const UserHandlerDefinition = v.union([
   PolygonCDKScheduledTransactionsHandlerDefinition,
   ERC20DataDefinition,
   TradableDefinition,
+  YieldFiDefinition,
 ])
 
 export function getUserHandler(
@@ -193,5 +195,7 @@ export function getUserHandler(
       return new ERC20DataHandler(field, definition)
     case 'tradable':
       return new TradableHandler(field)
+    case 'yieldfi':
+      return new YieldFiHandler(field)
   }
 }
