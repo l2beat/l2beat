@@ -153,9 +153,23 @@
             ]
           }
         },
+        "allPausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
+        "allUnpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
+        "completeTokenBridgingPausers": [
+          "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
+        ],
+        "completeTokenBridgingUnpausers": [
+          "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
+        ],
         "CONTRACT_VERSION": "1.0",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
+        "initiateTokenBridgingPausers": [
+          "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
+        ],
+        "initiateTokenBridgingUnpausers": [
+          "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
+        ],
         "isPaused_BLOB_SUBMISSION": false,
         "isPaused_CALLDATA_SUBMISSION": false,
         "isPaused_COMPLETE_TOKEN_BRIDGING": false,
@@ -215,6 +229,60 @@
       ],
       "proxyType": "gnosis safe zodiac module",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause the bridge.",
+          "role": ".allPausers",
+          "via": [
+            { "address": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause the bridge.",
+          "role": ".allUnpausers",
+          "via": [
+            { "address": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingPausers",
+          "via": [
+            { "address": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingUnpausers",
+          "via": [
+            { "address": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingPausers",
+          "via": [
+            { "address": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingUnpausers",
+          "via": [
+            { "address": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
@@ -714,6 +782,42 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause the bridge.",
+          "role": ".allPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause the bridge.",
+          "role": ".allUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingUnpausers"
+        },
         {
           "permission": "interact",
           "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
@@ -1249,8 +1353,8 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/L2MessageService": "0x429c2108cfcc2f721da1dd13c550c20b46f8ff1cb6447ad2ab549156948cc8b3",
-    "linea/TokenBridge": "0x99323d1dd7cdd4ab585b04d556a58c88601ee95cff390cf23c888539405041c0"
+    "linea/TokenBridge": "0x93559ed401899a7123ae90b35978aba27ee792022d843da39c53ffa72bd4828d"
   },
   "usedBlockNumbers": { "linea": 22243917 },
-  "permissionsConfigHash": "0x68e13865b28a56aef7b67d00f88a5c531936eecf8df6eff06cd78b7d3afba2ba"
+  "permissionsConfigHash": "0x6ae78fbef1721b078d849c76b3e5d5226e9c0f5b2e9ce8d1b0f379074a15655b"
 }

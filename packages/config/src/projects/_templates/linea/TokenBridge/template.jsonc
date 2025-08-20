@@ -3,7 +3,11 @@
   "displayName": "TokenBridge",
   "description": "Contract used to bridge and escrow ERC-20 tokens.",
   "fields": {
-    "accessControl": { "handler": { "type": "accessControl" } },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
     "defaultAdminAC": {
       "handler": {
         "type": "accessControl",
@@ -84,7 +88,9 @@
       "handler": {
         "type": "event",
         "select": ["role"],
-        "set": { "event": "PauseTypeRoleSet" },
+        "set": {
+          "event": "PauseTypeRoleSet"
+        },
         "groupBy": "pauseType"
       }
     },
@@ -92,9 +98,121 @@
       "handler": {
         "type": "event",
         "select": ["role"],
-        "set": { "event": "UnPauseTypeRoleSet" },
+        "set": {
+          "event": "UnPauseTypeRoleSet"
+        },
         "groupBy": "unPauseType"
       }
+    },
+    "allPausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ALL_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause the bridge."
+        }
+      ]
+    },
+    "initiateTokenBridgingPausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause token bridging actions initiated from this layer."
+        }
+      ]
+    },
+    "completeTokenBridgingPausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause token bridging actions initiated from the other layer."
+        }
+      ]
+    },
+    "allUnpausers": {
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_ALL_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause the bridge."
+        }
+      ]
+    },
+    "initiateTokenBridgingUnpausers": {
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can unpause token bridging actions initiated from this layer."
+        }
+      ]
+    },
+    "completeTokenBridgingUnpausers": {
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can unpause token bridging actions initiated from the other layer."
+        }
+      ]
+    },
+    "customContractSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "SET_CUSTOM_CONTRACT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can set custom ERC20 contracts for specific ERC20s."
+        }
+      ]
+    },
+    "reserveTokenSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "SET_RESERVED_TOKEN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a \"reserved\" status."
+        }
+      ]
+    },
+    "reserveTokenRemovers": {
+      "copy": "accessControl",
+      "edit": ["get", "REMOVE_RESERVED_TOKEN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can remove the \"reserved\" status from a token, meaning that it is allowed to be bridged again."
+        }
+      ]
+    },
+    "messageServiceSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "SET_MESSAGE_SERVICE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can set the contract used as the source of truth from crosschain messages."
+        }
+      ]
+    },
+    "remoteTokenBridgeSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "SET_REMOTE_TOKENBRIDGE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can set the contract that is recognized to be the token bridge contract on the other side."
+        }
+      ]
     }
   }
 }

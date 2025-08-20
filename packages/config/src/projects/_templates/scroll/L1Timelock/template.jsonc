@@ -22,10 +22,7 @@
         "method": "getMinDelay",
         "args": []
       },
-      "edit": [
-        "format",
-        "FormatSeconds"
-      ]
+      "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
       "handler": {

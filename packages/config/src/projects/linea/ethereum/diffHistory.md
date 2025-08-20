@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x0b39aa2b711972fa28dccd75a511c360948e68d2
+Generated with discovered.json: 0x3224fb05d9673a5e9c3c2a07521b6f87f21fd79b
 
-# Diff at Wed, 20 Aug 2025 06:56:57 GMT:
+# Diff at Wed, 20 Aug 2025 07:56:31 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@339ebf71db5912a5d77bd8646ad564fe2a80e95a block: 1753682855
@@ -19,10 +19,40 @@ discovery. Values are for block 1753682855 (main branch discovery), not current.
 ```diff
     contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
     +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      values.allPausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.allUnpausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.completeTokenBridgingPausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.completeTokenBridgingUnpausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.initiateTokenBridgingPausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.initiateTokenBridgingUnpausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
       values.pauseTypeToRole:
 +        {"1":"0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77","7":"0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c","8":"0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"}
       values.unpauseTypeToRole:
 +        {"1":"0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b","7":"0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802","8":"0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd"}
+    }
+```
+
+```diff
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can pause the bridge.","role":".allPausers"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can pause the bridge.","role":".allUnpausers"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can pause token bridging actions initiated from the other layer.","role":".completeTokenBridgingPausers"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can pause token bridging actions initiated from the other layer.","role":".completeTokenBridgingUnpausers"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can pause token bridging actions initiated from this layer.","role":".initiateTokenBridgingPausers"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can pause token bridging actions initiated from this layer.","role":".initiateTokenBridgingUnpausers"}
     }
 ```
 
