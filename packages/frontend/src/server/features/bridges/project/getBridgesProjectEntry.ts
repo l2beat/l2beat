@@ -29,6 +29,7 @@ import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/getAssociatedTokenWarning'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
+import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 
 export interface BridgesProjectEntry {
   name: string
@@ -164,7 +165,7 @@ export async function getBridgesProjectEntry(
       props: {
         id: 'tvs',
         title: 'Value Secured',
-        projectId: project.id,
+        project: getChartProject(project),
         tokens: tokens,
         milestones: project.milestones ?? [],
         defaultRange: project.archivedAt ? 'max' : '1y',
