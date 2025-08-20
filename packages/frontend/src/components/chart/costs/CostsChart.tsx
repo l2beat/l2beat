@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -73,11 +73,13 @@ interface Props {
   range: CostsTimeRange
   hasPostedData: boolean
   hasBlobs: boolean
+  project?: ChartProject
   tickCount?: number
   className?: string
 }
 
 export function CostsChart({
+  project,
   data,
   syncedUntil,
   unit,
@@ -141,6 +143,7 @@ export function CostsChart({
         onItemClick: toggleDataKey,
       }}
       className={className}
+      project={project}
     >
       <ComposedChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />

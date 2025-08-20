@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
@@ -12,22 +13,18 @@ import { TvsChartTimeRangeControls } from './TvsChartTimeRangeControls'
 import { TvsChartUnitControls } from './TvsChartUnitControls'
 
 interface Props {
-  projectId: string
+  project: ChartProject
   milestones: Milestone[]
   defaultRange: TvsChartRange
 }
 
-export function ProjectTvsChart({
-  projectId,
-  milestones,
-  defaultRange,
-}: Props) {
+export function ProjectTvsChart({ project, milestones, defaultRange }: Props) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
   const [timeRange, setTimeRange] = useState<TvsChartRange>(defaultRange)
 
   const { data, isLoading } = api.tvs.chart.useQuery({
     range: { type: timeRange },
-    filter: { type: 'projects', projectIds: [projectId] },
+    filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens: false,
   })
 
@@ -66,6 +63,7 @@ export function ProjectTvsChart({
       </ChartControlsWrapper>
       <TvsChart
         data={chartData}
+        project={project}
         unit={unit}
         isLoading={isLoading}
         syncedUntil={data?.syncedUntil}

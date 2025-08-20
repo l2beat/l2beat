@@ -1,23 +1,24 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { api } from '~/trpc/React'
 import { TokenChart } from './TokenChart'
 
 interface Props {
-  projectId: string
+  project: ChartProject
   milestones: Milestone[]
   token: ProjectToken
 }
 
-export function ProjectTokenChart({ projectId, milestones, token }: Props) {
+export function ProjectTokenChart({ project, milestones, token }: Props) {
   const { range } = useTvsChartControlsContext()
 
   const { data, isLoading } = api.tvs.tokenChart.useQuery({
     token: {
       tokenId: token.id,
-      projectId,
+      projectId: project.id,
     },
     range,
   })
@@ -32,6 +33,7 @@ export function ProjectTokenChart({ projectId, milestones, token }: Props) {
   return (
     <TokenChart
       data={chartData}
+      project={project}
       isLoading={isLoading}
       milestones={milestones}
       token={token}
