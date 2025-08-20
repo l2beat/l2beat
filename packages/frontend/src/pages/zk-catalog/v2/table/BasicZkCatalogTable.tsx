@@ -11,6 +11,7 @@ import range from 'lodash/range'
 import type { CSSProperties } from 'react'
 import React from 'react'
 import { getBasicTableGroupParams } from '~/components/table/BasicTable'
+import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
 import { SortingArrows } from '~/components/table/sorting/SortingArrows'
 import {
   Table,
@@ -204,6 +205,9 @@ function BasicZkCatalogTableRow<T extends BasicEntry>({
   renderSpanFill?: (props: { row: Row<T> }) => React.ReactElement | null
   renderInlineSpanFill?: (props: { row: Row<T> }) => React.ReactElement | null
 }) {
+  const { highlightedSlug } = useHighlightedTableRowContext()
+
+  const highlight = highlightedSlug === row.original.slug
   return (
     <>
       <TableRow
@@ -214,17 +218,27 @@ function BasicZkCatalogTableRow<T extends BasicEntry>({
           }),
         )}
       >
-        {row.getVisibleCells().slice(0, 4).map(renderCell)}
+        {row
+          .getVisibleCells()
+          .slice(0, 4)
+          .map((c) => renderCell(c, highlight))}
         {renderInlineSpanFill?.({ row })}
-        {row.getVisibleCells().slice(6, 7).map(renderCell)}
+        {row
+          .getVisibleCells()
+          .slice(6, 7)
+          .map((c) => renderCell(c, highlight))}
       </TableRow>
       {renderSpanFill?.({ row })}
     </>
   )
 }
 
-function renderCell<T extends BasicEntry>(cell: Cell<T, unknown>) {
+function renderCell<T extends BasicEntry>(
+  cell: Cell<T, unknown>,
+  highlight: boolean,
+) {
   const { meta } = cell.column.columnDef
+
   const groupParams = getBasicTableGroupParams(cell.column)
 
   const rowSpan = meta?.rowSpan ? meta.rowSpan(cell.getContext()) : undefined
@@ -243,6 +257,9 @@ function renderCell<T extends BasicEntry>(cell: Cell<T, unknown>) {
         cell.column.getIsPinned() && getRowTypeClassNamesWithoutOpacity(),
         groupParams?.isFirstInGroup && 'pl-6',
         groupParams?.isLastInGroup && 'pr-6!',
+        cell.column.getIsPinned() &&
+          highlight &&
+          'animate-row-highlight-no-opacity',
         cell.column.getCanSort() && meta?.align === undefined
           ? groupParams?.isFirstInGroup
             ? 'pl-10'
