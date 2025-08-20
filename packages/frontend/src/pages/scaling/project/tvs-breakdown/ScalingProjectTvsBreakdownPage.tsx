@@ -95,22 +95,7 @@ export function ScalingProjectTvsBreakdownPage({
               </TvsChartControlsContextProvider>
               <HorizontalSeparator className="my-4" />
               <TvsBreakdownSummaryBox
-                total={{
-                  value: project7dData.breakdown.total,
-                  change: project7dData.change.total,
-                }}
-                canonical={{
-                  value: project7dData.breakdown.canonical,
-                  change: project7dData.change.canonical,
-                }}
-                external={{
-                  value: project7dData.breakdown.external,
-                  change: project7dData.change.external,
-                }}
-                native={{
-                  value: project7dData.breakdown.native,
-                  change: project7dData.change.native,
-                }}
+                {...project7dData}
                 warning={project.tvsInfo?.warnings[0]}
               />
             </PrimaryCard>

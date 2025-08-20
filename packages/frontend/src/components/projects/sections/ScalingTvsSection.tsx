@@ -50,7 +50,10 @@ export function ScalingTvsSection({
       {...sectionProps}
       headerAccessory={
         tvsBreakdownUrl && (
-          <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+          <TvsBreakdownButton
+            tvsBreakdownUrl={tvsBreakdownUrl}
+            className="max-md:hidden"
+          />
         )
       }
     >
@@ -93,26 +96,11 @@ export function ScalingTvsSection({
         <>
           <HorizontalSeparator className="my-4" />
           <TvsBreakdownSummaryBox
-            total={{
-              value: tvsProjectStats.breakdown.total,
-              change: tvsProjectStats.change.total,
-            }}
-            canonical={{
-              value: tvsProjectStats.breakdown.canonical,
-              change: tvsProjectStats.change.canonical,
-            }}
-            external={{
-              value: tvsProjectStats.breakdown.external,
-              change: tvsProjectStats.change.external,
-            }}
-            native={{
-              value: tvsProjectStats.breakdown.native,
-              change: tvsProjectStats.change.native,
-            }}
+            {...tvsProjectStats}
             warning={tvsInfo?.warnings[0]}
           />
           {tvsBreakdownUrl && (
-            <div className="w-full md:hidden">
+            <div className="mt-3 w-full md:hidden">
               <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
             </div>
           )}
@@ -186,8 +174,10 @@ function TokenControls({
 
 export function TvsBreakdownButton({
   tvsBreakdownUrl,
+  className,
 }: {
   tvsBreakdownUrl: string
+  className?: string
 }) {
   return (
     <a
@@ -196,6 +186,7 @@ export function TvsBreakdownButton({
         'font-bold text-primary text-xs leading-none md:text-white',
         'flex w-full justify-center rounded-md border border-brand bg-transparent from-purple-100 to-pink-100 p-3 md:mt-0 md:w-fit md:border-0 md:bg-linear-to-r md:py-2',
         'ring-brand ring-offset-1 ring-offset-background focus:outline-none focus:ring-2',
+        className,
       )}
     >
       View TVS breakdown
