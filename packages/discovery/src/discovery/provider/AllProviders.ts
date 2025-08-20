@@ -119,7 +119,7 @@ export class AllProviders {
     )
   }
 
-  async get(chain: string, timestamp: UnixTime): Promise<IProvider> {
+  get(chain: string, timestamp: UnixTime): Promise<IProvider> {
     const batchingAndCachingProvider = this.getBatchingAndCachingProvider(chain)
     const stateless = HighLevelProvider.createStateless(
       this,
@@ -127,12 +127,11 @@ export class AllProviders {
       chain,
     )
 
-    const blockNumber = await stateless.getBlockNumberAtOrBefore(timestamp)
     return this.getImplementation(
       chain,
       batchingAndCachingProvider,
       timestamp,
-      blockNumber,
+      () => stateless.getBlockNumberAtOrBefore(timestamp),
     )
   }
 
@@ -158,16 +157,16 @@ export class AllProviders {
       chain,
       batchingAndCachingProvider,
       timestamp,
-      blockNumber,
+      () => new Promise((resolve) => resolve(blockNumber)),
     )
   }
 
-  private getImplementation(
+  private async getImplementation(
     chain: string,
     batchingAndCachingProvider: BatchingAndCachingProvider,
     timestamp: UnixTime,
-    blockNumber: number,
-  ): IProvider {
+    blockNumberGenerator: () => Promise<number>,
+  ): Promise<IProvider> {
     const chainKey = `${chain}:${timestamp}`
     const provider =
       this.highLevelProviders.get(chainKey) ??
@@ -176,7 +175,7 @@ export class AllProviders {
         batchingAndCachingProvider,
         chain,
         timestamp,
-        blockNumber,
+        await blockNumberGenerator(),
       )
     this.highLevelProviders.set(chainKey, provider)
 

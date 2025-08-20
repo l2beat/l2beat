@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime, unique } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import path from 'path'
 import type {
@@ -223,11 +223,25 @@ export async function discover(
     logger,
   )
   const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
-  const provider = await allProviders.get(chain, timestamp)
-  return {
-    result: await discoveryEngine.discover(provider, config.structure),
+  const result = await discoveryEngine.discover(
+    allProviders,
+    config.structure,
     timestamp,
-    usedBlockNumbers: { [chain]: provider.blockNumber },
+  )
+  const chains = unique(
+    result.map((c) => ChainSpecificAddress.longChain(c.address)),
+  )
+
+  const usedBlockNumbers: Record<string, number> = {}
+  for (const chain of chains) {
+    const provider = await allProviders.get(chain, timestamp)
+    usedBlockNumbers[chain] = provider.blockNumber
+  }
+
+  return {
+    result,
+    timestamp,
+    usedBlockNumbers,
     providerStats: allProviders.getStats(chain),
   }
 }
