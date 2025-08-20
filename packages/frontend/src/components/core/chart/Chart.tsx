@@ -75,7 +75,7 @@ const chartContainerClassNames = cn(
 export interface ChartProject {
   id: string
   slug: string
-  shortName: string
+  name: string
 }
 
 function ChartContainer<T extends { timestamp: number }>({
@@ -165,11 +165,11 @@ function ChartContainer<T extends { timestamp: number }>({
           <div className="pointer-events-none absolute bottom-14 left-3 flex items-center gap-1.5 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-16">
             <img
               src={`/icons/${project.slug}.png`}
-              alt={project.shortName}
+              alt={project.name}
               className="size-[22px]"
             />
             <span className="font-bold text-label-value-18">
-              {project.shortName}
+              {project.name}
             </span>
           </div>
         )}

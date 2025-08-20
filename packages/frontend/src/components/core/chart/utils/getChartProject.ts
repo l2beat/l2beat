@@ -11,6 +11,6 @@ export function getChartProject<
   return {
     id: project.id,
     slug: project.slug,
-    shortName: project.shortName ?? project.name,
+    name: project.shortName ?? project.name,
   }
 }
