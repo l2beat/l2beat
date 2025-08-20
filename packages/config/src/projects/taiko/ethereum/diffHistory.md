@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x48d6843d56c04bdc1ceaeb396e3d48e886b99169
+Generated with discovered.json: 0xc49b2b92c8573931bb1a089dfab45b27b89bb844
 
-# Diff at Wed, 20 Aug 2025 14:52:18 GMT:
+# Diff at Wed, 20 Aug 2025 14:59:53 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@67e41f566326dea91dc3f12a1b8947109f00301c block: 1755594109
-- current timestamp: 1755701496
+- comparing to: main@cd418e068c274f7cd46e3ace7789ff5bbb8a2dad block: 1755606045
+- current timestamp: 1755701960
 
 ## Description
 
@@ -36,7 +36,7 @@ New preconfirmer.
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1755594109 (main branch discovery), not current.
+discovery. Values are for block 1755606045 (main branch discovery), not current.
 
 ```diff
     contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac) {
@@ -48,7 +48,7 @@ discovery. Values are for block 1755594109 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xca70d8fe3a1962541aba440189fba415cc39b485
+Generated with discovered.json: 0xad376da02da1f79ecd6ee3bb86214a204bc4c8ac
 
 # Diff at Tue, 19 Aug 2025 09:02:29 GMT:
 
