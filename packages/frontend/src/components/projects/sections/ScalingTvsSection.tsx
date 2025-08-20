@@ -60,13 +60,10 @@ export function ScalingTvsSection({
     >
       <TvsChartControlsContextProvider defaultRange={defaultRange}>
         <Controls projectId={project.id} />
-        <ProjectBridgeTypeTvsChart
-          projectId={project.id}
-          milestones={milestones}
-        />
+        <ProjectBridgeTypeTvsChart project={project} milestones={milestones} />
         <ProjectAssetCategoryTvsChart
+          project={project}
           milestones={milestones}
-          projectId={project.id}
         />
       </TvsChartControlsContextProvider>
       <TvsChartControlsContextProvider defaultRange={defaultRange}>

@@ -61,11 +61,11 @@ export function ScalingProjectTvsBreakdownPage({
               <TvsChartControlsContextProvider defaultRange={defaultRange}>
                 <Controls projectId={project.id} />
                 <ProjectBridgeTypeTvsChart
-                  projectId={project.id}
+                  project={project}
                   milestones={milestones}
                 />
                 <ProjectAssetCategoryTvsChart
-                  projectId={project.id}
+                  project={project}
                   milestones={milestones}
                 />
               </TvsChartControlsContextProvider>
