@@ -5,6 +5,7 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
 import partition from 'lodash/partition'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -236,15 +237,15 @@ export async function getEcosystemEntry(
           ...entry,
           gasTokens: project.chainConfig?.gasTokens,
           ecosystemInfo: project.ecosystemInfo,
-          filterable: [
-            {
+          filterable: compact([
+            project.id === 'superchain' && {
               id: 'isPartOfSuperchain',
               value: project.ecosystemInfo.isPartOfSuperchain ? 'Yes' : 'No',
             },
             ...(entry.filterable?.filter(
               (f) => !EXCLUDED_FILTERS.includes(f.id),
             ) ?? []),
-          ],
+          ]),
         }
         return result
       })
