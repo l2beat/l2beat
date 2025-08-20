@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "timestamp": 1755613763,
+  "timestamp": 1755614030,
   "configHash": "0x61c8e47626bb7fc06534e6463f53228b61c07473008c26635560bcde0c96aed3",
   "entries": [
     {
@@ -112,6 +112,11 @@
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5",
         "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
+        "pauseTypeToRole": {
+          "1": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
+          "7": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
+          "8": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"
+        },
         "remoteSender": "eth:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
         "REMOVE_RESERVED_TOKEN_ROLE": "0x19bf281d118073c159a713666aba52e0d403520cd01e03f42e0f62a0b3bd4a35",
         "SET_CUSTOM_CONTRACT_ROLE": "0x550554a677c8e7b73b62db78b0ef06c5f237da4ef30b88196a899ccf591041fe",
@@ -123,7 +128,12 @@
         "tokenBeacon": "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
         "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
         "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd",
-        "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802"
+        "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802",
+        "unpauseTypeToRole": {
+          "1": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
+          "7": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802",
+          "8": "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd"
+        }
       },
       "fieldMeta": {
         "isPaused_GENERAL": { "severity": "HIGH" },
@@ -1578,9 +1588,9 @@
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/LineaRollup": "0x62179b632448b6fa5622bfea4240428dcd0cd7f2fd455914a05b040313014dfe",
     "linea/Roles": "0xa53488bfd173ae836ebda33b0560f0f0dd61141e44bc38b9ce23133023bde792",
-    "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b",
+    "linea/TokenBridge": "0x99323d1dd7cdd4ab585b04d556a58c88601ee95cff390cf23c888539405041c0",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23175720 },
-  "permissionsConfigHash": "0x1af6c2746e7c52580bdd04b3b2001301b4d90ae16f68c921089a1574b32cb67c"
+  "usedBlockNumbers": { "ethereum": 23175743 },
+  "permissionsConfigHash": "0x68e13865b28a56aef7b67d00f88a5c531936eecf8df6eff06cd78b7d3afba2ba"
 }

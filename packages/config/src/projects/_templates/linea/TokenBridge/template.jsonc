@@ -3,11 +3,7 @@
   "displayName": "TokenBridge",
   "description": "Contract used to bridge and escrow ERC-20 tokens.",
   "fields": {
-    "accessControl": {
-      "handler": {
-        "type": "accessControl"
-      }
-    },
+    "accessControl": { "handler": { "type": "accessControl" } },
     "defaultAdminAC": {
       "handler": {
         "type": "accessControl",
@@ -82,6 +78,22 @@
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
         "args": [8]
+      }
+    },
+    "pauseTypeToRole": {
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": { "event": "PauseTypeRoleSet" },
+        "groupBy": "pauseType"
+      }
+    },
+    "unpauseTypeToRole": {
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": { "event": "UnPauseTypeRoleSet" },
+        "groupBy": "unPauseType"
       }
     }
   }

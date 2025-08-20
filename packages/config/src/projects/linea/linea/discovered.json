@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "linea",
-  "timestamp": 1755613763,
+  "timestamp": 1755614030,
   "configHash": "0x1e5bdf99afd2d87b4a8e2b6fe2d8ec3ee3f3c5e3a7022297882f161279411e71",
   "entries": [
     {
@@ -168,6 +168,11 @@
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5",
         "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
+        "pauseTypeToRole": {
+          "1": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
+          "7": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
+          "8": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"
+        },
         "remoteSender": "linea:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
         "REMOVE_RESERVED_TOKEN_ROLE": "0x19bf281d118073c159a713666aba52e0d403520cd01e03f42e0f62a0b3bd4a35",
         "SET_CUSTOM_CONTRACT_ROLE": "0x550554a677c8e7b73b62db78b0ef06c5f237da4ef30b88196a899ccf591041fe",
@@ -179,7 +184,12 @@
         "tokenBeacon": "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0",
         "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
         "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd",
-        "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802"
+        "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802",
+        "unpauseTypeToRole": {
+          "1": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
+          "7": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802",
+          "8": "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd"
+        }
       },
       "fieldMeta": {
         "isPaused_GENERAL": { "severity": "HIGH" },
@@ -334,6 +344,7 @@
       "name": "L2MessageService",
       "address": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
       "type": "Contract",
+      "template": "linea/L2MessageService",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x9436ff273e587ee919293672a7a5ba7bf371053a92565ee236a004932a5dda66"
@@ -377,26 +388,69 @@
           ]
         ],
         "$upgradeCount": 6,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          },
+          "L1_L2_MESSAGE_SETTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"]
+          },
+          "MINIMUM_FEE_SETTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          },
+          "RATE_LIMIT_SETTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          },
+          "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          },
+          "USED_RATE_LIMIT_RESETTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          },
+          "PAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          },
+          "PAUSE_L1_L2_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          },
+          "PAUSE_L2_L1_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          },
+          "UNPAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          },
+          "UNPAUSE_L1_L2_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          },
+          "UNPAUSE_L2_L1_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          }
+        },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "568405216505261796000",
+        "currentPeriodAmountInWei": "609505216505261796000",
         "currentPeriodEnd": 1755634371,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
         "L1_L2_MESSAGE_SETTER_ROLE": "0x4705265620026983c754c5288b65446d794a03174326ec6d7c0b5c7f1fd67415",
-        "l1RollingHashes": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
         "lastAnchoredL1MessageNumber": 774816,
         "limitInWei": "15000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 96689,
+        "nextMessageNumber": 96690,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
@@ -408,7 +462,6 @@
         "UNPAUSE_L2_L1_ROLE": "0xb6cc65f42901ed602aec1619cc1ead29d487cd489094a37615153eaeb991d770",
         "USED_RATE_LIMIT_RESETTER_ROLE": "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9"
       },
-      "errors": { "l1RollingHashes": "Processing error occurred." },
       "implementationNames": {
         "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec": "TransparentUpgradeableProxy",
         "linea:0x05d43713B7E333d2D54be65cE3b5F3698aB960Fd": "L2MessageService"
@@ -517,6 +570,11 @@
         "linea:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": "SafeProxy",
         "linea:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
       }
+    },
+    {
+      "address": "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L2Timelock",
@@ -1190,8 +1248,9 @@
     "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b"
+    "linea/L2MessageService": "0x429c2108cfcc2f721da1dd13c550c20b46f8ff1cb6447ad2ab549156948cc8b3",
+    "linea/TokenBridge": "0x99323d1dd7cdd4ab585b04d556a58c88601ee95cff390cf23c888539405041c0"
   },
-  "usedBlockNumbers": { "linea": 22243784 },
-  "permissionsConfigHash": "0x1af6c2746e7c52580bdd04b3b2001301b4d90ae16f68c921089a1574b32cb67c"
+  "usedBlockNumbers": { "linea": 22243917 },
+  "permissionsConfigHash": "0x68e13865b28a56aef7b67d00f88a5c531936eecf8df6eff06cd78b7d3afba2ba"
 }
