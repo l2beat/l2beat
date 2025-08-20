@@ -11,10 +11,7 @@ import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
-import {
-  TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/TypeInfo'
+import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
@@ -66,7 +63,8 @@ export const scalingSummaryColumns = [
       </TableLink>
     ),
     meta: {
-      tooltip: <TypeExplanationTooltip />,
+      tooltip:
+        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
     },
   }),
   columnHelper.accessor(

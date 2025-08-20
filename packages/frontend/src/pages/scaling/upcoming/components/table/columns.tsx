@@ -1,9 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
-import {
-  TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/TypeInfo'
+import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/getScalingUpcomingEntries'
@@ -38,7 +35,8 @@ export const scalingUpcomingColumns = [
       </TableLink>
     ),
     meta: {
-      tooltip: <TypeExplanationTooltip />,
+      tooltip:
+        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
     },
   }),
   columnHelper.display({

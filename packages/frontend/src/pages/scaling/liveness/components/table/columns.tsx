@@ -6,10 +6,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
-import {
-  TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/TypeInfo'
+import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { InfoIcon } from '~/icons/Info'
@@ -95,7 +92,8 @@ export function getScalingLivenessColumns(hideProofSystem?: boolean) {
           </TableLink>
         ),
         meta: {
-          tooltip: <TypeExplanationTooltip />,
+          tooltip:
+            'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
         },
       }),
     columnHelper.display({

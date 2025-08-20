@@ -4,10 +4,7 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { CombinedGrissiniCell } from '~/components/rosette/grissini/CombinedGrissiniCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
-import {
-  TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/TypeInfo'
+import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import {
   adjustTableValue,
   sortTableValues,
@@ -48,7 +45,8 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
           </TableLink>
         ),
         meta: {
-          tooltip: <TypeExplanationTooltip />,
+          tooltip:
+            'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
         },
       }),
     columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.layer), {
