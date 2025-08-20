@@ -13,7 +13,7 @@ export type DaThroughputSummaryParams = v.infer<
 >
 
 export async function getDaThroughputSummary(
-  params: DaThroughputSummaryParams,
+  params?: DaThroughputSummaryParams,
 ) {
   if (env.MOCK) {
     return getMockDaThroughputSummaryData()
@@ -25,10 +25,10 @@ export type ThroughputSummaryData = Awaited<
   ReturnType<typeof getDaThroughputSummaryData>
 >
 const getDaThroughputSummaryData = async (
-  params: DaThroughputSummaryParams,
+  params?: DaThroughputSummaryParams,
 ) => {
   const db = getDb()
-  const to = params.to ?? UnixTime.toStartOf(UnixTime.now(), 'day')
+  const to = params?.to ?? UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - 7 * UnixTime.DAY
   const throughput = await db.dataAvailability.getByDaLayersAndTimeRange(
     THROUGHPUT_ENABLED_DA_LAYERS,
@@ -40,17 +40,38 @@ const getDaThroughputSummaryData = async (
     return undefined
   }
 
-  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndDaLayerId(
+  const { grouped, minTimestamp } = groupByTimestampAndDaLayerId(
     scalingOnlyRecords,
     'daily',
   )
 
+  const lastDataForLayers: Record<
+    string,
+    { timestamp: number; value: number }
+  > = {}
+  for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
+    const lastValue = Object.entries(grouped).findLast(
+      ([_, values]) => values[layer] !== undefined,
+    )
+    if (lastValue) {
+      const [timestamp, value] = lastValue
+      lastDataForLayers[layer] = {
+        timestamp: Number(timestamp),
+        value: value[layer] ?? 0,
+      }
+    }
+  }
+
+  const maxTimestamp = Math.max(
+    ...Object.values(lastDataForLayers).map(({ timestamp }) => timestamp),
+  )
+
   return {
     latest: {
-      ethereum: grouped[maxTimestamp]?.ethereum ?? 0,
-      celestia: grouped[maxTimestamp]?.celestia ?? 0,
-      avail: grouped[maxTimestamp]?.avail ?? 0,
-      eigenda: grouped[maxTimestamp]?.eigenda ?? 0,
+      ethereum: lastDataForLayers?.ethereum?.value ?? 0,
+      celestia: lastDataForLayers?.celestia?.value ?? 0,
+      avail: lastDataForLayers?.avail?.value ?? 0,
+      eigenda: lastDataForLayers?.eigenda?.value ?? 0,
     },
     data7dAgo: {
       ethereum: grouped[minTimestamp]?.ethereum ?? 0,
@@ -58,6 +79,9 @@ const getDaThroughputSummaryData = async (
       avail: grouped[minTimestamp]?.avail ?? 0,
       eigenda: grouped[minTimestamp]?.eigenda ?? 0,
     },
+    estimatedLayers: Object.entries(lastDataForLayers)
+      .filter(([_, { timestamp }]) => timestamp < maxTimestamp)
+      .map(([layer]) => layer),
   }
 }
 
@@ -75,5 +99,6 @@ function getMockDaThroughputSummaryData(): ThroughputSummaryData {
       avail: 100000,
       eigenda: 100000,
     },
+    estimatedLayers: ['eigenda'],
   }
 }

@@ -18,6 +18,7 @@ export const capx: ScalingProject = upcomingL2({
     links: {
       websites: ['https://capx.ai/'],
       socialMedia: ['https://discord.com/invite/capx', 'https://x.com/0xCapx'],
+      explorers: ['https://capxscan.com'],
     },
   },
   ecosystemInfo: {

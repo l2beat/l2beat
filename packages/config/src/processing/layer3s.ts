@@ -3,12 +3,12 @@ import { alphadune } from '../projects/alphadune/alphadune'
 import { animechain } from '../projects/animechain/animechain'
 import { anomaly } from '../projects/anomaly/anomaly'
 import { apechain } from '../projects/apechain/apechain'
-import { aviveworld } from '../projects/aviveworld/aviveworld'
 import { b3 } from '../projects/b3/b3'
 import { bitlazer } from '../projects/bitlazer/bitlazer'
 import { blessnet } from '../projects/blessnet/blessnet'
 import { blockfit } from '../projects/blockfit/blockfit'
 import { bugbuster } from '../projects/bugbuster/bugbuster'
+import { chainbounty } from '../projects/chainbounty/chainbounty'
 import { cheese } from '../projects/cheese/cheese'
 import { clique } from '../projects/clique/clique'
 import { conwai } from '../projects/conwai/conwai'
@@ -20,7 +20,6 @@ import { donatuz } from '../projects/donatuz/donatuz'
 import { educhain } from '../projects/educhain/educhain'
 import { ethereal } from '../projects/ethereal/ethereal'
 import { evedex } from '../projects/evedex/evedex'
-import { fiefdom } from '../projects/fiefdom/fiefdom'
 import { flynet } from '../projects/flynet/flynet'
 import { forta } from '../projects/forta/forta'
 import { game7 } from '../projects/game7/game7'
@@ -42,11 +41,10 @@ import { moonchain } from '../projects/moonchain/moonchain'
 import { muster } from '../projects/muster/muster'
 import { mvchain } from '../projects/mvchain/mvchain'
 import { novastro } from '../projects/novastro/novastro'
-import { nums } from '../projects/nums/nums'
 import { oceanum } from '../projects/oceanum/oceanum'
 import { onchain } from '../projects/onchain/onchain'
 import { onyx } from '../projects/onyx/onyx'
-import { oursong } from '../projects/oursong/oursong'
+import { perennial } from '../projects/perennial/perennial'
 import { playblock } from '../projects/playblock/playblock'
 import { pmon } from '../projects/pmon/pmon'
 import { popapex } from '../projects/popapex/popapex'
@@ -62,10 +60,8 @@ import { superposition } from '../projects/superposition/superposition'
 import { syndicateframe } from '../projects/syndicateframe/syndicateframe'
 import { syndr } from '../projects/syndr/syndr'
 import { toy } from '../projects/toy/toy'
-import { ungaii } from '../projects/ungaii/ungaii'
 import { unite } from '../projects/unite/unite'
 import { vemphorizon } from '../projects/vemphorizon/vemphorizon'
-import { vessel } from '../projects/vessel/vessel'
 import { winr } from '../projects/winr/winr'
 import { xai } from '../projects/xai/xai'
 import { xrone } from '../projects/xrone/xrone'
@@ -77,12 +73,12 @@ export const layer3s: ScalingProject[] = [
   animechain,
   alphadune,
   apechain,
-  aviveworld,
   bitlazer,
   blessnet,
   blockfit,
   bugbuster,
   b3,
+  chainbounty,
   cheese,
   clique,
   conwai,
@@ -94,7 +90,6 @@ export const layer3s: ScalingProject[] = [
   educhain,
   ethereal,
   evedex,
-  fiefdom,
   flynet,
   forta,
   game7,
@@ -111,11 +106,11 @@ export const layer3s: ScalingProject[] = [
   rari,
   rivalz,
   zklinknova,
-  ungaii,
   xai,
   oceanum,
   onchain,
   onyx,
+  perennial,
   popapex,
   popboss,
   pmon,
@@ -130,13 +125,10 @@ export const layer3s: ScalingProject[] = [
   mvchain,
   moonchain,
   novastro,
-  nums,
   unite,
   vemphorizon,
-  vessel,
   l3x,
   lumiterra,
-  oursong,
   playblock,
   spheron,
   superposition,

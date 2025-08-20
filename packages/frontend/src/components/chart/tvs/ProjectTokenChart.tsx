@@ -25,10 +25,7 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { TvsBreakdownButton } from '~/components/projects/sections/ScalingTvsSection'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import { useIsClient } from '~/hooks/useIsClient'
-import type {
-  ProjectToken,
-  ProjectTokens,
-} from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
@@ -44,7 +41,7 @@ interface Props {
   milestones: Milestone[]
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
-  tokens: ProjectTokens
+  tokens: ProjectToken[]
   token: ProjectToken
   setToken: (token: ProjectToken | undefined) => void
   unit: ChartUnit
@@ -223,13 +220,12 @@ interface ControlsProps {
   isBridge: boolean
   unit: ChartUnit
   setUnit: (value: ChartUnit) => void
-  tokens: ProjectTokens
+  tokens: ProjectToken[]
   token: ProjectToken
   setToken: (token: ProjectToken | undefined) => void
 }
 
 function TokenChartUnitControls({
-  isBridge,
   unit,
   setUnit,
   tokens,
@@ -248,12 +244,7 @@ function TokenChartUnitControls({
       ) : (
         <Skeleton className="h-8 w-[104.82px]" />
       )}
-      <TokenCombobox
-        tokens={tokens}
-        value={token}
-        setValue={setToken}
-        isBridge={isBridge}
-      />
+      <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
     </div>
   )
 }

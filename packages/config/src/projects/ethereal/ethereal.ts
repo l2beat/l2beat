@@ -7,6 +7,7 @@ export const ethereal: ScalingProject = upcomingL3({
   capability: 'universal',
   addedAt: UnixTime(1753781100),
   hostChain: ProjectId('arbitrum'),
+  hasTestnet: true,
   display: {
     name: 'Ethereal',
     slug: 'ethereal',

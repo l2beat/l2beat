@@ -45,7 +45,7 @@ export async function getSummedTvsValues(
   ])
 
   const latestTimestamp = latest.at(-1)?.timestamp
-  if (!latestTimestamp) {
+  if (!latestTimestamp || valueRecords.length === 0) {
     return []
   }
   const delayedRecords = latest.filter((v) => v.timestamp < latestTimestamp)

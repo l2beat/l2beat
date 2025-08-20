@@ -3,7 +3,7 @@ import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/Projec
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TvsBreakdownSummaryBox } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
-import type { ProjectTokens } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from './ProjectSection'
@@ -11,7 +11,7 @@ import type { ProjectSectionProps } from './types'
 
 export interface ScalingTvsSectionProps extends ProjectSectionProps {
   id: 'tvs'
-  tokens?: ProjectTokens
+  tokens: ProjectToken[] | undefined
   projectId: string
   milestones: Milestone[]
   tvsProjectStats: ProjectSevenDayTvsBreakdown
