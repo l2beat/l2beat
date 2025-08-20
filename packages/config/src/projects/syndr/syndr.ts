@@ -16,6 +16,7 @@ export const syndr: ScalingProject = upcomingL3({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://syndr.com/'],
+      explorers: ['https://explorer.syndr.com'],
       documentation: ['https://docs.syndr.com'],
       repositories: ['https://github.com/0xSyndr'],
       socialMedia: [

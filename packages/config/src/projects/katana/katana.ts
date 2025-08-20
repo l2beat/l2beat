@@ -61,7 +61,10 @@ export const katana: ScalingProject = {
     upgradesAndGovernanceImage: 'agglayer-algateway',
     links: {
       websites: ['https://katana.network/'],
-      bridges: ['https://app.katana.network/'],
+      bridges: [
+        'https://app.katana.network/',
+        'https://bridge.katana.network/',
+      ],
       explorers: ['https://explorer.katanarpc.com'],
       repositories: ['https://github.com/agglayer'],
       documentation: [
@@ -71,11 +74,13 @@ export const katana: ScalingProject = {
       socialMedia: [
         'https://x.com/katana',
         'https://discord.com/invite/KatanaNetwork',
+        'https://reddit.com/r/katana/',
       ],
     },
   },
   proofSystem: {
     type: 'Validity',
+    zkCatalogId: ProjectId('sp1'),
   },
   config: {
     trackedTxs: [

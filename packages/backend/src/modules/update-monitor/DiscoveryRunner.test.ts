@@ -35,7 +35,6 @@ describe(DiscoveryRunner.name, () => {
         }),
         engine,
         mockObject<TemplateService>(),
-        'ethereum',
       )
       await runner.discoverWithRetry(
         sourceConfig,
@@ -67,7 +66,6 @@ describe(DiscoveryRunner.name, () => {
         allProvidersMock,
         engine,
         mockObject<TemplateService>(),
-        'ethereum',
       )
       await runner.discoverWithRetry(
         sourceConfig,
@@ -116,7 +114,6 @@ describe(DiscoveryRunner.name, () => {
           }),
           engine,
           mockObject<TemplateService>(),
-          'ethereum',
         )
 
         await runner.discoverWithRetry(
@@ -150,7 +147,6 @@ describe(DiscoveryRunner.name, () => {
           }),
           engine,
           mockObject<TemplateService>(),
-          'ethereum',
         )
 
         await expect(

@@ -131,6 +131,7 @@ export function ActivityChart({
           isLoading,
           yAxis: {
             scale,
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
             tickCount,
           },

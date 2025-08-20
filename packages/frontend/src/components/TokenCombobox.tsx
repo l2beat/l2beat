@@ -3,10 +3,7 @@ import React from 'react'
 import { externalLinks } from '~/consts/externalLinks'
 import { CheckIcon } from '~/icons/Check'
 import { ChevronIcon } from '~/icons/Chevron'
-import type {
-  ProjectToken,
-  ProjectTokens,
-} from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { cn } from '~/utils/cn'
 import {
   Command,
@@ -24,29 +21,20 @@ import { linkVariants } from './link/CustomLink'
 const MAX_PER_SOURCE = 10
 
 interface Props {
-  tokens: ProjectTokens
+  tokens: ProjectToken[]
   value: ProjectToken | undefined
   setValue: (token: ProjectToken | undefined) => void
   className?: string
-  isBridge: boolean
 }
 
-export function TokenCombobox({
-  tokens,
-  value,
-  setValue,
-  className,
-  isBridge,
-}: Props) {
+export function TokenCombobox({ tokens, value, setValue, className }: Props) {
   const [open, setOpen] = React.useState(false)
-
-  const allTokens = [...tokens.canonical, ...tokens.external, ...tokens.native]
 
   const onSelect = (currentValue: string) => {
     const token =
       currentValue === value?.id.toString()
         ? undefined
-        : allTokens.find((t) => t.id.toString() === currentValue)
+        : tokens.find((t) => t.id.toString() === currentValue)
     setValue(token)
     setOpen(false)
   }
@@ -74,26 +62,7 @@ export function TokenCombobox({
                 Request it here
               </a>
             </CommandEmpty>
-            <TokenGroup
-              heading={
-                isBridge ? 'Bridged Tokens' : 'Canonically Bridged Tokens'
-              }
-              value={value}
-              tokens={tokens.canonical}
-              onSelect={onSelect}
-            />
-            <TokenGroup
-              heading="Natively Minted Tokens"
-              value={value}
-              tokens={tokens.native}
-              onSelect={onSelect}
-            />
-            <TokenGroup
-              heading="Externally Bridged Tokens"
-              value={value}
-              tokens={tokens.external}
-              onSelect={onSelect}
-            />
+            <TokenGroup value={value} tokens={tokens} onSelect={onSelect} />
           </CommandList>
         </Command>
       </PopoverContent>
@@ -117,13 +86,12 @@ function Input({ value, setValue }: Pick<Props, 'value' | 'setValue'>) {
 }
 
 interface TokenGroupProps {
-  heading: string
   value: ProjectToken | undefined
   tokens: ProjectToken[]
   onSelect: (value: string) => void
 }
 
-function TokenGroup({ heading, tokens, value, onSelect }: TokenGroupProps) {
+function TokenGroup({ tokens, value, onSelect }: TokenGroupProps) {
   const search = useCommandState((state) => state.search)
   const filteredTokens = tokens.filter((token) => tokenFilter(search, token))
   if (filteredTokens.length === 0) {
@@ -132,7 +100,7 @@ function TokenGroup({ heading, tokens, value, onSelect }: TokenGroupProps) {
   const moreCount = filteredTokens.length - MAX_PER_SOURCE
   return (
     <>
-      <CommandGroup heading={heading}>
+      <CommandGroup>
         {filteredTokens.slice(0, MAX_PER_SOURCE).map((token) => (
           <CommandItem
             key={token.id.toString()}

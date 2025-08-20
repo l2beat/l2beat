@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x3368c56890434551899b1984eddbc0203b4a7563
+
+# Diff at Mon, 18 Aug 2025 09:09:27 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0dd593b7eab607ddac1ba1df05212f23f79157e3 block: 1736950439
+- current timestamp: 1755508162
+
+## Description
+
+Removed one SC member.
+
+## Watched changes
+
+```diff
+    contract Fuel Security Council (0x32da601374b38154f05904B16F44A1911Aa6f314) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x5F5e0C904153789a9E978c286180b4191950d886"
+      values.$threshold:
+-        10
++        9
+      values.multisigThreshold:
+-        "10 of 13 (77%)"
++        "9 of 12 (75%)"
+    }
+```
+
 Generated with discovered.json: 0xee85ddce444aaa0a2eab03b90f3a5f370c93e43f
 
 # Diff at Mon, 14 Jul 2025 12:45:06 GMT:

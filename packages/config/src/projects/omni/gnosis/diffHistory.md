@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x42fd7839d7d8c9919bb40b83988b083b11f6e083
+
+# Diff at Thu, 14 Aug 2025 11:43:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1754307769
+- current timestamp: 1755171830
+
+## Description
+
+New Hashi owning Multisig.
+
+## Watched changes
+
+```diff
+    contract HashiManager_Gnosis (0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      values.$admin:
+-        "gno:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
++        "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623"
+      values.owner:
+-        "gno:0xb1F43dc8B57562e7FA48157D73102a8e4a94975A"
++        "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623"
+      values.upgradeabilityOwner:
+-        "gno:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
++        "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (0xb1F43dc8B57562e7FA48157D73102a8e4a94975A)
+    +++ description: None
+```
+
+```diff
+    contract GnosisSafeL2 (0xEF138856d0581641A57245Ee5CFfc9ceaA059623) {
+    +++ description: None
+      values.$members.0:
++        "gno:0xd722EC6853e6EbAaf8664602A37855FAe872E482"
+      values.multisigThreshold:
+-        "2 of 2 (100%)"
++        "2 of 3 (67%)"
+      receivedPermissions:
++        [{"permission":"interact","from":"gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E","description":"change critical configurations of the Hashi protocol like the validation contract addresses.","role":".owner"},{"permission":"upgrade","from":"gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E","role":"admin"}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../SafeL2/SafeL2.sol => /dev/null                 | 1152 --------------------
+ .../SafeL2/SafeProxy.p.sol => /dev/null            |   37 -
+ 2 files changed, 1189 deletions(-)
+```
+
 Generated with discovered.json: 0xdbc9b7feab155628ae851b304d06611135723d06
 
 # Diff at Tue, 05 Aug 2025 16:35:17 GMT:

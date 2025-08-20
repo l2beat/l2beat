@@ -115,7 +115,7 @@ export function ProjectScalingSummary({ project }: Props) {
                     tvsWarnings={project.header.tvs?.tokens.warnings ?? []}
                   />
                   {project.header.tvs && (
-                    <p className="mt-2 text-label-value-13 text-secondary">
+                    <p className="mt-2 text-label-value-13 text-secondary max-md:hidden">
                       Click to view TVS breakdown
                     </p>
                   )}
@@ -152,7 +152,7 @@ export function ProjectScalingSummary({ project }: Props) {
                     tvsWarnings={[]}
                   />
                   {project.header.tvs && (
-                    <p className="mt-2 text-label-value-13 text-secondary">
+                    <p className="mt-2 text-label-value-13 text-secondary max-md:hidden">
                       Click to view TVS breakdown
                     </p>
                   )}
