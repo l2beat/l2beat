@@ -1,8 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import {
   TypeExplanationTooltip,
   TypeInfo,
 } from '~/components/table/cells/TypeInfo'
+import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/getScalingUpcomingEntries'
 
@@ -13,16 +15,30 @@ export const scalingUpcomingColumns = [
     columnHelper,
     (row) => `/scaling/projects/${row.slug}`,
   ),
-  columnHelper.accessor('category', {
-    header: 'Type',
+  columnHelper.accessor('proofSystem', {
+    header: 'Proof system',
     cell: (ctx) => (
-      <div className="font-medium">
-        <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
-      </div>
+      <TableLink
+        href={
+          ctx.getValue()?.zkCatalogId
+            ? `/zk-catalog?highlight=${ctx.getValue()?.zkCatalogId}`
+            : undefined
+        }
+      >
+        <TwoRowCell>
+          <TwoRowCell.First>
+            <TypeInfo stacks={ctx.row.original.stacks}>
+              {ctx.getValue()?.type}
+            </TypeInfo>
+          </TwoRowCell.First>
+          {ctx.getValue()?.name && (
+            <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      </TableLink>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip />,
-      cellClassName: 'pr-5',
     },
   }),
   columnHelper.display({

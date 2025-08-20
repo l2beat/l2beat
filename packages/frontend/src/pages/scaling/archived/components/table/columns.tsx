@@ -2,10 +2,12 @@ import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import {
   TypeExplanationTooltip,
   TypeInfo,
 } from '~/components/table/cells/TypeInfo'
+import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { EM_DASH } from '~/consts/characters'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/getScalingArchivedEntries'
@@ -13,7 +15,7 @@ import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValue
 
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 
-export function getScalingArchivedColumns(hideType?: boolean) {
+export function getScalingArchivedColumns(hideProofSystem?: boolean) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,
@@ -39,11 +41,28 @@ export function getScalingArchivedColumns(hideType?: boolean) {
         cellClassName: 'justify-center',
       },
     }),
-    !hideType &&
-      columnHelper.accessor('category', {
-        header: 'Type',
+    !hideProofSystem &&
+      columnHelper.accessor('proofSystem', {
+        header: 'Proof system',
         cell: (ctx) => (
-          <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
+          <TableLink
+            href={
+              ctx.getValue()?.zkCatalogId
+                ? `/zk-catalog?highlight=${ctx.getValue()?.zkCatalogId}`
+                : undefined
+            }
+          >
+            <TwoRowCell>
+              <TwoRowCell.First>
+                <TypeInfo stacks={ctx.row.original.stacks}>
+                  {ctx.getValue()?.type}
+                </TypeInfo>
+              </TwoRowCell.First>
+              {ctx.getValue()?.name && (
+                <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
+              )}
+            </TwoRowCell>
+          </TableLink>
         ),
         meta: {
           tooltip: <TypeExplanationTooltip />,
