@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart } from 'recharts'
@@ -30,6 +31,7 @@ interface Props {
   syncedUntil: number | undefined
   className?: string
   tickCount?: number
+  milestones: Milestone[]
 }
 
 export function DataPostedChart({
@@ -40,6 +42,7 @@ export function DataPostedChart({
   syncedUntil,
   className,
   tickCount,
+  milestones,
 }: Props) {
   const chartMeta = {
     posted: {
@@ -57,6 +60,7 @@ export function DataPostedChart({
       className={className}
       meta={chartMeta}
       isLoading={isLoading}
+      milestones={milestones}
       project={project}
     >
       <ComposedChart data={data} margin={{ top: 20 }}>
