@@ -5,7 +5,6 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
-import partition from 'lodash/partition'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import { getCollection } from '~/content/getCollection'
@@ -147,9 +146,10 @@ export async function getEcosystemEntry(
     (p) => p.ecosystemInfo.id === ecosystem.id,
   )
 
-  const [upcomingProjects, liveProjects] = partition(
-    ecosystemProjects,
-    (p) => p.isUpcoming,
+  const upcomingProjects = ecosystemProjects.filter((p) => p.isUpcoming)
+  const archivedProjects = ecosystemProjects.filter((p) => !!p.archivedAt)
+  const liveProjects = ecosystemProjects.filter(
+    (p) => !p.isUpcoming && !p.archivedAt,
   )
 
   const [
@@ -214,15 +214,16 @@ export async function getEcosystemEntry(
     projectsByRaas: getProjectsByRaas(liveProjects),
     token,
     projectsChartData: getEcosystemProjectsChartData(
-      liveProjects,
+      [...archivedProjects, ...liveProjects],
       allScalingProjects.length,
+      tvs.projects,
+      projectsActivity,
     ),
     banners: {
       firstBanner: ecosystem.ecosystemConfig.firstBanner,
       secondBanner: ecosystem.ecosystemConfig.secondBanner,
     },
     liveProjects: liveProjects
-      .filter((p) => !p.archivedAt)
       .map((project) => {
         const entry = getScalingSummaryEntry(
           project,
