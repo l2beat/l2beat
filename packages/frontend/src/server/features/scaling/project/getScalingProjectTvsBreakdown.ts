@@ -1,4 +1,4 @@
-import type { Project } from '@l2beat/config'
+import type { Milestone, Project } from '@l2beat/config'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getProjectIcon } from '../../utils/getProjectIcon'
@@ -19,6 +19,7 @@ export interface ScalingProjectTvsBreakdown {
   dataTimestamp: number
   entries: TvsBreakdownTokenEntry[]
   project7dData: ProjectSevenDayTvsBreakdown
+  milestones: Milestone[]
 }
 
 export async function getScalingProjectTvsBreakdown(
@@ -54,5 +55,6 @@ export async function getScalingProjectTvsBreakdown(
     dataTimestamp: getTvsTargetTimestamp(),
     entries,
     project7dData,
+    milestones: project.milestones ?? [],
   }
 }
