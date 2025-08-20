@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "timestamp": 1755614030,
+  "timestamp": 1755680565,
   "configHash": "0x61c8e47626bb7fc06534e6463f53228b61c07473008c26635560bcde0c96aed3",
   "entries": [
     {
@@ -207,6 +207,14 @@
       ],
       "proxyType": "immutable",
       "description": "A public proxy contract forwarding calls to a predefined target contract (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "submit and finalize blocks as the Operator role when 6 months of no finalizations have passed.",
+          "role": ".fallbackOperator"
+        }
+      ],
       "sinceTimestamp": 1733219987,
       "sinceBlock": 21321239,
       "values": {
@@ -277,12 +285,27 @@
     {
       "address": "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract).",
+          "role": ".pausers"
+        }
+      ]
     },
     {
       "address": "eth:0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "operateLinea",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "role": ".Operators"
+        }
+      ]
     },
     {
       "address": "eth:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB",
@@ -297,7 +320,14 @@
     {
       "address": "eth:0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "operateLinea",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "role": ".Operators"
+        }
+      ]
     },
     {
       "address": "eth:0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5",
@@ -324,6 +354,13 @@
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 90d, if registered as a module there.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
+          "role": ".GnosisSafe_modules"
+        }
+      ],
       "ignoreInWatchMode": ["txNonce", "queueNonce"],
       "sinceTimestamp": 1753454807,
       "sinceBlock": 22996844,
@@ -365,6 +402,215 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause the bridge.",
+          "role": ".allPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause the bridge.",
+          "role": ".allUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
+          "role": ".reserveTokenSetters",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
+          "role": ".reserveTokenSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
+          "role": ".reserveTokenRemovers",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
+          "role": ".reserveTokenRemovers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set custom ERC20 contracts for specific ERC20s.",
+          "role": ".customContractSetters",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set custom ERC20 contracts for specific ERC20s.",
+          "role": ".customContractSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set the contract that is recognized to be the token bridge contract on the other side.",
+          "role": ".remoteTokenBridgeSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set the contract used as the source of truth from crosschain messages.",
+          "role": ".messageServiceSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can unpause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can unpause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+          "description": "enable/disable the module, set delays and expiration of transactions, set the target.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
+          "description": "change the beacon implementation.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "cancel queued transactions.",
+          "role": ".cancellerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "execute transactions that are ready.",
+          "role": ".executorAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "via": [
+            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions.",
+          "role": ".proposerAC",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions.",
+          "role": ".proposerAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+          "delay": 7776000,
+          "role": ".ZodiacModule_modules"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "role": ".executorAC"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1689149759,
       "sinceBlock": 17676233,
@@ -447,6 +693,38 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
+          "role": ".reserveTokenSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
+          "role": ".reserveTokenRemovers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set custom ERC20 contracts for specific ERC20s.",
+          "role": ".customContractSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+          "description": "enable/disable the module, set delays and expiration of transactions, set the target.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions.",
+          "role": ".proposerAC"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1748512535,
       "sinceBlock": 22587649,
@@ -620,11 +898,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0x3f83107e5b1063b324f5e59c81291ae4429765f5a6c2638d3e90a4d769e147b6",
-        "currentFinalizedState": "0xa6a74bae0aa115e1f5e9107c06390bbf8481af41434b96a2d278a5bb008c75ad",
+        "currentFinalizedShnarf": "0x91145db170667f80abcae4f78004909f0b46bd2558f928370b23283641bc7235",
+        "currentFinalizedState": "0xbd8af0d1a63ed0a8be902109d3b6e63ef9f203974144ff3faa52225071280f5d",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "507223233705261796000",
+        "currentPeriodAmountInWei": "1341610226694254779152",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -716,6 +994,19 @@
       ],
       "proxyType": "immutable",
       "description": "A standard timelock with access control. The current minimum delay is 0s.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
+        }
+      ],
       "sinceTimestamp": 1689150959,
       "sinceBlock": 17676332,
       "values": {
@@ -789,6 +1080,13 @@
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "role": ".GnosisSafe_modules"
+        }
+      ],
       "sinceTimestamp": 1700506439,
       "sinceBlock": 18614911,
       "values": {
@@ -869,6 +1167,18 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "role": "admin"
+        }
+      ],
       "sinceTimestamp": 1689158711,
       "sinceBlock": 17676969,
       "values": {
@@ -1436,5 +1746,6 @@
     "linea/TokenBridge": "0x44ac54b42a3064536f608e9b590f17b1ffe63129ab72fbc2fbb79e6f56850a59",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23175743 }
+  "usedBlockNumbers": { "ethereum": 23181266 },
+  "permissionsConfigHash": "0x2a2c30cbb28dee113fd7ccddb76b31b1c6c7fa42b7d235d7e499c9103ceed3d6"
 }

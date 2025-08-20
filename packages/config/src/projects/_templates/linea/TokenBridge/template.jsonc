@@ -180,7 +180,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a \"reserved\" status."
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status."
         }
       ]
     },
@@ -190,7 +190,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can remove the \"reserved\" status from a token, meaning that it is allowed to be bridged again."
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again."
         }
       ]
     },
