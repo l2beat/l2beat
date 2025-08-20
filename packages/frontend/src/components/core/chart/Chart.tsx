@@ -72,6 +72,12 @@ const chartContainerClassNames = cn(
   "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/40",
 )
 
+export interface ChartProject {
+  id: string
+  slug: string
+  shortName: string
+}
+
 function ChartContainer<T extends { timestamp: number }>({
   className,
   children,
@@ -83,6 +89,7 @@ function ChartContainer<T extends { timestamp: number }>({
   logoClassName,
   size = 'regular',
   interactiveLegend,
+  project,
   ...props
 }: React.ComponentProps<'div'> & {
   meta: ChartMeta
@@ -99,6 +106,7 @@ function ChartContainer<T extends { timestamp: number }>({
   loaderClassName?: string
   logoClassName?: string
   isLoading?: boolean
+  project?: ChartProject
   size?: 'regular' | 'small'
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
@@ -152,6 +160,18 @@ function ChartContainer<T extends { timestamp: number }>({
               logoClassName,
             )}
           />
+        )}
+        {isClient && size !== 'small' && project && (
+          <div className="pointer-events-none absolute bottom-14 left-3 flex items-center gap-1.5 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-16">
+            <img
+              src={`/icons/${project.slug}.png`}
+              alt={project.shortName}
+              className="size-[22px]"
+            />
+            <span className="font-bold text-label-value-18">
+              {project.shortName}
+            </span>
+          </div>
         )}
         {!isLoading && milestones && (
           <ChartMilestones data={data} milestones={milestones} ref={ref} />
