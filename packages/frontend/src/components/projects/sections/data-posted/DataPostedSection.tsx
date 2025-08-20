@@ -47,6 +47,7 @@ export function DataPostedSection({
       <ProjectDataPostedChart
         projectId={projectId}
         defaultRange={defaultRange}
+        milestones={milestones}
       />
       {daLayer.name !== 'EigenDA' && (
         <>

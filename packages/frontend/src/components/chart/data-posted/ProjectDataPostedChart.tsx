@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DataPostedTimeRangeControls } from '~/pages/scaling/data-posted/DataPostedTimeRangeControls'
@@ -13,9 +14,14 @@ import { ProjectDataPostedChartStats } from './ProjectDataPostedChartStats'
 interface Props {
   projectId: string
   defaultRange: DataPostedTimeRange
+  milestones: Milestone[]
 }
 
-export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
+export function ProjectDataPostedChart({
+  projectId,
+  defaultRange,
+  milestones,
+}: Props) {
   const [timeRange, setTimeRange] = useState<DataPostedTimeRange>(defaultRange)
 
   const { data, isLoading } = api.da.scalingProjectChart.useQuery({
@@ -47,6 +53,7 @@ export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
         />
       </ChartControlsWrapper>
       <DataPostedChart
+        milestones={milestones}
         resolution={rangeToResolution({ type: timeRange })}
         data={chartData}
         syncedUntil={data?.syncedUntil}
