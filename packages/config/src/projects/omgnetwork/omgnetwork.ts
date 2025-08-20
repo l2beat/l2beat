@@ -43,7 +43,6 @@ export const omgnetwork: ScalingProject = {
       ],
     },
   },
-  dataAvailability: undefined,
   proofSystem: undefined,
   dataAvailability: {
     layer: DA_LAYERS.NONE,

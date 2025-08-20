@@ -20,6 +20,7 @@ export const layerai: ScalingProject = underReviewL2({
       explorers: ['https://explorer.layerai.org/'],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Validity',
   },

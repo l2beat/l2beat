@@ -41,7 +41,6 @@ export const layer2finance: ScalingProject = {
       ],
     },
   },
-  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },

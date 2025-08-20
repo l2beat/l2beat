@@ -51,7 +51,6 @@ export const hermez: ScalingProject = {
       ],
     },
   },
-  dataAvailability: undefined,
   proofSystem: {
     type: 'Validity',
   },
