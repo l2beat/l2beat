@@ -9,6 +9,7 @@ import type { IProvider } from '../../../provider/IProvider'
 import type { Handler, HandlerResult } from '../../Handler'
 import { getCoingeckoId } from './getCoingeckoId'
 import { getTokenInfo } from './getTokenInfo'
+import { OpCanonical } from './SubHandlers'
 import { SourceEntry } from './types'
 import { today } from './utils'
 
@@ -24,6 +25,7 @@ export class ERC20DataHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: ERC20DataDefinition,
+    private readonly abi: string[],
   ) {}
 
   async execute(
@@ -56,6 +58,8 @@ export class ERC20DataHandler implements Handler {
       entry?.deploymentTimestamp,
     )
 
+    const canonical = await getIsCanonical(provider, address, this.abi)
+
     return Promise.resolve({
       field: '$tokenData',
       value: {
@@ -73,6 +77,7 @@ export class ERC20DataHandler implements Handler {
         source,
         bridgedUsing: entry?.bridgedUsing,
         excludeFromTotal: entry?.excludeFromTotal,
+        canonical,
       },
     })
   }
@@ -88,4 +93,18 @@ function getSupply(chain: string, entry: SourceEntry) {
   const formula = chain === 'ethereum' ? 'zero' : entry?.supply
   assert(formula !== undefined, 'Missing supply formula')
   return formula
+}
+
+async function getIsCanonical(
+  provider: IProvider,
+  address: ChainSpecificAddress,
+  abi: string[],
+) {
+  const isOpCanonical = await OpCanonical.classify({ provider, address, abi })
+
+  if (!isOpCanonical) {
+    return false
+  }
+
+  return OpCanonical.execute({ provider, address, abi })
 }
