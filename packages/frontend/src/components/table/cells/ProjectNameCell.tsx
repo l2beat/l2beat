@@ -1,3 +1,7 @@
+import type {
+  ProjectScalingCapability,
+  ProjectScalingPurpose,
+} from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
@@ -7,16 +11,22 @@ import { LiveIndicator } from '~/components/LiveIndicator'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ProjectBadge } from '~/components/projects/ProjectBadge'
 import { useIsMobile } from '~/hooks/useIsMobile'
+import { Layer3Icon } from '~/icons/Layer3'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
+import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { NoDataIcon } from '../../NoDataIcon'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
 interface ProjectCellProps {
-  project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'>
+  project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'> & {
+    isLayer3?: boolean
+    purposes?: ProjectScalingPurpose[]
+    capability?: ProjectScalingCapability
+  }
   className?: string
   withInfoTooltip?: boolean
   ignoreUnderReviewIcon?: boolean
@@ -37,6 +47,14 @@ export function ProjectNameCell({
             project={project}
           />
         </PrimaryValueCell>
+        {project.isLayer3 && (
+          <Tooltip>
+            <TooltipTrigger>
+              <Layer3Icon className="size-4" />
+            </TooltipTrigger>
+            <TooltipContent>{project.nameSecondLine}</TooltipContent>
+          </Tooltip>
+        )}
         {project.statuses?.verificationWarning === true && (
           <Tooltip>
             <TooltipTrigger>
@@ -80,20 +98,35 @@ export function ProjectNameCell({
         {project.statuses?.syncWarning && (
           <NoDataIcon content={project.statuses.syncWarning} />
         )}
+        {project.statuses?.ongoingAnomaly && (
+          <Tooltip>
+            <TooltipTrigger>
+              <LiveIndicator />
+            </TooltipTrigger>
+            <TooltipContent>
+              There's an ongoing anomaly. Check detailed page for more
+              information.
+            </TooltipContent>
+          </Tooltip>
+        )}
       </div>
-      {project.nameSecondLine && (
+      {project.nameSecondLine && !project.isLayer3 && (
         <span className="block font-medium text-[0.8125rem] text-secondary leading-3.75">
           {project.nameSecondLine}
         </span>
       )}
-      {project.statuses?.ongoingAnomaly && (
-        <div className="flex items-center justify-center gap-1 text-negative">
-          <LiveIndicator />
-          <span className="font-medium text-[11px] uppercase leading-none">
-            Ongoing anomaly
-          </span>
-        </div>
-      )}
+      {project.capability === 'appchain' &&
+        project.purposes &&
+        project.purposes?.length > 0 && (
+          <div
+            className={cn(
+              'text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]',
+              className,
+            )}
+          >
+            {project.purposes.join(', ')}
+          </div>
+        )}
     </div>
   )
 }
