@@ -148,7 +148,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
 }
 
 function getType(p: ScalingProject): ProjectScalingCategory | undefined {
-  if (p.isUpcoming || (!p.proofSystem && !p.dataAvailability)) return undefined
+  if (p.isUpcoming || !p.proofSystem || !p.dataAvailability) return undefined
   if (p.reasonsForBeingOther) return 'Other'
 
   const isEthereumBridge =
