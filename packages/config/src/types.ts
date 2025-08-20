@@ -928,6 +928,8 @@ export interface EigenDaTrackingConfig {
 
 export interface ProjectEcosystemInfo {
   id: ProjectId
+  /** Is this project part of the Superchain? Only used with id: 'superchain' */
+  isPartOfSuperchain?: boolean
   sinceTimestamp?: UnixTime
   untilTimestamp?: UnixTime
 }

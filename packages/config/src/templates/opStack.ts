@@ -361,6 +361,7 @@ function opStackCommon(
     },
     ecosystemInfo: {
       id: ProjectId('superchain'),
+      isPartOfSuperchain: partOfSuperchain,
     },
     technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
