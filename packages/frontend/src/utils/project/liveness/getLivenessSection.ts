@@ -4,7 +4,6 @@ import { assert, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import groupBy from 'lodash/groupBy'
 import { getDefaultSubtype } from '~/components/chart/liveness/getDefaultSubtype'
-import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { LivenessSectionProps } from '~/components/projects/sections/LivenessSection'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { LivenessProject } from '~/server/features/scaling/liveness/types'
@@ -20,7 +19,7 @@ export async function getLivenessSection(
 ): Promise<
   | Omit<
       LivenessSectionProps,
-      'projectId' | 'id' | 'title' | 'sectionOrder' | 'milestones'
+      'projectId' | 'id' | 'title' | 'sectionOrder' | 'milestones' | 'project'
     >
   | undefined
 > {
@@ -65,6 +64,5 @@ export async function getLivenessSection(
     trackedTransactions,
     defaultRange: range,
     isArchived: project.archivedAt !== undefined,
-    project: getChartProject(project),
   }
 }

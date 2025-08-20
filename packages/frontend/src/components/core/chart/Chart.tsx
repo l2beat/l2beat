@@ -17,6 +17,7 @@ import { ChartLoader } from './ChartLoader'
 import { ChartMilestones } from './ChartMilestones'
 import { ChartNoDataSourceState } from './ChartNoDataSourceState'
 import { ChartNoDataState } from './ChartNoDataState'
+import { ChartProjectLogo } from './ChartProjectLogo'
 
 export type ChartMeta = Record<
   string,
@@ -77,6 +78,7 @@ export interface ChartProject {
   id: ProjectId
   slug: string
   name: string
+  shortName: string | undefined
 }
 
 function ChartContainer<T extends { timestamp: number }>({
@@ -163,16 +165,10 @@ function ChartContainer<T extends { timestamp: number }>({
           />
         )}
         {isClient && size !== 'small' && project && (
-          <div className="pointer-events-none absolute bottom-14 left-3 flex items-center gap-1.5 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-16">
-            <img
-              src={`/icons/${project.slug}.png`}
-              alt={project.name}
-              className="size-[22px]"
-            />
-            <span className="font-bold text-label-value-18">
-              {project.name}
-            </span>
-          </div>
+          <ChartProjectLogo
+            project={project}
+            className="pointer-events-none absolute bottom-14 left-3 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-16"
+          />
         )}
         {!isLoading && milestones && (
           <ChartMilestones data={data} milestones={milestones} ref={ref} />

@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
 import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolution'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
@@ -12,7 +11,7 @@ export async function getDataPostedSection(
 ): Promise<
   | Pick<
       DataPostedSectionProps,
-      'defaultRange' | 'daLayer' | 'daTrackingConfig' | 'project'
+      'defaultRange' | 'daLayer' | 'daTrackingConfig'
     >
   | undefined
 > {
@@ -34,6 +33,5 @@ export async function getDataPostedSection(
     },
     defaultRange: range,
     daTrackingConfig: project.daTrackingConfig,
-    project: getChartProject(project),
   }
 }

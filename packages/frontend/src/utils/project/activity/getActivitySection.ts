@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ActivitySectionProps } from '~/components/projects/sections/ActivitySection'
 
 import { isActivityChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
@@ -8,7 +7,7 @@ import type { SsrHelpers } from '~/trpc/server'
 export async function getActivitySection(
   helpers: SsrHelpers,
   project: Project<never, 'archivedAt' | 'hasActivity'>,
-): Promise<Pick<ActivitySectionProps, 'defaultRange' | 'project'> | undefined> {
+): Promise<Pick<ActivitySectionProps, 'defaultRange'> | undefined> {
   if (!project.hasActivity) return undefined
 
   const range = project.archivedAt ? 'max' : '1y'
@@ -22,7 +21,6 @@ export async function getActivitySection(
   }
 
   return {
-    project: getChartProject(project),
     defaultRange: range,
   }
 }

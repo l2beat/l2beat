@@ -76,6 +76,7 @@ export function ActivityChart({
     () => ({
       projects: {
         label:
+          project?.shortName ??
           project?.name ??
           (type === 'ValidiumsAndOptimiums' ? 'Validiums & Optimiums' : type),
         color: typeToColor(type),
@@ -91,7 +92,7 @@ export function ActivityChart({
         },
       },
     }),
-    [project?.name, type],
+    [project?.name, project?.shortName, type],
   ) satisfies ChartMeta
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)

@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ScalingTvsSectionProps } from '~/components/projects/sections/ScalingTvsSection'
 import { isDetailedTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
 import type { SsrHelpers } from '~/trpc/server'
@@ -7,9 +6,7 @@ import type { SsrHelpers } from '~/trpc/server'
 export async function getScalingTvsSection(
   helpers: SsrHelpers,
   project: Project<never, 'archivedAt'>,
-): Promise<
-  Pick<ScalingTvsSectionProps, 'defaultRange' | 'project'> | undefined
-> {
+): Promise<Pick<ScalingTvsSectionProps, 'defaultRange'> | undefined> {
   const range = project.archivedAt ? 'max' : '1y'
   const data = await helpers.tvs.detailedChart.fetch({
     range,
@@ -23,6 +20,5 @@ export async function getScalingTvsSection(
 
   return {
     defaultRange: range,
-    project: getChartProject(project),
   }
 }
