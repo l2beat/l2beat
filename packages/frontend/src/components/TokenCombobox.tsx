@@ -22,19 +22,12 @@ const MAX_TOKENS = 25
 
 interface Props {
   tokens: ProjectToken[]
-  placeholder?: string
   value: ProjectToken | undefined
   setValue: (token: ProjectToken | undefined) => void
   className?: string
 }
 
-export function TokenCombobox({
-  tokens,
-  value,
-  setValue,
-  className,
-  placeholder,
-}: Props) {
+export function TokenCombobox({ tokens, value, setValue, className }: Props) {
   const [open, setOpen] = React.useState(false)
 
   const onSelect = (currentValue: string) => {
@@ -50,7 +43,11 @@ export function TokenCombobox({
     <div className={cn('flex items-center gap-2', className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger className="group/popover-trigger h-8 justify-between">
-          {value ? <TokenItem token={value} /> : (placeholder ?? 'Tokens')}
+          {value ? (
+            <TokenItem token={value} />
+          ) : (
+            'Select token for chart preview'
+          )}
           <ChevronIcon className="size-3 shrink-0 transition-transform group-data-[state=open]/popover-trigger:rotate-180" />
         </PopoverTrigger>
         <PopoverContent className="p-0" align="start">

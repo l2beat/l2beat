@@ -73,7 +73,6 @@ export function ScalingTvsSection({
           tokens={tokens ?? []}
           value={selectedToken}
           setValue={setSelectedToken}
-          placeholder="Select a token to preview chart"
         />
 
         {selectedToken && (

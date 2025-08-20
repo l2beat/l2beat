@@ -74,7 +74,6 @@ export function ScalingProjectTvsBreakdownPage({
                   tokens={entries ?? []}
                   value={selectedToken}
                   setValue={setSelectedToken}
-                  placeholder="Select a token to preview chart"
                 />
 
                 {selectedToken && (

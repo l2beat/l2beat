@@ -38,7 +38,6 @@ export function BridgesTvsSection({
           tokens={tokens}
           setValue={setToken}
           value={token}
-          placeholder="Select a token to preview chart"
           className="mt-2"
         />
       )}
