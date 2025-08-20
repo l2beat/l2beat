@@ -42,16 +42,24 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
     columnHelper.accessor('proofSystem', {
       header: 'Proof system',
       cell: (ctx) => (
-        <TwoRowCell>
-          <TwoRowCell.First>
-            <TypeInfo stacks={ctx.row.original.stacks}>
-              {ctx.getValue()?.type}
-            </TypeInfo>
-          </TwoRowCell.First>
-          {ctx.getValue()?.name && (
-            <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
-          )}
-        </TwoRowCell>
+        <TableLink
+          href={
+            ctx.getValue()?.zkCatalogId
+              ? `/zk-catalog?highlight=${ctx.getValue()?.zkCatalogId}`
+              : undefined
+          }
+        >
+          <TwoRowCell>
+            <TwoRowCell.First>
+              <TypeInfo stacks={ctx.row.original.stacks}>
+                {ctx.getValue()?.type}
+              </TypeInfo>
+            </TwoRowCell.First>
+            {ctx.getValue()?.name && (
+              <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
+            )}
+          </TwoRowCell>
+        </TableLink>
       ),
       meta: {
         tooltip: <TypeExplanationTooltip />,

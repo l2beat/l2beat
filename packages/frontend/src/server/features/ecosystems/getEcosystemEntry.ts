@@ -116,7 +116,7 @@ export async function getEcosystemEntry(
     return undefined
   }
 
-  const [allScalingProjects, projects] = await Promise.all([
+  const [allScalingProjects, projects, zkCatalogProjects] = await Promise.all([
     ps.getProjects({
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
@@ -140,6 +140,9 @@ export async function getEcosystemEntry(
         'isUpcoming',
       ],
       where: ['isScaling'],
+    }),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
     }),
   ])
 
@@ -230,6 +233,7 @@ export async function getEcosystemEntry(
           tvs.projects[project.id.toString()],
           projectsActivity[project.id.toString()],
           !!projectsOngoingAnomalies[project.id.toString()],
+          zkCatalogProjects,
         )
         return {
           ...entry,
@@ -241,7 +245,9 @@ export async function getEcosystemEntry(
         }
       })
       .sort(compareTvs),
-    upcomingProjects: upcomingProjects.map(getScalingUpcomingEntry),
+    upcomingProjects: upcomingProjects.map((p) =>
+      getScalingUpcomingEntry(p, zkCatalogProjects),
+    ),
     allMilestones: getMilestones([ecosystem, ...ecosystemProjects]),
     ecosystemMilestones: getMilestones([ecosystem]),
     images: {
