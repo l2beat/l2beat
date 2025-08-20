@@ -84,7 +84,7 @@ export function ScalingProjectTvsBreakdownPage({
                       className="mt-2"
                     />
                     <ProjectTokenChart
-                      projectId={project.id}
+                      project={project}
                       milestones={milestones}
                       token={selectedToken}
                     />

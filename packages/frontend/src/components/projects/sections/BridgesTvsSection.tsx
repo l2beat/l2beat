@@ -46,7 +46,7 @@ export function BridgesTvsSection({
         <>
           <TvsChartControlsContextProvider defaultRange={defaultRange}>
             <ProjectTokenChart
-              projectId={project.id}
+              project={project}
               milestones={milestones}
               token={token}
             />
