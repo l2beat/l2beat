@@ -1,10 +1,13 @@
 import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import type { TooltipProps } from 'recharts'
-import { Area, AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import { useMemo } from 'react'
+import { Area, AreaChart, type TooltipProps } from 'recharts'
 import {
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  type ChartMeta,
+  type ChartProject,
   ChartTooltip,
   ChartTooltipWrapper,
   useChart,
@@ -15,55 +18,62 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
+import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import type { ChartUnit } from '../types'
 
-export interface TvsChartDataPoint {
+type TokenChartDataPoint = {
   timestamp: number
   value: number | null
 }
 
 interface Props {
-  data: TvsChartDataPoint[] | undefined
-  project?: ChartProject
-  unit: ChartUnit
-  isLoading: boolean
+  data: TokenChartDataPoint[] | undefined
+  project: ChartProject
   syncedUntil: number | undefined
-  milestones: Milestone[] | undefined
-  tickCount?: number
+  isLoading: boolean
+  milestones: Milestone[]
+  token: ProjectToken
+  className?: string
 }
 
-export function TvsChart({
+export function TokenChart({
   data,
   project,
-  unit,
   isLoading,
   milestones,
+  token,
   syncedUntil,
-  tickCount,
+  className,
 }: Props) {
-  const chartMeta = {
-    value: {
-      color: 'var(--chart-pink)',
-      indicatorType: { shape: 'line' },
-      label: unit.toUpperCase(),
-    },
-  } satisfies ChartMeta
+  const chartMeta = useMemo(
+    () => ({
+      value: {
+        label: token.symbol,
+        color: 'var(--chart-pink)',
+        indicatorType: {
+          shape: 'line',
+        },
+      },
+    }),
+    [token.symbol],
+  ) satisfies ChartMeta
 
   return (
     <ChartContainer
-      project={project}
+      className={className}
       meta={chartMeta}
       data={data}
       isLoading={isLoading}
       milestones={milestones}
+      project={project}
     >
-      <AreaChart data={data} accessibilityLayer margin={{ top: 20 }}>
+      <AreaChart data={data} margin={{ top: 20 }}>
         <defs>
           <PinkFillGradientDef id="fill" />
           <PinkStrokeGradientDef id="stroke" />
         </defs>
+        <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="value"
           fill="url(#fill)"
@@ -76,37 +86,30 @@ export function TvsChart({
           data,
           isLoading,
           yAxis: {
-            tickFormatter: (value: number) => formatCurrency(value, unit),
-            tickCount,
+            tickFormatter: (value: number) => formatCurrency(value, 'usd'),
+            tickCount: 4,
           },
           syncedUntil,
         })}
-        <ChartTooltip
-          filterNull={false}
-          content={<TvsCustomTooltip unit={unit} />}
-        />
+        <ChartTooltip filterNull={false} content={<CustomTooltip />} />
       </AreaChart>
     </ChartContainer>
   )
 }
 
-export function TvsCustomTooltip({
+function CustomTooltip({
   active,
   payload,
   label,
-  unit,
-}: TooltipProps<number, string> & { unit: ChartUnit }) {
+}: TooltipProps<number, string>) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
   return (
     <ChartTooltipWrapper>
-      <div className="flex min-w-28 flex-col">
-        <div className="mb-3 font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, {
-            longMonthName: true,
-            mode: 'datetime',
-          })}
+      <div className="flex min-w-48 flex-col gap-1">
+        <div className="mb-1 font-medium text-label-value-14 text-secondary">
+          {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
@@ -130,7 +133,7 @@ export function TvsCustomTooltip({
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
                   {entry.value !== null && entry.value !== undefined
-                    ? formatCurrency(entry.value, unit)
+                    ? formatCurrency(entry.value, 'usd')
                     : 'No data'}
                 </span>
               </div>

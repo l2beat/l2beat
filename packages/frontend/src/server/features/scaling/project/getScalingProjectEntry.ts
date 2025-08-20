@@ -316,12 +316,12 @@ export async function getScalingProjectEntry(
       props: {
         id: 'tvs',
         title: 'Value Secured',
-        projectId: project.id,
         tvsBreakdownUrl: `/scaling/projects/${project.slug}/tvs-breakdown`,
         milestones: sortedMilestones,
         tokens,
         tvsProjectStats,
         tvsInfo: project.tvsInfo,
+        project,
         ...scalingTvsSection,
       },
     })
@@ -333,10 +333,9 @@ export async function getScalingProjectEntry(
       props: {
         id: 'activity',
         title: 'Activity',
-        projectId: project.id,
         milestones: sortedMilestones,
         category: project.scalingInfo.type,
-        projectName: project.name,
+        project,
         ...activitySection,
       },
     })
@@ -348,8 +347,8 @@ export async function getScalingProjectEntry(
       props: {
         id: 'onchain-costs',
         title: 'Onchain costs',
-        projectId: project.id,
         milestones: sortedMilestones,
+        project,
         ...costsSection,
       },
     })
@@ -361,8 +360,8 @@ export async function getScalingProjectEntry(
       props: {
         id: 'data-posted',
         title: 'Data posted',
-        projectId: project.id,
         milestones: sortedMilestones,
+        project,
         ...dataPostedSection,
       },
     })
@@ -380,8 +379,8 @@ export async function getScalingProjectEntry(
       props: {
         id: 'liveness',
         title: 'Liveness',
-        projectId: project.id,
         milestones: sortedMilestones,
+        project,
         ...livenessSection,
       },
     })
