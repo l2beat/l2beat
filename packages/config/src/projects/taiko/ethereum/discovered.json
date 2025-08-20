@@ -5100,7 +5100,7 @@
     "taiko/SP1VerifierGateway": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",
     "taiko/TaikoDAOController": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "taiko/TaikoL1PostPacaya": "0x3efa4c94aba85afda79b284b7a199a699d0357f151e3e697e249f6c924543fe6",
+    "taiko/TaikoL1PostPacaya": "0x1c5c0d9d05b2fae60da559699fb4b2329d79068ab7105bb9ae3c72186be8bd17",
     "taiko/TaikoTokenPostPacaya": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804",
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"

@@ -13,6 +13,7 @@ export const polynomial: ScalingProject = opStackL2({
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Infra.Superchain],
   additionalPurposes: ['Exchange'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  isPartOfSuperchain: true,
   display: {
     name: 'Polynomial',
     slug: 'polynomial',

@@ -10,6 +10,7 @@ export type ProjectToken = {
   name: string
   symbol: string
   source: TvsToken['source']
+  category: TvsToken['category']
   value: number
   iconUrl: string
 }
@@ -40,6 +41,7 @@ export async function getTokensForProject(
         name: t.name,
         symbol: t.symbol,
         source: t.source,
+        category: t.category,
         value: tokenValue.valueForProject,
         iconUrl: t.iconUrl ?? placeholderIcon,
       }

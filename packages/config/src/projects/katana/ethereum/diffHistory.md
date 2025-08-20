@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xc39968d29a2f7123903d09a69f8d2e6d85e7f569
+
+# Diff at Wed, 20 Aug 2025 10:48:46 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@262b00e32d0a4e462cf5011a16f1fcaa9ed6d5a8 block: 1755156807
+- current timestamp: 1755686907
+
+## Description
+
+Updated the range program for proving L2 STF. I was not able to check the vkey commitment.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
++++ description: Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey.
++++ severity: HIGH
+      values.rangeVkeyCommitment:
+-        "0x2ebb1e0d5380158f22adf3750cc6056100a133d274fd7c5b457148ff29dfe173"
++        "0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872"
+    }
+```
+
 Generated with discovered.json: 0xaa81c969a22f2d5fc8e7b7045f01ffdb18ad02ae
 
 # Diff at Thu, 14 Aug 2025 07:33:34 GMT:

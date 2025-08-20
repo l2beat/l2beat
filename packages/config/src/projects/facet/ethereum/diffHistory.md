@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x8353bceb9d6213c536f528dfb173ae38f2251a06
+
+# Diff at Tue, 19 Aug 2025 12:17:22 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@67e41f566326dea91dc3f12a1b8947109f00301c block: 1755000507
+- current timestamp: 1755605791
+
+## Description
+
+Ignore anchor values.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755000507 (main branch discovery), not current.
+
+```diff
+    contract Rollup (0x686E7d01C7BFCB563721333A007699F154C04eb4) {
+    +++ description: Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.
+      values.getAnchorRoot:
+-        ["0x88b54f3a73b2cbb7f29caae53a780a8b4974c5e0bd157ad3c7bb122b72939bcc",1721260]
+    }
+```
+
 Generated with discovered.json: 0xe4aff01914f343654cdb84cac31b608f1dc388c6
 
 # Diff at Tue, 12 Aug 2025 12:08:32 GMT:
