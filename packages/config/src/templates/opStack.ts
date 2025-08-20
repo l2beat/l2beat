@@ -250,7 +250,7 @@ function opStackCommon(
     architectureImage.push('superchain')
   }
 
-  if (partOfSuperchainOnchain) {
+  if (templateVars.isPartOfSuperchain || partOfSuperchainOnchain) {
     automaticBadges.push(BADGES.Infra.Superchain)
   }
   if (fraudProofType !== 'None') {
