@@ -1600,7 +1600,16 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
 }
 
 function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
-  return templateVars.discovery.hasContract('SuperchainConfig')
+  if (!templateVars.discovery.hasContract('SuperchainConfig')) {
+    return false
+  }
+
+  // Some chains are not part of superchain, but they deploy their own version of the superchain config
+  // We need to check if the chain is part of superchain by checking the address of the superchain config
+  return (
+    templateVars.discovery.getContract('SuperchainConfig').address ===
+    'eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C'
+  )
 }
 
 function migratedToLockbox(templateVars: OpStackConfigCommon): boolean {
