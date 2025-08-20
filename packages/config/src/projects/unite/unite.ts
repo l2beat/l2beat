@@ -25,6 +25,7 @@ export const unite: ScalingProject = underReviewL3({
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },
@@ -47,8 +48,5 @@ export const unite: ScalingProject = underReviewL3({
     type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
-  },
-  proofSystem: {
-    type: 'Optimistic',
   },
 })
