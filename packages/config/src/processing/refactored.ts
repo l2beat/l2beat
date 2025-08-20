@@ -17,7 +17,7 @@ import { near } from '../projects/near/near-da'
 import { nebraupa } from '../projects/nebraupa/nebraupa'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
 import { payy } from '../projects/payy/payy-zk-catalog'
-import { polygonzkevmprover } from '../projects/polygonzkevmprover/polygonzkevmprover'
+import { zkprover } from '../projects/zkprover/zkprover'
 import { risc0 } from '../projects/risc0/risc0'
 import { risczero } from '../projects/risczero/risczero'
 import { soulwallet } from '../projects/soulwallet/soulwallet'
@@ -46,7 +46,7 @@ export const refactored: BaseProject[] = [
   // zk catalog v2
   sp1,
   boojum,
-  polygonzkevmprover,
+  zkprover,
   stone,
   lineaprover,
   openvmprover,

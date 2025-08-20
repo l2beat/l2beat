@@ -72,6 +72,7 @@ export const risc0: BaseProject = {
           'https://etherscan.io/address/0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
           'https://arbiscan.io/address/0xac292cf957dd5ba174cda13b05c16afc71700327',
           'https://etherscan.io/address/0x34Eda8BfFb539AeC33078819847B36D221c6641c',
+          'https://etherscan.io/address/0x2a098988600d87650Fb061FfAff08B97149Fa84D',
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('taiko'), ProjectId('bob'), ProjectId('hibachi')],
