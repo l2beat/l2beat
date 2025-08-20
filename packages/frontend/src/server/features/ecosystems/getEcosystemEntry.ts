@@ -239,7 +239,7 @@ export async function getEcosystemEntry(
           gasTokens: project.chainConfig?.gasTokens,
           ecosystemInfo: project.ecosystemInfo,
           filterable: compact([
-            project.id === 'superchain' && {
+            ecosystem.id === 'superchain' && {
               id: 'isPartOfSuperchain',
               value: project.ecosystemInfo.isPartOfSuperchain ? 'Yes' : 'No',
             },
