@@ -152,8 +152,7 @@ function getType(p: ScalingProject): ProjectScalingCategory | undefined {
   if (p.reasonsForBeingOther) return 'Other'
 
   const isEthereumBridge =
-    p.dataAvailability?.bridge.value === 'Enshrined' ||
-    p.dataAvailability?.bridge.value === 'Self Custodied'
+    p.dataAvailability?.bridge.projectId === ProjectId('ethereum')
   const proofType = p.proofSystem?.type
 
   if (proofType === 'Optimistic') {
