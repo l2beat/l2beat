@@ -51,7 +51,14 @@ export function getCommonScalingEntry({
     },
     tab: getScalingTab(project),
     filterable: [
-      { id: 'type', value: project.scalingInfo.type },
+      ...(project.scalingInfo.type
+        ? [
+            {
+              id: 'type' as const,
+              value: project.scalingInfo.type,
+            },
+          ]
+        : []),
       ...(project.scalingInfo.stacks ?? ['No stack']).map((stack) => ({
         id: 'stack' as const,
         value: stack,

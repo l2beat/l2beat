@@ -10,6 +10,7 @@ import {
   TypeExplanationTooltip,
   TypeInfo,
 } from '~/components/table/cells/TypeInfo'
+import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { InfoIcon } from '~/icons/Info'
 import { AnomalyIndicator } from '../AnomalyIndicator'
@@ -74,16 +75,24 @@ export function getScalingLivenessColumns(hideProofSystem?: boolean) {
       columnHelper.accessor('proofSystem', {
         header: 'Proof system',
         cell: (ctx) => (
-          <TwoRowCell>
-            <TwoRowCell.First>
-              <TypeInfo stacks={ctx.row.original.stacks}>
-                {ctx.getValue()?.type}
-              </TypeInfo>
-            </TwoRowCell.First>
-            {ctx.getValue()?.name && (
-              <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
-            )}
-          </TwoRowCell>
+          <TableLink
+            href={
+              ctx.getValue()?.zkCatalogId
+                ? `/zk-catalog?highlight=${ctx.getValue()?.zkCatalogId}`
+                : undefined
+            }
+          >
+            <TwoRowCell>
+              <TwoRowCell.First>
+                <TypeInfo stacks={ctx.row.original.stacks}>
+                  {ctx.getValue()?.type}
+                </TypeInfo>
+              </TwoRowCell.First>
+              {ctx.getValue()?.name && (
+                <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
+              )}
+            </TwoRowCell>
+          </TableLink>
         ),
         meta: {
           tooltip: <TypeExplanationTooltip />,
