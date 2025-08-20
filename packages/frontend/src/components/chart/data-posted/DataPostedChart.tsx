@@ -1,7 +1,7 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -24,6 +24,7 @@ interface DataPostedChartDataPoint {
 
 interface Props {
   data: DataPostedChartDataPoint[] | undefined
+  project?: ChartProject
   resolution: DaThroughputResolution
   isLoading: boolean
   syncedUntil: number | undefined
@@ -33,6 +34,7 @@ interface Props {
 
 export function DataPostedChart({
   data,
+  project,
   resolution,
   isLoading,
   syncedUntil,
@@ -55,6 +57,7 @@ export function DataPostedChart({
       className={className}
       meta={chartMeta}
       isLoading={isLoading}
+      project={project}
     >
       <ComposedChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
