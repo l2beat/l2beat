@@ -1090,7 +1090,7 @@ describe(executeBlip.name, () => {
       expect(() => executeBlip(123, ['length'])).toThrow(
         'length requires an array, object, or string input',
       )
-      expect(() => executeBlip(null, ['length'])).toThrow(
+      expect(() => executeBlip(null as any, ['length'])).toThrow(
         'length requires an array, object, or string input',
       )
       expect(() => executeBlip(true, ['length'])).toThrow(
