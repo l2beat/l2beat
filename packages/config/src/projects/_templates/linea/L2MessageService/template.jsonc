@@ -1,5 +1,15 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["l1RollingHashes"],
-  "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+  "fields": { "accessControl": { "handler": { "type": "accessControl" } } },
+  "l1l2MessageSetter": {
+    "copy": "accessControl",
+    "edit": ["get", "L1_L2_MESSAGE_SETTER_ROLE", "members"],
+    "permissions": [
+      {
+        "type": "interact",
+        "description": "can set the contract that is recognized to be the token bridge contract on the other side."
+      }
+    ]
+  }
 }
