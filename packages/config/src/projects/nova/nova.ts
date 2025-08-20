@@ -176,7 +176,7 @@ export const nova: ScalingProject = orbitStackL2({
   },
   nonTemplateProofSystem: {
     type: 'Optimistic',
-    name: 'BoLD'
+    name: 'BoLD',
   },
   upgradesAndGovernance: getNitroGovernance(
     l2CoreQuorumPercent,
