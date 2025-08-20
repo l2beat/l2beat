@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x8d8cd3cb314a63b7c42511155f134524eac8b69b
+
+# Diff at Wed, 20 Aug 2025 14:29:32 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@67e41f566326dea91dc3f12a1b8947109f00301c block: 1755594109
+- current timestamp: 1755699181
+
+## Description
+
+New preconfirmer.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.
+      description:
+-        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
++        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
+      values.havingPerfectOperators:
+-        true
++        false
+      values.operatorCount:
+-        3
++        4
+      values.registeredOperators.3:
++        {"proposer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7","sequencer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"}
+      values.registeredOperatorsCount:
+-        3
++        4
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755594109 (main branch discovery), not current.
+
+```diff
+    contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered.
+      values.registeredOperators:
++        [{"proposer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","sequencer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"},{"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"},{"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}]
+      values.registeredOperatorsCount:
++        3
+    }
+```
+
 Generated with discovered.json: 0xca70d8fe3a1962541aba440189fba415cc39b485
 
 # Diff at Tue, 19 Aug 2025 09:02:29 GMT:
