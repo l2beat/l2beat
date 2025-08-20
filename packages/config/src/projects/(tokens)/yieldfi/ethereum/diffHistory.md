@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf7390ac0fab8a9aa9179f24d5d8e567e9cf220bb
+Generated with discovered.json: 0x8ad31a190ea813b83179183312ce1a0a6f1f5f42
 
-# Diff at Wed, 20 Aug 2025 11:22:44 GMT:
+# Diff at Wed, 20 Aug 2025 13:25:03 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - current timestamp: 1755603175
@@ -25,7 +25,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract vUSDC (0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb)
+    contract yUSD (0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb)
     +++ description: None
 ```
 
@@ -37,7 +37,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract yvUSD (0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC)
+    contract vyUSD (0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC)
     +++ description: None
 ```
 

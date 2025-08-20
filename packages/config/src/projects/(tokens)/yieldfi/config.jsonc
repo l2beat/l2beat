@@ -6,12 +6,12 @@
   "initialAddresses": [
     "eth:0x2e3c5e514eef46727de1fe44618027a9b70d92fc",
     "eth:0x19ebd191f7a24ece672ba13a302212b5ef7f35cb",
-    "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e"
+    "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
+    "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4"
   ],
   "names": {
-    "eth:0x2e3c5e514eef46727de1fe44618027a9b70d92fc": "yvUSD",
-    "eth:0x19ebd191f7a24ece672ba13a302212b5ef7f35cb": "vUSDC",
-    "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e": "Administrator"
+    "eth:0x2e3c5e514eef46727de1fe44618027a9b70d92fc": "vyUSD",
+    "eth:0x19ebd191f7a24ece672ba13a302212b5ef7f35cb": "yUSD"
   },
   "overrides": {
     "eth:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": {
@@ -30,7 +30,7 @@
         "previewMint"
       ],
       "fields": {
-        "minters": {
+        "$minters": {
           "handler": {
             "type": "yieldfi"
           }
@@ -47,7 +47,7 @@
         "previewMint"
       ],
       "fields": {
-        "minters": {
+        "$minters": {
           "handler": {
             "type": "yieldfi"
           }
@@ -69,6 +69,20 @@
               "0x3812cb515c4c47772b5b6b50b84b6a856abab98cf24bcfb67a83510fb661c133": "BOND",
               "0x0f2a9aa9ac2639d8d73bfa84d0682d3e88d5f473437d4e7c341378f9bbebddbd": "LOCKBOX",
               "0xaeed4774a6ca7dc9eef4423038c2a3abe132048336feddd81b2e9a5e941eb777": "YIELD"
+            }
+          }
+        }
+      }
+    },
+    "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1": "PROPOSER_ROLE",
+              "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE",
+              "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783": "CANCELLER_ROLE"
             }
           }
         }

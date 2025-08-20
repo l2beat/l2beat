@@ -2,7 +2,7 @@
   "name": "yieldfi",
   "chain": "ethereum",
   "timestamp": 1755603175,
-  "configHash": "0x66a14c7570393c7e06444279e12ee37642dd3a6e68687a1e84032ed2ed517d6b",
+  "configHash": "0x165bf6f5168370d344a207e4fb0e161dafe37efe5595f769dc02674333f0011a",
   "entries": [
     {
       "name": "Manager",
@@ -112,7 +112,7 @@
       }
     },
     {
-      "name": "vUSDC",
+      "name": "yUSD",
       "address": "eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb",
       "type": "Contract",
       "sourceHashes": [
@@ -125,6 +125,7 @@
       "values": {
         "$admin": "eth:0xE26E1D2ae51dcB89E382CA7400b080e6632117B9",
         "$implementation": "eth:0x5bf44d32260AeE6b807c490e92eF0481D15Ab493",
+        "$minters": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"],
         "$pastUpgrades": [
           [
             "2025-04-28T03:38:47.000Z",
@@ -148,7 +149,6 @@
         "getUnvestedAmount": 21084428293,
         "lastDistributionTimestamp": 1755579059,
         "manager": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
-        "minters": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"],
         "name": "YieldFi yUSD",
         "symbol": "yUSD",
         "totalAssets": 92553815052142,
@@ -191,7 +191,7 @@
       }
     },
     {
-      "name": "yvUSD",
+      "name": "vyUSD",
       "address": "eth:0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC",
       "type": "Contract",
       "sourceHashes": [
@@ -204,6 +204,7 @@
       "values": {
         "$admin": "eth:0x3C6ECDcdAc78B65BDD85985285C1A1d140A79a63",
         "$implementation": "eth:0xb94758e90263b48D8f150FFc314b957e2475e247",
+        "$minters": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"],
         "$pastUpgrades": [
           [
             "2025-06-07T12:15:59.000Z",
@@ -228,7 +229,6 @@
         "guardrailMultiplier": 2,
         "lastDistributionTimestamp": 1755579311,
         "manager": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
-        "minters": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"],
         "name": "YieldFi vyUSD",
         "symbol": "vyUSD",
         "totalAssets": 19228185094373,
@@ -411,6 +411,24 @@
       "sinceBlock": 22497060,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xA6E98a21eA3cBE891b8A24f7233443748C17b387"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xA6E98a21eA3cBE891b8A24f7233443748C17b387"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xA6E98a21eA3cBE891b8A24f7233443748C17b387"]
+          }
+        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
@@ -479,6 +497,11 @@
           "role": ".owner"
         }
       ]
+    },
+    {
+      "address": "eth:0xA6E98a21eA3cBE891b8A24f7233443748C17b387",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -1043,5 +1066,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "usedBlockNumbers": { "ethereum": 23174841 },
-  "permissionsConfigHash": "0xcfb8f73410843cbf18322ef41865a360581c3b3de0ad78ed98b6dfd3e18844c0"
+  "permissionsConfigHash": "0xa697bc3a632243c0f4eb5dce9fac1dfd2274c7ba4c429044669a5745efda30f3"
 }
