@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
@@ -73,7 +74,7 @@ const chartContainerClassNames = cn(
 )
 
 export interface ChartProject {
-  id: string
+  id: ProjectId
   slug: string
   name: string
 }
