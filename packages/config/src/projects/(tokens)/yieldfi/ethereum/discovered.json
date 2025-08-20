@@ -2,7 +2,7 @@
   "name": "yieldfi",
   "chain": "ethereum",
   "timestamp": 1755603175,
-  "configHash": "0xe7e59c0c5d80145a9a246a64d17cfce8ca57ef86e9c8d9c77178fc1a85d51a46",
+  "configHash": "0x66a14c7570393c7e06444279e12ee37642dd3a6e68687a1e84032ed2ed517d6b",
   "entries": [
     {
       "name": "Manager",
@@ -67,6 +67,41 @@
           ]
         ],
         "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "MANAGER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "MINTER_AND_REDEEMER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "REWARDER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "BRIDGE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "COLLATERAL_MANAGER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "YIELD": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] },
+          "LOCKBOX": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "ADMIN": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          }
+        },
         "pendingTimeLockPeriod": 0,
         "timeLockPeriod": 14400,
         "timeLockUpdateEligibleAt": 0
@@ -113,12 +148,7 @@
         "getUnvestedAmount": 21084428293,
         "lastDistributionTimestamp": 1755579059,
         "manager": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
-        "minters": {
-          "pastMinters": ["eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC"],
-          "pastMinterManagers": [
-            "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e"
-          ]
-        },
+        "minters": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"],
         "name": "YieldFi yUSD",
         "symbol": "yUSD",
         "totalAssets": 92553815052142,
@@ -198,12 +228,7 @@
         "guardrailMultiplier": 2,
         "lastDistributionTimestamp": 1755579311,
         "manager": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
-        "minters": {
-          "pastMinters": ["eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC"],
-          "pastMinterManagers": [
-            "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e"
-          ]
-        },
+        "minters": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"],
         "name": "YieldFi vyUSD",
         "symbol": "vyUSD",
         "totalAssets": 19228185094373,

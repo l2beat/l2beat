@@ -196,6 +196,6 @@ export function getUserHandler(
     case 'tradable':
       return new TradableHandler(field)
     case 'yieldfi':
-      return new YieldFiHandler(field)
+      return new YieldFiHandler(field, abi)
   }
 }

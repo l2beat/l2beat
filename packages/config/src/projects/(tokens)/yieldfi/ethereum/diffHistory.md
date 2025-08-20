@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x95e7fdc3cf174375cd8691cf34ed7e35d88061e5
+Generated with discovered.json: 0xf7390ac0fab8a9aa9179f24d5d8e567e9cf220bb
 
-# Diff at Tue, 19 Aug 2025 12:09:22 GMT:
+# Diff at Wed, 20 Aug 2025 11:22:44 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - current timestamp: 1755603175
