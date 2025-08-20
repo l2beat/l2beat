@@ -48,9 +48,9 @@ export function TvsBreakdownSummaryBox({ breakdown, change, warning }: Props) {
       >
         <ValueWithPercentageChange
           change={change.total}
-          className="mr-0 font-bold text-heading-24! text-primary leading-none"
+          className="font-bold text-heading-24! text-primary leading-none lg:mr-0"
           changeClassName="text-label-value-16"
-          containerClassName="flex-col"
+          containerClassName="lg:flex-col max-lg:items-baseline"
           changeContainerClassName="leading-none"
         >
           {warning && (
