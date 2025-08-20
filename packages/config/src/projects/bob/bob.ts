@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime, ProjectId } from '@l2beat/shared-pure'
 import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -63,6 +63,11 @@ export const bob: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
+  nonTemplateProofSystem: {
+    type: 'Optimistic',
+    name: 'OP Kailua',
+    zkCatalogId: ProjectId('risc0'),
+  },
   chainConfig: {
     name: 'bob',
     chainId: 60808,
