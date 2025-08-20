@@ -1,3 +1,4 @@
+import type { ProjectEcosystemInfo } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
@@ -7,6 +8,7 @@ import { LiveIndicator } from '~/components/LiveIndicator'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ProjectBadge } from '~/components/projects/ProjectBadge'
 import { useIsMobile } from '~/hooks/useIsMobile'
+import { SuperchainIcon } from '~/icons/providers/SuperchainIcon'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
@@ -16,7 +18,9 @@ import { NoDataIcon } from '../../NoDataIcon'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
 interface ProjectCellProps {
-  project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'>
+  project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'> & {
+    ecosystemInfo?: ProjectEcosystemInfo
+  }
   className?: string
   withInfoTooltip?: boolean
   ignoreUnderReviewIcon?: boolean
@@ -37,6 +41,17 @@ export function ProjectNameCell({
             project={project}
           />
         </PrimaryValueCell>
+        {project.ecosystemInfo?.isPartOfSuperchain && (
+          <Tooltip>
+            <TooltipTrigger>
+              <SuperchainIcon />
+            </TooltipTrigger>
+            <TooltipContent>
+              The chain contributes revenue to the Optimism Collective and is a
+              standard OP Stack chain.
+            </TooltipContent>
+          </Tooltip>
+        )}
         {project.statuses?.verificationWarning === true && (
           <Tooltip>
             <TooltipTrigger>
