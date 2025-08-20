@@ -120,6 +120,7 @@ function ChartContainer<T extends { timestamp: number }>({
   const noDataSourcesSelected = Object.keys(meta).every(
     (key) => interactiveLegend && !interactiveLegend?.dataKeys.includes(key),
   )
+  const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div
@@ -160,6 +161,11 @@ function ChartContainer<T extends { timestamp: number }>({
             animated={false}
             className={cn(
               'pointer-events-none absolute right-3 bottom-12 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14',
+              !!interactiveLegend &&
+                !interactiveLegend.disableOnboarding &&
+                !hasFinishedOnboardingInitial
+                ? 'bottom-[60px] group-has-[.recharts-legend-wrapper]:bottom-[68px]'
+                : 'bottom-12 group-has-[.recharts-legend-wrapper]:bottom-14',
               logoClassName,
             )}
           />
@@ -167,7 +173,14 @@ function ChartContainer<T extends { timestamp: number }>({
         {isClient && size !== 'small' && project && (
           <ChartProjectLogo
             project={project}
-            className="pointer-events-none absolute bottom-14 left-3 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-16"
+            className={cn(
+              'pointer-events-none absolute left-3 opacity-50',
+              !!interactiveLegend &&
+                !interactiveLegend.disableOnboarding &&
+                !hasFinishedOnboardingInitial
+                ? 'bottom-[68px] group-has-[.recharts-legend-wrapper]:bottom-[76px]'
+                : 'bottom-14 group-has-[.recharts-legend-wrapper]:bottom-16',
+            )}
           />
         )}
         {!isLoading && milestones && (
