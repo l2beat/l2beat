@@ -8,6 +8,7 @@ import type {
 } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
@@ -29,7 +30,6 @@ import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/getAssociatedTokenWarning'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
-import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 
 export interface BridgesProjectEntry {
   name: string
