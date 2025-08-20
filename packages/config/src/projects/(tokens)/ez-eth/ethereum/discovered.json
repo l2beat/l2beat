@@ -54,7 +54,8 @@
           "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
           "chainId": 1,
           "supply": "zero",
-          "source": "canonical"
+          "source": "canonical",
+          "canonical": false
         },
         "$upgradeCount": 4,
         "decimals": 18,
