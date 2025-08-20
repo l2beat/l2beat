@@ -81,8 +81,8 @@ export function ChartStatsItem({
         className,
       )}
     >
-      <div className="flex items-center gap-1.5">
-        <span className="whitespace-nowrap font-medium text-secondary text-xs md:mb-1">
+      <div className="flex items-center gap-1.5 md:mb-1">
+        <span className="whitespace-nowrap font-medium text-secondary text-xs">
           {label}
         </span>
         {tooltip && (
