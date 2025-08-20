@@ -154,7 +154,8 @@ function getType(p: ScalingProject): ProjectScalingCategory | undefined {
   if (p.isUpcoming || !p.proofSystem || !p.dataAvailability) return undefined
 
   const isEthereumBridge =
-    p.dataAvailability?.bridge.projectId === ProjectId('ethereum')
+    p.dataAvailability?.bridge.value === 'Enshrined' ||
+    p.dataAvailability.bridge.value === 'Self-attested' // Intmax case
   const proofType = p.proofSystem?.type
 
   if (proofType === 'Optimistic') {
