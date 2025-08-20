@@ -47,8 +47,9 @@ export function ProjectNameCell({
               <SuperchainIcon />
             </TooltipTrigger>
             <TooltipContent>
-              The chain contributes revenue to the Optimism Collective and is a
-              standard OP Stack chain.
+              The project is officially part of the Superchain - it contributes
+              revenue to the Optimism Collective and uses the SuperchainConfig
+              to manage chain configuration values.
             </TooltipContent>
           </Tooltip>
         )}
