@@ -54,7 +54,7 @@ function readProject(
 
     return [
       {
-        config: configReader.readConfig(project, chain),
+        config: configReader.readConfig(project),
         discovery,
       },
       ...sharedModules.flatMap((sharedModule) =>
@@ -79,7 +79,7 @@ export function getProject(
   const response: ApiProjectResponse = { entries: [] }
   const meta = getMeta(data.map((x) => x.discovery))
   for (const { config, discovery } of data) {
-    const chain = config.chain
+    const chain = discovery.chain
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
       .map((entry) => {

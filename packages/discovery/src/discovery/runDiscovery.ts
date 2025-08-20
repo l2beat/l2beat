@@ -1,7 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
-import { ChainSpecificAddress, UnixTime, unique } from '@l2beat/shared-pure'
-import { providers } from 'ethers'
+import {
+  assert,
+  ChainSpecificAddress,
+  UnixTime,
+  unique,
+} from '@l2beat/shared-pure'
+import groupBy from 'lodash/groupBy'
 import path from 'path'
 import type {
   DiscoveryChainConfig,
@@ -23,21 +28,25 @@ import type { DiscoveryOutput } from './output/types'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
 
-async function getTimestamp(
+function getTimestamp(
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
-): Promise<Date> {
-  if (config.blockNumber !== undefined) {
-    const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
-    return UnixTime.toDate(
-      (await provider.getBlock(config.blockNumber)).timestamp,
-    )
-  }
+): Date {
+  // TODO(radomski): I don't know how to handle discovery on a block with different chains
+  // if (config.blockNumber !== undefined) {
+  //   const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
+  //   return UnixTime.toDate(
+  //     (await provider.getBlock(config.blockNumber)).timestamp,
+  //   )
+  // }
 
+  const chains = configReader.readAllDiscoveredChainsForProject(config.project)
+  const chain = chains[0]
+  assert(chain !== undefined)
   const configuredTimestamp =
     config.timestamp ??
     (config.dev
-      ? configReader.readDiscovery(config.project, config.chain.name).timestamp
+      ? configReader.readDiscovery(config.project, chain).timestamp
       : undefined) ??
     UnixTime.now() - UnixTime.MINUTE
 
@@ -52,12 +61,9 @@ export async function runDiscovery(
   chainConfigs: DiscoveryChainConfig[],
   logger: Logger,
 ): Promise<void> {
-  const projectConfig = configReader.readConfig(
-    config.project,
-    config.chain.name,
-  )
+  const projectConfig = configReader.readConfig(config.project)
 
-  const timestampDate = await getTimestamp(configReader, config)
+  const timestampDate = getTimestamp(configReader, config)
 
   const { result, timestamp, usedBlockNumbers, providerStats } = await discover(
     paths,
@@ -71,33 +77,40 @@ export async function runDiscovery(
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
-  await saveDiscoveryResult(
-    result,
-    projectConfig,
-    timestamp,
-    usedBlockNumbers,
-    logger,
-    {
-      paths,
-      sourcesFolder: config.sourcesFolder,
-      flatSourcesFolder: config.flatSourcesFolder,
-      discoveryFilename: config.discoveryFilename,
-      saveSources: config.saveSources,
-      templatesFolder,
-      projectDiscoveryFolder: configReader.getProjectChainPath(
-        projectConfig.structure.name,
-        projectConfig.structure.chain,
-      ),
-    },
+  const grouped = groupBy(result, (entry) =>
+    ChainSpecificAddress.longChain(entry.address),
   )
+
+  for (const [chain, entries] of Object.entries(grouped)) {
+    await saveDiscoveryResult(
+      chain,
+      entries,
+      projectConfig,
+      timestamp,
+      { [chain]: usedBlockNumbers[chain] } as Record<string, number>,
+      logger,
+      {
+        paths,
+        sourcesFolder: config.sourcesFolder,
+        flatSourcesFolder: config.flatSourcesFolder,
+        discoveryFilename: config.discoveryFilename,
+        saveSources: config.saveSources,
+        templatesFolder,
+        projectDiscoveryFolder: configReader.getProjectChainPath(
+          projectConfig.structure.name,
+          chain,
+        ),
+      },
+    )
+  }
 
   // TODO(radomski): This is a disaster from the point of view of separation of
   // concerns. We should agree on what even is a shared module and how to
   // handle them cleanly.
   if (config.project.startsWith('shared-')) {
-    const allConfigs = configReader.readAllDiscoveredConfigsForChain(
-      config.chain.name,
-    )
+    const allConfigs = configReader
+      .readAllConfiguredProjects()
+      .map((p) => configReader.readConfig(p.project))
     const backrefConfigs = allConfigs
       .filter((c) => c.structure.sharedModules.includes(config.project))
       .map((c) => c.structure)
@@ -130,10 +143,7 @@ export async function dryRunDiscovery(
   const now = UnixTime.now() - UnixTime.MINUTE
   const yesterday = now - UnixTime.DAY
 
-  const projectConfig = configReader.readConfig(
-    config.project,
-    config.chain.name,
-  )
+  const projectConfig = configReader.readConfig(config.project)
 
   const [discovered, discoveredYesterday] = await Promise.all([
     justDiscover(
@@ -156,7 +166,11 @@ export async function dryRunDiscovery(
     ),
   ])
 
-  const diff = diffDiscovery(discoveredYesterday.entries, discovered.entries)
+  // biome-ignore lint/style/noNonNullAssertion: TODO
+  const d1 = discoveredYesterday['ethereum']!
+  // biome-ignore lint/style/noNonNullAssertion: TODO
+  const d2 = discovered['ethereum']!
+  const diff = diffDiscovery(d1.entries, d2.entries)
 
   if (diff.length > 0) {
     console.log(JSON.stringify(diff, null, 2))
@@ -173,7 +187,7 @@ async function justDiscover(
   http: HttpClient,
   overwriteCache: boolean,
   logger: Logger,
-): Promise<DiscoveryOutput> {
+): Promise<Record<string, DiscoveryOutput>> {
   const { result, timestamp, usedBlockNumbers } = await discover(
     paths,
     chainConfigs,
@@ -185,13 +199,22 @@ async function justDiscover(
   )
 
   const templateService = new TemplateService(paths.discovery)
-  return toDiscoveryOutput(
-    templateService,
-    config,
-    timestamp,
-    usedBlockNumbers,
-    result,
+  const grouped = groupBy(result, (entry) =>
+    ChainSpecificAddress.longChain(entry.address),
   )
+
+  const resultDict: Record<string, DiscoveryOutput> = {}
+  for (const [chain, entries] of Object.entries(grouped)) {
+    resultDict[chain] = toDiscoveryOutput(
+      chain,
+      templateService,
+      config,
+      timestamp,
+      usedBlockNumbers,
+      entries,
+    )
+  }
+  return resultDict
 }
 
 export async function discover(
@@ -214,7 +237,6 @@ export async function discover(
     ? new OverwriteCacheWrapper(sqliteCache)
     : sqliteCache
 
-  const chain = config.structure.chain
   const { allProviders, discoveryEngine } = getDiscoveryEngine(
     paths,
     chainConfigs,
@@ -242,6 +264,6 @@ export async function discover(
     result,
     timestamp,
     usedBlockNumbers,
-    providerStats: allProviders.getStats(chain),
+    providerStats: allProviders.getStats('ethereum'), // TODO(radomski): Fix
   }
 }

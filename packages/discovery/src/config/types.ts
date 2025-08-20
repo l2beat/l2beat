@@ -3,7 +3,6 @@ import type { ExplorerConfig } from '../utils/IEtherscanClient'
 
 export interface DiscoveryModuleConfig {
   readonly project: string
-  readonly chain: DiscoveryChainConfig
   readonly dryRun?: boolean
   readonly dev?: boolean
   readonly overwriteCache: boolean

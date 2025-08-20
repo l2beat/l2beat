@@ -233,7 +233,7 @@ export function generateClingoForDiscoveries(
 
   for (const { project, chain } of discoveries.getSortedProjects()) {
     const discovery = discoveries.get(project, chain).discoveryOutput
-    const config = configReader.readConfig(project, chain)
+    const config = configReader.readConfig(project)
     const permissionsInClingo = generateClingoForProjectOnChain(
       config.permission,
       configReader,
