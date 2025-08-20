@@ -182,6 +182,12 @@ interface OpStackConfigCommon {
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
+  /**
+   * Overrides the onchain check for superchain ecosystem
+   * Its needed cuz some project are using custom superchain config
+   * but still are a part of superchain config due to offchain agreements
+   */
+  isPartOfSuperchain?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -238,9 +244,13 @@ function opStackCommon(
     'opstack',
     postsToEthereum(templateVars) ? 'rollup' : 'optimium',
   ]
-  const partOfSuperchain = isPartOfSuperchain(templateVars)
-  if (partOfSuperchain) {
+  const partOfSuperchainOnchain = isPartOfSuperchainOnchain(templateVars)
+
+  if (hasSuperchainConfig(templateVars)) {
     architectureImage.push('superchain')
+  }
+
+  if (templateVars.isPartOfSuperchain || partOfSuperchainOnchain) {
     automaticBadges.push(BADGES.Infra.Superchain)
   }
   if (fraudProofType !== 'None') {
@@ -361,6 +371,8 @@ function opStackCommon(
     },
     ecosystemInfo: {
       id: ProjectId('superchain'),
+      isPartOfSuperchain:
+        templateVars.isPartOfSuperchain ?? partOfSuperchainOnchain,
     },
     technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
@@ -1598,7 +1610,20 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
 
-function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
+function isPartOfSuperchainOnchain(templateVars: OpStackConfigCommon): boolean {
+  if (!templateVars.discovery.hasContract('SuperchainConfig')) {
+    return false
+  }
+
+  // Some chains are not part of superchain, but they deploy their own version of the superchain config
+  // We need to check if the chain is part of superchain by checking the address of the superchain config
+  return (
+    templateVars.discovery.getContract('SuperchainConfig').address ===
+    'eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C'
+  )
+}
+
+function hasSuperchainConfig(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('SuperchainConfig')
 }
 

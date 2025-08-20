@@ -5,6 +5,7 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import { getCollection } from '~/content/getCollection'
@@ -232,14 +233,22 @@ export async function getEcosystemEntry(
           projectsActivity[project.id.toString()],
           !!projectsOngoingAnomalies[project.id.toString()],
         )
-        return {
+
+        const result: EcosystemProjectEntry = {
           ...entry,
           gasTokens: project.chainConfig?.gasTokens,
           ecosystemInfo: project.ecosystemInfo,
-          filterable: entry.filterable?.filter(
-            (f) => !EXCLUDED_FILTERS.includes(f.id),
-          ),
+          filterable: compact([
+            project.id === 'superchain' && {
+              id: 'isPartOfSuperchain',
+              value: project.ecosystemInfo.isPartOfSuperchain ? 'Yes' : 'No',
+            },
+            ...(entry.filterable?.filter(
+              (f) => !EXCLUDED_FILTERS.includes(f.id),
+            ) ?? []),
+          ]),
         }
+        return result
       })
       .sort(compareTvs),
     upcomingProjects: upcomingProjects.map(getScalingUpcomingEntry),
