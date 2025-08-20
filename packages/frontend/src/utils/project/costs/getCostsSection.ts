@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
+import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { CostsSectionProps } from '~/components/projects/sections/costs/CostsSection'
-
 import type { SsrHelpers } from '~/trpc/server'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
@@ -13,7 +13,7 @@ export async function getCostsSection(
 ): Promise<
   | Pick<
       CostsSectionProps,
-      'trackedTransactions' | 'defaultRange' | 'hasPostedData'
+      'trackedTransactions' | 'defaultRange' | 'hasPostedData' | 'project'
     >
   | undefined
 > {
@@ -35,5 +35,6 @@ export async function getCostsSection(
     trackedTransactions,
     hasPostedData: data.chart.some((d) => d[13] !== null),
     defaultRange: range,
+    project: getChartProject(project),
   }
 }
