@@ -231,14 +231,22 @@ export async function getEcosystemEntry(
           projectsActivity[project.id.toString()],
           !!projectsOngoingAnomalies[project.id.toString()],
         )
-        return {
+
+        const result: EcosystemProjectEntry = {
           ...entry,
           gasTokens: project.chainConfig?.gasTokens,
           ecosystemInfo: project.ecosystemInfo,
-          filterable: entry.filterable?.filter(
-            (f) => !EXCLUDED_FILTERS.includes(f.id),
-          ),
+          filterable: [
+            {
+              id: 'isPartOfSuperchain',
+              value: project.ecosystemInfo.isPartOfSuperchain ? 'Yes' : 'No',
+            },
+            ...(entry.filterable?.filter(
+              (f) => !EXCLUDED_FILTERS.includes(f.id),
+            ) ?? []),
+          ],
         }
+        return result
       })
       .sort(compareTvs),
     upcomingProjects: upcomingProjects.map(getScalingUpcomingEntry),
