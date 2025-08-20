@@ -4,6 +4,7 @@ import { ProjectTokenChart } from '~/components/chart/tvs/ProjectTokenChart'
 import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
 import { TokenSummaryBox } from '~/components/chart/tvs/TokenSummaryBox'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TokenCombobox } from '~/components/TokenCombobox'
@@ -24,7 +25,7 @@ import type { ProjectSectionProps } from './types'
 export interface ScalingTvsSectionProps extends ProjectSectionProps {
   id: 'tvs'
   tokens: ProjectToken[] | undefined
-  projectId: string
+  project: ChartProject
   milestones: Milestone[]
   tvsProjectStats: ProjectSevenDayTvsBreakdown
   tvsInfo: ProjectTvsInfo
@@ -33,7 +34,7 @@ export interface ScalingTvsSectionProps extends ProjectSectionProps {
 }
 
 export function ScalingTvsSection({
-  projectId,
+  project,
   milestones,
   tokens,
   tvsProjectStats,
@@ -58,14 +59,11 @@ export function ScalingTvsSection({
       }
     >
       <TvsChartControlsContextProvider defaultRange={defaultRange}>
-        <Controls projectId={projectId} />
-        <ProjectBridgeTypeTvsChart
-          projectId={projectId}
-          milestones={milestones}
-        />
+        <Controls projectId={project.id} />
+        <ProjectBridgeTypeTvsChart project={project} milestones={milestones} />
         <ProjectAssetCategoryTvsChart
+          project={project}
           milestones={milestones}
-          projectId={projectId}
         />
       </TvsChartControlsContextProvider>
       <TvsChartControlsContextProvider defaultRange={defaultRange}>
@@ -79,11 +77,11 @@ export function ScalingTvsSection({
           <>
             <TokenControls
               token={selectedToken}
-              projectId={projectId}
+              projectId={project.id}
               className="mt-2"
             />
             <ProjectTokenChart
-              projectId={projectId}
+              project={project}
               milestones={milestones}
               token={selectedToken}
             />

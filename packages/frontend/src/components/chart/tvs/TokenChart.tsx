@@ -7,6 +7,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   type ChartMeta,
+  type ChartProject,
   ChartTooltip,
   ChartTooltipWrapper,
   useChart,
@@ -28,6 +29,7 @@ type TokenChartDataPoint = {
 
 interface Props {
   data: TokenChartDataPoint[] | undefined
+  project: ChartProject
   syncedUntil: number | undefined
   isLoading: boolean
   milestones: Milestone[]
@@ -37,6 +39,7 @@ interface Props {
 
 export function TokenChart({
   data,
+  project,
   isLoading,
   milestones,
   token,
@@ -63,6 +66,7 @@ export function TokenChart({
       data={data}
       isLoading={isLoading}
       milestones={milestones}
+      project={project}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
         <defs>

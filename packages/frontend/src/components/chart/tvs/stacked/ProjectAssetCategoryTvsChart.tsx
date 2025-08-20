@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { api } from '~/trpc/React'
 import {
@@ -9,12 +10,12 @@ import {
 } from './AssetCategoryTvsChart'
 
 interface ProjectAssetCategoryTvsChartProps {
-  projectId: string
+  project: ChartProject
   milestones: Milestone[]
 }
 
 export function ProjectAssetCategoryTvsChart({
-  projectId,
+  project,
   milestones,
 }: ProjectAssetCategoryTvsChartProps) {
   const { range, unit } = useTvsChartControlsContext()
@@ -24,7 +25,7 @@ export function ProjectAssetCategoryTvsChart({
   )
 
   const { data, isLoading } = api.tvs.detailedChart.useQuery({
-    filter: { type: 'projects', projectIds: [projectId] },
+    filter: { type: 'projects', projectIds: [project.id] },
     range,
     excludeAssociatedTokens: false,
   })
@@ -69,6 +70,7 @@ export function ProjectAssetCategoryTvsChart({
       syncedUntil={data?.syncedUntil}
       dataKeys={dataKeys}
       toggleDataKey={toggleDataKey}
+      project={project}
     />
   )
 }
