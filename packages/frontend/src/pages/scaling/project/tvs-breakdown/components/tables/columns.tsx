@@ -118,7 +118,7 @@ export const columns = [
       return (
         <div className="flex items-center gap-1">
           <Tooltip>
-            <TooltipTrigger asChild>
+            <TooltipTrigger asChild disabledOnMobile>
               <button onClick={() => setSelectedToken(ctx.row.original)}>
                 <a href="#token-chart">
                   <LineChartIcon className="size-4" />

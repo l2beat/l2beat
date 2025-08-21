@@ -60,7 +60,10 @@ export function ScalingProjectTvsBreakdownPage({
             icon={icon}
             tvsBreakdownTimestamp={dataTimestamp}
           />
-          <div className="smooth-scroll md:space-y-6">
+          <div
+            className="smooth-scroll group/section-wrapper md:space-y-6"
+            data-project-page={true}
+          >
             <SelectedTokenContextProvider>
               <PrimaryCard>
                 <TvsChartControlsContextProvider defaultRange={defaultRange}>
