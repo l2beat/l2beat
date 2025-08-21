@@ -26,6 +26,7 @@ import { TableEmptyState } from '~/components/table/TableEmptyState'
 import { cn } from '~/utils/cn'
 
 interface BasicEntry {
+  id: string
   slug: string
   isVerified?: boolean
   redWarning?: string | undefined
@@ -211,7 +212,7 @@ function BasicZkCatalogTableRow<T extends BasicEntry>({
   return (
     <>
       <TableRow
-        slug={row.original.slug}
+        slug={row.original.id}
         className={cn(
           getRowTypeClassNames({
             isEthereum: row.original.slug === 'ethereum',
