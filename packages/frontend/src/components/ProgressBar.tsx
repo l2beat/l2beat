@@ -18,7 +18,7 @@ export function ProgressBar({
       {/* Background track */}
       <div
         className={cn(
-          'absolute inset-0 rounded-full border border-divider bg-surface-primary',
+          'absolute inset-0 border border-divider bg-surface-primary',
           trackClassName,
         )}
       />
@@ -26,7 +26,7 @@ export function ProgressBar({
       {/* Progress fill */}
       <div
         className={cn(
-          'absolute inset-y-0 left-0 rounded-full bg-primary',
+          'absolute inset-y-0 left-0 bg-primary',
           progressClassName,
         )}
         style={{
