@@ -298,7 +298,7 @@ function opStackCommon(
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Optimistic' }),
+      (hasNoProofs ? undefined : { type: 'Optimistic', name: 'OPFP' }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
