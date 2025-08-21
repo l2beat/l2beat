@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently {{operatorCount}} operators registered.",
+  "description": "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently {{registeredOperatorsCount}} operators registered.",
   "ignoreMethods": ["epochStartTimestamp", "operatorMapping", "proxiableUUID"],
   "ignoreInWatchMode": [
     "getOperatorCandidatesForCurrentEpoch",
@@ -11,6 +11,31 @@
   "fields": {
     "getOperatorCandidatesForCurrentEpoch": {
       "permissions": [{ "type": "sequence" }]
+    },
+    "registeredOperators": {
+      "handler": {
+        "type": "event",
+        "select": ["proposer", "sequencer"],
+        "add": {
+          "event": "OperatorAdded"
+        },
+        "remove": {
+          "event": "OperatorRemoved"
+        }
+      }
+    },
+    "registeredOperatorsCount": {
+      "handler": {
+        "type": "event",
+        "select": "proposer",
+        "add": {
+          "event": "OperatorAdded"
+        },
+        "remove": {
+          "event": "OperatorRemoved"
+        }
+      },
+      "edit": ["length"]
     }
   }
 }

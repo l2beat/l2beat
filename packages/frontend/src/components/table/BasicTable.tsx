@@ -25,15 +25,22 @@ import { getCommonPinningStyles } from './utils/commonPinningStyles'
 import {
   getRowClassNames,
   getRowClassNamesWithoutOpacity,
+  type RowBackgroundColor,
 } from './utils/rowType'
 
 export type BasicTableRow = {
   slug?: string
-  backgroundColor?: 'red' | 'blue' | 'yellow'
+  backgroundColor?: RowBackgroundColor
 }
 
 export interface BasicTableProps<T extends BasicTableRow> {
   table: TanstackTable<T>
+  /**
+   * Custom row sorting function
+   * It is used after tanstack sorting is applied
+   * For example, it allows to keep Ethereum at the top in the Activity table
+   */
+  rowSortingFn?: (a: Row<T>, b: Row<T>) => number
   /**
    * Custom sub component render function
    */
@@ -46,7 +53,6 @@ export interface BasicTableProps<T extends BasicTableRow> {
    * If the table is inside a main page card - bypass right margin by adding classes
    */
   insideMainPageCard?: boolean
-  rowColoringMode?: 'default' | 'ignore-colors'
 }
 
 export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
@@ -60,6 +66,12 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   const groupedHeader = maxDepth === 1 ? headerGroups[0] : undefined
   const actualHeader = maxDepth === 1 ? headerGroups[1] : headerGroups[0]
   assert(actualHeader, 'Actual header is required')
+
+  const rows = props.table.getRowModel().rows
+  const rowSortingFn = props.rowSortingFn
+  if (rowSortingFn !== undefined) {
+    rows.sort((a, b) => rowSortingFn(a, b))
+  }
 
   return (
     <Table>
@@ -157,7 +169,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         </TableHeaderRow>
       </TableHeader>
       <TableBody>
-        {props.table.getRowModel().rows.map((row) => (
+        {rows.map((row) => (
           <BasicTableRow row={row} key={row.id} {...props} />
         ))}
         {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
