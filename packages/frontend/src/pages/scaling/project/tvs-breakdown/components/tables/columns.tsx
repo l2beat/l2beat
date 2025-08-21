@@ -9,6 +9,7 @@ import {
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
+import { LineChartIcon } from '~/icons/LineChart'
 import { cn } from '~/utils/cn'
 import { categoryToLabel } from './categoryToLabel'
 import { BridgedUsingCell } from './cells/BridgedUsingCell'
@@ -16,7 +17,6 @@ import { TokenAddressCell } from './cells/TokenAddressCell'
 import { TokenNameCell } from './cells/TokenNameCell'
 import { TokenValueCell } from './cells/TokenValueCell'
 import type { TokenRow } from './TvsBreakdownTokenTable'
-import { LineChartIcon } from '~/icons/LineChart'
 
 const columnHelper = createColumnHelper<TokenRow>()
 export const columns = [
