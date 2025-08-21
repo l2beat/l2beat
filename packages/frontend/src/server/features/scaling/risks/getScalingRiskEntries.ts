@@ -30,6 +30,7 @@ export async function getScalingRiskEntries() {
   ])
 
   const entries = projects
+    .filter((p) => p.statuses.reviewStatus !== 'initialReview')
     .map((project) =>
       getScalingRiskEntry(
         project,
@@ -38,7 +39,6 @@ export async function getScalingRiskEntries() {
       ),
     )
     .sort(compareTvs)
-    .filter((entry) => entry.tab !== 'notReviewed')
 
   return groupByScalingTabs(entries)
 }
