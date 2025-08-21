@@ -12,7 +12,7 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { NotSyncedBarPatternDef } from '~/components/core/chart/defs/NotSyncedBarPatternDef'
+import { EstimatedBarPatternDef } from '~/components/core/chart/defs/EstimatedBarPatternDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -156,7 +156,7 @@ export function DaPercentageThroughputChart({
           {Object.keys(chartMeta).map((key) => {
             const actualKey = key as keyof typeof chartMeta
             return (
-              <NotSyncedBarPatternDef
+              <EstimatedBarPatternDef
                 key={actualKey}
                 id={`${actualKey}EstimatedFill`}
                 fill={chartMeta[actualKey].color}

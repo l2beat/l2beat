@@ -3,7 +3,7 @@ interface Props {
   fill: string
 }
 
-export function NotSyncedBarPatternDef({ id, fill }: Props) {
+export function EstimatedBarPatternDef({ id, fill }: Props) {
   return (
     <pattern
       id={id}
