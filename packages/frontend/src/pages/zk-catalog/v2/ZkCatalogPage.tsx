@@ -1,4 +1,3 @@
-import { CustomLink } from '~/components/link/CustomLink'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { externalLinks } from '~/consts/externalLinks'
@@ -25,6 +24,10 @@ export function ZkCatalogPage({ ...props }: Props) {
           <WorkInProgressNotice />
         ) : (
           <>
+            <div className="bg-link/20 p-4 text-paragraph-14 max-md:mt-2 md:mb-4 md:rounded-lg md:text-paragraph-16">
+              More detailed information about each proof system will be
+              available soon. Stay tuned!
+            </div>
             <TableFilterContextProvider>
               <div className="mr-4 mb-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
                 <TableFilters entries={props.entries} />
@@ -32,12 +35,6 @@ export function ZkCatalogPage({ ...props }: Props) {
               </div>
               <ZkCatalogTable entries={props.entries} />
             </TableFilterContextProvider>
-            <p className="mt-2 text-balance text-center text-paragraph-15 text-secondary">
-              We appreciate your patience as we work to improve your experience.
-              <br />
-              The previous version of ZK Catalog can be found{' '}
-              <CustomLink href="/zk-catalog/v1">here</CustomLink>.
-            </p>
           </>
         )}
       </SideNavLayout>
