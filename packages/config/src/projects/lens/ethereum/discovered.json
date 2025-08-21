@@ -1300,6 +1300,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23145175 },
+  "usedBlockNumbers": { "ethereum": 23145178 },
   "permissionsConfigHash": "0xc0e32fdfb9627182e5f3223397d7ae9f5cc611a5692bf508320b846638cbac1d"
 }
