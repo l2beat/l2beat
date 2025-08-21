@@ -42,11 +42,6 @@ export const settlus: ScalingProject = opStackL2({
       },
     ],
   },
-  activityConfig: {
-    type: 'block',
-    startBlock: 1,
-    adjustCount: { type: 'SubtractOne' },
-  },
   discovery,
   genesisTimestamp,
   isNodeAvailable: 'UnderReview',

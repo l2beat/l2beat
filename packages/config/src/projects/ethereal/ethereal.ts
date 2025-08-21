@@ -14,7 +14,6 @@ export const ethereal: ScalingProject = upcomingL3({
     description:
       'Ethereal is a decentralized exchange offering institutional-grade performance (sub-20 ms latency, ~1M orders per second) with DeFi-enabled self-custody and security guarantees.',
     purposes: ['Exchange'],
-    category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://ethereal.trade'],
@@ -26,5 +25,8 @@ export const ethereal: ScalingProject = upcomingL3({
         'https://mirror.xyz/0x71331A0991C312fcCF766c3Ca8F7a11c4f5F756B',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

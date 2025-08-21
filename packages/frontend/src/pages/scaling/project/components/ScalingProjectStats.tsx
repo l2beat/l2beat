@@ -110,12 +110,19 @@ export function ProjectScalingStats({ project, className }: Props) {
         value={project.header.gasTokens.join(', ')}
       />
     ) : undefined,
-    <ProjectSummaryStat
-      key="type"
-      title="Type"
-      value={<TypeInfo>{project.header.category}</TypeInfo>}
-    />,
-
+    project.header.category ? (
+      <ProjectSummaryStat
+        key="type"
+        title="Type"
+        value={<TypeInfo>{project.header.category}</TypeInfo>}
+      />
+    ) : project.header.proofSystemType ? (
+      <ProjectSummaryStat
+        key="proof-system"
+        title="Proof system"
+        value={<TypeInfo>{project.header.proofSystemType}</TypeInfo>}
+      />
+    ) : undefined,
     <ProjectSummaryStat
       key="purpose"
       title={pluralize(project.header.purposes.length, 'Purpose')}

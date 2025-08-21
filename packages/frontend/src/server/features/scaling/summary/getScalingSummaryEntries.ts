@@ -2,8 +2,8 @@ import type {
   Project,
   ProjectAssociatedToken,
   ProjectScalingCapability,
-  ProjectScalingCategory,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingStack,
   ProjectScalingStage,
@@ -15,6 +15,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import { getL2Risks } from '~/pages/scaling/utils/getL2Risks'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
+import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { ActivityLatestUopsData } from '../activity/getActivityLatestTps'
@@ -34,6 +35,10 @@ export async function getScalingSummaryEntries() {
     optional: ['tvsInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'archivedAt'],
+  })
+
+  const zkCatalogProjects = await ps.getProjects({
+    select: ['zkCatalogInfo'],
   })
 
   const [
@@ -56,6 +61,7 @@ export async function getScalingSummaryEntries() {
         tvs.projects[project.id.toString()],
         projectsActivity[project.id.toString()],
         !!projectsOngoingAnomalies[project.id.toString()],
+        zkCatalogProjects,
       ),
     )
     .sort(compareTvs)
@@ -66,7 +72,7 @@ export async function getScalingSummaryEntries() {
 export interface ScalingSummaryEntry extends CommonScalingEntry {
   capability: ProjectScalingCapability
   stage: ProjectScalingStage
-  category: ProjectScalingCategory
+  proofSystem: ProjectScalingProofSystem | undefined
   purposes: ProjectScalingPurpose[]
   stacks: ProjectScalingStack[] | undefined
   dataAvailability: ProjectScalingDa | undefined
@@ -104,6 +110,7 @@ export function getScalingSummaryEntry(
   latestTvs: ProjectSevenDayTvsBreakdown | undefined,
   activity: ActivityLatestUopsData[string] | undefined,
   ongoingAnomaly: boolean,
+  zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingSummaryEntry {
   const associatedTokenWarning =
     latestTvs && latestTvs.breakdown.total > 0
@@ -131,7 +138,10 @@ export function getScalingSummaryEntry(
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
     capability: project.scalingInfo.capability,
-    category: project.scalingInfo.type,
+    proofSystem: getProofSystemWithName(
+      project.scalingInfo.proofSystem,
+      zkCatalogProjects,
+    ),
     stacks: project.scalingInfo.stacks,
     dataAvailability: project.scalingDa,
     purposes: project.scalingInfo.purposes,

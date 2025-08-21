@@ -10,7 +10,6 @@ export const flynet: ScalingProject = underReviewL3({
   display: {
     name: 'Flynet',
     slug: 'flynet',
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     description:
       'Flynet is a transaction network for restaurant industry participants, by restaurant industry participants by Blackbird.',
@@ -28,5 +27,9 @@ export const flynet: ScalingProject = underReviewL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

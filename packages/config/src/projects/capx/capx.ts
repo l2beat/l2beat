@@ -13,7 +13,6 @@ export const capx: ScalingProject = upcomingL2({
     description:
       'Capx is a Layer 2 focused on simplifying and reducing the cost of building AI agents.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://capx.ai/'],
@@ -23,5 +22,8 @@ export const capx: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

@@ -26,8 +26,8 @@ import type {
   ProjectPermissions,
   ProjectReviewStatus,
   ProjectScalingCapability,
-  ProjectScalingCategory,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
@@ -72,7 +72,7 @@ export interface ScalingProject {
   /** Ecosystem information */
   ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */
-  dataAvailability?: ProjectScalingDa
+  dataAvailability: ProjectScalingDa | undefined
   /** Details about the custom availability solution */
   customDa?: ProjectCustomDa
   /** Risk view values for this project */
@@ -120,15 +120,6 @@ export interface ProjectScalingConfig {
   liveness?: ProjectLivenessConfig
 }
 
-export interface ProjectScalingProofSystem {
-  /** Type of proof system */
-  type: 'Optimistic' | 'Validity'
-  /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
-  name?: string
-  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
-  zkCatalogId?: string
-}
-
 export interface ProjectScalingDisplay {
   /** Name of the scaling project, will be used as a display name on the website */
   name: string
@@ -136,8 +127,6 @@ export interface ProjectScalingDisplay {
   shortName?: string
   /** Url friendly scaling project name, will be used in website urls */
   slug: string
-  /** Name of the category the scaling project belongs to */
-  category: ProjectScalingCategory
   /** Technological stacks */
   stacks?: ProjectScalingStack[]
   /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */

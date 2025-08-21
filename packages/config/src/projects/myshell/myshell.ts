@@ -12,7 +12,6 @@ export const myshell: ScalingProject = upcomingL2({
     description:
       'MyShell announced new L2 aimed to connect users, creators, and open-source AI model researchers, powered by EigenDA and OP Stack.',
     purposes: ['AI'],
-    category: 'Optimium',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://myshell.ai/'],
@@ -22,6 +21,9 @@ export const myshell: ScalingProject = upcomingL2({
         'https://discord.com/invite/myshell',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
