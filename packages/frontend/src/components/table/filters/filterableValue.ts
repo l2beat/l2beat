@@ -24,6 +24,7 @@ export const FilterableValueId = v.enum([
   'bridgingType',
   'category',
   'bridgedUsing',
+  'isPartOfSuperchain',
 ])
 
 export const filterIdToLabel: Record<FilterableValueId, string> = {
@@ -42,6 +43,7 @@ export const filterIdToLabel: Record<FilterableValueId, string> = {
   bridgingType: 'Bridging Type',
   category: 'Category',
   bridgedUsing: 'Bridged Using',
+  isPartOfSuperchain: 'Is Part of Superchain',
 }
 
 export const filterIdToValues: Record<FilterableValueId, string> = {
@@ -60,6 +62,7 @@ export const filterIdToValues: Record<FilterableValueId, string> = {
   bridgingType: 'bridging types',
   category: 'categories',
   bridgedUsing: 'bridged using',
+  isPartOfSuperchain: 'options',
 }
 
 export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {

@@ -23,6 +23,42 @@ export function ChartStats({ children, className }: Props) {
   )
 }
 
+export function ChartStatsPrimaryItem({
+  label,
+  children,
+  className,
+  tooltip,
+}: {
+  label: React.ReactNode
+  children: React.ReactNode
+  tooltip?: string
+  className?: string
+}) {
+  return (
+    <div
+      className={cn(
+        'flex flex-col items-center justify-center rounded border border-divider bg-surface-primary p-4',
+        className,
+      )}
+    >
+      <div className="mb-2 flex items-center gap-1.5">
+        <span className="font-medium text-label-value-14 text-secondary">
+          {label}
+        </span>
+        {tooltip && (
+          <Tooltip>
+            <TooltipTrigger>
+              <InfoIcon className="size-3.5" />
+            </TooltipTrigger>
+            <TooltipContent>{tooltip}</TooltipContent>
+          </Tooltip>
+        )}
+      </div>
+      {children}
+    </div>
+  )
+}
+
 export function ChartStatsItem({
   label,
   children,
@@ -41,11 +77,11 @@ export function ChartStatsItem({
   return (
     <div
       className={cn(
-        'flex flex-col items-start justify-between gap-2 max-md:flex-row max-md:items-center',
+        'flex flex-col items-start max-md:flex-row max-md:items-center max-md:justify-between',
         className,
       )}
     >
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1.5 md:mb-1">
         <span className="whitespace-nowrap font-medium text-secondary text-xs">
           {label}
         </span>

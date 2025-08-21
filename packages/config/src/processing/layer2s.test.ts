@@ -4,6 +4,7 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
   notUndefined,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -47,13 +48,21 @@ describe('layer2s', () => {
 
   describe('ecosystems', () => {
     const ecosystemIds = ecosystems.map((e) => e.id)
-    for (const layer2 of layer2s) {
-      it(`every project with ecosystemInfo has valid ecosystem configured: ${layer2.display.name}`, () => {
+    it('every project with ecosystemInfo has valid ecosystem configured', () => {
+      for (const layer2 of layer2s) {
         if (layer2.ecosystemInfo) {
           expect(ecosystemIds).toInclude(layer2.ecosystemInfo.id)
         }
-      })
-    }
+      }
+    })
+
+    it('uses isPartOfSuperchain only for superchain', () => {
+      for (const layer2 of layer2s) {
+        if (layer2.ecosystemInfo?.isPartOfSuperchain) {
+          expect(layer2.ecosystemInfo?.id).toEqual(ProjectId('superchain'))
+        }
+      }
+    })
   })
 
   describe('links', () => {

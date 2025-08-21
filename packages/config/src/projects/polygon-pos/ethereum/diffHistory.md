@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x9e02030d5dcb43c6cb42ff38f6a638c971c0d6e6
+
+# Diff at Wed, 20 Aug 2025 11:58:05 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.comv>)
+- comparing to: main@262b00e32d0a4e462cf5011a16f1fcaa9ed6d5a8 block: 1755010596
+- current timestamp: 1755691047
+
+## Description
+
+Increased validator set to 105.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
 Generated with discovered.json: 0xca7f926c175dfd83727d63cae7e91b5f03ba2266
 
 # Diff at Tue, 12 Aug 2025 14:56:55 GMT:
