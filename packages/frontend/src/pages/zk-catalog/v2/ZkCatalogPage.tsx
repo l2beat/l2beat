@@ -2,14 +2,12 @@ import { Banner } from '~/components/Banner'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { externalLinks } from '~/consts/externalLinks'
-import { env } from '~/env'
 import { useTracking } from '~/hooks/useTracking'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { cn } from '~/utils/cn'
 import type { ZkCatalogEntry } from '../../../server/features/zk-catalog/getZkCatalogEntries'
 import { ZkCatalogHeader } from '../v1/components/ZkCatalogHeader'
-import { WorkInProgressNotice } from './components/WorkInProgressNotice'
 import { ZkCatalogTable } from './table/ZkCatalogTable'
 
 interface Props extends AppLayoutProps {
@@ -21,28 +19,22 @@ export function ZkCatalogPage({ ...props }: Props) {
     <AppLayout {...props}>
       <SideNavLayout>
         <ZkCatalogHeader />
-        {!env.CLIENT_SIDE_ZK_CATALOG_V2 ? (
-          <WorkInProgressNotice />
-        ) : (
-          <>
-            <Banner
-              type="info"
-              centered
-              hideIcon
-              className="max-md:mx-4 max-md:mt-4 md:mb-4"
-            >
-              More detailed information about each proof system will be
-              available soon. Stay tuned!
-            </Banner>
-            <TableFilterContextProvider>
-              <div className="mr-4 mb-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
-                <TableFilters entries={props.entries} />
-                <TrustedSetupFrameworkLink />
-              </div>
-              <ZkCatalogTable entries={props.entries} />
-            </TableFilterContextProvider>
-          </>
-        )}
+        <Banner
+          type="info"
+          centered
+          hideIcon
+          className="max-md:mx-4 max-md:mt-4 md:mb-4"
+        >
+          More detailed information about each proof system will be available
+          soon. Stay tuned!
+        </Banner>
+        <TableFilterContextProvider>
+          <div className="mr-4 mb-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
+            <TableFilters entries={props.entries} />
+            <TrustedSetupFrameworkLink />
+          </div>
+          <ZkCatalogTable entries={props.entries} />
+        </TableFilterContextProvider>
       </SideNavLayout>
     </AppLayout>
   )
