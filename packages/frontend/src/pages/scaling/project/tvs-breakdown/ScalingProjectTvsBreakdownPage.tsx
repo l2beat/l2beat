@@ -60,7 +60,7 @@ export function ScalingProjectTvsBreakdownPage({
             icon={icon}
             tvsBreakdownTimestamp={dataTimestamp}
           />
-          <div className="md:space-y-6">
+          <div className="smooth-scroll md:space-y-6">
             <SelectedTokenContextProvider>
               <PrimaryCard>
                 <TvsChartControlsContextProvider defaultRange={defaultRange}>
@@ -111,7 +111,7 @@ function InteractiveTokenChart({
 }) {
   const { selectedToken, setSelectedToken } = useSelectedTokenContext()
   return (
-    <section id="token-chart">
+    <section id="token-chart" className="scroll-mt-3">
       <TokenCombobox
         tokens={entries ?? []}
         value={selectedToken}
