@@ -29,17 +29,17 @@ export function VerifiedCountWithDetails({ data }: Props) {
       <CountWithAttesters
         count={data.successful?.count}
         attesters={data.successful?.attesters}
-        icon={VerifiedIcon}
+        type="successful"
       />
       <CountWithAttesters
         count={data.notVerified?.count}
         attesters={data.notVerified?.attesters}
-        icon={CircleQuestionMarkIcon}
+        type="notVerified"
       />
       <CountWithAttesters
         count={data.unsuccessful?.count}
         attesters={data.unsuccessful?.attesters}
-        icon={UnverifiedIcon}
+        type="unsuccessful"
       />
     </div>
   )
@@ -48,7 +48,7 @@ export function VerifiedCountWithDetails({ data }: Props) {
 function CountWithAttesters({
   count,
   attesters,
-  icon: Icon,
+  type,
 }: {
   count: number | undefined
   attesters:
@@ -56,16 +56,30 @@ function CountWithAttesters({
         icon: string
       })[]
     | undefined
-  icon: React.ComponentType<{ className?: string }>
+  type: 'successful' | 'notVerified' | 'unsuccessful'
 }) {
   if (!count || count === 0) return null
+
+  const Icon =
+    type === 'successful'
+      ? VerifiedIcon
+      : type === 'notVerified'
+        ? CircleQuestionMarkIcon
+        : UnverifiedIcon
 
   return (
     <div className="flex items-center gap-1">
       <span className="font-bold text-label-value-16 text-secondary leading-none">
         {count}
       </span>
-      <Icon className="size-4" />
+      <Tooltip>
+        <TooltipTrigger>
+          <Icon className="size-4" />
+        </TooltipTrigger>
+        <TooltipContent>
+          {`${type === 'successful' ? 'Successfully' : type === 'notVerified' ? 'Not' : 'Unsuccessfully'} verified`}
+        </TooltipContent>
+      </Tooltip>
       {attesters && attesters.length > 0 && (
         <span className="font-medium text-label-value-14 text-secondary leading-none">
           by
