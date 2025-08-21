@@ -18,7 +18,6 @@ import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
-import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { NoDataIcon } from '../../NoDataIcon'
 import { PrimaryValueCell } from './PrimaryValueCell'
@@ -133,12 +132,7 @@ export function ProjectNameCell({
       {project.capability === 'appchain' &&
         project.purposes &&
         project.purposes?.length > 0 && (
-          <div
-            className={cn(
-              'text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]',
-              className,
-            )}
-          >
+          <div className="text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
             {project.purposes.join(', ')}
           </div>
         )}
