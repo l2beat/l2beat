@@ -41,8 +41,8 @@ export function ZkCatalogTable({ entries }: { entries: ZkCatalogEntry[] }) {
       },
       sorting: [
         {
-          id: '#',
-          desc: false,
+          id: 'tvs',
+          desc: true,
         },
       ],
     },
