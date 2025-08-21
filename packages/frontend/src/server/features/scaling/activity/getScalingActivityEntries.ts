@@ -106,6 +106,7 @@ function getEthereumEntry(
     slug: 'ethereum',
     tab,
     filterable: undefined,
+    backgroundColor: 'blue',
     data: {
       tps: data.tps,
       uops: data.uops,

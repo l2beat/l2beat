@@ -30,10 +30,5 @@ export function ScalingRiskTable({
     },
   })
 
-  return (
-    <BasicTable
-      table={table}
-      rowColoringMode={notReviewed ? 'ignore-colors' : undefined}
-    />
-  )
+  return <BasicTable table={table} />
 }
