@@ -1,3 +1,4 @@
+import { Banner } from '~/components/Banner'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { externalLinks } from '~/consts/externalLinks'
@@ -24,10 +25,15 @@ export function ZkCatalogPage({ ...props }: Props) {
           <WorkInProgressNotice />
         ) : (
           <>
-            <div className="bg-link/20 p-4 text-paragraph-14 max-md:mt-2 md:mb-4 md:rounded-lg md:text-paragraph-16">
+            <Banner
+              type="info"
+              centered
+              hideIcon
+              className="max-md:mx-4 max-md:mt-4 md:mb-4"
+            >
               More detailed information about each proof system will be
               available soon. Stay tuned!
-            </div>
+            </Banner>
             <TableFilterContextProvider>
               <div className="mr-4 mb-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
                 <TableFilters entries={props.entries} />
