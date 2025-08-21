@@ -31,7 +31,7 @@ export function ProgressBar({
       {/* Progress fill */}
       <div
         className={cn(
-          'absolute inset-y-0 left-0 rounded-full bg-primary',
+          'absolute inset-y-0 left-0 mr-px ml-px rounded-full bg-primary',
           progressClassName,
         )}
         style={{
