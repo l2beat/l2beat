@@ -11,6 +11,7 @@ import {
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ProjectBadge } from '~/components/projects/ProjectBadge'
+import { useIsMobile } from '~/hooks/useIsMobile'
 import { Layer3Icon } from '~/icons/Layer3'
 import { SuperchainIcon } from '~/icons/providers/SuperchainIcon'
 import { ShieldIcon } from '~/icons/Shield'
