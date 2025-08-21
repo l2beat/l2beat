@@ -138,6 +138,7 @@ export async function getEcosystemEntry(
         'milestones',
         'archivedAt',
         'isUpcoming',
+        'hasTestnet',
       ],
       where: ['isScaling'],
     }),

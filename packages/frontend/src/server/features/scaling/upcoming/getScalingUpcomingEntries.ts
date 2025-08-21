@@ -12,6 +12,7 @@ export async function getScalingUpcomingEntries() {
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'display'],
     where: ['isScaling', 'isUpcoming'],
+    optional: ['hasTestnet'],
   })
 
   const entries = projects
@@ -22,6 +23,7 @@ export async function getScalingUpcomingEntries() {
 }
 
 export interface ScalingUpcomingEntry extends CommonScalingEntry {
+  hasTestnet: boolean
   initialOrder: number
   category: ProjectScalingCategory
   stacks: ProjectScalingStack[] | undefined
@@ -29,17 +31,26 @@ export interface ScalingUpcomingEntry extends CommonScalingEntry {
 }
 
 export function getScalingUpcomingEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'display'>,
+  project: Project<'scalingInfo' | 'statuses' | 'display', 'hasTestnet'>,
 ): ScalingUpcomingEntry {
+  const commonEntry = getCommonScalingEntry({
+    project,
+    ongoingAnomaly: false,
+    changes: undefined,
+  })
   return {
-    ...getCommonScalingEntry({
-      project,
-      ongoingAnomaly: false,
-      changes: undefined,
-    }),
+    ...commonEntry,
+    hasTestnet: !!project.hasTestnet,
     category: project.scalingInfo.type,
     stacks: project.scalingInfo.stacks,
     purposes: project.scalingInfo.purposes,
     initialOrder: project.addedAt,
+    filterable: [
+      {
+        id: 'hasTestnet',
+        value: project.hasTestnet ? 'Yes' : 'No',
+      },
+      ...(commonEntry.filterable ?? []),
+    ],
   }
 }
