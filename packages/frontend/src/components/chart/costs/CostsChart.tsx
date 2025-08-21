@@ -78,6 +78,8 @@ interface Props {
   className?: string
 }
 
+const hiddenDataKeys = ['posted'] as const
+
 export function CostsChart({
   project,
   data,
@@ -126,9 +128,10 @@ export function CostsChart({
     [hasBlobs],
   ) satisfies ChartMeta
 
-  const hidden = useMemo<['posted']>(() => ['posted'], [])
-
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, hidden)
+  const { dataKeys, toggleDataKey } = useChartDataKeys(
+    chartMeta,
+    hiddenDataKeys,
+  )
 
   const resolution = rangeToResolution({ type: range })
 
