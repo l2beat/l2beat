@@ -1,4 +1,5 @@
 import type {
+  ProjectEcosystemInfo,
   ProjectScalingCapability,
   ProjectScalingPurpose,
 } from '@l2beat/config'
@@ -10,8 +11,8 @@ import {
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ProjectBadge } from '~/components/projects/ProjectBadge'
-import { useIsMobile } from '~/hooks/useIsMobile'
 import { Layer3Icon } from '~/icons/Layer3'
+import { SuperchainIcon } from '~/icons/providers/SuperchainIcon'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
@@ -26,6 +27,7 @@ interface ProjectCellProps {
     isLayer3?: boolean
     purposes?: ProjectScalingPurpose[]
     capability?: ProjectScalingCapability
+    ecosystemInfo?: ProjectEcosystemInfo
   }
   className?: string
   withInfoTooltip?: boolean
@@ -53,6 +55,18 @@ export function ProjectNameCell({
               <Layer3Icon className="size-4" />
             </TooltipTrigger>
             <TooltipContent>{project.nameSecondLine}</TooltipContent>
+          </Tooltip>
+        )}
+        {project.ecosystemInfo?.isPartOfSuperchain && (
+          <Tooltip>
+            <TooltipTrigger>
+              <SuperchainIcon />
+            </TooltipTrigger>
+            <TooltipContent>
+              The project is officially part of the Superchain - it contributes
+              revenue to the Optimism Collective and uses the SuperchainConfig
+              to manage chain configuration values.
+            </TooltipContent>
           </Tooltip>
         )}
         {project.statuses?.verificationWarning === true && (

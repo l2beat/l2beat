@@ -45,7 +45,11 @@ export function DataPostedSection({
       </p>
       <HorizontalSeparator className="my-4" />
       {daLayer.name === 'EigenDA' && <EigenDataSourceInfo />}
-      <ProjectDataPostedChart project={project} defaultRange={defaultRange} />
+      <ProjectDataPostedChart
+        project={project}
+        defaultRange={defaultRange}
+        milestones={milestones}
+      />
       {daLayer.name !== 'EigenDA' && (
         <>
           <HorizontalSeparator className="my-4" />

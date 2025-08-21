@@ -1,7 +1,7 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "timestamp": 1755593388,
+  "timestamp": 1755696029,
   "configHash": "0x851ed026eccaa32df4ffd7e96bb448828da46eaafb63be127f43dcabbb74ba0d",
   "entries": [
     {
@@ -726,7 +726,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 20239200,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0xD1cB680812CE318c55C29A8a9A0D9Bc7B9448dad",
+        "lastResolved": "eth:0x8BCF718175c15b11a7739ab3361081C5226fb177",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
@@ -838,7 +838,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 23172076
+          "prevBlockNum": 23182319
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -926,7 +926,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0xD5A72E5C2d8fC5e12cba6F81FA67d9A5F4A48B6a",
-        "gameCount": 68,
+        "gameCount": 70,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A",
@@ -1071,7 +1071,7 @@
           ]
         ],
         "$upgradeCount": 8,
-        "basefeeScalar": 10000000,
+        "basefeeScalar": 2000000,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11",
         "batchInbox": "eth:0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83",
@@ -1097,7 +1097,7 @@
         "l1StandardBridge": "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
         "maximumGasLimit": 200000000,
         "minimumGasLimit": 21000000,
-        "operatorFeeConstant": 0,
+        "operatorFeeConstant": 15000000000000,
         "operatorFeeScalar": 0,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
@@ -1118,7 +1118,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279133814289969223296",
+        "scalar": "452312848583266388373324160190187140051835877600158453279133814289961223296",
         "sequencerInbox": "eth:0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 19634330,
@@ -1321,7 +1321,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 25,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1555,7 +1555,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660555",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660558",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2852,6 +2852,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23174030 },
+  "usedBlockNumbers": { "ethereum": 23182548 },
   "permissionsConfigHash": "0x5b6ba9618a6f66940404ed0f850432e0c438c8e8b64d0b51a0120b64ee274490"
 }

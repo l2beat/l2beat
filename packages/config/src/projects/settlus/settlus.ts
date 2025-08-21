@@ -13,6 +13,7 @@ export const settlus: ScalingProject = opStackL2({
   addedAt: UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
   additionalBadges: [BADGES.RaaS.Alchemy],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  isPartOfSuperchain: false,
   display: {
     name: 'Settlus',
     slug: 'settlus',
