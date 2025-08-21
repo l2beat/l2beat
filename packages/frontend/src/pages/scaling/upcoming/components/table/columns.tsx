@@ -1,7 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
-import { TypeInfo } from '~/components/table/cells/TypeInfo'
-import { TableLink } from '~/components/table/TableLink'
+import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/getScalingUpcomingEntries'
 
@@ -14,26 +12,7 @@ export const scalingUpcomingColumns = [
   ),
   columnHelper.accessor('proofSystem', {
     header: 'Proof system',
-    cell: (ctx) => (
-      <TableLink
-        href={
-          ctx.getValue()?.zkCatalogId
-            ? `/zk-catalog?highlight=${ctx.getValue()?.zkCatalogId}`
-            : undefined
-        }
-      >
-        <TwoRowCell>
-          <TwoRowCell.First>
-            <TypeInfo stacks={ctx.row.original.stacks}>
-              {ctx.getValue()?.type}
-            </TypeInfo>
-          </TwoRowCell.First>
-          {ctx.getValue()?.name && (
-            <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      </TableLink>
-    ),
+    cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
     meta: {
       tooltip:
         'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',

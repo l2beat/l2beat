@@ -2,9 +2,8 @@ import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { CombinedGrissiniCell } from '~/components/rosette/grissini/CombinedGrissiniCell'
+import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
-import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
-import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import {
   adjustTableValue,
   sortTableValues,
@@ -24,26 +23,7 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
     !hideProofSystem &&
       columnHelper.accessor('proofSystem', {
         header: 'Proof system',
-        cell: (ctx) => (
-          <TableLink
-            href={
-              ctx.getValue()?.zkCatalogId
-                ? `/zk-catalog?highlight=${ctx.getValue()?.zkCatalogId}`
-                : `/scaling/projects/${ctx.row.original.slug}#state-validation`
-            }
-          >
-            <TwoRowCell>
-              <TwoRowCell.First>
-                <TypeInfo stacks={ctx.row.original.stacks}>
-                  {ctx.getValue()?.type}
-                </TypeInfo>
-              </TwoRowCell.First>
-              {ctx.getValue()?.name && (
-                <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
-              )}
-            </TwoRowCell>
-          </TableLink>
-        ),
+        cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
         meta: {
           tooltip:
             'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',

@@ -4,9 +4,8 @@ import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
+import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
-import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
-import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
@@ -38,26 +37,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
     }),
     columnHelper.accessor('proofSystem', {
       header: 'Proof system',
-      cell: (ctx) => (
-        <TableLink
-          href={
-            ctx.getValue()?.zkCatalogId
-              ? `/zk-catalog?highlight=${ctx.getValue()?.zkCatalogId}`
-              : undefined
-          }
-        >
-          <TwoRowCell>
-            <TwoRowCell.First>
-              <TypeInfo stacks={ctx.row.original.stacks}>
-                {ctx.getValue()?.type}
-              </TypeInfo>
-            </TwoRowCell.First>
-            {ctx.getValue()?.name && (
-              <TwoRowCell.Second>{ctx.getValue()?.name}</TwoRowCell.Second>
-            )}
-          </TwoRowCell>
-        </TableLink>
-      ),
+      cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
       meta: {
         tooltip:
           'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
