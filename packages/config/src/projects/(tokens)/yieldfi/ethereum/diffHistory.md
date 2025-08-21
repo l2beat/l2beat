@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x8ad31a190ea813b83179183312ce1a0a6f1f5f42
+Generated with discovered.json: 0xf1e99775baa50344028af386dfa7b9a02ff74cac
 
-# Diff at Wed, 20 Aug 2025 13:25:03 GMT:
+# Diff at Thu, 21 Aug 2025 08:54:06 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - current timestamp: 1755603175
@@ -68,6 +68,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract RequestReceipt (0x933B4464beBE7136bC184637792c0EE514057660)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USD Coin Token (0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
     +++ description: None
 ```
 

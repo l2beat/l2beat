@@ -666,8 +666,12 @@
                           },
                           {
                             "type": "object",
-                            "properties": { "type": { "const": "yieldfi" } },
-                            "required": ["type"]
+                            "properties": {
+                              "type": { "const": "minters" },
+                              "kind": { "const": "yieldfi" },
+                              "permissionlessMinting": { "type": "boolean" }
+                            },
+                            "required": ["type", "kind"]
                           }
                         ]
                       },

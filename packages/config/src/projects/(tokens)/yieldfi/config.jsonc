@@ -15,7 +15,14 @@
   },
   "overrides": {
     "eth:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": {
-      "ignoreDiscovery": true
+      "ignoreRelatives": [
+        "$admin",
+        "blacklister",
+        "masterMinter",
+        "minters",
+        "owner",
+        "pauser"
+      ]
     },
     "eth:0x933B4464beBE7136bC184637792c0EE514057660": {
       "ignoreMethods": ["orders", "readOrder"]
@@ -32,7 +39,9 @@
       "fields": {
         "$minters": {
           "handler": {
-            "type": "yieldfi"
+            "type": "minters",
+            "kind": "yieldfi",
+            "permissionlessMinting": true
           }
         }
       }
@@ -49,7 +58,9 @@
       "fields": {
         "$minters": {
           "handler": {
-            "type": "yieldfi"
+            "type": "minters",
+            "kind": "yieldfi",
+            "permissionlessMinting": true
           }
         }
       }
