@@ -67,7 +67,7 @@ export const zkCatalogColumns = [
         header: 'Verifiers',
         meta: {
           tooltip:
-            'Shows the count of verifiers and their verification status - successful or unsuccessful, if verification was performed.',
+            'Shows the number of different versions of onchain verifiers and whether they were independently checked by regenerating them from the proving system’s source code. A green check indicates successful verification, while a red cross indicates a failure to regenerate.',
           virtual: true,
         },
       }),
