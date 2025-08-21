@@ -19,13 +19,11 @@ export function getCommonScalingEntry({
   changes,
   syncWarning,
   ongoingAnomaly,
-  disableBackgroundColoring,
 }: {
   project: Project<'scalingInfo' | 'statuses' | 'display'>
   changes: ProjectChanges | undefined
   syncWarning?: string
   ongoingAnomaly?: boolean
-  disableBackgroundColoring?: boolean
 }): CommonScalingEntry {
   const statuses = {
     yellowWarning: project.statuses.yellowWarning,
@@ -42,6 +40,7 @@ export function getCommonScalingEntry({
     emergencyWarning: project.statuses.emergencyWarning,
     ongoingAnomaly,
   }
+  const tab = getScalingTab(project)
 
   return {
     id: project.id,
@@ -53,11 +52,10 @@ export function getCommonScalingEntry({
         ? undefined
         : `L3 on ${project.scalingInfo.hostChain.shortName ?? project.scalingInfo.hostChain.name}`,
     shortName: project.shortName,
-    backgroundColor: disableBackgroundColoring
-      ? undefined
-      : getRowBackgroundColor(statuses),
+    backgroundColor:
+      tab === 'notReviewed' ? undefined : getRowBackgroundColor(statuses),
     statuses,
-    tab: getScalingTab(project),
+    tab,
     filterable: [
       { id: 'type', value: project.scalingInfo.type },
       ...(project.scalingInfo.stacks ?? ['No stack']).map((stack) => ({
