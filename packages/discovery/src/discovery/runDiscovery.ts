@@ -114,6 +114,7 @@ export async function runDiscovery(
     logger,
     result,
     !!config.verboseTemplatization,
+    projectConfig.color,
     templateService,
   )
 }
