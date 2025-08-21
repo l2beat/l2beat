@@ -39,7 +39,7 @@ async function getTimestamp(
     (config.dev
       ? configReader.readDiscovery(config.project, config.chain.name).timestamp
       : undefined) ??
-    UnixTime.now()
+    UnixTime.now() - UnixTime.MINUTE
 
   return UnixTime.toDate(configuredTimestamp)
 }
@@ -114,6 +114,7 @@ export async function runDiscovery(
     logger,
     result,
     !!config.verboseTemplatization,
+    projectConfig.color,
     templateService,
   )
 }
@@ -126,7 +127,7 @@ export async function dryRunDiscovery(
   chainConfigs: DiscoveryChainConfig[],
   logger: Logger,
 ): Promise<void> {
-  const now = UnixTime.now()
+  const now = UnixTime.now() - UnixTime.MINUTE
   const yesterday = now - UnixTime.DAY
 
   const projectConfig = configReader.readConfig(

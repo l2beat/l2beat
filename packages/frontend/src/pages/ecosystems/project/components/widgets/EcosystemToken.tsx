@@ -31,8 +31,8 @@ export function EcosystemToken({ token, className }: Props) {
           {token.description}
         </p>
       </div>
-      <HorizontalSeparator className="my-4 sm:hidden" />
-      <div className="mt-4 grid sm:grid-cols-3 sm:gap-2">
+      <HorizontalSeparator className="my-3 sm:hidden" />
+      <div className="grid sm:mt-4 sm:grid-cols-3 sm:gap-2">
         <DataTile label="Price">
           <span>{formatCurrency(token.data.price.value, 'usd')}</span>
           <PercentChange className="ml-0.5" value={token.data.price.change} />
