@@ -125,6 +125,8 @@ export function getScalingSummaryEntry(
       changes,
       ongoingAnomaly,
       syncWarning: activitySyncWarning,
+      disableBackgroundColoring:
+        project.statuses.reviewStatus === 'initialReview',
     }),
     stage:
       project.scalingInfo.type === 'Other' || !project.scalingStage

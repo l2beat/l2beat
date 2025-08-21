@@ -25,11 +25,12 @@ import { getCommonPinningStyles } from './utils/commonPinningStyles'
 import {
   getRowClassNames,
   getRowClassNamesWithoutOpacity,
+  type RowBackgroundColor,
 } from './utils/rowType'
 
 export type BasicTableRow = {
   slug?: string
-  backgroundColor?: 'red' | 'blue' | 'yellow'
+  backgroundColor?: RowBackgroundColor
 }
 
 export interface BasicTableProps<T extends BasicTableRow> {
@@ -46,7 +47,6 @@ export interface BasicTableProps<T extends BasicTableRow> {
    * If the table is inside a main page card - bypass right margin by adding classes
    */
   insideMainPageCard?: boolean
-  rowColoringMode?: 'default' | 'ignore-colors'
 }
 
 export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {

@@ -1,5 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
+import { getRowBackgroundColor } from '~/components/table/utils/rowType'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
@@ -18,12 +19,30 @@ export function getCommonScalingEntry({
   changes,
   syncWarning,
   ongoingAnomaly,
+  disableBackgroundColoring,
 }: {
   project: Project<'scalingInfo' | 'statuses' | 'display'>
   changes: ProjectChanges | undefined
   syncWarning?: string
   ongoingAnomaly?: boolean
+  disableBackgroundColoring?: boolean
 }): CommonScalingEntry {
+  const statuses = {
+    yellowWarning: project.statuses.yellowWarning,
+    redWarning: project.statuses.redWarning,
+    verificationWarning: !getIsProjectVerified(
+      project.statuses.unverifiedContracts,
+      changes,
+    ),
+    underReview: getUnderReviewStatus({
+      isUnderReview: !!project.statuses.reviewStatus,
+      impactfulChange: !!changes?.impactfulChange,
+    }),
+    syncWarning,
+    emergencyWarning: project.statuses.emergencyWarning,
+    ongoingAnomaly,
+  }
+
   return {
     id: project.id,
     slug: project.slug,
@@ -34,21 +53,10 @@ export function getCommonScalingEntry({
         ? undefined
         : `L3 on ${project.scalingInfo.hostChain.shortName ?? project.scalingInfo.hostChain.name}`,
     shortName: project.shortName,
-    statuses: {
-      yellowWarning: project.statuses.yellowWarning,
-      redWarning: project.statuses.redWarning,
-      verificationWarning: !getIsProjectVerified(
-        project.statuses.unverifiedContracts,
-        changes,
-      ),
-      underReview: getUnderReviewStatus({
-        isUnderReview: !!project.statuses.reviewStatus,
-        impactfulChange: !!changes?.impactfulChange,
-      }),
-      syncWarning,
-      emergencyWarning: project.statuses.emergencyWarning,
-      ongoingAnomaly,
-    },
+    backgroundColor: disableBackgroundColoring
+      ? undefined
+      : getRowBackgroundColor(statuses),
+    statuses,
     tab: getScalingTab(project),
     filterable: [
       { id: 'type', value: project.scalingInfo.type },

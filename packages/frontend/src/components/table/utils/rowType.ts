@@ -1,28 +1,21 @@
-import { ProjectId } from '@l2beat/shared-pure'
 import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/components/table/DaSummaryPublicTable'
-import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
-import type { BasicTableProps } from '../BasicTable'
+import type { UnderReviewStatus } from '~/utils/project/underReview'
 
-type RowBackgroundColor = ReturnType<typeof getRowBackgroundColor>
-export function getRowBackgroundColor(
-  entry: CommonProjectEntry,
-  rowColoringMode: BasicTableProps<CommonProjectEntry>['rowColoringMode'],
-) {
-  if (entry.id === ProjectId.ETHEREUM) {
-    return 'blue'
-  }
-  if (rowColoringMode === 'ignore-colors') {
-    return undefined
-  }
-
+export type RowBackgroundColor = 'blue' | 'red' | 'yellow' | undefined
+export function getRowBackgroundColor(statuses: {
+  redWarning?: string
+  verificationWarning?: boolean
+  underReview?: UnderReviewStatus
+  ongoingAnomaly?: boolean
+}): RowBackgroundColor | undefined {
   if (
-    !!entry.statuses?.verificationWarning ||
-    !!entry.statuses?.redWarning ||
-    !!entry.statuses?.ongoingAnomaly
+    !!statuses?.verificationWarning ||
+    !!statuses?.redWarning ||
+    !!statuses?.ongoingAnomaly
   ) {
     return 'red'
   }
-  if (entry.statuses?.underReview) {
+  if (statuses?.underReview) {
     return 'yellow'
   }
 }
