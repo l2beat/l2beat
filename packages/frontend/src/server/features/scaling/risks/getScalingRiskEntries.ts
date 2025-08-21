@@ -38,6 +38,7 @@ export async function getScalingRiskEntries() {
       ),
     )
     .sort(compareTvs)
+    .filter((entry) => entry.tab !== 'notReviewed')
 
   return groupByScalingTabs(entries)
 }
