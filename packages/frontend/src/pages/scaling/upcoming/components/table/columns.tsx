@@ -1,8 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import {
-  TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/TypeInfo'
+import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/getScalingUpcomingEntries'
 
@@ -13,16 +10,12 @@ export const scalingUpcomingColumns = [
     columnHelper,
     (row) => `/scaling/projects/${row.slug}`,
   ),
-  columnHelper.accessor('category', {
-    header: 'Type',
-    cell: (ctx) => (
-      <div className="font-medium">
-        <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
-      </div>
-    ),
+  columnHelper.accessor('proofSystem', {
+    header: 'Proof system',
+    cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
     meta: {
-      tooltip: <TypeExplanationTooltip />,
-      cellClassName: 'pr-5',
+      tooltip:
+        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
     },
   }),
   columnHelper.display({

@@ -3,6 +3,7 @@ import type {
   ProjectAssociatedToken,
   ProjectCustomColors,
   ProjectScalingCategory,
+  ProjectScalingProofSystem,
   ProjectScalingStage,
   ReasonForBeingInOther,
   WarningWithSentiment,
@@ -75,7 +76,8 @@ export interface ProjectScalingEntry {
     links: ProjectLink[]
     hostChain?: string
     chainId?: number
-    category: ProjectScalingCategory
+    category?: ProjectScalingCategory
+    proofSystemType?: ProjectScalingProofSystem['type']
     purposes: string[]
     tvs?: {
       breakdown?: {
@@ -191,6 +193,7 @@ export async function getScalingProjectEntry(
           : 'multiple'
       : undefined,
     category: project.scalingInfo.type,
+    proofSystemType: project.scalingInfo.proofSystem?.type,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
     links: getProjectLinks(project.display.links),
@@ -472,7 +475,10 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (project.scalingStage.stage !== 'NotApplicable') {
+  if (
+    project.scalingStage.stage !== 'NotApplicable' &&
+    project.scalingInfo.type
+  ) {
     sections.push({
       type: 'StageSection',
       props: {

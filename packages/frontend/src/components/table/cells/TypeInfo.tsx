@@ -115,29 +115,3 @@ function TypeTooltip({ Icon, text }: TypeTooltipProps) {
     </Tooltip>
   )
 }
-
-export function TypeExplanationTooltip({
-  showOnlyRollupsDefinitions,
-}: {
-  showOnlyRollupsDefinitions?: boolean
-}) {
-  return (
-    <div>
-      <div className="mb-1">
-        Type of this project. Determines data availability and proof system
-        used.
-      </div>
-      ZK Rollups = Validity Proofs + onchain data
-      <br />
-      Optimistic Rollups = Fraud Proofs + onchain data
-      {!showOnlyRollupsDefinitions && (
-        <>
-          <br />
-          Validiums = Validity Proofs + offchain data
-          <br />
-          Optimiums = Fraud Proofs + offchain data
-        </>
-      )}
-    </div>
-  )
-}

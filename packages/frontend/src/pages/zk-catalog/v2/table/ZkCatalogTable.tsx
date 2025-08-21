@@ -59,7 +59,7 @@ export function ZkCatalogTable({ entries }: { entries: ZkCatalogEntry[] }) {
     return (
       <>
         {remainingTrustedSetups.map((ts) => (
-          <TableRow key={ts.trustedSetup[0]?.id} slug={undefined}>
+          <TableRow key={ts.trustedSetup[0]?.id} slug={row.original.id}>
             <TrustedSetupCells trustedSetups={ts} />
           </TableRow>
         ))}
