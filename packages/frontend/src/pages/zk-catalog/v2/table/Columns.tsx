@@ -39,7 +39,7 @@ export const zkCatalogColumns = [
       id: 'tvs',
       meta: {
         tooltip:
-          'The values secured by the listed verifiers, calculated as a sum of the total value secured of all projects that use them.',
+          'The values secured by the listed verifiers, calculated as a sum of the total value secured of all projects that use them and are listed on L2BEAT.',
       },
       cell: (ctx) => {
         return (
