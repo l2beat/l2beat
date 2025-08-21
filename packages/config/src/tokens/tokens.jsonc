@@ -34,6 +34,11 @@
       "address": "0x4C1746A800D224393fE2470C70A35717eD4eA5F1"
     },
     {
+      "symbol": "TRN",
+      "coingeckoId": "t3rn",
+      "address": "0x0d292b4a8fcfed626dc73242cec1da0503b891fd"
+    },
+    {
       "symbol": "TRALA",
       "address": "0xD5e0eda0214f1d05af466E483d9376a77A67448b"
     },
