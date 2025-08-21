@@ -13,6 +13,7 @@ export async function getScalingUpcomingEntries() {
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'display'],
       where: ['isScaling', 'isUpcoming'],
+      optional: ['hasTestnet'],
     }),
     ps.getProjects({
       select: ['zkCatalogInfo'],
@@ -27,6 +28,7 @@ export async function getScalingUpcomingEntries() {
 }
 
 export interface ScalingUpcomingEntry extends CommonScalingEntry {
+  hasTestnet: boolean
   initialOrder: number
   proofSystem: ProjectScalingProofSystem | undefined
   stacks: ProjectScalingStack[] | undefined
@@ -34,15 +36,17 @@ export interface ScalingUpcomingEntry extends CommonScalingEntry {
 }
 
 export function getScalingUpcomingEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'display'>,
+  project: Project<'scalingInfo' | 'statuses' | 'display', 'hasTestnet'>,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingUpcomingEntry {
+  const commonEntry = getCommonScalingEntry({
+    project,
+    ongoingAnomaly: false,
+    changes: undefined,
+  })
   return {
-    ...getCommonScalingEntry({
-      project,
-      ongoingAnomaly: false,
-      changes: undefined,
-    }),
+    ...commonEntry,
+    hasTestnet: !!project.hasTestnet,
     proofSystem: getProofSystemWithName(
       project.scalingInfo.proofSystem,
       zkCatalogProjects,
@@ -50,5 +54,12 @@ export function getScalingUpcomingEntry(
     stacks: project.scalingInfo.stacks,
     purposes: project.scalingInfo.purposes,
     initialOrder: project.addedAt,
+    filterable: [
+      {
+        id: 'hasTestnet',
+        value: project.hasTestnet ? 'Yes' : 'No',
+      },
+      ...(commonEntry.filterable ?? []),
+    ],
   }
 }

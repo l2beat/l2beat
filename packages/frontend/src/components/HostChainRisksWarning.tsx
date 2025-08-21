@@ -14,7 +14,7 @@ export function HostChainRisksWarning({
   riskCount,
 }: HostChainRisksWarningProps) {
   const text = riskCount
-    ? 'There are ' + riskCount + ' additional risks coming from the hostchain '
+    ? 'There are ' + riskCount + ' additional risks coming from the host chain '
     : 'The section considers only the L3 properties. For more details please refer to '
 
   return (
