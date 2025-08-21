@@ -13,7 +13,7 @@ import { getDiscoveryInfo } from './getDiscoveryInfo'
 interface UpcomingConfigCommon {
   id: string
   addedAt: UnixTime
-  hasTestnet?: boolean
+  hasTestnet?: true
   display: ProjectScalingDisplay
   capability: ProjectScalingCapability
   badges?: Badge[]

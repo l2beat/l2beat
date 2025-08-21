@@ -18,7 +18,7 @@ import { getDiscoveryInfo } from './getDiscoveryInfo'
 interface UnderReviewConfigCommon {
   id: string
   addedAt: UnixTime
-  hasTestnet?: boolean
+  hasTestnet?: true
   capability: ProjectScalingCapability
   ecosystemInfo?: ProjectEcosystemInfo
   activityConfig?: ProjectActivityConfig
