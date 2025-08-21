@@ -1,7 +1,15 @@
-export function NoDataPatternDef() {
+export function NoDataPatternDef({
+  id = 'noDataFill',
+  fill,
+  fillOpacity,
+}: {
+  id?: string
+  fill?: string
+  fillOpacity?: number
+}) {
   return (
     <pattern
-      id="noDataFill"
+      id={id}
       patternUnits="userSpaceOnUse"
       width="20"
       height="20"
@@ -10,15 +18,15 @@ export function NoDataPatternDef() {
       <rect
         width="10"
         height="20"
-        fill="var(--secondary)"
-        fillOpacity={0.25}
+        fill={fill ?? 'var(--secondary)'}
+        fillOpacity={fillOpacity ?? 0.25}
         className="dark:hidden"
       />
       <rect
         width="10"
         height="20"
-        fill="var(--secondary)"
-        fillOpacity={0.5}
+        fill={fill ?? 'var(--secondary)'}
+        fillOpacity={fillOpacity ?? 0.5}
         className="not-dark:hidden"
       />
     </pattern>
