@@ -17,7 +17,6 @@ export const t3rn: ScalingProject = underReviewL3({
   display: {
     name: 't3rn',
     slug: 't3rn',
-    category: 'Optimium', // Cross-chain execution protocol
     stacks: [], // Custom stack - not based on standard stacks
     description:
       't3rn is a Universal Execution Protocol that enables smart contracts to call and compose across multiple blockchains atomically with fail-safe interoperable execution.',
@@ -30,6 +29,10 @@ export const t3rn: ScalingProject = underReviewL3({
       socialMedia: ['https://x.com/t3rn_io', 'https://github.com/t3rn/t3rn'],
     },
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
+  dataAvailability: undefined,
   chainConfig: {
     name: 't3rn',
     gasTokens: ['TRN'],
