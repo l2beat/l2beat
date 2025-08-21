@@ -76,7 +76,7 @@ export function getScalingLivenessColumns(hideProofSystem?: boolean) {
             href={
               ctx.getValue()?.zkCatalogId
                 ? `/zk-catalog?highlight=${ctx.getValue()?.zkCatalogId}`
-                : undefined
+                : `/scaling/projects/${ctx.row.original.slug}#state-validation`
             }
           >
             <TwoRowCell>

@@ -44,9 +44,11 @@ export function getScalingArchivedColumns(hideProofSystem?: boolean) {
         cell: (ctx) => (
           <TableLink
             href={
-              ctx.getValue()?.zkCatalogId
-                ? `/zk-catalog?highlight=${ctx.getValue()?.zkCatalogId}`
-                : undefined
+              !ctx.getValue()?.type
+                ? undefined
+                : ctx.getValue()?.zkCatalogId
+                  ? `/zk-catalog?highlight=${ctx.getValue()?.zkCatalogId}`
+                  : `/scaling/projects/${ctx.row.original.slug}#state-validation`
             }
           >
             <TwoRowCell>
