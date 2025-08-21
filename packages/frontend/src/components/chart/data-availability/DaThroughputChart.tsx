@@ -15,8 +15,8 @@ import { DaAbsoluteThroughputChart } from './DaAbsoluteThroughputChart'
 import { DaPercentageThroughputChart } from './DaPercentageThroughputChart'
 
 export function DaThroughputChart() {
-  const [range, setRange] = useState<DaThroughputTimeRange>('7d')
-  const [metric, setMetric] = useState<'percentage' | 'absolute'>('absolute')
+  const [range, setRange] = useState<DaThroughputTimeRange>('1y')
+  const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
   const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
 
   const { data: chartData, isLoading } = api.da.chart.useQuery({
