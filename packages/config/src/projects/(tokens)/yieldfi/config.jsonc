@@ -22,7 +22,8 @@
         "minters",
         "owner",
         "pauser"
-      ]
+      ],
+      "ignoreMethods": ["admin", "implementation"]
     },
     "eth:0x933B4464beBE7136bC184637792c0EE514057660": {
       "ignoreMethods": ["orders", "readOrder"]

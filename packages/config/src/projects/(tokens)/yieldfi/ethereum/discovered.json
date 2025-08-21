@@ -2,7 +2,7 @@
   "name": "yieldfi",
   "chain": "ethereum",
   "timestamp": 1755603175,
-  "configHash": "0x11e96a64376b5a1cdb7afad2a0cde727c8c666cf1151686b9e7e1c71f6beba01",
+  "configHash": "0xd555ab0258bb6c34e1162c3dcc7358024c22d956fc32f91e600a78362d62903b",
   "entries": [
     {
       "name": "Manager",
@@ -573,10 +573,6 @@
         "totalSupply": "45139743126406292",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
-      },
-      "errors": {
-        "admin": "Processing error occurred.",
-        "implementation": "Processing error occurred."
       },
       "fieldMeta": {
         "minters": {
