@@ -13,6 +13,7 @@ export const ethernity: ScalingProject = opStackL2({
   additionalPurposes: ['AI'],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  isPartOfSuperchain: true,
   display: {
     name: 'Epic Chain',
     slug: 'epicchain',

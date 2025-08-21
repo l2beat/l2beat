@@ -1363,7 +1363,6 @@
   "static/icons/lineaprover.png": "c3c4616ebc352adb86b6864f11bf1415",
   "static/icons/loopringprover.png": "c5c2dbf7357d5f151c441979d06534eb",
   "static/icons/openvmprover.png": "72af3fd15d71787494d1d83a78f8b20e",
-  "static/icons/polygonzkevmprover.png": "9d643ec2b04da762806fbb7fb2ceb568",
   "static/icons/risc0.png": "6651b4c99bf3a2141bd1d1392bcf3bc2",
   "static/icons/stone.png": "3a06c9b63b7d18607868d2110343be5f",
   "static/icons/zircuitprover.png": "285df9d1342aee46ed90ded52983e309",
@@ -1400,5 +1399,6 @@
   "static/icons/vemphorizon.png": "40e642c1e9b1908e0387ac6a8620f781",
   "static/meta-images/scaling/projects/vemphorizon/opengraph-image.png": "a1b7b7362c111337b0b48aeaff349b0c",
   "static/icons/aztecv1prover.png": "56de9d06ea64d786eefdcccaf747d2f6",
-  "static/meta-images/governance/publications/governance-review-65.png": "50950216ec74ee3a5fa669529bf68a33"
+  "static/meta-images/governance/publications/governance-review-65.png": "50950216ec74ee3a5fa669529bf68a33",
+  "static/icons/zkprover.png": "9209da36dc894b389ad580067aa77c59"
 }
