@@ -127,6 +127,7 @@ export interface BaseProject {
   isUpcoming?: true
   archivedAt?: UnixTime
   hasActivity?: true
+  hasTestnet?: true
 }
 
 // #region common data
