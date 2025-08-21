@@ -79,8 +79,8 @@ const inclusionDelay = discovery.getContractValue<PacayaConfig>(
 
 const whitelistedOperatorsCount = discovery.getContractValue<PacayaConfig>(
   'PreconfWhitelist',
-  'operatorCount',
-)
+  'registeredOperators',
+).length
 
 const chainId = 167000
 
@@ -383,7 +383,7 @@ export const taiko: ScalingProject = {
     operator: {
       name: 'The system uses whitelist-based rotating operators',
       description: `The system uses a whitelist-based sequencing mechanism to allow for fast preconfirmations on the L2. On the L1, whitelisted preconfirmers (or the fallback operator) can sequence Taiko L2 blocks by proposing them on the TaikoL1 contract.
-        The whitelist is managed by the \`PreconfWhitelist\` contract, which currently has ${whitelistedOperatorsCount} operators registered.
+        The whitelist is managed by the \`PreconfWhitelist\` contract, which currently has ${whitelistedOperatorsCount} active operators registered.
         The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the ${formatSeconds(taikoChainConfig.provingWindow)} proving window.
         Currently, proving a block requires the block proposer to run a SGX instance with Geth, plus either SGX (Reth), SP1, or RISC0 to prove the block.
         Unless the block proposer proves the block within the proving window, it will forfeit half of its liveness bond to the TaikoL1 smart contract.`,
