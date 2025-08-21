@@ -137,7 +137,7 @@ export function DaAbsoluteThroughputChart({
                 dataKey: estimatedKey,
                 stroke: chartMeta[actualKey].color,
                 strokeDasharray: '3 3',
-                fill: 'url(#noDataFill)',
+                fill: 'none',
                 hide: !dataKeys.includes(actualKey),
               },
             ]
