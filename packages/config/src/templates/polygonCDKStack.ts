@@ -198,7 +198,7 @@ export function polygonCDKStack(
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs
         ? undefined
-        : { type: 'Validity', zkCatalogId: ProjectId('polygonzkevmprover') }),
+        : { type: 'Validity', zkCatalogId: ProjectId('zkprover') }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.nonTemplateEscrows,

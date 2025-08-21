@@ -4,7 +4,9 @@
   "ignoreMethods": ["epochStartTimestamp", "operatorMapping", "proxiableUUID"],
   "ignoreInWatchMode": [
     "getOperatorCandidatesForCurrentEpoch",
-    "getOperatorCandidatesForNextEpoch"
+    "getOperatorCandidatesForNextEpoch",
+    "getOperatorForCurrentEpoch",
+    "getOperatorForNextEpoch"
   ],
   "fields": {
     "getOperatorCandidatesForCurrentEpoch": {

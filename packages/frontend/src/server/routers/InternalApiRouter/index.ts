@@ -4,6 +4,7 @@ import express from 'express'
 import { validateRoute } from '~/utils/validateRoute'
 import { getDiscolupeProjects } from './getDiscolupeProjects'
 import { getHotPages } from './getHotPages'
+import { getInternalTokenBreakdown } from './getInternalTokenBreakdown'
 import { getLivenessTxs } from './getLivenessTxs'
 import { getLogoGeneratorProjects } from './getLogoGeneratorProjects'
 
@@ -53,6 +54,12 @@ export function createInternalApiRouter() {
       res.json(livenessTxs)
     },
   )
+  router.get('/api/internal-token-breakdown', async (req, res) => {
+    // It can take a while - ~30s
+    req.clearTimeout()
+    const tokenBreakdown = await getInternalTokenBreakdown()
+    res.json(tokenBreakdown)
+  })
 
   return router
 }

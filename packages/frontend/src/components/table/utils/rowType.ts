@@ -3,8 +3,8 @@ import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/compo
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import type { BasicTableProps } from '../BasicTable'
 
-type RowType = ReturnType<typeof getRowType>
-export function getRowType(
+type RowBackgroundColor = ReturnType<typeof getRowBackgroundColor>
+export function getRowBackgroundColor(
   entry: CommonProjectEntry,
   rowColoringMode: BasicTableProps<CommonProjectEntry>['rowColoringMode'],
 ) {
@@ -30,8 +30,8 @@ export function getRowType(
 /*
   NOTICE: It is important that this functions return the same colors
 */
-export function getRowClassNames(rowType: RowType) {
-  switch (rowType) {
+export function getRowClassNames(rowBackgroundColor: RowBackgroundColor) {
+  switch (rowBackgroundColor) {
     case 'blue':
       return 'bg-blue-500/35 dark:bg-blue-700/25'
     case 'red':
@@ -43,8 +43,10 @@ export function getRowClassNames(rowType: RowType) {
   }
 }
 
-export function getRowClassNamesWithoutOpacity(rowType: RowType | null) {
-  switch (rowType) {
+export function getRowClassNamesWithoutOpacity(
+  rowBackgroundColor: RowBackgroundColor | null,
+) {
+  switch (rowBackgroundColor) {
     case 'blue':
       return 'bg-blue-400 dark:bg-blue-900'
     case 'red':

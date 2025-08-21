@@ -23,11 +23,7 @@ export const TokenTvsChartParams = z.object({
 
 export type TokenTvsChartParams = z.infer<typeof TokenTvsChartParams>
 
-type TokenTvsChartPoint = [
-  timestamp: number,
-  amount: number | null,
-  usdValue: number | null,
-]
+type TokenTvsChartPoint = [timestamp: number, usdValue: number | null]
 
 type TokenTvsChartData = {
   chart: TokenTvsChartPoint[]
@@ -92,7 +88,7 @@ export async function getTokenTvsChart({
   const data: TokenTvsChartPoint[] = []
   for (const timestamp of timestamps) {
     const value = tokenValuesByTimestamp[timestamp]
-    data.push([timestamp, value?.amount ?? null, value?.value ?? null])
+    data.push([timestamp, value?.valueForProject ?? null])
   }
 
   return {
@@ -113,7 +109,7 @@ function getMockTokenTvsChartData(
   const timestamps = generateTimestamps(adjustedRange, resolution)
 
   return {
-    chart: timestamps.map((timestamp) => [timestamp, 30000, 50000]),
+    chart: timestamps.map((timestamp) => [timestamp, 50000]),
     syncedUntil: to,
   }
 }

@@ -9,7 +9,6 @@ import { flexRender } from '@tanstack/react-table'
 import range from 'lodash/range'
 import React from 'react'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
-import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { cn } from '~/utils/cn'
 import { SortingArrows } from './sorting/SortingArrows'
 import {
@@ -26,12 +25,15 @@ import { getCommonPinningStyles } from './utils/commonPinningStyles'
 import {
   getRowClassNames,
   getRowClassNamesWithoutOpacity,
-  getRowType,
 } from './utils/rowType'
 
-export interface BasicTableProps<T extends CommonProjectEntry> {
+export type BasicTableRow = {
+  slug?: string
+  backgroundColor?: 'red' | 'blue' | 'yellow'
+}
+
+export interface BasicTableProps<T extends BasicTableRow> {
   table: TanstackTable<T>
-  children?: React.ReactNode
   /**
    * Custom sub component render function
    */
@@ -47,9 +49,7 @@ export interface BasicTableProps<T extends CommonProjectEntry> {
   rowColoringMode?: 'default' | 'ignore-colors'
 }
 
-export function BasicTable<T extends CommonProjectEntry>(
-  props: BasicTableProps<T>,
-) {
+export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   if (props.table.getRowCount() === 0) {
     return <TableEmptyState />
   }
@@ -61,7 +61,6 @@ export function BasicTable<T extends CommonProjectEntry>(
   const actualHeader = maxDepth === 1 ? headerGroups[1] : headerGroups[0]
   assert(actualHeader, 'Actual header is required')
 
-  const rows = getTableRows(props.table)
   return (
     <Table>
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
@@ -158,28 +157,20 @@ export function BasicTable<T extends CommonProjectEntry>(
         </TableHeaderRow>
       </TableHeader>
       <TableBody>
-        {props.children ?? (
-          <>
-            {rows.ethereumEntry && (
-              <BasicTableRow row={rows.ethereumEntry} {...props} />
-            )}
-            {rows.rest.map((row) => (
-              <BasicTableRow row={row} key={row.id} {...props} />
-            ))}
-          </>
-        )}
+        {props.table.getRowModel().rows.map((row) => (
+          <BasicTableRow row={row} key={row.id} {...props} />
+        ))}
         {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
       </TableBody>
     </Table>
   )
 }
 
-export function BasicTableRow<T extends CommonProjectEntry>({
+export function BasicTableRow<T extends BasicTableRow>({
   row,
   className,
   ...props
 }: BasicTableProps<T> & { row: Row<T>; className?: string }) {
-  const rowType = getRowType(row.original, props.rowColoringMode)
   const { highlightedSlug } = useHighlightedTableRowContext()
 
   return (
@@ -187,7 +178,7 @@ export function BasicTableRow<T extends CommonProjectEntry>({
       <TableRow
         slug={row.original.slug}
         className={cn(
-          getRowClassNames(rowType),
+          getRowClassNames(row.original.backgroundColor),
           row.getIsExpanded() &&
             props.renderSubComponent?.({ row }) &&
             'border-none!',
@@ -219,8 +210,11 @@ export function BasicTableRow<T extends CommonProjectEntry>({
                       : 'pl-4'
                     : undefined,
                   cell.column.getIsPinned() &&
-                    getRowClassNamesWithoutOpacity(rowType),
+                    getRowClassNamesWithoutOpacity(
+                      row.original.backgroundColor,
+                    ),
                   cell.column.getIsPinned() &&
+                    row.original.slug &&
                     highlightedSlug === row.original.slug &&
                     'animate-row-highlight-no-opacity',
                   meta?.cellClassName,
@@ -240,7 +234,7 @@ export function BasicTableRow<T extends CommonProjectEntry>({
         (props.rawSubComponent ? (
           props.renderSubComponent({ row })
         ) : (
-          <tr className="border-b">
+          <tr className="border-divider border-b">
             {/* 2nd row is a custom 1 cell row */}
             <td colSpan={row.getVisibleCells().length}>
               {props.renderSubComponent({ row })}
@@ -309,21 +303,4 @@ export function getBasicTableGroupParams<T>(column: Column<T>) {
     isFirstInGroup,
     isLastInGroup,
   }
-}
-
-function getTableRows<T extends CommonProjectEntry>(table: TanstackTable<T>) {
-  const rows = table.getRowModel().rows
-
-  let ethereumEntry: Row<T> | undefined
-  const rest: Row<T>[] = []
-
-  for (const row of rows) {
-    if (row.original.slug === 'ethereum') {
-      ethereumEntry = row
-      continue
-    }
-    rest.push(row)
-  }
-
-  return { ethereumEntry, rest }
 }

@@ -56,7 +56,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Canonical (external escrow)"
+            "name": "Custom escrow"
           }
         ]
       }
@@ -211,7 +211,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Canonical (external escrow)"
+            "name": "Custom escrow"
           }
         ]
       }
@@ -275,7 +275,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Canonical (external escrow)"
+            "name": "Custom escrow"
           }
         ]
       }
