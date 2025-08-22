@@ -57,6 +57,8 @@ export const zkCatalogColumns = [
         meta: {
           tooltip:
             'Shows the trusted setups used within the proving stack and their risks.',
+          cellClassName: 'px-6 pt-4 pb-3',
+
           additionalRows: (cell) => {
             return Object.entries(cell.row.original.trustedSetups)
               .slice(1)
@@ -93,10 +95,6 @@ export const zkCatalogColumns = [
   columnHelper.display({
     id: 'tech-stack',
     header: 'Tech stack',
-    meta: {
-      cellClassName: 'pl-6',
-      headClassName: 'pl-6',
-    },
     cell: (ctx) => {
       return <TechStackCell techStack={ctx.row.original.techStack} />
     },

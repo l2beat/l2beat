@@ -200,6 +200,9 @@ export function BasicTableRow<T extends BasicTableRow>({
     denominator === Math.max(...uniqueRowsCount),
     'Incorrect row configuration',
   )
+  const maxRowSpan = Math.max(...uniqueRowsCount)
+
+  const cellPropsMap = new Map<number, React.ComponentProps<typeof TableCell>>()
 
   return (
     <>
@@ -213,7 +216,7 @@ export function BasicTableRow<T extends BasicTableRow>({
           className,
         )}
       >
-        {row.getVisibleCells().map((cell) => {
+        {row.getVisibleCells().map((cell, index) => {
           const { meta } = cell.column.columnDef
           const groupParams = getBasicTableGroupParams(cell.column)
 
@@ -231,35 +234,36 @@ export function BasicTableRow<T extends BasicTableRow>({
               ?.length ?? 0) +
               1)
 
+          const cellProps: React.ComponentProps<typeof TableCell> = {
+            align: meta?.align,
+            className: cn(
+              groupParams?.isFirstInGroup && 'pl-6!',
+              groupParams?.isLastInGroup && 'pr-6!',
+              cell.column.getCanSort() && meta?.align === undefined
+                ? groupParams?.isFirstInGroup
+                  ? 'pl-10'
+                  : 'pl-4'
+                : undefined,
+              cell.column.getIsPinned() &&
+                getRowClassNamesWithoutOpacity(row.original.backgroundColor),
+              cell.column.getIsPinned() &&
+                row.original.slug &&
+                highlightedSlug === row.original.slug &&
+                'animate-row-highlight-no-opacity',
+              meta?.cellClassName,
+            ),
+            style: getCommonPinningStyles(cell.column),
+          }
+
+          cellPropsMap.set(index, cellProps)
           return (
             <React.Fragment key={`${row.id}-${cell.id}`}>
-              <TableCell
-                rowSpan={rowSpan}
-                align={meta?.align}
-                className={cn(
-                  groupParams?.isFirstInGroup && 'pl-6',
-                  groupParams?.isLastInGroup && 'pr-6!',
-                  cell.column.getCanSort() && meta?.align === undefined
-                    ? groupParams?.isFirstInGroup
-                      ? 'pl-10'
-                      : 'pl-4'
-                    : undefined,
-                  cell.column.getIsPinned() &&
-                    getRowClassNamesWithoutOpacity(
-                      row.original.backgroundColor,
-                    ),
-                  cell.column.getIsPinned() &&
-                    row.original.slug &&
-                    highlightedSlug === row.original.slug &&
-                    'animate-row-highlight-no-opacity',
-                  meta?.cellClassName,
-                )}
-                style={getCommonPinningStyles(cell.column)}
-                colSpan={colSpan}
-              >
+              <TableCell rowSpan={rowSpan} colSpan={colSpan} {...cellProps}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableCell>
-              {groupParams?.isLastInGroup && <BasicTableColumnFiller as="td" />}
+              {groupParams?.isLastInGroup && (
+                <BasicTableColumnFiller as="td" rowSpan={maxRowSpan} />
+              )}
             </React.Fragment>
           )
         })}
@@ -268,9 +272,9 @@ export function BasicTableRow<T extends BasicTableRow>({
         return (
           <TableRow
             key={`additional-row-${additionalRowIndex}`}
-            slug={undefined}
+            slug={row.original.slug}
           >
-            {row.getVisibleCells().map((cell) => {
+            {row.getVisibleCells().map((cell, index) => {
               const additionalRows =
                 cell.column.columnDef.meta?.additionalRows?.(cell.getContext())
               if (!additionalRows) {
@@ -289,10 +293,12 @@ export function BasicTableRow<T extends BasicTableRow>({
                 return null
               }
 
+              const cellProps = cellPropsMap.get(index)
               return (
                 <TableCell
                   key={`${cell.id}-${additionalRowIndex}`}
                   rowSpan={rowSpan}
+                  {...cellProps}
                 >
                   {additionalRow}
                 </TableCell>
@@ -355,10 +361,16 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
 
 function BasicTableColumnFiller({
   as: Comp,
+  rowSpan,
+  colSpan,
 }: {
   as: 'th' | 'colgroup' | 'td'
+  rowSpan?: number
+  colSpan?: number
 }) {
-  return <Comp className="h-full w-4 min-w-4" />
+  return (
+    <Comp className="h-full w-4 min-w-4" rowSpan={rowSpan} colSpan={colSpan} />
+  )
 }
 
 export function getBasicTableGroupParams<T>(column: Column<T>) {
