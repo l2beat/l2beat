@@ -511,39 +511,6 @@ App-specific data can be reconstructed by app clients, which request and assembl
         ],
       },
       {
-        projectId: ProjectId('sophon-mainnet-2'),
-        name: 'sophon mainnet-2',
-        daTrackingConfig: [
-          {
-            type: 'avail',
-            sinceBlock: 0,
-            appIds: ['36'],
-          },
-        ],
-      },
-      {
-        projectId: ProjectId('sophon-mainnet-3'),
-        name: 'sophon-mainnet-3',
-        daTrackingConfig: [
-          {
-            type: 'avail',
-            sinceBlock: 0,
-            appIds: ['37'],
-          },
-        ],
-      },
-      {
-        projectId: ProjectId('sophon-mainnet-4'),
-        name: 'sophon-mainnet-4',
-        daTrackingConfig: [
-          {
-            type: 'avail',
-            sinceBlock: 0,
-            appIds: ['38'],
-          },
-        ],
-      },
-      {
         projectId: ProjectId('lens-historical-data'),
         name: 'lens-historical-data',
         daTrackingConfig: [
