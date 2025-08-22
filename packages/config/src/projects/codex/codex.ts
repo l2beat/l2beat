@@ -9,7 +9,6 @@ export const codex: ScalingProject = underReviewL2({
   display: {
     name: 'Codex',
     slug: 'codex',
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     description:
       'Codex Chain is a secure, high-throughput, EVM-equivalent Layer 2 blockchain purpose-built for stablecoin-native payments, FX, and settlement.',
@@ -36,6 +35,8 @@ export const codex: ScalingProject = underReviewL2({
       },
     ],
   },
+  proofSystem: undefined,
+  dataAvailability: undefined,
   activityConfig: {
     type: 'block',
     startBlock: 1,
