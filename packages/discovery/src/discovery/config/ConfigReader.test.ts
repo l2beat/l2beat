@@ -470,10 +470,9 @@ describe('config and discovery resolution', () => {
       })
 
       const reader = new ConfigReader('/base')
-      const config = reader.readConfig('usdc', 'ethereum')
+      const config = reader.readConfig('usdc')
 
       expect(config.structure.name).toEqual('usdc')
-      expect(config.structure.chain).toEqual('ethereum')
       expect(config.structure.maxAddresses).toEqual(10)
     })
   })

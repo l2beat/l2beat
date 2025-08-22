@@ -7,6 +7,7 @@ import {
   type StructureConfig,
   StructureContract,
 } from '../config/StructureConfig'
+import type { AllProviders } from '../provider/AllProviders'
 import type { IProvider } from '../provider/IProvider'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { DiscoveryEngine } from './DiscoveryEngine'
@@ -21,6 +22,8 @@ const base = {
   combinedMeta: undefined,
 }
 
+type Thenable<T> = PromiseLike<T> | T
+
 describe(DiscoveryEngine.name, () => {
   const A = ChainSpecificAddress.random()
   const B = ChainSpecificAddress.random()
@@ -29,7 +32,13 @@ describe(DiscoveryEngine.name, () => {
   const strB = B.toString()
   const strC = C.toString()
   const strD = D.toString()
-  const provider = mockObject<IProvider>({})
+  const provider = mockObject<AllProviders>({
+    get: mockFn().resolvesTo(
+      mockObject<Thenable<IProvider>>({
+        then: undefined,
+      }),
+    ),
+  })
 
   it('can perform a discovery', async () => {
     const config = generateFakeConfig([A], {
@@ -63,7 +72,7 @@ describe(DiscoveryEngine.name, () => {
       })
 
     const engine = new DiscoveryEngine(addressAnalyzer, Logger.SILENT)
-    const result = await engine.discover(provider, config.structure)
+    const result = await engine.discover(provider, config.structure, 1234)
 
     expect(result).toEqual([
       {
