@@ -10,6 +10,25 @@
       "name": "Ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+        "decimals": 18,
+        "sinceTimestamp": 1754512679
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "facet-ETH-external",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
         "type": "calculation",
         "operator": "sum",
         "arguments": [
@@ -17,17 +36,9 @@
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
-            "escrowAddress": "0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+            "escrowAddress": "0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD",
             "decimals": 18,
-            "sinceTimestamp": 1754512679
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "native",
-            "chain": "ethereum",
-            "escrowAddress": "0x0000000000000b07ED001607f5263D85bf28Ce4C",
-            "decimals": 18,
-            "sinceTimestamp": 1734701579
+            "sinceTimestamp": 1733855495
           },
           {
             "type": "balanceOfEscrow",
@@ -36,11 +47,19 @@
             "escrowAddress": "0x8F75466D69a52EF53C7363F38834bEfC027A2909",
             "decimals": 18,
             "sinceTimestamp": 1733855519
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x0000000000000b07ED001607f5263D85bf28Ce4C",
+            "decimals": 18,
+            "sinceTimestamp": 1734701579
           }
         ]
       },
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
@@ -59,7 +78,7 @@
         "sinceTimestamp": 1733855519
       },
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     }
   ]
