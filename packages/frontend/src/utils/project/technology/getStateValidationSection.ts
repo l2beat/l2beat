@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import type { ProjectDetailsRelatedProjectBannerProps } from '~/components/ProjectDetailsRelatedProjectBanner'
 import type { StateValidationSectionProps } from '~/components/projects/sections/StateValidationSection'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
@@ -15,7 +16,7 @@ export async function getStateValidationSection(
     where: ['zkCatalogInfo'],
   })
 
-  const zkCatalogBannerProject = getZkCatalogBannerProject(
+  const zkCatalogBanner = getZkCatalogBanner(
     project.scalingInfo.proofSystem?.zkCatalogId,
     zkCatalogProjects,
   )
@@ -29,14 +30,14 @@ export async function getStateValidationSection(
     isUnderReview:
       !!project.statuses.reviewStatus ||
       !!project.scalingTechnology.stateValidation.isUnderReview,
-    zkCatalogBannerProject,
+    zkCatalogBanner,
   }
 }
 
-function getZkCatalogBannerProject(
+function getZkCatalogBanner(
   zkCatalogProjectId: string | undefined,
   zkCatalogProjects: Project[],
-) {
+): ProjectDetailsRelatedProjectBannerProps | undefined {
   if (!zkCatalogProjectId) return undefined
 
   const zkCatalogProject = zkCatalogProjects.find(
@@ -45,8 +46,11 @@ function getZkCatalogBannerProject(
   if (!zkCatalogProject) return undefined
 
   return {
-    id: zkCatalogProjectId,
-    name: zkCatalogProject.name,
-    icon: getProjectIcon(zkCatalogProject.slug),
+    project: {
+      name: zkCatalogProject.name,
+      icon: getProjectIcon(zkCatalogProject.slug),
+    },
+    text: 'Learn more about the proof system here:',
+    href: `/zk-catalog?highlight=${zkCatalogProjectId}`,
   }
 }

@@ -1,5 +1,9 @@
 import type { ProjectScalingStateValidation } from '@l2beat/config'
 import { DiagramImage } from '~/components/DiagramImage'
+import {
+  ProjectDetailsRelatedProjectBanner,
+  type ProjectDetailsRelatedProjectBannerProps,
+} from '~/components/ProjectDetailsRelatedProjectBanner'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { HorizontalSeparator } from '../../core/HorizontalSeparator'
 import { Markdown } from '../../markdown/Markdown'
@@ -12,17 +16,13 @@ import type { ProjectSectionProps } from './types'
 export interface StateValidationSectionProps extends ProjectSectionProps {
   diagram: DiagramParams | undefined
   stateValidation: ProjectScalingStateValidation
-  zkCatalogBannerProject?: {
-    id: string
-    name: string
-    icon: string
-  }
+  zkCatalogBanner?: ProjectDetailsRelatedProjectBannerProps
 }
 
 export function StateValidationSection({
   diagram,
   stateValidation,
-  zkCatalogBannerProject,
+  zkCatalogBanner,
   ...sectionProps
 }: StateValidationSectionProps) {
   return (
@@ -48,8 +48,11 @@ export function StateValidationSection({
           <Category key={category.title} category={category} />
         ))}
       </div>
-      {zkCatalogBannerProject && (
-        <ZkCatalogBanner project={zkCatalogBannerProject} />
+      {zkCatalogBanner && (
+        <ProjectDetailsRelatedProjectBanner
+          className="mt-4 md:mt-6"
+          {...zkCatalogBanner}
+        />
       )}
     </ProjectSection>
   )
@@ -76,39 +79,6 @@ function Category({ category }: CategoryProps) {
       {category.references && (
         <ReferenceList references={category.references} tight />
       )}
-    </div>
-  )
-}
-
-function ZkCatalogBanner({
-  project,
-}: {
-  project: {
-    id: string
-    name: string
-    icon: string
-  }
-}) {
-  return (
-    <div className="mt-4 flex w-full items-center rounded-lg bg-surface-secondary px-4 py-2 font-medium text-xs md:mt-6">
-      <div>
-        Learn more about the proof system here:{' '}
-        <span className="inline-block">
-          <img
-            className="mr-1 inline-block size-5"
-            src={project.icon}
-            width={20}
-            height={20}
-            alt={`${project.name} logo`}
-          />
-          <a
-            href={`/zk-catalog?highlight=${project.id}`}
-            className="inline-block font-medium text-link text-xs underline hover:text-blue-550 dark:hover:text-blue-550"
-          >
-            {project.name}
-          </a>
-        </span>
-      </div>
     </div>
   )
 }
