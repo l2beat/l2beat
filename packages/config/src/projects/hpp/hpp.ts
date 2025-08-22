@@ -1,4 +1,4 @@
-import { UnixTime, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
 
@@ -17,7 +17,9 @@ export const hpp: ScalingProject = underReviewL2({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://hpp.io/'],
-      bridges: ['https://bridge.arbitrum.io/?sourceChain=ethereum&destinationChain=hpp-mainnet&tab=bridge'],
+      bridges: [
+        'https://bridge.arbitrum.io/?sourceChain=ethereum&destinationChain=hpp-mainnet&tab=bridge',
+      ],
       explorers: ['https://explorer.hpp.io/'],
       documentation: ['https://docs.hpp.io/'],
       repositories: ['https://github.com/hpp-io'],
