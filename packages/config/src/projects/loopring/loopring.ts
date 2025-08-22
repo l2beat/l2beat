@@ -58,7 +58,6 @@ export const loopring: ScalingProject = {
       'Loopring is a ZK Rollup exchange protocol for trading and payments.',
     purposes: ['NFT', 'Exchange'],
     stacks: ['Loopring'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://loopring.org'],
       bridges: ['https://loopring.io/#/trade'],

@@ -32,6 +32,8 @@ import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
 
+const hiddenDataKeys = ['ethereum'] as const
+
 export function EcosystemsActivityChart({
   id,
   name,
@@ -65,7 +67,10 @@ export function EcosystemsActivityChart({
       },
     } satisfies ChartMeta
   }, [name])
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
+  const { dataKeys, toggleDataKey } = useChartDataKeys(
+    chartMeta,
+    hiddenDataKeys,
+  )
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
 
   const { data, isLoading } = api.activity.chart.useQuery({
@@ -107,18 +112,20 @@ export function EcosystemsActivityChart({
         }}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend content={<ChartLegendContent reverse />} />
           {getStrokeOverFillAreaComponents({
             data: [
               {
                 dataKey: 'ethereum',
                 stroke: 'url(#strokeEthereum)',
+                strokeWidth: 2,
                 fill: 'url(#fillEthereum)',
                 hide: !dataKeys.includes('ethereum'),
               },
               {
                 dataKey: 'projects',
                 stroke: 'var(--ecosystem-primary)',
+                strokeWidth: 2,
                 fill: 'url(#fillProjects)',
                 hide: !dataKeys.includes('projects'),
               },

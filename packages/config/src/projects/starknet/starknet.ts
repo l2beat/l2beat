@@ -198,8 +198,6 @@ export const starknet: ScalingProject = {
     description:
       'Starknet is a ZK rollup that uses STARK proofs to securely scale Ethereum and Ethereum blobs for data availability. Starknet is also actively engaged in bringing Bitcoin users the same scale, UX, and liquidity through a variety of products and programs.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
-
     links: {
       bridges: ['https://starkgate.starknet.io/'],
       websites: [

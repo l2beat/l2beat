@@ -201,6 +201,19 @@ export class BlipRuntime {
         assert(typeof copy === 'object')
         return Object.entries(copy) as ContractValue
       }
+      case 'length': {
+        let result: number
+        if (Array.isArray(v)) {
+          result = v.length
+        } else if (typeof v === 'object' && v !== null) {
+          result = Object.keys(v).length
+        } else if (typeof v === 'string') {
+          result = v.length
+        } else {
+          assert(false, 'length requires an array, object, or string input')
+        }
+        return result
+      }
       default: {
         assert(false, 'unhandled')
       }

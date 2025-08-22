@@ -22,12 +22,12 @@ export const celo: ScalingProject = opStackL2({
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
+  isPartOfSuperchain: false,
   display: {
     name: 'Celo',
     slug: 'celo',
     description:
       'Celo is an Ethereum Optimium based on the OP stack, scaling real-world solutions & leading a thriving new digital economy for all.',
-    category: 'Other',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://celo.org/'],

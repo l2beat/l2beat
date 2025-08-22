@@ -51,9 +51,8 @@ export const Discover = command({
       args.projectQuery,
     )
 
-    logProjectsToDiscover(projectsOnChain, logger)
     const timestamp = getTimestamp(args)
-
+    logProjectsToDiscover(projectsOnChain, logger)
     for (const chainName in projectsOnChain) {
       const chain = getChainConfig(chainName)
       for (const project of projectsOnChain[chainName]) {
@@ -145,6 +144,8 @@ function addressPredicate(
 // TODO(radomski): This will not exist. In the future all of this information
 // will be stored in the discovery but since we're emulating having a single
 // discovered.json we have to do this trick.
+// TODO(radomski): This is only to be removed after we have a single discovery
+// for all chains at the same time
 function getTimestamp(args: {
   timestamp: number | undefined
   dev: boolean
@@ -155,7 +156,7 @@ function getTimestamp(args: {
     args.dryRun === false &&
     args.timestamp === undefined
   ) {
-    return UnixTime.now()
+    return UnixTime.now() - UnixTime.MINUTE
   }
 
   return undefined

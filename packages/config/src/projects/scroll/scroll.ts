@@ -73,7 +73,6 @@ export const scroll: ScalingProject = {
     description:
       'Scroll is ZK Rollup that extends Ethereum’s capabilities through ZK tech and EVM compatibility.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://scroll.io'],
       bridges: ['https://scroll.io/bridge'],

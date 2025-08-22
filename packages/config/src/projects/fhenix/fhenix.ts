@@ -13,7 +13,6 @@ export const fhenix: ScalingProject = upcomingL2({
     description:
       'Fhenix is Fully Homomorphic Encryption rollup, built on top of Arbitrum Stack.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://fhenix.io/'],
@@ -29,5 +28,8 @@ export const fhenix: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

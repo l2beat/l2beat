@@ -12,7 +12,6 @@ export const studiochain: ScalingProject = upcomingL2({
     description:
       'Studiochain is a Layer 2 blockchain built with Arbitrum’s Ethereum layer-2 tech, which will play host to My Pet Hooligan.',
     purposes: ['Gaming'],
-    category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://karratcoin.com/'],
@@ -23,5 +22,8 @@ export const studiochain: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

@@ -38,6 +38,7 @@ export const worldchain = opStackL2({
         'https://linkedin.com/company/worldcoinproject/',
         'https://youtube.com/@worldcoinofficial',
       ],
+      rollupCodes: 'https://rollup.codes/world-chain',
     },
   },
   associatedTokens: ['WLD'],

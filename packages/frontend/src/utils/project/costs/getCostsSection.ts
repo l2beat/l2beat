@@ -1,6 +1,5 @@
 import type { Project } from '@l2beat/config'
 import type { CostsSectionProps } from '~/components/projects/sections/costs/CostsSection'
-
 import type { SsrHelpers } from '~/trpc/server'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
