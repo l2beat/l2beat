@@ -24,7 +24,21 @@ export const codex: ScalingProject = underReviewL2({
       ],
     },
   },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
+  chainConfig: {
+    name: 'codex',
+    gasTokens: ['ETH'],
+    chainId: 81224,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.codex.xyz',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
 })
