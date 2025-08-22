@@ -152,7 +152,7 @@ describe(DaService.name, () => {
       ])
     })
 
-    it.only('should match avail blobs', async () => {
+    it('should match avail blobs', async () => {
       const TIME = UnixTime.now()
 
       const mockBlobs = [
