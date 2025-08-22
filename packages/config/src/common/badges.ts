@@ -613,6 +613,17 @@ export const badges = [
       value: 'OP Mainnet',
     },
   },
+  {
+    id: 'Scroll',
+    type: BadgeType.L3ParentChain,
+    name: 'Built on top of Scroll',
+    description: 'The project has Scroll as its host chain',
+    action: {
+      type: 'scalingFilter',
+      id: 'hostChain',
+      value: 'Scroll',
+    },
+  },
   // Other
   {
     id: 'AccountAbstraction',
