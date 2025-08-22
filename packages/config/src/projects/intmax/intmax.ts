@@ -9,6 +9,7 @@ import {
 } from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { scroll } from '../scroll/scroll'
@@ -21,6 +22,7 @@ export const intmax: ScalingProject = {
   id: ProjectId('intmax'),
   capability: 'universal',
   addedAt: UnixTime(1722256071), // 2024-07-29T12:27:51Z
+  badges: [BADGES.L3ParentChain.Scroll],
   display: {
     name: 'INTMAX',
     slug: 'intmax',
