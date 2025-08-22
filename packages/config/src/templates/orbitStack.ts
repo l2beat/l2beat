@@ -159,7 +159,7 @@ interface OrbitStackConfigCommon {
   }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
   availDa?: {
-    appId: string
+    appIds: string[]
     sinceBlock: number // Block number on Avail Network
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
@@ -863,7 +863,7 @@ function getDaTracking(
         daLayer: ProjectId('avail'),
         // TODO: update to value from discovery
         sinceBlock: templateVars.availDa.sinceBlock,
-        appId: templateVars.availDa.appId,
+        appIds: templateVars.availDa.appIds,
       },
     ]
   }
