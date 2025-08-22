@@ -1,5 +1,6 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
+import type { RowBackgroundColor } from '~/components/table/utils/rowType'
 import type { UnderReviewStatus } from '~/utils/project/underReview'
 
 export interface CommonProjectEntry {
@@ -9,6 +10,7 @@ export interface CommonProjectEntry {
   nameSecondLine?: string
   shortName?: string
   slug: string
+  backgroundColor: RowBackgroundColor
   statuses:
     | {
         yellowWarning?: string

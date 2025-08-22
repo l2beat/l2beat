@@ -13,7 +13,6 @@ export const surge: ScalingProject = upcomingL2({
     description:
       "Surge is a based rollup showcasing the Nethermind client's Gigagas performance, built on the Taiko stack.",
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://surge.wtf/'],
       bridges: ['https://bridge.hoodi.surge.wtf/'],
@@ -22,5 +21,8 @@ export const surge: ScalingProject = upcomingL2({
       repositories: ['https://github.com/nethermindEth/surge'],
       socialMedia: ['https://x.com/NethermindEth'],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

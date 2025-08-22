@@ -29,7 +29,6 @@ import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
-  ProjectScalingProofSystem,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -44,6 +43,7 @@ import type {
   ProjectEscrow,
   ProjectPermissions,
   ProjectScalingCapability,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
@@ -114,7 +114,7 @@ export interface ZkStackConfigCommon {
   }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
   availDa?: {
-    appId: string
+    appIds: string[]
     /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
@@ -280,11 +280,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
           : settlesOnGateway
             ? 'zkstack-rollup-gateway'
             : 'zkstack-rollup',
-      category: templateVars.reasonsForBeingOther
-        ? 'Other'
-        : daProvider !== undefined
-          ? 'Validium'
-          : 'ZK Rollup',
       liveness: {
         explanation: executionDelay
           ? `${templateVars.display.name} is a ${
@@ -676,7 +671,7 @@ function getDaTracking(
         daLayer: ProjectId('avail'),
         // TODO: update to value from discovery
         sinceBlock: templateVars.availDa.sinceBlock,
-        appId: templateVars.availDa.appId,
+        appIds: templateVars.availDa.appIds,
       },
     ]
   }

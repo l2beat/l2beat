@@ -39,7 +39,7 @@ async function getTimestamp(
     (config.dev
       ? configReader.readDiscovery(config.project, config.chain.name).timestamp
       : undefined) ??
-    UnixTime.now()
+    UnixTime.now() - UnixTime.MINUTE
 
   return UnixTime.toDate(configuredTimestamp)
 }
@@ -114,6 +114,7 @@ export async function runDiscovery(
     logger,
     result,
     !!config.verboseTemplatization,
+    projectConfig.color,
     templateService,
   )
 }
@@ -126,7 +127,7 @@ export async function dryRunDiscovery(
   chainConfigs: DiscoveryChainConfig[],
   logger: Logger,
 ): Promise<void> {
-  const now = UnixTime.now()
+  const now = UnixTime.now() - UnixTime.MINUTE
   const yesterday = now - UnixTime.DAY
 
   const projectConfig = configReader.readConfig(
@@ -200,7 +201,7 @@ export async function discover(
   logger: Logger,
   timestampDate: Date | undefined,
   http: HttpClient,
-  overwriteChache: boolean,
+  overwriteCache: boolean,
 ): Promise<{
   result: Analysis[]
   timestamp: UnixTime
@@ -209,7 +210,7 @@ export async function discover(
 }> {
   const sqliteCache = new SQLiteCache(paths.cache)
 
-  const cache = overwriteChache
+  const cache = overwriteCache
     ? new OverwriteCacheWrapper(sqliteCache)
     : sqliteCache
 
@@ -220,7 +221,6 @@ export async function discover(
     cache,
     http,
     logger,
-    chain,
   )
   const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
   const provider = await allProviders.get(chain, timestamp)

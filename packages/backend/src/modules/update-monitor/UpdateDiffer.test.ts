@@ -46,13 +46,13 @@ describe(UpdateDiffer.name, () => {
       expect(runForProjectMockFn).toHaveBeenNthCalledWith(
         1,
         PROJECT_A,
-        chain,
+        [chain],
         UnixTime.now(),
       )
       expect(runForProjectMockFn).toHaveBeenNthCalledWith(
         2,
         PROJECT_B,
-        chain,
+        [chain],
         UnixTime.now(),
       )
     })
@@ -130,7 +130,7 @@ describe(UpdateDiffer.name, () => {
       ]
       updateDiffer.getUpdateDiffs = mockFn().returns(updateDiffs)
 
-      await updateDiffer.runForProject(PROJECT_A, 'ethereum', UnixTime.now())
+      await updateDiffer.runForProject(PROJECT_A, ['ethereum'], UnixTime.now())
 
       expect(dbTransaction).toHaveBeenCalled()
       expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
@@ -160,7 +160,7 @@ describe(UpdateDiffer.name, () => {
       )
       updateDiffer.getUpdateDiffs = mockFn().returns([])
 
-      await updateDiffer.runForProject(PROJECT_A, 'ethereum', UnixTime.now())
+      await updateDiffer.runForProject(PROJECT_A, ['ethereum'], UnixTime.now())
 
       expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
         PROJECT_A,
@@ -196,7 +196,7 @@ describe(UpdateDiffer.name, () => {
       const getUpdateDiffsMock = mockFn()
       updateDiffer.getUpdateDiffs = getUpdateDiffsMock
 
-      await updateDiffer.runForProject(PROJECT_A, 'ethereum', UnixTime.now())
+      await updateDiffer.runForProject(PROJECT_A, ['ethereum'], UnixTime.now())
 
       expect(dbTransaction).not.toHaveBeenCalled()
       expect(getUpdateDiffsMock).not.toHaveBeenCalled()

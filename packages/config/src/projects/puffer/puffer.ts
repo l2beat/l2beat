@@ -13,7 +13,6 @@ export const puffer: ScalingProject = upcomingL2({
     description:
       'UniFi by the Puffer team is their planned flagship based rollup using the Puffer AVS for preconfirmations to explore better UX, security and native yield for users.',
     purposes: ['Universal', 'Restaking'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://puffer.fi/'],
       bridges: ['https://quest.puffer.fi/unifi'],
@@ -25,5 +24,8 @@ export const puffer: ScalingProject = upcomingL2({
         'https://medium.com/puffer-fi',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

@@ -13,7 +13,6 @@ export const genlayer: ScalingProject = upcomingL2({
     description:
       'GenLayer is the first AI-native blockchain built for AI-powered smart contracts.',
     purposes: ['Universal', 'AI'],
-    category: 'ZK Rollup',
     stacks: ['ZK Stack'],
     links: {
       websites: ['https://genlayer.com/'],
@@ -24,5 +23,8 @@ export const genlayer: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

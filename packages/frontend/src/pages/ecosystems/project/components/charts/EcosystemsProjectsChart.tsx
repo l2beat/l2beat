@@ -13,6 +13,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { EcosystemMilestone } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { EcosystemProjectsCountData } from '~/server/features/ecosystems/getEcosystemProjectsChartData'
 import { formatTimestamp } from '~/utils/dates'
@@ -91,6 +92,8 @@ export function EcosystemsProjectsChart({
           <ChartTooltip content={<CustomTooltip />} />
         </AreaChart>
       </ChartContainer>
+      <HorizontalSeparator className="mb-3 sm:hidden" />
+      <Stats stats={data.stats} />
     </EcosystemWidget>
   )
 }
@@ -113,6 +116,29 @@ function Header({
       <div className="text-right">
         <div className="font-bold text-xl">{projectCount} Projects</div>
         <EcosystemsMarketShare marketShare={marketShare} />
+      </div>
+    </div>
+  )
+}
+
+function Stats({ stats }: { stats: EcosystemProjectsCountData['stats'] }) {
+  return (
+    <div className="grid gap-x-4 gap-y-2 sm:grid-cols-2">
+      <div className="flex items-baseline justify-between rounded border-divider sm:border sm:px-6 sm:py-3 sm:max-xl:flex-col sm:max-xl:items-center sm:max-xl:justify-center">
+        <span className="text-balance text-center font-medium text-label-value-14 text-secondary sm:text-label-value-12 sm:max-xl:mb-1">
+          Projects with TVS &gt; $100M
+        </span>
+        <span className="font-bold text-label-value-15">
+          {stats.tvsGreaterThanHundredMillion} projects
+        </span>
+      </div>
+      <div className="flex items-baseline justify-between rounded border-divider sm:border sm:px-6 sm:py-3 sm:max-xl:flex-col sm:max-xl:items-center sm:max-xl:justify-center">
+        <span className="text-balance text-center font-medium text-label-value-14 text-secondary sm:text-label-value-12 sm:max-xl:mb-1">
+          Projects with avg UOPS &gt; 1
+        </span>
+        <span className="font-bold text-label-value-15">
+          {stats.avgUopsGreaterThanOne} projects
+        </span>
       </div>
     </div>
   )

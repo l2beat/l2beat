@@ -13,7 +13,6 @@ export const jovay: ScalingProject = upcomingL2({
     description:
       'Jovay, by Ant Digital Technologies, is an Ethereum Layer 2 blockchain built for real-world assets and users.',
     purposes: ['Universal', 'RWA'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://jovay.io/'],
       documentation: ['https://docs.jovay.io/'],
@@ -24,5 +23,8 @@ export const jovay: ScalingProject = upcomingL2({
         'https://t.me/Jovay_Network',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

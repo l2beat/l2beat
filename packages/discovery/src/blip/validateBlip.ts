@@ -84,6 +84,8 @@ export function validateBlip(input: unknown): boolean {
       )
     case 'to_entries':
       return input.length === 1
+    case 'length':
+      return input.length === 1
     default:
       return false
   }

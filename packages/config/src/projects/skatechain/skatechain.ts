@@ -12,7 +12,6 @@ export const skatechain: ScalingProject = upcomingL2({
     description:
       "Skatechain enables users to interact with applications from any VM while staying on their favorite VM. Its Hub Chain operates as an Ethereum L2, leveraging dual data availability and providing a secure environment for whitelisted applications to interact with Skate's AVS.",
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://skatechain.org/'],
@@ -29,5 +28,8 @@ export const skatechain: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })
