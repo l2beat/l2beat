@@ -21,7 +21,7 @@ export const zklighter: ScalingProject = upcomingL2({
       socialMedia: [
         'https://x.com/Lighter_xyz',
         'https://discord.com/invite/gPHuvUE6VU',
-        'https://www.linkedin.com/company/lighter-xyz',
+        'https://linkedin.com/company/lighter-xyz',
       ],
     },
   },
