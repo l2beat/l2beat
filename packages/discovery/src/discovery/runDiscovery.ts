@@ -166,9 +166,9 @@ export async function dryRunDiscovery(
     ),
   ])
 
-  // biome-ignore lint/style/noNonNullAssertion: TODO
+  // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): To be fixed after a single discovered.json
   const d1 = discoveredYesterday['ethereum']!
-  // biome-ignore lint/style/noNonNullAssertion: TODO
+  // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): To be fixed after a single discovered.json
   const d2 = discovered['ethereum']!
   const diff = diffDiscovery(d1.entries, d2.entries)
 
@@ -229,7 +229,7 @@ export async function discover(
   result: Analysis[]
   timestamp: UnixTime
   usedBlockNumbers: Record<string, number>
-  providerStats: AllProviderStats
+  providerStats: Record<string, AllProviderStats>
 }> {
   const sqliteCache = new SQLiteCache(paths.cache)
 
@@ -264,6 +264,6 @@ export async function discover(
     result,
     timestamp,
     usedBlockNumbers,
-    providerStats: allProviders.getStats('ethereum'), // TODO(radomski): Fix
+    providerStats: allProviders.getStats(),
   }
 }

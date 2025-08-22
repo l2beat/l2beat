@@ -11,8 +11,7 @@ import { ProjectDiscovery } from './ProjectDiscovery'
 describe(ProjectDiscovery.name, () => {
   const projectName = 'ExampleProject'
   const configReader = mockObject<ConfigReader>({
-    readConfig: (projectName: string) =>
-      mockConfig(projectName),
+    readConfig: (projectName: string) => mockConfig(projectName),
     readDiscovery: () => discoveredJsonStub,
     readAllDiscoveredChainsForProject: mockFn().returns(['ethereum']),
   })

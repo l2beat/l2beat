@@ -6,7 +6,7 @@ import {
   type HttpClient,
   RpcClient,
 } from '@l2beat/shared'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime, unique } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import type { DiscoveryChainConfig } from '../../config/types'
 import { getExplorerClient } from '../../utils/IEtherscanClient'
@@ -26,6 +26,7 @@ export class AllProviders {
     { config: DiscoveryChainConfig; providers: RawProviders }
   > = new Map()
 
+  private inFlight: Map<string, Promise<HighLevelProvider>> = new Map()
   private lowLevelProviders: Map<string, LowLevelProvider> = new Map()
   private batchingAndCachingProviders: Map<string, BatchingAndCachingProvider> =
     new Map()
@@ -161,43 +162,69 @@ export class AllProviders {
     )
   }
 
-  private async getImplementation(
+  private getImplementation(
     chain: string,
     batchingAndCachingProvider: BatchingAndCachingProvider,
     timestamp: UnixTime,
     blockNumberGenerator: () => Promise<number>,
   ): Promise<IProvider> {
-    const chainKey = `${chain}:${timestamp}`
-    const provider =
-      this.highLevelProviders.get(chainKey) ??
-      new HighLevelProvider(
-        this,
-        batchingAndCachingProvider,
-        chain,
-        timestamp,
-        await blockNumberGenerator(),
-      )
-    this.highLevelProviders.set(chainKey, provider)
+    const chainKey = encodeKey(chain, timestamp)
+    const cached = this.highLevelProviders.get(chainKey)
+    if (cached) return new Promise((resolve) => resolve(cached))
 
-    return provider
+    const existing = this.inFlight.get(chainKey)
+    if (existing) return existing
+
+    const creation = (async () => {
+      try {
+        const blockNumber = await blockNumberGenerator()
+        const provider = new HighLevelProvider(
+          this,
+          batchingAndCachingProvider,
+          chain,
+          timestamp,
+          blockNumber,
+        )
+        // Double-check in case someone won the race while we awaited
+        const prior = this.highLevelProviders.get(chainKey)
+        if (prior) return prior
+        this.highLevelProviders.set(chainKey, provider)
+        return provider
+      } finally {
+        this.inFlight.delete(chainKey)
+      }
+    })()
+
+    this.inFlight.set(chainKey, creation)
+    return creation
   }
 
-  getStats(chain: string): AllProviderStats {
-    const highLevelMeasurements = [...this.highLevelProviders.keys()]
-      .filter((key) => key.startsWith(chain))
-      .map(
-        (key) => this.highLevelProviders.get(key)?.stats ?? new ProviderStats(),
-      )
-      .reduce((a, b) => ProviderStats.add(a, b), new ProviderStats())
+  getStats(): Record<string, AllProviderStats> {
+    const chains = unique(
+      [...this.highLevelProviders.keys()].map((key) => decodeKey(key)[0]),
+    )
 
-    return {
-      highLevelMeasurements,
-      cacheMeasurements:
-        this.batchingAndCachingProviders.get(chain)?.stats ??
-        new ProviderStats(),
-      lowLevelMeasurements:
-        this.lowLevelProviders.get(chain)?.stats ?? new ProviderStats(),
+    const result: Record<string, AllProviderStats> = {}
+    for (const chain of chains) {
+      const highLevelMeasurements = [...this.highLevelProviders.keys()]
+        .filter((key) => key.startsWith(chain))
+        .map(
+          (key) =>
+            this.highLevelProviders.get(key)?.stats ?? new ProviderStats(),
+        )
+        .reduce((a, b) => ProviderStats.add(a, b), new ProviderStats())
+
+      result[chain] = {
+        highLevelMeasurements,
+        cacheMeasurements:
+          this.batchingAndCachingProviders.get(chain)?.stats ??
+          new ProviderStats(),
+        lowLevelMeasurements:
+          this.lowLevelProviders.get(chain)?.stats ?? new ProviderStats(),
+      }
     }
+
+    return result
   }
 
   private getBatchingAndCachingProvider(
@@ -244,4 +271,12 @@ export class AllProviders {
     this.batchingAndCachingProviders.set(chain, batchingAndCachingProvider)
     return batchingAndCachingProvider
   }
+}
+
+function encodeKey(chain: string, timestamp: number) {
+  return `${chain}:${timestamp}`
+}
+
+function decodeKey(key: string) {
+  return key.split(':') as [string, number]
 }

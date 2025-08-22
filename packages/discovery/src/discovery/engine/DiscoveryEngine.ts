@@ -1,5 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { ChainSpecificAddress, type UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  type UnixTime,
+  unique,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import type {
   AddressAnalyzer,
@@ -87,6 +91,7 @@ export class DiscoveryEngine {
       toAnalyze = {}
 
       const total = this.objectCount + leftToAnalyze.length
+
       await Promise.all(
         leftToAnalyze.map(async ({ address, templates }) => {
           const skipReason = shouldSkip(
