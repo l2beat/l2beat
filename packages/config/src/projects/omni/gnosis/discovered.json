@@ -1511,6 +1511,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "gnosis": 41599272 },
+  "usedBlockNumbers": { "gnosis": 41599273 },
   "permissionsConfigHash": "0x5e1db316d1473e7c712fafb8a396b733a20090a1d1dbca783ad499e657dab8fb"
 }

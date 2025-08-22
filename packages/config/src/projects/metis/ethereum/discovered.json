@@ -2348,6 +2348,6 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "usedBlockNumbers": { "ethereum": 23137894 },
+  "usedBlockNumbers": { "ethereum": 23137895 },
   "permissionsConfigHash": "0xcf47b2001af63febe38b6c23cc0c02405dfa5290bb40cf15f8b74aded4b56851"
 }

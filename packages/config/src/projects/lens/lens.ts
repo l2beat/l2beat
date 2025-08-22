@@ -93,7 +93,7 @@ export const lens: ScalingProject = zkStackL2({
   },
   availDa: {
     sinceBlock: 1180000, // avail block number, roughly 04/03 right before mainnet launch (chain was active before)
-    appId: '26',
+    appIds: ['26'],
   },
   nonTemplateTrackedTxs: [
     {

@@ -21,7 +21,6 @@ export const perennial: ScalingProject = underReviewL3({
     description:
       'Perennial is an L3 purpose-built for perpetuals trading with near-zero fees, tight spreads, and deeper liquidity via an intent-AMM hybrid model.',
     purposes: ['Universal'],
-    category: 'Optimium',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://perennial.finance/'],
@@ -36,6 +35,10 @@ export const perennial: ScalingProject = underReviewL3({
         'https://discord.com/invite/perennial-finance',
       ],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Optimistic',
   },
   chainConfig: {
     name: 'perennial',

@@ -13,6 +13,7 @@ import {
   type ProjectCostsInfo,
   type ProjectDiscoveryInfo,
   type ProjectLivenessInfo,
+  type ProjectScalingCategory,
   ProjectTvsConfigSchema,
   type TvsToken,
 } from '../types'
@@ -80,7 +81,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     discoveryInfo: adjustDiscoveryInfo(p),
     scalingInfo: {
       layer: p.type,
-      type: p.display.category,
+      type: getType(p),
       capability: p.capability,
       hostChain: getHostChain(p.hostChain ?? ProjectId.ETHEREUM),
       reasonsForBeingOther: p.reasonsForBeingOther,
@@ -92,6 +93,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       stage: getStage(p.stage),
       purposes: p.display.purposes,
       scopeOfAssessment: p.scopeOfAssessment,
+      proofSystem: p.proofSystem,
     },
     scalingStage: p.stage,
     scalingRisks: {
@@ -141,7 +143,28 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
     hasActivity: p.config.activityConfig ? true : undefined,
+    hasTestnet: p.hasTestnet,
     escrows: p.config.escrows,
+  }
+}
+
+function getType(p: ScalingProject): ProjectScalingCategory | undefined {
+  if (p.reasonsForBeingOther) return 'Other'
+  if (p.dataAvailability?.bridge.value === 'Plasma') return 'Plasma'
+
+  if (p.isUpcoming || !p.proofSystem || !p.dataAvailability) return undefined
+
+  const isEthereumBridge =
+    p.dataAvailability?.bridge.value === 'Enshrined' ||
+    p.dataAvailability.bridge.value === 'Self-attested' // Intmax case
+  const proofType = p.proofSystem?.type
+
+  if (proofType === 'Optimistic') {
+    return isEthereumBridge ? 'Optimistic Rollup' : 'Optimium'
+  }
+
+  if (proofType === 'Validity') {
+    return isEthereumBridge ? 'ZK Rollup' : 'Validium'
   }
 }
 

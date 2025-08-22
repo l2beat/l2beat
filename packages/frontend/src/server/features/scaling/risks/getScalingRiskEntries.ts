@@ -30,6 +30,7 @@ export async function getScalingRiskEntries() {
   ])
 
   const entries = projects
+    .filter((p) => p.statuses.reviewStatus !== 'initialReview')
     .map((project) =>
       getScalingRiskEntry(
         project,

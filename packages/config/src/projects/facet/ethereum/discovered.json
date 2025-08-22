@@ -16,7 +16,7 @@
       "type": "Contract",
       "template": "facet/FacetEtherBridge",
       "sourceHashes": [
-        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e",
+        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2",
         "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
       ],
       "proxyType": "EIP1967 proxy",
@@ -39,7 +39,7 @@
         }
       },
       "implementationNames": {
-        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "FacetEtherBridgeV6",
+        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "ERC1967Factory",
         "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": "FacetEtherBridgeV6"
       },
       "category": { "name": "External Bridges", "priority": 1 }
@@ -371,28 +371,23 @@
   ],
   "abis": {
     "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": [
-      "constructor()",
-      "error FeatureDisabled()",
-      "error InvalidAmount()",
-      "error InvalidInitialization()",
-      "error NotFactory()",
-      "error NotInitializing()",
-      "error ZeroAdminAddress()",
-      "event Initialized(uint64 version)",
-      "function adminMarkComplete(address recipient, bytes32 withdrawalId)",
-      "function adminWithdraw(address recipient, uint256 amount)",
-      "function adminWithdrawFCT(address recipient, uint256 amount)",
-      "function bridgeAndCall(address recipient, address dumbContractToCall, bytes functionCalldata, uint64) payable",
-      "function deposit() payable",
-      "function donateETH() payable",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getAdmin() view returns (address)",
-      "function getDumbContract() pure returns (address)",
-      "function getSigner() view returns (address)",
-      "function initialize()",
-      "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
-      "function setAdmin(address admin)",
-      "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
+      "error DeploymentFailed()",
+      "error SaltDoesNotStartWithCaller()",
+      "error Unauthorized()",
+      "error UpgradeFailed()",
+      "event AdminChanged(address indexed proxy, address indexed admin)",
+      "event Deployed(address indexed proxy, address indexed implementation, address indexed admin)",
+      "event Upgraded(address indexed proxy, address indexed implementation)",
+      "function adminOf(address proxy) view returns (address admin)",
+      "function changeAdmin(address proxy, address admin)",
+      "function deploy(address implementation, address admin) payable returns (address proxy)",
+      "function deployAndCall(address implementation, address admin, bytes data) payable returns (address proxy)",
+      "function deployDeterministic(address implementation, address admin, bytes32 salt) payable returns (address proxy)",
+      "function deployDeterministicAndCall(address implementation, address admin, bytes32 salt, bytes data) payable returns (address proxy)",
+      "function initCodeHash() view returns (bytes32 result)",
+      "function predictDeterministicAddress(bytes32 salt) view returns (address predicted)",
+      "function upgrade(address proxy, address implementation) payable",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
       "error InvalidProof()",

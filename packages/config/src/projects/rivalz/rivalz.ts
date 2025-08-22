@@ -10,7 +10,6 @@ export const rivalz: ScalingProject = upcomingL3({
   display: {
     name: 'Rivalz',
     slug: 'rivalz',
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     description:
       'Rivalz is a new chain on Arbitrum Orbit for a new service - ADCS (Agentic data coordination service).',
@@ -29,5 +28,8 @@ export const rivalz: ScalingProject = upcomingL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

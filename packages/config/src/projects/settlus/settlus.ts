@@ -34,18 +34,7 @@ export const settlus: ScalingProject = opStackL2({
   chainConfig: {
     name: 'settlus',
     chainId: 5371,
-    apis: [
-      {
-        type: 'rpc',
-        url: 'https://settlus-septestnet.g.alchemy.com/public',
-        callsPerMinute: 1500,
-      },
-    ],
-  },
-  activityConfig: {
-    type: 'block',
-    startBlock: 1,
-    adjustCount: { type: 'SubtractOne' },
+    apis: [],
   },
   discovery,
   genesisTimestamp,
