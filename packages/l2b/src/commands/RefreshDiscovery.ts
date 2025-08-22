@@ -10,6 +10,7 @@ import { asciiProgressBar, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { boolean, command, flag, option, optional, string } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
+import { AdaptiveTimePredictor } from '../implementations/common/AdaptiveTimePredictor'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 import { Separated } from './types'
@@ -140,9 +141,10 @@ export const RefreshDiscovery = command({
       logger.info(
         `\nOverall ${toRefresh.length} projects need discovery refresh.`,
       )
+      const predictor = new AdaptiveTimePredictor()
       if (args.confirmed || keyInYN('Do you want to continue?')) {
-        const startTime = performance.now()
         for (const [i, { config }] of toRefresh.entries()) {
+          const startTime = performance.now()
           await discoverAndUpdateDiffHistory(
             {
               project: config.name,
@@ -161,6 +163,7 @@ export const RefreshDiscovery = command({
 
           reportStatus(
             logger,
+            predictor,
             i + 1,
             toRefresh.length,
             performance.now() - startTime,
@@ -174,6 +177,7 @@ export const RefreshDiscovery = command({
 
 function reportStatus(
   logger: Logger,
+  predictor: AdaptiveTimePredictor,
   finishedCount: number,
   count: number,
   runTime: number,
@@ -181,7 +185,7 @@ function reportStatus(
 ) {
   const bar = chalk.cyan(asciiProgressBar(finishedCount, count))
   const timeLeft = formatSeconds(
-    ((runTime / finishedCount) * (count - finishedCount)) / 1000,
+    predictor.updateAndPredict(runTime / 1000, count - finishedCount),
   )
   const eta = `ETA: ${timeLeft.padEnd(6)}`
   const countDigits = count.toString().length
