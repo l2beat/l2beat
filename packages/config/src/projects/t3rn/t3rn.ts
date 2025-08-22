@@ -46,25 +46,6 @@ export const t3rn: ScalingProject = underReviewL3({
     ],
   },
   escrows: [
-    // TRN Token Contracts on various chains
-    {
-      address: EthereumAddress('0x1114982539A2Bfb84e8B9e4e320bbC04532a9e44'), // TRN token on Arbitrum
-      sinceTimestamp: UnixTime(1753909200), // 2025-07-31 (mainnet launch)
-      tokens: ['TRN'],
-      chain: 'arbitrum',
-    },
-    {
-      address: EthereumAddress('0xeECEC063D5ea592A49340437a8C59A624Fa79159'), // TRN token on Base
-      sinceTimestamp: UnixTime(1753909200), // 2025-07-31 (mainnet launch)
-      tokens: ['TRN'],
-      chain: 'base',
-    },
-    {
-      address: EthereumAddress('0x60bB07a76E7b6FA37110B5045752054Af4f5015F'), // TRN token on Optimism
-      sinceTimestamp: UnixTime(1753909200), // 2025-07-31 (mainnet launch)
-      tokens: ['TRN'],
-      chain: 'optimism',
-    },
     // Staking Contract on Arbitrum
     {
       address: EthereumAddress('0xC5a87664DCFD45B1bF646cFD209c5a54118B146B'), // stakedTRNChef on Arbitrum
