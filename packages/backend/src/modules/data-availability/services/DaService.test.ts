@@ -399,7 +399,7 @@ const MOCK_AVAIL_CONFIGS: BlockDaIndexedConfig[] = [
     type: 'avail' as const,
     daLayer: ProjectId('avail'),
     projectId: ProjectId('project-avail-1'),
-    appId: 'avail-1',
+    appIds: ['avail-1'],
     sinceBlock: 0,
   },
 ]
