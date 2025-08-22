@@ -22,10 +22,9 @@ export function HostChainRisksWarning({
       text={text}
       project={{
         name: hostChainName,
-        slug: hostChainSlug,
         icon: hostChainIcon,
-        type: 'scaling',
       }}
+      href={`/scaling/projects/${hostChainSlug}`}
     />
   )
 }
