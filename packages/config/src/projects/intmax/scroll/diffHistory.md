@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x396457894af894d753d560c3cace1f1cf94cdc70
+Generated with discovered.json: 0x8149ee5dda8757bebcda4e449a71de3c4d95ab6c
 
-# Diff at Mon, 18 Aug 2025 14:24:05 GMT:
+# Diff at Fri, 22 Aug 2025 08:15:58 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@0028c7090e7ff5307846e318ad45aaf7ed5601d0 block: 1754909083
-- current timestamp: 1755527038
+- comparing to: main@3d329dea47533f39a2d068e0d1659b75a5fa8cef block: 1754909083
+- current timestamp: 1755850487
 
 ## Description
 
@@ -81,7 +81,7 @@ Generated with discovered.json: 0x396457894af894d753d560c3cace1f1cf94cdc70
 ```diff
 +   Status: CREATED
     contract PlonkVerifier (0x1d38545a33740Ab3480d9035bB3126914404423d)
-    +++ description: None
+    +++ description: A wrapper verifier that can check both withdrawal zk proofs to exit from INTMAX network and zk proofs for claiming rewards of the privacy mining program.
 ```
 
 ## Source code changes

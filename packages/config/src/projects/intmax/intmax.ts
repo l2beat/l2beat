@@ -34,7 +34,6 @@ export const intmax: ScalingProject = {
         'https://docs.network.intmax.io',
         'https://eprint.iacr.org/2023/1082.pdf',
         'https://medium.com/intmax/the-deep-dive-into-statelessness-intmax2-algorithm-was-published-be7a306048ff',
-        'https://intmax-wallet.gitbook.io/intmax-developers-hub',
       ],
       repositories: ['https://github.com/InternetMaximalism'],
       socialMedia: ['https://twitter.com/intmaxIO'],

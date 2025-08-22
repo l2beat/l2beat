@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "ethereum",
-  "timestamp": 1755527038,
+  "timestamp": 1755850487,
   "configHash": "0xab3e140b35504785130784cc7c4e1c032524515bdb4084edb56f2417da06c907",
   "entries": [
     {
@@ -380,8 +380,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
-        "getLastDepositId": 9242,
-        "getLastRelayedDepositId": 9233,
+        "getLastDepositId": 9967,
+        "getLastRelayedDepositId": 9966,
         "getNativeTokenIndex": 0,
         "paused": false,
         "RELAY_LIMIT": 450,
@@ -480,7 +480,10 @@
           "x-random-fifty-percent-template",
           "x-test-social-graph",
           "x-test-trm",
-          "x-test-random"
+          "x-test-random",
+          "x-mxon-prod-001",
+          "x-kyc-basic-template-001",
+          "x-strict-membership-policy"
         ],
         "getRestakeableStrategies": [
           "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
@@ -1015,6 +1018,6 @@
     "intmax/Liquidity": "0xd7d5acf0c2574b4d98b015b7e23864f0e8f319fe1fa58532e649aabe51a35cfd",
     "intmax/PredicatePermitter": "0x3558c47cc4cc15bddb87c33f9c6166935da9199ad3d5a55bd77681d197be6728"
   },
-  "usedBlockNumbers": { "ethereum": 23168516 },
+  "usedBlockNumbers": { "ethereum": 23195352 },
   "permissionsConfigHash": "0x9a240030134b12857a0ad3b1c1459da05f8a936a431230313e2252e94d582823"
 }

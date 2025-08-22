@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A wrapper verifier that can check both withdrawal zk proofs to exit from INTMAX network and zk proofs for claiming rewards of the privacy mining program."
+}

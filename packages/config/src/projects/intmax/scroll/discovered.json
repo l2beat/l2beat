@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "scroll",
-  "timestamp": 1755527038,
+  "timestamp": 1755850487,
   "configHash": "0xbf5228d93d76a9815248f29132efc51f9d8b74a0bcb55653e1b01db58d64d062",
   "entries": [
     {
@@ -47,14 +47,14 @@
         ],
         "$upgradeCount": 1,
         "contribution": "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af",
-        "depositIndex": 9233,
-        "depositTreeRoot": "0x21621db819bddb60abf74f29bbd5a0ed42c8c6d023fa6a8465d49d831cf60b21",
+        "depositIndex": 9961,
+        "depositTreeRoot": "0x3ade6873a8f248cd9ccdf8acd9f29a4c795d17275e34bb6059e89f0af1246b00",
         "FULL_ACCOUNT_IDS_BYTES": 640,
-        "getLatestBlockNumber": 10360,
+        "getLatestBlockNumber": 11239,
         "getPenalty": 0,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "lastProcessedDepositId": 9233,
+        "lastProcessedDepositId": 9961,
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "NUM_SENDERS_IN_BLOCK": 128,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
@@ -70,10 +70,12 @@
       "name": "PlonkVerifier",
       "address": "scr:0x1d38545a33740Ab3480d9035bB3126914404423d",
       "type": "Contract",
+      "template": "intmax/PlonkVerifier",
       "sourceHashes": [
         "0x926abfaaba7312d1272afe02a6e3c9b60e473c53aa143fd5f2a11b7fa751751f"
       ],
       "proxyType": "immutable",
+      "description": "A wrapper verifier that can check both withdrawal zk proofs to exit from INTMAX network and zk proofs for claiming rewards of the privacy mining program.",
       "sinceTimestamp": 1754301333,
       "sinceBlock": 18309372,
       "values": { "$immutable": true },
@@ -126,11 +128,11 @@
           "numPhases": 7,
           "phase0Period": 16
         },
-        "getCurrentPeriod": 58,
+        "getCurrentPeriod": 62,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
-        "nullifierNonce": 2850,
+        "nullifierNonce": 3087,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
         "RELAY_LIMIT": 100,
         "REWARD_TOKEN_INDEX": 1,
@@ -636,9 +638,10 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "intmax/Claim": "0x96ba300a18f4cb6ac05e9c5f4fcc8b3916daca44ae2a839e88592b0a700c1638",
     "intmax/Contribution": "0x5b054bae35b8a718a705f49eb6b59b86926069d57f1a3a7b698ea12aad64e991",
+    "intmax/PlonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "intmax/Rollup": "0x9efdc4c4aebfdd09e6ab16141180d3f9fa8e1bfe833622003535a1d9b98836c6",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "usedBlockNumbers": { "scroll": 19518756 },
+  "usedBlockNumbers": { "scroll": 19860058 },
   "permissionsConfigHash": "0x9a240030134b12857a0ad3b1c1459da05f8a936a431230313e2252e94d582823"
 }
