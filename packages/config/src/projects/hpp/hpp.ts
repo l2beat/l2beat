@@ -29,6 +29,7 @@ export const hpp: ScalingProject = underReviewL2({
       ],
     },
   },
+  dataAvailability: undefined,
   chainConfig: {
     name: 'hpp',
     gasTokens: ['ETH'],
