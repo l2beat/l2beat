@@ -60,12 +60,7 @@ function CountWithAttesters({
 }) {
   if (!count || count === 0) return null
 
-  const Icon =
-    type === 'successful'
-      ? VerifiedIcon
-      : type === 'notVerified'
-        ? CircleQuestionMarkIcon
-        : UnverifiedIcon
+  const Icon = typeToIcon(type)
 
   return (
     <div className="flex items-center gap-1">
@@ -76,9 +71,7 @@ function CountWithAttesters({
         <TooltipTrigger>
           <Icon className="size-4" />
         </TooltipTrigger>
-        <TooltipContent>
-          {`${type === 'successful' ? 'Successfully' : type === 'notVerified' ? 'Not' : 'Unsuccessfully'} verified`}
-        </TooltipContent>
+        <TooltipContent>{`${typeToLabel(type)} verified`}</TooltipContent>
       </Tooltip>
       {attesters && attesters.length > 0 && (
         <span className="font-medium text-label-value-14 text-secondary leading-none">
@@ -103,4 +96,26 @@ function CountWithAttesters({
       ))}
     </div>
   )
+}
+
+function typeToIcon(type: 'successful' | 'notVerified' | 'unsuccessful') {
+  switch (type) {
+    case 'successful':
+      return VerifiedIcon
+    case 'notVerified':
+      return CircleQuestionMarkIcon
+    case 'unsuccessful':
+      return UnverifiedIcon
+  }
+}
+
+function typeToLabel(type: 'successful' | 'notVerified' | 'unsuccessful') {
+  switch (type) {
+    case 'successful':
+      return 'Successfully'
+    case 'notVerified':
+      return 'Not'
+    case 'unsuccessful':
+      return 'Unsuccessfully'
+  }
 }
