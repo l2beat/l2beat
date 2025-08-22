@@ -5007,6 +5007,6 @@
     "tokens/SimpleMultisig": "0x73e5a8496e19740524ebce826192ac009f1f6f859bb8266c5ded33163da586b8",
     "tokens/STRK": "0x9979d16113874eb421347478aae102736cd4055e0853e97e1c132d1f41506d1d"
   },
-  "usedBlockNumbers": { "ethereum": 23182187 },
+  "usedBlockNumbers": { "ethereum": 23182188 },
   "permissionsConfigHash": "0x99e5d35874c5e888c0b8a5cb06023231acd30445d4cd80b21fa0890f1423e811"
 }

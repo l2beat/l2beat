@@ -1,3 +1,25 @@
+Generated with discovered.json: 0xb9d08802718951e06d0df243e27833a8010478db
+
+# Diff at Fri, 22 Aug 2025 08:12:51 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3d329dea47533f39a2d068e0d1659b75a5fa8cef block: 1755599698
+- current timestamp: 1755850298
+
+## Description
+
+Added a new minter to ZK token, as approved by this governance proposal: https://www.tally.xyz/gov/zksync/proposal/38542076628472360665761284306860773162167153028104855759973536253827423667325?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+## Watched changes
+
+```diff
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.13:
++        "zksync:0xcfA355a6678a38c401B89bF44C6f98AF5a98572B"
+    }
+```
+
 Generated with discovered.json: 0x87696c25baaddea3f1e0e454ef878abf51558206
 
 # Diff at Tue, 19 Aug 2025 10:35:10 GMT:

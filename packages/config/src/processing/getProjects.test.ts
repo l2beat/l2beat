@@ -489,16 +489,18 @@ describe('getProjects', () => {
     describe('every appId is unique for Avail projects', () => {
       const appIds = new Map<string, string>()
       for (const project of projects) {
-        if (project.daTrackingConfig) {
+        const trackingConfig = project.daTrackingConfig
+        if (trackingConfig) {
           it(project.id, () => {
-            assert(project.daTrackingConfig) // type issue
-            for (const config of project.daTrackingConfig) {
+            for (const config of trackingConfig) {
               if (config.type === 'avail') {
-                assert(
-                  !appIds.has(config.appId),
-                  `Duplicate appId (${config.appId}) detected [${project.id}, ${appIds.get(config.appId)}]`,
-                )
-                appIds.set(config.appId, project.id)
+                for (const appId of config.appIds) {
+                  assert(
+                    !appIds.has(appId),
+                    `Duplicate appId (${appId}) detected [${project.id}, ${appIds.get(appId)}]`,
+                  )
+                  appIds.set(appId, project.id)
+                }
               }
             }
           })

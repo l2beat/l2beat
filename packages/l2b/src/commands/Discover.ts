@@ -8,7 +8,11 @@ import {
   getChainShortName,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional, positional, string } from 'cmd-ts'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
@@ -47,6 +51,7 @@ export const Discover = command({
       args.projectQuery,
     )
 
+    const timestamp = getTimestamp(args)
     logProjectsToDiscover(projectsOnChain, logger)
     for (const chainName in projectsOnChain) {
       const chain = getChainConfig(chainName)
@@ -55,7 +60,7 @@ export const Discover = command({
           ...args,
           project,
           chain,
-          timestamp: args.timestamp,
+          timestamp: timestamp ?? args.timestamp,
         }
 
         await discoverAndUpdateDiffHistory(config, {
@@ -134,4 +139,25 @@ function addressPredicate(
   const discovery = configReader.readDiscovery(haystackProject, chain)
 
   return discovery.entries.find((c) => c.address === address) !== undefined
+}
+
+// TODO(radomski): This will not exist. In the future all of this information
+// will be stored in the discovery but since we're emulating having a single
+// discovered.json we have to do this trick.
+// TODO(radomski): This is only to be removed after we have a single discovery
+// for all chains at the same time
+function getTimestamp(args: {
+  timestamp: number | undefined
+  dev: boolean
+  dryRun: boolean
+}): UnixTime | undefined {
+  if (
+    args.dev === false &&
+    args.dryRun === false &&
+    args.timestamp === undefined
+  ) {
+    return UnixTime.now() - UnixTime.MINUTE
+  }
+
+  return undefined
 }

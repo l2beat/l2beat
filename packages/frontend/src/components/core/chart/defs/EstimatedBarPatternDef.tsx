@@ -28,7 +28,7 @@ export function EstimatedBarPatternDef({ id, fill }: Props) {
         fill={fill}
         fillOpacity={0.5}
         className="not-dark:hidden"
-      />{' '}
+      />
     </pattern>
   )
 }

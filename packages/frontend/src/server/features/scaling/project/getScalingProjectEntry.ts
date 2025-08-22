@@ -32,6 +32,7 @@ import { getDataAvailabilitySection } from '~/utils/project/technology/getDataAv
 import { getOperatorSection } from '~/utils/project/technology/getOperatorSection'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/getOtherConsiderationsSection'
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
+import { getStateValidationSection } from '~/utils/project/technology/getStateValidationSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
 import { getScalingTvsSection } from '~/utils/project/tvs/getScalingTvsSection'
 import {
@@ -529,20 +530,14 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (project.scalingTechnology.stateValidation) {
+  const stateValidationSection = await getStateValidationSection(project)
+  if (stateValidationSection) {
     sections.push({
       type: 'StateValidationSection',
       props: {
         id: 'state-validation',
         title: 'State validation',
-        stateValidation: project.scalingTechnology.stateValidation,
-        diagram: getDiagramParams(
-          'state-validation',
-          project.scalingTechnology.stateValidationImage ?? project.slug,
-        ),
-        isUnderReview:
-          !!project.statuses.reviewStatus ||
-          !!project.scalingTechnology.stateValidation.isUnderReview,
+        ...stateValidationSection,
       },
     })
   }
