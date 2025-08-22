@@ -1,6 +1,7 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ClockIcon } from '~/icons/Clock'
@@ -14,7 +15,7 @@ import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
 export interface ThroughputSectionProps extends ProjectSectionProps {
-  projectId: ProjectId
+  project: ChartProject
   throughput: DaLayerThroughput[]
   customColors: Record<string, string> | undefined
   syncStatus: {
@@ -25,7 +26,7 @@ export interface ThroughputSectionProps extends ProjectSectionProps {
 }
 
 export function ThroughputSection({
-  projectId,
+  project,
   throughput,
   customColors,
   syncStatus,
@@ -50,13 +51,13 @@ export function ThroughputSection({
         </p>
         <HorizontalSeparator className="my-4" />
         <ThroughputSectionChart
-          daLayer={projectId}
+          project={project}
           configuredThroughputs={throughput}
           customColors={customColors}
           milestones={milestones}
         />
         <HorizontalSeparator className="my-4" />
-        <ThroughputChartStats projectId={projectId} syncStatus={syncStatus} />
+        <ThroughputChartStats projectId={project.id} syncStatus={syncStatus} />
       </IncludeScalingOnlyProvider>
     </ProjectSection>
   )

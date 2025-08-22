@@ -5,7 +5,7 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
-import partition from 'lodash/partition'
+import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import { getCollection } from '~/content/getCollection'
@@ -116,7 +116,7 @@ export async function getEcosystemEntry(
     return undefined
   }
 
-  const [allScalingProjects, projects] = await Promise.all([
+  const [allScalingProjects, projects, zkCatalogProjects] = await Promise.all([
     ps.getProjects({
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
@@ -138,8 +138,12 @@ export async function getEcosystemEntry(
         'milestones',
         'archivedAt',
         'isUpcoming',
+        'hasTestnet',
       ],
       where: ['isScaling'],
+    }),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
     }),
   ])
 
@@ -147,9 +151,10 @@ export async function getEcosystemEntry(
     (p) => p.ecosystemInfo.id === ecosystem.id,
   )
 
-  const [upcomingProjects, liveProjects] = partition(
-    ecosystemProjects,
-    (p) => p.isUpcoming,
+  const upcomingProjects = ecosystemProjects.filter((p) => p.isUpcoming)
+  const archivedProjects = ecosystemProjects.filter((p) => !!p.archivedAt)
+  const liveProjects = ecosystemProjects.filter(
+    (p) => !p.isUpcoming && !p.archivedAt,
   )
 
   const [
@@ -214,15 +219,16 @@ export async function getEcosystemEntry(
     projectsByRaas: getProjectsByRaas(liveProjects),
     token,
     projectsChartData: getEcosystemProjectsChartData(
-      liveProjects,
+      [...archivedProjects, ...liveProjects],
       allScalingProjects.length,
+      tvs.projects,
+      projectsActivity,
     ),
     banners: {
       firstBanner: ecosystem.ecosystemConfig.firstBanner,
       secondBanner: ecosystem.ecosystemConfig.secondBanner,
     },
     liveProjects: liveProjects
-      .filter((p) => !p.archivedAt)
       .map((project) => {
         const entry = getScalingSummaryEntry(
           project,
@@ -230,18 +236,29 @@ export async function getEcosystemEntry(
           tvs.projects[project.id.toString()],
           projectsActivity[project.id.toString()],
           !!projectsOngoingAnomalies[project.id.toString()],
+          zkCatalogProjects,
         )
-        return {
+
+        const result: EcosystemProjectEntry = {
           ...entry,
           gasTokens: project.chainConfig?.gasTokens,
           ecosystemInfo: project.ecosystemInfo,
-          filterable: entry.filterable?.filter(
-            (f) => !EXCLUDED_FILTERS.includes(f.id),
-          ),
+          filterable: compact([
+            ecosystem.id === 'superchain' && {
+              id: 'isPartOfSuperchain',
+              value: project.ecosystemInfo.isPartOfSuperchain ? 'Yes' : 'No',
+            },
+            ...(entry.filterable?.filter(
+              (f) => !EXCLUDED_FILTERS.includes(f.id),
+            ) ?? []),
+          ]),
         }
+        return result
       })
       .sort(compareTvs),
-    upcomingProjects: upcomingProjects.map(getScalingUpcomingEntry),
+    upcomingProjects: upcomingProjects.map((p) =>
+      getScalingUpcomingEntry(p, zkCatalogProjects),
+    ),
     allMilestones: getMilestones([ecosystem, ...ecosystemProjects]),
     ecosystemMilestones: getMilestones([ecosystem]),
     images: {

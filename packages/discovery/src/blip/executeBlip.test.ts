@@ -1031,7 +1031,7 @@ describe(executeBlip.name, () => {
     })
   })
 
-  describe('shape operations', () => {
+  describe('to_entries operations', () => {
     it('works with objects', () => {
       const input = { x: 'one', y: 'two', z: 'three' }
       const result = executeBlip(input, ['to_entries'])
@@ -1062,6 +1062,52 @@ describe(executeBlip.name, () => {
       const input: ContractValue[] = []
       const result = executeBlip(input, ['to_entries'])
       expect(result).toEqual([])
+    })
+  })
+
+  describe('length operations', () => {
+    it('returns length of arrays', () => {
+      expect(executeBlip([1, 2, 3], ['length'])).toEqual(3)
+      expect(executeBlip([], ['length'])).toEqual(0)
+      expect(executeBlip(['a', 'b', 'c', 'd'], ['length'])).toEqual(4)
+    })
+
+    it('returns length of objects', () => {
+      expect(executeBlip({ a: 1, b: 2 }, ['length'])).toEqual(2)
+      expect(executeBlip({}, ['length'])).toEqual(0)
+      expect(
+        executeBlip({ x: 'one', y: 'two', z: 'three' }, ['length']),
+      ).toEqual(3)
+    })
+
+    it('returns length of strings', () => {
+      expect(executeBlip('hello', ['length'])).toEqual(5)
+      expect(executeBlip('', ['length'])).toEqual(0)
+      expect(executeBlip('test string', ['length'])).toEqual(11)
+    })
+
+    it('throws on invalid inputs', () => {
+      expect(() => executeBlip(123, ['length'])).toThrow(
+        'length requires an array, object, or string input',
+      )
+      expect(() => executeBlip(null as any, ['length'])).toThrow(
+        'length requires an array, object, or string input',
+      )
+      expect(() => executeBlip(true, ['length'])).toThrow(
+        'length requires an array, object, or string input',
+      )
+    })
+
+    it('can be used in pipe operations', () => {
+      expect(executeBlip([1, 2, 3], ['pipe', ['length'], ['=', 3]])).toEqual(
+        true,
+      )
+      expect(
+        executeBlip({ a: 1, b: 2 }, ['pipe', ['length'], ['!=', 0]]),
+      ).toEqual(true)
+      expect(executeBlip('hello', ['pipe', ['length'], ['!=', 10]])).toEqual(
+        true,
+      )
     })
   })
 })

@@ -12,7 +12,6 @@ export const sova: ScalingProject = upcomingL2({
     description:
       "Sova is an Ethereum L2 running the OP rollup stack. The network's key innovation is providing native Bitcoin integration at the network level enabling smart contracts to directly interact with Bitcoin.",
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://sova.io/'],
@@ -28,5 +27,8 @@ export const sova: ScalingProject = upcomingL2({
   hasTestnet: true,
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

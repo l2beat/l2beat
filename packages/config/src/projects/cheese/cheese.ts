@@ -16,7 +16,6 @@ export const cheese: ScalingProject = underReviewL3({
     BADGES.RaaS.Caldera,
   ],
   display: {
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     name: 'CheeseChain',
     slug: 'cheese',
@@ -35,6 +34,10 @@ export const cheese: ScalingProject = underReviewL3({
         'https://t.me/cheesegateway',
       ],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Optimistic',
   },
   chainConfig: {
     name: 'cheese',

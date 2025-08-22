@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x97c31230516821464669e730affc5cc30943b2eb
+
+# Diff at Wed, 20 Aug 2025 14:33:17 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@67e41f566326dea91dc3f12a1b8947109f00301c block: 1755509879
+- current timestamp: 1755700281
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.75:
++        {"sourceChainSelector":"18164309074156128038","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.18164309074156128038:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
 Generated with discovered.json: 0x339cd3cc637ecb3284c56c4998dc7b952fe73c88
 
 # Diff at Mon, 18 Aug 2025 09:48:51 GMT:

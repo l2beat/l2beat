@@ -36,7 +36,6 @@ import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
-  ProjectScalingProofSystem,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -52,8 +51,8 @@ import type {
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
-  ProjectScalingCategory,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
@@ -162,9 +161,7 @@ interface OpStackConfigCommon {
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hasSuperchainScUpgrades?: boolean
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingCategory
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   /** Set to true if projects posts blobs to Ethereum */
   usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
@@ -182,13 +179,17 @@ interface OpStackConfigCommon {
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
+  /**
+   * Overrides the onchain check for superchain ecosystem
+   * Its needed cuz some project are using custom superchain config
+   * but still are a part of superchain config due to offchain agreements
+   */
+  isPartOfSuperchain?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   upgradesAndGovernance?: string
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingDisplay['category']
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
@@ -208,7 +209,6 @@ function opStackCommon(
     | 'architectureImage'
     | 'purposes'
     | 'stacks'
-    | 'category'
     | 'warning'
   >
 } {
@@ -238,9 +238,13 @@ function opStackCommon(
     'opstack',
     postsToEthereum(templateVars) ? 'rollup' : 'optimium',
   ]
-  const partOfSuperchain = isPartOfSuperchain(templateVars)
-  if (partOfSuperchain) {
+  const partOfSuperchainOnchain = isPartOfSuperchainOnchain(templateVars)
+
+  if (hasSuperchainConfig(templateVars)) {
     architectureImage.push('superchain')
+  }
+
+  if (templateVars.isPartOfSuperchain || partOfSuperchainOnchain) {
     automaticBadges.push(BADGES.Infra.Superchain)
   }
   if (fraudProofType !== 'None') {
@@ -293,13 +297,6 @@ function opStackCommon(
             ? 'kailua'
             : undefined,
       stacks: ['OP Stack'],
-      category:
-        templateVars.display.category ??
-        (templateVars.reasonsForBeingOther
-          ? 'Other'
-          : postsToEthereum(templateVars)
-            ? 'Optimistic Rollup'
-            : 'Optimium'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -311,7 +308,7 @@ function opStackCommon(
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Optimistic' }),
+      (hasNoProofs ? undefined : { type: 'Optimistic', name: 'OPFP' }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
@@ -361,6 +358,8 @@ function opStackCommon(
     },
     ecosystemInfo: {
       id: ProjectId('superchain'),
+      isPartOfSuperchain:
+        templateVars.isPartOfSuperchain ?? partOfSuperchainOnchain,
     },
     technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
@@ -1598,7 +1597,20 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
 
-function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
+function isPartOfSuperchainOnchain(templateVars: OpStackConfigCommon): boolean {
+  if (!templateVars.discovery.hasContract('SuperchainConfig')) {
+    return false
+  }
+
+  // Some chains are not part of superchain, but they deploy their own version of the superchain config
+  // We need to check if the chain is part of superchain by checking the address of the superchain config
+  return (
+    templateVars.discovery.getContract('SuperchainConfig').address ===
+    'eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C'
+  )
+}
+
+function hasSuperchainConfig(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('SuperchainConfig')
 }
 

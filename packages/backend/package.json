@@ -6,7 +6,8 @@
   "types": "./index.d.ts",
   "scripts": {
     "build": "./scripts/build.sh",
-    "build:dependencies": "cd ../.. && pnpm build:dependencies",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:backend",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:backend",
     "build:config": "cd ../config && pnpm build",
     "clean": "rm -rf build",
     "format": "biome format .",

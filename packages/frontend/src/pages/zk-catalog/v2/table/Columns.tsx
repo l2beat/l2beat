@@ -39,7 +39,7 @@ export const zkCatalogColumns = [
       id: 'tvs',
       meta: {
         tooltip:
-          'The values secured by the listed verifiers, calculated as a sum of the total value secured of all projects that use them.',
+          'The values secured by the listed verifiers, calculated as a sum of the total value secured of all projects that use them and are listed on L2BEAT.',
       },
       cell: (ctx) => {
         return (
@@ -67,7 +67,7 @@ export const zkCatalogColumns = [
         header: 'Verifiers',
         meta: {
           tooltip:
-            'Shows the count of verifiers and their verification status - successful or unsuccessful, if verification was performed.',
+            'Shows the number of different versions of onchain verifiers and whether they were independently checked by regenerating them from the proving system’s source code. A green check indicates successful verification, while a red cross indicates a failure to regenerate.',
           virtual: true,
         },
       }),

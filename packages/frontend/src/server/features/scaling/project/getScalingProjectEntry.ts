@@ -3,6 +3,7 @@ import type {
   ProjectAssociatedToken,
   ProjectCustomColors,
   ProjectScalingCategory,
+  ProjectScalingProofSystem,
   ProjectScalingStage,
   ReasonForBeingInOther,
   WarningWithSentiment,
@@ -75,7 +76,8 @@ export interface ProjectScalingEntry {
     links: ProjectLink[]
     hostChain?: string
     chainId?: number
-    category: ProjectScalingCategory
+    category?: ProjectScalingCategory
+    proofSystemType?: ProjectScalingProofSystem['type']
     purposes: string[]
     tvs?: {
       breakdown?: {
@@ -191,6 +193,7 @@ export async function getScalingProjectEntry(
           : 'multiple'
       : undefined,
     category: project.scalingInfo.type,
+    proofSystemType: project.scalingInfo.proofSystem?.type,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
     links: getProjectLinks(project.display.links),
@@ -313,12 +316,12 @@ export async function getScalingProjectEntry(
       props: {
         id: 'tvs',
         title: 'Value Secured',
-        projectId: project.id,
         tvsBreakdownUrl: `/scaling/projects/${project.slug}/tvs-breakdown`,
         milestones: sortedMilestones,
         tokens,
         tvsProjectStats,
         tvsInfo: project.tvsInfo,
+        project,
         ...scalingTvsSection,
       },
     })
@@ -330,10 +333,9 @@ export async function getScalingProjectEntry(
       props: {
         id: 'activity',
         title: 'Activity',
-        projectId: project.id,
         milestones: sortedMilestones,
         category: project.scalingInfo.type,
-        projectName: project.name,
+        project,
         ...activitySection,
       },
     })
@@ -345,8 +347,8 @@ export async function getScalingProjectEntry(
       props: {
         id: 'onchain-costs',
         title: 'Onchain costs',
-        projectId: project.id,
         milestones: sortedMilestones,
+        project,
         ...costsSection,
       },
     })
@@ -358,8 +360,8 @@ export async function getScalingProjectEntry(
       props: {
         id: 'data-posted',
         title: 'Data posted',
-        projectId: project.id,
         milestones: sortedMilestones,
+        project,
         ...dataPostedSection,
       },
     })
@@ -377,8 +379,8 @@ export async function getScalingProjectEntry(
       props: {
         id: 'liveness',
         title: 'Liveness',
-        projectId: project.id,
         milestones: sortedMilestones,
+        project,
         ...livenessSection,
       },
     })
@@ -473,7 +475,10 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (project.scalingStage.stage !== 'NotApplicable') {
+  if (
+    project.scalingStage.stage !== 'NotApplicable' &&
+    project.scalingInfo.type
+  ) {
     sections.push({
       type: 'StageSection',
       props: {

@@ -13,7 +13,6 @@ export const toy: ScalingProject = upcomingL3({
     description:
       'TOY offers a solution by building consumer AI tools that integrate with any game on the most popular streaming platforms, connecting players with viewers and creating value, connections, and increased sales.',
     purposes: ['AI', 'Gaming'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://playontoy.com/'],
@@ -29,6 +28,9 @@ export const toy: ScalingProject = upcomingL3({
         'https://tiktok.com/@playontoy',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
