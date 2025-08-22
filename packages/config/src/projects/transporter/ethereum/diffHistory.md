@@ -8,7 +8,7 @@ Generated with discovered.json: 0x57ddf43bcb439f36c5cad6ea0fe21f7762cb7814
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New off ramps, added new HybridLockReleaseUSDCTokenPool template.
 
 ## Watched changes
 
