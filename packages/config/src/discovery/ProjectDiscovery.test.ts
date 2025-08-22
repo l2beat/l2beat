@@ -11,8 +11,8 @@ import { ProjectDiscovery } from './ProjectDiscovery'
 describe(ProjectDiscovery.name, () => {
   const projectName = 'ExampleProject'
   const configReader = mockObject<ConfigReader>({
-    readConfig: (projectName: string, chain: string) =>
-      mockConfig(projectName, chain),
+    readConfig: (projectName: string) =>
+      mockConfig(projectName),
     readDiscovery: () => discoveredJsonStub,
     readAllDiscoveredChainsForProject: mockFn().returns(['ethereum']),
   })
@@ -126,12 +126,10 @@ describe(ProjectDiscovery.name, () => {
 
 function mockConfig(
   name: string,
-  chain = 'ethereum',
   innerConfig: Partial<DiscoveryConfig> = {},
 ): ConfigRegistry {
   return new ConfigRegistry({
     name,
-    chain,
     initialAddresses: [],
     ...innerConfig,
   })
