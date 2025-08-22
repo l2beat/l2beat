@@ -7,6 +7,7 @@ export const alphadune: ScalingProject = upcomingL3({
   capability: 'universal',
   addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   hostChain: ProjectId('arbitrum'),
+  hasTestnet: true,
   display: {
     name: 'Alpha Dune Network',
     slug: 'alphadune',
