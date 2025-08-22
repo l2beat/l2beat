@@ -34,9 +34,17 @@ export const risc0: BaseProject = {
     {
       title: 'rv32im circuit soundness vulnerability',
       url: 'https://x.com/RiscZero/status/1935404812146725042',
-      date: '2024-06-18T00:00:00Z',
+      date: '2025-06-18T00:00:00Z',
       description:
-        'Release of Risc0 2.1.0 with a fix of a missing constraint in rv32im circuit that affected any 3-register RISC-V instruction.',
+        'Release of risc0-zkVM 2.1.0 with a fix of a missing constraint in rv32im circuit that affected any 3-register RISC-V instruction.',
+      type: 'incident',
+    },
+    {
+      title: 'Underconstrained division vulnerability',
+      url: 'https://x.com/RiscZero/status/1952503598056882225',
+      date: '2025-08-05T00:00:00Z',
+      description:
+        'Release of risc0-zkVM 2.2.0 with a fix of a signed integer division soundness vulnerability.',
       type: 'incident',
     },
   ],
