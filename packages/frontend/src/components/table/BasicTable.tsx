@@ -196,11 +196,8 @@ export function BasicTableRow<T extends BasicTableRow>({
   )
 
   const denominator = commonDenominator(uniqueRowsCount)
-  assert(
-    denominator === Math.max(...uniqueRowsCount),
-    'Incorrect row configuration',
-  )
   const maxRowSpan = Math.max(...uniqueRowsCount)
+  assert(denominator === maxRowSpan, 'Incorrect row configuration')
 
   const cellPropsMap = new Map<number, React.ComponentProps<typeof TableCell>>()
 
