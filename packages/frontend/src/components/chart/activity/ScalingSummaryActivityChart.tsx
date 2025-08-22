@@ -77,8 +77,13 @@ const chartMeta = {
   },
 } satisfies ChartMeta
 
+const hiddenDataKeys = ['others'] as const
+
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, ['others'])
+  const { dataKeys, toggleDataKey } = useChartDataKeys(
+    chartMeta,
+    hiddenDataKeys,
+  )
 
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
     range: timeRange,
@@ -114,6 +119,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
         interactiveLegend={{
           dataKeys,
           onItemClick: toggleDataKey,
+          disableOnboarding: true,
         }}
       >
         <AreaChart data={chartData} margin={{ top: 20 }}>
@@ -127,9 +133,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             <EthereumFillGradientDef id="ethereum-fill" />
             <EthereumStrokeGradientDef id="ethereum-stroke" />
           </defs>
-          <ChartLegend
-            content={<ChartLegendContent disableOnboarding={true} />}
-          />
+          <ChartLegend content={<ChartLegendContent />} />
           {getStrokeOverFillAreaComponents({
             data: [
               {
@@ -165,6 +169,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             data: chartData,
             isLoading,
             yAxis: {
+              domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
               unit: ' UOPS',
             },
             syncedUntil: data?.syncedUntil,

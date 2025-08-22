@@ -104,6 +104,7 @@ export function ScalingSummaryTvsChart({
         interactiveLegend={{
           dataKeys,
           onItemClick: toggleDataKey,
+          disableOnboarding: true,
         }}
       >
         <AreaChart
@@ -118,9 +119,7 @@ export function ScalingSummaryTvsChart({
             <YellowFillGradientDef id="others-fill" />
             <YellowStrokeGradientDef id="others-stroke" />
           </defs>
-          <ChartLegend
-            content={<ChartLegendContent disableOnboarding={true} />}
-          />
+          <ChartLegend content={<ChartLegendContent />} />
           {getStrokeOverFillAreaComponents({
             data: [
               {
@@ -147,6 +146,7 @@ export function ScalingSummaryTvsChart({
             data: chartData,
             isLoading,
             yAxis: {
+              domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },
             syncedUntil: data?.syncedUntil,

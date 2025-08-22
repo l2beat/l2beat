@@ -1,4 +1,5 @@
 import { avail } from '../projects/avail/avail'
+import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
@@ -16,7 +17,6 @@ import { near } from '../projects/near/near-da'
 import { nebraupa } from '../projects/nebraupa/nebraupa'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
 import { payy } from '../projects/payy/payy-zk-catalog'
-import { polygonzkevmprover } from '../projects/polygonzkevmprover/polygonzkevmprover'
 import { risc0 } from '../projects/risc0/risc0'
 import { risczero } from '../projects/risczero/risczero'
 import { soulwallet } from '../projects/soulwallet/soulwallet'
@@ -28,6 +28,7 @@ import { vector } from '../projects/vector/vector'
 import { worldcoinsemaphore } from '../projects/worldcoinsemaphore/worldcoinsemaphore'
 import { worldcoinsmtb } from '../projects/worldcoinsmtb/worldcoinsmtb'
 import { zircuitprover } from '../projects/zircuitprover/zircuitprover'
+import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
 
@@ -45,7 +46,7 @@ export const refactored: BaseProject[] = [
   // zk catalog v2
   sp1,
   boojum,
-  polygonzkevmprover,
+  zkprover,
   stone,
   lineaprover,
   openvmprover,
@@ -54,6 +55,7 @@ export const refactored: BaseProject[] = [
   loopringprover,
   zksyncprover,
   intmaxprover,
+  aztecv1prover,
   // da-beat
   ethereum,
   avail,

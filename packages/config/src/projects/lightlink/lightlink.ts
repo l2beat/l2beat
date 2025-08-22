@@ -68,12 +68,12 @@ export const lightlink: ScalingProject = {
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
+  proofSystem: undefined,
   display: {
     name: 'LightLink',
     slug: 'lightlink',
     description:
       'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions.',
-    category: 'Other',
     purposes: ['Universal'],
     links: {
       websites: ['https://lightlink.io'],

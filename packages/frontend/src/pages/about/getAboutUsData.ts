@@ -14,6 +14,7 @@ export async function getAboutUsData(
       manifest,
       metadata: getMetadata(manifest, {
         title: 'About Us - L2BEAT',
+        description: 'Learn about L2BEAT’s mission.',
         openGraph: {
           url,
           image: '/meta-images/about-us/opengraph-image.png',

@@ -17,6 +17,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   pickWorseRisk,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -50,8 +51,8 @@ import type {
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
-  ProjectScalingCategory,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
@@ -139,6 +140,7 @@ interface OpStackConfigCommon {
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   milestones?: Milestone[]
+  nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
@@ -159,9 +161,7 @@ interface OpStackConfigCommon {
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hasSuperchainScUpgrades?: boolean
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingCategory
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   /** Set to true if projects posts blobs to Ethereum */
   usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
@@ -179,13 +179,17 @@ interface OpStackConfigCommon {
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
+  /**
+   * Overrides the onchain check for superchain ecosystem
+   * Its needed cuz some project are using custom superchain config
+   * but still are a part of superchain config due to offchain agreements
+   */
+  isPartOfSuperchain?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   upgradesAndGovernance?: string
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingDisplay['category']
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
@@ -205,7 +209,6 @@ function opStackCommon(
     | 'architectureImage'
     | 'purposes'
     | 'stacks'
-    | 'category'
     | 'warning'
   >
 } {
@@ -235,9 +238,13 @@ function opStackCommon(
     'opstack',
     postsToEthereum(templateVars) ? 'rollup' : 'optimium',
   ]
-  const partOfSuperchain = isPartOfSuperchain(templateVars)
-  if (partOfSuperchain) {
+  const partOfSuperchainOnchain = isPartOfSuperchainOnchain(templateVars)
+
+  if (hasSuperchainConfig(templateVars)) {
     architectureImage.push('superchain')
+  }
+
+  if (templateVars.isPartOfSuperchain || partOfSuperchainOnchain) {
     automaticBadges.push(BADGES.Infra.Superchain)
   }
   if (fraudProofType !== 'None') {
@@ -264,6 +271,11 @@ function opStackCommon(
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
   ]
+
+  const hasNoProofs = templateVars.reasonsForBeingOther?.some(
+    (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
+  )
+
   return {
     archivedAt: templateVars.archivedAt,
     id: ProjectId(templateVars.discovery.projectName),
@@ -285,13 +297,6 @@ function opStackCommon(
             ? 'kailua'
             : undefined,
       stacks: ['OP Stack'],
-      category:
-        templateVars.display.category ??
-        (templateVars.reasonsForBeingOther
-          ? 'Other'
-          : postsToEthereum(templateVars)
-            ? 'Optimistic Rollup'
-            : 'Optimium'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -301,6 +306,9 @@ function opStackCommon(
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
+    proofSystem:
+      templateVars.nonTemplateProofSystem ??
+      (hasNoProofs ? undefined : { type: 'Optimistic', name: 'OPFP' }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
@@ -350,6 +358,8 @@ function opStackCommon(
     },
     ecosystemInfo: {
       id: ProjectId('superchain'),
+      isPartOfSuperchain:
+        templateVars.isPartOfSuperchain ?? partOfSuperchainOnchain,
     },
     technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
@@ -724,7 +734,7 @@ A single remaining child in a tournament can be 'resolved' and will be finalized
 The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
             references: [
               {
-                url: 'https://risc0.github.io/kailua/introduction.html',
+                url: 'https://risczero.com/blog/kailua-how-it-works',
                 title: 'Risc0 Kailua Docs',
               },
               {
@@ -1587,7 +1597,20 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
 
-function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
+function isPartOfSuperchainOnchain(templateVars: OpStackConfigCommon): boolean {
+  if (!templateVars.discovery.hasContract('SuperchainConfig')) {
+    return false
+  }
+
+  // Some chains are not part of superchain, but they deploy their own version of the superchain config
+  // We need to check if the chain is part of superchain by checking the address of the superchain config
+  return (
+    templateVars.discovery.getContract('SuperchainConfig').address ===
+    'eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C'
+  )
+}
+
+function hasSuperchainConfig(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('SuperchainConfig')
 }
 

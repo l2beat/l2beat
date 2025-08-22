@@ -1,3 +1,173 @@
+Generated with discovered.json: 0xc39968d29a2f7123903d09a69f8d2e6d85e7f569
+
+# Diff at Wed, 20 Aug 2025 10:48:46 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@262b00e32d0a4e462cf5011a16f1fcaa9ed6d5a8 block: 1755156807
+- current timestamp: 1755686907
+
+## Description
+
+Updated the range program for proving L2 STF. I was not able to check the vkey commitment.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
++++ description: Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey.
++++ severity: HIGH
+      values.rangeVkeyCommitment:
+-        "0x2ebb1e0d5380158f22adf3750cc6056100a133d274fd7c5b457148ff29dfe173"
++        "0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872"
+    }
+```
+
+Generated with discovered.json: 0xaa81c969a22f2d5fc8e7b7045f01ffdb18ad02ae
+
+# Diff at Thu, 14 Aug 2025 07:33:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1755009465
+- current timestamp: 1755156807
+
+## Description
+
+signer change.
+
+## Watched changes
+
+```diff
+    contract Safe (0x261a25ec6c396389B75B6b22BD4A8227070E3B50) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 4 (25%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+Generated with discovered.json: 0xe75ccf8ecc3587a3f653de33137e903bd5440ea5
+
+# Diff at Tue, 12 Aug 2025 14:40:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754909593
+- current timestamp: 1755009465
+
+## Description
+
+Conduit Multisig 1 signer added.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 12 (33%)"
+    }
+```
+
+Generated with discovered.json: 0xfb1b07e5a70f01bdcf7b811a556c09b25e6091a3
+
+# Diff at Mon, 11 Aug 2025 10:53:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32817e35c9fe0ba1a1c24a734c37d91068b1565d block: 1754486452
+- current timestamp: 1754909593
+
+## Description
+
+yield recipient changed.
+
+## Watched changes
+
+```diff
+    contract vbWBTC (0x2C24B57e2CCd1f273045Af6A5f632504C432374F) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50."
+    }
+```
+
+```diff
+    contract vbETH (0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50."
+    }
+```
+
+```diff
+    contract vbUSDS (0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50."
+    }
+```
+
+```diff
+    contract vbUSDC (0x53E82ABbb12638F09d9e624578ccB666217a765e) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50."
+    }
+```
+
+```diff
+    contract vbUSDT (0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x261a25ec6c396389B75B6b22BD4A8227070E3B50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 4 files changed, 2250 insertions(+)
+```
+
 Generated with discovered.json: 0x67d63c0bc913306634e8c5e959df23eb147cb90e
 
 # Diff at Wed, 06 Aug 2025 13:35:55 GMT:

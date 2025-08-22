@@ -1,8 +1,9 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -54,7 +55,7 @@ interface Props {
   scale: ChartScale
   metric: ActivityMetric
   type: ActivityChartType
-  projectName?: string
+  project?: ChartProject
   className?: string
   tickCount?: number
 }
@@ -67,28 +68,32 @@ export function ActivityChart({
   scale,
   type,
   metric,
-  projectName,
+  project,
   className,
   tickCount,
 }: Props) {
-  const chartMeta = {
-    projects: {
-      label:
-        projectName ??
-        (type === 'ValidiumsAndOptimiums' ? 'Validiums & Optimiums' : type),
-      color: typeToColor(type),
-      indicatorType: {
-        shape: 'line',
+  const chartMeta = useMemo(
+    () => ({
+      projects: {
+        label:
+          project?.shortName ??
+          project?.name ??
+          (type === 'ValidiumsAndOptimiums' ? 'Validiums & Optimiums' : type),
+        color: typeToColor(type),
+        indicatorType: {
+          shape: 'line',
+        },
       },
-    },
-    ethereum: {
-      label: 'Ethereum',
-      color: 'var(--chart-ethereum)',
-      indicatorType: {
-        shape: 'line',
+      ethereum: {
+        label: 'Ethereum',
+        color: 'var(--chart-ethereum)',
+        indicatorType: {
+          shape: 'line',
+        },
       },
-    },
-  } satisfies ChartMeta
+    }),
+    [project?.name, project?.shortName, type],
+  ) satisfies ChartMeta
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
 
@@ -102,10 +107,11 @@ export function ActivityChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
+      project={project}
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend content={<ChartLegendContent reverse />} />
         {getStrokeOverFillAreaComponents({
           data: [
             {
@@ -127,6 +133,7 @@ export function ActivityChart({
           isLoading,
           yAxis: {
             scale,
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
             tickCount,
           },

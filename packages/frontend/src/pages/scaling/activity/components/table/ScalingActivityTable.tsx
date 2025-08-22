@@ -1,7 +1,7 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
-import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
@@ -12,11 +12,10 @@ import { getScalingActivityColumns } from './columns'
 
 interface Props {
   entries: ScalingActivityEntry[]
-  rollups?: boolean
   notReviewed?: boolean
 }
 
-export function ScalingActivityTable({ entries, rollups, notReviewed }: Props) {
+export function ScalingActivityTable({ entries, notReviewed }: Props) {
   const { metric } = useActivityMetricContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -45,12 +44,19 @@ export function ScalingActivityTable({ entries, rollups, notReviewed }: Props) {
       },
     },
   })
-  return rollups ? (
-    <RollupsTable table={table} />
-  ) : (
+
+  return (
     <BasicTable
       table={table}
-      rowColoringMode={notReviewed ? 'ignore-colors' : undefined}
+      rowSortingFn={(a, b) => {
+        if (a.original.id === ProjectId.ETHEREUM) {
+          return -1
+        }
+        if (b.original.id === ProjectId.ETHEREUM) {
+          return 1
+        }
+        return 0
+      }}
     />
   )
 }

@@ -43,7 +43,6 @@ export const eclipse: ScalingProject = {
     slug: 'eclipse',
     description:
       'Eclipse is a sidechain powered by the Solana Virtual Machine (SVM).',
-    category: 'Other',
     purposes: ['Universal'],
     links: {
       websites: ['https://eclipse.xyz/'],
@@ -58,6 +57,7 @@ export const eclipse: ScalingProject = {
       ],
     },
   },
+  proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',
   },

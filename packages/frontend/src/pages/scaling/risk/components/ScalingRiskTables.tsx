@@ -6,7 +6,6 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import {
-  NotReviewedInfo,
   OthersInfo,
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
@@ -27,7 +26,6 @@ export function ScalingRiskTables(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    notReviewed: props.notReviewed.filter(filterEntries),
   }
 
   const initialSort = {
@@ -58,17 +56,11 @@ export function ScalingRiskTables(props: Props) {
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.notReviewed.length > 0 && (
-            <DirectoryTabsTrigger value="notReviewed">
-              Not reviewed
-              <CountBadge>{entries.notReviewed.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <ScalingRiskTable entries={entries.rollups} rollups />
+            <ScalingRiskTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
@@ -81,12 +73,6 @@ export function ScalingRiskTables(props: Props) {
           <DirectoryTabsContent value="others">
             <OthersInfo />
             <ScalingRiskTable entries={entries.others} />
-          </DirectoryTabsContent>
-        </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="notReviewed">
-            <NotReviewedInfo />
-            <ScalingRiskTable entries={entries.notReviewed} notReviewed />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

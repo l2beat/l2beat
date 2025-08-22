@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const genlayer: ScalingProject = upcomingL2({
   id: 'genlayer',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1740073213), // 2025-01-20T17:40:13Z
   display: {
     name: 'GenLayer',
@@ -12,7 +13,6 @@ export const genlayer: ScalingProject = upcomingL2({
     description:
       'GenLayer is the first AI-native blockchain built for AI-powered smart contracts.',
     purposes: ['Universal', 'AI'],
-    category: 'ZK Rollup',
     stacks: ['ZK Stack'],
     links: {
       websites: ['https://genlayer.com/'],
@@ -23,5 +23,8 @@ export const genlayer: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

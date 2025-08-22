@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "authorizedRelayers": {
+      "handler": {
+        "type": "event",
+        "select": ["addr"],
+        "add": {
+          "event": ["Authorized"],
+          "where": ["=", "#authorized", true]
+        },
+        "remove": {
+          "event": ["Authorized"],
+          "where": ["=", "#authorized", false]
+        }
+      }
+    }
+  },
+  "ignoreMethods": ["proxiableUUID"]
+}

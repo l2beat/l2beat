@@ -196,10 +196,8 @@ export const starknet: ScalingProject = {
     slug: 'starknet',
     stacks: ['SN Stack'],
     description:
-      'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
+      'Starknet is a ZK rollup that uses STARK proofs to securely scale Ethereum and Ethereum blobs for data availability. Starknet is also actively engaged in bringing Bitcoin users the same scale, UX, and liquidity through a variety of products and programs.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
-
     links: {
       bridges: ['https://starkgate.starknet.io/'],
       websites: [
@@ -228,6 +226,10 @@ export const starknet: ScalingProject = {
       value:
         "The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Due to this complexity, Starknet's SHARP costs represent an estimate based on self-reported costs by the Starkware team.",
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('stone'),
   },
   chainConfig: {
     name: 'starknet',
@@ -285,6 +287,8 @@ export const starknet: ScalingProject = {
       rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
       securityCouncilReference:
         'https://governance.starknet.io/learn/security_council',
+      stage1PrincipleDescription:
+        'While Starknet is considered Stage 1, the Security Council minority is employed to enforce censorship resistance in case the permissioned operator fails to include transactions. The process through which a censored user can contact the Security Council is not defined and currently unclear.',
     },
   ),
   technology: {
@@ -310,10 +314,10 @@ export const starknet: ScalingProject = {
     nodeSoftware:
       'The [Juno](https://github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
     compressionScheme:
-      'Starknet uses [stateful compression since v0.13.4](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/#v0_13_4).',
+      'Starknet uses [stateful compression since v0.13.4](https://docs.starknet.io/architecture/data-availability/#v0_13_4).',
     genesisState: 'There is no non-empty genesis state.',
     dataFormat:
-      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/architecture-and-concepts/network-architecture/data-availability/).',
+      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/architecture/data-availability/).',
   },
   stateValidation: {
     description:

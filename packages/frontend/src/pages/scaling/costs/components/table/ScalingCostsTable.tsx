@@ -1,7 +1,6 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useEffect, useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
-import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { CostsTableData } from '~/server/features/scaling/costs/getCostsTableData'
@@ -17,10 +16,9 @@ import { getScalingCostsColumns } from './columns'
 
 interface Props {
   entries: ScalingCostsEntry[]
-  rollups?: boolean
 }
 
-export function ScalingCostsTable({ entries, rollups }: Props) {
+export function ScalingCostsTable({ entries }: Props) {
   const { range } = useCostsTimeRangeContext()
   const { unit } = useCostsUnitContext()
   const { metric } = useCostsMetricContext()
@@ -61,7 +59,7 @@ export function ScalingCostsTable({ entries, rollups }: Props) {
     }
   }, [metric, setSorting, table])
 
-  return rollups ? <RollupsTable table={table} /> : <BasicTable table={table} />
+  return <BasicTable table={table} />
 }
 
 function mapToTableEntry(
@@ -92,7 +90,6 @@ function mapToTableEntry(
   return {
     ...entry,
     data: {
-      ...projectData,
       type: 'available',
       isSynced: projectData.isSynced,
       total: projectData[unit].total,
@@ -100,6 +97,7 @@ function mapToTableEntry(
       blobs: projectData[unit].blobs,
       compute: projectData[unit].compute,
       overhead: projectData[unit].overhead,
+      uopsCount: projectData.uopsCount,
     },
   }
 }
@@ -136,7 +134,7 @@ function calculateDataByType(
         data: {
           ...e.data,
           total: e.data.total / e.data.uopsCount,
-          blobs: e.data.blobs ? e.data.blobs / e.data.uopsCount : undefined,
+          blobs: e.data.blobs !== null ? e.data.blobs / e.data.uopsCount : null,
           compute: e.data.compute / e.data.uopsCount,
           calldata: e.data.calldata / e.data.uopsCount,
           overhead: e.data.overhead / e.data.uopsCount,

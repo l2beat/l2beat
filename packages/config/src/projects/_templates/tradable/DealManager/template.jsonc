@@ -5,5 +5,6 @@
     "calculateRedemptionFee",
     "calculateServiceFee",
     "payoutPeriodStartTime"
-  ]
+  ],
+  "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"]
 }

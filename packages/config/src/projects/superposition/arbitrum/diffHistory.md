@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x929e92771288b817ab19735eaef8c53617c5abec
+
+# Diff at Tue, 12 Aug 2025 15:53:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1752237564
+- current timestamp: 1755013885
+
+## Description
+
+Conduit Multisig signer added.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 12 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x99aac94f7aa4e0a9c3fd5e96394047258d2e99c1
 
 # Diff at Mon, 14 Jul 2025 12:44:22 GMT:

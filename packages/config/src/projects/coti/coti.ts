@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const coti: ScalingProject = upcomingL2({
   id: 'coti',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1712133479), // 2024-04-03T08:37:59Z
   display: {
     name: 'Coti',
@@ -12,7 +13,6 @@ export const coti: ScalingProject = upcomingL2({
     description:
       'Coti is a privacy-centric Ethereum Layer 2 leveraging multiparty computation and secure enclaves for scalable privacy.',
     purposes: ['Universal', 'Privacy'],
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://coti.io/'],
       documentation: [
@@ -26,5 +26,8 @@ export const coti: ScalingProject = upcomingL2({
         'https://discord.gg/9tq6CP6XrT',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

@@ -27,7 +27,6 @@ export const intmax: ScalingProject = {
     description:
       'INTMAX is a stateless Plasma-like ZK Rollup that enables private payments and minimal onchain costs.',
     purposes: ['Payments'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://intmax.io/'],
       explorers: ['https://explorer.intmax.io/'],
@@ -35,12 +34,15 @@ export const intmax: ScalingProject = {
         'https://docs.network.intmax.io',
         'https://eprint.iacr.org/2023/1082.pdf',
         'https://medium.com/intmax/the-deep-dive-into-statelessness-intmax2-algorithm-was-published-be7a306048ff',
-        'https://intmax-wallet.gitbook.io/intmax-developers-hub',
       ],
       repositories: ['https://github.com/InternetMaximalism'],
       socialMedia: ['https://twitter.com/intmaxIO'],
       bridges: ['https://app.intmax.io/bridge'],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('intmaxprover'),
   },
   config: {
     escrows: [

@@ -4,7 +4,7 @@ import { OverflowWrapper } from '~/components/core/OverflowWrapper'
 import { useCurrentSection } from '~/hooks/useCurrentSection'
 import { scrollHorizontallyToItem } from '~/utils/scrollToItem'
 import { startsWithNumber } from '~/utils/startsWithLetterOrNumber'
-import { glossarySectionTreshold } from '../consts'
+import { glossarySectionThreshold } from '../consts'
 import { AlphabetSelectorChar } from './AlphabetSelectorChar'
 
 const OPTIONS = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
@@ -15,7 +15,7 @@ interface Props<T> {
 
 export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
   const overflowContainer = useRef<HTMLDivElement>(null)
-  const currentSection = useCurrentSection(glossarySectionTreshold)
+  const currentSection = useCurrentSection(glossarySectionThreshold)
 
   const scrollToItem = useCallback(
     (item: HTMLLIElement, overflowingContainer: HTMLElement) =>

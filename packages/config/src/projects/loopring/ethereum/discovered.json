@@ -1,7 +1,7 @@
 {
   "name": "loopring",
   "chain": "ethereum",
-  "timestamp": 1751871011,
+  "timestamp": 1755157592,
   "configHash": "0xaf5bcd8c886cb30f1ad7d1dd612d976978d10df1f24d6b09429184ec1b62bd81",
   "entries": [
     {
@@ -67,7 +67,7 @@
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "eth:0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
-        "getBlockHeight": 63706,
+        "getBlockHeight": 64780,
         "getConstants": {
           "SNARK_SCALAR_FIELD": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           "MAX_OPEN_FORCED_REQUESTS": 4096,
@@ -84,10 +84,10 @@
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleRoot": "0x24efb9c164bd6f891de967392388b247ffc3793a6ff5d270c403327ae63e0ab4",
+        "getMerkleRoot": "0x2f70d0b72221988369398f043d07b67d0f75cae54fd1675e9028177596474a9c",
         "getNumAvailableForcedSlots": 4096,
         "getProtocolFeeValues": {
-          "syncedAt": 1751344439,
+          "syncedAt": 1754997443,
           "takerFeeBips": 0,
           "makerFeeBips": 0,
           "previousTakerFeeBips": 0,
@@ -339,11 +339,6 @@
       }
     },
     {
-      "address": "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
       "type": "EOA",
       "proxyType": "EOA"
@@ -476,11 +471,6 @@
       }
     },
     {
-      "address": "eth:0x7414eA41bd1844f61e8990b209a1Dc301489baa9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191",
       "type": "EOA",
       "proxyType": "EOA"
@@ -558,17 +548,14 @@
         "$members": [
           "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
           "eth:0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98",
-          "eth:0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191",
-          "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
-          "eth:0x7414eA41bd1844f61e8990b209a1Dc301489baa9",
           "eth:0x1F28F10176F89F4E9985873B84d14e75751BB3D1"
         ],
-        "$threshold": 4,
+        "$threshold": 2,
         "domainSeparator": "0xf45dfd6bdfe82ca616c58cff61bef38014e7194f65f8d7ba32eb9022170c8d1d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 227,
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 232,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1018,6 +1005,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22865639 },
-  "permissionsConfigHash": "0x48723498bf833781da58066d446c8d8f4e013f88da7aea83f45e0feee781a3c1"
+  "usedBlockNumbers": { "ethereum": 23137892 },
+  "permissionsConfigHash": "0x09fee062ecfd00ad91a765961375bcda61f42e97480b984fb2b850942550b2f9"
 }

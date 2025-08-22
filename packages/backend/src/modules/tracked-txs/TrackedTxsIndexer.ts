@@ -81,7 +81,7 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
         })
       }
       if (l2CostsDeletedRecords > 0) {
-        this.logger.info('Deleted liveness records', {
+        this.logger.info('Deleted L2 costs records', {
           from: configuration.from,
           to: configuration.to,
           id: configuration.id,

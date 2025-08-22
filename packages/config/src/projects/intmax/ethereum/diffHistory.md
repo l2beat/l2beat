@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x2468e74f362783da249c8d90c8fdc1405a5d87f8
+
+# Diff at Mon, 11 Aug 2025 10:52:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32817e35c9fe0ba1a1c24a734c37d91068b1565d block: 1754378270
+- current timestamp: 1754909083
+
+## Description
+
+config: ignore some vals in watch mode, add description for contribution contract.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754378270 (main branch discovery), not current.
+
+```diff
+    contract Contribution (0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2) {
+    +++ description: Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).
+      description:
++        "Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...)."
+    }
+```
+
 Generated with discovered.json: 0xd910381437ce057b4a96883cad106762af7ca351
 
 # Diff at Tue, 05 Aug 2025 07:17:57 GMT:

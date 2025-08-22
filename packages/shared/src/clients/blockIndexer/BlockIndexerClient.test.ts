@@ -38,7 +38,7 @@ describe(BlockIndexerClient.name, () => {
       expect(blockNumber).toEqual(result)
     })
 
-    it('if there is no closes block number try 10 minutes earlier', async () => {
+    it('if there is no closest block number try 10 minutes earlier', async () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
       const result = 1234

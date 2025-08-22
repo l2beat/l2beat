@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "build:dependencies": "cd ../.. && pnpm build:dependencies",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:discovery",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:discovery",
     "clean": "rm -rf dist",
     "format": "biome format .",
     "format:fix": "biome format --write .",
@@ -24,7 +25,7 @@
     "@l2beat/validate": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
-    "@mradomski/fast-solidity-parser": "0.1.4",
+    "@mradomski/fast-solidity-parser": "0.1.6",
     "bignumber.js": "^9.1.2",
     "chalk": "^4.1.2",
     "clingo-wasm": "0.3.2",

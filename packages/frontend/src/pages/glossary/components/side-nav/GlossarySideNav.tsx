@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react'
 import type { CollectionEntry } from '~/content/getCollection'
 import { useCurrentSection } from '~/hooks/useCurrentSection'
 import { scrollVerticallyToItem } from '~/utils/scrollToItem'
-import { glossarySectionTreshold } from '../consts'
+import { glossarySectionThreshold } from '../consts'
 import { GlossarySideNavItem } from './GlossarySideNavItem'
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 export function GlossarySideNav(props: Props) {
   const overflowContainer = useRef<HTMLUListElement>(null)
-  const currentSection = useCurrentSection(glossarySectionTreshold)
+  const currentSection = useCurrentSection(glossarySectionThreshold)
 
   const scrollToItem = useCallback(
     (item: HTMLLIElement, overflowingContainer: HTMLElement) =>

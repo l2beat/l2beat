@@ -5,10 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import {
-  TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/TypeInfo'
+import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { InfoIcon } from '~/icons/Info'
 import { AnomalyIndicator } from '../AnomalyIndicator'
@@ -18,7 +15,7 @@ import type { ScalingLivenessTableEntry } from './toTableEntry'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
-export function getScalingLivenessColumns(hideType?: boolean) {
+export function getScalingLivenessColumns(hideProofSystem?: boolean) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,
@@ -69,14 +66,13 @@ export function getScalingLivenessColumns(hideType?: boolean) {
         }),
       ],
     }),
-    !hideType &&
-      columnHelper.accessor('category', {
-        header: 'Type',
-        cell: (ctx) => (
-          <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
-        ),
+    !hideProofSystem &&
+      columnHelper.accessor('proofSystem', {
+        header: 'Proof system',
+        cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
         meta: {
-          tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
+          tooltip:
+            'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
         },
       }),
     columnHelper.display({

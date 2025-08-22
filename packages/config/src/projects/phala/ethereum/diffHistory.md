@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x324e3fe10f9e03676ee650f4f3c07b8686abac4d
+
+# Diff at Thu, 14 Aug 2025 08:54:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1755009465
+- current timestamp: 1755161649
+
+## Description
+
+New OP succinct vKeys (same aggregationVKey as katana).
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x009db7eba2814292b350d8b18e3861fcf8cb387de821c3d4546b79552ee2afa5"
++        "0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e"
+      values.rangeVkeyCommitment:
+-        "0x0ea16a87731757ad1753d1906cb006de1fdd6a760add547c0c691bcd0914de7e"
++        "0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872"
+    }
+```
+
+Generated with discovered.json: 0x3c18304ac41d7930f39b10856de6773e511ec2b2
+
+# Diff at Tue, 12 Aug 2025 14:42:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1753681931
+- current timestamp: 1755009465
+
+## Description
+
+Conduit Multisig 1 signer added.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 12 (33%)"
+    }
+```
+
 Generated with discovered.json: 0xbdeed1d592849290a9217fa3e0aa8d5995ddc172
 
 # Diff at Mon, 28 Jul 2025 05:52:29 GMT:

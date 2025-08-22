@@ -1,7 +1,7 @@
 {
   "name": "tradable",
   "chain": "zksync2",
-  "timestamp": 1753949758,
+  "timestamp": 1755162744,
   "configHash": "0xcacfc22a6ec7b759d36b6d7fbdff37db776b8783bc92fe3daea675bf60146c3d",
   "entries": [
     {
@@ -25,6 +25,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618680,
       "sinceBlock": 48952941,
       "values": {
@@ -50,7 +51,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": 25868748251352,
+        "availableForInvestment": 25357585772403,
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0x3D19625Bb8E4B52Ac4ca28ecec2B5E243ae2EE81",
@@ -72,42 +73,42 @@
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                1900495774832,
+                1916097254832,
                 true
               ],
               [
                 "zksync:0x0D89a79a3a2b5C97D47cad3f41988C509398C148",
                 0,
                 0,
-                17721063232870,
+                17866537792870,
                 true
               ],
               [
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                8476442,
+                10535392,
                 true
               ],
               [
                 "zksync:0x4F3E1d9913D620017AC4781151dE12C01c3F40bb",
                 0,
                 0,
-                18099511565525,
+                18248089475525,
                 true
               ],
               [
                 "zksync:0x6f8739Ac9E5254f697b38455b404798E740Af217",
                 0,
                 0,
-                20788792367642,
+                20959446287641,
                 true
               ],
               [
                 "zksync:0x9BC9bc97C7338e34Fe08e383F68d432930C05624",
                 0,
                 0,
-                3758361331337,
+                3789213881337,
                 true
               ]
             ],
@@ -120,42 +121,42 @@
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                1900495774832,
+                1916097254832,
                 true
               ],
               [
                 "zksync:0x0D89a79a3a2b5C97D47cad3f41988C509398C148",
                 0,
                 0,
-                17721063232870,
+                17866537792870,
                 true
               ],
               [
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                8476442,
+                10535392,
                 true
               ],
               [
                 "zksync:0x4F3E1d9913D620017AC4781151dE12C01c3F40bb",
                 0,
                 0,
-                18099511565525,
+                18248089475525,
                 true
               ],
               [
                 "zksync:0x6f8739Ac9E5254f697b38455b404798E740Af217",
                 0,
                 0,
-                20788792367642,
+                20959446287641,
                 true
               ],
               [
                 "zksync:0x9BC9bc97C7338e34Fe08e383F68d432930C05624",
                 0,
                 0,
-                3758361331337,
+                3789213881337,
                 true
               ]
             ],
@@ -168,42 +169,42 @@
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                1900495774832,
+                1916097254832,
                 true
               ],
               [
                 "zksync:0x0D89a79a3a2b5C97D47cad3f41988C509398C148",
                 0,
                 0,
-                17721063232870,
+                17866537792870,
                 true
               ],
               [
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                8476442,
+                10535392,
                 true
               ],
               [
                 "zksync:0x4F3E1d9913D620017AC4781151dE12C01c3F40bb",
                 0,
                 0,
-                18099511565525,
+                18248089475525,
                 true
               ],
               [
                 "zksync:0x6f8739Ac9E5254f697b38455b404798E740Af217",
                 1,
                 1,
-                20788792367641,
+                20959446287640,
                 true
               ],
               [
                 "zksync:0x9BC9bc97C7338e34Fe08e383F68d432930C05624",
                 0,
                 0,
-                3758361331337,
+                3789213881337,
                 true
               ]
             ],
@@ -216,42 +217,42 @@
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                1900495774832,
+                1916097254832,
                 true
               ],
               [
                 "zksync:0x0D89a79a3a2b5C97D47cad3f41988C509398C148",
                 1,
                 1,
-                17721063232869,
+                17866537792869,
                 true
               ],
               [
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                8476442,
+                10535392,
                 true
               ],
               [
                 "zksync:0x4F3E1d9913D620017AC4781151dE12C01c3F40bb",
                 1,
                 1,
-                18099511565524,
+                18248089475524,
                 true
               ],
               [
                 "zksync:0x6f8739Ac9E5254f697b38455b404798E740Af217",
                 1,
                 1,
-                20788792367641,
+                20959446287640,
                 true
               ],
               [
                 "zksync:0x9BC9bc97C7338e34Fe08e383F68d432930C05624",
                 0,
                 0,
-                3758361331337,
+                3789213881337,
                 true
               ]
             ],
@@ -291,6 +292,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618949,
       "sinceBlock": 48953173,
       "values": {
@@ -646,6 +648,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1736528714,
       "sinceBlock": 53365728,
       "values": {
@@ -1296,6 +1299,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618711,
       "sinceBlock": 48952964,
       "values": {
@@ -1501,7 +1505,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1741042761,
       "sinceBlock": 56988301,
       "values": {
@@ -1526,7 +1530,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -1604,7 +1608,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618862,
       "sinceBlock": 48953095,
       "values": {
@@ -1629,7 +1633,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -1669,47 +1673,47 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
-            "balance": 3800666320000
+            "balance": 2418605690000
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x10d895080132C09F76606acc034aFcD80Fa27235",
-            "balance": 1279687000000
+            "balance": 814346170001
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x1Ad84be4117da1e363d76E8BD9A39261744c9835",
-            "balance": 16442528000000
+            "balance": 10463427240000
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x21fBCEaF431fD9DA970956508588007F699b3D5A",
-            "balance": 5022831000000
+            "balance": 3196347000000
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x274cf465A7f5F5e00d9bCa9F3cf8706398724b6D",
-            "balance": 7724421000000
+            "balance": 4915540610001
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x3220dfCa501B41557f893C1b510C8f1E45595F2C",
-            "balance": 3399193000000
+            "balance": 2163122730000
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
-            "balance": 285950000000
+            "balance": 181968230001
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
-            "balance": 6553937680000
+            "balance": 4170687550000
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0xFEFfb9c5A961a66d97206beE9EEC3e42A2937E06",
-            "balance": 5719096000000
+            "balance": 3639424780000
           }
         ],
         "id": "1bc9ad53-f369-4f7d-ac89-62e3a8f9522f",
@@ -1718,11 +1722,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmWL2dosr4sV1eGAKrUYbjcZhNDh9JnPdhErMMZSuHTLwP",
         "name": "Private Credit Direct Deal0000077",
-        "nav": { "value": 1000000, "timestamp": 1753537538, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753540953 },
+        "nav": { "value": 1000000, "timestamp": 1754751567, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754872350 },
         "symbol": "PC0000077",
         "totalSize": 100000000000000,
-        "totalSupply": 50228310000000,
+        "totalSupply": 31963470000003,
         "yieldGenerationStart": 1731944475
       },
       "implementationNames": {
@@ -1746,6 +1750,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618787,
       "sinceBlock": 48953033,
       "values": {
@@ -1987,7 +1992,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "zksync:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 23393148022155,
+        "totalSupply": 21328543912155,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -2030,7 +2035,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618829,
       "sinceBlock": 48953067,
       "values": {
@@ -2055,7 +2060,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2145,6 +2150,11 @@
       }
     },
     {
+      "address": "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DealManager",
       "address": "zksync:0x20178588eCBfb8189Ae389beaB481de1f406F731",
       "type": "Contract",
@@ -2155,6 +2165,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618906,
       "sinceBlock": 48953132,
       "values": {
@@ -2317,7 +2328,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1736528714,
       "sinceBlock": 53365728,
       "values": {
@@ -2342,7 +2353,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2478,6 +2489,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618938,
       "sinceBlock": 48953163,
       "values": {
@@ -2503,7 +2515,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": 72200000000000,
+        "availableForInvestment": 66700000000000,
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0xe53dBcEf6F700536a912c51CAEa4D0E2bE2b1388",
@@ -2553,7 +2565,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                13106586000000,
+                16641699000000,
                 true
               ],
               [
@@ -2567,14 +2579,14 @@
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                4103593000000,
+                5554723000000,
                 false
               ],
               [
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                684179000000,
+                1197936000000,
                 true
               ]
             ],
@@ -2615,7 +2627,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                13106586000000,
+                16641699000000,
                 true
               ],
               [
@@ -2629,14 +2641,14 @@
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                4103593000000,
+                5554723000000,
                 false
               ],
               [
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                684179000000,
+                1197936000000,
                 true
               ]
             ],
@@ -2677,7 +2689,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 1,
                 1,
-                13106585999999,
+                16641698999999,
                 true
               ],
               [
@@ -2691,14 +2703,14 @@
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                4103593000000,
+                5554723000000,
                 false
               ],
               [
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                684179000000,
+                1197936000000,
                 true
               ]
             ],
@@ -2739,7 +2751,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 1,
                 1,
-                13106585999999,
+                16641698999999,
                 true
               ],
               [
@@ -2753,14 +2765,14 @@
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                4103593000000,
+                5554723000000,
                 false
               ],
               [
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                684179000000,
+                1197936000000,
                 true
               ]
             ],
@@ -2795,7 +2807,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1744144140,
       "sinceBlock": 58856904,
       "values": {
@@ -2820,7 +2832,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2887,7 +2899,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618895,
       "sinceBlock": 48953121,
       "values": {
@@ -2912,7 +2924,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2961,27 +2973,27 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
-            "balance": 100457000000
+            "balance": 63927280000
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x10d895080132C09F76606acc034aFcD80Fa27235",
-            "balance": 368977000000
+            "balance": 234803670000
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x1Ad84be4117da1e363d76E8BD9A39261744c9835",
-            "balance": 426043000000
+            "balance": 271118350000
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0xFEFfb9c5A961a66d97206beE9EEC3e42A2937E06",
-            "balance": 1649005000000
+            "balance": 1049366570001
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x274cf465A7f5F5e00d9bCa9F3cf8706398724b6D",
-            "balance": 2227208000000
+            "balance": 1417314130000
           }
         ],
         "id": "04f17e28-4717-4722-a9c8-0f22ba3b338a",
@@ -2990,11 +3002,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/Qmeoxb4LU89a6vWfhLHeWyfCL6ArAqZP7AJVERDcJfzEdR",
         "name": "Private Credit Direct Deal0000083",
-        "nav": { "value": 1000000, "timestamp": 1753537493, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753541759 },
+        "nav": { "value": 1000000, "timestamp": 1754751478, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752279 },
         "symbol": "PC0000083",
         "totalSize": 100000000000000,
-        "totalSupply": 4771690000000,
+        "totalSupply": 3036530000001,
         "yieldGenerationStart": 1731684018
       },
       "implementationNames": {
@@ -3013,6 +3025,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618884,
       "sinceBlock": 48953111,
       "values": {
@@ -3498,6 +3511,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1736528949,
       "sinceBlock": 53365961,
       "values": {
@@ -3932,7 +3946,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618680,
       "sinceBlock": 48952941,
       "values": {
@@ -3957,7 +3971,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -3986,32 +4000,32 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
-            "balance": 1900495774832
+            "balance": 1916097254832
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x0D89a79a3a2b5C97D47cad3f41988C509398C148",
-            "balance": 17721063232870
+            "balance": 17866537792870
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
-            "balance": 8476442
+            "balance": 10535392
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x4F3E1d9913D620017AC4781151dE12C01c3F40bb",
-            "balance": 18099511565525
+            "balance": 18248089475525
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x6f8739Ac9E5254f697b38455b404798E740Af217",
-            "balance": 20788792367642
+            "balance": 20959446287641
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x9BC9bc97C7338e34Fe08e383F68d432930C05624",
-            "balance": 3758361331337
+            "balance": 3789213881337
           }
         ],
         "id": "97b83924-cf8e-4861-a1f7-396bf533234d",
@@ -4020,11 +4034,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmekcPCbmHj4bEQgAY2arWCVxY1qBDyAWjnT7YsYUWG4Hd",
         "name": "Private Credit Direct Deal0000101",
-        "nav": { "value": 1000000, "timestamp": 1753536805, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753539701 },
+        "nav": { "value": 1000000, "timestamp": 1754751613, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752239 },
         "symbol": "PC0000101",
         "totalSize": 88136981000000,
-        "totalSupply": 62268232748648,
+        "totalSupply": 62779395227597,
         "yieldGenerationStart": 1731944567
       },
       "implementationNames": {
@@ -4043,7 +4057,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1747927037,
       "sinceBlock": 60781371,
       "values": {
@@ -4068,7 +4082,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4084,12 +4098,12 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
-            "balance": 4313080970001
+            "balance": 3615315070002
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
-            "balance": 10507474920001
+            "balance": 8807586170002
           }
         ],
         "id": "19b0e556-8b98-4855-9e0c-57f9cf0166d8",
@@ -4098,11 +4112,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmTbEYHLifvzpeZKqd6WBxb1zYFLQUftTNWkR9fkbuAuXq",
         "name": "Private Credit Direct Deal9868327516",
-        "nav": { "value": 1000000, "timestamp": 1752601548, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752776727 },
+        "nav": { "value": 1000000, "timestamp": 1754751703, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754872713 },
         "symbol": "PC986",
         "totalSize": 50000000000000,
-        "totalSupply": 14820555890002,
+        "totalSupply": 12422901240004,
         "yieldGenerationStart": 1747937551
       },
       "implementationNames": {
@@ -4126,7 +4140,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1744144112,
       "sinceBlock": 58856886,
       "values": {
@@ -4151,7 +4165,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4173,27 +4187,27 @@
           {
             "isFiatAccount": false,
             "account": "zksync:0x9BC9bc97C7338e34Fe08e383F68d432930C05624",
-            "balance": 9731226130000
+            "balance": 9790408130000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
-            "balance": 9464001650000
+            "balance": 9521560650000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
-            "balance": 2558358360000
+            "balance": 2573918360000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0x0D89a79a3a2b5C97D47cad3f41988C509398C148",
-            "balance": 23656316390000
+            "balance": 23800167390000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0x6f8739Ac9E5254f697b38455b404798E740Af217",
-            "balance": 36805961480000
+            "balance": 37029809480000
           }
         ],
         "id": "45459131-29a3-4c33-b392-ecc392b8248e",
@@ -4202,11 +4216,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmX5YL21uTFjnXuwo8fEAnNvCACZ76fKifoeychgp9EVfW",
         "name": "Private Credit Direct Deal0000091",
-        "nav": { "value": 1000000, "timestamp": 1753493102, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753493186 },
+        "nav": { "value": 1000000, "timestamp": 1754073955, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075600 },
         "symbol": "PC000",
         "totalSize": 100000000000000,
-        "totalSupply": 99156663000000,
+        "totalSupply": 99656663000000,
         "yieldGenerationStart": 1753493186
       },
       "implementationNames": {
@@ -4240,7 +4254,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1741042455,
       "sinceBlock": 56988065,
       "values": {
@@ -4265,7 +4279,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4291,7 +4305,7 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
-            "balance": 12384697000000
+            "balance": 13187411000000
           },
           {
             "isFiatAccount": false,
@@ -4301,12 +4315,17 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
-            "balance": 227768000000
+            "balance": 495549000000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
             "balance": 2203100000000
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
+            "balance": 329505000000
           }
         ],
         "id": "61fdf0f9-f482-4c69-aeb7-5df203e7c936",
@@ -4315,11 +4334,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmVQFfvAxdeaPWDTQdVS9sYEd2uw7MsUtY8KLqtPpjhWkZ",
         "name": "Private Credit Direct Deal0002223",
-        "nav": { "value": 1000000, "timestamp": 1752601728, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752790264 },
+        "nav": { "value": 1000000, "timestamp": 1754751659, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752247 },
         "symbol": "PC000",
         "totalSize": 100000000000000,
-        "totalSupply": 21600000000000,
+        "totalSupply": 23000000000000,
         "yieldGenerationStart": 1742406693
       },
       "implementationNames": {
@@ -4343,6 +4362,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618852,
       "sinceBlock": 48953087,
       "values": {
@@ -4411,7 +4431,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618756,
       "sinceBlock": 48953004,
       "values": {
@@ -4436,7 +4456,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4559,7 +4579,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618852,
       "sinceBlock": 48953087,
       "values": {
@@ -4584,7 +4604,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4651,7 +4671,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618906,
       "sinceBlock": 48953132,
       "values": {
@@ -4676,7 +4696,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4733,6 +4753,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618809,
       "sinceBlock": 48953047,
       "values": {
@@ -4801,7 +4822,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618744,
       "sinceBlock": 48952992,
       "values": {
@@ -4826,7 +4847,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4986,6 +5007,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618928,
       "sinceBlock": 48953154,
       "values": {
@@ -5303,7 +5325,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618928,
       "sinceBlock": 48953154,
       "values": {
@@ -5328,7 +5350,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5449,6 +5471,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618766,
       "sinceBlock": 48953014,
       "values": {
@@ -5474,7 +5497,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": 80050000000000,
+        "availableForInvestment": 78050000000000,
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0xC629D9E3d1A4325DBfAff85D5a61Da956cc5e32b",
@@ -5540,6 +5563,20 @@
                 0,
                 2483673000000,
                 false
+              ],
+              [
+                "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
+                0,
+                0,
+                1000000000000,
+                true
+              ],
+              [
+                "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559",
+                0,
+                0,
+                1000000000000,
+                false
               ]
             ],
             0,
@@ -5595,6 +5632,89 @@
                 0,
                 2483673000000,
                 false
+              ],
+              [
+                "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
+                0,
+                0,
+                1000000000000,
+                true
+              ],
+              [
+                "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559",
+                0,
+                0,
+                1000000000000,
+                false
+              ]
+            ],
+            0,
+            0
+          ],
+          [
+            [
+              [
+                "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
+                0,
+                0,
+                1015736000000,
+                true
+              ],
+              [
+                "zksync:0xfDAfccb9c40d187Ab8127b704343c2FF4CC0090c",
+                0,
+                0,
+                6748850000000,
+                true
+              ],
+              [
+                "zksync:0x21fBCEaF431fD9DA970956508588007F699b3D5A",
+                0,
+                0,
+                6748850000000,
+                true
+              ],
+              [
+                "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
+                0,
+                0,
+                384054000000,
+                true
+              ],
+              [
+                "zksync:0x8fA623583adAdb32d6C7bc9668E3d752010fF182",
+                0,
+                0,
+                1549314000000,
+                true
+              ],
+              [
+                "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
+                0,
+                0,
+                1019523000000,
+                false
+              ],
+              [
+                "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
+                0,
+                0,
+                2483673000000,
+                false
+              ],
+              [
+                "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
+                0,
+                0,
+                1000000000000,
+                true
+              ],
+              [
+                "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559",
+                0,
+                0,
+                1000000000000,
+                false
               ]
             ],
             0,
@@ -5650,60 +5770,19 @@
                 0,
                 2483673000000,
                 false
-              ]
-            ],
-            0,
-            2
-          ],
-          [
-            [
+              ],
               [
-                "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
+                "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                1015736000000,
+                1000000000000,
                 true
               ],
               [
-                "zksync:0xfDAfccb9c40d187Ab8127b704343c2FF4CC0090c",
-                1,
-                1,
-                6748849999999,
-                true
-              ],
-              [
-                "zksync:0x21fBCEaF431fD9DA970956508588007F699b3D5A",
-                1,
-                1,
-                6748849999999,
-                true
-              ],
-              [
-                "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
+                "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559",
                 0,
                 0,
-                384054000000,
-                true
-              ],
-              [
-                "zksync:0x8fA623583adAdb32d6C7bc9668E3d752010fF182",
-                0,
-                0,
-                1549314000000,
-                true
-              ],
-              [
-                "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
-                0,
-                0,
-                1019523000000,
-                false
-              ],
-              [
-                "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
-                0,
-                0,
-                2483673000000,
+                1000000000000,
                 false
               ]
             ],
@@ -5728,6 +5807,11 @@
       }
     },
     {
+      "address": "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Deal",
       "address": "zksync:0x641d9B8d290F759B75F7C30eDcD96C38BD26afD4",
       "type": "Contract",
@@ -5738,7 +5822,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618711,
       "sinceBlock": 48952964,
       "values": {
@@ -5763,7 +5847,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5832,6 +5916,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618917,
       "sinceBlock": 48953143,
       "values": {
@@ -6121,6 +6206,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618895,
       "sinceBlock": 48953121,
       "values": {
@@ -6146,7 +6232,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": 95228310000000,
+        "availableForInvestment": 96963469999999,
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0x3765bBe18749c30Cb5589c13de8A0DEb7F16A683",
@@ -6168,35 +6254,35 @@
                 "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
                 0,
                 0,
-                100457000000,
+                63927280000,
                 true
               ],
               [
                 "zksync:0x10d895080132C09F76606acc034aFcD80Fa27235",
                 0,
                 0,
-                368977000000,
+                234803670000,
                 true
               ],
               [
                 "zksync:0x1Ad84be4117da1e363d76E8BD9A39261744c9835",
                 0,
                 0,
-                426043000000,
+                271118350000,
                 true
               ],
               [
                 "zksync:0xFEFfb9c5A961a66d97206beE9EEC3e42A2937E06",
                 0,
                 0,
-                1649005000000,
+                1049366570001,
                 true
               ],
               [
                 "zksync:0x274cf465A7f5F5e00d9bCa9F3cf8706398724b6D",
                 0,
                 0,
-                2227208000000,
+                1417314130000,
                 true
               ]
             ],
@@ -6209,35 +6295,35 @@
                 "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
                 0,
                 0,
-                100457000000,
+                63927280000,
                 true
               ],
               [
                 "zksync:0x10d895080132C09F76606acc034aFcD80Fa27235",
                 0,
                 0,
-                368977000000,
+                234803670000,
                 true
               ],
               [
                 "zksync:0x1Ad84be4117da1e363d76E8BD9A39261744c9835",
                 0,
                 0,
-                426043000000,
+                271118350000,
                 true
               ],
               [
                 "zksync:0xFEFfb9c5A961a66d97206beE9EEC3e42A2937E06",
                 0,
                 0,
-                1649005000000,
+                1049366570001,
                 true
               ],
               [
                 "zksync:0x274cf465A7f5F5e00d9bCa9F3cf8706398724b6D",
                 0,
                 0,
-                2227208000000,
+                1417314130000,
                 true
               ]
             ],
@@ -6250,35 +6336,35 @@
                 "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
                 0,
                 0,
-                100457000000,
+                63927280000,
                 true
               ],
               [
                 "zksync:0x10d895080132C09F76606acc034aFcD80Fa27235",
                 0,
                 0,
-                368977000000,
+                234803670000,
                 true
               ],
               [
                 "zksync:0x1Ad84be4117da1e363d76E8BD9A39261744c9835",
                 0,
                 0,
-                426043000000,
+                271118350000,
                 true
               ],
               [
                 "zksync:0xFEFfb9c5A961a66d97206beE9EEC3e42A2937E06",
                 1,
                 1,
-                1649004999999,
+                1049366570000,
                 true
               ],
               [
                 "zksync:0x274cf465A7f5F5e00d9bCa9F3cf8706398724b6D",
                 1,
                 1,
-                2227207999999,
+                1417314129999,
                 true
               ]
             ],
@@ -6291,35 +6377,35 @@
                 "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
                 0,
                 0,
-                100457000000,
+                63927280000,
                 true
               ],
               [
                 "zksync:0x10d895080132C09F76606acc034aFcD80Fa27235",
                 0,
                 0,
-                368977000000,
+                234803670000,
                 true
               ],
               [
                 "zksync:0x1Ad84be4117da1e363d76E8BD9A39261744c9835",
                 0,
                 0,
-                426043000000,
+                271118350000,
                 true
               ],
               [
                 "zksync:0xFEFfb9c5A961a66d97206beE9EEC3e42A2937E06",
                 1,
                 1,
-                1649004999999,
+                1049366570000,
                 true
               ],
               [
                 "zksync:0x274cf465A7f5F5e00d9bCa9F3cf8706398724b6D",
                 1,
                 1,
-                2227207999999,
+                1417314129999,
                 true
               ]
             ],
@@ -6354,7 +6440,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1741042129,
       "sinceBlock": 56987839,
       "values": {
@@ -6379,7 +6465,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -6410,12 +6496,12 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
-            "balance": 26551054000000
+            "balance": 30804894000000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
-            "balance": 4502894000000
+            "balance": 6249054000000
           },
           {
             "isFiatAccount": false,
@@ -6429,11 +6515,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmX5VktKuppa7hcMi6qhpYMyUokimkh3Djo6sUbNvj12Cg",
         "name": "Private Credit Direct Deal188814458",
-        "nav": { "value": 1000000, "timestamp": 1752600697, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752764800 },
+        "nav": { "value": 1000000, "timestamp": 1754074111, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075585 },
         "symbol": "PC188",
         "totalSize": 100000000000000,
-        "totalSupply": 47450000000000,
+        "totalSupply": 53450000000000,
         "yieldGenerationStart": 1741302122
       },
       "implementationNames": {
@@ -6457,7 +6543,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618842,
       "sinceBlock": 48953078,
       "values": {
@@ -6482,7 +6568,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -6551,7 +6637,7 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0xE9d9aBef0aeC91d1BD3e6648f7400c1A1c5Ba475",
-            "balance": 47934100000000
+            "balance": 27934100000000
           },
           {
             "isFiatAccount": true,
@@ -6570,11 +6656,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmWQdLrqMASvupRRBC4oTGgMACv9azpE1Hpe91mLXYpEyB",
         "name": "Private Credit Direct Deal0000033",
-        "nav": { "value": 1000000, "timestamp": 1752601280, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752764729 },
+        "nav": { "value": 1000000, "timestamp": 1754074635, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075593 },
         "symbol": "PC0000033",
         "totalSize": 300000000000000,
-        "totalSupply": 295000000000000,
+        "totalSupply": 275000000000000,
         "yieldGenerationStart": 1731944980
       },
       "implementationNames": {
@@ -6603,6 +6689,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618744,
       "sinceBlock": 48952992,
       "values": {
@@ -7126,6 +7213,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1741042129,
       "sinceBlock": 56987839,
       "values": {
@@ -7151,7 +7239,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583960463129639935",
+        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583954463129639935",
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0x6bFCBf08B0Ef6F64aD090C0CeCbCde4Ee3e94Fa5",
@@ -7187,14 +7275,14 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                26551054000000,
+                30804894000000,
                 true
               ],
               [
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                4502894000000,
+                6249054000000,
                 false
               ],
               [
@@ -7228,14 +7316,14 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 1,
                 1,
-                26551053999999,
+                30804893999999,
                 true
               ],
               [
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                4502894000000,
+                6249054000000,
                 false
               ],
               [
@@ -7269,14 +7357,14 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 1,
                 1,
-                26551053999999,
+                30804893999999,
                 true
               ],
               [
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                4502894000000,
+                6249054000000,
                 false
               ],
               [
@@ -7310,14 +7398,14 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 2,
                 2,
-                26551053999998,
+                30804893999998,
                 true
               ],
               [
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                4502894000000,
+                6249054000000,
                 false
               ],
               [
@@ -7364,7 +7452,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618734,
       "sinceBlock": 48952985,
       "values": {
@@ -7389,7 +7477,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -7467,6 +7555,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618797,
       "sinceBlock": 48953040,
       "values": {
@@ -7799,6 +7888,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1747927037,
       "sinceBlock": 60781371,
       "values": {
@@ -7824,7 +7914,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583993092573749933",
+        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583995490228399931",
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0x3Ebd6CCb9ba03fEC57Db59344126e69080361A52",
@@ -7846,14 +7936,14 @@
                 "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
                 0,
                 0,
-                4313080970001,
+                3615315070002,
                 true
               ],
               [
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                10507474920001,
+                8807586170002,
                 true
               ]
             ],
@@ -7866,14 +7956,14 @@
                 "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
                 0,
                 0,
-                4313080970001,
+                3615315070002,
                 true
               ],
               [
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 1,
                 1,
-                10507474920000,
+                8807586170001,
                 true
               ]
             ],
@@ -7886,14 +7976,14 @@
                 "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
                 0,
                 0,
-                4313080970001,
+                3615315070002,
                 true
               ],
               [
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 2,
                 2,
-                10507474919999,
+                8807586170000,
                 true
               ]
             ],
@@ -7906,14 +7996,14 @@
                 "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
                 1,
                 1,
-                4313080970000,
+                3615315070001,
                 true
               ],
               [
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 2,
                 2,
-                10507474919999,
+                8807586170000,
                 true
               ]
             ],
@@ -7948,6 +8038,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618734,
       "sinceBlock": 48952985,
       "values": {
@@ -8021,6 +8112,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1753198755,
       "sinceBlock": 63225178,
       "values": {
@@ -8046,7 +8138,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583996063129639935",
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x742d35cc6634c0532925A3b8D4C0a8BfD4c4C8b2",
         "deal": "zksync:0xeF81EDc585D4e01E335d15988361b1cae1E4583a",
@@ -8061,7 +8153,116 @@
         "paymentCurrency": "zksync:0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
         "payoutBalances": [],
         "payoutDustThreshold": 10000,
-        "previewPrincipalPayout": [],
+        "previewPrincipalPayout": [
+          [
+            [
+              [
+                "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+                0,
+                0,
+                9600000000000,
+                false
+              ],
+              [
+                "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+                0,
+                0,
+                2000000000000,
+                false
+              ],
+              [
+                "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+                0,
+                0,
+                250000000000,
+                false
+              ]
+            ],
+            0,
+            0
+          ],
+          [
+            [
+              [
+                "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+                1,
+                1,
+                9599999999999,
+                false
+              ],
+              [
+                "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+                0,
+                0,
+                2000000000000,
+                false
+              ],
+              [
+                "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+                0,
+                0,
+                250000000000,
+                false
+              ]
+            ],
+            1,
+            1
+          ],
+          [
+            [
+              [
+                "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+                2,
+                2,
+                9599999999998,
+                false
+              ],
+              [
+                "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+                0,
+                0,
+                2000000000000,
+                false
+              ],
+              [
+                "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+                0,
+                0,
+                250000000000,
+                false
+              ]
+            ],
+            2,
+            2
+          ],
+          [
+            [
+              [
+                "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+                3,
+                3,
+                9599999999997,
+                false
+              ],
+              [
+                "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+                0,
+                0,
+                2000000000000,
+                false
+              ],
+              [
+                "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+                0,
+                0,
+                250000000000,
+                false
+              ]
+            ],
+            3,
+            3
+          ]
+        ],
         "redemptionBudget": 0,
         "redemptionFee": 0,
         "redemptionLockPeriod": 432000,
@@ -8089,6 +8290,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1753489414,
       "sinceBlock": 63374351,
       "values": {
@@ -8114,7 +8316,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": 103235260000000,
+        "availableForInvestment": 105499479160000,
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x56c57e0add4c855c621F4bc432804700c5220C7F",
         "deal": "zksync:0xCb352cF5A099772BC36f82A87c95a945CB4d1852",
@@ -8136,49 +8338,49 @@
                 "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
                 0,
                 0,
-                3107000000000,
+                3017910500000,
                 false
               ],
               [
                 "zksync:0xB2e90B1516465753f2d4cBB41E595ff4890e9944",
                 0,
                 0,
-                33288740000000,
+                32334225330000,
                 false
               ],
               [
                 "zksync:0x8aAE9D943130194e4F73cAE99611b7fac0FC8365",
                 0,
                 0,
-                10000000000000,
+                9713262000000,
                 false
               ],
               [
                 "zksync:0x4a7dEB4D0E8E352d980A4b0435B3d69f7DdF0439",
                 0,
                 0,
-                5000000000000,
+                4856631000000,
                 false
               ],
               [
                 "zksync:0xb94Ab5A369CB982899D43b1Eb7FfC39103e6fC9e",
                 0,
                 0,
-                15000000000000,
+                14569893000000,
                 false
               ],
               [
                 "zksync:0xE9d9aBef0aeC91d1BD3e6648f7400c1A1c5Ba475",
                 0,
                 0,
-                5000000000000,
+                4856631000000,
                 false
               ],
               [
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                7569000000000,
+                7351968010000,
                 false
               ]
             ],
@@ -8191,49 +8393,49 @@
                 "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
                 0,
                 0,
-                3107000000000,
+                3017910500000,
                 false
               ],
               [
                 "zksync:0xB2e90B1516465753f2d4cBB41E595ff4890e9944",
                 0,
                 0,
-                33288740000000,
+                32334225330000,
                 false
               ],
               [
                 "zksync:0x8aAE9D943130194e4F73cAE99611b7fac0FC8365",
                 0,
                 0,
-                10000000000000,
+                9713262000000,
                 false
               ],
               [
                 "zksync:0x4a7dEB4D0E8E352d980A4b0435B3d69f7DdF0439",
                 0,
                 0,
-                5000000000000,
+                4856631000000,
                 false
               ],
               [
                 "zksync:0xb94Ab5A369CB982899D43b1Eb7FfC39103e6fC9e",
                 0,
                 0,
-                15000000000000,
+                14569893000000,
                 false
               ],
               [
                 "zksync:0xE9d9aBef0aeC91d1BD3e6648f7400c1A1c5Ba475",
                 0,
                 0,
-                5000000000000,
+                4856631000000,
                 false
               ],
               [
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                7569000000000,
+                7351968010000,
                 false
               ]
             ],
@@ -8246,49 +8448,49 @@
                 "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
                 0,
                 0,
-                3107000000000,
+                3017910500000,
                 false
               ],
               [
                 "zksync:0xB2e90B1516465753f2d4cBB41E595ff4890e9944",
                 1,
                 1,
-                33288739999999,
+                32334225329999,
                 false
               ],
               [
                 "zksync:0x8aAE9D943130194e4F73cAE99611b7fac0FC8365",
                 0,
                 0,
-                10000000000000,
+                9713262000000,
                 false
               ],
               [
                 "zksync:0x4a7dEB4D0E8E352d980A4b0435B3d69f7DdF0439",
                 0,
                 0,
-                5000000000000,
+                4856631000000,
                 false
               ],
               [
                 "zksync:0xb94Ab5A369CB982899D43b1Eb7FfC39103e6fC9e",
                 0,
                 0,
-                15000000000000,
+                14569893000000,
                 false
               ],
               [
                 "zksync:0xE9d9aBef0aeC91d1BD3e6648f7400c1A1c5Ba475",
                 0,
                 0,
-                5000000000000,
+                4856631000000,
                 false
               ],
               [
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                7569000000000,
+                7351968010000,
                 false
               ]
             ],
@@ -8301,49 +8503,49 @@
                 "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
                 0,
                 0,
-                3107000000000,
+                3017910500000,
                 false
               ],
               [
                 "zksync:0xB2e90B1516465753f2d4cBB41E595ff4890e9944",
                 1,
                 1,
-                33288739999999,
+                32334225329999,
                 false
               ],
               [
                 "zksync:0x8aAE9D943130194e4F73cAE99611b7fac0FC8365",
                 0,
                 0,
-                10000000000000,
+                9713262000000,
                 false
               ],
               [
                 "zksync:0x4a7dEB4D0E8E352d980A4b0435B3d69f7DdF0439",
                 0,
                 0,
-                5000000000000,
+                4856631000000,
                 false
               ],
               [
                 "zksync:0xb94Ab5A369CB982899D43b1Eb7FfC39103e6fC9e",
                 0,
                 0,
-                15000000000000,
+                14569893000000,
                 false
               ],
               [
                 "zksync:0xE9d9aBef0aeC91d1BD3e6648f7400c1A1c5Ba475",
                 0,
                 0,
-                5000000000000,
+                4856631000000,
                 false
               ],
               [
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                7569000000000,
+                7351968010000,
                 false
               ]
             ],
@@ -8378,6 +8580,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618829,
       "sinceBlock": 48953067,
       "values": {
@@ -8616,6 +8819,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618842,
       "sinceBlock": 48953078,
       "values": {
@@ -8641,7 +8845,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": 5000000000000,
+        "availableForInvestment": 25000000000000,
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0x6FF4fAfD8D604614c704a5936D9146C0af19BD1E",
@@ -8712,7 +8916,7 @@
                 "zksync:0xE9d9aBef0aeC91d1BD3e6648f7400c1A1c5Ba475",
                 0,
                 0,
-                47934100000000,
+                27934100000000,
                 true
               ],
               [
@@ -8788,7 +8992,7 @@
                 "zksync:0xE9d9aBef0aeC91d1BD3e6648f7400c1A1c5Ba475",
                 0,
                 0,
-                47934100000000,
+                27934100000000,
                 true
               ],
               [
@@ -8864,7 +9068,7 @@
                 "zksync:0xE9d9aBef0aeC91d1BD3e6648f7400c1A1c5Ba475",
                 0,
                 0,
-                47934100000000,
+                27934100000000,
                 true
               ],
               [
@@ -8940,7 +9144,7 @@
                 "zksync:0xE9d9aBef0aeC91d1BD3e6648f7400c1A1c5Ba475",
                 0,
                 0,
-                47934100000000,
+                27934100000000,
                 true
               ],
               [
@@ -9004,7 +9208,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618960,
       "sinceBlock": 48953183,
       "values": {
@@ -9029,7 +9233,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -9113,7 +9317,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618917,
       "sinceBlock": 48953143,
       "values": {
@@ -9138,7 +9342,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -9208,8 +9412,8 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmWAsD5D39dzcQ3yjYVUXg5r3X6PTn39WVRxbwfS79Jzqx",
         "name": "Private Credit Direct Deal0000081",
-        "nav": { "value": 1000000, "timestamp": 1753536578, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753536578 },
+        "nav": { "value": 1000000, "timestamp": 1754751748, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754751748 },
         "symbol": "PC0000081",
         "totalSize": 125000000000000,
         "totalSupply": 54322463100007,
@@ -9231,6 +9435,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1744144140,
       "sinceBlock": 58856904,
       "values": {
@@ -9441,6 +9646,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618756,
       "sinceBlock": 48953004,
       "values": {
@@ -9842,6 +10048,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618862,
       "sinceBlock": 48953095,
       "values": {
@@ -9867,7 +10074,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": 49771690000000,
+        "availableForInvestment": 68036529999997,
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0x18012CB9e1478EF458C8c996F99b8DcEcA60795c",
@@ -9889,63 +10096,63 @@
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                3800666320000,
+                2418605690000,
                 true
               ],
               [
                 "zksync:0x10d895080132C09F76606acc034aFcD80Fa27235",
                 0,
                 0,
-                1279687000000,
+                814346170001,
                 true
               ],
               [
                 "zksync:0x1Ad84be4117da1e363d76E8BD9A39261744c9835",
                 0,
                 0,
-                16442528000000,
+                10463427240000,
                 true
               ],
               [
                 "zksync:0x21fBCEaF431fD9DA970956508588007F699b3D5A",
                 0,
                 0,
-                5022831000000,
+                3196347000000,
                 true
               ],
               [
                 "zksync:0x274cf465A7f5F5e00d9bCa9F3cf8706398724b6D",
                 0,
                 0,
-                7724421000000,
+                4915540610001,
                 true
               ],
               [
                 "zksync:0x3220dfCa501B41557f893C1b510C8f1E45595F2C",
                 0,
                 0,
-                3399193000000,
+                2163122730000,
                 true
               ],
               [
                 "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
                 0,
                 0,
-                285950000000,
+                181968230001,
                 true
               ],
               [
                 "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
                 0,
                 0,
-                6553937680000,
+                4170687550000,
                 true
               ],
               [
                 "zksync:0xFEFfb9c5A961a66d97206beE9EEC3e42A2937E06",
                 0,
                 0,
-                5719096000000,
+                3639424780000,
                 true
               ]
             ],
@@ -9958,63 +10165,63 @@
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                3800666320000,
+                2418605690000,
                 true
               ],
               [
                 "zksync:0x10d895080132C09F76606acc034aFcD80Fa27235",
                 0,
                 0,
-                1279687000000,
+                814346170001,
                 true
               ],
               [
                 "zksync:0x1Ad84be4117da1e363d76E8BD9A39261744c9835",
                 0,
                 0,
-                16442528000000,
+                10463427240000,
                 true
               ],
               [
                 "zksync:0x21fBCEaF431fD9DA970956508588007F699b3D5A",
                 0,
                 0,
-                5022831000000,
+                3196347000000,
                 true
               ],
               [
                 "zksync:0x274cf465A7f5F5e00d9bCa9F3cf8706398724b6D",
                 0,
                 0,
-                7724421000000,
+                4915540610001,
                 true
               ],
               [
                 "zksync:0x3220dfCa501B41557f893C1b510C8f1E45595F2C",
                 0,
                 0,
-                3399193000000,
+                2163122730000,
                 true
               ],
               [
                 "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
                 0,
                 0,
-                285950000000,
+                181968230001,
                 true
               ],
               [
                 "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
                 0,
                 0,
-                6553937680000,
+                4170687550000,
                 true
               ],
               [
                 "zksync:0xFEFfb9c5A961a66d97206beE9EEC3e42A2937E06",
                 0,
                 0,
-                5719096000000,
+                3639424780000,
                 true
               ]
             ],
@@ -10027,63 +10234,63 @@
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                3800666320000,
+                2418605690000,
                 true
               ],
               [
                 "zksync:0x10d895080132C09F76606acc034aFcD80Fa27235",
                 0,
                 0,
-                1279687000000,
+                814346170001,
                 true
               ],
               [
                 "zksync:0x1Ad84be4117da1e363d76E8BD9A39261744c9835",
                 0,
                 0,
-                16442528000000,
+                10463427240000,
                 true
               ],
               [
                 "zksync:0x21fBCEaF431fD9DA970956508588007F699b3D5A",
                 0,
                 0,
-                5022831000000,
+                3196347000000,
                 true
               ],
               [
                 "zksync:0x274cf465A7f5F5e00d9bCa9F3cf8706398724b6D",
                 0,
                 0,
-                7724421000000,
+                4915540610001,
                 true
               ],
               [
                 "zksync:0x3220dfCa501B41557f893C1b510C8f1E45595F2C",
                 0,
                 0,
-                3399193000000,
+                2163122730000,
                 true
               ],
               [
                 "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
                 0,
                 0,
-                285950000000,
+                181968230001,
                 true
               ],
               [
                 "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
                 0,
                 0,
-                6553937680000,
+                4170687550000,
                 true
               ],
               [
                 "zksync:0xFEFfb9c5A961a66d97206beE9EEC3e42A2937E06",
                 0,
                 0,
-                5719096000000,
+                3639424780000,
                 true
               ]
             ],
@@ -10096,63 +10303,63 @@
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                3800666320000,
+                2418605690000,
                 true
               ],
               [
                 "zksync:0x10d895080132C09F76606acc034aFcD80Fa27235",
                 0,
                 0,
-                1279687000000,
+                814346170001,
                 true
               ],
               [
                 "zksync:0x1Ad84be4117da1e363d76E8BD9A39261744c9835",
                 1,
                 1,
-                16442527999999,
+                10463427239999,
                 true
               ],
               [
                 "zksync:0x21fBCEaF431fD9DA970956508588007F699b3D5A",
                 0,
                 0,
-                5022831000000,
+                3196347000000,
                 true
               ],
               [
                 "zksync:0x274cf465A7f5F5e00d9bCa9F3cf8706398724b6D",
                 0,
                 0,
-                7724421000000,
+                4915540610001,
                 true
               ],
               [
                 "zksync:0x3220dfCa501B41557f893C1b510C8f1E45595F2C",
                 0,
                 0,
-                3399193000000,
+                2163122730000,
                 true
               ],
               [
                 "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
                 0,
                 0,
-                285950000000,
+                181968230001,
                 true
               ],
               [
                 "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
                 0,
                 0,
-                6553937680000,
+                4170687550000,
                 true
               ],
               [
                 "zksync:0xFEFfb9c5A961a66d97206beE9EEC3e42A2937E06",
                 0,
                 0,
-                5719096000000,
+                3639424780000,
                 true
               ]
             ],
@@ -10187,7 +10394,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618809,
       "sinceBlock": 48953047,
       "values": {
@@ -10212,7 +10419,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10269,7 +10476,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1736528949,
       "sinceBlock": 53365961,
       "values": {
@@ -10294,7 +10501,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10413,6 +10620,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618819,
       "sinceBlock": 48953057,
       "values": {
@@ -10595,7 +10803,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618722,
       "sinceBlock": 48952974,
       "values": {
@@ -10620,7 +10828,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10669,7 +10877,7 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
-            "balance": 33321750000000
+            "balance": 36866617000000
           },
           {
             "isFiatAccount": true,
@@ -10694,7 +10902,7 @@
           {
             "isFiatAccount": false,
             "account": "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
-            "balance": 2023611000000
+            "balance": 3478744000000
           }
         ],
         "id": "861cce9e-08ae-45a0-aca8-9fa229a0189d",
@@ -10703,11 +10911,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmQ3e2KAJSa5LjqJo2b3PwwU5GAv5EDfgHqSor7oRtr9Dz",
         "name": "Private Credit Direct Deal0000031",
-        "nav": { "value": 1000000, "timestamp": 1752601145, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752601145 },
+        "nav": { "value": 1000000, "timestamp": 1754751846, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752295 },
         "symbol": "PC0000031",
         "totalSize": 400000000000000,
-        "totalSupply": 194500000000000,
+        "totalSupply": 199500000000000,
         "yieldGenerationStart": 1731944911
       },
       "implementationNames": {
@@ -10731,7 +10939,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618949,
       "sinceBlock": 48953173,
       "values": {
@@ -10756,7 +10964,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10867,7 +11075,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618777,
       "sinceBlock": 48953025,
       "values": {
@@ -10892,7 +11100,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -11020,6 +11228,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618777,
       "sinceBlock": 48953025,
       "values": {
@@ -11477,6 +11686,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618691,
       "sinceBlock": 48952950,
       "values": {
@@ -11743,7 +11953,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618787,
       "sinceBlock": 48953033,
       "values": {
@@ -11768,7 +11978,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -11838,6 +12048,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618960,
       "sinceBlock": 48953183,
       "values": {
@@ -12058,6 +12269,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1744144112,
       "sinceBlock": 58856886,
       "values": {
@@ -12083,7 +12295,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583908756466639935",
+        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583908256466639935",
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x56c57e0add4c855c621F4bc432804700c5220C7F",
         "deal": "zksync:0x464aE5c4FcBa8Bab8D004C6b5Bd0F71d16Fb767e",
@@ -12112,35 +12324,35 @@
                 "zksync:0x9BC9bc97C7338e34Fe08e383F68d432930C05624",
                 0,
                 0,
-                9731226130000,
+                9790408130000,
                 false
               ],
               [
                 "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
                 0,
                 0,
-                9464001650000,
+                9521560650000,
                 false
               ],
               [
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                2558358360000,
+                2573918360000,
                 false
               ],
               [
                 "zksync:0x0D89a79a3a2b5C97D47cad3f41988C509398C148",
                 0,
                 0,
-                23656316390000,
+                23800167390000,
                 false
               ],
               [
                 "zksync:0x6f8739Ac9E5254f697b38455b404798E740Af217",
                 0,
                 0,
-                36805961480000,
+                37029809480000,
                 false
               ]
             ],
@@ -12160,35 +12372,35 @@
                 "zksync:0x9BC9bc97C7338e34Fe08e383F68d432930C05624",
                 0,
                 0,
-                9731226130000,
+                9790408130000,
                 false
               ],
               [
                 "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
                 0,
                 0,
-                9464001650000,
+                9521560650000,
                 false
               ],
               [
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                2558358360000,
+                2573918360000,
                 false
               ],
               [
                 "zksync:0x0D89a79a3a2b5C97D47cad3f41988C509398C148",
                 0,
                 0,
-                23656316390000,
+                23800167390000,
                 false
               ],
               [
                 "zksync:0x6f8739Ac9E5254f697b38455b404798E740Af217",
                 0,
                 0,
-                36805961480000,
+                37029809480000,
                 false
               ]
             ],
@@ -12208,35 +12420,35 @@
                 "zksync:0x9BC9bc97C7338e34Fe08e383F68d432930C05624",
                 0,
                 0,
-                9731226130000,
+                9790408130000,
                 false
               ],
               [
                 "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
                 0,
                 0,
-                9464001650000,
+                9521560650000,
                 false
               ],
               [
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                2558358360000,
+                2573918360000,
                 false
               ],
               [
                 "zksync:0x0D89a79a3a2b5C97D47cad3f41988C509398C148",
                 0,
                 0,
-                23656316390000,
+                23800167390000,
                 false
               ],
               [
                 "zksync:0x6f8739Ac9E5254f697b38455b404798E740Af217",
                 1,
                 1,
-                36805961479999,
+                37029809479999,
                 false
               ]
             ],
@@ -12256,35 +12468,35 @@
                 "zksync:0x9BC9bc97C7338e34Fe08e383F68d432930C05624",
                 0,
                 0,
-                9731226130000,
+                9790408130000,
                 false
               ],
               [
                 "zksync:0x8B93db2B1D1d5518c2C29068b0C90b1b220535b8",
                 0,
                 0,
-                9464001650000,
+                9521560650000,
                 false
               ],
               [
                 "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
                 0,
                 0,
-                2558358360000,
+                2573918360000,
                 false
               ],
               [
                 "zksync:0x0D89a79a3a2b5C97D47cad3f41988C509398C148",
                 0,
                 0,
-                23656316390000,
+                23800167390000,
                 false
               ],
               [
                 "zksync:0x6f8739Ac9E5254f697b38455b404798E740Af217",
                 1,
                 1,
-                36805961479999,
+                37029809479999,
                 false
               ]
             ],
@@ -12324,7 +12536,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618766,
       "sinceBlock": 48953014,
       "values": {
@@ -12349,7 +12561,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12367,7 +12579,8 @@
           "zksync:0x9efEEB00e7cA27933F902c309299AC940049A358",
           "zksync:0x057d426FF0a9b6c199B9e5d970eE24D097eC0AC6",
           "zksync:0x5Ec6380bdbebB5Ea599BC5616f00848DAFF3f790",
-          "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43"
+          "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
+          "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559"
         ],
         "fiatAccounts": [
           "zksync:0x00D677c894697598086DDB900fD9ab2B1f352870",
@@ -12413,6 +12626,16 @@
             "isFiatAccount": false,
             "account": "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
             "balance": 2483673000000
+          },
+          {
+            "isFiatAccount": true,
+            "account": "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
+            "balance": 1000000000000
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559",
+            "balance": 1000000000000
           }
         ],
         "id": "0b9682e6-08fb-4ec7-89ac-1587d245ba52",
@@ -12421,11 +12644,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmWWjipHS9ocGeAjSJMquou6w8qJR8ZZXws11rivSzZ4TR",
         "name": "Private Credit Direct Deal0000027",
-        "nav": { "value": 1000000, "timestamp": 1752600163, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752788927 },
+        "nav": { "value": 1000000, "timestamp": 1754073862, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075560 },
         "symbol": "PC0000027",
         "totalSize": 100000000000000,
-        "totalSupply": 19950000000000,
+        "totalSupply": 21950000000000,
         "yieldGenerationStart": 1731944452
       },
       "implementationNames": {
@@ -12444,6 +12667,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1753901543,
       "sinceBlock": 63546535,
       "values": {
@@ -12469,7 +12693,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583970913129639935",
+        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583970213129639935",
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0xDa33e9DA12adBeEf7570d01bf14Eac377a397514",
@@ -12505,7 +12729,7 @@
                 "zksync:0xa22AF71d1E7529837cdeFBe96FEA63F2C7499eb6",
                 0,
                 0,
-                1905580000000,
+                2255580000000,
                 false
               ],
               [
@@ -12533,7 +12757,7 @@
                 "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559",
                 0,
                 0,
-                1905580000000,
+                2255580000000,
                 false
               ]
             ],
@@ -12560,7 +12784,7 @@
                 "zksync:0xa22AF71d1E7529837cdeFBe96FEA63F2C7499eb6",
                 0,
                 0,
-                1905580000000,
+                2255580000000,
                 false
               ],
               [
@@ -12588,7 +12812,7 @@
                 "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559",
                 0,
                 0,
-                1905580000000,
+                2255580000000,
                 false
               ]
             ],
@@ -12615,7 +12839,7 @@
                 "zksync:0xa22AF71d1E7529837cdeFBe96FEA63F2C7499eb6",
                 0,
                 0,
-                1905580000000,
+                2255580000000,
                 false
               ],
               [
@@ -12643,7 +12867,7 @@
                 "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559",
                 0,
                 0,
-                1905580000000,
+                2255580000000,
                 false
               ]
             ],
@@ -12670,7 +12894,7 @@
                 "zksync:0xa22AF71d1E7529837cdeFBe96FEA63F2C7499eb6",
                 0,
                 0,
-                1905580000000,
+                2255580000000,
                 false
               ],
               [
@@ -12698,7 +12922,7 @@
                 "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559",
                 0,
                 0,
-                1905580000000,
+                2255580000000,
                 false
               ]
             ],
@@ -12733,7 +12957,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1753489414,
       "sinceBlock": 63374351,
       "values": {
@@ -12758,7 +12982,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12775,37 +12999,37 @@
           {
             "isFiatAccount": false,
             "account": "zksync:0x0DF208bAEfbeEE252a3Cbe4760AFb8d1c07e4848",
-            "balance": 3107000000000
+            "balance": 3017910500000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0xB2e90B1516465753f2d4cBB41E595ff4890e9944",
-            "balance": 33288740000000
+            "balance": 32334225330000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0x8aAE9D943130194e4F73cAE99611b7fac0FC8365",
-            "balance": 10000000000000
+            "balance": 9713262000000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0x4a7dEB4D0E8E352d980A4b0435B3d69f7DdF0439",
-            "balance": 5000000000000
+            "balance": 4856631000000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0xb94Ab5A369CB982899D43b1Eb7FfC39103e6fC9e",
-            "balance": 15000000000000
+            "balance": 14569893000000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0xE9d9aBef0aeC91d1BD3e6648f7400c1A1c5Ba475",
-            "balance": 5000000000000
+            "balance": 4856631000000
           },
           {
             "isFiatAccount": false,
             "account": "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
-            "balance": 7569000000000
+            "balance": 7351968010000
           }
         ],
         "id": "6953e20f-6f4e-47b8-a025-16bed7d5f84d",
@@ -12814,11 +13038,11 @@
         "maxHolders": 1000,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/Qmad5MyJmrA633digyHKjK5dWqKgs99YA55Fy5kDFYT6oq",
         "name": "Private Credit Direct Deal2314254748",
-        "nav": { "value": 1000000, "timestamp": 1753493001, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753493001 },
+        "nav": { "value": 1000000, "timestamp": 1754074538, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075618 },
         "symbol": "PC231",
         "totalSize": 182200000000000,
-        "totalSupply": 78964740000000,
+        "totalSupply": 76700520840000,
         "yieldGenerationStart": 1753492879
       },
       "implementationNames": {
@@ -12850,6 +13074,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618873,
       "sinceBlock": 48953104,
       "values": {
@@ -13243,7 +13468,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618700,
       "sinceBlock": 48952957,
       "values": {
@@ -13268,7 +13493,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13362,7 +13587,7 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0x8922bA008d535f1A0812c7b999201F04C8785198",
-            "balance": 32223966765289
+            "balance": 32459838015289
           },
           {
             "isFiatAccount": true,
@@ -13372,12 +13597,62 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0x8fA623583adAdb32d6C7bc9668E3d752010fF182",
-            "balance": 1405491639998
+            "balance": 1415779479998
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x957C65de787415cfE6d55Ee60f53F820D2F449F8",
             "balance": 18741482100000
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0x9efEEB00e7cA27933F902c309299AC940049A358",
+            "balance": 37140009999
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0xfbB48b5DC7f2f219cacE3aE2A4B2Ba9F31F45B37",
+            "balance": 17704899999
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0x82eE27dDEfaf7b5018F543FCCf315BE0A9b7542D",
+            "balance": 101569050000
+          },
+          {
+            "isFiatAccount": true,
+            "account": "zksync:0xDF7D04a1B7447F3A41775Da93108FE591DFC7a81",
+            "balance": 89547419999
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0xEA583aD17241b99D691F2A1b5d941F603533E0D2",
+            "balance": 6037469999
+          },
+          {
+            "isFiatAccount": true,
+            "account": "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
+            "balance": 5535750000
+          },
+          {
+            "isFiatAccount": true,
+            "account": "zksync:0x04554CB274c149Dc243bF69C2f5161467337F761",
+            "balance": 89555919999
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0x5Ec6380bdbebB5Ea599BC5616f00848DAFF3f790",
+            "balance": 23177859999
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0x49596ee2cbc3E50C50B13F111713C3c241047E4f",
+            "balance": 22726780000
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0xD0c0a7816B16e6D948617c3B98Ea65d0b2703B22",
+            "balance": 137182899999
           }
         ],
         "id": "e88bc5d5-e2ad-4a37-8b19-ab48a95a81b0",
@@ -13386,11 +13661,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmTq4AxWBrF7V1esUqRKZFkJx4tfWRim4h6fxHq1kSw7cB",
         "name": "Private Credit Direct Deal0000015",
-        "nav": { "value": 1000000, "timestamp": 1752600432, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752803224 },
+        "nav": { "value": 1000000, "timestamp": 1754074688, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075569 },
         "symbol": "PC0000015",
         "totalSize": 350000000000000,
-        "totalSupply": 106060660515294,
+        "totalSupply": 106836997665287,
         "yieldGenerationStart": 1731944635
       },
       "implementationNames": {
@@ -13422,7 +13697,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1753901543,
       "sinceBlock": 63546535,
       "values": {
@@ -13447,7 +13722,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13474,7 +13749,7 @@
           {
             "isFiatAccount": false,
             "account": "zksync:0xa22AF71d1E7529837cdeFBe96FEA63F2C7499eb6",
-            "balance": 1905580000000
+            "balance": 2255580000000
           },
           {
             "isFiatAccount": false,
@@ -13494,7 +13769,7 @@
           {
             "isFiatAccount": false,
             "account": "zksync:0x2088B4bf57214d99C43c7ed2D10B32d71FDd4559",
-            "balance": 1905580000000
+            "balance": 2255580000000
           }
         ],
         "id": "32ae45a5-93a1-4547-920e-818a0ae7566f",
@@ -13503,11 +13778,11 @@
         "maxHolders": 1000,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmWDnLbP5YhTwkbJDqatPteNWqtF3fZfX69qy9v67ywFN8",
         "name": "Private Credit Direct Deal0000098",
-        "nav": { "value": 1000000, "timestamp": 1753905591, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753905591 },
+        "nav": { "value": 1000000, "timestamp": 1754751794, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752287 },
         "symbol": "PC000",
         "totalSize": 100000000000000,
-        "totalSupply": 37000000000000,
+        "totalSupply": 37700000000000,
         "yieldGenerationStart": 1753905502
       },
       "implementationNames": {
@@ -13526,7 +13801,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618819,
       "sinceBlock": 48953057,
       "values": {
@@ -13551,7 +13826,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13614,6 +13889,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618722,
       "sinceBlock": 48952974,
       "values": {
@@ -13639,7 +13915,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": 205500000000000,
+        "availableForInvestment": 200500000000000,
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
@@ -13682,7 +13958,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                33321750000000,
+                36866617000000,
                 true
               ],
               [
@@ -13717,7 +13993,7 @@
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                2023611000000,
+                3478744000000,
                 false
               ]
             ],
@@ -13751,7 +14027,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                33321750000000,
+                36866617000000,
                 true
               ],
               [
@@ -13786,7 +14062,7 @@
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                2023611000000,
+                3478744000000,
                 false
               ]
             ],
@@ -13820,7 +14096,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                33321750000000,
+                36866617000000,
                 true
               ],
               [
@@ -13855,7 +14131,7 @@
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                2023611000000,
+                3478744000000,
                 false
               ]
             ],
@@ -13889,7 +14165,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                33321750000000,
+                36866617000000,
                 true
               ],
               [
@@ -13924,7 +14200,7 @@
                 "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
                 0,
                 0,
-                2023611000000,
+                3478744000000,
                 false
               ]
             ],
@@ -13979,7 +14255,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618691,
       "sinceBlock": 48952950,
       "values": {
@@ -14004,7 +14280,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14086,7 +14362,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618938,
       "sinceBlock": 48953163,
       "values": {
@@ -14111,7 +14387,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14160,7 +14436,7 @@
           {
             "isFiatAccount": true,
             "account": "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
-            "balance": 13106586000000
+            "balance": 16641699000000
           },
           {
             "isFiatAccount": true,
@@ -14170,12 +14446,12 @@
           {
             "isFiatAccount": false,
             "account": "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
-            "balance": 4103593000000
+            "balance": 5554723000000
           },
           {
             "isFiatAccount": true,
             "account": "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
-            "balance": 684179000000
+            "balance": 1197936000000
           }
         ],
         "id": "a1629d5d-7b67-42d3-87e9-91c9f872d8b6",
@@ -14184,11 +14460,11 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmdgFGkuc9St18p7dhfzTwxxwotgVpsiT24UmaYg6ALhkg",
         "name": "Private Credit Direct Deal0000049",
-        "nav": { "value": 1000000, "timestamp": 1753536622, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753537601 },
+        "nav": { "value": 1000000, "timestamp": 1754751523, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752271 },
         "symbol": "PC0000049",
         "totalSize": 100000000000000,
-        "totalSupply": 27800000000000,
+        "totalSupply": 33300000000000,
         "yieldGenerationStart": 1731944934
       },
       "implementationNames": {
@@ -14217,7 +14493,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618797,
       "sinceBlock": 48953040,
       "values": {
@@ -14242,7 +14518,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14337,6 +14613,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1741042455,
       "sinceBlock": 56988065,
       "values": {
@@ -14362,7 +14639,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583986313129639935",
+        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583984913129639935",
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0x4C22Fc4Abc099871245d7C47919d5D443Acb7957",
@@ -14391,7 +14668,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 0,
                 0,
-                12384697000000,
+                13187411000000,
                 true
               ],
               [
@@ -14405,7 +14682,7 @@
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                227768000000,
+                495549000000,
                 true
               ],
               [
@@ -14413,6 +14690,13 @@
                 0,
                 0,
                 2203100000000,
+                false
+              ],
+              [
+                "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
+                0,
+                0,
+                329505000000,
                 false
               ]
             ],
@@ -14432,7 +14716,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 1,
                 1,
-                12384696999999,
+                13187410999999,
                 true
               ],
               [
@@ -14446,7 +14730,7 @@
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                227768000000,
+                495549000000,
                 true
               ],
               [
@@ -14454,6 +14738,13 @@
                 0,
                 0,
                 2203100000000,
+                false
+              ],
+              [
+                "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
+                0,
+                0,
+                329505000000,
                 false
               ]
             ],
@@ -14473,7 +14764,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 1,
                 1,
-                12384696999999,
+                13187410999999,
                 true
               ],
               [
@@ -14487,7 +14778,7 @@
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                227768000000,
+                495549000000,
                 true
               ],
               [
@@ -14495,6 +14786,13 @@
                 0,
                 0,
                 2203100000000,
+                false
+              ],
+              [
+                "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
+                0,
+                0,
+                329505000000,
                 false
               ]
             ],
@@ -14514,7 +14812,7 @@
                 "zksync:0x57C494b687D96dd4804877bB088D78fC6d6E4EaD",
                 2,
                 2,
-                12384696999998,
+                13187410999998,
                 true
               ],
               [
@@ -14528,7 +14826,7 @@
                 "zksync:0x16679CC776FBb687E7E45a9eFbBd218236672E16",
                 0,
                 0,
-                227768000000,
+                495549000000,
                 true
               ],
               [
@@ -14536,6 +14834,13 @@
                 0,
                 0,
                 2203100000000,
+                false
+              ],
+              [
+                "zksync:0xBb7AE30c8157442ECD692EB6bA4947A55E3Bdb43",
+                0,
+                0,
+                329505000000,
                 false
               ]
             ],
@@ -14575,7 +14880,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1753198755,
       "sinceBlock": 63225178,
       "values": {
@@ -14600,29 +14905,54 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
-        "eligibleAccounts": [],
+        "eligibleAccounts": [
+          "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+          "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+          "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561"
+        ],
         "fiatAccounts": [],
-        "holders": [],
+        "holders": [
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+            "balance": 9600000000000
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+            "balance": 2000000000000
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+            "balance": 250000000000
+          }
+        ],
         "id": "82d1cd86-9e52-4952-bd79-97ba863408f1",
         "isOpenEnded": true,
         "manager": "zksync:0x925303f0c9b4eF5445E77c3f1c7Fc2A04b133BE5",
         "maxHolders": 1000,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmS97zzqhoJ7SBAh7Ge7DdfEhWd7UEGwdMiq1xseRyCUaz",
         "name": "Private Credit Direct Deal97235924",
-        "nav": { "value": 0, "timestamp": 0, "decimals": 6 },
-        "price": { "value": 0, "decimals": 6, "timestamp": 0 },
+        "nav": { "value": 1000000, "timestamp": 1755114593, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1755114593 },
         "symbol": "PC972",
         "totalSize": 15000000000000,
-        "totalSupply": 0,
-        "yieldGenerationStart": 0
+        "totalSupply": 11850000000000,
+        "yieldGenerationStart": 1755038139
       },
       "implementationNames": {
         "zksync:0xeF81EDc585D4e01E335d15988361b1cae1E4583a": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
       }
+    },
+    {
+      "address": "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "zksync:0xf971F58577aeFC4c70F5a7f9e171cf1611f9afFb",
@@ -14645,7 +14975,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618884,
       "sinceBlock": 48953111,
       "values": {
@@ -14670,7 +15000,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14785,8 +15115,8 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmQv3mEb35fh31QRhR7qLpDaAdT8ALCbK1BA4RzWC1xho9",
         "name": "Private Credit Direct Deal0000089",
-        "nav": { "value": 1000000, "timestamp": 1753536744, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753537652 },
+        "nav": { "value": 1000000, "timestamp": 1754074485, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754074485 },
         "symbol": "PC0000089",
         "totalSize": 100000000000000,
         "totalSupply": 37000010692081,
@@ -14813,6 +15143,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1731618700,
       "sinceBlock": 48952957,
       "values": {
@@ -14838,7 +15169,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": 243939339484706,
+        "availableForInvestment": 243163002334713,
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x2EACB2B011cd1ea434297D25de6BA6c49e5005eB",
         "deal": "zksync:0xd8916e15D351DC728414e99A4883c72010eE11f8",
@@ -14916,7 +15247,7 @@
                 "zksync:0x8922bA008d535f1A0812c7b999201F04C8785198",
                 0,
                 0,
-                32223966765289,
+                32459838015289,
                 true
               ],
               [
@@ -14930,7 +15261,7 @@
                 "zksync:0x8fA623583adAdb32d6C7bc9668E3d752010fF182",
                 0,
                 0,
-                1405491639998,
+                1415779479998,
                 true
               ],
               [
@@ -14939,6 +15270,76 @@
                 0,
                 18741482100000,
                 true
+              ],
+              [
+                "zksync:0x9efEEB00e7cA27933F902c309299AC940049A358",
+                0,
+                0,
+                37140009999,
+                false
+              ],
+              [
+                "zksync:0xfbB48b5DC7f2f219cacE3aE2A4B2Ba9F31F45B37",
+                0,
+                0,
+                17704899999,
+                false
+              ],
+              [
+                "zksync:0x82eE27dDEfaf7b5018F543FCCf315BE0A9b7542D",
+                0,
+                0,
+                101569050000,
+                false
+              ],
+              [
+                "zksync:0xDF7D04a1B7447F3A41775Da93108FE591DFC7a81",
+                0,
+                0,
+                89547419999,
+                true
+              ],
+              [
+                "zksync:0xEA583aD17241b99D691F2A1b5d941F603533E0D2",
+                0,
+                0,
+                6037469999,
+                false
+              ],
+              [
+                "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
+                0,
+                0,
+                5535750000,
+                true
+              ],
+              [
+                "zksync:0x04554CB274c149Dc243bF69C2f5161467337F761",
+                0,
+                0,
+                89555919999,
+                true
+              ],
+              [
+                "zksync:0x5Ec6380bdbebB5Ea599BC5616f00848DAFF3f790",
+                0,
+                0,
+                23177859999,
+                false
+              ],
+              [
+                "zksync:0x49596ee2cbc3E50C50B13F111713C3c241047E4f",
+                0,
+                0,
+                22726780000,
+                false
+              ],
+              [
+                "zksync:0xD0c0a7816B16e6D948617c3B98Ea65d0b2703B22",
+                0,
+                0,
+                137182899999,
+                false
               ]
             ],
             0,
@@ -15006,7 +15407,7 @@
                 "zksync:0x8922bA008d535f1A0812c7b999201F04C8785198",
                 0,
                 0,
-                32223966765289,
+                32459838015289,
                 true
               ],
               [
@@ -15020,7 +15421,7 @@
                 "zksync:0x8fA623583adAdb32d6C7bc9668E3d752010fF182",
                 0,
                 0,
-                1405491639998,
+                1415779479998,
                 true
               ],
               [
@@ -15029,6 +15430,76 @@
                 0,
                 18741482100000,
                 true
+              ],
+              [
+                "zksync:0x9efEEB00e7cA27933F902c309299AC940049A358",
+                0,
+                0,
+                37140009999,
+                false
+              ],
+              [
+                "zksync:0xfbB48b5DC7f2f219cacE3aE2A4B2Ba9F31F45B37",
+                0,
+                0,
+                17704899999,
+                false
+              ],
+              [
+                "zksync:0x82eE27dDEfaf7b5018F543FCCf315BE0A9b7542D",
+                0,
+                0,
+                101569050000,
+                false
+              ],
+              [
+                "zksync:0xDF7D04a1B7447F3A41775Da93108FE591DFC7a81",
+                0,
+                0,
+                89547419999,
+                true
+              ],
+              [
+                "zksync:0xEA583aD17241b99D691F2A1b5d941F603533E0D2",
+                0,
+                0,
+                6037469999,
+                false
+              ],
+              [
+                "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
+                0,
+                0,
+                5535750000,
+                true
+              ],
+              [
+                "zksync:0x04554CB274c149Dc243bF69C2f5161467337F761",
+                0,
+                0,
+                89555919999,
+                true
+              ],
+              [
+                "zksync:0x5Ec6380bdbebB5Ea599BC5616f00848DAFF3f790",
+                0,
+                0,
+                23177859999,
+                false
+              ],
+              [
+                "zksync:0x49596ee2cbc3E50C50B13F111713C3c241047E4f",
+                0,
+                0,
+                22726780000,
+                false
+              ],
+              [
+                "zksync:0xD0c0a7816B16e6D948617c3B98Ea65d0b2703B22",
+                0,
+                0,
+                137182899999,
+                false
               ]
             ],
             0,
@@ -15096,7 +15567,7 @@
                 "zksync:0x8922bA008d535f1A0812c7b999201F04C8785198",
                 0,
                 0,
-                32223966765289,
+                32459838015289,
                 true
               ],
               [
@@ -15110,7 +15581,7 @@
                 "zksync:0x8fA623583adAdb32d6C7bc9668E3d752010fF182",
                 0,
                 0,
-                1405491639998,
+                1415779479998,
                 true
               ],
               [
@@ -15119,6 +15590,76 @@
                 0,
                 18741482100000,
                 true
+              ],
+              [
+                "zksync:0x9efEEB00e7cA27933F902c309299AC940049A358",
+                0,
+                0,
+                37140009999,
+                false
+              ],
+              [
+                "zksync:0xfbB48b5DC7f2f219cacE3aE2A4B2Ba9F31F45B37",
+                0,
+                0,
+                17704899999,
+                false
+              ],
+              [
+                "zksync:0x82eE27dDEfaf7b5018F543FCCf315BE0A9b7542D",
+                0,
+                0,
+                101569050000,
+                false
+              ],
+              [
+                "zksync:0xDF7D04a1B7447F3A41775Da93108FE591DFC7a81",
+                0,
+                0,
+                89547419999,
+                true
+              ],
+              [
+                "zksync:0xEA583aD17241b99D691F2A1b5d941F603533E0D2",
+                0,
+                0,
+                6037469999,
+                false
+              ],
+              [
+                "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
+                0,
+                0,
+                5535750000,
+                true
+              ],
+              [
+                "zksync:0x04554CB274c149Dc243bF69C2f5161467337F761",
+                0,
+                0,
+                89555919999,
+                true
+              ],
+              [
+                "zksync:0x5Ec6380bdbebB5Ea599BC5616f00848DAFF3f790",
+                0,
+                0,
+                23177859999,
+                false
+              ],
+              [
+                "zksync:0x49596ee2cbc3E50C50B13F111713C3c241047E4f",
+                0,
+                0,
+                22726780000,
+                false
+              ],
+              [
+                "zksync:0xD0c0a7816B16e6D948617c3B98Ea65d0b2703B22",
+                0,
+                0,
+                137182899999,
+                false
               ]
             ],
             0,
@@ -15186,7 +15727,7 @@
                 "zksync:0x8922bA008d535f1A0812c7b999201F04C8785198",
                 1,
                 1,
-                32223966765288,
+                32459838015288,
                 true
               ],
               [
@@ -15200,7 +15741,7 @@
                 "zksync:0x8fA623583adAdb32d6C7bc9668E3d752010fF182",
                 0,
                 0,
-                1405491639998,
+                1415779479998,
                 true
               ],
               [
@@ -15209,6 +15750,76 @@
                 0,
                 18741482100000,
                 true
+              ],
+              [
+                "zksync:0x9efEEB00e7cA27933F902c309299AC940049A358",
+                0,
+                0,
+                37140009999,
+                false
+              ],
+              [
+                "zksync:0xfbB48b5DC7f2f219cacE3aE2A4B2Ba9F31F45B37",
+                0,
+                0,
+                17704899999,
+                false
+              ],
+              [
+                "zksync:0x82eE27dDEfaf7b5018F543FCCf315BE0A9b7542D",
+                0,
+                0,
+                101569050000,
+                false
+              ],
+              [
+                "zksync:0xDF7D04a1B7447F3A41775Da93108FE591DFC7a81",
+                0,
+                0,
+                89547419999,
+                true
+              ],
+              [
+                "zksync:0xEA583aD17241b99D691F2A1b5d941F603533E0D2",
+                0,
+                0,
+                6037469999,
+                false
+              ],
+              [
+                "zksync:0x441eD00a87a553dE8ad43824f2de878C44ca06e6",
+                0,
+                0,
+                5535750000,
+                true
+              ],
+              [
+                "zksync:0x04554CB274c149Dc243bF69C2f5161467337F761",
+                0,
+                0,
+                89555919999,
+                true
+              ],
+              [
+                "zksync:0x5Ec6380bdbebB5Ea599BC5616f00848DAFF3f790",
+                0,
+                0,
+                23177859999,
+                false
+              ],
+              [
+                "zksync:0x49596ee2cbc3E50C50B13F111713C3c241047E4f",
+                0,
+                0,
+                22726780000,
+                false
+              ],
+              [
+                "zksync:0xD0c0a7816B16e6D948617c3B98Ea65d0b2703B22",
+                0,
+                0,
+                137182899999,
+                false
               ]
             ],
             0,
@@ -15247,7 +15858,7 @@
         "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
       "sinceTimestamp": 1731618873,
       "sinceBlock": 48953104,
       "values": {
@@ -15272,7 +15883,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753949756,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -15388,6 +15999,7 @@
         "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
       ],
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
       "sinceTimestamp": 1741042761,
       "sinceBlock": 56988301,
       "values": {
@@ -16018,11 +16630,11 @@
   },
   "usedTemplates": {
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
-    "tradable/Deal": "0x043d0f7d015daca42a4cecc63b58e7d041a64b9f245e9812ae54fd6c7939fe1d",
+    "tradable/Deal": "0xd6f2266e990f7fdccaff6578af0e1aacd28c11810beeb63450053295f8160370",
     "tradable/DealFactory": "0xe4d94d3217fe1624dcb9054de5d69ad9bdf57797e618201af04eed9c10061ca7",
-    "tradable/DealManager": "0x48838ef8da5e8218b480b5b04b5c299da88b0a75ef95f3bf6789513e381cc20d",
+    "tradable/DealManager": "0x97aad4d43c4d3012e4f422bd12a8407e28b602da351ab2be57ee9d27ac4912ba",
     "tradable/DealRegistry": "0x80492a8b01b07c7eb3c5cebc3a4c692ef4abb2da9faf34b0d838d7d21d76e23f"
   },
-  "usedBlockNumbers": { "zksync2": 63566528 },
-  "permissionsConfigHash": "0x32819bef24fd7268ed3838dd2f26b25355a8a8e529811999255ec79e906564eb"
+  "usedBlockNumbers": { "zksync2": 64027305 },
+  "permissionsConfigHash": "0x9611c95bd6e720ff5f90546129ace6491cf2ed3ceaf6c25b4a9d39c05bbcb8f8"
 }

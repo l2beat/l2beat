@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x5cb28d8cb5209c41aafa40c23f4f8f1f5a91dda0
+
+# Diff at Thu, 21 Aug 2025 09:31:05 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd418e068c274f7cd46e3ace7789ff5bbb8a2dad block: 1755013885
+- current timestamp: 1755768616
+
+## Description
+
+Upgrade to ArbOS v40 wasmModuleRoot.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x65AD139061B3f6DDb16170a07b925337ddf42407) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v32 wasmModuleRoot"
++        "ArbOS v40 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
++        "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a"
+    }
+```
+
+Generated with discovered.json: 0x1bd7cc1091a65fa13f84347cfa0521c592c879b7
+
+# Diff at Tue, 12 Aug 2025 15:52:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1752237546
+- current timestamp: 1755013885
+
+## Description
+
+Conduit Multisig signer added.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 12 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x128870786c079b41e542272cc902c9d540e39632
 
 # Diff at Mon, 14 Jul 2025 12:44:19 GMT:

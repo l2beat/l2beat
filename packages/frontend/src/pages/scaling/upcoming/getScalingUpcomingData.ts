@@ -27,6 +27,9 @@ export async function getScalingUpcomingData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Upcoming Scaling Projects - L2BEAT',
+        description:
+          'Discover upcoming Ethereum scaling solutions before they launch.',
         openGraph: {
           url: req.originalUrl,
           image: '/meta-images/scaling/upcoming/opengraph-image.png',

@@ -13,7 +13,6 @@ export const reddiozkvm: ScalingProject = underReviewL2({
     description:
       'Reddio aims to bring the world’s first GPU-Accelerated Parallel EVM architecture to live production. Purpose-built for compute-intensive and AI-native applications, it opens a new frontier of speed and programmability within Ethereum’s ecosystem.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://reddio.com/'],
       bridges: [
@@ -35,6 +34,10 @@ export const reddiozkvm: ScalingProject = underReviewL2({
         'https://discord.com/invite/SjNAJ4qkK3',
       ],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Validity',
   },
   associatedTokens: ['RDO'],
   chainConfig: {

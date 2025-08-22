@@ -74,7 +74,6 @@ export const reddioex: ScalingProject = {
       'RedSonic is a Validium based on the StarkEx technology. Its goal is to power the next generation Web3 apps and games by providing developers with the APIs and SDKs to create digital assets and easily integrate them in-app and in-game.',
     purposes: ['Exchange', 'NFT', 'Gaming'],
     stacks: ['StarkEx'],
-    category: 'Validium',
     links: {
       websites: ['https://reddio.com/'],
       bridges: [
@@ -94,6 +93,9 @@ export const reddioex: ScalingProject = {
         'https://discord.com/invite/SjNAJ4qkK3',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
   stage: {
     stage: 'NotApplicable',

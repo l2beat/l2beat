@@ -20,7 +20,6 @@ type SupportedOPStackChains =
   | 'SUPERSEED'
   | 'POLYNOMIAL'
   | 'MINT'
-  | 'SNAXCHAIN'
 type OPStackInfo = [string, string] // [config, genesis file]
 
 const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
@@ -110,7 +109,7 @@ function OPSTACK(chain: SupportedOPStackChains): ProjectScalingStateDerivation {
       'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
     genesisState: `The genesis file can be found [here](${genesis}).`,
     dataFormat:
-      "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/).",
+      "The format specification of Sequencer's data batches can be found [here](https://optimism.io/blog/here-s-how-you-can-reproduce-op-mainnet-s-migration-to-bedrock).",
   }
 }
 

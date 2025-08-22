@@ -50,7 +50,6 @@ export const zkspace: ScalingProject = {
       'ZKBase is an infrastructure protocol based on Zero-Knowledge (ZK) proof technology. It aims to support various projects across the Bitcoin and Ethereum networks.',
     purposes: ['NFT', 'Exchange', 'Payments'],
     stacks: ['ZKsync Lite'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://zkbase.org/'],
       bridges: ['https://zkbase.app'],
@@ -61,13 +60,16 @@ export const zkspace: ScalingProject = {
         'https://discord.gg/MJKtaYcYw8',
         'https://twitter.com/ZKBaseOfficial',
         'https://t.me/ZKSpaceOfficial',
-        'https://medium.com/zkswap',
       ],
     },
     liveness: {
       explanation:
         "ZK Space is a ZK rollup based on ZKsync Lite's code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and a validity proof should be generated, submitted, and verified. ",
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('zksyncprover'),
   },
   config: {
     associatedTokens: ['ZKS'],
@@ -227,7 +229,7 @@ export const zkspace: ScalingProject = {
     },
     {
       title: 'ZKSpace launched',
-      url: 'https://medium.com/zkswap/l2-labs-launches-all-in-one-layer2-platform-zkspace-featuring-zkswap-v3-0-nfts-payments-82dae7d9207c',
+      url: 'https://x.com/ZKBaseOfficial/status/1465943738157465605',
       date: '2021-12-20T00:00:00Z',
       description:
         'All-in-One ScalingProject Platform ZKSpace, Featuring ZKSwap v3.0, NFTs, & Payments is launched.',

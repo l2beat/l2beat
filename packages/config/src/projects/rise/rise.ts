@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const rise: ScalingProject = upcomingL2({
   id: 'rise',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1713776957), // 2024-04-22T09:09:17Z
   display: {
     name: 'RISE',
@@ -12,7 +13,6 @@ export const rise: ScalingProject = upcomingL2({
     description:
       'RISE is a Parallel EVM Rollup that intends to unlock a new era of performance for Ethereum.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://riselabs.xyz/'],
@@ -27,5 +27,8 @@ export const rise: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

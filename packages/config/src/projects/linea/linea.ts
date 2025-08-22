@@ -91,7 +91,6 @@ export const linea: ScalingProject = {
     description:
       'Linea is a ZK Rollup powered by a zkEVM developed at Consensys, designed to scale the Ethereum network.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://linea.build/'],
       bridges: ['https://bridge.linea.build/'],
@@ -116,6 +115,10 @@ export const linea: ScalingProject = {
       explanation:
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Proofs and state roots are currently posted in the same transaction.',
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('lineaprover'),
   },
   config: {
     escrows: [

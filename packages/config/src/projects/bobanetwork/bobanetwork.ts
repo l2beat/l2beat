@@ -144,7 +144,7 @@ export const bobanetwork: ScalingProject = opStackL2({
     {
       title: 'Boba launches L2 on Avalanche',
       date: '2022-09-21T00:00:00Z',
-      url: 'https://boba.network/blog/an-avalanche-of-boba-is-coming/',
+      url: 'https://medium.com/avalancheavax/boba-launches-the-first-l2-on-avalanche-107d9166dc06',
       description: 'Boba launches on Avalanche.',
       type: 'general',
     },

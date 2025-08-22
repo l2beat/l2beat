@@ -25,6 +25,7 @@ export const xlayer: ScalingProject = {
     REASON_FOR_BEING_OTHER.SMALL_DAC,
     REASON_FOR_BEING_OTHER.NO_PROOFS,
   ],
+  proofSystem: undefined,
   display: {
     name: 'X Layer',
     slug: 'xlayer',
@@ -38,7 +39,6 @@ export const xlayer: ScalingProject = {
       explorers: ['https://okx.com/explorer/xlayer'],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
     },
-    category: 'Other',
     purposes: ['Universal'],
   },
   dataAvailability: {

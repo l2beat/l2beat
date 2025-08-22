@@ -1,7 +1,6 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
-import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
@@ -11,11 +10,10 @@ import { toLivenessTableEntry } from './toTableEntry'
 
 interface Props {
   entries: ScalingLivenessEntry[]
-  rollups?: boolean
   hideType?: boolean
 }
 
-export function ScalingLivenessTable({ entries, rollups, hideType }: Props) {
+export function ScalingLivenessTable({ entries, hideType }: Props) {
   const { timeRange } = useLivenessTimeRangeContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -41,5 +39,5 @@ export function ScalingLivenessTable({ entries, rollups, hideType }: Props) {
     },
   })
 
-  return rollups ? <RollupsTable table={table} /> : <BasicTable table={table} />
+  return <BasicTable table={table} />
 }

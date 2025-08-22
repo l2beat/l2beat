@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "ethereum",
-  "timestamp": 1754378270,
+  "timestamp": 1755850487,
   "configHash": "0xab3e140b35504785130784cc7c4e1c032524515bdb4084edb56f2417da06c907",
   "entries": [
     {
@@ -136,6 +136,8 @@
         "0x04d47a14538cc31c1d5699cd1ba8e634345861e576bb09735cacd8e7569495da"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).",
+      "ignoreInWatchMode": ["getCurrentPeriod"],
       "sinceTimestamp": 1750500551,
       "sinceBlock": 22752148,
       "values": {
@@ -151,7 +153,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 6,
+        "getCurrentPeriod": 8,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -378,8 +380,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
-        "getLastDepositId": 6662,
-        "getLastRelayedDepositId": 6662,
+        "getLastDepositId": 9967,
+        "getLastRelayedDepositId": 9966,
         "getNativeTokenIndex": 0,
         "paused": false,
         "RELAY_LIMIT": 450,
@@ -423,6 +425,7 @@
           "role": ".getPredicateManager"
         }
       ],
+      "ignoreInWatchMode": ["getDeployedPolicies"],
       "sinceTimestamp": 1735344335,
       "sinceBlock": 21497263,
       "values": {
@@ -470,7 +473,17 @@
           "x-temp-001",
           "x-temp-002",
           "x-test-prod-001",
-          "x-trm-template"
+          "x-trm-template",
+          "x-nest-prod-005",
+          "x-social-graph-template",
+          "x-random-template",
+          "x-random-fifty-percent-template",
+          "x-test-social-graph",
+          "x-test-trm",
+          "x-test-random",
+          "x-mxon-prod-001",
+          "x-kyc-basic-template-001",
+          "x-strict-membership-policy"
         ],
         "getRestakeableStrategies": [
           "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
@@ -999,12 +1012,12 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/PredicateServiceManager": "0xab8cdaa1cd6ce6003cf49746a5682bb5f3e224c6dbc43d244929cbb43e98051a",
+    "eigenlayer/PredicateServiceManager": "0xcd86cf671cd3a2752f83bbda6131c455658841f9daef6307544da099dd4baf39",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "intmax/Contribution": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "intmax/Contribution": "0x5b054bae35b8a718a705f49eb6b59b86926069d57f1a3a7b698ea12aad64e991",
     "intmax/Liquidity": "0xd7d5acf0c2574b4d98b015b7e23864f0e8f319fe1fa58532e649aabe51a35cfd",
     "intmax/PredicatePermitter": "0x3558c47cc4cc15bddb87c33f9c6166935da9199ad3d5a55bd77681d197be6728"
   },
-  "usedBlockNumbers": { "ethereum": 23073315 },
-  "permissionsConfigHash": "0xf596c0d49109b82369a28ca6ee615a0f398f68fc5f5511120c267a29c74e2046"
+  "usedBlockNumbers": { "ethereum": 23195352 },
+  "permissionsConfigHash": "0x9a240030134b12857a0ad3b1c1459da05f8a936a431230313e2252e94d582823"
 }

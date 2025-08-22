@@ -53,6 +53,14 @@ export const agglayer: BaseProject = {
       type: 'general',
     },
     {
+      title: 'Pessimistic Proof testnet goes live',
+      url: 'https://x.com/0xPolygon/status/1869867180415730130',
+      date: '2024-12-01T00:00:00Z',
+      description:
+        'Developers gain hands-on access to simulate cross-chain failover scenarios and test Agglayer’s fallback security model.',
+      type: 'general',
+    },
+    {
       title: 'AUSD becomes Agglayer’s stablecoin',
       url: 'https://x.com/0xPolygon/status/1855975301215658214',
       date: '2024-11-11T00:00:00Z',
@@ -103,11 +111,14 @@ export const agglayer: BaseProject = {
   ],
   ecosystemConfig: {
     links: {
-      buildOn: 'https://visualizer.agglayer.dev/',
+      buildOn: 'https://docs.agglayer.dev/',
       learnMore: 'https://www.agglayer.dev/learn',
       governanceDelegateToL2BEAT:
         'https://governance.polygon.technology/community-members/0x1B686eE8E31c5959D9F5BBd8122a58682788eeaD/',
       governanceProposals: 'https://governance.polygon.technology/proposals/',
+    },
+    firstBanner: {
+      mainText: 'Build an Agglayer chain',
     },
     token: {
       tokenId: 'polygonzkevm-POL',

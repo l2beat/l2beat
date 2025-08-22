@@ -142,5 +142,11 @@
     "address": "0xD26bB3aaAa4cB5638A8581A4c4b1d937D8E05c54",
     "chain": "ethereum",
     "blockNumber": 22995199
+  },
+  "L1CrossDomainMessenger_v2_6_0_fraxtal": {
+    "hash": "0xd5047c4d0e194d60832d6fcddd0cfba77cc45a190d31800813ba676c19a7e751",
+    "address": "0x597959A313643Ed15d45dfbCC422321E72A84515",
+    "chain": "ethereum",
+    "blockNumber": 23174078
   }
 }

@@ -1,6 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -28,8 +31,6 @@ export const omgnetwork: ScalingProject = {
     description:
       'OMG Network claims to be the leading value transfer network for ETH and ERC20 tokens. The Network scales by centralizing transaction processing and remains safe by decentralizing security.',
     purposes: ['Payments'],
-    category: 'Plasma',
-
     links: {
       websites: ['https://omg.network'],
       documentation: ['https://docs.omg.network/'],
@@ -41,6 +42,12 @@ export const omgnetwork: ScalingProject = {
         'https://t.me/omgnetwork',
       ],
     },
+  },
+  proofSystem: undefined,
+  dataAvailability: {
+    layer: DA_LAYERS.NONE,
+    bridge: DA_BRIDGES.PLASMA,
+    mode: DA_MODES.BALANCE_PROOF,
   },
   stage: {
     stage: 'NotApplicable',

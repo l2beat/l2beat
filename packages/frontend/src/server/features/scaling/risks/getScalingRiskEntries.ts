@@ -9,7 +9,7 @@ import { getProjectsChangeReport } from '../../projects-change-report/getProject
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
-import { compareStageAndTvs } from '../utils/compareStageAndTvs'
+import { compareTvs } from '../tvs/utils/compareTvs'
 
 export async function getScalingRiskEntries() {
   const [tvs, projectsChangeReport, projects] = await Promise.all([
@@ -30,6 +30,7 @@ export async function getScalingRiskEntries() {
   ])
 
   const entries = projects
+    .filter((p) => p.statuses.reviewStatus !== 'initialReview')
     .map((project) =>
       getScalingRiskEntry(
         project,
@@ -37,7 +38,7 @@ export async function getScalingRiskEntries() {
         tvs[project.id],
       ),
     )
-    .sort(compareStageAndTvs)
+    .sort(compareTvs)
 
   return groupByScalingTabs(entries)
 }

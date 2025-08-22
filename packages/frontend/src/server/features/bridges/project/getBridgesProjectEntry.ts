@@ -1,5 +1,6 @@
 import type {
   Project,
+  ProjectAssociatedToken,
   ProjectBridgeInfo,
   ProjectCustomColors,
   TableReadyValue,
@@ -7,6 +8,7 @@ import type {
 } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
@@ -56,8 +58,9 @@ export interface BridgesProjectEntry {
         stablecoin: number
         associated: number
         btc: number
+        other: number
         warnings: WarningWithSentiment[]
-        associatedTokens: string[]
+        associatedTokens: ProjectAssociatedToken[]
       }
     }
     destination: TableReadyValue
@@ -158,11 +161,11 @@ export async function getBridgesProjectEntry(
 
   if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData.chart)) {
     sections.push({
-      type: 'TvsSection',
+      type: 'BridgesTvsSection',
       props: {
         id: 'tvs',
         title: 'Value Secured',
-        projectId: project.id,
+        project: getChartProject(project),
         tokens: tokens,
         milestones: project.milestones ?? [],
         defaultRange: project.archivedAt ? 'max' : '1y',

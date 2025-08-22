@@ -6,7 +6,8 @@
   "types": "./index.d.ts",
   "scripts": {
     "build": "./scripts/build.sh",
-    "build:dependencies": "cd ../.. && pnpm build:dependencies",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:backend",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:backend",
     "build:config": "cd ../config && pnpm build",
     "clean": "rm -rf build",
     "format": "biome format .",
@@ -33,7 +34,8 @@
     "tvs:calculate-ids": "ts-node ./scripts/tvs/calculate-ids.ts",
     "tvs:translate-id": "ts-node ./scripts/tvs/translate-id.ts",
     "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
-    "bridges:cli": "ts-node ./scripts/bridges/cli.ts"
+    "bridges:cli": "ts-node ./scripts/bridges/cli.ts",
+    "bridges:cli-stats": "ts-node ./scripts/bridges/cli-stats.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",

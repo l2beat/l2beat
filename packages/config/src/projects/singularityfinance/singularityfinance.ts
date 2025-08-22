@@ -12,7 +12,6 @@ export const singularityfinance: ScalingProject = upcomingL2({
     description:
       'Singularity Finance is an EVM compatible Layer 2 blockchain which brings the AI economy onchain. It offers a compliant RWA tokenisation framework to tokenise AI compute and monetise AI agents.',
     purposes: ['AI', 'RWA'],
-    category: 'Validium',
     links: {
       websites: ['https://singularityfinance.ai'],
       documentation: ['https://docs.singularityfinance.ai'],
@@ -21,5 +20,8 @@ export const singularityfinance: ScalingProject = upcomingL2({
         'https://x.com/Singularity_Fi',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

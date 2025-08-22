@@ -1,0 +1,58 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.",
+  "ignoreMethods": [
+    "getProposal",
+    "gameOver",
+    "isResolvable",
+    "latestProposals",
+    "needsDefense",
+    "l1BlockHashes",
+    "proposalIsCanonical",
+    "getAnchorRoot"
+  ],
+  "ignoreInWatchMode": [
+    "getProposalsLength",
+    "anchorL2BlockNumber",
+    "anchorProposalId",
+    "anchorRoot"
+  ],
+  "fields": {
+    "sequencerInbox": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "eth:0x00000000000000000000000000000000000face7"
+      }
+    },
+    "renouncedOwner": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001"
+      }
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can set the whitelisted proposers."
+        }
+      ]
+    },
+    "whitelistedProposers": {
+      "handler": {
+        "type": "event",
+        "select": "proposer",
+        "add": {
+          "event": "ProposerPermissionUpdated",
+          "where": ["=", "#allowed", true]
+        },
+        "remove": {
+          "event": "ProposerPermissionUpdated",
+          "where": ["=", "#allowed", false]
+        }
+      },
+      "permissions": [{ "type": "propose" }]
+    }
+  },
+  "category": "core"
+}

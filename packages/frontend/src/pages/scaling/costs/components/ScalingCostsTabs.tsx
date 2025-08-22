@@ -8,7 +8,11 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { OthersInfo, RollupsInfo } from '~/components/ScalingTabsInfo'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/ScalingTabsInfo'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
@@ -49,6 +53,10 @@ export function ScalingCostsTabs(props: Props) {
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
+            Validiums & Optimiums
+            <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
+          </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
@@ -62,7 +70,22 @@ export function ScalingCostsTabs(props: Props) {
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
-            <ScalingCostsTable entries={entries.rollups} rollups />
+            <ScalingCostsTable entries={entries.rollups} />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent
+            value="validiumsAndOptimiums"
+            className="pt-4 sm:pt-3"
+          >
+            <ValidiumsAndOptimiumsInfo />
+            <ScalingCostsChart
+              tab="validiumsAndOptimiums"
+              entries={entries.validiumsAndOptimiums}
+              milestones={props.milestones}
+            />
+            <HorizontalSeparator className="my-5" />
+            <ScalingCostsTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>

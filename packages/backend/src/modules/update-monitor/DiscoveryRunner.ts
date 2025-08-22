@@ -43,12 +43,7 @@ export class DiscoveryRunner {
     private readonly allProviders: AllProviders,
     private readonly discoveryEngine: DiscoveryEngine,
     private readonly templateService: TemplateService,
-    readonly chain: string,
   ) {}
-
-  async getBlockNumber(): Promise<number> {
-    return await this.allProviders.getLatestBlockNumber(this.chain)
-  }
 
   private async discover(
     projectName: string,

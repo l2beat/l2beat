@@ -12,7 +12,6 @@ export const gwyneth: ScalingProject = upcomingL2({
     description:
       'Taiko Gwyneth is a based booster rollup synchronously composable with Ethereum utilizing Taiko technology.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     stacks: ['Taiko'],
     links: {
       websites: [
@@ -24,5 +23,8 @@ export const gwyneth: ScalingProject = upcomingL2({
         'https://discord.gg/7EU5aP8P',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })
