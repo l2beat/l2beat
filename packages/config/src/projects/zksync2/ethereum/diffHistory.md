@@ -14,7 +14,7 @@ Emergency upgrade to protocol version v28.1, which only affects the verifiers. N
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       values.$pastUpgrades.22:
 +        ["2025-08-01T23:42:11.000Z","0x4408299240ea4bef17153116dbd0ab1fbd58dbe9a4b9fb177b7664a71e9c70f1",["eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC","eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22","eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec","eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"]]
       values.$upgradeCount:
@@ -103,7 +103,7 @@ permissions and upgrades remain the same. tracked transactions are now updated t
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       values.getSettlementLayer:
 -        "eth:0x0000000000000000000000000000000000000000"
 +        "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9"
@@ -124,7 +124,7 @@ discovery. Values are for block 1750835963 (main branch discovery), not current.
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       template:
 -        "shared-zk-stack/Diamond"
 +        "shared-zk-stack/Diamond_NotSettlementLayer"
@@ -227,7 +227,7 @@ discovery. Values are for block 22779919 (main branch discovery), not current.
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       address:
 -        "0x32400084C286CF3E17e7B677ea9583e60a000324"
 +        "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
@@ -913,7 +913,7 @@ discovery. Values are for block 22779919 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324)
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
 ```
 
 ```diff
@@ -1104,7 +1104,7 @@ discovery. Values are for block 22775246 (main branch discovery), not current.
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       template:
 -        "shared-zk-stack/v26/Diamond"
 +        "shared-zk-stack/Diamond"
@@ -1141,7 +1141,7 @@ Generated with discovered.json: 0xbbfa1081ae6cf52ef71abb62b90b79c7afd0c7ee
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       values.$implementation.3:
 -        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
 +        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
@@ -1480,7 +1480,7 @@ discovery. Values are for block 22481883 (main branch discovery), not current.
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       sourceHashes.4:
 -        "0x46ab6472330f39b5dde71de5fc30609f34ecfa68c11673e09438f6db607279ea"
       sourceHashes.3:
@@ -1643,7 +1643,7 @@ no risk-related changes.
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       sourceHashes.4:
 -        "0xf3a1cb3dd9315b2dfa9e9aca6d6b09e987a1eb463588f115e2eb142eaa2a4ac6"
 +        "0x46ab6472330f39b5dde71de5fc30609f34ecfa68c11673e09438f6db607279ea"
@@ -1803,7 +1803,7 @@ discovery. Values are for block 22346378 (main branch discovery), not current.
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       issuedPermissions:
 -        [{"permission":"interact","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
     }
@@ -1849,7 +1849,7 @@ TX filterer removed.
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       issuedPermissions.3:
 -        {"permission":"interact","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}
       issuedPermissions.2.to:
@@ -1944,7 +1944,7 @@ contract ProtectedAddressValidator {
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       issuedPermissions.1.to:
 -        "0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78"
 +        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
@@ -2035,7 +2035,7 @@ TransactionFilterer added. Risks already reflect this and the filterer contract 
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       issuedPermissions.3:
 +        {"permission":"interact","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}
       issuedPermissions.2.to:
@@ -2183,13 +2183,13 @@ discovery. Values are for block 22123358 (main branch discovery), not current.
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       template:
 -        "shared-zk-stack/Diamond_v26"
 +        "shared-zk-stack/v26/Diamond"
       description:
--        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
-+        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
+-        "The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
++        "The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
 +++ description: true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract.
 +++ severity: HIGH
       values.isPermanentRollup:
@@ -2225,7 +2225,7 @@ discovery. Values are for block 22044942 (main branch discovery), not current.
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       values.prepareChainCommitment:
 -        {"totalBatchesExecuted":497870,"totalBatchesVerified":497872,"totalBatchesCommitted":497874,"l2SystemContractsUpgradeTxHash":"0x0000000000000000000000000000000000000000000000000000000000000000","l2SystemContractsUpgradeBatchNumber":0,"batchHashes":["0x7c68f5c5ae85dac45341cfdc87aeb5e492641fcf7bc4aee3a61c94f8154291c2","0x749e1edf9074f1bf9767c9cac19f20a457c73207fd88cf4ebe0f6a7a68cf2fcc","0xa4daba9a6e4af05110f8f6560424208bc2d87aa56e013c68a3237827dfc0112d","0x4682fa1ce3ac5765db668c5a3cd7775a0f119351b7ca6938a4b1cfecfc7d36f8","0x170603927e9309ec4e6e17cd2c850161ed0ec167bc3ca5d56971a68b0e7a963e"],"priorityTree":{"nextLeafIndex":80,"startIndex":3270719,"unprocessedIndex":73,"sides":["0x07a258c2a4dc53e855a5b8b67bf4087da9e7bcf89f85c1781cb6ed5bf9d5e220","0xc067215f20d4f2d1646e700bb1dbcc479efcf4f03b90e82b7201ac49051abd55","0x07b9611ca8b372fd1473ca5487fe0d7368c12deb26362afdb119874a1e3f908d","0x9f0b35143e17929f615affdf1899907c80b9a458d0fb1ce6070a767256f975fd","0xa7f7767838fe0fb08c390783d69add3b0c73e9a01f914761d4e035b23edd7417","0xc5b1e324c83773f5769fba7edbf5512ab2daace12d7ae13a3bfb7a35816ae586","0x183451e7453218c629d33a77620ca05816e307c0e77a3960efcd37d636aa08c2","0x095621117fb1332a0c4d362c69fe286c0781e27f5418d079e77a294c3c8da311"]},"isPermanentRollup":true}
     }
@@ -2274,7 +2274,7 @@ Current status of protocol upgrade v26:
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       template:
 -        "shared-zk-stack/Diamond"
 +        "shared-zk-stack/Diamond_v26"
@@ -2292,7 +2292,7 @@ Current status of protocol upgrade v26:
 +        "0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31"
       description:
 -        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
-+        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
++        "The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
       issuedPermissions.2:
 +        {"permission":"interact","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}
       issuedPermissions.1.to:

@@ -26,7 +26,7 @@ standard zk stack v28 upgrade.
 
 ```diff
     contract zkVmDiamond (0x742A28e22277945BBAAa34810393bf6e8512576C) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       values.$implementation.0:
 -        "eth:0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
 +        "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC"
@@ -275,7 +275,7 @@ discovery. Values are for block 22896156 (main branch discovery), not current.
 
 ```diff
     contract zkVmDiamond (0x742A28e22277945BBAAa34810393bf6e8512576C) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       address:
 -        "0x742A28e22277945BBAAa34810393bf6e8512576C"
 +        "eth:0x742A28e22277945BBAAa34810393bf6e8512576C"
@@ -566,7 +566,7 @@ discovery. Values are for block 22896156 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract zkVmDiamond (0x742A28e22277945BBAAa34810393bf6e8512576C)
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
 ```
 
 ```diff
@@ -714,7 +714,7 @@ discovery. Values are for block 22593197 (main branch discovery), not current.
 
 ```diff
     contract zkVmDiamond (0x742A28e22277945BBAAa34810393bf6e8512576C) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       template:
 -        "shared-zk-stack/v26/Diamond"
 +        "shared-zk-stack/Diamond"
@@ -737,7 +737,7 @@ v27 upgrade to standard contracts.
 
 ```diff
     contract zkVmDiamond (0x742A28e22277945BBAAa34810393bf6e8512576C) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       sourceHashes.0:
 -        "0xbceaa498ea422a98ec91f01d7b76774610e543c9efd855141de933065f32b308"
 +        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
@@ -895,7 +895,7 @@ Initial discovery of a standard zk stack rollup.
 ```diff
 +   Status: CREATED
     contract zkVmDiamond (0x742A28e22277945BBAAa34810393bf6e8512576C)
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
 ```
 
 ```diff

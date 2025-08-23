@@ -194,7 +194,7 @@ discovery. Values are for block 22865742 (main branch discovery), not current.
 
 ```diff
     contract zkVmDiamond (0xC8C4cB5AF7c723c7EfD360898B47920679f92C92) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       address:
 -        "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
 +        "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
@@ -466,7 +466,7 @@ discovery. Values are for block 22865742 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract zkVmDiamond (0xC8C4cB5AF7c723c7EfD360898B47920679f92C92)
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
 ```
 
 ```diff
@@ -518,7 +518,7 @@ standard zk stack v28 upgrade.
 
 ```diff
     contract zkVmDiamond (0xC8C4cB5AF7c723c7EfD360898B47920679f92C92) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       values.$implementation.0:
 -        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
 +        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
@@ -747,7 +747,7 @@ discovery. Values are for block 22630381 (main branch discovery), not current.
 
 ```diff
     contract zkVmDiamond (0xC8C4cB5AF7c723c7EfD360898B47920679f92C92) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       template:
 -        "shared-zk-stack/v26/Diamond"
 +        "shared-zk-stack/Diamond"
@@ -889,5 +889,5 @@ Initial discovery of a standard zk stack validium.
 ```diff
 +   Status: CREATED
     contract zkVmDiamond (0xC8C4cB5AF7c723c7EfD360898B47920679f92C92)
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
 ```
