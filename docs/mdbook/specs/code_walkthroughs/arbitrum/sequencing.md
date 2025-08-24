@@ -33,7 +33,7 @@ function sendL2MessageFromOrigin(
 )
 ```
 
-It's important to note that the function can be gated if the `allowListEnabled` variable is set to `true`, which then checks if the `tx.origin` returns `true` in the `isAllowed` mapping. The function only allows calls from EOAs[^1] and that the length of the message doesn't exceed the `maxDataSize` variable, which is supposed to be set to ~90% of geth tx size limit[^2]. The `enqueueDelayedMessage` function on the `Bridge` contract is then called by specifying the `L2_MSG` message type, the L1-to-L2 aliased `msg.sender` as the sender, and the `messageDataHash`, which is constructed as the keccak hash of `messageData`. All message types are defined in the `MessageTypes` library:
+It's important to note that the function can be gated if the `allowListEnabled` variable is set to `true`, which then checks if the `tx.origin` returns `true` in the `isAllowed` mapping. The function only allows calls from EOAs[^1] and ensures that the length of the message doesn't exceed the `maxDataSize` variable, which is supposed to be set to ~90% of geth tx size limit[^2]. The `enqueueDelayedMessage` function on the `Bridge` contract is then called by specifying the `L2_MSG` message type, the L1-to-L2 aliased `msg.sender` as the sender, and the `messageDataHash`, which is constructed as the keccak hash of `messageData`. All message types are defined in the `MessageTypes` library:
 
 ```solidity
 uint8 constant L2_MSG = 3;
