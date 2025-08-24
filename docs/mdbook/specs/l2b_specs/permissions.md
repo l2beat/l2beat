@@ -44,7 +44,7 @@ The "upgrade" permissioned action for each permissioned actor should group contr
     * SystemConfig <via>
 ```
 
-Such grouping can be achieved by first grouping individual contracts by delay, and then contracts by set of delays.
+Such grouping can be achieved by first grouping individual contracts by delay, and then grouping contracts by set of delays.
 
 ```md
 [FoochainPortal] with [7d <via1>] delay
