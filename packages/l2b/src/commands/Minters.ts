@@ -1,5 +1,5 @@
 import { getChainConfig } from '@l2beat/discovery'
-import { command, positional, restPositionals, string } from 'cmd-ts'
+import { command, positional } from 'cmd-ts'
 import { getProvider } from '../implementations/common/GetProvider'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import {
@@ -18,10 +18,6 @@ export const Minters = command({
       displayName: 'chain',
     }),
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
-    signatures: restPositionals({
-      type: string,
-      displayName: 'additional signatures you want to search for (optional)',
-    }),
   },
   handler: async (args) => {
     const logger = getPlainLogger()
