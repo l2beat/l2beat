@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, unique } from '@l2beat/shared-pure'
 import type {
   Column,
   Header,
@@ -53,6 +53,7 @@ export interface BasicTableProps<T extends BasicTableRow> {
    * If the table is inside a main page card - bypass right margin by adding classes
    */
   insideMainPageCard?: boolean
+  getHighlightId?: (ctx: T) => string
 }
 
 export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
@@ -83,7 +84,8 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
               !header.isPlaceholder && !!header.column.columnDef.header,
           ) && (
             <TableHeaderRow>
-              {groupedHeader.headers.map((header) => {
+              {groupedHeader.headers.map((header, index) => {
+                const isLast = index === groupedHeader.headers.length - 1
                 return (
                   <React.Fragment key={header.id}>
                     <th
@@ -105,7 +107,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
                           header.getContext(),
                         )}
                     </th>
-                    {!header.isPlaceholder && (
+                    {!header.isPlaceholder && !isLast && (
                       <BasicTableColumnFiller as="th" />
                     )}
                   </React.Fragment>
@@ -114,7 +116,8 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
             </TableHeaderRow>
           )}
         <TableHeaderRow>
-          {actualHeader.headers.map((header) => {
+          {actualHeader.headers.map((header, index) => {
+            const isLast = index === actualHeader.headers.length - 1
             const groupParams = getBasicTableGroupParams(header.column)
             return (
               <React.Fragment key={`${actualHeader.id}-${header.id}`}>
@@ -157,7 +160,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
                     )
                   )}
                 </TableHead>
-                {groupParams?.isLastInGroup && (
+                {groupParams?.isLastInGroup && !isLast && (
                   <BasicTableColumnFiller as="th" />
                 )}
               </React.Fragment>
@@ -183,12 +186,39 @@ export function BasicTableRow<T extends BasicTableRow>({
   className,
   ...props
 }: BasicTableProps<T> & { row: Row<T>; className?: string }) {
-  const { highlightedSlug } = useHighlightedTableRowContext()
+  const { highlightedId } = useHighlightedTableRowContext()
+
+  const uniqueRowsCount = unique(
+    row
+      .getVisibleCells()
+      .map(
+        (cell) =>
+          (cell.column.columnDef.meta?.additionalRows?.(cell.getContext())
+            .length ?? 0) + 1,
+      ),
+  )
+
+  const denominator = commonDenominator(uniqueRowsCount)
+  const maxRowSpan = Math.max(...uniqueRowsCount)
+  assert(denominator === maxRowSpan, 'Incorrect row configuration')
+
+  const cellDataMap = new Map<
+    number,
+    {
+      isLastInGroup: boolean
+      props: React.ComponentProps<typeof TableCell>
+    }
+  >()
+
+  const highlightId = props.getHighlightId?.(row.original) ?? row.original.slug
+
+  const isHighlighted =
+    highlightId !== undefined && highlightedId === highlightId
 
   return (
     <>
       <TableRow
-        slug={row.original.slug}
+        highlightId={highlightId}
         className={cn(
           getRowClassNames(row.original.backgroundColor),
           row.getIsExpanded() &&
@@ -197,7 +227,7 @@ export function BasicTableRow<T extends BasicTableRow>({
           className,
         )}
       >
-        {row.getVisibleCells().map((cell) => {
+        {row.getVisibleCells().map((cell, index) => {
           const { meta } = cell.column.columnDef
           const groupParams = getBasicTableGroupParams(cell.column)
 
@@ -209,38 +239,91 @@ export function BasicTableRow<T extends BasicTableRow>({
             ? meta.colSpan(cell.getContext())
             : undefined
 
+          const rowSpan =
+            denominator /
+            ((cell.column.columnDef.meta?.additionalRows?.(cell.getContext())
+              ?.length ?? 0) +
+              1)
+
+          const cellProps: React.ComponentProps<typeof TableCell> = {
+            align: meta?.align,
+            className: cn(
+              groupParams?.isFirstInGroup && 'pl-6!',
+              groupParams?.isLastInGroup && 'pr-6!',
+              cell.column.getCanSort() && meta?.align === undefined
+                ? groupParams?.isFirstInGroup
+                  ? 'pl-10'
+                  : 'pl-4'
+                : undefined,
+              cell.column.getIsPinned() &&
+                getRowClassNamesWithoutOpacity(row.original.backgroundColor),
+              cell.column.getIsPinned() &&
+                isHighlighted &&
+                'animate-row-highlight-no-opacity',
+              meta?.cellClassName,
+            ),
+            style: getCommonPinningStyles(cell.column),
+          }
+
+          cellDataMap.set(index, {
+            isLastInGroup: groupParams?.isLastInGroup ?? false,
+            props: cellProps,
+          })
+
+          const prevCell = cellDataMap.get(index - 1)
           return (
             <React.Fragment key={`${row.id}-${cell.id}`}>
-              <TableCell
-                align={meta?.align}
-                className={cn(
-                  groupParams?.isFirstInGroup && 'pl-6',
-                  groupParams?.isLastInGroup && 'pr-6!',
-                  cell.column.getCanSort() && meta?.align === undefined
-                    ? groupParams?.isFirstInGroup
-                      ? 'pl-10'
-                      : 'pl-4'
-                    : undefined,
-                  cell.column.getIsPinned() &&
-                    getRowClassNamesWithoutOpacity(
-                      row.original.backgroundColor,
-                    ),
-                  cell.column.getIsPinned() &&
-                    row.original.slug &&
-                    highlightedSlug === row.original.slug &&
-                    'animate-row-highlight-no-opacity',
-                  meta?.cellClassName,
-                )}
-                style={getCommonPinningStyles(cell.column)}
-                colSpan={colSpan}
-              >
+              {prevCell && prevCell.isLastInGroup && (
+                <BasicTableColumnFiller as="td" rowSpan={rowSpan} />
+              )}
+              <TableCell rowSpan={rowSpan} colSpan={colSpan} {...cellProps}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableCell>
-              {groupParams?.isLastInGroup && <BasicTableColumnFiller as="td" />}
             </React.Fragment>
           )
         })}
       </TableRow>
+      {range(denominator - 1).map((additionalRowIndex) => {
+        return (
+          <TableRow
+            key={`additional-row-${additionalRowIndex}`}
+            highlightId={highlightId}
+          >
+            {row.getVisibleCells().map((cell, index) => {
+              const additionalRows =
+                cell.column.columnDef.meta?.additionalRows?.(cell.getContext())
+              if (!additionalRows) {
+                return null
+              }
+
+              const rowSpan = denominator / (additionalRows.length + 1)
+
+              const actualIndex = (additionalRowIndex + 1) / rowSpan - 1
+              if (!Number.isInteger(actualIndex)) {
+                return null
+              }
+
+              const additionalRow = additionalRows[actualIndex]
+              if (!additionalRow) {
+                return null
+              }
+
+              const cellData = cellDataMap.get(index)
+              const prevCell = cellDataMap.get(index - 1)
+              return (
+                <React.Fragment key={`${cell.id}-${additionalRowIndex}`}>
+                  {prevCell && prevCell.isLastInGroup && (
+                    <BasicTableColumnFiller as="td" rowSpan={rowSpan} />
+                  )}
+                  <TableCell rowSpan={rowSpan} {...cellData?.props}>
+                    {additionalRow}
+                  </TableCell>
+                </React.Fragment>
+              )
+            })}
+          </TableRow>
+        )
+      })}
       {row.getIsExpanded() &&
         props.renderSubComponent &&
         (props.rawSubComponent ? (
@@ -258,7 +341,8 @@ export function BasicTableRow<T extends BasicTableRow>({
 }
 
 function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
-  return props.headers.map((header) => {
+  return props.headers.map((header, index) => {
+    const isLast = index === props.headers.length - 1
     return (
       <React.Fragment key={header.id}>
         <colgroup
@@ -268,7 +352,9 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
             <col key={`${header.id}-${i}`} />
           ))}
         </colgroup>
-        {!header.isPlaceholder && <BasicTableColumnFiller as="colgroup" />}
+        {!header.isPlaceholder && !isLast && (
+          <BasicTableColumnFiller as="colgroup" />
+        )}
       </React.Fragment>
     )
   })
@@ -277,28 +363,43 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
 function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
   return (
     <tr>
-      {props.headers.map((header) => (
-        <td
-          key={header.id}
-          colSpan={header.colSpan}
-          className={cn(
-            'h-4',
-            !header.isPlaceholder && 'rounded-b-lg',
-            header.column.getIsPinned() && getRowClassNamesWithoutOpacity(null),
-          )}
-          style={getCommonPinningStyles(header.column)}
-        />
-      ))}
+      {props.headers.map((header, index) => {
+        const isLast = index === props.headers.length - 1
+        return (
+          <React.Fragment key={header.id}>
+            <td
+              colSpan={header.colSpan}
+              className={cn(
+                'h-4',
+                !header.isPlaceholder && 'rounded-b-lg',
+                header.column.getIsPinned() &&
+                  getRowClassNamesWithoutOpacity(null),
+              )}
+              style={getCommonPinningStyles(header.column)}
+            />
+            {!header.isPlaceholder && !isLast && (
+              <BasicTableColumnFiller as="td" />
+            )}
+          </React.Fragment>
+        )
+      })}
     </tr>
   )
 }
 
 function BasicTableColumnFiller({
   as: Comp,
+  rowSpan,
+  colSpan,
 }: {
   as: 'th' | 'colgroup' | 'td'
+  rowSpan?: number
+  colSpan?: number
+  className?: string
 }) {
-  return <Comp className="h-full w-4 min-w-4" />
+  return (
+    <Comp className="h-full w-4 min-w-4" rowSpan={rowSpan} colSpan={colSpan} />
+  )
 }
 
 export function getBasicTableGroupParams<T>(column: Column<T>) {
@@ -315,4 +416,16 @@ export function getBasicTableGroupParams<T>(column: Column<T>) {
     isFirstInGroup,
     isLastInGroup,
   }
+}
+
+function greatestCommonDivisor(a: number, b: number): number {
+  return b === 0 ? a : greatestCommonDivisor(b, a % b)
+}
+
+function leastCommonMultiple(a: number, b: number): number {
+  return (a * b) / greatestCommonDivisor(a, b)
+}
+
+function commonDenominator(numbers: number[]): number {
+  return numbers.reduce((acc, num) => leastCommonMultiple(acc, num))
 }

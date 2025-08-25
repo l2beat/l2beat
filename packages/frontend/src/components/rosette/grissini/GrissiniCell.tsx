@@ -27,7 +27,7 @@ export function GrissiniCell(props: GrissiniCellProps) {
     <Tooltip>
       <TooltipTrigger
         className={cn(
-          'flex size-full items-center justify-center',
+          'flex h-[inherit] w-full items-center justify-center',
           props.className,
         )}
         disabledOnMobile={props.disabledOnMobile}
