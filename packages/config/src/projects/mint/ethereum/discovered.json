@@ -2,7 +2,7 @@
   "name": "mint",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0x79d88bcc595a9c8234566956548939847fb8f38d24cd43a8b907d3398e087f5d",
+  "configHash": "0x6ea24c28b960b49c217e31eb7c49287c809175474f959ba36e1b501cb326276c",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

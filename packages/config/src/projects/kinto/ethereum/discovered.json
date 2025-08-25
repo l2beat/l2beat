@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "timestamp": 1755591879,
-  "configHash": "0x80c69257217a93514e84ec85fd25d47d63e23408592b9c0a77346cc49cc1474b",
+  "configHash": "0xaa0371cf04590f8767e7964648c703a3a644196a5176f02babd689ee4ff964f3",
   "entries": [
     {
       "name": "Hypernative",

@@ -2,7 +2,7 @@
   "name": "facet",
   "chain": "facet",
   "timestamp": 1755605791,
-  "configHash": "0x0c8c0b5a61efd655d3001eaedcb640ed03a5bbada706d8f517eb379bc941f4e0",
+  "configHash": "0x15a76bf8d2d07e27eea063062ecdc83f6e17d05092b545536b082e380b4ba34b",
   "entries": [
     {
       "name": "L2Bridge",

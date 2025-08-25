@@ -2,7 +2,7 @@
   "name": "phala",
   "chain": "ethereum",
   "timestamp": 1755161649,
-  "configHash": "0xdc09a119ba9b96e10c51f6389a16a0f0c1ee8e9a8074ce1007bb776ec199afec",
+  "configHash": "0xcd6211cf4c2c7acefbb5b5a75c8040c99dba06afbe48a9661a0abcb2b5633b62",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {

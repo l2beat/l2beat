@@ -2,7 +2,7 @@
   "name": "pNetwork",
   "chain": "ethereum",
   "timestamp": 1722354923,
-  "configHash": "0xb8ede703d5989cffafac0786ac6c82dd82e53d7237a2f9391b5193c2310c9414",
+  "configHash": "0x3396176f6d5e99ddbd8bc20055be2e0e075764ae0dc5704415885dd31fdb8ed0",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",

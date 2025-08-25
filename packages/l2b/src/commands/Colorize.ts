@@ -29,25 +29,26 @@ export const Colorize = command({
 
     const chainConfigs = configReader
       .readAllDiscoveredProjects()
-      .flatMap(({ project, chains }) =>
-        chains.map((chain) => configReader.readConfig(project, chain)),
-      )
+      .flatMap(({ project }) => configReader.readConfig(project))
 
     for (const config of chainConfigs) {
-      const discovery = configReader.readDiscovery(config.name, config.chain)
-      const color = colorize(config.color, discovery, templateService)
+      const chains = configReader.readAllDiscoveredChainsForProject(config.name)
+      for (const chain of chains) {
+        const discovery = configReader.readDiscovery(config.name, chain)
+        const color = colorize(config.color, discovery, templateService)
 
-      const colorized = combineStructureAndColor(discovery, color)
-      const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)
-      if (changed) {
-        const projectDiscoveryFolder = configReader.getProjectChainPath(
-          config.name,
-          config.chain,
-        )
+        const colorized = combineStructureAndColor(discovery, color)
+        const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)
+        if (changed) {
+          const projectDiscoveryFolder = configReader.getProjectChainPath(
+            config.name,
+            chain,
+          )
 
-        await saveDiscoveredJson(colorized, projectDiscoveryFolder)
+          await saveDiscoveredJson(colorized, projectDiscoveryFolder)
 
-        updateDiffHistory(config.name, args.message)
+          updateDiffHistory(config.name, args.message)
+        }
       }
     }
   },

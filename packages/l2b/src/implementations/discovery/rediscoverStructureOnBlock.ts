@@ -3,7 +3,6 @@ import {
   ConfigReader,
   type DiscoveryOutput,
   discover,
-  getChainConfig,
   getChainConfigs,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
@@ -38,7 +37,6 @@ export async function rediscoverStructureOnBlock(
   await discover(
     {
       project: projectName,
-      chain: getChainConfig(chain),
       ...timing,
       sourcesFolder: `.code@${timePoint}`,
       flatSourcesFolder: `.flat@${timePoint}`,

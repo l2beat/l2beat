@@ -2,7 +2,7 @@
   "name": "lasernet",
   "chain": "ethereum",
   "timestamp": 1755696922,
-  "configHash": "0x985d92af05fee24e094f8b7cc2069db35ef290097ee5a110b5ce20950681944a",
+  "configHash": "0x0cc6ab8ab2046d20d4ae8a0041c497b1b1a972ae528cb8cc8dde4286490b7d68",
   "entries": [
     {
       "address": "eth:0x006F5B7E2D58fb4E53DEdaB8802FCdf2a5441DC7",

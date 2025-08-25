@@ -2,7 +2,7 @@
   "name": "eigenda",
   "chain": "ethereum",
   "timestamp": 1753682819,
-  "configHash": "0xead13b0edc4ff271ca3478ad43811e797ff83b354c6b0a78be870cd64d35d0f1",
+  "configHash": "0x7f72d29596fa2eebd11c1fbe45f2ec4e203352c4bc2d970e267f592164d81bb5",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {

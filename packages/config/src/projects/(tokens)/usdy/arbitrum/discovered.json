@@ -2,7 +2,7 @@
   "name": "usdy",
   "chain": "arbitrum",
   "timestamp": 1752830574,
-  "configHash": "0xdbd8faaf81f843bcb3a069bf26b2b8f581c1590601c5cf54f3b728b107623422",
+  "configHash": "0xcb27c81fe43dd7973f27b2e2d2a33c5040cb2a926a1ea6a0beb78c4def23be93",
   "entries": [
     {
       "name": "USDY",

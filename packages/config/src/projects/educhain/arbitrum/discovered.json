@@ -2,7 +2,7 @@
   "name": "educhain",
   "chain": "arbitrum",
   "timestamp": 1750836613,
-  "configHash": "0x02f9855a3ab4d2ddeebee6755ccc16d0ad6a930e62497bf21f0bc968099a38ad",
+  "configHash": "0xabbdda509c2cfd71bee48f417fdd7ac4fee3a133e08af62924be276483f043e9",
   "entries": [
     {
       "address": "arb1:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",

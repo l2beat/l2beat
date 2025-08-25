@@ -2,7 +2,7 @@
   "name": "reddioex",
   "chain": "ethereum",
   "timestamp": 1715171819,
-  "configHash": "0x9fb134dce112b0184f8a290e77c8f71fab043bc9ec216f295b9368c89423b8de",
+  "configHash": "0x02359326db8d9f4ba265e25dbd7ae15cf876c6ff010624c4578a84a04f675afe",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
