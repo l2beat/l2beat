@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x2db52527d6b9d56aeab9582ba5e8ab9f307bb82d
+
+# Diff at Mon, 25 Aug 2025 12:22:51 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@db2e2037972253abead542c9802c5ac28817e5d2 block: 1752574031
+- current timestamp: 1756124502
+
+## Description
+
+Added proposal to unfreeze [this](https://etherscan.io/address/0xd02c8a355599fee7e4f1d1d71f7a01c0108e353c) bridge. It also seems to have been executed already. I have no idea what it is, the source is unverified.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: LOW
+      values.proposalCount:
+-        66
++        67
+    }
+```
+
 Generated with discovered.json: 0x22adbc7cc1053cf78b50d69a7f02ce7766acdbf5
 
 # Diff at Tue, 15 Jul 2025 10:07:38 GMT:
