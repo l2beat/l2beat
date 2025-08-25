@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x85145d8a8597f76d047759ceb5e4ad5736d575f0
+
+# Diff at Mon, 25 Aug 2025 13:11:29 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1753682855
+- current timestamp: 1756122271
+
+## Description
+
+Removed type 4 verifier and added a new type 1 verifier, which is now used.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.1:
++        "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.4:
+-        "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+## Source code changes
+
+```diff
+...0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873.sol} | 54 +++++++++++-----------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753682855 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierMainnetFull (0xED39C0C41A7651006953AB58Ecb3039363620995) {
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+      template:
++        "linea/Verifier"
+      description:
++        "Smart contract used to verify the proofs of Linea zkEVM execution."
+    }
+```
+
 Generated with discovered.json: 0x06497220bef4213ad8618280125b221a39d9e971
 
 # Diff at Mon, 28 Jul 2025 07:11:06 GMT:
