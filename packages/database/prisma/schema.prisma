@@ -269,6 +269,17 @@ model TokenValue {
   @@index([projectId, tokenId, timestamp(sort: Desc)])
 }
 
+model TokenMetadata {
+  tokenId      String  @db.VarChar(255)
+  projectId    String  @db.VarChar(255)
+  source       String  @db.VarChar(255)
+  category     String  @db.VarChar(255)
+  isAssociated Boolean
+
+  @@id([tokenId])
+  @@index([projectId])
+}
+
 model ProjectValue {
   timestamp     DateTime @db.Timestamp(6)
   project       String   @db.VarChar(255)

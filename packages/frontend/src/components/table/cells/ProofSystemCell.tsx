@@ -29,7 +29,7 @@ export function ProofSystemCell({
     >
       <TwoRowCell>
         <TwoRowCell.First>
-          <TypeInfo stacks={stacks}>{proofSystem?.type}</TypeInfo>
+          <TypeInfo stacks={stacks}>{proofSystem?.type ?? 'None'}</TypeInfo>
         </TwoRowCell.First>
         {proofSystem?.name && (
           <TwoRowCell.Second>{proofSystem?.name}</TwoRowCell.Second>
