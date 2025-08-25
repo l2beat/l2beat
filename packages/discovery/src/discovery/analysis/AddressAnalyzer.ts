@@ -51,10 +51,11 @@ export type AnalyzedContract = {
 } & AnalyzedCommon
 
 export type Reference = {
-  type: 'Reference'
-  targetType: Exclude<Analysis['type'], Reference['type']>
-  address: ChainSpecificAddress
   name: string | undefined
+  address: ChainSpecificAddress
+  type: 'Reference'
+  targetType: Analysis['type']
+  targetProject: string
 }
 
 export interface ExtendedTemplate {

@@ -55,7 +55,8 @@ export function processAnalysis(
                 type: x.type,
                 address: x.address,
                 name: x.name,
-                targetType: x.targetType,
+                targetType: x.targetType ?? 'targetType',
+                targetProject: x.targetProject,
               }
             : withoutUndefinedKeys({
                 name: x.name,

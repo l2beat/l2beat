@@ -95,7 +95,8 @@ export type StructureEntry = {
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
   usedTypes?: DiscoveryCustomType[]
-  targetType?: Exclude<Analysis['type'], 'Reference'>
+  targetType?: Analysis['type']
+  targetProject?: string
 }
 
 export type ColorEntry = {
