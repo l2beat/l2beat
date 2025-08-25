@@ -88,6 +88,15 @@ export class DiscoveryEngine {
       const total = this.objectCount + leftToAnalyze.length
       await Promise.all(
         leftToAnalyze.map(async ({ address, templates }) => {
+          if (sharedModuleIndex.has(address)) {
+            resolved[address.toString()] = {
+              type: 'Reference',
+              address,
+              name: 'TODO Reference',
+              targetType: 'Contract',
+            }
+            return
+          }
           const skipReason = shouldSkip(
             address,
             config,

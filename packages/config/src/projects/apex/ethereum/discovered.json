@@ -1,7 +1,7 @@
 {
   "name": "apex",
   "chain": "ethereum",
-  "timestamp": 1753200107,
+  "timestamp": 1756113364,
   "configHash": "0xacdfef3f5dfbf27ad79c203f222790ea7e151537040767a4c7e2257c3d28b85f",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -112,6 +112,11 @@
           }
         }
       ]
+    },
+    {
+      "name": "TODO Reference",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference"
     },
     {
       "address": "eth:0x4F753A937318A64b2867b16a55f5aea83A4C44dB",
@@ -1356,6 +1361,6 @@
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
-  "usedBlockNumbers": { "ethereum": 22975778 },
-  "permissionsConfigHash": "0xf59eaf475e3d59b216427f6fd0f76cf8354e8dc7bfd33e34549042ea29600682"
+  "usedBlockNumbers": { "ethereum": 23217164 },
+  "permissionsConfigHash": "0x53e582e150e4575b2bd25982aab44718325e2cb5048af917bc07b52ab53de4de"
 }

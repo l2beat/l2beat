@@ -95,6 +95,10 @@ export function buildPermissionsModel(
   structureEntry: StructureEntry,
   addressToNameMap: Record<string, string>,
 ): string {
+  if (structureEntry.type === 'Reference') {
+    return `% ignoring reference to ${structureEntry.address} (${structureEntry.name})`
+  }
+
   const relationsModel: string[] = []
 
   const contractValues = contractValuesForInterpolation(
