@@ -30,7 +30,7 @@
           "chainId": 1,
           "supply": "zero",
           "source": "canonical",
-          "canonical": false
+          "canonical": true
         },
         "decimals": 2,
         "getFeeParameters": {

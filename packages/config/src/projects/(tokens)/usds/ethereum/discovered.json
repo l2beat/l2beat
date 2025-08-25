@@ -39,7 +39,7 @@
           "chainId": 1,
           "supply": "zero",
           "source": "canonical",
-          "canonical": false
+          "canonical": true
         },
         "$upgradeCount": 1,
         "decimals": 18,

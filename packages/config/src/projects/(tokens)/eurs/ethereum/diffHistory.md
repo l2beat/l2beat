@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbd62d178a4ccf32540904e701aff6cb7ce08c5af
+Generated with discovered.json: 0x421fbe7bec28f7f2ec66d1d58461ab92915746b0
 
-# Diff at Wed, 20 Aug 2025 09:27:24 GMT:
+# Diff at Mon, 25 Aug 2025 17:04:28 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@c8847d1a63c9954979c8abfb64bfc56929ed7e7f block: 1752830495
+- comparing to: main@828b4eded571ebe4abe88b292bc0c7a10079c1e7 block: 1752830495
 - current timestamp: 1752830495
 
 ## Description
@@ -20,11 +20,11 @@ discovery. Values are for block 1752830495 (main branch discovery), not current.
     contract EURSToken (0xdB25f211AB05b1c97D595516F45794528a807ad8) {
     +++ description: None
       values.$tokenData.canonical:
-+        false
++        true
     }
 ```
 
-Generated with discovered.json: 0xdf3499b49403f1fa68ffcb74f2a0dfc240106614
+Generated with discovered.json: 0xcabea06ade5447b947e801ec236b77ae7ef63fd8
 
 # Diff at Fri, 18 Jul 2025 10:03:33 GMT:
 

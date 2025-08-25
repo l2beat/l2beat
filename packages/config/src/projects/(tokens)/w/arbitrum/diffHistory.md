@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x97f1418cc6287c8dd22b24c4b0af468070249b6c
+Generated with discovered.json: 0x84f52300a10ff0091d8c089e584715ddaa91c1e6
 
-# Diff at Wed, 20 Aug 2025 09:27:23 GMT:
+# Diff at Mon, 25 Aug 2025 17:05:11 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@c8847d1a63c9954979c8abfb64bfc56929ed7e7f block: 1752832725
+- comparing to: main@828b4eded571ebe4abe88b292bc0c7a10079c1e7 block: 1752832725
 - current timestamp: 1752832725
 
 ## Description
@@ -24,7 +24,7 @@ discovery. Values are for block 1752832725 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x5c22f20f3bd245b8e1cbda697030cee8efe75e9b
+Generated with discovered.json: 0xc3b9fb793f90a0f14d0eb60b57d4a4bc3b1ef913
 
 # Diff at Fri, 18 Jul 2025 10:03:32 GMT:
 
