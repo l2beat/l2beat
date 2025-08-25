@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -35,6 +36,20 @@ const withdrawalKeepalivePeriodSecondsFmt: number =
   )
 
 const verifierV2 = discovery.getContract('VerifierV2')
+
+const latestOutputV3 = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'latestOutputProposedV3',
+)
+const latestOutputV2 = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'latestOutputProposedV2',
+)
+
+assert(
+  latestOutputV2 === latestOutputV3,
+  'The project is now using SP1, update page!',
+)
 
 // the opstack template automatically applies the correct risk rosette slices, so we do not override them
 // as soon as this is not the case anymore (backdoor removed, permissionless proposing etc.),
