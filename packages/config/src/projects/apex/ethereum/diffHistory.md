@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x41da27e7015a573bcf644f55c57952a030936261
+Generated with discovered.json: 0x9658f323d15597a6811bef9bda0d43375257baea
 
-# Diff at Mon, 25 Aug 2025 09:28:19 GMT:
+# Diff at Mon, 25 Aug 2025 10:48:08 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@db2e2037972253abead542c9802c5ac28817e5d2 block: 1753200107
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x41da27e7015a573bcf644f55c57952a030936261
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Rerun to add Reference entries.
 
 ## Config/verification related changes
 
@@ -18,7 +18,7 @@ discovery. Values are for block 1753200107 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract TODO Reference (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60)
+    reference SHARPVerifierCallProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60)
     +++ description: None
 ```
 
