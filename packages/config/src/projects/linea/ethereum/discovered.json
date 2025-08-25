@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "timestamp": 1753682855,
-  "configHash": "0x05298ee2849cf50750a14ce653425c692151101b6a24c0d120f1ec3e468edaaa",
+  "configHash": "0xd238dc557e1c5ab74f036ead2a621f22387514aef6ecf0769dbccca486ba4fa8",
   "entries": [
     {
       "name": "TokenBridge",

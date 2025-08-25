@@ -2,7 +2,7 @@
   "name": "metal",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0xc42e3e5766f8f42aaab2faaf6c6d9ebe2622179cf824db0cd55627d6abee3cfb",
+  "configHash": "0x5b73520a2fbf8b1ac5871650b047fe64ef6859d12076b41e30c2f6dd8172816c",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

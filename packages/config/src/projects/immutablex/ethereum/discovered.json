@@ -2,7 +2,7 @@
   "name": "immutablex",
   "chain": "ethereum",
   "timestamp": 1741355279,
-  "configHash": "0x3e0797b8dd78f616412e3c579350ac657edc546b267e681824e2d0cc6c4b7965",
+  "configHash": "0xfe84fa6812e9f78d75fc582fa5aadf3fb697184453350359870dd3505a3859e6",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

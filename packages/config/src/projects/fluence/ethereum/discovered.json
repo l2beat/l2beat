@@ -2,7 +2,7 @@
   "name": "fluence",
   "chain": "ethereum",
   "timestamp": 1752570515,
-  "configHash": "0x7d31d045a6409e259172e47d7ca5d0c28b4537a254b996b8933bbd2e8bda5869",
+  "configHash": "0xeefd6d2eec9ab6ebb27f147aba3730e926d09d6084c890a2aba00cea15012308",
   "entries": [
     {
       "name": "OneStepProverHostIo",

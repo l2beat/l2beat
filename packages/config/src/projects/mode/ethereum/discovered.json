@@ -2,7 +2,7 @@
   "name": "mode",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0xbf52d99d8336c0508df4eaa3b9815b3d2c131da419543d0ba1b0308724e0b35c",
+  "configHash": "0xd2d0331b376cdaedb63e5438a75dd93f1c3b0bfb1ca7bd93ab378603cc5525f8",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

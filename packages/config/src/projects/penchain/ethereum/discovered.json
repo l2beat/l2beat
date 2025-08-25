@@ -2,7 +2,7 @@
   "name": "penchain",
   "chain": "ethereum",
   "timestamp": 1752752123,
-  "configHash": "0xcd640d2a9cc32a2655b67be84840d4512a356584e2c913aa42cc50261367d3ca",
+  "configHash": "0x474f7a7420384d5cabfe65aa935238abbd22791bc2a20475e63bf9b9b00787a2",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

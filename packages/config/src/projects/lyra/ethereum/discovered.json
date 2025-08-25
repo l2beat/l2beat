@@ -2,7 +2,7 @@
   "name": "lyra",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0xedebc90f72a3d0e0a023eecc28f9918b5e551c5f2a2870c86ae12f65b8e4b73e",
+  "configHash": "0xa39473e02d5fea0ec440f9906bf9e1258ca2c948b8661a3961746c6a7bf87406",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

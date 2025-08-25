@@ -2,7 +2,7 @@
   "name": "form",
   "chain": "ethereum",
   "timestamp": 1755010019,
-  "configHash": "0x3521df25e3a5e6bac48a2fada1eaf5e22f95c00accb6c4f349d9a53b6b5bf758",
+  "configHash": "0xee4e491034d03adf1b1671fd8cde37e664c1904e889af0fe08e81ab2734a5691",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

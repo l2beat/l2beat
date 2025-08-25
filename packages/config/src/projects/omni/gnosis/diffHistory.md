@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xfe10b54e5f58ebd9e3421784e53a84866e2c28ef
+
+# Diff at Mon, 25 Aug 2025 09:27:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@db2e2037972253abead542c9802c5ac28817e5d2 block: 1755171830
+- current timestamp: 1755171830
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755171830 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract EternalStorageProxy (0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x84bc73cd06bbe3f172fd25e627e76e9dcf8b685d
 
 # Diff at Thu, 14 Aug 2025 11:43:57 GMT:

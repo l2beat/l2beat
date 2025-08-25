@@ -2,7 +2,7 @@
   "name": "superlumio",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0x9fe3a517404bd8cda40479bb70659e7fc40cc332967167aa9d7f6dce09356671",
+  "configHash": "0x93668c4be8453eda2145db2127ba4a8bad824e14a3dd841dfccbc28912a50d7c",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

@@ -2,7 +2,7 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "timestamp": 1755782050,
-  "configHash": "0xcee9321ed44f6cfb59a7e064314b44ea975c59e3e33a59b19eb4de36ced4aee9",
+  "configHash": "0x6c9bd49ca31f446670476d7b41414f39d5696a887fdc16f383d877543fbcd74a",
   "entries": [
     {
       "address": "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",

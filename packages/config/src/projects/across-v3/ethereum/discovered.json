@@ -2,7 +2,7 @@
   "name": "across-v3",
   "chain": "ethereum",
   "timestamp": 1755259336,
-  "configHash": "0x49282a0e36b2ed47220313311018bfc4bbffd7c2bd90465ef3f81f692c81f2e2",
+  "configHash": "0x1d5d4e8d2f533cc8b627458e53a2e529b52f5733170b7bbcb509b4f1c8589897",
   "entries": [
     {
       "name": "VotingV2",
