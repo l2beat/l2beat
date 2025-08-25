@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2db52527d6b9d56aeab9582ba5e8ab9f307bb82d
+Generated with discovered.json: 0xee1a2f2607e59c25ff849e5bb2d18d7bf935dcae
 
-# Diff at Mon, 25 Aug 2025 12:22:51 GMT:
+# Diff at Mon, 25 Aug 2025 13:11:28 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@db2e2037972253abead542c9802c5ac28817e5d2 block: 1752574031
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1752574031
 - current timestamp: 1756124502
 
 ## Description
@@ -23,7 +23,7 @@ Added proposal to unfreeze [this](https://etherscan.io/address/0xd02c8a355599fee
     }
 ```
 
-Generated with discovered.json: 0x22adbc7cc1053cf78b50d69a7f02ce7766acdbf5
+Generated with discovered.json: 0x0d37ae4f37d5fd1cf53ef63cb6ea9ae7108ff204
 
 # Diff at Tue, 15 Jul 2025 10:07:38 GMT:
 

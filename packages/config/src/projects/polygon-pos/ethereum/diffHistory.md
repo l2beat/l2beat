@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xcc96d1b84b3df1d2538cfea30e4c5a860d5b8db8
+Generated with discovered.json: 0x6631758febb7dcdcf5be8d8eb8d22bd51b77b4db
 
-# Diff at Mon, 25 Aug 2025 12:20:59 GMT:
+# Diff at Mon, 25 Aug 2025 13:11:30 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@db2e2037972253abead542c9802c5ac28817e5d2 block: 1755691047
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1755691047
 - current timestamp: 1756124354
 
 ## Description
@@ -38,7 +38,7 @@ Upgraded to Safe v1.4.1
  1 file changed, 410 insertions(+), 275 deletions(-)
 ```
 
-Generated with discovered.json: 0x7a598ef6efc9cc2ef26f2f3f5335089950ae8d4a
+Generated with discovered.json: 0x4f6388ae4dd5b03eda3b2b57d9fd7ccdad3b3376
 
 # Diff at Wed, 20 Aug 2025 11:58:05 GMT:
 
