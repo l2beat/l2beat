@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "timestamp": 1756122271,
+  "timestamp": 1756131753,
   "configHash": "0x1ce0a1fbce33b5384a7e4767645bd18702e25f11464d0ee06c6d46e3de73e9f9",
   "entries": [
     {
@@ -234,7 +234,7 @@
         "0x8a6c3f5b047664111c8f981a4cb5d8a79c5652771665343ffdd15ae64fa253bf"
       ],
       "proxyType": "immutable",
-      "description": "Standard implementation used for assets that are native to the Linea L2 and bridged back to ethereum.",
+      "description": "Standard implementation used for assets that are native to the other layer and are bridged to this layer.",
       "sinceTimestamp": 1691067827,
       "sinceBlock": 17834645,
       "values": {
@@ -898,11 +898,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0x32ab9fcfcdd65af8d07954f465836fcb1c08fe806f8eaa4b9fe467af98ba18e6",
-        "currentFinalizedState": "0xd17f43c98a4de56b62af891266ac5284de1b3de511f5e8a21511df1ff92396ab",
+        "currentFinalizedShnarf": "0xbb3a9ab260eace0b576074c0abd201d0340bf3ec059a98503e9f26d481b912c1",
+        "currentFinalizedState": "0xb55aace758a4e45d1cf891e7efae0db7b64d139b43f30bb2baf3acc72b7ba1cc",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "735773279332342932806",
+        "currentPeriodAmountInWei": "817833279332342932806",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -1748,6 +1748,6 @@
     "linea/TokenBridge": "0x44ac54b42a3064536f608e9b590f17b1ffe63129ab72fbc2fbb79e6f56850a59",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23217904 },
+  "usedBlockNumbers": { "ethereum": 23218689 },
   "permissionsConfigHash": "0xc7347561b813ca9007e716bec1378301b09044973ccc5e6e8185045e6487a573"
 }

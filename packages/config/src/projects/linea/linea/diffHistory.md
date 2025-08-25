@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd3b2fdfa7447912c378b806a6d3e0fc4f72c4812
+Generated with discovered.json: 0xb8bc694465fb892baa37b137b7ae5e809e59a6c5
 
-# Diff at Mon, 25 Aug 2025 14:09:25 GMT:
+# Diff at Mon, 25 Aug 2025 14:23:54 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current timestamp: 1756122271
+- current timestamp: 1756131753
 
 ## Description
 
@@ -56,7 +56,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract BridgedToken (0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF)
-    +++ description: Standard implementation used for assets that are native to the Linea L2 and bridged back to ethereum.
+    +++ description: Standard implementation used for assets that are native to the other layer and are bridged to this layer.
 ```
 
 ```diff

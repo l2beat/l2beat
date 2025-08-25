@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf842eeac204996fca7fa18372b7d3fac11ca4b43
+Generated with discovered.json: 0x08967219f343c8dd102ad9e4166287da13df909e
 
-# Diff at Mon, 25 Aug 2025 14:09:25 GMT:
+# Diff at Mon, 25 Aug 2025 14:23:54 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@5f43becd32095551439042bc6793b2fd16b8bdbe block: 1756122271
-- current timestamp: 1756122271
+- comparing to: main@90dd8b76055bf0f493df8c45097d37e26f847015 block: 1756122271
+- current timestamp: 1756131753
 
 ## Description
 
@@ -45,6 +45,15 @@ discovery. Values are for block 1756122271 (main branch discovery), not current.
 +        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"]
       values.unpauseTypeToRole:
 +        {"1":"0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b","7":"0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802","8":"0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd"}
+    }
+```
+
+```diff
+    contract BridgedToken (0x36f274C1C197F277EA3C57859729398FCc8a3763) {
+    +++ description: Standard implementation used for assets that are native to the other layer and are bridged to this layer.
+      description:
+-        "Standard implementation used for assets that are native to the Linea L2 and bridged back to ethereum."
++        "Standard implementation used for assets that are native to the other layer and are bridged to this layer."
     }
 ```
 
