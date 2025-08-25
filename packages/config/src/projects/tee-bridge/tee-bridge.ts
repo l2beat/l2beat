@@ -89,7 +89,8 @@ export const teeBridge: BaseProject = {
           url: 'https://medium.com/initc3org/tee-based-smart-contracts-and-sealing-pitfalls-eccd5d751329',
         },
         {
-          title: 'SGXonerated: Finding (and Exploiting) SGX Enclave Bugs with Symbolic Execution',
+          title:
+            'SGXonerated: Finding (and Exploiting) SGX Enclave Bugs with Symbolic Execution',
           url: 'https://eprint.iacr.org/2023/378',
         },
         {
@@ -97,7 +98,8 @@ export const teeBridge: BaseProject = {
           url: 'https://sgx.fail/',
         },
         {
-          title: 'Secret Network v1.18 Upgrade: Due Process vs Bricking Risk Discussion',
+          title:
+            'Secret Network v1.18 Upgrade: Due Process vs Bricking Risk Discussion',
           url: 'https://forum.scrt.network/t/secret-network-v-1-18-upgrade-proposal/7720',
         },
       ],
@@ -108,7 +110,7 @@ export const teeBridge: BaseProject = {
         },
         {
           category: 'Funds can be frozen if',
-          text: 'Intel\'s Attestation Service becomes unavailable, new TEE nodes fail remote attestation due to unpatched vulnerabilities, or if TCB recovery procedures block legitimate nodes.',
+          text: "Intel's Attestation Service becomes unavailable, new TEE nodes fail remote attestation due to unpatched vulnerabilities, or if TCB recovery procedures block legitimate nodes.",
         },
         {
           category: 'Funds can be frozen if',
