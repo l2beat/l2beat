@@ -2852,6 +2852,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23182548 },
+  "usedBlockNumbers": { "ethereum": 23182549 },
   "permissionsConfigHash": "0x5b6ba9618a6f66940404ed0f850432e0c438c8e8b64d0b51a0120b64ee274490"
 }

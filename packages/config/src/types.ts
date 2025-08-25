@@ -924,7 +924,7 @@ export interface CelestiaDaTrackingConfig {
 export interface AvailDaTrackingConfig {
   type: 'avail'
   daLayer: ProjectId
-  appId: string
+  appIds: string[]
   sinceBlock: number
   untilBlock?: number
 }

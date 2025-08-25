@@ -713,7 +713,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1755701939,
+        "clock": 1755701951,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -5105,6 +5105,6 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23183040 },
+  "usedBlockNumbers": { "ethereum": 23183041 },
   "permissionsConfigHash": "0x3dc327d3163474829e67269d1e6718eaa7672dde16df376f724e4b729b0496be"
 }
