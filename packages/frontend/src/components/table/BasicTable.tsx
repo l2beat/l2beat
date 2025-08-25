@@ -53,6 +53,7 @@ export interface BasicTableProps<T extends BasicTableRow> {
    * If the table is inside a main page card - bypass right margin by adding classes
    */
   insideMainPageCard?: boolean
+  getHighlightId?: (ctx: T) => string
 }
 
 export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
@@ -185,7 +186,7 @@ export function BasicTableRow<T extends BasicTableRow>({
   className,
   ...props
 }: BasicTableProps<T> & { row: Row<T>; className?: string }) {
-  const { highlightedSlug } = useHighlightedTableRowContext()
+  const { highlightedId } = useHighlightedTableRowContext()
 
   const uniqueRowsCount = unique(
     row
@@ -209,10 +210,15 @@ export function BasicTableRow<T extends BasicTableRow>({
     }
   >()
 
+  const highlightId = props.getHighlightId?.(row.original) ?? row.original.slug
+
+  const isHighlighted =
+    highlightId !== undefined && highlightedId === highlightId
+
   return (
     <>
       <TableRow
-        slug={row.original.slug}
+        highlightId={highlightId}
         className={cn(
           getRowClassNames(row.original.backgroundColor),
           row.getIsExpanded() &&
@@ -252,8 +258,7 @@ export function BasicTableRow<T extends BasicTableRow>({
               cell.column.getIsPinned() &&
                 getRowClassNamesWithoutOpacity(row.original.backgroundColor),
               cell.column.getIsPinned() &&
-                row.original.slug &&
-                highlightedSlug === row.original.slug &&
+                isHighlighted &&
                 'animate-row-highlight-no-opacity',
               meta?.cellClassName,
             ),
@@ -282,7 +287,7 @@ export function BasicTableRow<T extends BasicTableRow>({
         return (
           <TableRow
             key={`additional-row-${additionalRowIndex}`}
-            slug={row.original.slug}
+            highlightId={highlightId}
           >
             {row.getVisibleCells().map((cell, index) => {
               const additionalRows =

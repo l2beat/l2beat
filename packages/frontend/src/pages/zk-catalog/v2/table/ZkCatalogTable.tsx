@@ -35,7 +35,7 @@ export function ZkCatalogTable({ entries }: { entries: ZkCatalogEntry[] }) {
 
   return (
     <PrimaryCard className="mt-1 max-md:mt-4">
-      <BasicTable table={table} />
+      <BasicTable table={table} getHighlightId={(row) => row.id} />
     </PrimaryCard>
   )
 }
