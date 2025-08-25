@@ -6,6 +6,7 @@ import { bsc } from '../projects/bsc/bsc'
 import { celestia } from '../projects/celestia/celestia'
 import { eigenda } from '../projects/eigenda/eigenda'
 import { espresso } from '../projects/espresso/espresso'
+import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { ethereum } from '../projects/ethereum/ethereum'
 import { gateway } from '../projects/gateway/gateway'
 import { gnosis } from '../projects/gnosis/gnosis'
@@ -64,6 +65,7 @@ export const refactored: BaseProject[] = [
   blobstream,
   near,
   espresso,
+  teeBridge,
   eigenda,
   memo,
   // chains
