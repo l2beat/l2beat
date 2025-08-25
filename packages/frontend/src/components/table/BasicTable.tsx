@@ -358,18 +358,26 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
 function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
   return (
     <tr>
-      {props.headers.map((header) => (
-        <td
-          key={header.id}
-          colSpan={header.colSpan}
-          className={cn(
-            'h-4',
-            !header.isPlaceholder && 'rounded-b-lg',
-            header.column.getIsPinned() && getRowClassNamesWithoutOpacity(null),
-          )}
-          style={getCommonPinningStyles(header.column)}
-        />
-      ))}
+      {props.headers.map((header, index) => {
+        const isLast = index === props.headers.length - 1
+        return (
+          <React.Fragment key={header.id}>
+            <td
+              colSpan={header.colSpan}
+              className={cn(
+                'h-4',
+                !header.isPlaceholder && 'rounded-b-lg',
+                header.column.getIsPinned() &&
+                  getRowClassNamesWithoutOpacity(null),
+              )}
+              style={getCommonPinningStyles(header.column)}
+            />
+            {!header.isPlaceholder && !isLast && (
+              <BasicTableColumnFiller as="td" />
+            )}
+          </React.Fragment>
+        )
+      })}
     </tr>
   )
 }
