@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb8bc694465fb892baa37b137b7ae5e809e59a6c5
+Generated with discovered.json: 0x431c542626a9c7ebe8dc499674c5d86b52f8b99c
 
-# Diff at Mon, 25 Aug 2025 14:23:54 GMT:
+# Diff at Mon, 25 Aug 2025 15:06:36 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current timestamp: 1756131753
+- current timestamp: 1756132740
 
 ## Description
 
@@ -26,7 +26,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract L2Roles (0x3886a948eA7b4053312c3aE31a13776144aA6239)
-    +++ description: None
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
 ```
 
 ```diff
@@ -37,8 +37,8 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract MultiSend (0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761)
-    +++ description: None
+    contract L2USDCBridge (0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A)
+    +++ description: L2 side of the old and now unused USDC bridge.
 ```
 
 ```diff
@@ -51,6 +51,18 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract L2Timelock (0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca)
     +++ description: A standard timelock with access control. The current minimum delay is 0s.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LineaVoyageXP (0xd83af4fbD77f3AB65C3B1Dc4B38D7e67AEcf599A)
+    +++ description: None
 ```
 
 ```diff

@@ -3,11 +3,7 @@
   "displayName": "TokenBridge",
   "description": "Contract used to bridge and escrow ERC-20 tokens.",
   "fields": {
-    "accessControl": {
-      "handler": {
-        "type": "accessControl"
-      }
-    },
+    "accessControl": { "handler": { "type": "accessControl" } },
     "defaultAdminAC": {
       "handler": {
         "type": "accessControl",
@@ -88,9 +84,7 @@
       "handler": {
         "type": "event",
         "select": ["role"],
-        "set": {
-          "event": "PauseTypeRoleSet"
-        },
+        "set": { "event": "PauseTypeRoleSet" },
         "groupBy": "pauseType"
       }
     },
@@ -98,9 +92,7 @@
       "handler": {
         "type": "event",
         "select": ["role"],
-        "set": {
-          "event": "UnPauseTypeRoleSet"
-        },
+        "set": { "event": "UnPauseTypeRoleSet" },
         "groupBy": "unPauseType"
       }
     },
@@ -108,10 +100,7 @@
       "copy": "accessControl",
       "edit": ["get", "PAUSE_ALL_ROLE", "members"],
       "permissions": [
-        {
-          "type": "interact",
-          "description": "can pause the bridge."
-        }
+        { "type": "interact", "description": "can pause the bridge." }
       ]
     },
     "initiateTokenBridgingPausers": {
@@ -138,10 +127,7 @@
       "copy": "accessControl",
       "edit": ["get", "UNPAUSE_ALL_ROLE", "members"],
       "permissions": [
-        {
-          "type": "interact",
-          "description": "can pause the bridge."
-        }
+        { "type": "interact", "description": "can pause the bridge." }
       ]
     },
     "initiateTokenBridgingUnpausers": {
@@ -213,6 +199,7 @@
           "description": "can set the contract that is recognized to be the token bridge contract on the other side."
         }
       ]
-    }
+    },
+    "remoteSender": { "edit": ["format", "EthereumAddress"] }
   }
 }

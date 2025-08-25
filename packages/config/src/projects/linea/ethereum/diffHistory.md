@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x08967219f343c8dd102ad9e4166287da13df909e
+Generated with discovered.json: 0xf63e0936a08ebdda8b2f15d2163a07360d0bc05b
 
-# Diff at Mon, 25 Aug 2025 14:23:54 GMT:
+# Diff at Mon, 25 Aug 2025 15:06:36 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@90dd8b76055bf0f493df8c45097d37e26f847015 block: 1756122271
-- current timestamp: 1756131753
+- comparing to: main@828b4eded571ebe4abe88b292bc0c7a10079c1e7 block: 1756122271
+- current timestamp: 1756132740
 
 ## Description
 
@@ -19,6 +19,12 @@ discovery. Values are for block 1756122271 (main branch discovery), not current.
 ```diff
     contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
     +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      template:
+-        "linea/TokenBridge"
++        "linea/L1TokenBridge"
+      values.remoteSender:
+-        "eth:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9"
++        "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9"
       values.allPausers:
 +        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
       values.allUnpausers:
@@ -45,6 +51,8 @@ discovery. Values are for block 1756122271 (main branch discovery), not current.
 +        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"]
       values.unpauseTypeToRole:
 +        {"1":"0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b","7":"0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802","8":"0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd"}
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"linea"}}]
     }
 ```
 
@@ -110,6 +118,18 @@ discovery. Values are for block 1756122271 (main branch discovery), not current.
 -        "L1Timelock"
 +        "Timelock"
     }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x41fAD3Df1B07B647D120D055259E474fE8046eb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1USDCBridge (0x504A330327A089d8364C4ab3811Ee26976d388ce)
+    +++ description: L1 side of the old and now unused USDC bridge.
 ```
 
 Generated with discovered.json: 0x85145d8a8597f76d047759ceb5e4ad5736d575f0

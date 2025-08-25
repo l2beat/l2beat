@@ -1,14 +1,14 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "timestamp": 1756131753,
-  "configHash": "0x1ce0a1fbce33b5384a7e4767645bd18702e25f11464d0ee06c6d46e3de73e9f9",
+  "timestamp": 1756132740,
+  "configHash": "0x8832718897b2cb3efddcea2e3096c4289be152ffd944938c942e90faa6a1f696",
   "entries": [
     {
       "name": "TokenBridge",
       "address": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
       "type": "Contract",
-      "template": "linea/TokenBridge",
+      "template": "linea/L1TokenBridge",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x49bdbe79d2cc9cefee03245e4b48260f4a71e7976af51741005758e7236d687d"
@@ -138,7 +138,7 @@
           "7": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
           "8": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"
         },
-        "remoteSender": "eth:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+        "remoteSender": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
         "remoteTokenBridgeSetters": [
           "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
         ],
@@ -180,7 +180,10 @@
       "implementationNames": {
         "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": "TransparentUpgradeableProxy",
         "eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34": "TokenBridge"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "linea" } }
+      ]
     },
     {
       "address": "eth:0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2",
@@ -189,11 +192,6 @@
     },
     {
       "address": "eth:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -266,6 +264,31 @@
       "proxyType": "EOA"
     },
     {
+      "name": "ProxyAdmin",
+      "address": "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1691086259,
+      "sinceBlock": 17836169,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      },
+      "implementationNames": {
+        "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": "ProxyAdmin"
+      }
+    },
+    {
       "address": "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
       "type": "EOA",
       "proxyType": "EOA",
@@ -299,6 +322,55 @@
       "address": "eth:0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "L1USDCBridge",
+      "address": "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce",
+      "type": "Contract",
+      "template": "linea/L1USDCBridge",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xf678573abd85e88b327027262fe80c5008f18138d6f2a4b3558ccf78d535c94f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "L1 side of the old and now unused USDC bridge.",
+      "sinceTimestamp": 1691086271,
+      "sinceBlock": 17836170,
+      "values": {
+        "$admin": "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
+        "$implementation": "eth:0x66CFD1562d6Aa4629e9e4142662c1A403528Df00",
+        "$pastUpgrades": [
+          [
+            "2023-08-03T18:11:11.000Z",
+            "0xa93648a8d01d65bea363bc2f6e19897e42f9af999370c07cb2a0ea6a5401b6b0",
+            ["eth:0x16Db542C30fB3519D11CF8F632077c62c1a944fd"]
+          ],
+          [
+            "2023-09-01T20:25:47.000Z",
+            "0xe752ce539119fc11af6239e8b26a79d80c9e84cec19ac6aca060f466853f5b7d",
+            ["eth:0x0eC393209674090368C592A591B25811e490BF36"]
+          ],
+          [
+            "2025-03-16T19:57:11.000Z",
+            "0xd61b29009aa7f628ff1b04138e30ebd39805e40a2e3e4a3e43050fd8b0f75548",
+            ["eth:0x66CFD1562d6Aa4629e9e4142662c1A403528Df00"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "balance": 0,
+        "messageService": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+        "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+        "paused": true,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "remoteUSDCBridge": "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A"
+      },
+      "implementationNames": {
+        "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce": "TransparentUpgradeableProxy",
+        "eth:0x66CFD1562d6Aa4629e9e4142662c1A403528Df00": "L1USDCBridge"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "linea" } }
+      ]
     },
     {
       "address": "eth:0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
@@ -1514,6 +1586,71 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x66CFD1562d6Aa4629e9e4142662c1A403528Df00": [
+      "error AmountTooBig(uint256 amount, uint256 limit)",
+      "error NoBurnCapabilities(address addr)",
+      "error NotFromRemoteUSDCBridge(address sender, address remoteUSDCBridge)",
+      "error NotMessageService(address addr, address messageService)",
+      "error NotUpgrader(address addr, address upgrader)",
+      "error RemoteUSDCBridgeAlreadySet(address remoteUSDCBridge)",
+      "error RemoteUSDCBridgeNotSet()",
+      "error SameMessageServiceAddr(address messageService)",
+      "error SenderBalanceTooLow(uint256 amount, uint256 balance)",
+      "error ZeroAddressNotAllowed(address addr)",
+      "error ZeroAmountNotAllowed(uint256 amount)",
+      "event AllLockedUSDCBurnt(address indexed sender)",
+      "event Deposited(address indexed depositor, uint256 amount, address indexed to)",
+      "event Initialized(uint8 version)",
+      "event MessageServiceUpdated(address indexed oldAddress, address indexed newAddress)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event ReceivedFromOtherLayer(address indexed recipient, uint256 indexed amount)",
+      "event RemoteUSDCBridgeSet(address indexed newRemoteUSDCBridge)",
+      "event Unpaused(address account)",
+      "function acceptOwnership()",
+      "function balance() view returns (uint256)",
+      "function burnAllLockedUSDC()",
+      "function changeMessageService(address newMessageService)",
+      "function deposit(uint256 amount) payable",
+      "function depositTo(uint256 amount, address to) payable",
+      "function initialize(address _messageService, address _usdc)",
+      "function messageService() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function receiveFromOtherLayer(address recipient, uint256 amount)",
+      "function remoteUSDCBridge() view returns (address)",
+      "function renounceOwnership()",
+      "function rescueTransfer(address to, uint256 amount)",
+      "function setRemoteUSDCBridge(address _remoteUSDCBridge)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function usdc() view returns (address)"
+    ],
     "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": [
       "constructor(address _owner, address _avatar, address _target, uint256 _cooldown, uint256 _expiration)",
       "event AvatarSet(address indexed previousAvatar, address indexed newAvatar)",
@@ -1743,11 +1880,12 @@
     "gnosisSafeModules/ZodiacDelay": "0x1cf1f83927c30dff78d2b2b635f9995b93db52502fcae1b9478e1dd4664540c5",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "linea/L1TokenBridge": "0xef38a739bf90c693c298d238745c360992548cf941cdee82ed7c4a5ba41df4ae",
+    "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
     "linea/LineaRollup": "0x62179b632448b6fa5622bfea4240428dcd0cd7f2fd455914a05b040313014dfe",
     "linea/Roles": "0xa53488bfd173ae836ebda33b0560f0f0dd61141e44bc38b9ce23133023bde792",
-    "linea/TokenBridge": "0x44ac54b42a3064536f608e9b590f17b1ffe63129ab72fbc2fbb79e6f56850a59",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23218689 },
-  "permissionsConfigHash": "0xc7347561b813ca9007e716bec1378301b09044973ccc5e6e8185045e6487a573"
+  "usedBlockNumbers": { "ethereum": 23218772 },
+  "permissionsConfigHash": "0x4bf61d095cf0fcf68c14d80000e1657ec63f5353d39fe11756216a0c3c7ba0d4"
 }
