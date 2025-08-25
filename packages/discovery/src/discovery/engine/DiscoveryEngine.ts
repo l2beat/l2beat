@@ -1,9 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import {
-  ChainSpecificAddress,
-  type UnixTime,
-  unique,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type UnixTime } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import type {
   AddressAnalyzer,
