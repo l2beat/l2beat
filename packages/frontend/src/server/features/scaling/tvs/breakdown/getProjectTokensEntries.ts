@@ -46,7 +46,7 @@ export interface TvsBreakdownTokenEntry extends FilterableEntry {
   isAssociated: TvsToken['isAssociated']
   isGasToken?: boolean
   address?: AddressData
-  formula: Formula
+  formula: Formula & { explorerUrl?: string }
   syncStatus?: string
   bridgedUsing?: {
     bridges: {
@@ -102,7 +102,6 @@ function getEntries(
     const { addresses } = extractAddressesFromTokenConfig(token)
     const address = processAddresses(addresses, chains)
 
-    const formula = token.valueForProject
     const tokenWithValues: TvsBreakdownTokenEntry = {
       id: token.id,
       name: token.name,
@@ -111,7 +110,7 @@ function getEntries(
       source: token.source,
       isAssociated: token.isAssociated,
       address,
-      formula: token.valueForProject ?? token.amount,
+      formula: withExplorerUrl(token.valueForProject ?? token.amount, chains),
       iconUrl: token.iconUrl ?? '',
       valueForProject: tokenValue.valueForProject,
       value: tokenValue.value,
@@ -144,14 +143,17 @@ function getEntries(
   return breakdown.sort((a, b) => +b.valueForProject - +a.valueForProject)
 }
 
-function withExplorerUrl(formula: Formula, chains: ChainConfig[]) {
+function withExplorerUrl(
+  formula: Formula,
+  chains: ChainConfig[],
+): Formula & { explorerUrl?: string } {
   switch (formula.type) {
     case 'balanceOfEscrow': {
       const explorer = chains.find((c) => c.name === formula.chain)?.explorerUrl
 
       return {
         ...formula,
-        escrowAddressExplorerUrl: explorer
+        explorerUrl: explorer
           ? `${explorer}/address/${formula.escrowAddress}`
           : undefined,
       }
@@ -168,7 +170,7 @@ function withExplorerUrl(formula: Formula, chains: ChainConfig[]) {
 
       return {
         ...formula,
-        addressExplorerUrl: explorer
+        explorerUrl: explorer
           ? `${explorer}/address/${formula.address}`
           : undefined,
       }

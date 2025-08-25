@@ -1,14 +1,12 @@
-import type {
-  CalculationFormula,
-  Formula as ConfigFormula,
-} from '@l2beat/config'
+import type { CalculationFormula } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
 import { EtherscanLink } from '~/components/EtherscanLink'
+import type { TvsBreakdownTokenEntry } from '~/server/features/scaling/tvs/breakdown/getProjectTokensEntries'
 import { cn } from '~/utils/cn'
 
 export function renderFormulaSubComponent<
-  T extends { formula: ConfigFormula },
+  T extends { formula: TvsBreakdownTokenEntry['formula'] },
 >({ row }: { row: Row<T> }) {
   return (
     <div className="ml-[52px] flex flex-col py-3">
@@ -31,7 +29,7 @@ function FormulaWithOperator({
   depth = 0,
   className,
 }: {
-  formula: ConfigFormula
+  formula: TvsBreakdownTokenEntry['formula']
   operator?: CalculationFormula['operator']
   depth?: number
   className?: string
@@ -48,7 +46,7 @@ function Formula({
   formula,
   depth,
 }: {
-  formula: ConfigFormula
+  formula: TvsBreakdownTokenEntry['formula']
   depth: number
 }) {
   switch (formula.type) {
@@ -97,11 +95,18 @@ function Operator({ operator }: { operator: CalculationFormula['operator'] }) {
 function BalanceOfEscrow({
   formula,
 }: {
-  formula: Extract<ConfigFormula, { type: 'balanceOfEscrow' }>
+  formula: Extract<
+    TvsBreakdownTokenEntry['formula'],
+    { type: 'balanceOfEscrow' }
+  >
 }) {
   return (
     <p>
-      Balance of <EtherscanLink address={formula.escrowAddress} />
+      Balance of{' '}
+      <EtherscanLink
+        address={formula.escrowAddress}
+        href={formula.explorerUrl}
+      />
     </p>
   )
 }
@@ -109,11 +114,15 @@ function BalanceOfEscrow({
 function CirculatingSupply({
   formula,
 }: {
-  formula: Extract<ConfigFormula, { type: 'circulatingSupply' }>
+  formula: Extract<
+    TvsBreakdownTokenEntry['formula'],
+    { type: 'circulatingSupply' }
+  >
 }) {
   return (
     <p>
-      Circulating supply of <EtherscanLink address={formula.address} />
+      Circulating supply of{' '}
+      <EtherscanLink address={formula.address} href={formula.explorerUrl} />
     </p>
   )
 }
@@ -122,7 +131,7 @@ function Calculation({
   formula,
   depth,
 }: {
-  formula: Extract<ConfigFormula, { type: 'calculation' }>
+  formula: Extract<TvsBreakdownTokenEntry['formula'], { type: 'calculation' }>
   depth: number
 }) {
   if (formula.operator === 'min' || formula.operator === 'max') {
@@ -177,7 +186,7 @@ const formatter = new Intl.NumberFormat('en-US')
 function Const({
   formula,
 }: {
-  formula: Extract<ConfigFormula, { type: 'const' }>
+  formula: Extract<TvsBreakdownTokenEntry['formula'], { type: 'const' }>
 }) {
   return (
     <p>
@@ -193,13 +202,14 @@ function TotalSupply({
   formula,
 }: {
   formula: Extract<
-    ConfigFormula,
+    TvsBreakdownTokenEntry['formula'],
     { type: 'starknetTotalSupply' | 'totalSupply' }
   >
 }) {
   return (
     <p>
-      Total supply of <EtherscanLink address={formula.address} />
+      Total supply of{' '}
+      <EtherscanLink address={formula.address} href={formula.explorerUrl} />
     </p>
   )
 }
