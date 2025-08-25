@@ -211,7 +211,6 @@ export function BasicTableRow<T extends BasicTableRow>({
   const isHighlighted =
     highlightId !== undefined && highlightedId === highlightId
 
-  console.log(row.id, row.getIsExpanded())
   return (
     <>
       <TableRow
