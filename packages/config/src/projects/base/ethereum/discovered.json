@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "ethereum",
   "timestamp": 1755525868,
-  "configHash": "0xec1b556cb6b1e632388e76e2ee4c28d9606c021ef494798dd077b94e86a4ab49",
+  "configHash": "0xb88d53741ba66057c4aeb81e58cbc7b4e72138d2114266ececc9345d5aa1e326",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

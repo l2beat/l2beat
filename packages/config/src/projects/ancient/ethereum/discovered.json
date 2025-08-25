@@ -2,7 +2,7 @@
   "name": "ancient",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0x8ed9dcfba38c53a9287a76666e5fdf25a49553308965f5788ecf30d8616a42be",
+  "configHash": "0xbcaef0b9dca1aec92f5888e8c57723164813cb257fce05c45b69430b4a76fe82",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

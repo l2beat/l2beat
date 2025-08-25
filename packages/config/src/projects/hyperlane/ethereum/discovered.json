@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "timestamp": 1755858507,
-  "configHash": "0xc4cced1f8b21eda729ef2be1c36ec06d16a7647bcee2e4922b3238b7838ca800",
+  "configHash": "0xa3d3659a26d3f48c25acc1178e2ce5c63d0ad212f40712c748906b9b6967178f",
   "entries": [
     {
       "address": "eth:0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -1552,6 +1552,6 @@
     "hyperlane/Mailbox": "0xe22d3d5e3098b17b9c38a147e885155b739913b845a7ce90bdb7c76debbf8674",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "usedBlockNumbers": { "ethereum": 23196017 },
+  "usedBlockNumbers": { "ethereum": 23196019 },
   "permissionsConfigHash": "0x8780f20b1527a876710d0d034d2558a17bf1bc523ee0a6f473d506966cfbfa33"
 }

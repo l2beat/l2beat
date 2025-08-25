@@ -2,7 +2,7 @@
   "name": "xchain",
   "chain": "ethereum",
   "timestamp": 1755853782,
-  "configHash": "0xf781c3d5a2d654aa25420b4b84b55e5f27ade8437b81b1a45d4455a6aed0a3b1",
+  "configHash": "0x7e655cc006d477c771cdf8521550327363e12b6a45da08a7433e17a584d0acc2",
   "entries": [
     {
       "name": "OneStepProverHostIo",

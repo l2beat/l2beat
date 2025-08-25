@@ -1,36 +1,75 @@
-Generated with discovered.json: 0xebc6ca123bd0c6f64b04301102301ea0b1a16aa2
+Generated with discovered.json: 0xe7bb390a4f69dacb237102648e7522694a10c3c8
 
-# Diff at Mon, 25 Aug 2025 10:49:58 GMT:
+# Diff at Mon, 25 Aug 2025 09:27:20 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@5a77193ce6f4b52703a8422b095bfe2d89559a39 block: 1755523806
-- current timestamp: 1756118729
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@db2e2037972253abead542c9802c5ac28817e5d2 block: 1755858338
+- current timestamp: 1755858338
 
 ## Description
 
-Functions decoded.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1755523806 (main branch discovery), not current.
+
+discovery. Values are for block 1755858338 (main branch discovery), not current.
 
 ```diff
-    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
-    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
-      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xaa5e9334:
--        ["ops-fast"]
-      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xc63b9e2d:
--        ["ops-fast"]
-      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyThreshold(uint256):
-+        ["ops-fast"]
-      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyFactor(uint256):
-+        ["ops-fast"]
+    contract ProxyAdmin (0xA76acF000C890b0DD7AEEf57627d9899F955d026) {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142","role":"admin"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9","role":"admin"}
     }
 ```
 
-Generated with discovered.json: 0x1d6acfe72c11fe05bd60410dec4bb4028323bf34
+```diff
++   Status: CREATED
+    contract L2USDCGateway (0x33B60d5Dd260d453cAC3782b0bDC01ce84672142)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WrappedEther (0x5300000000000000000000000000000000000004)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WETHGateway (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WETHGatewayCounterpart (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2LidoGateway (0x8aE8f22226B9d789A36AC81474e633f8bE2856c9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WstETHToken (0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xa3c131fa490fb486061d48e296489a15d5528d01
 
 # Diff at Tue, 12 Aug 2025 15:57:42 GMT:
 

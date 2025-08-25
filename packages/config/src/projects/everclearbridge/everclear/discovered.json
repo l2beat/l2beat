@@ -2,7 +2,7 @@
   "name": "everclearbridge",
   "chain": "everclear",
   "timestamp": 1754908695,
-  "configHash": "0xfb294695ab9535a4096f9afe1ca82c872710e9a4e4bbc79d170117e33b3a3413",
+  "configHash": "0xccae68d9f4f9e644731cfa54fdda1afb6140b71d577b5a15b43ce76d6414ddef",
   "entries": [
     {
       "address": "everclear:0x2eEd1440842990Fa61F0c396f981375Fa6004131",

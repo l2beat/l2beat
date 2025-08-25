@@ -2,7 +2,7 @@
   "name": "thebinaryholdings",
   "chain": "ethereum",
   "timestamp": 1734520283,
-  "configHash": "0xc97f2b1180b6a683850e030fea578a0a7482b93611ecab91d8affa50cdde1e34",
+  "configHash": "0x219db3a44e0b6cd27120a245118174f2c1312c9f4c45d1ded348c1cff44b7ccf",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

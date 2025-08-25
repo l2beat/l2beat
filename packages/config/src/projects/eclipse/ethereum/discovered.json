@@ -2,7 +2,7 @@
   "name": "eclipse",
   "chain": "ethereum",
   "timestamp": 1751902931,
-  "configHash": "0xf9189a7f1225f3756e940dfef4686a6acb70dcd58c3a576ff3460e166125b659",
+  "configHash": "0x8c7bcfe9e33e86b79fe8d3005f2df52b926e45240b84e55f7a8ae5a5a5cd47d8",
   "entries": [
     {
       "name": "GnosisSafe",

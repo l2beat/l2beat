@@ -2,7 +2,7 @@
   "name": "tradable",
   "chain": "zksync2",
   "timestamp": 1755162744,
-  "configHash": "0xcacfc22a6ec7b759d36b6d7fbdff37db776b8783bc92fe3daea675bf60146c3d",
+  "configHash": "0x2e2ca55e40bda3558d445bdd5376a695cd158f64dd6401bf0186dccc7de37be6",
   "entries": [
     {
       "address": "zksync:0x00Ac919b47D88Daf465EA9b03FF3B1D197582CE0",

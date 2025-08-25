@@ -2,7 +2,7 @@
   "name": "mantle",
   "chain": "ethereum",
   "timestamp": 1744706039,
-  "configHash": "0x02afdfa21898c7decd7f727bc2bdee8b34c5c740bde86aa64c8a037fa4997f50",
+  "configHash": "0xb30025be0e463ebd0a25da2ba117b29c62ab9156f82d98bb05677e973cf7ccdb",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

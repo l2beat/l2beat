@@ -2,7 +2,7 @@
   "name": "allbridge",
   "chain": "ethereum",
   "timestamp": 1748581691,
-  "configHash": "0x765b7ef32df88ff59e7f03948fd9e99bc43636003691cc3fcc7251155fb7a80f",
+  "configHash": "0x42d1f1ccf38c549b67d3158ec6280189bd12b13e48e59247caa251313af01ee9",
   "entries": [
     {
       "address": "eth:0x01a494079DCB715f622340301463cE50cd69A4D0",

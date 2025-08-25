@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "gateway",
   "timestamp": 1755850298,
-  "configHash": "0x6e7fe11f66f5b5540e267b5e39aa1c567a3f4a26548e595e72e63648d47e2f70",
+  "configHash": "0x638fd22e7e7c628851d3e7f4c75557f1a7fd87fbb5c2007c4df4dba9a44efb20",
   "entries": [],
   "abis": {},
   "usedTemplates": {},

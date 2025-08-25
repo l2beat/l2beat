@@ -2,7 +2,7 @@
   "name": "winr",
   "chain": "arbitrum",
   "timestamp": 1755013885,
-  "configHash": "0xbe2156269140e6d06951268c7df9b94f32f63e344396b682d240a42b8f520baa",
+  "configHash": "0xb5096cbcf76faa0e86888a62d796f79c19db8d894ca2cfaaae3889759af4db31",
   "entries": [
     {
       "address": "arb1:0x026919DbCFab70a2A45775088C933331A7B25Ac6",

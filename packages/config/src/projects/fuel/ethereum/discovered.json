@@ -2,7 +2,7 @@
   "name": "fuel",
   "chain": "ethereum",
   "timestamp": 1755508162,
-  "configHash": "0x95b68e6fde20dde4ddb8fd8b2c485733a021261d94ad1b51e206b62e1ff623e2",
+  "configHash": "0xd18c371a5ef9fb1f8fb8c54a1395d1b9de4c9a32469210a5c81b71ea60c02d42",
   "entries": [
     {
       "name": "Fuel Security Council",

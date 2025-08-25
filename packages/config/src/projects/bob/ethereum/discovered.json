@@ -2,7 +2,7 @@
   "name": "bob",
   "chain": "ethereum",
   "timestamp": 1755696029,
-  "configHash": "0x851ed026eccaa32df4ffd7e96bb448828da46eaafb63be127f43dcabbb74ba0d",
+  "configHash": "0x5921207a1851a31dc6ee6395a11b519f71260a43b84a2d93fb08fff478d0c52e",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

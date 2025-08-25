@@ -2,7 +2,7 @@
   "name": "edgeless",
   "chain": "ethereum",
   "timestamp": 1744201739,
-  "configHash": "0x16b1fee9f5519961230b7bc1990ec1e2afc6773946c8e5fc3d6d7b34f01f3a17",
+  "configHash": "0x3051c8aac8f825a6de6e5f1d81d806d4e48f1601a556b421e7d8b022fb4509d1",
   "entries": [
     {
       "address": "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",

@@ -2,7 +2,7 @@
   "name": "worldchain",
   "chain": "ethereum",
   "timestamp": 1755847065,
-  "configHash": "0x2d0ecd1924b8861c720f371a00f25df90a1a85a2aff5c10554a12da2375c88fa",
+  "configHash": "0x34359ee0df58d2e54f934f827fc163c383c97480b423142eeafef9d7b0c8805b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

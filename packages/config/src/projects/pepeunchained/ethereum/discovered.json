@@ -2,7 +2,7 @@
   "name": "pepeunchained",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0x449f9b9faed84d9b6f543c668f3b15e10bbf802592067807910f3acdbe3534f5",
+  "configHash": "0x657886a37b84618cafd6ea14e84cda2ea6fb6469bf63b71dc0a1795ecd664908",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

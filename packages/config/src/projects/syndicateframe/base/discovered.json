@@ -2,7 +2,7 @@
   "name": "syndicateframe",
   "chain": "base",
   "timestamp": 1747235251,
-  "configHash": "0x4f0879c98acbc57144d909fd20901a1e158170245dc4fb9001abb6bfdc2ee8db",
+  "configHash": "0x6632bb6a61a8926609f54412f49e4fd16f1dcdd1b1558f2c819ba5dfb4aec4ea",
   "entries": [
     {
       "address": "base:0x000000000000000000000000000000000000dEaD",
