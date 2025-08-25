@@ -1,7 +1,7 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "timestamp": 1756116282,
+  "timestamp": 1756118684,
   "configHash": "0x59b4541e61f37172f030e749786f3ce2f7e598319406d442263c4dfe657eeef3",
   "entries": [
     {
@@ -715,6 +715,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23217407 },
+  "usedBlockNumbers": { "ethereum": 23217606 },
   "permissionsConfigHash": "0x0fce2db250d4177647709f445b4f4e0d924a8700b3acd3798704c94903377789"
 }
