@@ -190,7 +190,7 @@ export function getUserHandler(
     case 'polygoncdkScheduledTransactions':
       return new PolygonCDKScheduledTransactionHandler(field, abi)
     case 'ERC20Data':
-      return new ERC20DataHandler(field, definition)
+      return new ERC20DataHandler(field, definition, abi)
     case 'tradable':
       return new TradableHandler(field)
   }

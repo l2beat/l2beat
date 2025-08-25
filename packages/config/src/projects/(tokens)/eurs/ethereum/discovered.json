@@ -29,7 +29,8 @@
           "iconUrl": "https://coin-images.coingecko.com/coins/images/5164/large/EURS_300x300.png?1696505680",
           "chainId": 1,
           "supply": "zero",
-          "source": "canonical"
+          "source": "canonical",
+          "canonical": false
         },
         "decimals": 2,
         "getFeeParameters": {

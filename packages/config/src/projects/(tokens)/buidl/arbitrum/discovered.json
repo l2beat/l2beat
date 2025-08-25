@@ -43,7 +43,8 @@
           "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
           "chainId": 42161,
           "supply": "totalSupply",
-          "source": "native"
+          "source": "native",
+          "canonical": false
         },
         "$upgradeCount": 1,
         "cap": 0,
