@@ -73,12 +73,10 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
 
 export function executeDiscover(
   project: string,
-  chain: string,
   devMode: boolean,
 ): EventSource {
   const params = new URLSearchParams({
     project,
-    chain,
     devMode: devMode.toString(),
   })
   return new EventSource(`/api/terminal/discover?${params}`)

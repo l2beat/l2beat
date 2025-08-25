@@ -23,7 +23,7 @@ describe(findUnknownEntries.name, () => {
     })
 
     const entries = [A, B, C] as EntryParameters[]
-    const result = findUnknownEntries('', entries, configReader, 'ethereum')
+    const result = findUnknownEntries('', entries, configReader)
     expect(result).toEqual([ChainSpecificAddress.address(C.address)])
   })
 
@@ -35,7 +35,7 @@ describe(findUnknownEntries.name, () => {
     })
 
     const entries: EntryParameters[] = []
-    const result = findUnknownEntries('', entries, configReader, 'ethereum')
+    const result = findUnknownEntries('', entries, configReader)
     expect(result).toEqual([])
   })
 })

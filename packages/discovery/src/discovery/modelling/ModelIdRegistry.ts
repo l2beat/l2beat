@@ -12,7 +12,6 @@ interface AddressData {
 }
 
 export class ModelIdRegistry {
-  private readonly dataByAddress: Record<string, AddressData> = {}
   private readonly dataById: Record<string, AddressData> = {}
   constructor(public readonly knowledgeBase: KnowledgeBase) {
     this.buildMaps()
@@ -30,7 +29,6 @@ export class ModelIdRegistry {
         shortChain,
         type: 'unknown',
       }
-      this.dataByAddress[`${shortChain}:${address}`] = data
       this.dataById[modelId] = data
     })
     const updateData = (fact: ClingoFact, field: keyof AddressData) => {
@@ -51,18 +49,6 @@ export class ModelIdRegistry {
     this.knowledgeBase
       .getFacts('addressDescription', [])
       .forEach((fact) => updateData(fact, 'description'))
-  }
-
-  getModelIdOrUndefined(chain: string, address: string): string | undefined {
-    return this.dataByAddress[`${chain}:${address.toLowerCase()}`]?.modelId
-  }
-
-  getModelId(chain: string, address: string): string {
-    const id = this.getModelIdOrUndefined(chain, address)
-    if (id === undefined) {
-      throw new Error(`No id found for ${chain}:${address}`)
-    }
-    return id
   }
 
   getAddressDataOrUndefined(modelId: string): AddressData | undefined {

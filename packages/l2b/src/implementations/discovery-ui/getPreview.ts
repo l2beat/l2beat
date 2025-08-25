@@ -16,15 +16,6 @@ export function getPreview(
   projectId: string,
 ): ApiPreviewResponse {
   const discoveries = getAllProjectDiscoveries(configReader, projectId)
-  const projectChains: string[] = discoveries.map((d) => d.chain)
-
-  // sort chains, keeping the host chain first
-  const hostChain = 'ethereum'
-  projectChains.sort((a, b) => {
-    if (a === hostChain) return -1
-    if (b === hostChain) return 1
-    return a.localeCompare(b)
-  })
 
   const permissionsPerChain: {
     chain: string

@@ -47,42 +47,47 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
     setOpen(true)
   }
 
-  return (
-    <li className={clsx(!props.first && 'border-t border-t-coffee-600')}>
-      <div className="group flex min-h-[22px] items-center justify-between pr-1 hover:bg-aux-brown">
-        <button
-          onClick={() => setOpen((open) => !open)}
-          className="flex w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
-        >
-          {open && <IconChevronDown />}
-          {!open && <IconChevronRight />}
-          {`${props.entry.project} on ${props.entry.chain}`}
-        </button>
-        <span className="whitespace-nowrap text-coffee-400 text-xs italic group-hover:text-coffee-200">
-          @ {props.entry.blockNumber}
-        </span>
-      </div>
-      {open && (
-        <>
-          <ListItemContracts
-            title="Initial"
-            onFocus={onFocus}
-            entries={props.entry.initialContracts}
-          />
-          <ListItemContracts
-            title="Discovered"
-            onFocus={onFocus}
-            entries={props.entry.discoveredContracts}
-          />
-          <ListItemContracts
-            startClosed
-            title="EOAs"
-            onFocus={onFocus}
-            entries={props.entry.eoas}
-          />
-        </>
-      )}
-    </li>
+  return Object.entries(props.entry.blockNumbers).map(
+    ([chain, blockNumber]) => (
+      <li className={clsx(!props.first && 'border-t border-t-coffee-600')}>
+        <div className="group flex min-h-[22px] items-center justify-between pr-1 hover:bg-aux-brown">
+          <button
+            onClick={() => setOpen((open) => !open)}
+            className="flex w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
+          >
+            {open && <IconChevronDown />}
+            {!open && <IconChevronRight />}
+            {`${props.entry.project} on ${chain}`}
+          </button>
+          <span className="whitespace-nowrap text-coffee-400 text-xs italic group-hover:text-coffee-200">
+            @ {blockNumber}
+          </span>
+        </div>
+        {open && (
+          <>
+            <ListItemContracts
+              title="Initial"
+              onFocus={onFocus}
+              entries={props.entry.initialContracts}
+              chain={chain}
+            />
+            <ListItemContracts
+              title="Discovered"
+              onFocus={onFocus}
+              entries={props.entry.discoveredContracts}
+              chain={chain}
+            />
+            <ListItemContracts
+              startClosed
+              title="EOAs"
+              onFocus={onFocus}
+              entries={props.entry.eoas}
+              chain={chain}
+            />
+          </>
+        )}
+      </li>
+    ),
   )
 }
 
@@ -91,21 +96,26 @@ function ListItemContracts(props: {
   entries: ApiAddressEntry[]
   onFocus?: () => void
   startClosed?: boolean
+  chain: string
 }) {
   const [open, setOpen] = useState(!props.startClosed)
   const selected = usePanelStore((state) => state.selected)
+
+  const filteredEntries = props.entries.filter(
+    (entry) => entry.chain === props.chain,
+  )
   useEffect(() => {
     const selectedSet = new Set<string>(selected)
-    for (const { address } of props.entries) {
+    for (const { address } of filteredEntries) {
       if (selectedSet.has(address)) {
         setOpen(true)
         props.onFocus?.()
         break
       }
     }
-  }, [props.entries, selected, props.onFocus])
+  }, [filteredEntries, selected, props.onFocus])
 
-  if (props.entries.length === 0) {
+  if (filteredEntries.length === 0) {
     return null
   }
   return (
@@ -130,7 +140,7 @@ function ListItemContracts(props: {
       </button>
       {open && (
         <ol>
-          {props.entries
+          {filteredEntries
             .toSorted((a, b) => b.type.localeCompare(a.type))
             .map((entry) => (
               <AddressEntry key={entry.address} entry={entry} />

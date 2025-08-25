@@ -13,7 +13,6 @@ import {
 
 export function generateClingoFromPermissionsConfig(
   entry: StructureEntry,
-  chain: string,
   permissionsConfig: PermissionsConfig,
   templateService: TemplateService,
   addressToNameMap: Record<string, string>,
@@ -27,17 +26,11 @@ export function generateClingoFromPermissionsConfig(
     permissionsConfig.overrides?.[entry.address.toString()],
   )
 
-  return buildPermissionsModel(
-    chain,
-    mergedPermissionsConfig,
-    entry,
-    addressToNameMap,
-  )
+  return buildPermissionsModel(mergedPermissionsConfig, entry, addressToNameMap)
 }
 
 export function generateClingoFromModelLp(
   entry: StructureEntry,
-  chain: string,
   templateService: TemplateService,
   addressToNameMap: Record<string, string>,
 ): string {
@@ -45,7 +38,7 @@ export function generateClingoFromModelLp(
     ? templateService.loadClingoModelTemplate(entry.template)
     : undefined
   if (modelTemplate) {
-    const values = contractValuesForInterpolation(chain, entry, undefined)
+    const values = contractValuesForInterpolation(entry, undefined)
     const interpolated = interpolateModelTemplate(
       modelTemplate,
       values,
@@ -58,7 +51,6 @@ export function generateClingoFromModelLp(
 
 export function getProjectSpecificModelLp(
   project: string,
-  chain: string,
   configReader: ConfigReader,
 ): string | undefined {
   const projectPath = configReader.getProjectPath(project)

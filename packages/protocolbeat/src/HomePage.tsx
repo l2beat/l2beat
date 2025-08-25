@@ -309,29 +309,12 @@ function ProjectList(props: {
             </button>
             <Link to={`/ui/p/${entry.name}`}>
               <span className="-mb-0.5 block">{entry.name}</span>
-              <span className="block text-coffee-400 text-xs uppercase">
-                {getChains(entry.chains)}
-              </span>
             </Link>
           </li>
         )
       })}
     </ol>
   )
-}
-
-function getChains(chains: string[]) {
-  const [first, second] = chains
-  if (!first) {
-    return 'No chains!'
-  }
-  if (!second) {
-    return first
-  }
-  if (chains.length === 2) {
-    return `${first}, ${second}`
-  }
-  return `${chains.length} chains`
 }
 
 function readFavorites() {

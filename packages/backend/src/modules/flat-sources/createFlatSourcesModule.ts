@@ -1,5 +1,4 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { ChainConverter } from '@l2beat/shared-pure'
 
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
@@ -17,11 +16,7 @@ export function createFlatSourcesModule(
     return
   }
 
-  const chainConverter = new ChainConverter(config.chains)
-  const controller = new FlatSourcesController(
-    peripherals.database,
-    chainConverter,
-  )
+  const controller = new FlatSourcesController(peripherals.database)
 
   return {
     routers: [createFlatSourcesRouter(controller)],

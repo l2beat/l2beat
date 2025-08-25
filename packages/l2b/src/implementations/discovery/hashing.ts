@@ -7,7 +7,6 @@ export function updateDiffHistoryHash(
   configReader: ConfigReader,
   diffHistoryPath: string,
   projectName: string,
-  chain: string,
 ) {
   let content = readFileSync(diffHistoryPath, 'utf-8')
 
@@ -15,7 +14,7 @@ export function updateDiffHistoryHash(
     content = content.split('\n').slice(2).join('\n')
   }
 
-  const hash = configReader.readDiscoveryHash(projectName, chain)
+  const hash = configReader.readDiscoveryHash(projectName)
   const hashLine = `${HASH_LINE_PREFIX}${hash.toString()}\n`
 
   writeFileSync(diffHistoryPath, `${hashLine}\n${content}`)

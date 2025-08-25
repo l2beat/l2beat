@@ -14,7 +14,6 @@ import type {
 } from './types'
 
 export function toDiscoveryOutput(
-  chain: string,
   templateService: TemplateService,
   config: ConfigRegistry,
   timestamp: UnixTime,
@@ -22,7 +21,6 @@ export function toDiscoveryOutput(
   results: Analysis[],
 ): DiscoveryOutput {
   const discovery = toRawDiscoveryOutput(
-    chain,
     templateService,
     config,
     timestamp,
@@ -40,7 +38,6 @@ export function toDiscoveryOutput(
 }
 
 export function toRawDiscoveryOutput(
-  chain: string,
   templateService: TemplateService,
   config: ConfigRegistry,
   timestamp: UnixTime,
@@ -48,7 +45,6 @@ export function toRawDiscoveryOutput(
   results: Analysis[],
 ): DiscoveryOutput {
   const structure = getStructureOutput(
-    chain,
     config.structure,
     timestamp,
     usedBlockNumbers,

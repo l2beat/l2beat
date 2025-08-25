@@ -82,15 +82,9 @@ describe(DiscoveryRunner.name, () => {
       )
 
       expect(allProvidersMock.get).toHaveBeenCalledTimes(0)
-      expect(engine.discover).toHaveBeenCalledTimes(2)
+      expect(engine.discover).toHaveBeenCalledTimes(1)
       expect(engine.discover).toHaveBeenNthCalledWith(
         1,
-        allProvidersMock,
-        getMockConfig({ modelCrossChainPermissions: true }).structure,
-        1,
-      )
-      expect(engine.discover).toHaveBeenNthCalledWith(
-        2,
         allProvidersMock,
         getMockConfig({ modelCrossChainPermissions: true }).structure,
         1,
@@ -201,6 +195,5 @@ const getMockConfigReader = (options?: {
     readConfig: (_name: string) => getMockConfig({ ...options }),
     readRawConfig: () => getMockRawConfig(options),
     getProjectPath: () => '/tmp/discovery',
-    readAllDiscoveredChainsForProject: () => ['ethereum', 'arbitrum'],
   })
 }

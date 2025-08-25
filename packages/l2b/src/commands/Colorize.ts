@@ -27,28 +27,22 @@ export const Colorize = command({
     const configReader = new ConfigReader(paths.discovery)
     const templateService = new TemplateService(paths.discovery)
 
-    const chainConfigs = configReader
+    const projectConfigs = configReader
       .readAllDiscoveredProjects()
-      .flatMap(({ project }) => configReader.readConfig(project))
+      .flatMap((project) => configReader.readConfig(project))
 
-    for (const config of chainConfigs) {
-      const chains = configReader.readAllDiscoveredChainsForProject(config.name)
-      for (const chain of chains) {
-        const discovery = configReader.readDiscovery(config.name, chain)
-        const color = colorize(config.color, discovery, templateService)
+    for (const config of projectConfigs) {
+      const discovery = configReader.readDiscovery(config.name)
+      const color = colorize(config.color, discovery, templateService)
 
-        const colorized = combineStructureAndColor(discovery, color)
-        const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)
-        if (changed) {
-          const projectDiscoveryFolder = configReader.getProjectChainPath(
-            config.name,
-            chain,
-          )
+      const colorized = combineStructureAndColor(discovery, color)
+      const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)
+      if (changed) {
+        const projectDiscoveryFolder = configReader.getProjectPath(config.name)
 
-          await saveDiscoveredJson(colorized, projectDiscoveryFolder)
+        await saveDiscoveredJson(colorized, projectDiscoveryFolder)
 
-          updateDiffHistory(config.name, args.message)
-        }
+        updateDiffHistory(config.name, args.message)
       }
     }
   },

@@ -13,7 +13,6 @@ export type ContractValue =
 
 export interface StructureOutput {
   name: string
-  chain: string
   blockNumber?: number
   timestamp: number
   entries: StructureEntry[]
@@ -26,7 +25,6 @@ export interface StructureOutput {
 
 export interface DiscoveryOutput {
   name: string
-  chain: string
   blockNumber?: number
   timestamp: number
   entries: EntryParameters[]

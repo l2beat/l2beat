@@ -3,15 +3,9 @@ import {
   ConfigReader,
   DiscoverCommandArgs,
   type DiscoveryModuleConfig,
-  getChainFullName,
-  getChainShortName,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional, positional, string } from 'cmd-ts'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
@@ -49,14 +43,9 @@ export const Discover = command({
     const matchingProjects = resolveProjects(args.projectQuery)
 
     logProjectsToDiscover(matchingProjects, logger)
-    const timestamp = getTimestamp(args)
 
-    for (const { project } of matchingProjects) {
-      const config: DiscoveryModuleConfig = {
-        ...args,
-        project,
-        timestamp: timestamp ?? args.timestamp,
-      }
+    for (const project of matchingProjects) {
+      const config: DiscoveryModuleConfig = { ...args, project }
 
       await discoverAndUpdateDiffHistory(config, {
         logger,
@@ -66,48 +55,39 @@ export const Discover = command({
   },
 })
 
-function logProjectsToDiscover(
-  projectsOnChain: { project: string; chains: string[] }[],
-  logger: Logger,
-) {
-  if (Object.keys(projectsOnChain).length === 0) {
+function logProjectsToDiscover(projects: string[], logger: Logger) {
+  if (projects.length === 0) {
     logger.info(chalk.greenBright('Nothing to discover'))
     return
   }
 
   logger.info('Will discover')
-  for (const { project, chains } of projectsOnChain) {
-    logger.info(`${chalk.blue(project)}: ${chalk.yellow(chains.join(', '))}`)
+  for (const project of projects) {
+    logger.info(`${chalk.blue(project)}`)
   }
 }
 
-function resolveProjects(
-  projectQuery: string,
-): { project: string; chains: string[] }[] {
-  const entries = configReader.readAllConfiguredProjects()
+function resolveProjects(projectQuery: string): string[] {
+  const entries = configReader.readAllDiscoveredProjects()
 
   const isAddressPredicate = EthereumAddress.check(projectQuery)
   const predicate: Predicate = isAddressPredicate
     ? addressPredicate
     : projectPredicate
 
-  const result: { project: string; chains: string[] }[] = []
-  for (const entry of entries) {
-    const { project, chains } = entry
-    const projectMatches = chains.some((chain) => {
-      const query = isAddressPredicate
-        ? ChainSpecificAddress.from(getChainShortName(chain), projectQuery)
-        : projectQuery
-
-      return predicate(query, project)
-    })
+  const matchingProjects: string[] = []
+  for (const project of entries) {
+    const query = isAddressPredicate
+      ? EthereumAddress(projectQuery)
+      : projectQuery
+    const projectMatches = predicate(query, project)
 
     if (projectMatches) {
-      result.push(entry)
+      matchingProjects.push(project)
     }
   }
 
-  return result
+  return matchingProjects
 }
 
 type Predicate = (needle: string, haystackProject: string) => boolean
@@ -123,30 +103,12 @@ function addressPredicate(
   needleAddress: string,
   haystackProject: string,
 ): boolean {
-  const address = ChainSpecificAddress(needleAddress)
-  const chain = getChainFullName(ChainSpecificAddress.chain(address))
-  const discovery = configReader.readDiscovery(haystackProject, chain)
+  const address = EthereumAddress(needleAddress)
+  const discovery = configReader.readDiscovery(haystackProject)
 
-  return discovery.entries.find((c) => c.address === address) !== undefined
-}
-
-// TODO(radomski): This will not exist. In the future all of this information
-// will be stored in the discovery but since we're emulating having a single
-// discovered.json we have to do this trick.
-// TODO(radomski): This is only to be removed after we have a single discovery
-// for all chains at the same time
-function getTimestamp(args: {
-  timestamp: number | undefined
-  dev: boolean
-  dryRun: boolean
-}): UnixTime | undefined {
-  if (
-    args.dev === false &&
-    args.dryRun === false &&
-    args.timestamp === undefined
-  ) {
-    return UnixTime.now() - UnixTime.MINUTE
-  }
-
-  return undefined
+  return (
+    discovery.entries.find(
+      (c) => ChainSpecificAddress.address(c.address) === address,
+    ) !== undefined
+  )
 }

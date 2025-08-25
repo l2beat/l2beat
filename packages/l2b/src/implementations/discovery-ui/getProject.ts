@@ -35,12 +35,11 @@ interface ProjectData {
 }
 
 function readProject(
-  chain: string,
   project: string,
   configReader: ConfigReader,
   seen = new Set<string>(),
 ): ProjectData[] {
-  const key = `${project}::${chain}`
+  const key = project
 
   if (seen.has(key)) {
     return []
@@ -49,16 +48,13 @@ function readProject(
   seen.add(key)
 
   try {
-    const discovery = configReader.readDiscovery(project, chain)
+    const discovery = configReader.readDiscovery(project)
     const sharedModules = discovery.sharedModules ?? []
 
     return [
-      {
-        config: configReader.readConfig(project),
-        discovery,
-      },
+      { config: configReader.readConfig(project), discovery },
       ...sharedModules.flatMap((sharedModule) =>
-        readProject(chain, sharedModule, configReader, seen),
+        readProject(sharedModule, configReader, seen),
       ),
     ]
   } catch {
@@ -71,15 +67,11 @@ export function getProject(
   templateService: TemplateService,
   project: string,
 ): ApiProjectResponse {
-  const chains = configReader.readAllDiscoveredChainsForProject(project)
-  const data = chains.flatMap((chain) =>
-    readProject(chain, project, configReader),
-  )
+  const data = readProject(project, configReader)
 
   const response: ApiProjectResponse = { entries: [] }
   const meta = getMeta(data.map((x) => x.discovery))
   for (const { config, discovery } of data) {
-    const chain = discovery.chain
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
       .map((entry) => {
@@ -104,7 +96,6 @@ export function getProject(
         const template = getTemplate(templateService, entry)
 
         return contractFromDiscovery(
-          chain,
           meta,
           entry,
           contractConfig,
@@ -117,7 +108,6 @@ export function getProject(
     const initialAddresses = config.structure.initialAddresses
     const chainInfo = {
       project: config.name,
-      chain: chain,
       initialContracts: contracts.filter((x) =>
         initialAddresses.includes(x.address),
       ),
@@ -139,10 +129,11 @@ export function getProject(
             description: x.description,
             referencedBy: [],
             address: x.address,
+            chain: ChainSpecificAddress.longChain(x.address),
           }
         })
         .sort(orderAddressEntries),
-      blockNumber: discovery.usedBlockNumbers[chain],
+      blockNumbers: discovery.usedBlockNumbers,
     } satisfies ApiProjectChain
     response.entries.push(chainInfo)
   }
@@ -196,7 +187,6 @@ function orderAddressEntries(a: ApiAddressEntry, b: ApiAddressEntry) {
 }
 
 function contractFromDiscovery(
-  chain: string,
   meta: Record<string, { name?: string; type: ApiAddressType }>,
   contract: EntryParameters,
   contractConfig: ContractConfig,
@@ -220,7 +210,7 @@ function contractFromDiscovery(
     .map(
       ([name, value]): Field => ({
         name,
-        value: parseFieldValue(value, meta, chain),
+        value: parseFieldValue(value, meta),
         ...getFieldInfo(name),
       }),
     )
@@ -245,6 +235,7 @@ function contractFromDiscovery(
     description: contract.description,
     referencedBy: [],
     address: contract.address,
+    chain: ChainSpecificAddress.longChain(contract.address),
     fields,
     abis: [contract.address, ...implementations].map((address) => ({
       address: address,

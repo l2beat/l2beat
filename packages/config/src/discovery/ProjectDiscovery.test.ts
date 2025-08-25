@@ -4,7 +4,7 @@ import {
   type DiscoveryConfig,
 } from '@l2beat/discovery'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { expect, mockObject } from 'earl'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery } from './ProjectDiscovery'
 
@@ -13,7 +13,6 @@ describe(ProjectDiscovery.name, () => {
   const configReader = mockObject<ConfigReader>({
     readConfig: (projectName: string) => mockConfig(projectName),
     readDiscovery: () => discoveredJsonStub,
-    readAllDiscoveredChainsForProject: mockFn().returns(['ethereum']),
   })
 
   const discovery = new ProjectDiscovery(projectName, configReader)
