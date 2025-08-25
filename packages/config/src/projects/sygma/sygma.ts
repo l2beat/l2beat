@@ -15,6 +15,7 @@ export const sygma: Bridge = {
   type: 'bridge',
   id: ProjectId('sygma'),
   addedAt: UnixTime(1711107103), // 2024-03-22T11:31:43Z
+  archivedAt: UnixTime(1755181398),
   display: {
     name: 'Sygma',
     slug: 'sygma',
