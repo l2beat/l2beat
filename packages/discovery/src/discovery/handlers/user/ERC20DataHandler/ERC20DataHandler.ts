@@ -58,7 +58,7 @@ export class ERC20DataHandler implements Handler {
       entry?.deploymentTimestamp,
     )
 
-    const canonical = await getIsCanonical(provider, address, this.abi)
+    const canonical = await getIsCanonical(provider, address, this.abi, source)
 
     return Promise.resolve({
       field: '$tokenData',
@@ -99,7 +99,13 @@ async function getIsCanonical(
   provider: IProvider,
   address: ChainSpecificAddress,
   abi: string[],
+  source: string,
 ) {
+  if (source === 'canonical') {
+    return true
+  }
+
+  // Here we will add more checks
   const isOpCanonical = await OpCanonical.classify({ provider, address, abi })
 
   if (!isOpCanonical) {
