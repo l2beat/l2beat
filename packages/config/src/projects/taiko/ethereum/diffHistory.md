@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x98a1139ed6d96ab4add7ef9ca4d7f2b12fee5fee
+
+# Diff at Mon, 25 Aug 2025 10:26:30 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@5a77193ce6f4b52703a8422b095bfe2d89559a39 block: 1755701960
+- current timestamp: 1756117493
+
+## Description
+
+ProverSet is in the process of changing owner.
+
+## Watched changes
+
+```diff
+    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+    }
+```
+
 Generated with discovered.json: 0x6494174869c79ea590836817fd668957e781e414
 
 # Diff at Wed, 20 Aug 2025 14:59:53 GMT:
