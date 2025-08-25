@@ -25,9 +25,7 @@
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-        "args": [
-          1
-        ]
+        "args": [1]
       }
     },
     "isPaused_L1_L2": {
@@ -35,9 +33,7 @@
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-        "args": [
-          2
-        ]
+        "args": [2]
       }
     },
     "isPaused_L2_L1": {
@@ -45,9 +41,7 @@
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-        "args": [
-          3
-        ]
+        "args": [3]
       }
     },
     "isPaused_BLOB_SUBMISSION": {
@@ -55,9 +49,7 @@
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-        "args": [
-          4
-        ]
+        "args": [4]
       }
     },
     "isPaused_CALLDATA_SUBMISSION": {
@@ -65,9 +57,7 @@
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-        "args": [
-          5
-        ]
+        "args": [5]
       }
     },
     "isPaused_FINALIZATION": {
@@ -75,9 +65,7 @@
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-        "args": [
-          6
-        ]
+        "args": [6]
       }
     },
     "isPaused_INITIATE_TOKEN_BRIDGING": {
@@ -85,9 +73,7 @@
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-        "args": [
-          7
-        ]
+        "args": [7]
       }
     },
     "isPaused_COMPLETE_TOKEN_BRIDGING": {
@@ -95,17 +81,13 @@
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-        "args": [
-          8
-        ]
+        "args": [8]
       }
     },
     "pauseTypeToRole": {
       "handler": {
         "type": "event",
-        "select": [
-          "role"
-        ],
+        "select": ["role"],
         "set": {
           "event": "PauseTypeRoleSet"
         },
@@ -115,9 +97,7 @@
     "unpauseTypeToRole": {
       "handler": {
         "type": "event",
-        "select": [
-          "role"
-        ],
+        "select": ["role"],
         "set": {
           "event": "UnPauseTypeRoleSet"
         },
@@ -126,11 +106,7 @@
     },
     "allPausers": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "PAUSE_ALL_ROLE",
-        "members"
-      ],
+      "edit": ["get", "PAUSE_ALL_ROLE", "members"],
       "permissions": [
         {
           "type": "interact",
@@ -140,11 +116,7 @@
     },
     "initiateTokenBridgingPausers": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE",
-        "members"
-      ],
+      "edit": ["get", "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE", "members"],
       "permissions": [
         {
           "type": "interact",
@@ -154,11 +126,7 @@
     },
     "completeTokenBridgingPausers": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE",
-        "members"
-      ],
+      "edit": ["get", "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE", "members"],
       "permissions": [
         {
           "type": "interact",
@@ -168,11 +136,7 @@
     },
     "allUnpausers": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "UNPAUSE_ALL_ROLE",
-        "members"
-      ],
+      "edit": ["get", "UNPAUSE_ALL_ROLE", "members"],
       "permissions": [
         {
           "type": "interact",
@@ -182,11 +146,7 @@
     },
     "initiateTokenBridgingUnpausers": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE",
-        "members"
-      ],
+      "edit": ["get", "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE", "members"],
       "permissions": [
         {
           "type": "interact",
@@ -196,11 +156,7 @@
     },
     "completeTokenBridgingUnpausers": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE",
-        "members"
-      ],
+      "edit": ["get", "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE", "members"],
       "permissions": [
         {
           "type": "interact",
@@ -210,11 +166,7 @@
     },
     "customContractSetters": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "SET_CUSTOM_CONTRACT_ROLE",
-        "members"
-      ],
+      "edit": ["get", "SET_CUSTOM_CONTRACT_ROLE", "members"],
       "permissions": [
         {
           "type": "interact",
@@ -224,11 +176,7 @@
     },
     "reserveTokenSetters": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "SET_RESERVED_TOKEN_ROLE",
-        "members"
-      ],
+      "edit": ["get", "SET_RESERVED_TOKEN_ROLE", "members"],
       "permissions": [
         {
           "type": "interact",
@@ -238,11 +186,7 @@
     },
     "reserveTokenRemovers": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "REMOVE_RESERVED_TOKEN_ROLE",
-        "members"
-      ],
+      "edit": ["get", "REMOVE_RESERVED_TOKEN_ROLE", "members"],
       "permissions": [
         {
           "type": "interact",
@@ -252,11 +196,7 @@
     },
     "messageServiceSetters": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "SET_MESSAGE_SERVICE_ROLE",
-        "members"
-      ],
+      "edit": ["get", "SET_MESSAGE_SERVICE_ROLE", "members"],
       "permissions": [
         {
           "type": "interact",
@@ -266,11 +206,7 @@
     },
     "remoteTokenBridgeSetters": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "SET_REMOTE_TOKENBRIDGE_ROLE",
-        "members"
-      ],
+      "edit": ["get", "SET_REMOTE_TOKENBRIDGE_ROLE", "members"],
       "permissions": [
         {
           "type": "interact",
@@ -279,10 +215,7 @@
       ]
     },
     "remoteSender": {
-      "edit": [
-        "format",
-        "LineaAddress"
-      ]
+      "edit": ["format", "LineaAddress"]
     }
   }
 }
