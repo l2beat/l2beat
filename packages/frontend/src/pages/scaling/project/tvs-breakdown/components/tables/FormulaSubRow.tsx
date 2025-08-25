@@ -14,7 +14,12 @@ export function renderFormulaSubComponent<
     <div className="ml-[52px] flex flex-col py-3">
       <p className="mb-1 font-normal text-xs">The value is calculated as:</p>
       <div className="rounded-lg bg-surface-secondary p-3 font-medium text-label-value-14">
-        <FormulaWithOperator formula={row.original.formula} operator="sum" />
+        <FormulaWithOperator
+          formula={row.original.formula}
+          operator={
+            row.original.formula.type === 'calculation' ? undefined : 'sum'
+          }
+        />
       </div>
     </div>
   )
@@ -33,9 +38,7 @@ function FormulaWithOperator({
 }) {
   return (
     <div className={cn('flex gap-4', className)}>
-      {!(depth === 0 && formula.type === 'calculation') && operator && (
-        <Operator operator={operator} />
-      )}
+      {operator && <Operator operator={operator} />}
       <Formula formula={formula} depth={depth} />
     </div>
   )
@@ -83,8 +86,11 @@ function Operator({ operator }: { operator: CalculationFormula['operator'] }) {
           <span className="inline-block w-[51px] text-center">deduct</span>
         </div>
       )
-    default:
+    case 'min':
+    case 'max':
       return null
+    default:
+      assertUnreachable(operator)
   }
 }
 
