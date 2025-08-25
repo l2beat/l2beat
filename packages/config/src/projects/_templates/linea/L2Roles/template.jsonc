@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // Linea-specific template (see criteria.json)
+  "description": "The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.",
+  "ignoreRelatives": ["multisend"],
+  "canActIndependently": false,
+  "fields": {
+    "roles": {
+      "handler": {
+        "type": "lineaRolesModule"
+      }
+    },
+    "pausers": {
+      "handler": {
+        "type": "hardcoded", // hack, but checked in .ts
+        "value": "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract)."
+        }
+      ]
+    }
+  }
+}

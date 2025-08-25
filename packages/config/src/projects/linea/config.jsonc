@@ -2,5 +2,19 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "linea",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"]
+  "initialAddresses": [
+    "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+    "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+    "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A",
+    "linea:0xd83af4fbD77f3AB65C3B1Dc4B38D7e67AEcf599A"
+  ],
+  "names": {
+    "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca": "L2Timelock",
+    "linea:0x3886a948eA7b4053312c3aE31a13776144aA6239": "L2Roles"
+  },
+  "overrides": {
+    "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD": {
+      "canActIndependently": true
+    }
+  }
 }

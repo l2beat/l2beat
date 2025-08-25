@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "L1Timelock",
+  "displayName": "Timelock",
   "description": "A standard timelock with access control. The current minimum delay is {{minDelayFormatted}}.",
   "fields": {
     "minDelayFormatted": {

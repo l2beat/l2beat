@@ -1,4 +1,4 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Standard implementation used for assets that are native to the Linea L2 and bridged back to ethereum."
+  "description": "Standard implementation used for assets that are native to the other layer and are bridged to this layer."
 }
