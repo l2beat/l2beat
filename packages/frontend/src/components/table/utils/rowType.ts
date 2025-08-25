@@ -49,5 +49,3 @@ export function getRowClassNamesWithoutOpacity(
       return 'bg-surface-primary'
   }
 }
-export const UNVERIFIED_DA_CLASSNAME = 'bg-red-100/70 dark:bg-red-900/70'
-export const UNDER_REVIEW_DA_CLASSNAME = 'bg-yellow-200/10'

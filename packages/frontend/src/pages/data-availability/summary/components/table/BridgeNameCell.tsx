@@ -6,10 +6,15 @@ import {
 import { TableLink } from '~/components/table/TableLink'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
+import type { DaBridgeRiskEntry } from '~/server/features/data-availability/risks/getDaRiskEntries'
 import type { DaBridgeSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
 import { getUnderReviewText } from '~/utils/project/underReview'
 
-export function BridgeNameCell({ bridge }: { bridge: DaBridgeSummaryEntry }) {
+export function BridgeNameCell({
+  bridge,
+}: {
+  bridge: DaBridgeSummaryEntry | DaBridgeRiskEntry
+}) {
   const isUnverified = bridge.statuses?.verificationWarning === true
   return (
     <TableLink
