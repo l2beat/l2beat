@@ -35,6 +35,13 @@ export function TvsBreakdownTokenTable(props: Props) {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
+    /**
+     * Row id is needed for the expanded row model to preserve the expanded state
+     * When no getRowId is provided, the id is the index of the row by default
+     * And the state is kept as a mapping between the id and the expanded state
+     * So if you expand the first row and filter the table, the first row will be expanded
+     */
+    getRowId: (row) => row.id,
     initialState: {
       sorting: [{ id: 'value', desc: true }],
       columnPinning: {
