@@ -11,7 +11,7 @@ import type {
 import { Hash256 } from '@l2beat/shared-pure'
 import { command, positional, restPositionals, type Type } from 'cmd-ts'
 import { id } from 'ethers/lib/utils'
-import { existsSync, writeFileSync } from 'fs'
+import { writeFileSync } from 'fs'
 import { Listr } from 'listr2'
 import { getProvider } from '../implementations/common/GetProvider'
 import { getMintTransactions } from '../implementations/minters/getMinters'
@@ -35,7 +35,7 @@ export const SignatureValue: Type<string, string> = {
 export const Minters = command({
   name: 'minters',
   description:
-    'Find token minters based on event transfers and traces - returns list of msg.senders who called mint function.',
+    'Find token minters based on event transfers and traces - returns list of msg.senders who called given function.',
   args: {
     chain: positional({
       displayName: 'chain',
@@ -49,8 +49,8 @@ export const Minters = command({
   handler: async (args) => {
     const chain = getChainConfig(args.chain)
 
-    const _provider = await getProvider(chain.rpcUrl, chain.explorer)
-    Object.assign(_provider, { chain: args.chain })
+    const provider = await getProvider(chain.rpcUrl, chain.explorer)
+    Object.assign(provider, { chain: args.chain })
 
     const proxyDetector = new ProxyDetector()
 
@@ -68,7 +68,7 @@ export const Minters = command({
       {
         title: 'Setting up provider',
         task: (ctx) => {
-          ctx.provider = _provider
+          ctx.provider = provider
           ctx.chain = chain
           ctx.proxyDetector = proxyDetector
         },
@@ -90,7 +90,7 @@ export const Minters = command({
             ...Object.entries(r).map(([sig, hash]) => `- ${sig}: ${hash}`),
           ]
 
-          ctx.selectors = new Set(Object.values(r).concat('0x24ffea9a'))
+          ctx.selectors = new Set(Object.values(r))
           task.title = outputLines.join('\n')
         },
       },
@@ -158,7 +158,6 @@ export const Minters = command({
                 ctx.selectors,
               )) {
                 sendersSet.add(sender.toLowerCase())
-                saveSingleSuccessfulFrame(call, [], args.address)
               }
             }
           }
@@ -198,26 +197,6 @@ function* walk(
 function printList(list: string[]) {
   for (const item of list) {
     console.log(`• ${item}`)
-  }
-}
-
-function saveSingleSuccessfulFrame(
-  call: DebugTransactionCall,
-  stack: string[],
-  address: string,
-) {
-  if (!existsSync(`./l2b-minters-stack-${address}.txt`)) {
-    writeFileSync(
-      `./l2b-minters-stack-${address}.txt`,
-      stack.join(' -> ') + '\n',
-    )
-  }
-
-  if (!existsSync(`./l2b-minters-trace-${address}.json`)) {
-    writeFileSync(
-      `./l2b-minters-trace-${address}.json`,
-      JSON.stringify({ call, stack }, null, 2),
-    )
   }
 }
 
