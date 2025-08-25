@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x98a1139ed6d96ab4add7ef9ca4d7f2b12fee5fee
+Generated with discovered.json: 0x5765bae5ae61ad328c23ef2bdc03bc2fc2014036
 
-# Diff at Mon, 25 Aug 2025 10:26:30 GMT:
+# Diff at Mon, 25 Aug 2025 14:12:20 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@5a77193ce6f4b52703a8422b095bfe2d89559a39 block: 1755701960
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1755701960
 - current timestamp: 1756117493
 
 ## Description
@@ -21,7 +21,7 @@ ProverSet is in the process of changing owner.
     }
 ```
 
-Generated with discovered.json: 0x6494174869c79ea590836817fd668957e781e414
+Generated with discovered.json: 0x6f603e71956eb5c81b15934d5323116a67d0f380
 
 # Diff at Wed, 20 Aug 2025 14:59:53 GMT:
 

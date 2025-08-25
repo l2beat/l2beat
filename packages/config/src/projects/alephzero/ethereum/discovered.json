@@ -1,8 +1,8 @@
 {
   "name": "alephzero",
   "chain": "ethereum",
-  "timestamp": 1756117672,
-  "configHash": "0x08672b8c905fcd628f1c95509e798e9875857f310619e7e9c1cea80f1b429aa2",
+  "timestamp": 1756130703,
+  "configHash": "0x1cf164009d3167eebba60109cabb974a8cbaa02f4db25715636a73711fd6fbef",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -93,13 +93,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1780,
+        "firstUnresolvedNode": 1781,
         "inbox": "eth:0x56D8EC76a421063e1907503aDd3794c395256AEb",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21895035,
-        "latestConfirmed": 1779,
-        "latestNodeCreated": 1779,
+        "latestConfirmed": 1780,
+        "latestNodeCreated": 1780,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e",
@@ -1078,7 +1078,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 1207,
+        "nonce": 1208,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1895,6 +1895,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23217523 },
+  "usedBlockNumbers": { "ethereum": 23218603 },
   "permissionsConfigHash": "0xebb7e4eead933a6c182b0fbd1303655c7e6192d8eb85a34217bd4b26dbff0e69"
 }

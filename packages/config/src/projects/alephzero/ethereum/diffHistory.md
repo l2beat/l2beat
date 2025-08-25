@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x3eafdb58d4c8bbc7e1d5f68bc53dfdfbcb672dd9
+Generated with discovered.json: 0x795ec5fa9001fa7890fc45cef664405591aaf0d3
 
-# Diff at Mon, 25 Aug 2025 10:29:33 GMT:
+# Diff at Mon, 25 Aug 2025 14:06:41 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@5a77193ce6f4b52703a8422b095bfe2d89559a39 block: 1752570323
-- current timestamp: 1756117672
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1752570323
+- current timestamp: 1756130703
 
 ## Description
 
@@ -26,7 +26,7 @@ Upgrade to ArbOS v40 wasmModuleRoot.
     }
 ```
 
-Generated with discovered.json: 0x40e6a73ede7606d0d6ed6022e2e54108d6e3ee2a
+Generated with discovered.json: 0xa8075fbf9334e55f6d957d969b38e6803d2cda5c
 
 # Diff at Tue, 15 Jul 2025 09:05:37 GMT:
 
