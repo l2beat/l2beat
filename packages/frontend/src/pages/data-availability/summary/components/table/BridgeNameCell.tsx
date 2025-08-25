@@ -19,7 +19,7 @@ export function BridgeNameCell({
   return (
     <TableLink
       href={bridge.href}
-      className="ml-4 flex items-center gap-1.5 font-medium text-sm md:ml-1"
+      className="flex items-center gap-1.5 font-medium text-sm"
     >
       {bridge.name}
       {isUnverified && (

@@ -76,7 +76,6 @@ const bridgeColumn = columnHelper.display({
     return <BridgeNameCell bridge={bridge} />
   },
   meta: {
-    headClassName: 'px-4',
     tooltip:
       'The DA bridge through which Ethereum is informed that data has been made available.',
     additionalRows: (cell) => {
