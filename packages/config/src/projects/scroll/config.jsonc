@@ -171,6 +171,9 @@
     "eth:0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": { "category": "spam" },
     "eth:0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": { "category": "spam" },
     "eth:0x63FB51C55d9605a75F8872C80De260a00fACfaA2": { "category": "spam" },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreDiscovery": true
+    },
     "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14": {
       "fields": {
         "timelockAdminAC": {
@@ -261,6 +264,18 @@
     },
     "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79": {
       "description": "Counterpart to the L1GatewayRouter contract."
+    },
+    "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": {
+      "fields": {
+        "counterpart": { "edit": ["format", "EthereumAddress"] },
+        "l1WETH": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "scr:0x5300000000000000000000000000000000000004": {
+      "ignoreDiscovery": true
+    },
+    "scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32": {
+      "ignoreDiscovery": true
     },
     "scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896": { "category": "spam" },
     "scr:0x0f50874f227621Dea72482004639a9fFe440A4dA": { "category": "spam" },
