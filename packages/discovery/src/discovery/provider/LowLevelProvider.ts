@@ -142,7 +142,7 @@ export class LowLevelProvider {
         async () => {
           const response = await this.provider.send('debug_traceTransaction', [
             transactionHash.toString(),
-            { tracer: 'callTracer' },
+            { tracer: 'callTracer', tracerConfig: { withLog: true } },
           ])
           return DebugTransactionCallResponse.parse(response)
         },

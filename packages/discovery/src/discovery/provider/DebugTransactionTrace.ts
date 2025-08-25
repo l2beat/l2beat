@@ -8,7 +8,17 @@ export interface DebugTransactionCall {
   type: string
   value?: string
   calls?: DebugTransactionCall[]
+  logs?: DebugTransactionLog[]
 }
+
+const DebugTransactionLog = v.object({
+  address: v.string(),
+  topics: v.array(v.string()),
+  data: v.string(),
+  position: v.string(),
+})
+
+export type DebugTransactionLog = v.infer<typeof DebugTransactionLog>
 
 const DebugTransactionCall: Validator<DebugTransactionCall> = v.object({
   from: v.string(),
@@ -18,6 +28,7 @@ const DebugTransactionCall: Validator<DebugTransactionCall> = v.object({
   type: v.string(),
   value: v.string().optional(),
   calls: v.lazy(() => v.array(DebugTransactionCall)).optional(),
+  logs: v.array(DebugTransactionLog).optional(),
 })
 
 export const DebugTransactionCallResponse = v.object({
