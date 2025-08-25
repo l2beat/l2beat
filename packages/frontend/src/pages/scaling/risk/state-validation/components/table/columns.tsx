@@ -47,4 +47,12 @@ export const scalingRiskStateValidationOptimisticColumns = [
     optimisticColumnHelper,
     (row) => `/scaling/projects/${row.slug}#state-validation`,
   ),
+  optimisticColumnHelper.accessor('proofSystem', {
+    header: 'Proof system',
+    cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
+    meta: {
+      tooltip:
+        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
+    },
+  }),
 ]

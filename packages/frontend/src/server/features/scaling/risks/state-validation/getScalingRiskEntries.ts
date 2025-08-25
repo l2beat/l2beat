@@ -53,6 +53,7 @@ export async function getScalingRiskStateValidationEntries() {
     getScalingRiskStateValidationOptimisticEntry(
       project,
       projectsChangeReport.getChanges(project.id),
+      zkCatalogProjects,
     ),
   )
 
@@ -94,13 +95,27 @@ function getScalingRiskStateValidationZkEntry(
   }
 }
 export interface ScalingRiskStateValidationOptimisticEntry
-  extends CommonScalingEntry {}
+  extends CommonScalingEntry {
+  proofSystem: ProjectScalingProofSystem
+}
 
 function getScalingRiskStateValidationOptimisticEntry(
   project: Project<'scalingInfo' | 'statuses' | 'display'>,
   changes: ProjectChanges,
+  zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingRiskStateValidationOptimisticEntry {
+  const proofSystem = project.scalingInfo?.proofSystem
+  assert(proofSystem, 'Proof system is required')
+
+  const zkCatalogProject = zkCatalogProjects.find(
+    (p) => p.id === proofSystem.zkCatalogId,
+  )
+
   return {
     ...getCommonScalingEntry({ project, changes }),
+    proofSystem: {
+      ...proofSystem,
+      name: proofSystem.name ?? zkCatalogProject?.name,
+    },
   }
 }
