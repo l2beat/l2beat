@@ -1,9 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "linea",
-  "import": [
-    "../globalConfig.jsonc"
-  ],
+  "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
     "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9"
