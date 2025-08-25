@@ -1,4 +1,184 @@
-Generated with discovered.json: 0x1d6acfe72c11fe05bd60410dec4bb4028323bf34
+Generated with discovered.json: 0xf4ef13b7e692b86660712651f5965ce97c5060f6
+
+# Diff at Mon, 25 Aug 2025 14:28:37 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@90dd8b76055bf0f493df8c45097d37e26f847015 block: 1756130522
+- current timestamp: 1756130522
+
+## Description
+
+Assign L1 counterpart.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756130522 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract WrappedEther (0x5300000000000000000000000000000000000004)
+    +++ description: None
+```
+
+```diff
+    contract L2WETHGateway (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9) {
+    +++ description: None
+      values.counterpart:
+-        "scr:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
++        "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
+      values.l1WETH:
+-        "scr:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2WETHGatewayCounterpart (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE)
+    +++ description: None
+```
+
+```diff
+    contract ProxyAdmin (0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2WstETHToken (0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x130790e1b3f4c03c904374a41af6af7b5e12096e
+
+# Diff at Mon, 25 Aug 2025 14:04:28 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1755858338
+- current timestamp: 1756130522
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract WrappedEther (0x5300000000000000000000000000000000000004) {
+    +++ description: None
+      values.totalSupply:
+-        "4497294538621618165812"
++        "4170911196463469688720"
+    }
+```
+
+```diff
+    contract L2WstETHToken (0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32) {
+    +++ description: None
+      values.totalSupply:
+-        "978415033324282926152"
++        "983802096521707616986"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755858338 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xaa5e9334:
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xc63b9e2d:
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyThreshold(uint256):
++        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyFactor(uint256):
++        ["ops-fast"]
+    }
+```
+
+Generated with discovered.json: 0xe7bb390a4f69dacb237102648e7522694a10c3c8
+
+# Diff at Mon, 25 Aug 2025 09:27:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@db2e2037972253abead542c9802c5ac28817e5d2 block: 1755858338
+- current timestamp: 1755858338
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755858338 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xA76acF000C890b0DD7AEEf57627d9899F955d026) {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142","role":"admin"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L2USDCGateway (0x33B60d5Dd260d453cAC3782b0bDC01ce84672142)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WrappedEther (0x5300000000000000000000000000000000000004)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WETHGateway (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WETHGatewayCounterpart (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2LidoGateway (0x8aE8f22226B9d789A36AC81474e633f8bE2856c9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WstETHToken (0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xa3c131fa490fb486061d48e296489a15d5528d01
 
 # Diff at Tue, 12 Aug 2025 15:57:42 GMT:
 

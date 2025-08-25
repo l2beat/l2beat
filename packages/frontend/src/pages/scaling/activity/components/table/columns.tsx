@@ -62,7 +62,7 @@ export const getScalingActivityColumns = (
       align: 'right',
       headClassName: 'max-w-[110px]',
       tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day.`,
-      colSpan: (cell) => (cell.row.original.data ? 1 : 100),
+      colSpan: (ctx) => (ctx.row.original.data ? 1 : 100),
     },
   }),
   columnHelper.accessor('data.maxCount.value', {

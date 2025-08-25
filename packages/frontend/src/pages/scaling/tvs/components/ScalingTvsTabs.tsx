@@ -145,7 +145,6 @@ export function ScalingTvsTabs(props: Props) {
               />
               <ScalingTvsTable
                 entries={entries.notReviewed}
-                notReviewed
                 breakdownType={breakdownType}
               />
             </DirectoryTabsContent>

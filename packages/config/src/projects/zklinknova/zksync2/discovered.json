@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "zksync2",
   "timestamp": 1753687799,
-  "configHash": "0xa93d4a3b7cf8ea51658b551209b1edfccd475e3581bf2451cd5fd65258b77fe1",
+  "configHash": "0x9d4f8489eef7a5e1a5358c2b41afd3656f45df780c446dfa32f969cfdc8590db",
   "entries": [
     {
       "address": "zksync:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",

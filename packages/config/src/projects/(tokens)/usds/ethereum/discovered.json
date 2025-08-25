@@ -2,7 +2,7 @@
   "name": "usds",
   "chain": "ethereum",
   "timestamp": 1752830555,
-  "configHash": "0xf315ceeb3c0b36e05dbb79206249c02ff28f6a514e2ce90869ab20eb556e9a1a",
+  "configHash": "0xba29af20558cd290cdb1f34f8026f7b80a230468ac55b37a716116ce9f0b9236",
   "entries": [
     {
       "name": "Usds",

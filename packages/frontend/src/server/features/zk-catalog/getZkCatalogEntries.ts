@@ -106,6 +106,7 @@ function getZkCatalogEntry(
   return {
     id: project.id,
     slug: project.slug,
+    backgroundColor: undefined,
     statuses: project.statuses,
     name: project.name,
     icon: getProjectIcon(project.slug),

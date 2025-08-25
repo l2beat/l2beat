@@ -2,7 +2,7 @@
   "name": "polynomial",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0x597f6e0f0e674b77e9b1e5c11e8e52aabc034bf92b220a335c1aa69a22af3a97",
+  "configHash": "0x708ba8d89da0a3598a79a5a63beacb41e8d1af75d9f9897557639c992f16f6f6",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

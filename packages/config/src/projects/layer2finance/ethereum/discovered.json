@@ -2,7 +2,7 @@
   "name": "layer2finance",
   "chain": "ethereum",
   "timestamp": 1733238599,
-  "configHash": "0x917062719ba6db78d48351698083ec47eef22077e50bc504c203b61556966c07",
+  "configHash": "0xffe1b47ef886de4ee81a0f1f3564aea22b154ba2106ad517f209231cc9aace4c",
   "entries": [
     {
       "address": "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",

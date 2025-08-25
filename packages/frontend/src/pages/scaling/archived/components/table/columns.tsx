@@ -2,10 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
-import {
-  TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/TypeInfo'
+import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { EM_DASH } from '~/consts/characters'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/getScalingArchivedEntries'
@@ -13,7 +10,7 @@ import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValue
 
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 
-export function getScalingArchivedColumns(hideType?: boolean) {
+export function getScalingArchivedColumns(hideProofSystem?: boolean) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,
@@ -39,14 +36,13 @@ export function getScalingArchivedColumns(hideType?: boolean) {
         cellClassName: 'justify-center',
       },
     }),
-    !hideType &&
-      columnHelper.accessor('category', {
-        header: 'Type',
-        cell: (ctx) => (
-          <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
-        ),
+    !hideProofSystem &&
+      columnHelper.accessor('proofSystem', {
+        header: 'Proof system',
+        cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
         meta: {
-          tooltip: <TypeExplanationTooltip />,
+          tooltip:
+            'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
         },
       }),
     columnHelper.display({

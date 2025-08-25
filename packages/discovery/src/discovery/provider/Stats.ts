@@ -26,11 +26,7 @@ interface ProviderMark {
 export class ProviderStats {
   private measurements: ProviderMark[] = Array.from(
     { length: ProviderMeasurementCount },
-    () =>
-      ({
-        count: 0,
-        durations: [],
-      }) satisfies ProviderMark,
+    () => ({ count: 0, durations: [] }) satisfies ProviderMark,
   )
 
   mark(key: number, durations: number, count = 1): void {
@@ -78,11 +74,7 @@ export interface AllProviderStats {
 
 export function printProviderStats(
   logger: Logger,
-  {
-    highLevelMeasurements,
-    cacheMeasurements,
-    lowLevelMeasurements,
-  }: AllProviderStats,
+  statsPerChain: Record<string, AllProviderStats>,
 ): void {
   const headers = [
     'Operation',
@@ -96,32 +88,37 @@ export function printProviderStats(
     'Avg multicall size',
   ]
 
-  const rows = []
-  const keys = Object.keys(ProviderMeasurement)
-  for (let key = 0; key < ProviderMeasurementCount; key++) {
-    const highLevelEntry = highLevelMeasurements.get(key)
-    const cacheEntry = cacheMeasurements.get(key)
-    const lowLevelEntry = lowLevelMeasurements.get(key)
+  for (const [chain, stats] of Object.entries(statsPerChain)) {
+    const { highLevelMeasurements, cacheMeasurements, lowLevelMeasurements } =
+      stats
+    const rows = []
+    const keys = Object.keys(ProviderMeasurement)
+    for (let key = 0; key < ProviderMeasurementCount; key++) {
+      const highLevelEntry = highLevelMeasurements.get(key)
+      const cacheEntry = cacheMeasurements.get(key)
+      const lowLevelEntry = lowLevelMeasurements.get(key)
 
-    rows.push(
-      [
-        keys[key] ?? '',
-        highLevelEntry.count,
-        formatDurations(highLevelEntry.durations),
-        cacheEntry.count,
-        `${Math.floor((cacheEntry.count / Math.max(1, highLevelEntry.count)) * 100)} %`,
-        formatDurations(cacheEntry.durations),
-        lowLevelEntry.count,
-        formatDurations(lowLevelEntry.durations),
-        (
-          (highLevelEntry.count - cacheEntry.count) /
-          Math.max(1, lowLevelEntry.count)
-        ).toFixed(0),
-      ].map((x) => x.toString()),
-    )
+      rows.push(
+        [
+          keys[key] ?? '',
+          highLevelEntry.count,
+          formatDurations(highLevelEntry.durations),
+          cacheEntry.count,
+          `${Math.floor((cacheEntry.count / Math.max(1, highLevelEntry.count)) * 100)} %`,
+          formatDurations(cacheEntry.durations),
+          lowLevelEntry.count,
+          formatDurations(lowLevelEntry.durations),
+          (
+            (highLevelEntry.count - cacheEntry.count) /
+            Math.max(1, lowLevelEntry.count)
+          ).toFixed(0),
+        ].map((x) => x.toString()),
+      )
+    }
+
+    logger.info(`Chain: ${chain}`)
+    logger.info(formatAsAsciiTable(headers, rows))
   }
-
-  logger.info(formatAsAsciiTable(headers, rows))
 }
 
 function formatDurations(durations: number[]): string {

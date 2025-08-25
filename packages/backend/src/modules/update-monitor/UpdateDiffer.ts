@@ -7,11 +7,7 @@ import {
   diffDiscovery,
   type EntryParameters,
 } from '@l2beat/discovery'
-import {
-  assert,
-  ChainSpecificAddress,
-  type UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type UnixTime } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 
 export class UpdateDiffer {
@@ -22,27 +18,6 @@ export class UpdateDiffer {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-  }
-
-  async runForChain(chain: string, timestamp: UnixTime) {
-    const projectConfigs =
-      this.configReader.readAllDiscoveredConfigsForChain(chain)
-
-    for (const projectConfig of projectConfigs) {
-      assert(
-        projectConfig.chain === chain,
-        `Discovery runner and project config chain mismatch in project ${projectConfig.name}. Update the config.json file or config.discovery.`,
-      )
-
-      try {
-        await this.runForProject(projectConfig.name, [chain], timestamp)
-      } catch (error) {
-        this.logger.error(
-          `[chain: ${chain}] Failed to update project [${projectConfig.name}]`,
-          error,
-        )
-      }
-    }
   }
 
   async runForProject(

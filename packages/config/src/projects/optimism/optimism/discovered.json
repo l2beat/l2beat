@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "timestamp": 1755525885,
-  "configHash": "0xcb34b03eecbbbfc6e16e1df0fdd30add161c814264c015e6e4b9e077bcc2411a",
+  "configHash": "0x1a0a2f320cc1d2b124a089b1d0a891037f97a82badf608597f7d5f1d302eb1df",
   "entries": [
     {
       "address": "oeth:0x0000000000000000000000000000000000000000",

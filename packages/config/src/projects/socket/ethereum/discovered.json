@@ -2,7 +2,7 @@
   "name": "socket",
   "chain": "ethereum",
   "timestamp": 1755601095,
-  "configHash": "0xd38e9c53b1775bb619aefecfa164c450b440ce77e1acd2928e28d4bfea9f134b",
+  "configHash": "0x0b752fb4c9f0d18a743848c735091d45f009e00e67a90b5eedca94b0333572ed",
   "entries": [
     {
       "name": "WETH Vault (Kinto)",
@@ -5064,6 +5064,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23174666 },
+  "usedBlockNumbers": { "ethereum": 23174668 },
   "permissionsConfigHash": "0x842db57db66f087e5c03063034812c8b5132bcf8838f82018ea9cb923df60b97"
 }

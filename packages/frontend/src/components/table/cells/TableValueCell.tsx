@@ -78,7 +78,7 @@ export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
   if (value.description) {
     return (
       <Tooltip>
-        <TooltipTrigger disabledOnMobile className="h-full">
+        <TooltipTrigger disabledOnMobile className="h-[inherit]">
           {trigger}
         </TooltipTrigger>
         <TooltipContent>

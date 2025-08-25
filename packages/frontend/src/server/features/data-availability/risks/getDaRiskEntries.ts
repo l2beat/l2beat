@@ -68,7 +68,8 @@ export interface DaRiskEntry extends CommonDaEntry {
   bridges: DaBridgeRiskEntry[]
 }
 
-interface DaBridgeRiskEntry extends Omit<CommonDaEntry, 'id' | 'tab' | 'icon'> {
+export interface DaBridgeRiskEntry
+  extends Omit<CommonDaEntry, 'id' | 'tab' | 'icon' | 'backgroundColor'> {
   risks: DaBridgeRisks
   tvs: number
 }

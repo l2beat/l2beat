@@ -2,7 +2,7 @@
   "name": "aevo",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0xa6de6852a614d97bf5b0bca081828f25f2fafe3afeb016f285e6ddd7c05f2ddd",
+  "configHash": "0x14c00328eea5454e234ec251cd911a16ed2158870699819a10b1320c39eb6b71",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

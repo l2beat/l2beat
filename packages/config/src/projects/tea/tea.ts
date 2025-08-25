@@ -13,7 +13,6 @@ export const tea: ScalingProject = upcomingL2({
     description:
       'Tea is an upcoming Layer 2 solution built on the OP Stack. It aims to provide a collaborative space for Web3 builders and users.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://tea.xyz/assam'],
@@ -33,5 +32,8 @@ export const tea: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

@@ -2,7 +2,7 @@
   "name": "orderly",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0x874adf29d88302df122769d22bfa9a87b0dabb3b81a35b703f6d8dacc180cd5c",
+  "configHash": "0x4dab049f7237ac30fb7291184b9d8e4fdaf07a154e2c5501604904925cf53d23",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

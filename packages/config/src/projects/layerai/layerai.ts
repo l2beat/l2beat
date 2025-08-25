@@ -12,7 +12,6 @@ export const layerai: ScalingProject = underReviewL2({
     description:
       'LayerAI is the dedicated blockchain network for data monetization within AI models. It functions as a sophisticated ecosystem strategically crafted to expedite the rise of the data economy. The LayerAI ecosystem empowers individuals to step into a transformative epoch where they can own, control, and capitalize on their most substantial digital asset – Data.',
     purposes: ['AI'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://layerai.org/'],
       bridges: ['https://bridge.layerai.org/'],
@@ -20,5 +19,9 @@ export const layerai: ScalingProject = underReviewL2({
       socialMedia: ['https://t.me/LayerAI_org', 'https://x.com/LayerAIorg'],
       explorers: ['https://explorer.layerai.org/'],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Validity',
   },
 })

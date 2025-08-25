@@ -2,7 +2,7 @@
   "name": "redstone",
   "chain": "ethereum",
   "timestamp": 1743924215,
-  "configHash": "0x2c7d17685a1e99cfa4086c058685cd3b56009e131d4c6c86283bde0878a3ba5d",
+  "configHash": "0xb3a832ed96cb79c047d5a5893869dc579784b4dbd90a3dffc8858c28a1b932b7",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
