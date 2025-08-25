@@ -10,6 +10,7 @@ Generated with discovered.json: 0x7dea948883607c59a213727d9113f5d5eb681b2c
 
 - [SystemConfig](https://disco.l2beat.com/diff/eth:0x795277B6aD8778E27aa70813157134cfC4a4D446/eth:0x83085450544c3F360a40720859EbB1bfd311584D): added a `setEIP1559Params` function to update denominator and elasticity params.
 - [OptimismPortal](https://disco.l2beat.com/diff/eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26/eth:0xF7209f5471628aC5f68FE4ae98Feb7f02E0f40Be): additional check in `proveWithdrawalTransaction`, nothing significant. Ignore changes related to interfaces.
+- [L2OutputOracle](https://disco.l2beat.com/diff/eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315/eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65): biggest change as it now supports SP1, but it is currently not used. A check has been added to the .ts file to detect when it gets used.
 
 ## Watched changes
 
