@@ -2,35 +2,18 @@ import {
   type DiscoveryChainConfig,
   getChainConfig,
   type IProvider,
-  ProxyDetector,
 } from '@l2beat/discovery'
 import type {
   DebugTransactionCall,
   DebugTransactionCallResponse,
 } from '@l2beat/discovery/dist/discovery/provider/DebugTransactionTrace'
 import { Hash256 } from '@l2beat/shared-pure'
-import { command, positional, restPositionals, type Type } from 'cmd-ts'
-import { id } from 'ethers/lib/utils'
-import { writeFileSync } from 'fs'
+import { command, positional, restPositionals, string } from 'cmd-ts'
+import { utils } from 'ethers'
 import { Listr } from 'listr2'
 import { getProvider } from '../implementations/common/GetProvider'
 import { getMintTransactions } from '../implementations/minters/getMinters'
 import { EthereumAddressValue } from './types'
-
-const baseSignatures = ['mint(address,uint256)', 'mint(uint256)']
-
-export const SignatureValue: Type<string, string> = {
-  from(str): Promise<string> {
-    return new Promise((resolve, reject) => {
-      try {
-        toSigHash(str)
-        resolve(str)
-      } catch {
-        reject('Invalid signature: ' + str)
-      }
-    })
-  },
-}
 
 export const Minters = command({
   name: 'minters',
@@ -42,7 +25,7 @@ export const Minters = command({
     }),
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
     signatures: restPositionals({
-      type: SignatureValue,
+      type: string,
       displayName: 'additional signatures you want to search for (optional)',
     }),
   },
@@ -52,16 +35,12 @@ export const Minters = command({
     const provider = await getProvider(chain.rpcUrl, chain.explorer)
     Object.assign(provider, { chain: args.chain })
 
-    const proxyDetector = new ProxyDetector()
-
     interface Ctx {
       provider: IProvider
-      proxyDetector: ProxyDetector
       chain: DiscoveryChainConfig
       transactions: string[]
       traces: Record<string, DebugTransactionCallResponse>
       minters: string[]
-      selectors: Set<string>
     }
 
     const tasks = new Listr<Ctx>([
@@ -70,28 +49,6 @@ export const Minters = command({
         task: (ctx) => {
           ctx.provider = provider
           ctx.chain = chain
-          ctx.proxyDetector = proxyDetector
-        },
-      },
-      {
-        title: 'Setting up selectors',
-        task: (ctx, task) => {
-          const sigs = baseSignatures.concat(args.signatures)
-          const r = sigs.reduce(
-            (acc, sig) => {
-              acc[sig] = toSigHash(sig)
-              return acc
-            },
-            {} as Record<string, string>,
-          )
-
-          const outputLines = [
-            'Signatures:',
-            ...Object.entries(r).map(([sig, hash]) => `- ${sig}: ${hash}`),
-          ]
-
-          ctx.selectors = new Set(Object.values(r))
-          task.title = outputLines.join('\n')
         },
       },
       {
@@ -106,8 +63,6 @@ export const Minters = command({
           if (ctx.transactions.length === 0) {
             throw new Error('No transactions found')
           }
-
-          ctx.transactions = ctx.transactions.slice(0, 1)
         },
       },
       {
@@ -129,10 +84,6 @@ export const Minters = command({
                 ctx.traces[txHash] = await ctx.provider.getDebugTrace(
                   Hash256(txHash),
                 )
-                writeFileSync(
-                  `./l2b-minters-trace-${txHash}.json`,
-                  JSON.stringify(ctx.traces[txHash], null, 2),
-                )
 
                 onFinish(txHash)
               },
@@ -151,13 +102,8 @@ export const Minters = command({
 
           for (const trace of Object.values(ctx.traces)) {
             for (const call of trace.calls ?? []) {
-              for (const { sender } of walk(
-                call,
-                [],
-                args.address,
-                ctx.selectors,
-              )) {
-                sendersSet.add(sender.toLowerCase())
+              for (const { sender } of walk(call, call.from)) {
+                sendersSet.add(sender)
               }
             }
           }
@@ -176,21 +122,29 @@ export const Minters = command({
 
 function* walk(
   call: DebugTransactionCall,
-  stack: string[],
-  address: string,
-  selectors: Set<string>,
+  lastCallSender: string,
 ): IterableIterator<{ sender: string }> {
-  if (
-    call.to.toLowerCase() === address.toLowerCase() &&
-    selectors.has(call.input.slice(0, 10).toLowerCase())
-  ) {
-    yield { sender: call.from }
+  const abi = [
+    'event Transfer(address indexed from, address indexed to, uint256 value)',
+  ]
+  const iface = new utils.Interface(abi)
+  const topic0 = iface.getEventTopic('Transfer')
+
+  const isMint = call.logs?.some((log) => {
+    const [eventTopic, from] = log.topics
+
+    return eventTopic === topic0 && from === Hash256.ZERO
+  })
+
+  if (isMint) {
+    const sender = call.type === 'DELEGATECALL' ? lastCallSender : call.from
+    yield { sender: sender.toLowerCase() }
   }
 
-  const nextStack = [...stack, call.from]
+  const nextLastCallSender = call.type === 'CALL' ? call.from : lastCallSender
 
   for (const nested of call.calls ?? []) {
-    yield* walk(nested, nextStack, address, selectors)
+    yield* walk(nested, nextLastCallSender)
   }
 }
 
@@ -198,8 +152,4 @@ function printList(list: string[]) {
   for (const item of list) {
     console.log(`• ${item}`)
   }
-}
-
-function toSigHash(sig: string) {
-  return id(sig).slice(0, 10)
 }
