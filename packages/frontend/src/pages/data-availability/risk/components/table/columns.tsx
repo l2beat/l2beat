@@ -78,8 +78,8 @@ const bridgeColumn = columnHelper.display({
   meta: {
     tooltip:
       'The DA bridge through which Ethereum is informed that data has been made available.',
-    additionalRows: (cell) => {
-      return cell.row.original.bridges
+    additionalRows: (ctx) => {
+      return ctx.row.original.bridges
         .slice(1)
         .map((bridge) => <BridgeNameCell key={bridge.slug} bridge={bridge} />)
     },
@@ -101,8 +101,8 @@ const committeeSecurityColumn = columnHelper.display({
   meta: {
     tooltip:
       'Shows if the DA bridge can securely confirm that the data availability attestations are backed by the DA layer’s economic security, meaning that the signatures from the DA layer are accurately verified and tracked onchain.',
-    additionalRows: (cell) => {
-      return cell.row.original.bridges
+    additionalRows: (ctx) => {
+      return ctx.row.original.bridges
         .slice(1)
         .map((bridge) => (
           <TableValueCell
@@ -130,8 +130,8 @@ const upgradeabilityColumn = columnHelper.display({
   meta: {
     tooltip:
       'Shows if the DA bridge can be upgraded, and if yes - if there’s a mechanism in place for withdrawals, and the time allowed for users to exit in case of an upgrade. ',
-    additionalRows: (cell) => {
-      return cell.row.original.bridges
+    additionalRows: (ctx) => {
+      return ctx.row.original.bridges
         .slice(1)
         .map((bridge) => (
           <TableValueCell
@@ -159,8 +159,8 @@ const relayerFailureColumn = columnHelper.display({
   meta: {
     tooltip:
       'Shows if there is an additional trust assumption on the majority of committee members. It distinguishes between DA solutions that are integrated into the Ethereum protocol (enshrined) and those that are external, thus requiring an additional trust assumption.',
-    additionalRows: (cell) => {
-      return cell.row.original.bridges
+    additionalRows: (ctx) => {
+      return ctx.row.original.bridges
         .slice(1)
         .map((bridge) => (
           <TableValueCell

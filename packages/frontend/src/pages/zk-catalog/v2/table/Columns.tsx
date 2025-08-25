@@ -59,8 +59,8 @@ export const zkCatalogColumns = [
             'Shows the trusted setups used within the proving stack and their risks.',
           cellClassName: 'px-6 pt-4 pb-3',
 
-          additionalRows: (cell) => {
-            return Object.entries(cell.row.original.trustedSetups)
+          additionalRows: (ctx) => {
+            return Object.entries(ctx.row.original.trustedSetups)
               .slice(1)
               .map(([key, ts]) => (
                 <TrustedSetupCell key={key} trustedSetup={ts} />
@@ -81,8 +81,8 @@ export const zkCatalogColumns = [
         meta: {
           tooltip:
             'Shows the number of different versions of onchain verifiers and whether they were independently checked by regenerating them from the proving system’s source code. A green check indicates successful verification, while a red cross indicates a failure to regenerate.',
-          additionalRows: (cell) => {
-            return Object.entries(cell.row.original.trustedSetups)
+          additionalRows: (ctx) => {
+            return Object.entries(ctx.row.original.trustedSetups)
               .slice(1)
               .map(([key, ts]) => (
                 <VerifiedCountWithDetails key={key} data={ts.verifiers} />

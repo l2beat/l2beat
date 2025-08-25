@@ -180,8 +180,8 @@ export const publicSystemsColumns = [
     meta: {
       tooltip:
         'The DA bridge through which Ethereum is informed that data has been made available.',
-      additionalRows: (cell) => {
-        return cell.row.original.bridges
+      additionalRows: (ctx) => {
+        return ctx.row.original.bridges
           .slice(1)
           .map((bridge) => <BridgeNameCell key={bridge.slug} bridge={bridge} />)
       },
@@ -201,14 +201,14 @@ export const publicSystemsColumns = [
           return <BridgeRiskCell bridge={bridge} layer={ctx.row.original} />
         },
         meta: {
-          additionalRows: (cell) => {
-            return cell.row.original.bridges
+          additionalRows: (ctx) => {
+            return ctx.row.original.bridges
               .slice(1)
               .map((bridge) => (
                 <BridgeRiskCell
                   key={bridge.slug}
                   bridge={bridge}
-                  layer={cell.row.original}
+                  layer={ctx.row.original}
                 />
               ))
           },
@@ -225,8 +225,8 @@ export const publicSystemsColumns = [
           return <BridgeValueSecuredCell bridge={bridge} />
         },
         meta: {
-          additionalRows: (cell) => {
-            return cell.row.original.bridges
+          additionalRows: (ctx) => {
+            return ctx.row.original.bridges
               .slice(1)
               .map((bridge) => (
                 <BridgeValueSecuredCell key={bridge.slug} bridge={bridge} />
@@ -249,8 +249,8 @@ export const publicSystemsColumns = [
           return <BridgeUsedByCell bridge={bridge} />
         },
         meta: {
-          additionalRows: (cell) => {
-            return cell.row.original.bridges
+          additionalRows: (ctx) => {
+            return ctx.row.original.bridges
               .slice(1)
               .map((bridge) => (
                 <BridgeUsedByCell key={bridge.slug} bridge={bridge} />

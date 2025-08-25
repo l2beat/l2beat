@@ -14,18 +14,18 @@ declare module '@tanstack/react-table' {
      * @see BasicDaTable
      * How many rows a cell should span across
      */
-    rowSpan?: (cell: CellContext<TData, TValue>) => number
+    rowSpan?: (ctx: CellContext<TData, TValue>) => number
     /**
      * @see BasicTable
      * How many columns a cell should span across
      */
-    colSpan?: (cell: CellContext<TData, TValue>) => number
+    colSpan?: (ctx: CellContext<TData, TValue>) => number
     /**
      * @see BasicDaTable
      * Columns marked as virtual will not be rendered in the table and must be rendered by the parent row spans
      */
     virtual?: boolean
-    additionalRows?: (cell: CellContext<TData, TValue>) => ReactNode[]
+    additionalRows?: (ctx: CellContext<TData, TValue>) => ReactNode[]
   }
 }
 
