@@ -8,13 +8,13 @@ import {
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TableCell, TableRow } from '~/components/table/Table'
 import { TableLink } from '~/components/table/TableLink'
-import { useTable } from '~/hooks/useTable'
-import { UnderReviewIcon } from '~/icons/UnderReview'
-import { UnverifiedIcon } from '~/icons/Unverified'
 import {
   UNDER_REVIEW_DA_CLASSNAME,
   UNVERIFIED_DA_CLASSNAME,
-} from '~/pages/data-availability/summary/components/table/DaSummaryPublicTable'
+} from '~/components/table/utils/rowType'
+import { useTable } from '~/hooks/useTable'
+import { UnderReviewIcon } from '~/icons/UnderReview'
+import { UnverifiedIcon } from '~/icons/Unverified'
 import type { DaRiskEntry } from '~/server/features/data-availability/risks/getDaRiskEntries'
 import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'

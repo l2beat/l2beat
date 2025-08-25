@@ -83,7 +83,8 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
               !header.isPlaceholder && !!header.column.columnDef.header,
           ) && (
             <TableHeaderRow>
-              {groupedHeader.headers.map((header) => {
+              {groupedHeader.headers.map((header, index) => {
+                const isLast = index === groupedHeader.headers.length - 1
                 return (
                   <React.Fragment key={header.id}>
                     <th
@@ -105,7 +106,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
                           header.getContext(),
                         )}
                     </th>
-                    {!header.isPlaceholder && (
+                    {!header.isPlaceholder && !isLast && (
                       <BasicTableColumnFiller as="th" />
                     )}
                   </React.Fragment>
@@ -114,7 +115,8 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
             </TableHeaderRow>
           )}
         <TableHeaderRow>
-          {actualHeader.headers.map((header) => {
+          {actualHeader.headers.map((header, index) => {
+            const isLast = index === actualHeader.headers.length - 1
             const groupParams = getBasicTableGroupParams(header.column)
             return (
               <React.Fragment key={`${actualHeader.id}-${header.id}`}>
@@ -157,7 +159,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
                     )
                   )}
                 </TableHead>
-                {groupParams?.isLastInGroup && (
+                {groupParams?.isLastInGroup && !isLast && (
                   <BasicTableColumnFiller as="th" />
                 )}
               </React.Fragment>
@@ -199,7 +201,13 @@ export function BasicTableRow<T extends BasicTableRow>({
   const maxRowSpan = Math.max(...uniqueRowsCount)
   assert(denominator === maxRowSpan, 'Incorrect row configuration')
 
-  const cellPropsMap = new Map<number, React.ComponentProps<typeof TableCell>>()
+  const cellDataMap = new Map<
+    number,
+    {
+      isLastInGroup: boolean
+      props: React.ComponentProps<typeof TableCell>
+    }
+  >()
 
   return (
     <>
@@ -252,15 +260,20 @@ export function BasicTableRow<T extends BasicTableRow>({
             style: getCommonPinningStyles(cell.column),
           }
 
-          cellPropsMap.set(index, cellProps)
+          cellDataMap.set(index, {
+            isLastInGroup: groupParams?.isLastInGroup ?? false,
+            props: cellProps,
+          })
+
+          const prevCell = cellDataMap.get(index - 1)
           return (
             <React.Fragment key={`${row.id}-${cell.id}`}>
+              {prevCell && prevCell.isLastInGroup && (
+                <BasicTableColumnFiller as="td" rowSpan={rowSpan} />
+              )}
               <TableCell rowSpan={rowSpan} colSpan={colSpan} {...cellProps}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableCell>
-              {groupParams?.isLastInGroup && (
-                <BasicTableColumnFiller as="td" rowSpan={maxRowSpan} />
-              )}
             </React.Fragment>
           )
         })}
@@ -290,15 +303,17 @@ export function BasicTableRow<T extends BasicTableRow>({
                 return null
               }
 
-              const cellProps = cellPropsMap.get(index)
+              const cellData = cellDataMap.get(index)
+              const prevCell = cellDataMap.get(index - 1)
               return (
-                <TableCell
-                  key={`${cell.id}-${additionalRowIndex}`}
-                  rowSpan={rowSpan}
-                  {...cellProps}
-                >
-                  {additionalRow}
-                </TableCell>
+                <React.Fragment key={`${cell.id}-${additionalRowIndex}`}>
+                  {prevCell && prevCell.isLastInGroup && (
+                    <BasicTableColumnFiller as="td" rowSpan={rowSpan} />
+                  )}
+                  <TableCell rowSpan={rowSpan} {...cellData?.props}>
+                    {additionalRow}
+                  </TableCell>
+                </React.Fragment>
               )
             })}
           </TableRow>
@@ -321,7 +336,8 @@ export function BasicTableRow<T extends BasicTableRow>({
 }
 
 function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
-  return props.headers.map((header) => {
+  return props.headers.map((header, index) => {
+    const isLast = index === props.headers.length - 1
     return (
       <React.Fragment key={header.id}>
         <colgroup
@@ -331,7 +347,9 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
             <col key={`${header.id}-${i}`} />
           ))}
         </colgroup>
-        {!header.isPlaceholder && <BasicTableColumnFiller as="colgroup" />}
+        {!header.isPlaceholder && !isLast && (
+          <BasicTableColumnFiller as="colgroup" />
+        )}
       </React.Fragment>
     )
   })
@@ -364,6 +382,7 @@ function BasicTableColumnFiller({
   as: 'th' | 'colgroup' | 'td'
   rowSpan?: number
   colSpan?: number
+  className?: string
 }) {
   return (
     <Comp className="h-full w-4 min-w-4" rowSpan={rowSpan} colSpan={colSpan} />
