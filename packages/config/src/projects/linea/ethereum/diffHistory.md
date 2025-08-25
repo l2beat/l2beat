@@ -1,3 +1,108 @@
+Generated with discovered.json: 0xf842eeac204996fca7fa18372b7d3fac11ca4b43
+
+# Diff at Mon, 25 Aug 2025 14:09:25 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@5f43becd32095551439042bc6793b2fd16b8bdbe block: 1756122271
+- current timestamp: 1756122271
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756122271 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      values.allPausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.allUnpausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.completeTokenBridgingPausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.completeTokenBridgingUnpausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.customContractSetters:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"]
+      values.initiateTokenBridgingPausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.initiateTokenBridgingUnpausers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.messageServiceSetters:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.pauseTypeToRole:
++        {"1":"0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77","7":"0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c","8":"0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"}
+      values.remoteTokenBridgeSetters:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.reserveTokenRemovers:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"]
+      values.reserveTokenSetters:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"]
+      values.unpauseTypeToRole:
++        {"1":"0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b","7":"0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802","8":"0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd"}
+    }
+```
+
+```diff
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can pause the bridge.","role":".allPausers"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can pause the bridge.","role":".allUnpausers"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can pause token bridging actions initiated from the other layer.","role":".completeTokenBridgingPausers"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can pause token bridging actions initiated from this layer.","role":".initiateTokenBridgingPausers"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.","role":".reserveTokenSetters","via":[{"address":"eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"},{"address":"eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436","delay":7776000}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.","role":".reserveTokenSetters"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can remove the reserved status from a token, meaning that it is allowed to be bridged again.","role":".reserveTokenRemovers","via":[{"address":"eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"},{"address":"eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436","delay":7776000}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can remove the reserved status from a token, meaning that it is allowed to be bridged again.","role":".reserveTokenRemovers"}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can set custom ERC20 contracts for specific ERC20s.","role":".customContractSetters","via":[{"address":"eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"},{"address":"eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436","delay":7776000}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can set custom ERC20 contracts for specific ERC20s.","role":".customContractSetters"}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can set the contract that is recognized to be the token bridge contract on the other side.","role":".remoteTokenBridgeSetters"}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can set the contract used as the source of truth from crosschain messages.","role":".messageServiceSetters"}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can unpause token bridging actions initiated from the other layer.","role":".completeTokenBridgingUnpausers"}
+      receivedPermissions.13:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can unpause token bridging actions initiated from this layer.","role":".initiateTokenBridgingUnpausers"}
+    }
+```
+
+```diff
+    contract Linea Multisig 2 (0xB8F5524D73f549Cf14A0587a3C7810723f9c0051) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.","role":".reserveTokenSetters"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can remove the reserved status from a token, meaning that it is allowed to be bridged again.","role":".reserveTokenRemovers"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can set custom ERC20 contracts for specific ERC20s.","role":".customContractSetters"}
+    }
+```
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      name:
+-        "L1Timelock"
++        "Timelock"
+    }
+```
+
 Generated with discovered.json: 0x85145d8a8597f76d047759ceb5e4ad5736d575f0
 
 # Diff at Mon, 25 Aug 2025 13:11:29 GMT:

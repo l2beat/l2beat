@@ -1,8 +1,8 @@
 {
   "name": "linea",
   "chain": "linea",
-  "timestamp": 1755680565,
-  "configHash": "0xe3c83139698aebdd78a1ee37ea52d166bd3eb3d975b0909ee371a4628bf1573d",
+  "timestamp": 1756122271,
+  "configHash": "0x1ce0a1fbce33b5384a7e4767645bd18702e25f11464d0ee06c6d46e3de73e9f9",
   "entries": [
     {
       "address": "linea:0x0000000000000000000000000000000000000000",
@@ -570,18 +570,18 @@
           }
         },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "1458316575440802830456",
-        "currentPeriodEnd": 1755721023,
+        "currentPeriodAmountInWei": "6308747494830564567",
+        "currentPeriodEnd": 1756162928,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
         "L1_L2_MESSAGE_SETTER_ROLE": "0x4705265620026983c754c5288b65446d794a03174326ec6d7c0b5c7f1fd67415",
-        "lastAnchoredL1MessageNumber": 774935,
+        "lastAnchoredL1MessageNumber": 776026,
         "limitInWei": "15000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 96717,
+        "nextMessageNumber": 96980,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
@@ -1466,6 +1466,6 @@
     "linea/L2MessageService": "0x429c2108cfcc2f721da1dd13c550c20b46f8ff1cb6447ad2ab549156948cc8b3",
     "linea/TokenBridge": "0x44ac54b42a3064536f608e9b590f17b1ffe63129ab72fbc2fbb79e6f56850a59"
   },
-  "usedBlockNumbers": { "linea": 22276449 },
-  "permissionsConfigHash": "0x2a2c30cbb28dee113fd7ccddb76b31b1c6c7fa42b7d235d7e499c9103ceed3d6"
+  "usedBlockNumbers": { "linea": 22490913 },
+  "permissionsConfigHash": "0xc7347561b813ca9007e716bec1378301b09044973ccc5e6e8185045e6487a573"
 }
