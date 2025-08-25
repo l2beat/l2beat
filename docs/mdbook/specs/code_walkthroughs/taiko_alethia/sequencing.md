@@ -66,7 +66,7 @@ function proposeBatch(
     returns (ITaikoInbox.BatchInfo memory, ITaikoInbox.BatchMetadata memory)
 ```
 
-The `_params` value is split into two parts, where the first part is intended to contain forced transactions, and the second part regular L2 sequenced transactions. The first part can be empty only if the oldest forced transaction is not over the force inclusion deadline. The function enforces that only one block can be proposed, and that the block contains at least `MIN_TXS_PER_FORCED_INCLUSION` transactions, among other routine checks. After this, the two parts follow the usual `proposeBlock` flow, separately.
+The `_params` value is split into two parts, where the first part is intended to contain forced transactions, and the second part is regular L2 sequenced transactions. The first part can be empty only if the oldest forced transaction is not over the force inclusion deadline. The function enforces that only one block can be proposed, and that the block contains at least `MIN_TXS_PER_FORCED_INCLUSION` transactions, among other routine checks. After this, the two parts follow the usual `proposeBlock` flow, separately.
 
 The function fetches the current config, which is hardcoded in the contract, and calls the `proposeBlock` function of the `LibProposing` library. Specifically for Taiko Alethia, the config is defined as follows:
 
@@ -221,7 +221,7 @@ struct BlobParams {
 
 struct BlockParams {
         // the max number of transactions in this block. Note that if there are not enough
-        // transactions in calldata or blobs, the block will contains as many transactions as
+        // transactions in calldata or blobs, the block will contain as many transactions as
         // possible.
         uint16 numTransactions;
         // The time difference (in seconds) between the timestamp of this block and
