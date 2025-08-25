@@ -22,7 +22,7 @@ export const teeBridge: BaseProject = {
   },
   display: {
     description:
-      'The TEE Bridge utilizes Trusted Execution Environments to provide data availability attestations with hardware-based security guarantees.',
+      'The TEE Bridge utilizes a Trusted Execution Environment (TEE) to provide data availability attestations with hardware-based security guarantees.',
     links: {
       documentation: [
         'https://docs.espressosys.com/network/guides/using-the-espresso-network/using-the-espresso-network-as-an-arbitrum-orbit-chain/arbitrum-nitro-integration-overview/using-tee-with-nitro',
