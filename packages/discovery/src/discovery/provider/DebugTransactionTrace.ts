@@ -38,16 +38,3 @@ export const DebugTransactionCallResponse = v.object({
 export type DebugTransactionCallResponse = v.infer<
   typeof DebugTransactionCallResponse
 >
-
-/**
- *                         {
-                                        "address": "0xa6525ae43edcd03dc08e775774dcabd3bb925872",
-                                        "topics": [
-                                            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-                                            "0x0000000000000000000000000000000000000000000000000000000000000000",
-                                            "0x00000000000000000000000054fe3425f09854e15081fa5b3276afcb4c46fca2"
-                                        ],
-                                        "data": "0x000000000000000000000000000000000000000000000000000000003d1275e0",
-                                        "position": "0x2"
-                                    }
- */
