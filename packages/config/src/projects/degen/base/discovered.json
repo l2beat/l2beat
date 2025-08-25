@@ -2,7 +2,7 @@
   "name": "degen",
   "chain": "base",
   "timestamp": 1750247897,
-  "configHash": "0x2a41fd1a61354d7563d95a8f7ad4c993da6a41b8b4ced8a66a12f2ae58192b2b",
+  "configHash": "0x85b4aaaa82b582a1d73c4a2125871a6214885a57d667aaaff04b3d0325e4ad7c",
   "entries": [
     {
       "address": "base:0x001271c57AeC639952B5201D052767c316755512",

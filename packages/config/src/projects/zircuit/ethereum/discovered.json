@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "ethereum",
   "timestamp": 1754567136,
-  "configHash": "0xf10901dfe14f54ba69cc8963f008b238f3b35a12b218550ec3160027b9c14e0e",
+  "configHash": "0x981b5963a0ac2a8755444fd448b0315f3d6fc6b403467fc7c627977f75051596",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

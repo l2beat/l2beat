@@ -16,9 +16,13 @@ export function buildSharedModuleIndex(
     // in 2-3 weeks. If it's still here, improve it!
     // ~ 29.07.202V
     try {
-      const discovery = configReader?.readDiscovery(sharedModule, config.chain)
-      for (const entry of discovery.entries) {
-        result.add(entry.address)
+      const chains =
+        configReader?.readAllDiscoveredChainsForProject(sharedModule)
+      for (const chain of chains) {
+        const discovery = configReader?.readDiscovery(sharedModule, chain)
+        for (const entry of discovery.entries) {
+          result.add(entry.address)
+        }
       }
     } catch {}
   }

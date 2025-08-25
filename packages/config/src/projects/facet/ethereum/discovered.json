@@ -2,7 +2,7 @@
   "name": "facet",
   "chain": "ethereum",
   "timestamp": 1755605791,
-  "configHash": "0x59b4541e61f37172f030e749786f3ce2f7e598319406d442263c4dfe657eeef3",
+  "configHash": "0x15a76bf8d2d07e27eea063062ecdc83f6e17d05092b545536b082e380b4ba34b",
   "entries": [
     {
       "name": "Inbox",

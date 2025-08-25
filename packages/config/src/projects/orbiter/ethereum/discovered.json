@@ -2,7 +2,7 @@
   "name": "orbiter",
   "chain": "ethereum",
   "timestamp": 1733239295,
-  "configHash": "0x78c13092631280f3415ea84f57c179d4bc23f6319cffd7647347a3ef8ce9e465",
+  "configHash": "0x56e9ad1ec8529b29fa5929a09c2932f11e093d6e817693b2b8b36d07d8276723",
   "entries": [
     {
       "address": "eth:0x095D2918B03b2e86D68551DCF11302121fb626c9",

@@ -2,7 +2,7 @@
   "name": "celo",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0xeeed83b3877122cbd550eb55112860fc19192fbbffb98b29ad73b5f6588a9a65",
+  "configHash": "0x6e1ab9de96578293465edc069038993e0ac8256eaedc938d6cbf324a4d4a869f",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

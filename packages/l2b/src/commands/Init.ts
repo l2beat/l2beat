@@ -1,9 +1,6 @@
-import { DiscoverCommandArgs } from '@l2beat/discovery'
 import { command, positional, restPositionals, string } from 'cmd-ts'
 import { initDiscovery } from '../implementations/init'
 import { EthereumAddressValue } from './types'
-
-const { chain } = DiscoverCommandArgs
 
 export const Init = command({
   name: 'init',
@@ -14,7 +11,11 @@ export const Init = command({
       displayName: 'project',
       description: 'name of the new project.',
     }),
-    chain,
+    chain: positional({
+      type: string,
+      displayName: 'chain',
+      description: 'name of the chain.',
+    }),
     initialAddresses: restPositionals({
       type: EthereumAddressValue,
       displayName: 'initialAddresses',

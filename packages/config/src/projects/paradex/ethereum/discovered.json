@@ -2,7 +2,7 @@
   "name": "paradex",
   "chain": "ethereum",
   "timestamp": 1755516515,
-  "configHash": "0x36aa8fbaa19ed7f99d28b5cfa08ce4081eb5ac3c4c498ec405297f1981a93c74",
+  "configHash": "0xdced3920c1a2235ef53d715959ba92f740169d16bb56fc4e3c4952aad3bc0586",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

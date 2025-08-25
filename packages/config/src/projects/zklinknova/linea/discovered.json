@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "linea",
   "timestamp": 1753687799,
-  "configHash": "0x4d970af675873a74a16925dcd60e2be34128a7ae933417c5887a6a38851e9f4a",
+  "configHash": "0x9d4f8489eef7a5e1a5358c2b41afd3656f45df780c446dfa32f969cfdc8590db",
   "entries": [
     {
       "address": "linea:0x0000000000000000000000000000000000000000",

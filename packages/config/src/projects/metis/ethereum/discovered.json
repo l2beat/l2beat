@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "timestamp": 1755157627,
-  "configHash": "0x6b00d93cb85cdf97a0b39a5ecddc34bebb5d6b73bbef07cfe4586a2077ac0996",
+  "configHash": "0x0367adc3ed756f7d71be4a8bb5869bef1146d8e546f383e086530fc151915889",
   "entries": [
     {
       "address": "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751",

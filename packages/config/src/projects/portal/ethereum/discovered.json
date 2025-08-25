@@ -2,7 +2,7 @@
   "name": "portal",
   "chain": "ethereum",
   "timestamp": 1751871251,
-  "configHash": "0x4c606f7f91dae9bd2af43f36289e1568c6a668618232f8cb2a0ed1c315bb6df1",
+  "configHash": "0x13be0f2e8edb4d12dc79a7587ed96daa58de558bd576474e5c2d221a179dca7f",
   "entries": [
     {
       "address": "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",

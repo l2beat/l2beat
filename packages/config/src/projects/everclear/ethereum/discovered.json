@@ -2,7 +2,7 @@
   "name": "everclear",
   "chain": "ethereum",
   "timestamp": 1752570455,
-  "configHash": "0xa7ea0cb1df973a6c8831ddbfca32315643d0840c44e3fdf88502a96d2d006b27",
+  "configHash": "0x963c807d778f587c41f47f2a9c7a532bfd1f2529d2e0cb84f33189cdc4ed766f",
   "entries": [
     {
       "name": "OneStepProverHostIo",

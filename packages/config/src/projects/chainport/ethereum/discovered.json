@@ -2,7 +2,7 @@
   "name": "chainport",
   "chain": "ethereum",
   "timestamp": 1752574031,
-  "configHash": "0x9fee6ec3389cb38404996e0ff856178487520e6646787b60996bb62527439496",
+  "configHash": "0x7df6d36d3014e3849fc88504d39e3385aab82f16ec06aef41e36700a0884f4ad",
   "entries": [
     {
       "name": "ChainportCongressMembersRegistry",

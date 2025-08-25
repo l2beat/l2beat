@@ -2,7 +2,7 @@
   "name": "deri",
   "chain": "arbitrum",
   "timestamp": 1750333028,
-  "configHash": "0xaa1ddcd76ae5a911fac93f53384e421ec5c407fccb42fcaf0bf2f5271cbb1194",
+  "configHash": "0x917554ae7042b5bdb03f6f3729fa142e1712c0249092aea9f3714eb03fb89fe7",
   "entries": [
     {
       "address": "arb1:0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE",

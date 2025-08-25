@@ -2,7 +2,7 @@
   "name": "worldcoin",
   "chain": "optimism",
   "timestamp": 1746697391,
-  "configHash": "0x87d1fa66681ea90788ba2615f4d480417e301c1385f6a2645371856ccd149ada",
+  "configHash": "0x97e4800d395e3a88cc329e78588771c119c4838840ab4bfef98443ea93b6acc9",
   "entries": [
     {
       "address": "oeth:0x0000000000000000000000000000000000000000",

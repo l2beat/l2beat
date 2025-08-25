@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "unichain",
   "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 200,
   "initialAddresses": [
     "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
     "eth:0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877",

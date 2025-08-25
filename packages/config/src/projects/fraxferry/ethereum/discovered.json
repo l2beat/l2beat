@@ -2,7 +2,7 @@
   "name": "fraxferry",
   "chain": "ethereum",
   "timestamp": 1753200647,
-  "configHash": "0xb3d00ec4f57508fa8441af7fe83d3ac427a399f20dff0658b9058bfc06eae352",
+  "configHash": "0xd9079a60d8c581ca661e86f831691a638c2d70fecfc5154c6fe90a97f50b30e9",
   "entries": [
     {
       "name": "sfrxETH Ferry Bridge (Optimism)",

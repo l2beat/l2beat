@@ -2,7 +2,7 @@
   "name": "polynetwork",
   "chain": "ethereum",
   "timestamp": 1725437207,
-  "configHash": "0xc9bee13100fa9fc52828d2dfb573b8fbdc31d730116d270e54102d55e351bb93",
+  "configHash": "0x210e4e85eb7df4bfffb24492a04c003ebec86f32d8fa29f8d7e62b30d2a838ed",
   "entries": [
     {
       "address": "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
