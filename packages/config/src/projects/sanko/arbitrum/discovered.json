@@ -2,7 +2,7 @@
   "name": "sanko",
   "chain": "arbitrum",
   "timestamp": 1746206122,
-  "configHash": "0xf7888b85aff1435210f072424456097d8355a4fa379ba65cb56addf9532d2b27",
+  "configHash": "0x4718ed24a07116a83dfa955f172c9bfe3cf0b4f0f3ec7377c8cda5b5eb0959cf",
   "entries": [
     {
       "address": "arb1:0x03eb90D1E10EEd08b0B3Ca1b3eb85FcFED3d94f4",

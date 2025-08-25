@@ -33,9 +33,6 @@ export const hermez: ScalingProject = {
     description:
       'Hermez is an open-source ZK Rollup that aims to be optimized for secure, low-cost and usable token transfers on the wings of Ethereum.',
     purposes: ['Payments'],
-    category: 'ZK Rollup',
-    // TODO: This is not correct. Research it.
-
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://hermez.io/'],

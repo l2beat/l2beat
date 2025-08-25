@@ -41,6 +41,8 @@ interface Props {
   resolution: DaThroughputResolution
 }
 
+const hiddenDataKeys = ['projectMax'] as const
+
 export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
   project,
@@ -53,10 +55,6 @@ export function ProjectDaAbsoluteThroughputChart({
     () => getProjectChartMeta(project.id),
     [project.id],
   )
-  const hiddenDataKeys = useMemo(
-    () => ['projectMax'],
-    [],
-  ) as (keyof typeof projectChartMeta)[]
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     projectChartMeta,

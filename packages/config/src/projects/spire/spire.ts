@@ -13,12 +13,14 @@ export const spire: ScalingProject = upcomingL2({
     description:
       'Spire is an upcoming appchain stack, focused on scaling Ethereum while maintaining close integration and alignment with L1.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://spire.dev/'],
       documentation: ['https://docs.spire.dev/'],
       repositories: ['https://github.com/spire-labs'],
       socialMedia: ['https://x.com/Spire_Labs', 'https://paragraph.com/@spire'],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

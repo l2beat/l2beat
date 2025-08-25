@@ -2,7 +2,7 @@
   "name": "swell",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0x158fff82a569053b7072fa62ed113d55bd2eaf5295792a9f6d3a91d870b2f849",
+  "configHash": "0x159597c72da422f2479fc0e48c9a0a51e8b85296afad8eb8e6da16e1c021ffc5",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -2457,6 +2457,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23166913 },
+  "usedBlockNumbers": { "ethereum": 23166914 },
   "permissionsConfigHash": "0x0e012efdeb1c00e351fad88bab6e6f0b5abc3307d0a4de7ba0f222aa1b2f85d3"
 }

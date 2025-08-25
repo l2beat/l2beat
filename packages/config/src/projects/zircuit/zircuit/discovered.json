@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "zircuit",
   "timestamp": 1754567136,
-  "configHash": "0x127004c822d62f183c8278cd5ab897a2d75c2988addb86ca14e4ffd3e27762c9",
+  "configHash": "0x981b5963a0ac2a8755444fd448b0315f3d6fc6b403467fc7c627977f75051596",
   "entries": [
     {
       "address": "zircuit:0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",

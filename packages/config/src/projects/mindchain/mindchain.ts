@@ -12,7 +12,6 @@ export const mindchain: ScalingProject = upcomingL3({
     slug: 'mindchain',
     description: 'MindChain is an FHE restaking Layer for PoS and AI networks.',
     purposes: ['AI'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://mindnetwork.xyz/'],
@@ -28,5 +27,8 @@ export const mindchain: ScalingProject = upcomingL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

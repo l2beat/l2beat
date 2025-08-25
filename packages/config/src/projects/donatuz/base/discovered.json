@@ -2,7 +2,7 @@
   "name": "donatuz",
   "chain": "base",
   "timestamp": 1755014032,
-  "configHash": "0x057b78ffbd50f116be99e6ebd9d7afd695c5c634e7a27effe9a50d6e5c1efb3b",
+  "configHash": "0xa9e5ed49351abdc6a31a1600157808dbbf442eb0dcd3afe11e5d8a04054abe4a",
   "entries": [
     {
       "address": "base:0x000000000000000000000000000000000000dEaD",

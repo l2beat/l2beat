@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "mantle",
   "timestamp": 1753687799,
-  "configHash": "0x35b675ae4426b0f1014d5722364f88a9d855577528eaebc441ea2a6b08870c26",
+  "configHash": "0x9d4f8489eef7a5e1a5358c2b41afd3656f45df780c446dfa32f969cfdc8590db",
   "entries": [
     {
       "name": "MantleOwner",

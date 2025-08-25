@@ -2,7 +2,7 @@
   "name": "lachain",
   "chain": "ethereum",
   "timestamp": 1753944315,
-  "configHash": "0x30dcbc63ef75281341a4477e8214955a2700b1f038c8f31e323a4e60a88c6bfc",
+  "configHash": "0x2b4b5f53bb0e36180935e149770ce1effbc7b24913bdc1348343a7ad73303fb8",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

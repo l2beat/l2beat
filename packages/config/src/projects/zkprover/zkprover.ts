@@ -3,10 +3,10 @@ import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
 
-export const polygonzkevmprover: BaseProject = {
-  id: ProjectId('polygonzkevmprover'),
-  slug: 'polygonzkevmprover',
-  name: 'Polygon zkEVM',
+export const zkprover: BaseProject = {
+  id: ProjectId('zkprover'),
+  slug: 'zkprover',
+  name: 'zkProver',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-18')),
   statuses: {
@@ -18,7 +18,7 @@ export const polygonzkevmprover: BaseProject = {
   },
   display: {
     description:
-      'Polygon zkEVM prover originally built by Polygon Zero team to prove state transition of Polygon zkEVM chain.',
+      'zkProver prover originally built by Polygon Zero team to prove state transition of Polygon zkEVM chain.',
     links: {
       documentation: [
         'https://docs.polygon.technology/zkEVM/architecture/zkprover/',

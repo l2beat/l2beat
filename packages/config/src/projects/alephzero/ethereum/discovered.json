@@ -2,7 +2,7 @@
   "name": "alephzero",
   "chain": "ethereum",
   "timestamp": 1752570323,
-  "configHash": "0x08672b8c905fcd628f1c95509e798e9875857f310619e7e9c1cea80f1b429aa2",
+  "configHash": "0x1cf164009d3167eebba60109cabb974a8cbaa02f4db25715636a73711fd6fbef",
   "entries": [
     {
       "name": "OneStepProverHostIo",

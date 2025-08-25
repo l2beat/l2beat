@@ -2,7 +2,7 @@
   "name": "appchain",
   "chain": "ethereum",
   "timestamp": 1755010019,
-  "configHash": "0xd1eb0c0a2b75d03bff765bd453c80cefe9b84ddc8ffb3ab9008106a72754e761",
+  "configHash": "0xef6ec16d1d2ae0174dff0f45522635c98bf57746f87dcc523494d33f5344a8c1",
   "entries": [
     {
       "name": "Inbox",
@@ -1812,6 +1812,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23125652 },
+  "usedBlockNumbers": { "ethereum": 23125654 },
   "permissionsConfigHash": "0x3817a3d516194d22c6edb2607228b146ea7c1c9002eebefe1d93a097f9b0109a"
 }

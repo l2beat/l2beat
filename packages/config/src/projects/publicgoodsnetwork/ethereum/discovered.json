@@ -2,7 +2,7 @@
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
   "timestamp": 1752237035,
-  "configHash": "0x779bb26252150cb75712154255617c46f99986963c6269fc696369b4c44d39e5",
+  "configHash": "0x8716f71f70a35b93970be262a9e75d2aff5ce42a851012897a22641953d57d81",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

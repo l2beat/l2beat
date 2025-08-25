@@ -2,7 +2,7 @@
   "name": "lisk",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0x705ec7d73243e0b465bd2849937304a64f3224af76d7bf64a6c924fc762fc299",
+  "configHash": "0x8d9a60fad22379460baac8979f7071e299d46b513a7c0f2311b650310afaa0c9",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -2739,6 +2739,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23166913 },
+  "usedBlockNumbers": { "ethereum": 23166914 },
   "permissionsConfigHash": "0x0d6cb427103ae088e8a8d68f50d0b1cff56dbdee05a7de17984438a4cb92bfaa"
 }
