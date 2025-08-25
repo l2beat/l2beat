@@ -33,12 +33,13 @@ function getTimestamp(
   config: DiscoveryModuleConfig,
 ): Date {
   // TODO(radomski): I don't know how to handle discovery on a block with different chains
-  // if (config.blockNumber !== undefined) {
-  //   const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
-  //   return UnixTime.toDate(
-  //     (await provider.getBlock(config.blockNumber)).timestamp,
-  //   )
-  // }
+  if (config.blockNumber !== undefined) {
+    throw new Error('Discovery on a block is not supported yet')
+    // const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
+    // return UnixTime.toDate(
+    //   (await provider.getBlock(config.blockNumber)).timestamp,
+    // )
+  }
 
   const chains = configReader.readAllDiscoveredChainsForProject(config.project)
   const chain = chains[0]
