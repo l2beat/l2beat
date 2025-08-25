@@ -308,7 +308,7 @@ function remapNames(
   discoveryOutput: DiscoveryOutput,
 ): Analysis[] {
   return results.map((entry) => {
-    if (entry.type === 'EOA') {
+    if (entry.type === 'EOA' || entry.type === 'Reference') {
       return entry
     }
 
