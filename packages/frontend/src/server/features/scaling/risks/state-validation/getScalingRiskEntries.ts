@@ -1,4 +1,5 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectScalingProofSystem } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import {
@@ -12,24 +13,32 @@ import {
 } from '../../getCommonScalingEntry'
 
 export async function getScalingRiskStateValidationEntries() {
-  const [projectsChangeReport, projects] = await Promise.all([
-    getProjectsChangeReport(),
-    ps.getProjects({
-      select: [
-        'statuses',
-        'scalingInfo',
-        'scalingRisks',
-        'display',
-        'scalingTechnology',
-      ],
-      optional: ['customDa', 'scalingDa'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
-    }),
-  ])
+  const [projectsChangeReport, projects, zkCatalogProjects] = await Promise.all(
+    [
+      getProjectsChangeReport(),
+      ps.getProjects({
+        select: [
+          'statuses',
+          'scalingInfo',
+          'scalingRisks',
+          'display',
+          'scalingTechnology',
+        ],
+        where: ['isScaling'],
+        whereNot: ['isUpcoming', 'archivedAt'],
+      }),
+      ps.getProjects({
+        select: ['zkCatalogInfo'],
+      }),
+    ],
+  )
 
   const [zkProjects, optimisticProjects] = partition(
-    projects.filter((p) => p.scalingInfo.proofSystem),
+    projects.filter(
+      (p) =>
+        p.scalingInfo.proofSystem &&
+        p.statuses.reviewStatus !== 'initialReview',
+    ),
     (p) => p.scalingInfo.proofSystem?.type === 'Validity',
   )
 
@@ -37,6 +46,7 @@ export async function getScalingRiskStateValidationEntries() {
     getScalingRiskStateValidationZkEntry(
       project,
       projectsChangeReport.getChanges(project.id),
+      zkCatalogProjects,
     ),
   )
   const optimisticEntries = optimisticProjects.map((project) =>
@@ -52,14 +62,35 @@ export async function getScalingRiskStateValidationEntries() {
   }
 }
 
-export interface ScalingRiskStateValidationZkEntry extends CommonScalingEntry {}
+export interface ScalingRiskStateValidationZkEntry extends CommonScalingEntry {
+  proofSystem: ProjectScalingProofSystem
+  isa: string | undefined
+}
 
 function getScalingRiskStateValidationZkEntry(
   project: Project<'scalingInfo' | 'statuses' | 'display'>,
   changes: ProjectChanges,
+  zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingRiskStateValidationZkEntry {
+  const proofSystem = project.scalingInfo?.proofSystem
+  assert(proofSystem, 'Proof system is required')
+
+  const zkCatalogProject = zkCatalogProjects.find(
+    (p) => p.id === proofSystem.zkCatalogId,
+  )
+  assert(zkCatalogProject, `zkCatalogProject not found: ${project.id}`)
+
+  const isa = zkCatalogProject.zkCatalogInfo.techStack.zkVM?.find(
+    (tag) => tag.type === 'ISA',
+  )
+
   return {
     ...getCommonScalingEntry({ project, changes }),
+    proofSystem: {
+      ...proofSystem,
+      name: proofSystem.name ?? zkCatalogProject?.name,
+    },
+    isa: isa?.name,
   }
 }
 export interface ScalingRiskStateValidationOptimisticEntry
