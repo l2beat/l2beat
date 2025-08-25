@@ -174,8 +174,6 @@ export class UpdateMonitor {
       )
 
       for (const chain of chains) {
-        const { discovery } = discoveryPerChain[chain]
-
         // read previous state (committed vs DB) and prime flat sources if needed
         const previousDiscovery = await this.getPreviousDiscovery(
           runner,
@@ -183,6 +181,9 @@ export class UpdateMonitor {
           projectConfig,
         )
 
+        const { discovery } = discoveryPerChain[chain] ?? {
+          discovery: undefined,
+        }
         if (!previousDiscovery || !discovery) {
           this.logger.warn('Previous or current discovery missing', {
             project,
@@ -328,7 +329,10 @@ export class UpdateMonitor {
       undefined,
       previousDiscovery.dependentDiscoveries,
     )
-    const { discovery, flatSources } = discoveryPerChain[chain]
+    const { discovery, flatSources } = discoveryPerChain[chain] ?? {
+      discovery: undefined,
+      flatSources: {},
+    }
 
     // NOTE(radomski): We should only write to the database files that are
     // resulting from discoveries accepted by the research team. Otherwise an
