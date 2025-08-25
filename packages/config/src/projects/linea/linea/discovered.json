@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "linea",
   "timestamp": 1755680565,
-  "configHash": "0x1e5bdf99afd2d87b4a8e2b6fe2d8ec3ee3f3c5e3a7022297882f161279411e71",
+  "configHash": "0xe3c83139698aebdd78a1ee37ea52d166bd3eb3d975b0909ee371a4628bf1573d",
   "entries": [
     {
       "address": "linea:0x0000000000000000000000000000000000000000",

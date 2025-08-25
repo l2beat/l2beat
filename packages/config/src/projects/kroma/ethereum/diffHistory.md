@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xcd11bf5091ca833cd55f6eddbdc742de81694380
+Generated with discovered.json: 0x870245a5ae4355e8c97af5ec0093178aa2d47282
 
-# Diff at Tue, 19 Aug 2025 14:22:14 GMT:
+# Diff at Mon, 25 Aug 2025 13:21:31 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@dbab88cbeee540d8cfe30af097a9f0483585b86d block: 1752575723
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1752575723
 - current timestamp: 1752575723
 
 ## Description
@@ -25,7 +25,7 @@ discovery. Values are for block 1752575723 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xf778330a62e5cb6e2323b325393f411961cceb37
+Generated with discovered.json: 0xb35de0e00f14cacece0cc182b6636b880f408478
 
 # Diff at Mon, 14 Jul 2025 12:45:15 GMT:
 
