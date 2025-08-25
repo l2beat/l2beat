@@ -3,7 +3,6 @@ import { v } from '@l2beat/validate'
 const UpdateMessage = v.object({
   projectId: v.string(),
   chain: v.string(),
-  blockNumber: v.number(),
   timestamp: v.number(),
   message: v.string(),
 })
