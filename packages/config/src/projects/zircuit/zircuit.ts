@@ -69,7 +69,7 @@ const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
     {
       title:
         'L2OutputOracle.sol - Etherscan source code - bootstrapV2() function',
-      url: 'https://etherscan.io/address/0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315#code#F1#L320',
+      url: 'https://etherscan.io/address/0x92Ef6Af472b39F1b363da45E35530c24619245A4',
     },
     {
       title: 'VerifierV2.sol - Etherscan source code',
