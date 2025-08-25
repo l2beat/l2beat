@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x8dc8caaf5bcdd048edf0eb1134ccb652e71ab746
+
+# Diff at Tue, 19 Aug 2025 09:02:29 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@0ed103f64e02fe332cd2478ee125c9e5f1d4c1d9 block: 1755212383
+- current timestamp: 1755594109
+
+## Description
+
+Silence discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755212383 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x1670000000000000000000000000000000000001) {
+    +++ description: None
+      values.nextMessageId:
+-        4288
+      values.proxiableUUID:
++        "EXPECT_REVERT"
+    }
+```
+
+```diff
+    contract TaikoAnchor (0x1670000000000000000000000000000000010001) {
+    +++ description: Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.
+      values.lastSyncedBlock:
+-        23142409
+      values.parentTimestamp:
+-        1755212383
+      values.publicInputHash:
+-        "0xba37b9e2e1c66e4398dcdbdd8ebf6d8ee0609de9110089dfb0f1b5e2cdbe46c9"
+    }
+```
+
 Generated with discovered.json: 0x8b3be1f2a9eed12773d1c1a22d8cf9dbb272d2a3
 
 # Diff at Fri, 15 Aug 2025 08:50:57 GMT:

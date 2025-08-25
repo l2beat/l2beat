@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x6631758febb7dcdcf5be8d8eb8d22bd51b77b4db
+
+# Diff at Mon, 25 Aug 2025 13:11:30 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1755691047
+- current timestamp: 1756124354
+
+## Description
+
+Upgraded to Safe v1.4.1
+
+## Watched changes
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../PolygonMultisig/Safe.sol}                      | 685 ++++++++++++---------
+ 1 file changed, 410 insertions(+), 275 deletions(-)
+```
+
+Generated with discovered.json: 0x4f6388ae4dd5b03eda3b2b57d9fd7ccdad3b3376
+
+# Diff at Wed, 20 Aug 2025 11:58:05 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.comv>)
+- comparing to: main@262b00e32d0a4e462cf5011a16f1fcaa9ed6d5a8 block: 1755010596
+- current timestamp: 1755691047
+
+## Description
+
+Increased validator set to 105.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
 Generated with discovered.json: 0xca7f926c175dfd83727d63cae7e91b5f03ba2266
 
 # Diff at Tue, 12 Aug 2025 14:56:55 GMT:

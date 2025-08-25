@@ -2,7 +2,7 @@
   "name": "gpt",
   "chain": "ethereum",
   "timestamp": 1738322195,
-  "configHash": "0x357508da30a31c83cd284a091d9921a69e8edf67c8807ac20ef7f6b9b0f3acb2",
+  "configHash": "0x5a404554cc741f15a8d1b938d04b48828bca27e556ee4513c1ce3727fd83180d",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

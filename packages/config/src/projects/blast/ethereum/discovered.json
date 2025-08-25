@@ -2,7 +2,7 @@
   "name": "blast",
   "chain": "ethereum",
   "timestamp": 1730369759,
-  "configHash": "0x081250a441b5e05789aa0d3b12194743ed2bf0834d951f0ecdc72141ad2ef7f9",
+  "configHash": "0x64b47ede34a79bc3c00ee0874040abe69d4157078be1dc611c4bd70c64e13220",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

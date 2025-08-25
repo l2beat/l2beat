@@ -2,7 +2,7 @@
   "name": "lachain",
   "chain": "zksync2",
   "timestamp": 1753944315,
-  "configHash": "0x061d69103add7eaba060fad4a3275833cfba1cdc11ee5620205c9769917c44c8",
+  "configHash": "0x2b4b5f53bb0e36180935e149770ce1effbc7b24913bdc1348343a7ad73303fb8",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},

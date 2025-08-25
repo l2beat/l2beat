@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "gnosis",
   "timestamp": 1755171830,
-  "configHash": "0xf38842e2482516344564512f0881069b022f5a01ea808a41c2c26f6d22af8f8f",
+  "configHash": "0x1579affe7ab0c693d701abbdd21d419966009d958511be4e4d866db7e6ea36b9",
   "entries": [
     {
       "address": "gno:0x0000000000000000000000000000000000000000",
@@ -232,6 +232,25 @@
       },
       "implementationNames": {
         "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED": "SelectorTokenGasLimitManager"
+      }
+    },
+    {
+      "name": "EternalStorageProxy",
+      "address": "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x781decea1d7b5174464b57449f32ada83d1c1b7e12bdfa47eb9d00a41a36c839"
+      ],
+      "proxyType": "immutable",
+      "values": {
+        "$immutable": true,
+        "implementation": "gno:0xB740472C650fe949931B9df0cB253B48c80c82dE",
+        "proxyOwner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "upgradeabilityOwner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "version": 6
+      },
+      "implementationNames": {
+        "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6": "EternalStorageProxy"
       }
     },
     {
@@ -1196,6 +1215,17 @@
       "function setTargetAddress(address targetAddress_)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ],
+    "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6": [
+      "function proxyOwner() view returns (address)",
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
     "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": [
       "function upgradeTo(uint256 version, address implementation)",
       "function version() view returns (uint256)",
@@ -1511,6 +1541,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "gnosis": 41599272 },
-  "permissionsConfigHash": "0x5e1db316d1473e7c712fafb8a396b733a20090a1d1dbca783ad499e657dab8fb"
+  "usedBlockNumbers": { "gnosis": 41599273 },
+  "permissionsConfigHash": "0xdd14a223281ad3007f536bad13ce1c6e2547595fe29cce02186ba8e2b58df53b"
 }

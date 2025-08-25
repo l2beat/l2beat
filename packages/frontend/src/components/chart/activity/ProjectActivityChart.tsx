@@ -1,6 +1,7 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
@@ -17,17 +18,15 @@ import { getChartType } from './utils/getChartType'
 
 interface Props {
   milestones: Milestone[]
-  projectId: string
+  project: ChartProject
   category?: ProjectScalingCategory
-  projectName?: string
   defaultRange: ActivityTimeRange
 }
 
 export function ProjectActivityChart({
   milestones,
-  projectId,
+  project,
   category,
-  projectName,
   defaultRange,
 }: Props) {
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>(defaultRange)
@@ -38,7 +37,7 @@ export function ProjectActivityChart({
     range: { type: timeRange },
     filter: {
       type: 'projects',
-      projectIds: [projectId],
+      projectIds: [project.id],
     },
   })
 
@@ -95,7 +94,7 @@ export function ProjectActivityChart({
         syncedUntil={chart?.syncedUntil}
         className="mt-4 mb-3"
         type={type}
-        projectName={projectName}
+        project={project}
         tickCount={4}
       />
       <ActivityRatioChart

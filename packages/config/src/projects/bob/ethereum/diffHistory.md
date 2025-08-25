@@ -1,3 +1,114 @@
+Generated with discovered.json: 0x203000013482bfc46287b678aaabacf4f177b270
+
+# Diff at Wed, 20 Aug 2025 13:20:38 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@a5cc1e039bdedb279170d2bb52305902c4ef8183 block: 1755593388
+- current timestamp: 1755696029
+
+## Description
+
+Fee changes.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        10000000
++        2000000
+      values.operatorFeeConstant:
+-        0
++        15000000000000
+    }
+```
+
+Generated with discovered.json: 0xa7ce99a387f5c6fdb9cc11763d894e3e7b92340e
+
+# Diff at Tue, 19 Aug 2025 08:50:03 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@68aa16384f50c1fed10bef1bedec004cd66392e4 block: 1754482163
+- current timestamp: 1755593388
+
+## Description
+
+The decoded first scheduled and then executed call can be found [here](https://tools.l2beat.com/decoder-new/?data=u7BsvUHxkfBdDESC-TOnvPbZqsA4499vd_7uAAOxpGfTAA&to=0x8eab2d97dfce405a1692a21b3ff3a172d593d319&chainId=1) and it adds a `RiscZeroVerifierEmergencyStop`
+- Address: `0x9f9994eb4cb5200198fefb470f8b50301662e696`
+- Selector: `0x73c457ba`
+
+Honestly im not sure why all other verifiers are commented out if they can still be used. Will ask basti when he gets back. For now i added this one and kept the previous one.
+
+## Watched changes
+
+```diff
+    contract TimelockController (0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.8:
++        {"id":"0x8f9bc667a318296f0c9a7a2773fd371cfedc904128c7ff5af6c246d383cb46db","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3073c457ba000000000000000000000000000000000000000000000000000000000000000000000000000000009f9994eb4cb5200198fefb470f8b50301662e696"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.11:
++        {"id":"0x8f9bc667a318296f0c9a7a2773fd371cfedc904128c7ff5af6c246d383cb46db","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3073c457ba000000000000000000000000000000000000000000000000000000000000000000000000000000009f9994eb4cb5200198fefb470f8b50301662e696","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      values.verifier6Manual:
++        "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696"
+      errors:
+-        {"verifier6Manual":"Processing error occurred."}
+    }
+```
+
+```diff
+    EOA  (0xF616A4f81857CFEe54A4A049Ec187172574bd412) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696","description":"pause the verifier.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0x2a098988600d87650Fb061FfAff08B97149Fa84D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (0x9F9994Eb4Cb5200198FEfb470f8b50301662e696)
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+```
+
+## Source code changes
+
+```diff
+...:0x2a098988600d87650Fb061FfAff08B97149Fa84D.sol | 1699 ++++++++++++++++++++
+ ...0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9.sol} |    0
+ ...0x1efDd13f831ceeEa14940806705A53D3211CD698.sol} |    0
+ ...:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696.sol |  315 ++++
+ 4 files changed, 2014 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754482163 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierRouter (0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      errors:
++        {"verifier6Manual":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x0cd169c99228834e7e06575c0c94176449bc6e47
 
 # Diff at Wed, 06 Aug 2025 12:09:36 GMT:

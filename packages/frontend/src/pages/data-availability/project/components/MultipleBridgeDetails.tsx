@@ -16,13 +16,10 @@ import { RiskBanner } from '~/components/projects/RiskBanner'
 import { GrissiniCell } from '~/components/rosette/grissini/GrissiniCell'
 import { GrissiniIcon } from '~/components/rosette/grissini/GrissiniIcon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/NoBridgeGrissiniDetailsPlaceholder'
+import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
 import { useRouter } from '~/hooks/useRouter'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
-import {
-  UNDER_REVIEW_DA_CLASSNAME,
-  UNVERIFIED_DA_CLASSNAME,
-} from '~/pages/data-availability/summary/components/table/DaSummaryPublicTable'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -62,9 +59,9 @@ export function MultipleBridgeDetails({ project }: Props) {
                   index > 2 && 'max-md:hidden',
                   index === 0 && 'md:rounded-t-none',
                   bridge.verificationWarning
-                    ? UNVERIFIED_DA_CLASSNAME
+                    ? getRowClassNamesWithoutOpacity('red')
                     : bridge.impactfulChangeWarning
-                      ? UNDER_REVIEW_DA_CLASSNAME
+                      ? getRowClassNamesWithoutOpacity('yellow')
                       : 'bg-surface-secondary md:bg-transparent',
                 )}
               >

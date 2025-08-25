@@ -2,7 +2,7 @@
   "name": "arenaz",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0xdd99cbc59e6f5339ea41b13912096d6e54ab9605b5a9da1e823f619dea6decb3",
+  "configHash": "0xe6695c868d2224bf5a9b27f01f2fa82be3b1a00d5fac02496cfc9febae0ade85",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -2364,6 +2364,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23166913 },
+  "usedBlockNumbers": { "ethereum": 23166914 },
   "permissionsConfigHash": "0x1cdeac883e79dde092c57008512f7f282f532515b181b3d122697298e58b3c75"
 }

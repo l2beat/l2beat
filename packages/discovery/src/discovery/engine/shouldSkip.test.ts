@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import type { ConfigReader } from '../config/ConfigReader'
 import { ConfigRegistry } from '../config/ConfigRegistry'
 import { StructureContract } from '../config/StructureConfig'
@@ -27,6 +27,7 @@ describe(shouldSkip.name, () => {
   it('skips addresses from a shared module', () => {
     const address = ChainSpecificAddress.random()
     const configReader = mockObject<ConfigReader>({
+      readAllDiscoveredChainsForProject: mockFn().returns(['ethereum']),
       readDiscovery: () => ({
         name: 'SharedFoo',
         chain: 'ethereum',

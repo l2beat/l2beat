@@ -276,7 +276,7 @@ export const eigenda: BaseProject = {
     ],
   },
   daBridge: {
-    name: 'Service Manager',
+    name: 'DACert Verifier',
     daLayer: ProjectId('eigenda'),
     technology: {
       description: `

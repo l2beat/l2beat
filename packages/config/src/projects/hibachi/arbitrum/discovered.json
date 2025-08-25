@@ -2,7 +2,7 @@
   "name": "hibachi",
   "chain": "arbitrum",
   "timestamp": 1754411762,
-  "configHash": "0x4e1db2bd50baa98b17b8b4b24a341d32486bacc73d51a2caa4287450de89c6f6",
+  "configHash": "0x0bc146b25efe984f9e8719c228b27f0cc54dd7d0aae6151da4468fd2d458200c",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000000",
@@ -1103,6 +1103,6 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "wormhole": "0x5a6ef2aca99ae337de77c543a9fe799d22ea71925a551ec8314b9ed552a8a71c"
   },
-  "usedBlockNumbers": { "arbitrum": 365280108 },
+  "usedBlockNumbers": { "arbitrum": 365280115 },
   "permissionsConfigHash": "0xe9a525d80996f3bce4d5cd1a7430d896ede903fbb5ba3f0948447f9c64c0108b"
 }

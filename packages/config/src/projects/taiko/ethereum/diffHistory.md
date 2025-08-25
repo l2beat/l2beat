@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x5765bae5ae61ad328c23ef2bdc03bc2fc2014036
+
+# Diff at Mon, 25 Aug 2025 14:12:20 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1755701960
+- current timestamp: 1756117493
+
+## Description
+
+ProverSet is in the process of changing owner.
+
+## Watched changes
+
+```diff
+    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+    }
+```
+
+Generated with discovered.json: 0x6f603e71956eb5c81b15934d5323116a67d0f380
+
+# Diff at Wed, 20 Aug 2025 14:59:53 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd418e068c274f7cd46e3ace7789ff5bbb8a2dad block: 1755606045
+- current timestamp: 1755701960
+
+## Description
+
+New preconfirmer.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.
+      description:
+-        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
++        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
+      values.havingPerfectOperators:
+-        true
++        false
+      values.operatorCount:
+-        3
++        4
+      values.registeredOperators.3:
++        {"proposer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7","sequencer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"}
+      values.registeredOperatorsCount:
+-        3
++        4
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755606045 (main branch discovery), not current.
+
+```diff
+    contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered.
+      values.registeredOperators:
++        [{"proposer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","sequencer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"},{"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"},{"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}]
+      values.registeredOperatorsCount:
++        3
+    }
+```
+
+Generated with discovered.json: 0xad376da02da1f79ecd6ee3bb86214a204bc4c8ac
+
+# Diff at Tue, 19 Aug 2025 09:02:29 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@0ed103f64e02fe332cd2478ee125c9e5f1d4c1d9 block: 1755212383
+- current timestamp: 1755594109
+
+## Description
+
+New operator count.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered.
+      description:
+-        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
++        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
+      values.havingPerfectOperators:
+-        false
++        true
+      values.operatorCount:
+-        4
++        3
+    }
+```
+
 Generated with discovered.json: 0xb50d1b74749190bba47a2ce6f7d59e8916c5fea8
 
 # Diff at Fri, 15 Aug 2025 08:50:57 GMT:

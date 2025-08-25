@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "nova",
   "timestamp": 1753344203,
-  "configHash": "0xc7cd4d180e81f69cff58af141315c40d8e51e4bc9e049df677d9626ba498575a",
+  "configHash": "0x5908abdfe2cd32900e061d05cdf3bc404af4adaaeefd3c6a6abc94f346e7ae36",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",

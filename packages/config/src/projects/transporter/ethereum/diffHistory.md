@@ -1,3 +1,132 @@
+Generated with discovered.json: 0x4fa87dd7aeecb631f39dc8753ce17af0a53f5eba
+
+# Diff at Fri, 22 Aug 2025 10:24:45 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@327d3bb5142b362f1fe9c0439f30f84c5e1ffb30 block: 1755700281
+- current timestamp: 1755854301
+
+## Description
+
+New off ramps, added new HybridLockReleaseUSDCTokenPool template.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.76:
++        {"sourceChainSelector":"arbitrum","offRamp":"eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF"}
+      values.offRamps.77:
++        {"sourceChainSelector":"base","offRamp":"eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF"}
+      values.offRamps.78:
++        {"sourceChainSelector":"optimism","offRamp":"eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF"}
+      values.offRamps.79:
++        {"sourceChainSelector":"polygon","offRamp":"eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF"}
+      values.offRamps.80:
++        {"sourceChainSelector":"avalanche","offRamp":"eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF"}
+      values.offRamps.81:
++        {"sourceChainSelector":"1923510103922296319","offRamp":"eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract HybridLockReleaseUSDCTokenPool (0x03D19033AdA17750D5BC2d8E325337D0748F9FEF)
+    +++ description: A token pool for USDC which uses CCTP for supported chains and Lock/Release for all others
+```
+
+```diff
++   Status: CREATED
+    contract MessageTransmitter (0x0a992d191DEeC32aFe36203Ad87D7d289a738F81)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract HybridLockReleaseUSDCTokenPool (0xc2e3A3C18ccb634622B57fF119a1C8C7f12e8C0c)
+    +++ description: A token pool for USDC which uses CCTP for supported chains and Lock/Release for all others
+```
+
+## Source code changes
+
+```diff
+...:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF.sol | 2371 +++++++++++++++
+ ...:0xc2e3A3C18ccb634622B57fF119a1C8C7f12e8C0c.sol | 2561 ++++++++++++++++
+ .../ethereum/.flat/MessageTransmitter.sol          | 3081 ++++++++++++++++++++
+ 3 files changed, 8013 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755700281 (main branch discovery), not current.
+
+```diff
+    contract ManyChainMultiSig (0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) {
+    +++ description: None
+      template:
++        "transporter/ManyChainMultiSig"
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B) {
+    +++ description: None
+      template:
++        "transporter/ManyChainMultiSig"
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (0xa8D5E1daA6D8B94f11D77B7E09DE846292ef69FF) {
+    +++ description: None
+      template:
++        "transporter/ManyChainMultiSig"
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (0xAD97C0270a243270136E40278155C12ce7C7F87B) {
+    +++ description: None
+      template:
++        "transporter/ManyChainMultiSig"
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) {
+    +++ description: None
+      template:
++        "transporter/ManyChainMultiSig"
+    }
+```
+
+Generated with discovered.json: 0x97c31230516821464669e730affc5cc30943b2eb
+
+# Diff at Wed, 20 Aug 2025 14:33:17 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@67e41f566326dea91dc3f12a1b8947109f00301c block: 1755509879
+- current timestamp: 1755700281
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.75:
++        {"sourceChainSelector":"18164309074156128038","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.18164309074156128038:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
 Generated with discovered.json: 0x339cd3cc637ecb3284c56c4998dc7b952fe73c88
 
 # Diff at Mon, 18 Aug 2025 09:48:51 GMT:

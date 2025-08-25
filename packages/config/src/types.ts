@@ -127,6 +127,7 @@ export interface BaseProject {
   isUpcoming?: true
   archivedAt?: UnixTime
   hasActivity?: true
+  hasTestnet?: true
 }
 
 // #region common data
@@ -332,7 +333,7 @@ export interface ProjectBridgeTechnology {
 // #region scaling data
 export interface ProjectScalingInfo {
   layer: 'layer2' | 'layer3'
-  type: ProjectScalingCategory
+  type: ProjectScalingCategory | undefined
   capability: ProjectScalingCapability
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   hostChain: {
@@ -349,6 +350,7 @@ export interface ProjectScalingInfo {
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]
   scopeOfAssessment: ProjectScalingScopeOfAssessment | undefined
+  proofSystem: ProjectScalingProofSystem | undefined
 }
 
 export type ProjectScalingCategory =
@@ -358,6 +360,15 @@ export type ProjectScalingCategory =
   | 'Validium'
   | 'Optimium'
   | 'Other'
+
+export interface ProjectScalingProofSystem {
+  /** Type of proof system */
+  type: 'Optimistic' | 'Validity'
+  /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
+  name?: string
+  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
+  zkCatalogId?: string
+}
 
 export type ProjectScalingCapability = 'universal' | 'appchain'
 
@@ -913,7 +924,7 @@ export interface CelestiaDaTrackingConfig {
 export interface AvailDaTrackingConfig {
   type: 'avail'
   daLayer: ProjectId
-  appId: string
+  appIds: string[]
   sinceBlock: number
   untilBlock?: number
 }
@@ -928,6 +939,8 @@ export interface EigenDaTrackingConfig {
 
 export interface ProjectEcosystemInfo {
   id: ProjectId
+  /** Is this project part of the Superchain? Only used with id: 'superchain' */
+  isPartOfSuperchain?: boolean
   sinceTimestamp?: UnixTime
   untilTimestamp?: UnixTime
 }

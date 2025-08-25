@@ -2,7 +2,7 @@
   "name": "ez-eth",
   "chain": "ethereum",
   "timestamp": 1752830507,
-  "configHash": "0x6a2a186bdefced57f1a4eddf659226ea6298d93bc8c492b014d090048ebe34e6",
+  "configHash": "0x8ae60ddd313fd6b9c0d0be21712e2d091b80fd5f0514cbf89f6132f1c0535e07",
   "entries": [
     {
       "name": "EzEthToken",

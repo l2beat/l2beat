@@ -96,7 +96,8 @@ export const zkCatalogTags = [
     id: 'OpenVM',
     type: ZkCatalogTagType.ISA,
     name: 'OpenVM',
-    description: 'Instruction language for zkVM developed by Scroll.',
+    description:
+      'Extensible instruction set for OpenVM zkVM developed by Axiom.',
   },
   // Plonk
   {

@@ -18,7 +18,6 @@ export const ink: ScalingProject = opStackL2({
     stateValidationImage: 'opfp',
     description:
       'Ink is an Optimistic Rollup built with the OP Stack by Kraken exchange.',
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://inkonchain.com/en-US'],
@@ -33,6 +32,7 @@ export const ink: ScalingProject = opStackL2({
         'https://discord.com/invite/inkonchain',
         'https://t.me/inkonchain',
       ],
+      rollupCodes: 'https://rollup.codes/ink',
     },
   },
   genesisTimestamp,

@@ -2,7 +2,7 @@
   "name": "near",
   "chain": "ethereum",
   "timestamp": 1746523487,
-  "configHash": "0x502d767939615de5b4719aee37a7b05276c0ac6fe22d1b09ef495c7ca4944b09",
+  "configHash": "0xd80a9ac13114eee504c2615e665457919b8b3c326830203ed8fbea9c923295c9",
   "entries": [
     {
       "name": "NearProver",

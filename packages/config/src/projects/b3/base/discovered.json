@@ -2,7 +2,7 @@
   "name": "b3",
   "chain": "base",
   "timestamp": 1747235189,
-  "configHash": "0x73feee572630cf7f218a930e1690e757dbc101addc7139038b35a37068740d00",
+  "configHash": "0x0aefa17462439543c40912e805ac10b0270d1f54248d824cf737d448a7366451",
   "entries": [
     {
       "address": "base:0x000000000000000000000000000000000000dEaD",

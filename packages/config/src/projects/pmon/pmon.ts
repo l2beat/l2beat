@@ -16,7 +16,6 @@ export const pmon: ScalingProject = underReviewL3({
     BADGES.RaaS.AltLayer,
   ],
   display: {
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     name: 'PMON Chain',
     slug: 'pmon',
@@ -36,6 +35,10 @@ export const pmon: ScalingProject = underReviewL3({
       ],
     },
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
+  dataAvailability: undefined,
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
   },

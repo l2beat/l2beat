@@ -2,7 +2,7 @@
   "name": "galxegravity",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0x27acba2277d832d1ee848594d589af87c40ebaf2c06d07e8df55a7255cbe097e",
+  "configHash": "0x4e98c1c558341805627e3b53ea9f7326ea6d2b7a3ca71cea4afc630eee72debe",
   "entries": [
     {
       "address": "eth:0x006F5B7E2D58fb4E53DEdaB8802FCdf2a5441DC7",

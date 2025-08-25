@@ -3,7 +3,7 @@ import type { ChartMeta } from '../Chart'
 
 export function useChartDataKeys<T extends ChartMeta>(
   chartMeta: T,
-  hiddenDataKeys?: (keyof T)[],
+  hiddenDataKeys?: (keyof T)[] | readonly (keyof T)[],
 ) {
   const [showAllSelected, setShowAllSelected] = useState(false)
   const [dataKeys, setDataKeys] = useState<(keyof T)[] | null>(null)
