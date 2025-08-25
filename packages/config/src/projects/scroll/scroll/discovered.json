@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "timestamp": 1755858338,
+  "timestamp": 1756130522,
   "configHash": "0x2191704f0d354db60384a67be893b35cffdd1799df54ba47952af63234b93212",
   "entries": [
     {
@@ -240,8 +240,8 @@
               "setOverhead(uint256)": ["ops-fast"],
               "setCommitScalar(uint256)": ["ops-fast"],
               "setBlobScalar(uint256)": ["ops-fast"],
-              "0xaa5e9334": ["ops-fast"],
-              "0xc63b9e2d": ["ops-fast"]
+              "setPenaltyThreshold(uint256)": ["ops-fast"],
+              "setPenaltyFactor(uint256)": ["ops-fast"]
             },
             "scr:0x5300000000000000000000000000000000000005": {
               "updateMinWithdrawAmount(uint256)": ["ops-fast"],
@@ -953,9 +953,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xec63153efc658cbf72bb86116325d6b26118299d15cee4101ce14426896f3b38",
+        "messageRoot": "0xa4a74fe3139591b411e803797e1aa80c0f21e47c68b7ad7dcd6eaf8a50f8ca94",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 208154,
+        "nextMessageIndex": 208378,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -987,7 +987,7 @@
         },
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "4497294538621618165812"
+        "totalSupply": "4170911196463469688720"
       },
       "implementationNames": {
         "scr:0x5300000000000000000000000000000000000004": "WrappedEther"
@@ -2275,7 +2275,7 @@
         "gateway": "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9",
         "name": "Wrapped liquid staked Ether 2.0",
         "symbol": "wstETH",
-        "totalSupply": "978415033324282926152"
+        "totalSupply": "983802096521707616986"
       },
       "implementationNames": {
         "scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32": "TransparentUpgradeableProxy",
@@ -3583,6 +3583,6 @@
     "scroll/ScrollOwnerL2": "0x77eb1863ff595be1f6d216e4eb34cc75c37aae99c08c2cd56f8adaa13c218141",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "scroll": 19865398 },
+  "usedBlockNumbers": { "scroll": 20078282 },
   "permissionsConfigHash": "0xa503276cff8a4826484533c69a5fcd17ca0a9f6b3d73fc86103c87b21e349ed3"
 }
