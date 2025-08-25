@@ -48,7 +48,7 @@ const latestOutputV2 = discovery.getContractValue<number>(
 
 assert(
   latestOutputV2 === latestOutputV3,
-  'The project is now using SP1, update page!',
+  'The project is now using SP1, update page! see PR#8997',
 )
 
 // the opstack template automatically applies the correct risk rosette slices, so we do not override them
@@ -290,7 +290,7 @@ export const zircuit: ScalingProject = opStackL2({
         references: [
           {
             title: 'Etherscan - OptimismPortal - escapeEth() function',
-            url: 'https://etherscan.io/address/0xA0A36095A2258568759fb41CAE4934BBd2d04E26#code#F1#L456',
+            url: 'https://etherscan.io/address/0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1',
           },
         ],
         risks: [],
