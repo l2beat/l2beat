@@ -104,7 +104,6 @@ const flatSourcesRepository = mockObject<Database['flatSources']>({
 describe(UpdateMonitor.name, () => {
   let updateNotifier = mockObject<UpdateNotifier>({})
   let updateDiffer = mockObject<UpdateDiffer>({})
-  let discoveryRunner = mockObject<DiscoveryRunner>({})
   const discoveryOutputCache = new DiscoveryOutputCache()
   const chainConverter = new ChainConverter([
     { name: 'ethereum', chainId: ChainId.ETHEREUM },
@@ -119,16 +118,16 @@ describe(UpdateMonitor.name, () => {
     updateDiffer = mockObject<UpdateDiffer>({
       runForProject: mockFn().resolvesTo(undefined),
     })
-    discoveryRunner = mockObject<DiscoveryRunner>({
-      discoverWithRetry: mockFn().resolvesTo({
-        discovery: DISCOVERY_RESULT,
-        flatSources: {},
-      }),
-    })
   })
 
   describe(UpdateMonitor.prototype.update.name, () => {
     it('iterates over runners and dispatches updates', async () => {
+      const discoveryRunner = mockObject<DiscoveryRunner>({
+        discoverWithRetry: mockFn().resolvesTo({
+          ethereum: { discovery: DISCOVERY_RESULT, flatSources: {} },
+          arbitrum: { discovery: DISCOVERY_RESULT, flatSources: {} },
+        }),
+      })
       const chains = ['ethereum', 'arbitrum']
       const configReader = mockObject<ConfigReader>({
         readDiscovery: () => ({
@@ -183,7 +182,7 @@ describe(UpdateMonitor.name, () => {
       ).toHaveBeenNthCalledWith(2, 'arbitrum')
 
       // runs discovery for every project
-      expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(4)
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(3)
 
       expect(updateDiffer.runForProject).toHaveBeenCalledTimes(1)
 
@@ -219,8 +218,12 @@ describe(UpdateMonitor.name, () => {
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
         discoverWithRetry: mockFn()
-          .resolvesToOnce({ discovery: discoveryA, flatSources: {} })
-          .resolvesToOnce({ discovery: discoveryB, flatSources: {} }),
+          .resolvesToOnce({
+            ethereum: { discovery: discoveryA, flatSources: {} },
+          })
+          .resolvesToOnce({
+            ethereum: { discovery: discoveryB, flatSources: {} },
+          }),
       })
 
       const updateMonitorRepository = mockObject<Database['updateMonitor']>({
@@ -273,8 +276,10 @@ describe(UpdateMonitor.name, () => {
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
         discoverWithRetry: mockFn().resolvesToOnce({
-          discovery: dbEntry.discovery,
-          flatSources: {},
+          ethereum: {
+            discovery: dbEntry.discovery,
+            flatSources: {},
+          },
         }),
       })
 
@@ -319,8 +324,10 @@ describe(UpdateMonitor.name, () => {
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
         discoverWithRetry: mockFn().resolvesToOnce({
-          discovery: committed,
-          flatSources: {},
+          ethereum: {
+            discovery: committed,
+            flatSources: {},
+          },
         }),
       })
 
@@ -550,6 +557,15 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('generates the daily reminder for two different chains', async () => {
+      const discoveryRunner = mockObject<DiscoveryRunner>({
+        discoverWithRetry: mockFn().resolvesTo({
+          ethereum: {
+            discovery: DISCOVERY_RESULT,
+            flatSources: {},
+          },
+        }),
+      })
+
       const timestamp = 0
       const updateMonitorRepository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
@@ -609,6 +625,15 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('does nothing for an empty cache', async () => {
+      const discoveryRunner = mockObject<DiscoveryRunner>({
+        discoverWithRetry: mockFn().resolvesTo({
+          ethereum: {
+            discovery: DISCOVERY_RESULT,
+            flatSources: {},
+          },
+        }),
+      })
+
       const timestamp = 0
       const updateMonitorRepository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,

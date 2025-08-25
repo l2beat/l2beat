@@ -7,11 +7,7 @@ import {
   diffDiscovery,
   type EntryParameters,
 } from '@l2beat/discovery'
-import {
-  assert,
-  ChainSpecificAddress,
-  type UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type UnixTime } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 
 export class UpdateDiffer {

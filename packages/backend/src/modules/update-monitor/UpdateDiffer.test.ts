@@ -329,7 +329,6 @@ describe(UpdateDiffer.name, () => {
 })
 
 const PROJECT_A = 'project-a'
-const PROJECT_B = 'project-b'
 const NAME_A = 'contract-a'
 const ADDRESS_A = EthereumAddress.random()
 const NAME_B = 'contract-b'

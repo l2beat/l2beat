@@ -237,7 +237,7 @@ export class DiscoveryRunner {
       await new Promise((resolve) => setTimeout(resolve, delayMs))
     }
 
-    if (result?.discovery === undefined) {
+    if (result === undefined) {
       assert(
         err !== undefined,
         'Programmer error: Error should not be undefined there',

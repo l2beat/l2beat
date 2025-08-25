@@ -81,21 +81,19 @@ describe(DiscoveryRunner.name, () => {
         getMockConfigReader({ modelCrossChainPermissions: true }),
       )
 
-      expect(allProvidersMock.get).toHaveBeenCalledTimes(2)
-      expect(allProvidersMock.get).toHaveBeenNthCalledWith(1, 'arbitrum', 123)
-      expect(allProvidersMock.get).toHaveBeenNthCalledWith(2, 'ethereum', 1)
+      expect(allProvidersMock.get).toHaveBeenCalledTimes(0)
       expect(engine.discover).toHaveBeenCalledTimes(2)
       expect(engine.discover).toHaveBeenNthCalledWith(
         1,
         allProvidersMock,
         getMockConfig({ modelCrossChainPermissions: true }).structure,
-        123,
+        1,
       )
       expect(engine.discover).toHaveBeenNthCalledWith(
         2,
         allProvidersMock,
         getMockConfig({ modelCrossChainPermissions: true }).structure,
-        123,
+        1,
       )
     })
 
