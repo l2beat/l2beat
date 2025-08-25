@@ -1,7 +1,7 @@
 {
   "name": "chainport",
   "chain": "ethereum",
-  "timestamp": 1752574031,
+  "timestamp": 1756124502,
   "configHash": "0x7df6d36d3014e3849fc88504d39e3385aab82f16ec06aef41e36700a0884f4ad",
   "entries": [
     {
@@ -207,7 +207,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 216,
+        "nonce": 218,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -240,7 +240,7 @@
         "$immutable": true,
         "getMembersRegistry": "eth:0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa",
         "name": "ChainportCongress",
-        "proposalCount": 66
+        "proposalCount": 67
       },
       "fieldMeta": {
         "proposalCount": {
@@ -385,6 +385,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22923880 },
+  "usedBlockNumbers": { "ethereum": 23218089 },
   "permissionsConfigHash": "0x26fc2f185492ee222a5639023d7f34b0c8c8bc5ebbbce7c96f409161d004433b"
 }

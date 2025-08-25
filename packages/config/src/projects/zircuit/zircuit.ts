@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -36,6 +37,20 @@ const withdrawalKeepalivePeriodSecondsFmt: number =
 
 const verifierV2 = discovery.getContract('VerifierV2')
 
+const latestOutputV3 = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'latestOutputProposedV3',
+)
+const latestOutputV2 = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'latestOutputProposedV2',
+)
+
+assert(
+  latestOutputV2 === latestOutputV3,
+  'The project is now using SP1, update page! see PR#8997',
+)
+
 // the opstack template automatically applies the correct risk rosette slices, so we do not override them
 // as soon as this is not the case anymore (backdoor removed, permissionless proposing etc.),
 // we should update the opstack.ts or not use it anymore
@@ -54,7 +69,7 @@ const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
     {
       title:
         'L2OutputOracle.sol - Etherscan source code - bootstrapV2() function',
-      url: 'https://etherscan.io/address/0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315#code#F1#L320',
+      url: 'https://etherscan.io/address/0x92Ef6Af472b39F1b363da45E35530c24619245A4',
     },
     {
       title: 'VerifierV2.sol - Etherscan source code',
@@ -275,7 +290,7 @@ export const zircuit: ScalingProject = opStackL2({
         references: [
           {
             title: 'Etherscan - OptimismPortal - escapeEth() function',
-            url: 'https://etherscan.io/address/0xA0A36095A2258568759fb41CAE4934BBd2d04E26#code#F1#L456',
+            url: 'https://etherscan.io/address/0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1',
           },
         ],
         risks: [],

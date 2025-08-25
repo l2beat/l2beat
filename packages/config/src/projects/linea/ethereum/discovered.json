@@ -1,8 +1,8 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "timestamp": 1755680565,
-  "configHash": "0xe3c83139698aebdd78a1ee37ea52d166bd3eb3d975b0909ee371a4628bf1573d",
+  "timestamp": 1756122271,
+  "configHash": "0xd238dc557e1c5ab74f036ead2a621f22387514aef6ecf0769dbccca486ba4fa8",
   "entries": [
     {
       "name": "TokenBridge",
@@ -264,23 +264,6 @@
       "address": "eth:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "PlonkVerifierMainnetFull",
-      "address": "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7",
-      "type": "Contract",
-      "template": "linea/Verifier",
-      "sourceHashes": [
-        "0x7ffe47dd82e25e61467c2b267669b2c48ea49c8a7f1a744fea45ab189bc8b455"
-      ],
-      "proxyType": "immutable",
-      "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
-      "sinceTimestamp": 1744893263,
-      "sinceBlock": 22288746,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7": "PlonkVerifierMainnetFull"
-      }
     },
     {
       "address": "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
@@ -634,7 +617,7 @@
           "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
         ],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 59,
+        "nonce": 60,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -646,6 +629,23 @@
       "address": "eth:0x9376c137AF5124FFc39bD8940A3D88D1cd508992",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PlonkVerifierMainnetFull",
+      "address": "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873",
+      "type": "Contract",
+      "template": "linea/Verifier",
+      "sourceHashes": [
+        "0x64013fe6cc4367b6dbbeb934bdb33f30aa57f2e6ebd6342fd05f2beb795c59c4"
+      ],
+      "proxyType": "immutable",
+      "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
+      "sinceTimestamp": 1755702719,
+      "sinceBlock": 23183104,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873": "PlonkVerifierMainnetFull"
+      }
     },
     {
       "name": "UpgradeableBeacon",
@@ -745,7 +745,7 @@
           "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -898,11 +898,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0x91145db170667f80abcae4f78004909f0b46bd2558f928370b23283641bc7235",
-        "currentFinalizedState": "0xbd8af0d1a63ed0a8be902109d3b6e63ef9f203974144ff3faa52225071280f5d",
+        "currentFinalizedShnarf": "0x32ab9fcfcdd65af8d07954f465836fcb1c08fe806f8eaa4b9fe467af98ba18e6",
+        "currentFinalizedState": "0xd17f43c98a4de56b62af891266ac5284de1b3de511f5e8a21511df1ff92396ab",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "1341610226694254779152",
+        "currentPeriodAmountInWei": "735773279332342932806",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -945,10 +945,10 @@
         "VERIFIER_UNSETTER_ROLE": "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a",
         "verifiers": [
           "eth:0xED39C0C41A7651006953AB58Ecb3039363620995",
+          "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
@@ -1059,10 +1059,12 @@
       "name": "PlonkVerifierMainnetFull",
       "address": "eth:0xED39C0C41A7651006953AB58Ecb3039363620995",
       "type": "Contract",
+      "template": "linea/Verifier",
       "sourceHashes": [
         "0xb87d66914fca067b6c490e46194aeef92a6c4930a9a6e53bfd2833813b0685a8"
       ],
       "proxyType": "immutable",
+      "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
       "sinceTimestamp": 1748943779,
       "sinceBlock": 22623305,
       "values": { "$immutable": true },
@@ -1512,9 +1514,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
-    ],
     "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": [
       "constructor(address _owner, address _avatar, address _target, uint256 _cooldown, uint256 _expiration)",
       "event AvatarSet(address indexed previousAvatar, address indexed newAvatar)",
@@ -1559,6 +1558,9 @@
     ],
     "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": [
       "constructor(address _singleton)"
+    ],
+    "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": [
       "constructor(address implementation_)",
@@ -1746,6 +1748,6 @@
     "linea/TokenBridge": "0x44ac54b42a3064536f608e9b590f17b1ffe63129ab72fbc2fbb79e6f56850a59",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23181266 },
-  "permissionsConfigHash": "0x2a2c30cbb28dee113fd7ccddb76b31b1c6c7fa42b7d235d7e499c9103ceed3d6"
+  "usedBlockNumbers": { "ethereum": 23217904 },
+  "permissionsConfigHash": "0xcff67d7af3c52f125acee63e8d8e5b907766fd579844f4e29245486e5fc0adf8"
 }

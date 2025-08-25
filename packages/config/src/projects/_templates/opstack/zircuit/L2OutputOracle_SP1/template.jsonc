@@ -1,0 +1,85 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in {{withdrawalKeepalivePeriodSecondsFmt}}. Additionally, users can 'escape' their funds after {{timeLimitOutputRootSubmissionSecondsFmt}} of no state updates by supplying merkle proofs or using a resolver.",
+  "ignoreMethods": [
+    "getL2OutputAfter",
+    "getL2OutputIndexAfter",
+    "getL2Output",
+    "computeL2Timestamp",
+    "getL2OutputRootWithFinalization",
+    "getL2OutputEx",
+    "isL2OutputFinalized",
+    "historicBlockHashes"
+  ],
+  "ignoreInWatchMode": [
+    "latestBlockNumber",
+    "latestOutputIndex",
+    "nextBlockNumber",
+    "nextOutputIndex",
+    "latestOutputProposedV2",
+    "latestOutputProposedV3"
+  ],
+  "fields": {
+    "timeLimitOutputRootSubmissionSecondsFmt": {
+      "handler": {
+        "type": "call",
+        "method": "timeLimitOutputRootSubmissionSeconds",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "proposer": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "propose"
+        }
+      ]
+    },
+    "challenger": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "challenge"
+        }
+      ]
+    },
+    "deletedOutputs": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["prevNextOutputIndex", "newNextOutputIndex"],
+        "add": {
+          "event": "OutputsDeleted"
+        }
+      }
+    },
+    "withdrawalKeepalivePeriodSecondsFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function withdrawalKeepalivePeriodSeconds() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "latestOutputProposedV3": {
+      "handler": {
+        "type": "event",
+        "select": "l2OutputIndex",
+        "set": {
+          "event": "OutputProposed"
+        }
+      }
+    },
+    "latestOutputProposedV2": {
+      "handler": {
+        "type": "event",
+        "select": "l2OutputIndex",
+        "set": {
+          "event": "OutputProposedV2"
+        }
+      }
+    }
+  }
+}
