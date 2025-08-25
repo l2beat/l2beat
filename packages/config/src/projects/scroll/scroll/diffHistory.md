@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xf4ef13b7e692b86660712651f5965ce97c5060f6
+
+# Diff at Mon, 25 Aug 2025 14:28:37 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@90dd8b76055bf0f493df8c45097d37e26f847015 block: 1756130522
+- current timestamp: 1756130522
+
+## Description
+
+Assign L1 counterpart.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756130522 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract WrappedEther (0x5300000000000000000000000000000000000004)
+    +++ description: None
+```
+
+```diff
+    contract L2WETHGateway (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9) {
+    +++ description: None
+      values.counterpart:
+-        "scr:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
++        "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
+      values.l1WETH:
+-        "scr:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2WETHGatewayCounterpart (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE)
+    +++ description: None
+```
+
+```diff
+    contract ProxyAdmin (0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2WstETHToken (0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x130790e1b3f4c03c904374a41af6af7b5e12096e
 
 # Diff at Mon, 25 Aug 2025 14:04:28 GMT:
