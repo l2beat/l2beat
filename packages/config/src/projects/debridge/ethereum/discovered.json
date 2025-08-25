@@ -2,7 +2,7 @@
   "name": "debridge",
   "chain": "ethereum",
   "timestamp": 1753092647,
-  "configHash": "0xe251156abc78df2f9ac8459c95dcb41b505c4bd9c2866225d24414a8191ae626",
+  "configHash": "0x665a75925a8e7a947fbecdea13d7c9296a1dd4cc1b6914c8ff3f0fa07bd90c1c",
   "entries": [
     {
       "address": "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205",

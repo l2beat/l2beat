@@ -2,7 +2,7 @@
   "name": "automata",
   "chain": "ethereum",
   "timestamp": 1743923255,
-  "configHash": "0xb8155e2037746878979ad340c4a37fd5a5e829847090531ad1be2b4e9dc24d85",
+  "configHash": "0x0656e707abedcc834c7631092cb9721a48c425ec23ac7acd0b614daabef9b7a5",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

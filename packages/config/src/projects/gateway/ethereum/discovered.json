@@ -2,7 +2,7 @@
   "name": "gateway",
   "chain": "ethereum",
   "timestamp": 1754119529,
-  "configHash": "0xa10b15e4c54de1367997fbab06bff4f3367b24f28f00a83ba3157122848b41e7",
+  "configHash": "0xcf18bc89fc9392fb20887ff4cc2b96e2db6abbb6a09945b7c79a56670c70d948",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

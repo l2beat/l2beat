@@ -2,7 +2,7 @@
   "name": "nearomni",
   "chain": "ethereum",
   "timestamp": 1748007215,
-  "configHash": "0xf0be1be503d13e236c1e095ee204f2396461d9d0c2040890f8e0a66ca4f6324a",
+  "configHash": "0x6e2b0a4baf2fd98ac31265b88d85c8fe0c2fc83500f45eee08099dbe2bd0cf3c",
   "entries": [
     {
       "address": "eth:0x1180c536465413eE05b206b3a99d4C6a9934D2b7",

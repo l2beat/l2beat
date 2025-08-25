@@ -2,7 +2,7 @@
   "name": "superseed",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0xc195c5322a085a25086f1dc3e1d1babfb69509f00ad9fa997f5578911dda74b4",
+  "configHash": "0x4f9a4d996fd4beb6f5d4d6c41d5040b02e15dfedd51aeb6730fa7dbcaf7012bc",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

@@ -2,7 +2,7 @@
   "name": "dydx",
   "chain": "ethereum",
   "timestamp": 1733483111,
-  "configHash": "0x4f7a9bfc3a9022ee27d5be5046c1250470be059d5048d9acc6ef6e1f27b7db9a",
+  "configHash": "0xb7f93cbf0a2dd3d00596760c6bf8a0482ee528910c7636e4c392b2cce37579ba",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",

@@ -2,7 +2,7 @@
   "name": "plumenetwork",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0xcc6ecd8604c9d93abe4ea2cd30599edd0494f4fb1f3155d122f52e09b794a85e",
+  "configHash": "0x4ba49e2396ce2c6db03d38481fb78ba5a89ce9925eaf58d1554e336f7f235156",
   "entries": [
     {
       "address": "eth:0x006F5B7E2D58fb4E53DEdaB8802FCdf2a5441DC7",

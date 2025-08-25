@@ -15,7 +15,6 @@ export const airas: ScalingProject = underReviewL2({
     description:
       'AIRAS (Artificial Intelligence Real Assets System) is a ZK Rollup designed to power autonomous applications for real-world assets, leveraging AI and blockchain to drive efficiency, transparency, and automation in asset management.',
     purposes: ['RWA'],
-    category: 'ZK Rollup',
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://airas.com/'],
@@ -29,6 +28,10 @@ export const airas: ScalingProject = underReviewL2({
         'https://t.me/airas_network',
       ],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Validity',
   },
   ecosystemInfo: {
     id: ProjectId('agglayer'),

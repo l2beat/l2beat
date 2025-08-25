@@ -2,7 +2,7 @@
   "name": "gateway",
   "chain": "gateway",
   "timestamp": 1754119529,
-  "configHash": "0x746fb628cfff16b3807b215300b467d2974872eef29ce279726c64d6b16212a2",
+  "configHash": "0xcf18bc89fc9392fb20887ff4cc2b96e2db6abbb6a09945b7c79a56670c70d948",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

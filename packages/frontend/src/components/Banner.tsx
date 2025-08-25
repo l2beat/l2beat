@@ -25,11 +25,13 @@ type Props = VariantProps<typeof bannerVariants> &
         asMarkdown: true
         children: string
         className?: string
+        hideIcon?: boolean
       }
     | {
         asMarkdown?: false
         children: React.ReactNode
         className?: string
+        hideIcon?: boolean
       }
   )
 
@@ -39,10 +41,13 @@ export function Banner({
   type,
   centered,
   className,
+  hideIcon,
 }: Props) {
   return (
     <div className={cn(bannerVariants({ type, centered }), className)}>
-      <InfoIcon className="mt-px size-[14px] shrink-0 fill-current" />
+      {!hideIcon && (
+        <InfoIcon className="mt-px size-[14px] shrink-0 fill-current" />
+      )}
       {asMarkdown ? <Markdown>{children}</Markdown> : children}
     </div>
   )

@@ -13,7 +13,6 @@ export const ola: ScalingProject = upcomingL2({
     description:
       'Ola is an open source hybrid ZK Rollup that delivers programmable scalability and data ownership to blockchain ecosystems.',
     purposes: ['Privacy'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://olavm.org/'],
       documentation: ['https://ola-2.gitbook.io/ola-developer-documents/'],
@@ -27,5 +26,8 @@ export const ola: ScalingProject = upcomingL2({
         'https://youtube.com/@Ola_Sin7y',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

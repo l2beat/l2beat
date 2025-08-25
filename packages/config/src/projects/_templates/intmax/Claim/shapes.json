@@ -4,5 +4,11 @@
     "address": "0x1899bF9D0e40Dd1bB6C3CCF2123A0Bd1DE0F0548",
     "chain": "scroll",
     "blockNumber": 17474807
+  },
+  "Claim_v5_0_0": {
+    "hash": "0xdf0969ba7c2284c214c510f2d058375ac28bbfc0eca15673bed761979f32647e",
+    "address": "0x5216C8D0F2188a91aD07Fe4F334F220b2F7b59EA",
+    "chain": "scroll",
+    "blockNumber": 19518196
   }
 }

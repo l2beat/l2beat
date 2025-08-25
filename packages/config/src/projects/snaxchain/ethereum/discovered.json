@@ -2,7 +2,7 @@
   "name": "snaxchain",
   "chain": "ethereum",
   "timestamp": 1755009465,
-  "configHash": "0x795a2ad0b79104094fdc585ccd98933dd3fabac57c31ee60c0db62cfa04b6fb6",
+  "configHash": "0x23c17624a147122a94a7e5facac4965a02915f99f682a7605e6b6a46b21ed291",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
