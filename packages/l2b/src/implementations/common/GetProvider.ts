@@ -6,7 +6,7 @@ import {
   getDiscoveryPaths,
   getMulticall3Config,
   type IProvider,
-  SQLiteCache,
+  NoCache,
 } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
 import { mkdirSync } from 'fs'
@@ -22,7 +22,8 @@ export async function getProvider(
   const paths = getDiscoveryPaths()
   // Make sure the cache directory exists
   mkdirSync(dirname(paths.cache), { recursive: true })
-  const cache = new SQLiteCache(paths.cache)
+  // const cache = new SQLiteCache(paths.cache)
+  const noCache = new NoCache()
 
   const chainConfigs: DiscoveryChainConfig[] = [
     {
@@ -41,7 +42,7 @@ export async function getProvider(
   const allProviders = new AllProviders(
     chainConfigs,
     httpClient,
-    cache,
+    noCache,
     Logger.SILENT,
   )
   const blockNumber =
