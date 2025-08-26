@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -35,8 +34,6 @@ const withdrawalKeepalivePeriodSecondsFmt: number =
     'withdrawalKeepalivePeriodSecondsFmt',
   )
 
-const verifierV3 = discovery.getContract('VerifierV3')
-
 // the opstack template automatically applies the correct risk rosette slices, so we do not override them
 // as soon as this is not the case anymore (backdoor removed, permissionless proposing etc.),
 // we should update the opstack.ts or not use it anymore
@@ -58,8 +55,8 @@ const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
       url: 'https://etherscan.io/address/0x92Ef6Af472b39F1b363da45E35530c24619245A4',
     },
     {
-      title: 'VerifierV3 (SP1) - Etherscan source code',
-      url: safeGetImplementation(verifierV3),
+      title: 'VerifierV3 (SP1VerifierGateway) - Etherscan source code',
+      url: 'https://etherscan.io/address/0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67#code',
     },
   ],
 }
@@ -214,7 +211,7 @@ export const zircuit: ScalingProject = opStackL2({
         functionSignature:
           'function proposeL2OutputV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _aggrProof) payable',
         sinceTimestamp: UnixTime(1741654919),
-        untilTimestamp: UnixTime(1756148051)
+        untilTimestamp: UnixTime(1756148051),
       },
     },
     {
@@ -231,7 +228,7 @@ export const zircuit: ScalingProject = opStackL2({
           'function proposeL2OutputV3(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable',
         sinceTimestamp: UnixTime(1756148051),
       },
-    }
+    },
   ],
   nonTemplateTechnology: {
     operator: {
