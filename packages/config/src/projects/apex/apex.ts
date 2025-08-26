@@ -129,7 +129,6 @@ export const apex: ScalingProject = {
       technical distinction is not visible to the user.`,
     purposes: ['Exchange'],
     stacks: ['StarkEx'],
-    category: 'Other',
     links: {
       websites: ['https://apex.exchange/'],
       bridges: ['https://pro.apex.exchange/'],

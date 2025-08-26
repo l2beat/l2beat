@@ -2,7 +2,7 @@
   "name": "hop",
   "chain": "ethereum",
   "timestamp": 1711616603,
-  "configHash": "0xca72e1d9dba4fd93d568355fd67908ae86a6e525a8b6ad4855c4b9e9de2b7686",
+  "configHash": "0x3b2fea9cf3ca9d948d2ad2b48974b9c0b35abaf3e434da52998be9aa5ba5fd3d",
   "entries": [
     {
       "name": "Hop Multisig",

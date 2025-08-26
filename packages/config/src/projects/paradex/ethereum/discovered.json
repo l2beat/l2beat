@@ -2,7 +2,7 @@
   "name": "paradex",
   "chain": "ethereum",
   "timestamp": 1755516515,
-  "configHash": "0x36aa8fbaa19ed7f99d28b5cfa08ce4081eb5ac3c4c498ec405297f1981a93c74",
+  "configHash": "0xdced3920c1a2235ef53d715959ba92f740169d16bb56fc4e3c4952aad3bc0586",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -757,6 +757,6 @@
     "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
-  "usedBlockNumbers": { "ethereum": 23167647 },
+  "usedBlockNumbers": { "ethereum": 23167648 },
   "permissionsConfigHash": "0x1878ede5af5352a3434f168af83b9c2451d4043b08515586aae152b8da2b9bb8"
 }

@@ -2,7 +2,7 @@
   "name": "rs-eth",
   "chain": "base",
   "timestamp": 1752830527,
-  "configHash": "0x2b540159bb11769533b9cb89a2235f165d9414a774f330bef5bae3d77f9d21de",
+  "configHash": "0x2ebe0041212cf32827538f48b7973a5b55a68a75252bf8c34c5c2ed153167c42",
   "entries": [
     {
       "name": "RSETH_OFT",

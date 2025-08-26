@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "scroll",
   "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 200,
   "initialAddresses": [
     "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
     "eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
@@ -75,7 +76,8 @@
     "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376": "TimelockFast",
     "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f": "TimelockEmergency",
     "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4": "Scroll USDC",
-    "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd": "L2PauseController"
+    "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd": "L2PauseController",
+    "scr:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "L2WETHGatewayCounterpart"
   },
   "overrides": {
     "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": {
@@ -169,6 +171,9 @@
     "eth:0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": { "category": "spam" },
     "eth:0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": { "category": "spam" },
     "eth:0x63FB51C55d9605a75F8872C80De260a00fACfaA2": { "category": "spam" },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreDiscovery": true
+    },
     "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14": {
       "fields": {
         "timelockAdminAC": {
@@ -260,6 +265,18 @@
     "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79": {
       "description": "Counterpart to the L1GatewayRouter contract."
     },
+    "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": {
+      "fields": {
+        "counterpart": { "edit": ["format", "EthereumAddress"] },
+        "l1WETH": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "scr:0x5300000000000000000000000000000000000004": {
+      "ignoreDiscovery": true
+    },
+    "scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32": {
+      "ignoreDiscovery": true
+    },
     "scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896": { "category": "spam" },
     "scr:0x0f50874f227621Dea72482004639a9fFe440A4dA": { "category": "spam" },
     "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d": { "category": "spam" },
@@ -272,6 +289,9 @@
     "scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825": { "category": "spam" },
     "scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": { "category": "spam" },
     "scr:0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf": { "category": "spam" },
-    "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": { "category": "spam" }
+    "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": { "category": "spam" },
+    "scr:0x0c67D8D067E349669dfEAB132A7c03A90594eE09": {
+      "ignoreDiscovery": true
+    }
   }
 }

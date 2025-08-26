@@ -2,7 +2,7 @@
   "name": "satellite",
   "chain": "ethereum",
   "timestamp": 1717494911,
-  "configHash": "0x625006f22e8f6fcbabc36e9ef01c0b99fecdf93585937b2ef881003e66dee129",
+  "configHash": "0x2071a7cadd39da50e15fa4ddf25716f88f818e7ed6f12644261fa203346b792d",
   "entries": [
     {
       "address": "eth:0x027c1882B975E2cd771AE068b0389FA38B9dda73",

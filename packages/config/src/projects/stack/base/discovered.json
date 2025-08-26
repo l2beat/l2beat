@@ -2,7 +2,7 @@
   "name": "stack",
   "chain": "base",
   "timestamp": 1755014032,
-  "configHash": "0x4122f72716c23b50cff452e33ed15befa517101d6a2e24b2d69000c280b494ef",
+  "configHash": "0x1312239b3ae46d8bb59a1ac6a4abaab69ef41b1c9abfe579dae7e5ac05aaeb3f",
   "entries": [
     {
       "address": "base:0x000000000000000000000000000000000000dEaD",

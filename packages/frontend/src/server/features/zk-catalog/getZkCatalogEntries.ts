@@ -106,6 +106,7 @@ function getZkCatalogEntry(
   return {
     id: project.id,
     slug: project.slug,
+    backgroundColor: undefined,
     statuses: project.statuses,
     name: project.name,
     icon: getProjectIcon(project.slug),
@@ -118,8 +119,8 @@ function getZkCatalogEntry(
         ...(project.zkCatalogInfo.techStack.finalWrap ?? []),
         ...(project.zkCatalogInfo.techStack.zkVM ?? []),
       ].map((techStack) => ({
-        id: 'techStack' as const,
-        value: `${techStack.type}: ${techStack.name}`,
+        id: techStack.type,
+        value: techStack.name,
       })),
     ],
   }

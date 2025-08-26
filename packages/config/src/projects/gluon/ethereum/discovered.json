@@ -2,7 +2,7 @@
   "name": "gluon",
   "chain": "ethereum",
   "timestamp": 1737625319,
-  "configHash": "0x4a7170f2ec368fe4cd61a3dbfcbe941b0deb64b54abe21c0c3df3a0c01d657eb",
+  "configHash": "0x12c23f587f99eac44644dc58e96c941abc019ecad6a84c2cbc66686d681e3cb0",
   "entries": [
     {
       "name": "SpotData",

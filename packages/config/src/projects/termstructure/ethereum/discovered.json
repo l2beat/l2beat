@@ -2,7 +2,7 @@
   "name": "termstructure",
   "chain": "ethereum",
   "timestamp": 1722945083,
-  "configHash": "0x5401df17d2466030c9d12aed104deaf2ba6d3dd82e3e702d1bb133422ff5a61b",
+  "configHash": "0x9cbf3ca016472246b6f018857641afd090815d78db2c6fa71696641b45620c2a",
   "entries": [
     {
       "name": "ZkTrueUp",

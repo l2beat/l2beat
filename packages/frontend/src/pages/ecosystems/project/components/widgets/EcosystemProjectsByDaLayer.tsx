@@ -50,7 +50,7 @@ export function EcosystemProjectsByDaLayer({
             progress={blobsData.blobsShare * 100}
             className="h-3 w-full"
             progressClassName="bg-branding-primary"
-            trackClassName="border-branding-secondary"
+            trackClassName="border-branding-primary"
           />
           <p className="mt-1 text-center text-2xs text-secondary">
             {formatPercent(blobsData.blobsShare)} of total blob size

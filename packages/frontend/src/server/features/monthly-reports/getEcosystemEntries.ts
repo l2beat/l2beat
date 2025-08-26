@@ -48,7 +48,7 @@ export interface EcosystemMonthlyUpdateEntry
     stage: ProjectScalingStage
     slug: string
     description: string
-    category: ProjectScalingCategory
+    category: ProjectScalingCategory | undefined
     tvs?: number
     uops?: number
     isAppchain: boolean

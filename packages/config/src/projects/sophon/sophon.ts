@@ -124,7 +124,7 @@ export const sophon: ScalingProject = zkStackL2({
   ],
   availDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start
-    appId: '17',
+    appIds: ['17', '36', '37', '38'],
   },
   nonTemplateRiskView: {
     sequencerFailure: {
