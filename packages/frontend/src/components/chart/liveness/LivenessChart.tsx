@@ -7,7 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart, ReferenceArea, ReferenceLine } from 'recharts'
+import { Area, AreaChart, ReferenceArea, ReferenceDot } from 'recharts'
 import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -77,6 +77,18 @@ export function LivenessChart({
     () => Math.max(...noPostedAreas.map((area) => area.end)),
     [noPostedAreas],
   )
+  const singleDataPoints = useMemo(() => {
+    return data?.filter((point, i, arr) => {
+      const prevPoint = arr.at(i - 1)
+      const nextPoint = arr.at(i + 1)
+
+      return (
+        prevPoint?.range === null &&
+        nextPoint?.range === null &&
+        point.range !== null
+      )
+    })
+  }, [data])
 
   return (
     <ChartContainer
@@ -89,23 +101,41 @@ export function LivenessChart({
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
-        {noPostedAreas.map((area) => (
+        {noPostedAreas.map(({ start, end }) => (
           <ReferenceArea
-            key={`${area.start}-${area.end}`}
-            x1={area.start}
-            x2={area.end}
+            key={`${start}-${end}`}
+            x1={start}
+            x2={end}
             fill="url(#noDataLiveness)"
-            stroke={area.start.toString()}
           />
         ))}
-        {noPostedAreas.map((area) => (
-          <ReferenceLine
-            key={area.end}
-            x={area.end}
-            stroke="var(--surface-primary)"
-            strokeWidth={2}
-          />
-        ))}
+        {singleDataPoints?.map((point) => [
+          <ReferenceDot
+            key={`${point.timestamp}-bottom-range`}
+            x={point.timestamp}
+            y={point.range?.[0] ?? 0}
+            fill={chartMeta.range.color}
+            stroke={chartMeta.range.color}
+            r={3}
+          />,
+          <ReferenceDot
+            key={`${point.timestamp}-top-range`}
+            x={point.timestamp}
+            y={point.range?.[1] ?? 0}
+            fill={chartMeta.range.color}
+            stroke={chartMeta.range.color}
+            r={3}
+          />,
+          <ReferenceDot
+            key={`${point.timestamp}-avg`}
+            x={point.timestamp}
+            y={point.avg ?? 0}
+            fill="none"
+            stroke={chartMeta.avg.color}
+            strokeDasharray={'1 1'}
+            r={3}
+          />,
+        ])}
         <Area
           dataKey="range"
           isAnimationActive={false}
@@ -113,7 +143,6 @@ export function LivenessChart({
           strokeWidth={2}
           fill="var(--chart-pink-fill-gradient)"
           fillOpacity={0.4}
-          connectNulls
         />
         <Area
           dataKey="avg"
@@ -122,7 +151,6 @@ export function LivenessChart({
           stroke="var(--chart-pink)"
           fill="none"
           strokeDasharray="5 5"
-          connectNulls
         />
         {getCommonChartComponents({
           data,
@@ -169,7 +197,7 @@ export function LivenessChart({
               width="10"
               height="20"
               fill="var(--chart-pink)"
-              fillOpacity={0.5}
+              fillOpacity={0.25}
             />
           </pattern>
         </defs>
@@ -293,13 +321,21 @@ function getNoPostedAreas(data: LivenessChartDataPoint[] | undefined) {
   while (i < (data?.length ?? 0)) {
     const point = data?.at(i)
     const nextPoint = data?.at(i + 1)
+
     assert(point, 'Point is defined')
-    if (start !== undefined && point.range !== null && point.avg !== null) {
+    if (
+      start !== undefined &&
+      nextPoint !== undefined &&
+      nextPoint?.range !== null &&
+      nextPoint?.avg !== null
+    ) {
       noPostedAreas.push({ start, end: point.timestamp })
       start = undefined
     }
     if (
       start === undefined &&
+      point?.range === null &&
+      point?.avg === null &&
       nextPoint?.range === null &&
       nextPoint?.avg === null
     ) {
