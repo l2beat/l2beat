@@ -16,5 +16,6 @@
     "getTotalPooledEther",
     "getTotalShares",
     "getCurrentStakeLimit"
-  ]
+  ],
+  "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
 }
