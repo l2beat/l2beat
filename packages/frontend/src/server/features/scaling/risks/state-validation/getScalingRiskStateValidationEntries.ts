@@ -1,5 +1,11 @@
-import type { Project, ProjectScalingProofSystem } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import type {
+  Project,
+  ProjectScalingProofSystem,
+  TrustedSetup,
+  ZkCatalogTag,
+} from '@l2beat/config'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
+import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import {
@@ -66,6 +72,12 @@ export async function getScalingRiskStateValidationEntries() {
 export interface ScalingRiskStateValidationZkEntry extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem
   isa: string | undefined
+  trustedSetups?: Record<
+    string,
+    (TrustedSetup & {
+      proofSystem: ZkCatalogTag
+    })[]
+  >
 }
 
 function getScalingRiskStateValidationZkEntry(
@@ -85,6 +97,8 @@ function getScalingRiskStateValidationZkEntry(
     (tag) => tag.type === 'ISA',
   )
 
+  const trustedSetups = getTrustedSetups(zkCatalogProject, project.id)
+
   return {
     ...getCommonScalingEntry({ project, changes }),
     proofSystem: {
@@ -92,6 +106,7 @@ function getScalingRiskStateValidationZkEntry(
       name: proofSystem.name ?? zkCatalogProject?.name,
     },
     isa: isa?.name,
+    trustedSetups,
   }
 }
 export interface ScalingRiskStateValidationOptimisticEntry
@@ -118,4 +133,22 @@ function getScalingRiskStateValidationOptimisticEntry(
       name: proofSystem.name ?? zkCatalogProject?.name,
     },
   }
+}
+
+function getTrustedSetups(
+  project: Project<'zkCatalogInfo'>,
+  projectId: ProjectId,
+): ScalingRiskStateValidationZkEntry['trustedSetups'] {
+  const relevantProofSystemIds = new Set(
+    project.zkCatalogInfo.verifierHashes
+      .filter((v) => v.usedBy.includes(projectId))
+      .map((v) => `${v.proofSystem.type}-${v.proofSystem.id}`),
+  )
+
+  return groupBy(
+    project.zkCatalogInfo.trustedSetups.filter((ts) =>
+      relevantProofSystemIds.has(`${ts.proofSystem.type}-${ts.proofSystem.id}`),
+    ),
+    (ts) => `${ts.proofSystem.type}-${ts.proofSystem.id}`,
+  )
 }

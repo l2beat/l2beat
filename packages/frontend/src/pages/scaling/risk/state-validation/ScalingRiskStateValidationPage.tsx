@@ -7,7 +7,7 @@ import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingT
 import type {
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationZkEntry,
-} from '~/server/features/scaling/risks/state-validation/getScalingRiskEntries'
+} from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 import { ScalingRiskStateValidationTabs } from './components/ScalingRiskStateValidationTabs'
 
 interface Props extends AppLayoutProps {

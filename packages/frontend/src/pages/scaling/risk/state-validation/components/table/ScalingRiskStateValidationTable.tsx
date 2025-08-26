@@ -5,7 +5,7 @@ import { useTable } from '~/hooks/useTable'
 import type {
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationZkEntry,
-} from '~/server/features/scaling/risks/state-validation/getScalingRiskEntries'
+} from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 import {
   scalingRiskStateValidationColumns,
   scalingRiskStateValidationOptimisticColumns,

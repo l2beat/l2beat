@@ -10,7 +10,10 @@ import { TechStackTag } from './TechStackTag'
 import { TrustedSetupRiskDot } from './TrustedSetupRiskDot'
 
 interface Props {
-  trustedSetup: ZkCatalogEntry['trustedSetups'][string]
+  trustedSetup: {
+    trustedSetup: ZkCatalogEntry['trustedSetups'][string]['trustedSetup']
+    projectsUsedIn?: ZkCatalogEntry['trustedSetups'][string]['projectsUsedIn']
+  }
 }
 
 export function TrustedSetupCell({ trustedSetup }: Props) {
@@ -58,15 +61,17 @@ export function TrustedSetupCell({ trustedSetup }: Props) {
           })}
         </TooltipContent>
       </Tooltip>
-      <div className="flex items-center gap-1.5">
-        <p className="font-medium text-label-value-12 text-secondary">
-          Used in
-        </p>
-        <ProjectsUsedIn
-          noL2ClassName="text-label-value-12 font-medium text-secondary"
-          usedIn={trustedSetup.projectsUsedIn}
-        />
-      </div>
+      {trustedSetup.projectsUsedIn && (
+        <div className="flex items-center gap-1.5">
+          <p className="font-medium text-label-value-12 text-secondary">
+            Used in
+          </p>
+          <ProjectsUsedIn
+            noL2ClassName="text-label-value-12 font-medium text-secondary"
+            usedIn={trustedSetup.projectsUsedIn}
+          />
+        </div>
+      )}
     </div>
   )
 }

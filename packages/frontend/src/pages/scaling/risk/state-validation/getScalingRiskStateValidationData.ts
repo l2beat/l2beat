@@ -1,7 +1,7 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import { getScalingRiskStateValidationEntries } from '~/server/features/scaling/risks/state-validation/getScalingRiskEntries'
+import { getScalingRiskStateValidationEntries } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'

@@ -2,10 +2,11 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
+import { TrustedSetupCell } from '~/pages/zk-catalog/v2/components/TrustedSetupCell'
 import type {
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationZkEntry,
-} from '~/server/features/scaling/risks/state-validation/getScalingRiskEntries'
+} from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 
 const zkColumnHelper = createColumnHelper<ScalingRiskStateValidationZkEntry>()
 
@@ -36,6 +37,29 @@ export const scalingRiskStateValidationColumns = [
         emptyMode="n/a"
       />
     ),
+  }),
+  zkColumnHelper.accessor('trustedSetups', {
+    header: 'Trusted setup',
+    cell: (ctx) => {
+      const trustedSetupEntries = Object.entries(
+        ctx.row.original.trustedSetups ?? {},
+      )
+
+      if (trustedSetupEntries.length === 0) {
+        return <TableValueCell value={undefined} emptyMode="n/a" />
+      }
+      return (
+        <div className="flex flex-col gap-2 py-2">
+          {trustedSetupEntries.map(([key, ts]) => (
+            <TrustedSetupCell key={key} trustedSetup={{ trustedSetup: ts }} />
+          ))}
+        </div>
+      )
+    },
+    meta: {
+      tooltip:
+        'Trusted setup information for the proof system used by this project',
+    },
   }),
 ]
 
