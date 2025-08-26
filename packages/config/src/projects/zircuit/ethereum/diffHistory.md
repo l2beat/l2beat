@@ -8,7 +8,7 @@ Generated with discovered.json: 0x3abb85b5b9bd5c27d49020755a9731acfb98a761
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Zircuit started posting SP1 proofs and the old verifier is now impossible to be used, even though it is still there.
 
 ## Config/verification related changes
 
