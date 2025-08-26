@@ -12,6 +12,10 @@ import {
   getProjectsChangeReport,
   type ProjectChanges,
 } from '~/server/features/projects-change-report/getProjectsChangeReport'
+import {
+  getVerifiersWithAttesters,
+  type TrustedSetupVerifierData,
+} from '~/server/features/zk-catalog/getZkCatalogEntries'
 import { ps } from '~/server/projects'
 import {
   type CommonScalingEntry,
@@ -74,9 +78,16 @@ export interface ScalingRiskStateValidationZkEntry extends CommonScalingEntry {
   isa: string | undefined
   trustedSetups?: Record<
     string,
-    (TrustedSetup & {
-      proofSystem: ZkCatalogTag
-    })[]
+    {
+      trustedSetup: (TrustedSetup & {
+        proofSystem: ZkCatalogTag
+      })[]
+      verifiers: {
+        successful?: TrustedSetupVerifierData
+        unsuccessful?: TrustedSetupVerifierData
+        notVerified?: TrustedSetupVerifierData
+      }
+    }
   >
 }
 
@@ -109,6 +120,7 @@ function getScalingRiskStateValidationZkEntry(
     trustedSetups,
   }
 }
+
 export interface ScalingRiskStateValidationOptimisticEntry
   extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem
@@ -139,16 +151,51 @@ function getTrustedSetups(
   project: Project<'zkCatalogInfo'>,
   projectId: ProjectId,
 ): ScalingRiskStateValidationZkEntry['trustedSetups'] {
-  const relevantProofSystemIds = new Set(
-    project.zkCatalogInfo.verifierHashes
-      .filter((v) => v.usedBy.includes(projectId))
-      .map((v) => `${v.proofSystem.type}-${v.proofSystem.id}`),
+  const relevantVerifiers = project.zkCatalogInfo.verifierHashes.filter((v) =>
+    v.usedBy.includes(projectId),
   )
 
-  return groupBy(
+  const relevantProofSystemIds = new Set(
+    relevantVerifiers.map((v) => `${v.proofSystem.type}-${v.proofSystem.id}`),
+  )
+
+  const grouped = groupBy(
     project.zkCatalogInfo.trustedSetups.filter((ts) =>
       relevantProofSystemIds.has(`${ts.proofSystem.type}-${ts.proofSystem.id}`),
     ),
     (ts) => `${ts.proofSystem.type}-${ts.proofSystem.id}`,
+  )
+
+  return Object.fromEntries(
+    Object.entries(grouped).map(([key, ts]) => {
+      const trustedSetupVerifiers = relevantVerifiers.filter(
+        (v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`,
+      )
+
+      const groupedByStatus = groupBy(
+        trustedSetupVerifiers,
+        (v) => v.verificationStatus,
+      )
+      return [
+        key,
+        {
+          trustedSetup: ts,
+          verifiers: {
+            successful: getVerifiersWithAttesters(
+              groupedByStatus,
+              'successful',
+            ),
+            unsuccessful: getVerifiersWithAttesters(
+              groupedByStatus,
+              'unsuccessful',
+            ),
+            notVerified: getVerifiersWithAttesters(
+              groupedByStatus,
+              'notVerified',
+            ),
+          },
+        },
+      ]
+    }),
   )
 }

@@ -3,6 +3,7 @@ import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { TrustedSetupCell } from '~/pages/zk-catalog/v2/components/TrustedSetupCell'
+import { VerifiedCountWithDetails } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import type {
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationZkEntry,
@@ -51,7 +52,10 @@ export const scalingRiskStateValidationColumns = [
       return (
         <div className="flex flex-col gap-2 py-2">
           {trustedSetupEntries.map(([key, ts]) => (
-            <TrustedSetupCell key={key} trustedSetup={{ trustedSetup: ts }} />
+            <TrustedSetupCell
+              key={key}
+              trustedSetup={{ trustedSetup: ts.trustedSetup }}
+            />
           ))}
         </div>
       )
@@ -59,6 +63,30 @@ export const scalingRiskStateValidationColumns = [
     meta: {
       tooltip:
         'Trusted setup information for the proof system used by this project',
+    },
+  }),
+  zkColumnHelper.display({
+    id: 'verifiers',
+    header: 'Verifiers',
+    cell: (ctx) => {
+      const trustedSetupEntries = Object.entries(
+        ctx.row.original.trustedSetups ?? {},
+      )
+
+      if (trustedSetupEntries.length === 0) {
+        return <TableValueCell value={undefined} emptyMode="n/a" />
+      }
+      return (
+        <div className="flex flex-col gap-2 py-2">
+          {trustedSetupEntries.map(([key, ts]) => (
+            <VerifiedCountWithDetails key={key} data={ts.verifiers} />
+          ))}
+        </div>
+      )
+    },
+    meta: {
+      tooltip:
+        'Shows the number of different versions of onchain verifiers and whether they were independently checked by regenerating them from the proving system’s source code. A green check indicates successful verification, while a red cross indicates a failure to regenerate.',
     },
   }),
 ]

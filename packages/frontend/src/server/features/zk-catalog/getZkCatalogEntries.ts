@@ -19,7 +19,7 @@ import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
 
-type TrustedSetupVerifierData = {
+export type TrustedSetupVerifierData = {
   count: number
   attesters: (ZkCatalogAttester & { icon: string })[]
 }
@@ -153,9 +153,18 @@ function getTrustedSetupsWithVerifiersAndAttesters(
         {
           trustedSetup: ts,
           verifiers: {
-            successful: getVerifiers(groupedByStatus, 'successful'),
-            unsuccessful: getVerifiers(groupedByStatus, 'unsuccessful'),
-            notVerified: getVerifiers(groupedByStatus, 'notVerified'),
+            successful: getVerifiersWithAttesters(
+              groupedByStatus,
+              'successful',
+            ),
+            unsuccessful: getVerifiersWithAttesters(
+              groupedByStatus,
+              'unsuccessful',
+            ),
+            notVerified: getVerifiersWithAttesters(
+              groupedByStatus,
+              'notVerified',
+            ),
           },
           projectsUsedIn: getProjectsUsedIn(
             uniq(trustedSetupVerifiers.flatMap((v) => v.usedBy)),
@@ -167,7 +176,7 @@ function getTrustedSetupsWithVerifiersAndAttesters(
   )
 }
 
-function getVerifiers(
+export function getVerifiersWithAttesters(
   verifiers: Record<string, ProjectZkCatalogInfo['verifierHashes']>,
   key: 'successful' | 'unsuccessful' | 'notVerified',
 ): TrustedSetupVerifierData | undefined {
