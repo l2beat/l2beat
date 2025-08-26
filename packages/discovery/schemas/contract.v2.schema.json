@@ -591,7 +591,8 @@
                 "type": "object",
                 "properties": {
                   "type": { "const": "YieldFiMinters" },
-                  "permissionlessMinting": { "type": "boolean" }
+                  "permissionlessMinting": { "type": "boolean" },
+                  "mintingWithPermit": { "type": "boolean" }
                 },
                 "required": ["type"]
               }
