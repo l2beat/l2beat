@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "linea",
-  "timestamp": 1756193866,
+  "timestamp": 1756214374,
   "configHash": "0x8832718897b2cb3efddcea2e3096c4289be152ffd944938c942e90faa6a1f696",
   "entries": [
     {
@@ -478,18 +478,18 @@
           }
         },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "1100030218536197875670",
+        "currentPeriodAmountInWei": "1132322359786197875670",
         "currentPeriodEnd": 1756253657,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
         "L1_L2_MESSAGE_SETTER_ROLE": "0x4705265620026983c754c5288b65446d794a03174326ec6d7c0b5c7f1fd67415",
-        "lastAnchoredL1MessageNumber": 776209,
+        "lastAnchoredL1MessageNumber": 776312,
         "limitInWei": "15000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 97037,
+        "nextMessageNumber": 97051,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
@@ -602,7 +602,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SafeL2",
+      "name": "Linea Multisig 4",
       "address": "linea:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -655,7 +655,7 @@
         "getChainId": 59144,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -748,11 +748,12 @@
       "name": "ProxyAdmin",
       "address": "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A",
@@ -773,10 +774,12 @@
       "name": "LineaVoyageXP",
       "address": "linea:0xd83af4fbD77f3AB65C3B1Dc4B38D7e67AEcf599A",
       "type": "Contract",
+      "template": "linea/LineaVoyageXP",
       "sourceHashes": [
         "0x27c154755b817aa7f568ee6f2c163f981b6af18c0c3a1708d6a79932467ff12c"
       ],
       "proxyType": "immutable",
+      "description": "Voyage XP tokens are non-transferrable, soulbound tokens that are distributed to recognize the community’s contribution toward the growth of the Linea ecosystem.",
       "sinceTimestamp": 1699958814,
       "sinceBlock": 854427,
       "values": {
@@ -849,7 +852,7 @@
       }
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "Linea Multisig 3",
       "address": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -981,6 +984,14 @@
             { "address": "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E" },
             { "address": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca" }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A",
+          "role": "admin",
+          "via": [
+            { "address": "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -988,6 +999,11 @@
           "permission": "act",
           "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
           "role": ".executorAC"
+        },
+        {
+          "permission": "act",
+          "from": "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1554,8 +1570,9 @@
     "linea/L2MessageService": "0x429c2108cfcc2f721da1dd13c550c20b46f8ff1cb6447ad2ab549156948cc8b3",
     "linea/L2Roles": "0x87df637d02e99d769d43f393133e5ea3e583758a151bdccb3bf7a6a1bd6c6187",
     "linea/L2TokenBridge": "0xde60fe36104dfc27d1da95bf2e74c70fc2b30fa7cb17e179ebcfce8c4a701e3b",
+    "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698"
   },
-  "usedBlockNumbers": { "linea": 22525076 },
-  "permissionsConfigHash": "0xdf1a88b755dd56bfba2003ee567cf99b75b5f652bf98c05d7e28be467796ecef"
+  "usedBlockNumbers": { "linea": 22535193 },
+  "permissionsConfigHash": "0x63a7b38ae7023cd94800908979cb2de2e86d79feee5df47ddec430a68e5634e6"
 }

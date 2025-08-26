@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb60e5dfc9d21a3a3b5c3f87708d83aa503370357
+Generated with discovered.json: 0x49689d20c48dce3c84516b6d1680f2491bfd205e
 
-# Diff at Tue, 26 Aug 2025 07:39:13 GMT:
+# Diff at Tue, 26 Aug 2025 13:20:59 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current timestamp: 1756193866
+- current timestamp: 1756214374
 
 ## Description
 
@@ -43,7 +43,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract SafeL2 (0xB8F5524D73f549Cf14A0587a3C7810723f9c0051)
+    contract Linea Multisig 4 (0xB8F5524D73f549Cf14A0587a3C7810723f9c0051)
     +++ description: None
 ```
 
@@ -62,7 +62,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract LineaVoyageXP (0xd83af4fbD77f3AB65C3B1Dc4B38D7e67AEcf599A)
-    +++ description: None
+    +++ description: Voyage XP tokens are non-transferrable, soulbound tokens that are distributed to recognize the community’s contribution toward the growth of the Linea ecosystem.
 ```
 
 ```diff
@@ -79,6 +79,6 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD)
+    contract Linea Multisig 3 (0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD)
     +++ description: None
 ```

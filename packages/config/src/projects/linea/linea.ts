@@ -94,7 +94,6 @@ assert(
   'disco config is wrong for the L2 pausers, check hardcoded pausers in the L2Roles module',
 )
 
-
 const periodInSeconds = discovery.getContractValue<number>(
   'LineaRollup',
   'periodInSeconds',

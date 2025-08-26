@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x42702091db431d969abead3753c9aa2a0a5b4a54
+Generated with discovered.json: 0x3943f0ea0cbf7cb57663e5006ee300628a1d5b15
 
-# Diff at Tue, 26 Aug 2025 07:39:13 GMT:
+# Diff at Tue, 26 Aug 2025 13:20:59 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@15f4ab3f78712626d5b541bd838f3514a301704c block: 1756122271
-- current timestamp: 1756193866
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1756122271
+- current timestamp: 1756214374
 
 ## Description
 
@@ -110,6 +110,10 @@ discovery. Values are for block 1756122271 (main branch discovery), not current.
 +        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can unpause token bridging actions initiated from the other layer.","role":".completeTokenBridgingUnpausers"}
       receivedPermissions.13:
 +        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can unpause token bridging actions initiated from this layer.","role":".initiateTokenBridgingUnpausers"}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0x504A330327A089d8364C4ab3811Ee26976d388ce","role":"admin","via":[{"address":"eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5","role":".owner"}
     }
 ```
 
