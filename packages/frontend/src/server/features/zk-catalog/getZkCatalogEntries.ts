@@ -119,8 +119,8 @@ function getZkCatalogEntry(
         ...(project.zkCatalogInfo.techStack.finalWrap ?? []),
         ...(project.zkCatalogInfo.techStack.zkVM ?? []),
       ].map((techStack) => ({
-        id: 'techStack' as const,
-        value: `${techStack.type}: ${techStack.name}`,
+        id: techStack.type,
+        value: techStack.name,
       })),
     ],
   }

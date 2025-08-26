@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "previewDeposit",
+    "previewWithdraw",
+    "previewRedeem",
+    "previewMint"
+  ],
+  "fields": {
+    "$minters": {
+      "handler": {
+        "type": "YieldFiMinters",
+        "permissionlessMinting": true
+      }
+    }
+  }
+}

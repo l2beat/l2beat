@@ -2,7 +2,12 @@ import {
   LEVEL,
   type LogLevel,
 } from '@l2beat/backend-tools/dist/logger/LogLevel'
-import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+  Hash256,
+} from '@l2beat/shared-pure'
 import { extendType, string, type Type } from 'cmd-ts'
 import { stat } from 'fs/promises'
 
@@ -10,6 +15,14 @@ export const EthereumAddressValue: Type<string, EthereumAddress> = {
   from(str): Promise<EthereumAddress> {
     return new Promise((resolve, _) => {
       resolve(EthereumAddress(str))
+    })
+  },
+}
+
+export const ChainSpecificAddressValue: Type<string, ChainSpecificAddress> = {
+  from(str): Promise<ChainSpecificAddress> {
+    return new Promise((resolve, _) => {
+      resolve(ChainSpecificAddress(str))
     })
   },
 }

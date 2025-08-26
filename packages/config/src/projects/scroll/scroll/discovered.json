@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "timestamp": 1755858338,
-  "configHash": "0x2191704f0d354db60384a67be893b35cffdd1799df54ba47952af63234b93212",
+  "timestamp": 1756130522,
+  "configHash": "0x6e386ff7bfe037be174acda5e779881498f60bf10f0347ee3fcbf4b3fdcff488",
   "entries": [
     {
       "address": "scr:0x0000000000000000000000000000000000000000",
@@ -240,8 +240,8 @@
               "setOverhead(uint256)": ["ops-fast"],
               "setCommitScalar(uint256)": ["ops-fast"],
               "setBlobScalar(uint256)": ["ops-fast"],
-              "0xaa5e9334": ["ops-fast"],
-              "0xc63b9e2d": ["ops-fast"]
+              "setPenaltyThreshold(uint256)": ["ops-fast"],
+              "setPenaltyFactor(uint256)": ["ops-fast"]
             },
             "scr:0x5300000000000000000000000000000000000005": {
               "updateMinWithdrawAmount(uint256)": ["ops-fast"],
@@ -953,44 +953,13 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xec63153efc658cbf72bb86116325d6b26118299d15cee4101ce14426896f3b38",
+        "messageRoot": "0xa4a74fe3139591b411e803797e1aa80c0f21e47c68b7ad7dcd6eaf8a50f8ca94",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 208154,
+        "nextMessageIndex": 208378,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
         "scr:0x5300000000000000000000000000000000000000": "L2MessageQueue"
-      }
-    },
-    {
-      "name": "WrappedEther",
-      "address": "scr:0x5300000000000000000000000000000000000004",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x12e6a853608d733e3bfa691f3dc87cb51c904c95216fb71e9388291df395e2b6"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696917614,
-      "sinceBlock": 0,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0xe5b117a3cd7ae7ed3508e6e6c5a0794536b2a8dee12533c4d7524eae9c85438f",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "Wrapped Ether",
-          "version": "1",
-          "chainId": 534352,
-          "verifyingContract": "scr:0x5300000000000000000000000000000000000004",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "name": "Wrapped Ether",
-        "symbol": "WETH",
-        "totalSupply": "4497294538621618165812"
-      },
-      "implementationNames": {
-        "scr:0x5300000000000000000000000000000000000004": "WrappedEther"
       }
     },
     {
@@ -1218,8 +1187,8 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpart": "scr:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
-        "l1WETH": "scr:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "counterpart": "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
+        "l1WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "router": "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79",
@@ -1228,7 +1197,8 @@
       "implementationNames": {
         "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": "TransparentUpgradeableProxy",
         "scr:0x86c5CBfC03ffFC7faf5dfC7D781A9adfA9f47dD1": "L2WETHGateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
@@ -1321,19 +1291,6 @@
       },
       "implementationNames": {
         "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14": "TimelockController"
-      }
-    },
-    {
-      "name": "L2WETHGatewayCounterpart",
-      "address": "scr:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1696926410,
-      "sinceBlock": 507,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "scr:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": ""
       }
     },
     {
@@ -1474,11 +1431,6 @@
         {
           "permission": "upgrade",
           "from": "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32",
           "role": "admin"
         }
       ],
@@ -1887,11 +1839,6 @@
       }
     },
     {
-      "address": "scr:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "scr:0xc1985e3712b33a5303e097e9CeD22E91338ba64d",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2232,55 +2179,6 @@
       "address": "scr:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "L2WstETHToken",
-      "address": "scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x056b26625eff7fc71f9c1713f15f554997c0fc8d9940f0829aa4c6279d10a3ce"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1696920347,
-      "sinceBlock": 136,
-      "values": {
-        "$admin": "scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45",
-        "$implementation": "scr:0x38224D52ecC979aEdfEb31b1EEa0cfCEbd55247e",
-        "$pastUpgrades": [
-          [
-            "2023-10-10T06:45:47.000Z",
-            "0x99221b546d9bf9930e0906dc9e841e2d7c88066403fc4f07eb7645644a6ae1c3",
-            ["scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69"]
-          ],
-          [
-            "2024-03-05T07:52:25.000Z",
-            "0x64c28a89bdfa47a14998cdaaa4d85113e72c451e817a294930f93bdee4a3d598",
-            ["scr:0x38224D52ecC979aEdfEb31b1EEa0cfCEbd55247e"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "counterpart": "scr:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0x7ea5e6f23fd742b512a890cc64bcc4f1a466bacce8c83108554b76ceec5f6ca8",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "Wrapped liquid staked Ether 2.0",
-          "version": "1",
-          "chainId": 534352,
-          "verifyingContract": "scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "gateway": "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9",
-        "name": "Wrapped liquid staked Ether 2.0",
-        "symbol": "wstETH",
-        "totalSupply": "978415033324282926152"
-      },
-      "implementationNames": {
-        "scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32": "TransparentUpgradeableProxy",
-        "scr:0x38224D52ecC979aEdfEb31b1EEa0cfCEbd55247e": "L2WstETHToken"
-      }
     },
     {
       "address": "scr:0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf",
@@ -2735,33 +2633,6 @@
       "function withdrawETH(uint256 _amount, uint256 _gasLimit) payable",
       "function withdrawETHAndCall(address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable"
     ],
-    "scr:0x38224D52ecC979aEdfEb31b1EEa0cfCEbd55247e": [
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event EIP712DomainChanged()",
-      "event Initialized(uint8 version)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(address _from, uint256 _amount)",
-      "function counterpart() view returns (address)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function gateway() view returns (address)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function initialize(string _name, string _symbol, uint8 _decimals, address _gateway, address _counterpart)",
-      "function mint(address _to, uint256 _amount)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferAndCall(address receiver, uint256 amount, bytes data) returns (bool success)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
-    ],
     "scr:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -2859,33 +2730,6 @@
       "function owner() view returns (address)",
       "function renounceOwnership()",
       "function transferOwnership(address _newOwner)"
-    ],
-    "scr:0x5300000000000000000000000000000000000004": [
-      "constructor()",
-      "error InvalidShortString()",
-      "error StringTooLong(string str)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event EIP712DomainChanged()",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Withdrawal(address indexed src, uint256 wad)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function deposit() payable",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function withdraw(uint256 wad)"
     ],
     "scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3556,12 +3400,6 @@
     "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": [
       "constructor(address _singleton)"
     ],
-    "scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": [
       "error AlreadyInit()",
       "error InvalidApprovalThreshold()",
@@ -3583,6 +3421,6 @@
     "scroll/ScrollOwnerL2": "0x77eb1863ff595be1f6d216e4eb34cc75c37aae99c08c2cd56f8adaa13c218141",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "scroll": 19865398 },
-  "permissionsConfigHash": "0xa503276cff8a4826484533c69a5fcd17ca0a9f6b3d73fc86103c87b21e349ed3"
+  "usedBlockNumbers": { "scroll": 20078282 },
+  "permissionsConfigHash": "0x89101ff15afb68cf17ea6a03c5084f8f21983ecf6456fd5e5ecd9a9069f931bd"
 }
