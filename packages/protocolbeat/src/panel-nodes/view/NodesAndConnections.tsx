@@ -18,7 +18,9 @@ export function NodesAndConnections() {
         if (shouldHide) return null
 
         const targetNode = visible.find((n) => n.id === field.target)
-        const isDashed = targetNode?.addressType === 'EOA'
+        const isDashed =
+          targetNode?.addressType === 'EOA' ||
+          targetNode?.addressType === 'EOAPermissioned'
         const isHighlighted =
           selected.includes(node.id) || selected.includes(field.target)
         const isDimmed = enableDimming && selected.length > 0 && !isHighlighted
