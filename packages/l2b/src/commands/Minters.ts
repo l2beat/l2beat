@@ -1,53 +1,88 @@
-import { getChainConfig } from '@l2beat/discovery'
+import type { Logger } from '@l2beat/backend-tools'
+import { getChainConfig, type IProvider } from '@l2beat/discovery'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { command, positional } from 'cmd-ts'
 import { getProvider } from '../implementations/common/GetProvider'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import {
-  getDebugTraces,
+  fetchAndAnalyze,
   getMintTransactions,
-  traverseTraces,
 } from '../implementations/minters/getMinters'
-import { EthereumAddressValue } from './types'
+import { ChainSpecificAddressValue } from './types'
 
 export const Minters = command({
   name: 'minters',
   description:
     'Find token minters based on event transfers and traces - returns list of msg.senders who called given function.',
   args: {
-    chain: positional({
-      displayName: 'chain',
+    address: positional({
+      type: ChainSpecificAddressValue,
+      displayName: 'address',
     }),
-    address: positional({ type: EthereumAddressValue, displayName: 'address' }),
   },
   handler: async (args) => {
+    const chainName = ChainSpecificAddress.longChain(args.address)
     const logger = getPlainLogger()
-    const chain = getChainConfig(args.chain)
+    const chain = getChainConfig(chainName)
 
     const provider = await getProvider(chain.rpcUrl, chain.explorer)
-    Object.assign(provider, { chain: args.chain })
+    Object.assign(provider, { chain: chainName })
 
     logger.info('Getting mint transactions...')
     const transactions = await getMintTransactions(provider, args.address)
     logger.info(`Done. Got ${transactions.length} transactions`)
 
-    logger.info('Getting debug traces...')
-    let counter = 0
-    const onFetch = (txHash: string) => {
-      counter++
-      logger.info(
-        `Fetched trace for ${txHash} [${counter}/${transactions.length}] `,
-      )
+    if (transactions.length === 0) {
+      logger.info('No mint transactions found.')
+      return
     }
-    const traces = await getDebugTraces(provider, transactions, onFetch)
-    logger.info(`Done. Got ${traces.length} traces`)
 
-    logger.info('Traversing traces...')
-    const minters = traverseTraces(traces)
-    logger.info(`Done. Got ${minters.length} minters`)
+    logger.info('Processing traces...')
+    const minters = await analyzeAll(provider, logger, transactions)
 
-    logger.info('Minters:')
+    assert(
+      minters.length > 0,
+      `No minters found despite ${transactions.length} mint transactions - logic/provider might be flawed`,
+    )
+
+    logger.info(`Done. Found ${minters.length} minter(s):`)
     for (const minter of minters) {
       logger.info(`• ${minter}`)
     }
   },
 })
+
+async function analyzeAll(
+  provider: IProvider,
+  logger: Logger,
+  transactions: string[],
+) {
+  const minters = new Set<string>()
+  let counter = 0
+  let nextPercentToLog = 10
+
+  await Promise.all(
+    transactions.map(async (txHash) => {
+      const mintersDetected = await fetchAndAnalyze(provider, txHash)
+
+      for (const minter of mintersDetected) {
+        if (!minters.has(minter)) {
+          logger.info(`New minter detected - ${minter}`)
+        }
+
+        minters.add(minter)
+      }
+
+      counter++
+
+      // tick safety
+      const percent = Math.floor((counter / transactions.length) * 100)
+      if (percent >= nextPercentToLog) {
+        logger.info(`Processed ${percent}% traces`)
+        nextPercentToLog += 10
+      }
+    }),
+  )
+
+  return [...minters]
+}

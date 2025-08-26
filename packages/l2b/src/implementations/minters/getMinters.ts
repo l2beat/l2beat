@@ -18,16 +18,11 @@ const topic0 = iface.getEventTopic('Transfer')
 
 export async function getMintTransactions(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ) {
   const topics = iface.encodeFilterTopics('Transfer', [EthereumAddress.ZERO])
 
-  const chainSpecificAddress = ChainSpecificAddress.fromLong(
-    provider.chain,
-    address,
-  )
-
-  const logs = await provider.getLogs(chainSpecificAddress, topics)
+  const logs = await provider.getLogs(address, topics)
 
   return [...new Set(logs.map((log) => log.transactionHash))]
 }
@@ -46,14 +41,12 @@ export function getDebugTraces(
   )
 }
 
-export function traverseTraces(traces: DebugTransactionCallResponse[]) {
+export function traverseTrace(trace: DebugTransactionCallResponse) {
   const sendersSet = new Set<string>()
 
-  for (const trace of traces) {
-    for (const call of trace.calls ?? []) {
-      for (const { sender } of walk(call, call.from)) {
-        sendersSet.add(sender)
-      }
+  for (const call of trace.calls ?? []) {
+    for (const { sender } of walk(call, call.from)) {
+      sendersSet.add(sender)
     }
   }
 
@@ -80,4 +73,13 @@ function* walk(
   for (const nested of call.calls ?? []) {
     yield* walk(nested, nextLastCallSender)
   }
+}
+
+export async function fetchAndAnalyze(provider: IProvider, txHash: string) {
+  const trace = await provider.getDebugTrace(Hash256(txHash))
+  const minters = traverseTrace(trace)
+
+  return minters.map((minter) =>
+    ChainSpecificAddress.fromLong(provider.chain, minter),
+  )
 }
