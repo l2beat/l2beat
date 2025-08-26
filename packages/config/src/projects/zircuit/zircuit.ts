@@ -51,7 +51,7 @@ const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
   references: [
     {
       title:
-        'L2OutputOracle.sol - Etherscan source code - bootstrapV2() function',
+        'L2OutputOracle.sol - Etherscan source code - bootstrapL2Output() function',
       url: 'https://etherscan.io/address/0x92Ef6Af472b39F1b363da45E35530c24619245A4',
     },
     {
