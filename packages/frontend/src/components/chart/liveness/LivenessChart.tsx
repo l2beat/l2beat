@@ -1,11 +1,13 @@
 import type { Milestone } from '@l2beat/config'
 import {
+  assert,
   assertUnreachable,
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart, ReferenceArea } from 'recharts'
+import { Area, AreaChart, ReferenceArea, ReferenceLine } from 'recharts'
 import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -43,6 +45,21 @@ interface Props {
   resolution: LivenessChartResolution
 }
 
+const chartMeta = {
+  range: {
+    label: 'Min&max submission interval',
+    color: 'var(--chart-pink-stroke-gradient-1)',
+    indicatorType: {
+      shape: 'line',
+    },
+  },
+  avg: {
+    label: 'Average interval',
+    color: 'var(--chart-pink)',
+    indicatorType: { shape: 'line', strokeDasharray: '3 3' },
+  },
+} satisfies ChartMeta
+
 export function LivenessChart({
   data,
   isLoading,
@@ -55,20 +72,11 @@ export function LivenessChart({
   anyAnomalyLive,
   resolution,
 }: Props) {
-  const chartMeta = {
-    range: {
-      label: 'Min&max submission interval',
-      color: 'var(--chart-pink-stroke-gradient-1)',
-      indicatorType: {
-        shape: 'line',
-      },
-    },
-    avg: {
-      label: 'Average interval',
-      color: 'var(--chart-pink)',
-      indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-    },
-  } satisfies ChartMeta
+  const noPostedAreas = useMemo(() => getNoPostedAreas(data), [data])
+  const maxNoPostedAreaEnd = useMemo(
+    () => Math.max(...noPostedAreas.map((area) => area.end)),
+    [noPostedAreas],
+  )
 
   return (
     <ChartContainer
@@ -81,6 +89,23 @@ export function LivenessChart({
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
+        {noPostedAreas.map((area) => (
+          <ReferenceArea
+            key={`${area.start}-${area.end}`}
+            x1={area.start}
+            x2={area.end}
+            fill="url(#noDataLiveness)"
+            stroke={area.start.toString()}
+          />
+        ))}
+        {noPostedAreas.map((area) => (
+          <ReferenceLine
+            key={area.end}
+            x={area.end}
+            stroke="var(--surface-primary)"
+            strokeWidth={2}
+          />
+        ))}
         <Area
           dataKey="range"
           isAnimationActive={false}
@@ -117,6 +142,7 @@ export function LivenessChart({
             fillOpacity={anyAnomalyLive ? 0.2 : undefined}
           />
         )}
+
         <ChartTooltip
           filterNull={false}
           content={
@@ -124,6 +150,7 @@ export function LivenessChart({
               subtype={subtype}
               anyAnomalyLive={anyAnomalyLive}
               resolution={resolution}
+              maxNoPostedAreaEnd={maxNoPostedAreaEnd}
             />
           }
         />
@@ -131,6 +158,20 @@ export function LivenessChart({
           <PinkFillGradientDef id="fillRange" />
           <PinkStrokeGradientDef id="strokeRange" />
           <NoDataPatternDef />
+          <pattern
+            id="noDataLiveness"
+            patternUnits="userSpaceOnUse"
+            width="20"
+            height="20"
+            patternTransform="rotate(45)"
+          >
+            <rect
+              width="10"
+              height="20"
+              fill="var(--chart-pink)"
+              fillOpacity={0.5}
+            />
+          </pattern>
         </defs>
       </AreaChart>
     </ChartContainer>
@@ -144,10 +185,12 @@ function LivenessCustomTooltip({
   subtype,
   anyAnomalyLive,
   resolution,
+  maxNoPostedAreaEnd,
 }: TooltipProps<number, string> & {
   subtype: TrackedTxsConfigSubtype
   anyAnomalyLive: boolean
   resolution: LivenessChartResolution
+  maxNoPostedAreaEnd: number
 }) {
   if (!active || !payload || typeof timestamp !== 'number') return null
 
@@ -161,7 +204,9 @@ function LivenessCustomTooltip({
   if (!range?.value || !avg?.value) {
     content = (
       <div className="mt-2 font-medium text-label-value-16">
-        {anyAnomalyLive ? getTooltipContent(subtype) : 'No data'}
+        {anyAnomalyLive || timestamp <= maxNoPostedAreaEnd
+          ? getTooltipContent(subtype)
+          : 'No data'}
       </div>
     )
   } else {
@@ -238,4 +283,31 @@ function getTooltipContent(subtype: TrackedTxsConfigSubtype) {
     default:
       assertUnreachable(subtype)
   }
+}
+
+function getNoPostedAreas(data: LivenessChartDataPoint[] | undefined) {
+  const noPostedAreas: { start: number; end: number }[] = []
+
+  let i = 0
+  let start: number | undefined
+  while (i < (data?.length ?? 0)) {
+    const point = data?.at(i)
+    const nextPoint = data?.at(i + 1)
+    assert(point, 'Point is defined')
+    if (start !== undefined && point.range !== null && point.avg !== null) {
+      noPostedAreas.push({ start, end: point.timestamp })
+      start = undefined
+    }
+    if (
+      start === undefined &&
+      nextPoint?.range === null &&
+      nextPoint?.avg === null
+    ) {
+      start = point.timestamp
+    }
+
+    i++
+  }
+
+  return noPostedAreas
 }
