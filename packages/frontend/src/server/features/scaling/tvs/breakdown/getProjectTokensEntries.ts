@@ -1,17 +1,6 @@
-import type {
-  ChainConfig,
-  Formula,
-  Project,
-  ProjectContract,
-  TvsToken,
-} from '@l2beat/config'
+import type { ChainConfig, Formula, Project, TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
-import {
-  assertUnreachable,
-  ChainSpecificAddress,
-  TokenId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assertUnreachable, TokenId, UnixTime } from '@l2beat/shared-pure'
 import capitalize from 'lodash/capitalize'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import { env } from '~/env'
@@ -46,7 +35,7 @@ export interface TvsBreakdownTokenEntry extends FilterableEntry {
   isAssociated: TvsToken['isAssociated']
   isGasToken?: boolean
   address?: AddressData
-  formula: Formula & { explorerUrl?: string }
+  formula: Formula & { addressUrl?: string; escrowAddressUrl?: string }
   syncStatus?: string
   bridgedUsing?: {
     bridges: {
@@ -146,15 +135,18 @@ function getEntries(
 function withExplorerUrl(
   formula: Formula,
   chains: ChainConfig[],
-): Formula & { explorerUrl?: string } {
+): Formula & { addressUrl?: string; escrowAddressUrl?: string } {
   switch (formula.type) {
     case 'balanceOfEscrow': {
       const explorer = chains.find((c) => c.name === formula.chain)?.explorerUrl
 
       return {
         ...formula,
-        explorerUrl: explorer
+        escrowAddressUrl: explorer
           ? `${explorer}/address/${formula.escrowAddress}`
+          : undefined,
+        addressUrl: explorer
+          ? `${explorer}/address/${formula.address}`
           : undefined,
       }
     }
@@ -170,7 +162,7 @@ function withExplorerUrl(
 
       return {
         ...formula,
-        explorerUrl: explorer
+        addressUrl: explorer
           ? `${explorer}/address/${formula.address}`
           : undefined,
       }
@@ -186,24 +178,17 @@ function withExplorerUrl(
 function processAddresses(
   addresses: Address[],
   chains: ChainConfig[],
-  projectContracts?: Record<string, ProjectContract[]>,
 ): TvsBreakdownTokenEntry['address'] {
   if (addresses.length > 1) {
     return 'multiple'
   }
   if (addresses.length === 1 && addresses[0]) {
     const address = addresses[0]
-    const contractName = projectContracts?.[address.chain]?.find(
-      (c) =>
-        ChainSpecificAddress.address(c.address).toLowerCase() ===
-        address.address.toLowerCase(),
-    )?.name
     const explorer = chains.find((c) => c.name === address.chain)?.explorerUrl
 
     return {
       address: address.address,
       url: explorer ? `${explorer}/address/${address.address}` : undefined,
-      name: contractName,
     }
   }
   return undefined

@@ -103,9 +103,11 @@ function BalanceOfEscrow({
   return (
     <p>
       Balance of{' '}
+      <EtherscanLink address={formula.address} href={formula.addressUrl} /> in
+      escrow at{' '}
       <EtherscanLink
         address={formula.escrowAddress}
-        href={formula.explorerUrl}
+        href={formula.escrowAddressUrl}
       />
     </p>
   )
@@ -122,7 +124,7 @@ function CirculatingSupply({
   return (
     <p>
       Circulating supply of{' '}
-      <EtherscanLink address={formula.address} href={formula.explorerUrl} />
+      <EtherscanLink address={formula.address} href={formula.addressUrl} />
     </p>
   )
 }
@@ -209,7 +211,7 @@ function TotalSupply({
   return (
     <p>
       Total supply of{' '}
-      <EtherscanLink address={formula.address} href={formula.explorerUrl} />
+      <EtherscanLink address={formula.address} href={formula.addressUrl} />
     </p>
   )
 }
