@@ -60,6 +60,41 @@ assert(
   'disco config is wrong for the pausers, check hardcoded pausers in the Roles module',
 )
 
+const zodiacL2Roles = discovery.getContractValue<{
+  roles: Record<string, Record<string, boolean>>
+}>('L2Roles', 'roles')
+const zodiacVoyageXpMinterRole = '1'
+const zodiacVoyageXpMinters: ProjectPermissionedAccount[] =
+  discovery.formatPermissionedAccounts(
+    Object.keys(zodiacL2Roles.roles[zodiacVoyageXpMinterRole].members),
+  )
+const zodiacVoyageXpMintersHardcoded = discovery.getPermissionedAccounts(
+  'L2Roles',
+  'voyageXpMinters',
+)
+assert(
+  zodiacVoyageXpMinters.length === zodiacVoyageXpMintersHardcoded.length &&
+    zodiacVoyageXpMinters[0].address ===
+      zodiacVoyageXpMintersHardcoded[0].address,
+  'disco config is wrong for the voyageXpMinters, check hardcoded voyageXpMinters in the L2Roles module',
+)
+
+const zodiacL2PauserRole = '2'
+const zodiacL2Pausers: ProjectPermissionedAccount[] =
+  discovery.formatPermissionedAccounts(
+    Object.keys(zodiacL2Roles.roles[zodiacL2PauserRole].members),
+  )
+const zodiacL2PausersHardcoded = discovery.getPermissionedAccounts(
+  'L2Roles',
+  'pausers',
+)
+assert(
+  zodiacL2Pausers.length === zodiacL2PausersHardcoded.length &&
+    zodiacL2Pausers[0].address === zodiacL2PausersHardcoded[0].address,
+  'disco config is wrong for the L2 pausers, check hardcoded pausers in the L2Roles module',
+)
+
+
 const periodInSeconds = discovery.getContractValue<number>(
   'LineaRollup',
   'periodInSeconds',

@@ -1,14 +1,28 @@
-Generated with discovered.json: 0xf63e0936a08ebdda8b2f15d2163a07360d0bc05b
+Generated with discovered.json: 0x42702091db431d969abead3753c9aa2a0a5b4a54
 
-# Diff at Mon, 25 Aug 2025 15:06:36 GMT:
+# Diff at Tue, 26 Aug 2025 07:39:13 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@828b4eded571ebe4abe88b292bc0c7a10079c1e7 block: 1756122271
-- current timestamp: 1756132740
+- comparing to: main@15f4ab3f78712626d5b541bd838f3514a301704c block: 1756122271
+- current timestamp: 1756193866
 
 ## Description
 
 Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x5822D8457c00FB82203918ED92907b935B9D40AE"
++        "eth:0xC263178AC471C4411abAf5c22cD4D8D67033bc82"
+      values.$members.6:
+-        "eth:0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1"
++        "eth:0x99234cd9B532F30538ac797D33c212e3B69Fd087"
+    }
+```
 
 ## Config/verification related changes
 

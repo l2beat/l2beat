@@ -10,15 +10,27 @@
         "type": "lineaRolesModule"
       }
     },
-    "pausers": {
+    "voyageXpMinters": {
       "handler": {
         "type": "hardcoded", // hack, but checked in .ts
-        "value": "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+        "value": "linea:0x97643DD2dFE4dd0b64d43504BAC4ADb2923fdf7a"
       },
       "permissions": [
         {
           "type": "interact",
-          "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract)."
+          "description": "can mint XP soulbound tokens as part of the Voyage campaign."
+        }
+      ]
+    },
+    "pausers": {
+      "handler": {
+        "type": "hardcoded", // hack, but checked in .ts
+        "value": "linea:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause the L2MessageService, the TokenBridge and the L2USDCBridge."
         }
       ]
     }
