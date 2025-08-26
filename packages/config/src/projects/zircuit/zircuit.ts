@@ -298,6 +298,14 @@ export const zircuit: ScalingProject = opStackL2({
   },
   milestones: [
     {
+      title: 'Proof system migrated to SP1',
+      date: '2025-25-05T00:00:00.00Z',
+      description:
+        'Zircuit deprecates its in-house proof system in favor of SP1.',
+      type: 'general',
+      url: 'https://etherscan.io/address/0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67',
+    },
+    {
       title: 'Escape mechanism',
       url: 'https://www.zircuit.com/blog/mainnet-phase-1-is-live',
       date: '2025-08-05T00:00:00.00Z',
