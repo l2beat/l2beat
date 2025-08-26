@@ -13,7 +13,7 @@ export interface SyncMetadataRecord {
   feature: SyncMetadataFeature
   id: string
   target: UnixTime
-  syncedUntil: UnixTime
+  syncedUntil: UnixTime | null
 }
 
 export function toRecord(row: Selectable<SyncMetadata>): SyncMetadataRecord {
@@ -21,7 +21,7 @@ export function toRecord(row: Selectable<SyncMetadata>): SyncMetadataRecord {
     ...row,
     feature: row.feature as SyncMetadataFeature,
     target: UnixTime.fromDate(row.target),
-    syncedUntil: UnixTime.fromDate(row.syncedUntil),
+    syncedUntil: row.syncedUntil ? UnixTime.fromDate(row.syncedUntil) : null,
   }
 }
 
@@ -29,6 +29,8 @@ export function toRow(record: SyncMetadataRecord): Insertable<SyncMetadata> {
   return {
     ...record,
     target: UnixTime.toDate(record.target),
-    syncedUntil: UnixTime.toDate(record.syncedUntil),
+    syncedUntil: record.syncedUntil
+      ? UnixTime.toDate(record.syncedUntil)
+      : null,
   }
 }

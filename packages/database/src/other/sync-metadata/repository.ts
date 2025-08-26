@@ -42,7 +42,11 @@ export class SyncMetadataRepository extends BaseRepository {
   ): Promise<void> {
     await this.db
       .updateTable('SyncMetadata')
-      .set({ syncedUntil: UnixTime.toDate(record.syncedUntil) })
+      .set({
+        syncedUntil: record.syncedUntil
+          ? UnixTime.toDate(record.syncedUntil)
+          : null,
+      })
       .where('feature', '=', record.feature)
       .where('id', '=', record.id)
       .execute()

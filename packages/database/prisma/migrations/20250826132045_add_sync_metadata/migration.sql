@@ -3,7 +3,7 @@ CREATE TABLE "SyncMetadata" (
     "feature" VARCHAR(255) NOT NULL,
     "id" VARCHAR(255) NOT NULL,
     "target" TIMESTAMP(6) NOT NULL,
-    "syncedUntil" TIMESTAMP(6) NOT NULL,
+    "syncedUntil" TIMESTAMP(6),
 
     CONSTRAINT "SyncMetadata_pkey" PRIMARY KEY ("feature","id")
 );
