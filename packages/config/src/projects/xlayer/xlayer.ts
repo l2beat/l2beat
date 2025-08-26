@@ -41,6 +41,7 @@ export const xlayer: ScalingProject = {
     },
     category: 'Other',
     purposes: ['Universal'],
+    stacks: ['Agglayer CDK']
   },
   dataAvailability: {
     layer: DA_LAYERS.NONE,
@@ -68,6 +69,9 @@ export const xlayer: ScalingProject = {
       type: 'block',
       startBlock: 1,
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('agglayer'),
   },
   chainConfig: {
     name: 'xlayer',
