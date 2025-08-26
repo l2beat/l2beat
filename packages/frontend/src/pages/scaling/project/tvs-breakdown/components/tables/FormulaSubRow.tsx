@@ -1,9 +1,9 @@
 import type { CalculationFormula } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
-import { EtherscanLink } from '~/components/EtherscanLink'
 import type { TvsBreakdownTokenEntry } from '~/server/features/scaling/tvs/breakdown/getProjectTokensEntries'
 import { cn } from '~/utils/cn'
+import { TokenAddressCell } from './cells/TokenAddressCell'
 
 export function renderFormulaSubComponent<
   T extends { formula: TvsBreakdownTokenEntry['formula'] },
@@ -100,15 +100,17 @@ function BalanceOfEscrow({
     { type: 'balanceOfEscrow' }
   >
 }) {
+  if (formula.addressMeta.address === 'native') {
+    return (
+      <p>
+        Balance in <TokenAddressCell {...formula.escrowAddressMeta} />
+      </p>
+    )
+  }
   return (
     <p>
-      Balance of{' '}
-      <EtherscanLink address={formula.address} href={formula.addressUrl} /> in
-      escrow at{' '}
-      <EtherscanLink
-        address={formula.escrowAddress}
-        href={formula.escrowAddressUrl}
-      />
+      Balance of <TokenAddressCell {...formula.addressMeta} /> in{' '}
+      <TokenAddressCell {...formula.escrowAddressMeta} />
     </p>
   )
 }
@@ -123,8 +125,7 @@ function CirculatingSupply({
 }) {
   return (
     <p>
-      Circulating supply of{' '}
-      <EtherscanLink address={formula.address} href={formula.addressUrl} />
+      Circulating supply of <TokenAddressCell {...formula.addressMeta} />
     </p>
   )
 }
@@ -210,8 +211,7 @@ function TotalSupply({
 }) {
   return (
     <p>
-      Total supply of{' '}
-      <EtherscanLink address={formula.address} href={formula.addressUrl} />
+      Total supply of <TokenAddressCell {...formula.addressMeta} />
     </p>
   )
 }

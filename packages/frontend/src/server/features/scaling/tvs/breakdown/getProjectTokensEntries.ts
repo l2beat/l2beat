@@ -25,13 +25,11 @@ import {
   extractAddressesFromTokenConfig,
 } from './extractAddressesFromTokenConfig'
 
-type AddressData =
-  | {
-      address: string
-      url?: string
-      name?: string
-    }
-  | 'multiple'
+type AddressData = {
+  address: string
+  url?: string
+  name?: string
+}
 
 export interface TvsBreakdownTokenEntry extends FilterableEntry {
   id: TvsToken['id']
@@ -45,8 +43,8 @@ export interface TvsBreakdownTokenEntry extends FilterableEntry {
   source: TvsToken['source']
   isAssociated: TvsToken['isAssociated']
   isGasToken?: boolean
-  address?: AddressData
-  formula: Formula & { addressUrl?: string; escrowAddressUrl?: string }
+  address?: AddressData | 'multiple'
+  formula: FormulaWithMeta
   syncStatus?: string
   bridgedUsing?: {
     bridges: {
@@ -114,7 +112,11 @@ function getEntries(
       source: token.source,
       isAssociated: token.isAssociated,
       address,
-      formula: withExplorerUrl(token.valueForProject ?? token.amount, chains),
+      formula: withExplorerUrl(
+        token.valueForProject ?? token.amount,
+        chains,
+        project.contracts?.addresses,
+      ),
       iconUrl: token.iconUrl ?? '',
       valueForProject: tokenValue.valueForProject,
       value: tokenValue.value,
@@ -147,42 +149,80 @@ function getEntries(
   return breakdown.sort((a, b) => +b.valueForProject - +a.valueForProject)
 }
 
+// Ik its ugly but it works and is type safe
+type FormulaWithMeta =
+  | (Extract<Formula, { type: 'balanceOfEscrow' }> & {
+      addressMeta: AddressData
+      escrowAddressMeta: AddressData
+    })
+  | (Omit<Extract<Formula, { type: 'calculation' }>, 'arguments'> & {
+      arguments: FormulaWithMeta[]
+    })
+  | (Extract<
+      Formula,
+      { type: 'circulatingSupply' | 'totalSupply' | 'starknetTotalSupply' }
+    > & {
+      addressMeta: AddressData
+    })
+  | (Omit<Extract<Formula, { type: 'value' }>, 'amount'> & {
+      amount: FormulaWithMeta
+    })
+  | Extract<Formula, { type: 'const' }>
+
 function withExplorerUrl(
   formula: Formula,
   chains: ChainConfig[],
-): Formula & { addressUrl?: string; escrowAddressUrl?: string } {
+  projectContracts: Record<string, ProjectContract[]> | undefined,
+): FormulaWithMeta {
   switch (formula.type) {
     case 'balanceOfEscrow': {
-      const explorer = chains.find((c) => c.name === formula.chain)?.explorerUrl
-
       return {
         ...formula,
-        escrowAddressUrl: explorer
-          ? `${explorer}/address/${formula.escrowAddress}`
-          : undefined,
-        addressUrl: explorer
-          ? `${explorer}/address/${formula.address}`
-          : undefined,
+        escrowAddressMeta: processAddress(
+          {
+            address: formula.escrowAddress,
+            chain: formula.chain,
+          },
+          chains,
+          projectContracts,
+        ),
+        addressMeta: processAddress(
+          {
+            address: formula.address,
+            chain: formula.chain,
+          },
+          chains,
+          projectContracts,
+        ),
       }
     }
     case 'calculation':
       return {
         ...formula,
-        arguments: formula.arguments.map((arg) => withExplorerUrl(arg, chains)),
+        arguments: formula.arguments.map((arg) =>
+          withExplorerUrl(arg, chains, projectContracts),
+        ),
       }
     case 'circulatingSupply':
     case 'totalSupply':
     case 'starknetTotalSupply': {
-      const explorer = chains.find((c) => c.name === formula.chain)?.explorerUrl
-
       return {
         ...formula,
-        addressUrl: explorer
-          ? `${explorer}/address/${formula.address}`
-          : undefined,
+        addressMeta: processAddress(
+          {
+            address: formula.address,
+            chain: formula.chain,
+          },
+          chains,
+          projectContracts,
+        ),
       }
     }
     case 'value':
+      return {
+        ...formula,
+        amount: withExplorerUrl(formula.amount, chains, projectContracts),
+      }
     case 'const':
       return formula
     default:
@@ -193,27 +233,35 @@ function withExplorerUrl(
 function processAddresses(
   addresses: Address[],
   chains: ChainConfig[],
-  projectContracts?: Record<string, ProjectContract[]>,
-): TvsBreakdownTokenEntry['address'] {
+  projectContracts: Record<string, ProjectContract[]> | undefined,
+): AddressData | 'multiple' | undefined {
   if (addresses.length > 1) {
     return 'multiple'
   }
   if (addresses.length === 1 && addresses[0]) {
     const address = addresses[0]
-    const contractName = projectContracts?.[address.chain]?.find(
-      (c) =>
-        ChainSpecificAddress.address(c.address).toLowerCase() ===
-        address.address.toLowerCase(),
-    )?.name
-    const explorer = chains.find((c) => c.name === address.chain)?.explorerUrl
-
-    return {
-      address: address.address,
-      url: explorer ? `${explorer}/address/${address.address}` : undefined,
-      name: contractName,
-    }
+    return processAddress(address, chains, projectContracts)
   }
   return undefined
+}
+
+function processAddress(
+  address: Address,
+  chains: ChainConfig[],
+  projectContracts: Record<string, ProjectContract[]> | undefined,
+): AddressData {
+  const contractName = projectContracts?.[address.chain]?.find(
+    (c) =>
+      ChainSpecificAddress.address(c.address).toLowerCase() ===
+      address.address.toLowerCase(),
+  )?.name
+  const explorer = chains.find((c) => c.name === address.chain)?.explorerUrl
+
+  return {
+    address: address.address,
+    url: explorer ? `${explorer}/address/${address.address}` : undefined,
+    name: contractName,
+  }
 }
 
 function getSyncStatus(valueTimestamp: UnixTime, targetTimestamp: UnixTime) {
