@@ -15,6 +15,7 @@ export type YieldFiMintersDefinition = v.infer<typeof YieldFiMintersDefinition>
 export const YieldFiMintersDefinition = v.strictObject({
   type: v.literal('YieldFiMinters'),
   permissionlessMinting: v.boolean().optional(),
+  mintingWithPermit: v.boolean().optional(),
 })
 
 export class YieldFiMintersHandler implements Handler {
@@ -72,6 +73,7 @@ export class YieldFiMintersHandler implements Handler {
       value: {
         members: Array.from(minters),
         permissionlessMinting: this.definition.permissionlessMinting,
+        mintingWithPermit: this.definition.mintingWithPermit,
       },
     }
   }
