@@ -2,7 +2,7 @@
   "name": "yieldfi",
   "chain": "ethereum",
   "timestamp": 1755603175,
-  "configHash": "0xabb637e7a0442f8de9bb68c0c2edb0ed67835bb2b266f028cfb7fc69234209e1",
+  "configHash": "0xf48269b3ccef287cf1718ed3a361eb48ea27ff6d0563b8dae753407177ae27ee",
   "entries": [
     {
       "name": "Manager",
