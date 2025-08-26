@@ -10,7 +10,7 @@ type OpStackProject = {
   L2OutputOracle: string | undefined
 }
 
-export function analyseAllOpStackChains(
+export function analyzeAllOpStackChains(
   projectToCompare: string | null,
   paths: DiscoveryPaths,
 ) {

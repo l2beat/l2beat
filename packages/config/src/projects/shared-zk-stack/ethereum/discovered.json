@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "timestamp": 1754120227,
-  "configHash": "0x0aaaef30a9547a261f336c6d448ed0f4644527e8980f2484a86102f52e582259",
+  "timestamp": 1755850298,
+  "configHash": "0x638fd22e7e7c628851d3e7f4c75557f1a7fd87fbb5c2007c4df4dba9a44efb20",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -3287,6 +3287,6 @@
     "shared-zk-stack/SecurityCouncil": "0x0b8804832bc8dce16a070579f3ae7bd8a88ec36c613ed48e2ffc2d8fae340180",
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23051924 },
+  "usedBlockNumbers": { "ethereum": 23195336 },
   "permissionsConfigHash": "0xb225a1c4ad9acaae4a1265042a215cb9c2dffbea01a44fa59f1fc00bc0dda257"
 }

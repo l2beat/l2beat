@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x51fc8642e4f6190293ed7e5d7c9e68f8272f1d60
+Generated with discovered.json: 0xfb51c48c4eba9c71359796a5a62002ad31d32141
 
 # Diff at Mon, 14 Jul 2025 12:45:54 GMT:
 
@@ -5116,7 +5116,7 @@ Generated with discovered.json: 0x9499a161dab92924ef2ab20a6556f1aa1fc54d83
 
 ## Description
 
-The implementation of SequencerInbox was upgraded to a differenct contract with identical code.
+The implementation of SequencerInbox was upgraded to a different contract with identical code.
 This was done to change the immutable boolean `isUsingFeeToken` to false. This immutable should indeed be false on ethereum mainnet as it signifies the base L1 using a custom fee token. (Used as a check for `submitBatchSpendingReport()` function that is needed for fee sequencer fee reimbursement)
 
 ## Watched changes

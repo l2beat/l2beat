@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x5b6346a8ea0720df42f49abe826ed6501334406b
+Generated with discovered.json: 0xc3ae9ff369a8facf587796c3d38da1ffc9015c3b
 
 # Diff at Mon, 28 Jul 2025 06:07:38 GMT:
 
@@ -5595,7 +5595,7 @@ Generated with discovered.json: 0xf57bca95bc2f9c5a0ff66a0694131823eb2943bd
 
 ## Description
 
-Added shapes to strategy template to automatically apply the template. Templetized ignoring eigen() token method to prevent custom strategy from spamming.
+Added shapes to strategy template to automatically apply the template. Templated ignoring eigen() token method to prevent custom strategy from spamming.
 
 ## Config/verification related changes
 
@@ -5778,7 +5778,7 @@ Generated with discovered.json: 0x8e81bf69871f9c75df3876cc95e439c7edc13416
 
 ## Description
 
-A third quorum is added. (added config) This new quorum uses a yet unverified strategy to count its stake. (Probbaly related to restaked ALT)
+A third quorum is added. (added config) This new quorum uses a yet unverified strategy to count its stake. (Probably related to restaked ALT)
 
 source: [StakeRegistry.strategyParams(2,0)](https://etherscan.io/address/0x006124Ae7976137266feeBFb3F4D2BE4C073139D#readProxyContract#F20)
 

@@ -27,7 +27,7 @@
         },
         "priceId": "coinbase-wrapped-btc"
       },
-      "category": "stablecoin",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -447,7 +447,7 @@
         },
         "priceId": "solv-btc"
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {

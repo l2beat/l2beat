@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -12,6 +12,7 @@ export const bob: ScalingProject = opStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPKailua],
   additionalPurposes: ['Bitcoin DApps'],
+  isPartOfSuperchain: true,
   display: {
     name: 'BOB',
     slug: 'bob',
@@ -57,12 +58,17 @@ export const bob: ScalingProject = opStackL2({
     },
     {
       title: 'Phase 1: Optimistic BOB',
-      url: 'https://docs.gobob.xyz/docs/bob-chain/roadmap/#-phase-1-bootstrapping-as-an-ethereum-l2',
+      url: 'https://x.com/build_on_bob/status/1763642185101004914',
       date: '2024-05-01T00:00:00Z',
       description: 'BOB bootstrapping as an Optimistic Rollup on Ethereum.',
       type: 'general',
     },
   ],
+  nonTemplateProofSystem: {
+    type: 'Optimistic',
+    name: 'OP Kailua',
+    zkCatalogId: ProjectId('risc0'),
+  },
   chainConfig: {
     name: 'bob',
     chainId: 60808,

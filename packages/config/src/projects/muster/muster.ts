@@ -21,7 +21,6 @@ export const muster: ScalingProject = orbitStackL3({
     slug: 'muster',
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
-    category: 'Other',
     description:
       'Muster Network is an Arbitrum Orbit L3 gaming chain aiming to transform digital ownership for brands and games while managing blockchain infrastructure and security.',
     links: {
@@ -29,10 +28,15 @@ export const muster: ScalingProject = orbitStackL3({
       bridges: [
         'https://bridge.arbitrum.io/?destinationChain=muster&sourceChain=arbitrum-one',
       ],
-      documentation: ['https://docs.cometh.io/marketplace'],
+      documentation: ['https://docs.cometh.io'],
       explorers: ['https://muster-explorer.alt.technology/'],
       repositories: ['https://github.com/cometh-hq'],
-      socialMedia: ['https://x.com/Cometh', 'https://blog.cometh.io/'],
+      socialMedia: [
+        'https://x.com/Cometh',
+        'https://blog.cometh.io/',
+        'https://linkedin.com/company/comethstudio',
+        'https://youtube.com/@comethio',
+      ],
     },
   },
   chainConfig: {

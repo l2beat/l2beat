@@ -9,6 +9,7 @@
     "getRestakeableStrategies"
   ],
   "ignoreMethods": ["deployedPolicyIDs", "strategies"],
+  "ignoreInWatchMode": ["getDeployedPolicies"],
   "fields": {
     "intmaxThreshold": {
       "handler": {

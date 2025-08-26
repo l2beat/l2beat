@@ -10,5 +10,11 @@
     "address": "0xA75112d1df37FA53a431525CD47A7d7faCEA7E73",
     "chain": "ethereum",
     "blockNumber": 22424645
+  },
+  "DelegationManager_redistribution": {
+    "hash": "0x070312684717f779729ea8c996718a93f984ef1cc6afd216b9b80007e7d49e7c",
+    "address": "0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89",
+    "chain": "ethereum",
+    "blockNumber": 23083543
   }
 }

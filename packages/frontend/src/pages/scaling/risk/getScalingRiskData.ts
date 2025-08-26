@@ -27,6 +27,9 @@ export async function getScalingRiskData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Risk Analysis - L2BEAT',
+        description:
+          'Understand the risks of Ethereum scaling solutions using L2BEAT’s assessments.',
         openGraph: {
           url: req.originalUrl,
           image: '/meta-images/scaling/risk-analysis/opengraph-image.png',

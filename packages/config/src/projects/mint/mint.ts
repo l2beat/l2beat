@@ -13,6 +13,7 @@ export const mint: ScalingProject = opStackL2({
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  isPartOfSuperchain: true,
   display: {
     name: 'Mint',
     slug: 'mint',

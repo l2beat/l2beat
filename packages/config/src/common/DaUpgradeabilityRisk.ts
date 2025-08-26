@@ -26,7 +26,7 @@ function SecurityCouncil(delaySeconds: number): TableReadyValue {
       ...common,
       value: formatSeconds(delaySeconds),
       sentiment: 'good',
-      description: `User have more than ${formatSeconds(
+      description: `Users have more than ${formatSeconds(
         delaySeconds,
       )} days to exit the system before the bridge implementation update is completed.`,
     }
@@ -47,7 +47,7 @@ function SecurityCouncil(delaySeconds: number): TableReadyValue {
     ...common,
     value: `SC ${formatSeconds(delaySeconds)}`,
     sentiment: 'bad',
-    description: `User have more than ${formatSeconds(
+    description: `Users have more than ${formatSeconds(
       delaySeconds,
     )} days to exit the system before the bridge implementation update is completed.`,
   }
@@ -61,7 +61,7 @@ function Eoa(delaySeconds: number): TableReadyValue {
       ...common,
       value: formatSeconds(delaySeconds),
       sentiment: 'warning',
-      description: `User have more than ${formatSeconds(
+      description: `Users have more than ${formatSeconds(
         delaySeconds,
       )} days to exit the system before the bridge implementation update is completed.`,
     }
@@ -71,7 +71,7 @@ function Eoa(delaySeconds: number): TableReadyValue {
     ...common,
     value: formatSeconds(delaySeconds),
     sentiment: 'bad',
-    description: `User have more than ${formatSeconds(
+    description: `Users have more than ${formatSeconds(
       delaySeconds,
     )} days to exit the system before the bridge implementation update is completed.`,
   }

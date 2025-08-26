@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "scroll",
   "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 200,
   "initialAddresses": [
     "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
     "eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
@@ -60,9 +61,9 @@
     "eth:0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": "ZkEvmVerifierV2-1",
     "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "PlonkVerifierV2-1",
     "eth:0xf5bABa891e6De03540ecfb1917B8F07112A45a83": "ZkEvmVerifierPostEuclid",
-    "eth:0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba": "ZkEvmVerifierPostEuclid-2",
+    "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA": "ZkEvmVerifierPostEuclid-2",
     "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": "PlonkVerifierPostEuclid",
-    "eth:0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6": "PlonkVerifierPostEuclid-2",
+    "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": "PlonkVerifierPostEuclid-2",
     "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
     "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "pufETHEscrow",
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow",
@@ -74,7 +75,9 @@
     "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4": "TimelockSCEmergencyScroll",
     "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376": "TimelockFast",
     "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f": "TimelockEmergency",
-    "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4": "Scroll USDC"
+    "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4": "Scroll USDC",
+    "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd": "L2PauseController",
+    "scr:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "L2WETHGatewayCounterpart"
   },
   "overrides": {
     "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": {
@@ -156,6 +159,11 @@
         "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
       }
     },
+    "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": {
+      "manualSourcePaths": {
+        "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.5.2/bundle/verifier.bin"
+      }
+    },
     "eth:0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": { "category": "spam" },
     "eth:0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": { "category": "spam" },
     "eth:0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3": { "category": "spam" },
@@ -163,6 +171,9 @@
     "eth:0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": { "category": "spam" },
     "eth:0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": { "category": "spam" },
     "eth:0x63FB51C55d9605a75F8872C80De260a00fACfaA2": { "category": "spam" },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreDiscovery": true
+    },
     "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14": {
       "fields": {
         "timelockAdminAC": {
@@ -217,24 +228,6 @@
     "scr:0xd29687c813D741E2F938F4aC377128810E217b1b": {
       "ignoreMethods": ["getPastTotalSupply", "clock"]
     },
-    "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "scrollAccessControl",
-            "roleNames": {
-              "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "SECURITY_COUNCIL_NO_DELAY_ROLE",
-              "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85": "SCROLL_MULTISIG_NO_DELAY_ROLE",
-              "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761": "EMERGENCY_MULTISIG_NO_DELAY_ROLE",
-              "0x0bc16a0ae95f4e5b799d8e99b60c3f58a85a250a4113bda01d7aa9161915bb51": "emergency-nodelay",
-              "0x25cde7d55aec2382cb151a266953ae458755f20dbd760809260e51683955fe9e": "ops-fast",
-              "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79": "TIMELOCK_1DAY_DELAY_TOLE",
-              "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": "TIMELOCK_7DAY_DELAY_ROLE"
-            }
-          }
-        }
-      }
-    },
     "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484": {
       "description": "Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway."
     },
@@ -272,6 +265,18 @@
     "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79": {
       "description": "Counterpart to the L1GatewayRouter contract."
     },
+    "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": {
+      "fields": {
+        "counterpart": { "edit": ["format", "EthereumAddress"] },
+        "l1WETH": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "scr:0x5300000000000000000000000000000000000004": {
+      "ignoreDiscovery": true
+    },
+    "scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32": {
+      "ignoreDiscovery": true
+    },
     "scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896": { "category": "spam" },
     "scr:0x0f50874f227621Dea72482004639a9fFe440A4dA": { "category": "spam" },
     "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d": { "category": "spam" },
@@ -284,6 +289,9 @@
     "scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825": { "category": "spam" },
     "scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": { "category": "spam" },
     "scr:0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf": { "category": "spam" },
-    "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": { "category": "spam" }
+    "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": { "category": "spam" },
+    "scr:0x0c67D8D067E349669dfEAB132A7c03A90594eE09": {
+      "ignoreDiscovery": true
+    }
   }
 }

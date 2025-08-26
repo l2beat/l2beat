@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x0a8e9b670a543c3b05e0a41a4a604688176611ba
+
+# Diff at Tue, 12 Aug 2025 14:43:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754911841
+- current timestamp: 1755009465
+
+## Description
+
+Conduit Multisig 1 signer added.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 12 (33%)"
+    }
+```
+
+Generated with discovered.json: 0xb92b83816716de143694d9e67c39c44a2754e087
+
+# Diff at Mon, 11 Aug 2025 11:30:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32817e35c9fe0ba1a1c24a734c37d91068b1565d block: 1753462307
+- current timestamp: 1754911841
+
+## Description
+
+basefeescalar increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x525a2744134805516a45B8abb6Aa0aA1dA3809F6) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        684000
++        1368000
+    }
+```
+
 Generated with discovered.json: 0x8fa5b40ba1b1759f52f51772fb49aa164620089d
 
 # Diff at Fri, 25 Jul 2025 15:49:57 GMT:

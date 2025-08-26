@@ -10,5 +10,11 @@
     "address": "0xBa32ca8BcD3AEd8bd5d9CB93B9967580C53aD728",
     "chain": "ethereum",
     "blockNumber": 22966922
+  },
+  "PausableIsm_v904": {
+    "hash": "0xc3e01cdc19c1b0970c3e92b9e8be45ed0fe4ae69242b992dba1f4894b62b1569",
+    "address": "0x8047Ac910670E8596CA57Bf7F7ddB8a706079c60",
+    "chain": "ethereum",
+    "blockNumber": 23137805
   }
 }

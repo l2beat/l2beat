@@ -1,4 +1,38 @@
-Generated with discovered.json: 0xaa74771f9b0f9ccfddfd1a0fff6c0b9cd16b4806
+Generated with discovered.json: 0xba8741cde0c2e89bed1c892780c925481cfada9a
+
+# Diff at Tue, 12 Aug 2025 14:38:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754569855
+- current timestamp: 1755009465
+
+## Description
+
+Conduit Multisig 1 signer added.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        68400
++        205200
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 12 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x151e4af629ae53e7c0d0a93eba6224141d0464d3
 
 # Diff at Fri, 25 Jul 2025 15:49:52 GMT:
 
@@ -8,7 +42,7 @@ Generated with discovered.json: 0xaa74771f9b0f9ccfddfd1a0fff6c0b9cd16b4806
 
 ## Description
 
-Conduit: Optiportal2 upgrade (permissioned gametype). All contracts are using standard implementations.
+Conduit: OptimismPortal2 upgrade (permissioned gametype). All contracts are using standard implementations.
 
 absolute prestate: v1.6.0 (cannon64) - does not use alt-DA commitments
 

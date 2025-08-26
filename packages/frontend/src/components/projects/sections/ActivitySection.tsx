@@ -1,4 +1,5 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { ProjectActivityChart } from '../../chart/activity/ProjectActivityChart'
 import { ProjectSection } from './ProjectSection'
@@ -6,18 +7,16 @@ import type { ProjectSectionProps } from './types'
 
 export interface ActivitySectionProps extends ProjectSectionProps {
   id: 'activity'
-  projectId: string
+  project: ChartProject
   milestones: Milestone[]
   category?: ProjectScalingCategory
-  projectName?: string
   defaultRange: ActivityTimeRange
 }
 
 export function ActivitySection({
-  projectId,
+  project,
   milestones,
   category,
-  projectName,
   defaultRange,
   ...sectionProps
 }: ActivitySectionProps) {
@@ -25,9 +24,8 @@ export function ActivitySection({
     <ProjectSection {...sectionProps}>
       <ProjectActivityChart
         milestones={milestones}
-        projectId={projectId}
+        project={project}
         category={category}
-        projectName={projectName}
         defaultRange={defaultRange}
       />
     </ProjectSection>

@@ -287,7 +287,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Canonical (external escrow)"
+            "name": "Custom escrow"
           }
         ]
       }
@@ -989,7 +989,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

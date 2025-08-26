@@ -11,7 +11,7 @@ import {
   positional,
   string,
 } from 'cmd-ts'
-import { getChainConfig, getChainConfigs } from '../config/config.discovery'
+import { getChainConfigs } from '../config/config.discovery'
 import type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,
@@ -20,14 +20,8 @@ import { ConfigReader } from '../discovery/config/ConfigReader'
 import { getDiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
 import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
 import { configureLogger } from './logger'
-import { ChainValue } from './types'
 
 export const DiscoverCommandArgs = {
-  chain: positional({
-    type: ChainValue,
-    displayName: 'chain',
-    description: 'name of the chain on which discovery will happen',
-  }),
   project: positional({
     type: string,
     displayName: 'project',
@@ -99,12 +93,8 @@ export const DiscoverCommand = command({
   args: DiscoverCommandArgs,
   handler: (args) => {
     const chainConfigs = getChainConfigs()
-    const chain = getChainConfig(args.chain)
 
-    const config: DiscoveryModuleConfig = {
-      ...args,
-      chain,
-    }
+    const config: DiscoveryModuleConfig = { ...args }
 
     discover(config, chainConfigs)
   },
@@ -137,10 +127,6 @@ export async function discover(
   }
 
   logger = logger.for('Discovery')
-  logger.info(
-    `Starting discovery of ${chalk.blue(config.project)} on ${chalk.blue(
-      config.chain.name,
-    )}`,
-  )
+  logger.info(`Starting discovery of ${chalk.blue(config.project)}`)
   await runDiscovery(paths, http, configReader, config, chainConfigs, logger)
 }

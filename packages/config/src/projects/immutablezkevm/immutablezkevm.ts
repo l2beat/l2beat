@@ -43,7 +43,6 @@ export const immutablezkevm: ScalingProject = {
     slug: 'immutablezkevm',
     description:
       'Immutable zkEVM is a sidechain focused on gaming and powered by Polygon stack. It plans to eventually transition to a ZK Rollup.',
-    category: 'Other',
     purposes: ['Universal'],
     links: {
       websites: ['https://immutable.com/products/immutable-zkevm'],
@@ -52,6 +51,7 @@ export const immutablezkevm: ScalingProject = {
       explorers: ['https://explorer.immutable.com/'],
     },
   },
+  proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',
   },

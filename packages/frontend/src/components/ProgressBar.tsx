@@ -14,7 +14,12 @@ export function ProgressBar({
   trackClassName,
 }: ProgressBarSVGProps) {
   return (
-    <div className={cn('relative h-3 w-full', className)}>
+    <div
+      className={cn(
+        'relative h-3 w-full overflow-hidden rounded-full',
+        className,
+      )}
+    >
       {/* Background track */}
       <div
         className={cn(
@@ -26,7 +31,7 @@ export function ProgressBar({
       {/* Progress fill */}
       <div
         className={cn(
-          'absolute inset-y-0 left-0 rounded-full bg-primary',
+          'absolute inset-y-0 left-0 mr-px ml-px rounded-full bg-primary',
           progressClassName,
         )}
         style={{

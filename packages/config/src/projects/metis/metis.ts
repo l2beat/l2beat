@@ -19,7 +19,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatChallengePeriod } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -66,7 +65,6 @@ export const metis: ScalingProject = {
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM. It uses a decentralized Sequencer pool running Tendermint consensus and MPC module to sign transaction batches.',
     purposes: ['Universal'],
     stacks: ['OVM'],
-    category: 'Other',
     links: {
       websites: ['https://metis.io'],
       bridges: ['https://bridge.metis.io'],
@@ -86,6 +84,7 @@ export const metis: ScalingProject = {
       ],
     },
   },
+  proofSystem: undefined,
   stage: getStage(
     {
       stage0: {
@@ -218,12 +217,11 @@ export const metis: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...RISK_VIEW.STATE_FP_INT,
+      ...RISK_VIEW.STATE_FP_INT(CHALLENGE_PERIOD_SECONDS),
       description:
-        RISK_VIEW.STATE_FP_INT.description +
+        RISK_VIEW.STATE_FP_INT().description +
         ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
       sentiment: 'bad',
-      secondLine: formatChallengePeriod(CHALLENGE_PERIOD_SECONDS),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),

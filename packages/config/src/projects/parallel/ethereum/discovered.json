@@ -2,7 +2,7 @@
   "name": "parallel",
   "chain": "ethereum",
   "timestamp": 1746547031,
-  "configHash": "0x176c0f74fa0df8fc8c94ac5f0e662a2aaa971aff6e4363132886bc8dead0fd80",
+  "configHash": "0xcadd7afff56a2d552403adc3f3fafa18b5a7d8d4bb091addc58fef8cf7e88cdc",
   "entries": [
     {
       "name": "Inbox",

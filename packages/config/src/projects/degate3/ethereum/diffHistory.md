@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x933cda9d7130f219253c603ef3639b154fdfc8c3
+Generated with discovered.json: 0x01c1ea3bfda78f075d353253ca7defc17eb3a5e6
 
 # Diff at Mon, 14 Jul 2025 12:44:58 GMT:
 
@@ -688,7 +688,7 @@ Generated with discovered.json: 0x2f5ff9403f5b0ceba03cfcc60518cca1105fba5f
 
 ## Description
 
-Discovery refresh. 
+Discovery refresh.
 
 ## Config/verification related changes
 

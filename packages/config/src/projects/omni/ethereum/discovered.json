@@ -1,14 +1,9 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "timestamp": 1754307769,
-  "configHash": "0x88938a2c9d7af8afcb80ee249bc3c8dbdce0ff9adb3baba1105eaa6470301458",
+  "timestamp": 1755171830,
+  "configHash": "0x1579affe7ab0c693d701abbdd21d419966009d958511be4e4d866db7e6ea36b9",
   "entries": [
-    {
-      "address": "eth:0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "Giveth EOA 2",
       "address": "eth:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
@@ -53,23 +48,6 @@
       "implementationNames": {
         "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba": "Yaru"
       }
-    },
-    {
-      "address": "eth:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
-          "role": "admin"
-        }
-      ]
     },
     {
       "address": "eth:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
@@ -272,10 +250,10 @@
         "hashiManager": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299",
         "isInitialized": true,
-        "maxAvailablePerTx": "9945470000000000000000000",
+        "maxAvailablePerTx": "9948790916878907112461780",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 1559,
+        "nonce": 1746,
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -293,7 +271,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Hashi Multisig",
       "address": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -302,6 +280,30 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
+          "role": "admin"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686042107,
       "sinceBlock": 17420395,
@@ -309,6 +311,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xd722EC6853e6EbAaf8664602A37855FAe872E482",
           "eth:0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
           "eth:0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf"
         ],
@@ -316,15 +319,14 @@
         "domainSeparator": "0xaee10730379a3d6df2303789b1843342698bd85d618cdf13a5f75b84e16d88eb",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 22,
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 23,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      },
-      "category": { "name": "Spam", "priority": -1 }
+      }
     },
     {
       "name": "ForeignAMB",
@@ -436,55 +438,6 @@
       "address": "eth:0x5b10cE4DDD27F57d4D432D409A5321219cbA7893",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Hashi Multisig",
-      "address": "eth:0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
-          "role": ".owner"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1729072343,
-      "sinceBlock": 20977347,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0xeca6EAa2C77d8f0aA9247e681C64455deAae51aC",
-          "eth:0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
-          "eth:0xB1dD1828794075f7521365163A93DE9e68e3c49f",
-          "eth:0x9bd93c5ad5e0a6be890c82FD77eE42ce8B642eF8"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0x55fd33e1f6d651168aaf544b6f7a3e8b59f3673b8dfdef28e13b9053b118aa40",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 7,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0x670a3e447F4DE92C012777Ac5591D81E12aD0957": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
     },
     {
       "name": "CoW Protocol EOA 2",
@@ -667,7 +620,7 @@
       "sinceTimestamp": 1726023347,
       "sinceBlock": 20724523,
       "values": {
-        "$admin": "eth:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
+        "$admin": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
         "$implementation": "eth:0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
         "$pastUpgrades": [
           [
@@ -684,12 +637,12 @@
         "expectedThreshold": 1,
         "implementation": "eth:0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
         "isInitialized": true,
-        "owner": "eth:0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
+        "owner": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
         "reporters": ["gno:0x0000000000000000000000000000000000000000"],
         "targetAddress": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
         "targetChainId": 100,
         "threshold": 1,
-        "upgradeabilityOwner": "eth:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
+        "upgradeabilityOwner": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
         "version": 1,
         "yaho": "eth:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
         "yaru": "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba"
@@ -742,7 +695,7 @@
       "sinceTimestamp": 1738140599,
       "sinceBlock": 21729100,
       "values": {
-        "$admin": "eth:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
+        "$admin": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
         "$implementation": "eth:0x716623daF27f2aFA8D6051A4Eda08E12107a2c83",
         "$pastUpgrades": [
           [
@@ -759,12 +712,12 @@
         "expectedThreshold": 1,
         "implementation": "eth:0x716623daF27f2aFA8D6051A4Eda08E12107a2c83",
         "isInitialized": true,
-        "owner": "eth:0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
+        "owner": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
         "reporters": ["gno:0x0000000000000000000000000000000000000000"],
         "targetAddress": "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6",
         "targetChainId": 100,
         "threshold": 1,
-        "upgradeabilityOwner": "eth:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
+        "upgradeabilityOwner": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
         "version": 1,
         "yaho": "eth:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
         "yaru": "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba"
@@ -798,11 +751,6 @@
       "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
     },
     {
-      "address": "eth:0x9bd93c5ad5e0a6be890c82FD77eE42ce8B642eF8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xA07888742c18d7e658132AE0148fF205fFF46481",
       "type": "EOA",
       "proxyType": "EOA"
@@ -821,11 +769,6 @@
       "implementationNames": {
         "eth:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": "Hashi"
       }
-    },
-    {
-      "address": "eth:0xB1dD1828794075f7521365163A93DE9e68e3c49f",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
@@ -888,6 +831,11 @@
     },
     {
       "address": "eth:0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xd722EC6853e6EbAaf8664602A37855FAe872E482",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -966,11 +914,6 @@
         "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": "EternalStorageProxy",
         "eth:0x6943A218d58135793F1FE619414eD476C37ad65a": "BridgeValidators"
       }
-    },
-    {
-      "address": "eth:0xeca6EAa2C77d8f0aA9247e681C64455deAae51aC",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "BridgeValidators_Omni",
@@ -1139,54 +1082,6 @@
       "function executeMessages(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) returns (bytes[])",
       "function executed(uint256) view returns (bool)"
     ],
-    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
-      "constructor()",
-      "event AddedOwner(address indexed owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address indexed handler)",
-      "event ChangedGuard(address indexed guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address indexed module)",
-      "event EnabledModule(address indexed module)",
-      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
-      "event RemovedOwner(address indexed owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
     "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": [
       "constructor(address _masterCopy)"
     ],
@@ -1213,9 +1108,6 @@
       "function transferProxyOwnership(address newOwner)",
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
-    ],
-    "eth:0x670a3e447F4DE92C012777Ac5591D81E12aD0957": [
-      "constructor(address _singleton)"
     ],
     "eth:0x6943A218d58135793F1FE619414eD476C37ad65a": [
       "function validatorCount() view returns (uint256)",
@@ -1660,6 +1552,6 @@
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23067472 },
-  "permissionsConfigHash": "0x59501709611c93965ad209722baf49b221b517759119304e98aacd9b0b2a0a3c"
+  "usedBlockNumbers": { "ethereum": 23139063 },
+  "permissionsConfigHash": "0xdd14a223281ad3007f536bad13ce1c6e2547595fe29cce02186ba8e2b58df53b"
 }

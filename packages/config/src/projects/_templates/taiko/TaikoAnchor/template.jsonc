@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TaikoAnchor",
+  "description": "Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.",
+  "ignoreMethods": [
+    "context",
+    "getMessageMinGasLimit",
+    "getBlockHash",
+    "lastSyncedBlock",
+    "parentTimestamp",
+    "publicInputHash"
+  ],
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    }
+  }
+}

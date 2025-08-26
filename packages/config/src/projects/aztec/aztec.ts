@@ -61,7 +61,6 @@ export const aztec: ScalingProject = {
     description:
       'Zk.Money v1 (Aztec v1, or sometimes called Aztec 2.0) is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
     purposes: ['Payments', 'Privacy'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],
       bridges: ['https://old.zk.money'],
@@ -73,6 +72,10 @@ export const aztec: ScalingProject = {
         'https://plonk.cafe/',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('aztecv1prover'),
   },
   config: {
     escrows: [

@@ -88,11 +88,9 @@ export const _StructureConfig = {
   sharedModules: v.array(v.string()).default([]),
   types: v.record(v.string(), DiscoveryCustomType).optional(),
 }
-// NOTE(radomsk): Big hack, shouldn't be like this
+// NOTE(radomski): Big hack, shouldn't be like this
 export const StructureConfig = v.object({
   name: v.string().check((v) => v.length >= 1),
-  chain: v.string().check((v) => v.length >= 1),
-  archived: v.boolean().optional(),
   import: v.array(v.string()).optional(),
   ..._StructureConfig,
 })

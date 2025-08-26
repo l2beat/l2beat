@@ -1,7 +1,7 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { getProjectDaThroughputChart } from '../../data-availability/throughput/getProjectDaThroughtputChart'
+import { getProjectDaThroughputChart } from '../../data-availability/throughput/getProjectDaThroughputChart'
 import { getActivityForProjectAndRange } from '../activity/getActivityForProjectAndRange'
 import { type CostsChartDataPoint, getCostsChart } from './getCostsChart'
 import { getCostsForProject } from './getCostsForProject'

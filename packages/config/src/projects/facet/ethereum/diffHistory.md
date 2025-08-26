@@ -1,3 +1,379 @@
+Generated with discovered.json: 0x72e48c1f62cde6fef47fb657fb8f93735cca9c5e
+
+# Diff at Mon, 25 Aug 2025 14:09:32 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1755605791
+- current timestamp: 1756118684
+
+## Description
+
+Cache issue, name FacetEtherBridgeV6 is correct.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755605791 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      sourceHashes.0:
+-        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2"
++        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
+      implementationNames.eth:0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        "ERC1967Factory"
++        "FacetEtherBridgeV6"
+    }
+```
+
+Generated with discovered.json: 0x7cb73d0e4c2b1ba9ed45474e55f4b8d60fc9f787
+
+# Diff at Fri, 22 Aug 2025 09:01:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@515ea2f778e0acc901831f9413259d8fb41219ff block: 1755605791
+- current timestamp: 1755605791
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755605791 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      sourceHashes.0:
+-        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
++        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2"
+      implementationNames.eth:0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        "FacetEtherBridgeV6"
++        "ERC1967Factory"
+    }
+```
+
+Generated with discovered.json: 0x8353bceb9d6213c536f528dfb173ae38f2251a06
+
+# Diff at Tue, 19 Aug 2025 12:17:22 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@67e41f566326dea91dc3f12a1b8947109f00301c block: 1755000507
+- current timestamp: 1755605791
+
+## Description
+
+Ignore anchor values.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755000507 (main branch discovery), not current.
+
+```diff
+    contract Rollup (0x686E7d01C7BFCB563721333A007699F154C04eb4) {
+    +++ description: Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.
+      values.getAnchorRoot:
+-        ["0x88b54f3a73b2cbb7f29caae53a780a8b4974c5e0bd157ad3c7bb122b72939bcc",1721260]
+    }
+```
+
+Generated with discovered.json: 0xe4aff01914f343654cdb84cac31b608f1dc388c6
+
+# Diff at Tue, 12 Aug 2025 12:08:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32a723ac08d08671a14307e26f7e27a0b92d39e7 block: 1754566470
+- current timestamp: 1755000507
+
+## Description
+
+Whitelisted Proposer changed. Config changes only (our side) for the bridge.
+
+## Watched changes
+
+```diff
+    contract Rollup (0x686E7d01C7BFCB563721333A007699F154C04eb4) {
+    +++ description: Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.
+      values.whitelistedProposers.0:
+-        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
++        "eth:0x615452db5467849689E98a8C5C242A96cF768a94"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754566470 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      sourceHashes.0:
+-        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2"
++        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
+      implementationNames.eth:0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        "ERC1967Factory"
++        "FacetEtherBridgeV6"
+    }
+```
+
+Generated with discovered.json: 0x8361ccb69ced4641e0e08f8a12cba6d6d81cee10
+
+# Diff at Thu, 07 Aug 2025 11:34:38 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3b461c4e9ab6af411ff23d3e19ddd42c0b1c052d block: 1745840699
+- current timestamp: 1754566470
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract L1Bridge (0x4E2eBa30a786c0643699b92234d74a71e958C08E) {
+    +++ description: L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      template:
++        "facet/L1ETHBridge"
+      sourceHashes:
++        ["0x2428a7345462c1359eba9d5cf1d2749c05cb9419787b7e2914c411bb0c244867"]
+      description:
++        "L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
+      sinceTimestamp:
++        1754512679
+      sinceBlock:
++        23084460
+      values:
++        {"$immutable":true,"depositNonce":1,"l2Bridge":"eth:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4","owner":"eth:0x0000000000000000000000000000000000000000","paused":false,"rollup":"eth:0x686E7d01C7BFCB563721333A007699F154C04eb4","withdrawalDelay":0}
+      implementationNames:
++        {"eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E":"L1Bridge"}
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract Rollup (0x686E7d01C7BFCB563721333A007699F154C04eb4) {
+    +++ description: Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      template:
++        "facet/Rollup"
+      sourceHashes:
++        ["0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"]
+      description:
++        "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system."
+      sinceTimestamp:
++        1754512643
+      sinceBlock:
++        23084457
+      values:
++        {"$immutable":true,"AGG_VKEY":"0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2","anchorL2BlockNumber":1721260,"anchorProposalId":0,"anchorRoot":"0x88b54f3a73b2cbb7f29caae53a780a8b4974c5e0bd157ad3c7bb122b72939bcc","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"10000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorRoot":["0x88b54f3a73b2cbb7f29caae53a780a8b4974c5e0bd157ad3c7bb122b72939bcc",1721260],"getProposalsLength":1,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1754499659,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":604800,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":5000000000000000,"RANGE_VKEY_COMMITMENT":"0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829","renouncedOwner":"eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","sequencerInbox":"eth:0x00000000000000000000000000000000000face7","VERIFIER":"eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0","whitelistedProposers":["eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"]}
+      implementationNames:
++        {"eth:0x686E7d01C7BFCB563721333A007699F154C04eb4":"Rollup"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract FacetSafeModule (0x3235AdE33cF7013f5b5A51089390396e931e6BCF)
+    +++ description: Module that allows the Safe to send Facet transactions.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FacetSafeProxy (0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25)
+    +++ description: Helper of the Safe Module that allows to send Facet transactions.
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/Facet Multisig/GnosisSafe.sol   |  953 +++++++
+ .../.flat/Facet Multisig/GnosisSafeProxy.p.sol     |   35 +
+ .../facet/ethereum/.flat/FacetSafeModule.sol       |   29 +
+ .../facet/ethereum/.flat/FacetSafeProxy.sol        |  488 ++++
+ .../src/projects/facet/ethereum/.flat/L1Bridge.sol | 2650 ++++++++++++++++++++
+ .../src/projects/facet/ethereum/.flat/Rollup.sol   | 1192 +++++++++
+ ...:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol | 1396 +++++++++++
+ ...:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol |  602 +++++
+ .../facet/ethereum/.flat/SP1VerifierGateway.sol    |  231 ++
+ 9 files changed, 7576 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745840699 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      name:
+-        "FacetEtherBridgeV6"
++        "FastExternalBridge"
+      description:
+-        "Official Facet implementation of the Ether Bridge."
++        "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing."
+      values.getAdmin:
+-        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
+      values.getDumbContract:
+-        "eth:0x1673540243E793B0e77C038D4a88448efF524DcE"
+      values.getSigner:
+-        "eth:0x314d660b083675f415cCAA9c545FeedF377d1006"
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract FacetSafeModule (0x3235AdE33cF7013f5b5A51089390396e931e6BCF)
+    +++ description: Module that allows the Safe to send Facet transactions.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal (0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
+    contract L1ETHLockbox (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
+    +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.
+      name:
+-        "L1StandardBridge"
++        "L1ETHLockbox"
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
++        "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw."
+      values.admin:
+-        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
+      values.l2TokenBridge:
+-        "eth:0xaCde2ce9a9Bc89ED083FaA80685E2bA2c9ec72E9"
+      values.messenger:
+-        "eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
+      values.MESSENGER:
+-        "eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
+      values.OTHER_BRIDGE:
+-        "eth:0xaCde2ce9a9Bc89ED083FaA80685E2bA2c9ec72E9"
+      values.otherBridge:
+-        "eth:0xaCde2ce9a9Bc89ED083FaA80685E2bA2c9ec72E9"
+      values.superchainConfig:
+-        "eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
+      values.systemConfig:
+-        "eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
+      values.weth:
+-        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0xa1233c2DB638D41893a101B0e9dd44cb681270E8)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0xC1E935F25f9c1198200ec442c6F02f1A2F04534e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FacetSafeProxy (0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25)
+    +++ description: Helper of the Safe Module that allows to send Facet transactions.
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract EthscriptionsSafeModule (0xDB866fD9241cd32851Df760c1Ec536f3199B22cE)
+    +++ description: Module that allows the Safe to interact with Ethscriptions.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xe2A3bda6CD571943DD4224d0B8872e221EB5997C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
+-   Status: DELETED
+    contract EthscriptionsSafeProxy (0xeEd444Fc821b866b002f30f502C53e88E15d5095)
+    +++ description: Helper of the Safe Module that allows to send Ethscriptions transactions.
+```
+
 Generated with discovered.json: 0x150387ea18b0d28ab352a0c1f48b147e923816b3
 
 # Diff at Mon, 14 Jul 2025 12:45:04 GMT:
@@ -1852,7 +2228,7 @@ Generated with discovered.json: 0x24304eef943273ff60a79585b7cc8e34165b60ec
 Discovery rerun on the same block number with only config-related changes.
 
 FacetSafeModule and EthscriptionsSafeModule where configured as 
-`canActIndependetnly: false` because they don't give ability to
+`canActIndependently: false` because they don't give ability to
 act on behalf on the GnosisSafe.
 
 ## Config/verification related changes

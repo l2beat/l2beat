@@ -91,8 +91,7 @@ export const eigenda: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description:
-      'EigenDA is a data availability solution built on Eigen Layer.',
+    description: 'EigenDA is a data availability solution built on EigenLayer.',
     links: {
       websites: ['https://www.eigenda.xyz/'],
       documentation: ['https://docs.eigenda.xyz/overview'],
@@ -119,7 +118,7 @@ export const eigenda: BaseProject = {
     EigenDA is composed by three types of off-chain entities: node operators, a disperser and a retriever.
     - EigenDA **operators** are node operators running the EigenDA node software and are registered to the EigenDA AVS in EigenLayer.
     - The **disperser** is the entity responsible for collecting the blobs from the sequencer, erasure coding them and generating the encoded blob's KZG commitments for each chunk. Although the disperser could be rollup-operated, it is currently a centralised entity operated by Eigen Labs.
-    - Lastly, the **retriever** client is responsible for querying the EigenDA operators to retrieve blob chunks, verifying their integrity and reconstructs the original blob. 
+    - Lastly, the **retriever** client is responsible for querying the EigenDA operators to retrieve blob chunks, verifying their integrity and reconstructing the original blob. 
     
     ### Operators Registration 
     Operators register with the EigenDAServiceManager via the registerOperatorToAVS() function, enabling them to participate in the data availability network. They are responsible for holding and serving blobs data, and earn rewards for their participation in the network.
@@ -272,7 +271,7 @@ export const eigenda: BaseProject = {
     ],
   },
   daBridge: {
-    name: 'Service Manager',
+    name: 'DACert Verifier',
     daLayer: ProjectId('eigenda'),
     technology: {
       description: `

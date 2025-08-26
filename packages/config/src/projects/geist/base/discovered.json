@@ -2,7 +2,7 @@
   "name": "geist",
   "chain": "base",
   "timestamp": 1750247929,
-  "configHash": "0xed30382f2feda08b9a374d7665f5743adab4e524ee125c416ce5327197945fc3",
+  "configHash": "0x4494f477b8a43e8740160d38217321bc8b2b5b15e5cf38434a069a67be3bc138",
   "entries": [
     {
       "address": "base:0x001271c57AeC639952B5201D052767c316755512",

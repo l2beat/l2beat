@@ -21,10 +21,12 @@ import { FindUnusedShapes } from './FindUnusedShapes'
 import { FixDiscoverySchemaPaths } from './FixDiscoverySchemaPaths'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
+import { GenerateEntrypoints } from './GenerateEntrypoints'
 import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
 import { MatchFlat } from './MatchFlat'
+import { Minters } from './Minters'
 import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
 import { Powerdiff } from './Powerdiff'
@@ -66,9 +68,11 @@ export function getSubcommands() {
     Flatten,
     FlattenAndDiff,
     GetTokenMinters,
+    GenerateEntrypoints,
     Init,
     InitTemplate,
     MatchFlat,
+    Minters,
     ModelPermissions,
     OPConfigs,
     Powerdiff,

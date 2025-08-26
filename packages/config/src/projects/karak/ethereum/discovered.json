@@ -2,7 +2,7 @@
   "name": "karak",
   "chain": "ethereum",
   "timestamp": 1728382019,
-  "configHash": "0x5129436290518f120fcfc8762cdf52e066b5ee640496ccf7198ba68396445ed0",
+  "configHash": "0xb6304e5e3c3d903d87936188186edc7f07b052a9a3e2ee6dc31fab25ff8eb164",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

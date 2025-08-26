@@ -33,8 +33,6 @@ export const fuelv1: ScalingProject = {
     description:
       'Fuel v1 is the first Optimistic Rollup live on Ethereum, supporting payments.',
     purposes: ['Payments'],
-    category: 'Optimistic Rollup',
-
     links: {
       websites: ['https://github.com/FuelLabs/fuel-v1-contracts/tree/master'],
       documentation: [
@@ -55,6 +53,9 @@ export const fuelv1: ScalingProject = {
         'https://hey.xyz/u/fuelnetwork',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
   config: {
     escrows: [

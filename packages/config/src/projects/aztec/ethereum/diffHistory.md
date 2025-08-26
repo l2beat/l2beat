@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x63b548095a91ace224b68cff30abf2bfa28264c0
+Generated with discovered.json: 0x028420bcfddfc941c45dcc9c3a75e80de6d0f011
 
 # Diff at Mon, 14 Jul 2025 12:44:47 GMT:
 
@@ -590,7 +590,7 @@ Generated with discovered.json: 0xfe5a836e62b3c749f591b5f32c82f9a28f1674d6
 ## Description
 
 Rollup processors receive gas reimbursements from the AztecFeeDistributor for having called the processRollup() function. The reimburseConstant, which is a constant added to each dynamically calculated gas reimbursement is now set to 0.
-Context: Zk.money V1 (this project) is sunset for a long time now. Users can only exit by runing a local docker container that runs the rollup. They have to pay the processRollup() transaction fee but get refunded by the AztecFeeDistributor.
+Context: Zk.money V1 (this project) is sunset for a long time now. Users can only exit by running a local docker container that runs the rollup. They have to pay the processRollup() transaction fee but get refunded by the AztecFeeDistributor.
 
 ## Watched changes
 
@@ -644,8 +644,8 @@ On Jan 14, 2024 TurboVerifier contract has been replaced with AlwaysReverting
 contract effectively halting verification process. On Feb 15, 2024 the verifier
 has been updated to an unverified contract. After 3 minutes it was again
 updated to a new TurboVerifier. The unverified contract is not similar in any
-way to the new TurboVerifier. While the new TurobVerifier has basically the
-same source code as the historical one expect some hardcoded values.
+way to the new TurboVerifier. While the new TurboVerifier has basically the
+same source code as the historical one except some hardcoded values.
 
 - the "3 minute" verifier (0xf3761b450571a49fa8e2af6e37e1eb3516209d56)
 - the new verifier (0x48cb7ba00d087541dc8e2b3738f80fdd1fee8ce8)

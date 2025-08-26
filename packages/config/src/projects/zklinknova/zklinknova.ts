@@ -89,7 +89,6 @@ export const zklinknova: ScalingProject = {
     description:
       'zkLink Nova is a Layer 3 zkEVM Validium network leveraging ZK Stack that allows for scattered assets across Ethereum Layer 2s to be aggregated for interoperable trade and transactions.',
     purposes: ['Universal', 'Interoperability'],
-    category: 'Other',
     links: {
       websites: ['https://zklink.io', 'https://zk.link'],
       bridges: [
@@ -107,6 +106,10 @@ export const zklinknova: ScalingProject = {
         'https://t.me/zkLinkorg',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('boojum'),
   },
   chainConfig: {
     name: 'zklinknova',

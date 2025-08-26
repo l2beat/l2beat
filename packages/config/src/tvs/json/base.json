@@ -402,7 +402,7 @@
         "decimals": 8,
         "sinceTimestamp": 1726099200
       },
-      "category": "stablecoin",
+      "category": "btc",
       "source": "native",
       "isAssociated": false
     },
@@ -422,7 +422,7 @@
         "sinceTimestamp": 1726099200,
         "untilTimestamp": 1746597600
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -1248,7 +1248,8 @@
         "chain": "ethereum",
         "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 9,
-        "sinceTimestamp": 1686793895
+        "sinceTimestamp": 1686793895,
+        "untilTimestamp": 1754560800
       },
       "category": "other",
       "source": "canonical",
@@ -1344,7 +1345,7 @@
         "decimals": 8,
         "sinceTimestamp": 1731342311
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -2593,7 +2594,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Canonical (external escrow)"
+            "name": "Custom escrow"
           }
         ]
       }
@@ -2696,7 +2697,7 @@
         "decimals": 18,
         "sinceTimestamp": 1686793895
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },
@@ -3045,7 +3046,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Canonical (external escrow)"
+            "name": "Custom escrow"
           }
         ]
       }
@@ -3390,7 +3391,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Canonical (external escrow)"
+            "name": "Custom escrow"
           }
         ]
       }

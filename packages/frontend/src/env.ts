@@ -17,13 +17,11 @@ const CLIENT_CONFIG = {
     .enum(['development', 'test', 'production'])
     .default('development'),
   DEPLOYMENT_ENV: z.enum(['preview', 'production']).optional(),
-  CLIENT_SIDE_FEATURE_FLAG_STAGE_SORTING: featureFlag.default(false),
   CLIENT_SIDE_GITCOIN_ROUND_LIVE: featureFlag.default(false),
   CLIENT_SIDE_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
   CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
   CLIENT_SIDE_PARTNERS: coerceBoolean.default(false),
-  CLIENT_SIDE_ZK_CATALOG_V2: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -115,13 +113,10 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
 
     // Client
-    CLIENT_SIDE_FEATURE_FLAG_STAGE_SORTING:
-      process.env.CLIENT_SIDE_FEATURE_FLAG_STAGE_SORTING,
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
     CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
     CLIENT_SIDE_PARTNERS: process.env.CLIENT_SIDE_PARTNERS,
-    CLIENT_SIDE_ZK_CATALOG_V2: process.env.CLIENT_SIDE_ZK_CATALOG_V2,
   }
 }

@@ -14,7 +14,7 @@ export function HostChainRisksWarning({
   riskCount,
 }: HostChainRisksWarningProps) {
   const text = riskCount
-    ? 'There are ' + riskCount + ' additional risks coming from the hostchain '
+    ? 'There are ' + riskCount + ' additional risks coming from the host chain '
     : 'The section considers only the L3 properties. For more details please refer to '
 
   return (
@@ -22,10 +22,9 @@ export function HostChainRisksWarning({
       text={text}
       project={{
         name: hostChainName,
-        slug: hostChainSlug,
         icon: hostChainIcon,
-        type: 'scaling',
       }}
+      href={`/scaling/projects/${hostChainSlug}`}
     />
   )
 }

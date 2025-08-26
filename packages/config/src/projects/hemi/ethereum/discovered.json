@@ -2,7 +2,7 @@
   "name": "hemi",
   "chain": "ethereum",
   "timestamp": 1750664843,
-  "configHash": "0x9bebbaa165be697efa45fa1dd2de399069bd1f75abb5abbaea70a56126cbb80e",
+  "configHash": "0x779dccc1a3d5a0bd609036de693d906c2582025b777fd946b70bf6ede2c10878",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

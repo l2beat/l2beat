@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "timestamp": 1750690607,
-  "configHash": "0x54d2e6114c3aa4f7b2ca9c0dce971da09c854f859b5896a9bc88815177e4dab8",
+  "configHash": "0x3f10a55abc6644a115f6565c34a835d94a47497a97759a53fb304c08eca03f1d",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

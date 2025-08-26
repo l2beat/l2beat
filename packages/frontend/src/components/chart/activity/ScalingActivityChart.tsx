@@ -7,8 +7,6 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
-import { EthereumLineIcon } from '~/icons/EthereumLineIcon'
-import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { useActivityMetricContext } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { useActivityTimeRangeContext } from '~/pages/scaling/activity/components/ActivityTimeRangeContext'
 import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
@@ -16,7 +14,6 @@ import type { ScalingActivityEntry } from '~/server/features/scaling/activity/ge
 import type { ActivityProjectFilter } from '~/server/features/scaling/activity/utils/projectFilterUtils'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
-import { Checkbox } from '../../core/Checkbox'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartScale } from '../types'
@@ -44,11 +41,6 @@ export function ScalingActivityChart({
   const [scale, setScale] = useLocalStorage<ChartScale>(
     'scaling-tvs-scale',
     'lin',
-  )
-
-  const [showMainnet, setShowMainnet] = useLocalStorage(
-    'scaling-activity-show-mainnet',
-    true,
   )
 
   const chartFilter: ActivityProjectFilter =
@@ -109,12 +101,11 @@ export function ScalingActivityChart({
         hideScalingFactor={hideScalingFactor}
       />
       <ActivityChart
-        className="mt-4 mb-2"
+        className="mt-4 mb-3"
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
         milestones={milestones}
-        showMainnet={showMainnet}
         scale={scale}
         metric={metric}
         type={type}
@@ -128,11 +119,8 @@ export function ScalingActivityChart({
       <Controls
         scale={scale}
         setScale={setScale}
-        showMainnet={showMainnet}
-        setShowMainnet={setShowMainnet}
         timeRange={timeRange}
         setTimeRange={setTimeRange}
-        metric={metric}
       />
     </div>
   )
@@ -141,22 +129,11 @@ export function ScalingActivityChart({
 interface ControlsProps {
   scale: ChartScale
   setScale: (scale: ChartScale) => void
-  showMainnet: boolean
-  setShowMainnet: (show: boolean) => void
   timeRange: ActivityTimeRange
   setTimeRange: (timeRange: ActivityTimeRange) => void
-  metric: ActivityMetric
 }
 
-function Controls({
-  scale,
-  setScale,
-  showMainnet,
-  setShowMainnet,
-  timeRange,
-  setTimeRange,
-  metric,
-}: ControlsProps) {
+function Controls({ scale, setScale, timeRange, setTimeRange }: ControlsProps) {
   const isClient = useIsClient()
   return (
     <ChartControlsWrapper>
@@ -172,23 +149,6 @@ function Controls({
           </RadioGroup>
         ) : (
           <Skeleton className="h-8 w-[91px] md:w-[95px]" />
-        )}
-        {isClient ? (
-          <Checkbox
-            name="showMainnetActivity"
-            checked={showMainnet}
-            onCheckedChange={(state) => setShowMainnet(!!state)}
-          >
-            <div className="flex flex-row items-center gap-2">
-              <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-              <span className="hidden md:inline">
-                {`ETH Mainnet ${metric === 'uops' ? 'Operations' : 'Transactions'}`}
-              </span>
-              <span className="md:hidden">{`ETH ${metric === 'uops' ? 'UOPS' : 'TPS'}`}</span>
-            </div>
-          </Checkbox>
-        ) : (
-          <Skeleton className="h-8 w-[114px] md:w-[230px]" />
         )}
       </div>
       <ActivityTimeRangeControls

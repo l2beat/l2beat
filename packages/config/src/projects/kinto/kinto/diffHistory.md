@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xe3e078f13aa8d0bf5991e086afc16eea660c8707
+
+# Diff at Tue, 19 Aug 2025 08:25:41 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0ed103f64e02fe332cd2478ee125c9e5f1d4c1d9 block: 1753449971
+- current timestamp: 1755591879
+
+## Description
+
+Removed one KYC provider. There are now 6, down from 7.
+
+## Watched changes
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      values.accessControl.KYC_PROVIDER_ROLE.members.0:
+-        "kinto:0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
++++ severity: HIGH
+      values.KYC_PROVIDERs.0:
+-        "kinto:0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
+    }
+```
+
 Generated with discovered.json: 0xacd6b76e90149f6fd163a966f202893da69840e3
 
 # Diff at Mon, 14 Jul 2025 12:46:55 GMT:

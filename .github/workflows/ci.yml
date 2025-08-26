@@ -246,7 +246,7 @@ jobs:
         run: pnpm install
 
       - name: Build dependencies
-        run: pnpm build:dependencies
+        run: pnpm build:dependencies:frontend
 
       - name: Start mock server and test pages
         run: |

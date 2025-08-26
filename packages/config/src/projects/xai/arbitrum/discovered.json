@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "timestamp": 1751875719,
-  "configHash": "0xb4e447e1d3350a9914d9e8b0619b89ec0219e96ca098fcf32c98addc46dbbf94",
+  "timestamp": 1755513362,
+  "configHash": "0x2266e7d4d573602b37e39e45bad94b33f55ee01d8d1f954cecf8eba6c871baa9",
   "entries": [
     {
       "name": "XaiMultisig2",
@@ -38,7 +38,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 17,
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -544,7 +544,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -728,7 +728,7 @@
         "allowedOutboxList": [
           "arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726"
         ],
-        "delayedMessageCount": 92034,
+        "delayedMessageCount": 92070,
         "inboxHistory": [
           "arb1:0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
           "arb1:0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
@@ -738,8 +738,8 @@
         "outboxHistory": ["arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
         "rollup": "arb1:0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "arb1:0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 156026,
-        "sequencerReportedSubMessageCount": 103347403
+        "sequencerMessageCount": 160019,
+        "sequencerReportedSubMessageCount": 107727475
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -869,7 +869,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 156026,
+        "batchCount": 160019,
         "batchPosterManager": "arb1:0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["arb1:0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "arb1:0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -879,10 +879,10 @@
           "membersCount": 5,
           "blsSignatures": [
             "YAaEnUny7I1Stgrqdkdn5ob8omB9Id5dh2xtP87ifNORqK2gdi8NLU9Lw4PAXlg/pwPcmuYrAp8OZOPAw02Z5NOUhTKS+udcc7iSEST/tJ6CI1KeH2jXoToqA5FADD4hrwt7qHtu0RK56+zb3voUzyGnjt838DQH0UZSAMmsEZq8k/KCZPeej6IP03lSQOPxSQAAzbxLd3GZKk0V9tYEF9HCHxHjyJHHN7whXqovNDOE/vcw87RZzBlBeP9fOQ8HKRdEvB70DjshSupH/QeU5Znd034y+4NGiMvaCIkoZGb0/tZxHFc9yxp2Uy2HpaVVDxMmZYLSAsWIdsfkAMHKLmQ2ZtqW8Khd9M/uXOaEqTSu6yjJyizIDyXbA3FUuoW8uQ==",
-            "YBnmxAj50xHWx74c8TEJQ4hMxDc8au4r/8ZjDdm9VZZeVz30yudFDkKd5gzt/bnDkxL/fS3uO/uyV5IK/x5g53D7ZBMcrVJF3UMriIitIvf/jriRsnCi1TSZVG+RpGoMNAAji+ipTEVV5YnQPi/AVGQIGwmoEzhA/giQH7evlxzC1Q876MQqHTwwfIrX63UZ5hPEs84OyTq5gHvR71UYbI7TEzHRNi3RJTfgsidx8Q1v2jndA5HfYUq2pxmmPPkIoxHSK+Syt24Fe9q/6dIMN76BXMDpbXu1+r0QdQMPLEfSWm/aquMI6sN1ljaa958XThaluC1z+iqrR9b5e8LoEq1OliZf2qCHnv9MFX51KCF42zEQiz493XQrf0HUJIfCag==",
             "YAX5RGkb2ssH+fb3F+MTg0p+7jF3Le5BT8W/hIR7iSsgHvN2l435zpiSVuqOZNaIaQ/wyuGPur4m2hoiJ1d0J+r/VvbEYQGFCxPe6oi5JzIuAb/QlRA9lT+B1Rup8HKhcAAnSGaIowju3bSosv0LG04H0NlZOSRdJSFOIBA3WyfiK1867Nju+ZqfWF/TLUvR4AnIz2uNkZ7TzuIiA6mQnDHvpKSKsAUvhhAovG8Y8TI0iC1W/LSX1G9VVqFBeI2k1gDX3vzit2yN2PjskBfh5+N6bsIRSECZPRXBqskekNytvRlFveesFOwpXOmiyRPmFAwaYLtsQtSVjz94Ev5rabPQim7x1y9s6AEtV/Q/ggRU7/lTha1SVmMCRdYWWu3Igg==",
             "YA+ljLY01rxIncmXWl8bIZduwLObm0LKJIjzdyXjzH5FLN4Y+sUF2zjvF07aUPHOyADiV0y/+ztNO/iTpKLCVUzPzRHTtsukZaE3SUY+IIYU6NvUYdMXfhcKnHH3VU+iVRaSfiK2hw7OCfsge8AQcucdNlgaHSrdvlDmzAIx7jsemsLh8ov5dpywIVkWWZGY6wIwVh2/zUWBMZ4O3V3OYWppRttXZr2ukmwIDU5hQ4qtKRKemHaHSgb18QTuUsowMhkLwx2eW5hMOIYyzLV+NyUTyaQhkD0EtYISRBhHM7RinbP9LQWbLm0dnueZ9O3AkwnbH8w6/h3jkshPZx8hqJ6QH33SwbML1KIvOTEFvgBs7dnj9gbcfMq+17Bu3/YkWw==",
-            "YBHz50DGYvPi02ynzcvcJS9K2nhXWKKSIZdDtXqxxoD3a1s2Fh2he79bMUWZ6M6qEhHM52HZr3l5jLoU4kOTBN+Q87yo0ljgZJYaphdYrHb+jabsPUcR+xdauJKAoKSkjQz8BWC9b2QZ3F7LK+Ro3cpWgkHR9SQlt86mk+eM71AWRl3ybwlRaxwAzYwOd9TRkQYARTY8fjvRmhChCY5lz7FtY0ttPrbJ3Mc2VXy5r0yyIoNFAQjg/jMNoablUOOIZRn+4KGLBQSPKcnl/Nv/0ZNdT563sLPj6mP3qLPlvwAhFpI5vIhSpGdpgJ8n8Ns3uxJyYsPD8qaHQciNLNTzYWGEze40CPMkxEeGRqi8yRoK8iuK5kse/+kqhBOyR3NVJg=="
+            "YBHz50DGYvPi02ynzcvcJS9K2nhXWKKSIZdDtXqxxoD3a1s2Fh2he79bMUWZ6M6qEhHM52HZr3l5jLoU4kOTBN+Q87yo0ljgZJYaphdYrHb+jabsPUcR+xdauJKAoKSkjQz8BWC9b2QZ3F7LK+Ro3cpWgkHR9SQlt86mk+eM71AWRl3ybwlRaxwAzYwOd9TRkQYARTY8fjvRmhChCY5lz7FtY0ttPrbJ3Mc2VXy5r0yyIoNFAQjg/jMNoablUOOIZRn+4KGLBQSPKcnl/Nv/0ZNdT563sLPj6mP3qLPlvwAhFpI5vIhSpGdpgJ8n8Ns3uxJyYsPD8qaHQciNLNTzYWGEze40CPMkxEeGRqi8yRoK8iuK5kse/+kqhBOyR3NVJg==",
+            "YAs1+BYgCS8HZ5vbTRT1nbt71wSvrFO3cFKUzWPXaud5V0ErIbWmk4ITu7VxEdDGnAyGmwwfVf2KjZXtsmDHYvXqED6z2fWva8RuY8wTrK5DYRVrPFpZxyFvfkO6j5TXyBPelZmJQzpQlFjx0eMoq4HFloDG1utysJywf3SqUuZKoU074I8pfkz4DSA8gomp6ACZNDBe+1rzvo4jFyzIKbhzveNanj9UWNEBJcrorD+ajWHW/Mrwn0P9RY5MeBt/CQQdCeHvOxTp95aWg2dXYv3iEB3WgH0i06da5gyjit809RYytX2x5I8pbgzugpsieBf8RrKq9FZujcdJJVAVtYJf/hWdptqcwEDdhfZTE2uMOVNJGFnwQ95wYdMT1jQpHA=="
           ]
         },
         "DAS_MESSAGE_HEADER_FLAG": "0x80",
@@ -890,7 +890,7 @@
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
         "isUsingFeeToken": true,
-        "keySetUpdates": 8,
+        "keySetUpdates": 9,
         "maxDataSize": 104857,
         "maxTimeVariation": {
           "delayBlocks": 5760,
@@ -903,7 +903,7 @@
         "rollup": "arb1:0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 92034,
+        "totalDelayedMessagesRead": 92070,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1126,7 +1126,7 @@
         "referralDiscountPercentage": 5,
         "referralRewardPercentage": 15,
         "symbol": "SNL",
-        "totalSupply": 3583296,
+        "totalSupply": 3583427,
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "usdcAddress": "arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "xaiAddress": "arb1:0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
@@ -1190,13 +1190,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 12774,
+        "firstUnresolvedNode": 13776,
         "inbox": "arb1:0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 12773,
-        "latestNodeCreated": 12925,
+        "latestConfirmed": 13775,
+        "latestNodeCreated": 13927,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1511,7 +1511,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "arb1:0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
         "esXaiAddress": "arb1:0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
-        "getPoolsCount": 302,
+        "getPoolsCount": 312,
         "nodeLicenseAddress": "arb1:0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "refereeAddress": "arb1:0xfD41041180571C5D371BEA3D9550E55653671198",
         "STAKE_KEYS_ADMIN_ROLE": "0x4744ee11e24f5fc5de82fa6dba03b134899d8fd3405c7e9a26e120c89c8d9c28",
@@ -1697,13 +1697,13 @@
           "8918378995433789954337",
           "156250000000000000000000000"
         ],
-        "challengeCounter": 13665,
+        "challengeCounter": 14667,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "arb1:0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "arb1:0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-        "getKycWalletCount": 6894,
+        "getKycWalletCount": 6916,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
         "maxKeysPerPool": 131872,
@@ -2817,6 +2817,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 355131296 },
+  "usedBlockNumbers": { "arbitrum": 369691682 },
   "permissionsConfigHash": "0xfabe95fd8855bcec83d5298a5037c9b29154739c2df6cb58d344e8962795ae9c"
 }

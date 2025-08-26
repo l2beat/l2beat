@@ -135,6 +135,404 @@ App-specific data can be reconstructed by app clients, which request and assembl
       },
     ],
     finality: 40, // best case is 2 blocks
+    sovereignProjectsTrackingConfig: [
+      {
+        projectId: ProjectId('avail-main'),
+        name: 'Avail',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['0'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('reserved-1'),
+        name: 'Reserved-1',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['1'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('reserved-2'),
+        name: 'Reserved-2',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['2'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('reserved-3'),
+        name: 'Reserved-3',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['3'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('reserved-4'),
+        name: 'Reserved-4',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['4'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('reserved-5'),
+        name: 'Reserved-5',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['5'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('reserved-6'),
+        name: 'Reserved-6',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['6'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('reserved-7'),
+        name: 'Reserved-7',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['7'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('reserved-8'),
+        name: 'Reserved-8',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['8'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('reserved-9'),
+        name: 'Reserved-9',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['9'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('0x84e96bb748abb8a16c28ecc'),
+        name: '0x84e96bb748abb8a16c28ecc',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['10'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('leouarz-test-app'),
+        name: 'Leouarz test app',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['11'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('bling'),
+        name: 'bling',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['12'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('hello-world'),
+        name: 'hello world',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['13'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('azeazeqsdhfgkjkk'),
+        name: 'azeazeqsdhfgkjkk',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['14'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('jjjtkekznfnxkeke'),
+        name: 'Jjjtkekznfnxkeke',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['15'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('crestal'),
+        name: 'CRESTAL',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['16'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('170889'),
+        name: '170889',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['18'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('skate-mainnet'),
+        name: 'skate-mainnet',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['19'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('lc85p'),
+        name: 'lc85p',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['20'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('dragonft'),
+        name: 'Dragonft',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['21'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('fuse-l2'),
+        name: 'fuse-l2',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['22'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('antonio'),
+        name: 'antonio',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['23'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('se-avail'),
+        name: 'se-avail',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['24'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('527d69c3'),
+        name: '527d69c3',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['25'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('kayabey'),
+        name: 'kayabey',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['27'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('kms'),
+        name: 'KMS',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['28'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('dans-awesome-app'),
+        name: "Dan's Awesome App",
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['29'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('up-or-down'),
+        name: 'Up or Down',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['30'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('svmbnb-mainnet'),
+        name: 'svmbnb-mainnet',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['31'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('odysphere'),
+        name: 'odysphere',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['32'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('uwu'),
+        name: 'UwU',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['33'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('space-and-time'),
+        name: 'Space and Time',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['34'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('art-peace'),
+        name: 'art-peace',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['35'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('lens-historical-data'),
+        name: 'lens-historical-data',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['39'],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('ody-playground'),
+        name: 'ody_playground',
+        daTrackingConfig: [
+          {
+            type: 'avail',
+            sinceBlock: 0,
+            appIds: ['40'],
+          },
+        ],
+      },
+    ],
     dataAvailabilitySampling: {
       erasureCodingScheme: '2D Reed-Solomon',
       erasureCodingProof: 'Validity proofs',
@@ -153,6 +551,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
       },
     },
   },
+
   milestones: [
     {
       title: 'Mainnet Launch',

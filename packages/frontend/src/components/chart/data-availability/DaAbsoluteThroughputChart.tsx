@@ -14,7 +14,9 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
+import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -39,7 +41,8 @@ export function DaAbsoluteThroughputChart({
   syncStatus,
   resolution,
 }: Props) {
-  const chartMeta = getDaChartMeta({ shape: 'line' })
+  const chartMeta = useMemo(() => getDaChartMeta({ shape: 'line' }), [])
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const max = useMemo(() => {
     return data
       ? Math.max(
@@ -52,15 +55,48 @@ export function DaAbsoluteThroughputChart({
   const { denominator, unit } = getDaDataParams(max)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
+      const ethereumValue = ethereum !== null ? ethereum / denominator : null
+      const celestiaValue = celestia !== null ? celestia / denominator : null
+      const availValue = avail !== null ? avail / denominator : null
+      const eigendaValue = eigenda !== null ? eigenda / denominator : null
+
       return {
         timestamp,
-        ethereum: ethereum !== null ? ethereum / denominator : null,
-        celestia: celestia !== null ? celestia / denominator : null,
-        avail: avail !== null ? avail / denominator : null,
-        eigenda: eigenda !== null ? eigenda / denominator : null,
+        ethereum:
+          syncStatus?.ethereum && syncStatus.ethereum >= timestamp
+            ? ethereumValue
+            : null,
+        ethereumEstimated:
+          syncStatus?.ethereum && syncStatus.ethereum <= timestamp
+            ? ethereumValue
+            : null,
+        celestia:
+          syncStatus?.celestia && syncStatus.celestia >= timestamp
+            ? celestiaValue
+            : null,
+        celestiaEstimated:
+          syncStatus?.celestia && syncStatus.celestia <= timestamp
+            ? celestiaValue
+            : null,
+        avail:
+          syncStatus?.avail && syncStatus.avail >= timestamp
+            ? availValue
+            : null,
+        availEstimated:
+          syncStatus?.avail && syncStatus.avail <= timestamp
+            ? availValue
+            : null,
+        eigenda:
+          syncStatus?.eigenda && syncStatus.eigenda >= timestamp
+            ? eigendaValue
+            : null,
+        eigendaEstimated:
+          syncStatus?.eigenda && syncStatus.eigenda <= timestamp
+            ? eigendaValue
+            : null,
       }
     })
-  }, [data, denominator])
+  }, [data, denominator, syncStatus])
 
   const syncedUntil = useMemo(
     () => Math.max(...Object.values(syncStatus ?? {})),
@@ -68,43 +104,51 @@ export function DaAbsoluteThroughputChart({
   )
 
   return (
-    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+    <ChartContainer
+      data={chartData}
+      meta={chartMeta}
+      isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
+    >
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <defs>
           <EthereumFillGradientDef id="ethereum-fill" />
           <FuchsiaFillGradientDef id="celestia-fill" />
           <LimeFillGradientDef id="eigenda-fill" />
           <SkyFillGradientDef id="avail-fill" />
+          <NoDataPatternDef />
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
         {getStrokeOverFillAreaComponents({
-          data: [
-            {
-              dataKey: 'ethereum',
-              stroke: chartMeta.ethereum.color,
-              fill: 'url(#ethereum-fill)',
-            },
-            {
-              dataKey: 'celestia',
-              stroke: chartMeta.celestia.color,
-              fill: 'url(#celestia-fill)',
-            },
-            {
-              dataKey: 'avail',
-              stroke: chartMeta.avail.color,
-              fill: 'url(#avail-fill)',
-            },
-            {
-              dataKey: 'eigenda',
-              stroke: chartMeta.eigenda.color,
-              fill: 'url(#eigenda-fill)',
-            },
-          ],
+          data: Object.keys(chartMeta).flatMap((key) => {
+            const actualKey = key as keyof typeof chartMeta
+            const estimatedKey = `${actualKey}Estimated`
+            return [
+              {
+                dataKey: actualKey,
+                stroke: chartMeta[actualKey].color,
+                fill: `url(#${actualKey}-fill)`,
+                hide: !dataKeys.includes(actualKey),
+              },
+              {
+                dataKey: estimatedKey,
+                stroke: chartMeta[actualKey].color,
+                strokeDasharray: '3 3',
+                fill: 'none',
+                hide: !dataKeys.includes(actualKey),
+              },
+            ]
+          }),
         })}
+
         {getCommonChartComponents({
           data: chartData,
           isLoading,
           yAxis: {
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: ` ${unit}`,
             tickCount: 3,
           },
@@ -161,7 +205,7 @@ function CustomTooltip({
       <HorizontalSeparator className="my-1" />
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
-          if (entry.type === 'none') return null
+          if (entry.type === 'none' || entry.hide) return null
           const configEntry = entry.name ? config[entry.name] : undefined
           if (!configEntry) return null
 
@@ -170,6 +214,11 @@ function CustomTooltip({
             : undefined
           const isEstimated = projectSyncStatus && projectSyncStatus < label
 
+          const estimatedPayload = payload.find(
+            (p) => p.name === `${entry.name}Estimated`,
+          )
+
+          const value = entry.value ?? estimatedPayload?.value
           return (
             <div
               key={index}
@@ -185,8 +234,8 @@ function CustomTooltip({
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {entry.value !== null && entry.value !== undefined
-                  ? `${isEstimated ? 'est. ' : ''} ${entry.value?.toFixed(2)} ${unit}`
+                {value !== null && value !== undefined
+                  ? `${isEstimated ? 'est. ' : ''} ${value.toFixed(2)} ${unit}`
                   : 'No data'}
               </span>
             </div>

@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "timestamp": 1754308257,
-  "configHash": "0xe4f161bcb7dbbb6afca4e50a24f99334ec23b90607d96f3e8134538035640e91",
+  "configHash": "0xc8f190a182d47c75b83d5ebbb6f9e8de5ff789002b0dc9a74ca567dcf41a1899",
   "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
     {
@@ -969,6 +969,6 @@
   "usedTemplates": {
     "shared-zk-stack/Diamond_NotSettlementLayer": "0x30b60445419f8d3893ba4eb0b4a8d04ad751d7ec8882a4a4ab5f7276c730ff8f"
   },
-  "usedBlockNumbers": { "ethereum": 23067512 },
+  "usedBlockNumbers": { "ethereum": 23067513 },
   "permissionsConfigHash": "0x9c1fe20cab2350396904a94b0812d699200d8adce8d1746a4e18a45feb6f9d93"
 }

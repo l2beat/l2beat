@@ -53,10 +53,20 @@ export function createServer() {
     app.use(ErrorHandler())
   }
 
-  app.listen(port, () => {
+  const server = app.listen(port, () => {
     logger.info('Started', {
       port,
     })
+  })
+
+  server.on('error', (err: NodeJS.ErrnoException) => {
+    if (err.code === 'EADDRINUSE') {
+      logger.error(`Port ${port} is already in use.`)
+      process.exit(1)
+    } else {
+      logger.error('Unhandled server error:', err)
+      process.exit(1)
+    }
   })
 }
 

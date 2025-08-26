@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "base",
-  "timestamp": 1754057818,
-  "configHash": "0x5e785129684f1569c775f27f5e1ebc6616a5b1664d010d6e1f75e5ab3dd33ade",
+  "timestamp": 1755525868,
+  "configHash": "0xb88d53741ba66057c4aeb81e58cbc7b4e72138d2114266ececc9345d5aa1e326",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -32,7 +32,7 @@
         "BASIS_POINT_SCALE": 10000,
         "FEE_DISBURSEMENT_INTERVAL": 86400,
         "L1_WALLET": "base:0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
-        "lastDisbursementTime": 1753987427,
+        "lastDisbursementTime": 1755388817,
         "netFeeRevenue": 0,
         "OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS": 250,
         "OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS": 1500,
@@ -80,7 +80,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292662448",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292663259",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -291,7 +291,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "basefee": 2442589568,
+        "basefee": 1014188843,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
         "blobBaseFee": 1,
@@ -303,15 +303,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xd03598baebf84bfc297adc4caaa7fb35c83e03c7257554bbbdc2b3d6521ff294",
+        "hash": "0x62b45cce16692876790e9f27aefc2c95418ec970b52bbc40a375ffdc798030d8",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 23046756,
+        "number": 23168403,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 1,
-        "timestamp": 1754057639,
+        "sequenceNumber": 11,
+        "timestamp": 1755525671,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -1288,6 +1288,6 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "usedBlockNumbers": { "base": 33634235 },
-  "permissionsConfigHash": "0xcdc33732face963e3d5f85b1a427fa929b6df90282178fc8251c676ac11f29ba"
+  "usedBlockNumbers": { "base": 34368260 },
+  "permissionsConfigHash": "0x2e5de7c6727a927413418c89b4a12fab49446f93697ed3c22554952631140b8b"
 }

@@ -6,17 +6,19 @@ import type {
   ChainConfig,
   ProjectEcosystemInfo,
   ProjectScalingCapability,
+  ProjectScalingProofSystem,
 } from '../types'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
 
 interface UpcomingConfigCommon {
   id: string
   addedAt: UnixTime
-  hasTestnet?: boolean
+  hasTestnet?: true
   display: ProjectScalingDisplay
   capability: ProjectScalingCapability
   badges?: Badge[]
   ecosystemInfo?: ProjectEcosystemInfo
+  proofSystem: ProjectScalingProofSystem | undefined
 }
 export interface UpcomingConfigL2 extends UpcomingConfigCommon {
   chainConfig?: ChainConfig
@@ -35,6 +37,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
     capability: templateVars.capability,
     hasTestnet: templateVars.hasTestnet,
     display: templateVars.display,
+    proofSystem: templateVars.proofSystem,
     stage: {
       stage: 'NotApplicable',
     },
@@ -46,6 +49,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
     badges: templateVars.badges,
     discoveryInfo: getDiscoveryInfo([]),
     ecosystemInfo: templateVars.ecosystemInfo,
+    dataAvailability: undefined,
   }
 }
 
@@ -61,6 +65,7 @@ export function upcomingL3(templateVars: UpcomingConfigL3): ScalingProject {
       ...templateVars.display,
     },
     hostChain: templateVars.hostChain,
+    proofSystem: templateVars.proofSystem,
     config: {
       escrows: [],
     },
@@ -70,5 +75,6 @@ export function upcomingL3(templateVars: UpcomingConfigL3): ScalingProject {
     badges: templateVars.badges,
     discoveryInfo: getDiscoveryInfo([]),
     ecosystemInfo: templateVars.ecosystemInfo,
+    dataAvailability: undefined,
   }
 }

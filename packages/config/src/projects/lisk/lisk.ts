@@ -13,7 +13,7 @@ export const lisk: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1714728793),
   associatedTokens: ['LSK'],
   additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Lisk',
     slug: 'lisk',
@@ -21,10 +21,7 @@ export const lisk: ScalingProject = opStackL2({
       'Lisk is an OP stack rollup on Ethereum that migrated from the L1 blockchain of the same name.',
     links: {
       websites: ['https://lisk.com/'],
-      bridges: [
-        'https://bridge.lisk.com/bridge/lisk',
-        'https://portal.lisk.com/',
-      ],
+      bridges: ['https://bridge.lisk.com/', 'https://portal.lisk.com/'],
       documentation: ['https://docs.lisk.com/'],
       explorers: ['https://blockscout.lisk.com/'],
       repositories: ['https://github.com/LiskHQ/lisk-node'],

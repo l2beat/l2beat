@@ -47,6 +47,7 @@ const vaultWeight =
   ).vault / 100
 
 export const termstructure: ScalingProject = {
+  archivedAt: UnixTime(1754983642),
   id: ProjectId('termstructure'),
   capability: 'appchain',
   addedAt: UnixTime(1709724246), // 2024-03-06T11:24:06Z
@@ -66,7 +67,6 @@ export const termstructure: ScalingProject = {
     description:
       'Term Structure introduces a distinct ZK Rollup solution democratizing fixed-rate and fixed-term borrowing and lending as well as fixed income trading by offering low transaction fees and enabling forced withdrawals.',
     purposes: ['Payments', 'Exchange', 'Lending'],
-    category: 'ZK Rollup',
     stacks: ['ZKsync Lite'],
     links: {
       websites: ['https://ts.finance/'],
@@ -83,8 +83,11 @@ export const termstructure: ScalingProject = {
     },
     liveness: {
       explanation:
-        'Term Structure is a ZK rollup based on ZKsync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+        "Term Structure is a ZK rollup based on ZKsync Lite's code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and a validity proof should be generated, submitted, and verified.",
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
   config: {
     escrows: [

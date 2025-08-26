@@ -23,18 +23,21 @@ import type {
 } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
 
 export function EcosystemsTvsChart({
+  id,
   name,
   entries,
   allScalingProjectsTvs,
   className,
   ecosystemMilestones,
 }: {
+  id: string
   name: string
   entries: EcosystemEntry['liveProjects']
   allScalingProjectsTvs: number
@@ -87,7 +90,12 @@ export function EcosystemsTvsChart({
 
   return (
     <EcosystemWidget className={className}>
-      <Header range={range} stats={stats} unit={unit} />
+      <Header
+        range={range}
+        stats={stats}
+        unit={unit}
+        invert={id === 'superchain'}
+      />
       <ChartContainer
         meta={chartMeta}
         data={chartData}
@@ -141,26 +149,48 @@ function Header({
   range,
   stats,
   unit,
+  invert,
 }: {
   range: [number, number] | undefined
   stats: { total: number; marketShare: number } | undefined
   unit: string
+  invert?: boolean
 }) {
   return (
-    <div className="mb-3 flex items-start justify-between">
-      <div>
+    <div className="mb-3">
+      <div className="flex justify-between">
         <div className="font-bold text-xl">TVS</div>
-        <EcosystemChartTimeRange range={range} />
-      </div>
-      <div className="text-right">
-        {stats?.total ? (
-          <div className="font-bold text-xl">
+        {invert ? (
+          stats?.marketShare ? (
+            <div className="font-semibold text-xl">
+              {formatPercent(stats?.marketShare)} market share
+            </div>
+          ) : (
+            <Skeleton className="my-[5px] ml-auto h-5 w-20" />
+          )
+        ) : stats?.total ? (
+          <div className="font-semibold text-xl">
             {formatCurrency(stats?.total, unit)}
           </div>
         ) : (
           <Skeleton className="my-[5px] ml-auto h-5 w-20" />
         )}
-        <EcosystemsMarketShare marketShare={stats?.marketShare} />
+      </div>
+      <div className="flex justify-between gap-1">
+        <EcosystemChartTimeRange range={range} />
+        {invert ? (
+          stats?.total ? (
+            <div className="font-medium text-branding-primary text-xs">
+              {formatCurrency(stats?.total, unit)}
+            </div>
+          ) : (
+            <Skeleton className="my-[3px] ml-auto h-[14px] w-36" />
+          )
+        ) : (
+          <div className="text-right">
+            <EcosystemsMarketShare marketShare={stats?.marketShare} />
+          </div>
+        )}
       </div>
     </div>
   )

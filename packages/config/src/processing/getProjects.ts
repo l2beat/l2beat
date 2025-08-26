@@ -13,6 +13,7 @@ import {
   type ProjectCostsInfo,
   type ProjectDiscoveryInfo,
   type ProjectLivenessInfo,
+  type ProjectScalingCategory,
   ProjectTvsConfigSchema,
   type TvsToken,
 } from '../types'
@@ -45,6 +46,13 @@ export function getProjects(): BaseProject[] {
 }
 
 function layer2Or3ToProject(p: ScalingProject): BaseProject {
+  const tvsConfig = getTvsConfig(p)
+
+  const associatedTokens = p.config.associatedTokens?.map((associated) => ({
+    symbol: associated,
+    icon: tvsConfig?.find((t) => t.symbol === associated)?.iconUrl,
+  }))
+
   return {
     id: p.id,
     name: p.display.name,
@@ -73,7 +81,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     discoveryInfo: adjustDiscoveryInfo(p),
     scalingInfo: {
       layer: p.type,
-      type: p.display.category,
+      type: getType(p),
       capability: p.capability,
       hostChain: getHostChain(p.hostChain ?? ProjectId.ETHEREUM),
       reasonsForBeingOther: p.reasonsForBeingOther,
@@ -85,6 +93,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       stage: getStage(p.stage),
       purposes: p.display.purposes,
       scopeOfAssessment: p.scopeOfAssessment,
+      proofSystem: p.proofSystem,
     },
     scalingStage: p.stage,
     scalingRisks: {
@@ -111,10 +120,10 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     },
     customDa: p.customDa,
     tvsInfo: {
-      associatedTokens: p.config.associatedTokens ?? [],
+      associatedTokens: associatedTokens ?? [],
       warnings: [p.display.tvsWarning].filter((x) => x !== undefined),
     },
-    tvsConfig: getTvsConfig(p),
+    tvsConfig,
     activityConfig: p.config.activityConfig,
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
@@ -134,7 +143,28 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
     hasActivity: p.config.activityConfig ? true : undefined,
+    hasTestnet: p.hasTestnet,
     escrows: p.config.escrows,
+  }
+}
+
+function getType(p: ScalingProject): ProjectScalingCategory | undefined {
+  if (p.reasonsForBeingOther) return 'Other'
+  if (p.dataAvailability?.bridge.value === 'Plasma') return 'Plasma'
+
+  if (p.isUpcoming || !p.proofSystem || !p.dataAvailability) return undefined
+
+  const isEthereumBridge =
+    p.dataAvailability?.bridge.value === 'Enshrined' ||
+    p.dataAvailability.bridge.value === 'Self-attested' // Intmax case
+  const proofType = p.proofSystem?.type
+
+  if (proofType === 'Optimistic') {
+    return isEthereumBridge ? 'Optimistic Rollup' : 'Optimium'
+  }
+
+  if (proofType === 'Validity') {
+    return isEthereumBridge ? 'ZK Rollup' : 'Validium'
   }
 }
 
@@ -145,11 +175,7 @@ function getLivenessInfo(p: ScalingProject): ProjectLivenessInfo | undefined {
 }
 
 function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
-  if (
-    p.type === 'layer2' &&
-    p.dataAvailability?.layer.projectId === 'ethereum' &&
-    p.config.trackedTxs !== undefined
-  ) {
+  if (p.type === 'layer2' && p.config.trackedTxs !== undefined) {
     return {
       warning: p.display.costsWarning,
     }
@@ -157,6 +183,12 @@ function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
 }
 
 function bridgeToProject(p: Bridge): BaseProject {
+  const tvsConfig = getTvsConfig(p)
+  const associatedTokens = p.config.associatedTokens?.map((associated) => ({
+    symbol: associated,
+    icon: tvsConfig?.find((t) => t.symbol === associated)?.iconUrl,
+  }))
+
   return {
     id: p.id,
     name: p.display.name,
@@ -192,10 +224,10 @@ function bridgeToProject(p: Bridge): BaseProject {
     discoveryInfo: adjustDiscoveryInfo(p),
     bridgeRisks: p.riskView,
     tvsInfo: {
-      associatedTokens: p.config.associatedTokens ?? [],
+      associatedTokens: associatedTokens ?? [],
       warnings: [],
     },
-    tvsConfig: getTvsConfig(p),
+    tvsConfig,
     chainConfig: p.chainConfig,
     milestones: p.milestones,
     // tags

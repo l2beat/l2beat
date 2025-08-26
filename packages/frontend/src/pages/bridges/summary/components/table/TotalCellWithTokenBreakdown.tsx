@@ -1,4 +1,7 @@
-import type { WarningWithSentiment } from '@l2beat/config'
+import type {
+  ProjectAssociatedToken,
+  WarningWithSentiment,
+} from '@l2beat/config'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   TokenBreakdown,
@@ -23,9 +26,10 @@ interface TotalCellProps {
         stablecoin: number
         associated: number
         btc: number
+        other: number
       }
     | undefined
-  associatedTokenSymbols: string[]
+  associatedTokens: ProjectAssociatedToken[]
   href: string
   change?: number
   tvsWarnings?: WarningWithSentiment[]
@@ -90,10 +94,10 @@ export function TotalCellWithTokenBreakdown(props: TotalCellProps) {
             </div>
             <TokenBreakdown
               total={props.breakdown.total}
-              associated={props.breakdown.associated}
               ether={props.breakdown.ether}
               stablecoin={props.breakdown.stablecoin}
               btc={props.breakdown.btc}
+              other={props.breakdown.other}
               className="h-[3px] w-[180px]"
             />
           </div>
@@ -106,8 +110,9 @@ export function TotalCellWithTokenBreakdown(props: TotalCellProps) {
           ether={props.breakdown.ether}
           stablecoin={props.breakdown.stablecoin}
           btc={props.breakdown.btc}
+          other={props.breakdown.other}
           tvsWarnings={tvsWarnings}
-          associatedTokenSymbols={props.associatedTokenSymbols}
+          associatedTokens={props.associatedTokens}
         />
       </TooltipContent>
     </Tooltip>

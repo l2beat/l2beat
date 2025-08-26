@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x3e462d994bd17ccd7777512eef5897910db77c09
+
+# Diff at Thu, 21 Aug 2025 13:16:01 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@12e90097fd9734ca4f21f4d0339da4383b46a09a block: 1754482869
+- current timestamp: 1755782050
+
+## Description
+
+Added a new Polygon CDK chain with chain ID 838. I was not able to figure out which chain that is.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.rollupCount:
+-        20
++        21
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.20:
++        {"rollupContract":"eth:0xaf6a4CDe41B9C7FCe858E1B875765cdEDB8f84c8","chainID":838,"verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","forkID":12,"rollupTypeID":11,"rollupVerifierType":1,"programVKey":"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"}
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xAb3506507449bF1880f3337825efd19ac89E235E"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 8 (38%)"
+    }
+```
+
+Generated with discovered.json: 0x37596342bb2ea4228da8f6250b5e3154c988fbe5
+
+# Diff at Wed, 06 Aug 2025 12:22:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1702d91eebfba5d614c3470bbe1babe10fbe4c2b block: 1754056580
+- current timestamp: 1754482869
+
+## Description
+
+XLayer migrates from Validium to pessimistic proofs (no state transition proofs).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.5:
++        3
+      values.rollupsDataV2.2.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.rollupsDataV2.2.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.2.rollupTypeID:
+-        8
++        11
+      values.rollupsDataV2.2.forkID:
+-        13
++        12
+      values.rollupsDataV2.2.verifier:
+-        "eth:0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
++        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+    }
+```
+
 Generated with discovered.json: 0x3f2ea7eefaf6194e2379c38051f6a5395d82bc5f
 
 # Diff at Fri, 01 Aug 2025 14:10:59 GMT:
@@ -7839,7 +7915,7 @@ Generated with discovered.json: 0x6124ec4be2edb290f32c6def8e55cfc071ddc45e
 ## Description
 
 Changes related to improving the shared-polygon-cdk module.
-Verifier is no longer part of this shared module - each rollup discoveres it for themselfs.
+Verifier is no longer part of this shared module - each rollup discovers it for themselves.
 
 ## Config/verification related changes
 

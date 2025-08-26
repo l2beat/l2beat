@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import partition from 'lodash/partition'
 import { env } from '~/env'
@@ -8,6 +8,7 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import type { ProjectDaThroughputChartParams } from './getProjectDaThroughputChart'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 import {
@@ -17,7 +18,7 @@ import {
 } from './utils/range'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
-type DaThroughputChartDataPoint = [
+export type DaThroughputChartDataPoint = [
   timestamp: number,
   values: Record<string, number> | null,
 ]
@@ -25,44 +26,76 @@ type DaThroughputChartDataPoint = [
 export type DaThroughputChartDataByChart = {
   chart: DaThroughputChartDataPoint[]
   syncedUntil: number
+  sovereignProjects: string[]
 }
 
 export const DaThroughputChartByProjectParams = v.object({
+  projectId: v.string(),
   range: DaThroughputTimeRange,
-  daLayer: v.string(),
+  includeScalingOnly: v.boolean(),
 })
 export type DaThroughputChartByProjectParams = v.infer<
   typeof DaThroughputChartByProjectParams
 >
 
 export async function getDaThroughputChartByProject(
-  ...parameters: Parameters<typeof getDaThroughputChartByProjectData>
+  params: ProjectDaThroughputChartParams,
 ) {
   if (env.MOCK) {
-    return getMockDaThroughputChartByProjectData(...parameters)
+    return getMockDaThroughputChartByProject(params)
   }
-  return await getDaThroughputChartByProjectData(...parameters)
+
+  const data = await getDaThroughputChartByProjectData(params)
+  if (!data) {
+    return undefined
+  }
+  const resolution = rangeToResolution(params.range)
+
+  const { grouped, from, to, syncedUntil, daLayer } = data
+
+  const timestamps = generateTimestamps([from, to], resolution)
+
+  const chart: DaThroughputChartDataPoint[] = []
+  for (const timestamp of timestamps) {
+    const values = grouped[timestamp] ?? null
+    chart.push([timestamp, values])
+  }
+
+  return {
+    chart,
+    syncedUntil,
+    sovereignProjects:
+      daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => p.name) ??
+      [],
+  }
 }
 
-const getDaThroughputChartByProjectData = async (
-  params: DaThroughputChartByProjectParams,
-): Promise<DaThroughputChartDataByChart> => {
+export async function getDaThroughputChartByProjectData(
+  params: ProjectDaThroughputChartParams,
+) {
   const db = getDb()
-  const resolution = rangeToResolution({ type: params.range })
-  const range = getThroughputRange({ type: params.range })
-  const [throughput, allProjects, daLayer] = await Promise.all([
-    db.dataAvailability.getByDaLayersAndTimeRange([params.daLayer], range),
+
+  const resolution = rangeToResolution(params.range)
+  const range = getThroughputRange(params.range)
+  const [allProjects, daLayer] = await Promise.all([
     ps.getProjects({}),
     ps.getProject({
-      id: params.daLayer as ProjectId,
+      id: ProjectId(params.projectId),
       select: ['daLayer'],
     }),
   ])
+
+  const sovereignProjectIds =
+    daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => p.projectId)
+
+  const throughput = await db.dataAvailability.getByDaLayersAndTimeRange(
+    [params.projectId],
+    range,
+    params.includeScalingOnly ? sovereignProjectIds : undefined,
+  )
+
   if (throughput.length === 0) {
-    return {
-      chart: [],
-      syncedUntil: UnixTime.now(),
-    }
+    return undefined
   }
 
   const syncedUntil = throughput.at(-1)?.timestamp
@@ -80,6 +113,7 @@ const getDaThroughputChartByProjectData = async (
     allProjects,
     resolution,
     sovereignProjects,
+    params.includeScalingOnly,
   )
 
   const expectedTo = getThroughputExpectedTimestamp(resolution)
@@ -88,16 +122,11 @@ const getDaThroughputChartByProjectData = async (
     ? maxTimestamp
     : expectedTo
 
-  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
-
-  const chart: DaThroughputChartDataPoint[] = []
-  for (const timestamp of timestamps) {
-    const values = grouped[timestamp] ?? null
-    chart.push([timestamp, values])
-  }
-
   return {
-    chart,
+    daLayer,
+    grouped,
+    from: minTimestamp,
+    to: adjustedTo,
     syncedUntil,
   }
 }
@@ -107,6 +136,7 @@ function groupByTimestampAndProjectId(
   allProjects: Project[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
   sovereignProjects: Map<ProjectId, string>,
+  includeScalingOnly: boolean,
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
@@ -141,37 +171,43 @@ function groupByTimestampAndProjectId(
       sovereignProjects.get(record.projectId as ProjectId)
     assert(projectName, `Project ${record.projectId} not found`)
 
-    result[timestamp] = {
-      ...result[timestamp],
-      [projectName]: Number(value),
-    }
-    minTimestamp = Math.min(minTimestamp, timestamp)
-    maxTimestamp = Math.max(maxTimestamp, timestamp)
-  }
-
-  // Add the difference between the total size and the sum of the other projects as 'Unknown'
-  const summedDaLayerByDay = sumByResolutionAndProject(
-    daLayerRecords,
-    resolution,
-  )
-  for (const record of summedDaLayerByDay) {
-    const timestamp = record.timestamp
-    const value = record.totalSize
-    const restSummed = Object.values(result[timestamp] ?? {}).reduce(
-      (acc, curr) => acc + curr,
-      0,
-    )
-
     if (result[timestamp]) {
-      result[timestamp]['Unknown'] = Number(value) - restSummed
+      result[timestamp][projectName] = Number(value)
     } else {
       result[timestamp] = {
-        ['Unknown']: Number(value) - restSummed,
+        [projectName]: Number(value),
       }
     }
 
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
+  }
+
+  if (!includeScalingOnly) {
+    // Add the difference between the total size and the sum of the other projects as 'Unknown'
+    const summedDaLayerByDay = sumByResolutionAndProject(
+      daLayerRecords,
+      resolution,
+    )
+    for (const record of summedDaLayerByDay) {
+      const timestamp = record.timestamp
+      const value = record.totalSize
+      const restSummed = Object.values(result[timestamp] ?? {}).reduce(
+        (acc, curr) => acc + curr,
+        0,
+      )
+
+      if (result[timestamp]) {
+        result[timestamp]['Unknown'] = Number(value) - restSummed
+      } else {
+        result[timestamp] = {
+          ['Unknown']: Number(value) - restSummed,
+        }
+      }
+
+      minTimestamp = Math.min(minTimestamp, timestamp)
+      maxTimestamp = Math.max(maxTimestamp, timestamp)
+    }
   }
 
   return {
@@ -190,29 +226,26 @@ function groupByTimestampAndProjectId(
   }
 }
 
-function getMockDaThroughputChartByProjectData({
+async function getMockDaThroughputChartByProject({
   range,
-}: DaThroughputChartByProjectParams): DaThroughputChartDataByChart {
-  const days = rangeToDays({ type: range }) ?? 730
+}: ProjectDaThroughputChartParams): Promise<DaThroughputChartDataByChart> {
+  const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
-  return {
-    chart: timestamps.map((timestamp) => {
-      const values = {
-        base: Math.random() * 900_000_000 + 90_000_000,
-        optimism: Math.random() * 900_000_000 + 90_000_000,
-        arbitrum: Math.random() * 900_000_000 + 90_000_000,
-        polygon: Math.random() * 900_000_000 + 90_000_000,
-        zkSync: Math.random() * 900_000_000 + 90_000_000,
-        zkSyncEra: Math.random() * 900_000_000 + 90_000_000,
-        gnosis: Math.random() * 900_000_000 + 90_000_000,
-        linea: Math.random() * 900_000_000 + 90_000_000,
-      }
+  const value = () => Math.random() * 900_000_000 + 90_000_000
 
-      return [timestamp, values]
-    }),
+  const projects = (await ps.getProjects({ where: ['isScaling'] }))
+    .map((p) => p.name)
+    .slice(0, 50)
+
+  return {
+    chart: timestamps.map((timestamp) => [
+      timestamp,
+      Object.fromEntries(projects.map((p) => [p, value()])),
+    ]),
     syncedUntil: to,
+    sovereignProjects: [],
   }
 }

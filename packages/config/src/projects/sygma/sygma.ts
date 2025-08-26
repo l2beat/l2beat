@@ -34,7 +34,7 @@ export const sygma: Bridge = {
         'https://scan.buildwithsygma.com',
         'https://scan.test.buildwithsygma.com',
       ],
-      repositories: ['https://github.com/sygmaprotocol'],
+      repositories: ['https://github.com/sprintertech/'],
       socialMedia: [
         'https://discord.gg/Qdf6GyNB5J',
         'https://twitter.com/buildwithsygma',

@@ -77,8 +77,6 @@ export const degate2: ScalingProject = {
       'DeGate is an app-specific ZK Rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purposes: ['Exchange'],
     stacks: ['Loopring'],
-    category: 'ZK Rollup',
-
     links: {
       websites: ['https://degate.com/'],
       bridges: ['https://app.degate.com/'],
@@ -92,6 +90,9 @@ export const degate2: ScalingProject = {
         'https://mirror.xyz/0x078a601f492043C8e7D0E15B0F8815f58b4c342f',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
   config: {
     associatedTokens: ['DG'],

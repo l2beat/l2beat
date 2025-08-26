@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x59582ad02e59a23c611488c833f46fc6e8f2472c
+Generated with discovered.json: 0x136b6404a72cbfd3fec286d68a67411e6d230141
 
 # Diff at Thu, 31 Jul 2025 10:51:20 GMT:
 
@@ -376,7 +376,7 @@ Generated with discovered.json: 0xa82bd43f0541946d04ac6d4e41241204fd143ce0
 
 ## Description
 
-Deficit config adjustements affecting fee calculation.
+Deficit config adjustments affecting fee calculation.
 
 ## Watched changes
 

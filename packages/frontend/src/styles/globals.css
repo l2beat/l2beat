@@ -65,6 +65,9 @@
   --chart-fuchsia: #ce66f4;
   --chart-lime: #a9f964;
   --chart-sky: #50bfff;
+  --chart-teal: #2ec4b6;
+  --chart-orange: #f98a24;
+  --chart-yellow-lime: #d6db5b;
 
   --chart-stacked-pink: #ff45b5;
   --chart-stacked-yellow: #ffc300;
@@ -120,7 +123,7 @@
   --scrollbar: #3f444c;
 
   --row-highlight: #9521bf66;
-  --row-highlight-no-opacity: #3c2742;
+  --row-highlight-no-opacity: #4b1d5f;
 
   /* Chart colors */
   --chart-ethereum: #3387ff;
@@ -441,6 +444,9 @@
   --color-chart-fuchsia: var(--chart-fuchsia);
   --color-chart-lime: var(--chart-lime);
   --color-chart-sky: var(--chart-sky);
+  --color-chart-teal: var(--chart-teal);
+  --color-chart-orange: var(--chart-orange);
+  --color-chart-yellow-lime: var(--chart-yellow-lime);
   --color-chart-stacked-blue: var(--chart-stacked-blue);
   --color-chart-stacked-yellow: var(--chart-stacked-yellow);
   --color-chart-stacked-pink: var(--chart-stacked-pink);

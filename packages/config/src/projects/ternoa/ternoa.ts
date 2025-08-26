@@ -32,7 +32,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 
 export const ternoa: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1727455020), // 2024-09-27T17:09:00Z
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Zeeve],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Payments'],
   display: {
@@ -142,7 +142,7 @@ export const ternoa: ScalingProject = polygonCDKStack({
       title: 'Ternoa Mainnet Launch',
       url: 'https://x.com/Ternoa_/status/1884519126812487828',
       date: '2025-01-29',
-      description: 'Ternoa 2.0 mainnet is live.',
+      description: 'Ternoa is live on mainnet, integrated with Agglayer.',
       type: 'general',
     },
   ],

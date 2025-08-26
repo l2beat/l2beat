@@ -1,8 +1,8 @@
 {
   "name": "ink",
   "chain": "ink",
-  "timestamp": 1753451063,
-  "configHash": "0xfdc50e0778d45fc82c11edae6753f8ef8050be79a7b1a1eb6b85d20682c4aa95",
+  "timestamp": 1755525900,
+  "configHash": "0x64a552af90aabb0b6a4c950407654020e292c496d17e8894ca7643473720e898",
   "entries": [
     {
       "name": "L2CrossDomainMessenger",
@@ -25,7 +25,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620900",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620921",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -78,7 +78,7 @@
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 971360633,
+        "l1BaseFee": 990882891,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -265,7 +265,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 971360633,
+        "basefee": 990882891,
         "baseFeeScalar": 4424,
         "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
         "blobBaseFee": 1,
@@ -277,15 +277,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x47d76cb8bd6702433acf0a609d1868fa5a14a7c1e29f1f00103aec8bd5fc7284",
+        "hash": "0x39f106af2a78568bbf4e4a955cd18a894ddec3c9443bbda353f80955ec751a32",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 22996530,
+        "number": 23168416,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 8,
-        "timestamp": 1753450991,
+        "sequenceNumber": 9,
+        "timestamp": 1755525827,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -1183,6 +1183,6 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "usedBlockNumbers": { "ink": 19952652 },
-  "permissionsConfigHash": "0x0328573278406238bf49a1d37798462b4f440b8688203997b3b87d11020d85a1"
+  "usedBlockNumbers": { "ink": 22027489 },
+  "permissionsConfigHash": "0xc187a211655f72961836c95749b908c33fdc8871e559317d4d7ad33f652f7f87"
 }

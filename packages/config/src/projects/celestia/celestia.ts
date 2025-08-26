@@ -86,7 +86,7 @@ export const celestia: BaseProject = {
       references: [
         {
           title: 'Celestia Specifications',
-          url: 'https://celestiaorg.github.io/celestia-app/specs/index.html',
+          url: 'https://celestiaorg.github.io/celestia-app/data_structures.html',
         },
         {
           title: 'Celestia Core - CometBFT',

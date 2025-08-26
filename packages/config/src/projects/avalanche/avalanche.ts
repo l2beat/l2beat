@@ -104,7 +104,7 @@ export const avalanche: Bridge = {
     validatedBy: {
       value: 'Offchain 6/8',
       description:
-        'A 6/8 Intel SGX allegedgly controls the escrowing EOA. Identities of the signers are not publicly disclosed.',
+        'A 6/8 Intel SGX allegedly controls the escrowing EOA. Identities of the signers are not publicly disclosed.',
       sentiment: 'bad',
     },
     governance: {
@@ -159,7 +159,7 @@ export const avalanche: Bridge = {
         },
         {
           category: 'Funds can be lost if',
-          text: 'wardens loose the private key.',
+          text: 'wardens lose the private key.',
         },
         {
           category: 'Funds can be frozen if',

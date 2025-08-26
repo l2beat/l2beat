@@ -1,8 +1,8 @@
 {
   "name": "soon",
   "chain": "ethereum",
-  "timestamp": 1748583791,
-  "configHash": "0x11311a48b4f24230ad62355aeb8cf3efc245bf462d87afc22dcb3efc42a21f26",
+  "timestamp": 1755161806,
+  "configHash": "0x7928d731f8525204126b6e7d1b7c5527f69ad8ba6a56781d63a051712d878d9a",
   "entries": [
     {
       "name": "L2OutputOracle",
@@ -51,10 +51,10 @@
         "finalizationPeriodSeconds": 86400,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 3330000,
-        "latestOutputIndex": 665,
-        "nextBlockNumber": 3335000,
-        "nextOutputIndex": 666,
+        "latestBlockNumber": 3915000,
+        "latestOutputIndex": 782,
+        "nextBlockNumber": 3920000,
+        "nextOutputIndex": 783,
         "proposer": "eth:0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
         "PROPOSER": "eth:0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
         "startingBlockNumber": 0,
@@ -460,7 +460,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292668718",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292668894",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1102,6 +1102,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22593538 },
+  "usedBlockNumbers": { "ethereum": 23138236 },
   "permissionsConfigHash": "0x763b8619edf458a4148bda3231acbfdbc1e21c4f2a6f04326ce45bc5228866d0"
 }

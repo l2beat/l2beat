@@ -7,6 +7,10 @@ import type {
   WarningWithSentiment,
 } from '../types'
 import { getDacSentiment } from './dataAvailability'
+import {
+  formatChallengeAndExecutionDelay,
+  formatChallengePeriod,
+} from './formatDelays'
 
 // State validation
 
@@ -34,12 +38,22 @@ export const STATE_FP_1R: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_FP_INT: TableReadyValue = {
-  value: 'Fraud proofs (INT)',
-  description:
-    'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
-  sentiment: 'good',
-  orderHint: Number.POSITIVE_INFINITY,
+export function STATE_FP_INT(
+  challengePeriodSeconds?: number,
+  executionDelaySeconds?: number,
+): TableReadyValue {
+  return {
+    value: 'Fraud proofs (INT)',
+    description:
+      'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
+    secondLine: executionDelaySeconds
+      ? formatChallengeAndExecutionDelay(
+          executionDelaySeconds + Number(challengePeriodSeconds),
+        )
+      : formatChallengePeriod(challengePeriodSeconds),
+    sentiment: 'good',
+    orderHint: Number.POSITIVE_INFINITY,
+  }
 }
 
 export const STATE_FP_INT_ZK: TableReadyValue = {
@@ -62,6 +76,14 @@ export const STATE_FP_HYBRID_ZK: TableReadyValue = {
   value: 'Fraud proofs (1R, ZK)',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used.',
+  sentiment: 'good',
+  orderHint: Number.POSITIVE_INFINITY,
+}
+
+export const STATE_ZKP_OPTIMISTIC: TableReadyValue = {
+  value: 'Fraud proofs (1R, ZK)',
+  description:
+    'Actors watching the chain can challenge state proposals, and challenged proposals must provide ZK proofs. SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
 }
@@ -111,6 +133,7 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   nOfChallengers: number,
   hasAtLeastFiveExternalChallengers?: boolean,
   challengeWindowSeconds?: number,
+  executionDelaySeconds?: number,
 ): TableReadyValue {
   const challengePeriod = challengeWindowSeconds
     ? ` There is a ${formatSeconds(challengeWindowSeconds)} challenge period.`
@@ -146,6 +169,11 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   return {
     value: 'Fraud proofs (INT)',
     description: descriptionBase + challengePeriod,
+    secondLine: executionDelaySeconds
+      ? formatChallengeAndExecutionDelay(
+          Number(challengeWindowSeconds) + executionDelaySeconds,
+        )
+      : formatChallengePeriod(challengeWindowSeconds),
     sentiment: sentiment,
     orderHint: nOfChallengers,
   }
@@ -543,6 +571,18 @@ export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
   }
 }
 
+export function PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY(
+  delay: number,
+): TableReadyValue {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Self propose',
+    description: `Anyone can propose blocks if accompanied by a validity proof. Only the whitelisted proposers can propose state roots for recent blocks optimistically. Anyone can propose optimistically for L2 blocks that are older than ${delayString}.`,
+    sentiment: 'good',
+    orderHint: delay,
+  }
+}
+
 export const PROPOSER_SELF_PROPOSE_ZK: TableReadyValue = {
   value: 'Self propose',
   description:
@@ -721,6 +761,7 @@ export const RISK_VIEW = {
   STATE_FP_1R_ZK,
   STATE_FP_HYBRID_ZK,
   STATE_ZKP_SN,
+  STATE_ZKP_OPTIMISTIC,
   STATE_ZKP_ST,
   STATE_ZKP_ST_SN_WRAP,
   STATE_ZKP_L3,
@@ -772,6 +813,7 @@ export const RISK_VIEW = {
   PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK,
+  PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY,
   PROPOSER_SELF_PROPOSE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
   PROPOSER_POS,

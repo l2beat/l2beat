@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "yieldfi",
+  "import": ["../../globalConfig.jsonc"],
+  "maxDepth": 3,
+  "initialAddresses": [
+    "eth:0x2e3c5e514eef46727de1fe44618027a9b70d92fc",
+    "eth:0x19ebd191f7a24ece672ba13a302212b5ef7f35cb"
+  ],
+  "names": {
+    "eth:0x2e3c5e514eef46727de1fe44618027a9b70d92fc": "vyUSD",
+    "eth:0x19ebd191f7a24ece672ba13a302212b5ef7f35cb": "yUSD"
+  },
+  "overrides": {
+    "eth:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": {
+      "ignoreRelatives": [
+        "$admin",
+        "blacklister",
+        "masterMinter",
+        "minters",
+        "owner",
+        "pauser"
+      ],
+      "ignoreMethods": ["admin", "implementation"]
+    }
+  }
+}

@@ -2,7 +2,7 @@
   "name": "ronin",
   "chain": "ethereum",
   "timestamp": 1751371163,
-  "configHash": "0x11449098ce42833b8be9219119d4e5c6c4c6a4599659d0cec423bbdf6677c3a4",
+  "configHash": "0x5d9498729e6fe387b4109f6c7bbffc2ee334f897bfa9d5b74f09a09b463a3bd9",
   "entries": [
     {
       "address": "eth:0x020Dd9a5e318695A61DDa88DB7Ad077Ec306e3E9",

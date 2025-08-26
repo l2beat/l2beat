@@ -12,9 +12,8 @@ export const fuse: ScalingProject = upcomingL2({
     name: 'Fuse',
     slug: 'fuse',
     description:
-      'Fuse Ember is a Layer 2 blockchain, designed for real-world payments and scalable Web3 adoption. Powered by Polygon CDK and zkRollup technology, Ember delivers fast, low-cost transaction. It features DAC-powered data availability, Agglayer interoperability, and native account abstraction.',
+      'Fuse Ember is a Layer 2 blockchain, designed for real-world payments and scalable Web3 adoption. Powered by Polygon CDK and zkRollup technology, Ember delivers fast, low-cost transactions. It features DAC-powered data availability, Agglayer interoperability, and native account abstraction.',
     purposes: ['Universal'],
-    category: 'Validium',
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://fuse.io/'],
@@ -31,5 +30,8 @@ export const fuse: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('agglayer'),
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

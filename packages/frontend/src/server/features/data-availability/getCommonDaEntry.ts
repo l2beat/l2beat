@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { getRowBackgroundColor } from '~/components/table/utils/rowType'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
 import { getProjectIcon } from '../utils/getProjectIcon'
 
@@ -16,6 +17,12 @@ export function getCommonDaEntry({
   href: string | undefined
   syncWarning?: string
 }): CommonDaEntry {
+  const statuses = {
+    underReview: project.statuses.reviewStatus
+      ? ('config' as const)
+      : undefined,
+    syncWarning,
+  }
   return {
     id: project.id,
     slug: project.slug,
@@ -24,10 +31,8 @@ export function getCommonDaEntry({
     nameSecondLine: project.daLayer.type,
     href,
     tab: project.daLayer.systemCategory,
-    statuses: {
-      underReview: project.statuses.reviewStatus ? 'config' : undefined,
-      syncWarning,
-    },
+    backgroundColor: getRowBackgroundColor(statuses),
+    statuses,
   }
 }
 
@@ -38,6 +43,13 @@ export function getCommonDacDaEntry({
   project: Project<'customDa' | 'statuses'>
   syncWarning?: string
 }): CommonDaEntry {
+  const statuses = {
+    underReview: project.statuses.reviewStatus
+      ? ('config' as const)
+      : undefined,
+    syncWarning,
+  }
+
   return {
     id: project.id,
     slug: project.slug,
@@ -46,9 +58,7 @@ export function getCommonDacDaEntry({
     nameSecondLine: project.customDa.type,
     href: `/scaling/projects/${project.slug}`,
     tab: 'custom',
-    statuses: {
-      underReview: project.statuses.reviewStatus ? 'config' : undefined,
-      syncWarning,
-    },
+    backgroundColor: getRowBackgroundColor(statuses),
+    statuses,
   }
 }

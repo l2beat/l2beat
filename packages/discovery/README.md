@@ -1000,6 +1000,7 @@ In the first example, `["get", "systemConfig"]` is a filter that extracts the sy
 - `delete`, deletes removes keys/indices from objects/arrays.
 - `shape`, creates a new object from input values using specified keys.
 - `to_entries`, converts an object to an array of key-value pairs.
+- `length`, returns the number of elements in arrays, objects, or strings.
 
 #### `pipe`
 
@@ -1114,7 +1115,7 @@ Only a single argument is allowed, it has to be a string.
 Takes three filters, the first is the condition, the second is the value if the condition is true, and the third is the value if the condition is false.
 The condition has to be a boolean.
 Filters producing the true and false values are lazily evaluated.
-If the true condition value is only a valid program when the condition is true it wont be evaluated if the condition doesn't pass.
+If the true condition value is only a valid program when the condition is true it won't be evaluated if the condition doesn't pass.
 
 - Input: `{ hasA: true, a: 1 }`
 - Program: `["if", ["get", "hasA"], ["pick", "a"], ["pick", "b"]]`
@@ -1165,6 +1166,25 @@ The order of entries follows the object's key insertion order.
 - Input: `[1, 23]`
 - Program: `["to_entries"]`
 - Output: `[[ "0", 1 ], [ "1", 23 ]]`
+
+### `length`
+
+Returns the number of elements in arrays, objects, or strings.
+For arrays, returns the array length.
+For objects, returns the number of properties.
+For strings, returns the string length.
+
+- Input: `[1, 2, 3]`
+- Program: `["length"]`
+- Output: `3`
+
+- Input: `{ a: 1, b: 2 }`
+- Program: `["length"]`
+- Output: `2`
+
+- Input: `"hello"`
+- Program: `["length"]`
+- Output: `5`
 
 ### Copy feature
 
