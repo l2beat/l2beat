@@ -17,7 +17,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -166,7 +165,7 @@ export const katana: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
-      secondLine: formatExecutionDelay(0), // state root is published together with the pessimistic proof
+      executionDelay: 0, // state root is published together with the pessimistic proof
     },
     dataAvailability: DATA_ON_CHAIN,
     exitWindow: {

@@ -29,7 +29,6 @@ import type {
   ProjectScalingDa,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
-  ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
   ProjectScalingStack,
   ProjectScalingStage,
@@ -37,6 +36,7 @@ import type {
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
+  TableReadyValue,
   WarningWithSentiment,
 } from './types'
 
@@ -178,6 +178,21 @@ export interface ProjectScalingTechnology {
   otherConsiderations?: ProjectTechnologyChoice[]
   /** Is the technology section under review */
   isUnderReview?: boolean
+}
+
+export interface ProjectScalingRiskView {
+  stateValidation: Omit<TableReadyValue, 'secondLine'> & {
+    /** @unit seconds */
+    executionDelay?: number
+    /** @unit seconds */
+    challengeDelay?: number
+    /** @unit ETH */
+    initialBond?: number
+  }
+  dataAvailability: TableReadyValue
+  exitWindow: TableReadyValue
+  sequencerFailure: TableReadyValue
+  proposerFailure: TableReadyValue
 }
 
 export interface Layer2TxConfig {
