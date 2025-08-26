@@ -10,18 +10,15 @@ interface Props {
 }
 
 export function TokenAddressCell(props: Props) {
+  const label = props.name ?? formatAddress(props.address.toString())
   if (!props.url) {
-    return (
-      <span className="pr-2 font-medium text-xs">
-        {props.name ?? formatAddress(props.address.toString())}
-      </span>
-    )
+    return <span className="pr-2 font-medium text-xs">{label}</span>
   }
 
   return (
     <CustomLink href={props.url}>
       <span className="flex items-center gap-1 text-xs">
-        {props.name ?? formatAddress(props.address.toString())}
+        {label}
         <CustomLinkIcon className="fill-blue-700 dark:fill-blue-500" />
       </span>
     </CustomLink>

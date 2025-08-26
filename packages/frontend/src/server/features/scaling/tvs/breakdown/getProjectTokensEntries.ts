@@ -1,6 +1,17 @@
-import type { ChainConfig, Formula, Project, TvsToken } from '@l2beat/config'
+import type {
+  ChainConfig,
+  Formula,
+  Project,
+  ProjectContract,
+  TvsToken,
+} from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
-import { assertUnreachable, TokenId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assertUnreachable,
+  ChainSpecificAddress,
+  TokenId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import capitalize from 'lodash/capitalize'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import { env } from '~/env'
@@ -89,7 +100,11 @@ function getEntries(
     if (!tokenValue) continue
 
     const { addresses } = extractAddressesFromTokenConfig(token)
-    const address = processAddresses(addresses, chains)
+    const address = processAddresses(
+      addresses,
+      chains,
+      project.contracts?.addresses,
+    )
 
     const tokenWithValues: TvsBreakdownTokenEntry = {
       id: token.id,
@@ -178,17 +193,24 @@ function withExplorerUrl(
 function processAddresses(
   addresses: Address[],
   chains: ChainConfig[],
+  projectContracts?: Record<string, ProjectContract[]>,
 ): TvsBreakdownTokenEntry['address'] {
   if (addresses.length > 1) {
     return 'multiple'
   }
   if (addresses.length === 1 && addresses[0]) {
     const address = addresses[0]
+    const contractName = projectContracts?.[address.chain]?.find(
+      (c) =>
+        ChainSpecificAddress.address(c.address).toLowerCase() ===
+        address.address.toLowerCase(),
+    )?.name
     const explorer = chains.find((c) => c.name === address.chain)?.explorerUrl
 
     return {
       address: address.address,
       url: explorer ? `${explorer}/address/${address.address}` : undefined,
+      name: contractName,
     }
   }
   return undefined
