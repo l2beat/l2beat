@@ -87,13 +87,13 @@ import {
 } from './StarkWareNamedStorageHandler'
 import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
 import {
-  TokenMintersDefinition,
-  TokenMintersHandler,
-} from './TokenMintersHandler/TokenMinters'
-import {
   TradableDefinition,
   TradableHandler,
 } from './TradableHandler/TradableHandler'
+import {
+  YieldFiMintersDefinition,
+  YieldFiMintersHandler,
+} from './YieldFiMintersHandler'
 import {
   ZKsyncEraScheduledTransactionHandler,
   ZKsyncEraScheduledTransactionsHandlerDefinition,
@@ -133,7 +133,7 @@ export const UserHandlerDefinition = v.union([
   PolygonCDKScheduledTransactionsHandlerDefinition,
   ERC20DataDefinition,
   TradableDefinition,
-  TokenMintersDefinition,
+  YieldFiMintersDefinition,
 ])
 
 export function getUserHandler(
@@ -198,7 +198,7 @@ export function getUserHandler(
       return new ERC20DataHandler(field, definition)
     case 'tradable':
       return new TradableHandler(field)
-    case 'minters':
-      return new TokenMintersHandler(field, definition, abi)
+    case 'YieldFiMinters':
+      return new YieldFiMintersHandler(field, definition, abi)
   }
 }

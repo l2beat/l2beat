@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xe342d14128626e9262c5e625c74a0814868e8ad2
+Generated with discovered.json: 0x8cf16c1c4b0a12eb2c77d42c8790de4f2b146c98
 
-# Diff at Thu, 21 Aug 2025 09:00:37 GMT:
+# Diff at Tue, 26 Aug 2025 11:40:25 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - current timestamp: 1755603175
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery.
 
 ## Initial discovery
 
@@ -80,6 +80,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract ProxyAdmin (0xc79920D40206cc28f7B70E72d623Ff7fB83004C1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xCfD925b89D4ccfee2eC9287b362648854aCbBF03)
     +++ description: None
 ```
 

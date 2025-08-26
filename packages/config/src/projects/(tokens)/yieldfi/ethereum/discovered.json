@@ -2,7 +2,7 @@
   "name": "yieldfi",
   "chain": "ethereum",
   "timestamp": 1755603175,
-  "configHash": "0xd555ab0258bb6c34e1162c3dcc7358024c22d956fc32f91e600a78362d62903b",
+  "configHash": "0xabb637e7a0442f8de9bb68c0c2edb0ed67835bb2b266f028cfb7fc69234209e1",
   "entries": [
     {
       "name": "Manager",
@@ -49,6 +49,7 @@
       "name": "Administrator",
       "address": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
       "type": "Contract",
+      "template": "yieldfi/Administrator",
       "sourceHashes": [
         "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
         "0xfeef795150202675eb781deeb753733de1bb9769ae0762cbb3f5a354690ae5e7"
@@ -115,6 +116,7 @@
       "name": "yUSD",
       "address": "eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb",
       "type": "Contract",
+      "template": "yieldfi/yToken",
       "sourceHashes": [
         "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
         "0xc584cf0791972d811cbb10b6ed2caf5e040fbcdd5219bf8386cdf9654fa19585"
@@ -197,6 +199,7 @@
       "name": "vyUSD",
       "address": "eth:0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC",
       "type": "Contract",
+      "template": "yieldfi/yToken",
       "sourceHashes": [
         "0x986346836d4dfb3ec6cb62cd668e6d746f8be0a370a352172dd7f7e0a7fe1320",
         "0xe0d5f5bf90b1a9a74c7ac96f5bcbbf52030da73aa7927629913cc14c0d2a2264"
@@ -353,6 +356,7 @@
       "name": "YieldFiTimelockController",
       "address": "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4",
       "type": "Contract",
+      "template": "yieldfi/TimelockController",
       "sourceHashes": [
         "0x706812f226bec5d959f6b4977145ce734718d676eaee8707aa2bff14e59eba77"
       ],
@@ -389,6 +393,14 @@
           "via": [
             { "address": "eth:0x6569089dd56A140777014d27B6113d96f3544f71" }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x933B4464beBE7136bC184637792c0EE514057660",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -405,6 +417,11 @@
         {
           "permission": "act",
           "from": "eth:0xc79920D40206cc28f7B70E72d623Ff7fB83004C1",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03",
           "role": ".owner"
         },
         {
@@ -449,6 +466,7 @@
       "name": "RequestReceipt",
       "address": "eth:0x933B4464beBE7136bC184637792c0EE514057660",
       "type": "Contract",
+      "template": "yieldfi/RequestReceipt",
       "sourceHashes": [
         "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
         "0x96fa98ebc2c01b61141dbd8871e1532a6ef100fce0a94d64e6a42ecf3ce69550"
@@ -614,6 +632,33 @@
       },
       "implementationNames": {
         "eth:0xc79920D40206cc28f7B70E72d623Ff7fB83004C1": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x933B4464beBE7136bC184637792c0EE514057660",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1745812367,
+      "sinceBlock": 22364997,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03": "ProxyAdmin"
       }
     },
     {
@@ -1220,6 +1265,17 @@
       "function unpause()",
       "function unpauseSC(address _sc)"
     ],
+    "eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "eth:0xE26E1D2ae51dcB89E382CA7400b080e6632117B9": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
@@ -1234,8 +1290,12 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97"
+    "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
+    "yieldfi/Administrator": "0x184ff11c8b97ce97ac2f8aa96e856e0ec078249673eec39724a97216a45330fe",
+    "yieldfi/RequestReceipt": "0x9cd3c432da249f2a9a2df0aa226edd4c4a8acfcc4a84dae193c994d30c599ffa",
+    "yieldfi/TimelockController": "0xf4f6d4f9669222f80d580819b71d8b2c9b243710e3af70c08a33151ed9b74d67",
+    "yieldfi/yToken": "0x08ce13da8ac2fd499d89f7f136b2d7ab5405770d22b19834762e1aec6504fb8d"
   },
   "usedBlockNumbers": { "ethereum": 23174841 },
-  "permissionsConfigHash": "0x25a542fb2403f35f5056cbb614dc6433b5d1f12f7c5e7784370b5b6e7f19b2e0"
+  "permissionsConfigHash": "0x18458e2b07fa1858f4202f05bfa54acc492bdc77c6e46233e5a109e5388c120f"
 }

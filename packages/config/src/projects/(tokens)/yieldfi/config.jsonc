@@ -2,12 +2,10 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "yieldfi",
   "import": ["../../globalConfig.jsonc"],
-  "maxDepth": 2,
+  "maxDepth": 3,
   "initialAddresses": [
     "eth:0x2e3c5e514eef46727de1fe44618027a9b70d92fc",
-    "eth:0x19ebd191f7a24ece672ba13a302212b5ef7f35cb",
-    "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
-    "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4"
+    "eth:0x19ebd191f7a24ece672ba13a302212b5ef7f35cb"
   ],
   "names": {
     "eth:0x2e3c5e514eef46727de1fe44618027a9b70d92fc": "vyUSD",
@@ -24,81 +22,6 @@
         "pauser"
       ],
       "ignoreMethods": ["admin", "implementation"]
-    },
-    "eth:0x933B4464beBE7136bC184637792c0EE514057660": {
-      "ignoreMethods": ["orders", "readOrder"]
-    },
-    "eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb": {
-      "ignoreMethods": [
-        "convertToAssets",
-        "convertToShares",
-        "previewDeposit",
-        "previewWithdraw",
-        "previewRedeem",
-        "previewMint"
-      ],
-      "fields": {
-        "$minters": {
-          "handler": {
-            "type": "minters",
-            "kind": "yieldfi",
-            "permissionlessMinting": true
-          }
-        }
-      }
-    },
-    "eth:0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC": {
-      "ignoreMethods": [
-        "convertToAssets",
-        "convertToShares",
-        "previewDeposit",
-        "previewWithdraw",
-        "previewRedeem",
-        "previewMint"
-      ],
-      "fields": {
-        "$minters": {
-          "handler": {
-            "type": "minters",
-            "kind": "yieldfi",
-            "permissionlessMinting": true
-          }
-        }
-      }
-    },
-    "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl",
-            "roleNames": {
-              "0xdf8b4c520ffe197c5343c6f5aec59570151ef9a492f2c624fd45ddde6135ec42": "ADMIN",
-              "0x196445be8e29cb4e505699c67ec8eceb0187441d0913818e000a48d538545d14": "MINTER_AND_REDEEMER",
-              "0x413cc8bb35fe129dacd3dfaae80d6d4c5d313f64cee9dd6712e7ca52e38573a9": "COLLATERAL_MANAGER",
-              "0x5a8bfb9223d93ad39e310233fff7bc65227887789e6e83c62b12f0dfdd782ec3": "REWARDER",
-              "0xaf290d8680820aad922855f39b306097b20e28774d6c1ad35a20325630c3a02c": "MANAGER",
-              "0x08fb31c3e81624356c3314088aa971b73bcc82d22bc3e3b184b4593077ae3278": "BRIDGE",
-              "0x3812cb515c4c47772b5b6b50b84b6a856abab98cf24bcfb67a83510fb661c133": "BOND",
-              "0x0f2a9aa9ac2639d8d73bfa84d0682d3e88d5f473437d4e7c341378f9bbebddbd": "LOCKBOX",
-              "0xaeed4774a6ca7dc9eef4423038c2a3abe132048336feddd81b2e9a5e941eb777": "YIELD"
-            }
-          }
-        }
-      }
-    },
-    "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl",
-            "roleNames": {
-              "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1": "PROPOSER_ROLE",
-              "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE",
-              "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783": "CANCELLER_ROLE"
-            }
-          }
-        }
-      }
     }
   }
 }

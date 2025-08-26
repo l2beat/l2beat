@@ -590,11 +590,10 @@
               {
                 "type": "object",
                 "properties": {
-                  "type": { "const": "minters" },
-                  "kind": { "const": "yieldfi" },
+                  "type": { "const": "YieldFiMinters" },
                   "permissionlessMinting": { "type": "boolean" }
                 },
-                "required": ["type", "kind"]
+                "required": ["type"]
               }
             ]
           },
