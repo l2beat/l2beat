@@ -129,7 +129,8 @@
         "$implementation": "eth:0x5bf44d32260AeE6b807c490e92eF0481D15Ab493",
         "$minters": {
           "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"],
-          "permissionlessMinting": true
+          "permissionlessMinting": true,
+          "mintingWithPermit": false
         },
         "$pastUpgrades": [
           [
@@ -212,7 +213,8 @@
         "$implementation": "eth:0xb94758e90263b48D8f150FFc314b957e2475e247",
         "$minters": {
           "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"],
-          "permissionlessMinting": true
+          "permissionlessMinting": true,
+          "mintingWithPermit": false
         },
         "$pastUpgrades": [
           [
