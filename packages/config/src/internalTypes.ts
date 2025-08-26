@@ -25,6 +25,7 @@ import type {
   ProjectLivenessInfo,
   ProjectPermissions,
   ProjectReviewStatus,
+  ProjectRiskView,
   ProjectScalingCapability,
   ProjectScalingDa,
   ProjectScalingProofSystem,
@@ -36,7 +37,6 @@ import type {
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
-  TableReadyValue,
   WarningWithSentiment,
 } from './types'
 
@@ -180,19 +180,8 @@ export interface ProjectScalingTechnology {
   isUnderReview?: boolean
 }
 
-export interface ProjectScalingRiskView {
-  stateValidation: Omit<TableReadyValue, 'secondLine'> & {
-    /** @unit seconds */
-    executionDelay?: number
-    /** @unit seconds */
-    challengeDelay?: number
-    /** @unit ETH */
-    initialBond?: number
-  }
-  dataAvailability: TableReadyValue
-  exitWindow: TableReadyValue
-  sequencerFailure: TableReadyValue
-  proposerFailure: TableReadyValue
+export interface ProjectScalingRiskView extends ProjectRiskView {
+  stateValidation: Omit<ProjectRiskView['stateValidation'], 'secondLine'>
 }
 
 export interface Layer2TxConfig {
