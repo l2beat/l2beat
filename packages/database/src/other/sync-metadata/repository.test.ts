@@ -76,6 +76,18 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
         },
         {
+          feature: 'activity',
+          id: 'base',
+          target: roundedHour + 1 * UnixTime.HOUR,
+          syncedUntil: roundedHour + 1 * UnixTime.HOUR,
+        },
+        {
+          feature: 'activity',
+          id: 'dydx',
+          target: roundedHour + 2 * UnixTime.HOUR,
+          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
+        },
+        {
           feature: 'l2Cost',
           id: 'base',
           target: roundedHour + 1 * UnixTime.HOUR,
@@ -85,11 +97,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       await repository.upsertMany(records)
 
       const newTarget = roundedHour + 3 * UnixTime.HOUR
-      await repository.updateTarget({
-        feature: 'activity',
-        id: 'arbitrum',
-        target: newTarget,
-      })
+      await repository.updateTarget('activity', ['arbitrum', 'base'], newTarget)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(2)
@@ -101,6 +109,18 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
         },
         {
+          feature: 'activity',
+          id: 'base',
+          target: newTarget,
+          syncedUntil: roundedHour + 1 * UnixTime.HOUR,
+        },
+        {
+          feature: 'activity',
+          id: 'dydx',
+          target: roundedHour + 2 * UnixTime.HOUR,
+          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
+        },
+        {
           feature: 'l2Cost',
           id: 'base',
           target: roundedHour + 1 * UnixTime.HOUR,
@@ -110,11 +130,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
     })
 
     it('should not affect non-existent record', async () => {
-      await repository.updateTarget({
-        feature: 'activity',
-        id: 'non-existent',
-        target: roundedHour,
-      })
+      await repository.updateTarget('activity', ['non-existent'], roundedHour)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(0)
@@ -131,6 +147,18 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
         },
         {
+          feature: 'activity',
+          id: 'base',
+          target: roundedHour + 1 * UnixTime.HOUR,
+          syncedUntil: roundedHour + 1 * UnixTime.HOUR,
+        },
+        {
+          feature: 'activity',
+          id: 'dydx',
+          target: roundedHour + 2 * UnixTime.HOUR,
+          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
+        },
+        {
           feature: 'l2Cost',
           id: 'base',
           target: roundedHour + 1 * UnixTime.HOUR,
@@ -140,11 +168,11 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       await repository.upsertMany(records)
 
       const newSyncedUntil = roundedHour + 3 * UnixTime.HOUR
-      await repository.updateSyncedUntil({
-        feature: 'activity',
-        id: 'arbitrum',
-        syncedUntil: newSyncedUntil,
-      })
+      await repository.updateSyncedUntil(
+        'activity',
+        ['arbitrum'],
+        newSyncedUntil,
+      )
 
       const results = await repository.getAll()
       expect(results).toHaveLength(2)
@@ -156,6 +184,18 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: newSyncedUntil,
         },
         {
+          feature: 'activity',
+          id: 'base',
+          target: roundedHour + 1 * UnixTime.HOUR,
+          syncedUntil: newSyncedUntil,
+        },
+        {
+          feature: 'activity',
+          id: 'dydx',
+          target: roundedHour + 2 * UnixTime.HOUR,
+          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
+        },
+        {
           feature: 'l2Cost',
           id: 'base',
           target: roundedHour + 1 * UnixTime.HOUR,
@@ -165,11 +205,11 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
     })
 
     it('should not affect non-existent record', async () => {
-      await repository.updateSyncedUntil({
-        feature: 'activity',
-        id: 'non-existent',
-        syncedUntil: roundedHour,
-      })
+      await repository.updateSyncedUntil(
+        'activity',
+        ['non-existent'],
+        roundedHour,
+      )
 
       const results = await repository.getAll()
       expect(results).toHaveLength(0)

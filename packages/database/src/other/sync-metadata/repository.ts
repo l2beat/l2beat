@@ -26,29 +26,16 @@ export class SyncMetadataRepository extends BaseRepository {
     return records.length
   }
 
-  async updateTarget(
-    record: Pick<SyncMetadataRecord, 'feature' | 'id' | 'target'>,
-  ): Promise<void> {
-    await this.db
-      .updateTable('SyncMetadata')
-      .set({ target: UnixTime.toDate(record.target) })
-      .where('feature', '=', record.feature)
-      .where('id', '=', record.id)
-      .execute()
-  }
-
   async updateSyncedUntil(
-    record: Pick<SyncMetadataRecord, 'feature' | 'id' | 'syncedUntil'>,
+    feature: string,
+    ids: string[],
+    syncedUntil: UnixTime,
   ): Promise<void> {
     await this.db
       .updateTable('SyncMetadata')
-      .set({
-        syncedUntil: record.syncedUntil
-          ? UnixTime.toDate(record.syncedUntil)
-          : null,
-      })
-      .where('feature', '=', record.feature)
-      .where('id', '=', record.id)
+      .set({ syncedUntil: UnixTime.toDate(syncedUntil) })
+      .where('feature', '=', feature)
+      .where('id', 'in', ids)
       .execute()
   }
 

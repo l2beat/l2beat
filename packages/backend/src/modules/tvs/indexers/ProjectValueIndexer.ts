@@ -44,6 +44,7 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
     to: number,
     configurations: Configuration<ProjectValueConfig>[],
   ) {
+    const configuration = configurations[0]
     const timestamps = this.$.syncOptimizer.getTimestampsToSync(
       from,
       to,
@@ -59,7 +60,7 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
     }
 
     const tokens = await this.$.db.tvsTokenValue.getByProject(
-      configurations[0].properties.project,
+      configuration.properties.project,
       timestamps[0],
       timestamps[timestamps.length - 1],
     )
@@ -68,7 +69,7 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
 
     for (const timestamp of timestamps) {
       const tokensForTimestamp = tokens.filter((t) => t.timestamp === timestamp)
-      const project = configurations[0].properties.project
+      const project = configuration.properties.project
 
       records.push(
         ...this.aggregateForTimestamp(project, timestamp, tokensForTimestamp),
@@ -77,6 +78,11 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
 
     return async () => {
       await this.$.db.tvsProjectValue.upsertMany(records)
+      await this.$.db.syncMetadata.updateSyncedUntil(
+        'tvs',
+        [configuration.id],
+        to,
+      )
       this.logger.info('Saved project values into DB', {
         timestamps: timestamps.length,
         records: records.length,
