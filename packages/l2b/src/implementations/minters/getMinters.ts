@@ -10,17 +10,17 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-const abi = [
+const ABI = [
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 ]
-const iface = new utils.Interface(abi)
-const topic0 = iface.getEventTopic('Transfer')
+const IFACE = new utils.Interface(ABI)
+const TRANSFER_TOPIC = IFACE.getEventTopic('Transfer')
 
 export async function getMintTransactions(
   provider: IProvider,
   address: ChainSpecificAddress,
 ) {
-  const topics = iface.encodeFilterTopics('Transfer', [EthereumAddress.ZERO])
+  const topics = IFACE.encodeFilterTopics('Transfer', [EthereumAddress.ZERO])
 
   const logs = await provider.getLogs(address, topics)
 
@@ -46,7 +46,7 @@ function* walk(
   const isMint = call.logs?.some((log) => {
     const [eventTopic, from] = log.topics
 
-    return eventTopic === topic0 && from === Hash256.ZERO
+    return eventTopic === TRANSFER_TOPIC && from === Hash256.ZERO
   })
 
   if (isMint) {
