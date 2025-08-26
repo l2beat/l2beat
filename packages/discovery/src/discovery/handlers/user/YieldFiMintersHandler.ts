@@ -72,8 +72,8 @@ export class YieldFiMintersHandler implements Handler {
       field: '$minters',
       value: {
         members: Array.from(minters),
-        permissionlessMinting: this.definition.permissionlessMinting ?? false,
-        mintingWithPermit: this.definition.mintingWithPermit ?? false,
+        permissionlessMinting: this.definition.permissionlessMinting,
+        mintingWithPermit: this.definition.mintingWithPermit,
       },
     }
   }
