@@ -34,7 +34,11 @@ export const lens: ScalingProject = zkStackL2({
         'https://onboarding.lens.xyz/explore',
       ],
       documentation: ['https://lens.xyz/docs'],
-      explorers: ['https://momoka.lens.xyz', 'https://explorer.lens.xyz/'],
+      explorers: [
+        'https://momoka.lens.xyz',
+        'https://explorer.lens.xyz/',
+        'https://lenscan.io/',
+      ],
       repositories: ['https://github.com/lens-protocol'],
       socialMedia: [
         'https://hey.xyz/u/lens',
