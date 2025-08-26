@@ -56,6 +56,7 @@ function DialogBody({ children, ...props }: RadixDialog.DialogContentProps) {
           props.className,
         )}
         {...props}
+        aria-describedby={undefined}
       >
         {children}
 

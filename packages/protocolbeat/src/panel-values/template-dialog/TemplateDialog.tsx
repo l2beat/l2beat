@@ -25,11 +25,22 @@ export const TemplateDialog = {
   Body: TemplateDialogBody,
 }
 
-function TemplateDialogRoot({ children }: { children: React.ReactNode }) {
+function TemplateDialogRoot({
+  children,
+  project,
+  selectedName,
+}: {
+  children: React.ReactNode
+  project: string
+  selectedName?: string
+}) {
+  const initialTemplateId = `${project}/${selectedName ?? '<ChangeMe>'}`
+  const initialFileName = `${selectedName ?? '<ChangeMe>'}.sol`
+
   const [step, setStep] = useState<DialogStep>('specify-template')
   const [formData, setFormData] = useState<TemplateFormData>({
-    templateId: '',
-    fileName: '',
+    templateId: initialTemplateId,
+    fileName: initialFileName,
   })
 
   return (
@@ -40,8 +51,8 @@ function TemplateDialogRoot({ children }: { children: React.ReactNode }) {
             // Reset state when dialog is closed
             setStep('specify-template')
             setFormData({
-              templateId: '',
-              fileName: '',
+              templateId: initialTemplateId,
+              fileName: initialFileName,
             })
           }
         }}
