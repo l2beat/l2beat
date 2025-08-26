@@ -368,22 +368,35 @@ export class TemplateService {
         : // biome-ignore lint/style/noNonNullAssertion: just checked
           Hash256(hashes[0]!)
 
-    if (Object.values(shapes).some((s) => s.hash === masterHash)) {
-      return
-    }
+    const hashAlreadyExists = Object.values(shapes).some(
+      (s) => s.hash === masterHash,
+    )
 
-    shapes[fileName] = {
-      hash: masterHash,
-      // biome-ignore lint/style/noNonNullAssertion: just checked
-      address: addresses.length > 1 ? addresses : addresses[0]!,
-      chain,
-      blockNumber,
+    assert(
+      !hashAlreadyExists,
+      `Shape for '${fileName}' with hash '${masterHash.toString().slice(0, 10)}...${masterHash.toString().slice(-10)}' already exists in '${templateId}'`,
+    )
+
+    assert(
+      !shapes[fileName],
+      `Shape with file name '${fileName}' already exists in '${templateId}'. Select a different file name.`,
+    )
+
+    const newShapes = {
+      ...shapes,
+      [fileName]: {
+        hash: masterHash,
+        // biome-ignore lint/style/noNonNullAssertion: just checked
+        address: addresses.length > 1 ? addresses : addresses[0]!,
+        chain,
+        blockNumber,
+      },
     }
 
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
     const templatePath = join(resolvedRootPath, templateId)
     const shapePath = join(templatePath, 'shapes.json')
-    writeFileSync(shapePath, formatJson(shapes))
+    writeFileSync(shapePath, formatJson(newShapes))
   }
 
   readShapeSchema(shapePath: string | undefined): ShapeSchema {
