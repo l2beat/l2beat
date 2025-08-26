@@ -35,28 +35,14 @@ const withdrawalKeepalivePeriodSecondsFmt: number =
     'withdrawalKeepalivePeriodSecondsFmt',
   )
 
-const verifierV2 = discovery.getContract('VerifierV2')
-
-const latestOutputV3 = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'latestOutputProposedV3',
-)
-const latestOutputV2 = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'latestOutputProposedV2',
-)
-
-assert(
-  latestOutputV2 === latestOutputV3,
-  'The project is now using SP1, update page! see PR#8997',
-)
+const verifierV3 = discovery.getContract('VerifierV3')
 
 // the opstack template automatically applies the correct risk rosette slices, so we do not override them
 // as soon as this is not the case anymore (backdoor removed, permissionless proposing etc.),
 // we should update the opstack.ts or not use it anymore
 const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
-  title: 'Validity proofs', // proof is the only input to the Verifier
-  description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently state updates do not require a proof if the last state update was made >= ${withdrawalKeepalivePeriodSecondsFmt} ago and is optimistically considered to be valid. Moreover, the system doesn't check that the transactions applied to the state are the ones published by the sequencer.`,
+  title: 'Validity proofs',
+  description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently state updates do not require a proof if the last state update was made >= ${withdrawalKeepalivePeriodSecondsFmt} ago and is optimistically considered to be valid.`,
   risks: [
     {
       category: 'Funds can be stolen if',
@@ -72,8 +58,8 @@ const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
       url: 'https://etherscan.io/address/0x92Ef6Af472b39F1b363da45E35530c24619245A4',
     },
     {
-      title: 'VerifierV2.sol - Etherscan source code',
-      url: safeGetImplementation(verifierV2),
+      title: 'VerifierV3 (SP1) - Etherscan source code',
+      url: safeGetImplementation(verifierV3),
     },
   ],
 }
@@ -228,8 +214,24 @@ export const zircuit: ScalingProject = opStackL2({
         functionSignature:
           'function proposeL2OutputV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _aggrProof) payable',
         sinceTimestamp: UnixTime(1741654919),
+        untilTimestamp: UnixTime(1756148051)
       },
     },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+        { type: 'liveness', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x92Ef6Af472b39F1b363da45E35530c24619245A4'),
+        selector: '0x76340d0a',
+        functionSignature:
+          'function proposeL2OutputV3(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable',
+        sinceTimestamp: UnixTime(1756148051),
+      },
+    }
   ],
   nonTemplateTechnology: {
     operator: {

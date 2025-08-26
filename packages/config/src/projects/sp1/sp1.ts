@@ -147,6 +147,7 @@ export const sp1: BaseProject = {
           ProjectId('molten'), // blobstream project
           ProjectId('sophon'), // vector project
           ProjectId('lens'), // vector project
+          ProjectId('zircuit')
         ],
       },
       {

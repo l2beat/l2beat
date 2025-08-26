@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "timestamp": 1756216503,
+  "timestamp": 1756120933,
   "configHash": "0x981b5963a0ac2a8755444fd448b0315f3d6fc6b403467fc7c627977f75051596",
   "entries": [
     {
@@ -80,7 +80,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 312784,
-          "prevBlockNum": 23222909
+          "prevBlockNum": 23217530
         },
         "paused": false,
         "resolverRegistry": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
@@ -127,7 +127,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639434",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639427",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -160,24 +160,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
-          "role": ".guardian"
-        },
-        {
-          "permission": "guard",
-          "from": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-          "role": ".defaultAdmin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-          "description": "manage roles including the guardian role.",
-          "role": ".defaultAdmin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1719933695,
       "sinceBlock": 20219691,
@@ -411,59 +393,6 @@
         "0x9097b28161923c9e2353a796f1580ecf8bf3415bae9a69f49102bdf7a1b94da8"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x994eEb321F9cD79B077a5455fC248c77f30Dd244",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1719936419,
       "sinceBlock": 20219915,
       "values": {
@@ -703,12 +632,12 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 18136692,
-        "latestOutputIndex": 32856,
-        "latestOutputProposedV2": 32836,
-        "latestOutputProposedV3": 32856,
-        "nextBlockNumber": 18136693,
-        "nextOutputIndex": 32857,
+        "latestBlockNumber": 18085169,
+        "latestOutputIndex": 32832,
+        "latestOutputProposedV2": 32832,
+        "latestOutputProposedV3": 32832,
+        "nextBlockNumber": 18085170,
+        "nextOutputIndex": 32833,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proposer": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
@@ -788,14 +717,7 @@
     {
       "address": "eth:0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
-          "role": ".batcherHash"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966",
@@ -854,113 +776,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
-          "role": ".challenger"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
-          "via": [
-            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x994eEb321F9cD79B077a5455fC248c77f30Dd244",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1719933659,
       "sinceBlock": 20219688,
@@ -1031,14 +846,7 @@
     {
       "address": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
-          "role": ".proposer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SP1VerifierGateway",
@@ -1084,14 +892,7 @@
     {
       "address": "eth:0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-          "role": ".monitorAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xFF00000000000000000000000000000000048900",
@@ -1734,6 +1535,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23225718 },
-  "permissionsConfigHash": "0xe02e2dd058fdb1f985e68753f52ca88a0f125d28226e3acd442c4ee402c1939c"
+  "usedBlockNumbers": { "ethereum": 23217793 }
 }
