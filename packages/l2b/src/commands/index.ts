@@ -26,6 +26,7 @@ import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
 import { MatchFlat } from './MatchFlat'
+import { Minters } from './Minters'
 import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
 import { Powerdiff } from './Powerdiff'
@@ -71,6 +72,7 @@ export function getSubcommands() {
     Init,
     InitTemplate,
     MatchFlat,
+    Minters,
     ModelPermissions,
     OPConfigs,
     Powerdiff,
