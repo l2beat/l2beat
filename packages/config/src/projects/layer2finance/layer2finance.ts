@@ -1,6 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../common'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
+  TECHNOLOGY,
+  UNDER_REVIEW_RISK_VIEW,
+} from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -21,7 +27,6 @@ export const layer2finance: ScalingProject = {
     description:
       'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
     purposes: ['Exchange'],
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://layer2.finance/'],
       bridges: ['https://app.l2.finance/'],
@@ -35,6 +40,14 @@ export const layer2finance: ScalingProject = {
         'https://twitter.com/CelerNetwork',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
+  },
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
   },
   config: {
     escrows: [

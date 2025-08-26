@@ -2,7 +2,7 @@
   "name": "rss3",
   "chain": "ethereum",
   "timestamp": 1729850135,
-  "configHash": "0xca724cca7946660788428c63749edc8a021c510189a34584e7a5321d734fc0dd",
+  "configHash": "0x5572171ef2ccf2e3c0943ad7c12a37cd179198e3ef3baf103078e1a73b50f569",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

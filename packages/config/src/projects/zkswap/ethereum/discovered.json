@@ -2,7 +2,7 @@
   "name": "zkswap",
   "chain": "ethereum",
   "timestamp": 1751872967,
-  "configHash": "0xeaa7a7cea5067e18818444a3f5c346a08427db6d98dbc8ebe04a3720b961648c",
+  "configHash": "0x1c05de36bbcd5d0cd75cebccb3fba5c69e34d536bdbc9aa849d82435d5f03814",
   "entries": [
     {
       "name": "Governance",

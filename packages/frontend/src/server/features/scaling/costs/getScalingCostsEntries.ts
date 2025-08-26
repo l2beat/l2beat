@@ -11,7 +11,7 @@ import {
   getCommonScalingEntry,
 } from '../getCommonScalingEntry'
 import type { CostsTableData } from './getCostsTableData'
-import { compareStageAndCost } from './utils/compareStageAndCost'
+import { compareCosts } from './utils/compareCosts'
 
 export async function getScalingCostsEntries(helpers: SsrHelpers) {
   const [projectsChangeReport, projects, costs] = await Promise.all([
@@ -32,7 +32,7 @@ export async function getScalingCostsEntries(helpers: SsrHelpers) {
         costs[project.id],
       ),
     )
-    .sort(compareStageAndCost)
+    .sort(compareCosts)
   return groupByScalingTabs(entries)
 }
 

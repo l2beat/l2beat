@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const ten: ScalingProject = upcomingL2({
   id: 'ten',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1705390051), // 2024-01-16T07:27:31Z
   display: {
     name: 'Ten',
@@ -12,7 +13,6 @@ export const ten: ScalingProject = upcomingL2({
     description:
       'Ten is an Encrypted Rollup that has been designed for use on the Ethereum network and uses 100% of the EVM. At present, Ten is available in testnet running on the Sepolia testnet for further testing and optimization.',
     purposes: ['Universal', 'Privacy'],
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://ten.xyz'],
       documentation: [
@@ -34,5 +34,8 @@ export const ten: ScalingProject = upcomingL2({
         'https://medium.com/obscuro-labs',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

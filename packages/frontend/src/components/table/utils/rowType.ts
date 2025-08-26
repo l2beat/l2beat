@@ -1,28 +1,20 @@
-import { ProjectId } from '@l2beat/shared-pure'
-import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/components/table/DaSummaryPublicTable'
-import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
-import type { BasicTableProps } from '../BasicTable'
+import type { UnderReviewStatus } from '~/utils/project/underReview'
 
-type RowType = ReturnType<typeof getRowType>
-export function getRowType(
-  entry: CommonProjectEntry,
-  rowColoringMode: BasicTableProps<CommonProjectEntry>['rowColoringMode'],
-) {
-  if (entry.id === ProjectId.ETHEREUM) {
-    return 'blue'
-  }
-  if (rowColoringMode === 'ignore-colors') {
-    return undefined
-  }
-
+export type RowBackgroundColor = 'blue' | 'red' | 'yellow' | undefined
+export function getRowBackgroundColor(statuses: {
+  redWarning?: string
+  verificationWarning?: boolean
+  underReview?: UnderReviewStatus
+  ongoingAnomaly?: boolean
+}): RowBackgroundColor | undefined {
   if (
-    !!entry.statuses?.verificationWarning ||
-    !!entry.statuses?.redWarning ||
-    !!entry.statuses?.ongoingAnomaly
+    !!statuses?.verificationWarning ||
+    !!statuses?.redWarning ||
+    !!statuses?.ongoingAnomaly
   ) {
     return 'red'
   }
-  if (entry.statuses?.underReview) {
+  if (statuses?.underReview) {
     return 'yellow'
   }
 }
@@ -30,12 +22,12 @@ export function getRowType(
 /*
   NOTICE: It is important that this functions return the same colors
 */
-export function getRowClassNames(rowType: RowType) {
-  switch (rowType) {
+export function getRowClassNames(rowBackgroundColor: RowBackgroundColor) {
+  switch (rowBackgroundColor) {
     case 'blue':
       return 'bg-blue-500/35 dark:bg-blue-700/25'
     case 'red':
-      return UNVERIFIED_DA_CLASSNAME
+      return 'bg-red-100/70 dark:bg-red-900/70'
     case 'yellow':
       return 'bg-yellow-200/10'
     default:
@@ -43,8 +35,10 @@ export function getRowClassNames(rowType: RowType) {
   }
 }
 
-export function getRowClassNamesWithoutOpacity(rowType: RowType | null) {
-  switch (rowType) {
+export function getRowClassNamesWithoutOpacity(
+  rowBackgroundColor: RowBackgroundColor | null,
+) {
+  switch (rowBackgroundColor) {
     case 'blue':
       return 'bg-blue-400 dark:bg-blue-900'
     case 'red':

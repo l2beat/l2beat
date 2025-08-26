@@ -1,8 +1,8 @@
 {
   "name": "celo",
   "chain": "ethereum",
-  "timestamp": 1753681823,
-  "configHash": "0xeeed83b3877122cbd550eb55112860fc19192fbbffb98b29ad73b5f6588a9a65",
+  "timestamp": 1755507657,
+  "configHash": "0x6e1ab9de96578293465edc069038993e0ac8256eaedc938d6cbf324a4d4a869f",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -126,6 +126,11 @@
       }
     },
     {
+      "address": "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
       "type": "EOA",
       "proxyType": "EOA"
@@ -201,7 +206,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620070",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620122",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -430,6 +435,11 @@
           "condition": "though restricted to the SuperchainConfig's `pause()` function"
         }
       ]
+    },
+    {
+      "address": "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1ERC721Bridge",
@@ -699,11 +709,6 @@
     },
     {
       "address": "eth:0x4F0b8e0f51dE4dE1bA0bb59876e1A9bC157a4751",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1377,11 +1382,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Celo Multisig 2",
       "address": "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d",
       "type": "Contract",
@@ -1673,13 +1673,13 @@
           "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
           "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
           "eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
-          "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
+          "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
           "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
           "eth:0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
           "eth:0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
           "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
           "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
-          "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
+          "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
           "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
           "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
         ],
@@ -1690,7 +1690,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 37,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1743,15 +1743,15 @@
           ]
         ],
         "$upgradeCount": 4,
-        "balance": "999850148453450932825158896",
+        "balance": "999849305453450932825158896",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "eth:0x6E226fa22e5F19363d231D3FA048aaBa73CC1f47",
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 463628,
-          "prevBlockNum": 23011467
+          "prevBoughtGas": 516982,
+          "prevBlockNum": 23164345
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2004,7 +2004,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 990,
+        "gameCount": 1159,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -2014,7 +2014,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112",
-        "permissionedGamesTotal": 990,
+        "permissionedGamesTotal": 1159,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -3051,6 +3051,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23015667 },
-  "permissionsConfigHash": "0xebc08e8e2a392a7ed4a6bacf23e03fa585377d815953f65a25b2731d2a516639"
+  "usedBlockNumbers": { "ethereum": 23166914 },
+  "permissionsConfigHash": "0x6125b63444f27008e66e34bc827a9a66841a8c495f69c9bb710106f1a8ea876f"
 }

@@ -2,7 +2,7 @@
   "name": "opticsV1",
   "chain": "ethereum",
   "timestamp": 1740653603,
-  "configHash": "0x91499722b74fe9810c784e706fd963e1a31a48f5d82e8032e1a449b3fb8f1ddb",
+  "configHash": "0x8db5f44a239e8fc0e426dd688526514b3f0c3866ee6b1506c68efd7ff22348ad",
   "entries": [
     {
       "address": "eth:0x07f5bFE05C5C4BF4a86af7BAf667e3737A3BA18F",

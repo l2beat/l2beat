@@ -2,7 +2,7 @@
   "name": "muster",
   "chain": "arbitrum",
   "timestamp": 1753341899,
-  "configHash": "0x60fd5cffc0e20abff4a93a767cd9888845facfa5fe930c995ba8d25a1c5ae8e7",
+  "configHash": "0x124f7fe06e120b448ac6264f6ac6ec4b319dc3dc80270841981d6b0d8823789d",
   "entries": [
     {
       "name": "UpgradeExecutor",

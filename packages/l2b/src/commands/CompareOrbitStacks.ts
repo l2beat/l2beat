@@ -1,7 +1,7 @@
 import { getDiscoveryPaths } from '@l2beat/discovery'
 import { command, positional, string, subcommands } from 'cmd-ts'
 import {
-  analyseAllOrbitChains,
+  analyzeAllOrbitChains,
   compareTwoOrbitChain,
 } from '../implementations/compareOrbitStacks'
 import { discoveryPath } from './args'
@@ -17,7 +17,7 @@ const CompareAllOrbitStackProjects = command({
       paths.discovery = args.discoveryPath
     }
 
-    await analyseAllOrbitChains(paths)
+    await analyzeAllOrbitChains(paths)
   },
 })
 

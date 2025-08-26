@@ -1074,7 +1074,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1724165531,
       "coingeckoListingTimestamp": 1726099200,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
       "chainId": 1,
       "source": "canonical",
@@ -1172,7 +1172,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1615751087,
       "coingeckoListingTimestamp": 1584403200,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://assets.coingecko.com/coins/images/10823/large/cwbtc.png?1696510780",
       "chainId": 1,
       "source": "canonical",
@@ -1885,7 +1885,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1723597307,
       "coingeckoListingTimestamp": 1727654400,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50411/large/eBTC.png?1727664788",
       "chainId": 1,
       "source": "canonical",
@@ -2137,7 +2137,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1717045667,
       "coingeckoListingTimestamp": 1720828800,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39182/large/FBTC_LOGO.png?1720850455",
       "chainId": 1,
       "source": "canonical",
@@ -3202,7 +3202,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1715936519,
       "coingeckoListingTimestamp": 1724889600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
       "chainId": 1,
       "source": "canonical",
@@ -3454,7 +3454,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1720421459,
       "coingeckoListingTimestamp": 1717113600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38338/large/token_m_btc.png?1717126408",
       "chainId": 1,
       "source": "canonical",
@@ -4714,7 +4714,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1585090944,
       "coingeckoListingTimestamp": 1591574400,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://assets.coingecko.com/coins/images/11370/large/Bitcoin.jpg?1696511287",
       "chainId": 1,
       "source": "canonical",
@@ -5022,7 +5022,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1719475619,
       "coingeckoListingTimestamp": 1712448000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 1,
       "source": "canonical",
@@ -5036,7 +5036,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1719483839,
       "coingeckoListingTimestamp": 1722556800,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
       "chainId": 1,
       "source": "canonical",
@@ -5610,7 +5610,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1629198727,
       "coingeckoListingTimestamp": 1600819200,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://assets.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
       "chainId": 1,
       "source": "canonical",
@@ -6283,7 +6283,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1543095952,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "chainId": 1,
       "source": "canonical",
@@ -6663,7 +6663,7 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6685,7 +6685,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6707,7 +6707,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6729,7 +6729,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6751,7 +6751,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6792,7 +6792,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1727371173,
       "coingeckoListingTimestamp": 1730160000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50879/large/kBTC.png?1730321084",
       "chainId": 10,
       "source": "external",
@@ -6830,7 +6830,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6863,7 +6863,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1681389587,
       "coingeckoListingTimestamp": 1600819200,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://assets.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
       "chainId": 10,
       "source": "external",
@@ -6938,7 +6938,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6960,7 +6960,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -7062,7 +7062,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/31800/large/TAROT.jpg?1696530615",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -7188,7 +7188,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1636665399,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "chainId": 10,
       "source": "canonical",
@@ -7274,7 +7274,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1745509030,
       "coingeckoListingTimestamp": 1730160000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50879/large/kBTC.png?1730321084",
       "chainId": 130,
       "source": "external",
@@ -7404,7 +7404,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1738952865,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "chainId": 130,
       "source": "external",
@@ -7475,7 +7475,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1715909089,
       "coingeckoListingTimestamp": 1717113600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38338/large/token_m_btc.png?1717126408",
       "chainId": 169,
       "source": "external",
@@ -7657,7 +7657,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1694653639,
       "coingeckoListingTimestamp": 1703894400,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/32217/large/wbtc_%281%29.png?1696832481",
       "chainId": 169,
       "source": "canonical",
@@ -7801,7 +7801,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1719217453,
       "coingeckoListingTimestamp": 1711929600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
       "chainId": 255,
       "source": "external",
@@ -7846,7 +7846,7 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "chainId": 288,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -7937,7 +7937,7 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "chainId": 324,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -7959,7 +7959,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 324,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -7981,7 +7981,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 324,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8003,7 +8003,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 324,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8025,7 +8025,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 324,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8111,7 +8111,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 324,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8187,7 +8187,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1683205551,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "chainId": 324,
       "source": "canonical",
@@ -8408,7 +8408,7 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8430,7 +8430,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8452,7 +8452,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8474,7 +8474,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8496,7 +8496,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8518,7 +8518,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8540,7 +8540,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8559,7 +8559,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1734625977,
       "coingeckoListingTimestamp": 1711929600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
       "chainId": 1135,
       "source": "external",
@@ -8949,7 +8949,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1738747771,
       "coingeckoListingTimestamp": 1712448000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 1868,
       "source": "external",
@@ -8971,7 +8971,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1738747957,
       "coingeckoListingTimestamp": 1722556800,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
       "chainId": 1868,
       "source": "external",
@@ -8993,7 +8993,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1741955217,
       "coingeckoListingTimestamp": 1743033600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/54834/large/solvBTC_Jupiter.png?1741969449",
       "chainId": 1868,
       "source": "external",
@@ -9058,7 +9058,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1742262373,
       "coingeckoListingTimestamp": 1726704000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50252/large/UA-BTC_1.png?1726721793",
       "chainId": 1868,
       "source": "external",
@@ -9102,7 +9102,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1737044211,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "chainId": 1868,
       "source": "external",
@@ -9234,10 +9234,10 @@
       "decimals": 18,
       "deploymentTimestamp": 1733628351,
       "coingeckoListingTimestamp": 1729641600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50978/large/a.jpg?1730208372",
       "chainId": 1923,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -9388,7 +9388,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1733862913,
       "coingeckoListingTimestamp": 1723593600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39682/large/swBTC200x200.png?1723652322",
       "chainId": 1923,
       "source": "external",
@@ -9476,7 +9476,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1734473115,
       "coingeckoListingTimestamp": 1726704000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50252/large/UA-BTC_1.png?1726721793",
       "chainId": 1923,
       "source": "external",
@@ -9664,7 +9664,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1733048016,
       "coingeckoListingTimestamp": 1721174400,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
       "chainId": 2818,
       "source": "external",
@@ -9911,7 +9911,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1717042584,
       "coingeckoListingTimestamp": 1720828800,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39182/large/FBTC_LOGO.png?1720850455",
       "chainId": 5000,
       "source": "external",
@@ -10293,7 +10293,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1724165535,
       "coingeckoListingTimestamp": 1726099200,
-      "category": "stablecoin",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
       "chainId": 8453,
       "source": "native",
@@ -10387,8 +10387,15 @@
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
       "chainId": 8453,
-      "source": "native",
-      "supply": "totalSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "name": "FAI",
@@ -10499,7 +10506,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
       "chainId": 8453,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -10540,7 +10547,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1731342311,
       "coingeckoListingTimestamp": 1724889600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
       "chainId": 8453,
       "source": "external",
@@ -10778,7 +10785,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1726196405,
       "coingeckoListingTimestamp": 1721174400,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
       "chainId": 8453,
       "source": "external",
@@ -11280,7 +11287,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1721774411,
       "coingeckoListingTimestamp": 1701648000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33363/large/abtc_%281%29.png?1701606956",
       "chainId": 34443,
       "source": "external",
@@ -11346,7 +11353,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1712920053,
       "coingeckoListingTimestamp": 1711929600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://assets.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
       "chainId": 34443,
       "source": "external",
@@ -11447,7 +11454,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1730555345,
       "coingeckoListingTimestamp": 1712448000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 34443,
       "source": "external",
@@ -11627,7 +11634,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1680261615,
       "coingeckoListingTimestamp": 1600819200,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
       "chainId": 42161,
       "source": "external",
@@ -11671,7 +11678,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1668644839,
       "coingeckoListingTimestamp": 1655856000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://assets.coingecko.com/coins/images/26115/large/btcb.png?1696525205",
       "chainId": 42161,
       "source": "external",
@@ -11771,7 +11778,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1731094732,
       "coingeckoListingTimestamp": 1726099200,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
       "chainId": 42161,
       "source": "native",
@@ -11929,7 +11936,7 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -11951,7 +11958,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -11973,7 +11980,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -11995,7 +12002,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12017,7 +12024,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12100,7 +12107,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1626958493,
       "coingeckoListingTimestamp": 1631491200,
-      "category": "stablecoin",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/18323/large/arbit.png?1696517814",
       "chainId": 42161,
       "source": "native",
@@ -12238,7 +12245,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12310,7 +12317,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/36726/large/moltenmesh.png?1712147407",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12332,7 +12339,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/37969/large/MOR200X200.png?1716327119",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12432,7 +12439,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12468,7 +12475,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/26536/large/Radiant-Logo-200x200.png?1696525610",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12553,7 +12560,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1711710476,
       "coingeckoListingTimestamp": 1712448000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 42161,
       "source": "external",
@@ -12620,7 +12627,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12642,7 +12649,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12926,7 +12933,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1623867469,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "chainId": 42161,
       "source": "canonical",
@@ -13090,7 +13097,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1719476222,
       "coingeckoListingTimestamp": 1722556800,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/xSolvBTC.png?1744170824",
       "chainId": 42161,
       "source": "external",
@@ -13375,7 +13382,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1724765843,
       "coingeckoListingTimestamp": 1721174400,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
       "chainId": 48900,
       "source": "external",
@@ -13572,7 +13579,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1741953292,
       "coingeckoListingTimestamp": 1730160000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50879/large/kBTC.png?1730321084",
       "chainId": 57073,
       "source": "external",
@@ -13650,6 +13657,20 @@
       "supply": "zero"
     },
     {
+      "name": "Etherex",
+      "coingeckoId": "etherex",
+      "address": "0xEfD81eeC32B9A8222D1842ec3d99c7532C31e348",
+      "symbol": "REX",
+      "decimals": 18,
+      "deploymentTimestamp": 1754279726,
+      "coingeckoListingTimestamp": 1754524800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68009/large/etherex.jpg?1754560098",
+      "chainId": 59144,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Foxy",
       "coingeckoId": "foxy",
       "address": "0x5FBDF89403270a1846F5ae7D113A989F850d1566",
@@ -13671,7 +13692,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1718170153,
       "coingeckoListingTimestamp": 1716249600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/37985/large/bbtc_icon.png?1716215414",
       "chainId": 59144,
       "source": "external",
@@ -13692,7 +13713,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1715238002,
       "coingeckoListingTimestamp": 1712448000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 59144,
       "source": "external",
@@ -13713,7 +13734,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1716875713,
       "coingeckoListingTimestamp": 1712448000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 59144,
       "source": "external",
@@ -13833,7 +13854,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1715526671,
       "coingeckoListingTimestamp": 1711929600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
       "chainId": 59144,
       "source": "external",
@@ -14012,7 +14033,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1691070334,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "chainId": 59144,
       "source": "canonical",
@@ -14084,7 +14105,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1725879531,
       "coingeckoListingTimestamp": 1720828800,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39182/large/FBTC_LOGO.png?1720850455",
       "chainId": 60808,
       "source": "external",
@@ -14105,7 +14126,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1723638067,
       "coingeckoListingTimestamp": 1712448000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 60808,
       "source": "external",
@@ -14127,7 +14148,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1724924787,
       "coingeckoListingTimestamp": 1722556800,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
       "chainId": 60808,
       "source": "external",
@@ -14149,7 +14170,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1724924845,
       "coingeckoListingTimestamp": 1723075200,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39599/large/uniBTC_200px.png?1723064455",
       "chainId": 60808,
       "source": "external",
@@ -14463,7 +14484,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38671/large/Stack.png?1718290662",
       "chainId": 111188,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -14543,7 +14564,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1728887147,
       "coingeckoListingTimestamp": 1712448000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 167000,
       "source": "external",
@@ -14564,7 +14585,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1728888227,
       "coingeckoListingTimestamp": 1722556800,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
       "chainId": 167000,
       "source": "external",
@@ -14621,7 +14642,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1716874538,
       "coingeckoListingTimestamp": 1712448000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 534352,
       "source": "external",
@@ -14830,7 +14851,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1750956642,
       "coingeckoListingTimestamp": 1724889600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
       "chainId": 747474,
       "source": "external",
@@ -14888,7 +14909,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -14909,7 +14930,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -14930,7 +14951,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -14951,7 +14972,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -14964,7 +14985,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1748346847,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "chainId": 747474,
       "source": "external",
@@ -14972,7 +14993,91 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge ETH",
+      "coingeckoId": "ethereum",
+      "address": "0xABb9adE1Bd2A3bDcCD4c91FB149685936aCb758E",
+      "symbol": "vbETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1754133432,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+      "chainId": 752025,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xac8dDbc1f261eE4632518a1A62c23cD2b5a52BAd",
+      "symbol": "vbUSDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1753378509,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 752025,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge USDT",
+      "coingeckoId": "tether",
+      "address": "0x5453e111aCE935Ba404b9474E14fe7a883B97519",
+      "symbol": "vbUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1752325126,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 752025,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge WBTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x593A86cB824e0e3546fAE6bbC56e6f3f3EB6213E",
+      "symbol": "vbWBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1754132656,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 752025,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (vault bridge)"
           }
         ]
       }
@@ -14985,7 +15090,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1715238151,
       "coingeckoListingTimestamp": 1712448000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://assets.coingecko.com/coins/images/36800/large/SOLV_BTC.jpg?1712469500",
       "chainId": 810180,
       "source": "external",
@@ -15006,7 +15111,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1715322228,
       "coingeckoListingTimestamp": 1711929600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://assets.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
       "chainId": 810180,
       "source": "external",
@@ -15071,7 +15176,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1733771467,
       "coingeckoListingTimestamp": 1727654400,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50411/large/eBTC.png?1727664788",
       "chainId": 21000000,
       "source": "external",
@@ -15093,7 +15198,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1733245117,
       "coingeckoListingTimestamp": 1724889600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
       "chainId": 21000000,
       "source": "external",
@@ -15115,7 +15220,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1734072451,
       "coingeckoListingTimestamp": 1729641600,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50978/large/a.jpg?1730208372",
       "chainId": 21000000,
       "source": "external",
@@ -15137,7 +15242,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1734006126,
       "coingeckoListingTimestamp": 1712448000,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 21000000,
       "source": "external",
@@ -15159,7 +15264,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1734006360,
       "coingeckoListingTimestamp": 1722556800,
-      "category": "other",
+      "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
       "chainId": 21000000,
       "source": "external",

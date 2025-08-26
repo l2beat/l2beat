@@ -4,5 +4,11 @@
     "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "SP1VerifierGateway_Ownable2Step": {
+    "hash": "0xae43138d235a7d6bdc28d5f7a1d652c8b9faecc9208b0f4c21490db6c906fa6c",
+    "address": "0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67",
+    "chain": "ethereum",
+    "blockNumber": 23216770
   }
 }

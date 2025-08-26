@@ -41,7 +41,7 @@ export abstract class Indexer {
       initialTimeoutMs: 1000,
       maxAttempts: Number.POSITIVE_INFINITY,
       // WARNING: Change only if you know what you are doing
-      // Alerting system in Kibana requires Indexer to log sth once an hour
+      // Alerting system in Kibana requires Indexer to log something once an hour
       maxTimeoutMs: 1 * 60 * 60_000,
     })
 

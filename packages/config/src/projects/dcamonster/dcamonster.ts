@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const dcamonster: ScalingProject = upcomingL2({
   id: 'dcamonster',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1712577740), // 2024-04-08T12:02:20Z
   display: {
     name: 'DCA.Monster',
@@ -12,7 +13,6 @@ export const dcamonster: ScalingProject = upcomingL2({
     description:
       'DCA.Monster is an innovative AMM that utilizes ERC20 streams for precise and efficient onchain Dollar Cost Averaging (DCA), powered by Cartesi Rollups.',
     purposes: ['Exchange'],
-    category: 'Optimistic Rollup',
     stacks: ['Cartesi Rollups'],
     links: {
       documentation: [
@@ -22,5 +22,8 @@ export const dcamonster: ScalingProject = upcomingL2({
       socialMedia: ['https://twitter.com/dca_monster'],
       websites: ['https://dca.monster'],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

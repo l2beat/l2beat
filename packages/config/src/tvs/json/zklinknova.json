@@ -863,7 +863,7 @@
         "decimals": 18,
         "sinceTimestamp": 1715322228
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -1113,7 +1113,8 @@
         "chain": "arbitrum",
         "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
         "decimals": 18,
-        "sinceTimestamp": 1709296973
+        "sinceTimestamp": 1709296973,
+        "untilTimestamp": 1754139600
       },
       "valueForSummary": {
         "type": "value",
@@ -1121,7 +1122,8 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1709296973
+          "sinceTimestamp": 1709296973,
+          "untilTimestamp": 1754139600
         },
         "priceId": "mozaic"
       },
@@ -1474,7 +1476,7 @@
         },
         "priceId": "solv-btc"
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -1499,7 +1501,7 @@
         "decimals": 18,
         "sinceTimestamp": 1715238151
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -2415,7 +2417,7 @@
         "decimals": 8,
         "sinceTimestamp": 1709295323
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false,
       "bridgedUsing": {
@@ -2499,7 +2501,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -2535,7 +2537,7 @@
         },
         "priceId": "bridged-wrapped-bitcoin-manta-pacific"
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -2571,7 +2573,7 @@
         },
         "priceId": "wrapped-bitcoin"
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

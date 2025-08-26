@@ -35,7 +35,7 @@ export function ProjectBadge({
         'h-16 w-auto lg:h-18',
         !disableInteraction &&
           badge.href &&
-          'transition-all ease-in-out hover:scale-[1.08]',
+          'transition-[scale] ease-in-out hover:scale-[1.08]',
         className,
       )}
     />

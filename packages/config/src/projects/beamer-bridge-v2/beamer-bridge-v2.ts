@@ -104,7 +104,7 @@ export const beamerbridgev2: Bridge = {
         discovery.getContractDetails('Resolver', {
           name: 'Resolver',
           description:
-            'This contract resides on the L1 chain and is tasked with receiving thefill or non-fill proofs from the target L2 chain and forwarding them to the RequestManager on the source L2 chain.',
+            'This contract resides on the L1 chain and is tasked with receiving the fill or non-fill proofs from the target L2 chain and forwarding them to the RequestManager on the source L2 chain.',
         }),
         discovery.getContractDetails('EthereumRequestManager', {
           name: 'RequestManager',

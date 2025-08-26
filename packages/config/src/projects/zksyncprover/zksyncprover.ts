@@ -28,11 +28,12 @@ export const zksyncprover: BaseProject = {
   zkCatalogInfo: {
     creator: 'Matter Labs',
     techStack: {
-      finalWrap: [
+      snark: [
         ZK_CATALOG_TAGS.Plonk.Zksync,
         // ZK_CATALOG_TAGS.Arithmetization.R1CS,
         // ZK_CATALOG_TAGS.PCS.KZG,
         ZK_CATALOG_TAGS.curve.BN254,
+        ZK_CATALOG_TAGS.Other.CustomCircuits,
       ],
     },
     proofSystemInfo: '',
@@ -52,7 +53,7 @@ export const zksyncprover: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('zksync')],
         description:
-          'Custom hash computation: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated1()',
+          'Custom verifier ID: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated1()',
       },
       {
         hash: '0xdfd9cbc5d113efddf3bfe382bcdd2cd67a9548fb62d758e9b18c8d8821ef1f22',
@@ -63,7 +64,7 @@ export const zksyncprover: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('zksync')],
         description:
-          'Custom hash computation: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated4()',
+          'Custom verifier ID: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated4()',
       },
       {
         hash: '0xdfd12090ec7d5f3cc8c98dcad49e938e9e33f6807b70679c6bdfe61fdf9fd329',
@@ -74,7 +75,7 @@ export const zksyncprover: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('zksync')],
         description:
-          'Custom hash computation: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated8()',
+          'Custom verifier ID: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated8()',
       },
       {
         hash: '0x730bd4aefc695fa8689235a3a8deafa82f785e5d9302481a6b7ecf95a7d0420a',
@@ -85,7 +86,7 @@ export const zksyncprover: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('zkspace')],
         description:
-          'Custom hash computation: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated1()',
+          'Custom verifier ID: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated1()',
       },
       {
         hash: '0x4a13f5d7934015fbfc3e24c61d3356fdc5c200032ab19c514e1ba619d3039ace',
@@ -96,7 +97,7 @@ export const zksyncprover: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('zkspace')],
         description:
-          'Custom hash computation: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated5()',
+          'Custom verifier ID: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated5()',
       },
       {
         hash: '0x75d87653bd7f2833ebbbec7128550beb4dd4f22e5224eb2b6bd73fa720da3a24',
@@ -107,7 +108,7 @@ export const zksyncprover: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('zkspace')],
         description:
-          'Custom hash computation: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated10()',
+          'Custom verifier ID: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated10()',
       },
       {
         hash: '0x79cab0460ac9f99789702614b77a3eacd0c52b0c29fb69d4065952edc247dad9',
@@ -118,7 +119,7 @@ export const zksyncprover: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('zkspace')],
         description:
-          'Custom hash computation: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated20()',
+          'Custom verifier ID: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated20()',
       },
     ],
   },

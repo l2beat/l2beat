@@ -1,10 +1,11 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { ActivitySection } from './sections/ActivitySection'
+import { BridgesTvsSection } from './sections/BridgesTvsSection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
 import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
-import { DataPostedSection } from './sections/DataPostedSection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
+import { DataPostedSection } from './sections/data-posted/DataPostedSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
 import { L3RiskAnalysisSection } from './sections/L3RiskAnalysisSection'
@@ -14,13 +15,12 @@ import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidents
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSummarySection } from './sections/RiskSummarySection'
+import { ScalingTvsSection } from './sections/ScalingTvsSection'
 import { SequencingSection } from './sections/SequencingSection'
-import { StackedTvsSection } from './sections/StackedTvsSection'
 import { StageSection } from './sections/StageSection'
 import { StateDerivationSection } from './sections/StateDerivationSection'
 import { StateValidationSection } from './sections/StateValidationSection'
 import { TechnologyChoicesSection } from './sections/TechnologyChoicesSection'
-import { TvsSection } from './sections/TvsSection'
 import { ThroughputSection } from './sections/throughput/ThroughputSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
@@ -42,17 +42,17 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           : `${index + 1}`
 
         switch (item.type) {
-          case 'StackedTvsSection':
+          case 'ScalingTvsSection':
             return (
-              <StackedTvsSection
+              <ScalingTvsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
-          case 'TvsSection':
+          case 'BridgesTvsSection':
             return (
-              <TvsSection
+              <BridgesTvsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

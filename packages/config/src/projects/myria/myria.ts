@@ -67,7 +67,6 @@ export const myria: ScalingProject = {
       'Myria is an expansive blockchain gaming ecosystem, comprised of a blockchain gaming hub and Myriaverse metaverse.',
     purposes: ['NFT', 'Exchange', 'Gaming'],
     stacks: ['StarkEx'],
-    category: 'Other',
     links: {
       websites: ['https://myria.com/'],
       bridges: ['https://hub.immutable.com/'],
@@ -81,6 +80,10 @@ export const myria: ScalingProject = {
         'https://instagram.com/myriagames',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('stone'),
   },
   stage: {
     stage: 'NotApplicable',
@@ -155,7 +158,7 @@ export const myria: ScalingProject = {
       date: '2022-08-26T00:00:00Z',
       url: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
       description:
-        'Layer 2 scaling solution powered by Starware is live on Ethereum.',
+        'Layer 2 scaling solution powered by StarkWare is live on Ethereum.',
       type: 'general',
     },
     {

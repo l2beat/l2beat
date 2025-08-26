@@ -28,34 +28,40 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
+const rollupModuleContract = discovery.getContract('Validium')
+
 export const wirex: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
-  archivedAt: UnixTime(1742774400), // 2025-03-24T00:00:00.000Z,
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Zeeve],
   additionalPurposes: ['Payments'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    name: 'Pay Chain',
+    name: 'Wirex Pay Chain',
     slug: 'wirex',
     description:
-      'Pay Chain is a Validium built on the Polygon CDK stack. It is used as the infrastructure for the Wirex non-custodial debit cards.',
+      'Pay Chain is a Validium built on the Polygon CDK stack. It is used as the infrastructure for the Wirex non-custodial debit cards and financial services.',
     links: {
       websites: ['https://wirexpaychain.com/'],
-      bridges: ['https://pay-chain-bridge.wirexpaychain.com/'],
-      documentation: ['https://docs.wirexpaychain.com/tech/wirex-pay-chain'],
-      explorers: ['https://pay-chain-blockscout.wirexpaychain.com/'],
+      documentation: [
+        'https://partner.wirexpaychain.com/docs/getting-started',
+        'https://docs.wirexpaychain.com/tech/wirex-pay-chain',
+      ],
+      explorers: ['https://blockscout.wirexpaychain.com'],
+      bridges: ['https://bridge.wirexpaychain.com/'],
       socialMedia: [
         'https://x.com/wirexpaychain',
-        'https://discord.gg/f8UGp4dH6g',
+        'https://linkedin.com/company/wirex-limited/',
         'https://wirexpaychain.com/blog',
+        'https://t.me/wirexpaychain',
+        'https://discord.gg/f8UGp4dH6g',
       ],
     },
   },
   chainConfig: {
     name: 'wirex',
     chainId: 31415,
-    explorerUrl: 'https://pay-chain-blockscout.wirexpaychain.com',
-    sinceTimestamp: UnixTime(1720093223),
+    explorerUrl: 'https://blockscout.wirexpaychain.com',
+    sinceTimestamp: UnixTime(1720089623),
     apis: [
       {
         type: 'rpc',
@@ -96,7 +102,7 @@ export const wirex: ScalingProject = polygonCDKStack({
       ],
     },
   },
-  rollupModuleContract: discovery.getContract('Validium'),
+  rollupModuleContract,
   rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   nonTemplateEscrows: [
@@ -120,6 +126,14 @@ export const wirex: ScalingProject = polygonCDKStack({
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the WirexPayChainValidium contract.',
   },
   milestones: [
+    {
+      title: 'Wirex Pay Relaunch',
+      url: 'https://x.com/wirexpaychain/status/1894387229209895058',
+      date: '2025-02-24',
+      description:
+        'Wirex Pay Chain relaunches via Zeeve, integrated with Polygon Agglayer.',
+      type: 'general',
+    },
     {
       title: 'Wirex Pay Chain Protocol Launch',
       url: 'https://x.com/wirexpaychain/status/1828779629051793710',

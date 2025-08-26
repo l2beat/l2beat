@@ -2,7 +2,7 @@
   "name": "wonder",
   "chain": "ethereum",
   "timestamp": 1753944481,
-  "configHash": "0x1a8ab712656bacdba403e0a447b614f099927aa26a647771149c786f93b94187",
+  "configHash": "0xf187e84e50319a96778a496e7b8148e35cc3f9cde20655e2c14f69591220212d",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

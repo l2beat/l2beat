@@ -28,6 +28,7 @@ import { TvsAmountRepository } from './tvs/amount/repository'
 import { TvsBlockTimestampRepository } from './tvs/block-timestamp/repository'
 import { TvsPriceRepository } from './tvs/price/repository'
 import { ProjectValueRepository } from './tvs/project-value/repository'
+import { TokenMetadataRepository } from './tvs/token-metadata/repository'
 import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
@@ -85,6 +86,7 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     tvsAmount: new TvsAmountRepository(db),
     tvsBlockTimestamp: new TvsBlockTimestampRepository(db),
     tvsTokenValue: new TokenValueRepository(db),
+    tvsTokenMetadata: new TokenMetadataRepository(db),
     tvsProjectValue: new ProjectValueRepository(db),
     // #endregion
     notifications: new NotificationsRepository(db),

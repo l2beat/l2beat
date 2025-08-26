@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "timestamp": 1753434851,
-  "configHash": "0xcb34b03eecbbbfc6e16e1df0fdd30add161c814264c015e6e4b9e077bcc2411a",
+  "timestamp": 1755525885,
+  "configHash": "0x1a0a2f320cc1d2b124a089b1d0a891037f97a82badf608597f7d5f1d302eb1df",
   "entries": [
     {
       "address": "oeth:0x0000000000000000000000000000000000000000",
@@ -104,7 +104,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "oeth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292647475",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292648088",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -165,7 +165,7 @@
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 375069637,
+        "l1BaseFee": 974402354,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -355,7 +355,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "basefee": 375069637,
+        "basefee": 974402354,
         "baseFeeScalar": 5227,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
         "blobBaseFee": 1,
@@ -367,15 +367,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xe9c3dcf8420fa7ed8e5cd5d991137846a99ee3a903835e8e7b65751c50a72d81",
+        "hash": "0xb4545580cc278c41f46a477d3e58921ad14d9f72543c5cbfd06cfbfc97521c9f",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 22995192,
+        "number": 23168414,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 5,
-        "timestamp": 1753434767,
+        "sequenceNumber": 1,
+        "timestamp": 1755525803,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -727,7 +727,7 @@
         "name": "Optimism",
         "owner": "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
         "symbol": "OP",
-        "totalSupply": "4294963294239972048644009441"
+        "totalSupply": "4294963292498750113616177748"
       },
       "implementationNames": {
         "oeth:0x4200000000000000000000000000000000000042": "GovernanceToken"
@@ -1518,6 +1518,6 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "usedBlockNumbers": { "optimism": 138918037 },
-  "permissionsConfigHash": "0xfb3e1195e4777333549259e6fcdde01eaad19665e585978eb2c8ed47a088a5b5"
+  "usedBlockNumbers": { "optimism": 139963554 },
+  "permissionsConfigHash": "0x1d9b4c7504a579865331b07b87b04c9e041dda68c7d5dec190ea44471cb9b6c7"
 }

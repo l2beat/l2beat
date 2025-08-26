@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "base",
   "timestamp": 1753687799,
-  "configHash": "0x5841e62a39ac282681a450ba4152beefcd4140e16e158773191fd5be1735fe50",
+  "configHash": "0x9d4f8489eef7a5e1a5358c2b41afd3656f45df780c446dfa32f969cfdc8590db",
   "entries": [
     {
       "name": "BaseL2Gateway",

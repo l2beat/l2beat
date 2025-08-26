@@ -9,6 +9,7 @@ export function getProjectLinks(...links: ProjectLinks[]): ProjectLink[] {
   const explorers = links.flatMap((links) => links.explorers ?? [])
   const repositories = links.flatMap((links) => links.repositories ?? [])
   const social = links.flatMap((links) => links.socialMedia ?? [])
+  const other = links.flatMap((links) => links.other ?? [])
   const rollupCodes = links.flatMap((links) => links.rollupCodes ?? [])
 
   return compact([
@@ -18,6 +19,7 @@ export function getProjectLinks(...links: ProjectLinks[]): ProjectLink[] {
     explorers.length !== 0 && { name: 'Explorer', links: explorers },
     repositories.length !== 0 && { name: 'Repository', links: repositories },
     social.length !== 0 && { name: 'Social', links: social },
+    other.length !== 0 && { name: 'Other', links: other },
     rollupCodes.length !== 0 && { name: 'rollup.codes', links: rollupCodes },
   ])
 }

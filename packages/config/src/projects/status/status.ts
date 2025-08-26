@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const status: ScalingProject = upcomingL2({
   id: 'status',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1729678881), // 2024-10-23T12:21:33
   display: {
     name: 'status',
@@ -12,7 +13,6 @@ export const status: ScalingProject = upcomingL2({
     description:
       'Status is a free network with sustainable funding for public apps, games and protocols.',
     purposes: ['Social'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://status.network/'],
       bridges: ['https://bridge.status.network/'],
@@ -20,5 +20,8 @@ export const status: ScalingProject = upcomingL2({
       repositories: ['https://github.com/status-im'],
       socialMedia: ['https://x.com/StatusL2'],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

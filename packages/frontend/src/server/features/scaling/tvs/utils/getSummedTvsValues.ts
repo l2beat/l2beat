@@ -19,6 +19,7 @@ export type SummedTvsValues = {
   native: number | null
   ether: number | null
   stablecoin: number | null
+  btc: number | null
   other: number | null
   associated: number | null
 }
@@ -44,7 +45,7 @@ export async function getSummedTvsValues(
   ])
 
   const latestTimestamp = latest.at(-1)?.timestamp
-  if (!latestTimestamp) {
+  if (!latestTimestamp || valueRecords.length === 0) {
     return []
   }
   const delayedRecords = latest.filter((v) => v.timestamp < latestTimestamp)
@@ -77,6 +78,10 @@ export async function getSummedTvsValues(
         )
         record.stablecoin += delayedRecordsForTimestamp.reduce(
           (acc, curr) => acc + curr.stablecoin,
+          0,
+        )
+        record.btc += delayedRecordsForTimestamp.reduce(
+          (acc, curr) => acc + curr.btc,
           0,
         )
         record.other += delayedRecordsForTimestamp.reduce(
@@ -113,6 +118,7 @@ export async function getSummedTvsValues(
         stablecoin: null,
         other: null,
         associated: null,
+        btc: null,
       }
     }
     return record

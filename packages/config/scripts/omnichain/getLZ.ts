@@ -91,7 +91,7 @@ async function fetchInternalTxs(
   const response = await fetch(
     `https://api.etherscan.io/api?module=account&startblock=${i - 1}&endblock=${
       i + batchSize
-    }&action=txlistinternal&address=${'0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675'}&apikey=${etherscanApiKey})}`,
+    }&action=txlistinternal&address=${'0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675'}&apikey=${etherscanApiKey}`,
   )
 
   const data = (await response.json()) as unknown as {
@@ -124,7 +124,7 @@ async function fetchDeployer(
   etherscanApiKey: string,
 ): Promise<string> {
   const response = await fetch(
-    `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=${address}&apikey=${etherscanApiKey})}`,
+    `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=${address}&apikey=${etherscanApiKey}`,
   )
   const data = (await response.json()) as unknown as {
     result: { contractCreator: string }[]
@@ -140,7 +140,7 @@ async function fetchNameAndABI(
   const result = { name: '', isERC20: '' }
 
   const response = await fetch(
-    `https://api.etherscan.io/api?module=contract&action=getsourcecode&address=${address}&apikey=${etherscanApiKey})}`,
+    `https://api.etherscan.io/api?module=contract&action=getsourcecode&address=${address}&apikey=${etherscanApiKey}`,
   )
   const data = (await response.json()) as unknown as {
     result: { ABI: string; ContractName: string }[]

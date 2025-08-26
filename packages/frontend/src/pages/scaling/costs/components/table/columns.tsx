@@ -1,6 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { Skeleton } from '~/components/core/Skeleton'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { TableLink } from '~/components/table/TableLink'
@@ -99,16 +100,28 @@ export function getScalingCostsColumns(metric: CostsMetric) {
     }),
     columnHelper.accessor('data.blobs', {
       header: 'Blobs',
-      cell: (ctx) => (
-        <SyncStatusWrapper
-          isSynced={
-            ctx.row.original.data.type === 'available' &&
-            ctx.row.original.data.isSynced
-          }
-        >
-          <CostsBreakdownValueCell data={ctx.row.original.data} type="blobs" />
-        </SyncStatusWrapper>
-      ),
+      cell: (ctx) => {
+        if (
+          ctx.row.original.data.type === 'available' &&
+          ctx.row.original.data.blobs === null
+        ) {
+          return <NotApplicableBadge />
+        }
+
+        return (
+          <SyncStatusWrapper
+            isSynced={
+              ctx.row.original.data.type === 'available' &&
+              ctx.row.original.data.isSynced
+            }
+          >
+            <CostsBreakdownValueCell
+              data={ctx.row.original.data}
+              type="blobs"
+            />
+          </SyncStatusWrapper>
+        )
+      },
       sortUndefined: 'last',
       meta: {
         align: 'right',
@@ -143,7 +156,7 @@ export function getScalingCostsColumns(metric: CostsMetric) {
           'before:bg-chart-stacked-pink',
         ),
         tooltip:
-          'The cost for carrying out different operations within a transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
+          "The transaction gas cost excluding calldata, blobs and the 21'000 intrinsic gas overhead for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
       },
     }),
     columnHelper.accessor('data.overhead', {
@@ -169,7 +182,7 @@ export function getScalingCostsColumns(metric: CostsMetric) {
           'before:bg-chart-stacked-purple',
         ),
         tooltip:
-          'The cost of the fixed 21,000 GAS overhead per L1 transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
+          "The cost of the fixed 21'000 intrinsic gas cost per L1 transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
       },
     }),
 

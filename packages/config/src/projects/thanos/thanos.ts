@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const thanos: ScalingProject = upcomingL2({
   id: 'thanos',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1726844759), // 2024-09-20T15:05:59Z
   display: {
     name: 'THANOS',
@@ -12,7 +13,6 @@ export const thanos: ScalingProject = upcomingL2({
     description:
       'Thanos is an upcoming Optimistic Rollup. By utilizing its native token within the L2 network, it aims to enable the creation of tailored Layer 2 environments where the token is used for transactions, offering a more efficient and cost-effective blockchain experience.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://tokamak.network/'],
@@ -29,5 +29,8 @@ export const thanos: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

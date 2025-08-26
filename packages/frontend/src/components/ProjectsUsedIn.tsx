@@ -14,6 +14,7 @@ export interface UsedInProjectWithIcon extends UsedInProject {
 interface Props {
   usedIn: UsedInProjectWithIcon[]
   className?: string
+  noL2ClassName?: string
   maxProjects?: number
   noTooltip?: boolean
   noLink?: boolean
@@ -22,6 +23,7 @@ interface Props {
 export function ProjectsUsedIn({
   usedIn,
   className,
+  noL2ClassName,
   maxProjects = 5,
   noTooltip,
   noLink,
@@ -29,7 +31,7 @@ export function ProjectsUsedIn({
   if (usedIn.length === 0) {
     return (
       <Tooltip>
-        <TooltipTrigger>No L2 😔</TooltipTrigger>
+        <TooltipTrigger className={noL2ClassName}>No L2 😔</TooltipTrigger>
         <TooltipContent>
           There are no scaling projects listed on L2BEAT that use this solution.
         </TooltipContent>

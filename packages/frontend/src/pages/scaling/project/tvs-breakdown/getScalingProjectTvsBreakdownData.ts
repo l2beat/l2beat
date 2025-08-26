@@ -47,7 +47,7 @@ export async function getScalingProjectTvsBreakdownData(
       page: 'ScalingProjectTvsBreakdownPage',
       props: {
         ...appLayoutProps,
-        tvsBreakdownData,
+        ...tvsBreakdownData,
         queryState: helpers.dehydrate(),
         defaultRange: range,
       },

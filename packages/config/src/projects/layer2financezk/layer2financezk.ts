@@ -33,12 +33,11 @@ export const layer2financezk: ScalingProject = {
     name: 'L2.Finance-zk',
     slug: 'layer2financezk',
     warning:
-      'ScalingProject.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
+      'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
     description:
-      'Celer’s ScalingProject.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
+      "Celer's Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.",
     purposes: ['Exchange'],
     stacks: ['StarkEx'],
-    category: 'Validium',
     links: {
       websites: ['https://layer2.finance/'],
       repositories: [
@@ -51,6 +50,11 @@ export const layer2financezk: ScalingProject = {
         'https://twitter.com/CelerNetwork',
       ],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('stone'),
   },
   stage: {
     stage: 'NotApplicable',

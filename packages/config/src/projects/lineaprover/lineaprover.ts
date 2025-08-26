@@ -35,40 +35,44 @@ export const lineaprover: BaseProject = {
   zkCatalogInfo: {
     creator: 'Consensys',
     techStack: {
-      finalWrap: [
+      zkVM: [
         ZK_CATALOG_TAGS.Plonk.linea,
-        ZK_CATALOG_TAGS.Plonk.Gnark,
         ZK_CATALOG_TAGS.ISA.EVM,
         ZK_CATALOG_TAGS.curve['BLS12-377'],
-        ZK_CATALOG_TAGS.curve.BN254,
         ZK_CATALOG_TAGS.curve['BW6-761'],
+      ],
+      finalWrap: [
+        ZK_CATALOG_TAGS.Plonk.Gnark,
+        ZK_CATALOG_TAGS.curve.BN254,
         // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
     proofSystemInfo: '',
     trustedSetups: [
       {
-        proofSystem: ZK_CATALOG_TAGS.Plonk.linea,
-        ...TRUSTED_SETUPS.Aleo,
-        ...TRUSTED_SETUPS.CeloPlumo,
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         ...TRUSTED_SETUPS.AztecIgnition,
       },
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-        ...TRUSTED_SETUPS.AztecIgnition,
+        ...TRUSTED_SETUPS.Aleo,
+      },
+      {
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        ...TRUSTED_SETUPS.CeloPlumo,
       },
     ],
     verifierHashes: [
       {
-        hash: '0xcfdff368eb0a9961712338df56f966f0f28899dcd1892b9898fce4928ca0d582',
+        hash: '0x7a181b5c0d9f93a5935cd1249aaa8e60a0e8f729d78325303e3a7dd769413b5b',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
-          'https://etherscan.io/address/0x41a4d93d09f4718fe899d12a4ad2c8a09104bdc7',
+          'https://etherscan.io/address/0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873',
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('linea')],
         description:
-          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract abi packed in the same order they are defined',
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
     ],
   },

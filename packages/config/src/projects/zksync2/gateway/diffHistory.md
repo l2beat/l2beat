@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x256e022712121ea0fee87c8885ab1f395c679735
+Generated with discovered.json: 0xb41ca9b1a22a21704563e47659de6aab76d31cab
 
 # Diff at Sat, 02 Aug 2025 07:32:34 GMT:
 
@@ -78,7 +78,7 @@ diff plonk: https://disco.l2beat.com/diff/eth:0x5BAfEF6729228add8775aF4Cecd2E68a
 
 ```diff
     contract DiamondProxy (0xCE7CBd23193d029410b40e0fD8a79a5121f9250C) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+    +++ description: The main contract defining the Layer 2. Operator actions like committing blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       values.$pastUpgrades.1:
 +        ["2025-08-01T23:57:13.000Z","0x317f561c5cc2944ec00a48e69c538f79bb6f519f8cbdea88005f484cfdd8daa0",["gateway:0xa365401Dc76d077c702965ECc39CfbfE436A6167","gateway:0xEE7f08400FDa3A46D32Ae78eBEC2D3841CeC53b7","gateway:0x7f124F72fB4f978798ffdedAD3332b0ce750F399","gateway:0x4659780be9E0863eFB2BAE5DD77E31e371f2d3C8"]]
       values.$upgradeCount:

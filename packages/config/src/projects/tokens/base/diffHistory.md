@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x8f5e09a92137af2b71fa824a45c1f3da79371a3e
+
+# Diff at Tue, 12 Aug 2025 17:02:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754307917
+- current timestamp: 1755018135
+
+## Description
+
+'Gateway' bridge deployed, minters added for that purpose.
+
+The gateway bridge validates via EOA sigs and has separate contracts for outbound and inbound bridge transactions.
+
+## Watched changes
+
+```diff
+    contract USD Coin Token (0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.12:
++        "base:0x2222222d7164433c4C09B0b0D809a9b52C04C205"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.13:
++        "base:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x92A19381444A001d62cE67BaFF066fA1111d7202) {
+    +++ description: None
+      values.$members.1:
+-        "base:0xab7C7E7ac51f70dd959f3541316dBd715773158B"
++        "base:0x397729229B3d824Ca1B93e6E25e7CB197973df33"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GatewayMinter (0x2222222d7164433c4C09B0b0D809a9b52C04C205)
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+```
+
+```diff
++   Status: CREATED
+    contract GatewayWallet (0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE)
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+```
+
+## Source code changes
+
+```diff
+.../base/.flat/GatewayMinter/ERC1967Proxy.p.sol    |  522 ++
+ .../base/.flat/GatewayMinter/GatewayMinter.sol     | 6189 ++++++++++++++++
+ .../base/.flat/GatewayWallet/ERC1967Proxy.p.sol    |  522 ++
+ .../base/.flat/GatewayWallet/GatewayWallet.sol     | 7521 ++++++++++++++++++++
+ 4 files changed, 14754 insertions(+)
+```
+
+Generated with discovered.json: 0x545d9264a8c606bccbd320805cc6deda4da0acf7
+
+# Diff at Mon, 04 Aug 2025 11:45:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7cc919a780045cf2b13d42712da413a3bff12b3 block: 1753687577
+- current timestamp: 1754307917
+
+## Description
+
+ms signer removed.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) {
+    +++ description: None
+      values.$members.3:
+-        "base:0xab7C7E7ac51f70dd959f3541316dBd715773158B"
+      values.multisigThreshold:
+-        "2 of 9 (22%)"
++        "2 of 8 (25%)"
+    }
+```
+
 Generated with discovered.json: 0xbd84259d2e240ee993e809379bcbf35df6bc53ce
 
 # Diff at Mon, 14 Jul 2025 12:46:37 GMT:

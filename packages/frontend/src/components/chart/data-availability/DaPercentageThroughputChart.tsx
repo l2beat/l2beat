@@ -12,6 +12,8 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { EstimatedBarPatternDef } from '~/components/core/chart/defs/EstimatedBarPatternDef'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
@@ -33,11 +35,18 @@ export function DaPercentageThroughputChart({
   syncStatus,
   resolution,
 }: Props) {
-  const chartMeta = getDaChartMeta({ shape: 'square' })
+  const chartMeta = useMemo(() => getDaChartMeta({ shape: 'square' }), [])
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
-      const total =
-        (ethereum ?? 0) + (celestia ?? 0) + (avail ?? 0) + (eigenda ?? 0)
+      const toSum = [
+        dataKeys.includes('ethereum') ? ethereum : 0,
+        dataKeys.includes('celestia') ? celestia : 0,
+        dataKeys.includes('avail') ? avail : 0,
+        dataKeys.includes('eigenda') ? eigenda : 0,
+      ].filter((e) => e !== null)
+
+      const total = toSum.reduce((acc, curr) => acc + curr, 0)
       if (total === 0) {
         return {
           timestamp: timestamp,
@@ -47,20 +56,49 @@ export function DaPercentageThroughputChart({
           eigenda: eigenda !== null ? 0 : null,
         }
       }
+
+      const isEthereumEstimated =
+        syncStatus?.ethereum && syncStatus.ethereum < timestamp
+      const isCelestiaEstimated =
+        syncStatus?.celestia && syncStatus.celestia < timestamp
+      const isAvailEstimated = syncStatus?.avail && syncStatus.avail < timestamp
+      const isEigenEstimated =
+        syncStatus?.eigenda && syncStatus.eigenda < timestamp
+
+      const ethereumValue =
+        ethereum !== null ? round((ethereum / total) * 100, 2) : null
+      const celestiaValue =
+        celestia !== null ? round((celestia / total) * 100, 2) : null
+      const availValue = avail !== null ? round((avail / total) * 100, 2) : null
+      const eigendaValue =
+        eigenda !== null ? round((eigenda / total) * 100, 2) : null
+
       return {
         timestamp: timestamp,
-        ethereum: ethereum !== null ? round((ethereum / total) * 100, 2) : null,
-        celestia: celestia !== null ? round((celestia / total) * 100, 2) : null,
-        avail: avail !== null ? round((avail / total) * 100, 2) : null,
-        eigenda: eigenda !== null ? round((eigenda / total) * 100, 2) : null,
+        ethereum: !isEthereumEstimated ? ethereumValue : null,
+        ethereumEstimated: isEthereumEstimated ? ethereumValue : null,
+        celestia: !isCelestiaEstimated ? celestiaValue : null,
+        celestiaEstimated: isCelestiaEstimated ? celestiaValue : null,
+        avail: !isAvailEstimated ? availValue : null,
+        availEstimated: isAvailEstimated ? availValue : null,
+        eigenda: !isEigenEstimated ? eigendaValue : null,
+        eigendaEstimated: isEigenEstimated ? eigendaValue : null,
       }
     })
-  }, [data])
+  }, [data, dataKeys, syncStatus])
 
   const syncedUntil = Math.max(...Object.values(syncStatus ?? {}))
 
   return (
-    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+    <ChartContainer
+      data={chartData}
+      meta={chartMeta}
+      isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
+    >
       <BarChart
         accessibilityLayer
         data={chartData}
@@ -68,30 +106,29 @@ export function DaPercentageThroughputChart({
         barCategoryGap={0}
       >
         <ChartLegend content={<ChartLegendContent />} />
-        <Bar
-          dataKey="ethereum"
-          stackId="a"
-          fill={chartMeta.ethereum.color}
-          isAnimationActive={false}
-        />
-        <Bar
-          dataKey="avail"
-          stackId="a"
-          fill={chartMeta.avail.color}
-          isAnimationActive={false}
-        />
-        <Bar
-          dataKey="celestia"
-          stackId="a"
-          fill={chartMeta.celestia.color}
-          isAnimationActive={false}
-        />
-        <Bar
-          dataKey="eigenda"
-          stackId="a"
-          fill={chartMeta.eigenda.color}
-          isAnimationActive={false}
-        />
+        {Object.keys(chartMeta).map((key) => {
+          const actualKey = key as keyof typeof chartMeta
+          const estimatedKey = `${actualKey}Estimated`
+          return [
+            <Bar
+              key={actualKey}
+              dataKey={actualKey}
+              stackId="a"
+              fill={chartMeta[actualKey].color}
+              isAnimationActive={false}
+              hide={!dataKeys.includes(actualKey)}
+            />,
+            <Bar
+              key={estimatedKey}
+              dataKey={estimatedKey}
+              stackId="a"
+              fill={`url(#${estimatedKey}Fill)`}
+              isAnimationActive={false}
+              hide={!dataKeys.includes(actualKey)}
+            />,
+          ]
+        })}
+
         {getCommonChartComponents({
           data: chartData,
           isLoading,
@@ -115,6 +152,18 @@ export function DaPercentageThroughputChart({
             />
           }
         />
+        <defs>
+          {Object.keys(chartMeta).map((key) => {
+            const actualKey = key as keyof typeof chartMeta
+            return (
+              <EstimatedBarPatternDef
+                key={actualKey}
+                id={`${actualKey}EstimatedFill`}
+                fill={chartMeta[actualKey].color}
+              />
+            )
+          })}
+        </defs>
       </BarChart>
     </ChartContainer>
   )
@@ -154,7 +203,7 @@ function CustomTooltip({
       <div className="flex flex-col gap-2">
         {payload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
-          if (!configEntry) return null
+          if (!configEntry || entry.hide) return null
 
           const projectSyncStatus = entry.name
             ? syncStatus?.[entry.name]
@@ -162,6 +211,11 @@ function CustomTooltip({
 
           const isEstimated = projectSyncStatus && projectSyncStatus < label
 
+          const estimatedPayload = payload.find(
+            (p) => p.name === `${entry.name}Estimated`,
+          )
+
+          const value = entry.value ?? estimatedPayload?.value
           return (
             <div
               key={index}
@@ -177,8 +231,8 @@ function CustomTooltip({
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {entry.value !== null && entry.value !== undefined
-                  ? `${isEstimated ? 'est. ' : ''} ${entry.value?.toFixed(2)}%`
+                {value !== null && value !== undefined
+                  ? `${isEstimated ? 'est. ' : ''} ${value.toFixed(2)}%`
                   : 'No data'}
               </span>
             </div>

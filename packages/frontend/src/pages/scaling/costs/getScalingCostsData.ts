@@ -29,6 +29,9 @@ export async function getScalingCostsData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Costs - L2BEAT',
+        description:
+          'Compare transaction costs across Ethereum scaling solutions.',
         openGraph: {
           url: req.originalUrl,
           image: '/meta-images/scaling/costs/opengraph-image.png',

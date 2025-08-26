@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "optimism",
   "timestamp": 1752074075,
-  "configHash": "0x9fb2829c463db0c0256a1279cd8cd872fcce6bc32825135fd8106f5ac86a8269",
+  "configHash": "0x064aaaa253417a49fe0b9589b591f6ec682070effdb57c51be07437dfeebb5cb",
   "entries": [
     {
       "address": "oeth:0x0000000000000000000000000000000000000000",

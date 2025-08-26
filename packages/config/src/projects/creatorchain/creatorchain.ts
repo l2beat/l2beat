@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const creatorchain: ScalingProject = upcomingL2({
   id: 'creatorchain',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1740170319),
   display: {
     name: 'Creator Chain',
@@ -12,7 +13,6 @@ export const creatorchain: ScalingProject = upcomingL2({
     description:
       'Creator is a Layer 2 blockchain built on the OP Stack. Creator is designed for speed, affordability, and scalability, it empowers developers with revenue-sharing smart contracts and incentivizes users with exclusive Phantom X NFTs that generate ongoing profits.',
     purposes: ['Universal', 'NFT'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://creatorchain.io/'],
@@ -30,5 +30,8 @@ export const creatorchain: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

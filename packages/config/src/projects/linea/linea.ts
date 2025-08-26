@@ -70,7 +70,7 @@ const withdrawalLimitInWei = discovery.getContractValue<number>(
   'limitInWei',
 )
 
-const finalizationPeriod = 0
+const finalizationPeriod = 0 // state root immediately finalized when proven
 
 const withdrawalLimitString = `Currently, there is a general limit of ${utils.formatEther(
   withdrawalLimitInWei,
@@ -91,7 +91,6 @@ export const linea: ScalingProject = {
     description:
       'Linea is a ZK Rollup powered by a zkEVM developed at Consensys, designed to scale the Ethereum network.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://linea.build/'],
       bridges: ['https://bridge.linea.build/'],
@@ -116,6 +115,10 @@ export const linea: ScalingProject = {
       explanation:
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Proofs and state roots are currently posted in the same transaction.',
     },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('lineaprover'),
   },
   config: {
     escrows: [
@@ -521,12 +524,12 @@ export const linea: ScalingProject = {
             url: 'https://etherscan.io/address/0x07ddce60658a61dc1732cacf2220fce4a01c49b0#code#F37#L41',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol 1 (100% complete)',
-            url: 'https://etherscan.io/address/0xED39C0C41A7651006953AB58Ecb3039363620995#code',
+            title: 'PlonkVerifierMainnetFull.sol 1 (Proof Type 0)',
+            url: 'https://etherscan.io/address/0xED39C0C41A7651006953AB58Ecb3039363620995',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol 2 (99% complete)',
-            url: 'https://etherscan.io/address/0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7#code',
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 1)',
+            url: 'https://etherscan.io/address/0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873',
           },
         ],
       },

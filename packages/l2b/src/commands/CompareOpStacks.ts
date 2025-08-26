@@ -1,6 +1,6 @@
 import { getDiscoveryPaths } from '@l2beat/discovery'
 import { command, positional, string, subcommands } from 'cmd-ts'
-import { analyseAllOpStackChains } from '../implementations/compareOpStacks'
+import { analyzeAllOpStackChains } from '../implementations/compareOpStacks'
 import { discoveryPath } from './args'
 
 const CompareSingleOpStackProjects = command({
@@ -18,7 +18,7 @@ const CompareSingleOpStackProjects = command({
       paths.discovery = args.discoveryPath
     }
 
-    await analyseAllOpStackChains(args.project, paths)
+    await analyzeAllOpStackChains(args.project, paths)
   },
 })
 
@@ -34,7 +34,7 @@ const CompareAllOpStackProjects = command({
       paths.discovery = args.discoveryPath
     }
 
-    await analyseAllOpStackChains(null, paths)
+    await analyzeAllOpStackChains(null, paths)
   },
 })
 

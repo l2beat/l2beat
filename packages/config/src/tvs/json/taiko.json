@@ -42,6 +42,25 @@
     },
     {
       "mode": "auto",
+      "id": "taiko-cbBTC",
+      "priceId": "coinbase-wrapped-btc",
+      "symbol": "cbBTC",
+      "name": "Coinbase Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "chain": "ethereum",
+        "escrowAddress": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+        "decimals": 8,
+        "sinceTimestamp": 1726099200
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "taiko-CRV",
       "priceId": "curve-dao-token",
       "symbol": "CRV",
@@ -239,7 +258,7 @@
         "decimals": 18,
         "sinceTimestamp": 1728887147
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -264,7 +283,7 @@
         "decimals": 18,
         "sinceTimestamp": 1728888227
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -418,7 +437,7 @@
         "decimals": 8,
         "sinceTimestamp": 1714550603
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

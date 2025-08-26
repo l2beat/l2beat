@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
-import { Checkbox } from '~/components/core/Checkbox'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -9,31 +9,29 @@ import { Skeleton } from '~/components/core/Skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/React'
-import { cn } from '~/utils/cn'
 import { CostsChart } from './CostsChart'
 import { CostsChartTimeRangeControls } from './CostsChartTimeRangeControls'
 import { ProjectCostsChartStats } from './ProjectCostsChartStats'
 
 interface Props {
   milestones: Milestone[]
-  projectId: string
+  project: ChartProject
   defaultRange: CostsTimeRange
   hasPostedData: boolean
 }
 
 export function ProjectCostsChart({
   milestones,
-  projectId,
+  project,
   defaultRange,
   hasPostedData,
 }: Props) {
   const [range, setRange] = useState<CostsTimeRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
-  const [showDataPosted, setShowDataPosted] = useState(false)
 
   const { data, isLoading } = api.costs.projectChart.useQuery({
     range,
-    projectId,
+    projectId: project.id,
   })
 
   const chartData = useMemo(() => {
@@ -100,33 +98,26 @@ export function ProjectCostsChart({
 
   return (
     <div>
-      <div className={cn('mt-4 mb-3 flex flex-col justify-between gap-1')}>
+      <div className="mt-4 mb-3 flex justify-between gap-1">
         <ProjectChartTimeRange range={chartRange} />
-        <div className="flex justify-between gap-1">
-          <DataPostedCheckbox
-            isLoading={isLoading}
-            disabled={!hasPostedData}
-            showDataPosted={showDataPosted}
-            setShowDataPosted={setShowDataPosted}
-          />
-          <CostsChartTimeRangeControls
-            projectSection
-            timeRange={range}
-            setTimeRange={setRange}
-          />
-        </div>
+        <CostsChartTimeRangeControls
+          projectSection
+          timeRange={range}
+          setTimeRange={setRange}
+        />
       </div>
       <CostsChart
+        project={project}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         unit={unit}
         isLoading={isLoading}
         milestones={milestones}
         range={range}
-        showDataPosted={hasPostedData ? showDataPosted : false}
+        hasPostedData={hasPostedData}
         hasBlobs={!!data?.hasBlobs}
         tickCount={4}
-        className="mt-4 mb-2"
+        className="mt-4 mb-3"
       />
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
       <HorizontalSeparator className="my-4" />
@@ -137,33 +128,6 @@ export function ProjectCostsChart({
         unit={unit}
       />
     </div>
-  )
-}
-
-function DataPostedCheckbox({
-  disabled,
-  showDataPosted,
-  setShowDataPosted,
-  isLoading,
-}: {
-  disabled: boolean
-  showDataPosted: boolean
-  setShowDataPosted: (value: boolean) => void
-  isLoading?: boolean
-}) {
-  if (isLoading) {
-    return <Skeleton className="h-8 w-[168px]" />
-  }
-
-  return (
-    <Checkbox
-      name="showDataPosted"
-      checked={disabled ? false : showDataPosted}
-      onCheckedChange={(state) => setShowDataPosted(!!state)}
-      disabled={disabled}
-    >
-      Show data posted
-    </Checkbox>
   )
 }
 

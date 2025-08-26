@@ -12,12 +12,11 @@ export const haust: ScalingProject = upcomingL2({
     description:
       'Haust Network is a zkEVM Layer 2 blockchain built on the Polygon CDK, integrating with the Agglayer and Account Abstraction from the outset.',
     purposes: ['Exchange'],
-    category: 'ZK Rollup',
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://haust.network/'],
       documentation: ['https://docs.haust.network/'],
-      explorers: ['https://explorer-test.haust.network'],
+      explorers: ['https://explorer-testnet.haust.app/'],
       repositories: ['https://github.com/Haust-Labs'],
       socialMedia: [
         'https://twitter.com/HaustNetwork',
@@ -29,5 +28,8 @@ export const haust: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('agglayer'),
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

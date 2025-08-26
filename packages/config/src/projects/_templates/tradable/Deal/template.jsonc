@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreInWatchMode": ["clock"],
+  "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
   "fields": {
     // "$tokenData": {
     //   "handler": {

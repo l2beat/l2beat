@@ -1,3 +1,167 @@
+Generated with discovered.json: 0xc90079b3cd6a001694dd01a98f78a3b0ec17965f
+
+# Diff at Tue, 19 Aug 2025 13:16:37 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6da25c0d4435a6f66eb5343e9d85157f8866f124 block: 1749462383
+- current timestamp: 1755609388
+
+## Description
+
+L1CrossDomainMessenger updated to v2.6.0 with custom gas token. Celo already has it but there is some small unimportant [diff](https://disco.l2beat.com/diff/eth:0x807124F75FF2120b2f26D7e6f9e39C03ee9DE212/eth:0x597959A313643Ed15d45dfbCC422321E72A84515). Similar thing for the SystemConfig contract, [but](https://disco.l2beat.com/diff/eth:0x9c61C5a8FF9408B83ac92571278550097A9d2BB5/eth:0xbF9d1CDF02720b50254e0ca70f01ffE4C9d82bae) (diff against celo) they kept support for the L2OutputOracle. L1StandardBridge [similar](https://disco.l2beat.com/diff/eth:0x28841965B26d41304905A836Da5C0921DA7dBB84/eth:0xe89Fbfb78920423AC9e7F06Acb2163ce55baB89f) (again against celo at the same version). The L1ERC721Bridge is fully standard. The L2OutputOracle is again nothing crazy, just new updates while keeping support for custom gas token and L2OutputOracle (diff against similar version [here](https://disco.l2beat.com/diff/eth:0x387422038358EE160aC57Dcd7aF73F9CC9401749/eth:0xd30B971922D42AA46C8A6432C332547432C89E14)).
+
+## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x4a84a5f83a1bfd93c2f1f066a4af23bab0de4929f91fe164cac53a77f2461edf"
++        "0xd5047c4d0e194d60832d6fcddd0cfba77cc45a190d31800813ba676c19a7e751"
+      values.$implementation:
+-        "eth:0xC08f08571Ea50EDaA1F71Fd6d72a68d164B0C618"
++        "eth:0x597959A313643Ed15d45dfbCC422321E72A84515"
+      values.$pastUpgrades.5:
++        ["2025-08-18T19:16:59.000Z","0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",["eth:0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]]
+      values.$pastUpgrades.6:
++        ["2025-08-18T19:16:59.000Z","0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",["eth:0x597959A313643Ed15d45dfbCC422321E72A84515"]]
+      values.$upgradeCount:
+-        5
++        7
+      values.version:
+-        "2.4.1-beta.2"
++        "2.6.0"
+      values.ENCODING_OVERHEAD:
++        260
+      values.FLOOR_CALLDATA_OVERHEAD:
++        40
+      values.TX_BASE_GAS:
++        21000
+      implementationNames.eth:0xC08f08571Ea50EDaA1F71Fd6d72a68d164B0C618:
+-        "L1CrossDomainMessengerCGT"
+      implementationNames.eth:0x597959A313643Ed15d45dfbCC422321E72A84515:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xbc39dcaa99e0ac5d2815c68d4b71402fec659f68f2096d36220eda3402d6afdd"
++        "0x50cae8451b81d721b283a52337ae8d16911d84dc1f12fc8183da626b93161519"
+      values.$implementation:
+-        "eth:0xB58D3b8F88AC9234dc2329D0fb1197B0c381446D"
++        "eth:0xbF9d1CDF02720b50254e0ca70f01ffE4C9d82bae"
+      values.$pastUpgrades.5:
++        ["2025-08-18T19:16:59.000Z","0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",["eth:0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]]
+      values.$pastUpgrades.6:
++        ["2025-08-18T19:16:59.000Z","0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",["eth:0xbF9d1CDF02720b50254e0ca70f01ffE4C9d82bae"]]
+      values.$upgradeCount:
+-        5
++        7
+      values.version:
+-        "2.3.0"
++        "2.5.0"
+      values.getAddresses:
++        {"l1CrossDomainMessenger":"eth:0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed","l1ERC721Bridge":"eth:0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5","l1StandardBridge":"eth:0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2","l2OutputOracle":"eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4","disputeGameFactory":"eth:0x0000000000000000000000000000000000000000","optimismPortal":"eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D","optimismMintableERC20Factory":"eth:0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc","gasPayingToken":"eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"}
+      values.operatorFeeConstant:
++        0
+      values.operatorFeeScalar:
++        0
+      implementationNames.eth:0xB58D3b8F88AC9234dc2329D0fb1197B0c381446D:
+-        "SystemConfigCGT"
+      implementationNames.eth:0xbF9d1CDF02720b50254e0ca70f01ffE4C9d82bae:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x343d5f78c514c42169e2cdc872dfe7a44e424a7b5692fca5810f5d2b69b85054"
++        "0x29726460095cbabf67e02a68905ff301cb85d6b1652b230c0a4036f346dd6ebf"
+      values.$implementation:
+-        "eth:0x318F7008D7B5541546248D248Fd1eB41A57a9E41"
++        "eth:0xe89Fbfb78920423AC9e7F06Acb2163ce55baB89f"
+      values.version:
+-        "2.2.1-beta.2"
++        "2.3.0"
+      implementationNames.eth:0x318F7008D7B5541546248D248Fd1eB41A57a9E41:
+-        "L1StandardBridgeCGT"
+      implementationNames.eth:0xe89Fbfb78920423AC9e7F06Acb2163ce55baB89f:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0x5c3bff13328150b2e8d53d43b6317fe29b36be456289a1724d7e6b548b702fb5"
++        "0xb9ed3314327cfa4bdab9614d4772040c01df636f632f7317611422dec046197f"
+      values.$implementation:
+-        "eth:0x553D60F9D5912e2ba9C3133550BC8eA551Fb0c0f"
++        "eth:0xd30B971922D42AA46C8A6432C332547432C89E14"
+      values.$pastUpgrades.7:
++        ["2025-08-18T19:16:59.000Z","0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",["eth:0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]]
+      values.$pastUpgrades.8:
++        ["2025-08-18T19:16:59.000Z","0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",["eth:0xd30B971922D42AA46C8A6432C332547432C89E14"]]
+      values.$upgradeCount:
+-        7
++        9
+      implementationNames.eth:0x553D60F9D5912e2ba9C3133550BC8eA551Fb0c0f:
+-        "OptimismPortalCGT"
+      implementationNames.eth:0xd30B971922D42AA46C8A6432C332547432C89E14:
++        "OptimismPortalCGT"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0xe599cf570ef24a19dd222aad5c0dfd249ecd9ed9a4b33d054028512ba4b2baf3"
++        "0x28669b49da3effd51f0f9424ca9cdd455c5b9327c09a40c65fc06f114a6eb837"
+      values.$implementation:
+-        "eth:0x7eecF36F384732F229D494E072a48fF294861fC2"
++        "eth:0x7B07f9FE593Ab0b035B2dce1e925A77F57B3b878"
+      values.$pastUpgrades.5:
++        ["2025-08-18T19:16:59.000Z","0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",["eth:0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]]
+      values.$pastUpgrades.6:
++        ["2025-08-18T19:16:59.000Z","0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",["eth:0x7B07f9FE593Ab0b035B2dce1e925A77F57B3b878"]]
+      values.$upgradeCount:
+-        5
++        7
+      values.version:
+-        "2.2.0-beta.1"
++        "2.4.0"
+      implementationNames.eth:0x7eecF36F384732F229D494E072a48fF294861fC2:
+-        "L1ERC721Bridge"
+      implementationNames.eth:0x7B07f9FE593Ab0b035B2dce1e925A77F57B3b878:
++        "L1ERC721Bridge"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Frax (prev. FXS) Token (0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/Frax (prev. FXS) Token.sol      | 1282 ++++++++++++++++++++
+ .../L1CrossDomainMessenger.sol}                    |  354 +++++-
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  211 ++--
+ .../L1StandardBridge/L1StandardBridge.sol}         |  680 +++--------
+ .../OptimismPortal/OptimismPortalCGT.sol           |  610 ++++------
+ .../SystemConfig/SystemConfig.sol}                 |  227 ++--
+ 6 files changed, 2226 insertions(+), 1138 deletions(-)
+```
+
 Generated with discovered.json: 0xff73bae1e8be12da793ade673d6b5c79f2cc4b6d
 
 # Diff at Mon, 14 Jul 2025 12:45:06 GMT:

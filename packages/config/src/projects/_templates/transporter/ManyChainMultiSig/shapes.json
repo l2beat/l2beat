@@ -3,6 +3,12 @@
     "hash": "0x15b33604a10bda5235da68c98629cc8246b96e86c931a23c296ae08f1eb691cb",
     "address": "0x117ec8aD107976e1dBCc21717ff78407Bc36aADc",
     "chain": "ethereum",
-    "blockNumber": 22188285
+    "blockNumber": 23195668
+  },
+  "ManyChainMultiSig_2": {
+    "hash": "0x4f59b9eb3c499a0ce481e88fbdca49583b553c9ae00db33bfcc9e38132a82b86",
+    "address": "0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e",
+    "chain": "ethereum",
+    "blockNumber": 23195668
   }
 }

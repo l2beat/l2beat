@@ -77,6 +77,29 @@ describe(CoingeckoClient.name, () => {
         UnixTime(1622577232),
       )
     })
+
+    it('if range ends in the future queries until UnixTime.now()', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => MOCK_PARSED_DATA,
+      })
+      const coingeckoClient = getMockClient(http, logger)
+
+      const from = 100
+      const to = UnixTime.now() + UnixTime.DAY
+
+      await coingeckoClient.getCoinMarketChartRange(
+        CoingeckoId('ethereum'),
+        'usd',
+        UnixTime(from),
+        to,
+      )
+
+      const url = new URL(http.fetch.calls[0].args[0])
+      const queriedTo = Number(url.searchParams.get('to'))
+
+      expect(queriedTo).toBeLessThan(to)
+      expect(queriedTo).toBeLessThanOrEqual(UnixTime.now())
+    })
   })
 
   describe(CoingeckoClient.prototype.getCoinList.name, () => {
@@ -173,7 +196,7 @@ describe(CoingeckoClient.name, () => {
       await coingeckoClient.query('/a/b', { foo: 'bar', baz: '123' })
     })
 
-    it('constructs a correct when there are no options', async () => {
+    it('constructs a correct URL when there are no options', async () => {
       const http = mockObject<HttpClient>({
         async fetch(url) {
           expect(url).toEqual('https://api.coingecko.com/api/v3/a/b')

@@ -52,7 +52,6 @@ export const cartesiprthoneypot: ScalingProject = {
       'Bug Bounty Appchain: Any user deposit is a **donation** to the Honeypot. The purpose of this Appchain is to test the Cartesi PRT optimistic fraud proof system. Withdrawals by users are not possible. Note that given the unique purpose of this Appchain, the Risk Rosette and Stages framework do not perfectly apply and additional considerations are required.',
     warning: 'The challenge protocol can be subject to delay attacks.',
     slug: 'cartesi-prt-honeypot',
-    category: 'Optimistic Rollup',
     stacks: ['Cartesi Rollups'],
     description:
       'Cartesi PRT Honeypot is an application-specific Stage-2 rollup that stress-tests Cartesi Rollups’ security. Protected solely by Cartesi’s PRT (Permissionless Refereed Tournaments) fraud-proof algorithm, it turns its locked funds into an open bounty for anyone who can break the system. Users should not deposit unless they are willing to donate their funds to the Honeypot.',
@@ -88,6 +87,10 @@ export const cartesiprthoneypot: ScalingProject = {
       explanation:
         'The current PRT implementation uses three tournament levels, which creates liveness risks in the event of Sybil attacks. Furthermore, it lacks the planned economic layer (bonds and rewards). As a result: (1) honest defenders must cover their own gas costs without compensation, and (2) a well-funded adversary can cheaply create Sybil challengers to keep the dispute tree alive, delaying finality. Safety and decentralization are unaffected, but withdrawals can be significantly delayed until every branch is resolved.',
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
+    name: 'Dave',
   },
   scopeOfAssessment: {
     inScope: [
@@ -153,10 +156,7 @@ export const cartesiprthoneypot: ScalingProject = {
     mode: DA_MODES.TRANSACTION_DATA,
   },
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_FP_INT,
-      secondLine: formatSeconds(minChallengePeriodSeconds),
-    },
+    stateValidation: RISK_VIEW.STATE_FP_INT(minChallengePeriodSeconds),
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
       value: 'Not applicable',

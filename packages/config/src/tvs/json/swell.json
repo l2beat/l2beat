@@ -231,7 +231,7 @@
         "decimals": 18,
         "sinceTimestamp": 1733628351
       },
-      "category": "other",
+      "category": "btc",
       "source": "native",
       "isAssociated": false,
       "bridgedUsing": {
@@ -284,7 +284,7 @@
         "sinceTimestamp": 1733862913,
         "untilTimestamp": 1753966800
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -362,7 +362,7 @@
         "decimals": 18,
         "sinceTimestamp": 1734473115
       },
-      "category": "other",
+      "category": "btc",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -473,7 +473,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Canonical (external escrow)"
+            "name": "Custom escrow"
           }
         ]
       }

@@ -124,6 +124,10 @@ function getChainDiscoveryConfig(
       'CELESTIA_API_URL_FOR_DISCOVERY',
       'CELESTIA_API_URL',
     ]),
+    coingeckoApiKey: env.optionalString([
+      'COINGECKO_API_KEY_FOR_DISCOVERY',
+      'COINGECKO_API_KEY',
+    ]),
     multicall: multicallConfig,
     explorer:
       explorerApi.type === 'blockscout' || explorerApi.type === 'routescan'

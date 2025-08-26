@@ -24,6 +24,8 @@ export async function getDonateData(
       manifest,
       metadata: getMetadata(manifest, {
         title: 'Donate - L2BEAT',
+        description:
+          "Support L2BEAT's independent research & development with a donation.",
         openGraph: {
           url,
           image: '/meta-images/donate/opengraph-image.png',

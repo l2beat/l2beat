@@ -13,7 +13,7 @@ import { createFaqRouter } from './faq/FaqRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createMonthlyUpdatesRouter } from './monthly-updates/MonthlyUpdatesRouter'
-import { createMutlisigReportRouter } from './multisig-report/MutlisigReportRouter'
+import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
 import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
@@ -55,7 +55,7 @@ export function createServerPageRouter(
     createDonateRouter,
     createGlossaryRouter,
     createDaRiskFrameworkRouter,
-    createMutlisigReportRouter,
+    createMultisigReportRouter,
     createTermsOfServiceRouter,
     createStagesRouter,
     createMonthlyUpdatesRouter,

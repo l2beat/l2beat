@@ -2,7 +2,7 @@
   "name": "hyphen",
   "chain": "ethereum",
   "timestamp": 1718953583,
-  "configHash": "0x60651ab584b05c9bd852207bbbe15d8abcb6cdcd4e49e86617f025353c46e95f",
+  "configHash": "0x9f9029c9a8afdcbe67eb9e5be54ca70b277deb28d2c9c948e7dce385b8a9e692",
   "entries": [
     {
       "address": "eth:0x129443cA2a9Dec2020808a2868b38dDA457eaCC7",

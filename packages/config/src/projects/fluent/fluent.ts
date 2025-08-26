@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const fluent: ScalingProject = upcomingL2({
   id: 'fluent',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1721218971), // 2024-07-17T12:22:51Z
   display: {
     name: 'Fluent',
@@ -12,7 +13,6 @@ export const fluent: ScalingProject = upcomingL2({
     description:
       'Fluent is an Ethereum L2 that blends Wasm, EVM and SVM-based smart contracts into a unified execution environment.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://fluent.xyz/'],
       documentation: ['https://docs.fluent.xyz/'],
@@ -25,5 +25,8 @@ export const fluent: ScalingProject = upcomingL2({
         'https://discord.com/invite/fluentxyz',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

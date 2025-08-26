@@ -42,7 +42,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Canonical (external escrow)"
+            "name": "Custom escrow"
           }
         ]
       }
@@ -286,7 +286,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Canonical (external escrow)"
+            "name": "Custom escrow"
           }
         ]
       }
@@ -351,7 +351,7 @@
         "decimals": 8,
         "sinceTimestamp": 1729307651
       },
-      "category": "other",
+      "category": "btc",
       "source": "canonical",
       "isAssociated": false
     },

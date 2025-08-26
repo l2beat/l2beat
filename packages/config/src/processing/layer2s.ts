@@ -5,7 +5,6 @@ import { aevo } from '../projects/aevo/aevo'
 import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
 import { alienx } from '../projects/alienx/alienx'
-import { align } from '../projects/align/align'
 import { allo } from '../projects/allo/allo'
 import { ancient } from '../projects/ancient/ancient'
 import { apex } from '../projects/apex/apex'
@@ -13,10 +12,8 @@ import { appchain } from '../projects/appchain/appchain'
 import { arbitrum } from '../projects/arbitrum/arbitrum'
 import { arcology } from '../projects/arcology/arcology'
 import { arenaz } from '../projects/arenaz/arenaz'
-import { arithmic } from '../projects/arithmic/arithmic'
 import { astarzkevm } from '../projects/astarzkevm/astarzkevm'
 import { automata } from '../projects/automata/automata'
-import { azchain } from '../projects/azchain/azchain'
 import { aztec } from '../projects/aztec/aztec'
 import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
 import { aztecconnect } from '../projects/aztecconnect/aztecconnect'
@@ -25,11 +22,11 @@ import { blast } from '../projects/blast/blast'
 import { bob } from '../projects/bob/bob'
 import { bobanetwork } from '../projects/bobanetwork/bobanetwork'
 import { brine } from '../projects/brine/brine'
-import { camp } from '../projects/camp/camp'
 import { canvasconnect } from '../projects/canvasconnect/canvasconnect'
 import { capx } from '../projects/capx/capx'
 import { cartesiprthoneypot } from '../projects/cartesi-prt-honeypot/cartesi-prt-honeypot'
 import { celo } from '../projects/celo/celo'
+import { codex } from '../projects/codex/codex'
 import { corn } from '../projects/corn/corn'
 import { coti } from '../projects/coti/coti'
 import { creator } from '../projects/creator/creator'
@@ -81,11 +78,10 @@ import { hypr } from '../projects/hypr/hypr'
 import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
-import { intmax } from '../projects/intmax/intmax'
+import { jovay } from '../projects/jovay/jovay'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
 import { kinto } from '../projects/kinto/kinto'
-import { koi } from '../projects/koi/koi'
 import { kontos } from '../projects/kontos/kontos'
 import { kroma } from '../projects/kroma/kroma'
 import { lachain } from '../projects/lachain/lachain'
@@ -94,12 +90,12 @@ import { lasernet } from '../projects/lasernet/lasernet'
 import { layer2finance } from '../projects/layer2finance/layer2finance'
 import { layer2financezk } from '../projects/layer2financezk/layer2financezk'
 import { layerai } from '../projects/layerai/layerai'
-import { leaf } from '../projects/leaf/leaf'
 import { lens } from '../projects/lens/lens'
 import { liftchain } from '../projects/liftchain/liftchain'
 import { lightlink } from '../projects/lightlink/lightlink'
 import { linea } from '../projects/linea/linea'
 import { lisk } from '../projects/lisk/lisk'
+import { logx } from '../projects/logx/logx'
 import { loopring } from '../projects/loopring/loopring'
 import { lootchain } from '../projects/lootchain/lootchain'
 import { lumia } from '../projects/lumia/lumia'
@@ -110,7 +106,6 @@ import { mawari } from '../projects/mawari/mawari'
 import { memento } from '../projects/memento/memento'
 import { metal } from '../projects/metal/metal'
 import { metis } from '../projects/metis/metis'
-import { millicent } from '../projects/millicent/millicent'
 import { mint } from '../projects/mint/mint'
 import { mode } from '../projects/mode/mode'
 import { moonveil } from '../projects/moonveil/moonveil'
@@ -120,10 +115,7 @@ import { myria } from '../projects/myria/myria'
 import { myshell } from '../projects/myshell/myshell'
 import { nal } from '../projects/nal/nal'
 import { namechain } from '../projects/namechain/namechain'
-import { network3 } from '../projects/network3/network3'
-import { neva } from '../projects/neva/neva'
 import { nil } from '../projects/nil/nil'
-import { nodle } from '../projects/nodle/nodle'
 import { nova } from '../projects/nova/nova'
 import { oevnetwork } from '../projects/oevnetwork/oevnetwork'
 import { ola } from '../projects/ola/ola'
@@ -136,8 +128,6 @@ import { ozean } from '../projects/ozean/ozean'
 import { pandasea } from '../projects/pandasea/pandasea'
 import { paradex } from '../projects/paradex/paradex'
 import { parallel } from '../projects/parallel/parallel'
-import { patex } from '../projects/patex/patex'
-import { pay } from '../projects/pay/pay'
 import { payy } from '../projects/payy/payy'
 import { penchain } from '../projects/penchain/penchain'
 import { pepeunchained } from '../projects/pepeunchained/pepeunchained'
@@ -180,8 +170,10 @@ import { snaxchain } from '../projects/snaxchain/snaxchain'
 import { solo } from '../projects/solo/solo'
 import { soneium } from '../projects/soneium/soneium'
 import { soon } from '../projects/soon/soon'
+import { soonbase } from '../projects/soonbase/soonbase'
 import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
+import { sova } from '../projects/sova/sova'
 import { sovrun } from '../projects/sovrun/sovrun'
 import { spire } from '../projects/spire/spire'
 import { starknet } from '../projects/starknet/starknet'
@@ -197,7 +189,6 @@ import { sxt } from '../projects/sxt/sxt'
 import { t1 } from '../projects/t1/t1'
 import { taiko } from '../projects/taiko/taiko'
 import { tea } from '../projects/tea/tea'
-import { telos } from '../projects/telos/telos'
 import { ten } from '../projects/ten/ten'
 import { termstructure } from '../projects/termstructure/termstructure'
 import { ternoa } from '../projects/ternoa/ternoa'
@@ -206,7 +197,6 @@ import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdin
 import { treasure } from '../projects/treasure/treasure'
 import { tusima } from '../projects/tusima/tusima'
 import { unichain } from '../projects/unichain/unichain'
-import { union } from '../projects/union/union'
 import { wirex } from '../projects/wirex/wirex'
 import { witness } from '../projects/witness/witness'
 import { wonder } from '../projects/wonder/wonder'
@@ -214,7 +204,6 @@ import { worldchain } from '../projects/worldchain/worldchain'
 import { xchain } from '../projects/xchain/xchain'
 import { xlayer } from '../projects/xlayer/xlayer'
 import { xpla } from '../projects/xpla/xpla'
-import { xsolla } from '../projects/xsolla/xsolla'
 import { xterio } from '../projects/xterio/xterio'
 import { zentachain } from '../projects/zentachain/zentachain'
 import { zeronetwork } from '../projects/zeronetwork/zeronetwork'
@@ -235,7 +224,6 @@ export const layer2s: ScalingProject[] = [
   airas,
   alephzero,
   alienx,
-  align,
   allo,
   ancient,
   apex,
@@ -243,10 +231,8 @@ export const layer2s: ScalingProject[] = [
   arbitrum,
   arcology,
   arenaz,
-  arithmic,
   astarzkevm,
   automata,
-  azchain,
   aztecconnect,
   aztec,
   aztecV2,
@@ -254,11 +240,11 @@ export const layer2s: ScalingProject[] = [
   blast,
   bob,
   bobanetwork,
-  camp,
   canvasconnect,
   capx,
   cartesiprthoneypot,
   celo,
+  codex,
   corn,
   coti,
   creator,
@@ -309,11 +295,10 @@ export const layer2s: ScalingProject[] = [
   immutablex,
   immutablezkevm,
   ink,
-  intmax,
+  jovay,
   karak,
   katana,
   kinto,
-  koi,
   kontos,
   kroma,
   lachain,
@@ -322,12 +307,12 @@ export const layer2s: ScalingProject[] = [
   layer2finance,
   layer2financezk,
   layerai,
-  leaf,
   lens,
   liftchain,
   lightlink,
   linea,
   lisk,
+  logx,
   loopring,
   lootchain,
   lumia,
@@ -338,7 +323,6 @@ export const layer2s: ScalingProject[] = [
   memento,
   metal,
   metis,
-  millicent,
   mint,
   mode,
   moonveil,
@@ -348,10 +332,7 @@ export const layer2s: ScalingProject[] = [
   myshell,
   nal,
   namechain,
-  network3,
-  neva,
   nil,
-  nodle,
   nova,
   oevnetwork,
   ola,
@@ -364,8 +345,6 @@ export const layer2s: ScalingProject[] = [
   pandasea,
   paradex,
   parallel,
-  patex,
-  pay,
   payy,
   penchain,
   pepeunchained,
@@ -409,8 +388,10 @@ export const layer2s: ScalingProject[] = [
   solo,
   soneium,
   soon,
+  soonbase,
   sophon,
   sorare,
+  sova,
   sovrun,
   spire,
   starknet,
@@ -427,7 +408,6 @@ export const layer2s: ScalingProject[] = [
   taiko,
   brine,
   tea,
-  telos,
   ten,
   termstructure,
   ternoa,
@@ -436,7 +416,6 @@ export const layer2s: ScalingProject[] = [
   treasure,
   tusima,
   unichain,
-  union,
   wirex,
   witness,
   wonder,
@@ -444,7 +423,6 @@ export const layer2s: ScalingProject[] = [
   xchain,
   xlayer,
   xpla,
-  xsolla,
   xterio,
   zentachain,
   zeronetwork,

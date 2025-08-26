@@ -1,6 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { Badge } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { Skeleton } from '~/components/core/Skeleton'
 import { DetailedOnHover } from '~/components/DetailedOnHover'
 import { formatCostValue } from '../utils/formatCostValue'
@@ -28,7 +28,7 @@ export function CostsBreakdownValueCell({ data, type }: Props) {
     }
   }
   const value = data[type]
-  if (value === null) return <Badge type="gray">N/A</Badge>
+  if (value === null) return <NotApplicableBadge />
 
   const formatted = formatCostValue(value, unit, metric)
 

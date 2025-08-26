@@ -38,18 +38,27 @@ function readProject(
   chain: string,
   project: string,
   configReader: ConfigReader,
+  seen = new Set<string>(),
 ): ProjectData[] {
+  const key = `${project}::${chain}`
+
+  if (seen.has(key)) {
+    return []
+  }
+
+  seen.add(key)
+
   try {
     const discovery = configReader.readDiscovery(project, chain)
     const sharedModules = discovery.sharedModules ?? []
 
     return [
       {
-        config: configReader.readConfig(project, chain),
+        config: configReader.readConfig(project),
         discovery,
       },
       ...sharedModules.flatMap((sharedModule) =>
-        readProject(chain, sharedModule, configReader),
+        readProject(chain, sharedModule, configReader, seen),
       ),
     ]
   } catch {
@@ -70,7 +79,7 @@ export function getProject(
   const response: ApiProjectResponse = { entries: [] }
   const meta = getMeta(data.map((x) => x.discovery))
   for (const { config, discovery } of data) {
-    const chain = config.chain
+    const chain = discovery.chain
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
       .map((entry) => {

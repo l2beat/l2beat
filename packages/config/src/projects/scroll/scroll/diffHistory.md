@@ -1,3 +1,301 @@
+Generated with discovered.json: 0xf4ef13b7e692b86660712651f5965ce97c5060f6
+
+# Diff at Mon, 25 Aug 2025 14:28:37 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@90dd8b76055bf0f493df8c45097d37e26f847015 block: 1756130522
+- current timestamp: 1756130522
+
+## Description
+
+Assign L1 counterpart.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756130522 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract WrappedEther (0x5300000000000000000000000000000000000004)
+    +++ description: None
+```
+
+```diff
+    contract L2WETHGateway (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9) {
+    +++ description: None
+      values.counterpart:
+-        "scr:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
++        "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
+      values.l1WETH:
+-        "scr:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2WETHGatewayCounterpart (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE)
+    +++ description: None
+```
+
+```diff
+    contract ProxyAdmin (0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"scr:0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2WstETHToken (0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x130790e1b3f4c03c904374a41af6af7b5e12096e
+
+# Diff at Mon, 25 Aug 2025 14:04:28 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1755858338
+- current timestamp: 1756130522
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract WrappedEther (0x5300000000000000000000000000000000000004) {
+    +++ description: None
+      values.totalSupply:
+-        "4497294538621618165812"
++        "4170911196463469688720"
+    }
+```
+
+```diff
+    contract L2WstETHToken (0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32) {
+    +++ description: None
+      values.totalSupply:
+-        "978415033324282926152"
++        "983802096521707616986"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755858338 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xaa5e9334:
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xc63b9e2d:
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyThreshold(uint256):
++        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyFactor(uint256):
++        ["ops-fast"]
+    }
+```
+
+Generated with discovered.json: 0xe7bb390a4f69dacb237102648e7522694a10c3c8
+
+# Diff at Mon, 25 Aug 2025 09:27:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@db2e2037972253abead542c9802c5ac28817e5d2 block: 1755858338
+- current timestamp: 1755858338
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755858338 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xA76acF000C890b0DD7AEEf57627d9899F955d026) {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142","role":"admin"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L2USDCGateway (0x33B60d5Dd260d453cAC3782b0bDC01ce84672142)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WrappedEther (0x5300000000000000000000000000000000000004)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WETHGateway (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WETHGatewayCounterpart (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2LidoGateway (0x8aE8f22226B9d789A36AC81474e633f8bE2856c9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WstETHToken (0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xa3c131fa490fb486061d48e296489a15d5528d01
+
+# Diff at Tue, 12 Aug 2025 15:57:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e94498235c6c8b45d3e4bfb77316081ba540850a block: 1754921961
+- current timestamp: 1755014055
+
+## Description
+
+USDC rescuer added.
+
+## Watched changes
+
+```diff
+    contract Scroll USDC (0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4) {
+    +++ description: Contract of the USDC token on Scroll.
+      values.rescuer:
+-        "scr:0x0000000000000000000000000000000000000000"
++        "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
+    }
+```
+
+Generated with discovered.json: 0x2129e7de31b81bfd1c58f8801b75b76f35c39de5
+
+# Diff at Tue, 05 Aug 2025 14:17:53 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
+- current timestamp: 1754403402
+
+## Description
+
+Access control changes.
+
+## Watched changes
+
+```diff
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.PAUSE_CONTROLLER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd"]}
+      values.accessControl.roles.SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"]}
+      values.accessControl.targets.scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC.setPause(bool).0:
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC.setPause(bool).0:
+-        "emergency-nodelay"
++        "PAUSE_CONTROLLER_ROLE"
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xaa5e9334:
++        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xc63b9e2d:
++        ["ops-fast"]
+      values.accessControl.targets.scr:0x331A873a2a85219863d80d248F9e2978fE88D0Ea:
++        {"updateBaseFeeOverhead(uint256)":["ops-fast"],"updateBaseFeeScalar(uint256)":["ops-fast"]}
+      values.accessControl.targets.scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd:
++        {"pause(address)":["emergency-nodelay"],"updatePauseCooldownPeriod(uint256)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"resetPauseCooldownPeriod(address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"unpause(address)":["emergency-nodelay","SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE"]}
+    }
+```
+
+```diff
+    contract AgoraGovernor (0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: Used to propose and manage onchain governance proposals.
+      values.votingDelay:
+-        86400
++        3600
+      values.votingPeriod:
+-        201600
++        432000
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA76acF000C890b0DD7AEEf57627d9899F955d026) {
+    +++ description: None
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Security Council Minority (0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2PauseController (0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/L2PauseController/PauseController.sol    |  619 +++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++++++
+ .../Scroll Security Council Minority/SafeL2.sol    | 1152 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 4 files changed, 2537 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753093859 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.TIMELOCK_1DAY_DELAY_TOLE:
+-        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
+      values.accessControl.roles.TIMELOCK_1DAY_DELAY_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
+    }
+```
+
 Generated with discovered.json: 0x9b36c271cfd6a020df8e88b2d9ad59a584a8a454
 
 # Diff at Thu, 31 Jul 2025 10:55:15 GMT:

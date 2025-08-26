@@ -1,12 +1,12 @@
 {
   "name": "lens",
   "chain": "zksync2",
-  "timestamp": 1753944339,
-  "configHash": "0x9786ec937b4b23b8d7ef56eda9e7aafa054a2a7d30c98732539eb9247e52f787",
+  "timestamp": 1755245760,
+  "configHash": "0x9749bfa965006f5c2d708d3c847c2f290e17ef3fe14d75206fa23ea441755724",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},
   "usedTemplates": {},
-  "usedBlockNumbers": { "zksync2": 63564278 },
-  "permissionsConfigHash": "0x0be36ad00f8cb0f8ae48c506dd0e525ea9a0784792771c353b6524299530520a"
+  "usedBlockNumbers": { "zksync2": 64050294 },
+  "permissionsConfigHash": "0xc0e32fdfb9627182e5f3223397d7ae9f5cc611a5692bf508320b846638cbac1d"
 }

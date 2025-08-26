@@ -26,8 +26,8 @@ import type {
   ProjectPermissions,
   ProjectReviewStatus,
   ProjectScalingCapability,
-  ProjectScalingCategory,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
@@ -48,7 +48,7 @@ export interface ScalingProject {
   /** If the project is an L3, ProjectId that serves as the base layer */
   hostChain?: ProjectId
   /** Does the project have a testnet? */
-  hasTestnet?: boolean
+  hasTestnet?: true
   /** Is the project universal or app specific (e.g. DEX) */
   capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
@@ -61,6 +61,8 @@ export interface ScalingProject {
   reviewStatus?: ProjectReviewStatus
   /** Colors used in the project's branding. E.g. ecosystem gradient, project page accents */
   colors?: ProjectCustomColors
+  /** Proof system of the project */
+  proofSystem: ProjectScalingProofSystem | undefined
   /** Information displayed about the project on the frontend */
   display: ProjectScalingDisplay
   /** Information required to calculate the stats of the project */
@@ -70,7 +72,7 @@ export interface ScalingProject {
   /** Ecosystem information */
   ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */
-  dataAvailability?: ProjectScalingDa
+  dataAvailability: ProjectScalingDa | undefined
   /** Details about the custom availability solution */
   customDa?: ProjectCustomDa
   /** Risk view values for this project */
@@ -95,7 +97,7 @@ export interface ScalingProject {
   badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  /** Things we have or haven't checked while assesing the stage */
+  /** Things we have or haven't checked while assessing the stage */
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   /** Discodrive markers - shouldn't be configured by a user */
   discoveryInfo: ProjectDiscoveryInfo
@@ -125,8 +127,6 @@ export interface ProjectScalingDisplay {
   shortName?: string
   /** Url friendly scaling project name, will be used in website urls */
   slug: string
-  /** Name of the category the scaling project belongs to */
-  category: ProjectScalingCategory
   /** Technological stacks */
   stacks?: ProjectScalingStack[]
   /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */

@@ -83,8 +83,8 @@ export const zkCatalogTags = [
   {
     id: 'CASM',
     type: ZkCatalogTagType.ISA,
-    name: 'cASM',
-    description: 'Instruction language for CairoVM developed by Starkware.',
+    name: 'Cairo ASM',
+    description: 'Instruction language for Cairo VM developed by Starkware.',
   },
   {
     id: 'EVM',
@@ -96,7 +96,8 @@ export const zkCatalogTags = [
     id: 'OpenVM',
     type: ZkCatalogTagType.ISA,
     name: 'OpenVM',
-    description: 'Instruction language for zkVM developed by Scroll.',
+    description:
+      'Extensible instruction set for OpenVM zkVM developed by Axiom.',
   },
   // Plonk
   {
@@ -133,6 +134,20 @@ export const zkCatalogTags = [
     name: 'linea',
     description:
       'Prover system of Linea written in Go, includes Vortex polynomial commitment and Arcane compiler.',
+  },
+  {
+    id: 'Plonky2',
+    type: ZkCatalogTagType.Plonk,
+    name: 'Plonky2',
+    description:
+      'Toolkit for developing transparent SNARKs based on PLONK and FRI developed by Polygon Zero team.',
+  },
+  {
+    id: 'AztecV1',
+    type: ZkCatalogTagType.Plonk,
+    name: 'AztecV1',
+    description:
+      'First version of Aztec implementation of Plonk proving system, originally developed for zk.money (AZTEC v1).',
   },
   // Fflonk
   {
@@ -248,6 +263,13 @@ export const zkCatalogTags = [
     name: 'eAIR',
     description:
       'Extended algebraic intermediate representation introduced by Polygon Zero for eSTARK.',
+  },
+  // Other
+  {
+    id: 'CustomCircuits',
+    type: ZkCatalogTagType.Other,
+    name: 'App-specific circuits',
+    description: 'This project uses custom app-specific ZK circuits.',
   },
 ] as const satisfies ZkCatalogTag[]
 

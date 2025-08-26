@@ -31,6 +31,7 @@ export const blast: ScalingProject = opStackL2({
       ],
       repositories: ['https://github.com/blast-io'],
       socialMedia: ['https://twitter.com/blast', 'https://discord.gg/blast-l2'],
+      rollupCodes: 'https://rollup.codes/blast',
     },
     tvsWarning: {
       value: 'The TVS does account for rehypothecated tokens.',
@@ -116,7 +117,7 @@ export const blast: ScalingProject = opStackL2({
       tokens: ['ETH', 'stETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
-        'Escrow for ETH that is invested into a yield-bearing contracts such as stETH.',
+        'Escrow for ETH that is invested into yield-bearing contracts such as stETH.',
     }),
   ],
   isNodeAvailable: true,
@@ -130,7 +131,7 @@ export const blast: ScalingProject = opStackL2({
     genesisState:
       'The genesis file can be found [here](https://github.com/blast-io/deployment/blob/master/mainnet/genesis.json).',
     dataFormat:
-      "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/).",
+      "The format specification of Sequencer's data batches can be found [here](https://optimism.io/blog/here-s-how-you-can-reproduce-op-mainnet-s-migration-to-bedrock).",
   },
   milestones: [
     {

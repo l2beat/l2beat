@@ -58,7 +58,6 @@ export const fuel: ScalingProject = {
     description:
       'Fuel Ignition is a high-performance Ethereum L2 built on FuelVM and the Sway language.',
     purposes: ['Universal'],
-    category: 'Other',
     links: {
       websites: ['https://fuel.network/'],
       bridges: [
@@ -77,6 +76,7 @@ export const fuel: ScalingProject = {
       ],
     },
   },
+  proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',
   },

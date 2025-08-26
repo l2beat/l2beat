@@ -2,7 +2,7 @@
   "name": "real",
   "chain": "ethereum",
   "timestamp": 1754054742,
-  "configHash": "0xcf143576b5eb89f0a8a7f261b0253937922fde46a815623a7b5496b51221cabc",
+  "configHash": "0xa93bb45636f651a3a6b1bc9488e67d146d185befc1583cd15215c42303385127",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -2371,6 +2371,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23046515 },
+  "usedBlockNumbers": { "ethereum": 23046516 },
   "permissionsConfigHash": "0x97b6758e22a392ab87dae48c4775c65bebccc26a97693069963cb7027f7b4723"
 }

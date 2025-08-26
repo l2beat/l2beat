@@ -1,9 +1,10 @@
 import type { ActivitySectionProps } from './ActivitySection'
+import type { BridgesTvsSectionProps } from './BridgesTvsSection'
 import type { ContractsSectionProps } from './contracts/ContractsSection'
 import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
-import type { DataPostedSectionProps } from './DataPostedSection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
+import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { L3RiskAnalysisSectionProps } from './L3RiskAnalysisSection'
@@ -14,13 +15,12 @@ import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
+import type { ScalingTvsSectionProps } from './ScalingTvsSection'
 import type { SequencingSectionProps } from './SequencingSection'
-import type { StackedTvsSectionProps } from './StackedTvsSection'
 import type { StageSectionProps } from './StageSection'
 import type { StateDerivationSectionProps } from './StateDerivationSection'
 import type { StateValidationSectionProps } from './StateValidationSection'
 import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
-import type { TvsSectionProps } from './TvsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 
 type SectionId =
@@ -73,14 +73,14 @@ interface ProjectDetailsThroughputSection {
   props: ProjectDetailsProps<ThroughputSectionProps>
 }
 
-interface ProjectDetailsStackedTvsSection {
-  type: 'StackedTvsSection'
-  props: ProjectDetailsProps<StackedTvsSectionProps>
+interface ProjectDetailsScalingTvsSection {
+  type: 'ScalingTvsSection'
+  props: ProjectDetailsProps<ScalingTvsSectionProps>
 }
 
-interface ProjectDetailsTvsSection {
-  type: 'TvsSection'
-  props: ProjectDetailsProps<TvsSectionProps>
+interface ProjectDetailsBridgesTvsSection {
+  type: 'BridgesTvsSection'
+  props: ProjectDetailsProps<BridgesTvsSectionProps>
 }
 
 interface ProjectDetailsActivitySection {
@@ -203,7 +203,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
-  | ProjectDetailsStackedTvsSection
-  | ProjectDetailsTvsSection
+  | ProjectDetailsScalingTvsSection
+  | ProjectDetailsBridgesTvsSection
   | ProjectDetailsActivitySection
 )

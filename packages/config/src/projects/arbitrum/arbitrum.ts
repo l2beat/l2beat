@@ -31,6 +31,11 @@ const challengeWindow = discovery.getContractValue<number>(
   'confirmPeriodBlocks',
 )
 const challengeWindowSeconds = challengeWindow * assumedBlockTime
+const challengeGracePeriodSeconds =
+  discovery.getContractValue<number>(
+    'RollupProxy',
+    'challengeGracePeriodBlocks',
+  ) * assumedBlockTime
 const l1TimelockDelay = discovery.getContractValue<number>(
   'L1Timelock',
   'getMinDelay',
@@ -276,7 +281,10 @@ export const arbitrum: ScalingProject = orbitStackL2({
       selfSequencingDelay,
       l1TimelockDelay,
     ),
-    stateValidation: RISK_VIEW.STATE_FP_INT,
+    stateValidation: RISK_VIEW.STATE_FP_INT(
+      challengeWindowSeconds,
+      challengeGracePeriodSeconds,
+    ),
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
@@ -306,6 +314,10 @@ export const arbitrum: ScalingProject = orbitStackL2({
       rollupNodeLink: 'https://github.com/OffchainLabs/nitro/',
     },
   ),
+  nonTemplateProofSystem: {
+    type: 'Optimistic',
+    name: 'BoLD',
+  },
   stateDerivation: {
     nodeSoftware: `The rollup node (Arbitrum Nitro) consists of four parts. The base layer is the core Geth server (with minor modifications to add hooks) that emulates the execution of EVM contracts and maintains Ethereum's state and [a fork of wasmer](https://github.com/OffchainLabs/wasmer) that is used for native WASM execution. The middle layer, ArbOS, provides additional Layer 2 functionalities such as decompressing data batches, accounting for Layer 1 gas costs, and supporting cross-chain bridge functionalities. The top layer consists of node software, primarily from Geth, that handles client connections (i.e., regular RPC node). [View Code](https://github.com/OffchainLabs/nitro/)`,
     compressionScheme: `The Sequencer's batches are compressed using a general-purpose data compression algorithm known as [Brotli](https://github.com/google/brotli), configured to its highest compression setting.`,
@@ -391,7 +403,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       url: 'https://twitter.com/arbitrum/status/1542159109511847937',
       date: '2022-06-29T00:00:00Z',
       description:
-        'Due of the heavy load being put on the chain, Odyssey program got paused.',
+        'Due to the heavy load being put on the chain, Odyssey program got paused.',
       type: 'incident',
     },
     {

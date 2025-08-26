@@ -251,7 +251,8 @@ export class BatchingAndCachingProvider {
         this.stats.mark(ProviderMeasurement.GET_LOGS, duration)
         return parseCacheEntry(cached)
       }
-      const logs = await this.provider.getLogs(
+      const logs = await getAllLogs(
+        this.provider,
         address,
         topics,
         fromBlock,
@@ -621,9 +622,9 @@ export class BatchingAndCachingProvider {
     return blobExists
   }
 
-  async getCelestiaBlockResultLogs(height: number) {
+  async getCelestiaBlockResultEvents(height: number) {
     const entry = await this.cache.entry(
-      'getCelestiaBlockResultLogs',
+      'getCelestiaBlockResultEvents',
       [height],
       undefined,
     )
@@ -631,9 +632,9 @@ export class BatchingAndCachingProvider {
     if (cached !== undefined) {
       return parseCacheEntry(cached)
     }
-    const logs = await this.provider.getCelestiaBlockResultLogs(height)
-    entry.write(JSON.stringify(logs))
-    return logs
+    const events = await this.provider.getCelestiaBlockResultEvents(height)
+    entry.write(JSON.stringify(events))
+    return events
   }
 }
 

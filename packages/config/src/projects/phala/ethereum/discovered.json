@@ -1,8 +1,8 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "timestamp": 1753681931,
-  "configHash": "0xdc09a119ba9b96e10c51f6389a16a0f0c1ee8e9a8074ce1007bb776ec199afec",
+  "timestamp": 1755161649,
+  "configHash": "0xcd6211cf4c2c7acefbb5b5a75c8040c99dba06afbe48a9661a0abcb2b5633b62",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -37,7 +37,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619835",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619839",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -292,6 +292,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
           "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
@@ -308,8 +309,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 143,
+        "multisigThreshold": "4 of 12 (33%)",
+        "nonce": 153,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -438,7 +439,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 22957111
+          "prevBlockNum": 23122523
         },
         "paused": false,
         "superchainConfig": "eth:0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8",
@@ -620,7 +621,7 @@
         "additionalProposers": [
           "eth:0xb6c7448Ad01AfAF34217FFd0eCaCf2c29bdc38fE"
         ],
-        "aggregationVkey": "0x009db7eba2814292b350d8b18e3861fcf8cb387de821c3d4546b79552ee2afa5",
+        "aggregationVkey": "0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e",
         "challenger": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "CHALLENGER": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "FINALIZATION_PERIOD_SECONDS": 28800,
@@ -628,15 +629,15 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 1924860,
-        "latestOutputIndex": 458,
-        "nextBlockNumber": 1929180,
-        "nextOutputIndex": 459,
+        "latestBlockNumber": 2076060,
+        "latestOutputIndex": 486,
+        "nextBlockNumber": 2080380,
+        "nextOutputIndex": 487,
         "optimisticMode": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "eth:0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
         "PROPOSER": "eth:0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
-        "rangeVkeyCommitment": "0x0ea16a87731757ad1753d1906cb006de1fdd6a760add547c0c691bcd0914de7e",
+        "rangeVkeyCommitment": "0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872",
         "rollupConfigHash": "0x2aee88f2b7f9f1edfab6c535edeb8a7d969c162fe974650fc3c1e4d3c75ecb8b",
         "startingBlockNumber": 0,
         "startingTimestamp": 1734387239,
@@ -852,6 +853,11 @@
         "eth:0xF8e8E783fa7A5CCDB77EddC3335cDb00066B515e": "Proxy",
         "eth:0x000FAF919Dc5a946B82bFfF252FAbC378bda1F50": "OptimismMintableERC20Factory"
       }
+    },
+    {
+      "address": "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1336,6 +1342,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x23a763ed39c139851f257aef8c5edb090d6cbf04040b6f63dace0d3e157a3ab0"
   },
-  "usedBlockNumbers": { "ethereum": 23015676 },
-  "permissionsConfigHash": "0x3c18feedf867890e06f784d5394d4aad6a83cd7817a61fa00e82fda9bb6bf8c8"
+  "usedBlockNumbers": { "ethereum": 23138224 },
+  "permissionsConfigHash": "0xf53ea44e19c0ab7c787fbf595b762043f4fc7f04dce28d01d5f809793e61a299"
 }

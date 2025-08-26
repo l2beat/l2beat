@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const quarkchain: ScalingProject = upcomingL2({
   id: 'quarkchain',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1741609623),
   display: {
     name: 'QuarkChain',
@@ -12,7 +13,6 @@ export const quarkchain: ScalingProject = upcomingL2({
     description:
       'QuarkChain is an L2 that aims to serve as infrastructure for AI and dApps. It is planning to integrate EthStorage to open up new possibilities for fully on-chain AI with all models and training data stored there.',
     purposes: ['AI'],
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://quarkchain.io/'],
       bridges: [
@@ -21,6 +21,7 @@ export const quarkchain: ScalingProject = upcomingL2({
       ],
       documentation: ['https://docs.quarkchain.io/'],
       explorers: ['https://explorer.beta.testnet.l2.quarkchain.io/'],
+      repositories: ['https://github.com/QuarkChain'],
       socialMedia: [
         'https://x.com/quark_chain',
         'https://discord.com/invite/GbkGhY3qkh',
@@ -28,5 +29,8 @@ export const quarkchain: ScalingProject = upcomingL2({
         'https://t.me/quarkchainio',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

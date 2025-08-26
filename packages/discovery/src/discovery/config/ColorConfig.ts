@@ -61,4 +61,7 @@ export const _ColorConfig = {
     )
     .optional(),
 }
-export const ColorConfig = v.object(_ColorConfig)
+export const ColorConfig = v.object({
+  archived: v.boolean().optional(),
+  ..._ColorConfig,
+})

@@ -1,8 +1,8 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "timestamp": 1752069707,
-  "configHash": "0xbebcf5305772e67f02c40649c761d43c7cc1551844667770ab517b1085779d2d",
+  "timestamp": 1755605082,
+  "configHash": "0x5020648bcc8108e19d6c3a77cf0b2a57b4c77df9ff3a35664e2813692d306202",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -61,9 +61,9 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 409,
-        "latestBlock": 1598880,
-        "relayers": ["eth:0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
+        "latestAuthoritySetId": 456,
+        "latestBlock": 1775232,
+        "relayers": ["eth:0x87b8171993dA656F1bdbF862B071f21E82D674B9"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "timelocks": ["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
@@ -120,7 +120,7 @@
         "feePerByte": 0,
         "feeRecipient": "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1593,
+        "messageId": 1682,
         "owner": "eth:0x45828180bbE489350D621d002968A0585406d487",
         "paused": false,
         "pauserAC": ["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
@@ -406,7 +406,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -415,17 +415,7 @@
       }
     },
     {
-      "address": "eth:0xAD379D3275a18bd4BB741C3b291a3778D51c3304",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
+      "address": "eth:0x87b8171993dA656F1bdbF862B071f21E82D674B9",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -436,6 +426,16 @@
           "role": ".relayers"
         }
       ]
+    },
+    {
+      "address": "eth:0xAD379D3275a18bd4BB741C3b291a3778D51c3304",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
@@ -744,8 +744,8 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "succinct/SP1Vector": "0x0d84ef33171173950df0aa38b6204925027638e1f67ed495360805f9f3186402"
+    "succinct/SP1Vector": "0x4b4bab1769276ac2be7215b73aff7dda8735ad26ed07bdfed49c63583ddc2025"
   },
-  "usedBlockNumbers": { "ethereum": 22882091 },
-  "permissionsConfigHash": "0xb0a78dc66bac32e379731421ac5ab77aad20f651374661719bb5545826f85a98"
+  "usedBlockNumbers": { "ethereum": 23175000 },
+  "permissionsConfigHash": "0xc2306ad6948cdc3a8dfad6b122680f0eb46009227a1b026bdb2cac25f4042687"
 }

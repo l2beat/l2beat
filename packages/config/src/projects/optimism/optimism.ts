@@ -23,7 +23,6 @@ export const optimism: ScalingProject = opStackL2({
     name: 'OP Mainnet',
     slug: 'op-mainnet',
     stateValidationImage: 'opfp',
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     description:
       'OP Mainnet is an EVM-equivalent Optimistic Rollup. It aims to be fast, simple, and secure.',
@@ -219,7 +218,7 @@ export const optimism: ScalingProject = opStackL2({
   stateDerivation: {
     ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
-      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://docs.optimism.io/builders/node-operators/management/snapshots). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
+      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://docs.optimism.io/builders/node-operators/management/snapshots). To reproduce the migration itself, see this [guide](https://optimism.io/blog/here-s-how-you-can-reproduce-op-mainnet-s-migration-to-bedrock).',
   },
   hasProperSecurityCouncil: true,
   nodeSourceLink:
@@ -319,7 +318,7 @@ export const optimism: ScalingProject = opStackL2({
     },
     {
       title: 'Fault Proof System is live on OP Goerli',
-      url: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
+      url: 'https://optimism.io/blog/the-op-stack-s-fault-proof-system-is-live-on-op-goerli',
       date: '2023-10-03T00:00:00Z',
       description: 'Fraud Proof system is live on Goerli.',
       type: 'general',

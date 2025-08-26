@@ -19,11 +19,7 @@ export class ConfigRegistry {
     return this.structure.name
   }
 
-  get chain(): string {
-    return this.structure.chain
-  }
-
   get archived(): boolean {
-    return this.structure.archived ?? false
+    return this.color.archived ?? false
   }
 }

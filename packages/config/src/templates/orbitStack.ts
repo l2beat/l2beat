@@ -19,13 +19,14 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   pickWorseRisk,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { formatChallengePeriod, formatDelay } from '../common/formatDelays'
+import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -47,6 +48,7 @@ import type {
   ProjectRisk,
   ProjectScalingCapability,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
@@ -122,9 +124,8 @@ interface OrbitStackConfigCommon {
   upgradeability?: {
     upgradableBy?: ProjectUpgradeableActor[]
   }
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingDisplay['category']
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
+  nonTemplateProofSystem?: ProjectScalingProofSystem
   bridge: EntryParameters
   blockNumberOpcodeTimeSeconds?: number
   rollupProxy: EntryParameters
@@ -158,7 +159,7 @@ interface OrbitStackConfigCommon {
   }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
   availDa?: {
-    appId: string
+    appIds: string[]
     sinceBlock: number // Block number on Avail Network
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
@@ -173,9 +174,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingDisplay['category']
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   upgradesAndGovernance?: string
 }
 
@@ -338,7 +337,6 @@ function orbitStackCommon(
     | 'architectureImage'
     | 'purposes'
     | 'stacks'
-    | 'category'
     | 'warning'
   >
 } {
@@ -458,6 +456,10 @@ function orbitStackCommon(
     )
   }
 
+  const hasNoProofs = templateVars.reasonsForBeingOther?.some(
+    (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
+  )
+
   return {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
@@ -474,14 +476,10 @@ function orbitStackCommon(
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       stacks: ['Arbitrum'],
-      category:
-        templateVars.display.category ??
-        (templateVars.reasonsForBeingOther
-          ? 'Other'
-          : postsToExternalDA
-            ? 'Optimium'
-            : 'Optimistic Rollup'),
     },
+    proofSystem:
+      templateVars.nonTemplateProofSystem ??
+      (hasNoProofs ? undefined : { type: 'Optimistic' }),
     riskView: getRiskView(templateVars, daProvider, isPostBoLD),
     stage: computedStage(templateVars),
     config: {
@@ -795,7 +793,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
           },
           explanation: `${
             templateVars.display.name
-          } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
+          } posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
             selfSequencingDelaySeconds,
           )}. The state root is settled ${formatSeconds(
             challengePeriodSeconds,
@@ -865,7 +863,7 @@ function getDaTracking(
         daLayer: ProjectId('avail'),
         // TODO: update to value from discovery
         sinceBlock: templateVars.availDa.sinceBlock,
-        appId: templateVars.availDa.appId,
+        appIds: templateVars.availDa.appIds,
       },
     ]
   }
@@ -915,6 +913,12 @@ function getRiskView(
   const challengePeriodSeconds =
     challengePeriodBlocks * blockNumberOpcodeTimeSeconds
 
+  const challengeGracePeriodBlocks =
+    templateVars.discovery.getContractValueOrUndefined(
+      'RollupProxy',
+      'challengeGracePeriodBlocks',
+    )
+
   const validatorWhitelistDisabled =
     templateVars.discovery.getContractValue<boolean>(
       'RollupProxy',
@@ -926,7 +930,13 @@ function getRiskView(
       templateVars.nonTemplateRiskView?.stateValidation ??
       (() => {
         if (validatorWhitelistDisabled) {
-          return RISK_VIEW.STATE_FP_INT
+          return RISK_VIEW.STATE_FP_INT(
+            challengePeriodSeconds,
+            challengeGracePeriodBlocks
+              ? Number(challengeGracePeriodBlocks) *
+                  blockNumberOpcodeTimeSeconds
+              : undefined,
+          )
         }
 
         const nOfChallengers = isPostBoLD
@@ -944,8 +954,11 @@ function getRiskView(
             nOfChallengers,
             templateVars.hasAtLeastFiveExternalChallengers ?? false,
             challengePeriodSeconds,
+            challengeGracePeriodBlocks
+              ? Number(challengeGracePeriodBlocks) *
+                  blockNumberOpcodeTimeSeconds
+              : undefined,
           ),
-          secondLine: formatChallengePeriod(challengePeriodSeconds),
         }
       })(),
     dataAvailability:

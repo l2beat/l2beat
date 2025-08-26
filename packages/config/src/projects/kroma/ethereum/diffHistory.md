@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xe549c479b88019591ee5d4b727f356605f0d3af8
+Generated with discovered.json: 0xb35de0e00f14cacece0cc182b6636b880f408478
 
 # Diff at Mon, 14 Jul 2025 12:45:15 GMT:
 
@@ -4907,7 +4907,7 @@ Generated with discovered.json: 0x192ec46727290d3f2d3b8213fa58f007f2fd1280
 
 ## Description
 
-One SC signer swapped its EOA (Xangle): https://www.tally.xyz/gov/kroma-security-council-l2/proposal/66793954205565734871927487347209424383799739452575476193452192540588648719016.
+One SC signer swapped its EOA (Xangle): https://www.tally.xyz/gov/kroma-security-council-l1/proposal/14618493072102478268804770651956339471812434732135801604235762335024802800380.
 
 ## Watched changes
 
@@ -6080,7 +6080,7 @@ Previously, validators could only withdraw funds to themselves. Now, with the wi
 
 ### 2. Change in block header hash function for Colosseum
 
-With the Shanghai upgrade on the Kroma mainnet, a withdrawalsRoot field has been added to the block header. Accordingly, the hash function for obtaining the block header in Colosseum has been modified. Implemenatation contract address: `0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066`
+With the Shanghai upgrade on the Kroma mainnet, a withdrawalsRoot field has been added to the block header. Accordingly, the hash function for obtaining the block header in Colosseum has been modified. Implementation contract address: `0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066`
 
 ### Current Context
 
