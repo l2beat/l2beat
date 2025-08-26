@@ -27,20 +27,6 @@ export async function getMintTransactions(
   return [...new Set(logs.map((log) => log.transactionHash))]
 }
 
-export function getDebugTraces(
-  provider: IProvider,
-  transactions: string[],
-  onFetch?: (txHash: string) => void,
-) {
-  return Promise.all(
-    transactions.map(async (txHash) => {
-      const result = await provider.getDebugTrace(Hash256(txHash))
-      onFetch?.(txHash)
-      return result
-    }),
-  )
-}
-
 export function traverseTrace(trace: DebugTransactionCallResponse) {
   const sendersSet = new Set<string>()
 
