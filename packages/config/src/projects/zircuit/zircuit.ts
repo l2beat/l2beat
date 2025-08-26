@@ -299,7 +299,7 @@ export const zircuit: ScalingProject = opStackL2({
   milestones: [
     {
       title: 'Proof system migrated to SP1',
-      date: '2025-25-05T00:00:00.00Z',
+      date: '2025-08-25T00:00:00.00Z',
       description:
         'Zircuit deprecates its in-house proof system in favor of SP1.',
       type: 'general',
