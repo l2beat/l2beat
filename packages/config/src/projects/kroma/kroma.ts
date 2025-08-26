@@ -34,7 +34,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 const discovery = new ProjectDiscovery('kroma')
 
 const timelockDefaultDelay = discovery.getContractValue<number>(
-  'L1Timelock',
+  'Timelock',
   'getMinDelay',
 )
 

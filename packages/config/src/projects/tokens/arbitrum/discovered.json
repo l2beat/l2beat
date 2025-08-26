@@ -343,5 +343,5 @@
     "tokens/PermissionManager": "0x68a32dbe1505111ca8a93551d5ccd78d16a6aa3a631c6206c804f4ae8b405767"
   },
   "usedBlockNumbers": { "arbitrum": 370405709 },
-  "permissionsConfigHash": "0x99e5d35874c5e888c0b8a5cb06023231acd30445d4cd80b21fa0890f1423e811"
+  "permissionsConfigHash": "0xa785713915a3d09c913ed115c0a3a9eb6d680bd4f00ec6f13ac0e170700418aa"
 }
