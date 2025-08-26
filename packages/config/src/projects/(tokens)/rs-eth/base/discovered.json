@@ -34,8 +34,7 @@
             "bridges": [
               { "name": "Layer Zero v2 OFT", "slug": "layerzerov2oft" }
             ]
-          },
-          "canonical": false
+          }
         },
         "approvalRequired": false,
         "decimalConversionRate": 1000000000000,

@@ -24,7 +24,6 @@ export class ERC20DataHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: ERC20DataDefinition,
-    private readonly abi: string[],
   ) {}
 
   async execute(

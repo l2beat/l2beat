@@ -58,8 +58,7 @@
           "iconUrl": "https://coin-images.coingecko.com/coins/images/39124/large/200x200.png?1720629607",
           "chainId": 1,
           "supply": "zero",
-          "source": "canonical",
-          "canonical": true
+          "source": "canonical"
         },
         "$upgradeCount": 4,
         "ADD_SUBVAULT_ROLE": "0xae944fcb809c01a95e89b6931e61939dd0bbb790c044c20197d070090098c3a2",

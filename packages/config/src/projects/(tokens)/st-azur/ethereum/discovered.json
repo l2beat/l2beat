@@ -50,8 +50,7 @@
           "iconUrl": "https://coin-images.coingecko.com/coins/images/38499/large/azuro.jpeg?1717727357",
           "chainId": 1,
           "supply": "zero",
-          "source": "canonical",
-          "canonical": true
+          "source": "canonical"
         },
         "$upgradeCount": 2,
         "decimals": 18,

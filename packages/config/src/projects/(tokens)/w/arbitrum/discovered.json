@@ -41,8 +41,7 @@
           "source": "external",
           "bridgedUsing": {
             "bridges": [{ "name": "Wormhole", "slug": "portal" }]
-          },
-          "canonical": false
+          }
         },
         "$upgradeCount": 1,
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",

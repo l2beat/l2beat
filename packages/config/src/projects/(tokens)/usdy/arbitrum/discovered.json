@@ -43,8 +43,7 @@
             "bridges": [
               { "name": "Layer Zero v2 OFT", "slug": "layerzerov2oft" }
             ]
-          },
-          "canonical": false
+          }
         },
         "$upgradeCount": 1,
         "blocklist": "arb1:0xb9123f09D44e6DF568726835233727A6e0FF16A2",
