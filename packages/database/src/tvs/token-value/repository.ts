@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { sql } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
 import { type TokenValueRecord, toRecord, toRow } from './entity'
 
@@ -153,5 +154,176 @@ export class TokenValueRepository extends BaseRepository {
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('TokenValue').executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getTvsForProject(
+    projectId: string,
+    breakdown: {
+      label: string
+      ids: string[]
+    }[],
+  ): Promise<
+    {
+      timestamp: string
+      label: string
+      value: string | number | bigint
+    }[]
+  > {
+    const datePart = sql`${sql.ref('timestamp')}::date`
+    const timePart = sql`${sql.ref('timestamp')}::time`
+
+    const queries = []
+    for (const group of breakdown) {
+      const query = this.db
+        .selectFrom('TokenValue')
+        .select(datePart.as('timestamp'))
+        .select(sql<string>`${group.label}`.as('label'))
+        .select(this.db.fn.sum('valueForProject').as('value'))
+        .where('projectId', '=', projectId)
+        .where(timePart, '=', sql`'00:00:00'::time`)
+        .where('tokenId', 'in', group.ids)
+        .groupBy(datePart)
+
+      queries.push(query)
+    }
+
+    const rows = await queries[0]
+      ?.union(queries.slice(1))
+      .orderBy('timestamp', 'desc')
+      .execute()
+
+    return rows
+      ? rows.map((row) => ({
+          timestamp: (row.timestamp as Date).toISOString(),
+          label: row.label as string,
+          value: row.value,
+        }))
+      : []
+  }
+
+  async getTvs(
+    breakdown: {
+      label: string
+      ids: string[]
+    }[],
+  ): Promise<
+    {
+      timestamp: string
+      label: string
+      value: string | number | bigint
+    }[]
+  > {
+    const timePart = sql`${sql.ref('timestamp')}::time`
+
+    const queries = []
+    for (const group of breakdown) {
+      const query = this.db
+        .selectFrom('TokenValue')
+        .select('TokenValue.timestamp')
+        .select(sql<string>`${group.label}`.as('label'))
+        .select(this.db.fn.sum('valueForSummary').as('value'))
+        .where(timePart, '=', sql`'00:00:00'::time`)
+        .where(
+          'timestamp',
+          '>=',
+          UnixTime.toDate(UnixTime.now() - UnixTime.DAY * 365),
+        )
+        .where('tokenId', 'in', group.ids)
+        .groupBy('TokenValue.timestamp')
+
+      queries.push(query)
+    }
+
+    const rows = await queries[0]
+      ?.union(queries.slice(1))
+      .orderBy('timestamp', 'desc')
+      .execute()
+
+    return rows
+      ? rows.map((row) => ({
+          timestamp: row.timestamp.toISOString(),
+          label: row.label as string,
+          value: row.value,
+        }))
+      : []
+  }
+
+  async getTvsChartBySource(projectIds: string[]): Promise<
+    {
+      timestamp: string
+      source: string
+      value: string | number | bigint
+    }[]
+  > {
+    const timePart = sql`${sql.ref('TokenValue.timestamp')}::time`
+
+    const rows = await this.db
+      .selectFrom('TokenValue')
+      .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
+      .select([
+        'TokenValue.timestamp',
+        'TokenMetadata.source',
+        this.db.fn.sum('valueForSummary').as('value'),
+      ])
+      .where(timePart, '=', sql`'00:00:00'::time`)
+      .where(
+        'timestamp',
+        '>=',
+        UnixTime.toDate(UnixTime.now() - UnixTime.DAY * 365),
+      )
+      .where('TokenMetadata.projectId', 'in', projectIds)
+      .groupBy(['TokenValue.timestamp', 'TokenMetadata.source'])
+      .orderBy('TokenValue.timestamp', 'desc')
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: row.timestamp.toISOString(),
+      source: row.source,
+      value: row.value,
+    }))
+  }
+
+  async getTvsTableBySource(
+    projectIds: string[],
+    depth: number,
+  ): Promise<
+    {
+      projectId: string
+      source: string
+      value: string | number | bigint
+    }[]
+  > {
+    const lt = this.db
+      .selectFrom('TokenValue')
+      .select(['tokenId', this.db.fn.max('timestamp').as('maxTimestamp')])
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '>=', UnixTime.toDate(depth))
+      .groupBy(['tokenId'])
+      .as('lt')
+
+    const rows = await this.db
+      .selectFrom('TokenMetadata')
+      .innerJoin(lt, 'lt.tokenId', 'TokenMetadata.tokenId')
+      .innerJoin('TokenValue', (join) =>
+        join
+          .onRef('TokenValue.tokenId', '=', 'TokenMetadata.tokenId')
+          .onRef('TokenValue.timestamp', '=', 'lt.maxTimestamp'),
+      )
+      .select([
+        'TokenMetadata.projectId',
+        'TokenMetadata.source',
+        this.db.fn.sum('TokenValue.valueForSummary').as('value'),
+      ])
+      .where('TokenMetadata.projectId', 'in', projectIds)
+      .where('timestamp', '>=', UnixTime.toDate(depth))
+      .groupBy(['TokenMetadata.projectId', 'TokenMetadata.source'])
+      .orderBy(['TokenMetadata.projectId', 'TokenMetadata.source'])
+      .execute()
+
+    return rows.map((row) => ({
+      projectId: row.projectId,
+      source: row.source,
+      value: row.value,
+    }))
   }
 }
