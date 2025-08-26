@@ -58,31 +58,25 @@ async function analyzeAll(
   transactions: string[],
 ) {
   const minters = new Set<string>()
-  let counter = 0
   let nextPercentToLog = 10
 
-  await Promise.all(
-    transactions.map(async (txHash) => {
-      const mintersDetected = await fetchAndAnalyze(provider, txHash)
+  for (const [index, txHash] of transactions.entries()) {
+    const mintersDetected = await fetchAndAnalyze(provider, txHash)
 
-      for (const minter of mintersDetected) {
-        if (!minters.has(minter)) {
-          logger.info(`New minter detected - ${minter}`)
-        }
-
-        minters.add(minter)
+    for (const minter of mintersDetected) {
+      if (!minters.has(minter)) {
+        logger.info(`New minter detected - ${minter}`)
       }
 
-      counter++
+      minters.add(minter)
+    }
 
-      // tick safety
-      const percent = Math.floor((counter / transactions.length) * 100)
-      if (percent >= nextPercentToLog) {
-        logger.info(`Processed ${percent}% traces`)
-        nextPercentToLog += 10
-      }
-    }),
-  )
+    const percent = Math.floor(((index + 1) / transactions.length) * 100)
+    if (percent >= nextPercentToLog) {
+      logger.info(`Processed ${percent}% of traces`)
+      nextPercentToLog += 10
+    }
+  }
 
   return [...minters]
 }
