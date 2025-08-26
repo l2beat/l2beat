@@ -7,7 +7,13 @@ import {
 } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart, ReferenceArea, ReferenceDot } from 'recharts'
+import {
+  Area,
+  AreaChart,
+  ReferenceArea,
+  ReferenceDot,
+  ReferenceLine,
+} from 'recharts'
 import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -73,8 +79,9 @@ export function LivenessChart({
   resolution,
 }: Props) {
   const noPostedAreas = useMemo(() => getNoPostedAreas(data), [data])
+  console.log(noPostedAreas)
   const maxNoPostedAreaEnd = useMemo(
-    () => Math.max(...noPostedAreas.map((area) => area.end)),
+    () => Math.max(...noPostedAreas.map((area) => area.end.timestamp)),
     [noPostedAreas],
   )
   const singleDataPoints = useMemo(() => {
@@ -101,14 +108,42 @@ export function LivenessChart({
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
-        {noPostedAreas.map(({ start, end }) => (
-          <ReferenceArea
-            key={`${start}-${end}`}
-            x1={start}
-            x2={end}
-            fill="url(#noDataLiveness)"
-          />
-        ))}
+        {noPostedAreas.map(({ start, end }) => [
+          <ReferenceLine
+            key={`${start.timestamp}-${end.timestamp}-bottom-line`}
+            segment={[
+              { x: start.timestamp, y: start.range?.[0] ?? 0 },
+              { x: end.timestamp, y: end.range?.[0] ?? 0 },
+            ]}
+            stroke="var(--secondary)"
+            strokeDasharray="5 5"
+            opacity={0.25}
+            strokeWidth={2}
+          />,
+          <ReferenceLine
+            key={`${start.timestamp}-${end.timestamp}-top-line`}
+            segment={[
+              { x: start.timestamp, y: start.range?.[1] ?? 0 },
+              { x: end.timestamp, y: end.range?.[1] ?? 0 },
+            ]}
+            stroke="var(--secondary)"
+            strokeDasharray="5 5"
+            opacity={0.25}
+            strokeWidth={2}
+          />,
+          <ReferenceLine
+            key={`${start.timestamp}-${end.timestamp}-avg-line`}
+            segment={[
+              { x: start.timestamp, y: start.avg ?? 0 },
+              { x: end.timestamp, y: end.avg ?? 0 },
+            ]}
+            stroke="var(--secondary)"
+            strokeDasharray="5 5"
+            opacity={0.25}
+            strokeWidth={2}
+          />,
+        ])}
+
         {singleDataPoints?.map((point) => [
           <ReferenceDot
             key={`${point.timestamp}-bottom-range`}
@@ -130,9 +165,10 @@ export function LivenessChart({
             key={`${point.timestamp}-avg`}
             x={point.timestamp}
             y={point.avg ?? 0}
-            fill="none"
+            fill={chartMeta.avg.color}
+            fillOpacity={0.25}
             stroke={chartMeta.avg.color}
-            strokeDasharray={'1 1'}
+            strokeDasharray="1 1"
             r={3}
           />,
         ])}
@@ -314,32 +350,27 @@ function getTooltipContent(subtype: TrackedTxsConfigSubtype) {
 }
 
 function getNoPostedAreas(data: LivenessChartDataPoint[] | undefined) {
-  const noPostedAreas: { start: number; end: number }[] = []
+  const noPostedAreas: {
+    start: LivenessChartDataPoint
+    end: LivenessChartDataPoint
+  }[] = []
 
   let i = 0
-  let start: number | undefined
+  let start: LivenessChartDataPoint | undefined
   while (i < (data?.length ?? 0)) {
     const point = data?.at(i)
     const nextPoint = data?.at(i + 1)
-
     assert(point, 'Point is defined')
-    if (
-      start !== undefined &&
-      nextPoint !== undefined &&
-      nextPoint?.range !== null &&
-      nextPoint?.avg !== null
-    ) {
-      noPostedAreas.push({ start, end: point.timestamp })
+    if (start !== undefined && point.range !== null && point.avg !== null) {
+      noPostedAreas.push({ start, end: point })
       start = undefined
     }
     if (
       start === undefined &&
-      point?.range === null &&
-      point?.avg === null &&
       nextPoint?.range === null &&
       nextPoint?.avg === null
     ) {
-      start = point.timestamp
+      start = point
     }
 
     i++
