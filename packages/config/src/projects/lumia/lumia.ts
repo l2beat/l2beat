@@ -32,7 +32,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 
 export const lumia: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1718181773), // 2024-06-12T08:42:53Z
-  additionalBadges: [BADGES.DA.DAC],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Restaking', 'RWA'],
   display: {
