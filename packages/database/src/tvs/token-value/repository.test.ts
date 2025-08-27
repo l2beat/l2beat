@@ -9,8 +9,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
   describe(TokenValueRepository.prototype.insertMany.name, () => {
     it('inserts new records', async () => {
       const records = [
-        tokenValue('a', 'ethereum', UnixTime(100), 10, 10000, 8000, 5000),
-        tokenValue('b', 'arbitrum', UnixTime(100), 1000, 1000, 800, 500),
+        tokenValue('a', 'ethereum', UnixTime(100), 10, 10000, 8000, 5000, 10),
+        tokenValue('b', 'arbitrum', UnixTime(100), 1000, 1000, 800, 500, 20),
       ]
 
       const inserted = await repository.insertMany(records)
@@ -37,6 +37,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             (i + 10) * 1000,
             (i + 10) * 800,
             (i + 10) * 500,
+            10,
           ),
         )
       }
@@ -52,14 +53,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
   describe(TokenValueRepository.prototype.getByProject.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
-        tokenValue('a', 'ethereum', UnixTime(50), 1, 1000, 800, 500),
-        tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
-        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500),
-        tokenValue('a', 'ethereum', UnixTime(200), 4, 4000, 3200, 2000),
-        tokenValue('a', 'ethereum', UnixTime(250), 5, 5000, 4000, 2500),
-        tokenValue('b', 'arbitrum', UnixTime(100), 10, 10000, 8000, 5000),
-        tokenValue('b', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000),
-        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000),
+        tokenValue('a', 'ethereum', UnixTime(50), 1, 1000, 800, 500, 10),
+        tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
+        tokenValue('a', 'ethereum', UnixTime(200), 4, 4000, 3200, 2000, 10),
+        tokenValue('a', 'ethereum', UnixTime(250), 5, 5000, 4000, 2500, 10),
+        tokenValue('b', 'arbitrum', UnixTime(100), 10, 10000, 8000, 5000, 20),
+        tokenValue('b', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000, 20),
+        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000, 30),
       ])
     })
 
@@ -71,10 +72,10 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
-        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500),
-        tokenValue('a', 'ethereum', UnixTime(200), 4, 4000, 3200, 2000),
-        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000),
+        tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
+        tokenValue('a', 'ethereum', UnixTime(200), 4, 4000, 3200, 2000, 10),
+        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000, 30),
       ])
     })
 
@@ -106,8 +107,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500),
-        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000),
+        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
+        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000, 30),
       ])
     })
 
@@ -119,8 +120,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500),
-        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000),
+        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
+        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000, 30),
       ])
     })
 
@@ -132,9 +133,9 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
-        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500),
-        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000),
+        tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
+        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000, 30),
       ])
     })
   })
@@ -142,14 +143,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
   describe(TokenValueRepository.prototype.getByTokenIdInTimeRange.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
-        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500),
-        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000),
-        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
-        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000),
-        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500),
-        tokenValue('b', 'ethereum', UnixTime(110), 10, 10000, 8000, 5000),
-        tokenValue('b', 'ethereum', UnixTime(120), 20, 20000, 16000, 10000),
-        tokenValue('c', 'ethereum', UnixTime(115), 30, 30000, 24000, 15000),
+        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500, 10),
+        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000, 10),
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
+        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000, 10),
+        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500, 10),
+        tokenValue('b', 'ethereum', UnixTime(110), 10, 10000, 8000, 5000, 20),
+        tokenValue('b', 'ethereum', UnixTime(120), 20, 20000, 16000, 10000, 20),
+        tokenValue('c', 'ethereum', UnixTime(115), 30, 30000, 24000, 15000, 30),
       ])
     })
 
@@ -161,11 +162,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqual([
-        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500),
-        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000),
-        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
-        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000),
-        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500),
+        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500, 10),
+        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000, 10),
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
+        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000, 10),
+        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500, 10),
       ])
     })
 
@@ -177,11 +178,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqual([
-        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500),
-        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000),
-        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
-        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000),
-        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500),
+        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500, 10),
+        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000, 10),
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
+        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000, 10),
+        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500, 10),
       ])
     })
 
@@ -193,9 +194,9 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqual([
-        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
-        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000),
-        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500),
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
+        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000, 10),
+        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500, 10),
       ])
     })
 
@@ -207,9 +208,9 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqual([
-        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500),
-        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000),
-        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500, 10),
+        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000, 10),
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
       ])
     })
 
@@ -241,7 +242,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqual([
-        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
       ])
     })
   })
@@ -250,20 +251,20 @@ describeDatabase(TokenValueRepository.name, (db) => {
     beforeEach(async () => {
       await repository.insertMany([
         // Token A with multiple timestamps
-        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
-        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
-        tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000),
+        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+        tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000, 10),
 
         // Token B with multiple timestamps
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
-        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000, 10),
 
         // Token C with a single timestamp
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
 
         // Different project
-        tokenValue('d', 'arbitrum', UnixTime(100), 10, 10000, 8000, 5000),
-        tokenValue('d', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000),
+        tokenValue('d', 'arbitrum', UnixTime(100), 10, 10000, 8000, 5000, 10),
+        tokenValue('d', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000, 10),
       ])
     })
 
@@ -274,9 +275,9 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
-        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000, 10),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
       ])
     })
 
@@ -287,9 +288,9 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
       ])
     })
 
@@ -300,9 +301,9 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
       ])
     })
 
@@ -322,9 +323,9 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000),
-        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000, 10),
+        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000, 10),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
       ])
     })
   })
@@ -333,16 +334,16 @@ describeDatabase(TokenValueRepository.name, (db) => {
     beforeEach(async () => {
       await repository.insertMany([
         // Token A with multiple timestamps
-        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
-        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
-        tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000),
+        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+        tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000, 10),
 
         // Token B with zero value at some timestamps
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
-        tokenValue('b', 'ethereum', UnixTime(130), 0, 0, 0, 0),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
+        tokenValue('b', 'ethereum', UnixTime(130), 0, 0, 0, 0, 20), // zero value
 
         // Token C with a single timestamp
-        tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500),
+        tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500, 30),
       ])
     })
 
@@ -350,9 +351,9 @@ describeDatabase(TokenValueRepository.name, (db) => {
       const result = await repository.getLastNonZeroValue(UnixTime(150))
 
       expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
-        tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
+        tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500, 30),
       ])
     })
 
@@ -363,8 +364,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
       )
 
       expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
       ])
     })
   })
@@ -374,10 +375,10 @@ describeDatabase(TokenValueRepository.name, (db) => {
     () => {
       it('deletes data in range for matching config', async () => {
         await repository.insertMany([
-          tokenValue('b', 'ethereum', UnixTime(1), 1, 1000, 800, 500),
-          tokenValue('b', 'ethereum', UnixTime(2), 2, 2000, 1600, 1000),
-          tokenValue('b', 'ethereum', UnixTime(3), 3, 3000, 2400, 1500),
-          tokenValue('c', 'arbitrum', UnixTime(2), 1000, 1000, 800, 500),
+          tokenValue('b', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
+          tokenValue('b', 'ethereum', UnixTime(2), 2, 2000, 1600, 1000, 20),
+          tokenValue('b', 'ethereum', UnixTime(3), 3, 3000, 2400, 1500, 30),
+          tokenValue('c', 'arbitrum', UnixTime(2), 1000, 1000, 800, 500, 40),
         ])
 
         const deleted = await repository.deleteByConfigInTimeRange(
@@ -390,14 +391,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([
-          tokenValue('b', 'ethereum', UnixTime(3), 3, 3000, 2400, 1500),
-          tokenValue('c', 'arbitrum', UnixTime(2), 1000, 1000, 800, 500),
+          tokenValue('b', 'ethereum', UnixTime(3), 3, 3000, 2400, 1500, 30),
+          tokenValue('c', 'arbitrum', UnixTime(2), 1000, 1000, 800, 500, 40),
         ])
       })
 
       it('returns 0 if no matching config found', async () => {
         await repository.insertMany([
-          tokenValue('b', 'ethereum', UnixTime(1), 1, 1000, 800, 500),
+          tokenValue('b', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
         ])
 
         const deleted = await repository.deleteByConfigInTimeRange(
@@ -410,7 +411,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([
-          tokenValue('b', 'ethereum', UnixTime(1), 1, 1000, 800, 500),
+          tokenValue('b', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
         ])
       })
     },
@@ -429,6 +430,7 @@ function tokenValue(
   value: number,
   valueForProject: number,
   valueForSummary: number,
+  priceUsd: number,
 ) {
   return {
     configurationId: configId.repeat(12),
@@ -439,5 +441,6 @@ function tokenValue(
     value,
     valueForProject,
     valueForSummary,
+    priceUsd,
   }
 }

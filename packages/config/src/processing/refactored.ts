@@ -27,7 +27,6 @@ import { stone } from '../projects/stone/stone'
 import { vector } from '../projects/vector/vector'
 import { worldcoinsemaphore } from '../projects/worldcoinsemaphore/worldcoinsemaphore'
 import { worldcoinsmtb } from '../projects/worldcoinsmtb/worldcoinsmtb'
-import { zircuitprover } from '../projects/zircuitprover/zircuitprover'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -50,7 +49,6 @@ export const refactored: BaseProject[] = [
   stone,
   lineaprover,
   openvmprover,
-  zircuitprover,
   risc0,
   loopringprover,
   zksyncprover,

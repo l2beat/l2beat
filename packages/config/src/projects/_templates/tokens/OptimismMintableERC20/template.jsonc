@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Standard OP stack's canonically bridged L2 token implementation with upgrade capabilities.",
+  "ignoreInWatchMode": ["totalSupply"],
+  "fields": {
+    "$tokenData": {
+      "handler": {
+        "type": "ERC20Data",
+        "overrides": { "source": "canonical", "supply": "zero" }
+      }
+    },
+    "$underlyingToken": {
+      "copy": "l1Token",
+      "edit": ["format", "EthereumAddress"]
+    },
+    "$wasCanonicallyBridged": {
+      "copy": "BRIDGE",
+      "edit": [
+        "=",
+        ["format", "OptimismAddress"],
+        "oeth:0x4200000000000000000000000000000000000010"
+      ]
+    }
+  }
+}

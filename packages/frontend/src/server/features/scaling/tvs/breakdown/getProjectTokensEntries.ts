@@ -295,6 +295,7 @@ async function getMockTvsBreakdownForProjectData(
             valueForSummary: 100,
             value: 100,
             amount: 100,
+            priceUsd: 10,
           },
         ] as const,
     ),

@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "mog",
+  "import": ["../../globalConfig.jsonc"],
+  "maxDepth": 0,
+  "initialAddresses": [
+    "eth:0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+    "base:0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71"
+  ],
+  "overrides": {
+    "eth:0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a": {
+      "ignoreMethods": ["showBacking"],
+      "fields": {
+        "$tokenData": {
+          "handler": {
+            "type": "ERC20Data"
+          }
+        }
+      }
+    }
+  }
+}
