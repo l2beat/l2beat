@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "scroll",
   "timestamp": 1753687799,
-  "configHash": "0x23298ca489e904c14879e9e2c7881339da3e243089cd1ee60ea6ee9561f7a89b",
+  "configHash": "0x9d4f8489eef7a5e1a5358c2b41afd3656f45df780c446dfa32f969cfdc8590db",
   "entries": [
     {
       "address": "scr:0x0000000000000000000000000000000000000000",

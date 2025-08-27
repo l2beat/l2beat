@@ -1,14 +1,14 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "timestamp": 1753682855,
-  "configHash": "0x05298ee2849cf50750a14ce653425c692151101b6a24c0d120f1ec3e468edaaa",
+  "timestamp": 1756214374,
+  "configHash": "0x8832718897b2cb3efddcea2e3096c4289be152ffd944938c942e90faa6a1f696",
   "entries": [
     {
       "name": "TokenBridge",
       "address": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
       "type": "Contract",
-      "template": "linea/TokenBridge",
+      "template": "linea/L1TokenBridge",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x49bdbe79d2cc9cefee03245e4b48260f4a71e7976af51741005758e7236d687d"
@@ -97,9 +97,27 @@
             ]
           }
         },
+        "allPausers": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
+        "allUnpausers": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
+        "completeTokenBridgingPausers": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+        ],
+        "completeTokenBridgingUnpausers": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+        ],
         "CONTRACT_VERSION": "1.0",
+        "customContractSetters": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+        ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
+        "initiateTokenBridgingPausers": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+        ],
+        "initiateTokenBridgingUnpausers": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+        ],
         "isPaused_BLOB_SUBMISSION": false,
         "isPaused_CALLDATA_SUBMISSION": false,
         "isPaused_COMPLETE_TOKEN_BRIDGING": false,
@@ -109,11 +127,30 @@
         "isPaused_L1_L2": false,
         "isPaused_L2_L1": false,
         "messageService": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+        "messageServiceSetters": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+        ],
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5",
         "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
-        "remoteSender": "eth:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+        "pauseTypeToRole": {
+          "1": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
+          "7": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
+          "8": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"
+        },
+        "remoteSender": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+        "remoteTokenBridgeSetters": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+        ],
         "REMOVE_RESERVED_TOKEN_ROLE": "0x19bf281d118073c159a713666aba52e0d403520cd01e03f42e0f62a0b3bd4a35",
+        "reserveTokenRemovers": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+        ],
+        "reserveTokenSetters": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+        ],
         "SET_CUSTOM_CONTRACT_ROLE": "0x550554a677c8e7b73b62db78b0ef06c5f237da4ef30b88196a899ccf591041fe",
         "SET_MESSAGE_SERVICE_ROLE": "0x77974cc9cb5bafc9bb265be792d93fa46355c05701895b82f6d3b4b448c8ce00",
         "SET_REMOTE_TOKENBRIDGE_ROLE": "0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24",
@@ -123,7 +160,12 @@
         "tokenBeacon": "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
         "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
         "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd",
-        "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802"
+        "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802",
+        "unpauseTypeToRole": {
+          "1": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
+          "7": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802",
+          "8": "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd"
+        }
       },
       "fieldMeta": {
         "isPaused_GENERAL": { "severity": "HIGH" },
@@ -138,7 +180,10 @@
       "implementationNames": {
         "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": "TransparentUpgradeableProxy",
         "eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34": "TokenBridge"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "linea" } }
+      ]
     },
     {
       "address": "eth:0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2",
@@ -147,11 +192,6 @@
     },
     {
       "address": "eth:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -192,7 +232,7 @@
         "0x8a6c3f5b047664111c8f981a4cb5d8a79c5652771665343ffdd15ae64fa253bf"
       ],
       "proxyType": "immutable",
-      "description": "Standard implementation used for assets that are native to the Linea L2 and bridged back to ethereum.",
+      "description": "Standard implementation used for assets that are native to the other layer and are bridged to this layer.",
       "sinceTimestamp": 1691067827,
       "sinceBlock": 17834645,
       "values": {
@@ -224,20 +264,29 @@
       "proxyType": "EOA"
     },
     {
-      "name": "PlonkVerifierMainnetFull",
-      "address": "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7",
+      "name": "ProxyAdmin",
+      "address": "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
       "type": "Contract",
-      "template": "linea/Verifier",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
-        "0x7ffe47dd82e25e61467c2b267669b2c48ea49c8a7f1a744fea45ab189bc8b455"
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
-      "sinceTimestamp": 1744893263,
-      "sinceBlock": 22288746,
-      "values": { "$immutable": true },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1691086259,
+      "sinceBlock": 17836169,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      },
       "implementationNames": {
-        "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7": "PlonkVerifierMainnetFull"
+        "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": "ProxyAdmin"
       }
     },
     {
@@ -276,6 +325,55 @@
       "proxyType": "EOA"
     },
     {
+      "name": "L1USDCBridge",
+      "address": "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce",
+      "type": "Contract",
+      "template": "linea/L1USDCBridge",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xf678573abd85e88b327027262fe80c5008f18138d6f2a4b3558ccf78d535c94f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "L1 side of the old and now unused USDC bridge.",
+      "sinceTimestamp": 1691086271,
+      "sinceBlock": 17836170,
+      "values": {
+        "$admin": "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
+        "$implementation": "eth:0x66CFD1562d6Aa4629e9e4142662c1A403528Df00",
+        "$pastUpgrades": [
+          [
+            "2023-08-03T18:11:11.000Z",
+            "0xa93648a8d01d65bea363bc2f6e19897e42f9af999370c07cb2a0ea6a5401b6b0",
+            ["eth:0x16Db542C30fB3519D11CF8F632077c62c1a944fd"]
+          ],
+          [
+            "2023-09-01T20:25:47.000Z",
+            "0xe752ce539119fc11af6239e8b26a79d80c9e84cec19ac6aca060f466853f5b7d",
+            ["eth:0x0eC393209674090368C592A591B25811e490BF36"]
+          ],
+          [
+            "2025-03-16T19:57:11.000Z",
+            "0xd61b29009aa7f628ff1b04138e30ebd39805e40a2e3e4a3e43050fd8b0f75548",
+            ["eth:0x66CFD1562d6Aa4629e9e4142662c1A403528Df00"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "balance": 0,
+        "messageService": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+        "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+        "paused": true,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "remoteUSDCBridge": "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A"
+      },
+      "implementationNames": {
+        "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce": "TransparentUpgradeableProxy",
+        "eth:0x66CFD1562d6Aa4629e9e4142662c1A403528Df00": "L1USDCBridge"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "linea" } }
+      ]
+    },
+    {
       "address": "eth:0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
       "type": "EOA",
       "proxyType": "EOA",
@@ -289,11 +387,6 @@
     },
     {
       "address": "eth:0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x5822D8457c00FB82203918ED92907b935B9D40AE",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -361,6 +454,111 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause the bridge.",
+          "role": ".allPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause the bridge.",
+          "role": ".allUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
+          "role": ".reserveTokenSetters",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
+          "role": ".reserveTokenSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
+          "role": ".reserveTokenRemovers",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
+          "role": ".reserveTokenRemovers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set custom ERC20 contracts for specific ERC20s.",
+          "role": ".customContractSetters",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set custom ERC20 contracts for specific ERC20s.",
+          "role": ".customContractSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set the contract that is recognized to be the token bridge contract on the other side.",
+          "role": ".remoteTokenBridgeSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set the contract used as the source of truth from crosschain messages.",
+          "role": ".messageServiceSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can unpause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can unpause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingUnpausers"
+        },
         {
           "permission": "interact",
           "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
@@ -443,6 +641,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "role": "admin",
           "via": [
@@ -452,6 +658,11 @@
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
+          "role": ".owner"
+        },
         {
           "permission": "act",
           "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
@@ -474,10 +685,10 @@
           "eth:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB",
           "eth:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
           "eth:0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5",
-          "eth:0x5822D8457c00FB82203918ED92907b935B9D40AE",
+          "eth:0xC263178AC471C4411abAf5c22cD4D8D67033bc82",
           "eth:0x9376c137AF5124FFc39bD8940A3D88D1cd508992",
           "eth:0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4",
-          "eth:0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1",
+          "eth:0x99234cd9B532F30538ac797D33c212e3B69Fd087",
           "eth:0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
         ],
         "$threshold": 4,
@@ -487,7 +698,7 @@
           "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
         ],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 59,
+        "nonce": 61,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -499,6 +710,23 @@
       "address": "eth:0x9376c137AF5124FFc39bD8940A3D88D1cd508992",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PlonkVerifierMainnetFull",
+      "address": "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873",
+      "type": "Contract",
+      "template": "linea/Verifier",
+      "sourceHashes": [
+        "0x64013fe6cc4367b6dbbeb934bdb33f30aa57f2e6ebd6342fd05f2beb795c59c4"
+      ],
+      "proxyType": "immutable",
+      "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
+      "sinceTimestamp": 1755702719,
+      "sinceBlock": 23183104,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873": "PlonkVerifierMainnetFull"
+      }
     },
     {
       "name": "UpgradeableBeacon",
@@ -522,12 +750,12 @@
       }
     },
     {
-      "address": "eth:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451",
+      "address": "eth:0x99234cd9B532F30538ac797D33c212e3B69Fd087",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1",
+      "address": "eth:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -547,6 +775,24 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
+          "role": ".reserveTokenSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
+          "role": ".reserveTokenRemovers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set custom ERC20 contracts for specific ERC20s.",
+          "role": ".customContractSetters"
+        },
         {
           "permission": "interact",
           "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
@@ -580,13 +826,18 @@
           "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
+    },
+    {
+      "address": "eth:0xC263178AC471C4411abAf5c22cD4D8D67033bc82",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "LineaRollup",
@@ -733,11 +984,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0xdb4f1ac51759540e6948b5585325b223079cf51492b6b9255a1b2b8807f0cdc3",
-        "currentFinalizedState": "0x83db020fc68c85e37e9027c768fe333f7617f912bdf1e8ac19914ffb5e73475a",
+        "currentFinalizedShnarf": "0xf99a1edd0078db8c98a9c02aa81c37c5f23dfed58e60c544264b78513f58300b",
+        "currentFinalizedState": "0xe0bf9068f0330f60b0cda250805bc6bb7995436237926a9a451e8f52fc5d15b3",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "242797681000000000000",
+        "currentPeriodAmountInWei": "2212068995000000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -780,10 +1031,10 @@
         "VERIFIER_UNSETTER_ROLE": "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a",
         "verifiers": [
           "eth:0xED39C0C41A7651006953AB58Ecb3039363620995",
+          "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
@@ -820,7 +1071,7 @@
       }
     },
     {
-      "name": "L1Timelock",
+      "name": "Timelock",
       "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
       "type": "Contract",
       "template": "global/Timelock",
@@ -894,10 +1145,12 @@
       "name": "PlonkVerifierMainnetFull",
       "address": "eth:0xED39C0C41A7651006953AB58Ecb3039363620995",
       "type": "Contract",
+      "template": "linea/Verifier",
       "sourceHashes": [
         "0xb87d66914fca067b6c490e46194aeef92a6c4930a9a6e53bfd2833813b0685a8"
       ],
       "proxyType": "immutable",
+      "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
       "sinceTimestamp": 1748943779,
       "sinceBlock": 22623305,
       "values": { "$immutable": true },
@@ -1347,8 +1600,70 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
+    "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x66CFD1562d6Aa4629e9e4142662c1A403528Df00": [
+      "error AmountTooBig(uint256 amount, uint256 limit)",
+      "error NoBurnCapabilities(address addr)",
+      "error NotFromRemoteUSDCBridge(address sender, address remoteUSDCBridge)",
+      "error NotMessageService(address addr, address messageService)",
+      "error NotUpgrader(address addr, address upgrader)",
+      "error RemoteUSDCBridgeAlreadySet(address remoteUSDCBridge)",
+      "error RemoteUSDCBridgeNotSet()",
+      "error SameMessageServiceAddr(address messageService)",
+      "error SenderBalanceTooLow(uint256 amount, uint256 balance)",
+      "error ZeroAddressNotAllowed(address addr)",
+      "error ZeroAmountNotAllowed(uint256 amount)",
+      "event AllLockedUSDCBurnt(address indexed sender)",
+      "event Deposited(address indexed depositor, uint256 amount, address indexed to)",
+      "event Initialized(uint8 version)",
+      "event MessageServiceUpdated(address indexed oldAddress, address indexed newAddress)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event ReceivedFromOtherLayer(address indexed recipient, uint256 indexed amount)",
+      "event RemoteUSDCBridgeSet(address indexed newRemoteUSDCBridge)",
+      "event Unpaused(address account)",
+      "function acceptOwnership()",
+      "function balance() view returns (uint256)",
+      "function burnAllLockedUSDC()",
+      "function changeMessageService(address newMessageService)",
+      "function deposit(uint256 amount) payable",
+      "function depositTo(uint256 amount, address to) payable",
+      "function initialize(address _messageService, address _usdc)",
+      "function messageService() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function receiveFromOtherLayer(address recipient, uint256 amount)",
+      "function remoteUSDCBridge() view returns (address)",
+      "function renounceOwnership()",
+      "function rescueTransfer(address to, uint256 amount)",
+      "function setRemoteUSDCBridge(address _remoteUSDCBridge)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function usdc() view returns (address)"
     ],
     "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": [
       "constructor(address _owner, address _avatar, address _target, uint256 _cooldown, uint256 _expiration)",
@@ -1394,6 +1709,9 @@
     ],
     "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": [
       "constructor(address _singleton)"
+    ],
+    "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": [
       "constructor(address implementation_)",
@@ -1576,11 +1894,12 @@
     "gnosisSafeModules/ZodiacDelay": "0x1cf1f83927c30dff78d2b2b635f9995b93db52502fcae1b9478e1dd4664540c5",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "linea/L1TokenBridge": "0xef38a739bf90c693c298d238745c360992548cf941cdee82ed7c4a5ba41df4ae",
+    "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
     "linea/LineaRollup": "0x62179b632448b6fa5622bfea4240428dcd0cd7f2fd455914a05b040313014dfe",
     "linea/Roles": "0xa53488bfd173ae836ebda33b0560f0f0dd61141e44bc38b9ce23133023bde792",
-    "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23015753 },
-  "permissionsConfigHash": "0x773ff326c146c9f0de4cc0ba06cd29cedfc3440f60b6e705660620ebcc55faaf"
+  "usedBlockNumbers": { "ethereum": 23225540 },
+  "permissionsConfigHash": "0x63a7b38ae7023cd94800908979cb2de2e86d79feee5df47ddec430a68e5634e6"
 }

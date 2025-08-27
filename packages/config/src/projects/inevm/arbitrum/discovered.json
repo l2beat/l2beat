@@ -2,7 +2,7 @@
   "name": "inevm",
   "chain": "arbitrum",
   "timestamp": 1753200951,
-  "configHash": "0x6237bbd91beba6b7cc65aebad4d342e4deba21809f07627796a52aed5c3a6274",
+  "configHash": "0x27ce55c3378ba8cbb6554069098b4f51a4e7d0e0baf419f9356cd51674fb8a44",
   "entries": [
     {
       "name": "CustomGateway",

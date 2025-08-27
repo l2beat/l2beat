@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "arbitrum",
   "timestamp": 1755691670,
-  "configHash": "0xa6186a6135c321188e4eb4b573b6a66afcd380bb58ff72a8a9537845c4c6090e",
+  "configHash": "0xc1718afb0c13259915dc9bd7c4cc65a507798fed0886d36405c2de5af8d68164",
   "entries": [
     {
       "address": "arb1:0x4896F23FF83242D8D4EB5fA1dEdF8c57e9145949",
@@ -343,5 +343,5 @@
     "tokens/PermissionManager": "0x68a32dbe1505111ca8a93551d5ccd78d16a6aa3a631c6206c804f4ae8b405767"
   },
   "usedBlockNumbers": { "arbitrum": 370405709 },
-  "permissionsConfigHash": "0x99e5d35874c5e888c0b8a5cb06023231acd30445d4cd80b21fa0890f1423e811"
+  "permissionsConfigHash": "0xa785713915a3d09c913ed115c0a3a9eb6d680bd4f00ec6f13ac0e170700418aa"
 }

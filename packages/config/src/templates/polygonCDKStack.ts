@@ -23,7 +23,6 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { formatExecutionDelay } from '../common/formatDelays'
 import { getStage } from '../common/stages/getStage'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
@@ -226,7 +225,7 @@ export function polygonCDKStack(
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
-        secondLine: formatExecutionDelay(finalizationPeriod),
+        executionDelay: finalizationPeriod,
       },
       dataAvailability: riskViewDA(daProvider),
       exitWindow: exitWindowRisk,

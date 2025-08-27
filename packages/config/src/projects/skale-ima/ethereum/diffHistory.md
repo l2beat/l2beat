@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x138b5e258a05d06e25943b4497ae7a6f811cd70c
+Generated with discovered.json: 0x8cf12a39be9e286d737022859c22010d858aaf26
+
+# Diff at Tue, 26 Aug 2025 13:37:14 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1738322567
+- current timestamp: 1738322567
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1738322567 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdminOwner (0x13fD1622F0E7e50A87B79cb296cbAf18362631C0) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a","role":"admin","via":[{"address":"eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"}]},{"permission":"upgrade","from":"eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94","role":"admin","via":[{"address":"eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"}]},{"permission":"upgrade","from":"eth:0x588801cA36558310D91234aFC2511502282b1621","role":"admin","via":[{"address":"eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"}]},{"permission":"upgrade","from":"eth:0x6ef406953bac772C2146389ED37846BA3b6086D1","role":"admin","via":[{"address":"eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"}]},{"permission":"upgrade","from":"eth:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d","role":"admin","via":[{"address":"eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"}]},{"permission":"upgrade","from":"eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404","role":"admin","via":[{"address":"eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"}]},{"permission":"upgrade","from":"eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669","role":"admin","via":[{"address":"eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"}]},{"permission":"upgrade","from":"eth:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986","role":"admin","via":[{"address":"eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a","role":"admin"},{"permission":"upgrade","from":"eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94","role":"admin"},{"permission":"upgrade","from":"eth:0x588801cA36558310D91234aFC2511502282b1621","role":"admin"},{"permission":"upgrade","from":"eth:0x6ef406953bac772C2146389ED37846BA3b6086D1","role":"admin"},{"permission":"upgrade","from":"eth:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d","role":"admin"},{"permission":"upgrade","from":"eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404","role":"admin"},{"permission":"upgrade","from":"eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669","role":"admin"},{"permission":"upgrade","from":"eth:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a","role":"admin"},{"permission":"upgrade","from":"eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94","role":"admin"},{"permission":"upgrade","from":"eth:0x588801cA36558310D91234aFC2511502282b1621","role":"admin"},{"permission":"upgrade","from":"eth:0x6ef406953bac772C2146389ED37846BA3b6086D1","role":"admin"},{"permission":"upgrade","from":"eth:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d","role":"admin"},{"permission":"upgrade","from":"eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404","role":"admin"},{"permission":"upgrade","from":"eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669","role":"admin"},{"permission":"upgrade","from":"eth:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986","role":"admin"}]
+    }
+```
+
+Generated with discovered.json: 0x0760fc633aa264b548c5eaa59dcb444a9c59b9b2
 
 # Diff at Mon, 14 Jul 2025 12:46:17 GMT:
 

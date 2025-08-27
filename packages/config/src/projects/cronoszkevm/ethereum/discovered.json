@@ -2,7 +2,7 @@
   "name": "cronoszkevm",
   "chain": "ethereum",
   "timestamp": 1755787720,
-  "configHash": "0xbd00fe935cc527dbe1d1d5559da4c1267da52bd870b5ebe115f42bc435b60c41",
+  "configHash": "0x62c9800034cef03cef8f291cf1af629446d16ad861f0df95808fc0f41419e9ca",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

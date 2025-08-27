@@ -1,4 +1,34 @@
-Generated with discovered.json: 0xfce91ee1d3336b16b42d54233a855050701fb308
+Generated with discovered.json: 0x72e48c1f62cde6fef47fb657fb8f93735cca9c5e
+
+# Diff at Mon, 25 Aug 2025 14:09:32 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1755605791
+- current timestamp: 1756118684
+
+## Description
+
+Cache issue, name FacetEtherBridgeV6 is correct.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755605791 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      sourceHashes.0:
+-        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2"
++        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
+      implementationNames.eth:0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        "ERC1967Factory"
++        "FacetEtherBridgeV6"
+    }
+```
+
+Generated with discovered.json: 0x7cb73d0e4c2b1ba9ed45474e55f4b8d60fc9f787
 
 # Diff at Fri, 22 Aug 2025 09:01:47 GMT:
 

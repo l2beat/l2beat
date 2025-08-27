@@ -2,7 +2,7 @@
   "name": "abstract",
   "chain": "zksync2",
   "timestamp": 1755156245,
-  "configHash": "0xf9905e41469637aefcbf23612e98e13a34a27e2a2e27b10b53f088c8163d6d11",
+  "configHash": "0x5bdb518ad26eff7f6d8cde0af1ad02dba856d46fb2877003bedba10df2725992",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},

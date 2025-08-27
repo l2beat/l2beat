@@ -2,7 +2,7 @@
   "name": "loopring",
   "chain": "ethereum",
   "timestamp": 1755157592,
-  "configHash": "0xaf5bcd8c886cb30f1ad7d1dd612d976978d10df1f24d6b09429184ec1b62bd81",
+  "configHash": "0xbd0a57c183a6a4fba7e63becadf94b79dbb4cf928647255830e5e95c5099fd05",
   "entries": [
     {
       "name": "ExchangeV3",

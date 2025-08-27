@@ -2,7 +2,7 @@
   "name": "skale-ima",
   "chain": "ethereum",
   "timestamp": 1738322567,
-  "configHash": "0x21982f2aa824b78f09f1079e35e24e380d2a7f3355c6e97a257b040861871899",
+  "configHash": "0xa1c2ebca5dab12e2c5c188ce2a353b4bdee93d0a0f3f0e71aaf80fa618380c9b",
   "entries": [
     {
       "name": "ProxyAdminOwner",
@@ -14,6 +14,79 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x588801cA36558310D91234aFC2511502282b1621",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1601280823,
       "sinceBlock": 10949879,
@@ -619,11 +692,12 @@
       "name": "ProxyAdmin",
       "address": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
@@ -1261,8 +1335,9 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 21744185 },
-  "permissionsConfigHash": "0xd8b37091887fca78350b4abd61c228921e75882b22102dfc00f1adc2eee83dc8"
+  "permissionsConfigHash": "0x5ba682fd125cf3aa43efd5caae02f6127617dc5a2b1618bb4d0abaa1d20b9a42"
 }

@@ -90,7 +90,7 @@ export const columns = [
       if (address === 'multiple')
         return <div className="font-medium text-xs">Multiple</div>
 
-      return <TokenAddressCell address={address.address} url={address.url} />
+      return <TokenAddressCell {...address} />
     },
   }),
   columnHelper.accessor('valueForProject', {

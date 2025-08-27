@@ -2,7 +2,7 @@
   "name": "settlus",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0x79ac1df75f6ced94d90a53540802fe221a76e6745989687d28a58afac30c2f84",
+  "configHash": "0x52ef4a021435d8a27e2506a16844cd00991836afbb361b9476a3208a1615ad81",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

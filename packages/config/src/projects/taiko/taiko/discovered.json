@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "taiko",
-  "timestamp": 1755701960,
-  "configHash": "0xefa1cc1d7be231aaa8cfbb3f77b6ddb6742c19f6b3e14425388be58a6577e483",
+  "timestamp": 1756117493,
+  "configHash": "0xbb343ba8e1765d6a479477e560fd4a4beb24a41b37c868f61102d33a1f5c0065",
   "entries": [
     {
       "address": "taiko:0x0000000000000000000000000000000000000000",
@@ -956,6 +956,6 @@
     "taiko/L2SignalService": "0xffde50e04578cf8884bebd7692fc22e6a1129f7edfac3dc7b8763cbd88a6b194",
     "taiko/TaikoAnchor": "0xe0fd7c7cfd46807053cf50f2f122c29c522bcde9da4f26d346bee658b7687f70"
   },
-  "usedBlockNumbers": { "taiko": 1646103 },
+  "usedBlockNumbers": { "taiko": 1785784 },
   "permissionsConfigHash": "0x3dc327d3163474829e67269d1e6718eaa7672dde16df376f724e4b729b0496be"
 }

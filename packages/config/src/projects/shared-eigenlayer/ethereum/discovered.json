@@ -2,7 +2,7 @@
   "name": "shared-eigenlayer",
   "chain": "ethereum",
   "timestamp": 1754503221,
-  "configHash": "0xe9b3ea091613579f148b4a656378dd43274ef2d6feb0e8ac7c261107fdef750e",
+  "configHash": "0xd64a224fd4fee06293b965c72ab1e341b7258b8d89319120a2b77cf1622fc1f4",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000E16E4",

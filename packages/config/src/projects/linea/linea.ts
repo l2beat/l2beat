@@ -21,7 +21,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { PERFORMED_BY } from '../../common/performedBy'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -36,7 +35,7 @@ import type { ProjectPermissionedAccount } from '../../types'
 const discovery = new ProjectDiscovery('linea')
 
 const timelockDelay = discovery.getContractValue<number>(
-  'L1Timelock',
+  'Timelock',
   'getMinDelay',
 )
 const timelockDelayString = formatSeconds(timelockDelay)
@@ -58,6 +57,40 @@ assert(
   zodiacPausers.length === zodiacPausersHardcoded.length &&
     zodiacPausers[0].address === zodiacPausersHardcoded[0].address,
   'disco config is wrong for the pausers, check hardcoded pausers in the Roles module',
+)
+
+const zodiacL2Roles = discovery.getContractValue<{
+  roles: Record<string, Record<string, boolean>>
+}>('L2Roles', 'roles')
+const zodiacVoyageXpMinterRole = '1'
+const zodiacVoyageXpMinters: ProjectPermissionedAccount[] =
+  discovery.formatPermissionedAccounts(
+    Object.keys(zodiacL2Roles.roles[zodiacVoyageXpMinterRole].members),
+  )
+const zodiacVoyageXpMintersHardcoded = discovery.getPermissionedAccounts(
+  'L2Roles',
+  'voyageXpMinters',
+)
+assert(
+  zodiacVoyageXpMinters.length === zodiacVoyageXpMintersHardcoded.length &&
+    zodiacVoyageXpMinters[0].address ===
+      zodiacVoyageXpMintersHardcoded[0].address,
+  'disco config is wrong for the voyageXpMinters, check hardcoded voyageXpMinters in the L2Roles module',
+)
+
+const zodiacL2PauserRole = '2'
+const zodiacL2Pausers: ProjectPermissionedAccount[] =
+  discovery.formatPermissionedAccounts(
+    Object.keys(zodiacL2Roles.roles[zodiacL2PauserRole].members),
+  )
+const zodiacL2PausersHardcoded = discovery.getPermissionedAccounts(
+  'L2Roles',
+  'pausers',
+)
+assert(
+  zodiacL2Pausers.length === zodiacL2PausersHardcoded.length &&
+    zodiacL2Pausers[0].address === zodiacL2PausersHardcoded[0].address,
+  'disco config is wrong for the L2 pausers, check hardcoded pausers in the L2Roles module',
 )
 
 const periodInSeconds = discovery.getContractValue<number>(
@@ -373,7 +406,7 @@ export const linea: ScalingProject = {
     stateValidation: {
       // TODO: linea proof system is now complete
       ...RISK_VIEW.STATE_ZKP_SN,
-      secondLine: formatExecutionDelay(finalizationPeriod),
+      executionDelay: finalizationPeriod,
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
@@ -524,12 +557,12 @@ export const linea: ScalingProject = {
             url: 'https://etherscan.io/address/0x07ddce60658a61dc1732cacf2220fce4a01c49b0#code#F37#L41',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol 1 (100% complete)',
-            url: 'https://etherscan.io/address/0xED39C0C41A7651006953AB58Ecb3039363620995#code',
+            title: 'PlonkVerifierMainnetFull.sol 1 (Proof Type 0)',
+            url: 'https://etherscan.io/address/0xED39C0C41A7651006953AB58Ecb3039363620995',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol 2 (99% complete)',
-            url: 'https://etherscan.io/address/0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7#code',
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 1)',
+            url: 'https://etherscan.io/address/0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873',
           },
         ],
       },

@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "base",
   "timestamp": 1755691670,
-  "configHash": "0x593213a3b90a8e6e3148ccfb62b67678dd08c3a79f8db6cc82ab1e51d88056d2",
+  "configHash": "0xc1718afb0c13259915dc9bd7c4cc65a507798fed0886d36405c2de5af8d68164",
   "entries": [
     {
       "address": "base:0x01BfD8ECe1309A11adAD54f62c644173a7039dA0",
@@ -965,7 +965,7 @@
       ]
     },
     {
-      "name": "L1Timelock",
+      "name": "Timelock",
       "address": "base:0xf817cb3092179083c48c014688D98B72fB61464f",
       "type": "Contract",
       "template": "global/Timelock",
@@ -1899,5 +1899,5 @@
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
   "usedBlockNumbers": { "base": 34451161 },
-  "permissionsConfigHash": "0x99e5d35874c5e888c0b8a5cb06023231acd30445d4cd80b21fa0890f1423e811"
+  "permissionsConfigHash": "0xa785713915a3d09c913ed115c0a3a9eb6d680bd4f00ec6f13ac0e170700418aa"
 }

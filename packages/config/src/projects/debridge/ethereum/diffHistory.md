@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x754f25c56327a10501902c9d3563901decbe9915
+Generated with discovered.json: 0xa049533418f1813e2419e47fae95eb86f648ab5f
+
+# Diff at Tue, 26 Aug 2025 13:36:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1753092647
+- current timestamp: 1753092647
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753092647 (main branch discovery), not current.
+
+```diff
+    contract Admin Multisig (0x6bec1faF33183e1Bc316984202eCc09d46AC92D5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA","role":"admin","via":[{"address":"eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe"}]},{"permission":"upgrade","from":"eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464","role":"admin","via":[{"address":"eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe"}]},{"permission":"upgrade","from":"eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824","role":"admin","via":[{"address":"eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe"}]},{"permission":"upgrade","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","role":"admin","via":[{"address":"eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe"}]},{"permission":"upgrade","from":"eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636","role":"admin","via":[{"address":"eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xE4427af3555CD9303D728C491364FAdFDD7494Fe) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA","role":"admin"},{"permission":"upgrade","from":"eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464","role":"admin"},{"permission":"upgrade","from":"eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824","role":"admin"},{"permission":"upgrade","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","role":"admin"},{"permission":"upgrade","from":"eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA","role":"admin"},{"permission":"upgrade","from":"eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464","role":"admin"},{"permission":"upgrade","from":"eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824","role":"admin"},{"permission":"upgrade","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","role":"admin"},{"permission":"upgrade","from":"eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636","role":"admin"}]
+    }
+```
+
+Generated with discovered.json: 0x9fc38e40b3cbc3001eddd81d028e24a39d1a2b81
 
 # Diff at Mon, 21 Jul 2025 10:11:14 GMT:
 

@@ -1,4 +1,46 @@
-Generated with discovered.json: 0xa60bb448262317ab94ac6a7ad632f1db48b8a377
+Generated with discovered.json: 0x2f24c11e5de04e3753bbb542e8eef9599e2329ff
+
+# Diff at Tue, 26 Aug 2025 13:36:42 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1718953583
+- current timestamp: 1718953583
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1718953583 (main branch discovery), not current.
+
+```diff
+    EOA  (0x129443cA2a9Dec2020808a2868b38dDA457eaCC7) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b","role":"admin","via":[{"address":"eth:0x13a4cC0750296bB72Eb0006febec306551A4f472"}]},{"permission":"upgrade","from":"eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168","role":"admin","via":[{"address":"eth:0x13a4cC0750296bB72Eb0006febec306551A4f472"}]},{"permission":"upgrade","from":"eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9","role":"admin","via":[{"address":"eth:0x13a4cC0750296bB72Eb0006febec306551A4f472"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x13a4cC0750296bB72Eb0006febec306551A4f472","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x13a4cC0750296bB72Eb0006febec306551A4f472) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b","role":"admin"},{"permission":"upgrade","from":"eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168","role":"admin"},{"permission":"upgrade","from":"eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b","role":"admin"},{"permission":"upgrade","from":"eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168","role":"admin"},{"permission":"upgrade","from":"eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9","role":"admin"}]
+    }
+```
+
+Generated with discovered.json: 0x8920e36e845bf593f4356fbdc30dc3a470b60442
 
 # Diff at Mon, 14 Jul 2025 12:45:11 GMT:
 

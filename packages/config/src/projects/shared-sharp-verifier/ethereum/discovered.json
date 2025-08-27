@@ -2,7 +2,7 @@
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
   "timestamp": 1747113875,
-  "configHash": "0xb1a123234a45d77f212a3fbd08adf12ca823cc2d4a2efc73c8ac4a512d6caf50",
+  "configHash": "0x3eba380e9dba57988b41c3bc14284152a0f91bf1f56a04ea1f0e7b52b5cda691",
   "entries": [
     {
       "name": "EcdsaPointsXColumn",

@@ -2,7 +2,7 @@
   "name": "pNetwork",
   "chain": "ethereum",
   "timestamp": 1722354923,
-  "configHash": "0xb8ede703d5989cffafac0786ac6c82dd82e53d7237a2f9391b5193c2310c9414",
+  "configHash": "0x3396176f6d5e99ddbd8bc20055be2e0e075764ae0dc5704415885dd31fdb8ed0",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -177,7 +177,25 @@
     {
       "address": "eth:0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D14DdFBE01AC537accBe35cCd771C30D53c535" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262",
@@ -299,11 +317,12 @@
       "name": "ProxyAdmin",
       "address": "eth:0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "eth:0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
@@ -1097,10 +1116,11 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "tokens/Lido/EVMScriptRegistry": "0x1aa84beab6ea9134fd6d07ba52f9382adc5aa46e9c4b38cb3ed5200978909460",
     "tokens/Lido/MiniMeToken": "0x4477605aa619c192084296dec31b5dc3ef87585bb125619bf0732705aa9b8500"
   },
   "usedBlockNumbers": { "ethereum": 20420398 },
-  "permissionsConfigHash": "0x1d732b2c5f233d9b1ef2cec5a4c93813fe4f6845e1c19c99a7ffb9569ccc263e"
+  "permissionsConfigHash": "0xa7821bb67b70f70aa5e6e465a4ffe2ed0cf6969bfb31035e5410e04dde9747d3"
 }

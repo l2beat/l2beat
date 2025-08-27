@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "timestamp": 1755858338,
-  "configHash": "0x9ab90762ab1fe2be54741263b30757e3bf40ba7957d26b545ee5adbbe346645a",
+  "timestamp": 1756130522,
+  "configHash": "0x6e386ff7bfe037be174acda5e779881498f60bf10f0347ee3fcbf4b3fdcff488",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -995,11 +995,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1755853223,
+        "getFirstUnfinalizedMessageEnqueueTime": 1756127891,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 960929,
-        "nextUnfinalizedQueueIndex": 960923,
+        "nextCrossDomainMessageIndex": 961226,
+        "nextUnfinalizedQueueIndex": 961222,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -2082,14 +2082,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 369275,
+        "lastFinalizedBatchIndex": 371573,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 369305,
-          "lastFinalizedBatchIndex": 369275,
-          "lastFinalizeTimestamp": 1755855311,
+          "lastCommittedBatchIndex": 371579,
+          "lastFinalizedBatchIndex": 371573,
+          "lastFinalizeTimestamp": 1756130135,
           "flags": 1,
           "reserved": 0
         },
@@ -2852,7 +2852,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 22831120560938,
+        "totalBridgedUSDC": 23970712164117,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -4091,6 +4091,6 @@
     "scroll/ScrollOwner": "0x14d7a582f7d39f4ed732aa56a3c9031c8fc613fa58dfaf42f4f572f19fae54b3",
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23196004 },
-  "permissionsConfigHash": "0x07a45d1282efaf20b2490aed46c1d2b715a7b2973d2797005cd10373ee3fe0ae"
+  "usedBlockNumbers": { "ethereum": 23218588 },
+  "permissionsConfigHash": "0x89101ff15afb68cf17ea6a03c5084f8f21983ecf6456fd5e5ecd9a9069f931bd"
 }
