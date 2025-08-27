@@ -13,10 +13,10 @@ import {
   assertUnreachable,
   ChainSpecificAddress,
   TokenId,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import { getDb } from '~/server/database'
+import { getTvsTargetTimestamp } from '~/server/features/scaling/tvs/utils/getTvsTargetTimestamp'
 
 /**
  * This endpoint is temporary - it serves as a source of data for our internal token spreadsheet.
@@ -26,8 +26,7 @@ export async function getInternalTokenBreakdown() {
   const db = getDb()
   const ps = new ProjectService()
 
-  const targetTimestamp =
-    UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
+  const targetTimestamp = getTvsTargetTimestamp()
 
   const [projects, projectsWithChainConfig, tokenValues] = await Promise.all([
     ps.getProjects({
@@ -65,6 +64,7 @@ export async function getInternalTokenBreakdown() {
     'value',
     'valueForProject',
     'valueForSummary',
+    'priceUsd',
     'tokenId',
     'projectId',
     'addressAddress',
