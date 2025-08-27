@@ -1,22 +1,15 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import capitalize from 'lodash/capitalize'
-import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
-import { LineChartIcon } from '~/icons/LineChart'
 import { cn } from '~/utils/cn'
-import { categoryToLabel } from './categoryToLabel'
-import { BridgedUsingCell } from './cells/BridgedUsingCell'
-import { TokenAddressCell } from './cells/TokenAddressCell'
-import { TokenNameCell } from './cells/TokenNameCell'
-import { TokenValueCell } from './cells/TokenValueCell'
-import type { TokenRow } from './ProjectTvsBreakdownTokenTable'
+import { categoryToLabel } from '../../project/tvs-breakdown/components/tables/categoryToLabel'
+import { BridgedUsingCell } from '../../project/tvs-breakdown/components/tables/cells/BridgedUsingCell'
+import { TokenAddressCell } from '../../project/tvs-breakdown/components/tables/cells/TokenAddressCell'
+import { TokenNameCell } from '../../project/tvs-breakdown/components/tables/cells/TokenNameCell'
+import { TokenValueCell } from '../../project/tvs-breakdown/components/tables/cells/TokenValueCell'
+import type { TokenRow } from './TvsBreakdownTokenTable'
 
 const columnHelper = createColumnHelper<TokenRow>()
 export const columns = [
@@ -56,6 +49,17 @@ export const columns = [
     },
   }),
   columnHelper.display({
+    id: 'project',
+    header: 'Project',
+    cell: (ctx) => {
+      return (
+        <div className="font-medium text-xs">
+          {ctx.row.original.projectName}
+        </div>
+      )
+    },
+  }),
+  columnHelper.display({
     id: 'bridgingType',
     header: 'Bridging Type',
     cell: (ctx) => {
@@ -80,19 +84,6 @@ export const columns = [
       </div>
     ),
   }),
-  columnHelper.display({
-    id: 'contract',
-    header: 'Contract',
-    cell: (ctx) => {
-      const { address } = ctx.row.original
-      if (!address) return '-'
-
-      if (address === 'multiple')
-        return <div className="font-medium text-xs">Multiple</div>
-
-      return <TokenAddressCell {...address} />
-    },
-  }),
   columnHelper.accessor('valueForProject', {
     id: 'value',
     header: 'TVS-Adjusted Value',
@@ -106,41 +97,39 @@ export const columns = [
     },
   }),
   columnHelper.display({
+    id: 'contract',
+    header: 'Contract',
+    cell: (ctx) => {
+      const { address } = ctx.row.original
+      if (!address) return '-'
+
+      if (address === 'multiple')
+        return <div className="font-medium text-xs">Multiple</div>
+
+      return <TokenAddressCell {...address} />
+    },
+  }),
+  columnHelper.display({
     id: 'actions',
     meta: {
       align: 'right',
     },
     cell: (ctx) => {
-      const { setSelectedToken } = useSelectedTokenContext()
       const isExpended = ctx.row.getIsExpanded()
       const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
 
       return (
-        <div className="flex items-center gap-1">
-          <Tooltip>
-            <TooltipTrigger asChild disabledOnMobile>
-              <button onClick={() => setSelectedToken(ctx.row.original)}>
-                <a href="#token-chart">
-                  <LineChartIcon className="size-4" />
-                </a>
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              Click to preview historical chart for this token
-            </TooltipContent>
-          </Tooltip>
-          <button
-            onClick={toggleExpandedHandler}
-            className="h-full cursor-pointer p-1 align-middle"
-          >
-            <ChevronIcon
-              className={cn(
-                'size-3 transition-transform duration-300',
-                isExpended && 'rotate-180',
-              )}
-            />
-          </button>
-        </div>
+        <button
+          onClick={toggleExpandedHandler}
+          className="h-full cursor-pointer p-1 align-middle"
+        >
+          <ChevronIcon
+            className={cn(
+              'size-3 transition-transform duration-300',
+              isExpended && 'rotate-180',
+            )}
+          />
+        </button>
       )
     },
   }),

@@ -35,6 +35,9 @@ export function Head({ manifest, metadata }: HeadProps) {
 
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />
+      {metadata.excludeFromSearchEngines && (
+        <meta name="robots" content="noindex" />
+      )}
 
       <OpengraphMeta {...metadata} />
       <TwitterMeta {...metadata} />

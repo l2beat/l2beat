@@ -3,7 +3,6 @@ import type {
   Formula,
   Project,
   ProjectContract,
-  TvsToken,
 } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import {
@@ -13,7 +12,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import capitalize from 'lodash/capitalize'
-import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import { env } from '~/env'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import { getDb } from '~/server/database'
@@ -24,6 +22,7 @@ import {
   type Address,
   extractAddressesFromTokenConfig,
 } from './extractAddressesFromTokenConfig'
+import type { ProjectTvsBreakdownTokenEntry } from './getProjectTokensEntries'
 
 type AddressData = {
   address: string
@@ -31,36 +30,18 @@ type AddressData = {
   name?: string
 }
 
-export interface ProjectTvsBreakdownTokenEntry extends FilterableEntry {
-  id: TvsToken['id']
-  name: string
-  symbol: TvsToken['symbol']
-  iconUrl: string
-  valueForProject: number
-  value: number
-  amount: number
-  category: TvsToken['category']
-  source: TvsToken['source']
-  isAssociated: TvsToken['isAssociated']
-  isGasToken?: boolean
-  address?: AddressData | 'multiple'
-  formula: FormulaWithMeta
-  syncStatus?: string
-  bridgedUsing?: {
-    bridges: {
-      name: string
-      slug?: string
-    }[]
-    warning?: string
-  }
+export interface TvsBreakdownTokenEntry extends ProjectTvsBreakdownTokenEntry {
+  projectName: string
 }
 
-export async function getProjectTokensEntries(
-  project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
-): Promise<ProjectTvsBreakdownTokenEntry[]> {
+export async function getAllTokensEntries(): Promise<TvsBreakdownTokenEntry[]> {
   if (env.MOCK) {
-    return getMockTvsBreakdownForProjectData(project)
+    return getMockTvsBreakdownForProjectData()
   }
+  const allProjects = await ps.getProjects({
+    select: ['tvsConfig'],
+    optional: ['chainConfig', 'contracts'],
+  })
 
   const db = getDb()
   const targetTimestamp = getTvsTargetTimestamp()
@@ -69,7 +50,7 @@ export async function getProjectTokensEntries(
     ps.getProjects({
       select: ['chainConfig'],
     }),
-    db.tvsTokenValue.getByProjectAtOrBefore(project.id, targetTimestamp),
+    db.tvsTokenValue.getAtOrBefore(targetTimestamp),
   ])
 
   const chains = projects.map((x) => x.chainConfig)
@@ -77,76 +58,90 @@ export async function getProjectTokensEntries(
     tokenValues.map((x) => [TokenId(x.tokenId), x]),
   )
 
-  const entries = getEntries(project, tokenValuesMap, chains, targetTimestamp)
+  const entries = getEntries(
+    allProjects,
+    tokenValuesMap,
+    chains,
+    targetTimestamp,
+  )
 
   return entries
 }
 
 function getEntries(
-  project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
+  projects: Project<'tvsConfig', 'chainConfig' | 'contracts'>[],
   tokenValuesMap: Map<TokenId, TokenValueRecord>,
   chains: ChainConfig[],
   targetTimestamp: UnixTime,
 ) {
-  const breakdown: ProjectTvsBreakdownTokenEntry[] = []
+  const entries: TvsBreakdownTokenEntry[] = []
 
-  const projectTokens = project.tvsConfig
-  const gasTokens = project.chainConfig?.gasTokens
+  for (const project of projects) {
+    const projectTokens = project.tvsConfig
+    const gasTokens = project.chainConfig?.gasTokens
 
-  for (const token of projectTokens) {
-    const tokenValue = tokenValuesMap.get(token.id)
-    if (!tokenValue) continue
+    for (const token of projectTokens) {
+      const tokenValue = tokenValuesMap.get(token.id)
+      if (!tokenValue) continue
 
-    const { addresses } = extractAddressesFromTokenConfig(token)
-    const address = processAddresses(
-      addresses,
-      chains,
-      project.contracts?.addresses,
-    )
-
-    const tokenWithValues: ProjectTvsBreakdownTokenEntry = {
-      id: token.id,
-      name: token.name,
-      symbol: token.symbol,
-      category: token.category,
-      source: token.source,
-      isAssociated: token.isAssociated,
-      address,
-      formula: withExplorerUrl(
-        token.valueForProject ?? token.amount,
+      const { addresses } = extractAddressesFromTokenConfig(token)
+      const address = processAddresses(
+        addresses,
         chains,
         project.contracts?.addresses,
-      ),
-      iconUrl: token.iconUrl ?? '',
-      valueForProject: tokenValue.valueForProject,
-      value: tokenValue.value,
-      amount: tokenValue.amount,
-      isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
-      syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
-      bridgedUsing: token.bridgedUsing,
-      filterable: [
-        {
-          id: 'bridgingType',
-          value: capitalize(token.source),
-        },
-        ...(token.bridgedUsing?.bridges.map(
-          (b) =>
-            ({
-              id: 'bridgedUsing',
-              value: b.name,
-            }) as const,
-        ) ?? []),
-        {
-          id: 'category',
-          value: categoryToLabel(token.category),
-        },
-      ],
-    }
+      )
 
-    breakdown.push(tokenWithValues)
+      const projectName = project.shortName ?? project.name
+
+      const tokenWithValues: TvsBreakdownTokenEntry = {
+        id: token.id,
+        name: token.name,
+        projectName,
+        symbol: token.symbol,
+        category: token.category,
+        source: token.source,
+        isAssociated: token.isAssociated,
+        address,
+        formula: withExplorerUrl(
+          token.valueForProject ?? token.amount,
+          chains,
+          project.contracts?.addresses,
+        ),
+        iconUrl: token.iconUrl ?? '',
+        valueForProject: tokenValue.valueForProject,
+        value: tokenValue.value,
+        amount: tokenValue.amount,
+        isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
+        syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
+        bridgedUsing: token.bridgedUsing,
+        filterable: [
+          {
+            id: 'project',
+            value: projectName,
+          },
+          {
+            id: 'bridgingType',
+            value: capitalize(token.source),
+          },
+          ...(token.bridgedUsing?.bridges.map(
+            (b) =>
+              ({
+                id: 'bridgedUsing',
+                value: b.name,
+              }) as const,
+          ) ?? []),
+          {
+            id: 'category',
+            value: categoryToLabel(token.category),
+          },
+        ],
+      }
+
+      entries.push(tokenWithValues)
+    }
   }
 
-  return breakdown.sort((a, b) => +b.valueForProject - +a.valueForProject)
+  return entries.sort((a, b) => +b.valueForProject - +a.valueForProject)
 }
 
 // Ik its ugly but it works and is type safe
@@ -273,35 +268,40 @@ function getSyncStatus(valueTimestamp: UnixTime, targetTimestamp: UnixTime) {
   }
 }
 
-async function getMockTvsBreakdownForProjectData(
-  project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
-): Promise<ProjectTvsBreakdownTokenEntry[]> {
+async function getMockTvsBreakdownForProjectData(): Promise<
+  TvsBreakdownTokenEntry[]
+> {
   const projects = await ps.getProjects({
-    select: ['chainConfig'],
+    select: ['tvsConfig'],
+    optional: ['chainConfig', 'contracts'],
   })
-  const chains = projects.map((x) => x.chainConfig)
+  const chains = projects
+    .map((x) => x.chainConfig)
+    .filter((e) => e !== undefined)
 
   const tokenValuesMap = new Map<TokenId, TokenValueRecord>(
-    project.tvsConfig.map(
-      (t) =>
-        [
-          TokenId(t.id),
-          {
-            timestamp: UnixTime.now(),
-            configurationId: 'any',
-            projectId: project.id,
-            tokenId: TokenId('1'),
-            valueForProject: 100,
-            valueForSummary: 100,
-            value: 100,
-            amount: 100,
-            priceUsd: 10,
-          },
-        ] as const,
+    projects.flatMap((p) =>
+      p.tvsConfig.map(
+        (t) =>
+          [
+            TokenId(t.id),
+            {
+              timestamp: UnixTime.now(),
+              configurationId: 'any',
+              projectId: p.id,
+              priceUsd: 50,
+              tokenId: TokenId('1'),
+              valueForProject: 100,
+              valueForSummary: 100,
+              value: 100,
+              amount: 100,
+            },
+          ] as const,
+      ),
     ),
   )
 
-  const entries = getEntries(project, tokenValuesMap, chains, UnixTime.now())
+  const entries = getEntries(projects, tokenValuesMap, chains, UnixTime.now())
 
   return entries
 }

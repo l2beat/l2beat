@@ -35,6 +35,7 @@ export const FilterableValueId = v.enum([
   'PCS',
   'Plonk',
   'STARK',
+  'project',
 ])
 
 export const filterIdToLabel: Record<FilterableValueId, string> = {
@@ -64,6 +65,7 @@ export const filterIdToLabel: Record<FilterableValueId, string> = {
   PCS: 'PCS',
   Plonk: 'Plonk',
   STARK: 'STARK',
+  project: 'Project',
 }
 
 export const filterIdToValues: Record<FilterableValueId, string> = {
@@ -93,6 +95,7 @@ export const filterIdToValues: Record<FilterableValueId, string> = {
   PCS: 'PCSs',
   Plonk: 'Plonks',
   STARK: 'STARKs',
+  project: 'projects',
 }
 
 export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {
