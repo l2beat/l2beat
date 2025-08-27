@@ -60,6 +60,21 @@ export const blobstream: BaseProject = {
           'function commitHeaderRange(bytes proof, bytes publicValues)',
       },
     },
+    {
+      projectId: ProjectId('blobstream'),
+      sinceTimestamp: 1724648927,
+      type: 'l2costs',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress(
+          '0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe',
+        ),
+        selector: '0x8455a3cf',
+        signature:
+          'function commitHeaderRange(bytes proof, bytes publicValues)',
+      },
+    },
   ],
   daBridge: {
     name: 'Blobstream',
