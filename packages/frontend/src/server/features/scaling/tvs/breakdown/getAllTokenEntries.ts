@@ -289,6 +289,7 @@ async function getMockTvsBreakdownForProjectData(): Promise<
               timestamp: UnixTime.now(),
               configurationId: 'any',
               projectId: p.id,
+              priceUsd: 50,
               tokenId: TokenId('1'),
               valueForProject: 100,
               valueForSummary: 100,
