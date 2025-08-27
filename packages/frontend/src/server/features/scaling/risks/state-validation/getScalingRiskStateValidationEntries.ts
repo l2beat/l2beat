@@ -70,10 +70,10 @@ export async function getScalingRiskStateValidationEntries() {
 export interface ScalingRiskStateValidationZkEntry extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem
   isa: string | undefined
-  trustedSetups?: Record<
+  trustedSetupsByProofSystem?: Record<
     string,
     {
-      trustedSetup: (TrustedSetup & {
+      trustedSetups: (TrustedSetup & {
         proofSystem: ZkCatalogTag
       })[]
       verifiers: {
@@ -103,7 +103,10 @@ function getScalingRiskStateValidationZkEntry(
     (tag) => tag.type === 'ISA',
   )
 
-  const trustedSetups = getTrustedSetups(zkCatalogProject, project.id)
+  const trustedSetupsByProofSystem = getTrustedSetupsByProofSystem(
+    zkCatalogProject,
+    project.id,
+  )
 
   return {
     ...getCommonScalingEntry({ project, changes }),
@@ -112,7 +115,7 @@ function getScalingRiskStateValidationZkEntry(
       name: proofSystem.name ?? zkCatalogProject?.name,
     },
     isa: isa?.name,
-    trustedSetups,
+    trustedSetupsByProofSystem,
     executionDelay: project.scalingRisks.self.stateValidation?.executionDelay,
   }
 }
@@ -152,10 +155,10 @@ function getScalingRiskStateValidationOptimisticEntry(
   }
 }
 
-function getTrustedSetups(
+function getTrustedSetupsByProofSystem(
   project: Project<'zkCatalogInfo'>,
   projectId: ProjectId,
-): ScalingRiskStateValidationZkEntry['trustedSetups'] {
+): ScalingRiskStateValidationZkEntry['trustedSetupsByProofSystem'] {
   const relevantVerifiers = project.zkCatalogInfo.verifierHashes.filter((v) =>
     v.usedBy.includes(projectId),
   )
@@ -172,7 +175,7 @@ function getTrustedSetups(
   )
 
   return Object.fromEntries(
-    Object.entries(grouped).map(([key, ts]) => {
+    Object.entries(grouped).map(([key, trustedSetups]) => {
       const trustedSetupVerifiers = relevantVerifiers.filter(
         (v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`,
       )
@@ -184,7 +187,7 @@ function getTrustedSetups(
       return [
         key,
         {
-          trustedSetup: ts,
+          trustedSetups,
           verifiers: {
             successful: getVerifiersWithAttesters(
               groupedByStatus,

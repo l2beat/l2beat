@@ -62,11 +62,11 @@ export const scalingRiskStateValidationColumns = [
         'Instruction Set Architecture (ISA) specifies the virtual machine or computational model that the proof system targets when generating proofs.',
     },
   }),
-  zkColumnHelper.accessor('trustedSetups', {
+  zkColumnHelper.accessor('trustedSetupsByProofSystem', {
     header: 'Trusted setup',
     cell: (ctx) => {
       const trustedSetupEntries = Object.entries(
-        ctx.row.original.trustedSetups ?? {},
+        ctx.row.original.trustedSetupsByProofSystem ?? {},
       )
 
       if (trustedSetupEntries.length === 0) {
@@ -75,10 +75,7 @@ export const scalingRiskStateValidationColumns = [
       return (
         <div className="flex flex-col gap-2 py-2">
           {trustedSetupEntries.map(([key, ts]) => (
-            <TrustedSetupCell
-              key={key}
-              trustedSetup={{ trustedSetup: ts.trustedSetup }}
-            />
+            <TrustedSetupCell key={key} trustedSetups={ts.trustedSetups} />
           ))}
         </div>
       )
@@ -93,7 +90,7 @@ export const scalingRiskStateValidationColumns = [
     header: 'Verifiers',
     cell: (ctx) => {
       const trustedSetupEntries = Object.entries(
-        ctx.row.original.trustedSetups ?? {},
+        ctx.row.original.trustedSetupsByProofSystem ?? {},
       )
 
       if (trustedSetupEntries.length === 0) {

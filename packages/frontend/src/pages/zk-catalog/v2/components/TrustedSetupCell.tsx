@@ -12,18 +12,16 @@ import { TechStackTag } from './TechStackTag'
 import { TrustedSetupRiskDot } from './TrustedSetupRiskDot'
 
 interface Props {
-  trustedSetup: {
-    trustedSetup: (TrustedSetup & {
-      proofSystem: ZkCatalogTag
-    })[]
-    projectsUsedIn?: UsedInProjectWithIcon[]
-  }
+  trustedSetups: (TrustedSetup & {
+    proofSystem: ZkCatalogTag
+  })[]
+  projectsUsedIn?: UsedInProjectWithIcon[]
 }
 
-export function TrustedSetupCell({ trustedSetup }: Props) {
-  const proofSystem = trustedSetup.trustedSetup[0]?.proofSystem
-  if (trustedSetup.trustedSetup.length === 0 || !proofSystem) return null
-  const worstRisk = pickWorstRisk(trustedSetup.trustedSetup)
+export function TrustedSetupCell({ trustedSetups, projectsUsedIn }: Props) {
+  const proofSystem = trustedSetups[0]?.proofSystem
+  if (trustedSetups.length === 0 || !proofSystem) return null
+  const worstRisk = pickWorstRisk(trustedSetups)
 
   return (
     <div className="flex flex-col items-start gap-2">
@@ -45,7 +43,7 @@ export function TrustedSetupCell({ trustedSetup }: Props) {
               withoutTooltip
             />
           </div>
-          {trustedSetup.trustedSetup.map((trustedSetup, i) => {
+          {trustedSetups.map((trustedSetup) => {
             return (
               <div key={trustedSetup.id} className="flex gap-2">
                 {trustedSetup.risk === 'N/A' ? (
@@ -65,14 +63,14 @@ export function TrustedSetupCell({ trustedSetup }: Props) {
           })}
         </TooltipContent>
       </Tooltip>
-      {trustedSetup.projectsUsedIn && (
+      {projectsUsedIn && (
         <div className="flex items-center gap-1.5">
           <p className="font-medium text-label-value-12 text-secondary">
             Used in
           </p>
           <ProjectsUsedIn
             noL2ClassName="text-label-value-12 font-medium text-secondary"
-            usedIn={trustedSetup.projectsUsedIn}
+            usedIn={projectsUsedIn}
           />
         </div>
       )}

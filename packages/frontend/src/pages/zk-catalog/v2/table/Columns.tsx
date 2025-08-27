@@ -48,11 +48,11 @@ export const zkCatalogColumns = [
         id: 'trusted-setups',
         header: 'Trusted setups',
         cell: (ctx) => {
-          const firstTrustedSetup = Object.values(
-            ctx.row.original.trustedSetups,
+          const first = Object.values(
+            ctx.row.original.trustedSetupsByProofSystem,
           )[0]
-          if (!firstTrustedSetup) return null
-          return <TrustedSetupCell trustedSetup={firstTrustedSetup} />
+          if (!first) return null
+          return <TrustedSetupCell trustedSetups={first.trustedSetups} />
         },
         meta: {
           tooltip:
@@ -60,10 +60,10 @@ export const zkCatalogColumns = [
           cellClassName: 'px-6 pt-4 pb-3',
 
           additionalRows: (ctx) => {
-            return Object.entries(ctx.row.original.trustedSetups)
+            return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
               .slice(1)
               .map(([key, ts]) => (
-                <TrustedSetupCell key={key} trustedSetup={ts} />
+                <TrustedSetupCell key={key} trustedSetups={ts.trustedSetups} />
               ))
           },
         },
@@ -72,17 +72,17 @@ export const zkCatalogColumns = [
         id: 'verifiers',
         header: 'Verifiers',
         cell: (ctx) => {
-          const firstTrustedSetup = Object.values(
-            ctx.row.original.trustedSetups,
+          const first = Object.values(
+            ctx.row.original.trustedSetupsByProofSystem,
           )[0]
-          if (!firstTrustedSetup) return null
-          return <VerifiedCountWithDetails data={firstTrustedSetup.verifiers} />
+          if (!first) return null
+          return <VerifiedCountWithDetails data={first.verifiers} />
         },
         meta: {
           tooltip:
             'Shows the number of different versions of onchain verifiers and whether they were independently checked by regenerating them from the proving system’s source code. A green check indicates successful verification, while a red cross indicates a failure to regenerate.',
           additionalRows: (ctx) => {
-            return Object.entries(ctx.row.original.trustedSetups)
+            return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
               .slice(1)
               .map(([key, ts]) => (
                 <VerifiedCountWithDetails key={key} data={ts.verifiers} />
