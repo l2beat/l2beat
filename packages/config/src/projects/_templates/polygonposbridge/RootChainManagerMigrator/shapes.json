@@ -1,0 +1,8 @@
+{
+  "RootChainManagerMigrator": {
+    "hash": "0x4d461641f48e1fc41d08d5f5672126575c15044e75679ad3abcd25a23d4575d1",
+    "address": "0xF0235dCa8fb0D3999685724dCBB9DD00c5d62DFa",
+    "chain": "ethereum",
+    "blockNumber": 23233122
+  }
+}
