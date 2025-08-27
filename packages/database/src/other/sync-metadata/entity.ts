@@ -25,7 +25,11 @@ export function toRecord(row: Selectable<SyncMetadata>): SyncMetadataRecord {
   }
 }
 
-export function toRow(record: SyncMetadataRecord): Insertable<SyncMetadata> {
+export function toRow(
+  record: Omit<SyncMetadataRecord, 'syncedUntil'> & {
+    syncedUntil?: UnixTime | null
+  },
+): Insertable<SyncMetadata> {
   return {
     ...record,
     target: UnixTime.toDate(record.target),

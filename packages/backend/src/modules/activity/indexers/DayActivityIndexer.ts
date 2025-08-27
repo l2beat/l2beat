@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import type { DayActivityIndexerDeps } from './types'
@@ -38,6 +38,11 @@ export class DayActivityIndexer extends ManagedChildIndexer {
     )
 
     await this.$.db.activity.upsertMany(counts)
+    await this.$.db.syncMetadata.updateSyncedUntil(
+      'activity',
+      [this.$.projectId],
+      adjustedTo * UnixTime.DAY,
+    )
 
     return adjustedTo
   }

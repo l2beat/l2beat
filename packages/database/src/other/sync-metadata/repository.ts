@@ -7,7 +7,9 @@ export class SyncMetadataRepository extends BaseRepository {
     await this.upsertMany([record])
   }
 
-  async upsertMany(records: SyncMetadataRecord[]): Promise<number> {
+  async upsertMany(
+    records: Omit<SyncMetadataRecord, 'syncedUntil'>[],
+  ): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
@@ -18,7 +20,6 @@ export class SyncMetadataRepository extends BaseRepository {
         .onConflict((cb) =>
           cb.columns(['feature', 'id']).doUpdateSet((eb) => ({
             target: eb.ref('excluded.target'),
-            syncedUntil: eb.ref('excluded.syncedUntil'),
           })),
         )
         .execute()

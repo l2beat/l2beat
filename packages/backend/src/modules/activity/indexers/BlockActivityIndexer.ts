@@ -56,6 +56,13 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     this.logger.info('Saving records', { count: dataToSave.length })
 
     await this.$.db.activity.upsertMany(dataToSave)
+    if (dataToSave.length > 0) {
+      await this.$.db.syncMetadata.updateSyncedUntil(
+        'activity',
+        [this.$.projectId],
+        Math.max(...dataToSave.map((d) => d.timestamp)),
+      )
+    }
 
     return adjustedTo
   }

@@ -7,8 +7,8 @@ export class HourlyIndexer extends RootIndexer {
   constructor(
     logger: Logger,
     private readonly clock: Clock,
-    private readonly options: {
-      onTick: (target: number) => Promise<void>
+    private readonly options?: {
+      onTick?: (target: number) => Promise<void>
     },
   ) {
     super(logger)
@@ -21,7 +21,7 @@ export class HourlyIndexer extends RootIndexer {
 
   async tick(): Promise<number> {
     const time = this.clock.getLastHour()
-    await this.options.onTick(time)
+    await this.options?.onTick?.(time)
     return time
   }
 }

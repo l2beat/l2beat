@@ -76,25 +76,14 @@ export function initTvsModule(
         projectsToUpdate.push(project.projectId)
       }
 
-      await Promise.all([
-        database.syncMetadata.upsertMany(
-          tokensToUpdate.map((id) => ({
-            feature: 'tvs',
-            id,
-            target: target,
-            syncedUntil: null,
-          })),
-        ),
-
-        database.syncMetadata.upsertMany(
-          projectsToUpdate.map((projectId) => ({
-            feature: 'tvs',
-            id: projectId,
-            target: target,
-            syncedUntil: null,
-          })),
-        ),
-      ])
+      await database.syncMetadata.upsertMany(
+        [...tokensToUpdate, ...projectsToUpdate].map((id) => ({
+          feature: 'tvs',
+          id,
+          target: target,
+          syncedUntil: null,
+        })),
+      )
     },
   })
 
