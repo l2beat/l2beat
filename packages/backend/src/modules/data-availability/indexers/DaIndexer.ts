@@ -89,7 +89,15 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
     )
 
     return async () => {
-      await this.$.db.dataAvailability.upsertMany(records)
+      await this.$.db.transaction(async () => {
+        await this.$.db.dataAvailability.upsertMany(records)
+        await this.$.db.syncMetadata.updateSyncedUntil(
+          'dataAvailability',
+          this.$.configurations.map((c) => c.properties.projectId),
+          Math.max(...records.map((r) => r.timestamp)),
+        )
+      })
+
       this.logger.info('Saved DA metrics into DB', {
         from,
         to: adjustedTo,

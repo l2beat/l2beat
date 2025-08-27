@@ -249,6 +249,7 @@ export type TimestampDaIndexedConfig = (
 export type BlockLayerDaTrackingConfig = {
   type: 'ethereum' | 'celestia' | 'avail'
   name: string
+  projectId: ProjectId
   url: string
   callsPerMinute: number
   batchSize: number
