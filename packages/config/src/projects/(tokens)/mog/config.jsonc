@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "mog",
+  "import": ["../../globalConfig.jsonc"],
+  "maxDepth": 0,
+  "initialAddresses": ["base:0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71"]
+}
