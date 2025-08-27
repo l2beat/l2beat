@@ -15,7 +15,6 @@ import {
   REASON_FOR_BEING_OTHER,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -167,7 +166,7 @@ export const fuel: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
-      secondLine: formatChallengePeriod(challengePeriod),
+      challengeDelay: challengePeriod,
     },
     dataAvailability: RISK_VIEW.DATA_EIGENDA(false),
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, challengePeriod),

@@ -21,7 +21,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { PERFORMED_BY } from '../../common/performedBy'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -407,7 +406,7 @@ export const linea: ScalingProject = {
     stateValidation: {
       // TODO: linea proof system is now complete
       ...RISK_VIEW.STATE_ZKP_SN,
-      secondLine: formatExecutionDelay(finalizationPeriod),
+      executionDelay: finalizationPeriod,
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,

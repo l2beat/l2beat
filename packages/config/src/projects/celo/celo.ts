@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  formatSeconds,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -82,12 +77,10 @@ export const celo: ScalingProject = opStackL2({
       description:
         'Although the OP stack fraud proof system is deployed, it assumes by default that data was made available. During a potential data withholding attack, it is impossible to prove a malicious state root.',
       sentiment: 'bad',
-      secondLine: `${formatSeconds(
-        discovery.getContractValue<number>(
-          'OptimismPortal2',
-          'proofMaturityDelaySeconds',
-        ),
-      )} challenge period`,
+      challengeDelay: discovery.getContractValue<number>(
+        'OptimismPortal2',
+        'proofMaturityDelaySeconds',
+      ),
       orderHint: 0,
     },
   },
