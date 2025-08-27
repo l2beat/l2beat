@@ -7,12 +7,23 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { badgesCompareFn } from '../common/badges'
-import type { Bridge, Layer2TxConfig, ScalingProject } from '../internalTypes'
+import {
+  formatChallengeAndExecutionDelay,
+  formatChallengePeriod,
+  formatExecutionDelay,
+} from '../common/formatDelays'
+import type {
+  Bridge,
+  Layer2TxConfig,
+  ProjectScalingRiskView,
+  ScalingProject,
+} from '../internalTypes'
 import {
   type BaseProject,
   type ProjectCostsInfo,
   type ProjectDiscoveryInfo,
   type ProjectLivenessInfo,
+  type ProjectRiskView,
   type ProjectScalingCategory,
   ProjectTvsConfigSchema,
   type TvsToken,
@@ -52,6 +63,8 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     symbol: associated,
     icon: tvsConfig?.find((t) => t.symbol === associated)?.iconUrl,
   }))
+
+  const hostChain = layer2s.find((x) => x.id === p.hostChain)
 
   return {
     id: p.id,
@@ -97,12 +110,15 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     },
     scalingStage: p.stage,
     scalingRisks: {
-      self: p.riskView,
+      self: getProcessedRiskView(p.riskView),
       host:
-        p.type === 'layer3'
-          ? layer2s.find((x) => x.id === p.hostChain)?.riskView
+        p.type === 'layer3' && hostChain
+          ? getProcessedRiskView(hostChain.riskView)
           : undefined,
-      stacked: p.type === 'layer3' ? p.stackedRiskView : undefined,
+      stacked:
+        p.type === 'layer3' && p.stackedRiskView
+          ? getProcessedRiskView(p.stackedRiskView)
+          : undefined,
     },
     scalingDa: p.dataAvailability,
     scalingTechnology: {
@@ -165,6 +181,33 @@ function getType(p: ScalingProject): ProjectScalingCategory | undefined {
 
   if (proofType === 'Validity') {
     return isEthereumBridge ? 'ZK Rollup' : 'Validium'
+  }
+}
+
+function getProcessedRiskView(
+  riskView: ProjectScalingRiskView,
+): ProjectRiskView {
+  const {
+    stateValidation: { challengeDelay, executionDelay },
+  } = riskView
+
+  let secondLine: string | undefined
+  if (challengeDelay !== undefined && executionDelay !== undefined) {
+    secondLine = formatChallengeAndExecutionDelay(
+      challengeDelay + executionDelay,
+    )
+  } else if (challengeDelay !== undefined) {
+    secondLine = formatChallengePeriod(challengeDelay)
+  } else if (executionDelay !== undefined) {
+    secondLine = formatExecutionDelay(executionDelay)
+  }
+
+  return {
+    ...riskView,
+    stateValidation: {
+      ...riskView.stateValidation,
+      secondLine,
+    },
   }
 }
 

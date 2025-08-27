@@ -3506,7 +3506,7 @@
         "sinceTimestamp": 1718928000
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [

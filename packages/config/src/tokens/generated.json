@@ -3573,20 +3573,6 @@
       "supply": "zero"
     },
     {
-      "name": "Mog Coin",
-      "coingeckoId": "mog-coin",
-      "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
-      "symbol": "Mog",
-      "decimals": 18,
-      "deploymentTimestamp": 1689822407,
-      "coingeckoListingTimestamp": 1689897600,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/31059/large/MOG_LOGO_200x200.png?1696529893",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "name": "Moonflow",
       "coingeckoId": "moonflow",
       "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa",

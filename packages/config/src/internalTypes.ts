@@ -25,11 +25,11 @@ import type {
   ProjectLivenessInfo,
   ProjectPermissions,
   ProjectReviewStatus,
+  ProjectRiskView,
   ProjectScalingCapability,
   ProjectScalingDa,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
-  ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
   ProjectScalingStack,
   ProjectScalingStage,
@@ -178,6 +178,10 @@ export interface ProjectScalingTechnology {
   otherConsiderations?: ProjectTechnologyChoice[]
   /** Is the technology section under review */
   isUnderReview?: boolean
+}
+
+export interface ProjectScalingRiskView extends ProjectRiskView {
+  stateValidation: Omit<ProjectRiskView['stateValidation'], 'secondLine'>
 }
 
 export interface Layer2TxConfig {
