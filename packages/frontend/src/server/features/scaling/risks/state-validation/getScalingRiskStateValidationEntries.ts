@@ -27,13 +27,7 @@ export async function getScalingRiskStateValidationEntries() {
     [
       getProjectsChangeReport(),
       ps.getProjects({
-        select: [
-          'statuses',
-          'scalingInfo',
-          'scalingRisks',
-          'display',
-          'scalingTechnology',
-        ],
+        select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
         where: ['isScaling'],
         whereNot: ['isUpcoming', 'archivedAt'],
       }),
@@ -89,10 +83,11 @@ export interface ScalingRiskStateValidationZkEntry extends CommonScalingEntry {
       }
     }
   >
+  executionDelay: number | undefined
 }
 
 function getScalingRiskStateValidationZkEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'display'>,
+  project: Project<'scalingInfo' | 'statuses' | 'display' | 'scalingRisks'>,
   changes: ProjectChanges,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingRiskStateValidationZkEntry {
@@ -118,6 +113,7 @@ function getScalingRiskStateValidationZkEntry(
     },
     isa: isa?.name,
     trustedSetups,
+    executionDelay: project.scalingRisks.self.stateValidation?.executionDelay,
   }
 }
 

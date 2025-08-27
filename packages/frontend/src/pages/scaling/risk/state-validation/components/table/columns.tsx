@@ -1,3 +1,4 @@
+import { formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
@@ -23,6 +24,23 @@ export const scalingRiskStateValidationColumns = [
       tooltip:
         'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
     },
+  }),
+  zkColumnHelper.accessor('executionDelay', {
+    header: 'Execution Delay',
+    cell: (ctx) => (
+      <TableValueCell
+        value={
+          ctx.row.original.executionDelay !== undefined
+            ? {
+                value: formatSeconds(ctx.row.original.executionDelay, {
+                  fullUnit: true,
+                }),
+              }
+            : undefined
+        }
+        emptyMode="n/a"
+      />
+    ),
   }),
   zkColumnHelper.accessor('isa', {
     header: 'ISA',
