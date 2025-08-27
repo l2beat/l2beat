@@ -48,18 +48,18 @@ export class ValueService {
 
         const valueForProject = token.valueForProject
           ? await this.executeFormula(
-            token.id,
-            token.valueForProject,
-            timestamp,
-          )
+              token.id,
+              token.valueForProject,
+              timestamp,
+            )
           : value
 
         const valueForSummary = token.valueForSummary
           ? await this.executeFormula(
-            token.id,
-            token.valueForSummary,
-            timestamp,
-          )
+              token.id,
+              token.valueForSummary,
+              timestamp,
+            )
           : (valueForProject ?? value)
 
         values.push({
@@ -117,7 +117,7 @@ export class ValueService {
     tokenId: string,
     formula: ValueFormula,
     timestamp: UnixTime,
-  ): Promise<{ value: BigIntWithDecimals, price: number }> {
+  ): Promise<{ value: BigIntWithDecimals; price: number }> {
     const configurationId = createPriceConfigId(formula.priceId)
     const price = await this.storage.getPrice(configurationId, timestamp)
 
@@ -145,7 +145,11 @@ export class ValueService {
       timestamp: UnixTime,
     ): Promise<BigIntWithDecimals | undefined> => {
       if (formula.type === 'value') {
-        const { value } = await this.executeValueFormula(tokenId, formula, timestamp)
+        const { value } = await this.executeValueFormula(
+          tokenId,
+          formula,
+          timestamp,
+        )
         return value
       }
 

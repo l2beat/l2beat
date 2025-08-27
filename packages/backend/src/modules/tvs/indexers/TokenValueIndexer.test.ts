@@ -316,7 +316,7 @@ function record(
   token: TvsToken,
   projectId: string,
   amount: number,
-  priceUsd: number
+  priceUsd: number,
 ) {
   return {
     ...value(timestamp, projectId, token.id, amount),
