@@ -1,8 +1,8 @@
 {
   "name": "mog",
   "chain": "base",
-  "timestamp": 1756284907,
-  "configHash": "0xf498404a81a9b5937252a720e73923500907161d778c6fd8f0b5be5a60694251",
+  "timestamp": 1756285476,
+  "configHash": "0xfa30dc410f4ac75fc0a669a8cfb72a1ec520c10f763bb7c7dd0bdfbf2033c79a",
   "entries": [
     {
       "name": "OptimismMintableERC20",
@@ -89,6 +89,6 @@
   "usedTemplates": {
     "tokens/OptimismMintableERC20": "0xc3a07d61ea3f87a7c6f83d6e66e3e9dcee7812e0677383410b20fc9c6832b80c"
   },
-  "usedBlockNumbers": { "base": 34747780 },
-  "permissionsConfigHash": "0x3a1028b32b1df7085a48b208fde8776113e4f0cbd9efa6fbe52f5fc09e8581fd"
+  "usedBlockNumbers": { "base": 34748064 },
+  "permissionsConfigHash": "0xe8ea61b86f67c3de0a058fb289d9f968a5d279c7a176d6f53098eac27ae4d37a"
 }
