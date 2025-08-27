@@ -52,7 +52,7 @@ export const zkCatalogColumns = [
             ctx.row.original.trustedSetupsByProofSystem,
           )[0]
           if (!first) return null
-          return <TrustedSetupCell trustedSetups={first.trustedSetups} />
+          return <TrustedSetupCell {...first} />
         },
         meta: {
           tooltip:
@@ -62,9 +62,7 @@ export const zkCatalogColumns = [
           additionalRows: (ctx) => {
             return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
               .slice(1)
-              .map(([key, ts]) => (
-                <TrustedSetupCell key={key} trustedSetups={ts.trustedSetups} />
-              ))
+              .map(([key, ts]) => <TrustedSetupCell key={key} {...ts} />)
           },
         },
       }),
