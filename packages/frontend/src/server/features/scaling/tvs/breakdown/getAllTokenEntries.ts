@@ -3,7 +3,6 @@ import type {
   Formula,
   Project,
   ProjectContract,
-  TvsToken,
 } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import {
@@ -13,7 +12,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import capitalize from 'lodash/capitalize'
-import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import { env } from '~/env'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import { getDb } from '~/server/database'
@@ -24,6 +22,7 @@ import {
   type Address,
   extractAddressesFromTokenConfig,
 } from './extractAddressesFromTokenConfig'
+import type { ProjectTvsBreakdownTokenEntry } from './getProjectTokensEntries'
 
 type AddressData = {
   address: string
@@ -31,28 +30,8 @@ type AddressData = {
   name?: string
 }
 
-export interface TvsBreakdownTokenEntry extends FilterableEntry {
-  id: TvsToken['id']
-  name: string
-  symbol: TvsToken['symbol']
-  iconUrl: string
-  valueForProject: number
-  value: number
-  amount: number
-  category: TvsToken['category']
-  source: TvsToken['source']
-  isAssociated: TvsToken['isAssociated']
-  isGasToken?: boolean
-  address?: AddressData | 'multiple'
-  formula: FormulaWithMeta
-  syncStatus?: string
-  bridgedUsing?: {
-    bridges: {
-      name: string
-      slug?: string
-    }[]
-    warning?: string
-  }
+export interface TvsBreakdownTokenEntry extends ProjectTvsBreakdownTokenEntry {
+  projectName: string
 }
 
 export async function getAllTokensEntries(): Promise<TvsBreakdownTokenEntry[]> {
@@ -95,62 +74,74 @@ function getEntries(
   chains: ChainConfig[],
   targetTimestamp: UnixTime,
 ) {
-  const breakdown: TvsBreakdownTokenEntry[] = []
+  const entries: TvsBreakdownTokenEntry[] = []
 
-  const allTokens = projects.flatMap((p) => p.tvsConfig)
+  for (const project of projects) {
+    const projectTokens = project.tvsConfig
+    const gasTokens = project.chainConfig?.gasTokens
 
-  const gasTokens = projects.flatMap((p) => p.chainConfig?.gasTokens)
+    for (const token of projectTokens) {
+      const tokenValue = tokenValuesMap.get(token.id)
+      if (!tokenValue) continue
 
-  for (const token of allTokens) {
-    const tokenValue = tokenValuesMap.get(token.id)
-    if (!tokenValue) continue
-
-    const { addresses } = extractAddressesFromTokenConfig(token)
-    const address = processAddresses(addresses, chains, {})
-
-    const tokenWithValues: TvsBreakdownTokenEntry = {
-      id: token.id,
-      name: token.name,
-      symbol: token.symbol,
-      category: token.category,
-      source: token.source,
-      isAssociated: token.isAssociated,
-      address,
-      formula: withExplorerUrl(
-        token.valueForProject ?? token.amount,
+      const { addresses } = extractAddressesFromTokenConfig(token)
+      const address = processAddresses(
+        addresses,
         chains,
-        {},
-      ),
-      iconUrl: token.iconUrl ?? '',
-      valueForProject: tokenValue.valueForProject,
-      value: tokenValue.value,
-      amount: tokenValue.amount,
-      isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
-      syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
-      bridgedUsing: token.bridgedUsing,
-      filterable: [
-        {
-          id: 'bridgingType',
-          value: capitalize(token.source),
-        },
-        ...(token.bridgedUsing?.bridges.map(
-          (b) =>
-            ({
-              id: 'bridgedUsing',
-              value: b.name,
-            }) as const,
-        ) ?? []),
-        {
-          id: 'category',
-          value: categoryToLabel(token.category),
-        },
-      ],
-    }
+        project.contracts?.addresses,
+      )
 
-    breakdown.push(tokenWithValues)
+      const projectName = project.shortName ?? project.name
+
+      const tokenWithValues: TvsBreakdownTokenEntry = {
+        id: token.id,
+        name: token.name,
+        projectName,
+        symbol: token.symbol,
+        category: token.category,
+        source: token.source,
+        isAssociated: token.isAssociated,
+        address,
+        formula: withExplorerUrl(
+          token.valueForProject ?? token.amount,
+          chains,
+          project.contracts?.addresses,
+        ),
+        iconUrl: token.iconUrl ?? '',
+        valueForProject: tokenValue.valueForProject,
+        value: tokenValue.value,
+        amount: tokenValue.amount,
+        isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
+        syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
+        bridgedUsing: token.bridgedUsing,
+        filterable: [
+          {
+            id: 'project',
+            value: projectName,
+          },
+          {
+            id: 'bridgingType',
+            value: capitalize(token.source),
+          },
+          ...(token.bridgedUsing?.bridges.map(
+            (b) =>
+              ({
+                id: 'bridgedUsing',
+                value: b.name,
+              }) as const,
+          ) ?? []),
+          {
+            id: 'category',
+            value: categoryToLabel(token.category),
+          },
+        ],
+      }
+
+      entries.push(tokenWithValues)
+    }
   }
 
-  return breakdown.sort((a, b) => +b.valueForProject - +a.valueForProject)
+  return entries.sort((a, b) => +b.valueForProject - +a.valueForProject)
 }
 
 // Ik its ugly but it works and is type safe
