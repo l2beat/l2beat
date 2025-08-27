@@ -16,7 +16,7 @@ import { BridgedUsingCell } from './cells/BridgedUsingCell'
 import { TokenAddressCell } from './cells/TokenAddressCell'
 import { TokenNameCell } from './cells/TokenNameCell'
 import { TokenValueCell } from './cells/TokenValueCell'
-import type { TokenRow } from './TvsBreakdownTokenTable'
+import type { TokenRow } from './ProjectTvsBreakdownTokenTable'
 
 const columnHelper = createColumnHelper<TokenRow>()
 export const columns = [

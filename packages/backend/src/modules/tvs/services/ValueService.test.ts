@@ -75,6 +75,7 @@ describe(ValueService.name, () => {
           value: 2000000,
           valueForProject: 2000000,
           valueForSummary: 2000000,
+          priceUsd: 200,
         },
       ])
     })
@@ -203,6 +204,7 @@ describe(ValueService.name, () => {
           value: 2000000,
           valueForProject: 2000000,
           valueForSummary: 2000000,
+          priceUsd: 200,
         },
         {
           timestamp: mockTimestamp,
@@ -212,6 +214,7 @@ describe(ValueService.name, () => {
           value: 1600000,
           valueForProject: 600000,
           valueForSummary: 600000,
+          priceUsd: 200,
         },
       ])
     })
@@ -281,6 +284,7 @@ describe(ValueService.name, () => {
           value: 2000000,
           valueForProject: 2000000,
           valueForSummary: 2000000,
+          priceUsd: 200,
         },
       ])
     })
@@ -358,6 +362,7 @@ describe(ValueService.name, () => {
           value: 2000000,
           valueForProject: 2000000,
           valueForSummary: 2000000,
+          priceUsd: 200,
         },
       ])
     })
@@ -521,6 +526,7 @@ describe(ValueService.name, () => {
           value: 0,
           valueForProject: 0,
           valueForSummary: 0,
+          priceUsd: 200,
         },
       ])
     })

@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "timestamp": 1756120933,
+  "timestamp": 1756216503,
   "configHash": "0x981b5963a0ac2a8755444fd448b0315f3d6fc6b403467fc7c627977f75051596",
   "entries": [
     {
@@ -80,7 +80,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 312784,
-          "prevBlockNum": 23217530
+          "prevBlockNum": 23222909
         },
         "paused": false,
         "resolverRegistry": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
@@ -127,7 +127,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639427",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639434",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -703,12 +703,12 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 18085169,
-        "latestOutputIndex": 32832,
-        "latestOutputProposedV2": 32832,
-        "latestOutputProposedV3": 32832,
-        "nextBlockNumber": 18085170,
-        "nextOutputIndex": 32833,
+        "latestBlockNumber": 18136692,
+        "latestOutputIndex": 32856,
+        "latestOutputProposedV2": 32836,
+        "latestOutputProposedV3": 32856,
+        "nextBlockNumber": 18136693,
+        "nextOutputIndex": 32857,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proposer": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
@@ -812,7 +812,7 @@
         "0x709abb48f790c58a1517d5b15d470a3b3058adc8ff1953bb2764302ffd552c1b"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.",
+      "description": "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. The verifier is now unused as the project migrated to SP1.",
       "sinceTimestamp": 1741569827,
       "sinceBlock": 22013168,
       "values": {
@@ -842,7 +842,7 @@
         "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737": "Proxy",
         "eth:0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0": "VerifierV2"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Zircuit Multisig 1",
@@ -1734,6 +1734,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23217793 },
+  "usedBlockNumbers": { "ethereum": 23225718 },
   "permissionsConfigHash": "0xe02e2dd058fdb1f985e68753f52ca88a0f125d28226e3acd442c4ee402c1939c"
 }

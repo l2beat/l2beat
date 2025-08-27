@@ -1,12 +1,12 @@
 import type { CalculationFormula } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
-import type { TvsBreakdownTokenEntry } from '~/server/features/scaling/tvs/breakdown/getProjectTokensEntries'
+import type { ProjectTvsBreakdownTokenEntry } from '~/server/features/scaling/tvs/breakdown/getProjectTokensEntries'
 import { cn } from '~/utils/cn'
 import { TokenAddressCell } from './cells/TokenAddressCell'
 
 export function renderFormulaSubComponent<
-  T extends { formula: TvsBreakdownTokenEntry['formula'] },
+  T extends { formula: ProjectTvsBreakdownTokenEntry['formula'] },
 >({ row }: { row: Row<T> }) {
   return (
     <div className="ml-[52px] flex flex-col py-3">
@@ -29,7 +29,7 @@ function FormulaWithOperator({
   depth = 0,
   className,
 }: {
-  formula: TvsBreakdownTokenEntry['formula']
+  formula: ProjectTvsBreakdownTokenEntry['formula']
   operator?: CalculationFormula['operator']
   depth?: number
   className?: string
@@ -46,7 +46,7 @@ function Formula({
   formula,
   depth,
 }: {
-  formula: TvsBreakdownTokenEntry['formula']
+  formula: ProjectTvsBreakdownTokenEntry['formula']
   depth: number
 }) {
   switch (formula.type) {
@@ -96,7 +96,7 @@ function BalanceOfEscrow({
   formula,
 }: {
   formula: Extract<
-    TvsBreakdownTokenEntry['formula'],
+    ProjectTvsBreakdownTokenEntry['formula'],
     { type: 'balanceOfEscrow' }
   >
 }) {
@@ -119,7 +119,7 @@ function CirculatingSupply({
   formula,
 }: {
   formula: Extract<
-    TvsBreakdownTokenEntry['formula'],
+    ProjectTvsBreakdownTokenEntry['formula'],
     { type: 'circulatingSupply' }
   >
 }) {
@@ -134,7 +134,10 @@ function Calculation({
   formula,
   depth,
 }: {
-  formula: Extract<TvsBreakdownTokenEntry['formula'], { type: 'calculation' }>
+  formula: Extract<
+    ProjectTvsBreakdownTokenEntry['formula'],
+    { type: 'calculation' }
+  >
   depth: number
 }) {
   if (formula.operator === 'min' || formula.operator === 'max') {
@@ -189,7 +192,7 @@ const formatter = new Intl.NumberFormat('en-US')
 function Const({
   formula,
 }: {
-  formula: Extract<TvsBreakdownTokenEntry['formula'], { type: 'const' }>
+  formula: Extract<ProjectTvsBreakdownTokenEntry['formula'], { type: 'const' }>
 }) {
   return (
     <p>
@@ -205,7 +208,7 @@ function TotalSupply({
   formula,
 }: {
   formula: Extract<
-    TvsBreakdownTokenEntry['formula'],
+    ProjectTvsBreakdownTokenEntry['formula'],
     { type: 'starknetTotalSupply' | 'totalSupply' }
   >
 }) {

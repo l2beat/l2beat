@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x60832aad559274f8abc6c148fcff7d0a1738ad54
+
+# Diff at Tue, 26 Aug 2025 13:36:23 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1756124502
+- current timestamp: 1756124502
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756124502 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a","role":"admin"}]
+    }
+```
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a","role":"admin","via":[{"address":"eth:0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F","role":".owner"}]
+    }
+```
+
 Generated with discovered.json: 0xee1a2f2607e59c25ff849e5bb2d18d7bf935dcae
 
 # Diff at Mon, 25 Aug 2025 13:11:28 GMT:

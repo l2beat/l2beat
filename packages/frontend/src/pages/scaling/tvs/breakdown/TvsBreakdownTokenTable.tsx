@@ -9,9 +9,9 @@ import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { useTable } from '~/hooks/useTable'
-import type { TvsBreakdownTokenEntry } from '~/server/features/scaling/tvs/breakdown/getProjectTokensEntries'
+import type { TvsBreakdownTokenEntry } from '~/server/features/scaling/tvs/breakdown/getAllTokenEntries'
+import { renderFormulaSubComponent } from '../../project/tvs-breakdown/components/tables/FormulaSubRow'
 import { columns } from './columns'
-import { renderFormulaSubComponent } from './FormulaSubRow'
 
 interface Props {
   entries: TokenRow[]

@@ -3330,7 +3330,7 @@
         "sinceTimestamp": 1677013204
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -3389,7 +3389,7 @@
         "sinceTimestamp": 1677013206
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -3507,7 +3507,7 @@
         "sinceTimestamp": 1673211956
       },
       "category": "ether",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -3599,7 +3599,7 @@
         "sinceTimestamp": 1632766868
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -5378,7 +5378,7 @@
         "sinceTimestamp": 1712102400
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -5437,7 +5437,7 @@
         "sinceTimestamp": 1716163200
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -6081,7 +6081,7 @@
         "sinceTimestamp": 1683328069
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -6668,7 +6668,7 @@
         "sinceTimestamp": 1678676107
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -7208,7 +7208,7 @@
         "sinceTimestamp": 1708387200
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -7234,7 +7234,7 @@
         "sinceTimestamp": 1673211957
       },
       "category": "ether",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -10129,7 +10129,7 @@
         "sinceTimestamp": 1718928000
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [

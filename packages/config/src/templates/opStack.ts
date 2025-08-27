@@ -24,11 +24,7 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import {
-  formatChallengeAndExecutionDelay,
-  formatChallengePeriod,
-  formatDelay,
-} from '../common/formatDelays'
+import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -36,6 +32,7 @@ import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
+  ProjectScalingRiskView,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -54,7 +51,6 @@ import type {
   ProjectScalingDa,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
-  ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectScalingStateDerivation,
@@ -877,13 +873,13 @@ function getRiskView(
 
 function getRiskViewStateValidation(
   templateVars: OpStackConfigCommon,
-): TableReadyValue {
+): ProjectScalingRiskView['stateValidation'] {
   const fraudProofType = getFraudProofType(templateVars)
   switch (fraudProofType) {
     case 'None': {
       return {
         ...RISK_VIEW.STATE_NONE,
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
+        challengeDelay: getChallengePeriod(templateVars),
       }
     }
     case 'Permissioned': {
@@ -909,10 +905,8 @@ function getRiskViewStateValidation(
     case 'Kailua': {
       return {
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
-        secondLine: formatChallengeAndExecutionDelay(
-          getChallengePeriod(templateVars) +
-            Number(getExecutionDelay(templateVars)),
-        ),
+        executionDelay: getExecutionDelay(templateVars),
+        challengeDelay: getChallengePeriod(templateVars),
       }
     }
   }

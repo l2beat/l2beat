@@ -488,13 +488,20 @@ export interface StageNotApplicable {
   stage: 'NotApplicable'
 }
 export interface ProjectScalingRisks {
-  self: ProjectScalingRiskView
-  host: ProjectScalingRiskView | undefined
-  stacked: ProjectScalingRiskView | undefined
+  self: ProjectRiskView
+  host: ProjectRiskView | undefined
+  stacked: ProjectRiskView | undefined
 }
 
-export interface ProjectScalingRiskView {
-  stateValidation: TableReadyValue
+export interface ProjectRiskView {
+  stateValidation: TableReadyValue & {
+    /** @unit seconds */
+    executionDelay?: number
+    /** @unit seconds */
+    challengeDelay?: number
+    /** @unit ETH */
+    initialBond?: number
+  }
   dataAvailability: TableReadyValue
   exitWindow: TableReadyValue
   sequencerFailure: TableReadyValue

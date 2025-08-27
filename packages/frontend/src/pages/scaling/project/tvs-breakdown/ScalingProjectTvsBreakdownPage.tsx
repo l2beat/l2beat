@@ -32,7 +32,7 @@ import { api } from '~/trpc/React'
 import { RequestTokenBox } from './components/RequestTokenBox'
 import { TvsBreakdownPageHeader } from './components/TvsBreakdownPageHeader'
 import { TvsBreakdownSummaryBox } from './components/TvsBreakdownSummaryBox'
-import { TvsBreakdownTokenTable } from './components/tables/TvsBreakdownTokenTable'
+import { ProjectTvsBreakdownTokenTable } from './components/tables/ProjectTvsBreakdownTokenTable'
 
 interface Props extends AppLayoutProps, ScalingProjectTvsBreakdown {
   queryState: DehydratedState
@@ -91,7 +91,7 @@ export function ScalingProjectTvsBreakdownPage({
                 />
               </PrimaryCard>
               <TableFilterContextProvider>
-                <TvsBreakdownTokenTable entries={entries} />
+                <ProjectTvsBreakdownTokenTable entries={entries} />
               </TableFilterContextProvider>
             </SelectedTokenContextProvider>
           </div>
