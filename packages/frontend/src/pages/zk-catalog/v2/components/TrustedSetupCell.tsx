@@ -1,18 +1,22 @@
-import type { TrustedSetup } from '@l2beat/config'
+import type { TrustedSetup, ZkCatalogTag } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
-import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
+import {
+  ProjectsUsedIn,
+  type UsedInProjectWithIcon,
+} from '~/components/ProjectsUsedIn'
 import { TechStackTag } from './TechStackTag'
 import { TrustedSetupRiskDot } from './TrustedSetupRiskDot'
 
 interface Props {
   trustedSetup: {
-    trustedSetup: ZkCatalogEntry['trustedSetups'][string]['trustedSetup']
-    projectsUsedIn?: ZkCatalogEntry['trustedSetups'][string]['projectsUsedIn']
+    trustedSetup: (TrustedSetup & {
+      proofSystem: ZkCatalogTag
+    })[]
+    projectsUsedIn?: UsedInProjectWithIcon[]
   }
 }
 
