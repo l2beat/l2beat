@@ -302,8 +302,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
       expect(result).toEqualUnsorted([
         tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 30),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
       ])
     })
 
