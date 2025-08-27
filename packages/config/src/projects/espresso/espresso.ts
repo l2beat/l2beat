@@ -59,12 +59,9 @@ export const espresso: BaseProject = {
       subtype: 'proofSubmissions',
       params: {
         formula: 'functionCall',
-        address: EthereumAddress(
-          '0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458',
-        ),
+        address: EthereumAddress('0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458'),
         selector: '0x2063d4f7',
-        signature:
-          'function newFinalizedState(tuple newState, tuple proof)',
+        signature: 'function newFinalizedState(tuple newState, tuple proof)',
       },
     },
     {
@@ -74,12 +71,9 @@ export const espresso: BaseProject = {
       subtype: 'proofSubmissions',
       params: {
         formula: 'functionCall',
-        address: EthereumAddress(
-          '0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458',
-        ),
+        address: EthereumAddress('0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458'),
         selector: '0x2063d4f7',
-        signature:
-          'function newFinalizedState(tuple newState, tuple proof)',
+        signature: 'function newFinalizedState(tuple newState, tuple proof)',
       },
     },
   ],

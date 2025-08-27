@@ -42,9 +42,7 @@ export const vector: BaseProject = {
       subtype: 'proofSubmissions',
       params: {
         formula: 'functionCall',
-        address: EthereumAddress(
-          '0x02993cdC11213985b9B13224f3aF289F03bf298d',
-        ),
+        address: EthereumAddress('0x02993cdC11213985b9B13224f3aF289F03bf298d'),
         selector: '0x8455a3cf',
         signature:
           'function commitHeaderRange(bytes proof, bytes publicValues)',
@@ -57,9 +55,7 @@ export const vector: BaseProject = {
       subtype: 'proofSubmissions',
       params: {
         formula: 'functionCall',
-        address: EthereumAddress(
-          '0x02993cdC11213985b9B13224f3aF289F03bf298d',
-        ),
+        address: EthereumAddress('0x02993cdC11213985b9B13224f3aF289F03bf298d'),
         selector: '0x8455a3cf',
         signature:
           'function commitHeaderRange(bytes proof, bytes publicValues)',
