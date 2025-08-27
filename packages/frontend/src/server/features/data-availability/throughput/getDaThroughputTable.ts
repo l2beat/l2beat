@@ -108,7 +108,9 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
                     lastRecord,
                     previousRecord,
                     largestPoster,
-                    maxThroughputPerSecond,
+                    maxThroughputPerSecond === 'NO_CAP'
+                      ? null
+                      : maxThroughputPerSecond,
                   )
                 : undefined,
               maxThroughputPerSecond,
@@ -138,13 +140,13 @@ function getPastDayData(
         readonly slug: string | undefined
       }
     | undefined,
-  maxThroughputPerSecond: number,
+  maxThroughputPerSecond: number | null,
 ) {
   const avgThroughputPerSecond = Number(lastRecord.totalSize) / UnixTime.DAY
-  const avgCapacityUtilization = round(
-    (avgThroughputPerSecond / maxThroughputPerSecond) * 100,
-    2,
-  )
+  const avgCapacityUtilization =
+    maxThroughputPerSecond === null
+      ? null
+      : round((avgThroughputPerSecond / maxThroughputPerSecond) * 100, 2)
 
   const currentTotalPosted = Number(lastRecord.totalSize)
   const previousTotalPosted = previousRecord
@@ -246,10 +248,11 @@ function getMockDaThroughputTableData(
 function getMaxThroughputPerSecond(
   daLayerId: ProjectId,
   latestThroughput: DaLayerThroughput,
-) {
+): number | 'NO_CAP' {
   const isEthereum = daLayerId === ProjectId.ETHEREUM
   const size = isEthereum ? latestThroughput.target : latestThroughput.size
   assert(size, 'Project does not have throughput data configured')
+  if (size === 'NO_CAP') return 'NO_CAP'
   return size / latestThroughput.frequency
 }
 

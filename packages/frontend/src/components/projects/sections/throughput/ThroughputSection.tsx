@@ -1,5 +1,6 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
@@ -96,9 +97,11 @@ function ThroughputChartStats({
         isSynced={syncStatus.isSynced}
         isLoading={isLoading}
       >
-        {data?.stats.pastDayAvgCapacityUtilization
-          ? `${data.stats.pastDayAvgCapacityUtilization}%`
-          : undefined}
+        {data?.stats.pastDayAvgCapacityUtilization === null ? (
+          <NotApplicableBadge />
+        ) : data?.stats.pastDayAvgCapacityUtilization ? (
+          `${data.stats.pastDayAvgCapacityUtilization}%`
+        ) : undefined}
       </ChartStatsItem>
       <ChartStatsItem
         label="Past day largest poster"

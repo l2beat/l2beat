@@ -72,20 +72,25 @@ export const publicSystemsColumns = [
       ),
       columnHelper.accessor((e) => e.data?.maxThroughputPerSecond, {
         header: 'MAX CAPACITY',
-        cell: (ctx) => (
-          <TableValueCell
-            emptyMode="upcoming"
-            value={
-              ctx.row.original.data?.maxThroughputPerSecond
-                ? {
-                    value: formatBpsToMbps(
-                      ctx.row.original.data.maxThroughputPerSecond,
-                    ),
-                  }
-                : undefined
-            }
-          />
-        ),
+        cell: (ctx) => {
+          const maxThroughputPerSecond =
+            ctx.row.original.data?.maxThroughputPerSecond
+          return (
+            <TableValueCell
+              emptyMode="upcoming"
+              value={
+                maxThroughputPerSecond
+                  ? {
+                      value:
+                        maxThroughputPerSecond === 'NO_CAP'
+                          ? 'No cap'
+                          : formatBpsToMbps(maxThroughputPerSecond),
+                    }
+                  : undefined
+              }
+            />
+          )
+        },
         meta: {
           align: 'right',
           tooltip:
@@ -96,20 +101,24 @@ export const publicSystemsColumns = [
   }),
   columnHelper.accessor((e) => e.data?.pastDayData?.avgCapacityUtilization, {
     header: 'past day avg\ncapacity used',
-    cell: (ctx) => (
-      <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
-        <TableValueCell
-          emptyMode="upcoming"
-          value={
-            ctx.row.original.data?.pastDayData?.avgCapacityUtilization
-              ? {
-                  value: `${ctx.row.original.data.pastDayData?.avgCapacityUtilization}%`,
-                }
-              : undefined
-          }
-        />
-      </SyncStatusWrapper>
-    ),
+    cell: (ctx) => {
+      const avgCapacityUtilization =
+        ctx.row.original.data?.pastDayData?.avgCapacityUtilization
+      return (
+        <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
+          <TableValueCell
+            emptyMode={avgCapacityUtilization === null ? 'n/a' : 'upcoming'}
+            value={
+              avgCapacityUtilization !== null
+                ? {
+                    value: `${avgCapacityUtilization}%`,
+                  }
+                : undefined
+            }
+          />
+        </SyncStatusWrapper>
+      )
+    },
     meta: {
       headClassName: 'pl-2',
       cellClassName: 'pl-2',

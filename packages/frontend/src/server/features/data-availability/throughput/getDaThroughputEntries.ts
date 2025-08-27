@@ -45,14 +45,14 @@ interface DaThroughputEntryData {
   /**
    * @unit B/s - bytes per second
    */
-  maxThroughputPerSecond: number
+  maxThroughputPerSecond: number | 'NO_CAP'
   pastDayData:
     | {
         /**
          * @unit B/s - bytes per second
          */
         avgThroughputPerSecond: number
-        avgCapacityUtilization: number
+        avgCapacityUtilization: number | null
         totalPosted: number
         change: number
         largestPoster:
