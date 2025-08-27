@@ -37,12 +37,14 @@ export class DayActivityIndexer extends ManagedChildIndexer {
       adjustedTo,
     )
 
-    await this.$.db.activity.upsertMany(counts)
-    await this.$.db.syncMetadata.updateSyncedUntil(
-      'activity',
-      [this.$.projectId],
-      adjustedTo * UnixTime.DAY,
-    )
+    await this.$.db.transaction(async () => {
+      await this.$.db.activity.upsertMany(counts)
+      await this.$.db.syncMetadata.updateSyncedUntil(
+        'activity',
+        [this.$.projectId],
+        adjustedTo * UnixTime.DAY,
+      )
+    })
 
     return adjustedTo
   }

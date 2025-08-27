@@ -177,10 +177,13 @@ function createIndexers(
 
     const hourlyIndexer = new HourlyIndexer(logger, clock, {
       onTick: async (targetTimestamp) => {
-        await database.syncMetadata.updateSyncedUntil(
-          'dataAvailability',
-          configurations.map((c) => c.projectId),
-          targetTimestamp,
+        await database.syncMetadata.upsertMany(
+          configurations.map((c) => ({
+            feature: 'dataAvailability',
+            id: c.projectId,
+            target: targetTimestamp,
+            syncedUntil: null,
+          })),
         )
       },
     })

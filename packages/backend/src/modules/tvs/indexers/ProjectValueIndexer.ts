@@ -77,12 +77,14 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
     }
 
     return async () => {
-      await this.$.db.tvsProjectValue.upsertMany(records)
-      await this.$.db.syncMetadata.updateSyncedUntil(
-        'tvs',
-        [configuration.id],
-        to,
-      )
+      await this.$.db.transaction(async () => {
+        await this.$.db.tvsProjectValue.upsertMany(records)
+        await this.$.db.syncMetadata.updateSyncedUntil(
+          'tvs',
+          [configuration.id],
+          to,
+        )
+      })
       this.logger.info('Saved project values into DB', {
         timestamps: timestamps.length,
         records: records.length,
