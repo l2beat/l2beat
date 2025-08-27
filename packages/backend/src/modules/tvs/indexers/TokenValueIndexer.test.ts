@@ -36,12 +36,12 @@ describe(TokenValueIndexer.name, () => {
 
       const valueService = mockObject<ValueService>({
         calculate: mockFn().returnsOnce([
-          value(timestamps[0], project, 'token-1', 100),
-          value(timestamps[0], project, 'token-2', 200),
-          value(timestamps[1], project, 'token-1', 150),
-          value(timestamps[1], project, 'token-2', 250),
-          value(timestamps[2], project, 'token-1', 180),
-          value(timestamps[2], project, 'token-2', 280),
+          { ...value(timestamps[0], project, 'token-1', 100), priceUsd: 10 },
+          { ...value(timestamps[0], project, 'token-2', 200), priceUsd: 20 },
+          { ...value(timestamps[1], project, 'token-1', 150), priceUsd: 10 },
+          { ...value(timestamps[1], project, 'token-2', 250), priceUsd: 20 },
+          { ...value(timestamps[2], project, 'token-1', 180), priceUsd: 10 },
+          { ...value(timestamps[2], project, 'token-2', 280), priceUsd: 20 },
         ]),
       })
 
@@ -85,12 +85,12 @@ describe(TokenValueIndexer.name, () => {
       )
 
       const expectedRecords: TokenValueRecord[] = [
-        record(timestamps[0], mockToken1, project, 100),
-        record(timestamps[0], mockToken2, project, 200),
-        record(timestamps[1], mockToken1, project, 150),
-        record(timestamps[1], mockToken2, project, 250),
-        record(timestamps[2], mockToken1, project, 180),
-        record(timestamps[2], mockToken2, project, 280),
+        record(timestamps[0], mockToken1, project, 100, 10),
+        record(timestamps[0], mockToken2, project, 200, 20),
+        record(timestamps[1], mockToken1, project, 150, 10),
+        record(timestamps[1], mockToken2, project, 250, 20),
+        record(timestamps[2], mockToken1, project, 180, 10),
+        record(timestamps[2], mockToken2, project, 280, 20),
       ]
 
       expect(tvsTokenValueRepository.insertMany).toHaveBeenOnlyCalledWith(
@@ -316,9 +316,11 @@ function record(
   token: TvsToken,
   projectId: string,
   amount: number,
+  priceUsd: number,
 ) {
   return {
     ...value(timestamp, projectId, token.id, amount),
     configurationId: TokenValueIndexer.idToConfigurationId(token),
+    priceUsd,
   }
 }
