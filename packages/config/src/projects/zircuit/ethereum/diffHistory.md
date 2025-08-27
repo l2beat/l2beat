@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x3abb85b5b9bd5c27d49020755a9731acfb98a761
+
+# Diff at Tue, 26 Aug 2025 13:58:36 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1756120933
+- current timestamp: 1756216503
+
+## Description
+
+Zircuit started posting SP1 proofs and the old verifier is now impossible to be used, even though it is still there.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756120933 (main branch discovery), not current.
+
+```diff
+    contract VerifierV2 (0xC25D093D3A3f58952252D2e763BEAF2559dc9737) {
+    +++ description: ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. The verifier is now unused as the project migrated to SP1.
+      description:
+-        "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system."
++        "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. The verifier is now unused as the project migrated to SP1."
+      category.name:
+-        "Local Infrastructure"
++        "Spam"
+      category.priority:
+-        5
++        -1
+    }
+```
+
 Generated with discovered.json: 0x60582163e2d99029023a3267e79fbd37e734cf24
 
 # Diff at Mon, 25 Aug 2025 13:11:34 GMT:
