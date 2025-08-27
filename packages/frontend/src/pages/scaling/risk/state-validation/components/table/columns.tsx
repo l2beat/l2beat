@@ -57,6 +57,10 @@ export const scalingRiskStateValidationColumns = [
         emptyMode="n/a"
       />
     ),
+    meta: {
+      tooltip:
+        'Instruction Set Architecture (ISA) specifies the virtual machine or computational model that the proof system targets when generating proofs.',
+    },
   }),
   zkColumnHelper.accessor('trustedSetups', {
     header: 'Trusted setup',
@@ -126,14 +130,14 @@ export const scalingRiskStateValidationOptimisticColumns = [
         'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
     },
   }),
-  optimisticColumnHelper.accessor('executionDelay', {
-    header: 'Execution Delay',
+  optimisticColumnHelper.accessor('challengePeriod', {
+    header: 'Challenge Period',
     cell: (ctx) => (
       <TableValueCell
         value={
-          ctx.row.original.executionDelay !== undefined
+          ctx.row.original.challengePeriod !== undefined
             ? {
-                value: formatSeconds(ctx.row.original.executionDelay, {
+                value: formatSeconds(ctx.row.original.challengePeriod, {
                   fullUnit: true,
                 }),
               }
@@ -143,14 +147,14 @@ export const scalingRiskStateValidationOptimisticColumns = [
       />
     ),
   }),
-  optimisticColumnHelper.accessor('challengePeriod', {
-    header: 'Challenge Period',
+  optimisticColumnHelper.accessor('executionDelay', {
+    header: 'Execution Delay',
     cell: (ctx) => (
       <TableValueCell
         value={
-          ctx.row.original.challengePeriod !== undefined
+          ctx.row.original.executionDelay !== undefined
             ? {
-                value: formatSeconds(ctx.row.original.challengePeriod, {
+                value: formatSeconds(ctx.row.original.executionDelay, {
                   fullUnit: true,
                 }),
               }
