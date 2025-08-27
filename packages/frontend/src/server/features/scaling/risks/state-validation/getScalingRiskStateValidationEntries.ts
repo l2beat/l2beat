@@ -120,10 +120,13 @@ function getScalingRiskStateValidationZkEntry(
 export interface ScalingRiskStateValidationOptimisticEntry
   extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem
+  executionDelay: number | undefined
+  challengePeriod: number | undefined
+  initialBond: number | undefined
 }
 
 function getScalingRiskStateValidationOptimisticEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'display'>,
+  project: Project<'scalingInfo' | 'statuses' | 'display' | 'scalingRisks'>,
   changes: ProjectChanges,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingRiskStateValidationOptimisticEntry {
@@ -134,12 +137,18 @@ function getScalingRiskStateValidationOptimisticEntry(
     (p) => p.id === proofSystem.zkCatalogId,
   )
 
+  const { stateValidation } =
+    project.scalingRisks.stacked ?? project.scalingRisks.self
+
   return {
     ...getCommonScalingEntry({ project, changes }),
     proofSystem: {
       ...proofSystem,
       name: proofSystem.name ?? zkCatalogProject?.name,
     },
+    executionDelay: stateValidation?.executionDelay,
+    challengePeriod: stateValidation?.challengeDelay,
+    initialBond: stateValidation?.initialBond,
   }
 }
 

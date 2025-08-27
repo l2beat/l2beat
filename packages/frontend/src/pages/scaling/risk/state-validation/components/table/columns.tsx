@@ -9,6 +9,7 @@ import type {
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationZkEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 const zkColumnHelper = createColumnHelper<ScalingRiskStateValidationZkEntry>()
 
@@ -124,5 +125,56 @@ export const scalingRiskStateValidationOptimisticColumns = [
       tooltip:
         'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
     },
+  }),
+  optimisticColumnHelper.accessor('executionDelay', {
+    header: 'Execution Delay',
+    cell: (ctx) => (
+      <TableValueCell
+        value={
+          ctx.row.original.executionDelay !== undefined
+            ? {
+                value: formatSeconds(ctx.row.original.executionDelay, {
+                  fullUnit: true,
+                }),
+              }
+            : undefined
+        }
+        emptyMode="n/a"
+      />
+    ),
+  }),
+  optimisticColumnHelper.accessor('challengePeriod', {
+    header: 'Challenge Period',
+    cell: (ctx) => (
+      <TableValueCell
+        value={
+          ctx.row.original.challengePeriod !== undefined
+            ? {
+                value: formatSeconds(ctx.row.original.challengePeriod, {
+                  fullUnit: true,
+                }),
+              }
+            : undefined
+        }
+        emptyMode="n/a"
+      />
+    ),
+  }),
+  optimisticColumnHelper.accessor('initialBond', {
+    header: 'Initial Bond',
+    cell: (ctx) => (
+      <TableValueCell
+        value={
+          ctx.row.original.initialBond !== undefined
+            ? {
+                value: formatCurrency(ctx.row.original.initialBond, 'eth', {
+                  decimals: 0,
+                }),
+              }
+            : undefined
+        }
+        emptyMode="n/a"
+      />
+    ),
   }),
 ]
