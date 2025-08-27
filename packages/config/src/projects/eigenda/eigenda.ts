@@ -1,4 +1,9 @@
-import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -101,6 +106,34 @@ export const eigenda: BaseProject = {
     },
     badges: [],
   },
+  trackedTxsConfig: [
+    {
+      projectId: ProjectId('eigenda'),
+      sinceTimestamp: 1712353787,
+      type: 'liveness',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0'),
+        selector: '0x7794965a',
+        signature:
+          'function confirmBatch(tuple batchHeader, tuple nonSignerStakesAndSignature)',
+      },
+    },
+    {
+      projectId: ProjectId('eigenda'),
+      sinceTimestamp: 1712353787,
+      type: 'l2costs',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0'),
+        selector: '0x7794965a',
+        signature:
+          'function confirmBatch(tuple batchHeader, tuple nonSignerStakesAndSignature)',
+      },
+    },
+  ],
   colors: {
     primary: '#6258FF',
     secondary: '#6258FF',
