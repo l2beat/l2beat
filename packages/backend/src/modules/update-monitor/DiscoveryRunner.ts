@@ -185,6 +185,9 @@ export class DiscoveryRunner {
 
       for (const chain of chains) {
         const provider = await this.allProviders.get(chain, dependencyTimestamp)
+        const filtered = analysis.filter(
+          (c) => ChainSpecificAddress.longChain(c.address) === chain,
+        )
 
         const discovery = toRawDiscoveryOutput(
           chain,
@@ -192,9 +195,9 @@ export class DiscoveryRunner {
           dependencyConfig,
           dependencyTimestamp,
           { [chain]: provider.blockNumber },
-          analysis,
+          filtered,
         )
-        discoveries.set(dependency.project, chain, discovery, analysis)
+        discoveries.set(dependency.project, chain, discovery, filtered)
       }
     }
     return discoveries
