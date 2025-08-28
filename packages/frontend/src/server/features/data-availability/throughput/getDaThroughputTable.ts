@@ -301,98 +301,91 @@ async function getLargestPosters(
   all: Record<string, LargestPoster | undefined>
   scalingOnly: Record<string, LargestPoster | undefined>
 }> {
-  const largestPostersRaw = Object.fromEntries(
+  const rawData = Object.fromEntries(
     Object.entries(groupedProjectValues)
       .map(([daLayer, values]) => {
-        let largestPosterAll = undefined
-        let largestPosterScalingOnly = undefined
         const lastTimestamp = groupedDaLayerValues[daLayer]?.at(-1)?.timestamp
-        if (!lastTimestamp) {
-          return undefined
-        }
+        if (!lastTimestamp) return undefined
 
-        const filteredValues = values.filter(
+        const currentValues = values.filter(
           (v) => v.timestamp === lastTimestamp,
         )
-
-        for (const value of filteredValues) {
-          // Find largest poster including all projects
-          if (
-            !largestPosterAll ||
-            value.totalSize > largestPosterAll.totalSize
-          ) {
-            largestPosterAll = value
-          }
-          // Find largest poster excluding sovereign projects
-          if (
-            !largestPosterScalingOnly ||
-            (!sovereignProjectsNamesMap.has(value.projectId) &&
-              value.totalSize > largestPosterScalingOnly.totalSize)
-          ) {
-            largestPosterScalingOnly = value
-          }
-        }
+        const scalingValues = currentValues.filter(
+          (v) => !sovereignProjectsNamesMap.has(v.projectId),
+        )
 
         return [
           daLayer,
-          { all: largestPosterAll, scalingOnly: largestPosterScalingOnly },
+          {
+            all: findLargestPoster(currentValues),
+            scalingOnly: findLargestPoster(scalingValues),
+          },
         ] as const
       })
       .filter(notUndefined),
   )
 
-  const allProjectIds = new Set<string>()
-  for (const { all, scalingOnly } of Object.values(largestPostersRaw)) {
-    if (all) allProjectIds.add(all.projectId)
-    if (scalingOnly) allProjectIds.add(scalingOnly.projectId)
+  const projectIds = new Set<ProjectId>()
+  for (const { all, scalingOnly } of Object.values(rawData)) {
+    if (all) projectIds.add(ProjectId(all.projectId))
+    if (scalingOnly) projectIds.add(ProjectId(scalingOnly.projectId))
   }
 
-  const largestPostersProjects = await ps.getProjects({
-    ids: Array.from(allProjectIds) as ProjectId[],
+  const projects = await ps.getProjects({
+    ids: Array.from(projectIds),
     select: ['scalingInfo'],
   })
 
-  const enrichPoster = (
-    poster: Omit<DataAvailabilityRecord, 'configurationId'>,
-    allowSovereign: boolean,
-  ) => {
-    const project = largestPostersProjects.find(
-      (p) => p.id === poster.projectId,
-    )
-    if (project) {
-      return {
-        name: project.name,
-        slug: project.slug,
-        ...poster,
-      }
-    }
-
-    const sovereignProject = sovereignProjectsNamesMap.get(poster.projectId)
-    if (sovereignProject && allowSovereign) {
-      return {
-        name: sovereignProject,
-        slug: undefined,
-        ...poster,
-      }
-    }
-
-    throw new Error(
-      `Project not found in config or in sovereign projects list: ${poster.projectId}`,
-    )
-  }
-
   return {
     all: Object.fromEntries(
-      Object.entries(largestPostersRaw).map(([daLayer, { all }]) => [
+      Object.entries(rawData).map(([daLayer, { all }]) => [
         daLayer,
-        all ? enrichPoster(all, true) : undefined,
+        all
+          ? enrichPoster(all, projects, sovereignProjectsNamesMap, true)
+          : undefined,
       ]),
     ),
     scalingOnly: Object.fromEntries(
-      Object.entries(largestPostersRaw).map(([daLayer, { scalingOnly }]) => [
+      Object.entries(rawData).map(([daLayer, { scalingOnly }]) => [
         daLayer,
-        scalingOnly ? enrichPoster(scalingOnly, false) : undefined,
+        scalingOnly
+          ? enrichPoster(
+              scalingOnly,
+              projects,
+              sovereignProjectsNamesMap,
+              false,
+            )
+          : undefined,
       ]),
     ),
   }
+}
+
+function findLargestPoster(
+  values: Omit<DataAvailabilityRecord, 'configurationId'>[],
+): Omit<DataAvailabilityRecord, 'configurationId'> | undefined {
+  return values.reduce(
+    (largest, current) =>
+      !largest || current.totalSize > largest.totalSize ? current : largest,
+    undefined as Omit<DataAvailabilityRecord, 'configurationId'> | undefined,
+  )
+}
+
+function enrichPoster(
+  poster: Omit<DataAvailabilityRecord, 'configurationId'>,
+  projects: Array<{ id: string; name: string; slug: string }>,
+  sovereignProjectsNamesMap: Map<string, string>,
+  allowSovereign: boolean,
+): LargestPoster {
+  const project = projects.find((p) => p.id === poster.projectId)
+  if (project) {
+    return { ...poster, name: project.name, slug: project.slug }
+  }
+
+  const sovereignName = sovereignProjectsNamesMap.get(poster.projectId)
+  if (sovereignName && allowSovereign) {
+    return { ...poster, name: sovereignName, slug: undefined }
+  }
+
+  throw new Error(`Project not found: ${poster.projectId}`)
 }
