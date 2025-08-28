@@ -52,7 +52,8 @@
       "ignoreMethods": ["get", "chain_under_challenge"]
     },
     "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": {
-      "ignoreMethods": ["chain_under_challenge"]
+      "ignoreMethods": ["chain_under_challenge"],
+      "category": "spam" // currently unused
     },
     "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": {
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",

@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "timestamp": 1755157627,
+  "timestamp": 1756391705,
   "configHash": "0x0367adc3ed756f7d71be4a8bb5869bef1146d8e546f383e086530fc151915889",
   "entries": [
     {
@@ -96,8 +96,8 @@
         "owner": "eth:0xbf1752DE62d825aF0634F514226F881a449874b6",
         "proxiableUUID": "EXPECT_REVERT",
         "rewardPayer": "eth:0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "355306828192764245009455",
-        "totalRewardsLiquidated": "47850636177470478876180"
+        "totalLocked": "351417948973146900913260",
+        "totalRewardsLiquidated": "48276029282420478876180"
       },
       "implementationNames": {
         "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": "TransparentUpgradeableProxy",
@@ -125,10 +125,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000689d8a2f0001404fa0",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000689d8a2f0001404fa0",
-        "length": 31236,
-        "lengthByChainId": 31236,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000068b06697000141bc2b",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068b06697000141bc2b",
+        "length": 31676,
+        "lengthByChainId": 31676,
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -531,8 +531,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 4265,
-        "getQueueLength": 40549,
+        "getNumPendingQueueElements": 4305,
+        "getQueueLength": 40589,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -868,12 +868,12 @@
         "earliestDisputedBlockNumber": 0,
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1755154991,
-        "getLastSequencerTimestampByChainId": 1755154991,
-        "getTotalBatches": 31236,
-        "getTotalBatchesByChainId": 31236,
-        "getTotalElements": 20991904,
-        "getTotalElementsByChainId": 20991904,
+        "getLastSequencerTimestamp": 1756391063,
+        "getLastSequencerTimestampByChainId": 1756391063,
+        "getTotalBatches": 31676,
+        "getTotalBatchesByChainId": 31676,
+        "getTotalElements": 21085227,
+        "getTotalElementsByChainId": 21085227,
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -1136,7 +1136,7 @@
         ],
         "$upgradeCount": 2,
         "BLOCK_REWARD": "18906360220000000",
-        "currentBatch": 148,
+        "currentBatch": 151,
         "escrow": "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "eth:0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
@@ -1270,7 +1270,8 @@
       "implementationNames": {
         "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": "L1ChugSplashProxy",
         "eth:0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E": "MVM_Verifier"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "eth:0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
@@ -2348,6 +2349,6 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "usedBlockNumbers": { "ethereum": 23137895 },
+  "usedBlockNumbers": { "ethereum": 23240246 },
   "permissionsConfigHash": "0xcf47b2001af63febe38b6c23cc0c02405dfa5290bb40cf15f8b74aded4b56851"
 }

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x0a40eeba9cfe5a8c61997e0cad046b657cdcfd8d
+
+# Diff at Thu, 28 Aug 2025 14:36:39 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3e088e62f4c969a9884f950ac3f9027242f1f8ff block: 1755157627
+- current timestamp: 1756391705
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755157627 (main branch discovery), not current.
+
+```diff
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) {
+    +++ description: The MVM Verifier contract is responsible for verifying the state of the MVM.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
 Generated with discovered.json: 0x547e26e9d455beae32256f4de4c390661c10aa15
 
 # Diff at Thu, 14 Aug 2025 13:18:25 GMT:
