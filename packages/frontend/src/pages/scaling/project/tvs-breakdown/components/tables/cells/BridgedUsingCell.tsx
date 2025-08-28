@@ -4,6 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { EllipsisText } from '~/components/EllipsisText'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 
@@ -50,13 +51,15 @@ function SingleBridge({
         className="flex items-center justify-start gap-1"
         href={`/bridges/projects/${bridge.slug}`}
       >
-        <span className="text-link underline">{bridge.name}</span>
+        <EllipsisText className="text-link underline">
+          {bridge.name}
+        </EllipsisText>
         <ArrowRightIcon className="inline-block fill-link transition-transform" />
       </a>
     )
   }
 
-  return <span>{bridge.name}</span>
+  return <EllipsisText>{bridge.name}</EllipsisText>
 }
 
 function MultipleBridge({
