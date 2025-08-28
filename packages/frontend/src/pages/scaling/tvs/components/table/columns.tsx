@@ -1,4 +1,6 @@
+import type { TvsToken } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
+import capitalize from 'lodash/capitalize'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import type { CommonProjectColumnsOptions } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
@@ -91,7 +93,13 @@ const tokenBridgeTypeColumns = [
   columnHelper.accessor('tvs.data.breakdown.canonical', {
     id: 'canonical',
     header: 'Canonically bridged',
-    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="canonical" />,
+    cell: (ctx) => (
+      <BreakdownCell
+        row={ctx.row.original}
+        dataKey="canonical"
+        type="bridgingType"
+      />
+    ),
     sortUndefined: 'last',
     meta: {
       cellClassName: 'w-1/3',
@@ -104,7 +112,13 @@ const tokenBridgeTypeColumns = [
   columnHelper.accessor('tvs.data.breakdown.native', {
     id: 'native',
     header: 'Natively minted',
-    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="native" />,
+    cell: (ctx) => (
+      <BreakdownCell
+        row={ctx.row.original}
+        dataKey="native"
+        type="bridgingType"
+      />
+    ),
     sortUndefined: 'last',
     meta: {
       cellClassName: 'w-1/3',
@@ -117,7 +131,13 @@ const tokenBridgeTypeColumns = [
   columnHelper.accessor('tvs.data.breakdown.external', {
     id: 'external',
     header: 'Externally bridged',
-    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="external" />,
+    cell: (ctx) => (
+      <BreakdownCell
+        row={ctx.row.original}
+        dataKey="external"
+        type="bridgingType"
+      />
+    ),
     sortUndefined: 'last',
     meta: {
       cellClassName: 'w-1/3',
@@ -135,7 +155,9 @@ const tokenAssetCategoryColumns = [
   columnHelper.accessor('tvs.data.breakdown.ether', {
     id: 'ether',
     header: 'ETH & derivatives',
-    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="ether" />,
+    cell: (ctx) => (
+      <BreakdownCell row={ctx.row.original} dataKey="ether" type="category" />
+    ),
     sortUndefined: 'last',
     meta: {
       cellClassName: 'w-[40%]',
@@ -147,7 +169,11 @@ const tokenAssetCategoryColumns = [
     id: 'stablecoins',
     header: 'Stablecoins',
     cell: (ctx) => (
-      <BreakdownCell row={ctx.row.original} dataKey="stablecoin" />
+      <BreakdownCell
+        row={ctx.row.original}
+        dataKey="stablecoin"
+        type="category"
+      />
     ),
     sortUndefined: 'last',
     meta: {
@@ -159,7 +185,9 @@ const tokenAssetCategoryColumns = [
   columnHelper.accessor('tvs.data.breakdown.btc', {
     id: 'btc',
     header: 'BTC & derivatives',
-    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="btc" />,
+    cell: (ctx) => (
+      <BreakdownCell row={ctx.row.original} dataKey="btc" type="category" />
+    ),
     sortUndefined: 'last',
     meta: {
       cellClassName: 'w-[40%]',
@@ -170,7 +198,9 @@ const tokenAssetCategoryColumns = [
   columnHelper.accessor('tvs.data.breakdown.other', {
     id: 'other',
     header: 'Other',
-    cell: (ctx) => <BreakdownCell row={ctx.row.original} dataKey="other" />,
+    cell: (ctx) => (
+      <BreakdownCell row={ctx.row.original} dataKey="other" type="category" />
+    ),
     sortUndefined: 'last',
     meta: {
       cellClassName: 'w-[10%] ',
@@ -185,32 +215,32 @@ const tokenAssetCategoryColumns = [
 function BreakdownCell({
   row,
   dataKey,
+  type,
 }: {
   row: ScalingTvsTableRow
   dataKey:
-    | 'canonical'
-    | 'native'
-    | 'external'
-    | 'ether'
-    | 'stablecoin'
-    | 'btc'
-    | 'other'
+    | Exclude<TvsToken['category'], 'rwaRestricted' | 'rwaPublic'>
+    | TvsToken['source']
+  type: 'bridgingType' | 'category'
 }) {
   const data = row.tvs.data
   if (!data) {
     return <NoDataBadge />
   }
 
-  const hash =
-    dataKey === 'canonical' || dataKey === 'native' || dataKey === 'external'
-      ? `#${dataKey}`
-      : ''
+  const filters = encodeURIComponent(
+    JSON.stringify({
+      [type]: {
+        values: [dataKeyToFilter(dataKey)],
+      },
+    }),
+  )
 
   return (
     <TableLink
       href={
         data.breakdown[dataKey] > 0
-          ? `/scaling/projects/${row.slug}/tvs-breakdown${hash}`
+          ? `/scaling/projects/${row.slug}/tvs-breakdown?filters=${filters}`
           : undefined
       }
     >
@@ -220,4 +250,19 @@ function BreakdownCell({
       />
     </TableLink>
   )
+}
+
+function dataKeyToFilter(dataKey: TvsToken['category'] | TvsToken['source']) {
+  switch (dataKey) {
+    case 'ether':
+      return 'ETH & derivatives'
+    case 'btc':
+      return 'BTC & derivatives'
+    case 'stablecoin':
+      return 'Stablecoins'
+    case 'other':
+      return 'Others'
+    default:
+      return capitalize(dataKey)
+  }
 }
