@@ -159,7 +159,7 @@ function BreakdownTypeTabs({
 }) {
   return (
     <Tabs
-      // name="breakdownType"
+      name="breakdownType"
       value={breakdownType}
       onValueChange={(value) =>
         setBreakdownType(value as 'bridgeType' | 'assetCategory')

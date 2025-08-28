@@ -2,20 +2,35 @@
 
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import * as React from 'react'
+import { useTracking } from '~/hooks/useTracking'
 import { cn } from '~/utils/cn'
 
 function Tabs({
   className,
   variant,
+  name,
+  onValueChange,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Root> & {
   variant?: 'highlighted'
+  name: string
 }) {
+  const { track } = useTracking()
+
   return (
     <TabsPrimitive.Root
       data-slot="tabs"
       data-variant={variant}
       className={cn('group/tabs flex flex-col gap-2', className)}
+      onValueChange={(val) => {
+        onValueChange?.(val)
+        track('tabsChanged', {
+          props: {
+            name: name,
+            value: val,
+          },
+        })
+      }}
       {...props}
     />
   )
