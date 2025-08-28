@@ -8,7 +8,7 @@ export class HourlyIndexer extends RootIndexer {
     logger: Logger,
     private readonly clock: Clock,
     private readonly options?: {
-      onTick?: (target: number) => Promise<void>
+      onTick?: (targetTimestamp: number) => Promise<void>
     },
   ) {
     super(logger)

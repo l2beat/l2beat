@@ -17,7 +17,7 @@ export class BlockTargetIndexer extends RootIndexer {
     private readonly db: Database,
     private readonly config: ActivityConfigProject,
     private readonly options?: {
-      onTick?: (target: number) => Promise<void>
+      onTick?: (targetTimestamp: number) => Promise<void>
     },
   ) {
     super(

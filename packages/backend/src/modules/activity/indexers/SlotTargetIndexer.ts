@@ -13,7 +13,7 @@ export class SlotTargetIndexer extends RootIndexer {
     private readonly slotTimestampProvider: SlotTimestampProvider,
     private readonly config: ActivityConfigProject,
     private readonly options?: {
-      onTick?: (target: number) => Promise<void>
+      onTick?: (targetTimestamp: number) => Promise<void>
     },
   ) {
     super(
