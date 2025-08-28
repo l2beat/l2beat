@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { Badge } from '~/components/badge/Badge'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
@@ -75,16 +76,24 @@ export const publicSystemsColumns = [
         cell: (ctx) => {
           const maxThroughputPerSecond =
             ctx.row.original.data?.maxThroughputPerSecond
+
+          if (maxThroughputPerSecond === 'NO_CAP') {
+            return (
+              <div className="text-left">
+                <Badge type="gray" size="small">
+                  No cap
+                </Badge>
+              </div>
+            )
+          }
+
           return (
             <TableValueCell
               emptyMode="upcoming"
               value={
                 maxThroughputPerSecond
                   ? {
-                      value:
-                        maxThroughputPerSecond === 'NO_CAP'
-                          ? 'No cap'
-                          : formatBpsToMbps(maxThroughputPerSecond),
+                      value: formatBpsToMbps(maxThroughputPerSecond),
                     }
                   : undefined
               }
