@@ -1,7 +1,7 @@
 {
   "name": "gateway",
   "chain": "gateway",
-  "timestamp": 1754119529,
+  "timestamp": 1756373713,
   "configHash": "0xcf18bc89fc9392fb20887ff4cc2b96e2db6abbb6a09945b7c79a56670c70d948",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -44,6 +44,6 @@
   "usedTemplates": {
     "shared-zk-stack/L1Messenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "gateway": 17031 },
-  "permissionsConfigHash": "0xa5764f349b55e9ebde03cc0ed3d732daa90a61d28835ca17bcdba1e1e8d1b675"
+  "usedBlockNumbers": { "gateway": 35864 },
+  "permissionsConfigHash": "0xce8ff687fd94100a0c00aa03ea7f676cbb007d6ebcc05b5f0196bc652248d264"
 }
