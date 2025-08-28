@@ -4,6 +4,7 @@ import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { categoryToLabel } from '../../project/tvs-breakdown/components/tables/categoryToLabel'
 import { BridgedUsingCell } from '../../project/tvs-breakdown/components/tables/cells/BridgedUsingCell'
 import { TokenAddressCell } from '../../project/tvs-breakdown/components/tables/cells/TokenAddressCell'
@@ -83,6 +84,20 @@ export const columns = [
         {categoryToLabel(ctx.row.original.category)}
       </div>
     ),
+  }),
+  columnHelper.accessor('priceUsd', {
+    id: 'priceUsd',
+    header: 'Price',
+    meta: {
+      align: 'right',
+    },
+    cell: (ctx) => {
+      return (
+        <div className="font-medium text-xs">
+          {formatCurrency(ctx.row.original.priceUsd, 'usd')}
+        </div>
+      )
+    },
   }),
   columnHelper.accessor('valueForProject', {
     id: 'value',
