@@ -252,7 +252,11 @@ function BreakdownCell({
   )
 }
 
-function dataKeyToFilter(dataKey: TvsToken['category'] | TvsToken['source']) {
+function dataKeyToFilter(
+  dataKey:
+    | Exclude<TvsToken['category'], 'rwaRestricted' | 'rwaPublic'>
+    | TvsToken['source'],
+) {
   switch (dataKey) {
     case 'ether':
       return 'ETH & derivatives'
