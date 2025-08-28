@@ -1,4 +1,6 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { CountBadge } from '~/components/badge/CountBadge'
+import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
@@ -12,18 +14,43 @@ import {
 } from './columns'
 
 export function ScalingRiskStateValidationTable({
+  tableTab,
+  setTableTab,
   zk,
   optimistic,
 }: {
+  tableTab: 'zk' | 'optimistic'
+  setTableTab: (tab: 'zk' | 'optimistic') => void
   zk: ScalingRiskStateValidationZkEntry[]
   optimistic: ScalingRiskStateValidationOptimisticEntry[]
 }) {
   return (
     <div>
-      <h1 className="font-bold text-2xl">ZK</h1>
-      <ScalingRiskZkTable entries={zk} />
-      <h1 className="font-bold text-2xl">Optimistic</h1>
-      <ScalingRiskOptimisticTable entries={optimistic} />
+      <RadioGroup
+        name="riskStateValidaitonTableTab"
+        value={tableTab}
+        onValueChange={(value) => setTableTab(value as 'zk' | 'optimistic')}
+        className="mb-2 h-10 w-full p-1.5"
+      >
+        <RadioGroupItem
+          value="zk"
+          className="flex w-full items-center justify-center gap-1.5"
+        >
+          Zero-knowledge
+          <CountBadge>{zk.length}</CountBadge>
+        </RadioGroupItem>
+        <RadioGroupItem
+          value="optimistic"
+          className="flex w-full items-center justify-center gap-1.5"
+        >
+          Optimistic
+          <CountBadge>{optimistic.length}</CountBadge>
+        </RadioGroupItem>
+      </RadioGroup>
+      {tableTab === 'zk' && <ScalingRiskZkTable entries={zk} />}
+      {tableTab === 'optimistic' && (
+        <ScalingRiskOptimisticTable entries={optimistic} />
+      )}
     </div>
   )
 }
