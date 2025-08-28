@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import type { DayActivityIndexerDeps } from './types'
@@ -32,17 +32,15 @@ export class DayActivityIndexer extends ManagedChildIndexer {
     const fromWithBatchSize = adjustedFrom + this.$.batchSize
     const adjustedTo = fromWithBatchSize < to ? fromWithBatchSize : to
 
-    const counts = await this.$.txsCountService.getTxsCount(
-      adjustedFrom,
-      adjustedTo,
-    )
+    const { records, latestTimestamp } =
+      await this.$.txsCountService.getTxsCount(adjustedFrom, adjustedTo)
 
     await this.$.db.transaction(async () => {
-      await this.$.db.activity.upsertMany(counts)
+      await this.$.db.activity.upsertMany(records)
       await this.$.db.syncMetadata.updateSyncedUntil(
         'activity',
         [this.$.projectId],
-        adjustedTo * UnixTime.DAY,
+        latestTimestamp,
       )
     })
 

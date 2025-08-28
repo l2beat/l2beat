@@ -17,7 +17,13 @@ export interface ActivityIndexerDeps
 }
 
 export interface TxsCountService {
-  getTxsCount(from: number, to: number): Promise<ActivityRecord[]>
+  getTxsCount(
+    from: number,
+    to: number,
+  ): Promise<{
+    records: ActivityRecord[]
+    latestTimestamp: number
+  }>
 }
 
 export interface DayActivityIndexerDeps extends ActivityIndexerDeps {

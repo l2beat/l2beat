@@ -23,10 +23,11 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
 
     this.logger.info('Fetching blocks', { from, to: adjustedTo })
 
-    const counts = await this.$.txsCountService.getTxsCount(from, adjustedTo)
-    const currentMap = await this.getDatabaseEntries(counts)
+    const { records, latestTimestamp } =
+      await this.$.txsCountService.getTxsCount(from, adjustedTo)
+    const currentMap = await this.getDatabaseEntries(records)
 
-    const dataToSave = counts.map(
+    const dataToSave = records.map(
       ({
         timestamp,
         projectId,
@@ -57,13 +58,11 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
 
     await this.$.db.transaction(async () => {
       await this.$.db.activity.upsertMany(dataToSave)
-      if (dataToSave.length > 0) {
-        await this.$.db.syncMetadata.updateSyncedUntil(
-          'activity',
-          [this.$.projectId],
-          Math.max(...dataToSave.map((d) => d.timestamp)),
-        )
-      }
+      await this.$.db.syncMetadata.updateSyncedUntil(
+        'activity',
+        [this.$.projectId],
+        latestTimestamp,
+      )
     })
 
     return adjustedTo
