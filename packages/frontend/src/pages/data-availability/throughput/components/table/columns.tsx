@@ -2,7 +2,6 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
-import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { TableLink } from '~/components/table/TableLink'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/DaCommonProjectColumns'
@@ -77,34 +76,48 @@ export const publicSystemsColumns = [
           const maxThroughputPerSecond =
             ctx.row.original.data?.maxThroughputPerSecond
           return (
-            <TwoRowCell>
-              <TwoRowCell.First>
-                <TableValueCell
-                  emptyMode="upcoming"
-                  value={
-                    maxThroughputPerSecond
-                      ? {
-                          value:
-                            maxThroughputPerSecond === 'NO_CAP'
-                              ? 'No cap'
-                              : formatBpsToMbps(maxThroughputPerSecond),
-                        }
-                      : undefined
-                  }
-                />
-              </TwoRowCell.First>
-              <TwoRowCell.Second>
-                {ctx.row.original.data?.maxRegistered
-                  ? formatBpsToMbps(ctx.row.original.data.maxRegistered)
-                  : undefined}
-              </TwoRowCell.Second>
-            </TwoRowCell>
+            <TableValueCell
+              emptyMode="upcoming"
+              value={
+                maxThroughputPerSecond
+                  ? {
+                      value:
+                        maxThroughputPerSecond === 'NO_CAP'
+                          ? 'No cap'
+                          : formatBpsToMbps(maxThroughputPerSecond),
+                    }
+                  : undefined
+              }
+            />
           )
         },
         meta: {
           align: 'right',
           tooltip:
-            'The maximum data throughput that can be sustained over time, along with the maximum recorded historically (calculated based on hourly data size). For Ethereum, the maximum capacity refers to the target blob throughput, since the blob base fee increases exponentially when usage exceeds the target.',
+            'The maximum data throughput that can be maintained over time. For Ethereum, it refers to the target blob throughput, as the blob base fee increases exponentially when blob usage exceeds the target.',
+        },
+      }),
+      columnHelper.accessor((e) => e.data?.maxRegistered, {
+        header: 'MAX REGISTERED',
+        cell: (ctx) => {
+          const maxRegisteredThroughput = ctx.row.original.data?.maxRegistered
+          return (
+            <TableValueCell
+              emptyMode="upcoming"
+              value={
+                maxRegisteredThroughput
+                  ? {
+                      value: formatBpsToMbps(maxRegisteredThroughput),
+                    }
+                  : undefined
+              }
+            />
+          )
+        },
+        meta: {
+          align: 'right',
+          tooltip:
+            'The maximum recorded throughput (historically, calculated based on hourly data size).',
         },
       }),
     ],
