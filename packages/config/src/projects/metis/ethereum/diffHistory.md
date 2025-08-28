@@ -8,7 +8,7 @@ Generated with discovered.json: 0x0a40eeba9cfe5a8c61997e0cad046b657cdcfd8d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Removing MVM_Verifier as it is unused, MVM_Fraud_Verifier is used in the proof system.
 
 ## Config/verification related changes
 
