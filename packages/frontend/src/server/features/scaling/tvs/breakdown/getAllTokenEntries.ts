@@ -108,6 +108,7 @@ function getEntries(
           project.contracts?.addresses,
         ),
         iconUrl: token.iconUrl ?? '',
+        priceUsd: tokenValue.priceUsd,
         valueForProject: tokenValue.valueForProject,
         value: tokenValue.value,
         amount: tokenValue.amount,
