@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { CoingeckoQueryService } from '@l2beat/shared'
+import partition from 'lodash/partition'
 import type { Config } from '../../config'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import type { Peripherals } from '../../peripherals/Peripherals'
@@ -36,7 +37,26 @@ export function createTrackedTxsModule(
 
   const indexerService = new IndexerService(peripherals.database)
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const hourlyIndexer = new HourlyIndexer(logger, clock, {
+    onTick: async (targetTimestamp) => {
+      const [l2CostsConfigs, livenessConfigs] = partition(
+        runtimeConfigurations,
+        (c) => c.type === 'l2costs',
+      )
+      await peripherals.database.syncMetadata.upsertMany([
+        ...l2CostsConfigs.map((c) => ({
+          feature: 'l2Costs' as const,
+          id: c.projectId,
+          target: targetTimestamp,
+        })),
+        ...livenessConfigs.map((c) => ({
+          feature: 'liveness' as const,
+          id: c.projectId,
+          target: targetTimestamp,
+        })),
+      ])
+    },
+  })
   const bigQueryClient = peripherals.getClient(
     BigQueryClient,
     config.trackedTxsConfig.bigQuery,

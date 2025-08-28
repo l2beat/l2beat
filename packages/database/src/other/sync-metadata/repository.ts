@@ -10,7 +10,7 @@ import {
 } from './entity'
 
 export class SyncMetadataRepository extends BaseRepository {
-  async upsert(record: SyncMetadataRecord): Promise<void> {
+  async upsert(record: Insertable<SyncMetadataRecord>): Promise<void> {
     await this.upsertMany([record])
   }
 

@@ -57,15 +57,14 @@ export function initTvsModule(
   const hourlyIndexer = new HourlyIndexer(logger, clock, {
     onTick: async (target) => {
       if (!config.tvs) return
-      const tokensToUpdate = []
-      const projectsToUpdate = []
+      const recordIds = []
       for (const project of config.tvs.projects) {
         const tokensWithRanges = getTokensWithRanges(project.tokens).filter(
           (t) =>
             t.sinceTimestamp <= target &&
             (!t.untilTimestamp || t.untilTimestamp >= target),
         )
-        tokensToUpdate.push(...tokensWithRanges.map((t) => t.id))
+        recordIds.push(...tokensWithRanges.map((t) => t.id))
 
         const { since, until } = getProjectSyncRange(tokensWithRanges)
 
@@ -73,15 +72,14 @@ export function initTvsModule(
           continue
         }
 
-        projectsToUpdate.push(project.projectId)
+        recordIds.push(project.projectId)
       }
 
       await database.syncMetadata.upsertMany(
-        [...tokensToUpdate, ...projectsToUpdate].map((id) => ({
+        recordIds.map((id) => ({
           feature: 'tvs',
           id,
           target: target,
-          syncedUntil: null,
         })),
       )
     },

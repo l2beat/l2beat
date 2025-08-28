@@ -101,6 +101,10 @@ function createIndexers(
   )[] = []
 
   for (const daLayer of config.blockLayers) {
+    const configurations = config.blockProjects.filter(
+      (c) => c.daLayer === daLayer.name,
+    )
+
     const targetIndexer = new BlockTargetIndexer(
       logger,
       clock,
@@ -108,20 +112,17 @@ function createIndexers(
       daLayer.name,
       {
         onTick: async (targetTimestamp) => {
-          await database.syncMetadata.upsert({
-            feature: 'dataAvailability',
-            id: daLayer.projectId,
-            target: targetTimestamp,
-            syncedUntil: null,
-          })
+          await database.syncMetadata.upsertMany(
+            configurations.map((c) => ({
+              feature: 'dataAvailability',
+              id: c.projectId,
+              target: targetTimestamp,
+            })),
+          )
         },
       },
     )
     targetIndexers.push(targetIndexer)
-
-    const configurations = config.blockProjects.filter(
-      (c) => c.daLayer === daLayer.name,
-    )
 
     let blobService: BlobService | undefined = undefined
     let blobIndexer: BlobIndexer | undefined = undefined
