@@ -34,6 +34,7 @@ export function ScalingRiskStateValidationTable({
       // name="riskStateValidaitonTableTab"
       value={tableTab}
       onValueChange={(value) => setTableTab(value as 'zk' | 'optimistic')}
+      variant="highlighted"
     >
       <TabsList>
         <TabsTrigger value="zk">

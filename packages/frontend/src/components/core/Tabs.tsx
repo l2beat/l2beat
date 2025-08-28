@@ -6,12 +6,16 @@ import { cn } from '~/utils/cn'
 
 function Tabs({
   className,
+  variant,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Root>) {
+}: React.ComponentProps<typeof TabsPrimitive.Root> & {
+  variant?: 'highlighted'
+}) {
   return (
     <TabsPrimitive.Root
       data-slot="tabs"
-      className={cn('flex flex-col gap-2', className)}
+      data-variant={variant}
+      className={cn('group/tabs flex flex-col gap-2', className)}
       {...props}
     />
   )
@@ -25,7 +29,7 @@ function TabsList({
     <TabsPrimitive.List
       data-slot="tabs-list"
       className={cn(
-        'mb-2 inline-flex h-10 w-full items-center justify-center rounded-lg bg-surface-secondary p-1.5',
+        'inline-flex h-10 w-full items-center justify-center rounded-lg bg-surface-secondary p-1.5',
         className,
       )}
       {...props}
@@ -41,7 +45,11 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        'group/tabs-trigger inline-flex w-full flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-2 py-1 font-bold text-label-value-15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-brand data-[state=active]:text-primary-invert',
+        'group/tabs-trigger inline-flex size-full flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-2 py-1 font-bold text-label-value-15',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-1',
+        'disabled:pointer-events-none disabled:opacity-50',
+        'data-[state=active]:bg-pure-white data-[state=active]:text-primary dark:data-[state=active]:bg-black',
+        'group-data-[variant=highlighted]/tabs:data-[state=active]:bg-brand group-data-[variant=highlighted]/tabs:data-[state=active]:text-primary-invert',
         className,
       )}
       {...props}
