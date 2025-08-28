@@ -51,10 +51,15 @@ function SingleBridge({
         className="flex items-center justify-start gap-1"
         href={`/bridges/projects/${bridge.slug}`}
       >
-        <EllipsisText className="text-link underline">
+        <EllipsisText
+          className="text-link underline"
+          accessoryRight={
+            <ArrowRightIcon className="inline-block fill-current" />
+          }
+        >
           {bridge.name}
         </EllipsisText>
-        <ArrowRightIcon className="inline-block fill-link transition-transform" />
+        <ArrowRightIcon className="inline-block fill-link" />
       </a>
     )
   }
