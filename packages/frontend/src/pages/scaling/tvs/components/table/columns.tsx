@@ -240,7 +240,7 @@ function BreakdownCell({
     <TableLink
       href={
         data.breakdown[dataKey] > 0
-          ? `/scaling/projects/${row.slug}/tvs-breakdown?filters=${filters}`
+          ? `/scaling/projects/${row.slug}/tvs-breakdown?filters=${filters}#tvs-breakdown-token-table`
           : undefined
       }
     >
