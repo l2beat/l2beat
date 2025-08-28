@@ -1,7 +1,7 @@
 {
   "name": "socket",
   "timestamp": 1755601095,
-  "configHash": "0x0b752fb4c9f0d18a743848c735091d45f009e00e67a90b5eedca94b0333572ed",
+  "configHash": "0x3a1e326bc1eb553dc7f5676f51bdd7f8e209f4940967786c90fda9321dbcc48c",
   "entries": [
     {
       "name": "WETH Vault (Kinto)",
@@ -860,18 +860,6 @@
       "proxyType": "EIP7702 EOA",
       "values": {
         "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B"
-      },
-      "errors": {
-        "delegationManager": "Processing error occurred.",
-        "DOMAIN_VERSION": "Processing error occurred.",
-        "eip712Domain": "Processing error occurred.",
-        "entryPoint": "Processing error occurred.",
-        "getDeposit": "Processing error occurred.",
-        "getDomainHash": "Processing error occurred.",
-        "getNonce": "Processing error occurred.",
-        "NAME": "Processing error occurred.",
-        "PACKED_USER_OP_TYPEHASH": "Processing error occurred.",
-        "VERSION": "Processing error occurred."
       }
     },
     {
