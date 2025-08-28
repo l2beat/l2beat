@@ -11,6 +11,11 @@ import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
+type LargestPoster = Omit<DataAvailabilityRecord, 'configurationId'> & {
+  name: string
+  slug: string | undefined
+}
+
 export async function getDaThroughputTable(
   ...parameters: Parameters<typeof getDaThroughputTableData>
 ) {
@@ -66,14 +71,16 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
     ]),
   )
 
-  const largestPosters = await getLargestPosters(
-    groupedDaLayerValues,
-    groupedProjectValues,
-    sovereignProjectsNamesMap,
-  )
+  const { all: largestPostersAll, scalingOnly: largestPostersScalingOnly } =
+    await getLargestPosters(
+      groupedDaLayerValues,
+      groupedProjectValues,
+      sovereignProjectsNamesMap,
+    )
 
   const getData = (
     values: Record<string, Omit<DataAvailabilityRecord, 'configurationId'>[]>,
+    largestPostersMap: Record<string, LargestPoster | undefined>,
   ) => {
     return Object.fromEntries(
       daLayers
@@ -93,7 +100,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
             'Project does not have throughput data configured',
           )
 
-          const largestPoster = largestPosters[daLayer.id]
+          const largestPoster = largestPostersMap[daLayer.id]
           const maxThroughputPerSecond = getMaxThroughputPerSecond(
             daLayer.id,
             latestThroughput,
@@ -120,8 +127,11 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   }
 
   return {
-    data: getData(groupedDaLayerValues),
-    scalingOnlyData: getData(onlyScalingDaLayerValues),
+    data: getData(groupedDaLayerValues, largestPostersAll),
+    scalingOnlyData: getData(
+      onlyScalingDaLayerValues,
+      largestPostersScalingOnly,
+    ),
   }
 }
 
@@ -287,19 +297,15 @@ async function getLargestPosters(
     Omit<DataAvailabilityRecord, 'configurationId'>[]
   >,
   sovereignProjectsNamesMap: Map<string, string>,
-): Promise<
-  Record<
-    string,
-    Omit<DataAvailabilityRecord, 'configurationId'> & {
-      name: string
-      slug: string | undefined
-    }
-  >
-> {
-  const largestPosters = Object.fromEntries(
+): Promise<{
+  all: Record<string, LargestPoster | undefined>
+  scalingOnly: Record<string, LargestPoster | undefined>
+}> {
+  const largestPostersRaw = Object.fromEntries(
     Object.entries(groupedProjectValues)
       .map(([daLayer, values]) => {
-        let largestPoster = undefined
+        let largestPosterAll = undefined
+        let largestPosterScalingOnly = undefined
         const lastTimestamp = groupedDaLayerValues[daLayer]?.at(-1)?.timestamp
         if (!lastTimestamp) {
           return undefined
@@ -310,55 +316,83 @@ async function getLargestPosters(
         )
 
         for (const value of filteredValues) {
-          if (!largestPoster || value.totalSize > largestPoster.totalSize) {
-            largestPoster = value
+          // Find largest poster including all projects
+          if (
+            !largestPosterAll ||
+            value.totalSize > largestPosterAll.totalSize
+          ) {
+            largestPosterAll = value
+          }
+          // Find largest poster excluding sovereign projects
+          if (
+            !largestPosterScalingOnly ||
+            (!sovereignProjectsNamesMap.has(value.projectId) &&
+              value.totalSize > largestPosterScalingOnly.totalSize)
+          ) {
+            largestPosterScalingOnly = value
           }
         }
-        if (!largestPoster) {
-          return undefined
-        }
-        return [daLayer, largestPoster] as const
+
+        return [
+          daLayer,
+          { all: largestPosterAll, scalingOnly: largestPosterScalingOnly },
+        ] as const
       })
       .filter(notUndefined),
   )
 
+  const allProjectIds = new Set<string>()
+  for (const { all, scalingOnly } of Object.values(largestPostersRaw)) {
+    if (all) allProjectIds.add(all.projectId)
+    if (scalingOnly) allProjectIds.add(scalingOnly.projectId)
+  }
+
   const largestPostersProjects = await ps.getProjects({
-    ids: Object.values(largestPosters).map((p) => ProjectId(p.projectId)),
+    ids: Array.from(allProjectIds) as ProjectId[],
     select: ['scalingInfo'],
   })
 
-  return Object.fromEntries(
-    Object.entries(largestPosters).map(([daLayer, largestPoster]) => {
-      const largestPosterProject = largestPostersProjects.find(
-        (p) => p.id === largestPoster.projectId,
-      )
-      if (largestPosterProject) {
-        return [
-          daLayer,
-          {
-            name: largestPosterProject.name,
-            slug: largestPosterProject.slug,
-            ...largestPoster,
-          },
-        ]
+  const enrichPoster = (
+    poster: Omit<DataAvailabilityRecord, 'configurationId'>,
+    allowSovereign: boolean,
+  ) => {
+    const project = largestPostersProjects.find(
+      (p) => p.id === poster.projectId,
+    )
+    if (project) {
+      return {
+        name: project.name,
+        slug: project.slug,
+        ...poster,
       }
+    }
 
-      const sovereignProject = sovereignProjectsNamesMap.get(
-        largestPoster.projectId,
-      )
-      if (sovereignProject) {
-        return [
-          daLayer,
-          {
-            name: sovereignProject,
-            slug: undefined,
-            ...largestPoster,
-          },
-        ]
+    const sovereignProject = sovereignProjectsNamesMap.get(poster.projectId)
+    if (sovereignProject && allowSovereign) {
+      return {
+        name: sovereignProject,
+        slug: undefined,
+        ...poster,
       }
-      throw new Error(
-        `Project not found in config or in sovereign projects list: ${largestPoster.projectId}`,
-      )
-    }),
-  )
+    }
+
+    throw new Error(
+      `Project not found in config or in sovereign projects list: ${poster.projectId}`,
+    )
+  }
+
+  return {
+    all: Object.fromEntries(
+      Object.entries(largestPostersRaw).map(([daLayer, { all }]) => [
+        daLayer,
+        all ? enrichPoster(all, true) : undefined,
+      ]),
+    ),
+    scalingOnly: Object.fromEntries(
+      Object.entries(largestPostersRaw).map(([daLayer, { scalingOnly }]) => [
+        daLayer,
+        scalingOnly ? enrichPoster(scalingOnly, false) : undefined,
+      ]),
+    ),
+  }
 }
