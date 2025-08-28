@@ -150,17 +150,6 @@ export function CostsChart({
     >
       <ComposedChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
-        {hasPostedData && (
-          <Line
-            yAxisId="right"
-            dataKey="posted"
-            strokeWidth={2}
-            stroke={chartMeta.posted.color}
-            isAnimationActive={false}
-            dot={false}
-            hide={!dataKeys.includes('posted')}
-          />
-        )}
         <Area
           yAxisId="left"
           dataKey="overhead"
@@ -213,6 +202,17 @@ export function CostsChart({
           isAnimationActive={false}
           hide={!dataKeys.includes('calldata')}
         />
+        {hasPostedData && (
+          <Line
+            yAxisId="right"
+            dataKey="posted"
+            strokeWidth={2}
+            stroke={chartMeta.posted.color}
+            isAnimationActive={false}
+            dot={false}
+            hide={!dataKeys.includes('posted')}
+          />
+        )}
 
         {hasPostedData && (
           <YAxis
