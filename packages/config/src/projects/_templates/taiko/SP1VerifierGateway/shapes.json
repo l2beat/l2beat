@@ -1,20 +1,17 @@
 {
   "SP1Verifier.sol": {
     "hash": "0x5350c31937c3194b7ab11b26251fcec0e2a3ba88b516d5c851b9f6bfe7e76935",
-    "address": "0x5f5b83Ca87E2fBc513B800FeD6cCD626536d7219",
-    "chain": "ethereum",
+    "address": "eth:0x5f5b83Ca87E2fBc513B800FeD6cCD626536d7219",
     "blockNumber": 22468063
   },
   "SP1PostPacaya": {
     "hash": "0x5ae248a45849f9700bac9ab8fbd1570be72258e51c738511f3468f788e1127ca",
-    "address": "0x35f26e14D0dAeDd1904843370f761C60B891D466",
-    "chain": "ethereum",
+    "address": "eth:0x35f26e14D0dAeDd1904843370f761C60B891D466",
     "blockNumber": 22565516
   },
   "TaikoSP1Verifier": {
     "hash": "0x21ba9895a752c42c9a52b397fdc8ee7c4c22e621273f53176f80c853e2502ca0",
-    "address": "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7",
-    "chain": "ethereum",
+    "address": "eth:0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7",
     "blockNumber": 22630425
   }
 }

@@ -1,8 +1,7 @@
 {
   "DelayedWMetis": {
     "hash": "0x9d2c1c322c99db1beff551176a6a67aed49220a4307f3d9b797ac7dcc975ecab",
-    "address": "0xa2033fbb6213B2233a6998391ccc8E070BcC1B51",
-    "chain": "ethereum",
+    "address": "eth:0xa2033fbb6213B2233a6998391ccc8E070BcC1B51",
     "blockNumber": 22537931
   }
 }

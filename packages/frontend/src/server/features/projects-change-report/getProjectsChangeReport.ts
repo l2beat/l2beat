@@ -1,5 +1,9 @@
 import type { UpdateDiffRecord } from '@l2beat/database'
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+} from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -50,29 +54,31 @@ async function getProjectsChangeReportWithFns() {
     // if all inputs used to create them are older than the block number we
     // used to build the project information.
     const activeDiffs = diffs.filter((diff) => {
-      const baseTimestamp = project?.discoveryInfo.timestampPerChain[diff.chain]
+      const baseTimestamp = project?.discoveryInfo.baseTimestamp
       if (baseTimestamp === undefined) return true
       const isDiffActive = baseTimestamp <= diff.diffBaseTimestamp
       return isDiffActive
     })
 
-    const byChain = groupBy(activeDiffs, (diff) => diff.chain)
+    const byChain = groupBy(activeDiffs, (diff) =>
+      ChainSpecificAddress.longChain(ChainSpecificAddress(diff.address)),
+    )
     for (const [chain, changes] of Object.entries(byChain)) {
       const changesByType = groupByType(changes)
 
       result[projectId] ??= {}
       result[projectId][chain] = {
         implementationChange: changesByType.implementationChange.map((c) =>
-          EthereumAddress(c.address),
+          ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
         ),
         highSeverityFieldChange: changesByType.highSeverityFieldChange.map(
-          (c) => EthereumAddress(c.address),
+          (c) => ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
         ),
         ultimateUpgraderChange: changesByType.ultimateUpgraderChange.map((c) =>
-          EthereumAddress(c.address),
+          ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
         ),
         becameVerified: changesByType.becameVerified.map((c) =>
-          EthereumAddress(c.address),
+          ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
         ),
       }
     }

@@ -10,7 +10,6 @@ type UpdateDiffType =
 
 export interface UpdateDiffRecord {
   type: UpdateDiffType
-  chain: string
   address: string
   projectId: string
   timestamp: UnixTime
@@ -21,7 +20,6 @@ export interface UpdateDiffRecord {
 export function toRow(record: UpdateDiffRecord): Insertable<UpdateDiff> {
   return {
     projectId: record.projectId,
-    chain: record.chain,
     address: record.address,
     type: record.type,
     timestamp: UnixTime.toDate(record.timestamp),
@@ -33,7 +31,6 @@ export function toRow(record: UpdateDiffRecord): Insertable<UpdateDiff> {
 export function toRecord(row: Selectable<UpdateDiff>): UpdateDiffRecord {
   return {
     projectId: row.projectId,
-    chain: row.chain,
     address: row.address,
     type: row.type as UpdateDiffType,
     timestamp: UnixTime.fromDate(row.timestamp),

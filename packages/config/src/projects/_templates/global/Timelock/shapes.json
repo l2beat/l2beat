@@ -1,20 +1,17 @@
 {
   "Timelock1": {
     "hash": "0xaf04cf94ef4bf759d6466fa262a5e8e54f6d5c9652286fe5d71c9a904de27e5c",
-    "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
-    "chain": "ethereum",
+    "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
     "blockNumber": 22188285
   },
   "Timelock2": {
     "hash": "0x6bcef64b35598149aee2e622e06fb8e414063ee43de09312ca4bbd0306b0eea9",
-    "address": "0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3",
-    "chain": "ethereum",
+    "address": "eth:0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3",
     "blockNumber": 22188285
   },
   "Timelock.sol": {
     "hash": "0xce6b84e712754e5a1e084026449891970a1f58fbd532d364ff46e123cb80f082",
-    "address": "0xf817cb3092179083c48c014688D98B72fB61464f",
-    "chain": "base",
+    "address": "base:0xf817cb3092179083c48c014688D98B72fB61464f",
     "blockNumber": 29215620
   }
 }

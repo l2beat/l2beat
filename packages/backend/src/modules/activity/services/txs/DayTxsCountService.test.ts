@@ -18,17 +18,20 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
       UnixTime.toDays(end),
     )
 
-    expect(result).toEqual([
-      activityRecord(
-        'a',
-        start,
-        2000,
-        null,
-        start,
-        start + 1 * UnixTime.DAY - 1,
-      ),
-      activityRecord('a', end, 3000, null, end, end + 1 * UnixTime.DAY - 1),
-    ])
+    expect(result).toEqual({
+      records: [
+        activityRecord(
+          'a',
+          start,
+          2000,
+          null,
+          start,
+          start + 1 * UnixTime.DAY - 1,
+        ),
+        activityRecord('a', end, 3000, null, end, end + 1 * UnixTime.DAY - 1),
+      ],
+      latestTimestamp: end,
+    })
     expect(provider.getDailyCount).toHaveBeenCalledTimes(2)
   })
 })

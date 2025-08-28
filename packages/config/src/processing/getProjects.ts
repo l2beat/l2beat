@@ -165,7 +165,8 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
 }
 
 function getType(p: ScalingProject): ProjectScalingCategory | undefined {
-  if (p.reasonsForBeingOther) return 'Other'
+  if (p.reasonsForBeingOther && p.reasonsForBeingOther.length > 0)
+    return 'Other'
   if (p.dataAvailability?.bridge.value === 'Plasma') return 'Plasma'
 
   if (p.isUpcoming || !p.proofSystem || !p.dataAvailability) return undefined
@@ -362,11 +363,11 @@ export function adjustDiscoveryInfo(
     contractsDiscoDriven,
     permissionsDiscoDriven,
     isDiscoDriven: contractsDiscoDriven && permissionsDiscoDriven,
-    timestampPerChain: project.discoveryInfo.timestampPerChain,
+    baseTimestamp: project.discoveryInfo.baseTimestamp,
     // This is implicit assumption that if there are timestamps per chain, then
     // the project has disco ui. It's cause if there are some keys it means
     // that the project has discovered.json file.
-    hasDiscoUi: Object.keys(project.discoveryInfo.timestampPerChain).length > 0,
+    hasDiscoUi: project.discoveryInfo.baseTimestamp !== undefined,
   }
 }
 

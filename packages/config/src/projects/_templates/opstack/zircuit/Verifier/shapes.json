@@ -1,14 +1,12 @@
 {
   "VerifierV2": {
     "hash": "0xaf075d81d9fd983d155a21617c104cfab25f4ad9e8f039fd8a15c1220e3d6227",
-    "address": "0xD5B424AC36928E2da7dA9eCA9807938a56988F5a",
-    "chain": "ethereum",
+    "address": "eth:0xD5B424AC36928E2da7dA9eCA9807938a56988F5a",
     "blockNumber": 22188285
   },
   "VerifierV2_2": {
     "hash": "0x709abb48f790c58a1517d5b15d470a3b3058adc8ff1953bb2764302ffd552c1b",
-    "address": "0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0",
-    "chain": "ethereum",
+    "address": "eth:0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0",
     "blockNumber": 22731151
   }
 }

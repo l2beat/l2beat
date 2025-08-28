@@ -73,12 +73,10 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
 
 export function executeDiscover(
   project: string,
-  chain: string,
   devMode: boolean,
 ): EventSource {
   const params = new URLSearchParams({
     project,
-    chain,
     devMode: devMode.toString(),
   })
   return new EventSource(`/api/terminal/discover?${params}`)
@@ -175,4 +173,11 @@ export async function getFlatSource(
   }
   const data = await res.json()
   return data as { name: string; sources: Record<string, string> }
+}
+
+export function executeFindMinters(address: string): EventSource {
+  const params = new URLSearchParams({
+    address,
+  })
+  return new EventSource(`/api/terminal/find-minters?${params}`)
 }

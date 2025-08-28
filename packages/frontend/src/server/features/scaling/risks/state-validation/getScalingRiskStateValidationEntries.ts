@@ -125,7 +125,7 @@ export interface ScalingRiskStateValidationOptimisticEntry
   proofSystem: ProjectScalingProofSystem
   executionDelay: number | undefined
   challengePeriod: number | undefined
-  initialBond: number | undefined
+  initialBond: string | undefined
 }
 
 function getScalingRiskStateValidationOptimisticEntry(

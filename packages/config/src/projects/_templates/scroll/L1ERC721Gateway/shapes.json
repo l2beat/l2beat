@@ -1,14 +1,12 @@
 {
   "L1ERC721Gateway.sol": {
     "hash": "0x2a543ae77e08fc2293b99836986b16db46b713eb958556cd1c95fcabce559b4b",
-    "address": "0xd1841c5756428812233eEA78afC17cb2D3e392bb",
-    "chain": "ethereum",
+    "address": "eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb",
     "blockNumber": 22338265
   },
   "L1ERC721Gateway_Feynman": {
     "hash": "0x8a8d5a6804c708dac3077a6dc3205f8c0ef2f6afab6f82c622a4b7e4b1cdda5d",
-    "address": "0x79F1bF1906B63b56E08c3ada4c51De11F145a27A",
-    "chain": "ethereum",
+    "address": "eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A",
     "blockNumber": 23168179
   }
 }

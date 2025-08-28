@@ -13,10 +13,10 @@ import { EcosystemProjectPage } from './ecosystems/project/EcosystemProjectPage'
 import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
 import { GovernancePage } from './governance/GovernancePage'
-import { GovernancePublicationPage } from './governance/publication/GovernancePublicationPage'
-import { GovernancePublicationsPage } from './governance/publications/GovernancePublicationsPage'
-import { MonthlyUpdatePage } from './monthly-updates/MonthlyUpdatePage'
 import { MultisigReportPage } from './multisig-report/MultisigReportPage'
+import { GovernancePublicationPage } from './publications/governance/GovernancePublicationPage'
+import { MonthlyUpdatePage } from './publications/monthly-updates/MonthlyUpdatePage'
+import { PublicationsPage } from './publications/PublicationsPage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
 import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
@@ -78,7 +78,6 @@ const pages = {
   EcosystemProjectPage,
   // Governance
   GovernancePage,
-  GovernancePublicationsPage,
   GovernancePublicationPage,
   // Side pages
   FaqPage,
@@ -91,6 +90,8 @@ const pages = {
   StagesPage,
   // Monthly Updates
   MonthlyUpdatePage,
+  // Publications
+  PublicationsPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {

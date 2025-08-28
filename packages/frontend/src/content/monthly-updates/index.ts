@@ -37,6 +37,7 @@ export type UpcomingProjectUpdate = v.infer<typeof upcomingProjectUpdate>
 
 const monthlyUpdate = v.object({
   title: v.string(),
+  description: v.string().optional(),
   startDate: v.unknown().transform((v) => new Date(v as string)),
   endDate: v.unknown().transform((v) => new Date(v as string)),
   publishedOn: v.unknown().transform((v) => new Date(v as string)),

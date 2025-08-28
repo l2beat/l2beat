@@ -2124,7 +2124,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -2824,7 +2824,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -2890,7 +2890,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -5208,7 +5208,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -7207,7 +7207,7 @@
         "decimals": 18,
         "sinceTimestamp": 1708387200
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -9548,7 +9548,7 @@
         "decimals": 6,
         "sinceTimestamp": 1743552000
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "native",
       "isAssociated": false
     },

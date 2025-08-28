@@ -1,8 +1,7 @@
 {
   "MetaMorphoV1_1": {
     "hash": "0xfe791189eed97c82304340dfa04689f918737a69613848068c760f3bef4e0416",
-    "address": "0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
-    "chain": "ethereum",
+    "address": "eth:0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
     "blockNumber": 22794595
   }
 }

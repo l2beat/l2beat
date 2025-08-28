@@ -1,14 +1,12 @@
 {
   "SystemConfig.sol": {
     "hash": "0xc6b44b4f580a4675d79b547ed6eef62882f9be3e0c86e18360e9ba5ead33755a",
-    "address": "0x6A124779fDf107c3F6BcB992731dCAaD09f2276A",
-    "chain": "ethereum",
+    "address": "eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A",
     "blockNumber": 22340099
   },
   "SystemConfig_Feynman": {
     "hash": "0x94a50a4d5efa2113acdaae7b769298f0c8c17e01bc6c6efeebdb7d8a7b0bec10",
-    "address": "0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE",
-    "chain": "ethereum",
+    "address": "eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE",
     "blockNumber": 23168232
   }
 }

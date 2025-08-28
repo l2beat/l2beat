@@ -18,7 +18,7 @@ export const spheron: ScalingProject = upcomingL3({
       websites: ['https://spheron.network/'],
       documentation: ['https://docs.spheron.network/'],
       repositories: ['https://github.com/spheronFdn'],
-      bridges: [],
+      bridges: ['https://spheron-devnet-eth.bridge.caldera.xyz'],
       socialMedia: [
         'https://x.com/SpheronFDN',
         'https://t.me/Spheron',

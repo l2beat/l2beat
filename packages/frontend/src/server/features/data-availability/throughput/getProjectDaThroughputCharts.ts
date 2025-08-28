@@ -24,7 +24,7 @@ export type getProjectDaThroughputChartsData = {
     data: DaThroughputChartDataPoint[]
   }
   stats: {
-    pastDayAvgCapacityUtilization: number | undefined
+    pastDayAvgCapacityUtilization: number | undefined | null
     pastDayAvgThroughputPerSecond: number | undefined
     largestPoster:
       | {

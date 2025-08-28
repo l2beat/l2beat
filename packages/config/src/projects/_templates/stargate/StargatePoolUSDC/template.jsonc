@@ -12,7 +12,6 @@
     "poolBalance",
     "treasuryFee",
     "tvl",
-    "getTransferGasLimit",
-    "deficitOffset"
+    "getTransferGasLimit"
   ]
 }

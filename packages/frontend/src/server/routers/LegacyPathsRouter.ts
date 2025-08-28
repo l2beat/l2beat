@@ -31,5 +31,9 @@ export function createLegacyPathsRouter() {
     res.redirect(301, `/scaling/projects/${req.params.name}`)
   })
 
+  router.get('/governance/publications/:id', (req, res) => {
+    res.redirect(301, `/publications/${req.params.id}`)
+  })
+
   return router
 }

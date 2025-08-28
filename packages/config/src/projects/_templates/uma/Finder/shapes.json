@@ -1,8 +1,7 @@
 {
   "Finder": {
     "hash": "0x6b81a32a0de6b3e8ed743f089a6518d3791b0e4d373300269439642482338ddb",
-    "address": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-    "chain": "ethereum",
+    "address": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
     "blockNumber": 22517852
   }
 }

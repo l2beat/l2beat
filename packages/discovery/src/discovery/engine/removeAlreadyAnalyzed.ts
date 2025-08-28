@@ -10,7 +10,11 @@ export function removeAlreadyAnalyzed(
   for (const analysis of resolved) {
     const address = analysis.address.toString()
     const suggestedTemplates = toAnalyze[address] ?? new Set()
-    if (analysisCoveredSuggestedTemplates(analysis, suggestedTemplates)) {
+    if (analysis.type === 'Reference') {
+      delete toAnalyze[address]
+    } else if (
+      analysisCoveredSuggestedTemplates(analysis, suggestedTemplates)
+    ) {
       delete toAnalyze[address]
     } else if (
       analysis.type !== 'EOA' &&
@@ -31,6 +35,7 @@ function analysisCoveredSuggestedTemplates(
   suggestedTemplates: Set<string>,
 ): boolean {
   return (
+    analysis.type === 'Reference' || // Templates suggestions don't make sense for References
     analysis.type === 'EOA' || // Templates suggestions don't make sense for EOAs
     analysis.extendedTemplate?.reason === 'byExtends' || // Explicit template was set
     suggestedTemplates.size === 0 || // We have nothing new to suggest

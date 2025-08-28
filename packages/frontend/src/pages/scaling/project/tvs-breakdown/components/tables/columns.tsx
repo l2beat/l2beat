@@ -11,6 +11,7 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
 import { LineChartIcon } from '~/icons/LineChart'
 import { cn } from '~/utils/cn'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { categoryToLabel } from './categoryToLabel'
 import { BridgedUsingCell } from './cells/BridgedUsingCell'
 import { TokenAddressCell } from './cells/TokenAddressCell'
@@ -91,6 +92,20 @@ export const columns = [
         return <div className="font-medium text-xs">Multiple</div>
 
       return <TokenAddressCell {...address} />
+    },
+  }),
+  columnHelper.accessor('priceUsd', {
+    id: 'priceUsd',
+    header: 'Price',
+    meta: {
+      align: 'right',
+    },
+    cell: (ctx) => {
+      return (
+        <div className="font-medium text-xs">
+          {formatCurrency(ctx.row.original.priceUsd, 'usd')}
+        </div>
+      )
     },
   }),
   columnHelper.accessor('valueForProject', {

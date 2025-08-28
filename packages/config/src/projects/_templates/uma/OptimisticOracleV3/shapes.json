@@ -1,8 +1,7 @@
 {
   "OptimisticOracleV3": {
     "hash": "0xfb2c9056673690384bb615fd326655f97b80fa2a5601a15a35065b0a68186ae7",
-    "address": "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
-    "chain": "ethereum",
+    "address": "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
     "blockNumber": 22780541
   }
 }

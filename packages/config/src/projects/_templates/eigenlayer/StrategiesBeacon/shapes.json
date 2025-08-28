@@ -1,8 +1,7 @@
 {
   "StrategiesBeacon.sol": {
     "hash": "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313",
-    "address": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
-    "chain": "ethereum",
+    "address": "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
     "blockNumber": 22425028
   }
 }

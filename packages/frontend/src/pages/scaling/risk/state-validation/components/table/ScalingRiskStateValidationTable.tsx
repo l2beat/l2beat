@@ -1,4 +1,11 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { CountBadge } from '~/components/badge/CountBadge'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '~/components/core/Tabs'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
@@ -12,19 +19,44 @@ import {
 } from './columns'
 
 export function ScalingRiskStateValidationTable({
+  tableTab,
+  setTableTab,
   zk,
   optimistic,
 }: {
+  tableTab: 'zk' | 'optimistic'
+  setTableTab: (tab: 'zk' | 'optimistic') => void
   zk: ScalingRiskStateValidationZkEntry[]
   optimistic: ScalingRiskStateValidationOptimisticEntry[]
 }) {
   return (
-    <div>
-      <h1 className="font-bold text-2xl">ZK</h1>
-      <ScalingRiskZkTable entries={zk} />
-      <h1 className="font-bold text-2xl">Optimistic</h1>
-      <ScalingRiskOptimisticTable entries={optimistic} />
-    </div>
+    <Tabs
+      name="riskStateValidaitonTableTab"
+      value={tableTab}
+      onValueChange={(value) => setTableTab(value as 'zk' | 'optimistic')}
+      variant="highlighted"
+    >
+      <TabsList>
+        <TabsTrigger value="zk">
+          Zero-knowledge
+          <CountBadge className="group-data-[state=active]/tabs-trigger:bg-primary-invert group-data-[state=active]/tabs-trigger:text-brand">
+            {zk.length}
+          </CountBadge>
+        </TabsTrigger>
+        <TabsTrigger value="optimistic">
+          Optimistic
+          <CountBadge className="group-data-[state=active]/tabs-trigger:bg-primary-invert group-data-[state=active]/tabs-trigger:text-brand">
+            {optimistic.length}
+          </CountBadge>
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="zk">
+        <ScalingRiskZkTable entries={zk} />
+      </TabsContent>
+      <TabsContent value="optimistic">
+        <ScalingRiskOptimisticTable entries={optimistic} />
+      </TabsContent>
+    </Tabs>
   )
 }
 

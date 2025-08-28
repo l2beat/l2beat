@@ -47,7 +47,6 @@ const projectSearchTermParamsSchema = z.object({
 
 const discoverQuerySchema = z.object({
   project: safeStringSchema,
-  chain: safeStringSchema,
   devMode: z.enum(['true', 'false']).transform((val) => val === 'true'),
 })
 
@@ -55,6 +54,10 @@ const matchFlatQuerySchema = z.object({
   project: safeStringSchema,
   address: ethereumAddressSchema,
   against: z.enum(['templates', 'projects']),
+})
+
+const findMintersSchema = z.object({
+  address: ethereumAddressSchema,
 })
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
@@ -212,6 +215,20 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     app.get('/api/terminal/download-all-shapes', (_req, res) => {
       executeTerminalCommand(
         `cd ${path.dirname(paths.discovery)}/../ && l2b download-all-shapes`,
+        res,
+      )
+    })
+
+    app.get('/api/terminal/find-minters', (req, res) => {
+      const queryValidation = findMintersSchema.safeParse(req.query)
+      if (!queryValidation.success) {
+        res.status(400).json({ errors: queryValidation.message })
+        return
+      }
+      const { address } = queryValidation.data
+
+      executeTerminalCommand(
+        `cd ${path.dirname(paths.discovery)}/../../backend && l2b minters ${address}`,
         res,
       )
     })

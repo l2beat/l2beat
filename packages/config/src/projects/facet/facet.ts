@@ -4,6 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -30,6 +31,11 @@ const FALLBACK_TIMEOUT_SECS = discovery.getContractValue<number>(
 const MAX_CHALLENGE_SECS = discovery.getContractValue<number>(
   'Rollup',
   'MAX_CHALLENGE_SECS',
+)
+
+const proposerBond = discovery.getContractValue<number>(
+  'Rollup',
+  'PROPOSER_BOND',
 )
 
 export const facet: ScalingProject = {
@@ -124,6 +130,14 @@ export const facet: ScalingProject = {
           'eth:0x0000000000000b07ED001607f5263D85bf28Ce4C',
         ),
         tokens: ['ETH'],
+        source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Facet fast bridge',
+            },
+          ],
+        },
         description: 'Fast external bridge contract.',
       }),
       discovery.getEscrowDetails({
@@ -131,6 +145,14 @@ export const facet: ScalingProject = {
           'eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909',
         ),
         tokens: ['ETH', 'WETH'],
+        source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Facet deprecated bridge',
+            },
+          ],
+        },
         description: 'L1ETHLockbox (deprecated).',
       }),
     ],
@@ -215,7 +237,9 @@ export const facet: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
-      executionDelay: MAX_CHALLENGE_SECS,
+      challengeDelay: MAX_CHALLENGE_SECS,
+      executionDelay: 0,
+      initialBond: formatEther(proposerBond),
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,

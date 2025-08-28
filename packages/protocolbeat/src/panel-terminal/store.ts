@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import {
   executeDiscover,
   executeDownloadAllShapes,
+  executeFindMinters,
   executeMatchFlat,
 } from '../api/api'
 
@@ -9,7 +10,6 @@ interface CommandState {
   inFlight: boolean
   stream?: EventSource
 
-  chain?: string
   devMode: boolean
 }
 
@@ -19,7 +19,6 @@ interface TerminalState {
   addOutput: (text: string) => void
   clear: () => void
 
-  setChain: (chain: string) => void
   setDevMode: (devMode: boolean) => void
 
   killCommand: () => void
@@ -27,6 +26,7 @@ interface TerminalState {
   matchProject: (project: string, address: string) => void
   discover: (project: string) => Promise<void>
   downloadAllShapes: () => void
+  findMinters: (address: string) => void
 }
 
 export const useTerminalStore = create<TerminalState>((set, get) => ({
@@ -38,8 +38,6 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
   addOutput: (text) => set((state) => ({ output: state.output + text })),
   clear: () => set({ output: '' }),
 
-  setChain: (chain: string) =>
-    set((state) => ({ command: { ...state.command, chain } })),
   setDevMode: (devMode: boolean) =>
     set((state) => ({ command: { ...state.command, devMode } })),
 
@@ -60,14 +58,12 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
     executeStreaming(set, () => executeDownloadAllShapes())
   },
   discover: (project: string): Promise<void> => {
-    const chain = get().command.chain
-    if (chain === undefined) {
-      return Promise.resolve()
-    }
-
     return executeStreaming(set, () =>
-      executeDiscover(project, chain, get().command.devMode),
+      executeDiscover(project, get().command.devMode),
     )
+  },
+  findMinters: (address: string) => {
+    executeStreaming(set, () => executeFindMinters(address))
   },
 }))
 
@@ -82,9 +78,6 @@ function executeStreaming(
       let stream: EventSource | undefined
       set((state) => {
         const { command } = state
-        if (command.chain === undefined) {
-          return state
-        }
 
         const newCommand = { ...command, stream: cmd(), inFlight: true }
         stream = newCommand.stream

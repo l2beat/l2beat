@@ -294,7 +294,7 @@ function getMilestones(
 function getGovernanceLinks(
   ecosystem: Project<'ecosystemConfig'>,
 ): EcosystemGovernanceLinks {
-  const lastPublication = getCollection('publications')
+  const lastPublication = getCollection('governance-publications')
     .filter((p) => p.id.includes('review'))
     .sort((a, b) => a.data.publishedOn.getTime() - b.data.publishedOn.getTime())
     .at(-1)
@@ -318,5 +318,5 @@ function getEcosystemUpdateLink(ecosystem: Project<'ecosystemConfig'>): string {
     .at(-1)
   assert(lastReport, 'No last report')
 
-  return `/publications/monthly-updates/${lastReport.id}#${ecosystem.id}`
+  return `/publications/${lastReport.id}#${ecosystem.id}`
 }

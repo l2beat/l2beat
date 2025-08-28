@@ -1,8 +1,7 @@
 {
   "KintoAppRegistry": {
     "hash": "0xec7b652ce6b00a358ea1be503c5faf2a7bea3f40d4ff81bce6c02bf27a50a3c6",
-    "address": "0xb9cE6BC89b79c713f34fd15D82a70900fEFD0de1",
-    "chain": "kinto",
+    "address": "kinto:0xb9cE6BC89b79c713f34fd15D82a70900fEFD0de1",
     "blockNumber": 845013
   }
 }
