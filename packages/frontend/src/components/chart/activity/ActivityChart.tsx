@@ -111,7 +111,7 @@ export function ActivityChart({
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent reverse />} />
+        <ChartLegend content={<ChartLegendContent />} />
         {getStrokeOverFillAreaComponents({
           data: [
             {

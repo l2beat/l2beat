@@ -112,7 +112,7 @@ export function EcosystemsActivityChart({
         }}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-          <ChartLegend content={<ChartLegendContent reverse />} />
+          <ChartLegend content={<ChartLegendContent />} />
           {getStrokeOverFillAreaComponents({
             data: [
               {

@@ -149,7 +149,7 @@ export function CostsChart({
       project={project}
     >
       <ComposedChart data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent reverse />} />
+        <ChartLegend content={<ChartLegendContent />} />
         {hasPostedData && (
           <Line
             yAxisId="right"
