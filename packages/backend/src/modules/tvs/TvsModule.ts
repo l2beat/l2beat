@@ -55,20 +55,20 @@ export function initTvsModule(
   const indexerService = new IndexerService(database)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock, {
-    onTick: async (target) => {
+    onTick: async (targetTimestamp) => {
       if (!config.tvs) return
       const recordIds = []
       for (const project of config.tvs.projects) {
         const tokensWithRanges = getTokensWithRanges(project.tokens).filter(
           (t) =>
-            t.sinceTimestamp <= target &&
-            (!t.untilTimestamp || t.untilTimestamp >= target),
+            t.sinceTimestamp <= targetTimestamp &&
+            (!t.untilTimestamp || t.untilTimestamp >= targetTimestamp),
         )
         recordIds.push(...tokensWithRanges.map((t) => t.id))
 
         const { since, until } = getProjectSyncRange(tokensWithRanges)
 
-        if (since > target || (until && until < target)) {
+        if (since > targetTimestamp || (until && until < targetTimestamp)) {
           continue
         }
 
@@ -79,7 +79,7 @@ export function initTvsModule(
         recordIds.map((id) => ({
           feature: 'tvs',
           id,
-          target: target,
+          target: targetTimestamp,
         })),
       )
     },

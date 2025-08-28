@@ -45,7 +45,7 @@ export function initActivityModule(
           database,
           project,
           {
-            onTick: async (target) => {
+            onTick: async (targetTimestamp) => {
               if (!config.activity) {
                 return
               }
@@ -54,7 +54,7 @@ export function initActivityModule(
                 config.activity.projects.map((p) => ({
                   feature: 'activity',
                   id: p.id,
-                  target: UnixTime.toStartOf(target, 'day'),
+                  target: UnixTime.toStartOf(targetTimestamp, 'day'),
                 })),
               )
             },
@@ -93,7 +93,7 @@ export function initActivityModule(
           providers.slotTimestamp,
           project,
           {
-            onTick: async (target) => {
+            onTick: async (targetTimestamp) => {
               if (!config.activity) {
                 return
               }
@@ -102,7 +102,7 @@ export function initActivityModule(
                 config.activity.projects.map((project) => ({
                   feature: 'activity',
                   id: project.id,
-                  target: UnixTime.toStartOf(target, 'day'),
+                  target: UnixTime.toStartOf(targetTimestamp, 'day'),
                 })),
               )
             },
@@ -132,10 +132,8 @@ export function initActivityModule(
       }
 
       case 'day': {
-        const dayTargetIndexer = new DayTargetIndexer(
-          logger,
-          clock,
-          async (target) => {
+        const dayTargetIndexer = new DayTargetIndexer(logger, clock, {
+          onTick: async (targetTimestamp) => {
             if (!config.activity) {
               return
             }
@@ -144,11 +142,11 @@ export function initActivityModule(
               config.activity.projects.map((project) => ({
                 feature: 'activity',
                 id: project.id,
-                target,
+                target: targetTimestamp,
               })),
             )
           },
-        )
+        })
 
         const provider = providers.day.getDayProvider(project.chainName)
         const txsCountService = new DayTxsCountService(provider, project.id)

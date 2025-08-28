@@ -7,7 +7,9 @@ export class DayTargetIndexer extends RootIndexer {
   constructor(
     logger: Logger,
     private readonly clock: Clock,
-    private readonly onTick: (target: number) => Promise<void>,
+    private readonly options?: {
+      onTick?: (targetTimestamp: number) => Promise<void>
+    },
   ) {
     super(logger)
   }
@@ -21,7 +23,7 @@ export class DayTargetIndexer extends RootIndexer {
     const target = UnixTime.toStartOf(this.clock.getLastHour(), 'day')
     const day = UnixTime.toDays(target)
 
-    await this.onTick(target)
+    await this.options?.onTick?.(target)
 
     return Promise.resolve(day)
   }
