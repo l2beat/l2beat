@@ -1,6 +1,11 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { CountBadge } from '~/components/badge/CountBadge'
-import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '~/components/core/Tabs'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
@@ -25,33 +30,32 @@ export function ScalingRiskStateValidationTable({
   optimistic: ScalingRiskStateValidationOptimisticEntry[]
 }) {
   return (
-    <div>
-      <RadioGroup
-        name="riskStateValidaitonTableTab"
-        value={tableTab}
-        onValueChange={(value) => setTableTab(value as 'zk' | 'optimistic')}
-        className="mb-2 h-10 w-full p-1.5"
-      >
-        <RadioGroupItem
-          value="zk"
-          className="flex w-full items-center justify-center gap-1.5"
-        >
+    <Tabs
+      // name="riskStateValidaitonTableTab"
+      value={tableTab}
+      onValueChange={(value) => setTableTab(value as 'zk' | 'optimistic')}
+    >
+      <TabsList>
+        <TabsTrigger value="zk">
           Zero-knowledge
-          <CountBadge>{zk.length}</CountBadge>
-        </RadioGroupItem>
-        <RadioGroupItem
-          value="optimistic"
-          className="flex w-full items-center justify-center gap-1.5"
-        >
+          <CountBadge className="group-data-[state=active]/tabs-trigger:bg-primary-invert group-data-[state=active]/tabs-trigger:text-brand">
+            {zk.length}
+          </CountBadge>
+        </TabsTrigger>
+        <TabsTrigger value="optimistic">
           Optimistic
-          <CountBadge>{optimistic.length}</CountBadge>
-        </RadioGroupItem>
-      </RadioGroup>
-      {tableTab === 'zk' && <ScalingRiskZkTable entries={zk} />}
-      {tableTab === 'optimistic' && (
+          <CountBadge className="group-data-[state=active]/tabs-trigger:bg-primary-invert group-data-[state=active]/tabs-trigger:text-brand">
+            {optimistic.length}
+          </CountBadge>
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="zk">
+        <ScalingRiskZkTable entries={zk} />
+      </TabsContent>
+      <TabsContent value="optimistic">
         <ScalingRiskOptimisticTable entries={optimistic} />
-      )}
-    </div>
+      </TabsContent>
+    </Tabs>
   )
 }
 
