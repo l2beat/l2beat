@@ -2,6 +2,7 @@ import type { DaLayerThroughput } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, notUndefined, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import keyBy from 'lodash/keyBy'
 import partition from 'lodash/partition'
 import round from 'lodash/round'
 import { env } from '~/env'
@@ -26,10 +27,13 @@ export type ThroughputTableData = Awaited<
 const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const db = getDb()
   const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const [values, daLayers] = await Promise.all([
+  const [values, maxHistoricalRecords, daLayers] = await Promise.all([
     db.dataAvailability.getByDaLayersAndTimeRange(
       THROUGHPUT_ENABLED_DA_LAYERS,
       [lastDay - 7 * UnixTime.DAY, lastDay],
+    ),
+    db.dataAvailability.getMaxHistoricalRecordByDaLayer(
+      THROUGHPUT_ENABLED_DA_LAYERS,
     ),
     ps.getProjects({
       ids: daLayerIds.map(ProjectId),
@@ -46,6 +50,11 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
         ]) ?? []
       )
     }),
+  )
+
+  const maxHistoricalRecordsByDaLayer = keyBy(
+    maxHistoricalRecords,
+    (v) => v.daLayer,
   )
 
   const [daLayerValues, projectValues] = partition(values, (v) =>
@@ -99,6 +108,11 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
             latestThroughput,
           )
 
+          const maxHistoricalRecord = maxHistoricalRecordsByDaLayer[daLayer.id]
+          const maxRegistered = maxHistoricalRecord
+            ? Number(maxHistoricalRecord.totalSize) / UnixTime.HOUR
+            : undefined
+
           return [
             daLayer.id,
             {
@@ -114,6 +128,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
                   )
                 : undefined,
               maxThroughputPerSecond,
+              maxRegistered,
             },
           ] as const
         })
@@ -208,6 +223,7 @@ function getMockDaThroughputTableData(
                 avgThroughputPerSecond: 100000,
               },
               maxThroughputPerSecond: 400000,
+              maxRegistered: 390000,
             },
           ] as const
         })
@@ -237,6 +253,7 @@ function getMockDaThroughputTableData(
                   : UnixTime.toStartOf(UnixTime.now(), 'day') -
                     1 * UnixTime.DAY,
               maxThroughputPerSecond: 400000,
+              maxRegistered: 390000,
             },
           ] as const
         })
