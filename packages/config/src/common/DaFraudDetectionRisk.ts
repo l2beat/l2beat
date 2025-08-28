@@ -23,7 +23,8 @@ function DasWithNoBlobsReconstruction(erasureCoding: boolean): TableReadyValue {
 const ErasureCodingProof: TableReadyValue = {
   value: 'Erasure coding proof',
   sentiment: 'bad',
-  description: 'TODO',
+  description:
+    'The DA layer relies on cryptographic proofs (such as KZG commitments or fraud proofs) to verify that data has been erasure coded correctly. However, this passive approach only detects malformed encoding, not data withholding attacks. Without active data availability sampling, there is no guarantee that the committed data is actually available for download.',
 }
 
 const NoFraudDetection: TableReadyValue = {
