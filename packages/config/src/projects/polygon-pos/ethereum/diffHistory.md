@@ -1,14 +1,14 @@
 Generated with discovered.json: 0x16d1328d98dfc60bdd823075007c27147a541009
 
-# Diff at Wed, 27 Aug 2025 14:57:14 GMT:
+# Diff at Thu, 28 Aug 2025 09:58:26 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@6a10f3ca78fe03a4e4a056c347e2b62212e8db09 block: 1756124354
+- comparing to: main@3e088e62f4c969a9884f950ac3f9027242f1f8ff block: 1756124354
 - current timestamp: 1756305761
 
 ## Description
 
-- [ERC20Predicate](https://disco.l2beat.com/diff/eth:0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB/eth:0x1F4c1E0afBeb5b5B86d7722549274434b29884F6): added a `migrateTokens` function that can be called by managers. [Here](https://app.blocksec.com/explorer/tx/eth/0x3b4c28808336605520ed240fee7ef8e7dd2cfd0f0509082cd9c099fd60c6e0f1) an example of a migration of a token (USDT).
+- [ERC20Predicate](https://disco.l2beat.com/diff/eth:0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB/eth:0x1F4c1E0afBeb5b5B86d7722549274434b29884F6): added a `migrateTokens` function that can be called by managers. [Here](https://app.blocksec.com/explorer/tx/eth/0x3b4c28808336605520ed240fee7ef8e7dd2cfd0f0509082cd9c099fd60c6e0f1) an example of a migration of a token (USDT). By looking at the example, a "migration" in this context means moving out funds from the bridge through an arbitrary call to the token contract, with the goal of migrating canonical tokens to a an external or native version.
 
 ## Watched changes
 
