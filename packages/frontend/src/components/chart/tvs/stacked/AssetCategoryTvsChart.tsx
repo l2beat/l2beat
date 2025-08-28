@@ -89,7 +89,7 @@ export function AssetCategoryTvsChart({
       className={className}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent reverse />} />
+        <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="other"
           hide={!dataKeys.includes('other')}

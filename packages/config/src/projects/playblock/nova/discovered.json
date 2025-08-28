@@ -2,14 +2,18 @@
   "name": "playblock",
   "chain": "nova",
   "timestamp": 1742892328,
-  "configHash": "0xf67938cf35b44fd45b17c522fbccae0b03d77a811db93075c0e445460ae0555c",
+  "configHash": "0xc4087f565e808fe433ad2a3047764ce3169eb18a39195932778988b0b5265f72",
   "entries": [
     {
       "name": "RollupProxy",
       "address": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
       "type": "Contract",
       "unverified": true,
-      "template": "orbitstack/RollupProxy",
+      "template": "orbitstack/RollupProxy_fastConfirm",
+      "sourceHashes": [
+        null,
+        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
+      ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "ignoreInWatchMode": [
@@ -157,7 +161,7 @@
         {
           "permission": "interact",
           "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {
@@ -244,7 +248,7 @@
         {
           "permission": "interact",
           "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
             { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
@@ -1305,11 +1309,11 @@
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
     "orbitstack/RollupEventInbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/RollupProxy": "0x9ecd81a9da8abc61f7ca4b4d204fabb54ffafc208082ed540300e88c7b5c00ee",
+    "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "nova": 82973305 },
-  "permissionsConfigHash": "0xd4af25354ec13e8c7d40c837abc6eb5712028714b0977ec06dc783e57f819afc"
+  "permissionsConfigHash": "0x4cfd1ce4cae008a03ee0746bb4f08284941602fcb4ead17afca854f4920abb6c"
 }
