@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x9872f8126013e8e9110cecbbb68f0b6a317d9751
+
+# Diff at Thu, 28 Aug 2025 09:36:30 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6a10f3ca78fe03a4e4a056c347e2b62212e8db09 block: 1754119529
+- current timestamp: 1756373713
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.2:
++        "eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8"
+      values.validatorsVTL.3:
++        "eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2"
+    }
+```
+
 Generated with discovered.json: 0x7d092f89fc0801a1e7477e121a7de738b947d282
 
 # Diff at Sat, 02 Aug 2025 07:32:17 GMT:
