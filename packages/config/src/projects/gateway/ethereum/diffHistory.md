@@ -8,7 +8,7 @@ Generated with discovered.json: 0x9872f8126013e8e9110cecbbb68f0b6a317d9751
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New validator added.
 
 ## Watched changes
 
