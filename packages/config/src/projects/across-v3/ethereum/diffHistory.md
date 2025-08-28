@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xcca498040c8b3885bf1a2906c93a3d3aff00995e
+
+# Diff at Thu, 28 Aug 2025 10:38:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3e088e62f4c969a9884f950ac3f9027242f1f8ff block: 1755259336
+- current timestamp: 1756377336
+
+## Description
+
+New Polygon adapter adding OFT support (OFTTransportAdapterWithStore)
+https://disco.l2beat.com/diff/eth:0xb4AeF0178f5725392A26eE18684C2aB62adc912e/eth:0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0
+
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Polygon_Adapter (0xb4AeF0178f5725392A26eE18684C2aB62adc912e)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      values.Adapters.137:
+-        "eth:0xb4AeF0178f5725392A26eE18684C2aB62adc912e"
++        "eth:0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Polygon_Adapter (0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+## Source code changes
+
+```diff
+.../Polygon_Adapter.sol                            | 290 +++++++++++++++++++--
+ 1 file changed, 269 insertions(+), 21 deletions(-)
+```
+
 Generated with discovered.json: 0xc3b055f7dfa90a2e3f8be8add835f75982e2412c
 
 # Diff at Fri, 15 Aug 2025 12:02:30 GMT:
