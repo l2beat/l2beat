@@ -34,7 +34,7 @@ export class SyncMetadataRepository extends BaseRepository {
   }
 
   async updateSyncedUntil(
-    feature: string,
+    feature: SyncMetadataRecord['feature'],
     ids: string[],
     syncedUntil: UnixTime,
   ): Promise<void> {

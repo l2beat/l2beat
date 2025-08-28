@@ -1,6 +1,5 @@
 import type { Database } from '@l2beat/database'
 import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
-import type { TrackedTxLivenessConfig } from '@l2beat/shared'
 import {
   clampRangeToDay,
   ProjectId,
@@ -44,18 +43,9 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         : UnixTime.toStartOf(safeHeight, 'hour')
     const { from: clampedFrom, to } = clampRangeToDay(from, parentSafeHeight)
 
-    const { records, configs } = await this.generateLiveness(clampedFrom, to)
+    const updatedLivenessRecords = await this.generateLiveness(clampedFrom, to)
 
-    await this.$.db.transaction(async () => {
-      await this.$.db.aggregatedLiveness.upsertMany(records)
-      await this.$.db.syncMetadata.updateSyncedUntilMany(
-        configs.map((c) => ({
-          feature: 'liveness',
-          id: c.projectId,
-          syncedUntil: to,
-        })),
-      )
-    })
+    await this.$.db.aggregatedLiveness.upsertMany(updatedLivenessRecords)
     return to
   }
 
@@ -68,10 +58,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
   async generateLiveness(
     from: UnixTime,
     to: UnixTime,
-  ): Promise<{
-    records: AggregatedLivenessRecord[]
-    configs: TrackedTxLivenessConfig[]
-  }> {
+  ): Promise<AggregatedLivenessRecord[]> {
     const aggregatedRecords: (AggregatedLivenessRecord | undefined)[] = []
 
     const configurations = await this.$.indexerService.getSavedConfigurations(
@@ -161,10 +148,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       }
     }
 
-    return {
-      records: aggregatedRecords.filter((r) => r !== undefined),
-      configs: allProjectConfigs,
-    }
+    return aggregatedRecords.filter((r) => r !== undefined)
   }
 
   aggregateRecords(

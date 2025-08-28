@@ -24,7 +24,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour - UnixTime.HOUR,
         },
         {
-          feature: 'l2Costs',
+          feature: 'l2costs',
           id: 'base',
           target: roundedHour,
           syncedUntil: roundedHour,
@@ -47,7 +47,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       const results2 = await repository.getAll()
       expect(results2).toEqualUnsorted([
         {
-          feature: 'l2Costs',
+          feature: 'l2costs',
           id: 'base',
           target: roundedHour,
           syncedUntil: roundedHour,
@@ -88,7 +88,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
         },
         {
-          feature: 'l2Costs',
+          feature: 'l2costs',
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour + UnixTime.HOUR,
@@ -120,7 +120,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
         },
         {
-          feature: 'l2Costs',
+          feature: 'l2costs',
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour + UnixTime.HOUR,
@@ -157,7 +157,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
         },
         {
-          feature: 'l2Costs',
+          feature: 'l2costs',
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour + UnixTime.HOUR,
@@ -201,7 +201,7 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
         },
         {
-          feature: 'l2Costs',
+          feature: 'l2costs',
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour + UnixTime.HOUR,

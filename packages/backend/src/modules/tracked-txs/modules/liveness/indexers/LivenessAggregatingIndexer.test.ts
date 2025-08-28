@@ -1,11 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, LivenessRecord } from '@l2beat/database'
 import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
-import {
-  createTrackedTxId,
-  type TrackedTxConfigEntry,
-  type TrackedTxLivenessConfig,
-} from '@l2beat/shared'
+import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   ProjectId,
   type SavedConfiguration,
@@ -31,7 +27,7 @@ const MOCK_PROJECTS: TrackedTxProject[] = [
         id: MOCK_CONFIGURATION_ID,
         type: 'liveness',
         subtype: MOCK_CONFIGURATION_TYPE,
-        untilTimestamp: NOW + 3 * UnixTime.HOUR,
+        untilTimestamp: UnixTime.now(),
         projectId: ProjectId('mocked-project'),
       }),
     ],
@@ -299,37 +295,26 @@ describe(LivenessAggregatingIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toEqual({
-        records: [
-          {
-            avg: 4 * UnixTime.HOUR,
-            max: 4 * UnixTime.HOUR,
-            min: 4 * UnixTime.HOUR,
-            projectId: 'mocked-project',
-            subtype: 'batchSubmissions',
-            timestamp: NOW - 3 * UnixTime.HOUR,
-            numberOfRecords: 1,
-          },
-          {
-            avg: 2 * UnixTime.HOUR,
-            max: 2 * UnixTime.HOUR,
-            min: 2 * UnixTime.HOUR,
-            projectId: 'mocked-project',
-            subtype: 'batchSubmissions',
-            timestamp: NOW - 1 * UnixTime.HOUR,
-            numberOfRecords: 1,
-          },
-        ],
-        configs: [
-          mockObject<TrackedTxLivenessConfig>({
-            id: MOCK_CONFIGURATION_ID,
-            type: 'liveness',
-            subtype: 'batchSubmissions',
-            untilTimestamp: NOW + 3 * UnixTime.HOUR,
-            projectId: ProjectId('mocked-project'),
-          }),
-        ],
-      })
+      expect(result).toEqual([
+        {
+          avg: 4 * UnixTime.HOUR,
+          max: 4 * UnixTime.HOUR,
+          min: 4 * UnixTime.HOUR,
+          projectId: 'mocked-project',
+          subtype: 'batchSubmissions',
+          timestamp: NOW - 3 * UnixTime.HOUR,
+          numberOfRecords: 1,
+        },
+        {
+          avg: 2 * UnixTime.HOUR,
+          max: 2 * UnixTime.HOUR,
+          min: 2 * UnixTime.HOUR,
+          projectId: 'mocked-project',
+          subtype: 'batchSubmissions',
+          timestamp: NOW - 1 * UnixTime.HOUR,
+          numberOfRecords: 1,
+        },
+      ])
     })
 
     it('split time range to hours and get liveness data for each hour', async () => {

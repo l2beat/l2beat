@@ -4,7 +4,7 @@ import type { SyncMetadata } from '../../kysely/generated/types'
 
 export type SyncMetadataFeature =
   | 'activity'
-  | 'l2Costs'
+  | 'l2costs'
   | 'liveness'
   | 'anomalies'
   | 'dataAvailability'

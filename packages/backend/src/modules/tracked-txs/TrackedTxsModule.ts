@@ -45,7 +45,7 @@ export function createTrackedTxsModule(
       )
       await peripherals.database.syncMetadata.upsertMany([
         ...l2CostsConfigs.map((c) => ({
-          feature: 'l2Costs' as const,
+          feature: 'l2costs' as const,
           id: c.projectId,
           target: targetTimestamp,
         })),
@@ -62,10 +62,7 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.bigQuery,
   )
 
-  const trackedTxsClient = new TrackedTxsClient(
-    bigQueryClient,
-    config.trackedTxsConfig.projects,
-  )
+  const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
 
   const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
     (project) => project.configurations,
@@ -99,6 +96,7 @@ export function createTrackedTxsModule(
     })),
     updaters,
     db: peripherals.database,
+    projects: config.trackedTxsConfig.projects,
   })
 
   let l2CostPricesIndexer: L2CostsPricesIndexer | undefined

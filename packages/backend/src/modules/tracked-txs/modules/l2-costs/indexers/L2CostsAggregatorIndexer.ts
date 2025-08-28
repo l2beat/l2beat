@@ -11,7 +11,6 @@ import {
   type ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import {
@@ -62,19 +61,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
 
     const aggregated = this.aggregate(costs, ethPrices)
 
-    const groupedByProjectId = groupBy(aggregated, (e) => e.projectId)
-    // TODO: does this take into account not inserting empty records?
-    const syncMetadataRecords = Object.entries(groupedByProjectId).map(
-      ([projectId, records]) => ({
-        feature: 'l2Costs' as const,
-        id: projectId,
-        syncedUntil: Math.max(...records.map((e) => e.timestamp)),
-      }),
-    )
-
     await this.$.db.aggregatedL2Cost.upsertMany(aggregated)
-    await this.$.db.syncMetadata.updateSyncedUntilMany(syncMetadataRecords)
-
     this.logger.info('Aggregated L2 costs', {
       count: aggregated.length,
     })

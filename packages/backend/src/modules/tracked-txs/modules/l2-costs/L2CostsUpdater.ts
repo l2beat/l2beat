@@ -1,12 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, L2CostRecord } from '@l2beat/database'
 import type { TrackedTxId } from '@l2beat/shared'
-import type { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import type { TrackedTxResult } from '../../types/model'
 import type { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 
-export class L2CostsUpdater implements TxUpdaterInterface {
-  type: TrackedTxsConfigType = 'l2costs'
+export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
+  type = 'l2costs' as const
 
   constructor(
     private readonly db: Database,
@@ -21,7 +21,7 @@ export class L2CostsUpdater implements TxUpdaterInterface {
       return
     }
 
-    const transformed = await this.transform(transactions)
+    const transformed = this.transform(transactions)
     await this.db.l2Cost.insertMany(transformed)
     this.logger.info('Updated L2 costs', { count: transactions.length })
   }
