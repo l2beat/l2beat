@@ -4,7 +4,7 @@ import type { SyncMetadata } from '../../kysely/generated/types'
 
 export type SyncMetadataFeature =
   | 'activity'
-  | 'l2Cost'
+  | 'l2Costs'
   | 'liveness'
   | 'anomalies'
   | 'dataAvailability'
@@ -27,13 +27,19 @@ export function toRecord(row: Selectable<SyncMetadata>): SyncMetadataRecord {
 }
 
 export function toRow(
-  record: Omit<SyncMetadataRecord, 'syncedUntil'> & {
-    syncedUntil?: UnixTime | null
-  },
+  record: Insertable<SyncMetadataRecord>,
 ): Insertable<SyncMetadata> {
   return {
-    ...record,
+    ...toRowWithoutTarget(record),
     target: UnixTime.toDate(record.target),
+  }
+}
+
+export function toRowWithoutTarget(
+  record: Omit<Insertable<SyncMetadataRecord>, 'target'>,
+): Omit<Insertable<SyncMetadata>, 'target'> {
+  return {
+    ...record,
     syncedUntil: record.syncedUntil
       ? UnixTime.toDate(record.syncedUntil)
       : null,
