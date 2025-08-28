@@ -29,7 +29,6 @@
       ],
       "ignoreRelatives": ["nativeToken"],
       "fields": {
-        "rollup": { "template": "orbitstack/RollupProxy" },
         "sequencerInbox": { "template": "orbitstack/SequencerInbox" }
       }
     },
