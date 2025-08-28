@@ -12,6 +12,7 @@ import type {
 import type { RpcClient } from '@l2beat/shared'
 import { assert, type LegacyToken, TokenId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import { projectIdToChain } from '../../../../config/chainMap'
 import type { ProjectTvsConfig } from '../../types'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
 import type { LocalStorage } from '../LocalStorage'
@@ -234,7 +235,7 @@ export function createToken(
             {
               type: 'totalSupply',
               address: legacyToken.address,
-              chain: project.id,
+              chain: projectIdToChain(project.id),
               decimals: legacyToken.decimals,
               sinceTimestamp,
               ...(untilTimestamp ? { untilTimestamp } : {}),
@@ -252,7 +253,7 @@ export function createToken(
         amountFormula = {
           type: 'totalSupply',
           address: legacyToken.address,
-          chain: project.id,
+          chain: projectIdToChain(project.id),
           decimals: legacyToken.decimals,
           sinceTimestamp,
           ...(untilTimestamp ? { untilTimestamp } : {}),

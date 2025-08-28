@@ -17,7 +17,8 @@ import {
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
-import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
+import { chainToProjectId } from '../../../config/chainMap'
 import { ValueService } from '../services/ValueService'
 import {
   type AmountConfig,
@@ -145,7 +146,7 @@ export class LocalExecutor {
 
     for (const chainProject of chainProjects) {
       const project = await this.ps.getProject({
-        id: ProjectId(chainProject),
+        id: chainToProjectId(chainProject),
         select: ['chainConfig'],
       })
 
