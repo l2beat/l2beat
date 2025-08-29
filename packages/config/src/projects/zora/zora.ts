@@ -21,7 +21,7 @@ export const zora: ScalingProject = opStackL2({
       'Zora is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],
-      bridges: ['https://superbridge.app/zora','https://relay.link/zora'],
+      bridges: ['https://bridge.zora.energy/'],
       documentation: ['https://docs.zora.co'],
       explorers: [
         'https://explorer.zora.energy/',
