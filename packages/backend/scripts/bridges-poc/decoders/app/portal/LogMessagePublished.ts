@@ -97,15 +97,12 @@ async function decoder(
       timestamp: input.blockTimestamp,
       txHash: input.transactionHash,
 
+      type: 'Portal_Outbound',
       originChain: input.chain,
-      // originToken: string
       originAmount: wormholeTransfer.amount,
-
-      // destinationChain?: string
       destinationToken: extractAddressFromPadded(wormholeTransfer.tokenAddress),
       destinationAmount: wormholeTransfer.amount,
-
-      type: 'LogMessagePublished',
+      wormholeMessageId: id,
     },
   }
 }

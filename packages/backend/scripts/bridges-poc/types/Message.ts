@@ -1,7 +1,10 @@
 export interface Message {
   id: string
   messagingProtocol: string
-  app: string
+  associated: {
+    app: string
+    transferId: string
+  }[]
 
   originChain: string
   originTxHash: string

@@ -58,7 +58,7 @@ function decoder(input: DecoderInput): DecoderOutput {
       txHash: input.transactionHash,
       timestamp: input.blockTimestamp,
       originChain: input.chain,
-      type: 'LogMessagePublished',
+      type: 'Wormhole_Outbound',
     },
   }
 }

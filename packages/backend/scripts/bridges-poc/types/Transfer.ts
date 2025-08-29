@@ -1,6 +1,10 @@
 export interface Transfer {
   id: string
   app: string
+  associated: {
+    messagingProtocol?: string
+    messageId?: string
+  }[]
 
   originChain: string
   originTx: string
