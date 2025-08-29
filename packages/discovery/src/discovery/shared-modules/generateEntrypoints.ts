@@ -17,8 +17,8 @@ export async function generateEntrypoints(
     configReader,
   )
   const projectDir = configReader.getProjectPath(project)
-  const outputFile = join(projectDir, ENTRYPOINTS_FILENAME)
-  await writeFile(outputFile, JSON.stringify(entrypoints, null, 2))
+  const outputFilePath = join(projectDir, ENTRYPOINTS_FILENAME)
+  await writeFile(outputFilePath, JSON.stringify(entrypoints, null, 2) + '\n')
 }
 
 function generateEntrypointsForProject(
