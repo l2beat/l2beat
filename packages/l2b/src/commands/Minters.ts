@@ -10,6 +10,11 @@ import {
 } from '../implementations/minters/getMinters'
 import { ChainSpecificAddressValue } from './types'
 
+interface MinterData {
+  address: ChainSpecificAddress
+  mintTxs: string[]
+}
+
 export const Minters = command({
   name: 'minters',
   description:
@@ -29,8 +34,13 @@ export const Minters = command({
     Object.assign(provider, { chain: chainName })
 
     logger.info('Getting mint transactions...')
-    const transactions = await getMintTransactions(provider, args.address)
-    logger.info(`Done. Got ${transactions.length} transactions`)
+    const { logsCount, transactions } = await getMintTransactions(
+      provider,
+      args.address,
+    )
+    logger.info('Done. Found:')
+    logger.info(` - ${logsCount} events`)
+    logger.info(` - ${transactions.length} transactions`)
 
     if (transactions.length === 0) {
       logger.info('No mint transactions found.')
@@ -41,15 +51,17 @@ export const Minters = command({
     const minters = await analyzeAll(provider, logger, transactions)
 
     assert(
-      minters.length > 0,
+      Object.keys(minters).length > 0,
       `No minters found despite ${transactions.length} mint transactions - logic/provider might be flawed`,
     )
 
     logger.info('')
     logger.info('==========================================')
-    logger.info(`Done. Found ${minters.length} minter(s):`)
-    for (const minter of minters) {
-      logger.info(`• ${minter}`)
+    logger.info(`Done. Found ${Object.keys(minters).length} minter(s):`)
+    for (const minter of Object.values(minters)) {
+      logger.info(`• ${minter.address}`)
+      logger.info(`  - ${minter.mintTxs.length} mint transactions`)
+      logger.info(`  - e.g. ${minter.mintTxs[0] ?? 'error'}`)
     }
   },
 })
@@ -59,18 +71,23 @@ async function analyzeAll(
   logger: Logger,
   transactions: string[],
 ) {
-  const minters = new Set<string>()
+  const minters: Record<ChainSpecificAddress, MinterData> = {}
   let nextPercentToLog = 10
 
   for (const [index, txHash] of transactions.entries()) {
     const mintersDetected = await fetchAndAnalyze(provider, txHash)
 
     for (const minter of mintersDetected) {
-      if (!minters.has(minter)) {
-        logger.info(`New minter detected - ${minter}`)
+      if (!minters[minter]) {
+        logger.info(`New minter detected: ${minter}`)
+        logger.info(` tx: ${txHash}`)
+        minters[minter] = {
+          address: minter,
+          mintTxs: [txHash],
+        }
+      } else {
+        minters[minter].mintTxs.push(txHash)
       }
-
-      minters.add(minter)
     }
 
     const percent = Math.floor(((index + 1) / transactions.length) * 100)
@@ -80,5 +97,5 @@ async function analyzeAll(
     }
   }
 
-  return [...minters]
+  return minters
 }
