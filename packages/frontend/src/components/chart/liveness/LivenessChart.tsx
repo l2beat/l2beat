@@ -1,6 +1,5 @@
 import type { Milestone } from '@l2beat/config'
 import {
-  assert,
   assertUnreachable,
   type TrackedTxsConfigSubtype,
   UnixTime,
@@ -9,10 +8,10 @@ import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import {
   Area,
-  AreaChart,
+  ComposedChart,
+  Line,
   ReferenceArea,
   ReferenceDot,
-  ReferenceLine,
 } from 'recharts'
 import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
@@ -34,7 +33,7 @@ import { formatRange } from '~/utils/dates'
 
 interface LivenessChartDataPoint {
   timestamp: number
-  range: readonly [number | null, number | null] | null
+  range: readonly [number, number] | null
   avg: number | null
 }
 
@@ -78,12 +77,6 @@ export function LivenessChart({
   anyAnomalyLive,
   resolution,
 }: Props) {
-  const noPostedAreas = useMemo(() => getNoPostedAreas(data), [data])
-  console.log(noPostedAreas)
-  const maxNoPostedAreaEnd = useMemo(
-    () => Math.max(...noPostedAreas.map((area) => area.end.timestamp)),
-    [noPostedAreas],
-  )
   const singleDataPoints = useMemo(() => {
     return data?.filter((point, i, arr) => {
       const prevPoint = arr.at(i - 1)
@@ -106,44 +99,29 @@ export function LivenessChart({
       milestones={milestones}
       project={project}
     >
-      <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
+      <ComposedChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
-        {noPostedAreas.map(({ start, end }) => [
-          <ReferenceLine
-            key={`${start.timestamp}-${end.timestamp}-bottom-line`}
-            segment={[
-              { x: start.timestamp, y: start.range?.[0] ?? 0 },
-              { x: end.timestamp, y: end.range?.[0] ?? 0 },
-            ]}
-            stroke="var(--secondary)"
-            strokeDasharray="5 5"
-            opacity={0.25}
-            strokeWidth={2}
-          />,
-          <ReferenceLine
-            key={`${start.timestamp}-${end.timestamp}-top-line`}
-            segment={[
-              { x: start.timestamp, y: start.range?.[1] ?? 0 },
-              { x: end.timestamp, y: end.range?.[1] ?? 0 },
-            ]}
-            stroke="var(--secondary)"
-            strokeDasharray="5 5"
-            opacity={0.25}
-            strokeWidth={2}
-          />,
-          <ReferenceLine
-            key={`${start.timestamp}-${end.timestamp}-avg-line`}
-            segment={[
-              { x: start.timestamp, y: start.avg ?? 0 },
-              { x: end.timestamp, y: end.avg ?? 0 },
-            ]}
-            stroke="var(--secondary)"
-            strokeDasharray="5 5"
-            opacity={0.25}
-            strokeWidth={2}
-          />,
-        ])}
-
+        <Area
+          dataKey="range"
+          isAnimationActive={false}
+          stroke="var(--secondary)"
+          legendType="none"
+          strokeWidth={2}
+          strokeOpacity={0.15}
+          fill="none"
+          connectNulls
+        />
+        <Line
+          dataKey="avg"
+          legendType="none"
+          isAnimationActive={false}
+          stroke="var(--secondary)"
+          strokeWidth={2}
+          strokeOpacity={0.15}
+          strokeDasharray="5 5"
+          dot={false}
+          connectNulls
+        />
         {singleDataPoints?.map((point) => [
           <ReferenceDot
             key={`${point.timestamp}-bottom-range`}
@@ -172,6 +150,7 @@ export function LivenessChart({
             r={3}
           />,
         ])}
+
         <Area
           dataKey="range"
           isAnimationActive={false}
@@ -188,6 +167,7 @@ export function LivenessChart({
           fill="none"
           strokeDasharray="5 5"
         />
+
         {getCommonChartComponents({
           data,
           isLoading,
@@ -214,7 +194,7 @@ export function LivenessChart({
               subtype={subtype}
               anyAnomalyLive={anyAnomalyLive}
               resolution={resolution}
-              maxNoPostedAreaEnd={maxNoPostedAreaEnd}
+              lastValidTimestamp={lastValidTimestamp}
             />
           }
         />
@@ -237,7 +217,7 @@ export function LivenessChart({
             />
           </pattern>
         </defs>
-      </AreaChart>
+      </ComposedChart>
     </ChartContainer>
   )
 }
@@ -249,12 +229,12 @@ function LivenessCustomTooltip({
   subtype,
   anyAnomalyLive,
   resolution,
-  maxNoPostedAreaEnd,
+  lastValidTimestamp,
 }: TooltipProps<number, string> & {
   subtype: TrackedTxsConfigSubtype
   anyAnomalyLive: boolean
   resolution: LivenessChartResolution
-  maxNoPostedAreaEnd: number
+  lastValidTimestamp: number | undefined
 }) {
   if (!active || !payload || typeof timestamp !== 'number') return null
 
@@ -268,7 +248,8 @@ function LivenessCustomTooltip({
   if (!range?.value || !avg?.value) {
     content = (
       <div className="mt-2 font-medium text-label-value-16">
-        {anyAnomalyLive || timestamp <= maxNoPostedAreaEnd
+        {anyAnomalyLive ||
+        (lastValidTimestamp && timestamp <= lastValidTimestamp)
           ? getTooltipContent(subtype)
           : 'No data'}
       </div>
@@ -347,34 +328,4 @@ function getTooltipContent(subtype: TrackedTxsConfigSubtype) {
     default:
       assertUnreachable(subtype)
   }
-}
-
-function getNoPostedAreas(data: LivenessChartDataPoint[] | undefined) {
-  const noPostedAreas: {
-    start: LivenessChartDataPoint
-    end: LivenessChartDataPoint
-  }[] = []
-
-  let i = 0
-  let start: LivenessChartDataPoint | undefined
-  while (i < (data?.length ?? 0)) {
-    const point = data?.at(i)
-    const nextPoint = data?.at(i + 1)
-    assert(point, 'Point is defined')
-    if (start !== undefined && point.range !== null && point.avg !== null) {
-      noPostedAreas.push({ start, end: point })
-      start = undefined
-    }
-    if (
-      start === undefined &&
-      nextPoint?.range === null &&
-      nextPoint?.avg === null
-    ) {
-      start = point
-    }
-
-    i++
-  }
-
-  return noPostedAreas
 }
