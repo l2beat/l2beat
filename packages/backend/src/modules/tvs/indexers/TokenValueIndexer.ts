@@ -94,8 +94,13 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
     })
 
     return async () => {
+      const syncedUntil = timestamps[timestamps.length - 1]
       await this.$.db.transaction(async () => {
-        await this.$.db.syncMetadata.updateSyncedUntil('tvs', tokenIds, to)
+        await this.$.db.syncMetadata.updateSyncedUntil(
+          'tvs',
+          tokenIds,
+          syncedUntil,
+        )
         await this.$.db.tvsTokenValue.insertMany(records)
       })
       this.logger.info('Saved token values into DB', {
@@ -103,7 +108,7 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
         tokens: records.length,
       })
 
-      return timestamps[timestamps.length - 1]
+      return syncedUntil
     }
   }
 
