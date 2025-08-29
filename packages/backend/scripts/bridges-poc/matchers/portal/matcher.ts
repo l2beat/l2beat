@@ -29,6 +29,14 @@ export async function matcher(
     messages: [],
   }
 
+  const toDelete: {
+    unmatchedMessages: { messagingProtocol: string; id: string }[]
+    unmatchedTransfers: { app: string; id: string }[]
+  } = {
+    unmatchedMessages: [],
+    unmatchedTransfers: [],
+  }
+
   const outbounds = unmatchedTransfers.filter(
     (t): t is Portal_Outbound => t.type === 'Portal_Outbound',
   )
@@ -104,10 +112,28 @@ export async function matcher(
         amount: amount,
         valueUsd: valueUsd,
       })
+
+      toDelete.unmatchedMessages.push({
+        messagingProtocol: outboundMessage.messagingProtocol,
+        id: outboundMessage.id,
+      })
+      toDelete.unmatchedMessages.push({
+        messagingProtocol: inboundMessage.messagingProtocol,
+        id: inboundMessage.id,
+      })
+      toDelete.unmatchedTransfers.push({
+        app: outbound.app,
+        id: outbound.id,
+      })
+      toDelete.unmatchedTransfers.push({
+        app: inbound.app,
+        id: inbound.id,
+      })
     }
   }
 
-  // add deletion mechanism
+  dataService.deleteUnmatchedMessages(toDelete.unmatchedMessages)
+  dataService.deleteUnmatchedTransfers(toDelete.unmatchedTransfers)
 
   return result
 }
