@@ -176,3 +176,10 @@ export async function getFlatSource(
   const data = await res.json()
   return data as { name: string; sources: Record<string, string> }
 }
+
+export function executeFindMinters(address: string): EventSource {
+  const params = new URLSearchParams({
+    address,
+  })
+  return new EventSource(`/api/terminal/find-minters?${params}`)
+}

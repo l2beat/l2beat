@@ -24,7 +24,10 @@ export async function getMintTransactions(
 
   const logs = await provider.getLogs(address, topics)
 
-  return [...new Set(logs.map((log) => log.transactionHash))]
+  return {
+    logsCount: logs.length,
+    transactions: [...new Set(logs.map((log) => log.transactionHash))],
+  }
 }
 
 export function traverseTrace(trace: DebugTransactionCallResponse) {
