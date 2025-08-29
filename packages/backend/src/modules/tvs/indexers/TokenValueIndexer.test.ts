@@ -14,7 +14,7 @@ import { TokenValueIndexer } from './TokenValueIndexer'
 
 describe(TokenValueIndexer.name, () => {
   describe(TokenValueIndexer.prototype.multiUpdate.name, () => {
-    it('calculates token values and saves them to DB', async () => {
+    it('calculates token values, saves them to DB and updates sync metadata', async () => {
       const from = 100
       const to = 300
       const timestamps = [UnixTime(150), UnixTime(200), UnixTime(250)]
@@ -49,11 +49,16 @@ describe(TokenValueIndexer.name, () => {
         insertMany: mockFn().returnsOnce(undefined),
       })
 
+      const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+        updateSyncedUntil: mockFn().returnsOnce(undefined),
+      })
+
       const indexer = new TokenValueIndexer({
         logger: Logger.SILENT,
         configurations: configs,
         db: mockDatabase({
           tvsTokenValue: tvsTokenValueRepository,
+          syncMetadata: syncMetadataRepository,
         }),
         syncOptimizer,
         dbStorage,
@@ -97,6 +102,11 @@ describe(TokenValueIndexer.name, () => {
         expectedRecords,
       )
       expect(safeHeight).toEqual(timestamps[timestamps.length - 1])
+      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenOnlyCalledWith(
+        'tvs',
+        configs.map((c) => c.properties.id),
+        timestamps[timestamps.length - 1],
+      )
     })
 
     it('returns to value if no timestamps to sync', async () => {

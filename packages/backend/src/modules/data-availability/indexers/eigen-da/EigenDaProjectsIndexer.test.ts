@@ -45,7 +45,7 @@ describe(EigenDaProjectsIndexer.name, () => {
   })
 
   describe(EigenDaProjectsIndexer.prototype.multiUpdate.name, () => {
-    it('should update at 02:00:00 and save to database', async () => {
+    it('should update at 02:00:00, save to database and update sync metadata', async () => {
       const configurations = [
         createConfiguration('project1', DA_LAYER, 'customer1'),
       ]
@@ -57,11 +57,12 @@ describe(EigenDaProjectsIndexer.name, () => {
         },
       ]
 
-      const { indexer, repository, eigenClient } = mockIndexer({
-        configurations,
-        daLayer: DA_LAYER,
-        projectData: mockProjectData,
-      })
+      const { indexer, repository, eigenClient, syncMetadataRepository } =
+        mockIndexer({
+          configurations,
+          daLayer: DA_LAYER,
+          projectData: mockProjectData,
+        })
 
       // Set time to 01:00:00
       const from = UnixTime.fromDate(new Date('2025-06-01T01:00:00Z'))
@@ -89,6 +90,12 @@ describe(EigenDaProjectsIndexer.name, () => {
           configurationId: configurations[0].id,
         },
       ])
+
+      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenOnlyCalledWith(
+        'dataAvailability',
+        configurations.map((c) => c.properties.projectId),
+        expectedAdjustedTo,
+      )
 
       expect(safeHeight).toEqual(expectedAdjustedTo)
     })
@@ -317,6 +324,10 @@ function mockIndexer($: {
     upsertMany: mockFn().resolvesTo(undefined),
   })
 
+  const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+    updateSyncedUntil: mockFn().resolvesTo(undefined),
+  })
+
   const eigenClient = mockObject<EigenApiClient>({
     getByProjectData: mockFn().resolvesTo($.projectData ?? []),
   })
@@ -333,7 +344,9 @@ function mockIndexer($: {
   })
 
   const db = mockDatabase({
+    transaction: mockFn(async (fun) => await fun()),
     dataAvailability: repository,
+    syncMetadata: syncMetadataRepository,
   })
 
   const indexer = new EigenDaProjectsIndexer({
@@ -351,6 +364,7 @@ function mockIndexer($: {
   return {
     indexer,
     repository,
+    syncMetadataRepository,
     eigenClient,
     indexerService,
     db,

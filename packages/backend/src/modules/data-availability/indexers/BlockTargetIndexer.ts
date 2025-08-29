@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockTimestampProvider } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { Clock } from '../../../tools/Clock'
 
@@ -18,6 +18,9 @@ export class BlockTargetIndexer extends RootIndexer {
     private readonly clock: Clock,
     private readonly blockTimestampProvider: BlockTimestampProvider,
     readonly daLayer: string,
+    private readonly options?: {
+      onTick?: (targetTimestamp: UnixTime, blockNumber: number) => Promise<void>
+    },
   ) {
     super(
       logger.tag({
@@ -51,6 +54,8 @@ export class BlockTargetIndexer extends RootIndexer {
     )
 
     this.blockHeight = blockNumber
+    // TODO: is this the right timestamp? or maybe getBlockNumberAtOrBefore should return the timestamp too?
+    await this.options?.onTick?.(timestamp, blockNumber)
     return blockNumber
   }
 }

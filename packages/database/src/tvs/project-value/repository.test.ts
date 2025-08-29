@@ -6,6 +6,10 @@ import { ProjectValueRepository } from './repository'
 describeDatabase(ProjectValueRepository.name, (db) => {
   const repository = db.tvsProjectValue
 
+  beforeEach(async () => {
+    await repository.deleteAll()
+  })
+
   describe(ProjectValueRepository.prototype.upsertMany.name, () => {
     it('inserts new records', async () => {
       const records = [

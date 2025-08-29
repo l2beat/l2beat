@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { ActivityRecord } from '@l2beat/database'
 import type { BlockProvider } from '@l2beat/shared'
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
 import type { UopsAnalyzer } from '../uops/types'
@@ -17,7 +17,13 @@ interface Dependencies {
 export class BlockTxsCountService {
   constructor(private readonly $: Dependencies) {}
 
-  async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
+  async getTxsCount(
+    from: number,
+    to: number,
+  ): Promise<{
+    records: ActivityRecord[]
+    latestTimestamp: number
+  }> {
     const queries = range(from, to + 1).map(async (blockNumber) => {
       const block = await this.$.provider.getBlockWithTransactions(blockNumber)
 
@@ -57,6 +63,12 @@ export class BlockTxsCountService {
 
     const blocks = await Promise.all(queries)
 
-    return aggregatePerDay(this.$.projectId, blocks)
+    const latestTimestamp = blocks.at(-1)?.timestamp
+    assert(latestTimestamp, 'Latest timestamp is undefined')
+
+    return {
+      records: aggregatePerDay(this.$.projectId, blocks),
+      latestTimestamp,
+    }
   }
 }

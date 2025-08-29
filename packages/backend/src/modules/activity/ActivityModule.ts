@@ -33,8 +33,7 @@ export function initActivityModule(
 
   const indexerService = new IndexerService(database)
 
-  const dayTargetIndexer = new DayTargetIndexer(logger, clock)
-  const indexers: ActivityIndexer[] = [dayTargetIndexer]
+  const indexers: ActivityIndexer[] = []
 
   config.activity.projects.forEach((project) => {
     switch (project.activityConfig.type) {
@@ -45,6 +44,22 @@ export function initActivityModule(
           providers.blockTimestamp,
           database,
           project,
+          {
+            onTick: async (targetTimestamp, blockNumber) => {
+              if (!config.activity) {
+                return
+              }
+
+              await database.syncMetadata.upsertMany(
+                config.activity.projects.map((p) => ({
+                  feature: 'activity',
+                  id: p.id,
+                  target: UnixTime.toStartOf(targetTimestamp, 'day'),
+                  blockTarget: blockNumber,
+                })),
+              )
+            },
+          },
         )
 
         const provider = providers.block.getBlockProvider(project.chainName)
@@ -78,6 +93,21 @@ export function initActivityModule(
           clock,
           providers.slotTimestamp,
           project,
+          {
+            onTick: async (targetTimestamp) => {
+              if (!config.activity) {
+                return
+              }
+
+              await database.syncMetadata.upsertMany(
+                config.activity.projects.map((project) => ({
+                  feature: 'activity',
+                  id: project.id,
+                  target: UnixTime.toStartOf(targetTimestamp, 'day'),
+                })),
+              )
+            },
+          },
         )
 
         const provider = providers.svmBlock.getBlockProvider(project.chainName)
@@ -103,6 +133,22 @@ export function initActivityModule(
       }
 
       case 'day': {
+        const dayTargetIndexer = new DayTargetIndexer(logger, clock, {
+          onTick: async (targetTimestamp) => {
+            if (!config.activity) {
+              return
+            }
+
+            await database.syncMetadata.upsertMany(
+              config.activity.projects.map((project) => ({
+                feature: 'activity',
+                id: project.id,
+                target: targetTimestamp,
+              })),
+            )
+          },
+        })
+
         const provider = providers.day.getDayProvider(project.chainName)
         const txsCountService = new DayTxsCountService(provider, project.id)
 
@@ -120,7 +166,7 @@ export function initActivityModule(
           db: database,
         })
 
-        indexers.push(activityIndexer)
+        indexers.push(dayTargetIndexer, activityIndexer)
         break
       }
     }

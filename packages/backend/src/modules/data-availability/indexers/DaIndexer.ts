@@ -82,14 +82,23 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
       previousRecords: previousRecords.length,
     })
 
-    const records = this.$.daService.generateRecords(
+    const { records, latestTimestamp } = this.$.daService.generateRecords(
       blobs,
       previousRecords,
       configurations.map((c) => c.properties),
     )
 
     return async () => {
-      await this.$.db.dataAvailability.upsertMany(records)
+      await this.$.db.transaction(async () => {
+        await this.$.db.dataAvailability.upsertMany(records)
+        await this.$.db.syncMetadata.updateSyncedUntil(
+          'dataAvailability',
+          this.$.configurations.map((c) => c.properties.projectId),
+          latestTimestamp,
+          adjustedTo,
+        )
+      })
+
       this.logger.info('Saved DA metrics into DB', {
         from,
         to: adjustedTo,

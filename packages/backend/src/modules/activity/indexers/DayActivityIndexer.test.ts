@@ -49,11 +49,13 @@ describe(DayActivityIndexer.name, () => {
       expect(newSafeHeight).toEqual(90)
     })
 
-    it('gets blocks counts and saves to db', async () => {
+    it('gets blocks counts, saves to db and updates sync metadata', async () => {
       const activityRepository = mockObject<Database['activity']>({
         upsertMany: mockFn().resolvesTo(undefined),
       })
-
+      const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+        updateSyncedUntil: mockFn().resolvesTo(undefined),
+      })
       const mockActivityRecords = [
         activityRecord('a', START, 5),
         activityRecord('a', START + 1 * UnixTime.DAY, 4),
@@ -61,12 +63,19 @@ describe(DayActivityIndexer.name, () => {
       ]
 
       const txsCountService = mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo(mockActivityRecords),
+        getTxsCount: mockFn().resolvesTo({
+          records: mockActivityRecords,
+          latestTimestamp:
+            mockActivityRecords[mockActivityRecords.length - 1].timestamp,
+        }),
       })
 
       const indexer = createIndexer({
         txsCountService,
-        db: mockDatabase({ activity: activityRepository }),
+        db: mockDatabase({
+          activity: activityRepository,
+          syncMetadata: syncMetadataRepository,
+        }),
         batchSize: 100,
       })
 
@@ -75,6 +84,11 @@ describe(DayActivityIndexer.name, () => {
       expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 10)
       expect(activityRepository.upsertMany).toHaveBeenCalledWith(
         mockActivityRecords,
+      )
+      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenCalledWith(
+        'activity',
+        ['a'],
+        10 * UnixTime.DAY,
       )
       expect(newSafeHeight).toEqual(10)
     })
@@ -121,6 +135,9 @@ function createIndexer(
       activity: mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([]),
         upsertMany: mockFn().resolvesTo(undefined),
+      }),
+      syncMetadata: mockObject<Database['syncMetadata']>({
+        updateSyncedUntil: mockFn().resolvesTo(undefined),
       }),
     }),
     projectId: ProjectId('a'),

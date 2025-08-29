@@ -31,17 +31,20 @@ describe(BlockTxsCountService.name, () => {
       })
 
       const result = await txsCountProvider.getTxsCount(1, 3)
-      expect(result).toEqual([
-        activityRecord('a', UnixTime.toStartOf(START, 'day'), 3, 5, 1, 2),
-        activityRecord(
-          'a',
-          UnixTime.toStartOf(START + 2 * UnixTime.DAY, 'day'),
-          5,
-          7,
-          3,
-          3,
-        ),
-      ])
+      expect(result).toEqual({
+        records: [
+          activityRecord('a', UnixTime.toStartOf(START, 'day'), 3, 5, 1, 2),
+          activityRecord(
+            'a',
+            UnixTime.toStartOf(START + 2 * UnixTime.DAY, 'day'),
+            5,
+            7,
+            3,
+            3,
+          ),
+        ],
+        latestTimestamp: START + 2 * UnixTime.DAY,
+      })
       expect(analyzer.calculateUops).toHaveBeenCalledTimes(3)
       expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(3)
     })
@@ -63,9 +66,12 @@ describe(BlockTxsCountService.name, () => {
         logger: mockObject<Logger>(),
       })
       const result = await txsCountProvider.getTxsCount(1, 2)
-      expect(result).toEqual([
-        activityRecord('a', UnixTime.toStartOf(START, 'day'), 1, 3, 1, 2),
-      ])
+      expect(result).toEqual({
+        records: [
+          activityRecord('a', UnixTime.toStartOf(START, 'day'), 1, 3, 1, 2),
+        ],
+        latestTimestamp: START + 1 * UnixTime.HOUR,
+      })
       expect(assessCount).toHaveBeenCalledTimes(4)
       expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(2)
     })
@@ -95,9 +101,12 @@ describe(BlockTxsCountService.name, () => {
         logger,
       })
       const result = await txsCountProvider.getTxsCount(1, 3)
-      expect(result).toEqual([
-        activityRecord('a', UnixTime.toStartOf(START, 'day'), 1, 2, 1, 3),
-      ])
+      expect(result).toEqual({
+        records: [
+          activityRecord('a', UnixTime.toStartOf(START, 'day'), 1, 2, 1, 3),
+        ],
+        latestTimestamp: START + 2 * UnixTime.HOUR,
+      })
       expect(logger.warn).toHaveBeenCalledTimes(4)
       expect(logger.warn).toHaveBeenNthCalledWith(1, 'txsCount is negative', {
         projectId: 'a',

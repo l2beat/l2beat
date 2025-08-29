@@ -7,7 +7,6 @@ import type {
 } from '@l2beat/shared'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { TrackedTxProject } from '../../config/Config'
 import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import type { Configuration } from '../../tools/uif/multi/types'
 import {
@@ -22,23 +21,13 @@ import { transformFunctionCallsQueryResult } from './utils/transformFunctionCall
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
 
 export class TrackedTxsClient {
-  constructor(
-    private readonly bigquery: BigQueryClient,
-    private readonly projects: TrackedTxProject[],
-  ) {}
+  constructor(private readonly bigquery: BigQueryClient) {}
 
   async getData(
     configurations: Configuration<TrackedTxConfigEntry>[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<TrackedTxResult[]> {
-    // we need to filter out configurations from projects that are archived
-    // it has to be done here otherwise indexer would delete data from inactive configurations/projects
-    configurations = configurations.filter((c) => {
-      const project = this.projects.find((p) => p.id === c.properties.projectId)
-      return project && !project.isArchived
-    })
-
     const transfersConfig = configurations.filter(
       (
         c,

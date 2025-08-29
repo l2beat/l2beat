@@ -13,7 +13,8 @@ export interface ApplicationModuleWithIndexer<T extends ChildIndexer>
   indexer: T
 }
 
-export interface ApplicationModuleWithUpdater<T extends TxUpdaterInterface>
-  extends ApplicationModule {
+export interface ApplicationModuleWithUpdater<
+  T extends TxUpdaterInterface<string>,
+> extends ApplicationModule {
   updater: T
 }
