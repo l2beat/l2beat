@@ -2,8 +2,10 @@ import type { TvsToken } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
 import capitalize from 'lodash/capitalize'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
 import type { CommonProjectColumnsOptions } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
+import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import { getColumnHeaderUnderline } from '~/utils/table/getColumnHeaderUnderline'
 import { TableLink } from '../../../../../components/table/TableLink'
 import type { ScalingTvsTableRow } from '../../utils/ToTableRows'
@@ -228,13 +230,11 @@ function BreakdownCell({
     return <NoDataBadge />
   }
 
-  const filters = encodeURIComponent(
-    JSON.stringify({
-      [type]: {
-        values: [dataKeyToFilter(dataKey)],
-      },
-    }),
-  )
+  const filters = getFilterSearchParams({
+    [type]: {
+      values: [dataKeyToFilter(dataKey)],
+    },
+  })
 
   return (
     <TableLink
@@ -259,13 +259,10 @@ function dataKeyToFilter(
 ) {
   switch (dataKey) {
     case 'ether':
-      return 'ETH & derivatives'
     case 'btc':
-      return 'BTC & derivatives'
     case 'stablecoin':
-      return 'Stablecoins'
     case 'other':
-      return 'Others'
+      return categoryToLabel(dataKey)
     default:
       return capitalize(dataKey)
   }
