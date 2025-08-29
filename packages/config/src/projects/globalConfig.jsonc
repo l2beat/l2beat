@@ -1,8 +1,5 @@
 {
-  "import": [
-    "globalTokens.jsonc",
-    "../projects/shared-sharp-verifier/entrypoints.json"
-  ],
+  "import": ["globalTokens.jsonc", "globalEntrypoints.jsonc"],
   "categories": {
     "core": {
       "name": "Local Infrastructure",
