@@ -39,15 +39,9 @@ function decoder(input: DecoderInput): DecoderOutput {
       timestamp: input.blockTimestamp,
       txHash: input.transactionHash,
 
-      // originChain?: string,
-      // originToken?: string
-      // originAmount?: string,
-
+      type: 'Portal_Inbound',
       destinationChain: input.chain,
-      // destinationToken?: string
-      // destinationAmount?: string
-
-      type: 'TransferRedeemed',
+      wormholeMessageId: id,
     },
     message: {
       id: id,
@@ -56,7 +50,7 @@ function decoder(input: DecoderInput): DecoderOutput {
       txHash: input.transactionHash,
       timestamp: input.blockNumber,
       destinationChain: input.chain,
-      type: 'L2BEAT_SYNTHETIC_TransferRedeemed',
+      type: 'L2BEAT_SYNTHETIC_Wormhole_Inbound',
     },
   }
 }
