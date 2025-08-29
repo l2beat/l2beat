@@ -219,7 +219,14 @@ describe('getProjects', () => {
 
   describe('chain config', () => {
     const chains = projects
-      .map((x) => x.chainConfig)
+      .map((x) =>
+        x.chainConfig
+          ? {
+              projectId: x.id,
+              ...x.chainConfig,
+            }
+          : undefined,
+      )
       .filter((x) => x !== undefined)
 
     it('every name is lowercase a-z0-9 <20 characters', () => {
@@ -233,6 +240,17 @@ describe('getProjects', () => {
       for (const chain of chains) {
         expect(encountered.has(chain.name)).toEqual(false)
         encountered.add(chain.name)
+      }
+    })
+
+    it('every name is equal to projectId', () => {
+      // in many places chain name and project id are used interchangeably so we need the to be the same
+      // do not add new projects here!
+      const KNOWN_EXCEPTIONS = ['polygonpos', 'g7']
+
+      for (const chain of chains) {
+        if (KNOWN_EXCEPTIONS.includes(chain.name)) continue
+        expect(chain.name).toEqual(chain.projectId)
       }
     })
 
