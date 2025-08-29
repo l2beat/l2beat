@@ -12,7 +12,6 @@ export const kontos: ScalingProject = underReviewL2({
     description:
       'Kontos is a zero-knowledge based layer-2 account protocol. Its architecture enables users to enjoy numerous multichain features, including gasless transactions and other smart account features.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://kontos.io/'],
       bridges: ['https://wallet.kontos.io/'],
@@ -27,6 +26,7 @@ export const kontos: ScalingProject = underReviewL2({
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Validity',
   },

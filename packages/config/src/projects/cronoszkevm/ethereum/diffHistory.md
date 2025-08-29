@@ -1,3 +1,83 @@
+Generated with discovered.json: 0x3f78db2fd1390c74e810da713a27d7471c1e91f7
+
+# Diff at Thu, 21 Aug 2025 14:49:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@gl2beat.com>)
+- comparing to: main@1bc9e714ac41324b76564a44406bb5685e9fbbce block: 1753944307
+- current timestamp: 1755787720
+
+## Description
+
+Upgraded verifeirs to version 28.1.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.7:
++        ["2025-08-21T06:13:47.000Z","0x7fb079169799d3618fdbbde9815e5e1b0afeb2191b301dfb80c9811b67b38489",["eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC","eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22","eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec","eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"]]
+      values.$upgradeCount:
+-        7
++        8
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        120259084288
++        120259084289
+      values.getSemverProtocolVersion.2:
+-        0
++        1
+      values.getVerifier:
+-        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
++        "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911 or eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6 depending on the supplied proof type.
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@1753944307 => .flat}/L1VerifierFflonk.sol     | 4 ++--
+ .../ethereum/{.flat@1753944307 => .flat}/L1VerifierPlonk.sol      | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+```
+
 Generated with discovered.json: 0xeae209be187a35030a81c6811cec0c845d4281c6
 
 # Diff at Thu, 31 Jul 2025 10:25:51 GMT:

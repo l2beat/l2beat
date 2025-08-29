@@ -92,7 +92,7 @@ export interface DaSummaryEntry extends CommonDaEntry {
 }
 
 export interface DaBridgeSummaryEntry
-  extends Omit<CommonDaEntry, 'id' | 'tab' | 'icon'> {
+  extends Omit<CommonDaEntry, 'id' | 'tab' | 'icon' | 'backgroundColor'> {
   tvs: {
     latest: number
     sevenDaysAgo: number
@@ -260,6 +260,7 @@ function getEthereumEntry(
     name: layer.name,
     nameSecondLine: layer.daLayer.type,
     href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
+    backgroundColor: 'blue',
     statuses: {},
     tab: 'public',
     economicSecurity: economicSecurity,

@@ -4,12 +4,8 @@ import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
+import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
-import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
-import {
-  TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
@@ -39,26 +35,15 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
         align: 'center',
       },
     }),
-    columnHelper.accessor('category', {
-      header: 'Type',
-      cell: (ctx) => (
-        <TwoRowCell>
-          <TwoRowCell.First>
-            <TypeInfo stacks={ctx.row.original.stacks}>
-              {ctx.getValue()}
-            </TypeInfo>
-          </TwoRowCell.First>
-          {ctx.row.original.capability === 'appchain' && (
-            <TwoRowCell.Second>
-              {ctx.row.original.purposes.sort().join(', ')}
-            </TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      ),
+    columnHelper.accessor('proofSystem', {
+      header: 'Proof system',
+      cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
       meta: {
-        tooltip: <TypeExplanationTooltip />,
+        tooltip:
+          'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
       },
     }),
+    ,
     columnHelper.accessor(
       (e) => {
         if (

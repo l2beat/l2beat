@@ -5,9 +5,10 @@ import { cn } from '~/utils/cn'
 interface Props {
   children: ReactNode
   change: number | undefined
-  containerClassName?: string
   className?: string
   changeClassName?: string
+  containerClassName?: string
+  changeContainerClassName?: string
 }
 
 export function ValueWithPercentageChange({
@@ -16,6 +17,7 @@ export function ValueWithPercentageChange({
   className,
   containerClassName,
   changeClassName,
+  changeContainerClassName,
 }: Props) {
   return (
     <div className={cn('flex flex-wrap items-center', containerClassName)}>
@@ -25,7 +27,7 @@ export function ValueWithPercentageChange({
       {change !== undefined && (
         <PercentChange
           value={change}
-          className="font-medium"
+          className={cn('font-medium', changeContainerClassName)}
           textClassName={changeClassName}
         />
       )}

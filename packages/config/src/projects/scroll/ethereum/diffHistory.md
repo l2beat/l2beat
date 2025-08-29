@@ -1,3 +1,286 @@
+Generated with discovered.json: 0xe2532d7ad9838d0a3ffd54fc704afa7305ed3b0c
+
+# Diff at Mon, 18 Aug 2025 13:31:33 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@335655f4527d4008046b61acfb5c017f56f8b51d block: 1755014055
+- current timestamp: 1755523806
+
+## Description
+
+[L1MessageQueueV2](https://disco.l2beat.com/diff/eth:0xEfA158006b072793a49E622B26761cD0eC38591d/eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa): Change `APPROPRIATE_INTRINSIC_GAS_PER_BYTE` from `16` to `40` to account for EIP-7623 floor gas
+
+[SystemConfig](https://disco.l2beat.com/diff/eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A/eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE): Add three new events: `MessageQueueParametersUpdated`, `EnforcedBatchParametersUpdated`, `SignerUpdated`
+
+[ScrollChain](https://disco.l2beat.com/diff/eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f/eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7): Remove blob proof methods and internal functions, restrict `commitAndFinalizeBatch` to top-level EOA calls only
+
+[L1ScrollMessenger](https://disco.l2beat.com/diff/eth:0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b/eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69): Remove message dropping and replay functionality
+
+[L1ETHGateway](https://disco.l2beat.com/diff/eth:0x546E0bF31FB6e7babD493452e4e6999191367B42/eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0): Stop implementing `IMessageDropCallback` and remove `onDropMessage`
+
+[L1WETHGateway](https://disco.l2beat.com/diff/eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49/eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24): Stop implementing `IMessageDropCallback` and remove `onDropMessage`
+
+[L1StandardERC20Gateway](https://disco.l2beat.com/diff/eth:0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c/eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9): Stop implementing `IMessageDropCallback` and remove `onDropMessage`
+
+[L1CustomERC20Gateway](https://disco.l2beat.com/diff/eth:0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c/eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97): Stop implementing `IMessageDropCallback`, remove `onDropMessage`, `updateTokenMapping` now calls L2 counterpart
+
+[L1ERC721Gateway](https://disco.l2beat.com/diff/eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb/eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A): Stop implementing `IMessageDropCallback` and remove `onDropMessage`
+
+[L1ERC1155Gateway](https://disco.l2beat.com/diff/eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7/eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E): Stop implementing `IMessageDropCallback` and remove `onDropMessage`
+
+[Verifier](https://disco.l2beat.com/diff/eth:0xbb08c87a2e871fcf3d86c4f7ed03dec8b66297ba/eth:0xa8d4702aa5c09af5dd1323e1842a43789021f485): New constructor parameter: `protocolVersion = 8`. Used to calculate `publicInputHash` used in proof verification.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.7:
++        {"startBatchIndex":0,"verifier":"eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485"}
+      values.legacyVerifiersLength.7:
++        0
+      values.verifierVersions.7:
++        8
+    }
+```
+
+```diff
+    contract L1MessageQueueV2 (0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a) {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.
+      sourceHashes.1:
+-        "0x99f1e9baeea6fd1f7773c90a40e71adfcfd2e28d14a59208a79323b7e36281a0"
++        "0x92b35ff3d05522053ea72bc1d79ad52bc1aa4f5fb8afeea039c1f7d26a18b59c"
+      values.$implementation:
+-        "eth:0xEfA158006b072793a49E622B26761cD0eC38591d"
++        "eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0xEfA158006b072793a49E622B26761cD0eC38591d:
+-        "L1MessageQueueV2"
+      implementationNames.eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa:
++        "L1MessageQueueV2"
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
+    +++ description: Contract used to bridge ERC721 tokens from L1 to L2.
+      sourceHashes.1:
+-        "0x2a543ae77e08fc2293b99836986b16db46b713eb958556cd1c95fcabce559b4b"
++        "0x8a8d5a6804c708dac3077a6dc3205f8c0ef2f6afab6f82c622a4b7e4b1cdda5d"
+      values.$implementation:
+-        "eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb"
++        "eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb:
+-        "L1ERC721Gateway"
+      implementationNames.eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A:
++        "L1ERC721Gateway"
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      sourceHashes.1:
+-        "0x0a1aa34da20ecb18034b84d08a6f6c0a3b5f5b865aaf9fbd37ef7c766dfdc5a8"
++        "0x1b2015473e07e2c05d22065439354cd227773c699f24fd62a8c67b381a9e970d"
+      values.$implementation:
+-        "eth:0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b"
++        "eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69"
+      values.$pastUpgrades.4:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.maxReplayTimes:
+-        3
+      implementationNames.eth:0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b:
+-        "L1ScrollMessenger"
+      implementationNames.eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69:
++        "L1ScrollMessenger"
+    }
+```
+
+```diff
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
+    +++ description: Contract used to bridge WETH from L1 to L2.
+      sourceHashes.1:
+-        "0xb90cab5924c6894e3047536242125cdface40857b9c70a6551210bc6de166b42"
++        "0x85541d2f37f32a3d9fe2cd14f01e794d21a323e3f67041c89a7293f790f85668"
+      values.$implementation:
+-        "eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49"
++        "eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49:
+-        "L1WETHGateway"
+      implementationNames.eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24:
++        "L1WETHGateway"
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
+    +++ description: Contract used to bridge ETH from L1 to L2.
+      sourceHashes.1:
+-        "0xa874514fbf17dc321480a8270dcdc3a5a0d9b8e37ff5de1187df641cd4a2f6e4"
++        "0x09dcca0374ada70701a459984dc3deae5816e1b6db9dd9596007c28ce5b389e2"
+      values.$implementation:
+-        "eth:0x546E0bF31FB6e7babD493452e4e6999191367B42"
++        "eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0x546E0bF31FB6e7babD493452e4e6999191367B42:
+-        "L1ETHGateway"
+      implementationNames.eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0:
++        "L1ETHGateway"
+    }
+```
+
+```diff
+    contract SystemConfig (0x8432728A257646449245558B8b7Dbe51A16c7a4D) {
+    +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
+      sourceHashes.1:
+-        "0xc6b44b4f580a4675d79b547ed6eef62882f9be3e0c86e18360e9ba5ead33755a"
++        "0x94a50a4d5efa2113acdaae7b769298f0c8c17e01bc6c6efeebdb7d8a7b0bec10"
+      values.$implementation:
+-        "eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A"
++        "eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A:
+-        "SystemConfig"
+      implementationNames.eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.
+      sourceHashes.1:
+-        "0x73386ff4d9fbaf9cba78ae1e91ee43f11ff39acb8bcf332085ec42d7da6c2306"
++        "0xdccc4e7f3d13677c2f3cb12f608b3aa0a8bacb59c54feb3dc21fc3f42c4d4e25"
+      values.$implementation:
+-        "eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f"
++        "eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7"
+      values.$pastUpgrades.7:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.maxNumTxInChunk:
+-        100
+      implementationNames.eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f:
+-        "ScrollChain"
+      implementationNames.eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7:
++        "ScrollChain"
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      sourceHashes.1:
+-        "0xe564c04903b37a6ee36ca18aeb567c15ce70fe0a8022621e7c93c833bc2fbbf3"
++        "0x5d802344cb0c2d20f6e366ef83eee38cb2d561b6ad26ed596111f84a4cf3aa80"
+      values.$implementation:
+-        "eth:0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c"
++        "eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c:
+-        "L1CustomERC20Gateway"
+      implementationNames.eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97:
++        "L1CustomERC20Gateway"
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
+    +++ description: Contract used to bridge ERC1155 tokens from L1 to L2.
+      sourceHashes.1:
+-        "0x35e9a9e7a691f357e642a73662c88a202224b73a44fc022f833ccc8aff9a4a64"
++        "0x3e82df6b3c4997362507d8f73c6fff945dedcee0aeaf99f8369b433dc82c0bca"
+      values.$implementation:
+-        "eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7"
++        "eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7:
+-        "L1ERC1155Gateway"
+      implementationNames.eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E:
++        "L1ERC1155Gateway"
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      sourceHashes.1:
+-        "0x93fe70d828e5646f5acb7768083ab2e5b9cfb5b6691a5dff48ff3c188ffd05a7"
++        "0x13d0dc38cdff2a957bfc9939cc28d16112c2052a699bc3bc9231879a79ff81e2"
+      values.$implementation:
+-        "eth:0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c"
++        "eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9"
+      values.$pastUpgrades.2:
++        ["2025-08-18T02:46:23.000Z","0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c",["eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c:
+-        "L1StandardERC20Gateway"
+      implementationNames.eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9:
++        "L1StandardERC20Gateway"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (0xa8d4702Aa5c09AF5dD1323E1842a43789021F485)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../L1CustomERC20Gateway/L1CustomERC20Gateway.sol  |  35 +-
+ .../L1ERC1155Gateway/L1ERC1155Gateway.sol          |  37 +-
+ .../L1ERC721Gateway/L1ERC721Gateway.sol            |  38 +-
+ .../L1ETHGateway/L1ETHGateway.sol                  |  26 +-
+ .../L1MessageQueueV2/L1MessageQueueV2.sol          |   3 +-
+ .../L1ScrollMessenger/L1ScrollMessenger.sol        | 111 +--
+ .../L1StandardERC20Gateway.sol                     |  27 +-
+ .../L1WETHGateway/L1WETHGateway.sol                |  31 +-
+ .../ScrollChain/ScrollChain.sol                    | 918 ++-------------------
+ .../SystemConfig/SystemConfig.sol                  |  25 +
+ .../ethereum/.flat/ZkEvmVerifierPostFeynman.sol    | 107 +++
+ 11 files changed, 247 insertions(+), 1111 deletions(-)
+```
+
 Generated with discovered.json: 0x1675a3c48ada4ccf97f25620eb2b67911bf9e5ff
 
 # Diff at Mon, 11 Aug 2025 14:21:53 GMT:

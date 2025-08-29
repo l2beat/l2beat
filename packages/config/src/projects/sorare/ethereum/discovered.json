@@ -2,7 +2,7 @@
   "name": "sorare",
   "chain": "ethereum",
   "timestamp": 1741183403,
-  "configHash": "0x9d76186d13df14d4de166d62acb8f1b662647701dddbe9d14040f15a6465f762",
+  "configHash": "0x50b9e45f4bf59bcbaccc74ede05d94d2746193ad71a743e814e2c35b88394638",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

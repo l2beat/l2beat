@@ -66,19 +66,16 @@ export async function writePermissionsIntoDiscovery(
   configReader: ConfigReader,
 ) {
   const rawConfig = configReader.readRawConfig(project)
-  const chainConfigs = configReader
-    .readAllDiscoveredChainsForProject(project)
-    .flatMap((chain) => configReader.readConfig(project, chain))
-
-  for (const config of chainConfigs) {
-    const discovery = configReader.readDiscovery(config.name, config.chain)
+  const chains = configReader.readAllDiscoveredChainsForProject(project)
+  for (const chain of chains) {
+    const discovery = configReader.readDiscovery(project, chain)
     combinePermissionsIntoDiscovery(discovery, permissionsOutput, {
       skipDependentDiscoveries: !rawConfig.modelCrossChainPermissions,
     })
 
     const projectDiscoveryFolder = configReader.getProjectChainPath(
-      config.name,
-      config.chain,
+      project,
+      chain,
     )
     discovery.entries = discovery.entries.map((e) => sortEntry(e))
     await saveDiscoveredJson(discovery, projectDiscoveryFolder)

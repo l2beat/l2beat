@@ -1,8 +1,8 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
+import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
-import { BasicDaTable } from '../../../components/BasicDaTable'
 import { useIncludeScalingOnly } from '../DaThroughputContext'
 import type { DaThroughputTableData } from './columns'
 import { publicSystemsColumns } from './columns'
@@ -32,7 +32,7 @@ export function DaThroughputPublicTable({ items }: Props) {
     getSortedRowModel: getSortedRowModel(),
   })
 
-  return <BasicDaTable table={table} />
+  return <BasicTable table={table} />
 }
 
 function toTableEntry(

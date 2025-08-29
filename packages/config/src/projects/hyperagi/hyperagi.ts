@@ -7,21 +7,22 @@ export const hyperagi: ScalingProject = upcomingL3({
   capability: 'universal',
   addedAt: UnixTime(1741704727),
   hostChain: ProjectId('arbitrum'),
+  hasTestnet: true,
   display: {
     name: 'HyperAGI',
     slug: 'hyperagi',
     description:
       'HyperAGI is a multi-tiered decentralized platform designed to provide powerful computational support and innovative applications for AI.',
     purposes: ['AI'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
-      websites: ['https://hyperagi.network/'],
-      documentation: ['https://hyperdust-foundation.gitbook.io/moss-ai-docs'],
+      websites: ['https://hyperagi.ai/'],
+      bridges: ['https://bridge.hyperagi.ai'],
+      documentation: ['https://hyperdust-foundation.gitbook.io/hyperagi-docs'],
       repositories: ['https://github.com/HyperdustLab/HyperdustProtocol'],
       explorers: ['https://explorer.hyperagi.network/'],
       socialMedia: [
-        'https://x.com/HyperDustIO',
+        'https://x.com/HyperAGIAI',
         'https://linkedin.com/company/hyperdust-protocol',
         'https://t.me/hyperdust_io',
       ],
@@ -29,5 +30,8 @@ export const hyperagi: ScalingProject = upcomingL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

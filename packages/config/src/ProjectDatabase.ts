@@ -73,6 +73,7 @@ const schema = {
   isUpcoming: 'BOOLEAN',
   archivedAt: 'INTEGER',
   hasActivity: 'BOOLEAN',
+  hasTestnet: 'BOOLEAN',
 } satisfies Schema<BaseProject>
 
 export class ProjectDatabase {

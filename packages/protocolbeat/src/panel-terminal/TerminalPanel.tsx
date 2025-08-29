@@ -34,6 +34,8 @@ export function TerminalPanel() {
     clear,
     setChain,
     setDevMode,
+    findMinters,
+    killCommand,
   } = useTerminalStore()
   const selectedAddress = usePanelStore((state) => state.selected)
 
@@ -87,6 +89,14 @@ export function TerminalPanel() {
         </label>
         <div className="flex flex-wrap items-center gap-2">
           <button
+            onClick={() => killCommand()}
+            disabled={!command.inFlight}
+            className="bg-aux-red px-4 py-1 text-white disabled:opacity-50"
+          >
+            Terminate
+          </button>
+          <div className="h-6 w-px bg-coffee-600" />
+          <button
             onClick={() => {
               discover(project).then(() => {
                 queryClient.invalidateQueries({
@@ -130,6 +140,17 @@ export function TerminalPanel() {
             className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
           >
             Download all shapes
+          </button>
+          <button
+            onClick={() => {
+              if (selectedAddress !== undefined) {
+                findMinters(selectedAddress)
+              }
+            }}
+            disabled={command.inFlight}
+            className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
+          >
+            Find minters
           </button>
         </div>
       </div>

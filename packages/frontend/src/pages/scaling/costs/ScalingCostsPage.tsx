@@ -38,7 +38,7 @@ export function ScalingCostsPage({
                 </CostsMetricContextProvider>
               </CostsUnitContextProvider>
             </CostsTimeRangeContextProvider>
-          </TableFilterContextProvider>{' '}
+          </TableFilterContextProvider>
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>

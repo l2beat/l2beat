@@ -74,7 +74,6 @@ export const lightlink: ScalingProject = {
     slug: 'lightlink',
     description:
       'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions.',
-    category: 'Other',
     purposes: ['Universal'],
     links: {
       websites: ['https://lightlink.io'],

@@ -43,7 +43,6 @@ export const eclipse: ScalingProject = {
     slug: 'eclipse',
     description:
       'Eclipse is a sidechain powered by the Solana Virtual Machine (SVM).',
-    category: 'Other',
     purposes: ['Universal'],
     links: {
       websites: ['https://eclipse.xyz/'],
@@ -93,7 +92,7 @@ export const eclipse: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
-      secondLine: `${formatSeconds(withdrawalDelaySeconds)} challenge period`,
+      challengeDelay: withdrawalDelaySeconds,
     },
     dataAvailability: RISK_VIEW.DATA_CELESTIA(false),
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),

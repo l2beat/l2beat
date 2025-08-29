@@ -2,7 +2,7 @@
   "name": "molten",
   "chain": "arbitrum",
   "timestamp": 1753200985,
-  "configHash": "0x134add4c53b3931ed14197a3f07acc2a55e7281aea1ef287961b4158c1c813b6",
+  "configHash": "0x16de25a9651a6cce744323978f85b23c3fd406614cd9598c1096f0b67e5e5a64",
   "entries": [
     {
       "address": "arb1:0x0cc6aB203689bd8004511cC60f5b25DfB3A91431",

@@ -3573,20 +3573,6 @@
       "supply": "zero"
     },
     {
-      "name": "Mog Coin",
-      "coingeckoId": "mog-coin",
-      "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
-      "symbol": "Mog",
-      "decimals": 18,
-      "deploymentTimestamp": 1689822407,
-      "coingeckoListingTimestamp": 1689897600,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/31059/large/MOG_LOGO_200x200.png?1696529893",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "name": "Moonflow",
       "coingeckoId": "moonflow",
       "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa",
@@ -5575,6 +5561,20 @@
       "supply": "zero"
     },
     {
+      "name": "T3rn",
+      "coingeckoId": "t3rn",
+      "address": "0x0d292b4a8FCfeD626dC73242cec1Da0503B891fd",
+      "symbol": "TRN",
+      "decimals": 9,
+      "deploymentTimestamp": 1725419315,
+      "coingeckoListingTimestamp": 1752796800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30009/large/Twitter_LOGO.png?1696528933",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Taiko Token",
       "coingeckoId": "taiko",
       "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
@@ -6685,7 +6685,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6707,7 +6707,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6729,7 +6729,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6751,7 +6751,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6830,7 +6830,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6938,7 +6938,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -6960,7 +6960,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -7062,7 +7062,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/31800/large/TAROT.jpg?1696530615",
       "chainId": 10,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -7959,7 +7959,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 324,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -7981,7 +7981,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 324,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8003,7 +8003,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 324,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8025,7 +8025,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 324,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8111,7 +8111,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 324,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8430,7 +8430,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8452,7 +8452,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8474,7 +8474,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8496,7 +8496,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8518,7 +8518,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -8540,7 +8540,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 1101,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -9237,7 +9237,7 @@
       "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50978/large/a.jpg?1730208372",
       "chainId": 1923,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -10506,7 +10506,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
       "chainId": 8453,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -11958,7 +11958,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -11980,7 +11980,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12002,7 +12002,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12024,7 +12024,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12245,7 +12245,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12317,7 +12317,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/36726/large/moltenmesh.png?1712147407",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12339,7 +12339,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/37969/large/MOR200X200.png?1716327119",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12439,7 +12439,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12475,7 +12475,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/26536/large/Radiant-Logo-200x200.png?1696525610",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12627,7 +12627,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12649,7 +12649,7 @@
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 42161,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -12796,6 +12796,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "TRN",
+      "coingeckoId": "t3rn",
+      "address": "0x1114982539A2Bfb84e8B9e4e320bbC04532a9e44",
+      "symbol": "TRN",
+      "decimals": 18,
+      "deploymentTimestamp": 1744237477,
+      "coingeckoListingTimestamp": 1752796800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30009/large/Twitter_LOGO.png?1696528933",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Umami",
@@ -14484,7 +14498,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38671/large/Stack.png?1718290662",
       "chainId": 111188,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [

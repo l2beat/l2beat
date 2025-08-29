@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x77ee470977d9222a8d5d4bc1a87663dc23d86ac0
+
+# Diff at Mon, 18 Aug 2025 09:02:32 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0dd593b7eab607ddac1ba1df05212f23f79157e3 block: 1755157463
+- current timestamp: 1755507657
+
+## Description
+
+Security council members rotation.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa"
++        "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94"
+      values.$members.10:
+-        "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A"
++        "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6"
+    }
+```
+
+Generated with discovered.json: 0x1770a53928ac28479d73ffff0b80022fd2c0fbb6
+
+# Diff at Thu, 14 Aug 2025 07:44:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1753681871
+- current timestamp: 1755157463
+
+## Description
+
+Fee pricing update.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x05f23282FFDCA8286E4738C1aF79079f3d843750) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        37110
++        127543
+    }
+```
+
 Generated with discovered.json: 0x2a80b28a2389cdbae8bd6fc063a9a09620bba0c1
 
 # Diff at Mon, 28 Jul 2025 05:51:30 GMT:

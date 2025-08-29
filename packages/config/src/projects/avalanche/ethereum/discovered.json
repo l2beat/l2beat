@@ -2,7 +2,7 @@
   "name": "avalanche",
   "chain": "ethereum",
   "timestamp": 1746608387,
-  "configHash": "0x1994d66987d6dc04380eb493a11ae6915946b7a16c3bbd4a006a03b17f09d12a",
+  "configHash": "0xeb54f341be0881125ad4685eb8169ce8ac945892ee4b885e379ee4f017b8a179",
   "entries": [
     {
       "address": "eth:0x8EB8a3b98659Cce290402893d0123abb75E3ab28",

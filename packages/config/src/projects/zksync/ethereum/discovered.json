@@ -2,7 +2,7 @@
   "name": "zksync",
   "chain": "ethereum",
   "timestamp": 1751371847,
-  "configHash": "0xc807cc6270de924758b0b5cb51e51313a7a9d3c2878e3e351cb6de86939a2557",
+  "configHash": "0x0adaeb2575393bf532880dcaf2896baae7076c74b0d503ae573becb2d04cbf84",
   "entries": [
     {
       "name": "Multisig 1",

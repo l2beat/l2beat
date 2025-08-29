@@ -4,5 +4,11 @@
     "address": "0x546E0bF31FB6e7babD493452e4e6999191367B42",
     "chain": "ethereum",
     "blockNumber": 22340099
+  },
+  "L1ETHGateway_Feynman": {
+    "hash": "0x09dcca0374ada70701a459984dc3deae5816e1b6db9dd9596007c28ce5b389e2",
+    "address": "0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0",
+    "chain": "ethereum",
+    "blockNumber": 23168202
   }
 }

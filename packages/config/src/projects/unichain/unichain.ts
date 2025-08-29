@@ -22,7 +22,6 @@ export const unichain: ScalingProject = opStackL2({
     stateValidationImage: 'opfp',
     description:
       'Unichain, a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://unichain.org/'],
@@ -98,6 +97,14 @@ export const unichain: ScalingProject = opStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Unichain flashblocks are live',
+      url: 'https://blog.uniswap.org/flashblocks-are-live',
+      description:
+        'Unichain hits 200ms sub-blocks inside Trusted Execution Environments.',
+      date: '2025-08-14T00:00:00Z',
+      type: 'general',
+    },
     {
       title: 'Mainnet Launch',
       url: 'https://x.com/unichain/status/1889313993296064770',

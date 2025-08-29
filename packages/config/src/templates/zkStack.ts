@@ -22,14 +22,13 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
-import { formatExecutionDelay } from '../common/formatDelays'
 import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
-  ProjectScalingProofSystem,
+  ProjectScalingRiskView,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -44,8 +43,8 @@ import type {
   ProjectEscrow,
   ProjectPermissions,
   ProjectScalingCapability,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
-  ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectTechnologyChoice,
@@ -114,7 +113,7 @@ export interface ZkStackConfigCommon {
   }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
   availDa?: {
-    appId: string
+    appIds: string[]
     /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
@@ -280,11 +279,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
           : settlesOnGateway
             ? 'zkstack-rollup-gateway'
             : 'zkstack-rollup',
-      category: templateVars.reasonsForBeingOther
-        ? 'Other'
-        : daProvider !== undefined
-          ? 'Validium'
-          : 'ZK Rollup',
       liveness: {
         explanation: executionDelay
           ? `${templateVars.display.name} is a ${
@@ -299,7 +293,9 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Validity' }),
+      (hasNoProofs
+        ? undefined
+        : { type: 'Validity', zkCatalogId: ProjectId('boojum') }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
@@ -331,7 +327,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
-        secondLine: formatExecutionDelay(executionDelayS),
+        executionDelay: executionDelayS,
       },
       dataAvailability:
         templateVars.nonTemplateRiskView?.dataAvailability ??
@@ -674,7 +670,7 @@ function getDaTracking(
         daLayer: ProjectId('avail'),
         // TODO: update to value from discovery
         sinceBlock: templateVars.availDa.sinceBlock,
-        appId: templateVars.availDa.appId,
+        appIds: templateVars.availDa.appIds,
       },
     ]
   }

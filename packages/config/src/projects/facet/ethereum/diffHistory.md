@@ -1,3 +1,89 @@
+Generated with discovered.json: 0x72e48c1f62cde6fef47fb657fb8f93735cca9c5e
+
+# Diff at Mon, 25 Aug 2025 14:09:32 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1755605791
+- current timestamp: 1756118684
+
+## Description
+
+Cache issue, name FacetEtherBridgeV6 is correct.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755605791 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      sourceHashes.0:
+-        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2"
++        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
+      implementationNames.eth:0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        "ERC1967Factory"
++        "FacetEtherBridgeV6"
+    }
+```
+
+Generated with discovered.json: 0x7cb73d0e4c2b1ba9ed45474e55f4b8d60fc9f787
+
+# Diff at Fri, 22 Aug 2025 09:01:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@515ea2f778e0acc901831f9413259d8fb41219ff block: 1755605791
+- current timestamp: 1755605791
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755605791 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      sourceHashes.0:
+-        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
++        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2"
+      implementationNames.eth:0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        "FacetEtherBridgeV6"
++        "ERC1967Factory"
+    }
+```
+
+Generated with discovered.json: 0x8353bceb9d6213c536f528dfb173ae38f2251a06
+
+# Diff at Tue, 19 Aug 2025 12:17:22 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@67e41f566326dea91dc3f12a1b8947109f00301c block: 1755000507
+- current timestamp: 1755605791
+
+## Description
+
+Ignore anchor values.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755000507 (main branch discovery), not current.
+
+```diff
+    contract Rollup (0x686E7d01C7BFCB563721333A007699F154C04eb4) {
+    +++ description: Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.
+      values.getAnchorRoot:
+-        ["0x88b54f3a73b2cbb7f29caae53a780a8b4974c5e0bd157ad3c7bb122b72939bcc",1721260]
+    }
+```
+
 Generated with discovered.json: 0xe4aff01914f343654cdb84cac31b608f1dc388c6
 
 # Diff at Tue, 12 Aug 2025 12:08:32 GMT:

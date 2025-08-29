@@ -52,10 +52,10 @@ export async function estimateTVL(rpcUrl: string, address: EthereumAddress) {
     callsPerMinute: 10,
   })
   const tokenIds = nonZeroBalances.map((entry) => entry.coingeckoId)
-  const tokenMarketDatas = await coingeckoClient.getCoinsMarket(tokenIds, 'usd')
+  const tokenMarketData = await coingeckoClient.getCoinsMarket(tokenIds, 'usd')
 
   const usdValue = nonZeroBalances.map((entry) => {
-    const marketData = tokenMarketDatas.find(
+    const marketData = tokenMarketData.find(
       (marketData) => marketData.id === entry.coingeckoId.toString(),
     )
     let value = 0n

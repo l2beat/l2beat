@@ -13,6 +13,7 @@ export const settlus: ScalingProject = opStackL2({
   addedAt: UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
   additionalBadges: [BADGES.RaaS.Alchemy],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  isPartOfSuperchain: false,
   display: {
     name: 'Settlus',
     slug: 'settlus',
@@ -33,18 +34,7 @@ export const settlus: ScalingProject = opStackL2({
   chainConfig: {
     name: 'settlus',
     chainId: 5371,
-    apis: [
-      {
-        type: 'rpc',
-        url: 'https://settlus-septestnet.g.alchemy.com/public',
-        callsPerMinute: 1500,
-      },
-    ],
-  },
-  activityConfig: {
-    type: 'block',
-    startBlock: 1,
-    adjustCount: { type: 'SubtractOne' },
+    apis: [],
   },
   discovery,
   genesisTimestamp,

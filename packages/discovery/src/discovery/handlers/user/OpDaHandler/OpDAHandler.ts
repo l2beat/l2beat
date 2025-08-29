@@ -64,7 +64,7 @@ export class OpStackDAHandler implements Handler {
 
     const isSequencerSendingBlobTx = await checkForBlobs(provider, lastTxs)
     const isUsingEigenDA = await checkForEigenDA(provider, lastTxs)
-    const isUsingCelestia = await checkForCelestia(provider, lastTxs)
+    const isUsingCelestia = checkForCelestia(lastTxs)
 
     return {
       field: this.field,

@@ -1,14 +1,14 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
+import { TableFilters } from '~/components/table/filters/TableFilters'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/getScalingUpcomingEntries'
-import { ScalingUpcomingTables } from './components/ScalingUpcomingTables'
+import { ScalingUpcomingTable } from './components/table/ScalingUpcomingTable'
 
 interface Props extends AppLayoutProps {
-  entries: TabbedScalingEntries<ScalingUpcomingEntry>
+  entries: ScalingUpcomingEntry[]
 }
 
 export function ScalingUpcomingPage({ entries, ...props }: Props) {
@@ -17,7 +17,8 @@ export function ScalingUpcomingPage({ entries, ...props }: Props) {
       <SideNavLayout>
         <MainPageHeader>Upcoming</MainPageHeader>
         <TableFilterContextProvider>
-          <ScalingUpcomingTables {...entries} />
+          <TableFilters entries={entries} />
+          <ScalingUpcomingTable entries={entries} />
         </TableFilterContextProvider>
       </SideNavLayout>
     </AppLayout>

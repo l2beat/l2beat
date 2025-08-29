@@ -1,8 +1,8 @@
 {
   "name": "reya",
   "chain": "ethereum",
-  "timestamp": 1752570599,
-  "configHash": "0x2bc3c230a374b2e5cfa24a0a0cf2ed9e3e27e62de3bd4a258807ed2c6d410747",
+  "timestamp": 1756118139,
+  "configHash": "0xe705b9a4eaf2a39d1df13da1c1fd35abcbde739242b81a94188585d91df45de2",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -202,7 +202,7 @@
           "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 45344,
+        "delayedMessageCount": 49973,
         "inboxHistory": [
           "eth:0x672109752635177ebcb17F2C7e04575A709014BD",
           "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
@@ -210,8 +210,8 @@
         "outboxHistory": ["eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
         "rollup": "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 43640,
-        "sequencerReportedSubMessageCount": 71113735
+        "sequencerMessageCount": 48257,
+        "sequencerReportedSubMessageCount": 74454853
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -322,7 +322,7 @@
         ],
         "$upgradeCount": 2,
         "anyTrustFastConfirmer": "eth:0x0000000000000000000000000000000000000000",
-        "arbOsFromWmRoot": "ArbOS v32 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v40 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "eth:0x383c03c4EfF819E73409DbC690755a9992393814",
         "chainId": 1729,
@@ -331,13 +331,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 2371,
+        "firstUnresolvedNode": 2453,
         "inbox": "eth:0x672109752635177ebcb17F2C7e04575A709014BD",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21894997,
-        "latestConfirmed": 2370,
-        "latestNodeCreated": 2383,
+        "latestConfirmed": 2452,
+        "latestNodeCreated": 2465,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
@@ -355,7 +355,7 @@
         "validatorUtils": "eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWalletCreator": "eth:0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39",
+        "wasmModuleRoot": "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -520,7 +520,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 43640,
+        "batchCount": 48257,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0x29156F8dFfE8979F49E3a085dbb10477373a6051"],
         "bridge": "eth:0x383c03c4EfF819E73409DbC690755a9992393814",
@@ -551,7 +551,7 @@
         "rollup": "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 45342,
+        "totalDelayedMessagesRead": 49972,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -827,7 +827,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 36,
+        "nonce": 44,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1596,6 +1596,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22923595 },
+  "usedBlockNumbers": { "ethereum": 23217561 },
   "permissionsConfigHash": "0x0253b3d4b54f9a909464b402f5006f9101136b70b73e763ead654f5fbe80c61a"
 }

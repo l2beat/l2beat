@@ -87,7 +87,13 @@ export const boojum: BaseProject = {
           'https://gateway.explorer.zksync.io/address/0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('zksync2')],
+        usedBy: [
+          ProjectId('zksync2'),
+          ProjectId('abstract'),
+          ProjectId('sophon'),
+          ProjectId('lens'),
+          ProjectId('cronoszkevm'),
+        ],
       },
       {
         hash: '0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7',
@@ -96,14 +102,7 @@ export const boojum: BaseProject = {
           'https://etherscan.io/address/0xD5dBE903F5382B052317D326FA1a7B63710C6a5b',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('abstract'),
-          ProjectId('grvt'),
-          ProjectId('lens'),
-          ProjectId('sophon'),
-          ProjectId('wonder'),
-          ProjectId('zkcandy'),
-        ],
+        usedBy: [ProjectId('grvt'), ProjectId('wonder'), ProjectId('zkcandy')],
       },
       {
         hash: '0x941fd36f78a5ba753dbbe65b9123a43ae833405fafd03b5149b959eee766e03c',
@@ -114,7 +113,6 @@ export const boojum: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [
           ProjectId('zeronetwork'),
-          ProjectId('cronoszkevm'),
           ProjectId('lachain'),
           ProjectId('sxt'),
         ],
@@ -127,7 +125,13 @@ export const boojum: BaseProject = {
           'https://gateway.explorer.zksync.io/address/0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('zksync2')],
+        usedBy: [
+          ProjectId('zksync2'),
+          ProjectId('abstract'),
+          ProjectId('sophon'),
+          ProjectId('lens'),
+          ProjectId('cronoszkevm'),
+        ],
       },
       {
         hash: '0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78',
@@ -136,14 +140,7 @@ export const boojum: BaseProject = {
           'https://etherscan.io/address/0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('abstract'),
-          ProjectId('grvt'),
-          ProjectId('lens'),
-          ProjectId('sophon'),
-          ProjectId('wonder'),
-          ProjectId('zkcandy'),
-        ],
+        usedBy: [ProjectId('grvt'), ProjectId('wonder'), ProjectId('zkcandy')],
       },
       {
         hash: '0xf688611ad4e0ef20184a89e7b593493dffcefe92071f85c1a0b94d4852c4f82f',
@@ -154,19 +151,27 @@ export const boojum: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [
           ProjectId('zeronetwork'),
-          ProjectId('cronoszkevm'),
           ProjectId('lachain'),
           ProjectId('sxt'),
         ],
       },
+      // {
+      //   hash: '0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+      //   knownDeployments: [
+      //     'https://etherscan.io/address/0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5',
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   usedBy: [ProjectId('treasure')],
+      // },
       {
-        hash: '0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2',
+        hash: '0x8574e152c41dc39a2ecab984545e1cf21cb3ec250b919018a8053f2fa270784f',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
-          'https://etherscan.io/address/0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5',
+          'https://lineascan.build/address/0x902C3806A84f4e855a8746e92d7F1C9a51400458',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('treasure')],
+        usedBy: [ProjectId('zklinknova')],
       },
     ],
   },

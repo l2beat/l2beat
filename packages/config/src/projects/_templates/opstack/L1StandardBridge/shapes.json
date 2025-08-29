@@ -142,5 +142,11 @@
     "address": "0x44AfB7722AF276A601D524F429016A18B6923df0",
     "chain": "ethereum",
     "blockNumber": 22995199
+  },
+  "L1StandardBridge_v2_3_0_fraxtal": {
+    "hash": "0x29726460095cbabf67e02a68905ff301cb85d6b1652b230c0a4036f346dd6ebf",
+    "address": "0xe89Fbfb78920423AC9e7F06Acb2163ce55baB89f",
+    "chain": "ethereum",
+    "blockNumber": 23175218
   }
 }

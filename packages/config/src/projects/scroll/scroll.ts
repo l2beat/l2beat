@@ -73,7 +73,6 @@ export const scroll: ScalingProject = {
     description:
       'Scroll is ZK Rollup that extends Ethereum’s capabilities through ZK tech and EVM compatibility.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://scroll.io'],
       bridges: ['https://scroll.io/bridge'],
@@ -108,6 +107,7 @@ export const scroll: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
+    zkCatalogId: ProjectId('openvmprover'),
   },
   scopeOfAssessment: {
     inScope: [
@@ -382,7 +382,7 @@ export const scroll: ScalingProject = {
   riskView: {
     stateValidation: {
       ...STATE_ZKP_ST_SN_WRAP,
-      secondLine: formatExecutionDelay(finalizationPeriod),
+      executionDelay: finalizationPeriod,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
@@ -397,7 +397,7 @@ export const scroll: ScalingProject = {
         {
           title:
             'ScrollChain.sol - Etherscan source code commitBatches() function',
-          url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
+          url: 'https://etherscan.io/address/0x0a20703878E68E587c59204cc0EA86098B8c3bA7#code',
         },
       ],
     },
@@ -407,7 +407,7 @@ export const scroll: ScalingProject = {
         {
           title:
             'ScrollChain.sol - Etherscan source code, finalizeBundlePostEuclidV2() function modifier',
-          url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
+          url: 'https://etherscan.io/address/0x0a20703878E68E587c59204cc0EA86098B8c3bA7#code',
         },
       ],
     },
@@ -427,7 +427,7 @@ export const scroll: ScalingProject = {
         },
         {
           title: 'L1MessageQueueV2 - Etherscan proxy contract',
-          url: 'https://etherscan.io/address/0xEfA158006b072793a49E622B26761cD0eC38591d',
+          url: 'https://etherscan.io/address/0x39C36c9026ac18104839A50c61a4507ea5052ECa',
         },
       ],
     },
@@ -439,7 +439,7 @@ export const scroll: ScalingProject = {
           {
             title:
               'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
-            url: 'https://etherscan.io/address/0x546E0bF31FB6e7babD493452e4e6999191367B42#code',
+            url: 'https://etherscan.io/address/0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0#code',
           },
         ],
       },
@@ -480,7 +480,7 @@ export const scroll: ScalingProject = {
           {
             title:
               'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
-            url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
+            url: 'https://etherscan.io/address/0x0a20703878E68E587c59204cc0EA86098B8c3bA7#code',
           },
         ],
       },
@@ -637,6 +637,14 @@ export const scroll: ScalingProject = {
   },
   upgradesAndGovernance: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the Security Council through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the \`TimelockSCSlow\`) and upgrading the affected contracts. The Security Council can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the \`updateMessageQueueParameters\` and \`updateEnforcedBatchParameters\` functions or by pausing the \`EnforcedTXGateway\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the Security Council minority can unpause, while the Security Council majority is authorized to update and reset the cooldown period. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.`,
   milestones: [
+    {
+      title: 'Scroll Feynman upgrade',
+      url: 'https://forum.scroll.io/t/proposal-feynman-upgrade/957',
+      date: '2025-08-18T00:00:00Z',
+      description:
+        'Feynman upgrade to improve the fee model and EVM compatibility.',
+      type: 'general',
+    },
     {
       title: 'Emergency verifier upgrade',
       url: 'https://etherscan.io/tx/0x3367e24b6cb138cea321f4556259660f24aba1b79ccce8f798ed135e28905f17',

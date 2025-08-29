@@ -242,6 +242,14 @@ function findAddressToCopy(
 }
 
 function canAddShape(selected: ApiProjectContract | ApiAddressEntry) {
+  if (
+    selected.type === 'Unverified' &&
+    'proxyType' in selected &&
+    selected.proxyType !== 'immutable'
+  ) {
+    return true
+  }
+
   return (
     selected.type !== 'Unverified' &&
     selected.type !== 'Unknown' &&

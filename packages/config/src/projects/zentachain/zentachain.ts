@@ -12,13 +12,12 @@ export const zentachain: ScalingProject = upcomingL2({
     description:
       'Zentachain is a privacy-focused IoT blockchain networking project that is focused on communication and data storage. Innovative and useful solutions are provided for issues of security and data ownership.',
     purposes: ['Universal', 'Privacy'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://zentachain.io/'],
-      bridges: ['https://sepolia-bridge.zentachain.io/'],
+      bridges: [],
       documentation: ['https://docs.zentachain.io/'],
-      explorers: ['https://explorer-sepolia.zentachain.io/'],
+      explorers: [],
       repositories: ['https://github.com/ZentaChain'],
       socialMedia: [
         'https://twitter.com/zentachain',
@@ -31,5 +30,8 @@ export const zentachain: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

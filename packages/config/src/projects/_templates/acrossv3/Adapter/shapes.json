@@ -84,10 +84,10 @@
     "blockNumber": 22867011
   },
   "Arbitrum_Adapter": {
-    "hash": "0xa1c171564a6e837069132a07b8c6d217e08cf53cd6a43151a7f497440d2f1e33",
-    "address": "0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210",
+    "hash": "0x9f6b3eb8d2e2f04dbfa536018999afb7482a88d8ada0182ab2a2a9b8ca5c79f6",
+    "address": "0x5eC9844936875E27eBF22172f4d92E107D35B57C",
     "chain": "ethereum",
-    "blockNumber": 22867011
+    "blockNumber": 23145942
   },
   "Linea_Adapter": {
     "hash": "0x0252bdb116e29cf6cc0b6de4ebf9589fcc53281458cb80f4db7a91a866d9eb46",
@@ -118,5 +118,11 @@
     "address": "0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3",
     "chain": "ethereum",
     "blockNumber": 22867011
+  },
+  "Polygon_Adapter_2": {
+    "hash": "0x6e7fdec1dea08a851a5c7c7d013648db8f07fcd751548a002281e712f89f6c49",
+    "address": "0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0",
+    "chain": "ethereum",
+    "blockNumber": 23238901
   }
 }

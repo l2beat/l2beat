@@ -142,5 +142,17 @@
     "address": "0x9c61C5a8FF9408B83ac92571278550097A9d2BB5",
     "chain": "ethereum",
     "blockNumber": 22882513
+  },
+  "SystemConfig_v2_5_0_L2OutputOracle": {
+    "hash": "0x50cae8451b81d721b283a52337ae8d16911d84dc1f12fc8183da626b93161519",
+    "address": "0xbF9d1CDF02720b50254e0ca70f01ffE4C9d82bae",
+    "chain": "ethereum",
+    "blockNumber": 23175174
+  },
+  "SystemConfig_v1_12_0_1559_zircuit": {
+    "hash": "0x55baff01a4d31b7dd4257fdb3509fffb44fb2fcc634cb987ae812f322bde0fcf",
+    "address": "0x83085450544c3F360a40720859EbB1bfd311584D",
+    "chain": "ethereum",
+    "blockNumber": 23216770
   }
 }

@@ -13,7 +13,6 @@ export const aztecV2: ScalingProject = upcomingL2({
     description:
       'Aztec is an open source layer 2 network that brings programmable privacy and scalability to Ethereum, powered by Noir, an open-source general programming language.',
     purposes: ['Universal', 'Privacy'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/', 'https://aztec.network/noir'],
       documentation: ['https://docs.aztec.network/'],
@@ -24,5 +23,8 @@ export const aztecV2: ScalingProject = upcomingL2({
         'https://t.me/aztecprotocol',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

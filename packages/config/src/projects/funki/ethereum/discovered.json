@@ -2,7 +2,7 @@
   "name": "funki",
   "chain": "ethereum",
   "timestamp": 1743924503,
-  "configHash": "0xde4414a553361fbc71eef16b9412d30f49f79b0c318bec561ba528075ee2687f",
+  "configHash": "0x370b1904b2cf4d5bbee00e9cdf81537ee9615c8895eb65b3c4298dcd67aaccc6",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

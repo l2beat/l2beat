@@ -14,7 +14,6 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -50,7 +49,6 @@ export const zkspace: ScalingProject = {
       'ZKBase is an infrastructure protocol based on Zero-Knowledge (ZK) proof technology. It aims to support various projects across the Bitcoin and Ethereum networks.',
     purposes: ['NFT', 'Exchange', 'Payments'],
     stacks: ['ZKsync Lite'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://zkbase.org/'],
       bridges: ['https://zkbase.app'],
@@ -70,6 +68,7 @@ export const zkspace: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
+    zkCatalogId: ProjectId('zksyncprover'),
   },
   config: {
     associatedTokens: ['ZKS'],
@@ -121,7 +120,7 @@ export const zkspace: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
-      secondLine: formatExecutionDelay(finalizationPeriod),
+      executionDelay: finalizationPeriod,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
@@ -229,7 +228,7 @@ export const zkspace: ScalingProject = {
     },
     {
       title: 'ZKSpace launched',
-      url: 'https://medium.com/zkswap/l2-labs-launches-all-in-one-layer2-platform-zkspace-featuring-zkswap-v3-0-nfts-payments-82dae7d9207c',
+      url: 'https://x.com/ZKBaseOfficial/status/1465943738157465605',
       date: '2021-12-20T00:00:00Z',
       description:
         'All-in-One ScalingProject Platform ZKSpace, Featuring ZKSwap v3.0, NFTs, & Payments is launched.',

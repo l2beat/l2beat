@@ -6,19 +6,19 @@ export const ozean: ScalingProject = upcomingL2({
   id: 'ozean',
   capability: 'universal',
   addedAt: UnixTime(1739946099),
+  hasTestnet: true,
   display: {
     name: 'Ozean',
     slug: 'ozean',
     description:
       "Ozean is Clearpool's new Layer 2 blockchain focused on integrating RWAs into DeFi. Built on the OP Stack.",
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://ozean.finance/'],
       documentation: ['https://docs.ozean.finance/'],
-      bridges: ['https://app.ozean.finance/bridge'],
-      explorers: [],
+      bridges: ['https://poseidon-testnet.bridge.caldera.xyz/'],
+      explorers: ['https://poseidon-testnet.explorer.caldera.xyz/'],
       repositories: ['https://github.com/clearpool-finance'],
       socialMedia: [
         'https://twitter.com/ClearpoolFin',
@@ -27,6 +27,9 @@ export const ozean: ScalingProject = upcomingL2({
         'https://discord.com/invite/YYzxscA4nu',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),

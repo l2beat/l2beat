@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x9b44439eaeb1009d8c070a62a055940be052996f
+
+# Diff at Tue, 26 Aug 2025 13:34:13 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1755853782
+- current timestamp: 1756214657
+
+## Description
+
+Conduit msig: removed one address
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 11 (36%)"
+    }
+```
+
+Generated with discovered.json: 0xdbea313a1ebe6d10e13d3d6046bd3c8c945206f2
+
+# Diff at Fri, 22 Aug 2025 09:10:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@327d3bb5142b362f1fe9c0439f30f84c5e1ffb30 block: 1755009465
+- current timestamp: 1755853782
+
+## Description
+
+Upgrade to ArbOS v40 wasmModuleRoot.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v32 wasmModuleRoot"
++        "ArbOS v40 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
++        "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a"
+    }
+```
+
 Generated with discovered.json: 0xd7a7a3d9a5d758692b27ba79458cfd2af1e280de
 
 # Diff at Tue, 12 Aug 2025 14:43:22 GMT:

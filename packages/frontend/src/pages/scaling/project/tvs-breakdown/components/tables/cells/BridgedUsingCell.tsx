@@ -4,7 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { EM_DASH } from '~/consts/characters'
+import { EllipsisText } from '~/components/EllipsisText'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function BridgedUsingCell(props: Props) {
-  if (!props.bridgedUsing) return EM_DASH
+  if (!props.bridgedUsing) return null
 
   const bridges = props.bridgedUsing?.bridges
 
@@ -51,15 +51,20 @@ function SingleBridge({
         className="flex items-center justify-start gap-1"
         href={`/bridges/projects/${bridge.slug}`}
       >
-        <span className="font-medium text-link text-xs underline">
+        <EllipsisText
+          className="text-link underline"
+          accessoryRight={
+            <ArrowRightIcon className="inline-block fill-current" />
+          }
+        >
           {bridge.name}
-        </span>
-        <ArrowRightIcon className="inline-block fill-link transition-transform" />
+        </EllipsisText>
+        <ArrowRightIcon className="inline-block fill-link" />
       </a>
     )
   }
 
-  return <span className="font-medium text-xs">{bridge.name}</span>
+  return <EllipsisText>{bridge.name}</EllipsisText>
 }
 
 function MultipleBridge({
@@ -69,13 +74,11 @@ function MultipleBridge({
 }) {
   return (
     <Tooltip>
-      <TooltipTrigger className="font-medium text-xs">Multiple</TooltipTrigger>
+      <TooltipTrigger>Multiple</TooltipTrigger>
       <TooltipContent>
         <ul>
           {bridges.map((bridge) => (
-            <li key={bridge.name} className="font-medium text-xs">
-              {bridge.name}
-            </li>
+            <li key={bridge.name}>{bridge.name}</li>
           ))}
         </ul>
       </TooltipContent>

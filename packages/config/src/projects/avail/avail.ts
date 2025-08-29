@@ -143,7 +143,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '0',
+            appIds: ['0'],
           },
         ],
       },
@@ -154,7 +154,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '1',
+            appIds: ['1'],
           },
         ],
       },
@@ -165,7 +165,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '2',
+            appIds: ['2'],
           },
         ],
       },
@@ -176,7 +176,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '3',
+            appIds: ['3'],
           },
         ],
       },
@@ -187,7 +187,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '4',
+            appIds: ['4'],
           },
         ],
       },
@@ -198,7 +198,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '5',
+            appIds: ['5'],
           },
         ],
       },
@@ -209,7 +209,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '6',
+            appIds: ['6'],
           },
         ],
       },
@@ -220,7 +220,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '7',
+            appIds: ['7'],
           },
         ],
       },
@@ -231,7 +231,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '8',
+            appIds: ['8'],
           },
         ],
       },
@@ -242,7 +242,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '9',
+            appIds: ['9'],
           },
         ],
       },
@@ -253,7 +253,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '10',
+            appIds: ['10'],
           },
         ],
       },
@@ -264,7 +264,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '11',
+            appIds: ['11'],
           },
         ],
       },
@@ -275,7 +275,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '12',
+            appIds: ['12'],
           },
         ],
       },
@@ -286,7 +286,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '13',
+            appIds: ['13'],
           },
         ],
       },
@@ -297,7 +297,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '14',
+            appIds: ['14'],
           },
         ],
       },
@@ -308,7 +308,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '15',
+            appIds: ['15'],
           },
         ],
       },
@@ -319,7 +319,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '16',
+            appIds: ['16'],
           },
         ],
       },
@@ -330,7 +330,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '18',
+            appIds: ['18'],
           },
         ],
       },
@@ -341,7 +341,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '19',
+            appIds: ['19'],
           },
         ],
       },
@@ -352,7 +352,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '20',
+            appIds: ['20'],
           },
         ],
       },
@@ -363,7 +363,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '21',
+            appIds: ['21'],
           },
         ],
       },
@@ -374,7 +374,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '22',
+            appIds: ['22'],
           },
         ],
       },
@@ -385,7 +385,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '23',
+            appIds: ['23'],
           },
         ],
       },
@@ -396,7 +396,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '24',
+            appIds: ['24'],
           },
         ],
       },
@@ -407,7 +407,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '25',
+            appIds: ['25'],
           },
         ],
       },
@@ -418,7 +418,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '27',
+            appIds: ['27'],
           },
         ],
       },
@@ -429,7 +429,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '28',
+            appIds: ['28'],
           },
         ],
       },
@@ -440,7 +440,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '29',
+            appIds: ['29'],
           },
         ],
       },
@@ -451,7 +451,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '30',
+            appIds: ['30'],
           },
         ],
       },
@@ -462,7 +462,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '31',
+            appIds: ['31'],
           },
         ],
       },
@@ -473,7 +473,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '32',
+            appIds: ['32'],
           },
         ],
       },
@@ -484,7 +484,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '33',
+            appIds: ['33'],
           },
         ],
       },
@@ -495,7 +495,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '34',
+            appIds: ['34'],
           },
         ],
       },
@@ -506,40 +506,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '35',
-          },
-        ],
-      },
-      {
-        projectId: ProjectId('sophon-mainnet-2'),
-        name: 'sophon mainnet-2',
-        daTrackingConfig: [
-          {
-            type: 'avail',
-            sinceBlock: 0,
-            appId: '36',
-          },
-        ],
-      },
-      {
-        projectId: ProjectId('sophon-mainnet-3'),
-        name: 'sophon-mainnet-3',
-        daTrackingConfig: [
-          {
-            type: 'avail',
-            sinceBlock: 0,
-            appId: '37',
-          },
-        ],
-      },
-      {
-        projectId: ProjectId('sophon-mainnet-4'),
-        name: 'sophon-mainnet-4',
-        daTrackingConfig: [
-          {
-            type: 'avail',
-            sinceBlock: 0,
-            appId: '38',
+            appIds: ['35'],
           },
         ],
       },
@@ -550,7 +517,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '39',
+            appIds: ['39'],
           },
         ],
       },
@@ -561,7 +528,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
           {
             type: 'avail',
             sinceBlock: 0,
-            appId: '40',
+            appIds: ['40'],
           },
         ],
       },

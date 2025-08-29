@@ -2,7 +2,7 @@
   "name": "nebraupa",
   "chain": "ethereum",
   "timestamp": 1749462491,
-  "configHash": "0xbfce36c6ac48153313b95c8244c2cb19ac3b228325eb2149b4cc5f5b8d13b375",
+  "configHash": "0x0e8f0800724d0a2eece044dee2145706bbb45a675efd4ca0af3b05b552b1cebc",
   "entries": [
     {
       "address": "eth:0x0188485989e211eDde9e5ba5794a3c6a3429BDb4",

@@ -16,12 +16,24 @@ const upgradeDelay = discovery.getContractValue<number>(
 )
 const upgradeDelayString = formatSeconds(upgradeDelay)
 
-const onRamps = Object.values(
+const existingOnRamps = Object.values(
   discovery.getContractValue<Record<string, string>>('Router', 'onRamps'),
 )
-const allTokenPools = onRamps.flatMap((onRamp) =>
-  discovery.getContractValue<ChainSpecificAddress[]>(onRamp, 'tokenPools'),
+
+const onRamps = existingOnRamps.filter(
+  (onRamp) => onRamp !== 'eth:0x0000000000000000000000000000000000000000',
 )
+
+const allTokenPools = onRamps.flatMap((onRamp) => {
+  try {
+    return discovery.getContractValue<ChainSpecificAddress[]>(
+      onRamp,
+      'tokenPools',
+    )
+  } catch {
+    return []
+  }
+})
 const tokenPools = [...new Set(allTokenPools)]
 
 export const transporter: Bridge = {

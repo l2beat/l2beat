@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x8b02f64390909e1f59c09683c7ba0d64efbf8d7a
+
+# Diff at Thu, 14 Aug 2025 07:46:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1754909851
+- current timestamp: 1755157592
+
+## Description
+
+signer change.
+
+## Watched changes
+
+```diff
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "2 of 3 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x47a50dad05e4f9fba6bbaf2545011cca5629f76e
 
 # Diff at Mon, 11 Aug 2025 10:57:45 GMT:

@@ -1,4 +1,50 @@
-Generated with discovered.json: 0x7716642039196f67a7c9e3f043d2a51de2d53e9f
+Generated with discovered.json: 0x4bac8d4356bcbe6489966d2a7f6fa5c27828501a
+
+# Diff at Fri, 29 Aug 2025 07:41:15 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e68cba094085f7ab7e642304a942701f260f19fb block: 1750690607
+- current timestamp: 1756453192
+
+## Description
+
+Msig changes.
+
+## Watched changes
+
+```diff
+    contract Morph Multisig 1 (0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xe72BB9d10f6eA936D7D4507d298ab867128aF54C"
+      values.$members.1:
++        "eth:0x27f05308F4b80242d3Dca1D5e9c3aE976098E9C8"
+      values.$members.2:
++        "eth:0xC7F81B58ec3937D11Bf4BA74C04FF69e944423F2"
+      values.$members.3:
++        "eth:0xbA430e784fe11ADbc20fa1a99193eeD87ACD68C7"
+      values.$members.2:
+-        "eth:0x19C0CebaEC6EDb61c00178Cf8c6112BAD5Ef68E6"
+      values.$members.3:
+-        "eth:0xcE7257224441385345CE6eEdd9D8667AD9Bab9f0"
+      values.$members.4:
+-        "eth:0x35B98995048b320f2DaFFAD5BaD5884F16e488A9"
+      values.$members.5:
+-        "eth:0x1DeBbDae435295eC72b904Cc8B476BA81a63BAdb"
+      values.$members.6:
+-        "eth:0x0B3d220254e407a780EA7498d51b6d4fef807Bd0"
+      values.$members.7:
+-        "eth:0xf39D8310a7DFEc320bD17bddE32A53d47e340B2e"
+      values.$threshold:
+-        5
++        3
+      values.multisigThreshold:
+-        "5 of 8 (63%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xbd44bc6448127fe87a43b1595f24fcc496f6d704
 
 # Diff at Mon, 14 Jul 2025 12:45:26 GMT:
 

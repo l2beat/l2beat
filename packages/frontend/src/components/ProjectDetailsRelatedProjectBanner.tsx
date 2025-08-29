@@ -2,10 +2,9 @@ import { cn } from '~/utils/cn'
 
 export type ProjectDetailsRelatedProjectBannerProps = {
   text: string
+  href: string
   project: {
     name: string
-    type: 'scaling' | 'bridges' | 'data-availability'
-    slug: string
     icon: string
   }
   className?: string
@@ -14,10 +13,9 @@ export type ProjectDetailsRelatedProjectBannerProps = {
 export function ProjectDetailsRelatedProjectBanner({
   text,
   project,
+  href,
   className,
 }: ProjectDetailsRelatedProjectBannerProps) {
-  const href = `/${project.type}/projects/${project.slug}` as const
-
   return (
     <div
       className={cn(

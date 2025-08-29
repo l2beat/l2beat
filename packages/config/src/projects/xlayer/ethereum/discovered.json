@@ -2,7 +2,7 @@
   "name": "xlayer",
   "chain": "ethereum",
   "timestamp": 1754482928,
-  "configHash": "0xb2a8f06bc4ad242652df86a52cd6c78d891afd1662bfd1a7fab2d67924c26835",
+  "configHash": "0x39f9ebf2966cb869604992492acae220bca258f3eaaa883fb8bcb7bf9be005c6",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -214,6 +214,6 @@
   "usedTemplates": {
     "polygon-cdk/PolygonPessimisticConsensus": "0xe243e1961d0062de8984cb8f88f047117bb8998497751cfd58b4dcf414cd66b5"
   },
-  "usedBlockNumbers": { "ethereum": 23081993 },
+  "usedBlockNumbers": { "ethereum": 23081994 },
   "permissionsConfigHash": "0x9e9d974f6fcc9707e2c69b704a5f1f50f5b78c18816eb17ffbc833d35ad8b058"
 }

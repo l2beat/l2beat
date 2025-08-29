@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "timestamp": 1753449971,
-  "configHash": "0x7268b108b90e5a07ad584adff12e5350ee05c4559af09f67da1494abcf499913",
+  "timestamp": 1755591879,
+  "configHash": "0xaa0371cf04590f8767e7964648c703a3a644196a5176f02babd689ee4ff964f3",
   "entries": [
     {
       "name": "NioGuardians",
@@ -18,7 +18,7 @@
       "sinceBlock": 234135,
       "values": {
         "$immutable": true,
-        "clock": 1753449729,
+        "clock": 1755591722,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -58,7 +58,7 @@
         "accessManager": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1753449729,
+        "clock": 1755591722,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -265,7 +265,7 @@
         "appRegistry": "kinto:0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "kinto:0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "29698714857311860375",
+        "getDeposit": "30080531576355860375",
         "kintoID": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -574,7 +574,7 @@
         "entryPoint": "kinto:0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "kinto:0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 5172,
+        "getNonce": 5377,
         "getOwnersCount": 4,
         "inRecovery": 0,
         "insurancePolicy": 0,
@@ -621,7 +621,7 @@
         "capacitorFactory__": "kinto:0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "kinto:0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 63406,
+        "globalMessageCount": 65337,
         "hasher__": "kinto:0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "kinto:0x0000000000000000000000000000000000000000",
         "owner": "kinto:0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -637,19 +637,6 @@
       "address": "kinto:0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "kinto:0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
-        }
-      ]
     },
     {
       "name": "KintoAppRegistry",
@@ -1089,7 +1076,7 @@
         "kintoID": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "kinto:0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 75813
+        "totalWallets": 75831
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
@@ -1805,7 +1792,6 @@
           "KYC_PROVIDER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "kinto:0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
               "kinto:0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
               "kinto:0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
               "kinto:0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
@@ -1845,7 +1831,6 @@
         "GOVERNANCErs": ["kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "KYC_PROVIDER_ROLE": "0x6c4079fcac94e7142d8c209744c998efe53a188aadb7e55958f7ad3ea8a1d652",
         "KYC_PROVIDERs": [
-          "kinto:0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
           "kinto:0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
           "kinto:0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
           "kinto:0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
@@ -1853,7 +1838,7 @@
           "kinto:0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1753449729,
+        "lastMonitoredAt": 1755590832,
         "name": "Kinto ID",
         "pendingSanctions": [
           {
@@ -3171,7 +3156,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 75482,
+        "totalSupply": 75499,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "walletFactory": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
@@ -4013,6 +3998,6 @@
     "kinto/KintoAppRegistry": "0xb37bd2f43ee0daa14c470dd51a29784276dfaadfb3a6e142e9753d27d138df1d",
     "kinto/KintoID": "0x60c7db78a1d45df2b83b6c019907865abc7fb5b31ab065b7d69aafa67c19fb8b"
   },
-  "usedBlockNumbers": { "kinto": 904192 },
-  "permissionsConfigHash": "0x03811691b7d1b7df3f917cf6b8ff42ca2d36e6835a82353d5a4f6eded2083287"
+  "usedBlockNumbers": { "kinto": 912791 },
+  "permissionsConfigHash": "0xe69bb223a27e1795b4bff31fcf2c30442c713e5dc193f743d5c201bb182f6007"
 }

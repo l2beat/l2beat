@@ -1,8 +1,8 @@
 {
   "name": "tokens",
   "chain": "base",
-  "timestamp": 1755018135,
-  "configHash": "0x593213a3b90a8e6e3148ccfb62b67678dd08c3a79f8db6cc82ab1e51d88056d2",
+  "timestamp": 1755691670,
+  "configHash": "0xc1718afb0c13259915dc9bd7c4cc65a507798fed0886d36405c2de5af8d68164",
   "entries": [
     {
       "address": "base:0x01BfD8ECe1309A11adAD54f62c644173a7039dA0",
@@ -401,7 +401,7 @@
           "base:0x362DBD4Ff662b2E2b05b9cEDC91da2Dd2c655b26"
         ],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 272,
+        "nonce": 281,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -634,7 +634,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "base:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 3844628679723933,
+        "totalSupply": 3780632896318234,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -804,7 +804,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 6,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 645972,
+        "nextAvailableNonce": 652922,
         "owner": "base:0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
         "paused": false,
         "pauser": "base:0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -965,7 +965,7 @@
       ]
     },
     {
-      "name": "L1Timelock",
+      "name": "Timelock",
       "address": "base:0xf817cb3092179083c48c014688D98B72fB61464f",
       "type": "Contract",
       "template": "global/Timelock",
@@ -1898,6 +1898,6 @@
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
-  "usedBlockNumbers": { "base": 34114394 },
-  "permissionsConfigHash": "0x7d346d89848c9776ec064c9cb072f1ab7310ba47fed16218ee7768eac453777a"
+  "usedBlockNumbers": { "base": 34451161 },
+  "permissionsConfigHash": "0xa785713915a3d09c913ed115c0a3a9eb6d680bd4f00ec6f13ac0e170700418aa"
 }

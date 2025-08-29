@@ -1,8 +1,8 @@
 {
   "name": "buidl",
   "chain": "arbitrum",
-  "timestamp": 1752830492,
-  "configHash": "0x2fe51bb3beee3d291f87c0894b147bdf4e3fc5ad5066a4c64b4dbab86118ff34",
+  "timestamp": 1755163834,
+  "configHash": "0x3c7bd284961c40556119667fb7749ea12da45911a8f492593c163a7426fd7748",
   "entries": [
     {
       "name": "DSToken",
@@ -13,7 +13,12 @@
         "0x4da147a21f4ffb7200fcf55538dd6f35ace4e4b02cf21ea11b4a76328af14581"
       ],
       "proxyType": "EIP1967 proxy",
-      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "ignoreInWatchMode": [
+        "clock",
+        "totalIssued",
+        "totalSupply",
+        "getWalletAt"
+      ],
       "sinceTimestamp": 1730729689,
       "sinceBlock": 270969308,
       "values": {
@@ -49,10 +54,10 @@
         "getImplementationAddress": "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7",
         "getInitializedVersion": 1,
         "getWalletAt": [
-          "arb1:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
+          "arb1:0x7f4e4384137b6aF7732e4e0951832b4152082fbB",
           "arb1:0x54FE3425f09854E15081fa5B3276afCB4C46FCa2",
           "arb1:0xC8abbd5bC34C943C908D99581e77D0A91b104515",
-          "arb1:0x7f4e4384137b6aF7732e4e0951832b4152082fbB"
+          "arb1:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69"
         ],
         "isPaused": false,
         "ISSUER_MULTICALL": 8194,
@@ -73,8 +78,8 @@
         "TA_MULTICALL": 8195,
         "TOKEN_ISSUER": 512,
         "TOKEN_REALLOCATOR": 8192,
-        "totalIssued": 44160780060000,
-        "totalSupply": 30622999980000,
+        "totalIssued": 47392637480000,
+        "totalSupply": 30709020510000,
         "TRANSACTION_RELAYER": 4096,
         "TRUST_SERVICE": 1,
         "UNUSED_1": 16,
@@ -204,6 +209,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "arbitrum": 358948249 },
+  "usedBlockNumbers": { "arbitrum": 368291904 },
   "permissionsConfigHash": "0xf0603d8ef61478ca7a44794b8dac43959228882ef6aecd40dbe7ebbe65d064c8"
 }

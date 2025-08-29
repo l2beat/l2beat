@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "omni",
   "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 200,
   "initialAddresses": [
     "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
     "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418",
@@ -11,7 +12,6 @@
     "gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf"
   ],
   "overrides": {
-    "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": { "category": "spam" },
     "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": {
       "category": "core",
       "description": "Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.",
@@ -136,6 +136,7 @@
     "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": {
       "displayName": "HashiManager_Gnosis",
       "proxyType": "Eternal Storage proxy",
+      "ignoreRelatives": ["reporters"],
       "fields": {
         "targetAddress": {
           "description": "Address of the target contract on Ethereum",
@@ -164,6 +165,9 @@
           }
         }
       }
+    },
+    "gno:0xB740472C650fe949931B9df0cB253B48c80c82dE": {
+      "ignoreDiscovery": true
     }
   }
 }

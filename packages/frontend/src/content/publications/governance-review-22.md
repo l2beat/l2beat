@@ -89,7 +89,7 @@ Pablo, on behalf of the ADPC, [published an RFP](https://forum.arbitrum.foundati
 
 ### **Gaming Catalyst Program (GCP) Council Nominations**
 
-The interim council for the GCP is looking for DAO nominations to fill the remaining 3/5 vacant spots. [Nominations ](https://forum.arbitrum.foundation/t/nominated-gaming-venture-council-members/2507)started on June 21st, and the deadline to apply is July 7th. A voting period will begin on the 22nd of July.
+The interim council for the GCP is looking for DAO nominations to fill the remaining 3/5 vacant spots. [Nominations ](https://forum.arbitrum.foundation/t/nominated-gaming-venture-council-members/25075)started on June 21st, and the deadline to apply is July 7th. A voting period will begin on the 22nd of July.
 
 Interested parties can [nominate themselves here](https://forum.arbitrum.foundation/t/reply-here-with-gcp-council-nominations/25093), and you can find [more information about the council here](https://forum.arbitrum.foundation/t/gcp-council-timelines-and-nomination-process/25076).
 

@@ -2,7 +2,7 @@
   "name": "cbridge",
   "chain": "ethereum",
   "timestamp": 1736926655,
-  "configHash": "0x1346c24bad531e3a5fb79ec43ac207e9be1d813471b30b34497992f61af71ff7",
+  "configHash": "0x557f4eb09b3866924e5c0516a8b7500d8e9a43231898d1e049cd250a984c37fb",
   "entries": [
     {
       "name": "PeggedTokenBridge",

@@ -23,13 +23,11 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { formatExecutionDelay } from '../common/formatDelays'
 import { getStage } from '../common/stages/getStage'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
-  ProjectScalingProofSystem,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -44,6 +42,7 @@ import type {
   ProjectEscrow,
   ProjectPermissions,
   ProjectScalingCapability,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingScopeOfAssessment,
   ProjectScalingStateDerivation,
@@ -107,7 +106,7 @@ export interface PolygonCDKStackConfig {
   }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
   availDa?: {
-    appId: string
+    appIds: string[]
     /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
@@ -181,11 +180,6 @@ export function polygonCDKStack(
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
       ],
-      category: templateVars.reasonsForBeingOther
-        ? 'Other'
-        : templateVars.daProvider !== undefined
-          ? 'Validium'
-          : 'ZK Rollup',
       architectureImage:
         (templateVars.architectureImage ??
         templateVars.daProvider !== undefined)
@@ -196,7 +190,9 @@ export function polygonCDKStack(
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Validity' }),
+      (hasNoProofs
+        ? undefined
+        : { type: 'Validity', zkCatalogId: ProjectId('zkprover') }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.nonTemplateEscrows,
@@ -229,7 +225,7 @@ export function polygonCDKStack(
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
-        secondLine: formatExecutionDelay(finalizationPeriod),
+        executionDelay: finalizationPeriod,
       },
       dataAvailability: riskViewDA(daProvider),
       exitWindow: exitWindowRisk,
@@ -506,7 +502,7 @@ function getDaTracking(
         daLayer: ProjectId('avail'),
         // TODO: update to value from discovery
         sinceBlock: templateVars.availDa.sinceBlock,
-        appId: templateVars.availDa.appId,
+        appIds: templateVars.availDa.appIds,
       },
     ]
   }

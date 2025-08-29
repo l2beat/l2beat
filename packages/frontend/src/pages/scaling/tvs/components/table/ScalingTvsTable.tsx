@@ -10,16 +10,10 @@ import { getScalingTvsColumns } from './columns'
 
 interface Props {
   entries: ScalingTvsEntry[]
-  notReviewed?: boolean
   breakdownType: 'bridgeType' | 'assetCategory'
 }
 
-export function ScalingTvsTable({
-  entries,
-
-  notReviewed,
-  breakdownType,
-}: Props) {
+export function ScalingTvsTable({ entries, breakdownType }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -58,11 +52,5 @@ export function ScalingTvsTable({
     },
   })
 
-  return (
-    <BasicTable
-      table={table}
-      insideMainPageCard
-      rowColoringMode={notReviewed ? 'ignore-colors' : undefined}
-    />
-  )
+  return <BasicTable table={table} insideMainPageCard />
 }

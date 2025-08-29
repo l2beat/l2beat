@@ -65,7 +65,6 @@ export const brine: ScalingProject = {
     slug: 'tanx',
     description: 'tanX is a DEX powered by StarkEx technology.',
     purposes: ['Exchange'],
-    category: 'Other',
     stacks: ['StarkEx'],
     links: {
       websites: ['https://tanx.fi/'],
@@ -81,6 +80,7 @@ export const brine: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
+    zkCatalogId: ProjectId('stone'),
   },
   stage: {
     stage: 'NotApplicable',

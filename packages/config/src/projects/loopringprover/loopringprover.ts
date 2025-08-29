@@ -107,17 +107,17 @@ export const loopringprover: BaseProject = {
         description:
           'Custom verifier ID: SHA256 hash of the abi packed vk array obtained by calling getVerificationKey(blockType = 0, blockSize = 256, blockVersion = 17) on the verifier smart contract.',
       },
-      {
-        hash: '0x297a8528055635ba2ee3e292ff3d8e871a10900f2e514e45ef2f2434ca8f8945',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
-        knownDeployments: [
-          'https://etherscan.io/address/0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6',
-        ],
-        verificationStatus: 'notVerified',
-        usedBy: [ProjectId('degate3')],
-        description:
-          'Custom verifier ID: SHA256 hash of the value hardcoded into VerificationKeys.sol library for the current deployment for blockType == 0 && blockSize == 25 && blockVersion == 0. Arrays vk and vk_gammaABC are concatenated into vkeys array, which is abi packed and hashed.',
-      },
+      // {
+      //   hash: '0x297a8528055635ba2ee3e292ff3d8e871a10900f2e514e45ef2f2434ca8f8945',
+      //   proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
+      //   knownDeployments: [
+      //     'https://etherscan.io/address/0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6',
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   usedBy: [ProjectId('degate3')],
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of the value hardcoded into VerificationKeys.sol library for the current deployment for blockType == 0 && blockSize == 25 && blockVersion == 0. Arrays vk and vk_gammaABC are concatenated into vkeys array, which is abi packed and hashed.',
+      // },
     ],
   },
 }

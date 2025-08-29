@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -73,11 +73,15 @@ interface Props {
   range: CostsTimeRange
   hasPostedData: boolean
   hasBlobs: boolean
+  project?: ChartProject
   tickCount?: number
   className?: string
 }
 
+const hiddenDataKeys = ['posted'] as const
+
 export function CostsChart({
+  project,
   data,
   syncedUntil,
   unit,
@@ -124,9 +128,10 @@ export function CostsChart({
     [hasBlobs],
   ) satisfies ChartMeta
 
-  const hidden = useMemo<['posted']>(() => ['posted'], [])
-
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, hidden)
+  const { dataKeys, toggleDataKey } = useChartDataKeys(
+    chartMeta,
+    hiddenDataKeys,
+  )
 
   const resolution = rangeToResolution({ type: range })
 
@@ -141,20 +146,10 @@ export function CostsChart({
         onItemClick: toggleDataKey,
       }}
       className={className}
+      project={project}
     >
       <ComposedChart data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent reverse />} />
-        {hasPostedData && (
-          <Line
-            yAxisId="right"
-            dataKey="posted"
-            strokeWidth={2}
-            stroke={chartMeta.posted.color}
-            dot={false}
-            isAnimationActive={false}
-            hide={!dataKeys.includes('posted')}
-          />
-        )}
+        <ChartLegend content={<ChartLegendContent />} />
         <Area
           yAxisId="left"
           dataKey="overhead"
@@ -162,8 +157,11 @@ export function CostsChart({
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
-          dot={false}
-          activeDot={false}
+          activeDot={
+            !dataKeys.includes('calldata') &&
+            (!chartMeta.blobs || !dataKeys.includes('blobs')) &&
+            !dataKeys.includes('compute')
+          }
           isAnimationActive={false}
           hide={!dataKeys.includes('overhead')}
         />
@@ -174,8 +172,10 @@ export function CostsChart({
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
-          dot={false}
-          activeDot={false}
+          activeDot={
+            !dataKeys.includes('calldata') &&
+            (!chartMeta.blobs || !dataKeys.includes('blobs'))
+          }
           isAnimationActive={false}
           hide={!dataKeys.includes('compute')}
         />
@@ -187,8 +187,7 @@ export function CostsChart({
             fillOpacity={1}
             strokeWidth={0}
             stackId="a"
-            dot={false}
-            activeDot={false}
+            activeDot={!dataKeys.includes('calldata')}
             isAnimationActive={false}
             hide={!dataKeys.includes('blobs')}
           />
@@ -200,10 +199,20 @@ export function CostsChart({
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
-          dot={false}
           isAnimationActive={false}
           hide={!dataKeys.includes('calldata')}
         />
+        {hasPostedData && (
+          <Line
+            yAxisId="right"
+            dataKey="posted"
+            strokeWidth={2}
+            stroke={chartMeta.posted.color}
+            isAnimationActive={false}
+            dot={false}
+            hide={!dataKeys.includes('posted')}
+          />
+        )}
 
         {hasPostedData && (
           <YAxis

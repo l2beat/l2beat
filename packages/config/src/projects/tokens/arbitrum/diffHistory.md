@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x39818d03c03b4a297f7eabe469fe9b7a93904687
+
+# Diff at Wed, 20 Aug 2025 12:08:18 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@262b00e32d0a4e462cf5011a16f1fcaa9ed6d5a8 block: 1755018135
+- current timestamp: 1755691670
+
+## Description
+
+Added 3 more signatures to Spiko permissions manager multisig.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (0x7843225BA488cf780A4Fe2c842B5dc2aBCf8A03e) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x4D1d9C5B5d9Ca448194313D799De374f362Bd460"
+      values.$members.1:
++        "arb1:0x6c00Be5d1013a5bca938EF6aa8F1E5e706FF384d"
+      values.$members.2:
++        "arb1:0xDa47Bd72438F11bef7Cc54F18cd02426dd86A5a2"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x12d9be24eab87516c871dd4294902e4225109e0b
 
 # Diff at Mon, 14 Jul 2025 12:46:38 GMT:

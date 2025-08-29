@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { LivenessChartSubtypeControls } from '~/pages/scaling/liveness/components/LivenessChartSubtypeControls'
@@ -17,7 +18,7 @@ import { LivenessChart } from './LivenessChart'
 import { LivenessChartStats } from './LivenessChartStats'
 
 interface Props {
-  projectId: string
+  project: ChartProject
   configuredSubtypes: TrackedTxsConfigSubtype[]
   anomalies: LivenessAnomaly[]
   hasTrackedContractsChanged: boolean
@@ -27,7 +28,7 @@ interface Props {
 }
 
 export function ProjectLivenessChart({
-  projectId,
+  project,
   configuredSubtypes,
   anomalies,
   hasTrackedContractsChanged,
@@ -43,7 +44,7 @@ export function ProjectLivenessChart({
 
   const { data: chart, isLoading } = api.liveness.projectChart.useQuery({
     range: timeRange,
-    projectId,
+    projectId: project.id,
     subtype,
   })
 
@@ -92,6 +93,7 @@ export function ProjectLivenessChart({
       <LivenessChart
         data={chartData}
         isLoading={isLoading}
+        project={project}
         subtype={subtype}
         milestones={milestones}
         lastValidTimestamp={lastValidTimestamp}

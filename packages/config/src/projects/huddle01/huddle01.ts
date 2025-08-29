@@ -18,7 +18,6 @@ export const huddle01: ScalingProject = underReviewL3({
   display: {
     name: 'Huddle01',
     slug: 'huddle01',
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     description:
       'Huddle01 is an Orbit stack L3 powering the dRTC protocol, a decentralized Real Time Communication Network operating an algorithmic prosumer marketplace for real-time data.',
@@ -40,6 +39,10 @@ export const huddle01: ScalingProject = underReviewL3({
         'https://youtube.com/@huddle01com',
       ],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Optimistic',
   },
   chainConfig: {
     name: 'huddle01',

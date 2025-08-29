@@ -3,7 +3,6 @@ import {
   ConfigReader,
   DiscoverCommandArgs,
   type DiscoveryModuleConfig,
-  getChainConfig,
   getChainFullName,
   getChainShortName,
   getDiscoveryPaths,
@@ -21,7 +20,7 @@ import { discoverAndUpdateDiffHistory } from '../implementations/discovery/disco
 // NOTE(radomski): We need to modify the args object because the only allowed
 // chains are those that we know of. But we also want to allow the user to
 // specify "all" as the chain name.
-const { project: _, chain: __, ...remainingArgs } = DiscoverCommandArgs
+const { project: _, ...remainingArgs } = DiscoverCommandArgs
 const args = {
   ...remainingArgs,
   projectQuery: positional({
@@ -47,34 +46,28 @@ export const Discover = command({
   args,
   handler: async (args) => {
     const logger = getPlainLogger()
-    const projectsOnChain: Record<string, string[]> = resolveProjects(
-      args.projectQuery,
-    )
+    const matchingProjects = resolveProjects(args.projectQuery)
 
-    logProjectsToDiscover(projectsOnChain, logger)
+    logProjectsToDiscover(matchingProjects, logger)
     const timestamp = getTimestamp(args)
 
-    for (const chainName in projectsOnChain) {
-      const chain = getChainConfig(chainName)
-      for (const project of projectsOnChain[chainName]) {
-        const config: DiscoveryModuleConfig = {
-          ...args,
-          project,
-          chain,
-          timestamp: timestamp ?? args.timestamp,
-        }
-
-        await discoverAndUpdateDiffHistory(config, {
-          logger,
-          description: args.message,
-        })
+    for (const { project } of matchingProjects) {
+      const config: DiscoveryModuleConfig = {
+        ...args,
+        project,
+        timestamp: timestamp ?? args.timestamp,
       }
+
+      await discoverAndUpdateDiffHistory(config, {
+        logger,
+        description: args.message,
+      })
     }
   },
 })
 
 function logProjectsToDiscover(
-  projectsOnChain: Record<string, string[]>,
+  projectsOnChain: { project: string; chains: string[] }[],
   logger: Logger,
 ) {
   if (Object.keys(projectsOnChain).length === 0) {
@@ -83,36 +76,34 @@ function logProjectsToDiscover(
   }
 
   logger.info('Will discover')
-  for (const chainName in projectsOnChain) {
-    logger.info(chalk.blue(chainName))
-    for (const project of projectsOnChain[chainName]) {
-      logger.info(`  - ${chalk.yellowBright(project)}`)
-    }
+  for (const { project, chains } of projectsOnChain) {
+    logger.info(`${chalk.blue(project)}: ${chalk.yellow(chains.join(', '))}`)
   }
 }
 
-function resolveProjects(projectQuery: string) {
-  const result: Record<string, string[]> = {}
+function resolveProjects(
+  projectQuery: string,
+): { project: string; chains: string[] }[] {
   const entries = configReader.readAllConfiguredProjects()
 
-  const predicate: Predicate = EthereumAddress.check(projectQuery)
+  const isAddressPredicate = EthereumAddress.check(projectQuery)
+  const predicate: Predicate = isAddressPredicate
     ? addressPredicate
     : projectPredicate
 
-  for (const { project, chains } of entries) {
-    const matchingChains = chains.filter((chain) => {
-      const query = EthereumAddress.check(projectQuery)
+  const result: { project: string; chains: string[] }[] = []
+  for (const entry of entries) {
+    const { project, chains } = entry
+    const projectMatches = chains.some((chain) => {
+      const query = isAddressPredicate
         ? ChainSpecificAddress.from(getChainShortName(chain), projectQuery)
         : projectQuery
 
       return predicate(query, project)
     })
 
-    for (const chain of matchingChains) {
-      if (!result[chain]) {
-        result[chain] = []
-      }
-      result[chain].push(project)
+    if (projectMatches) {
+      result.push(entry)
     }
   }
 
@@ -142,6 +133,8 @@ function addressPredicate(
 // TODO(radomski): This will not exist. In the future all of this information
 // will be stored in the discovery but since we're emulating having a single
 // discovered.json we have to do this trick.
+// TODO(radomski): This is only to be removed after we have a single discovery
+// for all chains at the same time
 function getTimestamp(args: {
   timestamp: number | undefined
   dev: boolean
@@ -152,7 +145,7 @@ function getTimestamp(args: {
     args.dryRun === false &&
     args.timestamp === undefined
   ) {
-    return UnixTime.now()
+    return UnixTime.now() - UnixTime.MINUTE
   }
 
   return undefined

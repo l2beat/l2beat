@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "timestamp": 1753200796,
-  "configHash": "0x6612e345d3fa27e6079fc85e49c9e86f16a6f48e24524f1223b3d0a6d0719cab",
+  "timestamp": 1755156465,
+  "configHash": "0x7342383200e491a94d758d6300483eb103d5c738d08df38c53d3767fdf5f38c8",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -63,7 +63,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 35289,
+        "exitNum": 35932,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -1643,7 +1643,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2157,
+        "exitNum": 2175,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -3707,9 +3707,7 @@
     "orbitstack/layer2/TreasuryTimelock": "0x980b51e8fac48051f563d3246b01c151b043c4bd3e252b27a5f4a301a0a3fad3",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0xf345ec40fe1222ef7f4a526c7eb6312670077f7d9b24d7f9f82c517103b02639"
   },
-  "usedBlockNumbers": { "arbitrum": 360431469 },
+  "usedBlockNumbers": { "arbitrum": 368262380 },
   "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7",
-  "dependentDiscoveries": {
-    "arbitrum": { "ethereum": { "timestamp": 1753200796 } }
-  }
+  "dependentDiscoveries": { "arbitrum": { "timestamp": 1755156465 } }
 }

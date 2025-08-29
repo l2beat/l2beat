@@ -2,7 +2,7 @@
   "name": "ethernity",
   "chain": "ethereum",
   "timestamp": 1752570443,
-  "configHash": "0xe1f0c138a84e58954b5a833722d0c29149c65e32bf98d59c78b1c4dea7848490",
+  "configHash": "0x291dc4374440e39dd0173b2ec0be35502a11fe7ba1f73619788ab39ef2ebaf97",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

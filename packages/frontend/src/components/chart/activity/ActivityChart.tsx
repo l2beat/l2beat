@@ -3,7 +3,7 @@ import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -55,7 +55,7 @@ interface Props {
   scale: ChartScale
   metric: ActivityMetric
   type: ActivityChartType
-  projectName?: string
+  project?: ChartProject
   className?: string
   tickCount?: number
 }
@@ -68,7 +68,7 @@ export function ActivityChart({
   scale,
   type,
   metric,
-  projectName,
+  project,
   className,
   tickCount,
 }: Props) {
@@ -76,7 +76,8 @@ export function ActivityChart({
     () => ({
       projects: {
         label:
-          projectName ??
+          project?.shortName ??
+          project?.name ??
           (type === 'ValidiumsAndOptimiums' ? 'Validiums & Optimiums' : type),
         color: typeToColor(type),
         indicatorType: {
@@ -91,7 +92,7 @@ export function ActivityChart({
         },
       },
     }),
-    [projectName, type],
+    [project?.name, project?.shortName, type],
   ) satisfies ChartMeta
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
@@ -106,6 +107,7 @@ export function ActivityChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
+      project={project}
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
@@ -131,6 +133,7 @@ export function ActivityChart({
           isLoading,
           yAxis: {
             scale,
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
             tickCount,
           },

@@ -2,7 +2,7 @@
   "name": "rari",
   "chain": "arbitrum",
   "timestamp": 1753201031,
-  "configHash": "0x4ce2e2c6e5729bdfc30b7464b948dd41f364565c8b9403ecff114aec2ef89ae3",
+  "configHash": "0xa6d925d290668b2b88619aacb3c6a20d13c7ad837928489dd359a93d07a495ef",
   "entries": [
     {
       "name": "ProxyAdmin",

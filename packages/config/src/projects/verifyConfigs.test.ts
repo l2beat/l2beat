@@ -9,13 +9,10 @@ describe('Verify Discovery config files', () => {
   for (const { project, chains } of projects) {
     describe(`${ConfigReader.name} for ${project}`, () => {
       describe(ConfigReader.prototype.readConfig.name, () => {
-        for (const chain of chains) {
-          it(`can read ${project} config`, () => {
-            const result = configReader.readConfig(project, chain)
-            expect(result.name).toEqual(project)
-            expect(result.chain).toEqual(chain)
-          })
-        }
+        it(`can read ${project} config`, () => {
+          const result = configReader.readConfig(project)
+          expect(result.name).toEqual(project)
+        })
       })
 
       describe(ConfigReader.prototype.readDiscovery.name, () => {

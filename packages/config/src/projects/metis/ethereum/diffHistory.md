@@ -1,3 +1,201 @@
+Generated with discovered.json: 0xa4c848b7cfabdba891636dc81c8679d93fdd889b
+
+# Diff at Fri, 29 Aug 2025 10:23:03 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa46b79ac63155d3cd74d5df516768acc9aa80d1 block: 1755157627
+- current timestamp: 1756462910
+
+## Description
+
+Removing MVM_Verifier as it is unused, MVM_Fraud_Verifier is used in the proof system.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755157627 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a","role":"admin"}
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb","role":"admin"}
+      receivedPermissions.3:
+-        {"permission":"upgrade","from":"eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a)
+    +++ description: MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.
+```
+
+```diff
+-   Status: DELETED
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb)
+    +++ description: The MVM Verifier contract is responsible for verifying the state of the MVM.
+```
+
+```diff
+-   Status: DELETED
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0)
+    +++ description: Contract that allows METIS_MANAGER to switch Sequencer.
+```
+
+Generated with discovered.json: 0x547e26e9d455beae32256f4de4c390661c10aa15
+
+# Diff at Thu, 14 Aug 2025 13:18:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1754472899
+- current timestamp: 1755157627
+
+## Description
+
+Most admins and owners moved to new Multisig ('Metis Multisig 2'). Metis has not published signers of this new 6/8 but they plan to make it a Security Council.
+
+Compare disco for the ~5 critical roles still held by the old multisig ('Metis Multisig').
+- [MVM_CanonicalTransaction](https://etherscan.io/address/0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a) admin
+- [DisputeGameFactory](https://etherscan.io/address/0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) gamecreator
+- [MVM_L2ChainManagerOnL1](https://etherscan.io/address/0xf3d58D1794f2634d6649a978f2dc093898FEEBc0) admin
+- [Lib_AddressManager](https://etherscan.io/address/0x918778e825747a892b17C66fe7D24C618262867d) manager
+- [MVM_Verifier](https://etherscan.io/address/0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) admin
+
+security council reference: https://docs.metis.io/andromeda/network/council
+
+## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
+    }
+```
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: Contract acting as an escrow for METIS tokens managed by LockingPool.
+      values.owner:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
+    }
+```
+
+```diff
+    contract FaultProofLockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb) {
+    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.
+      values.owner:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) {
+    +++ description: Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.
+      values.$admin:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.1:
+-        {"permission":"stateDeleterMetis","from":"eth:0x918778e825747a892b17C66fe7D24C618262867d","description":"Can delete batches from the StateCommitmentChain.","role":".1088_MVM_FraudVerifier"}
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff","role":"admin"}
+      receivedPermissions.3:
+-        {"permission":"upgrade","from":"eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48","role":"admin","via":[{"address":"eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}
+      receivedPermissions.4:
+-        {"permission":"upgrade","from":"eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3","role":"admin","via":[{"address":"eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb","role":"admin","via":[{"address":"eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b","role":"admin"}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6","role":"admin"}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd","role":"admin","via":[{"address":"eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}
+      receivedPermissions.12:
+-        {"permission":"upgrade","from":"eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738","role":"admin","via":[{"address":"eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      values.owner:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values._1088_MVM_FraudVerifier:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
+      values.1088_MVM_FraudVerifier:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
+      values.owner:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+      values.$admin:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.
+      values.owner:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Metis Security Council (0xbf1752DE62d825aF0634F514226F881a449874b6)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/Metis Security Council/Safe.sol | 1088 ++++++++++++++++++++
+ .../.flat/Metis Security Council/SafeProxy.p.sol   |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0x5fe4d0fbab344c2ff817fe1f4943eefbc7e1020c
 
 # Diff at Wed, 06 Aug 2025 09:35:05 GMT:

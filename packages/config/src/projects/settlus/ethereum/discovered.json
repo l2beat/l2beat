@@ -1,8 +1,8 @@
 {
   "name": "settlus",
   "chain": "ethereum",
-  "timestamp": 1753682231,
-  "configHash": "0x79ac1df75f6ced94d90a53540802fe221a76e6745989687d28a58afac30c2f84",
+  "timestamp": 1755507657,
+  "configHash": "0x52ef4a021435d8a27e2506a16844cd00991836afbb361b9476a3208a1615ad81",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -96,6 +96,11 @@
         "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
+    },
+    {
+      "address": "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
@@ -285,6 +290,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GnosisSafe",
       "address": "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
       "type": "Contract",
@@ -362,11 +372,6 @@
     },
     {
       "address": "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -771,11 +776,6 @@
       }
     },
     {
-      "address": "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xA351A874b48dCEdf1883dD4F4049bE3d9923700a",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1066,13 +1066,13 @@
           "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
           "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
           "eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
-          "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
+          "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
           "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
           "eth:0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
           "eth:0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
           "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
           "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
-          "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
+          "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
           "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
           "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
         ],
@@ -1083,7 +1083,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 37,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1278,7 +1278,7 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 2502,
+        "gameCount": 2839,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294",
@@ -1288,7 +1288,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 2502,
+        "permissionedGamesTotal": 2839,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -2268,6 +2268,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23015701 },
-  "permissionsConfigHash": "0x830998ce8da2c5ff9c87abaed97186890de21ea2f8c9cbc957ff30db21680d80"
+  "usedBlockNumbers": { "ethereum": 23166914 },
+  "permissionsConfigHash": "0xea873eb3b972c5febc83f594760b7c3039c0adf813d0b82af7481b4454bf1202"
 }

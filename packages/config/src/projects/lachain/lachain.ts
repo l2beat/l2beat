@@ -19,7 +19,10 @@ export const lachain: ScalingProject = zkStackL2({
       bridges: ['https://bridge.zk.lachain.network/'],
       documentation: ['https://lachain.gitbook.io/lachain-docs'],
       explorers: ['https://explorer.zk.lachain.network'],
-      socialMedia: ['https://x.com/LaChain_Network'],
+      socialMedia: [
+        'https://x.com/LaChain_Network',
+        'https://discord.com/invite/pxGXnApgQ7',
+      ],
     },
   },
   ecosystemInfo: {

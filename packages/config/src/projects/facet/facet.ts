@@ -5,6 +5,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   DATA_ON_CHAIN,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -12,7 +15,6 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -56,6 +58,7 @@ export const facet: ScalingProject = {
   },
   proofSystem: {
     type: 'Optimistic',
+    zkCatalogId: ProjectId('sp1'),
   },
   stage: getStage(
     {
@@ -92,7 +95,6 @@ export const facet: ScalingProject = {
     headerWarning:
       'The vast majority of funds bridged to Facet are bridged through external non-canonical bridges. Note that external bridges may introduce additional trust assumptions and the bridge-related aspects of the Stage and risk rosette assessment on this page apply only to bridges using the same proof system as the canonical bridge. L2BEAT is working on a TVS and asset framework to assess the risks of individual tokens, you can follow the latest updates [here](https://forum.l2beat.com/t/assets-bridges-and-tvs/388).',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://facet.org/'],
       bridges: [
@@ -199,11 +201,22 @@ export const facet: ScalingProject = {
         },
       },
     ],
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
+      adjustCount: { type: 'SubtractOne' },
+    },
+  },
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
   },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
-      secondLine: formatExecutionDelay(MAX_CHALLENGE_SECS),
+      challengeDelay: MAX_CHALLENGE_SECS,
+      executionDelay: 0,
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
@@ -312,9 +325,7 @@ export const facet: ScalingProject = {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
   },
-  permissions: {
-    addresses: discovery.getDiscoveredPermissions(),
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {
     name: 'facet',
     chainId: 1027303,

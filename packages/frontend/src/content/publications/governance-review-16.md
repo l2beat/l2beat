@@ -43,7 +43,7 @@ You can find us to discuss the above and more during our [Optimism Office Hours]
 
 Following a [successful temp-check](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x3ad664cfc7e8340e43608cfad131c1cd4d4f635a465877671766043334d45e6e) with overwhelming support, [the proposal](https://forum.arbitrum.foundation/t/govhack-at-eth-cc-brussels/23305) by Hack Humanity and Entropy Advisors to host a GovHack during ETH CC in Brussels has moved to an on-chain vote. 
 
-The [Tally proposal](https://www.tally.xyz/gov/arbitrum/proposal/2318647337263564305) ends on May 19 2024 at 3:14 am UTC.
+The [Tally proposal](https://www.tally.xyz/gov/arbitrum/proposal/22498645709460639498013508413205734891453964526622655693207250687057651118730) ends on May 19 2024 at 3:14 am UTC.
 
 
 ### **Temp Check - Proposal for Approval of DeDaub as the ADPC Security Advisor**

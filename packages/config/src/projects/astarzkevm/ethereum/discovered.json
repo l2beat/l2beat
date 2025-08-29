@@ -2,7 +2,7 @@
   "name": "astarzkevm",
   "chain": "ethereum",
   "timestamp": 1721204831,
-  "configHash": "0x7c02619ccca9055e90a843b480b141b4efc30ca1bbaa4f461a1e54e4fa0380e5",
+  "configHash": "0xe523a8e4eea991de87cd027660fe8f8294e841f4a4af7986fa7c5a7bed21113b",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

@@ -2,7 +2,7 @@
   "name": "w",
   "chain": "arbitrum",
   "timestamp": 1752832725,
-  "configHash": "0x8193d6c02706c76fe791d7e7b139e7c2744a29f7222700895f3845caf87772bf",
+  "configHash": "0xe05016755246550577f5c25a998b6e37e3c9e1c7adcd522ba7a5d4b8cd3dd602",
   "entries": [
     {
       "name": "WToken",

@@ -51,6 +51,13 @@
             "method": "getVerifier",
             "args": ["0xbb001d44"]
           }
+        },
+        "verifier6Manual": {
+          "handler": {
+            "type": "call",
+            "method": "getVerifier",
+            "args": ["0x73c457ba"]
+          }
         }
       }
     },

@@ -2,7 +2,7 @@
   "name": "mantapacific",
   "chain": "ethereum",
   "timestamp": 1728472175,
-  "configHash": "0x81b7d6affd77053647c1cc6d77cb1e1033c448a399131ac49584f2f9d7f7a471",
+  "configHash": "0xda58c9212969bed7bbfb322c5085a0aeb88dc13991bf46bcd3b747fffa42527c",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

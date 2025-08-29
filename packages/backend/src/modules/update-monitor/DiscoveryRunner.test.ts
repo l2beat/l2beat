@@ -28,14 +28,15 @@ describe(DiscoveryRunner.name, () => {
         mockObject<AllProviders>({
           get: mockFn().resolvesTo(MOCK_PROVIDER),
           getStats: () => ({
-            highLevelMeasurements: new ProviderStats(),
-            cacheMeasurements: new ProviderStats(),
-            lowLevelMeasurements: new ProviderStats(),
+            ethereum: {
+              highLevelMeasurements: new ProviderStats(),
+              cacheMeasurements: new ProviderStats(),
+              lowLevelMeasurements: new ProviderStats(),
+            },
           }),
         }),
         engine,
         mockObject<TemplateService>(),
-        'ethereum',
       )
       await runner.discoverWithRetry(
         sourceConfig,
@@ -58,16 +59,17 @@ describe(DiscoveryRunner.name, () => {
       const allProvidersMock = mockObject<AllProviders>({
         get: mockFn().resolvesTo(MOCK_PROVIDER),
         getStats: () => ({
-          highLevelMeasurements: new ProviderStats(),
-          cacheMeasurements: new ProviderStats(),
-          lowLevelMeasurements: new ProviderStats(),
+          ethereum: {
+            highLevelMeasurements: new ProviderStats(),
+            cacheMeasurements: new ProviderStats(),
+            lowLevelMeasurements: new ProviderStats(),
+          },
         }),
       })
       const runner = new DiscoveryRunner(
         allProvidersMock,
         engine,
         mockObject<TemplateService>(),
-        'ethereum',
       )
       await runner.discoverWithRetry(
         sourceConfig,
@@ -75,25 +77,23 @@ describe(DiscoveryRunner.name, () => {
         Logger.SILENT,
         1,
         10,
-        { 'project-a': { arbitrum: { timestamp: 123 } } },
+        { 'project-a': { timestamp: 123 } },
         getMockConfigReader({ modelCrossChainPermissions: true }),
       )
 
-      expect(allProvidersMock.get).toHaveBeenCalledTimes(2)
-      expect(allProvidersMock.get).toHaveBeenNthCalledWith(1, 'arbitrum', 123)
-      expect(allProvidersMock.get).toHaveBeenNthCalledWith(2, 'ethereum', 1)
+      expect(allProvidersMock.get).toHaveBeenCalledTimes(0)
       expect(engine.discover).toHaveBeenCalledTimes(2)
       expect(engine.discover).toHaveBeenNthCalledWith(
         1,
-        MOCK_PROVIDER,
-        getMockConfig({ chain: 'arbitrum', modelCrossChainPermissions: true })
-          .structure,
+        allProvidersMock,
+        getMockConfig({ modelCrossChainPermissions: true }).structure,
+        1,
       )
       expect(engine.discover).toHaveBeenNthCalledWith(
         2,
-        MOCK_PROVIDER,
-        getMockConfig({ chain: 'ethereum', modelCrossChainPermissions: true })
-          .structure,
+        allProvidersMock,
+        getMockConfig({ modelCrossChainPermissions: true }).structure,
+        1,
       )
     })
 
@@ -109,14 +109,15 @@ describe(DiscoveryRunner.name, () => {
           mockObject<AllProviders>({
             get: mockFn().resolvesTo(MOCK_PROVIDER),
             getStats: () => ({
-              highLevelMeasurements: new ProviderStats(),
-              cacheMeasurements: new ProviderStats(),
-              lowLevelMeasurements: new ProviderStats(),
+              ethereum: {
+                highLevelMeasurements: new ProviderStats(),
+                cacheMeasurements: new ProviderStats(),
+                lowLevelMeasurements: new ProviderStats(),
+              },
             }),
           }),
           engine,
           mockObject<TemplateService>(),
-          'ethereum',
         )
 
         await runner.discoverWithRetry(
@@ -143,14 +144,15 @@ describe(DiscoveryRunner.name, () => {
           mockObject<AllProviders>({
             get: mockFn().resolvesTo(MOCK_PROVIDER),
             getStats: () => ({
-              highLevelMeasurements: new ProviderStats(),
-              cacheMeasurements: new ProviderStats(),
-              lowLevelMeasurements: new ProviderStats(),
+              ethereum: {
+                highLevelMeasurements: new ProviderStats(),
+                cacheMeasurements: new ProviderStats(),
+                lowLevelMeasurements: new ProviderStats(),
+              },
             }),
           }),
           engine,
           mockObject<TemplateService>(),
-          'ethereum',
         )
 
         await expect(
@@ -196,8 +198,7 @@ const getMockConfigReader = (options?: {
   modelCrossChainPermissions?: boolean
 }) => {
   return mockObject<ConfigReader>({
-    readConfig: (_name: string, chain: string) =>
-      getMockConfig({ ...options, chain }),
+    readConfig: (_name: string) => getMockConfig({ ...options }),
     readRawConfig: () => getMockRawConfig(options),
     getProjectPath: () => '/tmp/discovery',
     readAllDiscoveredChainsForProject: () => ['ethereum', 'arbitrum'],

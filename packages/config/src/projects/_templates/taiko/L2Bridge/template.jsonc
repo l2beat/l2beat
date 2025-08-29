@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "signalService": {
+      "handler": {
+        "type": "call",
+        "method": "resolve",
+        "args": [
+          "0x7369676e616c5f73657276696365000000000000000000000000000000000000",
+          0
+        ]
+      }
+    },
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    }
+  },
+  "ignoreMethods": ["context", "getMessageMinGasLimit", "nextMessageId"]
+}

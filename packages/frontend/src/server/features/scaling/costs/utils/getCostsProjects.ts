@@ -6,7 +6,9 @@ import { ps } from '~/server/projects'
 // NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
 // support it yet. It's a performance issue.
 export const CostsProjectsFilter = v.union([
-  v.object({ type: v.enum(['all', 'rollups', 'others']) }),
+  v.object({
+    type: v.enum(['all', 'rollups', 'others', 'validiumsAndOptimiums']),
+  }),
   v.object({
     type: v.literal('projects'),
     projectIds: v.array(v.string()),
@@ -37,6 +39,11 @@ function filterToCondition(
       return (p) =>
         (p.scalingInfo.type === 'Optimistic Rollup' ||
           p.scalingInfo.type === 'ZK Rollup') &&
+        !(p.statuses.reviewStatus === 'initialReview')
+    case 'validiumsAndOptimiums':
+      return (p) =>
+        (p.scalingInfo.type === 'Validium' ||
+          p.scalingInfo.type === 'Optimium') &&
         !(p.statuses.reviewStatus === 'initialReview')
     case 'others':
       return (p) =>

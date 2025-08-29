@@ -1,8 +1,8 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "timestamp": 1755009465,
-  "configHash": "0xc42e3e5766f8f42aaab2faaf6c6d9ebe2622179cf824db0cd55627d6abee3cfb",
+  "timestamp": 1756214657,
+  "configHash": "0x5b73520a2fbf8b1ac5871650b047fe64ef6859d12076b41e30c2f6dd8172816c",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -236,7 +236,7 @@
         ],
         "$upgradeCount": 6,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620918",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620935",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -259,6 +259,11 @@
         "eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65": "L1CrossDomainMessenger"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
@@ -495,6 +500,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OptimismPortal2",
       "address": "eth:0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956",
       "type": "Contract",
@@ -546,7 +556,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 23120179
+          "prevBlockNum": 23219507
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -645,7 +655,6 @@
         "$members": [
           "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-          "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
           "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
@@ -660,8 +669,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 152,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 159,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -751,11 +760,6 @@
         "eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d": "L1ERC721Bridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SuperchainProxyAdmin",
@@ -1198,7 +1202,7 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 240,
+        "gameCount": 296,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x044CEC24Be9DFDd9c65DAC10059a13Fe0f617a5D",
@@ -1208,7 +1212,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 240,
+        "permissionedGamesTotal": 296,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -1297,11 +1301,6 @@
         "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x92827223f6b397CE9F208eE352bacA710765cACb",
@@ -1487,11 +1486,6 @@
       }
     },
     {
-      "address": "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1552,13 +1546,13 @@
           "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
           "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
           "eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
-          "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
+          "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
           "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
           "eth:0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
           "eth:0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
           "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
           "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
-          "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
+          "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
           "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
           "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
         ],
@@ -1569,7 +1563,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 37,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2477,6 +2471,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23125607 },
-  "permissionsConfigHash": "0xfda0e86af862c32fd15b531893042288326a04814c28cf0553d4a3fbdc15f239"
+  "usedBlockNumbers": { "ethereum": 23225564 },
+  "permissionsConfigHash": "0x0855e7c06bb6a33f84b5e0fe79caba978c95dd02b4636cdbe6c85694d1285651"
 }

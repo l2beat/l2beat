@@ -1,8 +1,8 @@
 {
   "name": "unichain",
   "chain": "ethereum",
-  "timestamp": 1753451183,
-  "configHash": "0xdc905eb1d472f94b8221a5bf6e6b85f51a85ace024524ec6ffb8f1231b97dbc7",
+  "timestamp": 1755525939,
+  "configHash": "0x8e689fcd41feaf9f9d80e79a95e7582ce521bdc769207de8d5b233054f8d7c63",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -125,6 +125,11 @@
       }
     },
     {
+      "address": "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
       "type": "EOA",
       "proxyType": "EOA"
@@ -178,8 +183,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 616009,
-          "prevBlockNum": 22996324
+          "prevBoughtGas": 515958,
+          "prevBlockNum": 23168388
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -328,12 +333,12 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x0000000000000000000000000000000000000000",
+        "anchorGame": "eth:0xea5C30E47Fe71282871938FB918532E065AB3062",
         "disputeGameFactory": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x193781a056643321a32aacffcb9087a6e54a0f858d5ee06f29cd920ada6eeea9",
-          22024228
+          "0x7bda8c9d2915fa3e69c168e42dcba2d86dbd0b3cbb5f9aab70f293673eb396bc",
+          24169640
         ],
         "initVersion": 1,
         "paused": false,
@@ -398,7 +403,7 @@
         ],
         "$upgradeCount": 3,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 6206,
+        "gameCount": 6780,
         "gameImpls": [
           "eth:0x4F0f6B7877A174A4fd41DF80dB80DeF8883bc772",
           "eth:0xC56EF9c3F3e9fD6713055b4577AC4AF8303E63e1",
@@ -483,6 +488,11 @@
           "condition": "though restricted to the SuperchainConfig's `pause()` function"
         }
       ]
+    },
+    {
+      "address": "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -748,11 +758,6 @@
           }
         }
       ]
-    },
-    {
-      "address": "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SuperchainProxyAdmin",
@@ -1447,7 +1452,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644547",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292645718",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1520,11 +1525,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "DelayedWETH",
       "address": "eth:0xa0157F0730Dea8d1a5c358Dc1d340a05D8796C23",
       "type": "Contract",
@@ -1558,7 +1558,7 @@
         "proxyAdminOwner": "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833",
         "symbol": "WETH",
         "systemConfig": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-        "totalSupply": "1600000000000000000",
+        "totalSupply": "20080000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -1752,13 +1752,13 @@
           "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
           "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
           "eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
-          "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
+          "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
           "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
           "eth:0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
           "eth:0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
           "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
           "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
-          "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
+          "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
           "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
           "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
         ],
@@ -1769,7 +1769,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 37,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3417,6 +3417,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig_pauseId": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
-  "usedBlockNumbers": { "ethereum": 22996546 },
-  "permissionsConfigHash": "0x3f03680df8ea185bc9435f75e33cbea99cd9184a68e764acbcb97ee8ffb6de97"
+  "usedBlockNumbers": { "ethereum": 23168425 },
+  "permissionsConfigHash": "0xeacbf41baabcae16d20cdedc44f6e4d739a50464a153eb6a5ea8e3e41289dd17"
 }

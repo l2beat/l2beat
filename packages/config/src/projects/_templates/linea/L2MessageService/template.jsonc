@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["l1RollingHashes"],
+  "fields": { "accessControl": { "handler": { "type": "accessControl" } } },
+  "l1l2MessageSetter": {
+    "copy": "accessControl",
+    "edit": ["get", "L1_L2_MESSAGE_SETTER_ROLE", "members"],
+    "permissions": [
+      {
+        "type": "interact",
+        "description": "Can anchor L1 data on the L2. A check is supposed to be added to the proof system on L1 so that it is not possible to settle if the anchor is not correct. The function is permissioned because otherwise anyone can cause a liveness failure by posting an invalid anchor."
+      }
+    ]
+  }
+}

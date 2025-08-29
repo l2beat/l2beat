@@ -1,10 +1,6 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../common'
-import type {
-  ProjectScalingDisplay,
-  ProjectScalingProofSystem,
-  ScalingProject,
-} from '../internalTypes'
+import type { ProjectScalingDisplay, ScalingProject } from '../internalTypes'
 import type {
   Badge,
   ChainConfig,
@@ -13,6 +9,8 @@ import type {
   ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectScalingCapability,
+  ProjectScalingDa,
+  ProjectScalingProofSystem,
 } from '../types'
 import { getActivityConfig } from './activity'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
@@ -20,16 +18,17 @@ import { getDiscoveryInfo } from './getDiscoveryInfo'
 interface UnderReviewConfigCommon {
   id: string
   addedAt: UnixTime
-  hasTestnet?: boolean
+  hasTestnet?: true
   capability: ProjectScalingCapability
   ecosystemInfo?: ProjectEcosystemInfo
   activityConfig?: ProjectActivityConfig
-  proofSystem?: ProjectScalingProofSystem
+  proofSystem: ProjectScalingProofSystem | undefined
   escrows?: ProjectEscrow[]
   chainConfig?: ChainConfig
   badges?: Badge[]
   archivedAt?: UnixTime
   discoveryInfo?: ProjectDiscoveryInfo
+  dataAvailability: ProjectScalingDa | undefined
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
@@ -57,11 +56,7 @@ export function underReviewL2(
     display: templateVars.display,
     proofSystem: templateVars.proofSystem,
     stage: {
-      stage:
-        templateVars.display.category === 'Optimistic Rollup' ||
-        templateVars.display.category === 'ZK Rollup'
-          ? 'UnderReview'
-          : 'NotApplicable',
+      stage: 'UnderReview',
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -82,6 +77,7 @@ export function underReviewL2(
     chainConfig: templateVars.chainConfig,
     badges: templateVars.badges,
     discoveryInfo: templateVars.discoveryInfo ?? getDiscoveryInfo([]),
+    dataAvailability: templateVars.dataAvailability,
   }
 }
 
@@ -114,11 +110,7 @@ export function underReviewL3(
       ),
     },
     stage: {
-      stage:
-        templateVars.display.category === 'Optimistic Rollup' ||
-        templateVars.display.category === 'ZK Rollup'
-          ? 'UnderReview'
-          : 'NotApplicable',
+      stage: 'UnderReview',
     },
     ecosystemInfo: templateVars.ecosystemInfo,
     riskView: UNDER_REVIEW_RISK_VIEW,
@@ -128,5 +120,6 @@ export function underReviewL3(
     chainConfig: templateVars.chainConfig,
     badges: templateVars.badges,
     discoveryInfo: templateVars.discoveryInfo ?? getDiscoveryInfo([]),
+    dataAvailability: templateVars.dataAvailability,
   }
 }

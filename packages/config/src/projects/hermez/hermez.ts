@@ -2,6 +2,9 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -30,9 +33,6 @@ export const hermez: ScalingProject = {
     description:
       'Hermez is an open-source ZK Rollup that aims to be optimized for secure, low-cost and usable token transfers on the wings of Ethereum.',
     purposes: ['Payments'],
-    category: 'ZK Rollup',
-    // TODO: This is not correct. Research it.
-
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://hermez.io/'],
@@ -53,6 +53,11 @@ export const hermez: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
+  },
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
   },
   stage: {
     stage: 'NotApplicable',

@@ -1,3 +1,54 @@
+Generated with discovered.json: 0xbb373179c193810d342c44b47608647296eeca7c
+
+# Diff at Tue, 26 Aug 2025 13:29:44 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1755507657
+- current timestamp: 1756214657
+
+## Description
+
+Conduit msig: removed one address
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 11 (36%)"
+    }
+```
+
+Generated with discovered.json: 0x82e74dc8bb9ca9d4162d3a1196a5fccd7e19d26e
+
+# Diff at Mon, 18 Aug 2025 09:02:45 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0dd593b7eab607ddac1ba1df05212f23f79157e3 block: 1755009465
+- current timestamp: 1755507657
+
+## Description
+
+Security council members rotation.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa"
++        "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94"
+      values.$members.10:
+-        "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A"
++        "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6"
+    }
+```
+
 Generated with discovered.json: 0x3565c7eccec15139fc6ab1475a85979095d9e618
 
 # Diff at Tue, 12 Aug 2025 14:41:14 GMT:

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xfeda2c4099102cdf0c8a9840d49c8b4980bcd1a9
+
+# Diff at Mon, 18 Aug 2025 09:03:25 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0dd593b7eab607ddac1ba1df05212f23f79157e3 block: 1753682243
+- current timestamp: 1755507657
+
+## Description
+
+Security council members rotation.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x51aCb8e1205De850D1b512584FeE9C29C3813dDa"
++        "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94"
+      values.$members.10:
+-        "eth:0x9Eb11A55132c851b9991F148b3Af791ca498fD7A"
++        "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6"
+    }
+```
+
 Generated with discovered.json: 0x5ed441550c1bcdc1e308b29951e99ae62bf6f8ac
 
 # Diff at Mon, 28 Jul 2025 05:57:46 GMT:

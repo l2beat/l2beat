@@ -13,12 +13,11 @@ export const coti: ScalingProject = upcomingL2({
     description:
       'Coti is a privacy-centric Ethereum Layer 2 leveraging multiparty computation and secure enclaves for scalable privacy.',
     purposes: ['Universal', 'Privacy'],
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://coti.io/'],
-      documentation: [
-        'https://medium.com/cotinetwork/how-coti-is-gearing-up-for-2024-and-beyond-e0d465794767',
-      ],
+      bridges: ['https://bridge.coti.io'],
+      documentation: ['https://docs.coti.io/coti-documentation'],
+      explorers: ['https://mainnet.cotiscan.io'],
       repositories: ['https://github.com/coti-io'],
       socialMedia: [
         'https://twitter.com/COTInetwork',
@@ -27,5 +26,8 @@ export const coti: ScalingProject = upcomingL2({
         'https://discord.gg/9tq6CP6XrT',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

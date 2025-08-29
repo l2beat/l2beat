@@ -18,7 +18,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatChallengePeriod } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -66,7 +65,6 @@ export const morph: ScalingProject = {
     description:
       'Morph is an EVM compatible rollup. It operates as an optimistic rollup with ZK fault proofs and has plans for decentralizing the Sequencer. Their mission is to build the first blockchain for consumers, where user-friendly applications integrate seamlessly into everyday life, becoming indispensable utilities.',
     purposes: ['Universal'],
-    category: 'Other',
     links: {
       websites: ['https://morphl2.io'],
       bridges: ['https://bridge.morphl2.io/'],
@@ -174,7 +172,7 @@ export const morph: ScalingProject = {
         RISK_VIEW.STATE_FP_1R_ZK.description +
         ' The system currently operates with a single whitelisted challenger.',
       sentiment: 'bad',
-      secondLine: formatChallengePeriod(challengeWindow),
+      challengeDelay: challengeWindow,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),

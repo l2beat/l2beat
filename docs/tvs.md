@@ -19,18 +19,18 @@ or type
 
 ## Configuration
 
-TVS configuration is represented as a set of JSON documents (one for each project) located in `/packages/config/src/tvs`. Each file represent an explicit list of tokens, along with all required properties which will be used to calculate project's TVS.
+TVS configuration is represented as a set of JSON documents (one for each project) located in `/packages/config/src/tvs`. Each file represents an explicit list of tokens, along with all required properties which will be used to calculate project's TVS.
 
 
    - `mode` - it can be either  `auto` or  `custom` (more on this subject in [Automatic vs manual configuration](#Automatic-vs-manual-configuration) section)
-   - `id` - arbitrarily assigned unique token identifier (usually in a form `<chain>-<symbol>`)
+   - `id` - arbitrarily assigned unique token identifier (usually in the form `<chain>-<symbol>`)
    - `priceId` - id of a token in 3rd party API (currently it's Coingecko)
    - `symbol` - symbol of a token
    - `name` - display name
    - `iconUrl`- url to token icon (optional)
-   - `amount` - formula to capture the amount of the token on a given chain along with it's value (amount * price)
-   - `valueForProject` - formula to calculate value of the token within project's total (i.e. to prevent double counting when token was used for lock-minting some other token)
-   - `valueForSummary` - formula to calculate value of the token within total of all projects (i.e. to prevent double counting when token was bridged from L2 to L3)
+   - `amount` - formula to capture the amount of the token on a given chain along with its value (amount * price)
+   - `valueForProject` - formula to calculate value of the token within project's total (i.e. to prevent double counting when a token was used for lock-minting some other token)
+   - `valueForSummary` - formula to calculate value of the token within total of all projects (i.e. to prevent double counting when a token was bridged from L2 to L3)
    - `category`- category of a token ( `ether`, `stablecoin`, `other`)
    - `source` - source of the token (`canonical`, `external`, `native`)
    -  `isAssociated`- is token associated with project (for example gov tokens)

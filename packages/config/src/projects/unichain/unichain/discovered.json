@@ -1,8 +1,8 @@
 {
   "name": "unichain",
   "chain": "unichain",
-  "timestamp": 1753451183,
-  "configHash": "0x0a0b1f66fb22eb36ea46a12431a609e640a61da77ef962382aa8e39b4048df9d",
+  "timestamp": 1755525939,
+  "configHash": "0x8e689fcd41feaf9f9d80e79a95e7582ce521bdc769207de8d5b233054f8d7c63",
   "entries": [
     {
       "address": "unichain:0x0000000000000000000000000000000000000000",
@@ -60,7 +60,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621543",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621815",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -113,7 +113,7 @@
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 911289677,
+        "l1BaseFee": 933745043,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -300,7 +300,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 911289677,
+        "basefee": 933745043,
         "baseFeeScalar": 2000,
         "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
         "blobBaseFee": 1,
@@ -312,15 +312,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xd97e025968649beabcab99f65ea8770db5634d748f69c79286eba5c5b571ae3b",
+        "hash": "0xaae056c6a67fa99257a4b11f34f5fa49bb4662cc37b3382e9d24ad9a74b57913",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 22996541,
+        "number": 23168420,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 0,
-        "timestamp": 1753451123,
+        "sequenceNumber": 4,
+        "timestamp": 1755525875,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -1454,6 +1454,6 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "usedBlockNumbers": { "unichain": 22702824 },
-  "permissionsConfigHash": "0x3f03680df8ea185bc9435f75e33cbea99cd9184a68e764acbcb97ee8ffb6de97"
+  "usedBlockNumbers": { "unichain": 24777580 },
+  "permissionsConfigHash": "0xeacbf41baabcae16d20cdedc44f6e4d739a50464a153eb6a5ea8e3e41289dd17"
 }

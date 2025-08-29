@@ -1,3 +1,450 @@
+Generated with discovered.json: 0xcca498040c8b3885bf1a2906c93a3d3aff00995e
+
+# Diff at Thu, 28 Aug 2025 10:38:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3e088e62f4c969a9884f950ac3f9027242f1f8ff block: 1755259336
+- current timestamp: 1756377336
+
+## Description
+
+New Polygon adapter adding OFT support (OFTTransportAdapterWithStore)
+https://disco.l2beat.com/diff/eth:0xb4AeF0178f5725392A26eE18684C2aB62adc912e/eth:0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0
+
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Polygon_Adapter (0xb4AeF0178f5725392A26eE18684C2aB62adc912e)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      values.Adapters.137:
+-        "eth:0xb4AeF0178f5725392A26eE18684C2aB62adc912e"
++        "eth:0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Polygon_Adapter (0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+## Source code changes
+
+```diff
+.../Polygon_Adapter.sol                            | 290 +++++++++++++++++++--
+ 1 file changed, 269 insertions(+), 21 deletions(-)
+```
+
+Generated with discovered.json: 0xc3b055f7dfa90a2e3f8be8add835f75982e2412c
+
+# Diff at Fri, 15 Aug 2025 12:02:30 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c3e90302baa55a4ba6e093cc5d28fae579abf41d block: 1751887607
+- current timestamp: 1755259336
+
+## Description
+
+Arbitrum adapter updated to include cctp v2 handling plus OFTTransportAdapter.
+https://disco.l2beat.com/diff/eth:0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210/eth:0x5eC9844936875E27eBF22172f4d92E107D35B57C
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitter (0x0a992d191DEeC32aFe36203Ad87D7d289a738F81)
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
+-   Status: DELETED
+    contract Arbitrum_Adapter (0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessengerV2 (0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d)
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
+-   Status: DELETED
+    contract Inbox (0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
+-   Status: DELETED
+    contract RollupProxy (0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x5613AF0474EB9c528A34701A5b1662E3C8FA0678)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RollupEventInbox (0x57Bd336d579A51938619271a7Cc137a46D0501B1)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
+-   Status: DELETED
+    contract OldOutbox (0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Dai Stablecoin Token (0x6B175474E89094C44Da98b954EedeAC495271d0F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayRouter (0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
+-   Status: DELETED
+    contract Outbox (0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USD Coin Token (0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20Gateway (0xa3A7B6F88361F48403514059F1F16C8E78d60EeC)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessenger (0xBd3fa81B58Ba92a82136038B25aDec7066af3155)
+    +++ description: Part of CCTP
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      values.Adapters.42161:
+-        "eth:0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210"
++        "eth:0x5eC9844936875E27eBF22172f4d92E107D35B57C"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinter (0xc4922d64a24675E16e1586e3e3Aa56C06fABe907)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
+-   Status: DELETED
+    contract Arbitrum Multisig 1 (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49)
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (0xE982615d461DD5cD06575BbeA87624fda4e3de17)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Arbitrum Security Council (0xF06E95eF589D9c38af242a8AAee8375f14023F85)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinterV2 (0xfd78EE919681417d192449715b2594ab58f5D002)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
++   Status: CREATED
+    contract Arbitrum_Adapter (0x5eC9844936875E27eBF22172f4d92E107D35B57C)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    |  953 ------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../GnosisSafe.sol => /dev/null                    |  953 ------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../Arbitrum_Adapter.sol                           |  247 +-
+ .../Bridge/Bridge.sol => /dev/null                 |  824 -----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ----
+ .../Dai Stablecoin Token.sol => /dev/null          |  154 -
+ .../ERC20Gateway/L1ERC20Gateway.sol => /dev/null   | 1382 ---------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  443 ---
+ .../GatewayRouter/L1GatewayRouter.sol => /dev/null |  992 ------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  443 ---
+ .../.flat@1751887607/Inbox/Inbox.sol => /dev/null  | 1384 ---------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  443 ---
+ .../L1Timelock/L1ArbitrumTimelock.sol => /dev/null | 1544 ----------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  631 ----
+ .../.flat@1751887607/MasterMinter.sol => /dev/null |  372 ---
+ .../MessageTransmitter.sol => /dev/null            | 3081 -------------------
+ .../OldOutbox/OldOutbox.sol => /dev/null           |  395 ---
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  443 ---
+ .../Outbox.sol => /dev/null                        |  536 ----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ----
+ .../Outbox.sol => /dev/null                        |  410 ---
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  443 ---
+ .../dev/null                                       |  140 -
+ .../dev/null                                       |  147 -
+ .../dev/null                                       |  132 -
+ .../RollupEventInbox.sol => /dev/null              |  140 -
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ----
+ .../RollupAdminLogic.1.sol => /dev/null            | 3166 --------------------
+ .../RollupProxy/RollupProxy.p.sol => /dev/null     |  742 -----
+ .../RollupProxy/RollupUserLogic.2.sol => /dev/null | 3064 -------------------
+ .../SequencerInbox/SequencerInbox.sol => /dev/null | 1427 ---------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ----
+ .../TokenMessenger.sol => /dev/null                | 2592 ----------------
+ .../AdminUpgradableProxy.p.sol => /dev/null        |  431 ---
+ .../TokenMessengerV2.sol => /dev/null              | 2785 -----------------
+ .../.flat@1751887607/TokenMinter.sol => /dev/null  | 1271 --------
+ .../TokenMinterV2.sol => /dev/null                 | 1207 --------
+ .../FiatTokenProxy.p.sol => /dev/null              |  268 --
+ .../USD Coin Token/FiatTokenV2_2.sol => /dev/null  | 2357 ---------------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  631 ----
+ .../UpgradeExecutor.sol => /dev/null               |  996 ------
+ 43 files changed, 231 insertions(+), 39924 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1751887607 (main branch discovery), not current.
+
+```diff
+    contract Arbitrum_Adapter (0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210) {
+    +++ description: None
+      template:
+-        "acrossv3/Adapter"
+      description:
+-        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
+-        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MessageTransmitter (0x0a992d191DEeC32aFe36203Ad87D7d289a738F81)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
++   Status: CREATED
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessengerV2 (0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x5613AF0474EB9c528A34701A5b1662E3C8FA0678)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupEventInbox (0x57Bd336d579A51938619271a7Cc137a46D0501B1)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
++   Status: CREATED
+    contract OldOutbox (0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Dai Stablecoin Token (0x6B175474E89094C44Da98b954EedeAC495271d0F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GatewayRouter (0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USD Coin Token (0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Gateway (0xa3A7B6F88361F48403514059F1F16C8E78d60EeC)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessenger (0xBd3fa81B58Ba92a82136038B25aDec7066af3155)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract TokenMinter (0xc4922d64a24675E16e1586e3e3Aa56C06fABe907)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
++   Status: CREATED
+    contract Arbitrum Multisig 1 (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49)
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
++   Status: CREATED
+    contract MasterMinter (0xE982615d461DD5cD06575BbeA87624fda4e3de17)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Arbitrum Security Council (0xF06E95eF589D9c38af242a8AAee8375f14023F85)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMinterV2 (0xfd78EE919681417d192449715b2594ab58f5D002)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
 Generated with discovered.json: 0x4690026675b61dc237611add1cfd7bdfff7aa871
 
 # Diff at Mon, 14 Jul 2025 12:44:38 GMT:

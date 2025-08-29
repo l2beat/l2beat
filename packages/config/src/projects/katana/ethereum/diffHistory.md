@@ -1,3 +1,124 @@
+Generated with discovered.json: 0x77f05fe88102228c2fd94b74d24e0415b0a50638
+
+# Diff at Fri, 29 Aug 2025 07:41:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e68cba094085f7ab7e642304a942701f260f19fb block: 1756214657
+- current timestamp: 1756453226
+
+## Description
+
+Msig changes.
+
+## Watched changes
+
+```diff
+    contract Katana yieldRecipient Mulsitig (0x67C912fF560951526BffDff66dFbD4DF8AE23756) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b"
++        "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1"
+    }
+```
+
+```diff
+    contract Safe (0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b"
++        "eth:0x6624307a4f672ec5C289fBA196952902BB518dc0"
+    }
+```
+
+Generated with discovered.json: 0x08ccc0d7f5082952e7141e310d4d66ad31a3bad4
+
+# Diff at Tue, 26 Aug 2025 13:28:38 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1755686907
+- current timestamp: 1756214657
+
+## Description
+
+Conduit msig: removed one address
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 11 (36%)"
+    }
+```
+
+Generated with discovered.json: 0xc4e3340ae4fbf7e2103819c69b7c461ef62b6cdd
+
+# Diff at Wed, 20 Aug 2025 10:48:46 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@262b00e32d0a4e462cf5011a16f1fcaa9ed6d5a8 block: 1755156807
+- current timestamp: 1755686907
+
+## Description
+
+Updated the range program for proving L2 STF. I was not able to check the vkey commitment.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
++++ description: Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey.
++++ severity: HIGH
+      values.rangeVkeyCommitment:
+-        "0x2ebb1e0d5380158f22adf3750cc6056100a133d274fd7c5b457148ff29dfe173"
++        "0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872"
+    }
+```
+
+Generated with discovered.json: 0xaa81c969a22f2d5fc8e7b7045f01ffdb18ad02ae
+
+# Diff at Thu, 14 Aug 2025 07:33:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1755009465
+- current timestamp: 1755156807
+
+## Description
+
+signer change.
+
+## Watched changes
+
+```diff
+    contract Safe (0x261a25ec6c396389B75B6b22BD4A8227070E3B50) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 4 (25%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0xe75ccf8ecc3587a3f653de33137e903bd5440ea5
 
 # Diff at Tue, 12 Aug 2025 14:40:13 GMT:

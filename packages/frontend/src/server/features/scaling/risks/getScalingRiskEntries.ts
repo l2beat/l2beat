@@ -1,4 +1,4 @@
-import type { Project, ProjectScalingRiskView } from '@l2beat/config'
+import type { Project, ProjectRiskView } from '@l2beat/config'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import { getDataAvailabilitySection } from '~/utils/project/technology/getDataAvailabilitySection'
@@ -30,6 +30,7 @@ export async function getScalingRiskEntries() {
   ])
 
   const entries = projects
+    .filter((p) => p.statuses.reviewStatus !== 'initialReview')
     .map((project) =>
       getScalingRiskEntry(
         project,
@@ -43,7 +44,7 @@ export async function getScalingRiskEntries() {
 }
 
 export interface ScalingRiskEntry extends CommonScalingEntry {
-  risks: ProjectScalingRiskView
+  risks: ProjectRiskView
   tvsOrder: number
   hasStateValidationSection: boolean
   hasDataAvailabilitySection: boolean

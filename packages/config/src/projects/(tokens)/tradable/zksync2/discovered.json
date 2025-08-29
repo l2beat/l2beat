@@ -1,8 +1,8 @@
 {
   "name": "tradable",
   "chain": "zksync2",
-  "timestamp": 1755013528,
-  "configHash": "0xcacfc22a6ec7b759d36b6d7fbdff37db776b8783bc92fe3daea675bf60146c3d",
+  "timestamp": 1755162744,
+  "configHash": "0x2e2ca55e40bda3558d445bdd5376a695cd158f64dd6401bf0186dccc7de37be6",
   "entries": [
     {
       "address": "zksync:0x00Ac919b47D88Daf465EA9b03FF3B1D197582CE0",
@@ -1530,7 +1530,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -1633,7 +1633,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -1992,7 +1992,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "zksync:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 21903160262155,
+        "totalSupply": 21328543912155,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -2060,7 +2060,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2148,6 +2148,11 @@
         "zksync:0x1F179A51Ab46252f469733DFcbD9115090A91f03": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
       }
+    },
+    {
+      "address": "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "DealManager",
@@ -2348,7 +2353,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2827,7 +2832,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2919,7 +2924,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -3966,7 +3971,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4077,7 +4082,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4160,7 +4165,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4274,7 +4279,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4451,7 +4456,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4599,7 +4604,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4691,7 +4696,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4842,7 +4847,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5345,7 +5350,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5802,6 +5807,11 @@
       }
     },
     {
+      "address": "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Deal",
       "address": "zksync:0x641d9B8d290F759B75F7C30eDcD96C38BD26afD4",
       "type": "Contract",
@@ -5837,7 +5847,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -6455,7 +6465,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -6558,7 +6568,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -7467,7 +7477,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -8128,7 +8138,7 @@
         ],
         "$upgradeCount": 3,
         "authority": "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717",
-        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "availableForInvestment": "115792089237316195423570985008687907853269984665640564039457583996063129639935",
         "availableFunds": 0,
         "capitalRecipient": "zksync:0x742d35cc6634c0532925A3b8D4C0a8BfD4c4C8b2",
         "deal": "zksync:0xeF81EDc585D4e01E335d15988361b1cae1E4583a",
@@ -8143,7 +8153,116 @@
         "paymentCurrency": "zksync:0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
         "payoutBalances": [],
         "payoutDustThreshold": 10000,
-        "previewPrincipalPayout": [],
+        "previewPrincipalPayout": [
+          [
+            [
+              [
+                "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+                0,
+                0,
+                9600000000000,
+                false
+              ],
+              [
+                "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+                0,
+                0,
+                2000000000000,
+                false
+              ],
+              [
+                "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+                0,
+                0,
+                250000000000,
+                false
+              ]
+            ],
+            0,
+            0
+          ],
+          [
+            [
+              [
+                "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+                1,
+                1,
+                9599999999999,
+                false
+              ],
+              [
+                "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+                0,
+                0,
+                2000000000000,
+                false
+              ],
+              [
+                "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+                0,
+                0,
+                250000000000,
+                false
+              ]
+            ],
+            1,
+            1
+          ],
+          [
+            [
+              [
+                "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+                2,
+                2,
+                9599999999998,
+                false
+              ],
+              [
+                "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+                0,
+                0,
+                2000000000000,
+                false
+              ],
+              [
+                "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+                0,
+                0,
+                250000000000,
+                false
+              ]
+            ],
+            2,
+            2
+          ],
+          [
+            [
+              [
+                "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+                3,
+                3,
+                9599999999997,
+                false
+              ],
+              [
+                "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+                0,
+                0,
+                2000000000000,
+                false
+              ],
+              [
+                "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+                0,
+                0,
+                250000000000,
+                false
+              ]
+            ],
+            3,
+            3
+          ]
+        ],
         "redemptionBudget": 0,
         "redemptionFee": 0,
         "redemptionLockPeriod": 432000,
@@ -9114,7 +9233,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -9223,7 +9342,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10300,7 +10419,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10382,7 +10501,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10709,7 +10828,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10845,7 +10964,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10981,7 +11100,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -11859,7 +11978,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12442,7 +12561,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12863,7 +12982,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13374,7 +13493,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13603,7 +13722,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13707,7 +13826,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14161,7 +14280,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14268,7 +14387,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14399,7 +14518,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14786,29 +14905,54 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
-        "eligibleAccounts": [],
+        "eligibleAccounts": [
+          "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+          "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+          "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561"
+        ],
         "fiatAccounts": [],
-        "holders": [],
+        "holders": [
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0x1F29cDd109838351265B4295caD307AA02B831eA",
+            "balance": 9600000000000
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0x63eb1046b8d8b67aC88AD14b466d1Ba454291ba7",
+            "balance": 2000000000000
+          },
+          {
+            "isFiatAccount": false,
+            "account": "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+            "balance": 250000000000
+          }
+        ],
         "id": "82d1cd86-9e52-4952-bd79-97ba863408f1",
         "isOpenEnded": true,
         "manager": "zksync:0x925303f0c9b4eF5445E77c3f1c7Fc2A04b133BE5",
         "maxHolders": 1000,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmS97zzqhoJ7SBAh7Ge7DdfEhWd7UEGwdMiq1xseRyCUaz",
         "name": "Private Credit Direct Deal97235924",
-        "nav": { "value": 0, "timestamp": 0, "decimals": 6 },
-        "price": { "value": 0, "decimals": 6, "timestamp": 0 },
+        "nav": { "value": 1000000, "timestamp": 1755114593, "decimals": 6 },
+        "price": { "value": 1000000, "decimals": 6, "timestamp": 1755114593 },
         "symbol": "PC972",
         "totalSize": 15000000000000,
-        "totalSupply": 0,
-        "yieldGenerationStart": 0
+        "totalSupply": 11850000000000,
+        "yieldGenerationStart": 1755038139
       },
       "implementationNames": {
         "zksync:0xeF81EDc585D4e01E335d15988361b1cae1E4583a": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
       }
+    },
+    {
+      "address": "zksync:0xF3B2FC59A851D491984741C79E91150D75B6e561",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "zksync:0xf971F58577aeFC4c70F5a7f9e171cf1611f9afFb",
@@ -14856,7 +15000,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -15739,7 +15883,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755013526,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -16491,6 +16635,6 @@
     "tradable/DealManager": "0x97aad4d43c4d3012e4f422bd12a8407e28b602da351ab2be57ee9d27ac4912ba",
     "tradable/DealRegistry": "0x80492a8b01b07c7eb3c5cebc3a4c692ef4abb2da9faf34b0d838d7d21d76e23f"
   },
-  "usedBlockNumbers": { "zksync2": 63973297 },
-  "permissionsConfigHash": "0x32819bef24fd7268ed3838dd2f26b25355a8a8e529811999255ec79e906564eb"
+  "usedBlockNumbers": { "zksync2": 64027305 },
+  "permissionsConfigHash": "0x9611c95bd6e720ff5f90546129ace6491cf2ed3ceaf6c25b4a9d39c05bbcb8f8"
 }

@@ -2,7 +2,7 @@
   "name": "deversifi",
   "chain": "ethereum",
   "timestamp": 1741185503,
-  "configHash": "0x4a52658f45ac568706607a80bbb344597a314eace083e9bc9181abc5d753c4cf",
+  "configHash": "0x2cc1930c30b5204986dc1ecaf5fd5f0f683b898d614efca6b63ae9a4d6c51b25",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

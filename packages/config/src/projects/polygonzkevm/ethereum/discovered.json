@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "timestamp": 1753192091,
-  "configHash": "0x8f2a3e0ae79c1c915dbf4b36d3f33538f556e6c0a23486d149642a04722be645",
+  "configHash": "0xad1d572d97e118e344456049a464dfc750e549925ce2004c55a8a9842c7c7af9",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

@@ -1,7 +1,7 @@
 import type {
   Project,
-  ProjectScalingCategory,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingStack,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
@@ -12,6 +12,7 @@ import {
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
+import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import { getDaLayerRisks } from '../../data-availability/utils/getDaLayerRisks'
 import type { ProjectsEconomicSecurity } from '../../data-availability/utils/getDaProjectsEconomicSecurity'
 import { getDaProjectsEconomicSecurity } from '../../data-availability/utils/getDaProjectsEconomicSecurity'
@@ -34,6 +35,7 @@ export async function getScalingDaEntries() {
     projects,
     daLayers,
     daBridges,
+    zkCatalogProjects,
     projectsEconomicSecurity,
   ] = await Promise.all([
     getProjectsLatestTvsUsd(),
@@ -49,6 +51,9 @@ export async function getScalingDaEntries() {
     }),
     ps.getProjects({
       select: ['daBridge'],
+    }),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
     }),
     getDaProjectsEconomicSecurity(),
   ])
@@ -74,6 +79,7 @@ export async function getScalingDaEntries() {
         daLayers,
         projectsChangeReport.getChanges(project.id),
         tvs[project.id],
+        zkCatalogProjects,
       )
     })
     .filter((entry) => entry !== undefined)
@@ -83,7 +89,7 @@ export async function getScalingDaEntries() {
 }
 
 export interface ScalingDaEntry extends CommonScalingEntry {
-  category: ProjectScalingCategory
+  proofSystem: ProjectScalingProofSystem | undefined
   dataAvailability: ProjectScalingDa
   stacks: ProjectScalingStack[] | undefined
   tvsOrder: number
@@ -105,11 +111,15 @@ function getScalingDaEntry(
   daLayers: Project<'daLayer'>[],
   changes: ProjectChanges,
   tvs: number | undefined,
+  zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingDaEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
-    category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
+    proofSystem: getProofSystemWithName(
+      project.scalingInfo.proofSystem,
+      zkCatalogProjects,
+    ),
     daHref: getDaHref(project, daLayers),
     stacks: project.scalingInfo.stacks,
     risks,

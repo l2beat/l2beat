@@ -21,8 +21,12 @@
         },
         "opStackDA": {
           "handler": {
-            "type": "opStackDA",
-            "sequencerAddress": "{{ batcherHash }}"
+            "type": "hardcoded", // !!! since they use the wrong encoding
+            "value": {
+              "isSequencerSendingBlobTx": false,
+              "isUsingCelestia": false,
+              "isUsingEigenDA": true
+            }
           }
         },
         "sequencerInbox": {

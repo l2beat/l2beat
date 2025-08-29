@@ -2,7 +2,7 @@
   "name": "sxt",
   "chain": "ethereum",
   "timestamp": 1753944351,
-  "configHash": "0x32bb9a90ce77434eb271ac6826b30ae640f08e7d25f2db0f6dde013452ded4c3",
+  "configHash": "0x7c5de9e5339fba60887a3937d5c63d2b2ecc25b5eda294b827059b2d47744abd",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

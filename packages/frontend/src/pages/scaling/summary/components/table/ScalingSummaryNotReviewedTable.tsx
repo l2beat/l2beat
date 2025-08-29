@@ -42,5 +42,5 @@ export function ScalingSummaryNotReviewedTable({ entries }: Props) {
     },
   })
 
-  return <BasicTable table={table} rowColoringMode="ignore-colors" />
+  return <BasicTable table={table} />
 }

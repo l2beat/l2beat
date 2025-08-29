@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x5b6346a8ea0720df42f49abe826ed6501334406b
+Generated with discovered.json: 0x0db183f815a4365def5ca700e372ade7bfca8691
+
+# Diff at Wed, 27 Aug 2025 13:18:55 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@2b69e551da08c81deadf0862f4062bf553e4edad block: 1753682819
+- current timestamp: 1756300615
+
+## Description
+
+Multisig owners update.
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x2bBA03bA38D90634e6afD8C23C16ca01651bc493"
+      values.$members.5:
+-        "eth:0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 4 (75%)"
+    }
+```
+
+Generated with discovered.json: 0xc3ae9ff369a8facf587796c3d38da1ffc9015c3b
 
 # Diff at Mon, 28 Jul 2025 06:07:38 GMT:
 

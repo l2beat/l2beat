@@ -16,7 +16,7 @@ export async function getDataAvailabilitySummaryData(
   ] = await Promise.all([
     getAppLayoutProps(),
     getDaSummaryEntries(),
-    getDaThroughputSummary({}),
+    getDaThroughputSummary(),
   ])
 
   return {

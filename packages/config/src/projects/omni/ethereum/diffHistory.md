@@ -1,3 +1,100 @@
+Generated with discovered.json: 0x1f185f97ee86b0eacd353131d0cd4bdbde296dda
+
+# Diff at Thu, 14 Aug 2025 11:43:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@200c2747a4a049cdea3746f37927303721bc165b block: 1754307769
+- current timestamp: 1755171830
+
+## Description
+
+New Hashi owning Multisig.
+
+## Watched changes
+
+```diff
+    contract Hashi Multisig (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xd722EC6853e6EbAaf8664602A37855FAe872E482"
+      values.multisigThreshold:
+-        "2 of 2 (100%)"
++        "2 of 3 (67%)"
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9","description":"change critical configurations of the Hashi protocol like the validation contract addresses.","role":".owner"},{"permission":"interact","from":"eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD","description":"change critical configurations of the Hashi protocol like the validation contract addresses.","role":".owner"},{"permission":"upgrade","from":"eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9","role":"admin"},{"permission":"upgrade","from":"eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD","role":"admin"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0x670a3e447F4DE92C012777Ac5591D81E12aD0957)
+    +++ description: None
+```
+
+```diff
+    contract HashiManager_Omni (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      values.$admin:
+-        "eth:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
++        "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43"
+      values.owner:
+-        "eth:0x670a3e447F4DE92C012777Ac5591D81E12aD0957"
++        "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43"
+      values.upgradeabilityOwner:
+-        "eth:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
++        "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43"
+    }
+```
+
+```diff
+    contract HashiManager_DAI (0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      values.$admin:
+-        "eth:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
++        "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43"
+      values.owner:
+-        "eth:0x670a3e447F4DE92C012777Ac5591D81E12aD0957"
++        "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43"
+      values.upgradeabilityOwner:
+-        "eth:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
++        "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43"
+    }
+```
+
+## Source code changes
+
+```diff
+.../.flat@1754307769/Safe/Safe.sol => /dev/null    | 1088 --------------------
+ .../Safe/SafeProxy.p.sol => /dev/null              |   37 -
+ 2 files changed, 1125 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754307769 (main branch discovery), not current.
+
+```diff
+    contract Hashi Multisig (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "Hashi Multisig"
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Safe (0x670a3e447F4DE92C012777Ac5591D81E12aD0957) {
+    +++ description: None
+      name:
+-        "Hashi Multisig"
++        "Safe"
+    }
+```
+
 Generated with discovered.json: 0x2353b63c35a2abdfa0b05adfe9c93a9fd5f1f279
 
 # Diff at Mon, 04 Aug 2025 11:43:13 GMT:

@@ -1,6 +1,5 @@
 import type { ContractValue } from '@l2beat/discovery'
 import {
-  assert,
   ChainSpecificAddress,
   // assert,
   EthereumAddress,
@@ -16,11 +15,12 @@ import {
   DA_LAYERS,
   DA_MODES,
   DATA_ON_CHAIN,
+  FORCE_TRANSACTIONS,
+  FRONTRUNNING_RISK,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -76,17 +76,12 @@ const inclusionDelay = discovery.getContractValue<PacayaConfig>(
   'inclusionDelay',
 )
 
+const whitelistedOperatorsCount = discovery.getContractValue<PacayaConfig>(
+  'PreconfWhitelist',
+  'registeredOperators',
+).length
+
 const chainId = 167000
-
-const preconfRouter = discovery.getContractValue(
-  'TaikoWrapper',
-  'preconfRouter',
-)
-
-assert(
-  preconfRouter === 'eth:0x0000000000000000000000000000000000000000',
-  'preconf router is set, update sequencing sections',
-) // also check this line:         require(p.blocks[0].signalSlots.length == 0, InvalidSignalSlots());
 
 export const taiko: ScalingProject = {
   id: ProjectId('taiko'),
@@ -100,7 +95,7 @@ export const taiko: ScalingProject = {
   badges: [
     BADGES.VM.EVM,
     BADGES.DA.EthereumBlobs,
-    BADGES.Other.BasedSequencing,
+    // BADGES.Other.BasedSequencing, // NOTE: add this back when preconfs whitelist is removed
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   proofSystem: undefined,
@@ -109,9 +104,8 @@ export const taiko: ScalingProject = {
     slug: 'taiko',
     stacks: ['Taiko'],
     description:
-      'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko combines based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',
+      'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko aims at combining based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',
     purposes: ['Universal'],
-    category: 'Other', // NOTE: will be moved to Others if they keep the ability not to use ZK proofs
     links: {
       websites: ['https://taiko.xyz'],
       bridges: ['https://bridge.taiko.xyz/'],
@@ -311,7 +305,7 @@ export const taiko: ScalingProject = {
         'A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a block, and SGX (Geth) is mandatory. A block can be proved without providing a ZK proof as SGX (Geth) + SGX (Reth) is a valid combination.',
       sentiment: 'bad',
       value: 'Multi-proofs',
-      secondLine: formatExecutionDelay(taikoChainConfig.cooldownWindow),
+      executionDelay: taikoChainConfig.cooldownWindow,
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
@@ -322,17 +316,12 @@ export const taiko: ScalingProject = {
       sentiment: 'bad',
       value: 'None',
     },
-    sequencerFailure: {
-      description: `The system uses a based (or L1-sequenced) rollup sequencing mechanism, meaning that users can propose L2 blocks directly on the Taiko L1 contract. Proposers are required to also prove blocks within ${formatSeconds(taikoChainConfig.provingWindow)}, or forfeit half of their liveness bond (${livenessBond} TAIKO).`,
-      sentiment: 'good',
-      value: 'Self sequence',
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: {
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
       description:
         RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS.description +
-        ' Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the proposer fails to prove the block within the proving window, they forfeit half of their liveness bond.',
-      sentiment: 'good',
-      value: 'Self propose',
+        ' Proofs can only be submitted for blocks sequenced by whitelisted operators. Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the initial proposer fails to prove the block within the proving window, they forfeit half of their liveness bond.',
     },
   },
   stage: getStage(
@@ -369,7 +358,7 @@ export const taiko: ScalingProject = {
         references: [
           {
             title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-            url: 'https://etherscan.io/address/0x80d888ce11738196CfCf27E3b18F65bD4a331CEC#code',
+            url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
           },
         ],
         risks: [
@@ -390,28 +379,37 @@ export const taiko: ScalingProject = {
       risks: [],
     },
     operator: {
-      name: 'The system uses a based sequencing mechanism',
-      description: `The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract.
+      name: 'The system uses whitelist-based rotating operators',
+      description: `The system uses a whitelist-based sequencing mechanism to allow for fast preconfirmations on the L2. On the L1, whitelisted preconfirmers (or the fallback operator) can sequence Taiko L2 blocks by proposing them on the TaikoL1 contract.
+        The whitelist is managed by the \`PreconfWhitelist\` contract, which currently has ${whitelistedOperatorsCount} active operators registered.
         The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the ${formatSeconds(taikoChainConfig.provingWindow)} proving window.
         Currently, proving a block requires the block proposer to run a SGX instance with Geth, plus either SGX (Reth), SP1, or RISC0 to prove the block.
         Unless the block proposer proves the block within the proving window, it will forfeit half of its liveness bond to the TaikoL1 smart contract.`,
       references: [
         {
           title: 'TaikoL1.sol - Etherscan source code, proposeBatch function',
-          url: 'https://etherscan.io/address/0x80d888ce11738196CfCf27E3b18F65bD4a331CEC#code',
+          url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
+        },
+        {
+          title: 'PreconfWhitelist.sol - Etherscan source code',
+          url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
         },
       ],
-      risks: [],
+      risks: [FRONTRUNNING_RISK],
     },
     forceTransactions: {
-      name: 'Users can force any transaction',
-      description: `The system is designed to allow users to propose L2 blocks directly on L1.
-        Note that this would require the user to run two of the available proving systems, or forfeit half the liveness bond of ${livenessBond} TAIKO.
-        Moreover, users can submit a blob containing a standalone transaction by calling the storeForcedInclusion() function on the ForcedInclusionStore contract. 
+      name: 'Users can force any transaction via L1',
+      description: `Users can submit a blob containing a standalone transaction by calling the \`storeForcedInclusion()\` function on the \`ForcedInclusionStore\` contract. 
         This forced transaction mechanism allows users to submit a transaction without running a prover.
-        This mechanism ensures that at least one forced transaction from the queue is processed every ${inclusionDelay} batches. However, if many transactions (k) are added to the queue, an individual transaction could experience a worst-case delay of up to k * ${inclusionDelay} batches while waiting for its turn.`,
-      references: [],
-      risks: [],
+        This mechanism ensures that at least one forced transaction from the queue is processed every ${inclusionDelay} batches. However, if many transactions (k) are added to the queue, an individual transaction could experience a worst-case delay of up to k * ${inclusionDelay} batches while waiting for its turn. Also, right now there is no mechanism that forces L2 Sequencer to include transactions from the queue in an L2 block, since L1 batches submission is permissioned behind a whitelist.`,
+      references: [
+        {
+          title:
+            'ForcedInclusionStore.sol - Etherscan source code, storeForcedInclusion function',
+          url: 'https://etherscan.io/address/0xcdb25e201ad3fdcfe16730a6ca2cc0b1ce2137a2#code',
+        },
+      ],
+      risks: [...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks],
     },
     exitMechanisms: [
       // TODO: double check exit mechanism
@@ -430,6 +428,14 @@ export const taiko: ScalingProject = {
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
+    {
+      title: 'Preconfs introduction',
+      url: 'https://taiko.mirror.xyz/rbgD_KM06QkDe1t0Gw1wI_MLvwobTS1PqEIfstZRo48',
+      date: '2025-08-11T00:00:00.00Z',
+      description:
+        'Taiko implements preconfs - whitelisted actors provide fast soft confirmations for L2 txs.',
+      type: 'general',
+    },
     {
       title: 'Plonky3 vulnerability patch',
       url: 'https://x.com/SuccinctLabs/status/1929773028034204121',

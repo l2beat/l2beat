@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart, ReferenceArea } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -33,6 +33,7 @@ interface LivenessChartDataPoint {
 interface Props {
   data: LivenessChartDataPoint[] | undefined
   isLoading: boolean
+  project?: ChartProject
   className?: string
   subtype: TrackedTxsConfigSubtype
   milestones: Milestone[]
@@ -45,6 +46,7 @@ interface Props {
 export function LivenessChart({
   data,
   isLoading,
+  project,
   className,
   subtype,
   milestones,
@@ -75,6 +77,7 @@ export function LivenessChart({
       meta={chartMeta}
       isLoading={isLoading}
       milestones={milestones}
+      project={project}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />

@@ -33,7 +33,7 @@ export function DaSummaryBoxes({
   )
 
   return (
-    <div className="flex max-md:flex-col md:gap-6">
+    <div className="grid md:grid-cols-2 md:gap-6">
       <SummaryTvsBox ethereum={ethereum} others={others} />
       <SummaryThroughputBox throughputSummaryData={throughputSummaryData} />
     </div>
@@ -74,7 +74,7 @@ function SummaryTvsBox({
   ]
 
   return (
-    <PrimaryCard className="flex w-full flex-col pt-6 pb-0 md:w-1/2 md:pt-[21px] md:pb-[29px]">
+    <PrimaryCard className="flex w-full flex-col pt-6 pb-0 md:pt-[21px] md:pb-[29px]">
       <span className="font-bold text-base leading-6! md:text-xl">
         Total Value Secured
       </span>
@@ -129,29 +129,33 @@ function SummaryThroughputBox({
       value: latest.ethereum,
       className: 'bg-chart-ethereum',
       percentage: round((latest.ethereum / total) * 100, 2),
+      estimated: throughputSummaryData.estimatedLayers.includes('ethereum'),
     },
     {
       label: 'Avail',
       value: latest.avail,
       className: 'bg-chart-sky',
       percentage: round((latest.avail / total) * 100, 2),
+      estimated: throughputSummaryData.estimatedLayers.includes('avail'),
     },
     {
       label: 'Celestia',
       value: latest.celestia,
       className: 'bg-chart-fuchsia',
       percentage: round((latest.celestia / total) * 100, 2),
+      estimated: throughputSummaryData.estimatedLayers.includes('celestia'),
     },
     {
       label: 'EigenDA',
       value: latest.eigenda,
       className: 'bg-chart-lime',
       percentage: round((latest.eigenda / total) * 100, 2),
+      estimated: throughputSummaryData.estimatedLayers.includes('eigenda'),
     },
   ]
 
   return (
-    <PrimaryCard className="flex w-full flex-col pt-4 pb-6 md:w-1/2 md:pt-4">
+    <PrimaryCard className="flex w-full flex-col pt-4 pb-6 md:pt-4">
       <div className="flex items-end gap-2">
         <span className="font-bold text-base leading-6! md:text-xl">
           Past Day Data Size
@@ -188,6 +192,7 @@ interface BreakdownItem {
   value: number
   className: string
   percentage: number
+  estimated?: boolean
 }
 
 function BreakdownWithTooltip({ items }: { items: BreakdownItem[] }) {
@@ -207,6 +212,7 @@ function BreakdownWithTooltip({ items }: { items: BreakdownItem[] }) {
               <span className="font-medium text-label-value-14">{s.label}</span>
             </div>
             <span className="font-medium text-label-value-15">
+              {s.estimated ? 'est. ' : ''}
               {s.percentage.toFixed(1)}%
             </span>
           </div>

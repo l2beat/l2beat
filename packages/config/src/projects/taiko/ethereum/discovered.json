@@ -1,9 +1,21 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "timestamp": 1753796542,
-  "configHash": "0xa5a7561c9a7b7897626869db8c83e36f23fe27891ac222366f68b0e71e88de61",
+  "timestamp": 1756117493,
+  "configHash": "0xbb343ba8e1765d6a479477e560fd4a4beb24a41b37c868f61102d33a1f5c0065",
   "entries": [
+    {
+      "address": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "role": ".getOperatorCandidatesForCurrentEpoch"
+        }
+      ]
+    },
     {
       "name": "PEMCertChainLib",
       "address": "eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
@@ -80,7 +92,7 @@
       "template": "taiko/TaikoL1PostPacaya",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0xd3d952e9a5655549b172292d82b0e6e7b2223cab5ef6819f2790ed53304f56a7"
+        "0x036f854f425618da3e66dad1cd29e352eda6ce3f728eb078bc043f82fe653157"
       ],
       "proxyType": "TaikoFork proxy",
       "description": "Main contract implementing the logic for proposing and proving Taiko blocks on L1.",
@@ -99,9 +111,9 @@
       "values": {
         "$admin": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": [
-          "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319",
+          "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F",
           "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
-          "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
+          "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
         ],
         "$pastUpgrades": [
           [
@@ -346,9 +358,18 @@
               "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
               "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
             ]
+          ],
+          [
+            "2025-08-11T13:45:11.000Z",
+            "0xbfd772cb4571eb6275f23d4fd8c7eb1502462b55821ee59dae0d15ab3325fc22",
+            [
+              "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F",
+              "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+              "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
+            ]
           ]
         ],
-        "$upgradeCount": 27,
+        "$upgradeCount": 28,
         "bondToken": "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
         "getConfig": {
           "chainId": 167000,
@@ -369,81 +390,81 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1290476,
-          "blockId_": 1290476,
+          "batchId_": 1323976,
+          "blockId_": 1780458,
           "ts_": {
-            "parentHash": "0x82c7e6a1e7ae90cda85305114bcc3028c2eb8ca29145a30f33cd8904acfc38d6",
-            "blockHash": "0x7920ea9b792854f97b69e37d0dea4bb90fe09f1a0c0f9af11a9bde03cedd978f",
-            "stateRoot": "0x719892ef95d13ee2bc70b76b8c8227d3cfc43e3f2a8703dda345c0a477d331f1",
-            "prover": "eth:0xF5C47C601af126D625508516cC5Ee4CF31aa06Bc",
+            "parentHash": "0xd1e8a183ff10ecd0ba5abea5601c4b0cf9bc312bab5ecc58ce9234bd4ddec283",
+            "blockHash": "0xda03b637a045e68394937c998be225e84c619c749a2686b50db674edbeba28b9",
+            "stateRoot": "0x7a32ca91e2cd0610c9afbff12c8c5df3c87ddf20db74b8f7dfef6c8bbffe3042",
+            "prover": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
             "inProvingWindow": true,
-            "createdAt": 1753782971
+            "createdAt": 1756108427
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1290476,
-          "blockHash_": "0x7920ea9b792854f97b69e37d0dea4bb90fe09f1a0c0f9af11a9bde03cedd978f",
-          "stateRoot_": "0x719892ef95d13ee2bc70b76b8c8227d3cfc43e3f2a8703dda345c0a477d331f1",
-          "verifiedAt_": 1741149515
+          "blockId_": 1323977,
+          "blockHash_": "0xff5c4c987d81736ec6518838ce601820a628bbb1a94e6be4d9ae0da1260cdecc",
+          "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "verifiedAt_": 1741798835
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1290476,
-          "blockId_": 1290476,
+          "batchId_": 1323977,
+          "blockId_": 1780715,
           "ts_": {
-            "parentHash": "0x82c7e6a1e7ae90cda85305114bcc3028c2eb8ca29145a30f33cd8904acfc38d6",
-            "blockHash": "0x7920ea9b792854f97b69e37d0dea4bb90fe09f1a0c0f9af11a9bde03cedd978f",
-            "stateRoot": "0x719892ef95d13ee2bc70b76b8c8227d3cfc43e3f2a8703dda345c0a477d331f1",
-            "prover": "eth:0xF5C47C601af126D625508516cC5Ee4CF31aa06Bc",
+            "parentHash": "0xda03b637a045e68394937c998be225e84c619c749a2686b50db674edbeba28b9",
+            "blockHash": "0xff5c4c987d81736ec6518838ce601820a628bbb1a94e6be4d9ae0da1260cdecc",
+            "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "prover": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
             "inProvingWindow": true,
-            "createdAt": 1753782971
+            "createdAt": 1756109591
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1290476,
-            "lastSynecdAt": 1753792559
+            "lastSyncedBlockId": 1323976,
+            "lastSynecdAt": 1756117415
           },
           {
-            "numBlocks": 1290803,
-            "lastVerifiedBlockId": 1290476,
+            "numBlocks": 1324008,
+            "lastVerifiedBlockId": 1323977,
             "provingPaused": false,
-            "lastProposedIn": 23025157,
+            "lastProposedIn": 23217502,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1290476,
-          "lastSyncedAt": 1753792559
+          "lastSyncedBatchId": 1323976,
+          "lastSyncedAt": 1756117415
         },
         "getStats2": {
-          "numBatches": 1290803,
-          "lastVerifiedBatchId": 1290476,
+          "numBatches": 1324008,
+          "lastVerifiedBatchId": 1323977,
           "paused": false,
-          "lastProposedIn": 23025157,
+          "lastProposedIn": 23217502,
           "lastUnpausedAt": 1716571955
         },
-        "impl": "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319",
+        "impl": "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F",
         "inboxWrapper": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 23025157,
-        "newFork": "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC",
+        "lastProposedIn": 23217502,
+        "newFork": "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82",
         "oldFork": "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "pacayaConfig": {
           "chainId": 167000,
           "maxUnverifiedBatches": 324000,
           "batchRingBufferSize": 360000,
-          "maxBatchesToVerify": 16,
+          "maxBatchesToVerify": 8,
           "blockMaxGasLimit": 240000000,
-          "livenessBondBase": "125000000000000000000",
+          "livenessBondBase": "25000000000000000000",
           "livenessBondPerBlock": 0,
           "stateRootSyncInternal": 4,
-          "maxAnchorHeightOffset": 64,
+          "maxAnchorHeightOffset": 96,
           "baseFeeConfig": {
             "adjustmentQuotient": 8,
             "sharingPctg": 75,
@@ -471,14 +492,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1290476,
-            "lastSyncedAt": 1753792559
+            "lastSyncedBatchId": 1323976,
+            "lastSyncedAt": 1756117415
           },
           "stats2": {
-            "numBatches": 1290803,
-            "lastVerifiedBatchId": 1290476,
+            "numBatches": 1324008,
+            "lastVerifiedBatchId": 1323977,
             "paused": false,
-            "lastProposedIn": 23025157,
+            "lastProposedIn": 23217502,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -486,9 +507,9 @@
       },
       "implementationNames": {
         "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": "ERC1967Proxy",
-        "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319": "PacayaForkRouter",
+        "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F": "PacayaForkRouter",
         "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264": "MainnetTaikoL1",
-        "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC": "MainnetInbox"
+        "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82": "MainnetInbox"
       }
     },
     {
@@ -692,7 +713,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1753796531,
+        "clock": 1756117487,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -795,6 +816,11 @@
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EmergencyMultisig",
@@ -942,7 +968,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 114,
+        "nonce": 132,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1157,7 +1183,7 @@
             "address": "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
           },
           {
-            "name": "0x7461696b6f000000000000000000000000000000000000000000000000000000",
+            "name": "taiko",
             "address": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
           },
           {
@@ -1179,6 +1205,14 @@
           {
             "name": "0x7370315f726574685f7665726966696572000000000000000000000000000000",
             "address": "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+          },
+          {
+            "name": "0x707265636f6e665f77686974656c697374000000000000000000000000000000",
+            "address": "eth:0xFD019460881e6EeC632258222393d5821029b2ac"
+          },
+          {
+            "name": "0x707265636f6e665f726f75746572000000000000000000000000000000000000",
+            "address": "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a"
           }
         ],
         "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -1204,8 +1238,21 @@
             "0x6272696467655f7761746368646f670000000000000000000000000000000000": "bridge_watchdog",
             "0x627269646765645f657263323000000000000000000000000000000000000000": "bridged_erc20",
             "0x627269646765645f657263373231000000000000000000000000000000000000": "bridged_erc721",
-            "0x627269646765645f657263313135350000000000000000000000000000000000": "bridged_erc1155"
+            "0x627269646765645f657263313135350000000000000000000000000000000000": "bridged_erc1155",
+            "0x7461696b6f000000000000000000000000000000000000000000000000000000": "taiko"
           }
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "role": ".getOperatorCandidatesForCurrentEpoch"
         }
       ]
     },
@@ -1296,7 +1343,7 @@
         "inNonReentrant": false,
         "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
         "resolver": "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
       },
       "implementationNames": {
@@ -1434,6 +1481,11 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "eth:0x7A853a6480F4D7dB79AE91c16c960dBbB6710d25",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1468,7 +1520,7 @@
         "inNonReentrant": false,
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "nextInstanceId": 14,
+        "nextInstanceId": 16,
         "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -1555,7 +1607,11 @@
           "0xb09f9005e4612526e378466b5c16ab6028478e81c085812d6ed37166c4cda10e",
           "0x6e43c1d575b5b785d0f6259dfac44998c6f0c164864f9f98270fb740c14eb943",
           "0x631778b0d420d2d0bba4c730b0fd74857afeefb3429371ae97ab450e40ca127e",
-          "0x482b06132c4306ea55bc34ff90d46532ff4151f473dbfe4d2cb2442af2ff288b"
+          "0x482b06132c4306ea55bc34ff90d46532ff4151f473dbfe4d2cb2442af2ff288b",
+          "0xca349ba0dfeced0bd837a56c97417c11e51d490eec4ff08321dd130776a413bd",
+          "0xe2375b778ee5700a73c7fcf449abb4a62e00127d324b6694898073ba5aff4f5c",
+          "0x67742ab222790e20ba3656b3b294645a3384a5df5a770b86f8c06529523d990e",
+          "0xddda8ba9c9153e3d2f680f2f53adbc774a9753cc55d40dde4cb02aef38c42109"
         ],
         "mrSigners": [
           "0xca0583a715534a8c981b914589a7f0dc5d60959d9ae79fb5353299a4231673d5"
@@ -1675,7 +1731,8 @@
             "0x6272696467655f7761746368646f670000000000000000000000000000000000": "bridge_watchdog",
             "0x627269646765645f657263323000000000000000000000000000000000000000": "bridged_erc20",
             "0x627269646765645f657263373231000000000000000000000000000000000000": "bridged_erc721",
-            "0x627269646765645f657263313135350000000000000000000000000000000000": "bridged_erc1155"
+            "0x627269646765645f657263313135350000000000000000000000000000000000": "bridged_erc1155",
+            "0x7461696b6f000000000000000000000000000000000000000000000000000000": "taiko"
           }
         }
       ]
@@ -2039,7 +2096,17 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
           "role": "admin"
         }
       ],
@@ -2050,6 +2117,7 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163",
           "eth:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a",
           "eth:0x0aED2375549D1115e180bd0caea829C429Ea50B3",
           "eth:0x1eE487CEdCe52c370DB11e62987F3ABe873E145A",
@@ -2057,12 +2125,12 @@
           "eth:0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
           "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
         ],
-        "$threshold": 4,
+        "$threshold": 5,
         "domainSeparator": "0x3a173428d0c590136352934d6660e8d16a6dc0181538aa341048cf31a1316c16",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 113,
+        "multisigThreshold": "5 of 7 (71%)",
+        "nonce": 124,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2228,7 +2296,7 @@
         "inNonReentrant": false,
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "nextInstanceId": 14,
+        "nextInstanceId": 16,
         "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2250,7 +2318,7 @@
       "template": "taiko/TaikoWrapper",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x9cee3ca82b3cd60de871679b86db583cbf35a0a911ded84676f9fdcc1a77c8ca"
+        "0x6f1f57d97885434b7f6b769ef9377a6fa75456740c69110c6bb37fb53a7fc68f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entry point for proposing blocks. It enforces the inclusion of forced transactions after their deadline.",
@@ -2258,29 +2326,34 @@
       "sinceBlock": 22484948,
       "values": {
         "$admin": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-        "$implementation": "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b",
+        "$implementation": "eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61",
         "$pastUpgrades": [
           [
             "2025-05-15T00:25:47.000Z",
             "0xf4136bf69dd60ed5f7716de1fc886feb28cddd315692053014caf4608c9de2ff",
             ["eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b"]
+          ],
+          [
+            "2025-08-11T13:45:11.000Z",
+            "0xbfd772cb4571eb6275f23d4fd8c7eb1502462b55821ee59dae0d15ab3325fc22",
+            ["eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "forcedInclusionStore": "eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03",
-        "impl": "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b",
+        "impl": "eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61",
         "inbox": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
         "inNonReentrant": false,
         "MIN_TXS_PER_FORCED_INCLUSION": 512,
         "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "preconfRouter": "eth:0x0000000000000000000000000000000000000000",
+        "preconfRouter": "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a",
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
         "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72": "ERC1967Proxy",
-        "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b": "TaikoWrapper"
+        "eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61": "TaikoWrapper"
       }
     },
     {
@@ -2316,6 +2389,11 @@
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "VerifierGateway",
@@ -2498,6 +2576,18 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "role": ".getOperatorCandidatesForCurrentEpoch"
+        }
+      ]
+    },
+    {
       "address": "eth:0xcF7017aD172a8aefBfF7e45CfaCeF5bd94701477",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2506,6 +2596,51 @@
       "address": "eth:0xd0d756A346105511bc59726c82c7Fd2e3Fe69e3F",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PreconfRouter",
+      "address": "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a",
+      "type": "Contract",
+      "template": "taiko/PreconfRouter",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0x7029286f91090d6d474c9bc0329436fed073038c547c5cd3db6c70045a7dccf8"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Entry point for batch proposals under the pre-confirmation architecture. It allows batches to be proposed only by whitelisted addresses.",
+      "sinceTimestamp": 1753275179,
+      "sinceBlock": 22981993,
+      "values": {
+        "$admin": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "eth:0xf571E2626E2CE68127852123A2cC6AA522C586A0",
+        "$pastUpgrades": [
+          [
+            "2025-07-23T12:52:59.000Z",
+            "0xb361e37443f6ab39912f0fb03456d12f1c69349004725b06f3607155c04fa052",
+            ["eth:0x2e2FB919E87947f156b374AE5831D756d8EcFBF9"]
+          ],
+          [
+            "2025-08-11T11:56:11.000Z",
+            "0x1000b14e86d8db17931f65e877e2eb13cb3990d0a129eee1aff21ce6ba96d2cf",
+            ["eth:0xf571E2626E2CE68127852123A2cC6AA522C586A0"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "fallbackPreconfer": "eth:0x7A853a6480F4D7dB79AE91c16c960dBbB6710d25",
+        "impl": "eth:0xf571E2626E2CE68127852123A2cC6AA522C586A0",
+        "inNonReentrant": false,
+        "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "paused": false,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "preconfWhitelist": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+        "proposeBatchEntrypoint": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
+        "proxiableUUID": "EXPECT_REVERT",
+        "resolver": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a": "ERC1967Proxy",
+        "eth:0xf571E2626E2CE68127852123A2cC6AA522C586A0": "PreconfRouter"
+      }
     },
     {
       "name": "Safe",
@@ -2629,7 +2764,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37661,
+        "nextMessageId": 37800,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2694,6 +2829,18 @@
       "address": "eth:0xDFbD5490462963Cc242471913B53b034B209B32c",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "role": ".getOperatorCandidatesForCurrentEpoch"
+        }
+      ]
     },
     {
       "address": "eth:0xE7CBcDa9a4FEAe2bC7ca6b2B682Bc4Ae9f8B7e3B",
@@ -2871,11 +3018,6 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "address": "eth:0xF5C47C601af126D625508516cC5Ee4CF31aa06Bc",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "TaikoDAOController",
       "address": "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
       "type": "Contract",
@@ -2912,6 +3054,90 @@
         "eth:0xd1934807041B168f383870A0d8F565aDe2DF9D7D": "TaikoDAOController"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "PreconfWhitelist",
+      "address": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+      "type": "Contract",
+      "template": "taiko/PreconfWhitelist",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0xf118d401839238cdc94b9476ab2149f7492c9653c489f80819102c4fe0b23fc3"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.",
+      "ignoreInWatchMode": [
+        "getOperatorCandidatesForCurrentEpoch",
+        "getOperatorCandidatesForNextEpoch",
+        "getOperatorForCurrentEpoch",
+        "getOperatorForNextEpoch"
+      ],
+      "sinceTimestamp": 1753275179,
+      "sinceBlock": 22981993,
+      "values": {
+        "$admin": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "eth:0x44eC275996BD69361EF062ed488882a58256CF11",
+        "$pastUpgrades": [
+          [
+            "2025-07-23T12:52:59.000Z",
+            "0x2d127d401f9d22fd4c4f8c14773f2e98e9a3e87837f78bb1d2881a8fcb91cd59",
+            ["eth:0x86f0AeFA26A1447bbE62bd2bE1D30ff3353B88fB"]
+          ],
+          [
+            "2025-08-11T11:56:11.000Z",
+            "0x1000b14e86d8db17931f65e877e2eb13cb3990d0a129eee1aff21ce6ba96d2cf",
+            ["eth:0x44eC275996BD69361EF062ed488882a58256CF11"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "getOperatorCandidatesForCurrentEpoch": [
+          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+          "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+        ],
+        "getOperatorCandidatesForNextEpoch": [
+          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+          "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+        ],
+        "getOperatorForCurrentEpoch": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
+        "getOperatorForNextEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+        "havingPerfectOperators": false,
+        "impl": "eth:0x44eC275996BD69361EF062ed488882a58256CF11",
+        "inNonReentrant": false,
+        "operatorChangeDelay": 2,
+        "operatorCount": 4,
+        "owner": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "paused": false,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "randomnessDelay": 2,
+        "registeredOperators": [
+          {
+            "proposer": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+            "sequencer": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+          },
+          {
+            "proposer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+            "sequencer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
+          },
+          {
+            "proposer": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+            "sequencer": "eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"
+          },
+          {
+            "proposer": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
+            "sequencer": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+          }
+        ],
+        "registeredOperatorsCount": 4,
+        "resolver": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0xFD019460881e6EeC632258222393d5821029b2ac": "ERC1967Proxy",
+        "eth:0x44eC275996BD69361EF062ed488882a58256CF11": "PreconfWhitelist"
+      }
     },
     {
       "name": "SP1Verifier",
@@ -2972,6 +3198,111 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82": [
+      "constructor(address _wrapper, address _verifier, address _bondToken, address _signalService)",
+      "error ACCESS_DENIED()",
+      "error AnchorBlockIdSmallerThanParent()",
+      "error AnchorBlockIdTooLarge()",
+      "error AnchorBlockIdTooSmall()",
+      "error ArraySizesMismatch()",
+      "error BatchNotFound()",
+      "error BatchVerified()",
+      "error BeyondCurrentFork()",
+      "error BlobNotFound()",
+      "error BlobNotSpecified()",
+      "error BlockNotFound()",
+      "error ContractPaused()",
+      "error CustomProposerMissing()",
+      "error CustomProposerNotAllowed()",
+      "error ETH_TRANSFER_FAILED()",
+      "error EtherNotPaidAsBond()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error FirstBlockTimeShiftNotZero()",
+      "error ForkNotActivated()",
+      "error INVALID_PAUSE_STATUS()",
+      "error InsufficientBond()",
+      "error InvalidBlobCreatedIn()",
+      "error InvalidBlobParams()",
+      "error InvalidGenesisBlockHash()",
+      "error InvalidParams()",
+      "error InvalidTransitionBlockHash()",
+      "error InvalidTransitionParentHash()",
+      "error InvalidTransitionStateRoot()",
+      "error MetaHashMismatch()",
+      "error MsgValueNotZero()",
+      "error NoBlocksToProve()",
+      "error NotFirstProposal()",
+      "error NotInboxWrapper()",
+      "error ParentMetaHashMismatch()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_NOT_FOUND()",
+      "error SameTransition()",
+      "error SignalNotSent()",
+      "error TimestampSmallerThanParent()",
+      "error TimestampTooLarge()",
+      "error TimestampTooSmall()",
+      "error TooManyBatches()",
+      "error TooManyBlocks()",
+      "error TooManySignals()",
+      "error TransitionNotFound()",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "error ZeroAnchorBlockHash()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BatchProposed(tuple(bytes32 txsHash, tuple(uint16 numTransactions, uint8 timeShift, bytes32[] signalSlots)[] blocks, bytes32[] blobHashes, bytes32 extraData, address coinbase, uint64 proposedIn, uint64 blobCreatedIn, uint32 blobByteOffset, uint32 blobByteSize, uint32 gasLimit, uint64 lastBlockId, uint64 lastBlockTimestamp, uint64 anchorBlockId, bytes32 anchorBlockHash, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) info, tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt) meta, bytes txList)",
+      "event BatchesProved(address verifier, uint64[] batchIds, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot)[] transitions)",
+      "event BatchesVerified(uint64 batchId, bytes32 blockHash)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event BondCredited(address indexed user, uint256 amount)",
+      "event BondDebited(address indexed user, uint256 amount)",
+      "event BondDeposited(address indexed user, uint256 amount)",
+      "event BondWithdrawn(address indexed user, uint256 amount)",
+      "event ConflictingProof(uint64 batchId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt) oldTran, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot) newTran)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Stats1Updated(tuple(uint64 genesisHeight, uint64 __reserved2, uint64 lastSyncedBatchId, uint64 lastSyncedAt) stats1)",
+      "event Stats2Updated(tuple(uint64 numBatches, uint64 lastVerifiedBatchId, bool paused, uint56 lastProposedIn, uint64 lastUnpausedAt) stats2)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function bondBalanceOf(address _user) view returns (uint256)",
+      "function bondToken() view returns (address)",
+      "function depositBond(uint256 _amount) payable",
+      "function getBatch(uint64 _batchId) view returns (tuple(bytes32 metaHash, uint64 lastBlockId, uint96 reserved3, uint96 livenessBond, uint64 batchId, uint64 lastBlockTimestamp, uint64 anchorBlockId, uint24 nextTransitionId, uint8 reserved4, uint24 verifiedTransitionId) batch_)",
+      "function getBatchVerifyingTransition(uint64 _batchId) view returns (tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt) ts_)",
+      "function getLastSyncedTransition() view returns (uint64 batchId_, uint64 blockId_, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt) ts_)",
+      "function getLastVerifiedTransition() view returns (uint64 batchId_, uint64 blockId_, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt) ts_)",
+      "function getStats1() view returns (tuple(uint64 genesisHeight, uint64 __reserved2, uint64 lastSyncedBatchId, uint64 lastSyncedAt))",
+      "function getStats2() view returns (tuple(uint64 numBatches, uint64 lastVerifiedBatchId, bool paused, uint56 lastProposedIn, uint64 lastUnpausedAt))",
+      "function getTransitionById(uint64 _batchId, uint24 _tid) view returns (tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt))",
+      "function getTransitionByParentHash(uint64 _batchId, bytes32 _parentHash) view returns (tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt))",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function inboxWrapper() view returns (address)",
+      "function init(address _owner, bytes32 _genesisBlockHash)",
+      "function isOnL1() pure returns (bool)",
+      "function owner() view returns (address)",
+      "function pacayaConfig() pure returns (tuple(uint64 chainId, uint64 maxUnverifiedBatches, uint64 batchRingBufferSize, uint64 maxBatchesToVerify, uint32 blockMaxGasLimit, uint96 livenessBondBase, uint96 livenessBondPerBlock, uint8 stateRootSyncInternal, uint64 maxAnchorHeightOffset, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig, uint16 provingWindow, uint24 cooldownWindow, uint8 maxSignalsToReceive, uint16 maxBlocksPerBatch, tuple(uint64 ontake, uint64 pacaya, uint64 shasta, uint64 unzen) forkHeights))",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proposeBatch(bytes _params, bytes _txList) returns (tuple(bytes32 txsHash, tuple(uint16 numTransactions, uint8 timeShift, bytes32[] signalSlots)[] blocks, bytes32[] blobHashes, bytes32 extraData, address coinbase, uint64 proposedIn, uint64 blobCreatedIn, uint32 blobByteOffset, uint32 blobByteSize, uint32 gasLimit, uint64 lastBlockId, uint64 lastBlockTimestamp, uint64 anchorBlockId, bytes32 anchorBlockHash, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) info_, tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt) meta_)",
+      "function proveBatches(bytes _params, bytes _proof)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function resolver() view returns (address)",
+      "function signalService() view returns (address)",
+      "function state() view returns (bytes32 __reserve1, tuple(uint64 genesisHeight, uint64 __reserved2, uint64 lastSyncedBatchId, uint64 lastSyncedAt) stats1, tuple(uint64 numBatches, uint64 lastVerifiedBatchId, bool paused, uint56 lastProposedIn, uint64 lastUnpausedAt) stats2)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifier() view returns (address)",
+      "function verifyBatches(uint64 _length)",
+      "function withdrawBond(uint256 _amount)"
     ],
     "eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1": [
       "constructor(address _singleton)"
@@ -3379,6 +3710,71 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0x44eC275996BD69361EF062ed488882a58256CF11": [
+      "constructor()",
+      "error ACCESS_DENIED()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error InvalidOperatorAddress()",
+      "error InvalidOperatorCount()",
+      "error InvalidOperatorIndex()",
+      "error NotOwnerOrEjecter()",
+      "error OperatorAlreadyExists()",
+      "error OperatorAlreadyRemoved()",
+      "error OperatorNotAvailableYet()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_NOT_FOUND()",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Consolidated(uint8 previousCount, uint8 newCount, bool havingPerfectOperators)",
+      "event EjecterUpdated(address indexed ejecter, bool isEjecter)",
+      "event Initialized(uint8 version)",
+      "event OperatorAdded(address indexed proposer, address indexed sequencer, uint256 activeSince)",
+      "event OperatorChangeDelaySet(uint8 delay)",
+      "event OperatorRemoved(address indexed proposer, address indexed sequencer, uint256 inactiveSince)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function addOperator(address _proposer, address _sequencer)",
+      "function consolidate()",
+      "function ejecters(address ejecter) view returns (bool isEjecter)",
+      "function epochStartTimestamp(uint256 _offset) view returns (uint32)",
+      "function getOperatorCandidatesForCurrentEpoch() view returns (address[])",
+      "function getOperatorCandidatesForNextEpoch() view returns (address[])",
+      "function getOperatorForCurrentEpoch() view returns (address)",
+      "function getOperatorForNextEpoch() view returns (address)",
+      "function havingPerfectOperators() view returns (bool)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner, uint8 _operatorChangeDelay, uint8 _randomnessDelay)",
+      "function isOperatorActive(address _proposer, uint32 _epochTimestamp) view returns (bool)",
+      "function operatorChangeDelay() view returns (uint8)",
+      "function operatorCount() view returns (uint8)",
+      "function operatorMapping(uint256 index) view returns (address proposer)",
+      "function operators(address proposer) view returns (uint32 activeSince, uint32 inactiveSince, uint8 index, address sequencerAddress)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function randomnessDelay() view returns (uint8)",
+      "function removeOperator(address _proposer, bool _effectiveImmediately)",
+      "function removeOperator(uint256 _operatorIndex)",
+      "function removeSelf()",
+      "function renounceOwnership()",
+      "function resolver() view returns (address)",
+      "function setEjecter(address _ejecter, bool _isEjecter)",
+      "function setOperatorChangeDelay(uint8 _operatorChangeDelay)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "eth:0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9": [
       "constructor(address es256Verifier)",
       "function verifyES256Signature(bytes tbs, bytes signature, bytes publicKey) view returns (bool sigValid)"
@@ -3764,111 +4160,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC": [
-      "constructor(address _wrapper, address _verifier, address _bondToken, address _signalService)",
-      "error ACCESS_DENIED()",
-      "error AnchorBlockIdSmallerThanParent()",
-      "error AnchorBlockIdTooLarge()",
-      "error AnchorBlockIdTooSmall()",
-      "error ArraySizesMismatch()",
-      "error BatchNotFound()",
-      "error BatchVerified()",
-      "error BeyondCurrentFork()",
-      "error BlobNotFound()",
-      "error BlobNotSpecified()",
-      "error BlockNotFound()",
-      "error ContractPaused()",
-      "error CustomProposerMissing()",
-      "error CustomProposerNotAllowed()",
-      "error ETH_TRANSFER_FAILED()",
-      "error EtherNotPaidAsBond()",
-      "error FUNC_NOT_IMPLEMENTED()",
-      "error FirstBlockTimeShiftNotZero()",
-      "error ForkNotActivated()",
-      "error INVALID_PAUSE_STATUS()",
-      "error InsufficientBond()",
-      "error InvalidBlobCreatedIn()",
-      "error InvalidBlobParams()",
-      "error InvalidGenesisBlockHash()",
-      "error InvalidParams()",
-      "error InvalidTransitionBlockHash()",
-      "error InvalidTransitionParentHash()",
-      "error InvalidTransitionStateRoot()",
-      "error MetaHashMismatch()",
-      "error MsgValueNotZero()",
-      "error NoBlocksToProve()",
-      "error NotFirstProposal()",
-      "error NotInboxWrapper()",
-      "error ParentMetaHashMismatch()",
-      "error REENTRANT_CALL()",
-      "error RESOLVER_NOT_FOUND()",
-      "error SameTransition()",
-      "error SignalNotSent()",
-      "error TimestampSmallerThanParent()",
-      "error TimestampTooLarge()",
-      "error TimestampTooSmall()",
-      "error TooManyBatches()",
-      "error TooManyBlocks()",
-      "error TooManySignals()",
-      "error TransitionNotFound()",
-      "error ZERO_ADDRESS()",
-      "error ZERO_VALUE()",
-      "error ZeroAnchorBlockHash()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BatchProposed(tuple(bytes32 txsHash, tuple(uint16 numTransactions, uint8 timeShift, bytes32[] signalSlots)[] blocks, bytes32[] blobHashes, bytes32 extraData, address coinbase, uint64 proposedIn, uint64 blobCreatedIn, uint32 blobByteOffset, uint32 blobByteSize, uint32 gasLimit, uint64 lastBlockId, uint64 lastBlockTimestamp, uint64 anchorBlockId, bytes32 anchorBlockHash, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) info, tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt) meta, bytes txList)",
-      "event BatchesProved(address verifier, uint64[] batchIds, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot)[] transitions)",
-      "event BatchesVerified(uint64 batchId, bytes32 blockHash)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event BondCredited(address indexed user, uint256 amount)",
-      "event BondDebited(address indexed user, uint256 amount)",
-      "event BondDeposited(address indexed user, uint256 amount)",
-      "event BondWithdrawn(address indexed user, uint256 amount)",
-      "event ConflictingProof(uint64 batchId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt) oldTran, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot) newTran)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Stats1Updated(tuple(uint64 genesisHeight, uint64 __reserved2, uint64 lastSyncedBatchId, uint64 lastSyncedAt) stats1)",
-      "event Stats2Updated(tuple(uint64 numBatches, uint64 lastVerifiedBatchId, bool paused, uint56 lastProposedIn, uint64 lastUnpausedAt) stats2)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function acceptOwnership()",
-      "function bondBalanceOf(address _user) view returns (uint256)",
-      "function bondToken() view returns (address)",
-      "function depositBond(uint256 _amount) payable",
-      "function getBatch(uint64 _batchId) view returns (tuple(bytes32 metaHash, uint64 lastBlockId, uint96 reserved3, uint96 livenessBond, uint64 batchId, uint64 lastBlockTimestamp, uint64 anchorBlockId, uint24 nextTransitionId, uint8 reserved4, uint24 verifiedTransitionId) batch_)",
-      "function getBatchVerifyingTransition(uint64 _batchId) view returns (tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt) ts_)",
-      "function getLastSyncedTransition() view returns (uint64 batchId_, uint64 blockId_, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt) ts_)",
-      "function getLastVerifiedTransition() view returns (uint64 batchId_, uint64 blockId_, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt) ts_)",
-      "function getStats1() view returns (tuple(uint64 genesisHeight, uint64 __reserved2, uint64 lastSyncedBatchId, uint64 lastSyncedAt))",
-      "function getStats2() view returns (tuple(uint64 numBatches, uint64 lastVerifiedBatchId, bool paused, uint56 lastProposedIn, uint64 lastUnpausedAt))",
-      "function getTransitionById(uint64 _batchId, uint24 _tid) view returns (tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt))",
-      "function getTransitionByParentHash(uint64 _batchId, bytes32 _parentHash) view returns (tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, address prover, bool inProvingWindow, uint48 createdAt))",
-      "function impl() view returns (address)",
-      "function inNonReentrant() view returns (bool)",
-      "function inboxWrapper() view returns (address)",
-      "function init(address _owner, bytes32 _genesisBlockHash)",
-      "function isOnL1() pure returns (bool)",
-      "function owner() view returns (address)",
-      "function pacayaConfig() pure returns (tuple(uint64 chainId, uint64 maxUnverifiedBatches, uint64 batchRingBufferSize, uint64 maxBatchesToVerify, uint32 blockMaxGasLimit, uint96 livenessBondBase, uint96 livenessBondPerBlock, uint8 stateRootSyncInternal, uint64 maxAnchorHeightOffset, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig, uint16 provingWindow, uint24 cooldownWindow, uint8 maxSignalsToReceive, uint16 maxBlocksPerBatch, tuple(uint64 ontake, uint64 pacaya, uint64 shasta, uint64 unzen) forkHeights))",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function proposeBatch(bytes _params, bytes _txList) returns (tuple(bytes32 txsHash, tuple(uint16 numTransactions, uint8 timeShift, bytes32[] signalSlots)[] blocks, bytes32[] blobHashes, bytes32 extraData, address coinbase, uint64 proposedIn, uint64 blobCreatedIn, uint32 blobByteOffset, uint32 blobByteSize, uint32 gasLimit, uint64 lastBlockId, uint64 lastBlockTimestamp, uint64 anchorBlockId, bytes32 anchorBlockHash, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) info_, tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt) meta_)",
-      "function proveBatches(bytes _params, bytes _proof)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function resolver() view returns (address)",
-      "function signalService() view returns (address)",
-      "function state() view returns (bytes32 __reserve1, tuple(uint64 genesisHeight, uint64 __reserved2, uint64 lastSyncedBatchId, uint64 lastSyncedAt) stats1, tuple(uint64 numBatches, uint64 lastVerifiedBatchId, bool paused, uint56 lastProposedIn, uint64 lastUnpausedAt) stats2)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function verifier() view returns (address)",
-      "function verifyBatches(uint64 _length)",
-      "function withdrawBond(uint256 _amount)"
-    ],
     "eth:0x8510d389236d7213eE9B9C38CAaBc0aD24853C25": [
       "constructor()",
       "error ApprovalCastForbidden(uint256 proposalId, address sender)",
@@ -4162,10 +4453,7 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b": [
+    "eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61": [
       "constructor(address _inbox, address _forcedInclusionStore, address _preconfRouter)",
       "error ACCESS_DENIED()",
       "error FUNC_NOT_IMPLEMENTED()",
@@ -4179,6 +4467,7 @@
       "error InvalidBlobParams()",
       "error InvalidBlockSize()",
       "error InvalidBlockTxs()",
+      "error InvalidProposer()",
       "error InvalidSignalSlots()",
       "error InvalidTimeShift()",
       "error OldestForcedInclusionDue()",
@@ -4215,6 +4504,9 @@
       "function unpause()",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": [
+      "constructor(address _singleton)"
     ],
     "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1": [
       "constructor(address _logic, bytes _data) payable",
@@ -4288,6 +4580,28 @@
     ],
     "eth:0xb284810536C0dAB6A8e48153B58588A9B9e0F701": [
       "constructor(address _singleton)"
+    ],
+    "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F": [
+      "constructor(address _oldFork, address _newFork)",
+      "error InvalidParams()",
+      "error ZeroForkAddress()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function newFork() view returns (address)",
+      "function oldFork() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function shouldRouteToOldFork(bytes4 _selector) pure returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a": [
       "constructor(address _singleton)"
@@ -4450,6 +4764,12 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "eth:0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487": [
       "constructor(address _singleton)"
     ],
@@ -4564,28 +4884,6 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyProof(tuple(uint64 batchId, bytes32 metaHash, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot) transition)[] _ctxs, bytes _proof)"
     ],
-    "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319": [
-      "constructor(address _oldFork, address _newFork)",
-      "error InvalidParams()",
-      "error ZeroForkAddress()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Upgraded(address indexed implementation)",
-      "function acceptOwnership()",
-      "function newFork() view returns (address)",
-      "function oldFork() view returns (address)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function shouldRouteToOldFork(bytes4 _selector) pure returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "eth:0xE78659fbF234c84C909Cf317D84edc2f6C0D8413": [
       "constructor()",
       "error ACCESS_DENIED()",
@@ -4674,6 +4972,48 @@
     "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06": [
       "constructor(address _singleton)"
     ],
+    "eth:0xf571E2626E2CE68127852123A2cC6AA522C586A0": [
+      "constructor(address _proposeBatchEntrypoint, address _preconfWhitelist, address _fallbackPreconfer)",
+      "error ACCESS_DENIED()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error ForcedInclusionNotSupported()",
+      "error INVALID_PAUSE_STATUS()",
+      "error InvalidLastBlockId(uint96 _actual, uint96 _expected)",
+      "error NotPreconferOrFallback()",
+      "error ProposerIsNotPreconfer()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_NOT_FOUND()",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function fallbackPreconfer() view returns (address)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function preconfWhitelist() view returns (address)",
+      "function proposeBatch(bytes _params, bytes _txList) returns (tuple(bytes32 txsHash, tuple(uint16 numTransactions, uint8 timeShift, bytes32[] signalSlots)[] blocks, bytes32[] blobHashes, bytes32 extraData, address coinbase, uint64 proposedIn, uint64 blobCreatedIn, uint32 blobByteOffset, uint32 blobByteSize, uint32 gasLimit, uint64 lastBlockId, uint64 lastBlockTimestamp, uint64 anchorBlockId, bytes32 anchorBlockHash, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig), tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt))",
+      "function proposeBatchEntrypoint() view returns (address)",
+      "function proposeBatchWithExpectedLastBlockId(bytes _params, bytes _txList, uint96 _expectedLastBlockId) returns (tuple(bytes32 txsHash, tuple(uint16 numTransactions, uint8 timeShift, bytes32[] signalSlots)[] blocks, bytes32[] blobHashes, bytes32 extraData, address coinbase, uint64 proposedIn, uint64 blobCreatedIn, uint32 blobByteOffset, uint32 blobByteSize, uint32 gasLimit, uint64 lastBlockId, uint64 lastBlockTimestamp, uint64 anchorBlockId, bytes32 anchorBlockHash, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) info_, tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt) meta_)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function resolver() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -4717,6 +5057,12 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0xFD019460881e6EeC632258222393d5821029b2ac": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "eth:0xFF5Adab685362DC4C33536a65aF5873738D1216B": [
       "error InvalidProof()",
       "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
@@ -4732,7 +5078,7 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "taiko/AutomataDcapV3Attestation": "0xc94a2c7d4ef9c322e01a6da5facff05a1b6389e69360c642587aa3c98d59677d",
     "taiko/DAO": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "taiko/DefaultResolver": "0x53b32b1e255a1a1bdf21125cbb22170988a66cec3102548b5283ec54eaedf25e",
+    "taiko/DefaultResolver": "0x3bdd61dc56b5feb822640d65e897e9c53937d6e553d599231f9ad0adb7a205ec",
     "taiko/EmergencyMultisig": "0x36b976b7e7ae2e39b6dbca16db2b65fa0a7cec1456f559a3a21cca1013c436ae",
     "taiko/EncryptionRegistry": "0x6e1f93fb50489c81ab2040ecb707c6e04171660edc52b35d0f255365e2c6da84",
     "taiko/ForcedInclusionStore": "0xe4a5ab65e9492a918778491a3551eb6d5788e45a0c040f4da6f6f53269925c97",
@@ -4740,6 +5086,8 @@
     "taiko/Multisig": "0x49a0b215fa16081fbf9c9d57b0632f3c40ca9576ed2f18a7ed5229a2411be66d",
     "taiko/OptimisticTokenVotingPlugin": "0x6a672d2ccf7819bd3003e4e2f21047fbad74dcfc72fcf6c89283ac0106156ec5",
     "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "taiko/PreconfRouter": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "taiko/PreconfWhitelist": "0x66b90cd81a3d4c503859f73a9eac9db422adec22d2cb29fc6e704f17d7052009",
     "taiko/ProverSet": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "taiko/QuotaManager": "0x60a9974b6da61ae37b06e2fc4839dece6d902b60d2baac895e8886d1609be020",
     "taiko/Risc0VerifierGateway": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
@@ -4752,11 +5100,11 @@
     "taiko/SP1VerifierGateway": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",
     "taiko/TaikoDAOController": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "taiko/TaikoL1PostPacaya": "0x3efa4c94aba85afda79b284b7a199a699d0357f151e3e697e249f6c924543fe6",
+    "taiko/TaikoL1PostPacaya": "0x1c5c0d9d05b2fae60da559699fb4b2329d79068ab7105bb9ae3c72186be8bd17",
     "taiko/TaikoTokenPostPacaya": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804",
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23025161 },
-  "permissionsConfigHash": "0x413524926b8ff17b7e8199ffa02d64f45b9745b433281dcc6465987be33e8114"
+  "usedBlockNumbers": { "ethereum": 23217508 },
+  "permissionsConfigHash": "0x3dc327d3163474829e67269d1e6718eaa7672dde16df376f724e4b729b0496be"
 }

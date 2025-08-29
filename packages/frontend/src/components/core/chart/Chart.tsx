@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
@@ -16,6 +17,8 @@ import { ChartLoader } from './ChartLoader'
 import { ChartMilestones } from './ChartMilestones'
 import { ChartNoDataSourceState } from './ChartNoDataSourceState'
 import { ChartNoDataState } from './ChartNoDataState'
+import { ChartProjectLogo } from './ChartProjectLogo'
+import { sortLegend } from './utils/sortLegend'
 
 export type ChartMeta = Record<
   string,
@@ -72,6 +75,13 @@ const chartContainerClassNames = cn(
   "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/40",
 )
 
+export interface ChartProject {
+  id: ProjectId
+  slug: string
+  name: string
+  shortName: string | undefined
+}
+
 function ChartContainer<T extends { timestamp: number }>({
   className,
   children,
@@ -83,6 +93,7 @@ function ChartContainer<T extends { timestamp: number }>({
   logoClassName,
   size = 'regular',
   interactiveLegend,
+  project,
   ...props
 }: React.ComponentProps<'div'> & {
   meta: ChartMeta
@@ -99,6 +110,7 @@ function ChartContainer<T extends { timestamp: number }>({
   loaderClassName?: string
   logoClassName?: string
   isLoading?: boolean
+  project?: ChartProject
   size?: 'regular' | 'small'
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
@@ -109,6 +121,7 @@ function ChartContainer<T extends { timestamp: number }>({
   const noDataSourcesSelected = Object.keys(meta).every(
     (key) => interactiveLegend && !interactiveLegend?.dataKeys.includes(key),
   )
+  const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div
@@ -118,8 +131,10 @@ function ChartContainer<T extends { timestamp: number }>({
           size === 'regular' &&
             'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
           size === 'small' && 'h-[114px] min-h-[114px] w-full',
-          noDataSourcesSelected &&
+          noDataSourcesSelected && [
             '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
+            '[&_.recharts-reference-area]:hidden',
+          ],
           className,
         )}
         {...props}
@@ -147,7 +162,25 @@ function ChartContainer<T extends { timestamp: number }>({
             animated={false}
             className={cn(
               'pointer-events-none absolute right-3 bottom-12 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14',
+              !!interactiveLegend &&
+                !interactiveLegend.disableOnboarding &&
+                !hasFinishedOnboardingInitial
+                ? 'bottom-[60px] group-has-[.recharts-legend-wrapper]:bottom-[68px]'
+                : 'bottom-12 group-has-[.recharts-legend-wrapper]:bottom-14',
               logoClassName,
+            )}
+          />
+        )}
+        {isClient && size !== 'small' && project && (
+          <ChartProjectLogo
+            project={project}
+            className={cn(
+              'pointer-events-none absolute left-3 opacity-50',
+              !!interactiveLegend &&
+                !interactiveLegend.disableOnboarding &&
+                !hasFinishedOnboardingInitial
+                ? 'bottom-[68px] group-has-[.recharts-legend-wrapper]:bottom-[76px]'
+                : 'bottom-14 group-has-[.recharts-legend-wrapper]:bottom-16',
             )}
           />
         )}
@@ -196,12 +229,10 @@ function ChartLegendContent({
   payload,
   verticalAlign = 'bottom',
   nameKey,
-  reverse = false,
   children,
 }: React.ComponentProps<'div'> &
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
     nameKey?: string
-    reverse?: boolean
   }) {
   const id = React.useId()
 
@@ -219,7 +250,7 @@ function ChartLegendContent({
     return null
   }
 
-  const actualPayload = reverse ? [...payload].reverse() : payload
+  const actualPayload = sortLegend(meta, payload, nameKey)
   return (
     <div
       className={cn(

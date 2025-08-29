@@ -2,7 +2,7 @@
   "name": "corn",
   "chain": "ethereum",
   "timestamp": 1753200551,
-  "configHash": "0x3dc9138defb6cac015c8613208dd5b76030b857584b7b2a7273f836a82c9329e",
+  "configHash": "0x1f9f1245e68bddf078ed47e73d4db1ae50fc585505cb678bda1afc1dc6fb4983",
   "entries": [
     {
       "name": "wBTC Escrow",

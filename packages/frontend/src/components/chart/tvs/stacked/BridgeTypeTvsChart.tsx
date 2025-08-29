@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -33,6 +33,7 @@ interface Props {
   toggleDataKey: (dataKey: string) => void
   tickCount?: number
   className?: string
+  project?: ChartProject
 }
 
 export const bridgeTypeTvsChartMeta = {
@@ -63,7 +64,11 @@ export function BridgeTypeTvsChart({
   tickCount,
   dataKeys,
   toggleDataKey,
+  project,
 }: Props) {
+  // If only one data key is selected we want to change the domain
+  // Having it from 0 to MAX does make sense for stacked chart (better comparison)
+  // But for single data source it should not start from 0
   return (
     <ChartContainer
       data={data}
@@ -75,18 +80,21 @@ export function BridgeTypeTvsChart({
         onItemClick: toggleDataKey,
       }}
       className={className}
+      project={project}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent reverse />} />
+        <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="external"
           hide={!dataKeys.includes('external')}
           fill={bridgeTypeTvsChartMeta.external.color}
           fillOpacity={1}
           strokeWidth={0}
-          stackId="a"
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
-          activeDot={false}
+          activeDot={
+            !dataKeys.includes('canonical') && !dataKeys.includes('native')
+          }
         />
         <Area
           dataKey="native"
@@ -94,9 +102,9 @@ export function BridgeTypeTvsChart({
           fill={bridgeTypeTvsChartMeta.native.color}
           fillOpacity={1}
           strokeWidth={0}
-          stackId="a"
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
-          activeDot={false}
+          activeDot={!dataKeys.includes('canonical')}
         />
         <Area
           dataKey="canonical"
@@ -104,13 +112,14 @@ export function BridgeTypeTvsChart({
           fill={bridgeTypeTvsChartMeta.canonical.color}
           fillOpacity={1}
           strokeWidth={0}
-          stackId="a"
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
         />
         {getCommonChartComponents({
           data,
           isLoading,
           yAxis: {
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             tickFormatter: (value: number) => formatCurrency(value, unit),
             tickCount,
           },

@@ -7,7 +7,7 @@ const CANONICAL_EXTERNAL = {
   bridgedUsing: {
     bridges: [
       {
-        name: 'Canonical (external escrow)',
+        name: 'Custom escrow',
       },
     ],
   } as LegacyTokenBridgedUsing,
