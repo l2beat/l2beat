@@ -27,7 +27,7 @@ export function LinkWithThumbnail({
         'group flex gap-6 rounded-md transition-colors',
         orientation === 'horizontal' &&
           'bg-surface-primary hover:bg-surface-secondary',
-        orientation === 'vertical' && 'max-w-96 flex-col',
+        orientation === 'vertical' && ' flex-col',
         props.className,
       )}
     >
@@ -37,7 +37,7 @@ export function LinkWithThumbnail({
         className={cn(
           'aspect-video w-full object-cover object-left will-change-transform',
           orientation === 'vertical' &&
-            'rounded-t-md transition-[scale,border-radius] group-hover:scale-[1.03] group-hover:rounded-md',
+            'rounded-md border border-divider transition-[scale] group-hover:scale-[1.03]',
           orientation === 'horizontal' &&
             'max-w-36 rounded-md transition-[scale] group-hover:scale-105 md:max-w-48',
         )}
@@ -57,7 +57,7 @@ export function LinkWithThumbnail({
           <p
             className={cn(
               orientation === 'vertical' &&
-                'mt-2 text-heading-20 group-hover:underline',
+                'mt-2 text-heading-18 group-hover:underline lg:text-heading-20',
               orientation === 'horizontal' &&
                 'text-heading-16 md:text-heading-18',
               'text-balance',
@@ -66,7 +66,9 @@ export function LinkWithThumbnail({
             {props.title}
           </p>
           {props.description && (
-            <div className="hidden md:block">
+            <div
+              className={cn(orientation === 'horizontal' && 'hidden md:block')}
+            >
               <p
                 className={cn(
                   'font-normal text-paragraph-14 text-secondary',
@@ -80,7 +82,13 @@ export function LinkWithThumbnail({
             </div>
           )}
         </div>
-        <p className="flex flex-wrap items-center gap-1 font-bold text-label-value-14 text-link underline transition-colors group-hover:text-blue-550 md:mt-3">
+        <p
+          className={cn(
+            'flex flex-wrap items-center gap-1 font-bold text-label-value-14 text-link underline transition-colors group-hover:text-blue-550',
+            orientation === 'horizontal' && 'md:mt-3',
+            orientation === 'vertical' && 'mt-3',
+          )}
+        >
           Read now
           <ArrowRightIcon className="fill-current" />
         </p>
