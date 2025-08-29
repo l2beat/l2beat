@@ -46,7 +46,6 @@ export async function getDaTrackingConfig(
     blockLayers.push({
       type: 'ethereum' as const,
       name: 'ethereum',
-      projectId: ProjectId.ETHEREUM,
       url: env.string('ETHEREUM_BLOBSCAN_API_URL'),
       callsPerMinute: env.integer('BLOBSCAN_CALLS_PER_MINUTE', 60),
       batchSize: env.integer('ETHEREUM_BLOBS_BATCH_SIZE', 2500),
@@ -75,7 +74,6 @@ export async function getDaTrackingConfig(
     blockLayers.push({
       type: 'celestia' as const,
       name: 'celestia',
-      projectId: ProjectId('celestia'),
       url: env.string('CELESTIA_BLOBS_API_URL'),
       callsPerMinute: env.integer(
         'CELESTIA_BLOBS_API_CALLS_PER_MINUTE',
@@ -106,7 +104,6 @@ export async function getDaTrackingConfig(
     blockLayers.push({
       type: 'avail' as const,
       name: 'avail',
-      projectId: ProjectId('avail'),
       url: env.string('AVAIL_BLOBS_API_URL'),
       callsPerMinute: env.integer('AVAIL_BLOBS_API_CALLS_PER_MINUTE', 2000),
       batchSize: env.integer('AVAIL_BLOBS_BATCH_SIZE', 100),
