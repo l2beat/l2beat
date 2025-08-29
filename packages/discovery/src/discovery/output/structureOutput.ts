@@ -17,11 +17,15 @@ export function getStructureOutput(
   usedBlockNumbers: Record<string, number>,
   results: Analysis[],
 ): StructureOutput {
+  // Temporarily exclude entrypoints from configHash
+  // TODO: find proper way of handling such situations
+  const { entrypoints: _, ...configWithoutEntrypoints } = config
+
   return withoutUndefinedKeys({
     name: config.name,
     chain,
     timestamp,
-    configHash: hashJsonStable(config),
+    configHash: hashJsonStable(configWithoutEntrypoints),
     sharedModules: undefinedIfEmpty(config.sharedModules),
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
