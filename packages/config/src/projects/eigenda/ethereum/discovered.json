@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "timestamp": 1753682819,
+  "timestamp": 1756300615,
   "configHash": "0x7f72d29596fa2eebd11c1fbe45f2ec4e203352c4bc2d970e267f592164d81bb5",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -144,7 +144,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 22,
+        "nonce": 27,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -326,7 +326,6 @@
           "0x9451e780b7a82699a8a5345caf25822345920da114581a31b412b59694f13adc",
           "0xdc9181f5b57437dcaaf3bb375cb770220dd467a179bdcab6f03e752face8d62e",
           "0x53db8d725c0ab3508a316c447486588e8ecf3f0e312e1eb660a78cc4da0435b9",
-          "0xc6605b3131884ae314f8c89b4cbcf89f55765a5ccb2242596d6fa04546c4a6a4",
           "0x4af3dac73046df0094622345c6546dafd0125ac82675783c76939c70c90c3583",
           "0xa4a276a179a448bb62e32a82dafe3993b3766e4356d14d48ff4b71ac43eb510c",
           "0x571acc1fd08b9f09262d7c3bcd1f92045e6632f62c1010776baec5e71f8f0714",
@@ -344,7 +343,6 @@
           "0xed3e75b0d95c82ef333aa13929a00b8e6c4e04c812006b21f3743c78f774992a",
           "0x7bd201d192cd84f224b5fc8fd8b3ce7ce8009021d4253d57dc44e7276fc20ae0",
           "0x527dcc8a9eac6bd0fc0312f8c20b76a57c962ba6ee6f23e3fdc5e6462542f7da",
-          "0xd1f3ce9de7fe79a39702057094755e521491df04907ff89277e8d31a5b166121",
           "0xd5606d3d6ab8f66f5e03ce91f661497136715da9de0592c73101542b761c9f05",
           "0x77d378ff087228faca307142fb29c9c6b488e21749e3439e7fb2b8d7b712df7f",
           "0xb0c2ad4df99ac14cc0859092c6391b88036a8d9940adfa1e091367999c50543b",
@@ -365,16 +363,9 @@
           "0xb5dd0e179a31ff0dcd1db1362118aab11586e8e42c713e154295a9effa4ab738",
           "0x1d4a7b4c590e8caae1f8e026fffe978b77e1dd3c4cd238951b0753fc724fb6d0",
           "0xaa2854f59d446537e7b349ca80646985c4bc296ee0a6ef4ae2e7ce2cfc6476e2",
-          "0xc69ab28996c80f2e5cb7016ab8f3f8bf029d8135646b645813020da86f432bcf",
           "0x866c3fdff1b88bb54fb06b8eb5d6222fa0389cd008471a141334aed0eb171878",
-          "0xc7800d34420e0bfdb5db29ea545899f1ec5e9a03aab96506aaf6d8724ba8c915",
-          "0xf84c9f0d23474947e24701dbc71c1247d7c90b146219cfef6231402cf454c14c",
-          "0x80dd3e365a5a50175acbb28eb1f931b1369d50e76560adb038baff9d30bf334a",
-          "0x14757e958213cdbf483e550491aa16c7446eaf64ac2894e33c823a60e9045f0a",
           "0x11120449cb50d85ed6e420a0a94dc8eecfc3da3ce9de99ef46dc0ee0e9f0669a",
           "0x8d4e5576c75115b4f0206d4af8bcbf5fb807607b9ad204a0884ad269981132f3",
-          "0x3278d7a1fc5f9f6a342007f6efd5fba9f8713169ed4c448f39884925422552f7",
-          "0x7020be1384be2be43386e97a3b5b332027a86df13dd684a5b2c6f109b560e0af",
           "0x0058fc08ccd6efbfa1b28be52f2f97a34e2168217f144bbb680a537d2ca18111",
           "0x42162fbd59503a09b5709d0e612b824cd12f92fa577ea993fd67e797df19415c",
           "0x0ceb3306c4166f83984b224c6046136f85df1bcb09da0605a5131736d5e40a77",
@@ -385,7 +376,6 @@
           "0x9e6f62da5509519a81e7ce9549000fa7991483cb9053221968351252b70a1fb9",
           "0x3e004bd28aa1b94a6f7a19d48007bb8211d9f7edb4a655653d8db5e1784fd76d",
           "0x3f6034d69a0aca29b330208a3946345f238844578025d459262ce882bec85ed9",
-          "0xab8f5fb53d5b1a01f560a22700bc55f71807b21523a25ff674837245dab433a8",
           "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086",
           "0xcffa72ad95f4b22f0b12c07e366fc907973a362e59408f2cf4c9cf64afcf4b59",
           "0x59cda9c6e1af517f006af4e9f8dc5777e98e8b56a00cc4a6fae1df481c9e6522",
@@ -409,7 +399,6 @@
           "0x4234c98d060d30258d25732fa8f252686dddda8758ccd6e3fe1fc82f4b97f6b5",
           "0x01d0d6d4276a88ba70ae6ef384288f846bab6d311716a4147111c7cf486b38c9",
           "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
-          "0xbdd732ea30885f35952cc61fb2fa054a2bad17bc86626ef2abd0e26aab36442e",
           "0x40ade5577b77152036616d1655f9127a6ae08cd8234c1043e08626f59bf8065f",
           "0x960dc057a3b0c24385c25845f5eebe1fafcc4739a94351b4550cb0d0e53d3655",
           "0x43dda608c71270a62bb2ef064f4866902da95538e2d98d20be1a9b2a8142f2dd",
@@ -425,7 +414,6 @@
           "0x12bbc1398d50485699592d0d1c05bc358714095a1d4d9971becfa9f1b48806b2",
           "0x0caff7e91769a74c203b21a099a9095df26726a888c8ae50ec29c661a698d5d5",
           "0xb2b2fd3feebc12a678f120f4b24c0c67b14185d26424598123e256be0ac40c23",
-          "0x1d32e0504112b36c7a6a366f240377b60afea521d5395183530ae19c200e3d65",
           "0x7006189839df958671661d84cedb0e276a8789df594cff325d6ace5bb2ae3245",
           "0x1c110f1cd7a151472377c5576c61825dec9d057ab1d188fe02b77900ab890424",
           "0xafa52dc954a63d64a5f5226cc23a879200a4eb72dcddc260dc6c5a8856f542b6",
@@ -447,7 +435,19 @@
           "0x9289a68c8990de394bdd809795157db1fd533359ecca479dfe650079cfad7c80",
           "0x4b4c68dd8324d92c733fd9e8571b59a88e28f417b8e8d90a580c8d70eac650d0",
           "0x043b00fe2b0b7af45acf2778eaf4fcd396c8549cb0876cc257f6c11e54ec6635",
-          "0x0824ab32bfcda7b4e253823f2421891fe791cc95e3de2e55a310de6f4b2b1269"
+          "0x0824ab32bfcda7b4e253823f2421891fe791cc95e3de2e55a310de6f4b2b1269",
+          "0x0955e7dff023cbc1818fb1439e69caf4647d504851f58ed09552eae3393e58a1",
+          "0x6d703438b7e75f6adae53e8c3f48de7256db52a20a6aca679a07cf5dceb537c9",
+          "0x3c5330aeb8fe113af9d30194f8573a5988bdd8a7dcf39f6fb3735df187c9d4c9",
+          "0x6c44dee76ef91585c58c16f5dc19694fc94a31fc65808cc7e6a08f4ee209e7db",
+          "0x23300304fd0646813aa0be7ccc7118087f34331f5892b9dd8ae54b6f0c669224",
+          "0x80dd3e365a5a50175acbb28eb1f931b1369d50e76560adb038baff9d30bf334a",
+          "0xc69ab28996c80f2e5cb7016ab8f3f8bf029d8135646b645813020da86f432bcf",
+          "0xc7800d34420e0bfdb5db29ea545899f1ec5e9a03aab96506aaf6d8724ba8c915",
+          "0xf84c9f0d23474947e24701dbc71c1247d7c90b146219cfef6231402cf454c14c",
+          "0x14757e958213cdbf483e550491aa16c7446eaf64ac2894e33c823a60e9045f0a",
+          "0xab8f5fb53d5b1a01f560a22700bc55f71807b21523a25ff674837245dab433a8",
+          "0xa5ed4323be04f277e312a5924bd6028e843d2948f646eb540b73ed8ee23379b8"
         ],
         "registries": [
           "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -611,16 +611,14 @@
           "eth:0xc201C95e809292c6ad242F4bbD8B342AD06571FB",
           "eth:0x55688D9211bC00BA573A1e0672e5de050818a360",
           "eth:0x68bbBD6c18B0bc1B563489A13a398345E9da23d0",
-          "eth:0x2bBA03bA38D90634e6afD8C23C16ca01651bc493",
-          "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4",
-          "eth:0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7"
+          "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
         ],
         "$threshold": 3,
         "domainSeparator": "0x6b43785a4eaebc9e965616031ecf6185396cf6e42ef9b1892cca81fe3a655fc2",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 18,
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -630,11 +628,6 @@
     },
     {
       "address": "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x2bBA03bA38D90634e6afD8C23C16ca01651bc493",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -976,7 +969,7 @@
           "eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 113754,
+        "batchId": 119986,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1012,7 +1005,7 @@
         "stakeRegistry": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 113754,
+        "taskNumber": 119986,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -1162,11 +1155,6 @@
     },
     {
       "address": "eth:0xc201C95e809292c6ad242F4bbD8B342AD06571FB",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1915,6 +1903,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23015750 },
-  "permissionsConfigHash": "0x3133c70e8471ddec92eb09f56446ad8b4b3436368779e592a662333aefe2ce57"
+  "usedBlockNumbers": { "ethereum": 23232697 },
+  "permissionsConfigHash": "0xf3585dbd30175eabdeeef71d8b29d376a4503bc783c2b486135156437dff68a4"
 }

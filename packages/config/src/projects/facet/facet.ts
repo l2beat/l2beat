@@ -215,7 +215,8 @@ export const facet: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
-      executionDelay: MAX_CHALLENGE_SECS,
+      challengeDelay: MAX_CHALLENGE_SECS,
+      executionDelay: 0,
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,

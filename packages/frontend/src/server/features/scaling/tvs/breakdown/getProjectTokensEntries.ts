@@ -39,6 +39,7 @@ export interface ProjectTvsBreakdownTokenEntry extends FilterableEntry {
   valueForProject: number
   value: number
   amount: number
+  priceUsd: number
   category: TvsToken['category']
   source: TvsToken['source']
   isAssociated: TvsToken['isAssociated']
@@ -118,6 +119,7 @@ function getEntries(
         project.contracts?.addresses,
       ),
       iconUrl: token.iconUrl ?? '',
+      priceUsd: tokenValue.priceUsd,
       valueForProject: tokenValue.valueForProject,
       value: tokenValue.value,
       amount: tokenValue.amount,
