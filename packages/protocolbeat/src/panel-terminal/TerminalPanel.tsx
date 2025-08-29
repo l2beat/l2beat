@@ -34,6 +34,7 @@ export function TerminalPanel() {
     clear,
     setChain,
     setDevMode,
+    killCommand,
   } = useTerminalStore()
   const selectedAddress = usePanelStore((state) => state.selected)
 
@@ -86,6 +87,13 @@ export function TerminalPanel() {
           <span className="text-xs">--dev</span>
         </label>
         <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={() => killCommand()}
+            disabled={!command.inFlight}
+            className="bg-aux-red px-4 py-1 text-white disabled:opacity-50"
+          >
+            Terminate
+          </button>
           <button
             onClick={() => {
               discover(project).then(() => {
