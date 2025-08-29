@@ -45,6 +45,8 @@ export const Minters = command({
       `No minters found despite ${transactions.length} mint transactions - logic/provider might be flawed`,
     )
 
+    logger.info('')
+    logger.info('==========================================')
     logger.info(`Done. Found ${minters.length} minter(s):`)
     for (const minter of minters) {
       logger.info(`• ${minter}`)
