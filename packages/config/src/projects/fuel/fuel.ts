@@ -4,7 +4,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { formatEther } from 'ethers/lib/utils'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -21,9 +20,6 @@ import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('fuel')
-const depositLimitGlobal = formatEther(
-  discovery.getContractValue<number>('FuelMessagePortal', 'depositLimitGlobal'),
-)
 const isErc20whitelistActive = discovery.getContractValue<boolean>(
   'FuelERC20Gateway',
   'whitelistRequired',
@@ -310,7 +306,8 @@ export const fuel: ScalingProject = {
           upgradableBy: [{ name: 'Fuel Security Council', delay: 'no' }],
         }),
         discovery.getContractDetails('FuelMessagePortal', {
-          description: `Contract that allows to send and receive arbitrary messages to and from L2. Pausers are allowed to blacklist L2->L1 messages.`,
+          description:
+            'Contract that allows to send and receive arbitrary messages to and from L2. Pausers are allowed to blacklist L2->L1 messages.',
           upgradableBy: [{ name: 'Fuel Security Council', delay: 'no' }],
         }),
         discovery.getContractDetails('FuelChainState', {
