@@ -17,15 +17,19 @@ export function getStructureOutput(
   usedBlockNumbers: Record<string, number>,
   results: Analysis[],
 ): StructureOutput {
-  // Temporarily exclude entrypoints from configHash
+  // Exclude from configHash generation the following fields:
+  //   - .import - because imports modify the config, so hash will change if necessary. 
+  //               Simply adding an import is not significant.
+  //   - .entrypoints - because otherwise any change in any project would 
+  //                    require rediscovery of everything.
   // TODO: find proper way of handling such situations
-  const { entrypoints: _, ...configWithoutEntrypoints } = config
+  const { import: _i, entrypoints: _e, ...strippedConfig } = config
 
   return withoutUndefinedKeys({
     name: config.name,
     chain,
     timestamp,
-    configHash: hashJsonStable(configWithoutEntrypoints),
+    configHash: hashJsonStable(strippedConfig),
     sharedModules: undefinedIfEmpty(config.sharedModules),
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
