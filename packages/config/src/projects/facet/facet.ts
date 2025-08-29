@@ -15,7 +15,6 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -216,7 +215,8 @@ export const facet: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
-      secondLine: formatExecutionDelay(MAX_CHALLENGE_SECS),
+      challengeDelay: MAX_CHALLENGE_SECS,
+      executionDelay: 0,
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,

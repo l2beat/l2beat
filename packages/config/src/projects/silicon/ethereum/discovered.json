@@ -2,7 +2,7 @@
   "name": "silicon",
   "chain": "ethereum",
   "timestamp": 1753192487,
-  "configHash": "0xe5320468f59d85bc317f39d62364cb9e98d82ed47d87ab57b3b0b086b4b0332c",
+  "configHash": "0xd3acaeb6ee0981535a825607f5287341068a4c39a666037e3b6344b78584eb64",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

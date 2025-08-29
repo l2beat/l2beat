@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "timestamp": 1754308257,
-  "configHash": "0xe4f161bcb7dbbb6afca4e50a24f99334ec23b90607d96f3e8134538035640e91",
+  "configHash": "0xc8f190a182d47c75b83d5ebbb6f9e8de5ff789002b0dc9a74ca567dcf41a1899",
   "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
     {

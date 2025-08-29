@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import {
   executeDiscover,
   executeDownloadAllShapes,
+  executeFindMinters,
   executeMatchFlat,
 } from '../api/api'
 
@@ -27,6 +28,7 @@ interface TerminalState {
   matchProject: (project: string, address: string) => void
   discover: (project: string) => Promise<void>
   downloadAllShapes: () => void
+  findMinters: (address: string) => void
 }
 
 export const useTerminalStore = create<TerminalState>((set, get) => ({
@@ -68,6 +70,9 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
     return executeStreaming(set, () =>
       executeDiscover(project, chain, get().command.devMode),
     )
+  },
+  findMinters: (address: string) => {
+    executeStreaming(set, () => executeFindMinters(address))
   },
 }))
 

@@ -2,7 +2,7 @@
   "name": "shape",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0x18e200935ad40a34323977a17000ef9a7631363d6f42def2539d488b0dd61c5c",
+  "configHash": "0xdc9e7a812699e3748a7b17ac6745ba6b82ac0f1749738d0ff7fe0585f393eaa9",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

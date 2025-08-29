@@ -2,7 +2,7 @@
   "name": "alienx",
   "chain": "ethereum",
   "timestamp": 1746690827,
-  "configHash": "0xd5bfb65bdce2b5642ce8e168ac42d6c43fb9adf7ba9cd7b8a022cb52dd63bf94",
+  "configHash": "0x6e0452c4f452c19ce687c2085a21a5f817acfdb56391bc178915a7c841344b1d",
   "entries": [
     {
       "address": "eth:0x0060621AFB2583db1c7b31406a2A3a6d15d9252f",

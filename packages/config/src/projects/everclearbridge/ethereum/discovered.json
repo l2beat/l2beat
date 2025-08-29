@@ -2,7 +2,7 @@
   "name": "everclearbridge",
   "chain": "ethereum",
   "timestamp": 1754908695,
-  "configHash": "0x42c1375ef4adc20f46ca456718adc1138e9a8956fe62509b9aab261c71dcf404",
+  "configHash": "0xccae68d9f4f9e644731cfa54fdda1afb6140b71d577b5a15b43ce76d6414ddef",
   "entries": [
     {
       "name": "Permit2",

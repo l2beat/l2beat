@@ -1,4 +1,38 @@
-Generated with discovered.json: 0x030024bdbb6cc51a10ab6d0b80ddfd57accda6f3
+Generated with discovered.json: 0x7c0b5ffe6141641ebc5892416f2af10e5aed3350
+
+# Diff at Tue, 26 Aug 2025 13:25:42 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1755009465
+- current timestamp: 1756214657
+
+## Description
+
+Conduit msig: removed one address and updated scalar added to basefee.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 11 (36%)"
+    }
+```
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        136800
++        410400
+    }
+```
+
+Generated with discovered.json: 0xec910bd819f2af22a56a7fc91a22408929b54c33
 
 # Diff at Tue, 12 Aug 2025 14:38:03 GMT:
 

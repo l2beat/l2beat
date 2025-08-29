@@ -1,4 +1,46 @@
-Generated with discovered.json: 0xa366fbec02a04f8819f1a5a3d75d26b38a44cfcc
+Generated with discovered.json: 0x62e40e87517f88ea68629d9ed6a252ad6c45ade7
+
+# Diff at Tue, 26 Aug 2025 13:36:59 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1722354923
+- current timestamp: 1722354923
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1722354923 (main branch discovery), not current.
+
+```diff
+    EOA  (0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2","role":"admin","via":[{"address":"eth:0xB6D14DdFBE01AC537accBe35cCd771C30D53c535"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xB6D14DdFBE01AC537accBe35cCd771C30D53c535","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2","role":"admin"}]
+    }
+```
+
+Generated with discovered.json: 0x4a80fd46016a75276cf261f212a77484da30f674
 
 # Diff at Mon, 14 Jul 2025 12:45:54 GMT:
 

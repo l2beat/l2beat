@@ -1,8 +1,8 @@
 {
   "name": "snaxchain",
   "chain": "ethereum",
-  "timestamp": 1755009465,
-  "configHash": "0x795a2ad0b79104094fdc585ccd98933dd3fabac57c31ee60c0db62cfa04b6fb6",
+  "timestamp": 1756214657,
+  "configHash": "0x23c17624a147122a94a7e5facac4965a02915f99f682a7605e6b6a46b21ed291",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -88,7 +88,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 33,
+        "gameCount": 47,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x1B780edfb393CB9f07Dcd7C699CBDF0fd663572b",
@@ -98,7 +98,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 33,
+        "permissionedGamesTotal": 47,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -566,7 +566,6 @@
         "$members": [
           "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-          "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
           "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
@@ -581,8 +580,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 152,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 159,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -691,11 +690,6 @@
           "role": ".proposer"
         }
       ]
-    },
-    {
-      "address": "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "OptimismPortal2",
@@ -833,11 +827,11 @@
           ]
         ],
         "$upgradeCount": 6,
-        "basefeeScalar": 6840000,
+        "basefeeScalar": 8892000,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0x060b915cA4904b56adA63565626b9c97F6CaD212",
         "batchInbox": "eth:0xFeC57BD3729a5F930d4Ee8ac5992Fdc8988426e4",
-        "blobbasefeeScalar": 0,
+        "blobbasefeeScalar": 611590,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "eth:0x0fD13C7f11d95070cE5CF31BAf1aCf9355BF4578",
         "eip1559Denominator": 0,
@@ -880,7 +874,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279131187530917502656",
+        "scalar": "452312848583266388373324160190187140051835877600158453279133814289968115296",
         "sequencerInbox": "eth:0xFeC57BD3729a5F930d4Ee8ac5992Fdc8988426e4",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 20520549,
@@ -1821,6 +1815,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23125607 },
-  "permissionsConfigHash": "0x2a9e9c5a7107cb397cbab049de6251a0ad78023ed824d63060b01f2715e212ff"
+  "usedBlockNumbers": { "ethereum": 23225564 },
+  "permissionsConfigHash": "0xa55f9792289f331e89363c4a2e9193ec7001bddc40ce8dd46d4feab9a947eda3"
 }

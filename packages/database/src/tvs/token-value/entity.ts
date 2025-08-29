@@ -11,6 +11,7 @@ export interface TokenValueRecord {
   value: number
   valueForProject: number
   valueForSummary: number
+  priceUsd: number
 }
 
 export function toRecord(row: Selectable<TokenValue>): TokenValueRecord {

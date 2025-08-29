@@ -1,4 +1,29 @@
-Generated with discovered.json: 0x9ed176a885fc95dfdce10d9378176f0ac80f2701
+Generated with discovered.json: 0x34fcb799b0c0ec266ca22c566d40785b56899593
+
+# Diff at Tue, 26 Aug 2025 13:30:47 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1755009465
+- current timestamp: 1756214657
+
+## Description
+
+Conduit msig: removed one address
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 11 (36%)"
+    }
+```
+
+Generated with discovered.json: 0xd2dbbfe2932c4b50c5ced6407179291ff6ede796
 
 # Diff at Tue, 12 Aug 2025 14:41:42 GMT:
 

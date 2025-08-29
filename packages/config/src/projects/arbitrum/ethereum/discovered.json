@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "timestamp": 1755156465,
-  "configHash": "0x7042994a5c447c2013ca4eef36bec48f935c9490accdae81016c2318d3a1471a",
+  "configHash": "0x7342383200e491a94d758d6300483eb103d5c738d08df38c53d3767fdf5f38c8",
   "entries": [
     {
       "address": "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -4974,7 +4974,5 @@
   },
   "usedBlockNumbers": { "ethereum": 23137799 },
   "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7",
-  "dependentDiscoveries": {
-    "arbitrum": { "arbitrum": { "timestamp": 1755156465 } }
-  }
+  "dependentDiscoveries": { "arbitrum": { "timestamp": 1755156465 } }
 }

@@ -2,22 +2,57 @@
   "name": "hyphen",
   "chain": "ethereum",
   "timestamp": 1718953583,
-  "configHash": "0x60651ab584b05c9bd852207bbbe15d8abcb6cdcd4e49e86617f025353c46e95f",
+  "configHash": "0x9f9029c9a8afdcbe67eb9e5be54ca70b277deb28d2c9c948e7dce385b8a9e692",
   "entries": [
     {
       "address": "eth:0x129443cA2a9Dec2020808a2868b38dDA457eaCC7",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "name": "ProxyAdmin",
       "address": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
@@ -430,7 +465,9 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
-  "usedTemplates": {},
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+  },
   "usedBlockNumbers": { "ethereum": 20138492 },
-  "permissionsConfigHash": "0xa21ac72e602973feb1689213d93c046d2079bab67b37e7828f3d08512a34a057"
+  "permissionsConfigHash": "0x469cafb6e46857f60bbeefa7ed2b8e5e7c4922721f930ac204f8d87e8370b11a"
 }

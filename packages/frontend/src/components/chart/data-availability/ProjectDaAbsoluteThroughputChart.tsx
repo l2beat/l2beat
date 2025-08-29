@@ -221,6 +221,11 @@ export function ProjectDaThroughputCustomTooltip({
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
                   No data
                 </span>
+              ) : entry.value === null &&
+                configEntry.label === 'Max capacity' ? (
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  No cap
+                </span>
               ) : (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
                   {(entry.value ?? 0).toFixed(2)} {unit}

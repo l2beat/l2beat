@@ -262,6 +262,7 @@ model TokenValue {
   value           Float    @db.Real
   valueForProject Float    @db.Real
   valueForSummary Float    @db.Real
+  priceUsd        Float    @default(0) @db.Real
 
   @@id([timestamp, configurationId])
   @@index([projectId])

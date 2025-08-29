@@ -1,8 +1,8 @@
 {
   "name": "game7",
   "chain": "arbitrum",
-  "timestamp": 1755768260,
-  "configHash": "0x7443156a4582c9abd1764d474cd071666254f20366f00604ee5fa89bc80bc682",
+  "timestamp": 1756452867,
+  "configHash": "0xccf51657a5d0c5ac3bcb1d737a71299530cb748c2833a91624f2c65902a661f2",
   "entries": [
     {
       "address": "arb1:0x026919DbCFab70a2A45775088C933331A7B25Ac6",
@@ -113,7 +113,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 3527,
+        "nonce": 3692,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -199,8 +199,8 @@
         "outboxHistory": ["arb1:0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
         "rollup": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerInbox": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
-        "sequencerMessageCount": 4467,
-        "sequencerReportedSubMessageCount": 1664918
+        "sequencerMessageCount": 4639,
+        "sequencerReportedSubMessageCount": 1668210
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -443,7 +443,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 4467,
+        "batchCount": 4639,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
@@ -611,13 +611,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3634,
+        "firstUnresolvedNode": 3799,
         "inbox": "arb1:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22746354,
-        "latestConfirmed": 3633,
-        "latestNodeCreated": 3633,
+        "latestConfirmed": 3798,
+        "latestNodeCreated": 3798,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "arb1:0xfbe537816d181888fAbE52338a5D921eE131E9Db",
@@ -866,7 +866,6 @@
         "$members": [
           "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-          "arb1:0x860e06Fe384D1A3340111e7D142E02642178c053",
           "arb1:0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "arb1:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -881,8 +880,8 @@
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 87,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 88,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1024,11 +1023,6 @@
           "role": ".validators"
         }
       ]
-    },
-    {
-      "address": "arb1:0x860e06Fe384D1A3340111e7D142E02642178c053",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "UpgradeExecutor",
@@ -2341,6 +2335,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 370712636 },
-  "permissionsConfigHash": "0xc84286e9718fce0964ead727e69f28ae2739fc4a1dca0e9221d10be17fb1a133"
+  "usedBlockNumbers": { "arbitrum": 373455297 },
+  "permissionsConfigHash": "0x938f2bb28efabf2fd3b9cdcd575bef422c9bbf2f9eb57f38b7aa84024110b37d"
 }

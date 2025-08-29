@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "timestamp": 1755609388,
-  "configHash": "0xda61d694fb98d57913113725e133aee8e4c228c9c1c06ec63b32963c46c2d113",
+  "configHash": "0x38d7539a9ea9370d4dd3b7baf3c5cff93ebea0db7d41bc1d2a6a7e306e7ddf56",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

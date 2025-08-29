@@ -21,7 +21,6 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -306,7 +305,7 @@ export const taiko: ScalingProject = {
         'A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a block, and SGX (Geth) is mandatory. A block can be proved without providing a ZK proof as SGX (Geth) + SGX (Reth) is a valid combination.',
       sentiment: 'bad',
       value: 'Multi-proofs',
-      secondLine: formatExecutionDelay(taikoChainConfig.cooldownWindow),
+      executionDelay: taikoChainConfig.cooldownWindow,
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,

@@ -2,7 +2,7 @@
   "name": "swan",
   "chain": "ethereum",
   "timestamp": 1722265907,
-  "configHash": "0x0737645a7de4ab15e080eabf7f6f4d34b4b594f0b645e02f8d66579f0fd35d44",
+  "configHash": "0x8236df7b2f7c72ec4e624b3ab5bc22cdfffff9330d784c090f60ae10a05d1096",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

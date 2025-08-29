@@ -2,7 +2,7 @@
   "name": "stargate",
   "chain": "ethereum",
   "timestamp": 1752074003,
-  "configHash": "0xe67fda5bd288d69e09c67c22834c3bff002cc46c777e22048c3115065458a45a",
+  "configHash": "0x8909decc197cc93a73dac64b32740ca9266d4764a75657a7d05f06cf31a37e99",
   "entries": [
     {
       "name": "Factory",

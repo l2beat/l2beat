@@ -2,7 +2,7 @@
   "name": "sophon",
   "chain": "zksync2",
   "timestamp": 1755162034,
-  "configHash": "0xbf47ead378b5067ec1a01a40e45649ab3017a5295a3a1f29387442a5982eece7",
+  "configHash": "0xb4b93761270f673aa126ad108c401586d8f687a3eae55f6bbdf71bb922a79c8a",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},

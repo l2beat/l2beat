@@ -503,6 +503,93 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
   )
 
   describe(
+    DataAvailabilityRepository.prototype.getMaxHistoricalRecordByDaLayer.name,
+    () => {
+      it('returns max historical record for each DA layer', async () => {
+        await repository.upsertMany([
+          // layer-a
+          record('layer-a', 'layer-a', 'config-id-1', START, 100n),
+          record(
+            'layer-a',
+            'layer-a',
+            'config-id-2',
+            START + 1 * UnixTime.DAY,
+            300n,
+          ),
+          record(
+            'layer-a',
+            'layer-a',
+            'config-id-3',
+            START + 2 * UnixTime.DAY,
+            200n,
+          ),
+          // layer-b
+          record('layer-b', 'layer-b', 'config-id-4', START, 400n),
+          record(
+            'layer-b',
+            'layer-b',
+            'config-id-5',
+            START + 2 * UnixTime.DAY,
+            500n,
+          ),
+          // layer-c
+          record('layer-c', 'layer-c', 'config-id-6', START, 100n),
+          // Project records (should be ignored)
+          record('project-a', 'layer-a', 'config-id-7', START, 1000n),
+          record('project-b', 'layer-b', 'config-id-7', START, 2000n),
+        ])
+
+        const results = await repository.getMaxHistoricalRecordByDaLayer([
+          'layer-a',
+          'layer-b',
+        ])
+
+        expect(results).toEqualUnsorted([
+          record(
+            'layer-a',
+            'layer-a',
+            'config-id-2',
+            START + 1 * UnixTime.DAY,
+            300n,
+          ),
+          record(
+            'layer-b',
+            'layer-b',
+            'config-id-5',
+            START + 2 * UnixTime.DAY,
+            500n,
+          ),
+        ])
+      })
+
+      it('returns empty array when daLayers array is empty', async () => {
+        await repository.upsertMany([
+          record('layer-a', 'layer-a', 'config-id-1', START, 100n),
+          record('layer-b', 'layer-b', 'config-id-2', START, 200n),
+        ])
+
+        const results = await repository.getMaxHistoricalRecordByDaLayer([])
+
+        expect(results).toEqual([])
+      })
+
+      it('returns empty array when no records exist for specified layers', async () => {
+        await repository.upsertMany([
+          record('layer-a', 'layer-a', 'config-id-1', START, 100n),
+          record('layer-b', 'layer-b', 'config-id-2', START, 200n),
+        ])
+
+        const results = await repository.getMaxHistoricalRecordByDaLayer([
+          'layer-c',
+          'layer-d',
+        ])
+
+        expect(results).toEqual([])
+      })
+    },
+  )
+
+  describe(
     DataAvailabilityRepository.prototype.deleteByConfigurationId.name,
     () => {
       it('should delete records within the specified time range', async () => {

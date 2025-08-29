@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "ethereum",
   "timestamp": 1752074075,
-  "configHash": "0xfafd6fd9c21b1decf6cf0a9b603266907867155382f9848fa31d2660f6cfbb46",
+  "configHash": "0x064aaaa253417a49fe0b9589b591f6ec682070effdb57c51be07437dfeebb5cb",
   "entries": [
     {
       "address": "eth:0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47",

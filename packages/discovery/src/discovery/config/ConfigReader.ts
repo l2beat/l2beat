@@ -33,18 +33,15 @@ export class ConfigReader {
 
   constructor(private rootPath: string) {}
 
-  readConfig(name: string, chain: string): ConfigRegistry {
+  readConfig(name: string): ConfigRegistry {
     const rawConfig = this.readRawConfig(name)
 
     const rawConfigForChain = {
       ...rawConfig,
-      chain,
       ...(rawConfig.archived ? { archived: true } : {}),
     }
 
     const config = new ConfigRegistry(rawConfigForChain)
-
-    assert(config.structure.chain === chain, 'Chain mismatch in config.jsonc')
 
     return config
   }
@@ -188,7 +185,7 @@ export class ConfigReader {
       .map((x) => x.project)
 
     for (const project of projects) {
-      const contents = this.readConfig(project, chain)
+      const contents = this.readConfig(project)
       result.push(contents)
     }
 

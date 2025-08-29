@@ -2,7 +2,7 @@
   "name": "w",
   "chain": "base",
   "timestamp": 1752832725,
-  "configHash": "0x631e8b6aff9e61a5a4e3bca817642da424a52077d5cc7735ed8367f43bb6d6cb",
+  "configHash": "0xe05016755246550577f5c25a998b6e37e3c9e1c7adcd522ba7a5d4b8cd3dd602",
   "entries": [
     {
       "name": "WToken",

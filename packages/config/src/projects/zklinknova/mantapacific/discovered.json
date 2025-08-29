@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "mantapacific",
   "timestamp": 1753687799,
-  "configHash": "0x01130c806553efa3aa5adf297c386ad60dd38352573855ea3723bb8ddab375fa",
+  "configHash": "0x9d4f8489eef7a5e1a5358c2b41afd3656f45df780c446dfa32f969cfdc8590db",
   "entries": [
     {
       "name": "MantaProxyAdmin",

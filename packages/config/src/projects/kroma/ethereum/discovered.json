@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "timestamp": 1752575723,
-  "configHash": "0x6f8ad5219eca412507ebb2dd7d5b8b2479dda3add69d0656874e83597a4620ef",
+  "configHash": "0x51a02b588712e9a8f0d103809e421148f7495cf3c3279c95588622ee4d315d16",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -128,7 +128,7 @@
       }
     },
     {
-      "name": "L1Timelock",
+      "name": "Timelock",
       "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
       "type": "Contract",
       "template": "global/Timelock",
@@ -2421,5 +2421,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 22924020 },
-  "permissionsConfigHash": "0x92d1e934c04f64479fd41b8837603fefda4f91b86f1a248a216e7ac2f5171576"
+  "permissionsConfigHash": "0xbed2d56fd23906f604712e46b71b4501e6bf26d291c058a6cdc596666c7d7462"
 }

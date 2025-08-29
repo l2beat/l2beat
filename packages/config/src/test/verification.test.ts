@@ -71,8 +71,9 @@ function getDiscoveries(
   }
 
   const dependentDiscoveries = discovery.dependentDiscoveries ?? {}
-  for (const [projectName, chains] of Object.entries(dependentDiscoveries)) {
-    for (const chain of Object.keys(chains)) {
+  for (const projectName of Object.keys(dependentDiscoveries)) {
+    const chains = configReader.readAllDiscoveredChainsForProject(projectName)
+    for (const chain of chains) {
       result.push(configReader.readDiscovery(projectName, chain))
     }
   }

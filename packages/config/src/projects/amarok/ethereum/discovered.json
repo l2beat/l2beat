@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "timestamp": 1754307650,
-  "configHash": "0x03aeeefe5b09cde0800c4bd5fbdc0745aa4ba02a219065edb04fa1814f0c27c6",
+  "configHash": "0x35133b7af5eb0eb74e100c94b3f85f7cea20c705650c08e66e5f2faebd65e46b",
   "entries": [
     {
       "address": "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",

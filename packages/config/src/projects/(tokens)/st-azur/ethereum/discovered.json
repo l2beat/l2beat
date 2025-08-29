@@ -2,7 +2,7 @@
   "name": "st-azur",
   "chain": "ethereum",
   "timestamp": 1753693931,
-  "configHash": "0x5c9be412fcc91f3de9509c8293d0580a97627c842c00ea1257b0955163d68ddd",
+  "configHash": "0x031213b25493eff9b4c8b88617ed9c64ec57d6abf05ac6a3e57a55dcb552b88e",
   "entries": [
     {
       "name": "RewardPoolV2",

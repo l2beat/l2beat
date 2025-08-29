@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "scroll",
   "timestamp": 1752074075,
-  "configHash": "0xedb12b9eac272860df81f99f9e3a9320c19cc3b21a70c7cfdc8d9e27ee67074e",
+  "configHash": "0x064aaaa253417a49fe0b9589b591f6ec682070effdb57c51be07437dfeebb5cb",
   "entries": [
     {
       "address": "scr:0x0000000000000000000000000000000000000000",

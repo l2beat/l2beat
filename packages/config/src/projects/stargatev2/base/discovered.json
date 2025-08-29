@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "base",
   "timestamp": 1752074075,
-  "configHash": "0xc555d7ddc35f94a08eaddd1c0e658f82b58e2b688fcd7927c8562b58adcde577",
+  "configHash": "0x064aaaa253417a49fe0b9589b591f6ec682070effdb57c51be07437dfeebb5cb",
   "entries": [
     {
       "name": "StargatePoolUSDC",

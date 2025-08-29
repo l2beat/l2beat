@@ -1,4 +1,4 @@
-import { assert, Hash256 } from '@l2beat/shared-pure'
+import { assert, Hash256, unique } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
@@ -25,12 +25,7 @@ import {
 import { runClingo } from './runClingo'
 
 export type DiscoveryTimestamps = {
-  [project: string]: {
-    [chain: string]: {
-      timestamp: number
-      blockNumber?: number // TODO(radomski): To be removed
-    }
-  }
+  [project: string]: { timestamp: number }
 }
 
 export class DiscoveryRegistry {
@@ -82,14 +77,25 @@ export class DiscoveryRegistry {
         if (skip && skip.project === project && skip.chain === chain) {
           continue
         }
-        result[project] ??= {}
-        result[project][chain] = {
+        result[project] = {
           timestamp: discovery.discoveryOutput.timestamp,
         }
       }
     }
 
     return result
+  }
+
+  getChains(project: string) {
+    const result: string[] = []
+    for (const [chain, discovery] of Object.entries(
+      this.discoveries[project] ?? {},
+    )) {
+      if (discovery.discoveryOutput.name === project) {
+        result.push(chain)
+      }
+    }
+    return unique(result)
   }
 }
 
@@ -233,7 +239,7 @@ export function generateClingoForDiscoveries(
 
   for (const { project, chain } of discoveries.getSortedProjects()) {
     const discovery = discoveries.get(project, chain).discoveryOutput
-    const config = configReader.readConfig(project, chain)
+    const config = configReader.readConfig(project)
     const permissionsInClingo = generateClingoForProjectOnChain(
       config.permission,
       configReader,

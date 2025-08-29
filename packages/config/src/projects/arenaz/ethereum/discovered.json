@@ -2,7 +2,7 @@
   "name": "arenaz",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0xdd99cbc59e6f5339ea41b13912096d6e54ab9605b5a9da1e823f619dea6decb3",
+  "configHash": "0xe6695c868d2224bf5a9b27f01f2fa82be3b1a00d5fac02496cfc9febae0ade85",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

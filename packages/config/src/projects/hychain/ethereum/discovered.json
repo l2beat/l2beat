@@ -2,7 +2,7 @@
   "name": "hychain",
   "chain": "ethereum",
   "timestamp": 1747829483,
-  "configHash": "0x0e878e6713b9894b51bdb2f3d08a7349241f78693840e0a6830a7fef113258d6",
+  "configHash": "0x0c45bf2e59b8b6e51b16aea20dce77970510ab1984e6ef57d43c51dc4279eeab",
   "entries": [
     {
       "name": "Outbox",

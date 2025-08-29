@@ -1,8 +1,8 @@
 {
   "name": "xchain",
   "chain": "ethereum",
-  "timestamp": 1755853782,
-  "configHash": "0xf781c3d5a2d654aa25420b4b84b55e5f27ade8437b81b1a45d4455a6aed0a3b1",
+  "timestamp": 1756214657,
+  "configHash": "0x7e655cc006d477c771cdf8521550327363e12b6a45da08a7433e17a584d0acc2",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -313,8 +313,8 @@
         "outboxHistory": ["eth:0x0b8071337dcB089478Ea740efC10904d9F359141"],
         "rollup": "eth:0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d",
         "sequencerInbox": "eth:0x47861E0419BE83d0175818a09221B6DF2EFD7793",
-        "sequencerMessageCount": 3374,
-        "sequencerReportedSubMessageCount": 7941054
+        "sequencerMessageCount": 3406,
+        "sequencerReportedSubMessageCount": 8006003
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -441,7 +441,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 3374,
+        "batchCount": 3406,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -604,7 +604,6 @@
         "$members": [
           "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-          "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
           "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
@@ -619,8 +618,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 155,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 159,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -713,11 +712,6 @@
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "address": "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "OneStepProofEntry",
@@ -1015,13 +1009,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 881,
+        "firstUnresolvedNode": 889,
         "inbox": "eth:0xE961Ef06c26D0f032F0298c97C41e648d3bb715a",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22739170,
-        "latestConfirmed": 880,
-        "latestNodeCreated": 891,
+        "latestConfirmed": 888,
+        "latestNodeCreated": 899,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0b8071337dcB089478Ea740efC10904d9F359141",
@@ -1768,6 +1762,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23195625 },
-  "permissionsConfigHash": "0x34b4916e9745bdce67785e281da50f2f395a146d8c4332cfbcd124519bedfe60"
+  "usedBlockNumbers": { "ethereum": 23225564 },
+  "permissionsConfigHash": "0x52c21c014f85d543f393c126de641c77207cae31b0f1821ac8b486bcfd1f240a"
 }
