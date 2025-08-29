@@ -310,7 +310,7 @@ export const fuel: ScalingProject = {
           upgradableBy: [{ name: 'Fuel Security Council', delay: 'no' }],
         }),
         discovery.getContractDetails('FuelMessagePortal', {
-          description: `Contract that allows to send and receive arbitrary messages to and from L2. It implements a max deposit limit for ETH, currently set to ${depositLimitGlobal} ETH, and rate limits withdrawals. Pausers are allowed to blacklist L2->L1 messages.`,
+          description: `Contract that allows to send and receive arbitrary messages to and from L2. Pausers are allowed to blacklist L2->L1 messages.`,
           upgradableBy: [{ name: 'Fuel Security Council', delay: 'no' }],
         }),
         discovery.getContractDetails('FuelChainState', {
