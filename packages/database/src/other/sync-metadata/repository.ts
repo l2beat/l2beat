@@ -33,7 +33,7 @@ export class SyncMetadataRepository extends BaseRepository {
     feature: SyncMetadataRecord['feature'],
     ids: string[],
     syncedUntil: UnixTime,
-    blockSyncedUntil?: UnixTime,
+    blockSyncedUntil?: number,
   ): Promise<void> {
     await this.db
       .updateTable('SyncMetadata')

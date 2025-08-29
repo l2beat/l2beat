@@ -19,7 +19,7 @@ export class BlockTargetIndexer extends RootIndexer {
     private readonly blockTimestampProvider: BlockTimestampProvider,
     readonly daLayer: string,
     private readonly options?: {
-      onTick?: (targetTimestamp: UnixTime) => Promise<void>
+      onTick?: (targetTimestamp: UnixTime, blockNumber: number) => Promise<void>
     },
   ) {
     super(
@@ -55,7 +55,7 @@ export class BlockTargetIndexer extends RootIndexer {
 
     this.blockHeight = blockNumber
     // TODO: is this the right timestamp? or maybe getBlockNumberAtOrBefore should return the timestamp too?
-    await this.options?.onTick?.(timestamp)
+    await this.options?.onTick?.(timestamp, blockNumber)
     return blockNumber
   }
 }

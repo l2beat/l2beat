@@ -111,12 +111,13 @@ function createIndexers(
       providers.blockTimestamp,
       daLayer.name,
       {
-        onTick: async (targetTimestamp) => {
+        onTick: async (targetTimestamp, blockNumber) => {
           await database.syncMetadata.upsertMany(
             configurations.map((c) => ({
               feature: 'dataAvailability',
               id: c.projectId,
               target: targetTimestamp,
+              blockTarget: blockNumber,
             })),
           )
         },
