@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -14,14 +15,14 @@ import { ProjectCostsChartStats } from './ProjectCostsChartStats'
 
 interface Props {
   milestones: Milestone[]
-  projectId: string
+  project: ChartProject
   defaultRange: CostsTimeRange
   hasPostedData: boolean
 }
 
 export function ProjectCostsChart({
   milestones,
-  projectId,
+  project,
   defaultRange,
   hasPostedData,
 }: Props) {
@@ -30,7 +31,7 @@ export function ProjectCostsChart({
 
   const { data, isLoading } = api.costs.projectChart.useQuery({
     range,
-    projectId,
+    projectId: project.id,
   })
 
   const chartData = useMemo(() => {
@@ -106,6 +107,7 @@ export function ProjectCostsChart({
         />
       </div>
       <CostsChart
+        project={project}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         unit={unit}

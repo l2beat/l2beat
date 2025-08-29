@@ -13,7 +13,6 @@ export const polygonpos2: ScalingProject = upcomingL2({
     description:
       'Polygon PoS 2.0 leverages ZK technology, ideally without changing anything for users or developers. All applications should continue working and fees should stay just as low. The only difference should be higher security and seamless interoperability with other chains in the Polygon 2.0 ecosystem.',
     purposes: ['Universal'],
-    category: 'Validium',
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://polygon.technology'],
@@ -33,5 +32,8 @@ export const polygonpos2: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('agglayer'),
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

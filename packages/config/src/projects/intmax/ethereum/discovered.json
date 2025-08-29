@@ -1,8 +1,8 @@
 {
   "name": "intmax",
   "chain": "ethereum",
-  "timestamp": 1754909083,
-  "configHash": "0xab3e140b35504785130784cc7c4e1c032524515bdb4084edb56f2417da06c907",
+  "timestamp": 1755850487,
+  "configHash": "0xff566c5b5584443b98a94053405ec37fe4abd66c069eaa848c138f993caece7b",
   "entries": [
     {
       "name": "PredicatePermitter",
@@ -153,7 +153,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 7,
+        "getCurrentPeriod": 8,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -380,8 +380,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
-        "getLastDepositId": 7889,
-        "getLastRelayedDepositId": 7885,
+        "getLastDepositId": 9967,
+        "getLastRelayedDepositId": 9966,
         "getNativeTokenIndex": 0,
         "paused": false,
         "RELAY_LIMIT": 450,
@@ -474,7 +474,16 @@
           "x-temp-002",
           "x-test-prod-001",
           "x-trm-template",
-          "x-nest-prod-005"
+          "x-nest-prod-005",
+          "x-social-graph-template",
+          "x-random-template",
+          "x-random-fifty-percent-template",
+          "x-test-social-graph",
+          "x-test-trm",
+          "x-test-random",
+          "x-mxon-prod-001",
+          "x-kyc-basic-template-001",
+          "x-strict-membership-policy"
         ],
         "getRestakeableStrategies": [
           "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
@@ -1009,6 +1018,6 @@
     "intmax/Liquidity": "0xd7d5acf0c2574b4d98b015b7e23864f0e8f319fe1fa58532e649aabe51a35cfd",
     "intmax/PredicatePermitter": "0x3558c47cc4cc15bddb87c33f9c6166935da9199ad3d5a55bd77681d197be6728"
   },
-  "usedBlockNumbers": { "ethereum": 23117292 },
-  "permissionsConfigHash": "0xf596c0d49109b82369a28ca6ee615a0f398f68fc5f5511120c267a29c74e2046"
+  "usedBlockNumbers": { "ethereum": 23195352 },
+  "permissionsConfigHash": "0x9a240030134b12857a0ad3b1c1459da05f8a936a431230313e2252e94d582823"
 }

@@ -2,7 +2,7 @@
   "name": "river",
   "chain": "ethereum",
   "timestamp": 1739873519,
-  "configHash": "0xa52ac3fb999b01b2430c03112425756d40665d9a3c1489d9d49a9d3642a39eca",
+  "configHash": "0xde27f32190bed3c595d52f1a7fedc4bd7829d696a19f45aa51189887bd46bedd",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

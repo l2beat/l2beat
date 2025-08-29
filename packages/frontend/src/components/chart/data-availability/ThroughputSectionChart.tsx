@@ -1,6 +1,7 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
@@ -21,14 +22,14 @@ import {
 } from './ProjectDaAbsoluteThroughputChart'
 
 interface Props {
-  daLayer: ProjectId
+  project: ChartProject
   configuredThroughputs: DaLayerThroughput[]
   customColors: Record<string, string> | undefined
   milestones: Milestone[]
 }
 
 export function ThroughputSectionChart({
-  daLayer,
+  project,
   configuredThroughputs,
   customColors,
   milestones,
@@ -38,7 +39,7 @@ export function ThroughputSectionChart({
 
   const { data, isLoading } = api.da.projectCharts.useQuery({
     range: { type: range },
-    projectId: daLayer,
+    projectId: project.id,
     includeScalingOnly,
   })
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
@@ -59,7 +60,7 @@ export function ThroughputSectionChart({
 
   return (
     <div>
-      {daLayer === 'eigenda' && <EigenDataSourceInfo />}
+      {project.id === 'eigenda' && <EigenDataSourceInfo />}
       <div className="mt-2 space-y-1">
         <EthereumProjectsOnlyCheckbox
           name="projectThroughputIncludeScalingOnly"
@@ -80,7 +81,7 @@ export function ThroughputSectionChart({
         </div>
       </div>
       <ProjectDaAbsoluteThroughputChart
-        projectId={daLayer}
+        project={project}
         dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
         isLoading={isLoading}
         milestones={milestones}
@@ -89,6 +90,7 @@ export function ThroughputSectionChart({
       />
       <DaThroughputByProjectChart
         data={data?.byProjectChart.data}
+        project={project}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
         customColors={customColors}
@@ -115,7 +117,7 @@ function getDataWithConfiguredThroughputs(
         untilTimestamp: nextConfig
           ? UnixTime.toStartOf(nextConfig.sinceTimestamp, 'day')
           : Number.POSITIVE_INFINITY,
-        maxDaily: config.size * batchesPerDay,
+        maxDaily: config.size === 'NO_CAP' ? null : config.size * batchesPerDay,
         targetDaily: config.target ? config.target * batchesPerDay : null,
       }
     })

@@ -2,7 +2,7 @@
   "name": "pz-eth",
   "chain": "ethereum",
   "timestamp": 1753693907,
-  "configHash": "0x1807806c5a159322dca421896a559f15ad39c98bba3019e12b65c6521f41e505",
+  "configHash": "0x28f9fad2025ec3ff4f0080d8e0bf9ac0d4bfcd930663b2057d965b17e7e09187",
   "entries": [
     {
       "name": "MultiVault",

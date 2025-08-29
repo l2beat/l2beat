@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "build:dependencies": "cd ../.. && pnpm build:dependencies",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:l2b",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:l2b",
     "dev": "node -r esbuild-register src/cli.ts",
     "dev:watch": "node --watch -r esbuild-register src/cli.ts",
     "l2bup": "pnpm build:dependencies && pnpm build && npm install -g .",
@@ -29,7 +30,7 @@
     "@l2beat/protocolbeat": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
-    "@mradomski/fast-solidity-parser": "0.1.4",
+    "@mradomski/fast-solidity-parser": "0.1.6",
     "ansi-to-html": "^0.7.2",
     "chalk": "^4.1.2",
     "cmd-ts": "^0.13.0",

@@ -1,31 +1,28 @@
+import { EllipsisText } from '~/components/EllipsisText'
 import { NoDataIcon } from '~/components/NoDataIcon'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 
 interface Props {
-  iconUrl: string
+  name: string
   symbol: string
   isGasToken?: boolean
   syncStatus?: string
 }
 
-export function TokenNameCell({
-  iconUrl,
-  symbol,
-  isGasToken,
-  syncStatus,
-}: Props) {
+export function TokenNameCell({ name, symbol, isGasToken, syncStatus }: Props) {
   return (
-    <div className="flex items-center justify-start gap-2 pr-4 md:pr-2">
-      <img
-        width={16}
-        height={16}
-        src={iconUrl}
-        className="size-5 rounded-full"
-        alt={`Icon of ${symbol}`}
-      />
-      <span className="font-medium text-xs">
-        {symbol} {isGasToken && '(gas)'}
-      </span>
-      {syncStatus && <NoDataIcon content={syncStatus} />}
-    </div>
+    <TwoRowCell>
+      <TwoRowCell.First>
+        <EllipsisText>{name}</EllipsisText>
+        <span>{isGasToken && ' (gas)'}</span>
+        {syncStatus && (
+          <>
+            {' '}
+            <NoDataIcon content={syncStatus} className="relative top-[3px]" />
+          </>
+        )}
+      </TwoRowCell.First>
+      <TwoRowCell.Second>{symbol}</TwoRowCell.Second>
+    </TwoRowCell>
   )
 }

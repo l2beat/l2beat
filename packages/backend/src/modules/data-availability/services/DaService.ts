@@ -148,5 +148,5 @@ function matchCelestiaProject(
 }
 
 function matchAvailProject(blob: AvailBlob, config: AvailDaTrackingConfig) {
-  return config.appId === blob.appId
+  return config.appIds.includes(blob.appId)
 }

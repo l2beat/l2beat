@@ -60,6 +60,7 @@ import { stack } from '../projects/stack/stack'
 import { superposition } from '../projects/superposition/superposition'
 import { syndicateframe } from '../projects/syndicateframe/syndicateframe'
 import { syndr } from '../projects/syndr/syndr'
+import { t3rn } from '../projects/t3rn/t3rn'
 import { toy } from '../projects/toy/toy'
 import { unite } from '../projects/unite/unite'
 import { vemphorizon } from '../projects/vemphorizon/vemphorizon'
@@ -135,6 +136,7 @@ export const layer3s: ScalingProject[] = [
   spheron,
   superposition,
   syndr,
+  t3rn,
   toy,
   winr,
   xrone,

@@ -1,4 +1,52 @@
-Generated with discovered.json: 0x3368c56890434551899b1984eddbc0203b4a7563
+Generated with discovered.json: 0x77b4203c2f3224227c822057d619ed3146cf7962
+
+# Diff at Fri, 29 Aug 2025 07:22:55 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e68cba094085f7ab7e642304a942701f260f19fb block: 1755508162
+- current timestamp: 1756452095
+
+## Description
+
+Updated challenge period from 7d to 1d.
+
+## Watched changes
+
+```diff
+    contract FuelChainState (0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x183fd58e0c8aaff660b72b7753154fcb311db3b7932357b1a8a1416fdd53caf0"
++        "0x3a22f204d585524196a1af919fb1dac397751b0b7872aff03ae207eb4d57ae7e"
+      values.$implementation:
+-        "eth:0x725B2b1a15D818E1f25c68be77816802e6036559"
++        "eth:0x621850dbB9160b54002B4a25b9fC9b2F26315f7e"
+      values.$pastUpgrades.1:
++        ["2025-08-27T14:14:35.000Z","0x313c212ccfc5e1413acd0c8fa345c6f96631fbb7c026c67f8fc22471a971f09c",["eth:0x621850dbB9160b54002B4a25b9fC9b2F26315f7e"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.COMMIT_COOLDOWN:
+-        604800
++        86400
+      values.TIME_TO_FINALIZE:
+-        604800
++        86400
+      implementationNames.eth:0x725B2b1a15D818E1f25c68be77816802e6036559:
+-        "FuelChainState"
+      implementationNames.eth:0x621850dbB9160b54002B4a25b9fC9b2F26315f7e:
++        "FuelChainState"
+    }
+```
+
+## Source code changes
+
+```diff
+.../FuelChainState/FuelChainState.sol                          | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+```
+
+Generated with discovered.json: 0x204dedc26b07aab222380167aa9c0a4448a7e429
 
 # Diff at Mon, 18 Aug 2025 09:09:27 GMT:
 

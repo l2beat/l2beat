@@ -2,7 +2,7 @@
   "name": "abstract",
   "chain": "ethereum",
   "timestamp": 1755156245,
-  "configHash": "0x79b1f196898f93382f95cf484d899f9b1321f99d021f3e3d4225b7efaa922fe9",
+  "configHash": "0x5bdb518ad26eff7f6d8cde0af1ad02dba856d46fb2877003bedba10df2725992",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

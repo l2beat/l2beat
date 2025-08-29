@@ -13,17 +13,25 @@ pnpm build:dependencies
 ```
 
 ## Scripts
-
 - `pnpm dev` - run the Next.js development server
 - `pnpm dev:mock` - run the Next.js development server with mock data
 - `pnpm build` - compile the production build
+- `pnpm start` - start the production server
+- `pnpm start:mock` - start the production server with mock data
+- `pnpm og-images` - generate OpenGraph images
+- `pnpm tinify` - optimize images
+- `pnpm new-project` - run og-images and tinify scripts (use after adding a new project in config)
+- `pnpm performance-test` - run performance tests
+- `pnpm size-test` - run data size tests
 - `pnpm build:dependencies` - builds the dependencies of frontend
-- `pnpm format` - run biome automatic formatter
-- `pnpm format:fix` - run biome automatic formatter and apply the recommended changes
+- `pnpm watch:dependencies` - watch and rebuild dependencies on changes
 - `pnpm lint` - run linter
+- `pnpm lint:fix` - run linter and fix issues
+- `pnpm format` - run biome formatter
+- `pnpm format:fix` - run biome formatter and fix issues
 - `pnpm test` - run the tests
 - `pnpm typecheck` - check if the code satisfies the typescript compiler
-- `pnpm tinify-logos` - resizes and optimizes logos
+- `pnpm test-all-pages` - test all pages
 
 ### Environment variables
 If you are running `pnpm dev:mock` you do not need any environment variables.

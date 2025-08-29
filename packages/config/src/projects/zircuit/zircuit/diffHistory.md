@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x7be0d5110606402029f38a92cd4bd5c0831a31f7
+Generated with discovered.json: 0xbaa4677fb74699d2176e39f19cc4eb06e040a3a0
+
+# Diff at Fri, 29 Aug 2025 07:19:13 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e68cba094085f7ab7e642304a942701f260f19fb block: 1756216503
+- current timestamp: 1756451851
+
+## Description
+
+Increased L2 fees by adding a constant and a scalar.
+
+## Watched changes
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain. This version though also contains a storage slot for `depositExclusions`.
+      values.operatorFeeConstant:
+-        0
++        23225000000
+      values.operatorFeeScalar:
+-        0
++        4200000000
+    }
+```
+
+Generated with discovered.json: 0x43d8f819be4802a5593153c469bf89c419e3e13e
 
 # Diff at Mon, 04 Aug 2025 12:35:57 GMT:
 

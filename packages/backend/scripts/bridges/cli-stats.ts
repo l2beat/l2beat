@@ -223,9 +223,9 @@ function printScriptSummaryAndConfirmation(
   )
 
   return new Promise((resolve) =>
-    rl.question('Do you want to run the script? [yes] ', (ans) => {
+    rl.question('Do you want to run the script? [yes] ', (answer) => {
       rl.close()
-      resolve(ans)
+      resolve(answer)
     }),
   )
 }

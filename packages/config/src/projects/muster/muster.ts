@@ -21,7 +21,6 @@ export const muster: ScalingProject = orbitStackL3({
     slug: 'muster',
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
-    category: 'Other',
     description:
       'Muster Network is an Arbitrum Orbit L3 gaming chain aiming to transform digital ownership for brands and games while managing blockchain infrastructure and security.',
     links: {

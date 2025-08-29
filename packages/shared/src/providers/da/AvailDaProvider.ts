@@ -41,23 +41,22 @@ export class AvailDaProvider implements DaBlobProvider {
     const targetExtrinsics = block.extrinsics
       .filter((ex) => {
         // Get first 32 bytes (64 characters since hex is 2 chars per byte)
-        return ex.substring(0, 64).includes('008400')
+        return ex.substring(0, 64).includes('8400')
       })
       .reverse()
 
     const appIndex = block.header.extension.V3.appLookup.index
 
-    if (
-      targetExtrinsics.length !==
-      block.header.extension.V3.appLookup.index.length
-    ) {
+    if (targetExtrinsics.length === 0) {
       return []
     }
 
-    for (const index in appIndex) {
-      // actual data starts at byte ~236
+    for (let i = 0; i < targetExtrinsics.length; i++) {
       const sizeInBytes =
-        (targetExtrinsics[index].length - DATA_EXTRINSIC_SHIFT) / 2
+        (targetExtrinsics[i].length - DATA_EXTRINSIC_SHIFT) / 2
+
+      // If we have more extrinsics than appIds, assign the extra ones to the last appId
+      const appIdIndex = i < appIndex.length ? i : appIndex.length - 1
 
       blobs.push({
         type: 'avail',
@@ -65,7 +64,7 @@ export class AvailDaProvider implements DaBlobProvider {
         blockTimestamp: timestamp,
         blockNumber: number,
         size: BigInt(sizeInBytes),
-        appId: appIndex[index].appId.toString(),
+        appId: appIndex[appIdIndex].appId.toString(),
       })
     }
 

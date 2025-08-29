@@ -2,7 +2,7 @@
   "name": "settlus",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0x79ac1df75f6ced94d90a53540802fe221a76e6745989687d28a58afac30c2f84",
+  "configHash": "0x52ef4a021435d8a27e2506a16844cd00991836afbb361b9476a3208a1615ad81",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -2268,6 +2268,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23166913 },
+  "usedBlockNumbers": { "ethereum": 23166914 },
   "permissionsConfigHash": "0xea873eb3b972c5febc83f594760b7c3039c0adf813d0b82af7481b4454bf1202"
 }

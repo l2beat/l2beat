@@ -10,7 +10,15 @@
           0
         ]
       }
+    },
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
     }
   },
-  "ignoreMethods": ["context", "getMessageMinGasLimit", "proxiableUUID"]
+  "ignoreMethods": ["context", "getMessageMinGasLimit", "nextMessageId"]
 }

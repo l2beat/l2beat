@@ -12,7 +12,6 @@ export const payy: ScalingProject = upcomingL2({
     description:
       'Payy is an app-specific zk-rollup enabling privacy and scalability for payments and DeFi.',
     purposes: ['Payments'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://payy.network/'],
       bridges: ['https://payy.link/download'],
@@ -21,5 +20,8 @@ export const payy: ScalingProject = upcomingL2({
       repositories: ['https://github.com/polybase/payy'],
       socialMedia: ['https://x.com/payy_link'],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

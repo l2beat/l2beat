@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xfe9b3e6474f3d78c2a52d19b5483780ddf27318b
+
+# Diff at Mon, 18 Aug 2025 10:49:55 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c03ee7950e90b5ae118a7781f59ea26a0440c0f9 block: 1751875719
+- current timestamp: 1755513362
+
+## Description
+
+DAC key changed.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.dacKeyset.blsSignatures.1:
+-        "YBnmxAj50xHWx74c8TEJQ4hMxDc8au4r/8ZjDdm9VZZeVz30yudFDkKd5gzt/bnDkxL/fS3uO/uyV5IK/x5g53D7ZBMcrVJF3UMriIitIvf/jriRsnCi1TSZVG+RpGoMNAAji+ipTEVV5YnQPi/AVGQIGwmoEzhA/giQH7evlxzC1Q876MQqHTwwfIrX63UZ5hPEs84OyTq5gHvR71UYbI7TEzHRNi3RJTfgsidx8Q1v2jndA5HfYUq2pxmmPPkIoxHSK+Syt24Fe9q/6dIMN76BXMDpbXu1+r0QdQMPLEfSWm/aquMI6sN1ljaa958XThaluC1z+iqrR9b5e8LoEq1OliZf2qCHnv9MFX51KCF42zEQiz493XQrf0HUJIfCag=="
+      values.dacKeyset.blsSignatures.4:
++        "YAs1+BYgCS8HZ5vbTRT1nbt71wSvrFO3cFKUzWPXaud5V0ErIbWmk4ITu7VxEdDGnAyGmwwfVf2KjZXtsmDHYvXqED6z2fWva8RuY8wTrK5DYRVrPFpZxyFvfkO6j5TXyBPelZmJQzpQlFjx0eMoq4HFloDG1utysJywf3SqUuZKoU074I8pfkz4DSA8gomp6ACZNDBe+1rzvo4jFyzIKbhzveNanj9UWNEBJcrorD+ajWHW/Mrwn0P9RY5MeBt/CQQdCeHvOxTp95aWg2dXYv3iEB3WgH0i06da5gyjit809RYytX2x5I8pbgzugpsieBf8RrKq9FZujcdJJVAVtYJf/hWdptqcwEDdhfZTE2uMOVNJGFnwQ95wYdMT1jQpHA=="
+      values.keySetUpdates:
+-        8
++        9
+    }
+```
+
 Generated with discovered.json: 0xea680efc9b7c5044d4a6b8d6e8ec0cc6401fb7e6
 
 # Diff at Mon, 14 Jul 2025 12:44:24 GMT:

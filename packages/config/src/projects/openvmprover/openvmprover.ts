@@ -6,7 +6,7 @@ import type { BaseProject } from '../../types'
 export const openvmprover: BaseProject = {
   id: ProjectId('openvmprover'),
   slug: 'openvmprover',
-  name: 'Scroll',
+  name: 'OpenVM',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-21')),
   statuses: {
@@ -18,14 +18,17 @@ export const openvmprover: BaseProject = {
   },
   display: {
     description:
-      'OpenVM prover is a zk proving system for customizable modular VM built by Scroll.',
+      'OpenVM prover is a zk proving system for customizable modular VM built by Axiom and used to prove Scroll L2 STF.',
     links: {
-      websites: ['https://docs.scroll.io/en/home/'],
+      websites: ['https://openvm.dev'],
       documentation: [
         'https://book.openvm.dev',
         'https://www.youtube.com/watch?v=NHwd-gJ8xg4',
       ],
-      repositories: ['https://github.com/scroll-tech/zkvm-prover/tree/master'],
+      repositories: [
+        'https://github.com/openvm-org/openvm',
+        'https://github.com/scroll-tech/zkvm-prover/tree/master',
+      ],
     },
     badges: [],
   },
@@ -40,10 +43,10 @@ export const openvmprover: BaseProject = {
     },
   ],
   zkCatalogInfo: {
-    creator: 'Scroll',
+    creator: 'Axiom',
     techStack: {
       zkVM: [
-        ZK_CATALOG_TAGS.STARK.ZkvmProver,
+        ZK_CATALOG_TAGS.STARK.Plonky3,
         ZK_CATALOG_TAGS.ISA.OpenVM,
         // ZK_CATALOG_TAGS.Arithmetization.AIR,
         ZK_CATALOG_TAGS.Field.BabyBear,

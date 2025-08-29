@@ -13,7 +13,6 @@ export const nil: ScalingProject = upcomingL2({
     description:
       '=nil; is a zkRollup that securely scales Ethereum through zkSharding, empowering web3 developers to build scalable and composable applications.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://nil.foundation/'],
       documentation: ['https://docs.nil.foundation/'],
@@ -21,5 +20,8 @@ export const nil: ScalingProject = upcomingL2({
       repositories: ['https://github.com/nilfoundation'],
       socialMedia: ['https://twitter.com/nil_foundation'],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

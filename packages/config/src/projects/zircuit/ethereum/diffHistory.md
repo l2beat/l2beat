@@ -1,4 +1,228 @@
-Generated with discovered.json: 0xd2b0f39ef0eaefc9328e29f2fdbcaf08f831c642
+Generated with discovered.json: 0x99d75e1ddf2eb52ee3bc2bc62b9dacbcf05b4d1a
+
+# Diff at Fri, 29 Aug 2025 07:19:10 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e68cba094085f7ab7e642304a942701f260f19fb block: 1756216503
+- current timestamp: 1756451851
+
+## Description
+
+Updated fee parameters.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.operatorFeeConstant:
+-        0
++        23225000000
+      values.operatorFeeScalar:
+-        0
++        4200000000
+    }
+```
+
+Generated with discovered.json: 0x3abb85b5b9bd5c27d49020755a9731acfb98a761
+
+# Diff at Tue, 26 Aug 2025 13:58:36 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1756120933
+- current timestamp: 1756216503
+
+## Description
+
+Zircuit started posting SP1 proofs and the old verifier is now impossible to be used, even though it is still there.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756120933 (main branch discovery), not current.
+
+```diff
+    contract VerifierV2 (0xC25D093D3A3f58952252D2e763BEAF2559dc9737) {
+    +++ description: ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. The verifier is now unused as the project migrated to SP1.
+      description:
+-        "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system."
++        "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. The verifier is now unused as the project migrated to SP1."
+      category.name:
+-        "Local Infrastructure"
++        "Spam"
+      category.priority:
+-        5
++        -1
+    }
+```
+
+Generated with discovered.json: 0x60582163e2d99029023a3267e79fbd37e734cf24
+
+# Diff at Mon, 25 Aug 2025 13:11:34 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ad220cb66b2845d84a69889aeb34f71bc5a0a6b0 block: 1754567136
+- current timestamp: 1756120933
+
+## Description
+
+- [SystemConfig](https://disco.l2beat.com/diff/eth:0x795277B6aD8778E27aa70813157134cfC4a4D446/eth:0x83085450544c3F360a40720859EbB1bfd311584D): added a `setEIP1559Params` function to update denominator and elasticity params.
+- [OptimismPortal](https://disco.l2beat.com/diff/eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26/eth:0xF7209f5471628aC5f68FE4ae98Feb7f02E0f40Be): additional check in `proveWithdrawalTransaction`, nothing significant. Ignore changes related to interfaces.
+- [L2OutputOracle](https://disco.l2beat.com/diff/eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315/eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65): biggest change as it now supports SP1, but it is currently not used. A check has been added to the .ts file to detect when it gets used.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4.
+      sourceHashes.1:
+-        "0xb800094cbe5da9b7c7fb14d9f851fabc0adb88151044c80334d6c6f9cc27cc4b"
++        "0xc4abdb5610f10d943d33cff714f0c98807bd0f37828f9b5b32a0874a2f192ce6"
+      values.$implementation:
+-        "eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26"
++        "eth:0xF7209f5471628aC5f68FE4ae98Feb7f02E0f40Be"
+      values.$pastUpgrades.7:
++        ["2025-08-22T22:25:59.000Z","0x1d729201879e9035259d12fc58020a8f4dd1cb7c6972f915a6fcef15f89756d6",["eth:0xF7209f5471628aC5f68FE4ae98Feb7f02E0f40Be"]]
+      values.$upgradeCount:
+-        7
++        8
+      implementationNames.eth:0xA0A36095A2258568759fb41CAE4934BBd2d04E26:
+-        "OptimismPortal"
+      implementationNames.eth:0xF7209f5471628aC5f68FE4ae98Feb7f02E0f40Be:
++        "OptimismPortal"
+    }
+```
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x889638b8fe1fe5acdc9fc63605747e530d07ef7a0e81c151b0e3f546c24adef9"
++        "0x55baff01a4d31b7dd4257fdb3509fffb44fb2fcc634cb987ae812f322bde0fcf"
+      values.$implementation:
+-        "eth:0x795277B6aD8778E27aa70813157134cfC4a4D446"
++        "eth:0x83085450544c3F360a40720859EbB1bfd311584D"
+      values.$pastUpgrades.2:
++        ["2025-08-22T22:25:59.000Z","0x1d729201879e9035259d12fc58020a8f4dd1cb7c6972f915a6fcef15f89756d6",["eth:0x83085450544c3F360a40720859EbB1bfd311584D"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.resourceConfig.maxTransactionLimit:
+-        8
+      values.resourceConfig._spacer:
++        8
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      implementationNames.eth:0x795277B6aD8778E27aa70813157134cfC4a4D446:
+-        "SystemConfig"
+      implementationNames.eth:0x83085450544c3F360a40720859EbB1bfd311584D:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      directlyReceivedPermissions.4:
+-        {"permission":"upgrade","from":"eth:0x6BCe7408c0781dcE7b71494274302D4b75a1447c","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c)
+    +++ description: This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof.
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 30d of no state updates by supplying merkle proofs or using a resolver.
+      template:
+-        "opstack/zircuit/L2OutputOracle"
++        "opstack/zircuit/L2OutputOracle_SP1"
+      sourceHashes.1:
+-        "0x5c9c6bf3e729a43f2616db0dda98893b4011faf62a7ce137ee88e758028f8047"
++        "0x409b9567c50661b673c0f84e9b8ed470f1ca48bc04fb1c8d09f8cac545e82cf8"
+      values.$implementation:
+-        "eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315"
++        "eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65"
+      values.$pastUpgrades.6:
++        ["2025-08-22T22:25:59.000Z","0x1d729201879e9035259d12fc58020a8f4dd1cb7c6972f915a6fcef15f89756d6",["eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.systemOwner:
+-        "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      values.verifier:
+-        "eth:0x6BCe7408c0781dcE7b71494274302D4b75a1447c"
+      values.VERIFIER:
+-        "eth:0x6BCe7408c0781dcE7b71494274302D4b75a1447c"
+      values.version:
+-        "2.1.0"
++        "3.0.0"
+      values.aggregationVkey:
++        "0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452"
+      values.allowBootstrapKeepalive:
++        false
+      values.initializerVersion:
++        2
+      values.owner:
++        "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      values.pendingOwner:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rangeVkeyCommitment:
++        "0x40bc0563112dcc6868037ea0445916342df200ec0152bf7b4c2cca1d640fdaa3"
+      values.rollupConfigHash:
++        "0x4443cede364fd50e63d976126c720d4b12b9a608e1005e42f95d619b552a913c"
+      values.verifierV3:
++        "eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67"
+      implementationNames.eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315:
+-        "L2OutputOracle"
+      implementationNames.eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65:
++        "L2OutputOracle"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 1 (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x6BCe7408c0781dcE7b71494274302D4b75a1447c","role":"admin","via":[{"address":"eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+## Source code changes
+
+```diff
+.../L2OutputOracle/L2OutputOracle.sol              |  587 +++++--
+ .../OptimismPortal/OptimismPortal.sol              | 1555 +++++++++---------
+ .../zircuit/ethereum/.flat/SP1Verifier.sol         |  602 +++++++
+ .../zircuit/ethereum/.flat/SP1VerifierGateway.sol  |  278 ++++
+ .../SystemConfig/SystemConfig.sol                  |   34 +-
+ .../Verifier/Proxy.p.sol => /dev/null              |  201 ---
+ .../Verifier/Verifier.sol => /dev/null             | 1643 --------------------
+ 7 files changed, 2178 insertions(+), 2722 deletions(-)
+```
+
+Generated with discovered.json: 0x76067fd761e63e6fb7c665038b0b3c2a5e9f3d8e
 
 # Diff at Thu, 07 Aug 2025 11:45:55 GMT:
 

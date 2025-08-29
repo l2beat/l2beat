@@ -2,7 +2,7 @@
   "name": "layerzerov2oft",
   "chain": "ethereum",
   "timestamp": 1752074063,
-  "configHash": "0x175cd7afbe402cf1884164e66cc10859fcb594c2d0ee8b94acff154f516eed79",
+  "configHash": "0x6eb634c4ea21f5223494384f7458a8d4a9df23298918ba6dcbc34970e1cd25e6",
   "entries": [
     {
       "address": "eth:0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2",

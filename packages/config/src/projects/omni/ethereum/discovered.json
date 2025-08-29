@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "timestamp": 1755171830,
-  "configHash": "0xc1d881edb7c8d8fc680f70e735ea952988522dae4975e5ead9866f653bce7bcf",
+  "configHash": "0x1579affe7ab0c693d701abbdd21d419966009d958511be4e4d866db7e6ea36b9",
   "entries": [
     {
       "name": "Giveth EOA 2",
@@ -1552,6 +1552,6 @@
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23139062 },
-  "permissionsConfigHash": "0x5e1db316d1473e7c712fafb8a396b733a20090a1d1dbca783ad499e657dab8fb"
+  "usedBlockNumbers": { "ethereum": 23139063 },
+  "permissionsConfigHash": "0xdd14a223281ad3007f536bad13ce1c6e2547595fe29cce02186ba8e2b58df53b"
 }

@@ -2,7 +2,7 @@
   "name": "apechain",
   "chain": "arbitrum",
   "timestamp": 1750247636,
-  "configHash": "0x005777ea69aa464c1c9b01c09ea36e29e3d3a0aa137c1a0ee765324da5fe863e",
+  "configHash": "0x00a7460041254fc8687b840b915d70f5b833dab40a19194c7e44d590c23d2da2",
   "entries": [
     {
       "name": "Inbox",

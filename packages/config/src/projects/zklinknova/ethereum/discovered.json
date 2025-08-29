@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "ethereum",
   "timestamp": 1753687799,
-  "configHash": "0xb7c0b6e6c5ff1722154d2e266dd651ea054534de170e0b79faaffcd6f45a401d",
+  "configHash": "0x9d4f8489eef7a5e1a5358c2b41afd3656f45df780c446dfa32f969cfdc8590db",
   "entries": [
     {
       "name": "Arbitrator",

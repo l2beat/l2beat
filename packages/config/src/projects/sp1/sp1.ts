@@ -140,6 +140,13 @@ export const sp1: BaseProject = {
           ProjectId('xlayer'),
           ProjectId('taiko'),
           ProjectId('facet'),
+          ProjectId('plumenetwork'), // blobstream project
+          ProjectId('galxegravity'), // blobstream project
+          ProjectId('rari'), // blobstream project
+          ProjectId('winr'), // blobstream project
+          ProjectId('molten'), // blobstream project
+          ProjectId('sophon'), // vector project
+          ProjectId('lens'), // vector project
         ],
       },
       {
@@ -167,7 +174,7 @@ export const sp1: BaseProject = {
           'https://gnosisscan.io/address/0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('omni'), ProjectId('facet')],
+        usedBy: [ProjectId('omni'), ProjectId('facet'), ProjectId('zircuit')],
       },
     ],
   },

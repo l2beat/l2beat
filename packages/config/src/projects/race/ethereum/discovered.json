@@ -2,7 +2,7 @@
   "name": "race",
   "chain": "ethereum",
   "timestamp": 1745587139,
-  "configHash": "0x3bc6b88129e77f47e9a332480fd6510de19e26568362b6cd95f8e9f9713a17ae",
+  "configHash": "0x24aa16c433c6e1ba7366308500620122b71b1fa1457d86c56855cb33dab585ed",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

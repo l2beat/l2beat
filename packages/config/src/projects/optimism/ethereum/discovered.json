@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "timestamp": 1755525885,
-  "configHash": "0xef5818563fa17e0e17995738e90b93df4cf05c9152ee2f8c631030fdc8a8464e",
+  "configHash": "0x1a0a2f320cc1d2b124a089b1d0a891037f97a82badf608597f7d5f1d302eb1df",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -400,7 +400,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "2d 19h",
+        "timeSinceLastL2beatInteraction": "9d 14h",
         "version": "1.0.0"
       },
       "implementationNames": {

@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "timestamp": 1754307650,
-  "configHash": "0x03aeeefe5b09cde0800c4bd5fbdc0745aa4ba02a219065edb04fa1814f0c27c6",
+  "configHash": "0x35133b7af5eb0eb74e100c94b3f85f7cea20c705650c08e66e5f2faebd65e46b",
   "entries": [
     {
       "address": "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -668,7 +668,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1754307635,
+        "getCurrentTime": 1754307647,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -5219,6 +5219,6 @@
     "uma/SkinnyOptimisticOracle": "0x1434821bf46e935aa8212feff24f12aba596cb343a0f7e1cd85c013d25744d5f",
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b"
   },
-  "usedBlockNumbers": { "ethereum": 23067462 },
+  "usedBlockNumbers": { "ethereum": 23067463 },
   "permissionsConfigHash": "0x374f1dcd3758e040d8c861238495ac3be3205eac7b121d5d58ede7f85a9eb8b9"
 }

@@ -2,7 +2,7 @@
   "name": "starknet",
   "chain": "ethereum",
   "timestamp": 1747219823,
-  "configHash": "0xad3be60e230b5768eb1f949c76372e4616cf705ea8f882c0d90968455c9d7519",
+  "configHash": "0x679dad53ad912d1d2dc3c526183bbfec511bd864101fc5b217cabfbd7cb7cb15",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

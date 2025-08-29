@@ -2,7 +2,7 @@
   "name": "l3x",
   "chain": "arbitrum",
   "timestamp": 1734957965,
-  "configHash": "0x9d8d838aaa04715e948196b0203b9154a266f72694ae384ee8ce90ec34bac259",
+  "configHash": "0x65f74cd343badfde7be9d6f03dbe416988a4c63f0c17cb1a6add3284e849caab",
   "entries": [
     {
       "name": "Outbox",

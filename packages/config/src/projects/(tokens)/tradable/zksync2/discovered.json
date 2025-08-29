@@ -2,7 +2,7 @@
   "name": "tradable",
   "chain": "zksync2",
   "timestamp": 1755162744,
-  "configHash": "0xcacfc22a6ec7b759d36b6d7fbdff37db776b8783bc92fe3daea675bf60146c3d",
+  "configHash": "0x2e2ca55e40bda3558d445bdd5376a695cd158f64dd6401bf0186dccc7de37be6",
   "entries": [
     {
       "address": "zksync:0x00Ac919b47D88Daf465EA9b03FF3B1D197582CE0",
@@ -1530,7 +1530,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -1633,7 +1633,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2060,7 +2060,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2353,7 +2353,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2832,7 +2832,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2924,7 +2924,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -3971,7 +3971,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4082,7 +4082,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4165,7 +4165,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4279,7 +4279,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4456,7 +4456,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4604,7 +4604,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4696,7 +4696,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4847,7 +4847,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5350,7 +5350,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5847,7 +5847,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -6465,7 +6465,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -6568,7 +6568,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -7477,7 +7477,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -9233,7 +9233,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -9342,7 +9342,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10419,7 +10419,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10501,7 +10501,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10828,7 +10828,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10964,7 +10964,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -11100,7 +11100,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -11978,7 +11978,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12561,7 +12561,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12982,7 +12982,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13493,7 +13493,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13722,7 +13722,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13826,7 +13826,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14280,7 +14280,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14387,7 +14387,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14518,7 +14518,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14905,7 +14905,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -15000,7 +15000,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -15883,7 +15883,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1755162740,
+        "clock": 1755162743,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -16635,6 +16635,6 @@
     "tradable/DealManager": "0x97aad4d43c4d3012e4f422bd12a8407e28b602da351ab2be57ee9d27ac4912ba",
     "tradable/DealRegistry": "0x80492a8b01b07c7eb3c5cebc3a4c692ef4abb2da9faf34b0d838d7d21d76e23f"
   },
-  "usedBlockNumbers": { "zksync2": 64027304 },
+  "usedBlockNumbers": { "zksync2": 64027305 },
   "permissionsConfigHash": "0x9611c95bd6e720ff5f90546129ace6491cf2ed3ceaf6c25b4a9d39c05bbcb8f8"
 }

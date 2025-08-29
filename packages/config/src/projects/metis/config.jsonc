@@ -51,9 +51,6 @@
     "eth:0xB2e2060A179e67cA4299Cc79fA337B98791DE069": {
       "ignoreMethods": ["get", "chain_under_challenge"]
     },
-    "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": {
-      "ignoreMethods": ["chain_under_challenge"]
-    },
     "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": {
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
       "ignoreInWatchMode": ["nonce"],
@@ -61,6 +58,16 @@
         "getOwners": { "severity": "LOW", "type": "PERMISSION" },
         "getThreshold": { "severity": "HIGH", "type": "PERMISSION" }
       }
+    },
+    // Unused contracts
+    "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": {
+      "ignoreDiscovery": true
     }
   }
 }

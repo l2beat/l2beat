@@ -1,8 +1,8 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "timestamp": 1744706039,
-  "configHash": "0x02afdfa21898c7decd7f727bc2bdee8b34c5c740bde86aa64c8a037fa4997f50",
+  "timestamp": 1756300390,
+  "configHash": "0xb30025be0e463ebd0a25da2ba117b29c62ab9156f82d98bb05677e973cf7ccdb",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -99,7 +99,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 115,
+        "nonce": 128,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -146,10 +146,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 78286346,
-        "latestOutputIndex": 9507,
-        "nextBlockNumber": 78288146,
-        "nextOutputIndex": 9508,
+        "latestBlockNumber": 84082346,
+        "latestOutputIndex": 12727,
+        "nextBlockNumber": 84084146,
+        "nextOutputIndex": 12728,
         "PROPOSER": "eth:0x6667961f5e9C98A76a48767522150889703Ed77D",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
@@ -447,7 +447,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 13 (46%)",
-        "nonce": 54,
+        "nonce": 57,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -588,7 +588,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292698539",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292700482",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -721,8 +721,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 591926,
-          "prevBlockNum": 22273145
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 23231090
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -1218,6 +1218,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22273219 },
+  "usedBlockNumbers": { "ethereum": 23232678 },
   "permissionsConfigHash": "0x71dab5e968205d6e6437d6c333a20fc3b2dfbd77dff2f44dc6061338a532dfd6"
 }

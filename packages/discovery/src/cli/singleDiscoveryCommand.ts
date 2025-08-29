@@ -1,7 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
 import { boolean, command, flag, positional } from 'cmd-ts'
+import groupBy from 'lodash/groupBy'
 import path from 'path'
 import { rimraf } from 'rimraf'
 import { getChainConfigs } from '../config/config.discovery'
@@ -52,26 +54,33 @@ export const SingleDiscoveryCommand = command({
 
     await rimraf(rootFolder)
 
-    await saveDiscoveryResult(
-      result,
-      projectConfig,
-      timestamp,
-      usedBlockNumbers,
-      Logger.INFO,
-      {
-        paths: { ...paths, discovery: rootFolder },
-        templatesFolder,
-      },
+    const grouped = groupBy(result, (entry) =>
+      ChainSpecificAddress.longChain(entry.address),
     )
 
-    logger.info(
-      'Opening discovered.json in the browser, please use firefox or other browser with JSON viewer extension',
-    )
-    logger.info(
-      'The discovered.json & code can be found in "./cache/single-discovery"',
-    )
+    for (const [chain, entries] of Object.entries(grouped)) {
+      await saveDiscoveryResult(
+        chain,
+        entries,
+        projectConfig,
+        timestamp,
+        { [chain]: usedBlockNumbers[chain] } as Record<string, number>,
+        Logger.INFO,
+        {
+          paths: { ...paths, discovery: rootFolder },
+          templatesFolder,
+        },
+      )
 
-    const jsonFilePath = path.join(rootFolder, 'discovered.json')
-    execSync(`open ${jsonFilePath}`)
+      logger.info(
+        'Opening discovered.json in the browser, please use firefox or other browser with JSON viewer extension',
+      )
+      logger.info(
+        'The discovered.json & code can be found in "./cache/single-discovery"',
+      )
+
+      const jsonFilePath = path.join(rootFolder, 'discovered.json')
+      execSync(`open ${jsonFilePath}`)
+    }
   },
 })

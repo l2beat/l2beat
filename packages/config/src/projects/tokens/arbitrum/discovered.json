@@ -1,11 +1,21 @@
 {
   "name": "tokens",
   "chain": "arbitrum",
-  "timestamp": 1755018135,
-  "configHash": "0xa6186a6135c321188e4eb4b573b6a66afcd380bb58ff72a8a9537845c4c6090e",
+  "timestamp": 1755691670,
+  "configHash": "0xc1718afb0c13259915dc9bd7c4cc65a507798fed0886d36405c2de5af8d68164",
   "entries": [
     {
       "address": "arb1:0x4896F23FF83242D8D4EB5fA1dEdF8c57e9145949",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x4D1d9C5B5d9Ca448194313D799De374f362Bd460",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x6c00Be5d1013a5bca938EF6aa8F1E5e706FF384d",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -26,6 +36,9 @@
         "$immutable": false,
         "$implementation": "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
         "$members": [
+          "arb1:0x4D1d9C5B5d9Ca448194313D799De374f362Bd460",
+          "arb1:0x6c00Be5d1013a5bca938EF6aa8F1E5e706FF384d",
+          "arb1:0xDa47Bd72438F11bef7Cc54F18cd02426dd86A5a2",
           "arb1:0xe67D2cbeaE3090bE017C66e7A6943961619a5D35",
           "arb1:0xA6e06dfE42064B7Cd6DC902a62e74ca5Bb574011",
           "arb1:0x4896F23FF83242D8D4EB5fA1dEdF8c57e9145949"
@@ -34,8 +47,8 @@
         "domainSeparator": "0xdf959e294edf7bc87123900e3127393d013c9fd8c6f92c7e6ea6f37f174037bd",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 16,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 17,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -128,7 +141,7 @@
         "owner": "arb1:0x0000000000000000000000000000000000000000",
         "paused": false,
         "symbol": "EUTBL",
-        "totalSupply": 13694954017212,
+        "totalSupply": 13640765418382,
         "trustedForwarder": "arb1:0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -136,6 +149,11 @@
         "arb1:0xCBeb19549054CC0a6257A77736FC78C367216cE7": "ERC1967Proxy",
         "arb1:0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80": "Token"
       }
+    },
+    {
+      "address": "arb1:0xDa47Bd72438F11bef7Cc54F18cd02426dd86A5a2",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xe67D2cbeaE3090bE017C66e7A6943961619a5D35",
@@ -324,6 +342,6 @@
     "tokens/EUTBL": "0x81f0a4ba908b50bd6aeb98ad11d5d6a3e2983f1ae5079341231489456a5b84f8",
     "tokens/PermissionManager": "0x68a32dbe1505111ca8a93551d5ccd78d16a6aa3a631c6206c804f4ae8b405767"
   },
-  "usedBlockNumbers": { "arbitrum": 367708014 },
-  "permissionsConfigHash": "0x7d346d89848c9776ec064c9cb072f1ab7310ba47fed16218ee7768eac453777a"
+  "usedBlockNumbers": { "arbitrum": 370405709 },
+  "permissionsConfigHash": "0xa785713915a3d09c913ed115c0a3a9eb6d680bd4f00ec6f13ac0e170700418aa"
 }

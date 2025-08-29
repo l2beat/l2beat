@@ -19,65 +19,6 @@ import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
 
 describe(UpdateDiffer.name, () => {
-  describe(UpdateDiffer.prototype.runForChain.name, () => {
-    it('runs for all projects', async () => {
-      const chain = 'ethereum'
-      const configReader = mockObject<ConfigReader>({
-        readAllDiscoveredConfigsForChain: mockFn().returns([
-          { name: PROJECT_A, chain },
-          { name: PROJECT_B, chain },
-        ]),
-      })
-
-      const updateDiffer = new UpdateDiffer(
-        configReader,
-        mockObject<Database>(),
-        mockObject<DiscoveryOutputCache>(),
-        Logger.SILENT,
-      )
-      const runForProjectMockFn = mockFn().resolvesTo(undefined)
-      updateDiffer.runForProject = runForProjectMockFn
-
-      await updateDiffer.runForChain(chain, UnixTime.now())
-
-      expect(
-        configReader.readAllDiscoveredConfigsForChain,
-      ).toHaveBeenCalledWith(chain)
-      expect(runForProjectMockFn).toHaveBeenNthCalledWith(
-        1,
-        PROJECT_A,
-        chain,
-        UnixTime.now(),
-      )
-      expect(runForProjectMockFn).toHaveBeenNthCalledWith(
-        2,
-        PROJECT_B,
-        chain,
-        UnixTime.now(),
-      )
-    })
-
-    it('throws if projectConfig chain mismatch', async () => {
-      const chain = 'ethereum'
-      const configReader = mockObject<ConfigReader>({
-        readAllDiscoveredConfigsForChain: mockFn().returns([
-          { name: PROJECT_A, chain: 'arbitrum' },
-        ]),
-      })
-
-      const updateDiffer = new UpdateDiffer(
-        configReader,
-        mockObject<Database>(),
-        mockObject<DiscoveryOutputCache>(),
-        Logger.SILENT,
-      )
-
-      expect(
-        async () => await updateDiffer.runForChain(chain, UnixTime.now()),
-      ).toBeRejected()
-    })
-  })
-
   describe(UpdateDiffer.prototype.runForProject.name, () => {
     it('should insert update diffs', async () => {
       const updateDiffRepository = mockObject<UpdateDiffRepository>({
@@ -130,7 +71,7 @@ describe(UpdateDiffer.name, () => {
       ]
       updateDiffer.getUpdateDiffs = mockFn().returns(updateDiffs)
 
-      await updateDiffer.runForProject(PROJECT_A, 'ethereum', UnixTime.now())
+      await updateDiffer.runForProject(PROJECT_A, ['ethereum'], UnixTime.now())
 
       expect(dbTransaction).toHaveBeenCalled()
       expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
@@ -160,7 +101,7 @@ describe(UpdateDiffer.name, () => {
       )
       updateDiffer.getUpdateDiffs = mockFn().returns([])
 
-      await updateDiffer.runForProject(PROJECT_A, 'ethereum', UnixTime.now())
+      await updateDiffer.runForProject(PROJECT_A, ['ethereum'], UnixTime.now())
 
       expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
         PROJECT_A,
@@ -196,7 +137,7 @@ describe(UpdateDiffer.name, () => {
       const getUpdateDiffsMock = mockFn()
       updateDiffer.getUpdateDiffs = getUpdateDiffsMock
 
-      await updateDiffer.runForProject(PROJECT_A, 'ethereum', UnixTime.now())
+      await updateDiffer.runForProject(PROJECT_A, ['ethereum'], UnixTime.now())
 
       expect(dbTransaction).not.toHaveBeenCalled()
       expect(getUpdateDiffsMock).not.toHaveBeenCalled()
@@ -388,7 +329,6 @@ describe(UpdateDiffer.name, () => {
 })
 
 const PROJECT_A = 'project-a'
-const PROJECT_B = 'project-b'
 const NAME_A = 'contract-a'
 const ADDRESS_A = EthereumAddress.random()
 const NAME_B = 'contract-b'

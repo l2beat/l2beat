@@ -16,7 +16,6 @@ export const rufus: ScalingProject = underReviewL2({
   display: {
     name: 'Rufus',
     slug: 'rufus',
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     description:
       'Rufus is an Orbit stack L2 with AnyTrust DA created for gaming by the team behind the Dogelon (ELON) token.',
@@ -33,6 +32,10 @@ export const rufus: ScalingProject = underReviewL2({
         'https://reddit.com/r/dogelon/',
       ],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Optimistic',
   },
   associatedTokens: ['ELON'],
   chainConfig: {

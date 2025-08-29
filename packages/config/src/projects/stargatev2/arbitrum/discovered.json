@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "arbitrum",
   "timestamp": 1752074075,
-  "configHash": "0xd9168e9e1725b7b04252281153b846e61dcaa71965be7f46643c6b352c742b3f",
+  "configHash": "0x064aaaa253417a49fe0b9589b591f6ec682070effdb57c51be07437dfeebb5cb",
   "entries": [
     {
       "name": "TokenMessagingArbitrum",

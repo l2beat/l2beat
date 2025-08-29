@@ -13,7 +13,7 @@ interface ScalingApiEntry {
   slug: string
   type: 'layer2' | 'layer3'
   hostChain: string | undefined
-  category: string
+  category: string | undefined
   providers: string[] | undefined
   purposes: string[]
   isArchived: boolean

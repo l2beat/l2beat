@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "timestamp": 1754120227,
-  "configHash": "0x8162c712d79ed1eb8257205243cf623bfde5ee43b6087ac8dd9d13bd0b74da48",
+  "timestamp": 1755850298,
+  "configHash": "0x638fd22e7e7c628851d3e7f4c75557f1a7fd87fbb5c2007c4df4dba9a44efb20",
   "entries": [
     {
       "name": "ProtocolTimelockController",
@@ -122,14 +122,15 @@
               "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
               "zksync:0x51E818785dEa065D392ac21F04E9cac5B601Cfd8",
               "zksync:0x70F6998FC0c492d9DD08b1105259252329be9Db6",
-              "zksync:0x496c401f5764D137a448C991D95B10125375AC08"
+              "zksync:0x496c401f5764D137a448C991D95B10125375AC08",
+              "zksync:0xcfA355a6678a38c401B89bF44C6f98AF5a98572B"
             ]
           },
           "BURNER_ROLE": { "adminRole": "BURNER_ADMIN_ROLE", "members": [] }
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1754120226,
+        "clock": 1755850298,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -150,7 +151,7 @@
         "MinterAdmin": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "13742632062315200000000000000"
+        "totalSupply": "13749972091315200000000000000"
       },
       "implementationNames": {
         "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
@@ -235,7 +236,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1754120226,
+        "clock": 1755850298,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -368,7 +369,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1754120226,
+        "clock": 1755850298,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -387,7 +388,7 @@
         "lateQuorumVoteExtension": 604800,
         "name": "ZkTokenGovernor",
         "proposalCreatedCount": 0,
-        "proposalQueuedCount": 3,
+        "proposalQueuedCount": 4,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "PROPOSE_GUARDIAN": "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
@@ -636,7 +637,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1754120226,
+        "clock": 1755850298,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -1095,6 +1096,6 @@
     "shared-zk-stack/ZkGovernor": "0x627a5b1cf3f7bfbb4bda2c2996de6a7e2d49c2fc9250811d48f3508071e07ac6",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "usedBlockNumbers": { "zksync2": 63638138 },
+  "usedBlockNumbers": { "zksync2": 64193692 },
   "permissionsConfigHash": "0xb225a1c4ad9acaae4a1265042a215cb9c2dffbea01a44fa59f1fc00bc0dda257"
 }

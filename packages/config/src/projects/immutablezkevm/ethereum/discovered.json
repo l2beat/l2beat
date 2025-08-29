@@ -2,7 +2,7 @@
   "name": "immutablezkevm",
   "chain": "ethereum",
   "timestamp": 1741355351,
-  "configHash": "0xc0e6b0cc2054b0b0fd156ea800acebe693156573652f80d92b64bcd45a268a11",
+  "configHash": "0xbd89ceeb5ef473fcb8741604175e1b96035e78e4f28bc5ee9c20c424c4e297cd",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000007B",

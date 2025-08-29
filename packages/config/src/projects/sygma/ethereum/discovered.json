@@ -2,7 +2,7 @@
   "name": "sygma",
   "chain": "ethereum",
   "timestamp": 1711624295,
-  "configHash": "0x637d49cdf5c4e38edca56482349b74eae943ea5091d12398092c852b88a93f4a",
+  "configHash": "0x7564e4f27a45b6961882819f8e3b9e64f5fb9d55a7d26a2dba4f34ea70e72748",
   "entries": [
     {
       "address": "eth:0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a",

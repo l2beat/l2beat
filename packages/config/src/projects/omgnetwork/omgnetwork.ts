@@ -31,8 +31,6 @@ export const omgnetwork: ScalingProject = {
     description:
       'OMG Network claims to be the leading value transfer network for ETH and ERC20 tokens. The Network scales by centralizing transaction processing and remains safe by decentralizing security.',
     purposes: ['Payments'],
-    category: 'Plasma',
-
     links: {
       websites: ['https://omg.network'],
       documentation: ['https://docs.omg.network/'],

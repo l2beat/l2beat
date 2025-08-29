@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -43,10 +44,19 @@ export function ScalingActivityTable({ entries, notReviewed }: Props) {
       },
     },
   })
+
   return (
     <BasicTable
       table={table}
-      rowColoringMode={notReviewed ? 'ignore-colors' : undefined}
+      rowSortingFn={(a, b) => {
+        if (a.original.id === ProjectId.ETHEREUM) {
+          return -1
+        }
+        if (b.original.id === ProjectId.ETHEREUM) {
+          return 1
+        }
+        return 0
+      }}
     />
   )
 }

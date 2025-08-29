@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "timestamp": 1753200107,
-  "configHash": "0xacdfef3f5dfbf27ad79c203f222790ea7e151537040767a4c7e2257c3d28b85f",
+  "configHash": "0xe2716d4f829566a77062f88ea3c7900c9e4ea3ec59cddf563ebe8ddd3e90762b",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

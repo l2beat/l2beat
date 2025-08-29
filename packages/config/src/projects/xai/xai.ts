@@ -127,7 +127,7 @@ export const xai: ScalingProject = orbitStackL3({
         },
         {
           external: true,
-          name: 'Rug Radio',
+          name: 'Alt Layer',
           href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
         },
         {

@@ -1,8 +1,8 @@
 {
   "name": "ebichain",
   "chain": "ethereum",
-  "timestamp": 1755009465,
-  "configHash": "0x70cff1d730ee41843d4497b8b27e4e99da052393a8a04f9617ee8e60df44d828",
+  "timestamp": 1756214657,
+  "configHash": "0x3f24e40e616dd47e402757ed38cf845509671d892d9ce8850f22743aac36b81a",
   "entries": [
     {
       "name": "SequencerInbox",
@@ -340,7 +340,6 @@
         "$members": [
           "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-          "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
           "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
@@ -355,8 +354,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 152,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 159,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -486,11 +485,6 @@
     },
     {
       "address": "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1502,6 +1496,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23125607 },
-  "permissionsConfigHash": "0xfb393ab3d6d1cd66f1d9e1d5aae15bc147db69d43c9fef32fc16a821c08b8b15"
+  "usedBlockNumbers": { "ethereum": 23225564 },
+  "permissionsConfigHash": "0x5d6ff986403639b9692e82361ee4434e99b1902052c9372926967f3bc58eef02"
 }

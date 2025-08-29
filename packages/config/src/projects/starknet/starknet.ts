@@ -20,7 +20,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -198,8 +197,6 @@ export const starknet: ScalingProject = {
     description:
       'Starknet is a ZK rollup that uses STARK proofs to securely scale Ethereum and Ethereum blobs for data availability. Starknet is also actively engaged in bringing Bitcoin users the same scale, UX, and liquidity through a variety of products and programs.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
-
     links: {
       bridges: ['https://starkgate.starknet.io/'],
       websites: [
@@ -254,7 +251,7 @@ export const starknet: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
-      secondLine: formatExecutionDelay(finalizationPeriod),
+      executionDelay: finalizationPeriod,
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,

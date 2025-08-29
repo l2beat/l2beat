@@ -2,7 +2,7 @@
   "name": "shared-sp1",
   "chain": "base",
   "timestamp": 1752073781,
-  "configHash": "0x0d92ad4bf6f9ca6ee74fd8fc271b886d7174fe114f3ef96cadff02d4fd7043cb",
+  "configHash": "0x683ed7d06905c7cc2a8451a47f2bd43641bc8367f96a86109420cd37244970ef",
   "entries": [
     {
       "name": "SP1Verifier",

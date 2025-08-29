@@ -59,13 +59,13 @@ TableHeaderRow.displayName = 'TableHeaderRow'
 
 const TableRow = ({
   className,
-  slug,
+  highlightId,
   ...props
 }: React.HTMLAttributes<HTMLTableRowElement> & {
-  slug: string | undefined
+  highlightId: string | undefined
 }) => {
-  const { highlightedSlug } = useHighlightedTableRowContext()
-  const isSelected = highlightedSlug && highlightedSlug === slug
+  const { highlightedId } = useHighlightedTableRowContext()
+  const isSelected = highlightedId && highlightedId === highlightId
   return (
     <tr
       className={cn(

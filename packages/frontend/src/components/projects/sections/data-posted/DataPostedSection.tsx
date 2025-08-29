@@ -1,6 +1,7 @@
 import type { Milestone, ProjectDaTrackingConfig } from '@l2beat/config'
 import { EigenDataSourceInfo } from '~/components/chart/data-availability/EigenDataSourceInfo'
 import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDataPostedChart'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
 import type { DataPostedTimeRange } from '~/server/features/scaling/data-posted/range'
@@ -9,7 +10,7 @@ import type { ProjectSectionProps } from '../types'
 import { DataPostedTrackedTransactions } from './DataPostedTrackedTransactions'
 
 export interface DataPostedSectionProps extends ProjectSectionProps {
-  projectId: string
+  project: ChartProject
   daLayer: {
     name: string
     logo: string
@@ -21,7 +22,7 @@ export interface DataPostedSectionProps extends ProjectSectionProps {
 }
 
 export function DataPostedSection({
-  projectId,
+  project,
   daLayer,
   milestones,
   defaultRange,
@@ -45,8 +46,9 @@ export function DataPostedSection({
       <HorizontalSeparator className="my-4" />
       {daLayer.name === 'EigenDA' && <EigenDataSourceInfo />}
       <ProjectDataPostedChart
-        projectId={projectId}
+        project={project}
         defaultRange={defaultRange}
+        milestones={milestones}
       />
       {daLayer.name !== 'EigenDA' && (
         <>

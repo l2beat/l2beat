@@ -22,7 +22,6 @@ export function createDiscoveryRunner(
   peripherals: Peripherals,
   discoveryLogger: Logger,
   chainConfigs: DiscoveryChainConfig[],
-  chain: string,
   cacheEnabled: boolean,
   cacheUri: string,
 ) {
@@ -43,16 +42,10 @@ export function createDiscoveryRunner(
     discoveryCache,
     http,
     discoveryLogger,
-    chain,
   )
 
   const templateService = new TemplateService(paths.discovery)
-  return new DiscoveryRunner(
-    allProviders,
-    discoveryEngine,
-    templateService,
-    chain,
-  )
+  return new DiscoveryRunner(allProviders, discoveryEngine, templateService)
 }
 
 function decodeCacheUri(uri: string, database: Database): IDiscoveryCache {

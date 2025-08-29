@@ -17,5 +17,6 @@
     "getStats2",
     "lastProposedIn",
     "state"
-  ]
+  ],
+  "ignoreRelatives": ["getLastSyncedTransition"]
 }

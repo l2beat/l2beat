@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "arbitrum",
   "timestamp": 1753687799,
-  "configHash": "0xc4a6971771520331d9d533156ae9380443328bdbed7fbdfd6e714d2428114bf5",
+  "configHash": "0x9d4f8489eef7a5e1a5358c2b41afd3656f45df780c446dfa32f969cfdc8590db",
   "entries": [
     {
       "address": "arb1:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",

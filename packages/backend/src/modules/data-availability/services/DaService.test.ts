@@ -164,6 +164,13 @@ describe(DaService.name, () => {
           blockTimestamp: TIME,
           size: BigInt(100),
         } as AvailBlob,
+        {
+          type: 'avail',
+          daLayer: 'avail',
+          appId: 'avail-2',
+          blockTimestamp: TIME,
+          size: BigInt(150),
+        } as AvailBlob,
         // blob not matching any project
         {
           type: 'avail',
@@ -188,14 +195,14 @@ describe(DaService.name, () => {
           projectId: 'avail',
           daLayer: 'avail',
           timestamp: UnixTime.toStartOf(TIME, 'hour'),
-          totalSize: 300n,
+          totalSize: 450n,
         },
         {
           configurationId: 'av-2',
           projectId: 'project-avail-1',
           daLayer: 'avail',
           timestamp: UnixTime.toStartOf(TIME, 'hour'),
-          totalSize: 100n,
+          totalSize: 250n,
         },
       ])
     })
@@ -399,7 +406,7 @@ const MOCK_AVAIL_CONFIGS: BlockDaIndexedConfig[] = [
     type: 'avail' as const,
     daLayer: ProjectId('avail'),
     projectId: ProjectId('project-avail-1'),
-    appId: 'avail-1',
+    appIds: ['avail-1', 'avail-2'],
     sinceBlock: 0,
   },
 ]

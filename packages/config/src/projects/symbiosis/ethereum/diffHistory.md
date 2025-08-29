@@ -1,4 +1,66 @@
-Generated with discovered.json: 0x480ef8e3727be8c1f8774c4aa4c51da492773412
+Generated with discovered.json: 0xeec96aafe30dac73d1c52645de71cc76cd4c64c6
+
+# Diff at Tue, 26 Aug 2025 13:37:23 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e10932be0db538f3a760bbc29232375f08915af7 block: 1741681871
+- current timestamp: 1741681871
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1741681871 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0ee552336134B6f8F0a72927b6124f8A81865928) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0","role":"admin","via":[{"address":"eth:0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProxyAdminBridgeV2 (0x1Da522B35363c1eda4833bc121c8F3c67B2caa75) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E","role":"admin"},{"permission":"upgrade","from":"eth:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E","role":"admin"},{"permission":"upgrade","from":"eth:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8","role":"admin"}]
+    }
+```
+
+```diff
+    contract ProxyAdminBridge (0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0","role":"admin"}]
+    }
+```
+
+```diff
+    contract Multisig (0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E","role":"admin","via":[{"address":"eth:0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"}]},{"permission":"upgrade","from":"eth:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8","role":"admin","via":[{"address":"eth:0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x1Da522B35363c1eda4833bc121c8F3c67B2caa75","role":".owner"}]
+    }
+```
+
+Generated with discovered.json: 0xc0d97941e3f9eac27b01ecbeb84231a2a9323bea
 
 # Diff at Mon, 14 Jul 2025 12:46:34 GMT:
 

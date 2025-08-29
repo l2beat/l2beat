@@ -38,7 +38,6 @@ export const layer2financezk: ScalingProject = {
       "Celer's Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.",
     purposes: ['Exchange'],
     stacks: ['StarkEx'],
-    category: 'Validium',
     links: {
       websites: ['https://layer2.finance/'],
       repositories: [
@@ -52,6 +51,7 @@ export const layer2financezk: ScalingProject = {
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Validity',
     zkCatalogId: ProjectId('stone'),

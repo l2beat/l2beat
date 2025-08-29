@@ -3,87 +3,98 @@ import { getCommonProjectColumns } from '~/components/table/utils/common-project
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { TechStackCell } from '../components/TechStackCell'
-import { withSpanByTrustedSetups } from './utils/ColUtils'
+import { TrustedSetupCell } from '../components/TrustedSetupCell'
+import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
 
 const columnHelper = createColumnHelper<ZkCatalogEntry>()
 
-const [indexColumn, logoColumn] = getCommonProjectColumns(
-  columnHelper,
-  () => undefined,
-)
-
 export const zkCatalogColumns = [
-  withSpanByTrustedSetups(indexColumn),
-  withSpanByTrustedSetups(logoColumn),
-  withSpanByTrustedSetups(
-    columnHelper.accessor((row) => row.name, {
-      id: 'name',
-      cell: (ctx) => {
-        return (
-          <div className="w-max space-y-px">
-            <div className="max-w-[146px] whitespace-pre-wrap font-bold text-base leading-none">
-              {ctx.row.original.name}
+  ...getCommonProjectColumns(columnHelper, () => undefined),
+  columnHelper.accessor((row) => row.name, {
+    id: 'name',
+    cell: (ctx) => {
+      return (
+        <div className="w-max space-y-px">
+          <div className="max-w-[146px] whitespace-pre-wrap font-bold text-base leading-none">
+            {ctx.row.original.name}
+          </div>
+          {ctx.row.original.creator && (
+            <div className="font-medium text-[13px] text-secondary leading-normal">
+              {ctx.row.original.creator}
             </div>
-            {ctx.row.original.creator && (
-              <div className="font-medium text-[13px] text-secondary leading-normal">
-                {ctx.row.original.creator}
-              </div>
-            )}
-          </div>
-        )
-      },
-    }),
-  ),
-  withSpanByTrustedSetups(
-    columnHelper.accessor((row) => row.tvs, {
-      id: 'tvs',
-      meta: {
-        tooltip:
-          'The values secured by the listed verifiers, calculated as a sum of the total value secured of all projects that use them.',
-      },
-      cell: (ctx) => {
-        return (
-          <div className="font-bold text-base">
-            {formatCurrency(ctx.row.original.tvs, 'usd')}
-          </div>
-        )
-      },
-    }),
-  ),
+          )}
+        </div>
+      )
+    },
+  }),
+  columnHelper.accessor((row) => row.tvs, {
+    id: 'tvs',
+    meta: {
+      tooltip:
+        'The values secured by the listed verifiers, calculated as a sum of the total value secured of all projects that use them and are listed on L2BEAT.',
+    },
+    cell: (ctx) => {
+      return (
+        <div className="font-bold text-base">
+          {formatCurrency(ctx.row.original.tvs, 'usd')}
+        </div>
+      )
+    },
+  }),
   columnHelper.group({
     id: 'trusted-setup-group',
     columns: [
       columnHelper.display({
         id: 'trusted-setups',
         header: 'Trusted setups',
+        cell: (ctx) => {
+          const first = Object.values(
+            ctx.row.original.trustedSetupsByProofSystem,
+          )[0]
+          if (!first) return null
+          return <TrustedSetupCell {...first} />
+        },
         meta: {
           tooltip:
             'Shows the trusted setups used within the proving stack and their risks.',
-          virtual: true,
+          cellClassName: 'px-6 pt-4 pb-3',
+
+          additionalRows: (ctx) => {
+            return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
+              .slice(1)
+              .map(([key, ts]) => <TrustedSetupCell key={key} {...ts} />)
+          },
         },
       }),
       columnHelper.display({
         id: 'verifiers',
         header: 'Verifiers',
+        cell: (ctx) => {
+          const first = Object.values(
+            ctx.row.original.trustedSetupsByProofSystem,
+          )[0]
+          if (!first) return null
+          return <VerifiedCountWithDetails data={first.verifiers} />
+        },
         meta: {
           tooltip:
-            'Shows the count of verifiers and their verification status - successful or unsuccessful, if verification was performed.',
-          virtual: true,
+            'Shows the number of different versions of onchain verifiers and whether they were independently checked by regenerating them from the proving system’s source code. A green check indicates successful verification, while a red cross indicates a failure to regenerate.',
+          additionalRows: (ctx) => {
+            return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
+              .slice(1)
+              .map(([key, ts]) => (
+                <VerifiedCountWithDetails key={key} data={ts.verifiers} />
+              ))
+          },
         },
       }),
     ],
   }),
-  withSpanByTrustedSetups(
-    columnHelper.display({
-      id: 'tech-stack',
-      header: 'Tech stack',
-      meta: {
-        cellClassName: 'pl-6',
-        headClassName: 'pl-6',
-      },
-      cell: (ctx) => {
-        return <TechStackCell techStack={ctx.row.original.techStack} />
-      },
-    }),
-  ),
+  columnHelper.display({
+    id: 'tech-stack',
+    header: 'Tech stack',
+    cell: (ctx) => {
+      return <TechStackCell techStack={ctx.row.original.techStack} />
+    },
+  }),
 ]

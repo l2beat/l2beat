@@ -41,8 +41,8 @@ repository:
 
 ```
 pnpm install
-pnpm build:dependencies
 cd packages/frontend
+pnpm build:dependencies:frontend
 pnpm dev:mock
 ```
 

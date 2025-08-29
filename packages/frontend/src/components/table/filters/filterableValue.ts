@@ -3,7 +3,7 @@ import { v } from '@l2beat/validate'
 export interface FilterableEntry {
   filterable: FilterableValue[] | undefined
 }
-type FilterableValue = {
+export type FilterableValue = {
   id: FilterableValueId
   value: string
 }
@@ -20,7 +20,22 @@ export const FilterableValueId = v.enum([
   'infrastructure',
   'vm',
   'other',
-  'techStack',
+  'bridgingType',
+  'category',
+  'bridgedUsing',
+  'isPartOfSuperchain',
+  'hasTestnet',
+  'Arithmetization',
+  'curve',
+  'Fflonk',
+  'Field',
+  'Groth16',
+  'ISA',
+  'Other',
+  'PCS',
+  'Plonk',
+  'STARK',
+  'project',
 ])
 
 export const filterIdToLabel: Record<FilterableValueId, string> = {
@@ -35,7 +50,22 @@ export const filterIdToLabel: Record<FilterableValueId, string> = {
   infrastructure: 'Infrastructure',
   vm: 'VM',
   other: 'Other properties',
-  techStack: 'Tech Stack',
+  bridgingType: 'Bridging Type',
+  category: 'Category',
+  bridgedUsing: 'Bridged Using',
+  isPartOfSuperchain: 'Is part of Superchain?',
+  hasTestnet: 'Has testnet?',
+  Arithmetization: 'Arithmetization',
+  curve: 'Curve',
+  Fflonk: 'Fflonk',
+  Field: 'Field',
+  Groth16: 'Groth16',
+  ISA: 'ISA',
+  Other: 'Other',
+  PCS: 'PCS',
+  Plonk: 'Plonk',
+  STARK: 'STARK',
+  project: 'Project',
 }
 
 export const filterIdToValues: Record<FilterableValueId, string> = {
@@ -50,7 +80,22 @@ export const filterIdToValues: Record<FilterableValueId, string> = {
   infrastructure: 'infras',
   vm: 'VMs',
   other: 'other',
-  techStack: 'tech stacks',
+  bridgingType: 'bridging types',
+  category: 'categories',
+  bridgedUsing: 'bridged using',
+  isPartOfSuperchain: 'options',
+  hasTestnet: 'options',
+  Arithmetization: 'arithmetizations',
+  curve: 'Curves',
+  Fflonk: 'Fflonks',
+  Field: 'Fields',
+  Groth16: 'Groth16s',
+  ISA: 'ISAs',
+  Other: 'Others',
+  PCS: 'PCSs',
+  Plonk: 'Plonks',
+  STARK: 'STARKs',
+  project: 'projects',
 }
 
 export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {

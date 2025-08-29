@@ -2,7 +2,7 @@
   "name": "zkfair",
   "chain": "ethereum",
   "timestamp": 1745306051,
-  "configHash": "0x210606301002920d09dc5476da17b68218b6c3bcc6935c7e90e48de682d988d9",
+  "configHash": "0xa11fd6426d41fd89c596596527c0e7a2c6d22201bd4b20c0c4fef9af48ad99ed",
   "entries": [
     {
       "name": "ZKFairAdmin",

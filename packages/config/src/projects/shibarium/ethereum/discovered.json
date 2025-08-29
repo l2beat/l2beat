@@ -2,7 +2,7 @@
   "name": "shibarium",
   "chain": "ethereum",
   "timestamp": 1745483963,
-  "configHash": "0xf76302ecce99b3f23569540b0ddb5495393577853fb2ade6811f9cb9dd82a9c9",
+  "configHash": "0x3c43bc7699b6bc216153b013d963eebc43bf35896167412d5b3840624e15b67a",
   "entries": [
     {
       "name": "ERC1155Predicate",

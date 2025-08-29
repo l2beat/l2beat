@@ -2,7 +2,7 @@
   "name": "shape",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0x18e200935ad40a34323977a17000ef9a7631363d6f42def2539d488b0dd61c5c",
+  "configHash": "0xdc9e7a812699e3748a7b17ac6745ba6b82ac0f1749738d0ff7fe0585f393eaa9",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -2318,6 +2318,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23166913 },
+  "usedBlockNumbers": { "ethereum": 23166914 },
   "permissionsConfigHash": "0xcf8f8c4028252b46967fe9a18995d25c02473f2cbec99bf726aa5628a72e6ffe"
 }

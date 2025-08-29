@@ -1,13 +1,14 @@
-import type { Project } from '@l2beat/config'
+import type { Milestone, Project } from '@l2beat/config'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getProjectIcon } from '../../utils/getProjectIcon'
-import { getTvsBreakdownForProject } from '../tvs/breakdown/getTvsBreakdownForProject'
-import type { BreakdownRecord } from '../tvs/breakdown/types'
+import {
+  getProjectTokensEntries as getProjectTokensEntries,
+  type ProjectTvsBreakdownTokenEntry,
+} from '../tvs/breakdown/getProjectTokensEntries'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
-import type { ProjectTokens } from '../tvs/tokens/getTokensForProject'
-import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
+import { getTvsTargetTimestamp } from '../tvs/utils/getTvsTargetTimestamp'
 
 export interface ScalingProjectTvsBreakdown {
   project: Project<
@@ -16,9 +17,9 @@ export interface ScalingProjectTvsBreakdown {
   >
   icon: string
   dataTimestamp: number
-  breakdown: BreakdownRecord
+  entries: ProjectTvsBreakdownTokenEntry[]
   project7dData: ProjectSevenDayTvsBreakdown
-  projectTokens: ProjectTokens | undefined
+  milestones: Milestone[]
 }
 
 export async function getScalingProjectTvsBreakdown(
@@ -35,15 +36,13 @@ export async function getScalingProjectTvsBreakdown(
     return undefined
   }
 
-  const [projects7dData, { dataTimestamp, breakdown }, projectTokens] =
-    await Promise.all([
-      get7dTvsBreakdown({
-        type: 'projects',
-        projectIds: [project.id.toString()],
-      }),
-      getTvsBreakdownForProject(project),
-      getTokensForProject(project),
-    ])
+  const [projects7dData, entries] = await Promise.all([
+    get7dTvsBreakdown({
+      type: 'projects',
+      projectIds: [project.id.toString()],
+    }),
+    getProjectTokensEntries(project),
+  ])
 
   const project7dData = projects7dData.projects[project.id.toString()]
   if (!project7dData) {
@@ -53,9 +52,9 @@ export async function getScalingProjectTvsBreakdown(
   return {
     project,
     icon: getProjectIcon(project.slug),
-    dataTimestamp,
-    breakdown,
+    dataTimestamp: getTvsTargetTimestamp(),
+    entries,
     project7dData,
-    projectTokens,
+    milestones: project.milestones ?? [],
   }
 }

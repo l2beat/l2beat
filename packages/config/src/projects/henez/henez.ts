@@ -15,10 +15,10 @@ export const henez: ScalingProject = underReviewL3({
     BADGES.Stack.Orbit,
     BADGES.VM.EVM,
   ],
+  dataAvailability: undefined,
   display: {
     name: 'Henez',
     slug: 'henez',
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     description:
       'Henez is an Orbit stack L3 with AnyTrust DA powering chain- and account-abstracted DeFi applications.',
@@ -34,6 +34,9 @@ export const henez: ScalingProject = underReviewL3({
         'https://t.me/HenezFinance',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
   chainConfig: {
     name: 'henez',

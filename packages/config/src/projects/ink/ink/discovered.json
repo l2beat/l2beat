@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ink",
   "timestamp": 1755525900,
-  "configHash": "0xfdc50e0778d45fc82c11edae6753f8ef8050be79a7b1a1eb6b85d20682c4aa95",
+  "configHash": "0x64a552af90aabb0b6a4c950407654020e292c496d17e8894ca7643473720e898",
   "entries": [
     {
       "name": "L2CrossDomainMessenger",
@@ -284,7 +284,7 @@
         "number": 23168416,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 4,
+        "sequenceNumber": 9,
         "timestamp": 1755525827,
         "version": "1.6.0"
       },
@@ -1183,6 +1183,6 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "usedBlockNumbers": { "ink": 22027484 },
+  "usedBlockNumbers": { "ink": 22027489 },
   "permissionsConfigHash": "0xc187a211655f72961836c95749b908c33fdc8871e559317d4d7ad33f652f7f87"
 }

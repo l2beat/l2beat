@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "base",
   "timestamp": 1752069683,
-  "configHash": "0x9297dadeee4bf38237e4e3d2399ee72cf549b29435dbe3c9edd81f1036e8f9a5",
+  "configHash": "0x778c2de12ef7dd6c467152d1d3b5af99ebb113c78ed5c2b1ca9c29f4b082a547",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {

@@ -1,8 +1,8 @@
 {
   "name": "fuel",
   "chain": "ethereum",
-  "timestamp": 1755508162,
-  "configHash": "0x95b68e6fde20dde4ddb8fd8b2c485733a021261d94ad1b51e206b62e1ff623e2",
+  "timestamp": 1756452095,
+  "configHash": "0xd18c371a5ef9fb1f8fb8c54a1395d1b9de4c9a32469210a5c81b71ea60c02d42",
   "entries": [
     {
       "name": "Fuel Security Council",
@@ -39,7 +39,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 44,
+        "nonce": 45,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -83,7 +83,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -284,15 +284,15 @@
             "members": ["eth:0x32da601374b38154f05904B16F44A1911Aa6f314"]
           }
         },
-        "currentPeriodAmount": "11863010566000000000",
-        "currentPeriodEnd": 1755719183,
+        "currentPeriodAmount": "1202075035000000000",
+        "currentPeriodEnd": 1756933139,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositLimitGlobal": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "ETH_DECIMALS": 18,
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 249154,
+        "getNextOutgoingMessageNonce": 249211,
         "limitAmount": "7829000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
@@ -301,7 +301,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "2628119081797000000000",
+        "totalDeposited": "1880224994053000000000",
         "withdrawalsPaused": false
       },
       "implementationNames": {
@@ -341,22 +341,27 @@
       "type": "Contract",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x183fd58e0c8aaff660b72b7753154fcb311db3b7932357b1a8a1416fdd53caf0"
+        "0x3a22f204d585524196a1af919fb1dac397751b0b7872aff03ae207eb4d57ae7e"
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1724767847,
       "sinceBlock": 20620432,
       "values": {
         "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0x725B2b1a15D818E1f25c68be77816802e6036559",
+        "$implementation": "eth:0x621850dbB9160b54002B4a25b9fC9b2F26315f7e",
         "$pastUpgrades": [
           [
             "2024-08-27T14:10:47.000Z",
             "0x01e63713a7ddee90866f272b7afb1d49aea17ed314edc7a80d00af36fd9b640a",
             ["eth:0x725B2b1a15D818E1f25c68be77816802e6036559"]
+          ],
+          [
+            "2025-08-27T14:14:35.000Z",
+            "0x313c212ccfc5e1413acd0c8fa345c6f96631fbb7c026c67f8fc22471a971f09c",
+            ["eth:0x621850dbB9160b54002B4a25b9fC9b2F26315f7e"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -383,17 +388,17 @@
           }
         },
         "BLOCKS_PER_COMMIT_INTERVAL": 10800,
-        "COMMIT_COOLDOWN": 604800,
+        "COMMIT_COOLDOWN": 86400,
         "COMMITTER_ROLE": "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "NUM_COMMIT_SLOTS": 240,
         "paused": false,
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
-        "TIME_TO_FINALIZE": 604800
+        "TIME_TO_FINALIZE": 86400
       },
       "implementationNames": {
         "eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130": "ERC1967Proxy",
-        "eth:0x725B2b1a15D818E1f25c68be77816802e6036559": "FuelChainState"
+        "eth:0x621850dbB9160b54002B4a25b9fC9b2F26315f7e": "FuelChainState"
       }
     },
     {
@@ -534,11 +539,12 @@
     "eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc": [
       "constructor(address _singleton)"
     ],
-    "eth:0x725B2b1a15D818E1f25c68be77816802e6036559": [
+    "eth:0x621850dbB9160b54002B4a25b9fC9b2F26315f7e": [
       "constructor(uint256 timeToFinalize, uint256 blocksPerCommitInterval, uint32 commitCooldown)",
       "error CannotRecommit()",
       "error CommitCooldownTooLarge()",
       "error FinalizationIsGtCooldown()",
+      "error InvalidTimeToFinalize()",
       "error TimeToFinalizeTooLarge()",
       "error UnknownBlock()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -715,6 +721,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23166955 },
+  "usedBlockNumbers": { "ethereum": 23245256 },
   "permissionsConfigHash": "0x0a92f2152313dd0271b5c7cfe6613fb7e69a9a056676a08da03864bf27ceacbc"
 }
