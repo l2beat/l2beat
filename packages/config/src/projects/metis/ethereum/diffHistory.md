@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x0a40eeba9cfe5a8c61997e0cad046b657cdcfd8d
+Generated with discovered.json: 0xa4c848b7cfabdba891636dc81c8679d93fdd889b
 
-# Diff at Thu, 28 Aug 2025 14:36:39 GMT:
+# Diff at Fri, 29 Aug 2025 10:23:03 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@3e088e62f4c969a9884f950ac3f9027242f1f8ff block: 1755157627
-- current timestamp: 1756391705
+- comparing to: main@fa46b79ac63155d3cd74d5df516768acc9aa80d1 block: 1755157627
+- current timestamp: 1756462910
 
 ## Description
 
@@ -17,11 +17,33 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1755157627 (main branch discovery), not current.
 
 ```diff
-    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) {
-    +++ description: The MVM Verifier contract is responsible for verifying the state of the MVM.
-      category:
-+        {"name":"Spam","priority":-1}
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a","role":"admin"}
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb","role":"admin"}
+      receivedPermissions.3:
+-        {"permission":"upgrade","from":"eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0","role":"admin"}
     }
+```
+
+```diff
+-   Status: DELETED
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a)
+    +++ description: MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.
+```
+
+```diff
+-   Status: DELETED
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb)
+    +++ description: The MVM Verifier contract is responsible for verifying the state of the MVM.
+```
+
+```diff
+-   Status: DELETED
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0)
+    +++ description: Contract that allows METIS_MANAGER to switch Sequencer.
 ```
 
 Generated with discovered.json: 0x547e26e9d455beae32256f4de4c390661c10aa15
