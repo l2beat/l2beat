@@ -1,7 +1,7 @@
 {
   "name": "morph",
   "chain": "ethereum",
-  "timestamp": 1750690607,
+  "timestamp": 1756453192,
   "configHash": "0x3f10a55abc6644a115f6565c34a835d94a47497a97759a53fb304c08eca03f1d",
   "entries": [
     {
@@ -40,11 +40,6 @@
     },
     {
       "address": "eth:0x0659dF9D53A987e3aDaa9019407431413A101eF3",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x0B3d220254e407a780EA7498d51b6d4fef807Bd0",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -166,11 +161,6 @@
       }
     },
     {
-      "address": "eth:0x1DeBbDae435295eC72b904Cc8B476BA81a63BAdb",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
       "type": "EOA",
       "proxyType": "EOA",
@@ -181,6 +171,11 @@
           "role": ".challengers"
         }
       ]
+    },
+    {
+      "address": "eth:0x27f05308F4b80242d3Dca1D5e9c3aE976098E9C8",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -269,11 +264,6 @@
       ]
     },
     {
-      "address": "eth:0x35B98995048b320f2DaFFAD5BaD5884F16e488A9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "L1MessageQueueWithGasPriceOracle",
       "address": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
       "type": "Contract",
@@ -311,9 +301,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 10389,
+        "nextCrossDomainMessageIndex": 23373,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 10378,
+        "pendingQueueIndex": 22863,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -674,8 +664,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 23201,
-        "lastFinalizedBatchIndex": 23127,
+        "lastCommittedBatchIndex": 40741,
+        "lastFinalizedBatchIndex": 40515,
         "LAYER_2_CHAIN_ID": 1,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -845,13 +835,18 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 32,
+        "nonce": 33,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
+    },
+    {
+      "address": "eth:0xbA430e784fe11ADbc20fa1a99193eeD87ACD68C7",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
@@ -963,6 +958,11 @@
       }
     },
     {
+      "address": "eth:0xC7F81B58ec3937D11Bf4BA74C04FF69e944423F2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1040,7 +1040,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 10389,
+        "messageNonce": 23373,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -1075,6 +1075,11 @@
           "role": ".challengers"
         }
       ]
+    },
+    {
+      "address": "eth:0xe72BB9d10f6eA936D7D4507d298ab867128aF54C",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ZkEvmVerifierV1",
@@ -1186,21 +1191,19 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xe72BB9d10f6eA936D7D4507d298ab867128aF54C",
+          "eth:0x27f05308F4b80242d3Dca1D5e9c3aE976098E9C8",
+          "eth:0xC7F81B58ec3937D11Bf4BA74C04FF69e944423F2",
+          "eth:0xbA430e784fe11ADbc20fa1a99193eeD87ACD68C7",
           "eth:0x0659dF9D53A987e3aDaa9019407431413A101eF3",
-          "eth:0x59C09F33d7D901b8B57644D68a45b123e9Bbd0E5",
-          "eth:0x19C0CebaEC6EDb61c00178Cf8c6112BAD5Ef68E6",
-          "eth:0xcE7257224441385345CE6eEdd9D8667AD9Bab9f0",
-          "eth:0x35B98995048b320f2DaFFAD5BaD5884F16e488A9",
-          "eth:0x1DeBbDae435295eC72b904Cc8B476BA81a63BAdb",
-          "eth:0x0B3d220254e407a780EA7498d51b6d4fef807Bd0",
-          "eth:0xf39D8310a7DFEc320bD17bddE32A53d47e340B2e"
+          "eth:0x59C09F33d7D901b8B57644D68a45b123e9Bbd0E5"
         ],
-        "$threshold": 5,
+        "$threshold": 3,
         "domainSeparator": "0x1fcc53749474cc8908a9631bf2bd115aaccfba0cc497d219304591a2780bec5d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 3,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 14,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1219,11 +1222,6 @@
           "role": ".challengers"
         }
       ]
-    },
-    {
-      "address": "eth:0xf39D8310a7DFEc320bD17bddE32A53d47e340B2e",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9",
@@ -1758,6 +1756,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22767866 },
-  "permissionsConfigHash": "0x26eb2a0fde35df36cb1cdbd9402f07450ed19bb4fff2ced3b0dc10e6ebd0a110"
+  "usedBlockNumbers": { "ethereum": 23245346 },
+  "permissionsConfigHash": "0x75090b99db4feed19604f9ce6f4140a4fae49b6f8e944fc3c74792d8c1e82dfc"
 }

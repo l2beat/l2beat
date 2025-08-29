@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x77f05fe88102228c2fd94b74d24e0415b0a50638
+
+# Diff at Fri, 29 Aug 2025 07:41:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e68cba094085f7ab7e642304a942701f260f19fb block: 1756214657
+- current timestamp: 1756453226
+
+## Description
+
+Msig changes.
+
+## Watched changes
+
+```diff
+    contract Katana yieldRecipient Mulsitig (0x67C912fF560951526BffDff66dFbD4DF8AE23756) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b"
++        "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1"
+    }
+```
+
+```diff
+    contract Safe (0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b"
++        "eth:0x6624307a4f672ec5C289fBA196952902BB518dc0"
+    }
+```
+
 Generated with discovered.json: 0x08ccc0d7f5082952e7141e310d4d66ad31a3bad4
 
 # Diff at Tue, 26 Aug 2025 13:28:38 GMT:
