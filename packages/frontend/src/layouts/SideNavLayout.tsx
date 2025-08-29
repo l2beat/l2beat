@@ -208,6 +208,10 @@ const groups = compact<NavGroup>([
 
 const sideLinks = [
   {
+    title: 'Publications',
+    href: '/publications',
+  },
+  {
     title: 'About Us',
     href: '/about-us',
   },

@@ -24,8 +24,10 @@ export function LinkWithThumbnail({
     <PlainLink
       href={props.href}
       className={cn(
-        'group flex gap-6 rounded-md bg-surface-primary transition-colors hover:bg-surface-secondary',
-        orientation === 'vertical' && 'max-w-96 flex-col bg-surface-secondary',
+        'group flex gap-6 rounded-md transition-colors',
+        orientation === 'horizontal' &&
+          'bg-surface-primary hover:bg-surface-secondary',
+        orientation === 'vertical' && 'max-w-96 flex-col',
         props.className,
       )}
     >
@@ -45,7 +47,7 @@ export function LinkWithThumbnail({
       <div
         className={cn(
           orientation === 'vertical' &&
-            'mb-6 flex h-full flex-col justify-between px-6',
+            'mb-6 flex h-full flex-col justify-between px-1',
           orientation === 'horizontal' &&
             'self-center py-[15px] transition-transform group-hover:translate-x-0.5',
         )}
@@ -54,7 +56,8 @@ export function LinkWithThumbnail({
           {props.topAccessory && <div>{props.topAccessory}</div>}
           <p
             className={cn(
-              orientation === 'vertical' && 'mt-2 text-heading-20',
+              orientation === 'vertical' &&
+                'mt-2 text-heading-20 group-hover:underline',
               orientation === 'horizontal' &&
                 'text-heading-16 md:text-heading-18',
               'text-balance',
@@ -66,9 +69,10 @@ export function LinkWithThumbnail({
             <div className="hidden md:block">
               <p
                 className={cn(
-                  'text-paragraph-14 text-secondary',
+                  'font-normal text-paragraph-14 text-secondary',
                   orientation === 'horizontal' && 'line-clamp-1',
-                  orientation === 'vertical' && 'mt-3 line-clamp-3',
+                  orientation === 'vertical' &&
+                    'mt-3 line-clamp-3 group-hover:underline',
                 )}
               >
                 {props.description}
@@ -77,7 +81,7 @@ export function LinkWithThumbnail({
           )}
         </div>
         <p className="flex flex-wrap items-center gap-1 font-bold text-label-value-14 text-link underline transition-colors group-hover:text-blue-550 md:mt-3">
-          Learn more
+          Read now
           <ArrowRightIcon className="fill-current" />
         </p>
       </div>

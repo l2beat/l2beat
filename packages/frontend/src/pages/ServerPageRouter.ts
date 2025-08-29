@@ -14,6 +14,7 @@ import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createMonthlyUpdatesRouter } from './monthly-updates/MonthlyUpdatesRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
+import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
 import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
@@ -59,6 +60,7 @@ export function createServerPageRouter(
     createTermsOfServiceRouter,
     createStagesRouter,
     createMonthlyUpdatesRouter,
+    createPublicationsRouter,
   ]
 
   for (const createRouter of routers) {
