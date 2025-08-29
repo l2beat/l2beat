@@ -1,0 +1,3 @@
+{
+  "import": ["../projects/shared-sharp-verifier/entrypoints.json"]
+}
