@@ -16,9 +16,7 @@ export const coti: ScalingProject = upcomingL2({
     links: {
       websites: ['https://coti.io/'],
       bridges: ['https://bridge.coti.io'],
-      documentation: [
-        'https://docs.coti.io/coti-documentation',
-      ],
+      documentation: ['https://docs.coti.io/coti-documentation'],
       explorers: ['https://mainnet.cotiscan.io'],
       repositories: ['https://github.com/coti-io'],
       socialMedia: [
