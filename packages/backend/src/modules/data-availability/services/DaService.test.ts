@@ -65,7 +65,7 @@ describe(DaService.name, () => {
           sequencer: 'any',
           topics: [],
           size: BigInt(400),
-          blockTimestamp: TIME + 1 * UnixTime.HOUR,
+          blockTimestamp: TIME,
           blockNumber: 1,
         } as EthereumBlob,
       ]
@@ -102,7 +102,7 @@ describe(DaService.name, () => {
             totalSize: 300n,
           },
         ],
-        latestTimestamp: UnixTime.toStartOf(TIME + 1 * UnixTime.HOUR, 'hour'),
+        latestTimestamp: UnixTime.toStartOf(TIME, 'hour'),
       })
     })
 
