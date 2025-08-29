@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "zircuit",
-  "timestamp": 1756216503,
+  "timestamp": 1756451851,
   "configHash": "0x981b5963a0ac2a8755444fd448b0315f3d6fc6b403467fc7c627977f75051596",
   "entries": [
     {
@@ -48,21 +48,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 1201144009,
+        "basefee": 624805720,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
         "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x479626f91390676ee68d3aecbf34d355fcc3135259fbac3d027448ebfc6f09ea",
+        "hash": "0xce35c1ab11166cae4d3f4f8cbf50ab566fa94badb398e9bc917d0ec1f637ab7f",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23225718,
-        "operatorFeeConstant": 0,
-        "operatorFeeScalar": 0,
-        "sequenceNumber": 0,
-        "timestamp": 1756216499,
+        "number": 23245235,
+        "operatorFeeConstant": 23225000000,
+        "operatorFeeScalar": 4200000000,
+        "sequenceNumber": 2,
+        "timestamp": 1756451843,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -316,6 +316,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/Layer2/L1Block_depositExclusions": "0x0dc9fa32452642b8d19e27a9a1e5e227852608d9a1b6fa9f532ff7dc53c77219"
   },
-  "usedBlockNumbers": { "zircuit": 18140144 },
+  "usedBlockNumbers": { "zircuit": 18257818 },
   "permissionsConfigHash": "0xe02e2dd058fdb1f985e68753f52ca88a0f125d28226e3acd442c4ee402c1939c"
 }
