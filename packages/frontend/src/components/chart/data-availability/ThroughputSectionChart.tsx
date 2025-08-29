@@ -117,7 +117,7 @@ function getDataWithConfiguredThroughputs(
         untilTimestamp: nextConfig
           ? UnixTime.toStartOf(nextConfig.sinceTimestamp, 'day')
           : Number.POSITIVE_INFINITY,
-        maxDaily: config.size * batchesPerDay,
+        maxDaily: config.size === 'NO_CAP' ? null : config.size * batchesPerDay,
         targetDaily: config.target ? config.target * batchesPerDay : null,
       }
     })
