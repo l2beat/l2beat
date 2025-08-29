@@ -77,12 +77,13 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
     }
 
     return async () => {
+      const syncedUntil = timestamps[timestamps.length - 1]
       await this.$.db.transaction(async () => {
         await this.$.db.tvsProjectValue.upsertMany(records)
         await this.$.db.syncMetadata.updateSyncedUntil(
           'tvs',
           [configuration.id],
-          to,
+          syncedUntil,
         )
       })
       this.logger.info('Saved project values into DB', {
@@ -91,7 +92,7 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
         tokens: tokens.length,
       })
 
-      return timestamps[timestamps.length - 1]
+      return syncedUntil
     }
   }
 
