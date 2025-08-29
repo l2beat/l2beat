@@ -49,6 +49,7 @@ import { playblock } from '../projects/playblock/playblock'
 import { pmon } from '../projects/pmon/pmon'
 import { popapex } from '../projects/popapex/popapex'
 import { popboss } from '../projects/popboss/popboss'
+import { primechain } from '../projects/primechain/primechain'
 import { rari } from '../projects/rari/rari'
 import { rivalz } from '../projects/rivalz/rivalz'
 import { sanko } from '../projects/sanko/sanko'
@@ -114,6 +115,7 @@ export const layer3s: ScalingProject[] = [
   perennial,
   popapex,
   popboss,
+  primechain,
   pmon,
   sanko,
   stack,
