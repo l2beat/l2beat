@@ -117,7 +117,10 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
 
           const maxHistoricalRecord = maxHistoricalRecordsByDaLayer[daLayer.id]
           const maxRegistered = maxHistoricalRecord
-            ? Number(maxHistoricalRecord.totalSize) / UnixTime.HOUR
+            ? {
+                value: Number(maxHistoricalRecord.totalSize) / UnixTime.HOUR,
+                timestamp: maxHistoricalRecord.timestamp,
+              }
             : undefined
 
           return [
@@ -233,7 +236,10 @@ function getMockDaThroughputTableData(
                 avgThroughputPerSecond: 100000,
               },
               maxThroughputPerSecond: 400000,
-              maxRegistered: 390000,
+              maxRegistered: {
+                value: 390000,
+                timestamp: 1744416000,
+              },
             },
           ] as const
         })
@@ -263,7 +269,10 @@ function getMockDaThroughputTableData(
                   : UnixTime.toStartOf(UnixTime.now(), 'day') -
                     1 * UnixTime.DAY,
               maxThroughputPerSecond: 400000,
-              maxRegistered: 390000,
+              maxRegistered: {
+                value: 390000,
+                timestamp: 1744416000,
+              },
             },
           ] as const
         })

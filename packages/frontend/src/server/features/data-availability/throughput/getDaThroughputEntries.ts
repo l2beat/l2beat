@@ -46,7 +46,12 @@ interface DaThroughputEntryData {
    * @unit B/s - bytes per second
    */
   maxThroughputPerSecond: number | 'NO_CAP'
-  maxRegistered: number | undefined
+  maxRegistered:
+    | {
+        value: number
+        timestamp: number
+      }
+    | undefined
   pastDayData:
     | {
         /**

@@ -7,6 +7,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPer
 import { TableLink } from '~/components/table/TableLink'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/DaCommonProjectColumns'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
+import { formatTimestamp } from '~/utils/dates'
 import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
 
 export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
@@ -116,7 +117,10 @@ export const publicSystemsColumns = [
               value={
                 maxRegisteredThroughput
                   ? {
-                      value: formatBpsToMbps(maxRegisteredThroughput),
+                      value: formatBpsToMbps(maxRegisteredThroughput.value),
+                      secondLine: `on ${formatTimestamp(
+                        maxRegisteredThroughput.timestamp,
+                      )}`,
                     }
                   : undefined
               }
@@ -141,7 +145,8 @@ export const publicSystemsColumns = [
           <TableValueCell
             emptyMode={avgCapacityUtilization === null ? 'n/a' : 'upcoming'}
             value={
-              avgCapacityUtilization !== null
+              avgCapacityUtilization !== null &&
+              avgCapacityUtilization !== undefined
                 ? {
                     value: `${avgCapacityUtilization}%`,
                   }
