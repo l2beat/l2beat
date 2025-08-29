@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL3 } from '../../templates/underReview'
+import { upcomingL3 } from '../../templates/upcoming'
 
-export const ouroboro: ScalingProject = underReviewL3({
+export const ouroboro: ScalingProject = upcomingL3({
   hostChain: ProjectId('arbitrum'),
   id: ProjectId('ouroboro'),
   capability: 'universal',
