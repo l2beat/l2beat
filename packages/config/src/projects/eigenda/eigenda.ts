@@ -1,4 +1,9 @@
-import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -101,6 +106,34 @@ export const eigenda: BaseProject = {
     },
     badges: [],
   },
+  trackedTxsConfig: [
+    {
+      projectId: ProjectId('eigenda'),
+      sinceTimestamp: 1712353787,
+      type: 'liveness',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0'),
+        selector: '0x7794965a',
+        signature:
+          'function confirmBatch(tuple batchHeader, tuple nonSignerStakesAndSignature)',
+      },
+    },
+    {
+      projectId: ProjectId('eigenda'),
+      sinceTimestamp: 1712353787,
+      type: 'l2costs',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0'),
+        selector: '0x7794965a',
+        signature:
+          'function confirmBatch(tuple batchHeader, tuple nonSignerStakesAndSignature)',
+      },
+    },
+  ],
   colors: {
     primary: '#6258FF',
     secondary: '#6258FF',
@@ -180,6 +213,11 @@ export const eigenda: BaseProject = {
         size: 15728640, // 15 MB
         frequency: 1, // x second
         sinceTimestamp: 1719187200, // 2024-06-24
+      },
+      {
+        size: 'NO_CAP',
+        frequency: 1, // x second
+        sinceTimestamp: 1753833600, // 2025-07-30
       },
     ],
     finality: 600, // ~10 minutes
@@ -271,7 +309,7 @@ export const eigenda: BaseProject = {
     ],
   },
   daBridge: {
-    name: 'Service Manager',
+    name: 'DACert Verifier',
     daLayer: ProjectId('eigenda'),
     technology: {
       description: `

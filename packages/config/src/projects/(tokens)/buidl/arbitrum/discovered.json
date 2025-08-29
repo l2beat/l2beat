@@ -2,7 +2,7 @@
   "name": "buidl",
   "chain": "arbitrum",
   "timestamp": 1755163834,
-  "configHash": "0x1c41a1c1cd1f29ad1febf2793807b7a5b40107380afd1fed7d2ea268413787ea",
+  "configHash": "0x3c7bd284961c40556119667fb7749ea12da45911a8f492593c163a7426fd7748",
   "entries": [
     {
       "name": "DSToken",

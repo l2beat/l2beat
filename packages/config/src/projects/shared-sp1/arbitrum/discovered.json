@@ -2,7 +2,7 @@
   "name": "shared-sp1",
   "chain": "arbitrum",
   "timestamp": 1752073781,
-  "configHash": "0x2d8dfb596960352a3b79835bc9561bc5dbe3628683fe436631c68f6fb18e96fb",
+  "configHash": "0x683ed7d06905c7cc2a8451a47f2bd43641bc8367f96a86109420cd37244970ef",
   "entries": [
     {
       "name": "SP1Verifier",

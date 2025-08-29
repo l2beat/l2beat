@@ -2,7 +2,7 @@
   "name": "pulseChain",
   "chain": "ethereum",
   "timestamp": 1746614171,
-  "configHash": "0x643d816fd4afddc582434b3f719c553b4b9983833e44219a1d8b779f111949dd",
+  "configHash": "0x3c072521fa93da37e7194f4cf2daabc7576f1b15e60ad0f55d0ee8655b57d517",
   "entries": [
     {
       "address": "eth:0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F",

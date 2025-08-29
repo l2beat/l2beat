@@ -2,7 +2,7 @@
   "name": "blessnet",
   "chain": "arbitrum",
   "timestamp": 1753200912,
-  "configHash": "0x5545d7a496d31c5f47300f33721f190b309be99aaeebc91f66dbd950d2fa91f4",
+  "configHash": "0xb9940695f2ead01373eb20c6009030ae2bd19a93364ee0e45b9d66da626bbd85",
   "entries": [
     {
       "name": "Blessnet Multisig 2",

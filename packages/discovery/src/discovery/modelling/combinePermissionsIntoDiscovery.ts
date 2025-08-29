@@ -73,8 +73,8 @@ export function combinePermissionsIntoDiscovery(
     )) {
       for (const [chain, timestamp] of Object.entries(chains)) {
         if (!(project === discovery.name && chain === discovery.chain)) {
-          timestampsWithoutCurProj[project] ??= {}
-          timestampsWithoutCurProj[project][chain] = timestamp
+          timestampsWithoutCurProj[project] ??= { timestamp }
+          timestampsWithoutCurProj[project].timestamp = timestamp
         }
       }
     }

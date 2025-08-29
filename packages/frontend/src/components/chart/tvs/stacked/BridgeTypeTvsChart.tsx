@@ -83,7 +83,7 @@ export function BridgeTypeTvsChart({
       project={project}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent reverse />} />
+        <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="external"
           hide={!dataKeys.includes('external')}

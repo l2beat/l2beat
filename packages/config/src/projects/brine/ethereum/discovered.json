@@ -2,7 +2,7 @@
   "name": "brine",
   "chain": "ethereum",
   "timestamp": 1741185671,
-  "configHash": "0x53d5ad7161a1e05b115544301abd897dbb11a91c79a9ae42276d3673c641fa04",
+  "configHash": "0x29a87c37bf58bc12457739e65967ff0e0ed796bea10b95d99004fe80a41e71fa",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

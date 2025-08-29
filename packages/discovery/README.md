@@ -1000,6 +1000,7 @@ In the first example, `["get", "systemConfig"]` is a filter that extracts the sy
 - `delete`, deletes removes keys/indices from objects/arrays.
 - `shape`, creates a new object from input values using specified keys.
 - `to_entries`, converts an object to an array of key-value pairs.
+- `length`, returns the number of elements in arrays, objects, or strings.
 
 #### `pipe`
 
@@ -1165,6 +1166,25 @@ The order of entries follows the object's key insertion order.
 - Input: `[1, 23]`
 - Program: `["to_entries"]`
 - Output: `[[ "0", 1 ], [ "1", 23 ]]`
+
+### `length`
+
+Returns the number of elements in arrays, objects, or strings.
+For arrays, returns the array length.
+For objects, returns the number of properties.
+For strings, returns the string length.
+
+- Input: `[1, 2, 3]`
+- Program: `["length"]`
+- Output: `3`
+
+- Input: `{ a: 1, b: 2 }`
+- Program: `["length"]`
+- Output: `2`
+
+- Input: `"hello"`
+- Program: `["length"]`
+- Output: `5`
 
 ### Copy feature
 

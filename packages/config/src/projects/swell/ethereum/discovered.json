@@ -2,7 +2,7 @@
   "name": "swell",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0x158fff82a569053b7072fa62ed113d55bd2eaf5295792a9f6d3a91d870b2f849",
+  "configHash": "0x159597c72da422f2479fc0e48c9a0a51e8b85296afad8eb8e6da16e1c021ffc5",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

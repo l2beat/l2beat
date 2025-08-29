@@ -2,7 +2,7 @@
   "name": "wirex",
   "chain": "ethereum",
   "timestamp": 1754397932,
-  "configHash": "0x6a0d19487d139f81a239bf907239f74fd17863576d730203323edb945eb21d36",
+  "configHash": "0x68f38f012a33e055a7139a279e7c2faec350a191372d4ed638ec5f249342d204",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

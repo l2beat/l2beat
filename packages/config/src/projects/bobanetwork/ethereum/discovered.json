@@ -2,7 +2,7 @@
   "name": "bobanetwork",
   "chain": "ethereum",
   "timestamp": 1751366039,
-  "configHash": "0x6232bdf23a62c00206bc3b8354cd26626b15d39f7c31e5e9cdcbb52a5b852e5b",
+  "configHash": "0x3e609a4a9e50d667ae4e30263794c5c2ec6d6824dcee544dea32e712222bbc2b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

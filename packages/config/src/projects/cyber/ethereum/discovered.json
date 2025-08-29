@@ -2,7 +2,7 @@
   "name": "cyber",
   "chain": "ethereum",
   "timestamp": 1743923519,
-  "configHash": "0x8c4f304a8903ee57b42293710e3fb550edc38a2d761bd02d4b7e98b39903cb14",
+  "configHash": "0xe58a51201748982765d1837466ed259327fe4df6c92158908fe2b9a07bf9c07e",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

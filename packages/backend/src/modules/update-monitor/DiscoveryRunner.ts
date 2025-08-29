@@ -19,7 +19,13 @@ import {
   type TemplateService,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
-import { assert, UnixTime, withoutUndefinedKeys } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  UnixTime,
+  unique,
+  withoutUndefinedKeys,
+} from '@l2beat/shared-pure'
 import isError from 'lodash/isError'
 import { Gauge } from 'prom-client'
 
@@ -29,10 +35,12 @@ export interface DiscoveryRunnerOptions {
   retryDelayMs?: number
 }
 
-export interface DiscoveryRunResult {
+export interface DiscoveryChainRunResult {
   discovery: DiscoveryOutput
   flatSources: Record<string, string>
 }
+
+export type DiscoveryRunResult = Record<string, DiscoveryChainRunResult>
 
 // 10 minutes
 const MAX_RETRIES = 30
@@ -47,21 +55,20 @@ export class DiscoveryRunner {
 
   private async discover(
     projectName: string,
-    projectChain: string,
     discoveryTimestamp: number,
     dependentDiscoveries: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
     logger: Logger,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
     logger.info(
-      `Attempting discovery of ${projectName} on ${projectChain} at timestamp ${discoveryTimestamp}`,
+      `Attempting discovery of ${projectName} at timestamp ${discoveryTimestamp}`,
     )
 
     const discoveryPaths = getDiscoveryPaths()
     configReader ??= new ConfigReader(discoveryPaths.discovery)
     const rawConfig = configReader.readRawConfig(projectName)
 
-    let toDiscover: { project: string; chain: string }[] = []
+    let toDiscover: { project: string }[] = []
     if (rawConfig.modelCrossChainPermissions) {
       logger.info('Discovering dependencies for cross-chain modelling')
       toDiscover = getDependenciesToDiscoverForProject(
@@ -75,13 +82,12 @@ export class DiscoveryRunner {
       )
     } else {
       logger.info('Discovering only current project - no cross-chain modelling')
-      toDiscover.push({ project: projectName, chain: projectChain })
+      toDiscover.push({ project: projectName })
     }
 
     if (dependentDiscoveries !== 'useCurrentTimestamp') {
       // Always default the discovery of current project to discoveryBlockNumber
-      dependentDiscoveries[projectName] ??= {}
-      dependentDiscoveries[projectName][projectChain] ??= {
+      dependentDiscoveries[projectName] = {
         timestamp: discoveryTimestamp,
       }
     }
@@ -93,7 +99,10 @@ export class DiscoveryRunner {
       logger,
     )
 
-    setDiscoveryMetrics(this.allProviders.getStats(projectChain), projectChain)
+    const metrics = this.allProviders.getStats()
+    for (const [chain, chainMetrics] of Object.entries(metrics)) {
+      setDiscoveryMetrics(chainMetrics, chain)
+    }
 
     const permissionsOutput = await modelPermissions(
       projectName,
@@ -103,31 +112,39 @@ export class DiscoveryRunner {
       discoveryPaths,
       { debug: false },
     )
-    const projectDiscovery = discoveries.get(projectName, projectChain)
-    combinePermissionsIntoDiscovery(
-      projectDiscovery.discoveryOutput,
-      permissionsOutput,
-    )
+    const projectChains = discoveries.getChains(projectName)
+    const result: DiscoveryRunResult = {}
+    for (const chain of projectChains) {
+      const projectDiscovery = discoveries.get(projectName, chain)
+      combinePermissionsIntoDiscovery(
+        projectDiscovery.discoveryOutput,
+        permissionsOutput,
+      )
 
-    assert(projectDiscovery.analysis)
-    // TODO: Should not be here - drop it and use implementation name once it's ready
-    // if somebody changes the name and decides to re-colorize
-    // then .flat folder will be incorrect
-    // Duplicated from saveDiscoveryResult.ts
-    const remappedResults = remapNames(
-      projectDiscovery.analysis,
-      projectDiscovery.discoveryOutput,
-    )
-    const flatSources = flattenDiscoveredSources(remappedResults, Logger.SILENT)
+      assert(projectDiscovery.analysis)
+      // TODO: Should not be here - drop it and use implementation name once it's ready
+      // if somebody changes the name and decides to re-colorize
+      // then .flat folder will be incorrect
+      // Duplicated from saveDiscoveryResult.ts
+      const remappedResults = remapNames(
+        projectDiscovery.analysis,
+        projectDiscovery.discoveryOutput,
+      )
+      const flatSources = flattenDiscoveredSources(
+        remappedResults,
+        Logger.SILENT,
+      )
 
-    return {
-      discovery: withoutUndefinedKeys(projectDiscovery.discoveryOutput),
-      flatSources,
+      result[chain] = {
+        discovery: withoutUndefinedKeys(projectDiscovery.discoveryOutput),
+        flatSources,
+      }
     }
+    return result
   }
 
   private async discoverMany(
-    toDiscover: { project: string; chain: string }[],
+    toDiscover: { project: string }[],
     dependentDiscoveries: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
     configReader: ConfigReader,
     logger: Logger,
@@ -139,43 +156,49 @@ export class DiscoveryRunner {
         dependencyTimestamp = UnixTime.now()
       } else {
         dependencyTimestamp =
-          dependentDiscoveries?.[dependency.project]?.[dependency.chain]
-            ?.timestamp
+          dependentDiscoveries?.[dependency.project]?.timestamp
 
         if (dependencyTimestamp === undefined) {
           // We rediscover on the past block number, but with current configs and dependencies.
           // Those dependencies might not have been referenced in the old discovery.
           // In that case we don't fail - the diff will show all those "added".
           logger.info(
-            `No block number found for dependency ${dependency.project} on ${dependency.chain}, skipping its rediscovery.`,
+            `No block number found for dependency ${dependency.project}, skipping its rediscovery.`,
           )
           continue
         }
       }
 
-      const dependencyConfig = configReader.readConfig(
-        dependency.project,
-        dependency.chain,
-      )
-      const provider = await this.allProviders.get(
-        dependency.chain,
-        dependencyTimestamp,
-      )
+      const dependencyConfig = configReader.readConfig(dependency.project)
       logger.info(
-        `Discovering ${dependencyConfig.name} on ${dependencyConfig.chain} at timestamp ${dependencyTimestamp}`,
+        `Discovering ${dependencyConfig.name} at timestamp ${dependencyTimestamp}`,
       )
       const analysis = await this.discoveryEngine.discover(
-        provider,
+        this.allProviders,
         dependencyConfig.structure,
-      )
-      const discovery = toRawDiscoveryOutput(
-        this.templateService,
-        dependencyConfig,
         dependencyTimestamp,
-        { [dependencyConfig.chain]: provider.blockNumber },
-        analysis,
       )
-      discoveries.set(dependency.project, dependency.chain, discovery, analysis)
+
+      const chains = unique(
+        analysis.map((c) => ChainSpecificAddress.longChain(c.address)),
+      )
+
+      for (const chain of chains) {
+        const provider = await this.allProviders.get(chain, dependencyTimestamp)
+        const filtered = analysis.filter(
+          (c) => ChainSpecificAddress.longChain(c.address) === chain,
+        )
+
+        const discovery = toRawDiscoveryOutput(
+          chain,
+          this.templateService,
+          dependencyConfig,
+          dependencyTimestamp,
+          { [chain]: provider.blockNumber },
+          filtered,
+        )
+        discoveries.set(dependency.project, chain, discovery, filtered)
+      }
     }
     return discoveries
   }
@@ -196,7 +219,6 @@ export class DiscoveryRunner {
       try {
         result = await this.discover(
           config.name,
-          config.chain,
           timestamp,
           dependentDiscoveries ?? {},
           logger,
@@ -213,12 +235,12 @@ export class DiscoveryRunner {
         2,
       )
       logger.warn(
-        `DiscoveryRunner: Retrying ${config.name} (chain: ${config.chain}) | attempt:${i} | error:${errorString}`,
+        `DiscoveryRunner: Retrying ${config.name} | attempt:${i} | error:${errorString}`,
       )
       await new Promise((resolve) => setTimeout(resolve, delayMs))
     }
 
-    if (result?.discovery === undefined) {
+    if (result === undefined) {
       assert(
         err !== undefined,
         'Programmer error: Error should not be undefined there',

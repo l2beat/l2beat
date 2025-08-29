@@ -2,7 +2,7 @@
   "name": "ham",
   "chain": "base",
   "timestamp": 1747293411,
-  "configHash": "0x4e62d4076af22d10db760b0ef0da971cafcfefbf94b60bf4f50e34d29676002a",
+  "configHash": "0xfa74df4b0d6fd3461caa6d6c47e1faa827a1e2441ed5b25231832f941572abea",
   "entries": [
     {
       "address": "base:0x000000000000000000000000000000000000dEaD",

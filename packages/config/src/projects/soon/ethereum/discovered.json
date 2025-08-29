@@ -2,7 +2,7 @@
   "name": "soon",
   "chain": "ethereum",
   "timestamp": 1755161806,
-  "configHash": "0xeab1901022104b54bec4141da30b31f8f01534ec844ce0c42912fac4745d610b",
+  "configHash": "0x7928d731f8525204126b6e7d1b7c5527f69ad8ba6a56781d63a051712d878d9a",
   "entries": [
     {
       "name": "L2OutputOracle",

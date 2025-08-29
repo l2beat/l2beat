@@ -20,20 +20,21 @@ export const FindUnusedShapes = command({
 
     const chainConfigs = configReader
       .readAllDiscoveredProjects()
-      .flatMap(({ project, chains }) =>
-        chains.map((chain) => configReader.readConfig(project, chain)),
-      )
+      .flatMap(({ project }) => configReader.readConfig(project))
 
     const allSourceHashesUsed = new Set<string>()
 
     for (const config of chainConfigs) {
-      const discovery = configReader.readDiscovery(config.name, config.chain)
+      const chains = configReader.readAllDiscoveredChainsForProject(config.name)
+      for (const chain of chains) {
+        const discovery = configReader.readDiscovery(config.name, chain)
 
-      for (const entry of discovery.entries) {
-        if (entry.sourceHashes) {
-          for (const hash of entry.sourceHashes) {
-            if (hash !== undefined) {
-              allSourceHashesUsed.add(hash)
+        for (const entry of discovery.entries) {
+          if (entry.sourceHashes) {
+            for (const hash of entry.sourceHashes) {
+              if (hash !== undefined) {
+                allSourceHashesUsed.add(hash)
+              }
             }
           }
         }

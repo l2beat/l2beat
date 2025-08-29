@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "gateway",
   "timestamp": 1754308257,
-  "configHash": "0xc98676f1b0cce81b2f52fa6e595546a58f08d1912868ea53427d0b02a475338f",
+  "configHash": "0xc8f190a182d47c75b83d5ebbb6f9e8de5ff789002b0dc9a74ca567dcf41a1899",
   "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
     {

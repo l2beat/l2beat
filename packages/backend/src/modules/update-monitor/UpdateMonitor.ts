@@ -154,21 +154,26 @@ export class UpdateMonitor {
 
     const projectFinished = projectGauge.startTimer({ project })
 
-    // iterate over chains for this project
-    for (const chain of chains) {
-      const chainUpdateStart = UnixTime.now()
-      try {
-        const projectConfig = this.configReader.readConfig(project, chain)
+    const chainUpdateStart = UnixTime.now()
+    try {
+      const projectConfig = this.configReader.readConfig(project)
 
-        // additional safety: skip archived per-chain config
-        if (projectConfig.archived) {
-          this.logger.info('Skipping archived project config', {
-            project,
-            chain,
-          })
-          continue
-        }
+      // additional safety: skip archived per-chain config
+      if (projectConfig.archived) {
+        this.logger.info('Skipping archived project config', { project })
+        return
+      }
 
+      const discoveryPerChain = await runner.discoverWithRetry(
+        projectConfig,
+        timestamp,
+        this.logger,
+        undefined,
+        undefined,
+        'useCurrentTimestamp', // for dependent discoveries
+      )
+
+      for (const chain of chains) {
         // read previous state (committed vs DB) and prime flat sources if needed
         const previousDiscovery = await this.getPreviousDiscovery(
           runner,
@@ -176,15 +181,9 @@ export class UpdateMonitor {
           projectConfig,
         )
 
-        const { discovery } = await runner.discoverWithRetry(
-          projectConfig,
-          timestamp,
-          this.logger,
-          undefined,
-          undefined,
-          'useCurrentTimestamp', // for dependent discoveries
-        )
-
+        const { discovery } = discoveryPerChain[chain] ?? {
+          discovery: undefined,
+        }
         if (!previousDiscovery || !discovery) {
           this.logger.warn('Previous or current discovery missing', {
             project,
@@ -197,7 +196,7 @@ export class UpdateMonitor {
 
         const deployedDiscovered = this.configReader.readDiscovery(
           projectConfig.name,
-          projectConfig.chain,
+          chain,
         )
         const unverifiedEntries = deployedDiscovered.entries
           .filter((c) => c.unverified)
@@ -241,20 +240,19 @@ export class UpdateMonitor {
           end: chainUpdateEnd,
           duration: chainUpdateEnd - chainUpdateStart,
         })
-      } catch (error) {
-        errorCount.inc()
-        const chainUpdateEnd = UnixTime.now()
-        this.logger.error(
-          {
-            project,
-            chain,
-            start: chainUpdateStart,
-            end: chainUpdateEnd,
-            duration: chainUpdateEnd - chainUpdateStart,
-          },
-          error,
-        )
       }
+    } catch (error) {
+      errorCount.inc()
+      const chainUpdateEnd = UnixTime.now()
+      this.logger.error(
+        {
+          project,
+          start: chainUpdateStart,
+          end: chainUpdateEnd,
+          duration: chainUpdateEnd - chainUpdateStart,
+        },
+        error,
+      )
     }
 
     projectFinished()
@@ -323,7 +321,7 @@ export class UpdateMonitor {
       previousDiscovery = databaseEntry.discovery
     }
 
-    const { discovery, flatSources } = await runner.discoverWithRetry(
+    const discoveryPerChain = await runner.discoverWithRetry(
       projectConfig,
       previousDiscovery.timestamp,
       this.logger,
@@ -331,6 +329,10 @@ export class UpdateMonitor {
       undefined,
       previousDiscovery.dependentDiscoveries,
     )
+    const { discovery, flatSources } = discoveryPerChain[chain] ?? {
+      discovery: undefined,
+      flatSources: {},
+    }
 
     // NOTE(radomski): We should only write to the database files that are
     // resulting from discoveries accepted by the research team. Otherwise an

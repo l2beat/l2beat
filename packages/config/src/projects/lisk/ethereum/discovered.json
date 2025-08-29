@@ -2,7 +2,7 @@
   "name": "lisk",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0x705ec7d73243e0b465bd2849937304a64f3224af76d7bf64a6c924fc762fc299",
+  "configHash": "0x8d9a60fad22379460baac8979f7071e299d46b513a7c0f2311b650310afaa0c9",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

@@ -251,7 +251,8 @@ export class BatchingAndCachingProvider {
         this.stats.mark(ProviderMeasurement.GET_LOGS, duration)
         return parseCacheEntry(cached)
       }
-      const logs = await this.provider.getLogs(
+      const logs = await getAllLogs(
+        this.provider,
         address,
         topics,
         fromBlock,

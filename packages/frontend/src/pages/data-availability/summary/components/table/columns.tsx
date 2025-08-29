@@ -10,7 +10,10 @@ import { EM_DASH } from '~/consts/characters'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 import { DacMembersCell } from '../../../components/DacMembersCell'
-import { virtual, withSpanByBridges } from '../../../utils/ColUtils'
+import { BridgeNameCell } from './BridgeNameCell'
+import { BridgeRiskCell } from './BridgeRiskCell'
+import { BridgeUsedByCell } from './BridgeUsedByCell'
+import { BridgeValueSecuredCell } from './BridgeValueSecuredCell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -95,25 +98,6 @@ const tvsColumn = (href?: (row: DaSummaryEntry) => string) =>
     },
   })
 
-const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
-  header: () => <span className="text-right">Slashable</span>,
-  cell: (ctx) => {
-    const value = ctx.getValue()
-
-    return (
-      <div className="w-full pr-[18px] text-right font-medium text-xs md:text-sm">
-        {formatDollarValueNumber(value ?? 0)}
-      </div>
-    )
-  },
-  sortingFn: sortSlashableStake,
-  meta: {
-    align: 'right',
-    tooltip:
-      'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
-  },
-})
-
 const membersColumn = columnHelper.display({
   header: 'Members',
   cell: (ctx) => (
@@ -145,57 +129,6 @@ const fallbackColumn = columnHelper.display({
   },
 })
 
-const daLayerGroup = columnHelper.group({
-  header: 'DA Layer',
-  columns: [
-    withSpanByBridges(daRisksColumn),
-    withSpanByBridges(tvsColumn()),
-    withSpanByBridges(slashableStakeColumn),
-  ],
-})
-
-const bridgeColumn = virtual(
-  columnHelper.display({
-    id: 'bridge',
-    header: 'Bridge',
-    meta: {
-      headClassName: 'px-4',
-      tooltip:
-        'The DA bridge through which Ethereum is informed that data has been made available.',
-    },
-  }),
-)
-
-const bridgeRisksColumn = virtual(
-  columnHelper.display({
-    id: 'bridge-risks',
-    header: 'Bridge Risks',
-  }),
-)
-
-const bridgeTvsColumn = virtual(
-  columnHelper.display({
-    id: 'bridge-tvs',
-    header: 'Value secured',
-    meta: {
-      tooltip:
-        'The sum of the total value secured (TVS) across all L2s & L3s that use this DA layer and DA bridge, and are listed on L2BEAT.',
-    },
-  }),
-)
-
-const bridgeUsedByColumn = virtual(
-  columnHelper.display({
-    id: 'bridge-used-by',
-    header: 'Used By',
-  }),
-)
-
-const bridgeGroup = columnHelper.group({
-  header: 'DA Bridge',
-  columns: [bridgeRisksColumn, bridgeTvsColumn, bridgeUsedByColumn],
-})
-
 function sortSlashableStake(
   rowA: Row<DaSummaryEntry>,
   rowB: Row<DaSummaryEntry>,
@@ -206,18 +139,127 @@ function sortSlashableStake(
   return rowBValue - rowAValue
 }
 
-const [indexColumn, logoColumn] = getDaCommonProjectColumns(
-  columnHelper,
-  (row) => `${row.href}`,
-)
-
 export const publicSystemsColumns = [
-  withSpanByBridges(indexColumn),
-  withSpanByBridges(logoColumn),
-  withSpanByBridges(daLayerColumn()),
-  daLayerGroup,
-  bridgeColumn,
-  bridgeGroup,
+  ...getDaCommonProjectColumns(columnHelper, (row) => `${row.href}`),
+  daLayerColumn(),
+  columnHelper.group({
+    header: 'DA Layer',
+    columns: [
+      daRisksColumn,
+      tvsColumn(),
+      columnHelper.accessor('economicSecurity', {
+        header: () => <span className="text-right">Slashable</span>,
+        cell: (ctx) => {
+          const value = ctx.getValue()
+
+          return (
+            <div className="w-full pr-[18px] text-right font-medium text-xs md:text-sm">
+              {formatDollarValueNumber(value ?? 0)}
+            </div>
+          )
+        },
+        sortingFn: sortSlashableStake,
+        meta: {
+          align: 'right',
+          tooltip:
+            'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
+        },
+      }),
+    ],
+  }),
+  columnHelper.display({
+    id: 'bridge',
+    header: 'Bridge',
+    cell: (ctx) => {
+      const bridge = ctx.row.original.bridges[0]
+      if (!bridge) {
+        return null
+      }
+      return <BridgeNameCell bridge={bridge} />
+    },
+    meta: {
+      tooltip:
+        'The DA bridge through which Ethereum is informed that data has been made available.',
+      additionalRows: (ctx) => {
+        return ctx.row.original.bridges
+          .slice(1)
+          .map((bridge) => <BridgeNameCell key={bridge.slug} bridge={bridge} />)
+      },
+    },
+  }),
+  columnHelper.group({
+    header: 'DA Bridge',
+    columns: [
+      columnHelper.display({
+        id: 'bridge-risks',
+        header: 'Bridge Risks',
+        cell: (ctx) => {
+          const bridge = ctx.row.original.bridges[0]
+          if (!bridge) {
+            return null
+          }
+          return <BridgeRiskCell bridge={bridge} layer={ctx.row.original} />
+        },
+        meta: {
+          additionalRows: (ctx) => {
+            return ctx.row.original.bridges
+              .slice(1)
+              .map((bridge) => (
+                <BridgeRiskCell
+                  key={bridge.slug}
+                  bridge={bridge}
+                  layer={ctx.row.original}
+                />
+              ))
+          },
+        },
+      }),
+      columnHelper.display({
+        id: 'bridge-tvs',
+        header: 'Value secured',
+        cell: (ctx) => {
+          const bridge = ctx.row.original.bridges[0]
+          if (!bridge) {
+            return null
+          }
+          return <BridgeValueSecuredCell bridge={bridge} />
+        },
+        meta: {
+          additionalRows: (ctx) => {
+            return ctx.row.original.bridges
+              .slice(1)
+              .map((bridge) => (
+                <BridgeValueSecuredCell key={bridge.slug} bridge={bridge} />
+              ))
+          },
+          align: 'right',
+          cellClassName: 'pr-[30px] md:pr-[34px]',
+          tooltip:
+            'The sum of the total value secured (TVS) across all L2s & L3s that use this DA layer and DA bridge, and are listed on L2BEAT.',
+        },
+      }),
+      columnHelper.display({
+        id: 'bridge-used-by',
+        header: 'Used By',
+        cell: (ctx) => {
+          const bridge = ctx.row.original.bridges[0]
+          if (!bridge) {
+            return null
+          }
+          return <BridgeUsedByCell bridge={bridge} />
+        },
+        meta: {
+          additionalRows: (ctx) => {
+            return ctx.row.original.bridges
+              .slice(1)
+              .map((bridge) => (
+                <BridgeUsedByCell key={bridge.slug} bridge={bridge} />
+              ))
+          },
+        },
+      }),
+    ],
+  }),
 ]
 
 export const customColumns = [

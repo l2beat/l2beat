@@ -2,7 +2,7 @@
   "name": "optopia",
   "chain": "ethereum",
   "timestamp": 1748434475,
-  "configHash": "0xef9308cff2e18249517610eb4bb512dc0a2e514665937677135d94737967546d",
+  "configHash": "0x0c368b82ccd179756c431db3d5f0914eb3e83bf548ccdf3a14d8415c99b86e5a",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

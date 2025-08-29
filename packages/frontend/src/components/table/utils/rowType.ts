@@ -1,4 +1,3 @@
-import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/components/table/DaSummaryPublicTable'
 import type { UnderReviewStatus } from '~/utils/project/underReview'
 
 export type RowBackgroundColor = 'blue' | 'red' | 'yellow' | undefined
@@ -28,7 +27,7 @@ export function getRowClassNames(rowBackgroundColor: RowBackgroundColor) {
     case 'blue':
       return 'bg-blue-500/35 dark:bg-blue-700/25'
     case 'red':
-      return UNVERIFIED_DA_CLASSNAME
+      return 'bg-red-100/70 dark:bg-red-900/70'
     case 'yellow':
       return 'bg-yellow-200/10'
     default:

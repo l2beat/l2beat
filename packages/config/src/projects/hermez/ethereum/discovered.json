@@ -2,7 +2,7 @@
   "name": "hermez",
   "chain": "ethereum",
   "timestamp": 1738736459,
-  "configHash": "0x458eebbf678700cee77247bb66418a7e82b9309e50e7d3e07400827d4937642e",
+  "configHash": "0x0371c22ab886d92940245c1ffe9fe2e3febb3bb14859bab140246c2d1c28b88f",
   "entries": [
     {
       "name": "ProxyAdmin",

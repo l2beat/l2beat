@@ -1,8 +1,8 @@
 {
   "name": "educhain",
   "chain": "arbitrum",
-  "timestamp": 1750836613,
-  "configHash": "0x02f9855a3ab4d2ddeebee6755ccc16d0ad6a930e62497bf21f0bc968099a38ad",
+  "timestamp": 1756118260,
+  "configHash": "0xabbdda509c2cfd71bee48f417fdd7ac4fee3a133e08af62924be276483f043e9",
   "entries": [
     {
       "address": "arb1:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -97,7 +97,7 @@
         "allowedOutboxList": [
           "arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"
         ],
-        "delayedMessageCount": 26776,
+        "delayedMessageCount": 27616,
         "inboxHistory": [
           "arb1:0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
           "arb1:0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251"
@@ -107,8 +107,8 @@
         "outboxHistory": ["arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"],
         "rollup": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerInbox": "arb1:0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-        "sequencerMessageCount": 61242,
-        "sequencerReportedSubMessageCount": 12783585
+        "sequencerMessageCount": 72580,
+        "sequencerReportedSubMessageCount": 16749573
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -513,7 +513,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 61242,
+        "batchCount": 72580,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0xeA64C25e6Ea873D5cffb045b80BEc605ABE06647"],
         "bridge": "arb1:0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8",
@@ -544,7 +544,7 @@
         "rollup": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 26775,
+        "totalDelayedMessagesRead": 27616,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -615,7 +615,7 @@
         ],
         "$upgradeCount": 2,
         "anyTrustFastConfirmer": "arb1:0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b",
-        "arbOsFromWmRoot": "ArbOS v32 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v40 wasmModuleRoot",
         "baseStake": "10000000000000000",
         "bridge": "arb1:0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8",
         "chainId": 41923,
@@ -624,13 +624,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "10000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 5306,
+        "firstUnresolvedNode": 6758,
         "inbox": "arb1:0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22775036,
-        "latestConfirmed": 5305,
-        "latestNodeCreated": 5305,
+        "latestConfirmed": 6757,
+        "latestNodeCreated": 6757,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9",
@@ -651,7 +651,7 @@
         "validatorUtils": "arb1:0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "arb1:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39",
+        "wasmModuleRoot": "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -861,7 +861,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1094,7 +1094,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 5285,
+        "nonce": 6737,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1873,6 +1873,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 350981739 },
+  "usedBlockNumbers": { "arbitrum": 372114453 },
   "permissionsConfigHash": "0x9018f20da56fae341cc2367860b74d2b18b66ef53f1f6bb29523092db305d6aa"
 }

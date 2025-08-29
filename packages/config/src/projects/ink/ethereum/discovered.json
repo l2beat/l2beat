@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ethereum",
   "timestamp": 1755525900,
-  "configHash": "0xd2d601ecaa5927fca86f27a05c099c5ab802d9b6786de610b6daebcd7c301d3d",
+  "configHash": "0x64a552af90aabb0b6a4c950407654020e292c496d17e8894ca7643473720e898",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

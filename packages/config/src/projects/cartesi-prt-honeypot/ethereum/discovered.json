@@ -2,7 +2,7 @@
   "name": "cartesi-prt-honeypot",
   "chain": "ethereum",
   "timestamp": 1750257587,
-  "configHash": "0x96b9e7274ae02e5ff46efce01ef04557d7e31826c2a85095c3dbbe9ee1be4105",
+  "configHash": "0x895716324e6d0473b3e0c0a6fd0f85f927000620a29386bc6932bcf4092e7756",
   "entries": [
     {
       "name": "TopTournament",

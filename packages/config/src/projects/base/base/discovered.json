@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "base",
   "timestamp": 1755525868,
-  "configHash": "0x5e785129684f1569c775f27f5e1ebc6616a5b1664d010d6e1f75e5ab3dd33ade",
+  "configHash": "0xb88d53741ba66057c4aeb81e58cbc7b4e72138d2114266ececc9345d5aa1e326",
   "entries": [
     {
       "name": "FeeDisburser",

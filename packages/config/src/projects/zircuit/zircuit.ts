@@ -34,14 +34,12 @@ const withdrawalKeepalivePeriodSecondsFmt: number =
     'withdrawalKeepalivePeriodSecondsFmt',
   )
 
-const verifierV2 = discovery.getContract('VerifierV2')
-
 // the opstack template automatically applies the correct risk rosette slices, so we do not override them
 // as soon as this is not the case anymore (backdoor removed, permissionless proposing etc.),
 // we should update the opstack.ts or not use it anymore
 const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
-  title: 'Validity proofs', // proof is the only input to the Verifier
-  description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently state updates do not require a proof if the last state update was made >= ${withdrawalKeepalivePeriodSecondsFmt} ago and is optimistically considered to be valid. Moreover, the system doesn't check that the transactions applied to the state are the ones published by the sequencer.`,
+  title: 'Validity proofs',
+  description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently state updates do not require a proof if the last state update was made >= ${withdrawalKeepalivePeriodSecondsFmt} ago and is optimistically considered to be valid.`,
   risks: [
     {
       category: 'Funds can be stolen if',
@@ -53,12 +51,12 @@ const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
   references: [
     {
       title:
-        'L2OutputOracle.sol - Etherscan source code - bootstrapV2() function',
-      url: 'https://etherscan.io/address/0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315#code#F1#L320',
+        'L2OutputOracle.sol - Etherscan source code - bootstrapL2Output() function',
+      url: 'https://etherscan.io/address/0x92Ef6Af472b39F1b363da45E35530c24619245A4',
     },
     {
-      title: 'VerifierV2.sol - Etherscan source code',
-      url: safeGetImplementation(verifierV2),
+      title: 'VerifierV3 (SP1VerifierGateway) - Etherscan source code',
+      url: 'https://etherscan.io/address/0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67#code',
     },
   ],
 }
@@ -213,6 +211,22 @@ export const zircuit: ScalingProject = opStackL2({
         functionSignature:
           'function proposeL2OutputV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _aggrProof) payable',
         sinceTimestamp: UnixTime(1741654919),
+        untilTimestamp: UnixTime(1756148051),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+        { type: 'liveness', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x92Ef6Af472b39F1b363da45E35530c24619245A4'),
+        selector: '0x76340d0a',
+        functionSignature:
+          'function proposeL2OutputV3(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable',
+        sinceTimestamp: UnixTime(1756148051),
       },
     },
   ],
@@ -275,7 +289,7 @@ export const zircuit: ScalingProject = opStackL2({
         references: [
           {
             title: 'Etherscan - OptimismPortal - escapeEth() function',
-            url: 'https://etherscan.io/address/0xA0A36095A2258568759fb41CAE4934BBd2d04E26#code#F1#L456',
+            url: 'https://etherscan.io/address/0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1',
           },
         ],
         risks: [],
@@ -283,6 +297,14 @@ export const zircuit: ScalingProject = opStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Proof system migrated to SP1',
+      date: '2025-08-25T00:00:00.00Z',
+      description:
+        'Zircuit deprecates its in-house proof system in favor of SP1.',
+      type: 'general',
+      url: 'https://etherscan.io/address/0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67',
+    },
     {
       title: 'Escape mechanism',
       url: 'https://www.zircuit.com/blog/mainnet-phase-1-is-live',

@@ -174,7 +174,7 @@ export const sp1: BaseProject = {
           'https://gnosisscan.io/address/0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('omni'), ProjectId('facet')],
+        usedBy: [ProjectId('omni'), ProjectId('facet'), ProjectId('zircuit')],
       },
     ],
   },

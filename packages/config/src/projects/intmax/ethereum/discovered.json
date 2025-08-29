@@ -2,7 +2,7 @@
   "name": "intmax",
   "chain": "ethereum",
   "timestamp": 1755850487,
-  "configHash": "0xab3e140b35504785130784cc7c4e1c032524515bdb4084edb56f2417da06c907",
+  "configHash": "0xff566c5b5584443b98a94053405ec37fe4abd66c069eaa848c138f993caece7b",
   "entries": [
     {
       "name": "PredicatePermitter",

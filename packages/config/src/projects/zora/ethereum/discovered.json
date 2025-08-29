@@ -2,7 +2,7 @@
   "name": "zora",
   "chain": "ethereum",
   "timestamp": 1755507657,
-  "configHash": "0xf46df692d7d99e1d4030893a7dd23a3d9e7eff2a367368187dd030898e1c3b22",
+  "configHash": "0xa31dcd43e28bc84f7d6e9a09960319230d0dac3a711c4239877aff1e8edb648f",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

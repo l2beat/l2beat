@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "ethereum",
   "timestamp": 1752073991,
-  "configHash": "0xb6229c3f0fc7fb9a00c26c5e53f736356d05c9b91cb5e7c42a89d867b8d82ae1",
+  "configHash": "0x2ad883a5e83c70fcb7940dd12128e11b451c42b2b50274045fda5960bb192b69",
   "entries": [
     {
       "name": "FPValidator",

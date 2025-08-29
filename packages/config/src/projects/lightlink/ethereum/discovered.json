@@ -2,7 +2,7 @@
   "name": "lightlink",
   "chain": "ethereum",
   "timestamp": 1743926099,
-  "configHash": "0x2033f8a75dc71ddb50adba75ab282061b8a1ba59381493dbe69232c64de152c3",
+  "configHash": "0x87c2ae343dbf93c9001c389470a8450df83a87df8183b88a2c38bcbead490e6d",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

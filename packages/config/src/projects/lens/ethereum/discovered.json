@@ -2,7 +2,7 @@
   "name": "lens",
   "chain": "ethereum",
   "timestamp": 1755245760,
-  "configHash": "0x967b80016a025186479b76cebcefda76a5f83b9eaeb23ac8363dd4f1c6ad2e6b",
+  "configHash": "0x9749bfa965006f5c2d708d3c847c2f290e17ef3fe14d75206fa23ea441755724",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

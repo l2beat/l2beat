@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "timestamp": 1752069683,
-  "configHash": "0xbca68a810f3d03277b83dccc6fb721d0e892bfb0378c2dbd461c186ae72ddafd",
+  "configHash": "0x778c2de12ef7dd6c467152d1d3b5af99ebb113c78ed5c2b1ca9c29f4b082a547",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {

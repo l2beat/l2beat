@@ -398,7 +398,7 @@
   "static/images/architecture/linea.png": "7cdd792198dd41c959bdb0b1d8de7863",
   "static/images/architecture/loopring.png": "72b55764cd29bcdecd5b42214508231c",
   "static/images/architecture/mantle.png": "ce35781164a534be667b17b0dce95943",
-  "static/images/architecture/metis.png": "89b6a8dbf3d1b9cb2c5280b908235251",
+  "static/images/architecture/metis.png": "0faf0633c2372200d5e1f548fe24b304",
   "static/images/architecture/morph.png": "3325c88c8850cedbfd1c2150ad3fd56d",
   "static/images/architecture/near.png": "6a02b6ef345ce62f36f9310b189f7d57",
   "static/images/architecture/omni.png": "49e4bb5ccb181440c22b848cf8db0062",
@@ -1367,7 +1367,6 @@
   "static/icons/openvmprover.png": "a8dfb6f6e7a7e1ad7c6081b649939237",
   "static/icons/risc0.png": "6651b4c99bf3a2141bd1d1392bcf3bc2",
   "static/icons/stone.png": "3a06c9b63b7d18607868d2110343be5f",
-  "static/icons/zircuitprover.png": "285df9d1342aee46ed90ded52983e309",
   "static/icons/zksyncprover.png": "3d332c71daecb207ed4a78d7d3031e15",
   "static/icons/jetstreamchain.png": "2cfdab2633a852dded3a70438a2d01f2",
   "static/meta-images/scaling/projects/jetstreamchain/opengraph-image.png": "51f312984070e1d8d31e6202ddc37859",
@@ -1404,5 +1403,7 @@
   "static/meta-images/governance/publications/governance-review-65.png": "50950216ec74ee3a5fa669529bf68a33",
   "static/icons/zkprover.png": "9209da36dc894b389ad580067aa77c59",
   "static/icons/t3rn.png": "91654d12e3956bbf15cf1f9d5e319fe7",
-  "static/images/badges/Scroll.png": "f121fec618448fdf0e831d47ec32686f"
+  "static/images/badges/Scroll.png": "f121fec618448fdf0e831d47ec32686f",
+  "static/images/badges/Scroll.png": "f121fec618448fdf0e831d47ec32686f",
+  "static/meta-images/governance/publications/governance-review-66.png": "836e4408a03ea617f58a1c4e2d4bb3e0"
 }

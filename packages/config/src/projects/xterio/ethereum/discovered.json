@@ -2,7 +2,7 @@
   "name": "xterio",
   "chain": "ethereum",
   "timestamp": 1745000255,
-  "configHash": "0xf6515e99c419288ad87b788dd8a3c6938bd5fcdfe21c7ad32999e9f2ba89b097",
+  "configHash": "0xb7ed8cc6c84078f2ad725e96408a73502a2ce32ffdbedc23f0546fbf6e6bf6c4",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "unichain",
   "timestamp": 1755525939,
-  "configHash": "0x0a0b1f66fb22eb36ea46a12431a609e640a61da77ef962382aa8e39b4048df9d",
+  "configHash": "0x8e689fcd41feaf9f9d80e79a95e7582ce521bdc769207de8d5b233054f8d7c63",
   "entries": [
     {
       "address": "unichain:0x0000000000000000000000000000000000000000",

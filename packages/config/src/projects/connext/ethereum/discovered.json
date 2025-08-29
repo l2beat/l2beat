@@ -2,7 +2,7 @@
   "name": "connext",
   "chain": "ethereum",
   "timestamp": 1753682687,
-  "configHash": "0xdf60a200199cd8c5362036b889a07ad92fd42e063699e3b48a554bcc325df6c5",
+  "configHash": "0x2d65b180eb3a15a3e46af3a6f3ca100c8c13f13ba9a13c61c04d5bfac75020f2",
   "entries": [
     {
       "address": "eth:0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",

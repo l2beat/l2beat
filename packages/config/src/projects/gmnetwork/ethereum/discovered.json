@@ -2,7 +2,7 @@
   "name": "gmnetwork",
   "chain": "ethereum",
   "timestamp": 1743924767,
-  "configHash": "0xf90696c11643e7bd2fda40b03943647fe5606affb8f6004431daed5a74b6c75c",
+  "configHash": "0x79959d60b033e99d02e985fcad6cce034088b2f52e200d0152115cac22a2f8f0",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

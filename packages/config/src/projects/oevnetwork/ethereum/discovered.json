@@ -2,7 +2,7 @@
   "name": "oevnetwork",
   "chain": "ethereum",
   "timestamp": 1755010019,
-  "configHash": "0xcbb08ab04ae8632b58d03d80db29d60b63172c7a9c2eec8f863da2337aae73f5",
+  "configHash": "0x365917338813a6d9545e70264c905a5519eb9f89524935f49bdbb483b051c48a",
   "entries": [
     {
       "address": "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",

@@ -2,7 +2,7 @@
   "name": "bugbuster",
   "chain": "optimism",
   "timestamp": 1727455453,
-  "configHash": "0xc0bb35c5230440f3eb2df2dabf46966e8f245b7484e438d41d16ff7f8a37670d",
+  "configHash": "0xc2c7c42faf3c6c1830b3f5acba203859481302d6fe9cb10297b3fcfee7abf5c8",
   "entries": [
     {
       "name": "History",

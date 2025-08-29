@@ -1,4 +1,4 @@
-import type { Project, ProjectScalingRiskView } from '@l2beat/config'
+import type { Project, ProjectRiskView } from '@l2beat/config'
 import type { RosetteValueTuple } from '~/components/rosette/individual/IndividualRosetteIcon'
 
 export interface ScalingRosette {
@@ -19,9 +19,7 @@ export function getScalingRosette(project: Project<'scalingRisks'>) {
   }
 }
 
-function getScalingRosetteValues(
-  risks: ProjectScalingRiskView,
-): RosetteValueTuple {
+function getScalingRosetteValues(risks: ProjectRiskView): RosetteValueTuple {
   return [
     { name: 'Sequencer failure', ...risks.sequencerFailure },
     { name: 'State validation', ...risks.stateValidation },

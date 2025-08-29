@@ -2,7 +2,7 @@
   "name": "xai",
   "chain": "arbitrum",
   "timestamp": 1755513362,
-  "configHash": "0xb4e447e1d3350a9914d9e8b0619b89ec0219e96ca098fcf32c98addc46dbbf94",
+  "configHash": "0x2266e7d4d573602b37e39e45bad94b33f55ee01d8d1f954cecf8eba6c871baa9",
   "entries": [
     {
       "name": "XaiMultisig2",

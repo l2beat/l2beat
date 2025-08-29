@@ -2,7 +2,7 @@
   "name": "debridge",
   "chain": "ethereum",
   "timestamp": 1753092647,
-  "configHash": "0xe251156abc78df2f9ac8459c95dcb41b505c4bd9c2866225d24414a8191ae626",
+  "configHash": "0x665a75925a8e7a947fbecdea13d7c9296a1dd4cc1b6914c8ff3f0fa07bd90c1c",
   "entries": [
     {
       "address": "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205",
@@ -125,6 +125,55 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1637442903,
       "sinceBlock": 13654184,
@@ -427,11 +476,12 @@
       "name": "ProxyAdmin",
       "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
@@ -894,8 +944,9 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 22966882 },
-  "permissionsConfigHash": "0xa6373d216fda56dcf55f9479a07797bcab40b4cbbef05590435342cccb33376c"
+  "permissionsConfigHash": "0xa853bce3cc00e999e6fd9ba36d3308db3081c7a50bdc078da1b64e0885c05a4d"
 }
