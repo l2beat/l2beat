@@ -15,6 +15,8 @@ export interface SyncMetadataRecord {
   id: string
   target: UnixTime
   syncedUntil: UnixTime | null
+  blockTarget: number | null
+  blockSyncedUntil: UnixTime | null
 }
 
 export function toRecord(row: Selectable<SyncMetadata>): SyncMetadataRecord {
@@ -23,6 +25,8 @@ export function toRecord(row: Selectable<SyncMetadata>): SyncMetadataRecord {
     feature: row.feature as SyncMetadataFeature,
     target: UnixTime.fromDate(row.target),
     syncedUntil: row.syncedUntil ? UnixTime.fromDate(row.syncedUntil) : null,
+    blockTarget: row.blockTarget,
+    blockSyncedUntil: row.blockSyncedUntil,
   }
 }
 
@@ -32,16 +36,21 @@ export function toRow(
   return {
     ...toRowWithoutTarget(record),
     target: UnixTime.toDate(record.target),
+    blockSyncedUntil: record.blockSyncedUntil,
   }
 }
 
 export function toRowWithoutTarget(
-  record: Omit<Insertable<SyncMetadataRecord>, 'target'>,
-): Omit<Insertable<SyncMetadata>, 'target'> {
+  record: Omit<Insertable<SyncMetadataRecord>, 'target' | 'blockTarget'>,
+): Omit<Insertable<SyncMetadata>, 'target' | 'blockTarget'> {
   return {
     ...record,
-    syncedUntil: record.syncedUntil
-      ? UnixTime.toDate(record.syncedUntil)
-      : null,
+    syncedUntil:
+      record.syncedUntil !== null
+        ? record.syncedUntil
+          ? UnixTime.toDate(record.syncedUntil)
+          : undefined
+        : null,
+    blockSyncedUntil: record.blockSyncedUntil,
   }
 }

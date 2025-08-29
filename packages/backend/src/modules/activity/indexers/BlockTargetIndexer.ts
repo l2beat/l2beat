@@ -17,7 +17,7 @@ export class BlockTargetIndexer extends RootIndexer {
     private readonly db: Database,
     private readonly config: ActivityConfigProject,
     private readonly options?: {
-      onTick?: (targetTimestamp: number) => Promise<void>
+      onTick?: (targetTimestamp: number, blockNumber: number) => Promise<void>
     },
   ) {
     super(
@@ -50,7 +50,7 @@ export class BlockTargetIndexer extends RootIndexer {
     await this.checkBlockNumber(blockNumber)
 
     this.blockHeight = blockNumber
-    await this.options?.onTick?.(timestamp)
+    await this.options?.onTick?.(timestamp, blockNumber)
     return blockNumber
   }
 

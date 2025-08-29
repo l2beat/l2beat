@@ -22,12 +22,16 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           id: 'arbitrum',
           target: roundedHour - UnixTime.HOUR,
           syncedUntil: roundedHour - UnixTime.HOUR,
+          blockTarget: 200,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'l2costs',
           id: 'base',
           target: roundedHour,
           syncedUntil: roundedHour,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
         },
       ]
       await repository.upsertMany(records)
@@ -41,6 +45,8 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           id: 'arbitrum',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour,
+          blockTarget: 225,
+          blockSyncedUntil: 200,
         },
       ])
 
@@ -51,12 +57,16 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           id: 'base',
           target: roundedHour,
           syncedUntil: roundedHour,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'activity',
           id: 'arbitrum',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour,
+          blockTarget: 225,
+          blockSyncedUntil: 200,
         },
       ])
     })
@@ -74,24 +84,32 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           id: 'arbitrum',
           target: roundedHour,
           syncedUntil: roundedHour,
+          blockTarget: 200,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'activity',
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour + UnixTime.HOUR,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'activity',
           id: 'dydx',
           target: roundedHour + 2 * UnixTime.HOUR,
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
+          blockTarget: 200,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'l2costs',
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour + UnixTime.HOUR,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
         },
       ]
       await repository.upsertMany(records)
@@ -112,99 +130,117 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour + UnixTime.HOUR,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'activity',
           id: 'dydx',
           target: roundedHour + 2 * UnixTime.HOUR,
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
+          blockTarget: 200,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'l2costs',
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour + UnixTime.HOUR,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'activity',
           id: 'arbitrum',
           target: roundedHour,
           syncedUntil: newSyncedUntil,
+          blockTarget: 200,
+          blockSyncedUntil: 100,
         },
       ])
     })
-  })
 
-  describe(SyncMetadataRepository.prototype.updateSyncedUntilMany.name, () => {
-    it('should update syncedUntil for existing records', async () => {
+    it('should update syncedUntil and blockSyncedUntil for existing record', async () => {
       const records: SyncMetadataRecord[] = [
         {
           feature: 'activity',
           id: 'arbitrum',
           target: roundedHour,
           syncedUntil: roundedHour,
+          blockTarget: 1000,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'activity',
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour + UnixTime.HOUR,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'activity',
           id: 'dydx',
           target: roundedHour + 2 * UnixTime.HOUR,
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
+          blockTarget: 200,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'l2costs',
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour + UnixTime.HOUR,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
         },
       ]
       await repository.upsertMany(records)
 
       const newSyncedUntil = roundedHour + 3 * UnixTime.HOUR
-      await repository.updateSyncedUntilMany([
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          syncedUntil: newSyncedUntil,
-        },
-        {
-          feature: 'activity',
-          id: 'base',
-          syncedUntil: newSyncedUntil + UnixTime.HOUR,
-        },
-      ])
+      const newBlockSyncedUntil = 999
+      await repository.updateSyncedUntil(
+        'activity',
+        ['arbitrum'],
+        newSyncedUntil,
+        newBlockSyncedUntil,
+      )
 
       const results = await repository.getAll()
+
       expect(results).toHaveLength(4)
       expect(results).toEqualUnsorted([
         {
           feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: newSyncedUntil,
-        },
-        {
-          feature: 'activity',
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
-          syncedUntil: newSyncedUntil + UnixTime.HOUR,
+          syncedUntil: roundedHour + UnixTime.HOUR,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'activity',
           id: 'dydx',
           target: roundedHour + 2 * UnixTime.HOUR,
           syncedUntil: roundedHour + 2 * UnixTime.HOUR,
+          blockTarget: 200,
+          blockSyncedUntil: 100,
         },
         {
           feature: 'l2costs',
           id: 'base',
           target: roundedHour + UnixTime.HOUR,
           syncedUntil: roundedHour + UnixTime.HOUR,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
+        },
+        {
+          feature: 'activity',
+          id: 'arbitrum',
+          target: roundedHour,
+          syncedUntil: newSyncedUntil,
+          blockTarget: 1000,
+          blockSyncedUntil: newBlockSyncedUntil,
         },
       ])
     })

@@ -45,7 +45,7 @@ export function initActivityModule(
           database,
           project,
           {
-            onTick: async (targetTimestamp) => {
+            onTick: async (targetTimestamp, blockNumber) => {
               if (!config.activity) {
                 return
               }
@@ -55,6 +55,7 @@ export function initActivityModule(
                   feature: 'activity',
                   id: p.id,
                   target: UnixTime.toStartOf(targetTimestamp, 'day'),
+                  blockTarget: blockNumber,
                 })),
               )
             },

@@ -62,6 +62,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
         'activity',
         [this.$.projectId],
         latestTimestamp,
+        adjustedTo,
       )
     })
 

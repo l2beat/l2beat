@@ -4,6 +4,8 @@ CREATE TABLE "SyncMetadata" (
     "id" VARCHAR(255) NOT NULL,
     "target" TIMESTAMP(6) NOT NULL,
     "syncedUntil" TIMESTAMP(6),
+    "blockTarget" INTEGER,
+    "blockSyncedUntil" INTEGER,
 
     CONSTRAINT "SyncMetadata_pkey" PRIMARY KEY ("feature","id")
 );

@@ -82,7 +82,7 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
       previousRecords: previousRecords.length,
     })
 
-    const records = this.$.daService.generateRecords(
+    const { records, latestTimestamp } = this.$.daService.generateRecords(
       blobs,
       previousRecords,
       configurations.map((c) => c.properties),
@@ -94,7 +94,8 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         await this.$.db.syncMetadata.updateSyncedUntil(
           'dataAvailability',
           this.$.configurations.map((c) => c.properties.projectId),
-          Math.max(...records.map((r) => r.timestamp)),
+          latestTimestamp,
+          adjustedTo,
         )
       })
 
