@@ -78,7 +78,6 @@ export class AddressAnalyzer {
     entrypoints: Record<ChainSpecificAddress, Entrypoint> = {},
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {
-    console.log(entrypoints)
     const code = await provider.getBytecode(address)
     const isEOA = codeIsEOA(code)
 
