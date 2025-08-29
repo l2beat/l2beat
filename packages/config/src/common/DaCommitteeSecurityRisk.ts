@@ -66,6 +66,18 @@ function NoHonestMinimumCommitteeSecurity(
   }
 }
 
+function TeeCommitteeSecurity(value?: string): TableReadyValue {
+  return {
+    value: value ?? 'TEE-based',
+    sentiment: 'warning',
+    description: `The committee security is based on Trusted Execution Environments (TEEs) with on-chain key registration and verification. 
+    TEE attestation keys are registered on-chain, providing transparency and governance control over valid TEE configurations. 
+    However, compromised TEE keys can still sign false availability attestations before governance can revoke them, creating a timing window for attacks. 
+    The system also has infrastructure dependencies on the TEE provider (e.g., Intel's Attestation Service) and requires coordinated responses to TCB recovery events when new vulnerabilities are discovered.`,
+    orderHint: 0,
+  }
+}
+
 function AutoDAC(params: {
   membersCount: number
   requiredMembers: number
@@ -149,5 +161,6 @@ export const DaCommitteeSecurityRisk = {
   NoCommitteeSecurity,
   NoDiversityCommitteeSecurity,
   NoHonestMinimumCommitteeSecurity,
+  TeeCommitteeSecurity,
   AutoDAC,
 }
