@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x99d75e1ddf2eb52ee3bc2bc62b9dacbcf05b4d1a
+
+# Diff at Fri, 29 Aug 2025 07:19:10 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e68cba094085f7ab7e642304a942701f260f19fb block: 1756216503
+- current timestamp: 1756451851
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.operatorFeeConstant:
+-        0
++        23225000000
+      values.operatorFeeScalar:
+-        0
++        4200000000
+    }
+```
+
 Generated with discovered.json: 0x3abb85b5b9bd5c27d49020755a9731acfb98a761
 
 # Diff at Tue, 26 Aug 2025 13:58:36 GMT:
