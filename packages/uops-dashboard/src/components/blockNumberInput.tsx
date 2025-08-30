@@ -31,7 +31,7 @@ export function BlockNumberInput({
         setErrorMessage(error.message)
       }
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
     setIsLoading(false)
   }
