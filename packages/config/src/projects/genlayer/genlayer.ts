@@ -16,9 +16,16 @@ export const genlayer: ScalingProject = upcomingL2({
     stacks: ['ZK Stack'],
     links: {
       websites: ['https://genlayer.com/'],
+      bridges: ['https://genlayer-testnet.bridge.caldera.xyz'],
+      repositories: ['https://github.com/genlayerlabs'],
       documentation: ['https://docs.genlayer.com/'],
       explorers: ['https://genlayer-testnet.explorer.caldera.xyz/'],
-      socialMedia: ['https://x.com/GenLayer'],
+      socialMedia: [
+        'https://x.com/GenLayer',
+        'https://discord.com/invite/8Jm4v89VAu',
+        'https://t.me/genlayer',
+        'https://www.youtube.com/@GenLayer',
+      ],
     },
   },
   ecosystemInfo: {
