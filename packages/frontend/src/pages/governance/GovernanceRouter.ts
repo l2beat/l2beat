@@ -26,7 +26,7 @@ export function createGovernanceRouter(
   })
 
   router.get(
-    '/governance/publications/:id',
+    '/publications/:id',
     validateRoute({
       params: v.object({ id: v.string() }),
     }),

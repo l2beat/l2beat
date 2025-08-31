@@ -21,6 +21,23 @@ export function PublicationsList({
     <>
       <TableFilters entries={publications} />
       <PrimaryCard className="mt-4 grid grid-cols-1 gap-x-4 gap-y-12 md:grid-cols-2 md:p-8 lg:grid-cols-3">
+        <div className="relative col-span-full row-start-2 h-[120px] w-full">
+          <img
+            src="/images/publications/newsletter-box.png"
+            alt="Publications"
+            className="absolute inset-0 h-full w-full rounded-lg object-cover object-center"
+          />
+          <div className="z-10 flex flex-col">
+            <div className="font-bold text-heading-24 text-white">
+              Want to get notified about new publications?
+            </div>
+            <div>
+              Get the latest insights - covering Ethereum Layer 2 ecosystem
+              updates, in-depth research and transparency reports, governance
+              proposals, and more.
+            </div>
+          </div>
+        </div>
         {filteredPublications.map((publication) => (
           <PublicationCard publication={publication} key={publication.id} />
         ))}
