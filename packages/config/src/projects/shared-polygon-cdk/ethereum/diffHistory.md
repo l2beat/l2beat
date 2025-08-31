@@ -5233,7 +5233,7 @@ Generated with discovered.json: 0x15662af018b78a0f906a35ea6da90ee771892d94
 
 ## Description
 
-Related to lumia upgrating to latest validium (type 7).
+Related to lumia upgrading to latest validium (type 7).
 
 config: change timelock descriptions, add delay.
 
