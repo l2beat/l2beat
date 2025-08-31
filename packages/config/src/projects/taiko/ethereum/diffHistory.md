@@ -1,38 +1,57 @@
-Generated with discovered.json: 0x3c23af90adfd110dcbabf8be45e148d2ec0cca2e
+Generated with discovered.json: 0x31bd1e3db3f230a3c39a898f99a5d9969ea7c0bc
 
-# Diff at Fri, 29 Aug 2025 10:26:06 GMT:
+# Diff at Sun, 31 Aug 2025 07:53:11 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@87c5e382c642255fd0a2841d66e663193b01574e block: 1756117493
-- current timestamp: 1756463061
+- current timestamp: 1756626709
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+- TaikoL1
+Minimal diff: changed function return value (proposeBatch now returns lastBlockId)
+https://disco.l2beat.com/diff/eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82/eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8
+
+No diff, changed NewFork constructor param to use the new implementation contract from above (0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8) 
+https://disco.l2beat.com/diff/eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F/eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7
+
+- ProverSet
+Admin change to EOA (taiko foundation msig member)
+
+- TaikoWrapper
+Minimal diff: changed functions ordering to do one less decoding 
+https://disco.l2beat.com/diff/eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61/eth:0x52D6FC6F6db9E370c336f64f61ff3C29568d1859
+
+- PreconfRouter
+Minimal diff: match function interface changes from above 
+https://disco.l2beat.com/diff/eth:0xf571E2626E2CE68127852123A2cC6AA522C586A0/eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913
+
+- PreconfWhitelist
+Operators can now also be added by ejecter (chnaged onlyOwner toonlyOwnerOrEjecter modifier).
 
 ## Watched changes
 
 ```diff
-    EOA  (0x000cb000E880A92a8f383D69dA2142a969B93DE7) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"sequence","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":".getOperatorCandidatesForCurrentEpoch"}]
+    contract ForcedInclusionStore (0x05d88855361808fA1d7fc28084Ef3fCa191c4e03) {
+    +++ description: Contract that allows users to enqueue forced transactions via L1. The system guarantees that at least one pending forced transaction from the queue will be processed every 255 batches. Individual transactions may face longer delays if the queue is extensive.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
     }
 ```
 
 ```diff
-    contract ERC1967Proxy (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
-    +++ description: None
-      name:
--        "TaikoL1"
-+        "ERC1967Proxy"
-      template:
--        "taiko/TaikoL1PostPacaya"
+    contract TaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
       sourceHashes.1:
 -        "0x036f854f425618da3e66dad1cd29e352eda6ce3f728eb078bc043f82fe653157"
 +        "0x4a046242c16270e33ec006d5d7d18a68040b417d8355d24cc6a44926ce444f6e"
-      description:
--        "Main contract implementing the logic for proposing and proving Taiko blocks on L1."
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
       values.$implementation.0:
 -        "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F"
 +        "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7"
@@ -44,111 +63,15 @@ Provide description of changes. This section will be preserved.
       values.$upgradeCount:
 -        28
 +        29
-      values.getLastSyncedTransition.batchId_:
--        1323976
-+        1325008
-      values.getLastSyncedTransition.blockId_:
--        1780458
-+        1905343
-      values.getLastSyncedTransition.ts_.parentHash:
--        "0xd1e8a183ff10ecd0ba5abea5601c4b0cf9bc312bab5ecc58ce9234bd4ddec283"
-+        "0x1aaf8bd4a3fc084001e673b413766cdc66036aae67fcc37ca51c110e28618de4"
-      values.getLastSyncedTransition.ts_.blockHash:
--        "0xda03b637a045e68394937c998be225e84c619c749a2686b50db674edbeba28b9"
-+        "0x292ffe5c938da0c72bd160cbee559a1d3300ff5441c698126dc6d960f9fb7c43"
-      values.getLastSyncedTransition.ts_.stateRoot:
--        "0x7a32ca91e2cd0610c9afbff12c8c5df3c87ddf20db74b8f7dfef6c8bbffe3042"
-+        "0xeee2568b67e0c0df0ddc92da34391ae08e17adc456ddf472c6d046ddfb492e72"
-      values.getLastSyncedTransition.ts_.createdAt:
--        1756108427
-+        1756450523
-      values.getLastVerifiedBlock.blockId_:
--        1323977
-+        1325008
-      values.getLastVerifiedBlock.blockHash_:
--        "0xff5c4c987d81736ec6518838ce601820a628bbb1a94e6be4d9ae0da1260cdecc"
-+        "0x292ffe5c938da0c72bd160cbee559a1d3300ff5441c698126dc6d960f9fb7c43"
-      values.getLastVerifiedBlock.stateRoot_:
--        "0x0000000000000000000000000000000000000000000000000000000000000000"
-+        "0xeee2568b67e0c0df0ddc92da34391ae08e17adc456ddf472c6d046ddfb492e72"
-      values.getLastVerifiedBlock.verifiedAt_:
--        1741798835
-+        1741822151
-      values.getLastVerifiedTransition.batchId_:
--        1323977
-+        1325008
-      values.getLastVerifiedTransition.blockId_:
--        1780715
-+        1905343
-      values.getLastVerifiedTransition.ts_.parentHash:
--        "0xda03b637a045e68394937c998be225e84c619c749a2686b50db674edbeba28b9"
-+        "0x1aaf8bd4a3fc084001e673b413766cdc66036aae67fcc37ca51c110e28618de4"
-      values.getLastVerifiedTransition.ts_.blockHash:
--        "0xff5c4c987d81736ec6518838ce601820a628bbb1a94e6be4d9ae0da1260cdecc"
-+        "0x292ffe5c938da0c72bd160cbee559a1d3300ff5441c698126dc6d960f9fb7c43"
-      values.getLastVerifiedTransition.ts_.stateRoot:
--        "0x0000000000000000000000000000000000000000000000000000000000000000"
-+        "0xeee2568b67e0c0df0ddc92da34391ae08e17adc456ddf472c6d046ddfb492e72"
-      values.getLastVerifiedTransition.ts_.prover:
--        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
-+        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
-      values.getLastVerifiedTransition.ts_.createdAt:
--        1756109591
-+        1756450523
-      values.getStateVariables.0.lastSynecdAt:
--        1756117415
-+        1756463027
-      values.getStateVariables.0.lastSyncedBlockId:
--        1323976
-+        1325008
-      values.getStateVariables.1.lastProposedIn:
--        23217502
-+        23246162
-      values.getStateVariables.1.lastVerifiedBlockId:
--        1323977
-+        1325008
-      values.getStateVariables.1.numBlocks:
--        1324008
-+        1325049
-      values.getStats1.lastSyncedBatchId:
--        1323976
-+        1325008
-      values.getStats1.lastSyncedAt:
--        1756117415
-+        1756463027
-      values.getStats2.numBatches:
--        1324008
-+        1325049
-      values.getStats2.lastVerifiedBatchId:
--        1323977
-+        1325008
-      values.getStats2.lastProposedIn:
--        23217502
-+        23246162
       values.impl:
 -        "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F"
 +        "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7"
-      values.lastProposedIn:
--        23217502
-+        23246162
       values.newFork:
 -        "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
 +        "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
-      values.state.stats1.lastSyncedBatchId:
--        1323976
-+        1325008
-      values.state.stats1.lastSyncedAt:
--        1756117415
-+        1756463027
-      values.state.stats2.numBatches:
--        1324008
-+        1325049
-      values.state.stats2.lastVerifiedBatchId:
--        1323977
-+        1325008
-      values.state.stats2.lastProposedIn:
--        23217502
-+        23246162
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
       implementationNames.eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F:
 -        "PacayaForkRouter"
       implementationNames.eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82:
@@ -157,8 +80,6 @@ Provide description of changes. This section will be preserved.
 +        "PacayaForkRouter"
       implementationNames.eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8:
 +        "MainnetInbox"
-      errors:
-+        {"addressManager":"Processing error occurred.","getLastSyncedBlock":"Processing error occurred.","lastUnpausedAt":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
     }
 ```
 
@@ -171,10 +92,26 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
-    EOA  (0x5F62d006C10C009ff50C878Cd6157aC861C99990) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"sequence","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":".getOperatorCandidatesForCurrentEpoch"}]
+    contract AutomataDcapV3Attestation (0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
     }
 ```
 
@@ -194,23 +131,180 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
+    contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE) {
+    +++ description: Entry contract to verify batches using RISC Zero.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261","description":"can update the program being verified","role":".owner"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","description":"can update the contract address for a given name","role":".owner"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","description":"can update the program being verified","role":".owner"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","description":"can add new instances without a DCAP attestation","role":".owner"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","description":"can update the program being verified","role":".owner"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","description":"can update the contract address for a given name","role":".owner"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","description":"can add new instances without a DCAP attestation","role":".owner"}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","description":"can update the program being verified","role":".owner"}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","description":"can update the contract address for a given name","role":".owner"}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03","role":"admin"}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261","role":"admin"}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","role":"admin"}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","role":"admin"}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","role":"admin"}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","role":"admin"}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","role":"admin"}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72","role":"admin"}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1","role":"admin"}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","role":"admin"}
+      receivedPermissions.25:
++        {"permission":"upgrade","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","role":"admin"}
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"}
+    }
+```
+
+```diff
+    contract SgxVerifier (0x7e6409e9b6c5e2064064a6cC994f9a2e95680782) {
+    +++ description: Verifier contract for SGX proven blocks.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract DefaultResolver (0x8Efa01564425692d0a0838DC10E300BD310Cb43e) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
     contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
     +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261","description":"can update the program being verified","role":".owner"}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","description":"can update the contract address for a given name","role":".owner"}
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","description":"can update the program being verified","role":".owner"}
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","description":"can add new instances without a DCAP attestation","role":".owner"}
+      receivedPermissions.4:
+-        {"permission":"interact","from":"eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","description":"can update the program being verified","role":".owner"}
+      receivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","description":"can update the contract address for a given name","role":".owner"}
+      receivedPermissions.6:
+-        {"permission":"interact","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","description":"can add new instances without a DCAP attestation","role":".owner"}
+      receivedPermissions.7:
+-        {"permission":"interact","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","description":"can update the program being verified","role":".owner"}
+      receivedPermissions.8:
+-        {"permission":"interact","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","description":"can update the contract address for a given name","role":".owner"}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03","role":"admin"}
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
+      receivedPermissions.11:
+-        {"permission":"upgrade","from":"eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261","role":"admin"}
+      receivedPermissions.12:
+-        {"permission":"upgrade","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","role":"admin"}
       receivedPermissions.13:
 -        {"permission":"upgrade","from":"eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9","role":"admin"}
+      receivedPermissions.14:
+-        {"permission":"upgrade","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","role":"admin"}
+      receivedPermissions.15:
+-        {"permission":"upgrade","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","role":"admin"}
+      receivedPermissions.16:
+-        {"permission":"upgrade","from":"eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
+      receivedPermissions.17:
+-        {"permission":"upgrade","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","role":"admin"}
+      receivedPermissions.18:
+-        {"permission":"upgrade","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","role":"admin"}
+      receivedPermissions.19:
+-        {"permission":"upgrade","from":"eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72","role":"admin"}
+      receivedPermissions.20:
+-        {"permission":"upgrade","from":"eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1","role":"admin"}
+      receivedPermissions.21:
+-        {"permission":"upgrade","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","role":"admin"}
+      receivedPermissions.22:
+-        {"permission":"upgrade","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","role":"admin"}
+      receivedPermissions.23:
+-        {"permission":"upgrade","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"}
+    }
+```
+
+```diff
+    contract SgxVerifier (0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136) {
+    +++ description: Verifier contract for SGX proven blocks.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
     }
 ```
 
 ```diff
     contract TaikoWrapper (0x9F9D2fC7abe74C79f86F0D1212107692430eef72) {
-    +++ description: None
-      template:
--        "taiko/TaikoWrapper"
+    +++ description: Entry point for proposing blocks. It enforces the inclusion of forced transactions after their deadline.
       sourceHashes.1:
 -        "0x6f1f57d97885434b7f6b769ef9377a6fa75456740c69110c6bb37fb53a7fc68f"
 +        "0xb219932acfe503395c533757b638bdb5327f27434f87222d3e135534243f0b51"
-      description:
--        "Entry point for proposing blocks. It enforces the inclusion of forced transactions after their deadline."
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
       values.$implementation:
 -        "eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61"
 +        "eth:0x52D6FC6F6db9E370c336f64f61ff3C29568d1859"
@@ -222,33 +316,49 @@ Provide description of changes. This section will be preserved.
       values.impl:
 -        "eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61"
 +        "eth:0x52D6FC6F6db9E370c336f64f61ff3C29568d1859"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
       implementationNames.eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61:
 -        "TaikoWrapper"
       implementationNames.eth:0x52D6FC6F6db9E370c336f64f61ff3C29568d1859:
 +        "TaikoWrapper"
-      errors:
-+        {"proxiableUUID":"Processing error occurred."}
     }
 ```
 
 ```diff
-    EOA  (0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"sequence","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":".getOperatorCandidatesForCurrentEpoch"}]
+    contract VerifierGateway (0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1) {
+    +++ description: Gateway contract for the multi-proof system. It redirects proof to the appropriate verifier based on the proof type.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0xbee1040D0Aab17AE19454384904525aE4A3602B9) {
+    +++ description: Entry contract to verify batches using SP1.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
     }
 ```
 
 ```diff
     contract PreconfRouter (0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a) {
-    +++ description: None
-      template:
--        "taiko/PreconfRouter"
+    +++ description: Entry point for batch proposals under the pre-confirmation architecture. It allows batches to be proposed only by whitelisted addresses.
       sourceHashes.1:
 -        "0x7029286f91090d6d474c9bc0329436fed073038c547c5cd3db6c70045a7dccf8"
 +        "0x34a58f3c77d5666ec8a39b17ab327273604248af9004c771429a4413b09e20dd"
-      description:
--        "Entry point for batch proposals under the pre-confirmation architecture. It allows batches to be proposed only by whitelisted addresses."
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
       values.$implementation:
 -        "eth:0xf571E2626E2CE68127852123A2cC6AA522C586A0"
 +        "eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913"
@@ -260,35 +370,34 @@ Provide description of changes. This section will be preserved.
       values.impl:
 -        "eth:0xf571E2626E2CE68127852123A2cC6AA522C586A0"
 +        "eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913"
-      values.proxiableUUID:
--        "EXPECT_REVERT"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
       implementationNames.eth:0xf571E2626E2CE68127852123A2cC6AA522C586A0:
 -        "PreconfRouter"
       implementationNames.eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913:
 +        "PreconfRouter"
-      errors:
-+        {"proxiableUUID":"Processing error occurred."}
     }
 ```
 
 ```diff
-    EOA  (0xe2dA8aC2E550cd141198a117520D4EDc8692AB74) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"sequence","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":".getOperatorCandidatesForCurrentEpoch"}]
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
     }
 ```
 
 ```diff
     contract PreconfWhitelist (0xFD019460881e6EeC632258222393d5821029b2ac) {
-    +++ description: None
-      template:
--        "taiko/PreconfWhitelist"
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.
       sourceHashes.1:
 -        "0xf118d401839238cdc94b9476ab2149f7492c9653c489f80819102c4fe0b23fc3"
 +        "0x93a254bb5914a81cd902577cdafd323639e44227fdae5e14aa14fd47e1440063"
-      description:
--        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
       values.$implementation:
 -        "eth:0x44eC275996BD69361EF062ed488882a58256CF11"
 +        "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc"
@@ -300,34 +409,21 @@ Provide description of changes. This section will be preserved.
       values.impl:
 -        "eth:0x44eC275996BD69361EF062ed488882a58256CF11"
 +        "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc"
-      values.registeredOperators:
--        [{"proposer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","sequencer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"},{"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"},{"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"},{"proposer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7","sequencer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"}]
-      values.registeredOperatorsCount:
--        4
-      values.epochStartTimestamp:
-+        [1756462679,1756463063,1756463447,1756463831,1756464215]
-      values.operatorMapping:
-+        ["eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7","eth:0x0000000000000000000000000000000000000000"]
       implementationNames.eth:0x44eC275996BD69361EF062ed488882a58256CF11:
 -        "PreconfWhitelist"
       implementationNames.eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc:
 +        "PreconfWhitelist"
-      errors:
-+        {"epochStartTimestamp":"Processing error occurred.","operatorMapping":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
     }
 ```
 
 ## Source code changes
 
 ```diff
-.../ERC1967Proxy}/ERC1967Proxy.p.sol               |  0
- .../ERC1967Proxy}/MainnetInbox.3.sol               | 15 +++++------
- .../ERC1967Proxy}/MainnetTaikoL1.2.sol             |  0
- .../ERC1967Proxy}/PacayaForkRouter.1.sol           |  0
- .../PreconfRouter/PreconfRouter.sol                | 20 +++++++--------
+.../PreconfRouter/PreconfRouter.sol                | 20 +++++++--------
  .../PreconfWhitelist/PreconfWhitelist.sol          |  2 +-
+ .../TaikoL1/MainnetInbox.3.sol                     | 15 +++++------
  .../TaikoWrapper/TaikoWrapper.sol                  | 30 ++++++++++++----------
- 7 files changed, 33 insertions(+), 34 deletions(-)
+ 4 files changed, 33 insertions(+), 34 deletions(-)
 ```
 
 Generated with discovered.json: 0x5765bae5ae61ad328c23ef2bdc03bc2fc2014036
