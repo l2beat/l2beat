@@ -10,5 +10,11 @@
     "address": "0xa2D216dD9c84cb2e738240aac0956BE98293be61",
     "chain": "ethereum",
     "blockNumber": 23123976
+  },
+  "TaikoWrapper_2908": {
+    "hash": "0xb219932acfe503395c533757b638bdb5327f27434f87222d3e135534243f0b51",
+    "address": "0x52D6FC6F6db9E370c336f64f61ff3C29568d1859",
+    "chain": "ethereum",
+    "blockNumber": 23259637
   }
 }
