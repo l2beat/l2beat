@@ -13,7 +13,7 @@ const ABI = parseAbi([
 ])
 
 // We need config for ChainId to create ID
-const NETWORKS = [
+const CONFIG = [
   {
     chainId: 2,
     chain: 'ethereum',
@@ -34,7 +34,7 @@ export const Wormhole_LogMessagePublished: Decoder = {
 }
 
 function decoder(input: DecoderInput): DecoderOutput {
-  const network = NETWORKS.find((n) => n.chain === input.chain)
+  const network = CONFIG.find((n) => n.chain === input.chain)
   if (!network) return {}
 
   const data = decodeEventLog({

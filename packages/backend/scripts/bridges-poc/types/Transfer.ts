@@ -18,7 +18,7 @@ export interface Transfer {
   destinationToken?: string
   destinationAmount?: bigint
 
-  token: string
-  amount: number
-  valueUsd: number
+  token?: string
+  amount?: number
+  valueUsd?: number
 }

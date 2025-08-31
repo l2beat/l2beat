@@ -17,7 +17,7 @@ const ABI = parseAbi([
   'function parseTransfer(bytes memory encoded) public pure returns ((uint8 payloadID,uint256 amount,bytes32 tokenAddress,uint16 tokenChain,bytes32 to,uint16 toChain,uint256 fee) memory transfer)',
 ])
 
-const NETWORKS = [
+const CONFIG = [
   {
     chainId: 2,
     chain: 'ethereum',
@@ -61,7 +61,7 @@ export async function matcher(
 
   const outbounds = unmatchedMessages.filter(
     (m) =>
-      m.sender === NETWORKS.find((n) => n.chain === m.originChain)?.tokenBridge,
+      m.sender === CONFIG.find((n) => n.chain === m.originChain)?.tokenBridge,
   )
 
   for (const outbound of outbounds) {
@@ -91,7 +91,7 @@ export async function matcher(
 
       const rpc = rpcs.get(outbound.originChain)
       assert(rpc)
-      const tokenBridge = NETWORKS.find(
+      const tokenBridge = CONFIG.find(
         (n) => n.chain === outbound.originChain,
       )?.tokenBridge
       assert(tokenBridge)
@@ -121,7 +121,7 @@ export async function matcher(
         parsedTransfer.tokenAddress,
       )
 
-      const { symbol, amount, valueUsd } = await tokenService.calculateValue(
+      const financials = await tokenService.calculateValue(
         inbound.destinationChain,
         destinationToken,
         parsedTransfer.amount,
@@ -149,9 +149,9 @@ export async function matcher(
         destinationToken: destinationToken,
         destinationAmount: parsedTransfer.amount,
 
-        token: symbol,
-        amount: amount,
-        valueUsd: valueUsd,
+        token: financials?.symbol,
+        amount: financials?.amount,
+        valueUsd: financials?.valueUsd,
       })
 
       toDelete.unmatchedMessages.push({
