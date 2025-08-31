@@ -1,10 +1,10 @@
 export class DataService {
-  getUnmatchedMessages<T extends unknown[]>(messagingProtocol: string): T {
-    return [] as unknown as T
+  getUnmatchedMessages<T>(messagingProtocol: string): T[] {
+    return []
   }
 
-  getUnmatchedTransfers<T extends unknown[]>(app: string): T {
-    return [] as unknown as T
+  getUnmatchedTransfers<T>(app: string): T[] {
+    return []
   }
 
   deleteUnmatchedMessages(

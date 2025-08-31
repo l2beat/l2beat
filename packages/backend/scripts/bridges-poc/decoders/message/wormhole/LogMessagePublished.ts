@@ -53,13 +53,15 @@ function decoder(input: DecoderInput): DecoderOutput {
   return {
     message: {
       id: id,
-      direction: 'outbound',
       messagingProtocol: 'wormhole',
       txHash: input.transactionHash,
       timestamp: input.blockTimestamp,
+      blockNumber: input.blockNumber,
 
       type: 'Wormhole_Outbound',
       originChain: input.chain,
+      sender: data.args.sender,
+      payload: data.args.payload,
     },
   }
 }

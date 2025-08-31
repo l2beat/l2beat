@@ -1,28 +1,50 @@
+import type { RpcClient } from '@l2beat/shared'
+import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  decodeFunctionResult,
+  encodeFunctionData,
+  type Hex,
+  parseAbi,
+} from 'viem'
+import { extractAddressFromPadded } from '../../../bridges/utils/viem'
 import type { DataService } from '../../types/DataService'
 import type { MatcherOutput } from '../../types/Matcher'
 import type { TokenService } from '../../types/TokenService'
-import type {
-  Wormhole_Inbound,
-  Wormhole_Outbound,
-} from '../../types/UnmatchedMessage'
-import type {
-  Portal_Inbound,
-  Portal_Outbound,
-} from '../../types/UnmatchedTransfer.'
+import type { Wormhole_Outbound } from '../../types/UnmatchedMessage'
+import type { Portal_Inbound } from '../../types/UnmatchedTransfer.'
+
+const ABI = parseAbi([
+  'function parseTransfer(bytes memory encoded) public pure returns ((uint8 payloadID,uint256 amount,bytes32 tokenAddress,uint16 tokenChain,bytes32 to,uint16 toChain,uint256 fee) memory transfer)',
+])
+
+const NETWORKS = [
+  {
+    chainId: 2,
+    chain: 'ethereum',
+    tokenBridge: EthereumAddress('0x3ee18B2214AFF97000D974cf647E7C347E8fa585'),
+  },
+  {
+    chainId: 23,
+    chain: 'arbitrum',
+    tokenBridge: EthereumAddress('0x0b2402144Bb366A632D14B83F244D2e0e21bD39c'),
+  },
+  {
+    chainId: 30,
+    chain: 'base',
+    tokenBridge: EthereumAddress('0x8d2de8d2f73F1F4cAB472AC9A881C9b123C79627'),
+  },
+]
 
 export async function matcher(
   dataService: DataService,
   tokenService: TokenService,
+  rpcs: Map<string, RpcClient>,
 ): Promise<MatcherOutput> {
   const unmatchedMessages =
-    dataService.getUnmatchedMessages<[Wormhole_Outbound, Wormhole_Inbound]>(
-      'wormhole',
-    )
+    dataService.getUnmatchedMessages<Wormhole_Outbound>('wormhole')
 
   const unmatchedTransfers =
-    dataService.getUnmatchedTransfers<[Portal_Outbound, Portal_Inbound]>(
-      'portal',
-    )
+    dataService.getUnmatchedTransfers<Portal_Inbound>('portal')
 
   const result: MatcherOutput = {
     transfers: [],
@@ -37,76 +59,95 @@ export async function matcher(
     unmatchedTransfers: [],
   }
 
-  const outbounds = unmatchedTransfers.filter(
-    (t): t is Portal_Outbound => t.type === 'Portal_Outbound',
+  const outbounds = unmatchedMessages.filter(
+    (m) =>
+      m.sender === NETWORKS.find((n) => n.chain === m.originChain)?.tokenBridge,
   )
 
   for (const outbound of outbounds) {
-    const inbound = unmatchedTransfers.find(
-      (t): t is Portal_Inbound =>
-        t.type === 'Portal_Inbound' && t.id === outbound.id,
-    )
+    const inbound = unmatchedTransfers.find((t) => t.id === outbound.id)
 
-    const outboundMessage = unmatchedMessages.find(
-      (m): m is Wormhole_Outbound =>
-        m.type === 'Wormhole_Outbound' && m.id === outbound.wormholeMessageId,
-    )
-
-    const inboundMessage = unmatchedMessages.find(
-      (m): m is Wormhole_Inbound =>
-        m.type === 'L2BEAT_SYNTHETIC_Wormhole_Inbound' &&
-        m.id === inbound?.wormholeMessageId,
-    )
-
-    if (inbound && inboundMessage && outboundMessage) {
+    if (inbound) {
       result.messages.push({
-        id: inboundMessage.id,
-        messagingProtocol: 'wormhole',
+        id: outbound.id,
+        messagingProtocol: outbound.messagingProtocol,
         associated: [
           {
-            app: 'portal',
-            transferId: outbound.id,
+            app: inbound.app,
+            transferId: inbound.id,
           },
         ],
 
-        originChain: outboundMessage.originChain,
-        originTxHash: outboundMessage.txHash,
-        originTimestamp: outboundMessage.timestamp,
-        originType: outboundMessage.type,
+        originChain: outbound.originChain,
+        originTxHash: outbound.txHash,
+        originTimestamp: outbound.timestamp,
+        originType: outbound.type,
 
-        destinationChain: inboundMessage.destinationChain,
-        destinationTxHash: inboundMessage.txHash,
-        destinationTimestamp: inboundMessage.timestamp,
-        destinationType: inboundMessage.type,
+        destinationChain: inbound.destinationChain,
+        destinationTxHash: inbound.txHash,
+        destinationTimestamp: inbound.timestamp,
+        destinationType: inbound.type,
       })
+
+      const rpc = rpcs.get(outbound.originChain)
+      assert(rpc)
+      const tokenBridge = NETWORKS.find(
+        (n) => n.chain === outbound.originChain,
+      )?.tokenBridge
+      assert(tokenBridge)
+      //parseTransferWithPayload not yet supported
+      //to support it we would need to check method signature from calldata
+      const call = await rpc.call(
+        {
+          to: tokenBridge,
+          data: Bytes.fromHex(
+            encodeFunctionData({
+              abi: ABI,
+              functionName: 'parseTransfer',
+              args: [outbound.payload],
+            }),
+          ),
+        },
+        outbound.blockNumber,
+      )
+
+      const parsedTransfer = decodeFunctionResult({
+        abi: ABI,
+        data: call.toString() as Hex,
+        functionName: 'parseTransfer',
+      })
+
+      const destinationToken = extractAddressFromPadded(
+        parsedTransfer.tokenAddress,
+      )
 
       const { symbol, amount, valueUsd } = await tokenService.calculateValue(
         inbound.destinationChain,
-        outbound.destinationToken,
-        outbound.destinationAmount,
+        destinationToken,
+        parsedTransfer.amount,
         inbound.timestamp,
       )
 
       result.transfers.push({
         id: outbound.id,
-        app: outbound.app,
+        app: inbound.app,
         associated: [
           {
-            messagingProtocol: inboundMessage.messagingProtocol,
-            messageId: inboundMessage.id,
+            messagingProtocol: outbound.messagingProtocol,
+            messageId: outbound.id,
           },
         ],
 
         originChain: outbound.originChain,
         originTx: outbound.txHash,
         originTimestamp: outbound.timestamp,
-        originAmount: outbound.originAmount,
+        originAmount: parsedTransfer.amount,
 
         destinationChain: inbound.destinationChain,
         destinationTx: inbound.txHash,
         destinationTimestamp: inbound.timestamp,
-        destinationToken: outbound.destinationToken,
-        destinationAmount: outbound.destinationAmount,
+        destinationToken: destinationToken,
+        destinationAmount: parsedTransfer.amount,
 
         token: symbol,
         amount: amount,
@@ -114,15 +155,7 @@ export async function matcher(
       })
 
       toDelete.unmatchedMessages.push({
-        messagingProtocol: outboundMessage.messagingProtocol,
-        id: outboundMessage.id,
-      })
-      toDelete.unmatchedMessages.push({
-        messagingProtocol: inboundMessage.messagingProtocol,
-        id: inboundMessage.id,
-      })
-      toDelete.unmatchedTransfers.push({
-        app: outbound.app,
+        messagingProtocol: outbound.messagingProtocol,
         id: outbound.id,
       })
       toDelete.unmatchedTransfers.push({

@@ -35,23 +35,13 @@ function decoder(input: DecoderInput): DecoderOutput {
     transfer: {
       id: id,
       app: 'portal',
-      direction: 'inbound',
-      timestamp: input.blockTimestamp,
       txHash: input.transactionHash,
+      timestamp: input.blockTimestamp,
+      blockNumber: input.blockNumber,
 
       type: 'Portal_Inbound',
       destinationChain: input.chain,
       wormholeMessageId: id,
-    },
-    message: {
-      id: id,
-      direction: 'inbound',
-      messagingProtocol: 'wormhole',
-      txHash: input.transactionHash,
-      timestamp: input.blockNumber,
-
-      type: 'L2BEAT_SYNTHETIC_Wormhole_Inbound',
-      destinationChain: input.chain,
     },
   }
 }
