@@ -323,7 +323,7 @@ Upgraded the proof system, new flow:
 1. A watcher requests a dispute by bonding METIS (unchanged).
 2. The request waits for a game to be deployed (by a whitelisted gameCreator) (unchanged)
 3. If the deadline arrives and no game exists, anyone can call disputeTimeout. The difference here is that disputeTimeout is not just a flagging function, but it now calls saveDisputedBatchTimeout on the StateCommitmentChain, which marks the batch root as disputed with disputedBatches[root]=true.
-4. Because the batch is now disputed, all later safety checks treat it as not final until MVM_Verifier deletes it. In particular, L2->L1 messaging/withdrawal is blocked for the batch root since the relayMessage() function in the L1CrossDomainMessanger eventually (in _verifyStateRootProofByChainId()) calls the ovmStateCommitmentChain to check the earliestDisputedBlockNumber, and any withdrawal whose L2 block ≥ earliestDisputedBlockNumber reverts until the dispute batch is deleted.
+4. Because the batch is now disputed, all later safety checks treat it as not final until MVM_Verifier deletes it. In particular, L2->L1 messaging/withdrawal is blocked for the batch root since the relayMessage() function in the L1CrossDomainMessenger eventually (in _verifyStateRootProofByChainId()) calls the ovmStateCommitmentChain to check the earliestDisputedBlockNumber, and any withdrawal whose L2 block ≥ earliestDisputedBlockNumber reverts until the dispute batch is deleted.
 
 ## Watched changes
 
