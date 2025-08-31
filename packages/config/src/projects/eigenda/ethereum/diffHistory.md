@@ -6644,7 +6644,7 @@ Generated with discovered.json: 0x6c1f315d53c94420733788742a072d1746dfbbcb
 
 ## Description
 
-EigenDA exposes the address of the RegistryCoordinator while for istance EOracle does not (it's immutable constructor param). Check RC is discovered when adding new AVSes.
+EigenDA exposes the address of the RegistryCoordinator while for instance EOracle does not (it's immutable constructor param). Check RC is discovered when adding new AVSes.
 
 ## Watched changes
 
