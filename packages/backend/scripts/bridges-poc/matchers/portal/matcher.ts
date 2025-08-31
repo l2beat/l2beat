@@ -81,12 +81,10 @@ export async function matcher(
         originChain: outbound.originChain,
         originTxHash: outbound.txHash,
         originTimestamp: outbound.timestamp,
-        originType: outbound.type,
 
         destinationChain: inbound.destinationChain,
         destinationTxHash: inbound.txHash,
         destinationTimestamp: inbound.timestamp,
-        destinationType: inbound.type,
       })
 
       const rpc = rpcs.get(outbound.originChain)
