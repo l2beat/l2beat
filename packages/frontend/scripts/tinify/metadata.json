@@ -1411,5 +1411,11 @@
   "static/icons/litecoinvm.png": "eeff76751a87a68c44af75b45fe3f9b2",
   "static/icons/okto.png": "163c380318bf50f82fe9a9faa1bc236d",
   "static/icons/sentient.png": "5811c8c15c295800d179b3ab72fbb4ba",
-  "static/icons/wilderworld.png": "5fac562d52b58951e3a2033696d913bd"
+  "static/icons/wilderworld.png": "5fac562d52b58951e3a2033696d913bd",
+  "static/meta-images/scaling/projects/forknet/opengraph-image.png": "10649f050628c26784aa4891182f97ff",
+  "static/meta-images/scaling/projects/iotex/opengraph-image.png": "270ebe3db7f9b4d9cdf22965f78689ab",
+  "static/meta-images/scaling/projects/litecoinvm/opengraph-image.png": "40b5dfe37e9a5ba5f66e39d732e33340",
+  "static/meta-images/scaling/projects/okto/opengraph-image.png": "d0bffc2bb21015e3b4d15d6a106a6d36",
+  "static/meta-images/scaling/projects/sentient/opengraph-image.png": "e58102a58bf9d3e1e018cab816c99a16",
+  "static/meta-images/scaling/projects/wilderworld/opengraph-image.png": "c29877606e51506ec48745d3404e2877"
 }
