@@ -1,6 +1,6 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import type { CollectionEntry } from '~/content/getCollection'
-import { formatPublicationDate } from '~/utils/dates'
 import {
   getImageParams,
   type ImageParams,
@@ -11,7 +11,7 @@ export interface PublicationEntry extends FilterableEntry {
   title: string
   shortTitle: string | undefined
   description: string | undefined
-  publishedOn: string
+  publishedOn: UnixTime
   thumbnail: ImageParams
   url: string
   tag: 'governance'
@@ -32,7 +32,7 @@ export function getPublicationEntryFromGovernance(
     thumbnail,
     shortTitle: governanceArticle.data.shortTitle,
     description: governanceArticle.data.description,
-    publishedOn: formatPublicationDate(governanceArticle.data.publishedOn),
+    publishedOn: UnixTime.fromDate(governanceArticle.data.publishedOn),
     url: `/publications/${governanceArticle.id}`,
     tag: 'governance',
     filterable: [

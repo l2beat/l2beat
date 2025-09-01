@@ -12,8 +12,8 @@ export async function getPublicationsData(
   const appLayoutProps = await getAppLayoutProps()
   const governancePublications = getCollection('governance-publications')
   const publications = governancePublications
-    .sort((a, b) => b.data.publishedOn.getTime() - a.data.publishedOn.getTime())
     .map(getPublicationEntryFromGovernance)
+    .sort((a, b) => b.publishedOn - a.publishedOn)
 
   return {
     head: {

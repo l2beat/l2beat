@@ -1,9 +1,11 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { LinkWithThumbnail } from '~/components/LinkWithThumbnail'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { externalLinks } from '~/consts/externalLinks'
+import { formatPublicationDate } from '~/utils/dates'
 import type { PublicationEntry } from '../utils/getPublicationEntry'
 
 export function PublicationsList({
@@ -59,7 +61,7 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
         <div className="flex items-center gap-2">
           <Tag tag={publication.tag} />
           <span className="font-medium text-brand text-label-value-12">
-            {publication.publishedOn}
+            {formatPublicationDate(UnixTime.toDate(publication.publishedOn))}
           </span>
         </div>
       }
