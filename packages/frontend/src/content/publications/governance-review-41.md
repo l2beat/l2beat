@@ -24,7 +24,7 @@ v3naru_Curia introduces the [Forum Score feature](https://gov.optimism.io/t/curi
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Optimism’s governance, from current initiatives to high-level conversations, during our [Optimism Office Hours](https://l2beat.com/governance/publications/meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
+You can find us to discuss everything related to Optimism’s governance, from current initiatives to high-level conversations, during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
@@ -98,7 +98,7 @@ Notably, 36.4% of those grantees had never conducted an audit before, and around
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Arbitrum’s governance, from current initiatives to high-level conversations, during our [Arbitrum Office Hours](https://l2beat.com/governance/publications/meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
+You can find us to discuss everything related to Arbitrum’s governance, from current initiatives to high-level conversations, during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 

@@ -14,7 +14,7 @@ The Grants Council also welcomed Immunefi and Certora to the whitelisted Auditin
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Optimism’s governance, from current initiatives to high-level conversations, during our [Optimism Office Hours](https://l2beat.com/governance/publications/meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
+You can find us to discuss everything related to Optimism’s governance, from current initiatives to high-level conversations, during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
@@ -92,7 +92,7 @@ You can check the [Domain allocator hub](https://arbitrumdaogrants.notion.site/t
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Arbitrum’s governance, from current initiatives to high-level conversations, during our [Arbitrum Office Hours](https://l2beat.com/governance/publications/meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
+You can find us to discuss everything related to Arbitrum’s governance, from current initiatives to high-level conversations, during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 

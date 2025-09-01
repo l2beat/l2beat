@@ -219,15 +219,15 @@ You can find us to discuss all of the above and more during our [Arbitrum Office
 
 
 
-* [Arbitrum DAO Onboarding](https://l2beat.com/governance/publications/meet.google.com/mrq-sitk-mfu) on Monday 27.5 at 1:00 pm
-* [Developer Relationships Fellowship](https://l2beat.com/governance/publications/meet.google.com/znp-vzuf-xpo) on Monday 27.5 at 10:00 pm
+* [Arbitrum DAO Onboarding](meet.google.com/mrq-sitk-mfu) on Monday 27.5 at 1:00 pm
+* [Developer Relationships Fellowship](meet.google.com/znp-vzuf-xpo) on Monday 27.5 at 10:00 pm
 * [ARDC Weekly Sync](http://meet.google.com/dyi-ymiy-ugn) on Tuesday 28.5 at 12:00 pm
-* [Business Development Fellowship](https://l2beat.com/governance/publications/meet.google.com/oie-cbfa-ckc) on Tuesday 28.5 at 3:00 pm
-* [Education Fellowship](https://l2beat.com/governance/publications/meet.google.com/coo-idns-srt) on Tuesday 28.5 at 10:00 pm
-* [Ecosystem Mapping Fellowship](https://l2beat.com/governance/publications/meet.google.com/qag-vhir-bjf) on Wednesday 29.5 at 1:00 pm
+* [Business Development Fellowship](meet.google.com/oie-cbfa-ckc) on Tuesday 28.5 at 3:00 pm
+* [Education Fellowship](meet.google.com/coo-idns-srt) on Tuesday 28.5 at 10:00 pm
+* [Ecosystem Mapping Fellowship](meet.google.com/qag-vhir-bjf) on Wednesday 29.5 at 1:00 pm
 * [Arbitrum Open Governance Call](http://meet.google.com/ouo-uskg-niq) on Wednesday 29.5 at 2:00 pm
 * [ADPC Call](http://meet.google.com/bju-dnib-sif) on Thursday 30.5 at 2:00 pm
-* [Social Media Fellowship](https://l2beat.com/governance/publications/meet.google.com/ybo-huqw-jnr) on Thursday 30.5 at 5:00 pm
+* [Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on Thursday 30.5 at 5:00 pm
 
 
 ## **Uniswap**

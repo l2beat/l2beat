@@ -13,7 +13,7 @@ Gonna.eth [has announced](https://gov.optimism.io/t/cycle-35-preliminary-review-
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Optimism’s governance, from current initiatives to high-level conversations, during our [Optimism Office Hours](https://l2beat.com/governance/publications/meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
+You can find us to discuss everything related to Optimism’s governance, from current initiatives to high-level conversations, during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
@@ -71,7 +71,7 @@ The report underscores the need for impartial, technically proficient council me
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Arbitrum’s governance, from current initiatives to high-level conversations, during our [Arbitrum Office Hours](https://l2beat.com/governance/publications/meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
+You can find us to discuss everything related to Arbitrum’s governance, from current initiatives to high-level conversations, during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
@@ -182,7 +182,7 @@ You can find us to discuss everything related to ZkSync’s governance, from cur
 
 **Upcoming Events (Times in UTC):**
 
-[Standing ZKsync Delegate Call](https://l2beat.com/governance/publications/meet.google.com/qvr-txgr-vja) - on 1.4 at 17:00.
+[Standing ZKsync Delegate Call](meet.google.com/qvr-txgr-vja) - on 1.4 at 17:00.
 
 
 ## **Scroll**
