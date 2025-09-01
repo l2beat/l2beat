@@ -59,6 +59,7 @@ export class AgglayerDataFetcher {
     '16': 'pentagon.games/pen-chain',
     '17': 'Okto (wallet?)',
     '20': 'Katana',
+    '21': 'Forknet.io'
   }
 
   // Rollup type ID descriptions
