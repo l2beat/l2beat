@@ -1,6 +1,12 @@
 {
   "ethereum": [
     {
+      "symbol": "eDLLR",
+      "category": "stablecoin",
+      "coingeckoId": "sovryn-dollar",
+      "address": "0xbdBb63F938c8961AF31eaD3deBa5C96e6A323DD1"
+    },
+    {
       "symbol": "PC",
       "address": "0xA1Aa371E450C5AeE7fff259cbF5ccA9384227272"
     },
@@ -6058,6 +6064,52 @@
     }
   ],
   "bob": [
+    {
+      "symbol": "WBTC",
+      "category": "btc",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "source": "external",
+      "coingeckoId": "wrapped-bitcoin",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "pumpBTC",
+      "category": "btc",
+      "coingeckoId": "pumpbtc",
+      "address": "0x1fCca65fb6Ae3b2758b9b2B394CB227eAE404e1E",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech (Express/Tunnel) and native minting"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "oUSDT",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USDC",
       "address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
