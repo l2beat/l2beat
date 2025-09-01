@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "timestamp": 1756214374,
+  "timestamp": 1756720779,
   "configHash": "0x8832718897b2cb3efddcea2e3096c4289be152ffd944938c942e90faa6a1f696",
   "entries": [
     {
@@ -983,11 +983,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0xf99a1edd0078db8c98a9c02aa81c37c5f23dfed58e60c544264b78513f58300b",
-        "currentFinalizedState": "0xe0bf9068f0330f60b0cda250805bc6bb7995436237926a9a451e8f52fc5d15b3",
+        "currentFinalizedShnarf": "0x0404dad7630cf460c8d683f04272586d03e673a70ad40e557e23060abc7e9d0a",
+        "currentFinalizedState": "0x0977f91be6bea2e594c2a88673bfcee74ccf1a02a3b1d444eaed986344f76628",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "2212068995000000000000",
+        "currentPeriodAmountInWei": "914795376457072105431",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -1661,6 +1661,12 @@
         "0x9436ff273e587ee919293672a7a5ba7bf371053a92565ee236a004932a5dda66"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "currentPeriodAmountInWei",
+        "currentPeriodEnd",
+        "lastAnchoredL1MessageNumber",
+        "nextMessageNumber"
+      ],
       "sinceTimestamp": 1688650665,
       "sinceBlock": 4,
       "values": {
@@ -1750,18 +1756,21 @@
           }
         },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "1132322359786197875670",
-        "currentPeriodEnd": 1756253657,
+        "currentPeriodAmountInWei": "5241088278173320873",
+        "currentPeriodEnd": 1756786836,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
         "L1_L2_MESSAGE_SETTER_ROLE": "0x4705265620026983c754c5288b65446d794a03174326ec6d7c0b5c7f1fd67415",
-        "lastAnchoredL1MessageNumber": 776312,
+        "l1l2MessageSetter": [
+          "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"
+        ],
+        "lastAnchoredL1MessageNumber": 777675,
         "limitInWei": "15000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 97051,
+        "nextMessageNumber": 97317,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
@@ -1772,6 +1781,11 @@
         "UNPAUSE_L1_L2_ROLE": "0xe8cb6172fcf5cbaae022b7c910224a4f0c20d53227e630056efff182155a5abc",
         "UNPAUSE_L2_L1_ROLE": "0xb6cc65f42901ed602aec1619cc1ead29d487cd489094a37615153eaeb991d770",
         "USED_RATE_LIMIT_RESETTER_ROLE": "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9"
+      },
+      "fieldMeta": {
+        "sender": {
+          "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
+        }
       },
       "implementationNames": {
         "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec": "TransparentUpgradeableProxy",
@@ -1927,7 +1941,7 @@
         "getChainId": 59144,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1938,7 +1952,15 @@
     {
       "address": "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+          "description": "Can anchor L1 data on the L2. A check is supposed to be added to the proof system on L1 so that it is not possible to settle if the anchor is not correct. The function is permissioned because otherwise anyone can cause a liveness failure by posting an invalid anchor.",
+          "role": ".l1l2MessageSetter"
+        }
+      ]
     },
     {
       "address": "linea:0xC263178AC471C4411abAf5c22cD4D8D67033bc82",
@@ -3449,7 +3471,7 @@
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/L1TokenBridge": "0xef38a739bf90c693c298d238745c360992548cf941cdee82ed7c4a5ba41df4ae",
     "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
-    "linea/L2MessageService": "0x429c2108cfcc2f721da1dd13c550c20b46f8ff1cb6447ad2ab549156948cc8b3",
+    "linea/L2MessageService": "0x734bf260a111807cc0b66114f86680b832667c5f1d22a8c3509f18823bdd0872",
     "linea/L2Roles": "0x87df637d02e99d769d43f393133e5ea3e583758a151bdccb3bf7a6a1bd6c6187",
     "linea/L2TokenBridge": "0xde60fe36104dfc27d1da95bf2e74c70fc2b30fa7cb17e179ebcfce8c4a701e3b",
     "linea/LineaRollup": "0x62179b632448b6fa5622bfea4240428dcd0cd7f2fd455914a05b040313014dfe",
@@ -3458,6 +3480,6 @@
     "linea/Roles": "0xa53488bfd173ae836ebda33b0560f0f0dd61141e44bc38b9ce23133023bde792",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "linea": 22535193, "ethereum": 23225540 },
-  "permissionsConfigHash": "0x63a7b38ae7023cd94800908979cb2de2e86d79feee5df47ddec430a68e5634e6"
+  "usedBlockNumbers": { "linea": 22778234, "ethereum": 23267544 },
+  "permissionsConfigHash": "0x42675d6fc2ff4a6ece45a816fa7c18ee1113d9e4543cde2b9590dd394d797942"
 }
