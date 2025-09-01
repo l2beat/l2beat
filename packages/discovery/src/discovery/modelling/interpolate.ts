@@ -36,6 +36,25 @@ export function interpolateModelTemplate(
       const processedValue = toLower
         ? String(value).toLowerCase()
         : String(value)
+
+      // TODO(radomski): There was a bug here for a long time. And only now we
+      // noticed it because of a different bug that prevented this one
+      // from firing. Before, addressToNameMap was only filled with
+      // ethereum addresses and when we referenced an L2 address we
+      // didn't find it's name. Now since we have a single discovery we
+      // DO find the name. After we have found the name resolving of the
+      // following
+      //
+      // l2Entrypoint(L2Timelock) :-
+      //   address(L2Timelock, "arb1", "&l2Timelock|lower").
+      //
+      //  Is wrong because in the address place we're putting the name. I
+      //  don't know how to fix it, so I'm just stuffing this with rags
+      //  until there is a better solution.
+      if (key === 'l2Timelock') {
+        return quoteEthereumAddress(processedValue)
+      }
+
       const casted = tryCastingToName(
         processedValue,
         addressToNameMap,
