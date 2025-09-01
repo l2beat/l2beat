@@ -36,7 +36,6 @@ export interface SaveDiscoveryResultOptions {
 }
 
 export async function saveDiscoveryResult(
-  chain: string,
   results: Analysis[],
   config: ConfigRegistry,
   timestamp: UnixTime,
@@ -46,12 +45,11 @@ export async function saveDiscoveryResult(
 ): Promise<void> {
   const projectDiscoveryFolder =
     options.projectDiscoveryFolder ??
-    posix.join(options.paths.discovery, config.structure.name, chain)
+    posix.join(options.paths.discovery, config.structure.name)
   await mkdirp(projectDiscoveryFolder)
 
   const templateService = new TemplateService(options.paths.discovery)
   const discoveryOutput = toDiscoveryOutput(
-    chain,
     templateService,
     config,
     timestamp,

@@ -28,5 +28,15 @@
     ],
     "chain": "ethereum",
     "blockNumber": 23123976
+  },
+  "TaikoL1PostPacaya_2908": {
+    "hash": "0x4a046242c16270e33ec006d5d7d18a68040b417d8355d24cc6a44926ce444f6e",
+    "address": [
+      "0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
+      "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+      "0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 23246164
   }
 }

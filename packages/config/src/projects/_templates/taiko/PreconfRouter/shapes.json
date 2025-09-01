@@ -4,5 +4,11 @@
     "address": "0xf571E2626E2CE68127852123A2cC6AA522C586A0",
     "chain": "ethereum",
     "blockNumber": 23132480
+  },
+  "PreconfRouter_2908": {
+    "hash": "0x34a58f3c77d5666ec8a39b17ab327273604248af9004c771429a4413b09e20dd",
+    "address": "0xC44577BAA22f999a16a9dF817A2aba6e5e696913",
+    "chain": "ethereum",
+    "blockNumber": 23259716
   }
 }
