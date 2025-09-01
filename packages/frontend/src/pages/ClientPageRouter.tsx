@@ -13,7 +13,6 @@ import { EcosystemProjectPage } from './ecosystems/project/EcosystemProjectPage'
 import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
 import { GovernancePage } from './governance/GovernancePage'
-import { GovernancePublicationsPage } from './governance/publications/GovernancePublicationsPage'
 import { MonthlyUpdatePage } from './monthly-updates/MonthlyUpdatePage'
 import { MultisigReportPage } from './multisig-report/MultisigReportPage'
 import { GovernancePublicationPage } from './publications/governance/GovernancePublicationPage'
@@ -79,7 +78,6 @@ const pages = {
   EcosystemProjectPage,
   // Governance
   GovernancePage,
-  GovernancePublicationsPage,
   GovernancePublicationPage,
   // Side pages
   FaqPage,
