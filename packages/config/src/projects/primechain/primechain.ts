@@ -13,7 +13,6 @@ export const primechain: ScalingProject = upcomingL3({
     description:
       'Prime Chain is a dedicated gamechain that enhances the gaming experience by enabling cross-chain interoperability while reducing fragmentation.',
     purposes: ['Gaming'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://echelon.io/'],
@@ -28,5 +27,8 @@ export const primechain: ScalingProject = upcomingL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })
