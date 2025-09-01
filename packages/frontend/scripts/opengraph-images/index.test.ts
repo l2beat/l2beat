@@ -35,7 +35,7 @@ describe('opengraph images', () => {
   })
 
   it('should contain governance articles opengraph images', async () => {
-    const articles = getCollection('publications')
+    const articles = getCollection('governance-publications')
 
     const missingArticles = articles
       .filter((p) => {

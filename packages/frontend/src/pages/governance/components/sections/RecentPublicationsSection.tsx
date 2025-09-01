@@ -1,6 +1,6 @@
 import { Button } from '~/components/core/Button'
 import { LinkWithThumbnail } from '~/components/LinkWithThumbnail'
-import type { GovernancePublicationEntry } from '../../utils/getGovernancePublicationEntry'
+import type { GovernancePublicationEntry } from '../../../publications/governance/utils/getGovernancePublicationEntry'
 import { GovernanceCard } from '../GovernanceCard'
 
 interface Props {

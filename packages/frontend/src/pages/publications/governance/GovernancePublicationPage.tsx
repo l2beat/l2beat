@@ -5,7 +5,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { GovernancePublicationEntry } from '~/pages/governance/utils/getGovernancePublicationEntry'
+import type { GovernancePublicationEntry } from '~/pages/publications/governance/utils/getGovernancePublicationEntry'
 
 interface Props extends AppLayoutProps {
   publication: GovernancePublicationEntry

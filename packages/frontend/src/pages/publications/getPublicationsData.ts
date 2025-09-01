@@ -10,7 +10,7 @@ export async function getPublicationsData(
   url: string,
 ): Promise<RenderData | undefined> {
   const appLayoutProps = await getAppLayoutProps()
-  const governancePublications = getCollection('publications')
+  const governancePublications = getCollection('governance-publications')
   const publications = governancePublications
     .sort((a, b) => b.data.publishedOn.getTime() - a.data.publishedOn.getTime())
     .map(getPublicationEntryFromGovernance)

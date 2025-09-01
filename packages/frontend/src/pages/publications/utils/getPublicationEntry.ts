@@ -18,7 +18,7 @@ export interface PublicationEntry extends FilterableEntry {
 }
 
 export function getPublicationEntryFromGovernance(
-  governanceArticle: CollectionEntry<'publications'>,
+  governanceArticle: CollectionEntry<'governance-publications'>,
 ): PublicationEntry {
   const thumbnail = getImageParams(
     `/meta-images/publications/${governanceArticle.id}.png`,
@@ -33,7 +33,7 @@ export function getPublicationEntryFromGovernance(
     shortTitle: governanceArticle.data.shortTitle,
     description: governanceArticle.data.description,
     publishedOn: formatPublicationDate(governanceArticle.data.publishedOn),
-    url: `governance/publications/${governanceArticle.id}`,
+    url: `/publications/${governanceArticle.id}`,
     tag: 'governance',
     filterable: [
       {

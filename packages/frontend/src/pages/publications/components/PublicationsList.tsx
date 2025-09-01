@@ -53,7 +53,7 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
   return (
     <LinkWithThumbnail
       {...publication.thumbnail}
-      href={`/governance/publications/${publication.id}`}
+      href={publication.url}
       title={publication.shortTitle ?? publication.title}
       topAccessory={
         <div className="flex items-center gap-2">

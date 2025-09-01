@@ -2,7 +2,7 @@ import { v } from '@l2beat/validate'
 
 import { defineCollection } from '../defineCollections'
 
-export const publicationsCollection = defineCollection({
+export const governancePublicationsCollection = defineCollection({
   type: 'content',
   schema: v.object({
     title: v.string(),

@@ -20,16 +20,14 @@ export interface GovernancePublicationEntry {
 }
 
 export function getGovernancePublicationEntry(
-  post: CollectionEntry<'publications'>,
+  post: CollectionEntry<'governance-publications'>,
 ): GovernancePublicationEntry {
   const author = getCollectionEntry('authors', post.data.authorId)
   if (!author) {
     throw new Error(`Author not found for ${post.id}`)
   }
 
-  const thumbnail = getImageParams(
-    `/meta-images/governance/publications/${post.id}.png`,
-  )
+  const thumbnail = getImageParams(`/meta-images/publications/${post.id}.png`)
   if (!thumbnail) {
     throw new Error(`Thumbnail not found for ${post.id}`)
   }

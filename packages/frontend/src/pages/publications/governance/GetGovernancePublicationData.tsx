@@ -1,6 +1,6 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollectionEntry } from '~/content/getCollection'
-import { getGovernancePublicationEntry } from '~/pages/governance/utils/getGovernancePublicationEntry'
+import { getGovernancePublicationEntry } from '~/pages/publications/governance/utils/getGovernancePublicationEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -10,7 +10,7 @@ export async function getGovernancePublicationData(
   id: string,
   url: string,
 ): Promise<RenderData | undefined> {
-  const publicationEntry = getCollectionEntry('publications', id)
+  const publicationEntry = getCollectionEntry('governance-publications', id)
   if (!publicationEntry) {
     return undefined
   }
@@ -24,7 +24,7 @@ export async function getGovernancePublicationData(
         description: publication.description ?? publication.excerpt,
         openGraph: {
           url,
-          image: `/meta-images/governance/publications/${publication.id}.png`,
+          image: `/meta-images/publications/${publication.id}.png`,
           type: 'article',
         },
       }),

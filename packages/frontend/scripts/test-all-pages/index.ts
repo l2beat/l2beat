@@ -30,7 +30,7 @@ async function main() {
       whereNot: ['archivedAt'],
     }),
   ])
-  const publications = getCollection('publications')
+  const publications = getCollection('governance-publications')
 
   const pages = compact([
     '/scaling/summary',
