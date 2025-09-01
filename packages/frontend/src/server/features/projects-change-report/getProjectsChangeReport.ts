@@ -40,7 +40,9 @@ async function getProjectsChangeReportWithFns() {
   const result: Record<string, ProjectChangeReport> = {}
 
   const db = getDb()
-  const updateDiffs = await db.updateDiff.getAll()
+  let updateDiffs = await db.updateDiff.getAll()
+  // TODO(radomski): Quick fix
+  updateDiffs = []
 
   const byProject = groupBy(updateDiffs, (diff) => diff.projectId)
   for (const [projectId, diffs] of Object.entries(byProject)) {
