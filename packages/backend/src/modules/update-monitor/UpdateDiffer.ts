@@ -7,7 +7,7 @@ import {
   diffDiscovery,
   type EntryParameters,
 } from '@l2beat/discovery'
-import { ChainSpecificAddress, type UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 
 export class UpdateDiffer {
@@ -115,8 +115,7 @@ export class UpdateDiffer {
         const index = Number.parseInt(indexString)
 
         const entry = latestContracts.find(
-          (e) =>
-            ChainSpecificAddress.address(e.address) === discoveryDiff.address,
+          (e) => e.address === discoveryDiff.address,
         )
 
         return entry?.receivedPermissions?.[index]?.permission === 'upgrade'
@@ -138,7 +137,7 @@ export class UpdateDiffer {
       updateDiffs.push({
         projectId,
         type: 'implementationChange',
-        address: address,
+        address,
         timestamp,
         diffBaseTimestamp,
         diffHeadTimestamp,
@@ -149,7 +148,7 @@ export class UpdateDiffer {
       updateDiffs.push({
         projectId,
         type: 'highSeverityFieldChange',
-        address: address,
+        address,
         timestamp,
         diffBaseTimestamp,
         diffHeadTimestamp,
@@ -160,7 +159,7 @@ export class UpdateDiffer {
       updateDiffs.push({
         projectId,
         type: 'ultimateUpgraderChange',
-        address: address,
+        address,
         timestamp,
         diffBaseTimestamp,
         diffHeadTimestamp,
