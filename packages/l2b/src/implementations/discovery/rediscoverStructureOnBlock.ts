@@ -15,7 +15,6 @@ export type Timing =
 
 export async function rediscoverStructureOnBlock(
   projectName: string,
-  chain: string,
   timing: Timing,
   saveSources = false,
   overwriteCache = false,
@@ -23,12 +22,10 @@ export async function rediscoverStructureOnBlock(
   const timePoint =
     timing.blockNumber !== undefined ? timing.blockNumber : timing.timestamp
 
-  process.stdout.write(
-    `Rediscovering ${projectName} on ${chain} at ${timePoint}... `,
-  )
+  process.stdout.write(`Rediscovering ${projectName} at ${timePoint}... `)
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
-  const discoveryFolder = configReader.getProjectChainPath(projectName, chain)
+  const discoveryFolder = configReader.getProjectPath(projectName)
 
   // Remove any old sources we fetched before, so that their count doesn't grow
   await rimraf(`${discoveryFolder}/.code@*`, { glob: true })

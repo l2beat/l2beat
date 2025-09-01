@@ -9,11 +9,6 @@ export const GenerateEntrypoints = command({
   name: 'generate-entrypoints',
   description: 'Generate entrypoints to use for address sharing/referencing.',
   args: {
-    chain: positional({
-      type: string,
-      displayName: 'chain',
-      description: 'Chain name',
-    }),
     project: positional({
       type: string,
       displayName: 'project',
@@ -23,6 +18,6 @@ export const GenerateEntrypoints = command({
   handler: async (args) => {
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
-    await generateEntrypoints(configReader, args.chain, args.project)
+    await generateEntrypoints(configReader, args.project)
   },
 })
