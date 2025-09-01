@@ -11,7 +11,7 @@
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "if [ ! -e ./src/chains.json ]; then echo \"[]\" > ./src/chains.json; fi && tsc --noEmit",
     "test": "mocha",
     "build:config": "cd ../config && pnpm build"
   },
