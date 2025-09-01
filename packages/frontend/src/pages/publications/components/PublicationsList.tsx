@@ -36,7 +36,7 @@ export function PublicationsList({
             </div>
           </div>
           <a
-            className="flex h-fit items-center justify-center whitespace-nowrap rounded-sm bg-white px-6 py-4 font-bold text-label-value-16 text-primary max-md:w-full"
+            className="flex h-fit items-center justify-center whitespace-nowrap rounded-sm bg-white px-6 py-4 font-bold text-label-value-16 text-neutral-900 max-md:w-full"
             href={externalLinks.substackSubscribe}
             target="_blank"
           >
