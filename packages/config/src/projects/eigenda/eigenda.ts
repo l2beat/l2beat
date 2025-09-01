@@ -403,6 +403,13 @@ An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
     {
+      title: 'EigenDA V2 launch',
+      url: 'https://x.com/0xkydo/status/1950571973790363737',
+      date: '2025-07-30T00:00:00Z',
+      description: 'EigenDA V2 launch on Ethereum mainnet.',
+      type: 'general',
+    },
+    {
       title: 'EigenDA launch on mainnet',
       url: 'https://blog.eigenlayer.xyz/mainnet-launch-eigenlayer-eigenda/',
       date: '2024-04-09T00:00:00Z',
