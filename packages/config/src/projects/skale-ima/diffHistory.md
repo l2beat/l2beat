@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xc95508074c529ac65e5b9505cb930ead499c653f
+
+# Diff at Mon, 01 Sep 2025 13:58:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7eff8455e0ad9da942f60c025235f897aa05b120 block: 1738322567
+- current timestamp: 1756734918
+
+## Description
+
+MS single member change.
+
+## Watched changes
+
+```diff
+    contract Skale IMA Multisig (eth:0x13fD1622F0E7e50A87B79cb296cbAf18362631C0) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e"
++        "eth:0xDB90FaAb0c78Fd055cDE86C03A8a483F22eC2858"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1738322567 (main branch discovery), not current.
+
+```diff
+    contract Skale IMA Multisig (eth:0x13fD1622F0E7e50A87B79cb296cbAf18362631C0) {
+    +++ description: None
+      name:
+-        "ProxyAdminOwner"
++        "Skale IMA Multisig"
+    }
+```
+
 Generated with discovered.json: 0x869b0105f4999255c31c72786deba8818e33d98b
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
