@@ -37,7 +37,7 @@ export const agglayer: BaseProject = {
       type: 'general',
     },
     {
-      title: 'AAgglayer Vault Bridge is available',
+      title: 'Agglayer Vault Bridge is available',
       url: 'https://x.com/Agglayer/status/1920489030497489127',
       date: '2025-05-08T00:00:00Z',
       description:
