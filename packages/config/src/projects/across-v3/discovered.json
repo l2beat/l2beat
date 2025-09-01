@@ -2090,7 +2090,7 @@
         "0x34fe953eae62cfc4797c138b47bc03a1d268dc47ac86e5fce536da6e8bc1e195"
       ],
       "proxyType": "immutable",
-      "description": "Implements a simple address whitelist for tokens that can be used as bonds and fees.",
+      "description": "A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the across ecosystem.",
       "sinceTimestamp": 1595094721,
       "sinceBlock": 10484890,
       "values": {

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xcd218134e5cc20876b1b37d0d1345da33f1c3236
+Generated with discovered.json: 0x25be1546b53b9039d7dfe9adc94dd7f52fa97099
 
-# Diff at Mon, 01 Sep 2025 13:10:39 GMT:
+# Diff at Mon, 01 Sep 2025 13:55:45 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@7eff8455e0ad9da942f60c025235f897aa05b120 block: 1756377336
@@ -8,13 +8,13 @@ Generated with discovered.json: 0xcd218134e5cc20876b1b37d0d1345da33f1c3236
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+All tokens are removed from the whitelist except for WETH, ABT and USDC.
 
 ## Watched changes
 
 ```diff
     contract AddressWhitelist (eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7) {
-    +++ description: Implements a simple address whitelist for tokens that can be used as bonds and fees.
+    +++ description: A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the across ecosystem.
       values.getWhitelist.0:
 -        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
       values.getWhitelist.2:
@@ -223,6 +223,21 @@ Provide description of changes. This section will be preserved.
 -        "eth:0xa5f2211B9b8170F694421f2046281775E8468044"
       values.getWhitelist.105:
 -        "eth:0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756377336 (main branch discovery), not current.
+
+```diff
+    contract AddressWhitelist (eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7) {
+    +++ description: A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the across ecosystem.
+      description:
+-        "Implements a simple address whitelist for tokens that can be used as bonds and fees."
++        "A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the across ecosystem."
     }
 ```
 
