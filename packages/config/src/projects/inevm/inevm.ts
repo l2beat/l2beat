@@ -26,7 +26,6 @@ export const inevm: ScalingProject = orbitStackL3({
       bridges: [
         'https://inevm.bridge.caldera.xyz/',
         'https://inevmbridge.com/',
-        'https://layerzero.inevm.com/bridge',
       ],
       documentation: ['https://docs.inevm.com/'],
       explorers: [
