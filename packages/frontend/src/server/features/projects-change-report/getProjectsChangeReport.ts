@@ -1,9 +1,5 @@
 import type { UpdateDiffRecord } from '@l2beat/database'
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  ProjectId,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
