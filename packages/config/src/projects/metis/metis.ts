@@ -55,7 +55,6 @@ export const metis: ScalingProject = {
   capability: 'universal',
   addedAt: UnixTime(1637945259), // 2021-11-26T16:47:39Z
   badges: [BADGES.VM.EVM, BADGES.Fork.OVM, BADGES.DA.EthereumBlobs],
-  reasonsForBeingOther: [],
   display: {
     name: 'Metis Andromeda',
     shortName: 'Metis',
