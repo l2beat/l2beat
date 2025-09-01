@@ -74,8 +74,7 @@ describe(discoveryDiffToMarkdown.name, () => {
       [
         '```diff',
         `    contract foo (${ADDRESS.toString()}) {`,
-        '    +++ description: None',
-        '++... (message too long)',
+        '    +++ description: Non... (message too long)',
         '```',
       ].join('\n'),
     )

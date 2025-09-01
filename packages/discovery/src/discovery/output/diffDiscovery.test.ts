@@ -153,7 +153,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'A',
-        address: ChainSpecificAddress.from('eth', ADDRESS_A),
+        address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         description: 'hello world',
@@ -181,7 +181,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'A',
-        address: ChainSpecificAddress.from('eth', ADDRESS_A),
+        address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         description: 'hello world',
@@ -207,7 +207,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'A',
-        address: ChainSpecificAddress.from('eth', ADDRESS_A),
+        address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         description: 'hello world',
@@ -218,7 +218,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'A',
-        address: ChainSpecificAddress.from('eth', ADDRESS_A),
+        address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         description: 'hello sailor',
