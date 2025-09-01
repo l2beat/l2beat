@@ -168,9 +168,7 @@ export const scalingRiskStateValidationOptimisticColumns = [
         value={
           ctx.row.original.initialBond !== undefined
             ? {
-                value: formatCurrency(ctx.row.original.initialBond, 'eth', {
-                  decimals: 0,
-                }),
+                value: 'Ξ' + ctx.row.original.initialBond
               }
             : undefined
         }

@@ -4,6 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -222,7 +223,7 @@ export const facet: ScalingProject = {
       ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
       challengeDelay: MAX_CHALLENGE_SECS,
       executionDelay: 0,
-      initialBond: proposerBond
+      initialBond: formatEther(proposerBond),
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,

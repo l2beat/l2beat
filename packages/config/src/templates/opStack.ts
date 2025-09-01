@@ -892,6 +892,12 @@ function getRiskViewStateValidation(
           RISK_VIEW.STATE_FP_INT().description +
           ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number[]>(
+            'DisputeGameFactory',
+            'initBonds',
+          )[1], // 1 is for permissioned games!
+        ),
       }
     }
     case 'Permissionless': {
@@ -900,6 +906,12 @@ function getRiskViewStateValidation(
           getChallengePeriod(templateVars),
           getExecutionDelay(templateVars),
         ),
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number[]>(
+            'DisputeGameFactory',
+            'initBonds',
+          )[0], // 0 is for permissionless games!
+        ),
       }
     }
     case 'Kailua': {
@@ -907,6 +919,12 @@ function getRiskViewStateValidation(
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number>(
+            'KailuaTreasury',
+            'participationBond',
+          ),
+        ),
       }
     }
   }

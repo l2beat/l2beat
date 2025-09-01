@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -83,6 +84,12 @@ export const celo: ScalingProject = opStackL2({
         'proofMaturityDelaySeconds',
       ),
       orderHint: 0,
+      initialBond: formatEther(
+        discovery.getContractValue<number[]>(
+          'DisputeGameFactory',
+          'initBonds',
+        )[1],
+      ),
     },
   },
   isNodeAvailable: 'UnderReview',
