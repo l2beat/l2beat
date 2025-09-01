@@ -21,7 +21,7 @@ export function getPublicationEntryFromGovernance(
   governanceArticle: CollectionEntry<'publications'>,
 ): PublicationEntry {
   const thumbnail = getImageParams(
-    `/meta-images/governance/publications/${governanceArticle.id}.png`,
+    `/meta-images/publications/${governanceArticle.id}.png`,
   )
   if (!thumbnail) {
     throw new Error(`Thumbnail not found for ${governanceArticle.id}`)

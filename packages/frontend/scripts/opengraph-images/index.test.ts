@@ -1,5 +1,6 @@
 import { existsSync } from 'fs'
 import path from 'path'
+import { getCollection } from '~/content/getCollection'
 import { ps } from '~/server/projects'
 import { getOpengraphProjectTypes } from './projects/generateProjectOgImages'
 
@@ -29,6 +30,26 @@ describe('opengraph images', () => {
     if (missingProjects.length > 0) {
       throw new Error(
         `Missing opengraph images for projects: ${missingProjects.join(', ')}. Run \`pnpm og-images\` to generate them.`,
+      )
+    }
+  })
+
+  it('should contain governance articles opengraph images', async () => {
+    const articles = getCollection('publications')
+
+    const missingArticles = articles
+      .filter((p) => {
+        const imageExists = path.join(
+          __dirname,
+          `../../static/meta-images/publications/${p.id}.png`,
+        )
+        return !existsSync(imageExists)
+      })
+      .map((p) => p.id)
+
+    if (missingArticles.length > 0) {
+      throw new Error(
+        `Missing opengraph images for governance articles: ${missingArticles.join(', ')}. Please add them.`,
       )
     }
   })
