@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { DiscoveryDiff } from './diffDiscovery'
 import {
@@ -7,10 +7,10 @@ import {
   fieldDiffToMarkdown,
 } from './diffToMarkdown'
 
-const ADDRESS = EthereumAddress.random()
+const ADDRESS = ChainSpecificAddress.random()
 
 describe(discoveryDiffToMarkdown.name, () => {
-  const SECOND_ADDRESS = EthereumAddress.random()
+  const SECOND_ADDRESS = ChainSpecificAddress.random()
 
   const FOO_CONTRACT_DIFF: DiscoveryDiff = {
     name: 'foo',

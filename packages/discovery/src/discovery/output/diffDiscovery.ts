@@ -1,4 +1,4 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 import { diffContracts, type FieldDiff } from './diffContracts'
 import type { EntryParameters, StructureEntry } from './types'
@@ -10,16 +10,6 @@ export interface DiscoveryDiff {
   description?: string
   diff?: FieldDiff[]
   type?: 'created' | 'deleted'
-}
-
-function addressCompare(a: string, b: string): boolean {
-  const lhs = a.includes(':')
-    ? ChainSpecificAddress.address(ChainSpecificAddress(a))
-    : a
-  const rhs = b.includes(':')
-    ? ChainSpecificAddress.address(ChainSpecificAddress(b))
-    : b
-  return lhs.toLowerCase() === rhs.toLowerCase()
 }
 
 export function diffDiscovery(
@@ -68,7 +58,7 @@ export function diffDiscovery(
     if (diff.length > 0) {
       modifiedOrDeleted.push({
         name: currentContract.name,
-        address: ChainSpecificAddress.address(currentContract.address),
+        address: currentContract.address,
         addressType: currentContract.type,
         description: currentContract.description,
         diff,
@@ -86,7 +76,7 @@ export function diffDiscovery(
       if (currentContract.proxyType !== 'EOA') {
         created.push({
           name: currentContract.name,
-          address: ChainSpecificAddress.address(currentContract.address),
+          address: currentContract.address,
           addressType: currentContract.type,
           description: currentContract.description,
           type: 'created',
