@@ -3,7 +3,10 @@ import { getCollection } from '~/content/getCollection'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getPublicationEntryFromGovernance } from './utils/getPublicationEntry'
+import {
+  getPublicationEntryFromGovernance,
+  getPublicationEntryFromMonthlyUpdate,
+} from './utils/getPublicationEntry'
 
 export async function getPublicationsData(
   manifest: Manifest,
@@ -11,8 +14,11 @@ export async function getPublicationsData(
 ): Promise<RenderData | undefined> {
   const appLayoutProps = await getAppLayoutProps()
   const governancePublications = getCollection('governance-publications')
+  const monthlyUpdates = getCollection('monthly-updates')
+
   const publications = governancePublications
     .map(getPublicationEntryFromGovernance)
+    .concat(monthlyUpdates.map(getPublicationEntryFromMonthlyUpdate))
     .sort((a, b) => b.publishedOn - a.publishedOn)
 
   return {

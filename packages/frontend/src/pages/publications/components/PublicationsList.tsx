@@ -72,10 +72,10 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
   )
 }
 
-function Tag({ tag }: { tag: string }) {
+function Tag({ tag }: { tag: PublicationEntry['tag'] }) {
   return (
     <div className="rounded-sm border border-brand px-[5px] py-[4.5px] font-bold text-brand text-label-value-13 uppercase">
-      {tag}
+      {tag === 'monthly-update' ? 'Monthly Update' : tag}
     </div>
   )
 }

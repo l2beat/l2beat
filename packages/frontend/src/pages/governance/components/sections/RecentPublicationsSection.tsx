@@ -1,5 +1,6 @@
 import { Button } from '~/components/core/Button'
 import { LinkWithThumbnail } from '~/components/LinkWithThumbnail'
+import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
 import type { GovernancePublicationEntry } from '../../../publications/governance/utils/getGovernancePublicationEntry'
 import { GovernanceCard } from '../GovernanceCard'
 
@@ -28,9 +29,14 @@ export function RecentPublicationsSection({ publications }: Props) {
 }
 
 function ExploreAllButton({ className }: { className?: string }) {
+  const filters = getFilterSearchParams({
+    contentCategory: {
+      values: ['Governance'],
+    },
+  })
   return (
     <Button className={className} variant="outline" size="sm" asChild>
-      <a href="/governance/publications">Explore all publications</a>
+      <a href={`/publications?filters=${filters}`}>Explore all publications</a>
     </Button>
   )
 }

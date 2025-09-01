@@ -14,7 +14,7 @@ export interface PublicationEntry extends FilterableEntry {
   publishedOn: UnixTime
   thumbnail: ImageParams
   url: string
-  tag: 'governance'
+  tag: 'governance' | 'monthly-update'
 }
 
 export function getPublicationEntryFromGovernance(
@@ -39,6 +39,32 @@ export function getPublicationEntryFromGovernance(
       {
         id: 'contentCategory',
         value: 'Governance',
+      },
+    ],
+  }
+}
+export function getPublicationEntryFromMonthlyUpdate(
+  monthlyUpdate: CollectionEntry<'monthly-updates'>,
+): PublicationEntry {
+  const thumbnail = getImageParams(
+    `/meta-images/publications/${monthlyUpdate.id}.png`,
+  )
+  if (!thumbnail) {
+    throw new Error(`Thumbnail not found for ${monthlyUpdate.id}`)
+  }
+  return {
+    id: monthlyUpdate.id,
+    title: monthlyUpdate.data.title,
+    thumbnail,
+    shortTitle: undefined,
+    description: monthlyUpdate.data.description,
+    publishedOn: UnixTime.fromDate(monthlyUpdate.data.publishedOn),
+    url: `/publications/${monthlyUpdate.id}`,
+    tag: 'monthly-update',
+    filterable: [
+      {
+        id: 'contentCategory',
+        value: 'Monthly Update',
       },
     ],
   }
