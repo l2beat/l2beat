@@ -12,8 +12,7 @@ export function EigenDataSourceInfo() {
   return (
     <>
       <div className="font-medium text-2xs text-secondary max-sm:hidden">
-        Data source: API provided by EigenLayer. Please note that the maximum
-        throughput claimed of 100 MiB/s has not been verified by L2BEAT.
+        Data source: API provided by EigenLayer.
       </div>
       <Drawer>
         <DrawerTrigger className="flex items-center gap-1 font-medium text-[13px] text-secondary sm:hidden">
