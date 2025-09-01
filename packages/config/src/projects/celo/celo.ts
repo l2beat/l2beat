@@ -26,6 +26,7 @@ export const celo: ScalingProject = opStackL2({
     stacks: ['OP Stack'],
     links: {
       websites: ['https://celo.org/'],
+      bridges: ['https://superbridge.app/celo'],
       documentation: ['https://docs.celo.org/'],
       explorers: [
         'https://explorer.celo.org/mainnet/',

@@ -15,9 +15,9 @@ export const coti: ScalingProject = upcomingL2({
     purposes: ['Universal', 'Privacy'],
     links: {
       websites: ['https://coti.io/'],
-      documentation: [
-        'https://medium.com/cotinetwork/how-coti-is-gearing-up-for-2024-and-beyond-e0d465794767',
-      ],
+      bridges: ['https://bridge.coti.io'],
+      documentation: ['https://docs.coti.io/coti-documentation'],
+      explorers: ['https://mainnet.cotiscan.io'],
       repositories: ['https://github.com/coti-io'],
       socialMedia: [
         'https://twitter.com/COTInetwork',

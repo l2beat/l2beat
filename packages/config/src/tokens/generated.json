@@ -5561,6 +5561,20 @@
       "supply": "zero"
     },
     {
+      "name": "T3rn",
+      "coingeckoId": "t3rn",
+      "address": "0x0d292b4a8FCfeD626dC73242cec1Da0503B891fd",
+      "symbol": "TRN",
+      "decimals": 9,
+      "deploymentTimestamp": 1725419315,
+      "coingeckoListingTimestamp": 1752796800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30009/large/Twitter_LOGO.png?1696528933",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Taiko Token",
       "coingeckoId": "taiko",
       "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
@@ -12782,6 +12796,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "TRN",
+      "coingeckoId": "t3rn",
+      "address": "0x1114982539A2Bfb84e8B9e4e320bbC04532a9e44",
+      "symbol": "TRN",
+      "decimals": 18,
+      "deploymentTimestamp": 1744237477,
+      "coingeckoListingTimestamp": 1752796800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30009/large/Twitter_LOGO.png?1696528933",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Umami",
