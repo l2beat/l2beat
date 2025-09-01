@@ -8,12 +8,7 @@ import type {
   EntryParameters,
   ReceivedPermission,
 } from '@l2beat/discovery'
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  Hash256,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
@@ -42,7 +37,7 @@ describe(UpdateDiffer.name, () => {
       )
       const updateDiffs: UpdateDiffRecord[] = [
         {
-          address: EthereumAddress.random(),
+          address: ChainSpecificAddress.random(),
           type: 'implementationChange',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
@@ -50,7 +45,7 @@ describe(UpdateDiffer.name, () => {
           diffHeadTimestamp: 456,
         },
         {
-          address: EthereumAddress.random(),
+          address: ChainSpecificAddress.random(),
           type: 'highSeverityFieldChange',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
@@ -58,7 +53,7 @@ describe(UpdateDiffer.name, () => {
           diffHeadTimestamp: 456,
         },
         {
-          address: EthereumAddress.random(),
+          address: ChainSpecificAddress.random(),
           type: 'ultimateUpgraderChange',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
@@ -157,7 +152,7 @@ describe(UpdateDiffer.name, () => {
       )
       const timestamp = UnixTime.now()
       const diff: DiscoveryDiff = {
-        address: EthereumAddress.random(),
+        address: ChainSpecificAddress.random(),
         addressType: 'Contract',
         diff: [
           {
@@ -200,7 +195,7 @@ describe(UpdateDiffer.name, () => {
       )
       const timestamp = UnixTime.now()
       const diff: DiscoveryDiff = {
-        address: EthereumAddress.random(),
+        address: ChainSpecificAddress.random(),
         addressType: 'Contract',
         diff: [
           {
@@ -243,7 +238,7 @@ describe(UpdateDiffer.name, () => {
         Logger.SILENT,
       )
       const timestamp = UnixTime.now()
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const diff: DiscoveryDiff = {
         address,
         addressType: 'Contract',
@@ -257,7 +252,7 @@ describe(UpdateDiffer.name, () => {
       const latestDiscovery = mockObject<DiscoveryOutput>({
         entries: [
           mockObject<EntryParameters>({
-            address: ChainSpecificAddress.from('eth', address),
+            address,
             receivedPermissions: [
               mockObject<ReceivedPermission>(),
               mockObject<ReceivedPermission>(),
@@ -313,10 +308,10 @@ describe(UpdateDiffer.name, () => {
 
 const PROJECT_A = 'project-a'
 const NAME_A = 'contract-a'
-const ADDRESS_A = EthereumAddress.random()
+const ADDRESS_A = ChainSpecificAddress.random()
 const NAME_B = 'contract-b'
-const ADDRESS_B = EthereumAddress.random()
-const ADDRESS_C = EthereumAddress.random()
+const ADDRESS_B = ChainSpecificAddress.random()
+const ADDRESS_C = ChainSpecificAddress.random()
 
 const COMMITTED: EntryParameters[] = [
   {
@@ -341,13 +336,14 @@ const mockProject: DiscoveryOutput = {
   usedBlockNumbers: {},
 }
 
-function mockContract(name: string, address: EthereumAddress): EntryParameters {
+function mockContract(
+  name: string,
+  address: ChainSpecificAddress,
+): EntryParameters {
   return {
     type: 'Contract',
     name,
-    address: ChainSpecificAddress.from('eth', address),
-    values: {
-      $immutable: true,
-    },
+    address,
+    values: { $immutable: true },
   }
 }

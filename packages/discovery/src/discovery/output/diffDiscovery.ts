@@ -1,11 +1,11 @@
-import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 import { diffContracts, type FieldDiff } from './diffContracts'
 import type { EntryParameters, StructureEntry } from './types'
 
 export interface DiscoveryDiff {
   name?: string
-  address: EthereumAddress
+  address: ChainSpecificAddress
   addressType: StructureEntry['type']
   description?: string
   diff?: FieldDiff[]
@@ -30,14 +30,14 @@ export function diffDiscovery(
   const modifiedOrDeleted: DiscoveryDiff[] = []
 
   for (const previousContract of previous) {
-    const currentContract = current.find((d) =>
-      addressCompare(d.address.toString(), previousContract.address.toString()),
+    const currentContract = current.find(
+      (d) => d.address === previousContract.address,
     )
     if (currentContract === undefined) {
       if (previousContract.proxyType !== 'EOA') {
         modifiedOrDeleted.push({
           name: previousContract.name,
-          address: ChainSpecificAddress.address(previousContract.address),
+          address: previousContract.address,
           addressType: previousContract.type,
           description: previousContract.description,
           type: 'deleted',
