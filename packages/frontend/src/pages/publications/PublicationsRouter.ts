@@ -33,29 +33,26 @@ export function createPublicationsRouter(
       params: v.object({ id: v.string() }),
     }),
     async (req, res) => {
-      const isGovernancePublication = !!getCollectionEntry(
+      const governancePublication = getCollectionEntry(
         'governance-publications',
         req.params.id,
       )
 
-      const isMonthlyUpdate = !!getCollectionEntry(
-        'monthly-updates',
-        req.params.id,
-      )
+      const monthlyUpdate = getCollectionEntry('monthly-updates', req.params.id)
 
       let data: RenderData | undefined
-      if (isGovernancePublication) {
+      if (governancePublication) {
         data = await getGovernancePublicationData(
           manifest,
-          req.params.id,
+          governancePublication,
           req.originalUrl,
         )
       }
 
-      if (isMonthlyUpdate) {
+      if (monthlyUpdate) {
         data = await getMonthlyUpdateData(
           manifest,
-          req.params.id,
+          monthlyUpdate,
           req.originalUrl,
           cache,
         )

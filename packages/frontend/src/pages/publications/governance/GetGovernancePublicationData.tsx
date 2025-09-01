@@ -1,5 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getCollectionEntry } from '~/content/getCollection'
+import type { CollectionEntry } from '~/content/getCollection'
 import { getGovernancePublicationEntry } from '~/pages/publications/governance/utils/getGovernancePublicationEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -7,10 +7,9 @@ import type { Manifest } from '~/utils/Manifest'
 
 export async function getGovernancePublicationData(
   manifest: Manifest,
-  id: string,
+  publicationEntry: CollectionEntry<'governance-publications'> | undefined,
   url: string,
 ): Promise<RenderData | undefined> {
-  const publicationEntry = getCollectionEntry('governance-publications', id)
   if (!publicationEntry) {
     return undefined
   }
