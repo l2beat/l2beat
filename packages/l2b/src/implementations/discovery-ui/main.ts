@@ -47,7 +47,6 @@ const projectSearchTermParamsSchema = z.object({
 
 const discoverQuerySchema = z.object({
   project: safeStringSchema,
-  chain: safeStringSchema,
   devMode: z.enum(['true', 'false']).transform((val) => val === 'true'),
 })
 

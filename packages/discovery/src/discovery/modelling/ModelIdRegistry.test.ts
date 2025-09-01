@@ -10,39 +10,6 @@ describe(ModelIdRegistry.name, () => {
     registry = new ModelIdRegistry(knowledgeBase)
   })
 
-  describe(ModelIdRegistry.prototype.getModelIdOrUndefined.name, () => {
-    it('returns undefined when address is not found', () => {
-      expect(
-        registry.getModelIdOrUndefined(
-          'eth',
-          '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-        ),
-      ).toEqual(undefined)
-    })
-
-    it('returns id when found', () => {
-      expect(
-        registry.getModelId(
-          'eth',
-          '0x000000000000000000000000000000000000ccc1',
-        ),
-      ).toEqual('contractA_eth_0x000000000000000000000000000000000000ccc1')
-    })
-  })
-
-  describe(ModelIdRegistry.prototype.getModelId.name, () => {
-    it('throws when no id is found', () => {
-      expect(() =>
-        registry.getModelId(
-          'eth',
-          '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-        ),
-      ).toThrow(
-        'No id found for eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      )
-    })
-  })
-
   describe(ModelIdRegistry.prototype.getAddressData.name, () => {
     it('returns address data', () => {
       expect(
