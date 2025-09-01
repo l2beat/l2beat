@@ -8,7 +8,6 @@ export const ouroboro: ScalingProject = upcomingL3({
   capability: 'universal',
   addedAt: UnixTime(1755482259),
   display: {
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     name: 'Ouroboro',
     slug: 'ouroboro',
@@ -26,5 +25,8 @@ export const ouroboro: ScalingProject = upcomingL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })
