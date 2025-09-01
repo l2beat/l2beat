@@ -17,7 +17,7 @@ export function BlockForm({
 }: {
   onComplete: (block: BlockWithChain | undefined) => void
 }) {
-  const [chainId, setChain] = useState<string>(SUPPORTED_CHAINS[0].id)
+  const [chainId, setChain] = useState<string>('ethereum')
   const [blockNumber, setBlockNumber] = useState('')
 
   const [isLoading, setIsLoading] = useState(false)

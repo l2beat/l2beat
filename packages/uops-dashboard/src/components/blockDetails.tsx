@@ -12,14 +12,18 @@ export function BlockDetails({ block }: { block: BlockWithChain }) {
       </h5>
       <p className="font-normal text-gray-700 dark:text-gray-400">
         Number:
-        <a
-          className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-          href={block.chain.getBlockLink(block.number)}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {block.number}
-        </a>
+        {block.chain.explorerUrl ? (
+          <a
+            className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+            href={`${block.chain.explorerUrl}/block/${block.number}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {block.number}
+          </a>
+        ) : (
+          block.number
+        )}
       </p>
       <p className="font-normal text-gray-700 dark:text-gray-400">
         Hash: {block.hash}

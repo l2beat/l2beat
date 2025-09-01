@@ -37,14 +37,18 @@ export function TransactionDetails({
 
           {op.contractAddress && (
             <>
-              <a
-                className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                href={chain.getContractLink(op.contractAddress)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {op.contractName ?? op.contractAddress}
-              </a>
+              {chain.explorerUrl ? (
+                <a
+                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  href={`${chain.explorerUrl}/address/${op.contractAddress}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {op.contractName ?? op.contractAddress}
+                </a>
+              ) : (
+                (op.contractName ?? op.contractAddress)
+              )}
               .{op.methodName ?? op.methodSelector} ({op.count})
             </>
           )}
@@ -118,14 +122,18 @@ export function TransactionDetails({
               <div className="overflow-x-auto p-4 md:p-5">
                 <p className="mb-4 text-base text-gray-500 leading-relaxed dark:text-gray-400">
                   Hash:
-                  <a
-                    className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                    href={chain.getTxLink(tx.hash)}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {tx.hash}
-                  </a>
+                  {chain.explorerUrl ? (
+                    <a
+                      className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                      href={`${chain.explorerUrl}/tx/${tx.hash}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {tx.hash}
+                    </a>
+                  ) : (
+                    tx.hash
+                  )}
                 </p>
                 {tx.details && printOperation(tx.details)}
               </div>
