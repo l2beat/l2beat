@@ -35,7 +35,8 @@
     "tvs:translate-id": "ts-node ./scripts/tvs/translate-id.ts",
     "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
     "bridges:cli": "ts-node ./scripts/bridges/cli.ts",
-    "bridges:cli-stats": "ts-node ./scripts/bridges/cli-stats.ts"
+    "bridges:cli-stats": "ts-node ./scripts/bridges/cli-stats.ts",
+    "bridges:cli2": "ts-node ./scripts/bridges-poc/cli.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
