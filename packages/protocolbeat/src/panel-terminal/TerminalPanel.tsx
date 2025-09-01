@@ -1,8 +1,7 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import ansiHTML from 'ansi-html'
 import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../api/api'
 import { Checkbox } from '../components/Checkbox'
 import { usePanelStore } from '../store/store'
 import { useTerminalStore } from './store'
@@ -32,7 +31,6 @@ export function TerminalPanel() {
     downloadAllShapes,
     discover,
     clear,
-    setChain,
     setDevMode,
     findMinters,
     killCommand,
@@ -42,12 +40,6 @@ export function TerminalPanel() {
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
-
-  const getProjectResponse = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
-  const chains = getProjectResponse.data?.entries ?? []
 
   useEffect(() => {
     clear()
@@ -59,26 +51,9 @@ export function TerminalPanel() {
     }
   }, [output])
 
-  useEffect(() => {
-    if (chains[0] && !command.chain) {
-      setChain(chains[0].chain)
-    }
-  }, [chains, command.chain])
-
   return (
     <div className="flex h-full flex-col p-2 text-sm">
       <div className="sticky top-0 mb-2 flex flex-wrap items-center gap-2">
-        <select
-          value={command.chain}
-          onChange={(e) => setChain(e.target.value)}
-          className="border bg-coffee-800 p-1 font-bold text-xs uppercase"
-        >
-          {chains.map((chain, i) => (
-            <option key={i} value={chain.chain}>
-              {chain.chain}
-            </option>
-          ))}
-        </select>
         <label className="flex items-center gap-1">
           <Checkbox
             checked={command.devMode}

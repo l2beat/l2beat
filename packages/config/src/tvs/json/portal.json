@@ -594,6 +594,25 @@
     },
     {
       "mode": "auto",
+      "id": "portal-CRO",
+      "priceId": "crypto-com-chain",
+      "symbol": "CRO",
+      "name": "CRO",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7310/large/cro_token_logo.png?1696507599",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b",
+        "chain": "ethereum",
+        "escrowAddress": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
+        "decimals": 8,
+        "sinceTimestamp": 1631535967
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "portal-CRV",
       "priceId": "curve-dao-token",
       "symbol": "CRV",
@@ -911,7 +930,7 @@
         "decimals": 6,
         "sinceTimestamp": 1656547200
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -1330,6 +1349,25 @@
     },
     {
       "mode": "auto",
+      "id": "portal-LEASH",
+      "priceId": "leash",
+      "symbol": "LEASH",
+      "name": "DOGE KILLER",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15802/large/Leash.png?1696515425",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x27C70Cd1946795B66be9d954418546998b546634",
+        "chain": "ethereum",
+        "escrowAddress": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
+        "decimals": 18,
+        "sinceTimestamp": 1631535967
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "portal-LEO",
       "priceId": "leo-token",
       "symbol": "LEO",
@@ -1514,7 +1552,7 @@
         "decimals": 18,
         "sinceTimestamp": 1631535967
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },

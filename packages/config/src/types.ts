@@ -632,7 +632,7 @@ export interface DaLayerThroughput {
    * Batch size for data availability. Together with batchFrequency it determines max throughput.
    * @unit B - bytes
    */
-  size: number
+  size: number | 'NO_CAP'
   /**
    * Desired size of blob data per block. Should be less than or equal to size.
    * @unit B - bytes
@@ -1105,7 +1105,7 @@ export interface ProjectDiscoveryInfo {
   isDiscoDriven: boolean
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
-  timestampPerChain: Record<string, number>
+  baseTimestamp: number | undefined
   hasDiscoUi: boolean
 }
 // #endregion

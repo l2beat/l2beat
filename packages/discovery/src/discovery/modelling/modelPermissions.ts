@@ -1,8 +1,7 @@
-import { assert, Hash256, unique } from '@l2beat/shared-pure'
+import { assert, Hash256 } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import { getChainShortName } from '../../config/config.discovery'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
@@ -31,71 +30,47 @@ export type DiscoveryTimestamps = {
 export class DiscoveryRegistry {
   discoveries: {
     [name: string]: {
-      [chain: string]: {
-        discoveryOutput: DiscoveryOutput
-        analysis?: Analysis[]
-      }
+      discoveryOutput: DiscoveryOutput
+      analysis?: Analysis[]
     }
   } = {}
 
-  get(project: string, chain: string) {
-    assert(
-      this.discoveries[project]?.[chain],
-      `Discovery for ${project} on ${chain} is not set.`,
-    )
-    return this.discoveries[project][chain]
+  get(project: string) {
+    assert(this.discoveries[project], `Discovery for ${project} is not set.`)
+    return this.discoveries[project]
   }
 
   set(
     project: string,
-    chain: string,
     discoveryOutput: DiscoveryOutput,
     analysis?: Analysis[],
   ) {
-    this.discoveries[project] ??= {}
-    this.discoveries[project][chain] = { discoveryOutput, analysis }
+    this.discoveries[project] = { discoveryOutput, analysis }
   }
 
-  getSortedProjects(): { project: string; chain: string }[] {
+  getSortedProjects(): string[] {
     const result = []
     const sortedProjects = Object.keys(this.discoveries).sort()
     for (const project of sortedProjects) {
-      const sortedChains = Object.keys(this.discoveries[project] ?? {}).sort()
-      for (const chain of sortedChains) {
-        result.push({ project, chain })
-      }
+      result.push(project)
     }
     return result
   }
 
-  getTimestamps(options: { skip?: { project: string; chain: string } } = {}) {
+  getTimestamps(options: { skip?: { project: string } } = {}) {
     const result: DiscoveryTimestamps = {}
     const skip = options.skip
 
-    for (const [project, chains] of Object.entries(this.discoveries)) {
-      for (const [chain, discovery] of Object.entries(chains)) {
-        if (skip && skip.project === project && skip.chain === chain) {
-          continue
-        }
-        result[project] = {
-          timestamp: discovery.discoveryOutput.timestamp,
-        }
+    for (const [project, discovery] of Object.entries(this.discoveries)) {
+      if (skip && skip.project === project) {
+        continue
+      }
+      result[project] = {
+        timestamp: discovery.discoveryOutput.timestamp,
       }
     }
 
     return result
-  }
-
-  getChains(project: string) {
-    const result: string[] = []
-    for (const [chain, discovery] of Object.entries(
-      this.discoveries[project] ?? {},
-    )) {
-      if (discovery.discoveryOutput.name === project) {
-        result.push(chain)
-      }
-    }
-    return unique(result)
   }
 }
 
@@ -123,21 +98,6 @@ export async function modelPermissions(
     permissionsConfigHash,
     discoveries,
   )
-}
-
-export function getDependenciesToDiscoverForProject(
-  project: string,
-  configReader: ConfigReader,
-): { project: string; chain: string }[] {
-  // Currently, only instances of the same project on different chains are returned.
-  // In the future, we might want to return referenced shared-modules
-  // and recursively dependencies of those.
-  return configReader
-    .readAllDiscoveredChainsForProject(project)
-    .map((chain) => ({ project, chain }))
-    .sort((a, b) =>
-      `${a.chain}-${a.project}`.localeCompare(`${b.chain}-${b.project}`),
-    )
 }
 
 export function buildPermissionsOutput(
@@ -237,8 +197,8 @@ export function generateClingoForDiscoveries(
 ): string {
   const generatedClingo: string[] = []
 
-  for (const { project, chain } of discoveries.getSortedProjects()) {
-    const discovery = discoveries.get(project, chain).discoveryOutput
+  for (const project of discoveries.getSortedProjects()) {
+    const discovery = discoveries.get(project).discoveryOutput
     const config = configReader.readConfig(project)
     const permissionsInClingo = generateClingoForProjectOnChain(
       config.permission,
@@ -260,12 +220,10 @@ export function generateClingoForProjectOnChain(
 ) {
   const generatedClingo: string[] = []
 
-  const shortChain = getChainShortName(discovery.chain)
   const addressToNameMap = buildAddressToNameMap(discovery.entries)
 
   const projectSpecificModelLp = getProjectSpecificModelLp(
     discovery.name,
-    discovery.chain,
     configReader,
   )
   if (projectSpecificModelLp) {
@@ -277,7 +235,6 @@ export function generateClingoForProjectOnChain(
     .forEach((entry) => {
       const clingoFromPermissions = generateClingoFromPermissionsConfig(
         entry,
-        shortChain,
         config,
         templateService,
         addressToNameMap,
@@ -285,7 +242,6 @@ export function generateClingoForProjectOnChain(
       generatedClingo.push(clingoFromPermissions)
       const clingoFromModelLp = generateClingoFromModelLp(
         entry,
-        shortChain,
         templateService,
         addressToNameMap,
       )
@@ -295,4 +251,11 @@ export function generateClingoForProjectOnChain(
     })
 
   return generatedClingo.join('\n')
+}
+
+export function getDependenciesToDiscoverForProject(
+  project: string,
+  _configReader: ConfigReader,
+): string[] {
+  return [project]
 }

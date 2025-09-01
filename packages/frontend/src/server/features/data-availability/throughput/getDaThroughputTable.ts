@@ -2,6 +2,7 @@ import type { DaLayerThroughput } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, notUndefined, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import keyBy from 'lodash/keyBy'
 import partition from 'lodash/partition'
 import round from 'lodash/round'
 import { env } from '~/env'
@@ -31,10 +32,13 @@ export type ThroughputTableData = Awaited<
 const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const db = getDb()
   const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const [values, daLayers] = await Promise.all([
+  const [values, maxHistoricalRecords, daLayers] = await Promise.all([
     db.dataAvailability.getByDaLayersAndTimeRange(
       THROUGHPUT_ENABLED_DA_LAYERS,
       [lastDay - 7 * UnixTime.DAY, lastDay],
+    ),
+    db.dataAvailability.getMaxHistoricalRecordByDaLayer(
+      THROUGHPUT_ENABLED_DA_LAYERS,
     ),
     ps.getProjects({
       ids: daLayerIds.map(ProjectId),
@@ -51,6 +55,11 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
         ]) ?? []
       )
     }),
+  )
+
+  const maxHistoricalRecordsByDaLayer = keyBy(
+    maxHistoricalRecords,
+    (v) => v.daLayer,
   )
 
   const [daLayerValues, projectValues] = partition(values, (v) =>
@@ -106,6 +115,14 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
             latestThroughput,
           )
 
+          const maxHistoricalRecord = maxHistoricalRecordsByDaLayer[daLayer.id]
+          const maxRegistered = maxHistoricalRecord
+            ? {
+                value: Number(maxHistoricalRecord.totalSize) / UnixTime.HOUR,
+                timestamp: maxHistoricalRecord.timestamp,
+              }
+            : undefined
+
           return [
             daLayer.id,
             {
@@ -115,10 +132,13 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
                     lastRecord,
                     previousRecord,
                     largestPoster,
-                    maxThroughputPerSecond,
+                    maxThroughputPerSecond === 'NO_CAP'
+                      ? null
+                      : maxThroughputPerSecond,
                   )
                 : undefined,
               maxThroughputPerSecond,
+              maxRegistered,
             },
           ] as const
         })
@@ -148,13 +168,13 @@ function getPastDayData(
         readonly slug: string | undefined
       }
     | undefined,
-  maxThroughputPerSecond: number,
+  maxThroughputPerSecond: number | null,
 ) {
   const avgThroughputPerSecond = Number(lastRecord.totalSize) / UnixTime.DAY
-  const avgCapacityUtilization = round(
-    (avgThroughputPerSecond / maxThroughputPerSecond) * 100,
-    2,
-  )
+  const avgCapacityUtilization =
+    maxThroughputPerSecond === null
+      ? null
+      : round((avgThroughputPerSecond / maxThroughputPerSecond) * 100, 2)
 
   const currentTotalPosted = Number(lastRecord.totalSize)
   const previousTotalPosted = previousRecord
@@ -216,6 +236,10 @@ function getMockDaThroughputTableData(
                 avgThroughputPerSecond: 100000,
               },
               maxThroughputPerSecond: 400000,
+              maxRegistered: {
+                value: 390000,
+                timestamp: 1744416000,
+              },
             },
           ] as const
         })
@@ -245,6 +269,10 @@ function getMockDaThroughputTableData(
                   : UnixTime.toStartOf(UnixTime.now(), 'day') -
                     1 * UnixTime.DAY,
               maxThroughputPerSecond: 400000,
+              maxRegistered: {
+                value: 390000,
+                timestamp: 1744416000,
+              },
             },
           ] as const
         })
@@ -256,10 +284,11 @@ function getMockDaThroughputTableData(
 function getMaxThroughputPerSecond(
   daLayerId: ProjectId,
   latestThroughput: DaLayerThroughput,
-) {
+): number | 'NO_CAP' {
   const isEthereum = daLayerId === ProjectId.ETHEREUM
   const size = isEthereum ? latestThroughput.target : latestThroughput.size
   assert(size, 'Project does not have throughput data configured')
+  if (size === 'NO_CAP') return 'NO_CAP'
   return size / latestThroughput.frequency
 }
 
