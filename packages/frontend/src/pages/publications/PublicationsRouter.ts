@@ -6,7 +6,7 @@ import type { RenderData, RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
 import { getPublicationsData } from './getPublicationsData'
-import { getGovernancePublicationData } from './governance/GetGovernancePublicationData'
+import { getGovernancePublicationData } from './governance/getGovernancePublicationData'
 import { getMonthlyUpdateData } from './monthly-updates/getMonthlyUpdateData'
 
 export function createPublicationsRouter(

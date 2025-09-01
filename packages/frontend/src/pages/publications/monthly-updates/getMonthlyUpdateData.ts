@@ -39,7 +39,7 @@ export async function getMonthlyUpdateData(
           "L2BEAT's monthly overview of the Ethereum scaling ecosystem: key news, protocol updates, and metrics.",
         openGraph: {
           url,
-          image: '/meta-images/monthly-updates/opengraph-image.png',
+          image: `/meta-images/publications/${monthlyUpdateEntry.id}.png`,
         },
       }),
     },
