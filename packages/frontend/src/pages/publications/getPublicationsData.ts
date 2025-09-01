@@ -27,10 +27,10 @@ export async function getPublicationsData(
       metadata: getMetadata(manifest, {
         title: 'Publications - L2BEAT',
         description:
-          "L2BEAT's monthly overview of the Ethereum scaling ecosystem: key news, protocol updates, and metrics.",
+          'Your hub for everything L2BEAT publishes: research, explainers, essays, interviews, and curated highlights on the evolving Layer 2 ecosystem.',
         openGraph: {
           url,
-          image: '/meta-images/monthly-updates/opengraph-image.png',
+          image: '/meta-images/publications/opengraph-image.png',
         },
       }),
     },
