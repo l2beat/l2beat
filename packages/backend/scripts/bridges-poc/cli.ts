@@ -1,4 +1,3 @@
-// TODO: add envio
 import { getEnv, Logger, type LoggerOptions } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
