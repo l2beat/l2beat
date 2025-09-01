@@ -21,7 +21,7 @@ We’re interested in discussing the Collective DAO archives and their contents 
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
+You can find us to discuss the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
 ## **Arbitrum**
 
@@ -92,7 +92,7 @@ Together with Ant Federation, we were recently elected as the DAO Advocate in th
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
 ## **Uniswap**
 
@@ -110,7 +110,7 @@ We’re interested in hearing the community’s thoughts on UAGP and its outcome
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 ## **Hop**
 
@@ -128,7 +128,7 @@ We believe delegate incentives should be renewed, but they also should be refres
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 ## **Polygon**
 
@@ -136,7 +136,7 @@ We were not aware of any significant news that is relevant to the scope of our g
 
 **When/where to catch us:**
 
-You can find us to discuss all things Polygon during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all things Polygon during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 ## **Starknet**
 
@@ -150,7 +150,7 @@ We’ll be following the Gaming Committee and their work as we’re interested i
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 ## **Connext**
 
@@ -184,4 +184,4 @@ We’re interested in discussing what the next steps with the Liquidity Task For
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Connext Office Hours](meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Connext Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.

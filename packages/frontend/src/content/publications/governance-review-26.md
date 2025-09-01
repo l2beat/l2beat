@@ -20,7 +20,7 @@ We are interested in discussing Blockspace Charters to hear the community’s op
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -146,7 +146,7 @@ Jooooo5as [submitted an RFC](https://forum.arbitrum.foundation/t/rfc-gyroscope-l
 
 ### **[Update] Liquidity Incentives Working Group**
 
-Following the successful temp-check of the ‘Incentives Detox’ proposal, we (L2BEAT) have been facilitating the creation and recurring meetings of a working group that will focus on analyzing the lessons learned from all previous programs and eventually help design (a) new, more efficient, incentives program(s). The working group meets every Wednesday at 3 pm UTC at [this link](meet.google.com/jqp-ppsq-xnq).
+Following the successful temp-check of the ‘Incentives Detox’ proposal, we (L2BEAT) have been facilitating the creation and recurring meetings of a working group that will focus on analyzing the lessons learned from all previous programs and eventually help design (a) new, more efficient, incentives program(s). The working group meets every Wednesday at 3 pm UTC at [this link](https://meet.google.com/jqp-ppsq-xnq).
 
 The recordings and summaries from the previous calls are in [the thread here](https://forum.arbitrum.foundation/t/rfc-incentives-detox-proposal/25849/65).
 
@@ -156,23 +156,23 @@ We’d like to hear the community’s opinion on the two events-related proposal
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[RWA Innovation Grants Program: Grantee Showcase](meet.google.com/epd-jmvw-tws) on 10.9 at 1:00 pm
+[RWA Innovation Grants Program: Grantee Showcase](https://meet.google.com/epd-jmvw-tws) on 10.9 at 1:00 pm
 
-[Open Discussion of Proposal(s)](meet.google.com/kvr-bpnx-zix) on 10.9 at 4:00 pm
+[Open Discussion of Proposal(s)](https://meet.google.com/kvr-bpnx-zix) on 10.9 at 4:00 pm
 
 [Entropy Advisors - Biweekly Office Hours](https://meet.google.com/rms-unku-wsq) on 10.9 at 5:15 pm
 
-[Thank ARB Demo Day](meet.google.com/chu-ozjb-uqy) on 11.9 at 1:00 pm
+[Thank ARB Demo Day](https://meet.google.com/chu-ozjb-uqy) on 11.9 at 1:00 pm
 
-[AVI Office Hours](meet.google.com/wic-qtfx-byq) on 11.9 at 3:00 pm
+[AVI Office Hours](https://meet.google.com/wic-qtfx-byq) on 11.9 at 3:00 pm
 
-[Arbitrum Incentives Working Group](meet.google.com/jqp-ppsq-xnq) on 11.9 at 4:00 pm
+[Arbitrum Incentives Working Group](https://meet.google.com/jqp-ppsq-xnq) on 11.9 at 4:00 pm
 
-[Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on 12.9 at 5:00 pm
+[Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on 12.9 at 5:00 pm
 
 
 ## **Uniswap**
@@ -208,11 +208,11 @@ We’re interested in discussing all issues that might require our attention. If
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Governance Community Call](meet.google.com/fuj-mbkg-vdu) on 10.9 at 2:00 pm
+[Governance Community Call](https://meet.google.com/fuj-mbkg-vdu) on 10.9 at 2:00 pm
 
 
 ## **Hop**
@@ -250,7 +250,7 @@ With the Hop grants program almost ready to publish its RFP list, we’re intere
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -282,7 +282,7 @@ If there’s anything in Polygon that you believe we should be aware of or invol
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Starknet**
@@ -307,7 +307,7 @@ The first vote on Starknet’s mainnet signifies the beginning of its active gov
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -353,11 +353,11 @@ The proposal to upgrade the Security Council and establish its election process 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Everclear Delegates Call](meet.google.com/vqi-tdhd-aaq) on 19.9 at 3:00 pm 
+[Everclear Delegates Call](https://meet.google.com/vqi-tdhd-aaq) on 19.9 at 3:00 pm 
 
 
 ## **Wormhole**

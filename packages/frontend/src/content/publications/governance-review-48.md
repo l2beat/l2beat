@@ -29,17 +29,17 @@ alexsotodigital [has posted](https://gov.optimism.io/t/voting-cycle-guide-36/984
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Optimism’s governance, from current initiatives to high-level conversations, during our [Optimism Office Hours](https://l2beat.com/governance/publications/meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss everything related to Optimism’s governance, from current initiatives to high-level conversations, during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
 [DAB Office Hours](https://discord.gg/optimism?event=1357733357634715970) - on 22.4 at 14:00.
 
-[Grants Council Office House](meet.google.com/vkn-qnwy-qqy) - on 22.4 at 17:30.
+[Grants Council Office House](https://meet.google.com/vkn-qnwy-qqy) - on 22.4 at 17:30.
 
 [Joint House Community Call](https://meet.google.com/vme-ovto-jcn) - on 22.4 at 18:00.
 
-[Delegate Monthly Onboarding Call](meet.google.com/bwy-qbcs-str) - on 22.4 at 19:00.
+[Delegate Monthly Onboarding Call](https://meet.google.com/bwy-qbcs-str) - on 22.4 at 19:00.
 
 
 ## **Arbitrum**
@@ -85,7 +85,7 @@ Sid from Areta [has posted](https://forum.arbitrum.foundation/t/adpc-update-thre
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Arbitrum’s governance, from current initiatives to high-level conversations, during our [Arbitrum Office Hours](https://l2beat.com/governance/publications/meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss everything related to Arbitrum’s governance, from current initiatives to high-level conversations, during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
@@ -93,7 +93,7 @@ You can find us to discuss everything related to Arbitrum’s governance, from c
 
 [Open Discussion of Proposals Governance Call](https://arbitrum.huddle01.app/room/zqt-insy-uiw) - on 22.4 at 16:00.
 
-[DeFi Education Fund Community Call](meet.google.com/kjb-tgss-skw) - on 22.4 at 17:00.
+[DeFi Education Fund Community Call](https://meet.google.com/kjb-tgss-skw) - on 22.4 at 17:00.
 
 [Entropy Advisors - biweekly office hours](https://meet.google.com/rms-unku-wsq) - on 22.4 at 17:15.
 
@@ -128,11 +128,11 @@ Looking ahead, the UAC outlines prerequisites for Uniswap v4 adoption and is dra
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Uniswap’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss everything related to Uniswap’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
-[DEF Community Call](meet.google.com/kjb-tgss-skw) - on 22.4 at 17:00.
+[DEF Community Call](https://meet.google.com/kjb-tgss-skw) - on 22.4 at 17:00.
 
 
 ## **Hop**
@@ -141,7 +141,7 @@ Hop’s governance hasn’t seen any new developments over the last week. If you
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Lisk’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss everything related to Lisk’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Polygon**
@@ -162,7 +162,7 @@ Parvez from Polygon’s validator support [has announced](https://forum.polygon.
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Polygon’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss everything related to Polygon’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Starknet**
@@ -171,7 +171,7 @@ Starknet’s governance hasn’t seen any new developments over the last week. I
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Starknet’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss everything related to Starknet’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -200,7 +200,7 @@ On the product side, Everclear has gone live on main‑net and Solana with a zer
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Hop’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss everything related to Hop’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Wormhole**
@@ -209,7 +209,7 @@ Wormhole’s governance hasn’t seen any new developments over the last week. I
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Wormhole’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss everything related to Wormhole’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Lisk**
@@ -239,7 +239,7 @@ The money would be paid as grants and incentives to help these partners continue
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Lisk’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss everything related to Lisk’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **ZkSync**
@@ -267,11 +267,11 @@ ZKsync is now working with SEAL‑911 and exchanging security desks to freeze or
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to ZkSync’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss everything related to ZkSync’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
-[Standing ZKsync Proposal Review Call](meet.google.com/qvr-txgr-vja) - on 23.4 at 15:30 UTC.
+[Standing ZKsync Proposal Review Call](https://meet.google.com/qvr-txgr-vja) - on 23.4 at 15:30 UTC.
 
 
 ## **Scroll**
@@ -301,12 +301,12 @@ Modular Crypto has filed the “[Brazil Local Node – Regional Evaluation](http
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Scroll’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss everything related to Scroll’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
-[Weekly DAO & Governance Call](meet.google.com/smr-hxgd-btt) - on 23.4 at 11:30 UTC.
+[Weekly DAO & Governance Call](https://meet.google.com/smr-hxgd-btt) - on 23.4 at 11:30 UTC.
 
-[Delegate Training Discussion](meet.google.com/yaj-mpsb-yng) - on 23.4 at 16:30 UTC.
+[Delegate Training Discussion](https://meet.google.com/yaj-mpsb-yng) - on 23.4 at 16:30 UTC.
 
-[Weekly DAO & Governance Call](meet.google.com/mhz-ncvc-ipd) - on 23.4 at 17:00 UTC.
+[Weekly DAO & Governance Call](https://meet.google.com/mhz-ncvc-ipd) - on 23.4 at 17:00 UTC.

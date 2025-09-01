@@ -46,7 +46,7 @@ We’re curious to discuss the learnings from the Citizenship and Personas resea
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -92,21 +92,21 @@ We’re interested in discussing OpCo with other delegates and relevant stakehol
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[ADPC RPC Marketplace - Information Session](meet.google.com/kho-pfxn-ekc) - on 27.1 at 21:00 (?)
+[ADPC RPC Marketplace - Information Session](https://meet.google.com/kho-pfxn-ekc) - on 27.1 at 21:00 (?)
 
-[Open Discussion of Proposal(s) - Bi-weekly Governance Call](meet.google.com/kvr-bpnx-zix) - on 28.1 at 16:00
+[Open Discussion of Proposal(s) - Bi-weekly Governance Call](https://meet.google.com/kvr-bpnx-zix) - on 28.1 at 16:00
 
 [Entropy Advisors - biweekly office hours](https://meet.google.com/rms-unku-wsq) - on 28.1 at 17:15
 
-[DeFi Education Fund Community Call](meet.google.com/kjb-tgss-skw) - on 28.1 at 18:00
+[DeFi Education Fund Community Call](https://meet.google.com/kjb-tgss-skw) - on 28.1 at 18:00
 
-[Arbitrum Incentives Working Group](meet.google.com/jqp-ppsq-xnq) - on 29.1 at 17:00
+[Arbitrum Incentives Working Group](https://meet.google.com/jqp-ppsq-xnq) - on 29.1 at 17:00
 
-[ADPC Call](meet.google.com/bju-dnib-sif) - on 29.1 at 15:00
+[ADPC Call](https://meet.google.com/bju-dnib-sif) - on 29.1 at 15:00
 
 
 ## **Uniswap**
@@ -139,11 +139,11 @@ The discussion around the tendering procedure started by SEEDGov is something in
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[DEF Community Call](meet.google.com/kjb-tgss-skw) - on 28.1 at 18:00
+[DEF Community Call](https://meet.google.com/kjb-tgss-skw) - on 28.1 at 18:00
 
 
 ## **Hop**
@@ -154,7 +154,7 @@ Hop’s governance hasn’t seen any new developments over the last week. If you
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Polygon**
@@ -172,7 +172,7 @@ We’re interested in discussing the DIP with other delegates and governance sta
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Starknet**
@@ -197,7 +197,7 @@ We always want to discuss Starknet and what’s happening there with other inter
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Everclear**
@@ -215,7 +215,7 @@ If there are things we’ve missed or that you believe we should be aware or inv
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Wormhole**
@@ -226,7 +226,7 @@ Wormhole’s governance hasn’t seen any new developments over the last week. I
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Lisk**
@@ -237,7 +237,7 @@ Lisk’s governance hasn’t seen any significant developments over the last wee
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **ZkSync**
@@ -272,11 +272,11 @@ There’s a lot of discussion happening in the DAO right now on the occasion of 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Standing ZKsync Proposal Review Call](meet.google.com/qvr-txgr-vja ) - on 29.1 at 16:30
+[Standing ZKsync Proposal Review Call](https://meet.google.com/qvr-txgr-vja ) - on 29.1 at 16:30
 
 
 ## **Scroll**
@@ -296,10 +296,10 @@ We’re interested in discussing the proposed Constitution with other delegates 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Weekly DAO & Governance Call](meet.google.com/smr-hxgd-btt) - on 29.1 at 12:30
+[Weekly DAO & Governance Call](https://meet.google.com/smr-hxgd-btt) - on 29.1 at 12:30
 
-[Weekly DAO & Governance Call](meet.google.com/mhz-ncvc-ipd) - on 29.1 at 18:00
+[Weekly DAO & Governance Call](https://meet.google.com/mhz-ncvc-ipd) - on 29.1 at 18:00

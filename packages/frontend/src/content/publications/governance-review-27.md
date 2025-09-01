@@ -35,11 +35,11 @@ We’re super interested in discussing with people who are building stuff on Opt
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Builder Office Hours with the Foundation (Bi-Weekly)](meet.google.com/pop-kkus-bvf) on 18.9 at 4:30 pm
+[Builder Office Hours with the Foundation (Bi-Weekly)](https://meet.google.com/pop-kkus-bvf) on 18.9 at 4:30 pm
 
 
 ## **Arbitrum**
@@ -99,17 +99,17 @@ There are a handful of important open fronts that we’re keen to discuss with o
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Thank ARB Demo Day](meet.google.com/chu-ozjb-uqy) on 18.9 at 13:00
+[Thank ARB Demo Day](https://meet.google.com/chu-ozjb-uqy) on 18.9 at 13:00
 
-[Open Discussion for Delegate Incentive Program](meet.google.com/otu-phpy-iyb) on 18.9 at 22:00
+[Open Discussion for Delegate Incentive Program](https://meet.google.com/otu-phpy-iyb) on 18.9 at 22:00
 
-[ADPC Call](meet.google.com/bju-dnib-sif) on 18.9 at 14:00
+[ADPC Call](https://meet.google.com/bju-dnib-sif) on 18.9 at 14:00
 
-[GCP Open Office - Weekly](meet.google.com/hjf-hrfg-gxg) - on 18.9 at 16:00
+[GCP Open Office - Weekly](https://meet.google.com/hjf-hrfg-gxg) - on 18.9 at 16:00
 
 
 ## **Uniswap**
@@ -149,7 +149,7 @@ We’re interested in discussing the topic of leveraging incentives and grants i
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Hop**
@@ -176,7 +176,7 @@ If you believe we should be aware of something or if you have a specific concern
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -191,7 +191,7 @@ We were unaware of any significant governance-related news in Starknet over the 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Starknet**
@@ -202,7 +202,7 @@ Other than [Starknet’s first-ever vote](https://governance.starknet.io/voting-
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -220,11 +220,11 @@ If you’re planning to apply for the Security Council, we’d love to hear from
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Everclear Delegates Call](meet.google.com/vqi-tdhd-aaq) on 19.9 at 15:00
+[Everclear Delegates Call](https://meet.google.com/vqi-tdhd-aaq) on 19.9 at 15:00
 
 
 ## **Wormhole**

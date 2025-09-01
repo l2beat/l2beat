@@ -32,11 +32,11 @@ Establishing an elected security council is a very important step towards decent
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-* [Builder Office Hours with the Foundation (Bi-Weekly)](meet.google.com/pop-kkus-bvf) on 24.7 at 7:30 pm
+* [Builder Office Hours with the Foundation (Bi-Weekly)](https://meet.google.com/pop-kkus-bvf) on 24.7 at 7:30 pm
 
 
 ## **Arbitrum**
@@ -115,16 +115,16 @@ After discussing with many people in Brussels during EthCC, we’re keen to go b
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-* [GCP Council Elections AMA - Slot 1](meet.google.com/qba-jswk-xof) on 24.7 at 4:00 pm
-* [Arbitrum Open Governance Call #17](meet.google.com/ouo-uskg-niq) ON 24.7 at 2:00 pm
-* [ADPC Call](meet.google.com/bju-dnib-sif) on 25.7 at 2:00 pm
-* [GCP Open Office - Weekly](meet.google.com/hjf-hrfg-gxg) on 25.7 at 4:00 pm
-* [Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on 25.7 at 5:00 pm
-* [Arbitrum DAO Onboarding](meet.google.com/mrq-sitk-mfu) on 25.7 at 10:00 pm
+* [GCP Council Elections AMA - Slot 1](https://meet.google.com/qba-jswk-xof) on 24.7 at 4:00 pm
+* [Arbitrum Open Governance Call #17](https://meet.google.com/ouo-uskg-niq) ON 24.7 at 2:00 pm
+* [ADPC Call](https://meet.google.com/bju-dnib-sif) on 25.7 at 2:00 pm
+* [GCP Open Office - Weekly](https://meet.google.com/hjf-hrfg-gxg) on 25.7 at 4:00 pm
+* [Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on 25.7 at 5:00 pm
+* [Arbitrum DAO Onboarding](https://meet.google.com/mrq-sitk-mfu) on 25.7 at 10:00 pm
 
 
 ## **Uniswap**
@@ -158,7 +158,7 @@ We’re interested in discussing DapDap's proposal with other delegates and hear
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Hop**
@@ -169,7 +169,7 @@ We were not aware of any significant governance-related news in Hop over the las
 
 **When/where to catch us:**
 
-You can find us to discuss all things Hop and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all things Hop and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events**
 
@@ -193,13 +193,13 @@ We’re happy to discuss anything in Polygon that you think we should be aware o
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
 
 
-* [Polygon Protocol Governance Call](meet.google.com/kez-vsmk-kng) on 25.7 at 3:00 pm
+* [Polygon Protocol Governance Call](https://meet.google.com/kez-vsmk-kng) on 25.7 at 3:00 pm
 
 
 ## **Starknet**
@@ -217,7 +217,7 @@ We’re very interested in discussing staking with other delegates or interested
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -233,8 +233,8 @@ We were unaware of any significant governance-related news in Everclear over the
 
 **When/where to catch us:**
 
-You can find us to discuss all things Everclear and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all things Everclear and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-* [Everclear Delegates Call](meet.google.com/vqi-tdhd-aaq) on 26.7 at 3:00 pm
+* [Everclear Delegates Call](https://meet.google.com/vqi-tdhd-aaq) on 26.7 at 3:00 pm

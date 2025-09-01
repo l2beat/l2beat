@@ -43,7 +43,7 @@ We’re interested in discussing the situation around Fault Proof mechanisms and
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -147,21 +147,21 @@ Multiple initiatives require delegate attention, and we’re keen to discuss all
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events**
 
-[Arbitrum Needs Workshop hosted by ThankARB & Disruption Joe](meet.google.com/qao-qyeg-tur) on 29.8 at 4:00 pm
+[Arbitrum Needs Workshop hosted by ThankARB & Disruption Joe](https://meet.google.com/qao-qyeg-tur) on 29.8 at 4:00 pm
 
-[Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on 29.8 at 5:00 pm
+[Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on 29.8 at 5:00 pm
 
-[ARDC Weekly Sync](meet.google.com/dyi-ymiy-ugn) on 2.9 at 12:00 pm
+[ARDC Weekly Sync](https://meet.google.com/dyi-ymiy-ugn) on 2.9 at 12:00 pm
 
-[Arbitrum Incentives Working Group](meet.google.com/jqp-ppsq-xnq) on 4.9 at 4:00 pm
+[Arbitrum Incentives Working Group](https://meet.google.com/jqp-ppsq-xnq) on 4.9 at 4:00 pm
 
-[GCP Open Office](meet.google.com/hjf-hrfg-gxg) on 5.9 at 4:00 pm
+[GCP Open Office](https://meet.google.com/hjf-hrfg-gxg) on 5.9 at 4:00 pm
 
-[Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on 5.9 at 5:00 pm
+[Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on 5.9 at 5:00 pm
 
 
 ## **Uniswap**
@@ -197,7 +197,7 @@ If there’s any initiative in Uniswap you believe we should be involved with, p
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Hop**
@@ -227,7 +227,7 @@ We are keen to discuss and understand the extent of the Arbitrum grant's impact 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Polygon**
@@ -243,7 +243,7 @@ If there’s any initiative in Polygon you believe we should be involved with, p
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Starknet**
@@ -280,7 +280,7 @@ We’re looking forward to Starknet’s first vote, and we’re keen to discuss 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -361,7 +361,7 @@ As the Operations Officer for the Governance Task Force, we’re interested in d
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Wormhole**
