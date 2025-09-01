@@ -30,7 +30,8 @@ async function main() {
       whereNot: ['archivedAt'],
     }),
   ])
-  const publications = getCollection('governance-publications')
+  const governancePublications = getCollection('governance-publications')
+  const monthlyUpdates = getCollection('monthly-updates')
 
   const pages = compact([
     '/scaling/summary',
@@ -72,8 +73,10 @@ async function main() {
     '/about-us',
     '/donate',
     '/governance',
-    '/governance/publications',
-    ...publications.map((p) => `/governance/publications/${p.id}`),
+    '/publications',
+    ...[...governancePublications, ...monthlyUpdates].map(
+      (p) => `/publications/${p.id}`,
+    ),
     '/terms-of-service',
     '/glossary',
     '/faq',
