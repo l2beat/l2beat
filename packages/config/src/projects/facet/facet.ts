@@ -4,6 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -30,6 +31,11 @@ const FALLBACK_TIMEOUT_SECS = discovery.getContractValue<number>(
 const MAX_CHALLENGE_SECS = discovery.getContractValue<number>(
   'Rollup',
   'MAX_CHALLENGE_SECS',
+)
+
+const proposerBond = discovery.getContractValue<number>(
+  'Rollup',
+  'PROPOSER_BOND',
 )
 
 export const facet: ScalingProject = {
@@ -217,6 +223,7 @@ export const facet: ScalingProject = {
       ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
       challengeDelay: MAX_CHALLENGE_SECS,
       executionDelay: 0,
+      initialBond: formatEther(proposerBond),
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,

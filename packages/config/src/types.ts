@@ -500,7 +500,7 @@ export interface ProjectRiskView {
     /** @unit seconds */
     challengeDelay?: number
     /** @unit ETH */
-    initialBond?: number
+    initialBond?: string
   }
   dataAvailability: TableReadyValue
   exitWindow: TableReadyValue
