@@ -1405,5 +1405,17 @@
   "static/icons/t3rn.png": "91654d12e3956bbf15cf1f9d5e319fe7",
   "static/meta-images/scaling/projects/t3rn/opengraph-image.png": "78f6c58b12a9a86d7e1cb53815e3734c",
   "static/images/badges/Scroll.png": "f121fec618448fdf0e831d47ec32686f",
-  "static/meta-images/governance/publications/governance-review-66.png": "836e4408a03ea617f58a1c4e2d4bb3e0"
+  "static/meta-images/governance/publications/governance-review-66.png": "836e4408a03ea617f58a1c4e2d4bb3e0",
+  "static/icons/forknet.png": "a278e3457754a74ab6db04c90e79d6f3",
+  "static/icons/iotex.png": "644cfee189e34c1f500238e9242faefd",
+  "static/icons/litecoinvm.png": "eeff76751a87a68c44af75b45fe3f9b2",
+  "static/icons/okto.png": "163c380318bf50f82fe9a9faa1bc236d",
+  "static/icons/sentient.png": "5811c8c15c295800d179b3ab72fbb4ba",
+  "static/icons/wilderworld.png": "5fac562d52b58951e3a2033696d913bd",
+  "static/meta-images/scaling/projects/forknet/opengraph-image.png": "10649f050628c26784aa4891182f97ff",
+  "static/meta-images/scaling/projects/iotex/opengraph-image.png": "270ebe3db7f9b4d9cdf22965f78689ab",
+  "static/meta-images/scaling/projects/litecoinvm/opengraph-image.png": "40b5dfe37e9a5ba5f66e39d732e33340",
+  "static/meta-images/scaling/projects/okto/opengraph-image.png": "d0bffc2bb21015e3b4d15d6a106a6d36",
+  "static/meta-images/scaling/projects/sentient/opengraph-image.png": "e58102a58bf9d3e1e018cab816c99a16",
+  "static/meta-images/scaling/projects/wilderworld/opengraph-image.png": "c29877606e51506ec48745d3404e2877"
 }
