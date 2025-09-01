@@ -32,6 +32,11 @@ const MAX_CHALLENGE_SECS = discovery.getContractValue<number>(
   'MAX_CHALLENGE_SECS',
 )
 
+const proposerBond = discovery.getContractValue<number>(
+  'Rollup',
+  'PROPOSER_BOND',
+)
+
 export const facet: ScalingProject = {
   type: 'layer2',
   id: ProjectId('facet'),
@@ -217,6 +222,7 @@ export const facet: ScalingProject = {
       ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
       challengeDelay: MAX_CHALLENGE_SECS,
       executionDelay: 0,
+      initialBond: proposerBond
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
