@@ -53,4 +53,24 @@ describe('opengraph images', () => {
       )
     }
   })
+
+  it('should contain monthly updates opengraph images', async () => {
+    const articles = getCollection('monthly-updates')
+
+    const missingUpdates = articles
+      .filter((p) => {
+        const imageExists = path.join(
+          __dirname,
+          `../../static/meta-images/publications/${p.id}.png`,
+        )
+        return !existsSync(imageExists)
+      })
+      .map((p) => p.id)
+
+    if (missingUpdates.length > 0) {
+      throw new Error(
+        `Missing opengraph images for monthly updates: ${missingUpdates.join(', ')}. Please add them.`,
+      )
+    }
+  })
 })
