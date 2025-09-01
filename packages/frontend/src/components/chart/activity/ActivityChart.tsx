@@ -139,7 +139,10 @@ export function ActivityChart({
           },
           syncedUntil,
         })}
-        <ChartTooltip filterNull={false} content={<ActivityCustomTooltip metric={metric} />} />
+        <ChartTooltip
+          filterNull={false}
+          content={<ActivityCustomTooltip metric={metric} />}
+        />
         <defs>
           {type === 'Rollups' && (
             <>
@@ -172,7 +175,7 @@ export function ActivityCustomTooltip({
   payload,
   label: timestamp,
   metric,
-}: TooltipProps<number, string>& {
+}: TooltipProps<number, string> & {
   metric: ActivityMetric
 }) {
   const { meta } = useChart()

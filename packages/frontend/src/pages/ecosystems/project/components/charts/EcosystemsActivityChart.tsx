@@ -140,7 +140,7 @@ export function EcosystemsActivityChart({
             },
             syncedUntil: data?.syncedUntil,
           })}
-          <ChartTooltip content={<ActivityCustomTooltip metric='uops'/>} />
+          <ChartTooltip content={<ActivityCustomTooltip metric="uops" />} />
           <defs>
             <CustomFillGradientDef
               id="fillProjects"
