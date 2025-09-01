@@ -255,6 +255,28 @@ export const ERC4337_methods: Method[] = [
     },
     'SmartAccount',
   ),
+  defineMethod(
+    parseAbiItem('function executeUserOpWithErrorString(address to, uint256 value, bytes data, uint8 operation)'),
+    ([to, , data]) => {
+      return [
+        {
+          type: 'recursive',
+          calldata: data,
+          to,
+        },
+      ]
+    },
+  ),
+  defineMethod(
+    parseAbiItem('function executeBySender((address to, uint256 value, bytes data)[] calls)'),
+    ([calls]) => {
+      return calls.map((call: { to: string; data: string }) => ({
+        type: 'recursive',
+        calldata: call.data,
+        to: call.to,
+      }))
+    },
+  )
 ]
 
 function decodeCalldata(
