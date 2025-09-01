@@ -22,8 +22,10 @@ const CONFIG = [
   },
 ]
 
-// change to map
-const DECODERS = [Wormhole_LogMessagePublished, Portal_TransferRedeemed]
+const DECODERS = new Map([
+  [Wormhole_LogMessagePublished.topic, Wormhole_LogMessagePublished.decoder],
+  [Portal_TransferRedeemed.topic, Portal_TransferRedeemed.decoder],
+])
 
 const MATCHERS = [matcher]
 
@@ -47,26 +49,25 @@ const cmd = command({
       for (const transaction of block.transactions) {
         assert(transaction.hash)
         for (const log of logsByTx[transaction.hash] ?? []) {
-          for (const decoder of DECODERS) {
-            if (log.topics[0] === decoder.topic) {
-              const { message, transfer } = await decoder.decoder({
-                log: logToViemLog(log),
-                transactionHash: transaction.hash,
-                blockNumber: block.number,
-                blockTimestamp: block.timestamp,
-                transactionLogs: (logsByTx[transaction.hash] ?? []).map(
-                  logToViemLog,
-                ),
-                transactionTo: transaction.to
-                  ? EthereumAddress(transaction.to)
-                  : undefined,
-                chain: config.name,
-              })
-              logger.info('Decoded', { message, transfer })
+          const decoder = DECODERS.get(log.topics[0])
+          if (decoder) {
+            const { message, transfer } = await decoder({
+              log: logToViemLog(log),
+              transactionHash: transaction.hash,
+              blockNumber: block.number,
+              blockTimestamp: block.timestamp,
+              transactionLogs: (logsByTx[transaction.hash] ?? []).map(
+                logToViemLog,
+              ),
+              transactionTo: transaction.to
+                ? EthereumAddress(transaction.to)
+                : undefined,
+              chain: config.name,
+            })
+            logger.info('Decoded', { message, transfer })
 
-              if (message) dataService.saveUnmatchedMessage(message)
-              if (transfer) dataService.saveUnmatchedTransfer(transfer)
-            }
+            if (message) dataService.saveUnmatchedMessage(message)
+            if (transfer) dataService.saveUnmatchedTransfer(transfer)
           }
         }
       }
