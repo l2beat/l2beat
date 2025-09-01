@@ -3,7 +3,7 @@ import type { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { DiscoveryDiff } from '@l2beat/discovery'
 import {
-  EthereumAddress,
+  ChainSpecificAddress,
   formatAsAsciiTable,
   ProjectId,
   UnixTime,
@@ -58,7 +58,7 @@ describe(UpdateNotifier.name, () => {
 
       const project = 'project-a'
       const dependents: string[] = []
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const changes: DiscoveryDiff[] = [
         {
           name: 'Contract',
@@ -143,7 +143,7 @@ describe(UpdateNotifier.name, () => {
 
       const project = 'project-a'
       const dependents: string[] = []
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const changes: DiscoveryDiff[] = [
         {
           name: 'Contract',
@@ -240,7 +240,7 @@ describe(UpdateNotifier.name, () => {
 
       const project = 'project-a'
       const dependents: string[] = []
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const changes: DiscoveryDiff[] = [
         {
           name: 'Contract',
@@ -266,7 +266,7 @@ describe(UpdateNotifier.name, () => {
         '    +++ description: None',
         '      A:',
         `-        ${'A'.repeat(1000)}`,
-        `+        ${'B'.repeat(795)}... (message too long)`,
+        `+        ${'B'.repeat(791)}... (message too long)`,
         '```',
       ].join('\n')
 
@@ -276,7 +276,7 @@ describe(UpdateNotifier.name, () => {
         '    +++ description: None',
         '      A:',
         `-        ${'A'.repeat(1000)}`,
-        `+        ${'B'.repeat(809)}... (message too long)`,
+        `+        ${'B'.repeat(805)}... (message too long)`,
         '```',
       ].join('\n')
 
@@ -330,7 +330,7 @@ describe(UpdateNotifier.name, () => {
 
       const project = 'project-a'
       const dependents: string[] = []
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const changes: DiscoveryDiff[] = [
         {
           name: 'Contract',
@@ -394,8 +394,8 @@ describe(UpdateNotifier.name, () => {
           {
             params: {
               formula: 'functionCall',
-              address: EthereumAddress(
-                '0x1234567890123456789012345678901234567890',
+              address: ChainSpecificAddress(
+                'eth:0x1234567890123456789012345678901234567890',
               ),
               selector: '0x12345678',
             },
@@ -419,8 +419,8 @@ describe(UpdateNotifier.name, () => {
 
       const project = 'project-a'
       const dependents: string[] = []
-      const address = EthereumAddress(
-        '0x1234567890123456789012345678901234567890',
+      const address = ChainSpecificAddress(
+        'eth:0x1234567890123456789012345678901234567890',
       ) // Same address as in trackedTxsConfig
       const changes: DiscoveryDiff[] = [
         {
@@ -500,8 +500,8 @@ describe(UpdateNotifier.name, () => {
           {
             params: {
               formula: 'functionCall',
-              address: EthereumAddress(
-                '0x9999999999999999999999999999999999999999',
+              address: ChainSpecificAddress(
+                'eth:0x9999999999999999999999999999999999999999',
               ),
               selector: '0x12345678',
             },
@@ -525,8 +525,8 @@ describe(UpdateNotifier.name, () => {
 
       const project = 'project-a'
       const dependents: string[] = []
-      const address = EthereumAddress(
-        '0x1234567890123456789012345678901234567890',
+      const address = ChainSpecificAddress(
+        'eth:0x1234567890123456789012345678901234567890',
       ) // Different from trackedTxsConfig
       const changes: DiscoveryDiff[] = [
         {

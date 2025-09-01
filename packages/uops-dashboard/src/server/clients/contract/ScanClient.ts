@@ -10,10 +10,11 @@ export class ScanClient implements ContractClient {
   constructor(
     private readonly apiUrl: string,
     private readonly apiKey: string,
+    private readonly chainId: string,
   ) {}
 
   async getName(address: string): Promise<string> {
-    const url = `${this.apiUrl}/api?module=contract&action=getsourcecode&address=${address}&apikey=${this.apiKey}`
+    const url = `${this.apiUrl}/api?module=contract&action=getsourcecode&address=${address}&apikey=${this.apiKey}&chainId=${this.chainId}`
 
     const res = await fetch(url)
 

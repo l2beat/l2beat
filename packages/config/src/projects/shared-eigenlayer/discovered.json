@@ -1,6 +1,6 @@
 {
   "name": "shared-eigenlayer",
-  "timestamp": 1754503221,
+  "timestamp": 1756724373,
   "configHash": "0xd64a224fd4fee06293b965c72ab1e341b7258b8d89319120a2b77cf1622fc1f4",
   "entries": [
     {
@@ -54,7 +54,7 @@
           "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         },
         "isExpired": false,
-        "latestPress": 1753923611,
+        "latestPress": 1756343099,
         "owner": "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
       },
       "fieldMeta": {
@@ -178,7 +178,8 @@
           "eth:0x9110e4e9e561514dE3be844D6fF9eF7cAcE65415",
           "eth:0xd314209cE0ae9aDfD7643BB9d8becD62290D826a",
           "eth:0xeadDFE246Cc8b309FfC6dDb4AB677Be49E8512AB",
-          "eth:0xD24a5F9A0E578f38e2B76d422b0a355ffee88F2E"
+          "eth:0xD24a5F9A0E578f38e2B76d422b0a355ffee88F2E",
+          "eth:0x875B5ff698B74B26f39C223c4996871F28AcDdea"
         ],
         "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "domainSeparator": "0xa376b8f73e544301999d5aabb44e4d306777f6f0f08bf031c1c4bbc027313aeb",
@@ -303,7 +304,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 26,
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -697,7 +698,7 @@
       "sinceBlock": 17445565,
       "values": {
         "$immutable": true,
-        "implementation": "eth:0xcb27A4819A64FBA93ABD4D480e4466aEc0503745",
+        "implementation": "eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
       "implementationNames": {
@@ -907,6 +908,42 @@
       }
     },
     {
+      "name": "EigenPod",
+      "address": "eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D",
+      "type": "Contract",
+      "template": "eigenlayer/EigenPod",
+      "sourceHashes": [
+        "0x36ccc9d7f0d91f9e9d190872b03eef97633be88c0151c76c22f3a7d9ccbd26c6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1756414187,
+      "sinceBlock": 23242109,
+      "values": {
+        "$immutable": true,
+        "activeValidatorCount": 0,
+        "currentCheckpoint": {
+          "beaconBlockRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "proofsRemaining": 0,
+          "podBalanceGwei": 0,
+          "balanceDeltasGwei": 0,
+          "prevBeaconBalanceGwei": 0
+        },
+        "currentCheckpointTimestamp": 0,
+        "eigenPodManager": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+        "ethPOS": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
+        "getConsolidationRequestFee": 1,
+        "getWithdrawalRequestFee": 1,
+        "lastCheckpointTimestamp": 0,
+        "podOwner": "eth:0x0000000000000000000000000000000000000000",
+        "proofSubmitter": "eth:0x0000000000000000000000000000000000000000",
+        "version": "1.6.1",
+        "withdrawableRestakedExecutionLayerGwei": 0
+      },
+      "implementationNames": {
+        "eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D": "EigenPod"
+      }
+    },
+    {
       "name": "Safe",
       "address": "eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1",
       "type": "Contract",
@@ -928,7 +965,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -983,7 +1020,7 @@
         "name": "Backing Eigen",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "bEIGEN",
-        "totalSupply": "1739305114501981276923076977",
+        "totalSupply": "1744454796558241769230769289",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -1199,7 +1236,7 @@
         "delegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 33926,
+        "numPods": 33991,
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
@@ -1395,7 +1432,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "417069392634991653093922597",
+        "totalShares": "426145802284078551513792860",
         "underlyingToken": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
         "version": "1.5.0"
       },
@@ -1786,42 +1823,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "EigenPod",
-      "address": "eth:0xcb27A4819A64FBA93ABD4D480e4466aEc0503745",
-      "type": "Contract",
-      "template": "eigenlayer/EigenPod",
-      "sourceHashes": [
-        "0xde563a9e55789a1e2e556d02f4dd7eb0f5266ad6ff6816f3406321b92603eb14"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1752250019,
-      "sinceBlock": 22897019,
-      "values": {
-        "$immutable": true,
-        "activeValidatorCount": 0,
-        "currentCheckpoint": {
-          "beaconBlockRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "proofsRemaining": 0,
-          "podBalanceGwei": 0,
-          "balanceDeltasGwei": 0,
-          "prevBeaconBalanceGwei": 0
-        },
-        "currentCheckpointTimestamp": 0,
-        "eigenPodManager": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-        "ethPOS": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "getConsolidationRequestFee": 1,
-        "getWithdrawalRequestFee": 1,
-        "lastCheckpointTimestamp": 0,
-        "podOwner": "eth:0x0000000000000000000000000000000000000000",
-        "proofSubmitter": "eth:0x0000000000000000000000000000000000000000",
-        "version": "1.6.0",
-        "withdrawableRestakedExecutionLayerGwei": 0
-      },
-      "implementationNames": {
-        "eth:0xcb27A4819A64FBA93ABD4D480e4466aEc0503745": "EigenPod"
-      }
-    },
-    {
       "address": "eth:0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1971,7 +1972,7 @@
         "name": "Eigen",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "EIGEN",
-        "totalSupply": "1739305114501981276923076977",
+        "totalSupply": "1744454796558241769230769289",
         "transferRestrictionsDisabledAfter": 0,
         "version": "1.6.0"
       },
@@ -2183,7 +2184,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 13 (69%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2700,6 +2701,86 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D": [
+      "constructor(address _ethPOS, address _eigenPodManager, string _version)",
+      "error BeaconTimestampBeforeLatestCheckpoint()",
+      "error BeaconTimestampTooFarInPast()",
+      "error CannotCheckpointTwiceInSingleBlock()",
+      "error CheckpointAlreadyActive()",
+      "error CredentialsAlreadyVerified()",
+      "error CurrentlyPaused()",
+      "error FeeQueryFailed()",
+      "error ForkTimestampZero()",
+      "error InputAddressZero()",
+      "error InputArrayLengthMismatch()",
+      "error InsufficientFunds()",
+      "error InsufficientWithdrawableBalance()",
+      "error InvalidEIP4788Response()",
+      "error InvalidProof()",
+      "error InvalidProofLength()",
+      "error InvalidProofLength()",
+      "error InvalidPubKeyLength()",
+      "error InvalidShortString()",
+      "error InvalidValidatorFieldsLength()",
+      "error MsgValueNot32ETH()",
+      "error NoActiveCheckpoint()",
+      "error NoBalanceToCheckpoint()",
+      "error OnlyEigenPodManager()",
+      "error OnlyEigenPodOwner()",
+      "error OnlyEigenPodOwnerOrProofSubmitter()",
+      "error PredeployFailed()",
+      "error StringTooLong(string str)",
+      "error TimestampOutOfRange()",
+      "error ValidatorInactiveOnBeaconChain()",
+      "error ValidatorIsExitingBeaconChain()",
+      "error ValidatorNotActiveInPod()",
+      "error ValidatorNotSlashedOnBeaconChain()",
+      "error WithdrawalCredentialsNotForEigenPod()",
+      "event CheckpointCreated(uint64 indexed checkpointTimestamp, bytes32 indexed beaconBlockRoot, uint256 validatorCount)",
+      "event CheckpointFinalized(uint64 indexed checkpointTimestamp, int256 totalShareDeltaWei)",
+      "event ConsolidationRequested(bytes32 indexed sourcePubkeyHash, bytes32 indexed targetPubkeyHash)",
+      "event EigenPodStaked(bytes32 pubkeyHash)",
+      "event ExitRequested(bytes32 indexed validatorPubkeyHash)",
+      "event Initialized(uint8 version)",
+      "event NonBeaconChainETHReceived(uint256 amountReceived)",
+      "event ProofSubmitterUpdated(address prevProofSubmitter, address newProofSubmitter)",
+      "event RestakedBeaconChainETHWithdrawn(address indexed recipient, uint256 amount)",
+      "event SwitchToCompoundingRequested(bytes32 indexed validatorPubkeyHash)",
+      "event ValidatorBalanceUpdated(bytes32 pubkeyHash, uint64 balanceTimestamp, uint64 newValidatorBalanceGwei)",
+      "event ValidatorCheckpointed(uint64 indexed checkpointTimestamp, bytes32 indexed pubkeyHash)",
+      "event ValidatorRestaked(bytes32 pubkeyHash)",
+      "event ValidatorWithdrawn(uint64 indexed checkpointTimestamp, bytes32 indexed pubkeyHash)",
+      "event WithdrawalRequested(bytes32 indexed validatorPubkeyHash, uint64 withdrawalAmountGwei)",
+      "function activeValidatorCount() view returns (uint256)",
+      "function checkpointBalanceExitedGwei(uint64) view returns (uint64)",
+      "function currentCheckpoint() view returns (tuple(bytes32 beaconBlockRoot, uint24 proofsRemaining, uint64 podBalanceGwei, int64 balanceDeltasGwei, uint64 prevBeaconBalanceGwei))",
+      "function currentCheckpointTimestamp() view returns (uint64)",
+      "function eigenPodManager() view returns (address)",
+      "function ethPOS() view returns (address)",
+      "function getConsolidationRequestFee() view returns (uint256)",
+      "function getParentBlockRoot(uint64 timestamp) view returns (bytes32)",
+      "function getWithdrawalRequestFee() view returns (uint256)",
+      "function initialize(address _podOwner)",
+      "function lastCheckpointTimestamp() view returns (uint64)",
+      "function podOwner() view returns (address)",
+      "function proofSubmitter() view returns (address)",
+      "function recoverTokens(address[] tokenList, uint256[] amountsToWithdraw, address recipient)",
+      "function requestConsolidation(tuple(bytes srcPubkey, bytes targetPubkey)[] requests) payable",
+      "function requestWithdrawal(tuple(bytes pubkey, uint64 amountGwei)[] requests) payable",
+      "function setProofSubmitter(address newProofSubmitter)",
+      "function stake(bytes pubkey, bytes signature, bytes32 depositDataRoot) payable",
+      "function startCheckpoint(bool revertIfNoBalance)",
+      "function validatorPubkeyHashToInfo(bytes32 validatorPubkeyHash) view returns (tuple(uint64 validatorIndex, uint64 restakedBalanceGwei, uint64 lastCheckpointedAt, uint8 status))",
+      "function validatorPubkeyToInfo(bytes validatorPubkey) view returns (tuple(uint64 validatorIndex, uint64 restakedBalanceGwei, uint64 lastCheckpointedAt, uint8 status))",
+      "function validatorStatus(bytes validatorPubkey) view returns (uint8)",
+      "function validatorStatus(bytes32 pubkeyHash) view returns (uint8)",
+      "function verifyCheckpointProofs(tuple(bytes32 balanceContainerRoot, bytes proof) balanceContainerProof, tuple(bytes32 pubkeyHash, bytes32 balanceRoot, bytes proof)[] proofs)",
+      "function verifyStaleBalance(uint64 beaconTimestamp, tuple(bytes32 beaconStateRoot, bytes proof) stateRootProof, tuple(bytes32[] validatorFields, bytes proof) proof)",
+      "function verifyWithdrawalCredentials(uint64 beaconTimestamp, tuple(bytes32 beaconStateRoot, bytes proof) stateRootProof, uint40[] validatorIndices, bytes[] validatorFieldsProofs, bytes32[][] validatorFields)",
+      "function version() view returns (string)",
+      "function withdrawRestakedBeaconChainETH(address recipient, uint256 amountWei)",
+      "function withdrawableRestakedExecutionLayerGwei() view returns (uint64)"
+    ],
     "eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1": [
       "constructor(address _singleton)"
     ],
@@ -3098,85 +3179,6 @@
       "function updateAVSMetadataURI(address avs, string metadataURI)",
       "function version() view returns (string)"
     ],
-    "eth:0xcb27A4819A64FBA93ABD4D480e4466aEc0503745": [
-      "constructor(address _ethPOS, address _eigenPodManager, string _version)",
-      "error BeaconTimestampTooFarInPast()",
-      "error CannotCheckpointTwiceInSingleBlock()",
-      "error CheckpointAlreadyActive()",
-      "error CredentialsAlreadyVerified()",
-      "error CurrentlyPaused()",
-      "error FeeQueryFailed()",
-      "error ForkTimestampZero()",
-      "error InputAddressZero()",
-      "error InputArrayLengthMismatch()",
-      "error InsufficientFunds()",
-      "error InsufficientWithdrawableBalance()",
-      "error InvalidEIP4788Response()",
-      "error InvalidProof()",
-      "error InvalidProofLength()",
-      "error InvalidProofLength()",
-      "error InvalidPubKeyLength()",
-      "error InvalidShortString()",
-      "error InvalidValidatorFieldsLength()",
-      "error MsgValueNot32ETH()",
-      "error NoActiveCheckpoint()",
-      "error NoBalanceToCheckpoint()",
-      "error OnlyEigenPodManager()",
-      "error OnlyEigenPodOwner()",
-      "error OnlyEigenPodOwnerOrProofSubmitter()",
-      "error PredeployFailed()",
-      "error StringTooLong(string str)",
-      "error TimestampOutOfRange()",
-      "error ValidatorInactiveOnBeaconChain()",
-      "error ValidatorIsExitingBeaconChain()",
-      "error ValidatorNotActiveInPod()",
-      "error ValidatorNotSlashedOnBeaconChain()",
-      "error WithdrawalCredentialsNotForEigenPod()",
-      "event CheckpointCreated(uint64 indexed checkpointTimestamp, bytes32 indexed beaconBlockRoot, uint256 validatorCount)",
-      "event CheckpointFinalized(uint64 indexed checkpointTimestamp, int256 totalShareDeltaWei)",
-      "event ConsolidationRequested(bytes32 indexed sourcePubkeyHash, bytes32 indexed targetPubkeyHash)",
-      "event EigenPodStaked(bytes32 pubkeyHash)",
-      "event ExitRequested(bytes32 indexed validatorPubkeyHash)",
-      "event Initialized(uint8 version)",
-      "event NonBeaconChainETHReceived(uint256 amountReceived)",
-      "event ProofSubmitterUpdated(address prevProofSubmitter, address newProofSubmitter)",
-      "event RestakedBeaconChainETHWithdrawn(address indexed recipient, uint256 amount)",
-      "event SwitchToCompoundingRequested(bytes32 indexed validatorPubkeyHash)",
-      "event ValidatorBalanceUpdated(bytes32 pubkeyHash, uint64 balanceTimestamp, uint64 newValidatorBalanceGwei)",
-      "event ValidatorCheckpointed(uint64 indexed checkpointTimestamp, bytes32 indexed pubkeyHash)",
-      "event ValidatorRestaked(bytes32 pubkeyHash)",
-      "event ValidatorWithdrawn(uint64 indexed checkpointTimestamp, bytes32 indexed pubkeyHash)",
-      "event WithdrawalRequested(bytes32 indexed validatorPubkeyHash, uint64 withdrawalAmountGwei)",
-      "function activeValidatorCount() view returns (uint256)",
-      "function checkpointBalanceExitedGwei(uint64) view returns (uint64)",
-      "function currentCheckpoint() view returns (tuple(bytes32 beaconBlockRoot, uint24 proofsRemaining, uint64 podBalanceGwei, int64 balanceDeltasGwei, uint64 prevBeaconBalanceGwei))",
-      "function currentCheckpointTimestamp() view returns (uint64)",
-      "function eigenPodManager() view returns (address)",
-      "function ethPOS() view returns (address)",
-      "function getConsolidationRequestFee() view returns (uint256)",
-      "function getParentBlockRoot(uint64 timestamp) view returns (bytes32)",
-      "function getWithdrawalRequestFee() view returns (uint256)",
-      "function initialize(address _podOwner)",
-      "function lastCheckpointTimestamp() view returns (uint64)",
-      "function podOwner() view returns (address)",
-      "function proofSubmitter() view returns (address)",
-      "function recoverTokens(address[] tokenList, uint256[] amountsToWithdraw, address recipient)",
-      "function requestConsolidation(tuple(bytes srcPubkey, bytes targetPubkey)[] requests) payable",
-      "function requestWithdrawal(tuple(bytes pubkey, uint64 amountGwei)[] requests) payable",
-      "function setProofSubmitter(address newProofSubmitter)",
-      "function stake(bytes pubkey, bytes signature, bytes32 depositDataRoot) payable",
-      "function startCheckpoint(bool revertIfNoBalance)",
-      "function validatorPubkeyHashToInfo(bytes32 validatorPubkeyHash) view returns (tuple(uint64 validatorIndex, uint64 restakedBalanceGwei, uint64 lastCheckpointedAt, uint8 status))",
-      "function validatorPubkeyToInfo(bytes validatorPubkey) view returns (tuple(uint64 validatorIndex, uint64 restakedBalanceGwei, uint64 lastCheckpointedAt, uint8 status))",
-      "function validatorStatus(bytes validatorPubkey) view returns (uint8)",
-      "function validatorStatus(bytes32 pubkeyHash) view returns (uint8)",
-      "function verifyCheckpointProofs(tuple(bytes32 balanceContainerRoot, bytes proof) balanceContainerProof, tuple(bytes32 pubkeyHash, bytes32 balanceRoot, bytes proof)[] proofs)",
-      "function verifyStaleBalance(uint64 beaconTimestamp, tuple(bytes32 beaconStateRoot, bytes proof) stateRootProof, tuple(bytes32[] validatorFields, bytes proof) proof)",
-      "function verifyWithdrawalCredentials(uint64 beaconTimestamp, tuple(bytes32 beaconStateRoot, bytes proof) stateRootProof, uint40[] validatorIndices, bytes[] validatorFieldsProofs, bytes32[][] validatorFields)",
-      "function version() view returns (string)",
-      "function withdrawRestakedBeaconChainETH(address recipient, uint256 amountWei)",
-      "function withdrawableRestakedExecutionLayerGwei() view returns (uint64)"
-    ],
     "eth:0xD4d1746142642Db4c1ab17b03B9c58baac913E5B": [
       "constructor(address _strategyManager, address _pauserRegistry, string _version)",
       "error BalanceExceedsMaxTotalDeposits()",
@@ -3457,6 +3459,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23083676 },
-  "permissionsConfigHash": "0xaa2ead69b923ba291f26fb73735038ee087526321b051bdbaade7c41395238c5"
+  "usedBlockNumbers": { "ethereum": 23267842 },
+  "permissionsConfigHash": "0xcfa377361d44087910caada935ab419f3e244a8236f7c9f5579e119de97e3d30"
 }

@@ -1,5 +1,5 @@
 import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import {
@@ -10,7 +10,9 @@ import {
   wrapItalic,
 } from './diffToMessage'
 
-const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
+const ADDRESS = ChainSpecificAddress(
+  'eth:0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01',
+)
 const BLOCK_NUMBER = 123456789
 
 describe('Discord message formatting', () => {

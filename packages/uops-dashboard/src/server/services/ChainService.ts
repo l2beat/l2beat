@@ -15,8 +15,6 @@ import { StarknetCounter } from '../counters/StarknetCounter'
 import type { DB } from '../db/db'
 import { NameService } from './NameService'
 
-const DEFAULT_BATCH_SIZE = 10
-
 export class ChainService {
   private readonly client: BlockClient
   private readonly counter: Counter
@@ -35,7 +33,7 @@ export class ChainService {
           url: chain.blockchainApi.url,
           sourceName: chain.id,
           http,
-          callsPerMinute: (chain.customBatchSize ?? DEFAULT_BATCH_SIZE) * 30,
+          callsPerMinute: chain.blockchainApi.callsPerMinute ?? 100,
           logger: Logger.SILENT,
           retryStrategy: 'RELIABLE',
         })
@@ -49,10 +47,18 @@ export class ChainService {
         ]
 
         let contractClient = undefined
-        const scanApiUrl = chain.etherscanApiUrl
-        const scanApiKey = getEtherscanApiKey(chain.id)
-        if (scanApiUrl && scanApiKey) {
-          contractClient = new ScanClient(scanApiUrl, scanApiKey)
+        const ethercanscanApiUrl = process.env['ETHERSCAN_API_URL']
+        const ethercanscanApiKey = process.env['ETHERSCAN_API_KEY']
+        if (
+          ethercanscanApiUrl &&
+          ethercanscanApiKey &&
+          chain.etherscanChainId
+        ) {
+          contractClient = new ScanClient(
+            ethercanscanApiUrl,
+            ethercanscanApiKey,
+            chain.etherscanChainId,
+          )
         }
 
         const codeClient = new RpcCodeClient(chain)
@@ -93,10 +99,4 @@ export class ChainService {
 
     return this.counter.countForBlocks(blocks)
   }
-}
-
-export function getEtherscanApiKey(chainId: string): string | undefined {
-  const envName = `${chainId.toUpperCase().replace('-', '_')}_SCAN_API_KEY`
-  const value = process.env[envName]
-  return value
 }
