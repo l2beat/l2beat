@@ -21,7 +21,7 @@ The [Agora vote](https://vote.optimism.io/proposals/7915319752155267557317510313
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 ## **Arbitrum**
 
@@ -41,7 +41,7 @@ L2BEAT’s co-founder Bartek Kiepuszewski is a Security Council nominee and was 
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 ## **Uniswap**
 
@@ -65,7 +65,7 @@ Organizations like DEF are doing a very difficult job which is an immense help f
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 ## **Hop**
 
@@ -83,7 +83,7 @@ There’s already a treasury diversification initiative being worked on which we
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 ## **Polygon**
 
@@ -125,7 +125,7 @@ The Community Treasury Board is a solid first step to opening up the doors for g
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 ## **Starknet**
 
@@ -135,7 +135,7 @@ We were not aware of any significant governance-related news in Starknet over th
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 ## **Connext**
 
@@ -159,4 +159,4 @@ We’d also like to understand the benefits of an analysis and report of the xER
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Connext Office Hours](meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Connext Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.

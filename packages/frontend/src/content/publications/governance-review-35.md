@@ -42,7 +42,7 @@ We’re interested in discussing the Security Council applications, especially s
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -117,17 +117,17 @@ There are many discussions we’re interested in getting more involved with, inc
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Open Discussion of Proposal(s) - Bi-weekly Governance Call](meet.google.com/kvr-bpnx-zix) on 14.1 at 16:00
+[Open Discussion of Proposal(s) - Bi-weekly Governance Call](https://meet.google.com/kvr-bpnx-zix) on 14.1 at 16:00
 
 [Entropy Advisors - biweekly office hours](https://meet.google.com/rms-unku-wsq) on 14.1 at 17:15
 
-[Arbitrum Incentives Working Group](meet.google.com/jqp-ppsq-xnq) on 15.1 at 17:00
+[Arbitrum Incentives Working Group](https://meet.google.com/jqp-ppsq-xnq) on 15.1 at 17:00
 
-[ADPC Call](meet.google.com/bju-dnib-sif) on 16.1 at 15:00
+[ADPC Call](https://meet.google.com/bju-dnib-sif) on 16.1 at 15:00
 
 
 ## **Uniswap**
@@ -162,11 +162,11 @@ If there are things in Uniswap you believe we should be aware of, please let us 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Governance Community Call](meet.google.com/fuj-mbkg-vdu) on 14.1 at 15:00
+[Governance Community Call](https://meet.google.com/fuj-mbkg-vdu) on 14.1 at 15:00
 
 
 ## **Hop**
@@ -182,7 +182,7 @@ If there are things in Hop you believe we should be aware of or involved with, p
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Polygon**
@@ -213,11 +213,11 @@ If there are things in Polygon you believe we should be aware of or involved wit
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Polygon Protocol Governance Call](meet.google.com/kez-vsmk-kng) on 16.1 at 16:00
+[Polygon Protocol Governance Call](https://meet.google.com/kez-vsmk-kng) on 16.1 at 16:00
 
 
 ## **Starknet**
@@ -240,7 +240,7 @@ If there are things in Starknet you believe we should be aware of or involved wi
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Everclear**
@@ -256,7 +256,7 @@ If there are things in Everclear you believe we should be aware of or involved w
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Wormhole**
@@ -282,7 +282,7 @@ Having seen delegate code of conduct discussions around multiple DAOs, we’re i
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Lisk**
@@ -304,7 +304,7 @@ If there are things in Lisk you believe we should be aware of or involved with, 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **ZkSync**
@@ -368,7 +368,7 @@ We’re interested in discussing the token priorities proposed by the ZKsync Gov
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Scroll**
@@ -410,4 +410,4 @@ We’re interested in discussing the active proposal and getting other delegates
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.

@@ -43,7 +43,7 @@ As a member of the Feedback Commission, we are interested in discussing differen
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -99,15 +99,15 @@ There are some high-level organizational discussions taking place, and we’d li
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
 
-* [ADPC Call](meet.google.com/bju-dnib-sif) on 4.7 at 2:00 pm
-* [GCP Open Office - Weekly](meet.google.com/hjf-hrfg-gxg) on 4.7 at 4:00 pm
-* [Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on 4.7 at 5:00 pm
-* [Arbitrum DAO Onboarding](meet.google.com/mrq-sitk-mfu) on 4.7 at 10:00 pm
+* [ADPC Call](https://meet.google.com/bju-dnib-sif) on 4.7 at 2:00 pm
+* [GCP Open Office - Weekly](https://meet.google.com/hjf-hrfg-gxg) on 4.7 at 4:00 pm
+* [Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on 4.7 at 5:00 pm
+* [Arbitrum DAO Onboarding](https://meet.google.com/mrq-sitk-mfu) on 4.7 at 10:00 pm
 * [Arbitrum GovHack Brussels](https://lu.ma/e/evt-z5YT4ZhTgbclZyt?pk=g-vgyPCL7CejgFOKI) on 5.7 at 6:30 am
 * [Arbitrum Delegate Day](https://lu.ma/5ubof808?pk=g-QADOiU5Pi60B9eX) on 9.7 at 6:00 am
 * [Arbitrum Day](https://lu.ma/e/evt-mDTLYwr4cbFWwtn?pk=g-mt9cCMPjrB2nu0L) on 10.7 at 09:00 am
@@ -129,7 +129,7 @@ We’re interested in discussing the potential synergies between Uniswap and Gno
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Hop**
@@ -147,7 +147,7 @@ If you’re applying for the Hop Grants Committee, we’d like to hear from you 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -169,7 +169,7 @@ If there are things in Polygon you believe we should be involved with or aware o
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Starknet**
@@ -185,7 +185,7 @@ If there are things in Starknet you believe we should be involved with or aware 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -231,4 +231,4 @@ We have nominated ourselves to be the Operations Officer for the Governance Task
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.

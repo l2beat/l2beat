@@ -55,7 +55,7 @@ There are ongoing elections for the grants council reviewers and the developer a
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -132,21 +132,21 @@ We’ve been following the discussion around the GCP, and we’re keen to discus
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
 
 
-* [Developer Relations Fellowship](meet.google.com/znp-vzuf-xpo) on 18.6 at 10:00 pm
-* [Business Development Fellowship](meet.google.com/oie-cbfa-ckc) on 18.6 at 3:00 pm
-* [Betting on Builders: Snapshot Office Hours](meet.google.com/eot-fbmj-zjm) on 19.6 at 2:30 pm
-* [Stylus Sprint Working Group Call](meet.google.com/muv-tuxs-yxr) on 19.6 at 5:00 pm
-* [GCP Open Office Weekly](meet.google.com/hjf-hrfg-gxg) on 20.6 at 4:00 pm
-* [Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on 20.6 at 5:00 pm
-* [Arbitrum DAO Onboarding](meet.google.com/mrq-sitk-mfu) on 21.6 at 10:00 pm
-* [ARDC Sync - Bi-Weekly Open Call](meet.google.com/dyi-ymiy-ugn) on 24.6 at 12:00 pm
-* [Arbitrum DAO Onboarding](meet.google.com/mrq-sitk-mfu) on 24.6 at 1:00 pm
+* [Developer Relations Fellowship](https://meet.google.com/znp-vzuf-xpo) on 18.6 at 10:00 pm
+* [Business Development Fellowship](https://meet.google.com/oie-cbfa-ckc) on 18.6 at 3:00 pm
+* [Betting on Builders: Snapshot Office Hours](https://meet.google.com/eot-fbmj-zjm) on 19.6 at 2:30 pm
+* [Stylus Sprint Working Group Call](https://meet.google.com/muv-tuxs-yxr) on 19.6 at 5:00 pm
+* [GCP Open Office Weekly](https://meet.google.com/hjf-hrfg-gxg) on 20.6 at 4:00 pm
+* [Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on 20.6 at 5:00 pm
+* [Arbitrum DAO Onboarding](https://meet.google.com/mrq-sitk-mfu) on 21.6 at 10:00 pm
+* [ARDC Sync - Bi-Weekly Open Call](https://meet.google.com/dyi-ymiy-ugn) on 24.6 at 12:00 pm
+* [Arbitrum DAO Onboarding](https://meet.google.com/mrq-sitk-mfu) on 24.6 at 1:00 pm
 
 
 ## **Uniswap**
@@ -181,7 +181,7 @@ The feedback to UAGP’s post, which included a review of the data from their su
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -212,7 +212,7 @@ We have participated in the discussion around the Hop Grants Program and have pr
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -285,7 +285,7 @@ Polygon’s recently announced 1 BILLION POL Community Grants Program is one of 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Starknet**
@@ -315,7 +315,7 @@ We’re interested in discussing the concept of ZK Governance further, as the ch
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -333,4 +333,4 @@ As L2BEAT, we have applied to the Governance Task Force's ‘Operations Officer�
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.

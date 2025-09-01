@@ -63,7 +63,7 @@ We’re interested in discussing feedback for Season 6, as well as thoughts for 
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -156,21 +156,21 @@ There are several new proposals and ongoing initiatives that we’re interested 
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[DeFi Education Fund Community Call](meet.google.com/kjb-tgss-skw) on 26.11 at 18:00
+[DeFi Education Fund Community Call](https://meet.google.com/kjb-tgss-skw) on 26.11 at 18:00
 
-[TAU Labs - ARDC Applicant Deliverables](meet.google.com/krs-qufp-ind) on 26.11 at 12:00
+[TAU Labs - ARDC Applicant Deliverables](https://meet.google.com/krs-qufp-ind) on 26.11 at 12:00
 
 [Nethermind Research - ARDC Application Deliverables Walkthrough](https://meet.google.com/dki-ytjv-hau) on 27.11 at 13:00
 
-[Revelo Intel - ARDC Applicant Deliverables](meet.google.com/kfc-rkip-qvo) on 27.11 at 15:00
+[Revelo Intel - ARDC Applicant Deliverables](https://meet.google.com/kfc-rkip-qvo) on 27.11 at 15:00
 
-[Arbitrum Incentives Working Group](meet.google.com/jqp-ppsq-xnq) on 27.11 at 17:00
+[Arbitrum Incentives Working Group](https://meet.google.com/jqp-ppsq-xnq) on 27.11 at 17:00
 
-[ADPC Call](meet.google.com/bju-dnib-sif) on 28.11 at 15:00
+[ADPC Call](https://meet.google.com/bju-dnib-sif) on 28.11 at 15:00
 
 [GCP Open Office - Weekly](https://meet.google.com/nwx-vkeq-rhq) on 28.11 at 16:00
 
@@ -214,13 +214,13 @@ If there are things on Uniswap you think we should be aware of or involved in, p
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
 [Uniswap Foundation Community Call [November]](https://lu.ma/e/evt-IcR9YkHTWKLcqaz?pk=g-hFI3tsnh4hFXizD) on 26.11 at 17:00
 
-[DEF Community Call](meet.google.com/kjb-tgss-skw) on 26.11 at 18:00
+[DEF Community Call](https://meet.google.com/kjb-tgss-skw) on 26.11 at 18:00
 
 
 ## **Hop**
@@ -248,7 +248,7 @@ If there are things on Hop you think we should be aware of or involved in, pleas
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Polygon**
@@ -298,7 +298,7 @@ We’re interested in discussing with other delegates about the upcoming governa
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Starknet**
@@ -334,7 +334,7 @@ If there are things on Starknet you think we should be aware of or involved in, 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -369,7 +369,7 @@ We’re interested in discussing the vbCLEAR Season 1 with other delegates and r
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Wormhole**
@@ -490,6 +490,6 @@ There are many things we’re keen to discuss with other delegates and relevant 
 
 **Upcoming Events (Times in UTC)**
 
-[#10 - Proposal Co-Design](meet.google.com/kbx-ivub-zhs) on 27.11 at 12:30
+[#10 - Proposal Co-Design](https://meet.google.com/kbx-ivub-zhs) on 27.11 at 12:30
 
-[#11 - Proposal Co-Design](meet.google.com/zty-msoz-goo) on 27.11 at 18:00
+[#11 - Proposal Co-Design](https://meet.google.com/zty-msoz-goo) on 27.11 at 18:00
