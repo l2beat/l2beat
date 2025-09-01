@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x25be1546b53b9039d7dfe9adc94dd7f52fa97099
+Generated with discovered.json: 0x675310b7fc60f7acf28632fb724fdfa2b202134a
 
-# Diff at Mon, 01 Sep 2025 13:55:45 GMT:
+# Diff at Mon, 01 Sep 2025 14:18:24 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@7eff8455e0ad9da942f60c025235f897aa05b120 block: 1756377336
@@ -8,13 +8,13 @@ Generated with discovered.json: 0x25be1546b53b9039d7dfe9adc94dd7f52fa97099
 
 ## Description
 
-All tokens are removed from the whitelist except for WETH, ABT and USDC.
+All tokens are removed from the whitelist except for WETH, ABT and USDC. (uma related)
 
 ## Watched changes
 
 ```diff
     contract AddressWhitelist (eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7) {
-    +++ description: A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the across ecosystem.
+    +++ description: A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the UMA ecosystem.
       values.getWhitelist.0:
 -        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
       values.getWhitelist.2:
@@ -234,10 +234,10 @@ discovery. Values are for block 1756377336 (main branch discovery), not current.
 
 ```diff
     contract AddressWhitelist (eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7) {
-    +++ description: A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the across ecosystem.
+    +++ description: A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the UMA ecosystem.
       description:
 -        "Implements a simple address whitelist for tokens that can be used as bonds and fees."
-+        "A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the across ecosystem."
++        "A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the UMA ecosystem."
     }
 ```
 
