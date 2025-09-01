@@ -9,11 +9,11 @@ export const litecoinvm: ScalingProject = upcomingL2({
   display: {
     name: 'LitecoinVM',
     slug: 'litecoinvm',
-    description: 'A trustless ZK omnichain built for Litecoin',
+    description: 'A trustless ZK omnichain built for Litecoin.',
     purposes: ['Universal'],
     stacks: ['Agglayer CDK'],
     links: {
-      websites: ['https://www.litvm.com/'],
+      websites: ['https://litvm.com/'],
       socialMedia: ['https://x.com/LitecoinVM'],
     },
   },

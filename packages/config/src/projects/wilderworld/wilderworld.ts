@@ -14,7 +14,7 @@ export const wilderworld: ScalingProject = upcomingL2({
     purposes: ['Universal'],
     stacks: ['Agglayer CDK'],
     links: {
-      websites: ['https://www.wilderworld.com/'],
+      websites: ['https://wilderworld.com/'],
       documentation: ['https://wiki.wilderworld.com/'],
       socialMedia: ['https://x.com/wilderworld'],
     },

@@ -15,7 +15,7 @@ export const forknet: ScalingProject = upcomingL2({
     purposes: ['Universal'],
     stacks: ['Agglayer CDK'],
     links: {
-      websites: ['https://www.forknet.io/'],
+      websites: ['https://forknet.io/'],
       bridges: ['https://bridge.forknet.io/'],
       socialMedia: ['https://x.com/forknet_io'],
     },
