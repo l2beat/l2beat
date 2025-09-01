@@ -60,9 +60,7 @@ async function getProjectsChangeReportWithFns() {
       return isDiffActive
     })
 
-    const byChain = groupBy(activeDiffs, (diff) =>
-      ChainSpecificAddress.longChain(ChainSpecificAddress(diff.address)),
-    )
+    const byChain = groupBy(activeDiffs, (diff) => diff.chain)
     for (const [chain, changes] of Object.entries(byChain)) {
       const changesByType = groupByType(changes)
 
