@@ -1,11 +1,13 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL2 } from '../../templates/upcoming'
+import { underReviewL2 } from '../../templates/underReview'
 
-export const silentData: ScalingProject = upcomingL2({
+export const silentData: ScalingProject = underReviewL2({
   id: 'silentdata',
   capability: 'universal',
   addedAt: UnixTime(1753945535),
+  badges: [BADGES.DA.CustomDA, BADGES.Stack.OPStack, BADGES.VM.EVM],
   display: {
     name: 'Silent Data',
     slug: 'silentdata',
@@ -15,7 +17,8 @@ export const silentData: ScalingProject = upcomingL2({
     stacks: ['OP Stack'],
     links: {
       websites: ['https://silentdata.com'],
-      explorers: ['https://explorer-testnet.rollup.silentdata.com'],
+      explorers: ['https://explorer-mainnet.rollup.silentdata.com/'],
+      bridges: ['https://bridge-mainnet.rollup.silentdata.com/'],
       documentation: ['https://docs.silentdata.com/'],
       socialMedia: [
         'https://linkedin.com/company/69477792',
@@ -27,4 +30,20 @@ export const silentData: ScalingProject = upcomingL2({
   proofSystem: {
     type: 'Optimistic',
   },
+  dataAvailability: undefined,
+  // no activity config due to no DA / rpc
+  escrows: [
+    {
+      address: EthereumAddress('0xCcd285b1ccf1cdaB36Da995B9fC68870E287694E'), // optiPortal
+      sinceTimestamp: UnixTime(1753442903),
+      tokens: ['ETH'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0xe97d73B0079e04f4ea4162b9173604a6213eF158'), // l1standardBridge
+      sinceTimestamp: UnixTime(1753442903),
+      tokens: '*',
+      chain: 'ethereum',
+    },
+  ],
 })
