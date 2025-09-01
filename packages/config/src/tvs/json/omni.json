@@ -691,7 +691,7 @@
         "decimals": 6,
         "sinceTimestamp": 1656547200
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },

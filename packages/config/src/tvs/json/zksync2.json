@@ -541,7 +541,7 @@
         "sinceTimestamp": 1682180023
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -567,7 +567,7 @@
         "sinceTimestamp": 1682180042
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -637,7 +637,7 @@
         "sinceTimestamp": 1682180065
       },
       "category": "ether",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -681,7 +681,7 @@
         "sinceTimestamp": 1682180004
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -1323,7 +1323,8 @@
         "address": "0xaBECe6D924E003816BCe65D9Bd20655303d0abc6",
         "chain": "zksync2",
         "decimals": 18,
-        "sinceTimestamp": 1739109131
+        "sinceTimestamp": 1739109131,
+        "untilTimestamp": 1756645200
       }
     },
     {
@@ -1403,7 +1404,7 @@
         "sinceTimestamp": 1682180085
       },
       "category": "ether",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
