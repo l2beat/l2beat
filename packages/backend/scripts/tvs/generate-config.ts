@@ -41,6 +41,10 @@ import { mapLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/mapLeg
 import { setTokenSyncRange } from '../../src/modules/tvs/tools/setTokenSyncRange'
 import type { TokenValue } from '../../src/modules/tvs/types'
 
+// we have disabled TVS for some projects using feature flags on HEROKU
+// as this script will be phased out soon we decided to hardcode it here
+const DISABLED_PROJECTS = ['kroma', 'treasure', 'real']
+
 const args = {
   project: positional({
     type: optional(string),
@@ -95,13 +99,22 @@ const cmd = command({
           select: ['escrows', 'tvsInfo'],
           optional: ['chainConfig', 'isBridge'],
         })
-      ).filter((project) => !excludedProjects.includes(project.id))
+      ).filter(
+        (project) =>
+          !excludedProjects.includes(project.id) &&
+          !DISABLED_PROJECTS.includes(project.id),
+      )
 
       if (!projects) {
         logger.error('No TVS projects found')
         process.exit(1)
       }
     } else {
+      if (DISABLED_PROJECTS.includes(args.project)) {
+        logger.error(`TVS for project '${args.project}' is disabled`)
+        process.exit(1)
+      }
+
       const project = await ps.getProject({
         id: ProjectId(args.project),
         select: ['escrows', 'tvsInfo'],

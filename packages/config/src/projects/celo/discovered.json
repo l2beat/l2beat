@@ -1,7 +1,7 @@
 {
   "name": "celo",
   "timestamp": 1755507657,
-  "configHash": "0x6e1ab9de96578293465edc069038993e0ac8256eaedc938d6cbf324a4d4a869f",
+  "configHash": "0x6d02e78dab844d4ede1f308a98865c917cc9b8c192080328ab09da75659f3d63",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

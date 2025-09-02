@@ -1422,5 +1422,10 @@
   "static/meta-images/scaling/projects/litecoinvm/opengraph-image.png": "40b5dfe37e9a5ba5f66e39d732e33340",
   "static/meta-images/scaling/projects/okto/opengraph-image.png": "d0bffc2bb21015e3b4d15d6a106a6d36",
   "static/meta-images/scaling/projects/sentient/opengraph-image.png": "e58102a58bf9d3e1e018cab816c99a16",
-  "static/meta-images/scaling/projects/wilderworld/opengraph-image.png": "c29877606e51506ec48745d3404e2877"
+  "static/meta-images/scaling/projects/wilderworld/opengraph-image.png": "c29877606e51506ec48745d3404e2877",
+  "static/meta-images/governance/publications/governance-review-67.png": "8bc0aaae4c88a304777abbc5e618e354",
+  "static/meta-images/publications/governance-review-67.png": "c82207525f02c9f2854cd4cc84416fc9",
+  "static/meta-images/publications/monthly-update-2025-08.png": "28ba9e1d4b02cbe7cae5bfb2392559d8",
+  "static/images/da-layer-technology/polygoncdk/architecture.png": "6a895f82267847b0dcafa810ef170587",
+  "static/images/da-layer-technology/starkex/architecture.png": "92b5f3985fe912a72f61dc68ff2adea3"
 }

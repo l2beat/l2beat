@@ -1,3 +1,54 @@
+Generated with discovered.json: 0xb922d794f9f0fc154e3c0c80957b458b070da718
+
+# Diff at Tue, 02 Sep 2025 09:26:15 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@1144aeaf984988c003c97be3791eeda76896f8ca block: 1756626709
+- current timestamp: 1756804828
+
+## Description
+
+One operator got removed.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered.
+      description:
+-        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
++        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
+      values.registeredOperators.3:
+-        {"proposer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7","sequencer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"}
+      values.registeredOperatorsCount:
+-        4
++        3
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756626709 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":".getOperatorCandidatesForCurrentEpoch"}]
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.
+      values.operatorCount:
+-        4
++        3
+    }
+```
+
 Generated with discovered.json: 0xe397a4e2f7bae970ccd0644fff18ad9dfffc77d0
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x01674f4e5705e128f8ed162b5a0b0e349723a306
+
+# Diff at Tue, 02 Sep 2025 15:24:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f5ac0f88bdc411ecf49ff6c20d5dd0db181a0c91 block: 1756804385
+- current timestamp: 1756804385
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756804385 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xaa5e9334:
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xc63b9e2d:
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyThreshold(uint256):
++        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyFactor(uint256):
++        ["ops-fast"]
+    }
+```
+
+Generated with discovered.json: 0x233f0f29b59309889d6ad0c59f627d40d50b4adf
+
+# Diff at Tue, 02 Sep 2025 09:16:29 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@1144aeaf984988c003c97be3791eeda76896f8ca block: 1756130522
+- current timestamp: 1756804385
+
+## Description
+
+Voting period and delay extended.
+
+## Watched changes
+
+```diff
+    contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: Used to propose and manage onchain governance proposals.
+      values.votingDelay:
+-        3600
++        172800
+      values.votingPeriod:
+-        432000
++        403200
+    }
+```
+
 Generated with discovered.json: 0x9288ea21b5f27624a804db3246dceb64e939e756
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

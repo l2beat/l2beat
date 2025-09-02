@@ -165,7 +165,8 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
 }
 
 function getType(p: ScalingProject): ProjectScalingCategory | undefined {
-  if (p.reasonsForBeingOther) return 'Other'
+  if (p.reasonsForBeingOther && p.reasonsForBeingOther.length > 0)
+    return 'Other'
   if (p.dataAvailability?.bridge.value === 'Plasma') return 'Plasma'
 
   if (p.isUpcoming || !p.proofSystem || !p.dataAvailability) return undefined
