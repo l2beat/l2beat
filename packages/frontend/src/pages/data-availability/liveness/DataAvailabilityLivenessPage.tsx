@@ -10,6 +10,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { DaLivenessEntry } from '~/server/features/data-availability/liveness/getDaLivenessEntries'
+import { DaLivenessTable } from './components/table/DaLivenessTable'
 
 interface Props extends AppLayoutProps {
   publicSystems: DaLivenessEntry[]
@@ -31,7 +32,9 @@ export function DataAvailabilityLivenessPage({
                   Public <CountBadge>{publicSystems.length}</CountBadge>
                 </DirectoryTabsTrigger>
               </DirectoryTabsList>
-              <DirectoryTabsContent value="public">test</DirectoryTabsContent>
+              <DirectoryTabsContent value="public">
+                <DaLivenessTable items={publicSystems} />
+              </DirectoryTabsContent>
             </DirectoryTabs>
           </div>
         </div>

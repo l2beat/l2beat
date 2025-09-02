@@ -48,6 +48,10 @@ function getDaLivenessEntry(
   bridges: Project<'daBridge' | 'statuses' | 'trackedTxsConfig'>[],
   projectsChangeReport: ProjectsChangeReport,
 ): DaLivenessEntry | undefined {
+  if (bridges.length === 0) {
+    return undefined
+  }
+
   const daBridges = bridges.map(
     (b): DaBridgeLivenessEntry => ({
       name: b.daBridge.name,
@@ -67,10 +71,6 @@ function getDaLivenessEntry(
       },
     }),
   )
-
-  if (layer.daLayer.usedWithoutBridgeIn.length > 0 || bridges.length === 0) {
-    return undefined
-  }
 
   return {
     ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
