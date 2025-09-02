@@ -8,6 +8,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
 import type { UpcomingProjectUpdateEntry } from '~/server/features/monthly-reports/getUpcomingEntries'
+import { PublicationTag } from '../components/PublicationsList'
 import { DaUpdateSection } from './components/da/DaUpdateSection'
 import { EcosystemUpdateSection } from './components/ecosystems/EcosystemUpdateSection'
 import { UpcomingProjectUpdateSection } from './components/upcoming/UpcomingProjectUpdateSection'
@@ -31,9 +32,12 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
         <MainPageHeader>Monthly Updates</MainPageHeader>
         <PrimaryCard className="md:p-8">
           <div>
-            <p className="text-brand text-subtitle-12 uppercase">
-              Published on {entry.publishedOn}
-            </p>
+            <div className="flex items-center gap-2">
+              <PublicationTag tag="monthly-update" />
+              <p className="text-brand text-subtitle-12 uppercase">
+                Published on {entry.publishedOn}
+              </p>
+            </div>
             <h1 className="mt-2 text-heading-24 md:text-heading-32">
               {entry.title}
             </h1>

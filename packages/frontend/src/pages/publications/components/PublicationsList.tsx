@@ -59,7 +59,7 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
       title={publication.shortTitle ?? publication.title}
       topAccessory={
         <div className="flex items-center gap-2">
-          <Tag tag={publication.tag} />
+          <PublicationTag tag={publication.tag} />
           <span className="font-medium text-brand text-label-value-12">
             {formatPublicationDate(UnixTime.toDate(publication.publishedOn))}
           </span>
@@ -72,9 +72,9 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
   )
 }
 
-function Tag({ tag }: { tag: PublicationEntry['tag'] }) {
+export function PublicationTag({ tag }: { tag: PublicationEntry['tag'] }) {
   return (
-    <div className="rounded-sm border border-brand px-[5px] py-[4.5px] font-bold text-brand text-label-value-13 uppercase">
+    <div className="whitespace-nowrap rounded-sm border border-brand px-[5px] py-[4.5px] font-bold text-brand text-label-value-13 uppercase">
       {tag === 'monthly-update' ? 'Monthly Update' : tag}
     </div>
   )

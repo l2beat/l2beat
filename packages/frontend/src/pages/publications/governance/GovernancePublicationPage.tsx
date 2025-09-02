@@ -6,6 +6,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { GovernancePublicationEntry } from '~/pages/publications/governance/utils/getGovernancePublicationEntry'
+import { PublicationTag } from '../components/PublicationsList'
 
 interface Props extends AppLayoutProps {
   publication: GovernancePublicationEntry
@@ -45,10 +46,13 @@ function PublicationHeader({
 }) {
   return (
     <div>
-      <p className="text-brand text-subtitle-12 uppercase">
-        {publication.readTimeInMinutes} min read • Published on{' '}
-        {publication.publishedOn}
-      </p>
+      <div className="flex items-center gap-2">
+        <PublicationTag tag="governance" />
+        <p className="text-brand text-subtitle-12 uppercase">
+          {publication.readTimeInMinutes} min read • Published on{' '}
+          {publication.publishedOn}
+        </p>
+      </div>
       <h1 className="mt-2 text-heading-24 md:text-heading-32">
         {publication.title}
       </h1>
