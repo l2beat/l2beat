@@ -37,7 +37,7 @@ export function StarkexDAC(template: TemplateVars): ProjectCustomDa {
   const technology: DaTechnology = {
     description: `
 ## Architecture
-![starkex architecture](/images/da-layer-technology/starkex/architecture${membersCount}.png#center)
+![starkex architecture](/images/da-layer-technology/starkex/architecture.png#center)
 
 The Starkware application utilizes a data availability solution that relies on a Committee Service to ensure data persistence. This architecture comprises the following components:
 
