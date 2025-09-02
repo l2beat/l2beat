@@ -13,10 +13,10 @@ import { EcosystemProjectPage } from './ecosystems/project/EcosystemProjectPage'
 import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
 import { GovernancePage } from './governance/GovernancePage'
-import { GovernancePublicationPage } from './governance/publication/GovernancePublicationPage'
-import { GovernancePublicationsPage } from './governance/publications/GovernancePublicationsPage'
-import { MonthlyUpdatePage } from './monthly-updates/MonthlyUpdatePage'
 import { MultisigReportPage } from './multisig-report/MultisigReportPage'
+import { GovernancePublicationPage } from './publications/governance/GovernancePublicationPage'
+import { MonthlyUpdatePage } from './publications/monthly-updates/MonthlyUpdatePage'
+import { PublicationsPage } from './publications/PublicationsPage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
 import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
@@ -25,7 +25,9 @@ import { ScalingLivenessPage } from './scaling/liveness/ScalingLivenessPage'
 import { ScalingProjectPage } from './scaling/project/ScalingProjectPage'
 import { ScalingProjectTvsBreakdownPage } from './scaling/project/tvs-breakdown/ScalingProjectTvsBreakdownPage'
 import { ScalingRiskPage } from './scaling/risk/ScalingRiskPage'
+import { ScalingRiskStateValidationPage } from './scaling/risk/state-validation/ScalingRiskStateValidationPage'
 import { ScalingSummaryPage } from './scaling/summary/ScalingSummaryPage'
+import { ScalingTvsBreakdownPage } from './scaling/tvs/breakdown/ScalingTvsBreakdownPage'
 import { ScalingTvsPage } from './scaling/tvs/ScalingTvsPage'
 import { ScalingUpcomingPage } from './scaling/upcoming/ScalingUpcomingPage'
 import { StagesPage } from './stages/StagesPage'
@@ -48,6 +50,7 @@ const pages = {
   ScalingSummaryPage,
   ScalingRiskPage,
   ScalingTvsPage,
+  ScalingTvsBreakdownPage,
   ScalingActivityPage,
   ScalingDataAvailabilityPage,
   ScalingLivenessPage,
@@ -56,6 +59,7 @@ const pages = {
   ScalingUpcomingPage,
   ScalingProjectPage,
   ScalingProjectTvsBreakdownPage,
+  ScalingRiskStateValidationPage,
   // Bridges
   BridgesSummaryPage,
   BridgesArchivedPage,
@@ -74,7 +78,6 @@ const pages = {
   EcosystemProjectPage,
   // Governance
   GovernancePage,
-  GovernancePublicationsPage,
   GovernancePublicationPage,
   // Side pages
   FaqPage,
@@ -87,6 +90,8 @@ const pages = {
   StagesPage,
   // Monthly Updates
   MonthlyUpdatePage,
+  // Publications
+  PublicationsPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {

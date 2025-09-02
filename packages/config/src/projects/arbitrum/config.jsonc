@@ -3,6 +3,7 @@
   "name": "arbitrum",
   "import": ["../globalConfig.jsonc"],
   "modelCrossChainPermissions": true,
+  "maxAddresses": 200,
   "initialAddresses": [
     "arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
     "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",

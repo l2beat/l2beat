@@ -15,7 +15,8 @@
         "decimals": 9,
         "sinceTimestamp": 1711324800,
         "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
-        "chain": "blast"
+        "chain": "blast",
+        "untilTimestamp": 1756720800
       },
       "category": "other",
       "source": "native",
@@ -100,7 +101,7 @@
         "decimals": 18,
         "sinceTimestamp": 1708812911
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },

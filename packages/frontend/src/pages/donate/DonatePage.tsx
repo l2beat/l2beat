@@ -69,7 +69,6 @@ interface HeaderProps {
 function Header({ networks, qrCodeUrl }: HeaderProps) {
   return (
     <PrimaryCard className="overflow-hidden">
-      <h1 className="mb-4 font-bold text-3xl lg:hidden">Donate</h1>
       <div className="grid md:grid-cols-12">
         <div className="leading-normal md:col-span-7">
           <DonationDescription />

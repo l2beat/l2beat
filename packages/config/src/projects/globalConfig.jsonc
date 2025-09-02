@@ -178,6 +178,8 @@
     "eth:0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C": "BlastMultisig 2",
     "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": "Linea Multisig 1",
     "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": "Linea Multisig 2",
+    "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD": "Linea Multisig 3",
+    "linea:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": "Linea Multisig 4",
     "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E": "Bob Multisig 1",
     "eth:0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194": "Bob Multisig 2",
     "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38": "Zircuit Multisig 1",

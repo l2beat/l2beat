@@ -118,5 +118,11 @@
     "address": "0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3",
     "chain": "ethereum",
     "blockNumber": 22867011
+  },
+  "Polygon_Adapter_2": {
+    "hash": "0x6e7fdec1dea08a851a5c7c7d013648db8f07fcd751548a002281e712f89f6c49",
+    "address": "0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0",
+    "chain": "ethereum",
+    "blockNumber": 23238901
   }
 }

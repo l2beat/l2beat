@@ -2,7 +2,6 @@ import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type ConfigRegistry,
-  getChainConfig,
   getDiscoveryPaths,
   TemplateService,
 } from '@l2beat/discovery'
@@ -44,12 +43,6 @@ export const RefreshDiscovery = command({
       short: 'p',
       description: 'exclude projects from discovery, comma separated.',
     }),
-    excludeChains: option({
-      type: optional(Separated(string)),
-      long: 'exclude-chains',
-      short: 'c',
-      description: 'exclude chains from discovery, comma separated.',
-    }),
     message: option({
       type: optional(string),
       long: 'message',
@@ -85,42 +78,31 @@ export const RefreshDiscovery = command({
       ? configReader.getProjectsInGroup(args.group)
       : null
 
-    const chainConfigs = configReader
+    const projectChain = configReader
       .readAllDiscoveredProjects()
-      .filter((entry) => (projects ? projects.includes(entry.project) : true))
-      .filter((entry) =>
-        args.excludeProjects
-          ? !args.excludeProjects.includes(entry.project)
-          : true,
+      .filter((project) => (projects ? projects.includes(project) : true))
+      .filter((project) =>
+        args.excludeProjects ? !args.excludeProjects.includes(project) : true,
       )
-      .flatMap(({ project, chains }) =>
-        chains.map((chain) => configReader.readConfig(project, chain)),
-      )
-      .filter((config) =>
-        args.excludeChains ? !args.excludeChains.includes(config.chain) : true,
-      )
-      .sort((a, b) => a.chain.localeCompare(b.chain))
+      .flatMap((project) => configReader.readConfig(project))
 
     const toRefresh: { config: ConfigRegistry; reason: string }[] = []
     let foundFrom = false
 
-    if (args.excludeChains?.length) {
-      logger.info('Excluding chains:', args.excludeChains?.join(', '))
-    }
     if (args.excludeProjects?.length) {
       logger.info('Excluding projects:', args.excludeProjects?.join(', '))
     }
 
-    for (const config of chainConfigs) {
+    for (const config of projectChain) {
       if (args.from !== undefined) {
-        if (!foundFrom && `${config.name}/${config.chain}` === args.from) {
+        if (!foundFrom && `${config.name}` === args.from) {
           foundFrom = true
         }
         if (!foundFrom) {
           continue
         }
       }
-      const discovery = configReader.readDiscovery(config.name, config.chain)
+      const discovery = configReader.readDiscovery(config.name)
       const needsRefreshReason = args.all
         ? '--all flag was provided'
         : templateService.discoveryNeedsRefresh(discovery, config)
@@ -136,7 +118,7 @@ export const RefreshDiscovery = command({
     } else {
       logger.info('Found projects that need discovery refresh:')
       for (const { config, reason } of toRefresh) {
-        logger.info(`- ${config.chain}/${config.name} (${reason})`)
+        logger.info(`- ${config.name} (${reason})`)
       }
       logger.info(
         `\nOverall ${toRefresh.length} projects need discovery refresh.`,
@@ -148,7 +130,6 @@ export const RefreshDiscovery = command({
           await discoverAndUpdateDiffHistory(
             {
               project: config.name,
-              chain: getChainConfig(config.chain),
               dev: true,
               overwriteCache: args.overwriteCache,
             },
@@ -167,7 +148,7 @@ export const RefreshDiscovery = command({
             i + 1,
             toRefresh.length,
             performance.now() - startTime,
-            `${config.name}/${config.chain}`,
+            `${config.name}`,
           )
         }
       }

@@ -70,5 +70,11 @@
     "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "ProxyAdmin_Linea": {
+    "hash": "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9",
+    "address": "0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c",
+    "chain": "linea",
+    "blockNumber": 22535105
   }
 }

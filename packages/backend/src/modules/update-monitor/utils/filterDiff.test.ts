@@ -1,11 +1,11 @@
 import type { DiscoveryDiff } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { filterDiff } from './filterDiff'
 
-const ADDRESS_A = EthereumAddress.random()
-const ADDRESS_B = EthereumAddress.random()
+const ADDRESS_A = ChainSpecificAddress.random()
+const ADDRESS_B = ChainSpecificAddress.random()
 
 describe(filterDiff.name, () => {
   it('unknownContracts', () => {

@@ -8,76 +8,12 @@ import type {
   EntryParameters,
   ReceivedPermission,
 } from '@l2beat/discovery'
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  Hash256,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
 
 describe(UpdateDiffer.name, () => {
-  describe(UpdateDiffer.prototype.runForChain.name, () => {
-    it('runs for all projects', async () => {
-      const chain = 'ethereum'
-      const configReader = mockObject<ConfigReader>({
-        readAllDiscoveredConfigsForChain: mockFn().returns([
-          { name: PROJECT_A, chain },
-          { name: PROJECT_B, chain },
-        ]),
-      })
-
-      const updateDiffer = new UpdateDiffer(
-        configReader,
-        mockObject<Database>(),
-        mockObject<DiscoveryOutputCache>(),
-        Logger.SILENT,
-      )
-      const runForProjectMockFn = mockFn().resolvesTo(undefined)
-      updateDiffer.runForProject = runForProjectMockFn
-
-      await updateDiffer.runForChain(chain, UnixTime.now())
-
-      expect(
-        configReader.readAllDiscoveredConfigsForChain,
-      ).toHaveBeenCalledWith(chain)
-      expect(runForProjectMockFn).toHaveBeenNthCalledWith(
-        1,
-        PROJECT_A,
-        [chain],
-        UnixTime.now(),
-      )
-      expect(runForProjectMockFn).toHaveBeenNthCalledWith(
-        2,
-        PROJECT_B,
-        [chain],
-        UnixTime.now(),
-      )
-    })
-
-    it('throws if projectConfig chain mismatch', async () => {
-      const chain = 'ethereum'
-      const configReader = mockObject<ConfigReader>({
-        readAllDiscoveredConfigsForChain: mockFn().returns([
-          { name: PROJECT_A, chain: 'arbitrum' },
-        ]),
-      })
-
-      const updateDiffer = new UpdateDiffer(
-        configReader,
-        mockObject<Database>(),
-        mockObject<DiscoveryOutputCache>(),
-        Logger.SILENT,
-      )
-
-      expect(
-        async () => await updateDiffer.runForChain(chain, UnixTime.now()),
-      ).toBeRejected()
-    })
-  })
-
   describe(UpdateDiffer.prototype.runForProject.name, () => {
     it('should insert update diffs', async () => {
       const updateDiffRepository = mockObject<UpdateDiffRepository>({
@@ -101,27 +37,24 @@ describe(UpdateDiffer.name, () => {
       )
       const updateDiffs: UpdateDiffRecord[] = [
         {
-          address: EthereumAddress.random(),
+          address: ChainSpecificAddress.random(),
           type: 'implementationChange',
-          chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
           diffBaseTimestamp: 123,
           diffHeadTimestamp: 456,
         },
         {
-          address: EthereumAddress.random(),
+          address: ChainSpecificAddress.random(),
           type: 'highSeverityFieldChange',
-          chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
           diffBaseTimestamp: 123,
           diffHeadTimestamp: 456,
         },
         {
-          address: EthereumAddress.random(),
+          address: ChainSpecificAddress.random(),
           type: 'ultimateUpgraderChange',
-          chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
           diffBaseTimestamp: 123,
@@ -130,12 +63,11 @@ describe(UpdateDiffer.name, () => {
       ]
       updateDiffer.getUpdateDiffs = mockFn().returns(updateDiffs)
 
-      await updateDiffer.runForProject(PROJECT_A, ['ethereum'], UnixTime.now())
+      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
 
       expect(dbTransaction).toHaveBeenCalled()
       expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
         PROJECT_A,
-        'ethereum',
       )
       expect(updateDiffRepository.insertMany).toHaveBeenCalledWith(updateDiffs)
     })
@@ -160,11 +92,10 @@ describe(UpdateDiffer.name, () => {
       )
       updateDiffer.getUpdateDiffs = mockFn().returns([])
 
-      await updateDiffer.runForProject(PROJECT_A, ['ethereum'], UnixTime.now())
+      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
 
       expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
         PROJECT_A,
-        'ethereum',
       )
       expect(updateDiffRepository.insertMany).not.toHaveBeenCalled()
     })
@@ -196,7 +127,7 @@ describe(UpdateDiffer.name, () => {
       const getUpdateDiffsMock = mockFn()
       updateDiffer.getUpdateDiffs = getUpdateDiffsMock
 
-      await updateDiffer.runForProject(PROJECT_A, ['ethereum'], UnixTime.now())
+      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
 
       expect(dbTransaction).not.toHaveBeenCalled()
       expect(getUpdateDiffsMock).not.toHaveBeenCalled()
@@ -221,7 +152,7 @@ describe(UpdateDiffer.name, () => {
       )
       const timestamp = UnixTime.now()
       const diff: DiscoveryDiff = {
-        address: EthereumAddress.random(),
+        address: ChainSpecificAddress.random(),
         addressType: 'Contract',
         diff: [
           {
@@ -234,7 +165,6 @@ describe(UpdateDiffer.name, () => {
         [diff],
         mockObject<EntryParameters[]>(),
         PROJECT_A,
-        'ethereum',
         timestamp,
         123,
         456,
@@ -244,7 +174,6 @@ describe(UpdateDiffer.name, () => {
         {
           address: diff.address,
           type: 'implementationChange',
-          chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
           diffBaseTimestamp: 123,
@@ -266,7 +195,7 @@ describe(UpdateDiffer.name, () => {
       )
       const timestamp = UnixTime.now()
       const diff: DiscoveryDiff = {
-        address: EthereumAddress.random(),
+        address: ChainSpecificAddress.random(),
         addressType: 'Contract',
         diff: [
           {
@@ -280,7 +209,6 @@ describe(UpdateDiffer.name, () => {
         [diff],
         mockObject<EntryParameters[]>(),
         PROJECT_A,
-        'ethereum',
         timestamp,
         123,
         456,
@@ -290,7 +218,6 @@ describe(UpdateDiffer.name, () => {
         {
           address: diff.address,
           type: 'highSeverityFieldChange',
-          chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
           diffBaseTimestamp: 123,
@@ -311,7 +238,7 @@ describe(UpdateDiffer.name, () => {
         Logger.SILENT,
       )
       const timestamp = UnixTime.now()
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const diff: DiscoveryDiff = {
         address,
         addressType: 'Contract',
@@ -325,7 +252,7 @@ describe(UpdateDiffer.name, () => {
       const latestDiscovery = mockObject<DiscoveryOutput>({
         entries: [
           mockObject<EntryParameters>({
-            address: ChainSpecificAddress.from('eth', address),
+            address,
             receivedPermissions: [
               mockObject<ReceivedPermission>(),
               mockObject<ReceivedPermission>(),
@@ -341,7 +268,6 @@ describe(UpdateDiffer.name, () => {
         [diff],
         latestDiscovery.entries,
         PROJECT_A,
-        'ethereum',
         timestamp,
         123,
         456,
@@ -351,7 +277,6 @@ describe(UpdateDiffer.name, () => {
         {
           address,
           type: 'ultimateUpgraderChange',
-          chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
           diffBaseTimestamp: 123,
@@ -374,26 +299,19 @@ describe(UpdateDiffer.name, () => {
         Logger.SILENT,
       )
 
-      updateDiffer.getOnDiskDiscovery({
-        name: PROJECT_A,
-        chain: 'ethereum',
-      })
+      updateDiffer.getOnDiskDiscovery(PROJECT_A)
 
-      expect(configReader.readDiscovery).toHaveBeenCalledWith(
-        PROJECT_A,
-        'ethereum',
-      )
+      expect(configReader.readDiscovery).toHaveBeenCalledWith(PROJECT_A)
     })
   })
 })
 
 const PROJECT_A = 'project-a'
-const PROJECT_B = 'project-b'
 const NAME_A = 'contract-a'
-const ADDRESS_A = EthereumAddress.random()
+const ADDRESS_A = ChainSpecificAddress.random()
 const NAME_B = 'contract-b'
-const ADDRESS_B = EthereumAddress.random()
-const ADDRESS_C = EthereumAddress.random()
+const ADDRESS_B = ChainSpecificAddress.random()
+const ADDRESS_C = ChainSpecificAddress.random()
 
 const COMMITTED: EntryParameters[] = [
   {
@@ -410,7 +328,6 @@ const COMMITTED: EntryParameters[] = [
 
 const mockProject: DiscoveryOutput = {
   name: PROJECT_A,
-  chain: 'ethereum',
   timestamp: 1,
   configHash: Hash256.random(),
   entries: COMMITTED,
@@ -419,13 +336,14 @@ const mockProject: DiscoveryOutput = {
   usedBlockNumbers: {},
 }
 
-function mockContract(name: string, address: EthereumAddress): EntryParameters {
+function mockContract(
+  name: string,
+  address: ChainSpecificAddress,
+): EntryParameters {
   return {
     type: 'Contract',
     name,
-    address: ChainSpecificAddress.from('eth', address),
-    values: {
-      $immutable: true,
-    },
+    address,
+    values: { $immutable: true },
   }
 }

@@ -20,14 +20,9 @@ interface Entrypoint {
 
 export async function generateEntrypoints(
   configReader: ConfigReader,
-  chain: string,
   project: string,
 ) {
-  const entrypoints = generateEntrypointsForProject(
-    project,
-    chain,
-    configReader,
-  )
+  const entrypoints = generateEntrypointsForProject(project, configReader)
   const projectDir = configReader.getProjectPath(project)
   const outputFile = join(projectDir, ENTRYPOINTS_FILENAME)
   await writeFile(outputFile, JSON.stringify(entrypoints, null, 2))
@@ -35,10 +30,9 @@ export async function generateEntrypoints(
 
 function generateEntrypointsForProject(
   project: string,
-  chain: string,
   configReader: ConfigReader,
 ): Entrypoints {
-  const discovery = configReader.readDiscovery(project, chain)
+  const discovery = configReader.readDiscovery(project)
   const entrypoints: Entrypoint[] = discovery.entries
     .filter((e) => e.type !== 'Reference')
     .map((e) => ({

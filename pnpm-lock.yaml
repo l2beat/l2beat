@@ -1011,6 +1011,9 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0
     devDependencies:
+      '@l2beat/config':
+        specifier: workspace:*
+        version: link:../config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config

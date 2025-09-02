@@ -1,6 +1,6 @@
 import type { UpdateNotifierRecord } from '@l2beat/database'
 import type { DiscoveryDiff } from '@l2beat/discovery'
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 const DEFAULT_OCCURRENCE_LIMIT = 3
 
@@ -64,6 +64,6 @@ function countFieldOccurrencesInDiffs(diffs: DiscoveryDiff[]) {
   return result
 }
 
-function getFieldKey(address: EthereumAddress, fieldKey: string): string {
+function getFieldKey(address: ChainSpecificAddress, fieldKey: string): string {
   return `${address.toString()}:${fieldKey}`
 }

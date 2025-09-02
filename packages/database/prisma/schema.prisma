@@ -136,9 +136,8 @@ model UpdateMonitor {
   timestamp         DateTime? @db.Timestamp(6)
   discoveryJsonBlob Json
   configHash        String    @default("") @db.VarChar(255)
-  chainId           Int       @default(1)
 
-  @@id([projectId, chainId])
+  @@id([projectId])
 }
 
 model UpdateNotifier {
@@ -148,7 +147,6 @@ model UpdateNotifier {
   projectId    String   @db.VarChar(255)
   timestamp    DateTime @default(now()) @db.Timestamp(6)
   diffJsonBlob Json
-  chainId      Int      @default(1)
 
   @@index([timestamp])
   @@index([projectId])
@@ -156,11 +154,10 @@ model UpdateNotifier {
 
 model UpdateMessage {
   projectId String   @db.VarChar(255)
-  chain     String   @db.VarChar(255)
   timestamp DateTime @db.Timestamp(6)
   message   String   @db.Text
 
-  @@id([projectId, chain, timestamp])
+  @@id([projectId, timestamp])
 }
 
 model VerifierStatus {
@@ -217,12 +214,11 @@ model AnomalyStats {
 
 model FlatSources {
   projectId   String   @db.VarChar(255)
-  chainId     Int
   timestamp   DateTime @default(now()) @db.Timestamp(6)
   contentHash String   @db.VarChar(255)
   flat        Json
 
-  @@id([projectId, chainId])
+  @@id([projectId])
 }
 
 model TvsAmount {
@@ -262,6 +258,7 @@ model TokenValue {
   value           Float    @db.Real
   valueForProject Float    @db.Real
   valueForSummary Float    @db.Real
+  priceUsd        Float    @default(0) @db.Real
 
   @@id([timestamp, configurationId])
   @@index([projectId])
@@ -302,14 +299,13 @@ model ProjectValue {
 
 model UpdateDiff {
   projectId         String   @db.VarChar(255)
-  chain             String   @db.VarChar(255)
   address           String   @db.VarChar(255)
   type              String   @db.VarChar(255)
   timestamp         DateTime @db.Timestamp(6)
   diffBaseTimestamp DateTime @default(now()) @db.Timestamp(6)
   diffHeadTimestamp DateTime @default(now()) @db.Timestamp(6)
 
-  @@unique([projectId, address, type, chain])
+  @@unique([projectId, address, type])
 }
 
 model Notification {
