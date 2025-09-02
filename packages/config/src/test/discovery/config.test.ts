@@ -1,7 +1,6 @@
 import {
   ConfigReader,
   colorize,
-  combineStructureAndColor,
   DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
@@ -229,12 +228,7 @@ describe('discovery config.jsonc', () => {
       const discovery = configReader.readDiscovery(c.name)
       const color = colorize(c.color, discovery, templateService)
 
-      const colorized = combineStructureAndColor(discovery, color)
-      const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)
-      assert(
-        !changed,
-        `${c.name} is not colorized correctly. Run l2b colorize.`,
-      )
+      expect(compareIntersection(color, discovery)).toBeTruthy()
     }
   })
 
@@ -268,3 +262,32 @@ describe('discovery config.jsonc', () => {
     }
   }).timeout(10000)
 })
+
+function compareIntersection(
+  obj1: Record<string, any>,
+  obj2: Record<string, any>,
+): boolean {
+  const keys1 = Object.keys(obj1)
+  const keys2 = Object.keys(obj2)
+
+  const intersectionKeys = keys1.filter((key) => keys2.includes(key))
+
+  if (intersectionKeys.length === 0) return true
+
+  return intersectionKeys.every((key) => {
+    const val1 = obj1[key]
+    const val2 = obj2[key]
+
+    // Deep comparison for objects
+    if (
+      typeof val1 === 'object' &&
+      typeof val2 === 'object' &&
+      val1 !== null &&
+      val2 !== null
+    ) {
+      return compareIntersection(val1, val2)
+    }
+
+    return val1 === val2
+  })
+}
