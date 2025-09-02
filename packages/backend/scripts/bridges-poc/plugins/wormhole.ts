@@ -1,4 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   createEventParser,
   createEventType,
@@ -20,7 +21,7 @@ export const LogMessagePublished = createEventType<{
   payload: `0x${string}`
   sequence: string
   wormholeChainId: number
-  sender: `0x${string}`
+  sender: EthereumAddress
 }>('wormhole.LogMessagePublished')
 
 export class WormholePlugin implements Plugin {
@@ -44,7 +45,7 @@ export class WormholePlugin implements Plugin {
       payload: parsed.payload,
       sequence: parsed.sequence.toString(),
       wormholeChainId: network.wormholeChainId,
-      sender: parsed.sender,
+      sender: EthereumAddress(parsed.sender),
     })
   }
 }

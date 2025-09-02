@@ -43,7 +43,7 @@ const parseTransferRedeemed = createEventParser(
 export const TransferRedeemed = createEventType<{
   sequence: string
   emitterWormholeChainId: number
-  emitterAddress: `0x${string}`
+  emitterAddress: EthereumAddress
 }>('portal.TransferRedeemed')
 
 export class PortalPlugin implements Plugin {
@@ -63,7 +63,7 @@ export class PortalPlugin implements Plugin {
     return TransferRedeemed.create(input.tx, {
       sequence: parsed.sequence.toString(),
       emitterWormholeChainId: parsed.emitterChainId,
-      emitterAddress: `0x${parsed.emitterAddress.slice(-40)}`,
+      emitterAddress: EthereumAddress(`0x${parsed.emitterAddress.slice(-40)}`),
     })
   }
 
