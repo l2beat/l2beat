@@ -2,16 +2,15 @@
   {
     "rollupID": 1,
     "name": "polygon zkEVM",
-    "networkName": "polygon zkEVM",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "",
     "rollupContract": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
     "chainID": "1101",
     "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
     "forkID": "12",
-    "lastLocalExitRoot": "0xc8eabcc4547176653a98ba1a4deabf64cfeb0ca613791c6e161677ee5f6aca54",
-    "lastBatchSequenced": "2195239",
-    "lastVerifiedBatch": "2195222",
+    "lastLocalExitRoot": "0x5c16b8bbcedb2e14334ee3779cdc95c746cc8eefa8ba93318bd12f1084d48273",
+    "lastBatchSequenced": "2195244",
+    "lastVerifiedBatch": "2195229",
     "lastVerifiedBatchBeforeUpgrade": "2150228",
     "rollupTypeID": "6 (zk rollup)",
     "rollupVerifierType": "statetransition (0)",
@@ -21,7 +20,6 @@
   {
     "rollupID": 2,
     "name": "Astar zkEVM",
-    "networkName": "Astar zkEVM",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "",
     "rollupContract": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
@@ -40,7 +38,6 @@
   {
     "rollupID": 3,
     "name": "X Layer",
-    "networkName": "X Layer",
     "gasTokenAddress": "0x75231F58b43240C9718Dd58B4967c5114342a86c",
     "comments": "",
     "rollupContract": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
@@ -59,7 +56,6 @@
   {
     "rollupID": 4,
     "name": "oev-network",
-    "networkName": "oev-network",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "dead",
     "rollupContract": "0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
@@ -78,7 +74,6 @@
   {
     "rollupID": 5,
     "name": "gpt-mainnet",
-    "networkName": "gpt-mainnet",
     "gasTokenAddress": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88",
     "comments": "dead",
     "rollupContract": "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
@@ -97,7 +92,6 @@
   {
     "rollupID": 6,
     "name": "witnesschain",
-    "networkName": "witnesschain",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "dead",
     "rollupContract": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
@@ -116,7 +110,6 @@
   {
     "rollupID": 7,
     "name": "prism",
-    "networkName": "prism",
     "gasTokenAddress": "0xD9343a049D5DBd89CD19DC6BcA8c48fB3a0a42a7",
     "comments": "lumia.org",
     "rollupContract": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
@@ -124,7 +117,7 @@
     "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
     "forkID": "12",
     "lastLocalExitRoot": "0x394cba1640d136a8f0847ebf79b713c1d67ccb3be46e4bc1825f468dd7efa020",
-    "lastBatchSequenced": "75118",
+    "lastBatchSequenced": "75124",
     "lastVerifiedBatch": "75118",
     "lastVerifiedBatchBeforeUpgrade": "62658",
     "rollupTypeID": "7 (validiumV2)",
@@ -135,7 +128,6 @@
   {
     "rollupID": 8,
     "name": "pay-chain",
-    "networkName": "pay-chain",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "wirexpaychain.com",
     "rollupContract": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
@@ -154,7 +146,6 @@
   {
     "rollupID": 9,
     "name": "silicon-zk",
-    "networkName": "silicon-zk",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "testnet",
     "rollupContract": "0xA87df42CD53E998b3A610B8bCe3719871b0bb940",
@@ -173,7 +164,6 @@
   {
     "rollupID": 10,
     "name": "silicon-zk",
-    "networkName": "silicon-zk",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "mainnet",
     "rollupContract": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
@@ -181,7 +171,7 @@
     "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
     "forkID": "12",
     "lastLocalExitRoot": "0x3e3b34c31d9cdec4dc1c1745d73968097a1120ea40ad52d426b2fb9e019b09fb",
-    "lastBatchSequenced": "47499",
+    "lastBatchSequenced": "47503",
     "lastVerifiedBatch": "47499",
     "lastVerifiedBatchBeforeUpgrade": "37862",
     "rollupTypeID": "7 (validiumV2)",
@@ -192,7 +182,6 @@
   {
     "rollupID": 11,
     "name": "haust-network",
-    "networkName": "haust-network",
     "gasTokenAddress": "0xec3502A9f98f151aF52EE6CB423a0afE7bBF5A19",
     "comments": "testnet",
     "rollupContract": "0xB234F18738d9531CAD6ae6d9A587d09fe200272C",
@@ -211,7 +200,6 @@
   {
     "rollupID": 12,
     "name": "haust-network",
-    "networkName": "haust-network",
     "gasTokenAddress": "0xec3502A9f98f151aF52EE6CB423a0afE7bBF5A19",
     "comments": "mainnet",
     "rollupContract": "0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",
@@ -230,7 +218,6 @@
   {
     "rollupID": 13,
     "name": "Ternoa",
-    "networkName": "Ternoa",
     "gasTokenAddress": "0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2",
     "comments": "",
     "rollupContract": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
@@ -249,7 +236,6 @@
   {
     "rollupID": 14,
     "name": "Z Chain",
-    "networkName": "Z Chain",
     "gasTokenAddress": "0xAae0a1aB5edA004D7884c0C081F490D5a77e8C32",
     "comments": "cdk-sov test",
     "rollupContract": "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
@@ -268,7 +254,6 @@
   {
     "rollupID": 15,
     "name": "Pentagon Games",
-    "networkName": "Pentagon Games",
     "gasTokenAddress": "0x5Ee3188A3f8aDee1D736EdD4AE85000105C88f66",
     "comments": "testnet?",
     "rollupContract": "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
@@ -287,7 +272,6 @@
   {
     "rollupID": 16,
     "name": "Pentagon Games",
-    "networkName": "Pentagon Games",
     "gasTokenAddress": "0xA1Aa371E450C5AeE7fff259cbF5ccA9384227272",
     "comments": "pentagon.games/pentagon-chain",
     "rollupContract": "0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
@@ -306,7 +290,6 @@
   {
     "rollupID": 17,
     "name": "Okto",
-    "networkName": "Okto",
     "gasTokenAddress": "0x5a3f6E39AA72da0B4B2754779F9C8e0170e1E767",
     "comments": "wallet",
     "rollupContract": "0x7449449460b5B732A9754CA3d9A7916122A9190d",
@@ -325,7 +308,6 @@
   {
     "rollupID": 18,
     "name": "Billions Network",
-    "networkName": "Billions Network",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "",
     "rollupContract": "0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
@@ -344,7 +326,6 @@
   {
     "rollupID": 19,
     "name": "Okto",
-    "networkName": "Okto",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "",
     "rollupContract": "0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
@@ -363,7 +344,6 @@
   {
     "rollupID": 20,
     "name": "katana",
-    "networkName": "katana",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "op stack cdk sov",
     "rollupContract": "0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
@@ -382,7 +362,6 @@
   {
     "rollupID": 21,
     "name": "forknet",
-    "networkName": "forknet",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "Forknet.io",
     "rollupContract": "0xaf6a4CDe41B9C7FCe858E1B875765cdEDB8f84c8",
@@ -401,7 +380,6 @@
   {
     "rollupID": 22,
     "name": "forknet",
-    "networkName": "forknet",
     "gasTokenAddress": "0x0000000000000000000000000000000000000000",
     "comments": "testnet?",
     "rollupContract": "0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b",
@@ -420,7 +398,6 @@
   {
     "rollupID": 23,
     "name": "Haust Network",
-    "networkName": "Haust Network",
     "gasTokenAddress": "0xec3502A9f98f151aF52EE6CB423a0afE7bBF5A19",
     "comments": "",
     "rollupContract": "0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8",

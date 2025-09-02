@@ -41,6 +41,7 @@ export class AgglayerDataFetcher {
   private provider: ethers.providers.JsonRpcProvider
   private rollupManagerAddress = '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'
   private outputFilePath: string
+  private readonly zeroAddress = '0x0000000000000000000000000000000000000000'
 
   // Manual comments per rollupID (user-editable)
   private comments: CommentsMap = {
@@ -119,74 +120,77 @@ export class AgglayerDataFetcher {
       this.provider,
     )
 
-    // Fetch rollup data
+    // Batched fetch of rollup base data
+    console.log('Fetching rollup data (batched)...')
     const rollupDataList: RollupDataExtended[] = []
-    let rollupID = 1
-    let continueLoop = true
+    const batchSize = 50
+    let nextStart = 1
+    let foundEnd = false
 
-    console.log('Fetching rollup data...')
-
-    while (continueLoop) {
-      try {
-        const data: RollupData =
-          await rollupManager.rollupIDToRollupDataV2(rollupID)
-
-        // Check if rollupContract is the zero address
-        if (
-          data.rollupContract === '0x0000000000000000000000000000000000000000'
-        ) {
-          console.log(`No more rollups found after ID ${rollupID - 1}`)
-          continueLoop = false
-        } else {
-          // Query per-rollup contract for extras: networkName + gasTokenAddress
-          let networkName: string | undefined
-          let gasTokenAddress: string | undefined
+    while (!foundEnd) {
+      const ids = Array.from({ length: batchSize }, (_, i) => nextStart + i)
+      const results = await Promise.all(
+        ids.map(async (id) => {
           try {
-            const rollupContract = new ethers.Contract(
-              data.rollupContract,
-              this.rollupContractAbi,
-              this.provider,
+            const data: RollupData =
+              await rollupManager.rollupIDToRollupDataV2(id)
+            return { id, data }
+          } catch (error: unknown) {
+            const errorWithMessage = error as ErrorWithMessage
+            console.log(
+              `Error fetching rollupID ${id}: ${errorWithMessage.message}`,
             )
-            networkName = await rollupContract.networkName()
-          } catch (_e) {
-            // ignore; fallback will be used
+            return { id, data: undefined as unknown as RollupData }
           }
-          try {
-            const rollupContract = new ethers.Contract(
-              data.rollupContract,
-              this.rollupContractAbi,
-              this.provider,
-            )
-            gasTokenAddress = await rollupContract.gasTokenAddress()
-          } catch (_e) {
-            // ignore; may be undefined
-          }
+        }),
+      )
 
-          // Add to our list with extended information
-          rollupDataList.push({
-            ...data,
-            rollupID,
-            name: networkName ?? 'Unknown',
-            networkName,
-            gasTokenAddress,
-            comments: this.getFromStringMap(
-              this.comments,
-              rollupID.toString(),
-              '',
-            ),
-          })
-
-          console.log(`Fetched data for rollupID: ${rollupID}`)
-          rollupID++
+      for (const r of results) {
+        const id = r.id
+        const data = r.data
+        if (!data || data.rollupContract === this.zeroAddress) {
+          console.log(`No more rollups found after ID ${id - 1}`)
+          foundEnd = true
+          break
         }
-      } catch (error: unknown) {
-        const errorWithMessage = error as ErrorWithMessage
-        console.log(
-          `Error fetching rollupID ${rollupID}: ${errorWithMessage.message}`,
-        )
-        continueLoop = false
+        rollupDataList.push({
+          ...data,
+          rollupID: id,
+          name: 'Unknown',
+          comments: this.getFromStringMap(this.comments, id.toString(), ''),
+        })
+      }
+
+      if (!foundEnd) {
+        nextStart += batchSize
       }
     }
+
+    // Fetch per-rollup extras concurrently (no bounds per provider guidance)
+    await Promise.all(
+      rollupDataList.map(async (item) => {
+        const rollupContract = new ethers.Contract(
+          item.rollupContract,
+          this.rollupContractAbi,
+          this.provider,
+        )
+        try {
+          const [nn, gta] = await Promise.allSettled([
+            rollupContract.networkName(),
+            rollupContract.gasTokenAddress(),
+          ])
+          if (nn.status === 'fulfilled') {
+            item.networkName = nn.value
+            item.name = nn.value ?? 'Unknown'
+          }
+          if (gta.status === 'fulfilled') {
+            item.gasTokenAddress = gta.value
+          }
+        } catch (_e) {
+          // ignore per-rollup errors
+        }
+      }),
+    )
 
     // Save complete data to file
     const formattedData = rollupDataList.map((data) => {
@@ -200,7 +204,6 @@ export class AgglayerDataFetcher {
       return {
         rollupID: data.rollupID,
         name: data.name,
-        networkName: data.networkName,
         gasTokenAddress: data.gasTokenAddress,
         comments: data.comments,
         rollupContract: data.rollupContract,
