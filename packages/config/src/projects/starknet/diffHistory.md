@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xdd4af6ae38dfe0551466200c1763f59a8c448c30
+
+# Diff at Tue, 02 Sep 2025 12:30:15 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5c76cd9f009fe74629d27e4a1456e2856a34b3d4 block: 1747219823
+- current timestamp: 1756816147
+
+## Description
+
+Updated zk programs to align with version 0.14.0.
+
+## Watched changes
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.aggregatorHashMapped:
+-        "Starknet Aggregator (since v0.13.4)"
++        "Starknet Aggregator (since v0.14.0)"
+      values.aggregatorProgramHash:
+-        "273279642033703284306509103355536170486431195329675679055627933497997642494"
++        "760308386675154762009993173725077399730170358078020153308029499928875469870"
+      values.configHash:
+-        "2590421891839256512113614983194993186457498815986333310670788206383913888162"
++        "3188242426588271529884520804512942022765170489242162533995649881904346336763"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
++        "793595346346724189681221050719974054861327641387231526786912662354259445535"
+      values.programHashHistory.11:
++        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
+      values.programHashMapped:
+-        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
++        "StarkNet OS (since v0.14.0)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1747219823 (main branch discovery), not current.
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      usedTypes.0.arg.760308386675154762009993173725077399730170358078020153308029499928875469870:
++        "Starknet Aggregator (since v0.14.0)"
+      usedTypes.0.arg.793595346346724189681221050719974054861327641387231526786912662354259445535:
++        "StarkNet OS (since v0.14.0)"
+    }
+```
+
 Generated with discovered.json: 0xee473be892f42bc506c9fff562e2724dc241ff40
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

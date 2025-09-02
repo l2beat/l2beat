@@ -739,8 +739,23 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742967335),
+          untilTimestamp: UnixTime(1756730495), // Sep-01-2025 02:41:35 PM UTC
           programHashes: [
             '2534935718742676028234156221136000178296467523045214874259117268197132196876', // Starknet OS
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1756730495), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '793595346346724189681221050719974054861327641387231526786912662354259445535', // Starknet OS (since Starknet v0.14.0)
           ],
         },
         _hackCostMultiplier: 0.17,
@@ -768,8 +783,23 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742836319),
+          untilTimestamp: UnixTime(1756730495), // Sep-01-2025 02:41:35 PM UTC
           programHashes: [
             '273279642033703284306509103355536170486431195329675679055627933497997642494', // Aggregator (since Starknet v0.13.4)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1756730495), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '760308386675154762009993173725077399730170358078020153308029499928875469870', // Aggregator (since Starknet v0.14.0)
           ],
         },
         _hackCostMultiplier: 0.17,
