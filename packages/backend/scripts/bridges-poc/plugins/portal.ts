@@ -7,7 +7,6 @@ import {
   createEventType,
   type Event,
   type EventDb,
-  generateId,
   type LogToDecode,
   type MatchResult,
   type Plugin,
@@ -73,9 +72,9 @@ export class PortalPlugin implements Plugin {
     }
 
     const outboundEvent = db.find(LogMessagePublished, {
-      sender: event.payload.emitterAddress,
-      wormholeChainId: event.payload.emitterWormholeChainId,
-      sequence: event.payload.sequence,
+      sender: event.args.emitterAddress,
+      wormholeChainId: event.args.emitterWormholeChainId,
+      sequence: event.args.sequence,
     })
     if (!outboundEvent) {
       return
@@ -105,7 +104,7 @@ export class PortalPlugin implements Plugin {
           encodeFunctionData({
             abi: ABI,
             functionName: 'parseTransfer',
-            args: [outboundEvent.payload.payload],
+            args: [outboundEvent.args.payload],
           }),
         ),
       },
@@ -123,13 +122,11 @@ export class PortalPlugin implements Plugin {
     return {
       message: {
         type: 'portal.WormholeMessage',
-        messageId: generateId('M'),
         inbound: event,
         outbound: outboundEvent,
       },
       transfer: {
         type: 'portal.Transfer',
-        transferId: generateId('T'),
         events: [outboundEvent, event],
         outbound: {
           tx: outboundEvent.tx,

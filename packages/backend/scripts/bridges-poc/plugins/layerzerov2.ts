@@ -9,7 +9,6 @@ import {
   createEventType,
   type Event,
   type EventDb,
-  generateId,
   type LogToDecode,
   type MatchResult,
   type Plugin,
@@ -109,7 +108,7 @@ export class LayerZeroV2Plugin implements Plugin {
     }
 
     const outboundEvent = db.find(PacketSent, {
-      guid: event.payload.guid,
+      guid: event.args.guid,
     })
     if (!outboundEvent) {
       return
@@ -118,7 +117,6 @@ export class LayerZeroV2Plugin implements Plugin {
     return {
       message: {
         type: 'layerzerov2.Message',
-        messageId: generateId('M'),
         inbound: event,
         outbound: outboundEvent,
       },

@@ -25,11 +25,10 @@ export interface Event<T = unknown> {
   eventId: string
   type: string
   tx: TxDetails
-  payload: T
+  args: T
 }
 
 export interface Message {
-  messageId: string
   type: string
   outbound: Event
   inbound: Event
@@ -44,7 +43,6 @@ export interface TransferSide {
 }
 
 export interface Transfer {
-  transferId: string
   type: string
   events: Event[]
   outbound: TransferSide
@@ -74,7 +72,7 @@ export function createEventType<T>(type: string): EventType<T> {
         type,
         tx,
         // Ensure it can be saved to db
-        payload: JSON.parse(JSON.stringify(payload)),
+        args: JSON.parse(JSON.stringify(payload)),
       }
     },
     checkType(action: Event): action is Event<T> {

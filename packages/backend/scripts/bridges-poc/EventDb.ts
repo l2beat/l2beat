@@ -7,7 +7,7 @@ export class EventDbImpl implements EventDb {
     return this.actions.find((a): a is Event<T> => {
       if (!type.checkType(a)) return false
       if (!query) return true
-      return matchesQuery(a.payload, query)
+      return matchesQuery(a.args, query)
     })
   }
 
@@ -15,7 +15,7 @@ export class EventDbImpl implements EventDb {
     return this.actions.filter((a): a is Event<T> => {
       if (!type.checkType(a)) return false
       if (!query) return true
-      return matchesQuery(a.payload, query)
+      return matchesQuery(a.args, query)
     })
   }
 }
