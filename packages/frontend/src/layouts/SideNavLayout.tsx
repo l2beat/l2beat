@@ -210,8 +210,8 @@ const groups = compact<NavGroup>([
   },
 ])
 
-const sideLinks = [
-  {
+const sideLinks = compact([
+  env.CLIENT_SIDE_PARTNERS && {
     title: 'Publications',
     href: '/publications',
   },
@@ -248,4 +248,4 @@ const sideLinks = [
     title: 'FAQ',
     href: '/faq',
   },
-]
+])
