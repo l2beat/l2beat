@@ -27,7 +27,7 @@ What are your thoughts regarding the 4th airdrop? Are there any topics you would
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Optimism Office Hours](http://meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
 ## **Arbitrum**
 
@@ -66,7 +66,7 @@ With both Questbook and Plurality Labs’ grant programs nearing their end, the 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Arbitrum Office Hours](http://meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
 ## **Uniswap**
 
@@ -116,7 +116,7 @@ Both the proposal to upgrade the fee mechanism to reward UNI stakers and delegat
 
 **When/where to catch us:**
 
-You can catch us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can catch us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 ## **Hop**
 
@@ -138,7 +138,7 @@ We’re keen to discuss whether it makes sense to approach treasury diversificat
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 ## **Polygon**
 
@@ -152,7 +152,7 @@ We’re always happy to chat with Polygon ecosystem participants, ranging from d
 
 **When/where to catch us:**
 
-You can find us to discuss all things Polygon at our [Polygon Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all things Polygon at our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 ## **Starknet**
 
@@ -170,7 +170,7 @@ We expect $STRK airdrop to kick things off in terms of Starknet governance. We�
 
 **When/where to catch us:**
 
-You can find us to discuss all things Starknet during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all things Starknet during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 ## **Connext**
 
@@ -200,4 +200,4 @@ With multiple different proposals about liquidity incentives being submitted, pe
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Connext Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Connext Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.

@@ -55,7 +55,7 @@ If you’re interested in discussing any of the votes before the deadline to bet
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -120,17 +120,17 @@ With the end of the year dawning closer, we’re interested in doing aa sort of 
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Open Discussion of Proposal(s) - Bi-weekly Governance Call](meet.google.com/kvr-bpnx-zix) on 17.12 at 16:00
+[Open Discussion of Proposal(s) - Bi-weekly Governance Call](https://meet.google.com/kvr-bpnx-zix) on 17.12 at 16:00
 
 [Entropy Advisors - biweekly office hours](https://meet.google.com/rms-unku-wsq) on 17.12 at 17:15
 
-[Stylus Sprint: 2nd Open Office Hour](meet.google.com/eep-chrt-vpp) on 17.12 at 18:00
+[Stylus Sprint: 2nd Open Office Hour](https://meet.google.com/eep-chrt-vpp) on 17.12 at 18:00
 
-[Arbitrum Incentives Working Group](meet.google.com/jqp-ppsq-xnq) on 18.12 at 17:00
+[Arbitrum Incentives Working Group](https://meet.google.com/jqp-ppsq-xnq) on 18.12 at 17:00
 
 
 ## **Uniswap**
@@ -170,7 +170,7 @@ We’re interested in discussing the proposal by the UAC to use the surplus budg
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Hop**
@@ -181,7 +181,7 @@ Hop’s governance hasn’t seen any new developments over the last week. If you
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Polygon**
@@ -201,7 +201,7 @@ We’re very interested in discussing AllezLabs’ proposal as we believe it’s
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Starknet**
@@ -212,7 +212,7 @@ Starknet’s governance hasn’t seen any new developments over the last week. I
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -232,11 +232,11 @@ Apart from the one social vote, Everclear’s governance hasn’t seen any new d
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Everclear Delegates Call](meet.google.com/vqi-tdhd-aaq) on 19.12 at 14:00
+[Everclear Delegates Call](https://meet.google.com/vqi-tdhd-aaq) on 19.12 at 14:00
 
 
 ## **Wormhole**
@@ -314,6 +314,6 @@ Although we do not have dedicated Office Hours for Scroll yet, we encourage you 
 
 **Upcoming Events (Times in UTC)**
 
-[#18 Reflection & Refining | Pre-Vote Check-In](meet.google.com/tfw-hfyz-qkp) on 18.12 at 12:30
+[#18 Reflection & Refining | Pre-Vote Check-In](https://meet.google.com/tfw-hfyz-qkp) on 18.12 at 12:30
 
-[#19 - Results & Next Steps](meet.google.com/pev-mdfz-gkt) on 18.12 at 18:00
+[#19 - Results & Next Steps](https://meet.google.com/pev-mdfz-gkt) on 18.12 at 18:00

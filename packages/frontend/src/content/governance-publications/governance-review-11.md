@@ -28,7 +28,7 @@ We’re looking to discuss the design of future RPGF rounds and collect thoughts
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
+You can find us to discuss the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
 ## **Arbitrum**
 
@@ -48,7 +48,7 @@ As the DAO Advocate, we (L2BEAT x Ant Federation) are committed to transparency 
 
 We (L2BEAT) started [an initiative that transformed into a working group](https://forum.arbitrum.foundation/t/arbitrum-onboarding-working-group-experiment/22849) funded by a Questbook grant to help onboard people in the Arbitrum DAO. The onboarding working group is experimental and will run for 3 months to determine its effectiveness in bringing new contributors to help with DAO initiatives.
 
-There are 2 onboarding calls taking place every week ([Mondays at 2 pm UTC and Thursdays at 11 pm UTC](meet.google.com/mrq-sitk-mfu)) and a [Telegram account](https://t.me/ArbitrumDAOOnboarding) (not a group chat) for people to be able to reach the onboarding working group directly.
+There are 2 onboarding calls taking place every week ([Mondays at 2 pm UTC and Thursdays at 11 pm UTC](https://meet.google.com/mrq-sitk-mfu)) and a [Telegram account](https://t.me/ArbitrumDAOOnboarding) (not a group chat) for people to be able to reach the onboarding working group directly.
 
 ### **[RFC] The OpCo - Scale, Structure, & Synergy**
 
@@ -70,7 +70,7 @@ The proposal is still a work in progress, but the preliminary overhead for the D
 
 ### **Open Discussion: Governance Tools and Mechanisms**
 
-Following a successful[ temp check for their proposal](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x1204041955b729052b9adb4da9e3fa9a03c415ca45aeefd5c41da4d9d45ea851), Frisson from Tally [created a post ](https://forum.arbitrum.foundation/t/open-discussion-governance-tools-and-mechanisms/22858)to serve as an open forum for people to share their ideas in regard to how Tally can improve their governance tools and mechanisms in the Arbitrum DAO, and also invite delegates to an open brainstorming session on [Thursday, April 4th at 1 pm UTC](meet.google.com/mmx-pdcp-wrb).
+Following a successful[ temp check for their proposal](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x1204041955b729052b9adb4da9e3fa9a03c415ca45aeefd5c41da4d9d45ea851), Frisson from Tally [created a post ](https://forum.arbitrum.foundation/t/open-discussion-governance-tools-and-mechanisms/22858)to serve as an open forum for people to share their ideas in regard to how Tally can improve their governance tools and mechanisms in the Arbitrum DAO, and also invite delegates to an open brainstorming session on [Thursday, April 4th at 1 pm UTC](https://meet.google.com/mmx-pdcp-wrb).
 
 **Discuss with L2BEAT**
 
@@ -78,7 +78,7 @@ There are multiple discussions and initiatives happening right now which we’d 
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
 ## **Uniswap**
 
@@ -111,7 +111,7 @@ We’re interested in discussing potential areas of concern when it comes to tre
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 ## **Hop**
 
@@ -129,7 +129,7 @@ We’re keen to discuss the treasury management framework that 0xLev1 has presen
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 ## **Polygon**
 
@@ -139,7 +139,7 @@ We were not aware of any significant governance-related news in Polygon over the
 
 **When/where to catch us:**
 
-You can find us to discuss all things Polygon during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all things Polygon during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 ## **Starknet**
 
@@ -149,7 +149,7 @@ We were not aware of any significant governance-related news in Starknet over th
 
 **When/where to catch us:**
 
-You can find us to discuss all things Starknet during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all things Starknet during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 ## **Connext**
 
@@ -169,4 +169,4 @@ The structure of the Security Council is and the technical knowledge of its memb
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Connext Office Hours](meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss the above and more during our [Connext Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.

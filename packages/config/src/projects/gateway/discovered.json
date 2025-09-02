@@ -1,6 +1,6 @@
 {
   "name": "gateway",
-  "timestamp": 1756373713,
+  "timestamp": 1756731927,
   "configHash": "0xcf18bc89fc9392fb20887ff4cc2b96e2db6abbb6a09945b7c79a56670c70d948",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -371,7 +371,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281"
         ],
-        "getFirstUnprocessedPriorityTx": 3732,
+        "getFirstUnprocessedPriorityTx": 4262,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -379,21 +379,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 27,
-        "getPriorityTreeRoot": "0x55f67f911cc4258ec7bab2d44eaf8a9eeed59ab32f171d30295775a9fcaa7627",
+        "getPriorityQueueSize": 24,
+        "getPriorityTreeRoot": "0x02b385a1db64fd43be6f193339d089a2f46ce5d335abaa57d433f8a46e326dc5",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084289,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 28, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 814,
-        "getTotalBatchesExecuted": 812,
-        "getTotalBatchesVerified": 814,
-        "getTotalBlocksCommitted": 814,
-        "getTotalBlocksExecuted": 812,
-        "getTotalBlocksVerified": 814,
-        "getTotalPriorityTxs": 3759,
+        "getTotalBatchesCommitted": 863,
+        "getTotalBatchesExecuted": 861,
+        "getTotalBatchesVerified": 863,
+        "getTotalBlocksCommitted": 863,
+        "getTotalBlocksExecuted": 861,
+        "getTotalBlocksVerified": 863,
+        "getTotalPriorityTxs": 4286,
         "getTransactionFilterer": "eth:0x5540DE94485dB078025318428F813C5d88215823",
         "getVerifier": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
         "getVerifierParams": {
@@ -497,8 +497,6 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
         "validatorsVTL": [
-          "eth:0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE",
-          "eth:0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF",
           "eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8",
           "eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2"
         ]
@@ -507,32 +505,6 @@
         "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "address": "eth:0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
-          "role": ".validatorsVTL"
-        }
-      ]
-    },
-    {
-      "address": "eth:0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
-          "role": ".validatorsVTL"
-        }
-      ]
     },
     {
       "name": "DualVerifier",
@@ -1057,6 +1029,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "gateway": 35864, "ethereum": 23238755 },
-  "permissionsConfigHash": "0xce8ff687fd94100a0c00aa03ea7f676cbb007d6ebcc05b5f0196bc652248d264"
+  "usedBlockNumbers": { "gateway": 38821, "ethereum": 23268469 },
+  "permissionsConfigHash": "0xc9612065a65c83a2f6add1c1967a5cff59fc49529ee171a5be5efaedf4b1708c"
 }

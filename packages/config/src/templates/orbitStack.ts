@@ -8,6 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
 import isEmpty from 'lodash/isEmpty'
 import unionBy from 'lodash/unionBy'
 import {
@@ -959,6 +960,19 @@ function getRiskView(
                   blockNumberOpcodeTimeSeconds
               : undefined,
           ),
+          initialBond: isPostBoLD
+            ? formatEther(
+                templateVars.discovery.getContractValue<number>(
+                  'RollupProxy',
+                  'baseStake',
+                ),
+              )
+            : formatEther(
+                templateVars.discovery.getContractValue<number>(
+                  'RollupProxy',
+                  'currentRequiredStake',
+                ),
+              ),
         }
       })(),
     dataAvailability:
