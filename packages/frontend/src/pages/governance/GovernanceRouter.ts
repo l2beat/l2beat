@@ -15,5 +15,9 @@ export function createGovernanceRouter(
     res.status(200).send(html)
   })
 
+  router.get('/governance/ethereum-connect', (_, res) => {
+    res.redirect('https://form.typeform.com/to/YVrD7Ava')
+  })
+
   return router
 }
