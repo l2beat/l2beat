@@ -16,15 +16,14 @@ export const moonchain: ScalingProject = underReviewL3({
       'MXCzkEVM Moonchain is a Layer3 Ethereum-compatible Optimistic Rollup on Arbitrum, focused on data exchange and communication in the IoT DePIN sector.',
     purposes: ['Universal'],
     links: {
-      websites: ['https://moonchain.com'],
+      websites: ['https://mchain.ai'],
       bridges: [
         'https://bridge.moonchain.com/',
-        'https://mns.moonchain.com/',
         'https://miningv2.matchx.io/',
         'https://swap.moonchain.com/',
         'https://nft.moonchain.com/',
       ],
-      documentation: ['https://doc.moonchain.com/'],
+      documentation: ['https://docs.mchain.ai/'],
       explorers: ['https://explorer.moonchain.com'],
       repositories: ['https://github.com/mxczkevm'],
       socialMedia: [
