@@ -1,0 +1,125 @@
+{
+  "title": "Monthly Updates - August 2025",
+  "startDate": "2025-08-01",
+  "endDate": "2025-08-31",
+  "publishedOn": "2025-09-01",
+  "updates": [
+    {
+      "type": "ecosystem",
+      "ecosystemId": "arbitrum-orbit",
+      "news": [
+        {
+          "title": "ArbitrumDAO Voting Underway on Proposal to Remove Nova Cost Cap, Upgrade Executors & Disable Legacy USDT Bridge",
+          "content": "The ArbitrumDAO [is voting on a bundled](https://www.tally.xyz/gov/arbitrum/proposal/51852039695020109312343918128899814224888993575448130385109956762385891284115?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) constitutional proposal that includes three governance actions, each of which has previously passed Snapshot. The current on-chain vote will determine whether these changes are officially enacted:\n\n- **Remove Cost Cap on Arbitrum Nova:** eliminate Nova’s cost cap to reflect reduced strategic importance.\n- **Upgrade Executor Contracts:** deploy enhanced executors on Arbitrum One, Nova, and Ethereum.\n- **Disable Legacy USDT Bridge:** fully retire old bridge now that USDT0 is live."
+        },
+        {
+          "title": "The Arbitrum Builder's Block: #001",
+          "content": "The Arbitrum Foundation [has launched](https://x.com/ArbitrumDevs/status/1955388050902749364) Builder’s Block, a new biweekly newsletter dedicated to developers building within the Arbitrum ecosystem. The publication offers fresh insights, technical updates, and ecosystem highlights—everything from advancements in the OP Stack to new tools and use cases surfacing across Arbitrum One and Nova."
+        },
+        {
+          "title": "Arbitrum’s Real-World Asset Expansion: A Deep Dive by Castle Labs",
+          "content": "Castle Labs [has published](https://x.com/castle_labs/status/1955991884045668623) an in-depth analysis of Arbitrum’s fast-growing Real-World Asset (RWA) ecosystem, tracing its journey from concept to over $350 million in RWA TVL in just over a year. The report details how initiatives like STEP, STEP 2, and RWA Innovation Grants have played a pivotal role in onboarding institutional issuers."
+        },
+        {
+          "title": "Smarter Gas Fees on Arbitrum: Dynamic Pricing Explained",
+          "content": "Arbitrum published a [detailed blog post](https://blog.arbitrum.io/dynamic-pricing-explainer/) introducing its proposal for Dynamic Pricing, a multi-dimensional gas fee model based on five distinct dimensions (Computation, State Access, State Growth, History Growth, Calldata). The mechanism adjusts fees dynamically in real-time, ensuring fairer costs and reducing system stress. Still a proposal, it would mark a major step toward scalability if adopted."
+        },
+        {
+          "title": "Build Onchain: Open House Build Starts August 22",
+          "content": "[Open House Build](https://openhouse.arbitrum.io/) is a 3-week online buildathon starting August 22, offering mentorship, workshops, and $33,000 in prizes. It’s designed to help solo builders and teams take their ideas from sketch to smart contract in a supportive environment."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "the-elastic-network",
+      "news": [
+        {
+          "title": "ZIP-12 Introduces Interop Messaging & Fast Finality",
+          "content": "Matter Labs [released ZIP-12](https://forum.zknation.io/t/zip-12-v29-interop-messaging-fast-finality-upgrade/745), outlining ZKsync Era v29 plans. It introduces native L2↔L2 interoperability via the ZK Gateway and Fast Finality for early, L1-anchored execution certainty."
+        },
+        {
+          "title": "Funding Proposal for Security Council v2",
+          "content": "The ZKSync DAO [approved](https://www.tally.xyz/gov/zksync/proposal/38542076628472360665761284306860773162167153028104855759973536253827423667325?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) funding for Security Council v2 with a capped mint of 27.7M ZK (~$1.1M), targeting 12 months of operations with over 50% cost savings."
+        },
+        {
+          "title": "Two-Year Funding For ZKsync Guardians",
+          "content": "Currently [under voting](https://www.tally.xyz/gov/zksync/proposal/14920227315823844313255249182525601975564035647349569740836448589354658768084?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) on TPP-7: two years of funding for ZKsync Guardians, covering compensation for 6 Guardians and 1M ZK for operational/legal costs."
+        },
+        {
+          "title": "ZKsync Joins Tokenized Asset Coalition",
+          "content": "ZKsync [has joined](https://x.com/zksync/status/1953411218447679942) the Tokenized Asset Coalition, aligning with industry leaders to drive institutional DeFi adoption and bring trillions on-chain."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "Optimism partners with Flashbots to accelerate sequencing across the Superchain",
+          "content": "Optimism [announced a partnership](https://www.optimism.io/blog/optimism-partners-with-flashbots) with Flashbots to bring fast, configurable, verifiable sequencing (e.g., Flashblocks with ~200ms confirmations) to OP Stack chains. Rollout to OP Mainnet and other chains is expected to begin soon."
+        },
+        {
+          "title": "Introducing the Kona-Node: A Rust-Powered Leap for the OP Stack",
+          "content": "Kona Node, a new high-performance rollup node built entirely in Rust, [has officially launched](https://www.optimism.io/blog/introducing-the-kona-node-a-rust-powered-leap-for-the-op-stack?utm_source=chatgpt.com) - bringing modularity, composability, and efficiency to the OP Stack ecosystem. Developed under the[ Kona suite](https://rollup.yoga/), this release offers an alternative to the traditional `op-node` by leveraging Rust’s memory safety and lightweight footprint. Unlike the original Go-based implementation, kona-node introduces an actor-based architecture, built on the `RollupNodeService` trait. This enables clearer developer interfaces and enhanced extensibility, especially for those integrating custom fault-proof systems. It supports multiple ZK backends (including FPVM, SP1, and Risc0) and is already live against OP Sepolia."
+        },
+        {
+          "title": "SuperStacks Review: $58M in TVL, Strong Retention, Complex Attribution",
+          "content": "The SuperStacks incentive program [successfully attracted](https://gov.optimism.io/t/superstacks-impact-analysis/10225) $58M in net TVL across DeFi protocols on the Superchain, with $53.7M still retained after 30 days—yielding a cost efficiency of $21.5/OP after incentives. The program's dual-sided strategy—stimulating both supply and demand—showed early signs of success in establishing sustainable DeFi liquidity loops."
+        },
+        {
+          "title": "BOB Strategic Raise",
+          "content": "BOB, the hybrid Layer 2 that brings Bitcoin to DeFi, [has secured](https://www.gobob.xyz/blog/bob-has-raised-21m) $21 million across multiple strategic funding rounds since December 2024. The latest $9.5M round saw continued support from key backers, including Castle Island Ventures, Ledger, Cathay Capital, RockawayX, and Sats Ventures, alongside new participation from Amber Group and Anchorage Digital’s CEO, Nathan McCauley."
+        },
+        {
+          "title": "Celo Ice Cream Hardfork",
+          "content": "Celo is [preparing to activate](https://forum.celo.org/t/ice-cream-hardfork-eigenda-v2-activation-timeline/12114) its next major upgrade, Ice Cream Hardfork, which will bring EigenDA v2 (Blazar) to its testnets and mainnet. This marks a key milestone in the evolution of Celo’s data availability layer, delivering faster confirmation times, improved scalability, and enhanced stability."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "news": [
+        {
+          "title": "Agglayer CDK Enterprise Launches: Enterprise-Grade Privacy with Native Interop",
+          "content": "Polygon Labs [has introduced](https://www.agglayer.dev/blogs/agglayer-cdk-enterprise-financial-grade-privacy-meets-native-interop-for-custom-blockchains) Agglayer CDK Enterprise, merging financial-grade privacy, enterprise tooling, and composability for institutions building private EVM chains."
+        },
+        {
+          "title": "Polygon Labs Launches Agglayer Developer Portal",
+          "content": "Polygon Labs [has unveiled](https://www.agglayer.dev/blogs/introducing-agglayer-developer-portal) the Agglayer Developer Portal, a sandbox for building multichain apps with unified bridges, fungible assets, and near-instant finality."
+        },
+        {
+          "title": "Moonveil is Building a Gamer-first Web3 Ecosystem on Agglayer",
+          "content": "Moonveil, founded by ex-Riot Games and Tencent devs, is [building](https://www.agglayer.dev/blogs/moonveil-is-building-a-gamer-first-web3-ecosystem-on-agglayer) a Web3 gaming ecosystem with a dedicated Agglayer CDK chain, backed by $2M in funding from Polygon Labs."
+        }
+      ]
+    },
+    {
+      "type": "data-availability",
+      "daLayerId": "eigenda",
+      "news": [
+        {
+          "title": "EigenLayer Proposes Incentives v2",
+          "content": "The Eigen Foundation [introduced](https://forum.eigenlayer.xyz/t/introducing-programmatic-incentives-v2/14690?utm_source=chatgpt.com) Programmatic Incentives v2, doubling reward emissions from 4% to 8% annual inflation (≈2.67M EIGEN/week). Allocation: 3% to ETH stakers, 4% to EIGEN stakers, 1% to ecosystem growth."
+        },
+        {
+          "title": "EigenLayer Protocol Council Approves Key Upgrades Including Redistributable Slashing",
+          "content": "The Protocol Council [approved](https://forum.eigenlayer.xyz/t/protocol-council-evaluation-elip-005-elip-006-elip-009/14674?utm_source=chatgpt.com) ELIP-005 (simplified contracts), ELIP-006 (Redistributable Slashing), and ELIP-009 (MOOCOW performance optimizations). All passed unanimously, with emphasis on risk disclosure for slashing mechanics."
+        }
+      ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Nethermind client v1.33.0 ready for testing",
+          "content": "Nethermind [rolled out](https://github.com/NethermindEth/nethermind/releases/tag/1.33.0-rc) v1.33.0-rc with 341+ improvements: new UI, live pruning, improved OP Stack support, performance boosts, and more. Aimed at usability, resource efficiency, and Superchain readiness."
+        }
+      ]
+    }
+  ]
+}
