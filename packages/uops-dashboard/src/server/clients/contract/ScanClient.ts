@@ -1,4 +1,4 @@
-import { v as v } from '@l2beat/validate'
+import { v } from '@l2beat/validate'
 import type { ContractClient } from './ContractClient'
 
 const Response = v.object({
