@@ -11,12 +11,12 @@ import type { Event } from './plugins/types'
 
 const CONFIG = [
   {
-    name: 'ethereum',
-    block: 23267551,
+    name: 'arbitrum',
+    block: 363451284,
   },
   {
     name: 'base',
-    block: 34966275,
+    block: 33582730,
   },
 ]
 
@@ -62,6 +62,7 @@ const cmd = command({
             })
 
             if (event) {
+              logger.info('Decoded', event)
               events.push(event)
             }
           }
