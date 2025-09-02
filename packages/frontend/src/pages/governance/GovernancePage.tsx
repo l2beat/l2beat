@@ -7,7 +7,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { GovernanceEventEntry } from '~/pages/governance/utils/getGovernanceEventEntries'
-import type { GovernancePublicationEntry } from '~/pages/governance/utils/getGovernancePublicationEntry'
+import type { GovernancePublicationEntry } from '~/pages/publications/governance/utils/getGovernancePublicationEntry'
 import { GovernanceHeaderIllustration } from './assets/GovernanceHeader'
 import { GovernanceEventsSection } from './components/sections/GovernanceEventsSection'
 import { OfficeHoursSection } from './components/sections/OfficeHoursSection'
@@ -61,7 +61,6 @@ function Header({
 }) {
   return (
     <PrimaryCard className="md:p-8">
-      <h1 className="mb-4 font-bold text-3xl md:hidden">Governance</h1>
       <div className="flex w-full items-center justify-between gap-5">
         <div className="flex flex-col gap-6">
           <p className="text-paragraph-18">

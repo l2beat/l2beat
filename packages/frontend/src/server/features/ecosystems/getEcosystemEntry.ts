@@ -294,7 +294,7 @@ function getMilestones(
 function getGovernanceLinks(
   ecosystem: Project<'ecosystemConfig'>,
 ): EcosystemGovernanceLinks {
-  const lastPublication = getCollection('publications')
+  const lastPublication = getCollection('governance-publications')
     .filter((p) => p.id.includes('review'))
     .sort((a, b) => a.data.publishedOn.getTime() - b.data.publishedOn.getTime())
     .at(-1)

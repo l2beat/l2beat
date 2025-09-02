@@ -1,6 +1,6 @@
 {
   "name": "across-v3",
-  "timestamp": 1756732125,
+  "timestamp": 1756804910,
   "configHash": "0x1d5d4e8d2f533cc8b627458e53a2e529b52f5733170b7bbcb509b4f1c8589897",
   "entries": [
     {
@@ -30,7 +30,7 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "23816106603384290830270001",
+        "cumulativeStake": "23857699355796755458131376",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
@@ -38,20 +38,20 @@
         "gat": "5000000000000000000000000",
         "getCurrentRoundId": 10166,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 9,
+          "numberPendingPriceRequests": 16,
           "numberResolvedPriceRequests": 1328
         },
-        "getVotePhase": 0,
+        "getVotePhase": 1,
         "lastRoundIdProcessed": 10166,
-        "lastUpdateTime": 1756728599,
+        "lastUpdateTime": 1756803947,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "eth:0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 9,
+        "nextPendingIndexToProcess": 15,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "665998031827392920",
-        "rewardPerTokenStored": "665978839773560954",
+        "rewardPerToken": "666395150586396618",
+        "rewardPerTokenStored": "666389919570692262",
         "slashingLibrary": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -584,7 +584,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1756732115,
+        "getCurrentTime": 1756804907,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -758,11 +758,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1756732115,
+        "getCurrentTime": 1756804907,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 3067123,
+        "numberOfDeposits": 3070297,
         "owner": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -972,7 +972,7 @@
         "$immutable": true,
         "emergencyProposer": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1756732115,
+        "getCurrentTime": 1756804907,
         "getMember": [
           "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1224,7 +1224,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1756732115,
+        "getCurrentTime": 1756804907,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1387,7 +1387,7 @@
           "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 350,
+        "nonce": 352,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1456,7 +1456,7 @@
           "56": "eth:0x4e8E101924eDE233C13e2D8622DC8aED2872d505",
           "130": "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
           "137": "eth:0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
-          "232": "eth:0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12",
+          "232": "eth:0xb234cA484866c811d0e6D3318866F583781ED045",
           "288": "eth:0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
           "324": "eth:0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
           "480": "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
@@ -1485,13 +1485,13 @@
         "protocolFeeCaptureAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0xaaefcbf943410d73eeaa600bd8deb16c9c5f3fe916e89817e0ddc9bc8193b487",
-          "relayerRefundRoot": "0xb8aa4844e45158ca7b7c2a63bb42cb4bb6dffac2451451cdc137a08df09b957a",
-          "slowRelayRoot": "0xa16bad32fbb50b0d20349dab7c22850f175ccebb3c1fa16e43caa03c35cd47b9",
-          "claimedBitMap": 262143,
-          "proposer": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
+          "poolRebalanceRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "relayerRefundRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "claimedBitMap": 0,
+          "proposer": "eth:0x0000000000000000000000000000000000000000",
           "unclaimedPoolRebalanceLeafCount": 0,
-          "challengePeriodEndTimestamp": 1756731395
+          "challengePeriodEndTimestamp": 0
         },
         "spokePool": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -3502,6 +3502,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "usedBlockNumbers": { "ethereum": 23268485 },
+  "usedBlockNumbers": { "ethereum": 23274493 },
   "permissionsConfigHash": "0xa4e3a5abd57e7db21539d6ddbfac55bf16e224b125ce93ce8efe08555cdda57f"
 }

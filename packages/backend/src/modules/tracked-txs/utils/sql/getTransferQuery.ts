@@ -7,15 +7,18 @@ export function getTransferQuery(
   from: UnixTime,
   to: UnixTime,
 ): BigQueryClientQuery {
+  const fromDate = UnixTime.toDate(from).toISOString()
+  const toDate = UnixTime.toDate(to).toISOString()
+
   const params = [
-    UnixTime.toDate(from).toISOString(),
-    UnixTime.toDate(to).toISOString(),
+    fromDate,
+    toDate,
     ...transfersConfig.flatMap((c) => [
       ...(c.from ? [c.from.toLowerCase()] : []),
       c.to.toLowerCase(),
     ]),
-    UnixTime.toDate(from).toISOString(),
-    UnixTime.toDate(to).toISOString(),
+    fromDate,
+    toDate,
   ]
 
   // To calculate the non-zero bytes we are grouping bytes by adding 'x' sign between each byte

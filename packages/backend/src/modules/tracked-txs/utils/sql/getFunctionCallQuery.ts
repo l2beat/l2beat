@@ -15,16 +15,19 @@ export function getFunctionCallQuery(
   const fullInputAddresses = configs
     .filter((c) => c.getFullInput)
     .map((c) => c.address.toLowerCase())
+  const fromDate = UnixTime.toDate(from).toISOString()
+  const toDate = UnixTime.toDate(to).toISOString()
+
   const params = [
     fullInputAddresses,
-    UnixTime.toDate(from).toISOString(),
-    UnixTime.toDate(to).toISOString(),
+    fromDate,
+    toDate,
     ...configs.flatMap((c) => [
       c.address.toLowerCase(),
       c.selector.toLowerCase() + '%',
     ]),
-    UnixTime.toDate(from).toISOString(),
-    UnixTime.toDate(to).toISOString(),
+    fromDate,
+    toDate,
   ]
 
   // To calculate the non-zero bytes we are grouping bytes by adding 'x' sign between each byte

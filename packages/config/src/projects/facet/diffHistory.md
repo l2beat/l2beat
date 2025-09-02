@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xc3b0a6fa18ddc100fbcbb21f230ee507420ba372
+
+# Diff at Tue, 02 Sep 2025 10:39:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1144aeaf984988c003c97be3791eeda76896f8ca block: 1756118684
+- current timestamp: 1756809496
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756118684 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (eth:0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      sourceHashes.0:
+-        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2"
++        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
+      implementationNames.eth:0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        "ERC1967Factory"
++        "FacetEtherBridgeV6"
+    }
+```
+
 Generated with discovered.json: 0x526590413c899973fab888bed315640dee3834a0
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
