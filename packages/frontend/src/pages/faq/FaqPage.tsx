@@ -59,7 +59,6 @@ export function FaqPage(props: AppLayoutProps) {
 function Header() {
   return (
     <PrimaryCard className="flex flex-col">
-      <h1 className="mb-4 font-bold text-3xl md:hidden">FAQ</h1>
       <p className="font-bold text-lg">
         Hi! We are glad you&apos;ve made it to FAQs!
       </p>

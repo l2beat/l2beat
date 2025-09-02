@@ -34,7 +34,11 @@ export function SideNavLayout({
     <SidebarProvider>
       <div className="relative flex flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>
-        <MobileTopNavbar groups={groups} logoLink={LOGO_LINK} />
+        <MobileTopNavbar
+          groups={groups}
+          logoLink={LOGO_LINK}
+          sideLinks={sideLinks}
+        />
         <NavSidebar
           logoLink={LOGO_LINK}
           groups={groups}
@@ -207,6 +211,10 @@ const groups = compact<NavGroup>([
 ])
 
 const sideLinks = [
+  {
+    title: 'Publications',
+    href: '/publications',
+  },
   {
     title: 'About Us',
     href: '/about-us',
