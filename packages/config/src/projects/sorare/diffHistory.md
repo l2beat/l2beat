@@ -8,7 +8,7 @@ Generated with discovered.json: 0x24ca010e9553c97fa48e943e5b5cd8f18b37d400
 
 ## Description
 
-Upgraded admin multisig. Added mapping from Starknet.
+Changed admin multisig. Added mapping from Starknet.
 
 ## Watched changes
 

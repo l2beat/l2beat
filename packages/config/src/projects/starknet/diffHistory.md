@@ -8,7 +8,7 @@ Generated with discovered.json: 0xdd4af6ae38dfe0551466200c1763f59a8c448c30
 
 ## Description
 
-Updated zk programs to align with version 0.14.0.
+Updated zk programs to align with version 0.14.0 (https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-30.md).
 
 ## Watched changes
 
