@@ -23,6 +23,13 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "PolygonSharedBridge",
+      "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
       "address": "eth:0x353800524721e11B453f73f523dD8840c215a213",
       "type": "EOA",
       "proxyType": "EOA",
@@ -103,6 +110,27 @@
         "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": "PolygonValidiumStorageMigration"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "PolygonRollupManager",
+      "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "type": "Reference",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+          "role": "admin"
+        }
+      ],
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
+      "name": "PolygonGlobalExitRootV2",
+      "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "name": "ProxyAdmin",
@@ -417,5 +445,5 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 21736867 },
-  "permissionsConfigHash": "0x376916f71d8c6047976243009177b350f76677ed9935ce8c7952dd167f610d67"
+  "permissionsConfigHash": "0xa757341337e5a503e01da238761786c9d1a9362f180b420361cd374d75ce1614"
 }

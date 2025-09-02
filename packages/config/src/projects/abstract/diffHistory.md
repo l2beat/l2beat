@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x94f0a169776771dcbd3e3bb05562136bb4b918e9
+
+# Diff at Tue, 02 Sep 2025 17:16:55 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@a1c1980a59e1040a5ec42c06890371ce5f315602 block: 1755156245
+- current timestamp: 1755156245
+
+## Description
+
+Rerun to add References to entrypoints of shared modules
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755156245 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x3846c3A30E62075Fa916216b35EF04B8F53931f6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference RollupL1DAValidator (eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xafc7805c640C4A9E5D28f6A5Eae23b50e59B831c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xCe20135Ac0253650E28Ea14911c69F1fADD8b06f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xdF28907A6A272fa06333a197d7F0379A0f8f00aa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x3cd1d8ff120dcc367b3c399ff4b04f51c08a3782
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

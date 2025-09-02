@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x40e8d82285afe626b65afd5a1fcd3b851f3bb08b
+Generated with discovered.json: 0xb5cc2f371db8d2f46bbb7330ac5f0c9167e48bfe
 
-# Diff at Tue, 02 Sep 2025 16:53:09 GMT:
+# Diff at Tue, 02 Sep 2025 17:18:37 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@a1c1980a59e1040a5ec42c06890371ce5f315602 block: 1755516515
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x40e8d82285afe626b65afd5a1fcd3b851f3bb08b
 
 ## Description
 
-Rerun to add References to entrypoints of shared-sharp-verifier
+Rerun to add References to entrypoints of shared modules
 
 ## Config/verification related changes
 

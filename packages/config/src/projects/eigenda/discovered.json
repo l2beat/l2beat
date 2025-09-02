@@ -496,7 +496,7 @@
       ],
       "proxyType": "immutable",
       "description": "Defines and stores pauser and unpauser roles for EigenDA contracts.",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
@@ -581,6 +581,13 @@
         "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E": "TransparentUpgradeableProxy",
         "eth:0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A": "EjectionManager"
       }
+    },
+    {
+      "name": "AVSDirectory",
+      "address": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
     },
     {
       "name": "EigenLayerRewardsInitiatorMultisig",
@@ -678,6 +685,38 @@
       }
     },
     {
+      "name": "EigenLayerOwningMultisig",
+      "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+      "type": "Reference",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0c431C66F4dE941d089625E5B423D00707977060",
+          "role": ".pausers"
+        }
+      ],
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
+    },
+    {
+      "name": "DelegationManager",
+      "address": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
+    },
+    {
       "address": "eth:0x3C20b05f44ef008A5b848761e58e5Ca9594163e9",
       "type": "EOA",
       "proxyType": "EOA"
@@ -714,6 +753,31 @@
       "address": "eth:0x4985238672d91Baed43dF1B2431F67bc332A1753",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "EigenLayerPauserMultisig",
+      "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390",
+      "type": "Reference",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0c431C66F4dE941d089625E5B423D00707977060",
+          "role": ".pausers"
+        }
+      ],
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
     },
     {
       "address": "eth:0x5262498E7D4fbbb08425b2a06D91157acDC50aDA",
@@ -1153,6 +1217,31 @@
       }
     },
     {
+      "name": "EigenLayerOperationsMultisig",
+      "address": "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+      "type": "Reference",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0c431C66F4dE941d089625E5B423D00707977060",
+          "role": ".pausers"
+        }
+      ],
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
+    },
+    {
       "address": "eth:0xc201C95e809292c6ad242F4bbD8B342AD06571FB",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1284,6 +1373,13 @@
           "role": ".relayers"
         }
       ]
+    },
+    {
+      "name": "EIGEN Token",
+      "address": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
     },
     {
       "address": "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4",
@@ -1903,5 +1999,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23232697 },
-  "permissionsConfigHash": "0xf3585dbd30175eabdeeef71d8b29d376a4503bc783c2b486135156437dff68a4"
+  "permissionsConfigHash": "0x6f73f4754558ab0fcaa0674c43c056ed23cd4b3b70b886d4d535666a317bd743"
 }

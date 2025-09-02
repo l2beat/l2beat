@@ -1008,5 +1008,5 @@
     "starkex/StarkExchangeOld": "0x1349c13ead4263acc9bf71f1282c62684eebc9e54c3c2e0c9e4ce04e120b146e"
   },
   "usedBlockNumbers": { "ethereum": 21981331 },
-  "permissionsConfigHash": "0x27e65a3017883746ba86c49e44408a46bdf1d720a643a014cae82f1083a8653e"
+  "permissionsConfigHash": "0xe9e404452699715b8dbf3bfbea2b25c73d981ef4243c8aff06788b0b78fa2109"
 }

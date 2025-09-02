@@ -950,5 +950,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 21981156 },
-  "permissionsConfigHash": "0xbaeee990a0a2e17c209d82d6c9a76a51494568a9f89b21fb1dd7b2e327891541"
+  "permissionsConfigHash": "0x276d6a2226f9c7f1e8ba3cdb8dbcee29a2204766bc25709243d55eb3eaa9f33b"
 }

@@ -17,6 +17,13 @@
       ]
     },
     {
+      "name": "PolygonSharedBridge",
+      "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
       "address": "eth:0x49015545B46B07082bd7faf2633643eae87710EC",
       "type": "EOA",
       "proxyType": "EOA",
@@ -61,6 +68,27 @@
       "address": "eth:0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PolygonRollupManager",
+      "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "type": "Reference",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+          "role": "admin"
+        }
+      ],
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
+      "name": "PolygonGlobalExitRootV2",
+      "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "name": "Validium",
@@ -404,5 +432,5 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 22774947 },
-  "permissionsConfigHash": "0xda2e078b950454d7b408e15826d9a565ab8a8a27e2e41b287ac8886d755a3275"
+  "permissionsConfigHash": "0x030a37edaccbcd56f113fb5474206a7769a05419e90b86aba6b0ae2b72d71180"
 }
