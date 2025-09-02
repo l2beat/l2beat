@@ -1,16 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
   createActionType,
-  defineEvent,
+  createEventParser,
   type LogToDecode,
   type Plugin,
 } from './types'
 
-const Event_LogMessagePublished = defineEvent(
+const parseLogMessagePublished = createEventParser(
   'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)',
 )
 
-// We need config for ChainId to create ID
 const NETWORKS = [
   { wormholeChainId: 2, chain: 'ethereum' },
   { wormholeChainId: 23, chain: 'arbitrum' },
@@ -32,7 +31,7 @@ export class WormholePlugin implements Plugin {
   }
 
   decodeLog(input: LogToDecode) {
-    const parsed = Event_LogMessagePublished.parse(input.log)
+    const parsed = parseLogMessagePublished(input.log)
     if (!parsed) return
 
     const network = NETWORKS.find((n) => n.chain === input.tx.chain)

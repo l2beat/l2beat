@@ -9,7 +9,6 @@ import {
   type ParseAbiItem,
   parseAbi,
 } from 'viem'
-import type { ActionDb } from '../ActionDb'
 
 export type ChainAddress = string
 export type ChainHash = string
@@ -96,6 +95,11 @@ export interface MatchResult {
   transfer?: Transfer
 }
 
+export interface ActionDb {
+  find<T>(type: ActionType<T>, query?: Partial<T>): Action<T> | undefined
+  findAll<T>(type: ActionType<T>, query?: Partial<T>): Action<T>[]
+}
+
 export interface Plugin {
   name: string
   decodeLog?: (
@@ -114,9 +118,9 @@ export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<
   ContractEventName<[T]>
 >['args']
 
-export function defineEvent<T extends `event ${string}(${string}`>(
+export function createEventParser<T extends `event ${string}(${string}`>(
   eventSignature: T,
-) {
+): (log: Log) => ParsedEvent<ParseAbiItem<T>> | undefined {
   const eventName = eventSignature.slice(
     'event '.length,
     eventSignature.indexOf('('),
@@ -124,20 +128,21 @@ export function defineEvent<T extends `event ${string}(${string}`>(
   const abi = parseAbi([eventSignature as string])
   // biome-ignore lint/suspicious/noExplicitAny: Viem types are hell
   const topic0 = encodeEventTopics({ abi, eventName } as any)[0]
-  return {
-    parse: (log: Log): ParsedEvent<ParseAbiItem<T>> | undefined => {
-      if (!topic0 || log.topics?.[0] !== topic0) return undefined
-      try {
-        const { args } = decodeEventLog({
-          abi,
-          eventName,
-          data: log.data,
-          topics: log.topics,
-        })
-        return args as ParsedEvent<ParseAbiItem<T>>
-      } catch {
-        return undefined
-      }
-    },
+
+  return function parseEvent(
+    log: Log,
+  ): ParsedEvent<ParseAbiItem<T>> | undefined {
+    if (!topic0 || log.topics?.[0] !== topic0) return undefined
+    try {
+      const { args } = decodeEventLog({
+        abi,
+        eventName,
+        data: log.data,
+        topics: log.topics,
+      })
+      return args as ParsedEvent<ParseAbiItem<T>>
+    } catch {
+      return undefined
+    }
   }
 }

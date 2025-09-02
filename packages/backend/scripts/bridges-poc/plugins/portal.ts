@@ -2,11 +2,11 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { decodeFunctionResult, encodeFunctionData, parseAbi } from 'viem'
-import type { ActionDb } from '../ActionDb'
 import {
   type Action,
+  type ActionDb,
   createActionType,
-  defineEvent,
+  createEventParser,
   generateId,
   type LogToDecode,
   type MatchResult,
@@ -36,7 +36,7 @@ const NETWORKS = [
   },
 ]
 
-const Event_TransferRedeemed = defineEvent(
+const parseTransferRedeemed = createEventParser(
   'event TransferRedeemed(uint16 indexed emitterChainId, bytes32 indexed emitterAddress, uint64 indexed sequence)',
 )
 
@@ -51,14 +51,13 @@ export class PortalPlugin implements Plugin {
 
   constructor(
     private logger: Logger,
-    private db: ActionDb,
     private rpcs: Map<string, RpcClient>,
   ) {
     this.logger = logger.for(this)
   }
 
   decodeLog(input: LogToDecode) {
-    const parsed = Event_TransferRedeemed.parse(input.log)
+    const parsed = parseTransferRedeemed(input.log)
     if (!parsed) return
 
     return TransferRedeemed.create(input.tx, {
@@ -68,12 +67,15 @@ export class PortalPlugin implements Plugin {
     })
   }
 
-  async matchAction(action: Action): Promise<MatchResult | undefined> {
+  async matchAction(
+    action: Action,
+    db: ActionDb,
+  ): Promise<MatchResult | undefined> {
     if (!TransferRedeemed.checkType(action)) {
       return
     }
 
-    const outboundAction = this.db.find(LogMessagePublished, {
+    const outboundAction = db.find(LogMessagePublished, {
       sender: action.payload.emitterAddress,
       wormholeChainId: action.payload.emitterWormholeChainId,
       sequence: action.payload.sequence,

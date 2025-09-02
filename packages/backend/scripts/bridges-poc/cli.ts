@@ -5,11 +5,9 @@ import { command, run } from 'cmd-ts'
 import groupBy from 'lodash/groupBy'
 import { CHAINS } from '../bridges/chains'
 import { logToViemLog } from '../bridges/utils/viem'
-import { Portal_TransferRedeemed } from './decoders/app/portal/TransferRedeemed'
-import { Wormhole_LogMessagePublished } from './decoders/message/wormhole/LogMessagePublished'
-import { matcher } from './matchers/portal/matcher'
-import { DataService } from './types/DataService'
-import { TokenService } from './types/TokenService'
+import { ActionDbImpl } from './ActionDb'
+import { createPlugins } from './plugins'
+import type { Action } from './plugins/types'
 
 const CONFIG = [
   {
@@ -22,21 +20,16 @@ const CONFIG = [
   },
 ]
 
-const DECODERS = new Map([
-  [Wormhole_LogMessagePublished.topic, Wormhole_LogMessagePublished.decoder],
-  [Portal_TransferRedeemed.topic, Portal_TransferRedeemed.decoder],
-])
-
-const MATCHERS = [matcher]
-
 const cmd = command({
   name: 'cli',
   args: {},
   handler: async (_) => {
     const logger = setupLogger()
     const chains = setupChains({ disableRpcLogging: true })
-    const dataService = new DataService()
-    const tokenService = new TokenService()
+
+    const plugins = createPlugins(logger, chains)
+
+    const actions: Action[] = []
 
     for (const config of CONFIG) {
       const rpc = chains.get(config.name)
@@ -49,34 +42,47 @@ const cmd = command({
       for (const transaction of block.transactions) {
         assert(transaction.hash)
         for (const log of logsByTx[transaction.hash] ?? []) {
-          const decoder = DECODERS.get(log.topics[0])
-          if (decoder) {
-            const { message, transfer } = await decoder({
+          for (const plugin of plugins) {
+            if (plugin.decodeLog === undefined) {
+              continue
+            }
+            const action = await plugin.decodeLog({
               log: logToViemLog(log),
-              transactionHash: transaction.hash,
-              blockNumber: block.number,
-              blockTimestamp: block.timestamp,
-              transactionLogs: (logsByTx[transaction.hash] ?? []).map(
-                logToViemLog,
-              ),
-              transactionTo: transaction.to
+              tx: {
+                timestamp: block.timestamp,
+                chain: config.name,
+                hash: transaction.hash,
+                blockNumber: block.number,
+                blockHash: block.hash,
+              },
+              txLogs: (logsByTx[transaction.hash] ?? []).map(logToViemLog),
+              txTo: transaction.to
                 ? EthereumAddress(transaction.to)
                 : undefined,
-              chain: config.name,
             })
-            logger.info('Decoded', { message, transfer })
 
-            if (message) dataService.saveUnmatchedMessage(message)
-            if (transfer) dataService.saveUnmatchedTransfer(transfer)
+            if (action) {
+              actions.push(action)
+            }
           }
         }
       }
     }
 
-    for (const m of MATCHERS) {
-      const output = await m(dataService, tokenService, chains)
+    const db = new ActionDbImpl(actions)
 
-      logger.info('Matched', output)
+    for (const action of actions) {
+      for (const plugin of plugins) {
+        if (plugin.matchAction === undefined) {
+          continue
+        }
+
+        const matching = await plugin.matchAction(action, db)
+
+        if (matching) {
+          logger.info('Matched', matching)
+        }
+      }
     }
   },
 })
