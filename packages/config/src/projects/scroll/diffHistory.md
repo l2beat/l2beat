@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x233f0f29b59309889d6ad0c59f627d40d50b4adf
+
+# Diff at Tue, 02 Sep 2025 09:16:29 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@1144aeaf984988c003c97be3791eeda76896f8ca block: 1756130522
+- current timestamp: 1756804385
+
+## Description
+
+Voting period and delay extended.
+
+## Watched changes
+
+```diff
+    contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: Used to propose and manage onchain governance proposals.
+      values.votingDelay:
+-        3600
++        172800
+      values.votingPeriod:
+-        432000
++        403200
+    }
+```
+
 Generated with discovered.json: 0x9288ea21b5f27624a804db3246dceb64e939e756
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
