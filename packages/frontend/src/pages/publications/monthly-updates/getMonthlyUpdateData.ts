@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { CollectionEntry } from '~/content/getCollection'
-import { env } from '~/env'
 import type { ICache } from '~/server/cache/ICache'
 import { getMonthlyUpdateEntry } from '~/server/features/monthly-reports/getMonthlyUpdateEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -10,14 +9,10 @@ import type { Manifest } from '~/utils/Manifest'
 
 export async function getMonthlyUpdateData(
   manifest: Manifest,
-  monthlyUpdate: CollectionEntry<'monthly-updates'> | undefined,
+  monthlyUpdate: CollectionEntry<'monthly-updates'>,
   url: string,
   cache: ICache,
-): Promise<RenderData | undefined> {
-  if (!monthlyUpdate || !env.CLIENT_SIDE_PARTNERS) {
-    return undefined
-  }
-
+): Promise<RenderData> {
   const [appLayoutProps, monthlyUpdateEntry] = await Promise.all([
     getAppLayoutProps(),
     cache.get(

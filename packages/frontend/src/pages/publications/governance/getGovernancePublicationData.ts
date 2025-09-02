@@ -7,12 +7,9 @@ import type { Manifest } from '~/utils/Manifest'
 
 export async function getGovernancePublicationData(
   manifest: Manifest,
-  publicationEntry: CollectionEntry<'governance-publications'> | undefined,
+  publicationEntry: CollectionEntry<'governance-publications'>,
   url: string,
-): Promise<RenderData | undefined> {
-  if (!publicationEntry) {
-    return undefined
-  }
+): Promise<RenderData> {
   const appLayoutProps = await getAppLayoutProps()
   const publication = getGovernancePublicationEntry(publicationEntry)
   return {
