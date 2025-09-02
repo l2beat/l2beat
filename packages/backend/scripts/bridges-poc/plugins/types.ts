@@ -21,8 +21,8 @@ export interface TxDetails {
   blockHash: string
 }
 
-export interface Action<T = unknown> {
-  actionId: string
+export interface Event<T = unknown> {
+  eventId: string
   type: string
   tx: TxDetails
   payload: T
@@ -31,8 +31,8 @@ export interface Action<T = unknown> {
 export interface Message {
   messageId: string
   type: string
-  outbound: Action
-  inbound: Action
+  outbound: Event
+  inbound: Event
 }
 
 export interface TransferSide {
@@ -46,7 +46,7 @@ export interface TransferSide {
 export interface Transfer {
   transferId: string
   type: string
-  actions: Action[]
+  actions: Event[]
   outbound: TransferSide
   inbound: TransferSide
 }
@@ -55,29 +55,29 @@ export function generateId(type: string) {
   return `${type}:${randomUUID()}`
 }
 
-export interface ActionType<T> {
+export interface EventType<T> {
   type: string
-  create(tx: Action['tx'], payload: T): Action<T>
-  checkType(action: Action): action is Action<T>
+  create(tx: Event['tx'], payload: T): Event<T>
+  checkType(action: Event): action is Event<T>
 }
 
-export function createActionType<T>(type: string): ActionType<T> {
+export function createEventType<T>(type: string): EventType<T> {
   if (!/\w+\.\w+/.test(type)) {
     throw new Error('Actions type must have the format: "plugin.action"')
   }
 
   return {
     type,
-    create(tx: Action['tx'], payload: T): Action<T> {
+    create(tx: Event['tx'], payload: T): Event<T> {
       return {
-        actionId: generateId('A'),
+        eventId: generateId('E'),
         type,
         tx,
         // Ensure it can be saved to db
         payload: JSON.parse(JSON.stringify(payload)),
       }
     },
-    checkType(action: Action): action is Action<T> {
+    checkType(action: Event): action is Event<T> {
       return action.type === type
     },
   }
@@ -95,20 +95,20 @@ export interface MatchResult {
   transfer?: Transfer
 }
 
-export interface ActionDb {
-  find<T>(type: ActionType<T>, query?: Partial<T>): Action<T> | undefined
-  findAll<T>(type: ActionType<T>, query?: Partial<T>): Action<T>[]
+export interface EventDb {
+  find<T>(type: EventType<T>, query?: Partial<T>): Event<T> | undefined
+  findAll<T>(type: EventType<T>, query?: Partial<T>): Event<T>[]
 }
 
 export interface Plugin {
   name: string
-  decodeLog?: (
+  decode?: (
     input: LogToDecode,
     // biome-ignore lint/suspicious/noConfusingVoidType: Otherwise it's painful to write
-  ) => Action | undefined | void | Promise<Action | undefined | void>
-  matchAction?: (
-    action: Action,
-    db: ActionDb,
+  ) => Event | undefined | void | Promise<Event | undefined | void>
+  match?: (
+    action: Event,
+    db: EventDb,
     // biome-ignore lint/suspicious/noConfusingVoidType: Otherwise it's painful to write
   ) => MatchResult | undefined | void | Promise<MatchResult | undefined | void>
 }

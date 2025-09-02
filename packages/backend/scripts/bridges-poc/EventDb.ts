@@ -1,18 +1,18 @@
-import type { Action, ActionDb, ActionType } from './plugins/types'
+import type { Event, EventDb, EventType } from './plugins/types'
 
-export class ActionDbImpl implements ActionDb {
-  constructor(public actions: Action[]) {}
+export class EventDbImpl implements EventDb {
+  constructor(public actions: Event[]) {}
 
-  find<T>(type: ActionType<T>, query?: Partial<T>): Action<T> | undefined {
-    return this.actions.find((a): a is Action<T> => {
+  find<T>(type: EventType<T>, query?: Partial<T>): Event<T> | undefined {
+    return this.actions.find((a): a is Event<T> => {
       if (!type.checkType(a)) return false
       if (!query) return true
       return matchesQuery(a.payload, query)
     })
   }
 
-  findAll<T>(type: ActionType<T>, query?: Partial<T>): Action<T>[] {
-    return this.actions.filter((a): a is Action<T> => {
+  findAll<T>(type: EventType<T>, query?: Partial<T>): Event<T>[] {
+    return this.actions.filter((a): a is Event<T> => {
       if (!type.checkType(a)) return false
       if (!query) return true
       return matchesQuery(a.payload, query)

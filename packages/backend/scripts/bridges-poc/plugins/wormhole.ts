@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
-  createActionType,
+  createEventType,
   createEventParser,
   type LogToDecode,
   type Plugin,
@@ -16,7 +16,7 @@ const NETWORKS = [
   { wormholeChainId: 30, chain: 'base' },
 ]
 
-export const LogMessagePublished = createActionType<{
+export const LogMessagePublished = createEventType<{
   payload: `0x${string}`
   sequence: string
   wormholeChainId: number
@@ -30,7 +30,7 @@ export class WormholePlugin implements Plugin {
     this.logger = logger.for(this)
   }
 
-  decodeLog(input: LogToDecode) {
+  decode(input: LogToDecode) {
     const parsed = parseLogMessagePublished(input.log)
     if (!parsed) return
 

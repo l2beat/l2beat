@@ -3,9 +3,9 @@ import type { RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { decodeFunctionResult, encodeFunctionData, parseAbi } from 'viem'
 import {
-  type Action,
-  type ActionDb,
-  createActionType,
+  type Event,
+  type EventDb,
+  createEventType,
   createEventParser,
   generateId,
   type LogToDecode,
@@ -40,7 +40,7 @@ const parseTransferRedeemed = createEventParser(
   'event TransferRedeemed(uint16 indexed emitterChainId, bytes32 indexed emitterAddress, uint64 indexed sequence)',
 )
 
-export const TransferRedeemed = createActionType<{
+export const TransferRedeemed = createEventType<{
   sequence: string
   emitterWormholeChainId: number
   emitterAddress: `0x${string}`
@@ -56,7 +56,7 @@ export class PortalPlugin implements Plugin {
     this.logger = logger.for(this)
   }
 
-  decodeLog(input: LogToDecode) {
+  decode(input: LogToDecode) {
     const parsed = parseTransferRedeemed(input.log)
     if (!parsed) return
 
@@ -67,10 +67,7 @@ export class PortalPlugin implements Plugin {
     })
   }
 
-  async matchAction(
-    action: Action,
-    db: ActionDb,
-  ): Promise<MatchResult | undefined> {
+  async match(action: Event, db: EventDb): Promise<MatchResult | undefined> {
     if (!TransferRedeemed.checkType(action)) {
       return
     }

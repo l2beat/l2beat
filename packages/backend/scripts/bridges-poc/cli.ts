@@ -5,9 +5,9 @@ import { command, run } from 'cmd-ts'
 import groupBy from 'lodash/groupBy'
 import { CHAINS } from '../bridges/chains'
 import { logToViemLog } from '../bridges/utils/viem'
-import { ActionDbImpl } from './ActionDb'
+import { EventDbImpl } from './EventDb'
 import { createPlugins } from './plugins'
-import type { Action } from './plugins/types'
+import type { Event } from './plugins/types'
 
 const CONFIG = [
   {
@@ -29,7 +29,7 @@ const cmd = command({
 
     const plugins = createPlugins(logger, chains)
 
-    const actions: Action[] = []
+    const events: Event[] = []
 
     for (const config of CONFIG) {
       const rpc = chains.get(config.name)
@@ -43,10 +43,10 @@ const cmd = command({
         assert(transaction.hash)
         for (const log of logsByTx[transaction.hash] ?? []) {
           for (const plugin of plugins) {
-            if (plugin.decodeLog === undefined) {
+            if (plugin.decode === undefined) {
               continue
             }
-            const action = await plugin.decodeLog({
+            const event = await plugin.decode({
               log: logToViemLog(log),
               tx: {
                 timestamp: block.timestamp,
@@ -61,23 +61,23 @@ const cmd = command({
                 : undefined,
             })
 
-            if (action) {
-              actions.push(action)
+            if (event) {
+              events.push(event)
             }
           }
         }
       }
     }
 
-    const db = new ActionDbImpl(actions)
+    const db = new EventDbImpl(events)
 
-    for (const action of actions) {
+    for (const event of events) {
       for (const plugin of plugins) {
-        if (plugin.matchAction === undefined) {
+        if (plugin.match === undefined) {
           continue
         }
 
-        const matching = await plugin.matchAction(action, db)
+        const matching = await plugin.match(event, db)
 
         if (matching) {
           logger.info('Matched', matching)
