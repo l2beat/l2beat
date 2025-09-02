@@ -61,7 +61,6 @@ function Header({
 }) {
   return (
     <PrimaryCard className="md:p-8">
-      <h1 className="mb-4 font-bold text-3xl md:hidden">Governance</h1>
       <div className="flex w-full items-center justify-between gap-5">
         <div className="flex flex-col gap-6">
           <p className="text-paragraph-18">

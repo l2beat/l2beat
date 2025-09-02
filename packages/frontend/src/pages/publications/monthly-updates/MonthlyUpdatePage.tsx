@@ -29,7 +29,7 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader>Monthly Updates</MainPageHeader>
+        <MainPageHeader>Publication</MainPageHeader>
         <PrimaryCard className="md:p-8">
           <div>
             <div className="flex items-center gap-2">

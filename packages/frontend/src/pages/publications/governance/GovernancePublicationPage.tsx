@@ -16,7 +16,7 @@ export function GovernancePublicationPage({ publication, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader>Governance Article</MainPageHeader>
+        <MainPageHeader>Publication</MainPageHeader>
         <PrimaryCard className="md:p-8">
           <PublicationHeader publication={publication} />
           <HorizontalSeparator className="my-8" />
