@@ -40,7 +40,7 @@ There are several discussions around the (further) decentralization of Optimism,
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -101,19 +101,19 @@ We’re interested in discussing the proposals currently being voted on with oth
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Open Discussion of Proposal(s) - Bi-weekly Governance Call](meet.google.com/kvr-bpnx-zix) on 22.10 at 16:00
+[Open Discussion of Proposal(s) - Bi-weekly Governance Call](https://meet.google.com/kvr-bpnx-zix) on 22.10 at 16:00
 
-[DeFi Education Fund Community Call](meet.google.com/kjb-tgss-skw) on 22.10 at 17:00
+[DeFi Education Fund Community Call](https://meet.google.com/kjb-tgss-skw) on 22.10 at 17:00
 
 [Entropy Advisors - biweekly office hours](https://meet.google.com/rms-unku-wsq) on 22.10 at 17:15
 
-[Arbitrum Incentives Working Group](meet.google.com/jqp-ppsq-xnq) on 23.10 at 16:00
+[Arbitrum Incentives Working Group](https://meet.google.com/jqp-ppsq-xnq) on 23.10 at 16:00
 
-[Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on 24.10 at 17:00
+[Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on 24.10 at 17:00
 
 
 ## **Uniswap**
@@ -158,11 +158,11 @@ We’re seeing a trend in DAOs setting some sort of code of conduct or shared pr
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[DEF Community Call](meet.google.com/kjb-tgss-skw) on 22.10 at 17:00
+[DEF Community Call](https://meet.google.com/kjb-tgss-skw) on 22.10 at 17:00
 
 
 ## **Hop**
@@ -173,7 +173,7 @@ Hop’s governance hasn’t seen any new developments over the last week. If you
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Polygon**
@@ -196,11 +196,11 @@ If there are things in Polygon you’d like to discuss, we’re always happy to 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Polygon Protocol Governance Call](meet.google.com/kez-vsmk-kng) on 24.10 at 15:00
+[Polygon Protocol Governance Call](https://meet.google.com/kez-vsmk-kng) on 24.10 at 15:00
 
 
 ## **Starknet**
@@ -211,7 +211,7 @@ Starknet’s governance hasn’t seen any new developments over the last week. I
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -231,11 +231,11 @@ We’re trying to understand whether there’s a need for a Security Task Force 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Everclear Delegates Call](meet.google.com/vqi-tdhd-aaq) on 24.10 at 14:00
+[Everclear Delegates Call](https://meet.google.com/vqi-tdhd-aaq) on 24.10 at 14:00
 
 
 ## **Wormhole**

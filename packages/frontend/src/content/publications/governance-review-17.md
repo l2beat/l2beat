@@ -58,13 +58,13 @@ The Collective is buzzing with activity for the preparations for Season 6. There
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-* [Grants Council Office Hours](meet.google.com/gzt-hubp-yjw) on Monday 20.5 at 4:00 pm
+* [Grants Council Office Hours](https://meet.google.com/gzt-hubp-yjw) on Monday 20.5 at 4:00 pm
 * [Joint House Community Call](https://meet.google.com/vme-ovto-jcn) on Tuesday 21.5 at 5:00 pm
-* [Anti-Capture Commission Office Hours](meet.google.com/tmf-rxoz-qqx) on Thursday 23.5 at 4:00 pm
+* [Anti-Capture Commission Office Hours](https://meet.google.com/tmf-rxoz-qqx) on Thursday 23.5 at 4:00 pm
 
 
 ## **Arbitrum**
@@ -177,20 +177,20 @@ Having said that, we’re keen to discuss any and all of the above topics as wel
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
 
 
-* [Arbitrum DAO Onboarding ](meet.google.com/mrq-sitk-mfu)on Monday 20.5 at 1:00 pm
-* [Developer Relationships Fellowship](meet.google.com/znp-vzuf-xpo) on Monday 20.5 at 10:00 pm
-* [Business Development Fellowship](meet.google.com/oie-cbfa-ckc) on Tuesday 21.5 at 3:00 pm
-* [Open Discussion of Proposal(s) - Bi-weekly Governance Call](meet.google.com/kvr-bpnx-zix) on Tuesday 21.5 at 4:00 pm
-* [Ecosystem Mapping Fellowship](meet.google.com/qag-vhir-bjf) on Tuesday 21.5 at 4:00 pm
-* [Education Fellowship](meet.google.com/coo-idns-srt) on Tuesday 21.5 at 10:00 pm
-* [Arbitrum RWA Education Session presented by Areta, Chainlink, Karpatkey & Gauntlet ](meet.google.com/pam-mstu-xpe)on Wednesday 22.5 at 3:00 pm
-* [Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on Thursday 23.5 at 5:00 pm
+* [Arbitrum DAO Onboarding ](https://meet.google.com/mrq-sitk-mfu)on Monday 20.5 at 1:00 pm
+* [Developer Relationships Fellowship](https://meet.google.com/znp-vzuf-xpo) on Monday 20.5 at 10:00 pm
+* [Business Development Fellowship](https://meet.google.com/oie-cbfa-ckc) on Tuesday 21.5 at 3:00 pm
+* [Open Discussion of Proposal(s) - Bi-weekly Governance Call](https://meet.google.com/kvr-bpnx-zix) on Tuesday 21.5 at 4:00 pm
+* [Ecosystem Mapping Fellowship](https://meet.google.com/qag-vhir-bjf) on Tuesday 21.5 at 4:00 pm
+* [Education Fellowship](https://meet.google.com/coo-idns-srt) on Tuesday 21.5 at 10:00 pm
+* [Arbitrum RWA Education Session presented by Areta, Chainlink, Karpatkey & Gauntlet ](https://meet.google.com/pam-mstu-xpe)on Wednesday 22.5 at 3:00 pm
+* [Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on Thursday 23.5 at 5:00 pm
 
 
 ## **Uniswap**
@@ -227,7 +227,7 @@ Designing a delegate rewards program is a very nuanced undertaking, as is eviden
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Hop**
@@ -238,7 +238,7 @@ We were not aware of any significant governance-related news in Hop over the las
 
 **When/where to catch us:**
 
-You can find us to discuss all things Hop during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all things Hop during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Polygon**
@@ -259,7 +259,7 @@ We’re interested in discussing the recently announced call for grant allocator
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Starknet**
@@ -275,7 +275,7 @@ We’re interested in discussing all new developments in Starknet with other del
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Connext**
@@ -324,4 +324,4 @@ We have been actively involved in the discussions around the security council an
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Connext Office Hours](meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Connext Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.

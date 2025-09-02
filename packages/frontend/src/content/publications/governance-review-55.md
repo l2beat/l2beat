@@ -53,7 +53,7 @@ You can find us to discuss everything related to Optimism’s governance, from c
 
 Upcoming Events (Times in UTC):
 
-[govNERDs Community Office Hours](http://meet.google.com/eqb-dfkk-mui) - on 10.6 at 19:00.
+[govNERDs Community Office Hours](https://meet.google.com/eqb-dfkk-mui) - on 10.6 at 19:00.
 
 ## **Arbitrum**
 
@@ -100,13 +100,13 @@ You can find us to discuss everything related to Arbitrum’s governance, from c
 
 **Upcoming Events (Times in UTC):**
 
-[Updating the OpCo Foundation’s Operational Capability](http://meet.google.com/nav-mbcm-cbx) - on 9.6 at 19:00.
+[Updating the OpCo Foundation’s Operational Capability](https://meet.google.com/nav-mbcm-cbx) - on 9.6 at 19:00.
 
 [Treasury Management Discussion #4](https://arbitrum.huddle01.app/room/dxp-nlaw-ggd) - on 11.6 at 16:00.
 
 [Bi-Weekly ARDC Office Hours](https://huddle01.app/room/dvb-zlbw-yus) - on 12.6 at 16:00.
 
-[AGI Working Group](http://meet.google.com/wnh-iott-hum) - on 12.6 at 17:00.
+[AGI Working Group](https://meet.google.com/wnh-iott-hum) - on 12.6 at 17:00.
 
 ## **Uniswap**
 
@@ -120,7 +120,7 @@ You can find us to discuss everything related to Uniswap’s governance, from cu
 
 **Upcoming Events (Times in UTC):**
 
-[Governance Community Call](http://meet.google.com/fuj-mbkg-vdu) - on 10.6 at 14:00.
+[Governance Community Call](https://meet.google.com/fuj-mbkg-vdu) - on 10.6 at 14:00.
 
 ## **Hop**
 
@@ -171,7 +171,7 @@ SEEDGov [created a post](https://forum.connext.network/t/votable-supply-and-dele
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Everclear’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss everything related to Everclear’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 ## **Wormhole**
 
@@ -225,10 +225,10 @@ Nneoma\_StableLab [created a post](https://forum.scroll.io/t/scroll-dao-delegate
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Scroll’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss everything related to Scroll’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
-[Weekly DAO & Governance Call](http://meet.google.com/nug-uygx-hbd) - on 11.6 at 11:30.
+[Weekly DAO & Governance Call](https://meet.google.com/nug-uygx-hbd) - on 11.6 at 11:30.
 
-[Weekly DAO & Governance Call](http://meet.google.com/pcm-nxzr-rig) - on 11.6 at 17:00.
+[Weekly DAO & Governance Call](https://meet.google.com/pcm-nxzr-rig) - on 11.6 at 17:00.

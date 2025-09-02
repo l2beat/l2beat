@@ -1,0 +1,39 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "silentdata",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "silentdata-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xCcd285b1ccf1cdaB36Da995B9fC68870E287694E",
+            "decimals": 18,
+            "sinceTimestamp": 1753442903
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xe97d73B0079e04f4ea4162b9173604a6213eF158",
+            "decimals": 18,
+            "sinceTimestamp": 1753442903
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -46,7 +46,7 @@ We’re always keen to chat with delegates about all things Optimism. These days
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -122,15 +122,15 @@ With proposals discussing the mission and vision of the DAO, chain abstraction, 
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Open Discussion of Proposal(s) - Bi-weekly Governance Call](meet.google.com/kvr-bpnx-zix) on 5.11 at 16:00
+[Open Discussion of Proposal(s) - Bi-weekly Governance Call](https://meet.google.com/kvr-bpnx-zix) on 5.11 at 16:00
 
 [Entropy Advisors - biweekly office hours](https://meet.google.com/rms-unku-wsq) on 5.11 at 17:15
 
-[Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on 7.11 at 17:00
+[Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on 7.11 at 17:00
 
 
 ## **Uniswap**
@@ -184,7 +184,7 @@ We’re interested in discussing the funding requests from Tally and Lighthouse 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Hop**
@@ -202,7 +202,7 @@ We’re happy to discuss ideas for RFPs that would support Hop with delegates an
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Polygon**
@@ -227,7 +227,7 @@ If there are things in Polygon you’d like to discuss with us, please do reach 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Starknet**
@@ -238,7 +238,7 @@ Starknet’s governance hasn’t seen any new developments over the last week. I
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -265,7 +265,7 @@ We’re interested in discussing the Security Task Force proposal by Creed with 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Wormhole**

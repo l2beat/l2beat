@@ -40,7 +40,7 @@ If you’re eager to learn more about Optimism, have ideas you’d like to bounc
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -48,8 +48,8 @@ You can find us to discuss all of the above and more during our [Optimism Office
 
 * [Grants Council Election Townhall](https://meet.google.com/bpc-gwgs-nhi) on 11.6 at 5:00 pm
 * [Developer Advisory Board Election Townhall](https://meet.google.com/jjg-hyyu-qnz) on 11.6 at 6:05 pm
-* [Builder Office Hours with the Foundation](meet.google.com/pop-kkus-bvf) on 12.6 at 4:30 pm
-* [ACC Office Hours](meet.google.com/wwr-kicc-zzi) on 13.6 at 4:00 pm
+* [Builder Office Hours with the Foundation](https://meet.google.com/pop-kkus-bvf) on 12.6 at 4:30 pm
+* [ACC Office Hours](https://meet.google.com/wwr-kicc-zzi) on 13.6 at 4:00 pm
 
 ## **Arbitrum**
 
@@ -150,20 +150,20 @@ We are always interested in discussing everything relevant to Arbitrum with othe
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
 
 
-* [Developer Relations Fellowship](meet.google.com/znp-vzuf-xpo) on 10.6 at 10:00 pm
-* [Business Development Fellowship](meet.google.com/oie-cbfa-ckc) on 11.6 at 3:00 pm
-* [Incentives Working Group](meet.google.com/qhw-irji-dcb) on 11.6 at 4:00 pm
-* [ARB M&A Pilot Phase Bi-Weekly](meet.google.com/wem-pdqd-qia) on 12.6 at 1:00 pm
-* [DAO Budget Creation - Discussion](meet.google.com/ssr-iavz-syv) on 12.6 at 2:00 pm
-* [ADPC Call](meet.google.com/bju-dnib-sif) on 13.6 at 2:00 pm
-* [Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on 13.6 at 5:00 pm
-* [Arbitrum DAO Onboarding](meet.google.com/mrq-sitk-mfu) on 13.6 at 10:00 pm
+* [Developer Relations Fellowship](https://meet.google.com/znp-vzuf-xpo) on 10.6 at 10:00 pm
+* [Business Development Fellowship](https://meet.google.com/oie-cbfa-ckc) on 11.6 at 3:00 pm
+* [Incentives Working Group](https://meet.google.com/qhw-irji-dcb) on 11.6 at 4:00 pm
+* [ARB M&A Pilot Phase Bi-Weekly](https://meet.google.com/wem-pdqd-qia) on 12.6 at 1:00 pm
+* [DAO Budget Creation - Discussion](https://meet.google.com/ssr-iavz-syv) on 12.6 at 2:00 pm
+* [ADPC Call](https://meet.google.com/bju-dnib-sif) on 13.6 at 2:00 pm
+* [Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on 13.6 at 5:00 pm
+* [Arbitrum DAO Onboarding](https://meet.google.com/mrq-sitk-mfu) on 13.6 at 10:00 pm
 * [Arbitrum’s Fees and Sequencer Revenue - Discussion](eet.google.com/fug-dcmu-sfm) on 14.6 at 1:00 pm
 
 
@@ -183,13 +183,13 @@ To decide whether matching the funds from LTIPP makes sense, we’d need to cons
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
 
 
-* [Uniswap Community Call](meet.google.com/fuj-mbkg-vdu) on 11.6 at 2:00 pm
+* [Uniswap Community Call](https://meet.google.com/fuj-mbkg-vdu) on 11.6 at 2:00 pm
 
 
 ## **Hop**
@@ -201,7 +201,7 @@ We were not aware of any significant governance-related news in Hop over the las
 
 **When/where to catch us:**
 
-You can find us to discuss all things Hop during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all things Hop during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -231,11 +231,11 @@ We’re interested in discussing all developments in Polygon with interested sta
 
 **When/where to catch us:**
 
-You can find us to discuss all things Polygon during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all things Polygon during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-* [Polygon Protocol Governance Call](meet.google.com/kez-vsmk-kng) on 13.6 at 3:00 pm
+* [Polygon Protocol Governance Call](https://meet.google.com/kez-vsmk-kng) on 13.6 at 3:00 pm
 
 ## **Starknet**
 
@@ -252,7 +252,7 @@ On the occasion of StarkHack, we’d like to connect with builders and key Stark
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -269,4 +269,4 @@ Connext becoming Everclear is more than a simple rebranding; it introduces funda
 
 **When/where to catch us:**
 
-You can find us to discuss the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.

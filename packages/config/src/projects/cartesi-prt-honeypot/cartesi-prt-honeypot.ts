@@ -5,7 +5,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-
+import { formatEther } from 'ethers/lib/utils'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -156,7 +156,10 @@ export const cartesiprthoneypot: ScalingProject = {
     mode: DA_MODES.TRANSACTION_DATA,
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_FP_INT(minChallengePeriodSeconds),
+    stateValidation: {
+      ...RISK_VIEW.STATE_FP_INT(minChallengePeriodSeconds),
+      initialBond: formatEther(0),
+    },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
       value: 'Not applicable',

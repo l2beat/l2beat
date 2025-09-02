@@ -360,7 +360,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
       title: 'Katana Launch',
       url: 'https://x.com/katana/status/1939808602727813253',
       date: '2025-07-01T00:00:00Z',
-      description: 'Katana is live on Ethereum mainnet.',
+      description: 'Katana is live on mainnet, integrated with Agglayer.',
       type: 'general',
     },
   ],

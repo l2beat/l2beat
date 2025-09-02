@@ -111,7 +111,7 @@ export function ActivityChart({
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent reverse />} />
+        <ChartLegend content={<ChartLegendContent />} />
         {getStrokeOverFillAreaComponents({
           data: [
             {
@@ -139,7 +139,10 @@ export function ActivityChart({
           },
           syncedUntil,
         })}
-        <ChartTooltip filterNull={false} content={<ActivityCustomTooltip />} />
+        <ChartTooltip
+          filterNull={false}
+          content={<ActivityCustomTooltip metric={metric} />}
+        />
         <defs>
           {type === 'Rollups' && (
             <>
@@ -171,7 +174,10 @@ export function ActivityCustomTooltip({
   active,
   payload,
   label: timestamp,
-}: TooltipProps<number, string>) {
+  metric,
+}: TooltipProps<number, string> & {
+  metric: ActivityMetric
+}) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
 
@@ -181,7 +187,7 @@ export function ActivityCustomTooltip({
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(timestamp, timestamp + UnixTime.DAY)}
         </div>
-        <span className="text-heading-16">Average UOPS</span>
+        <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {

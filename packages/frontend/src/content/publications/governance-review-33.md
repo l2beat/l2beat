@@ -61,11 +61,11 @@ We’re interested in discussing the upcoming Season 7 with other delegates and 
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Builder Office Hours with the Foundation (Bi-Weekly)](meet.google.com/pop-kkus-bvf) on 11.12 at 17:30
+[Builder Office Hours with the Foundation (Bi-Weekly)](https://meet.google.com/pop-kkus-bvf) on 11.12 at 17:30
 
 
 ## **Arbitrum**
@@ -119,15 +119,15 @@ We’re keen to discuss all ongoing initiatives and active proposals in Arbitrum
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Arbitrum Incentives Working Group](meet.google.com/jqp-ppsq-xnq) on 11.12 at 17:00
+[Arbitrum Incentives Working Group](https://meet.google.com/jqp-ppsq-xnq) on 11.12 at 17:00
 
-[EventHorizon:  Updates and working session for the Event Horizon delegation](meet.google.com/zqe-mupt-ppv) on 11.12 at 18:00
+[EventHorizon:  Updates and working session for the Event Horizon delegation](https://meet.google.com/zqe-mupt-ppv) on 11.12 at 18:00
 
-[ADPC Call](meet.google.com/bju-dnib-sif) on 12.12 at 15:00
+[ADPC Call](https://meet.google.com/bju-dnib-sif) on 12.12 at 15:00
 
 
 ## **Uniswap**
@@ -179,11 +179,11 @@ We’re interested in discussing the SEAL proposal further as we find it very in
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Governance Community Call](meet.google.com/fuj-mbkg-vdu) on 10.12 at 15:00
+[Governance Community Call](https://meet.google.com/fuj-mbkg-vdu) on 10.12 at 15:00
 
 
 ## **Hop**
@@ -201,7 +201,7 @@ We’re interested in discussing the retroactive grant request from the LTIPP ma
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -221,7 +221,7 @@ If there are things in Polygon’s governance you believe we should be aware of 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Starknet**
@@ -232,7 +232,7 @@ There haven’t been any new proposals or notable discussions in Starknet’s go
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -274,7 +274,7 @@ We’re curious to hear other delegates’ thoughts on the proposed Code of Cond
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Wormhole**
@@ -377,6 +377,6 @@ Although we do not have dedicated Office Hours for Scroll yet, we encourage you 
 
 **Upcoming Events (Times in UTC)**
 
-[#17 Reflection & Refining | Pre-Vote Check-In](meet.google.com/tfw-hfyz-qkp) on 11.12 at 12:30
+[#17 Reflection & Refining | Pre-Vote Check-In](https://meet.google.com/tfw-hfyz-qkp) on 11.12 at 12:30
 
-[#18 Reflection & Refining | Pre-Voter Check-In](meet.google.com/tfw-hfyz-qkp) on 11.12 at 18:00
+[#18 Reflection & Refining | Pre-Voter Check-In](https://meet.google.com/tfw-hfyz-qkp) on 11.12 at 18:00

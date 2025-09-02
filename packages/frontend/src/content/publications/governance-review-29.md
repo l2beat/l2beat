@@ -55,13 +55,13 @@ We’re keen to discuss things happening in Optimism and particularly the Superc
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Builder Office Hours with the Foundation (Bi-Weekly)](meet.google.com/pop-kkus-bvf) on 15.10 at 16:30
+[Builder Office Hours with the Foundation (Bi-Weekly)](https://meet.google.com/pop-kkus-bvf) on 15.10 at 16:30
 
-[Foundation AMA: Decentralization Models](meet.google.com/wnp-ojcs-dyo) on 17.10 at 17:30
+[Foundation AMA: Decentralization Models](https://meet.google.com/wnp-ojcs-dyo) on 17.10 at 17:30
 
 [govNerd Office Hours](https://meet.google.com/epc-dkgs-pfk) on 17.10 at 18:00
 
@@ -138,21 +138,21 @@ We’re interested in discussing active proposals while also hearing from Securi
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[ARDC V2 Proposal Discussion](meet.google.com/uao-ukjw-eoz) on 16.10 at 13:00
+[ARDC V2 Proposal Discussion](https://meet.google.com/uao-ukjw-eoz) on 16.10 at 13:00
 
 [Security Council Member Elections - AMA with Candidates](https://twitter.com/i/spaces/1zqKVYWyNwaxB) on 16.10 at 14:00
 
-[Arbitrum Incentives Working Group](meet.google.com/jqp-ppsq-xnq) on 16.10 at 16:00
+[Arbitrum Incentives Working Group](https://meet.google.com/jqp-ppsq-xnq) on 16.10 at 16:00
 
-[ADPC Call](meet.google.com/bju-dnib-sif) on 17.10 at 14:00
+[ADPC Call](https://meet.google.com/bju-dnib-sif) on 17.10 at 14:00
 
-[GCP Open Office - Weekly](meet.google.com/hjf-hrfg-gxg) on 17.10 at 16:00
+[GCP Open Office - Weekly](https://meet.google.com/hjf-hrfg-gxg) on 17.10 at 16:00
 
-[Social Media Fellowship](meet.google.com/ybo-huqw-jnr) on 17.10 at 17:00
+[Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on 17.10 at 17:00
 
 
 ## **Uniswap**
@@ -202,7 +202,7 @@ The proposal by AlphaGrowth seems interesting, and we’d like to discuss it fur
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Hop**
@@ -220,7 +220,7 @@ If you’re considering applying for the Head of DAO Ops role, we’d like to he
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -242,11 +242,11 @@ There is no news related to governance, but you might find the following posts i
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
-[Polygon Protocol Governance Call](meet.google.com/kez-vsmk-kng) on 17.10 at 15:00
+[Polygon Protocol Governance Call](https://meet.google.com/kez-vsmk-kng) on 17.10 at 15:00
 
 
 ## **Starknet**
@@ -257,7 +257,7 @@ Starknet’s governance hasn’t seen any new developments over the last week. I
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Everclear**
@@ -294,7 +294,7 @@ We’d love to hear from Security Council nominees and learn more about why they
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Everclear Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 
 ## **Wormhole**

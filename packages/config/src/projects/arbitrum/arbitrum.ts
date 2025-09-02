@@ -4,6 +4,7 @@ import {
   formatSeconds,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import {
   CONTRACTS,
   ESCROW,
@@ -281,10 +282,15 @@ export const arbitrum: ScalingProject = orbitStackL2({
       selfSequencingDelay,
       l1TimelockDelay,
     ),
-    stateValidation: RISK_VIEW.STATE_FP_INT(
-      challengeWindowSeconds,
-      challengeGracePeriodSeconds,
-    ),
+    stateValidation: {
+      ...RISK_VIEW.STATE_FP_INT(
+        challengeWindowSeconds,
+        challengeGracePeriodSeconds,
+      ),
+      initialBond: formatEther(
+        discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+      ),
+    },
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',

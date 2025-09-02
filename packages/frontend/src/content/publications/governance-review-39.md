@@ -18,7 +18,7 @@ We’re interested in discussing Optimism’s ACC role during Season 7 and see h
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -73,7 +73,7 @@ We’re keen to discuss the above initiatives, provide feedback, and see if ther
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
@@ -81,9 +81,9 @@ You can find us to discuss all of the above and more during our [Arbitrum Office
 
 [Entropy Advisors - biweekly office hours](https://meet.google.com/rms-unku-wsq) on 11.2 at 17:15.
 
-[ADPC Call](meet.google.com/bju-dnib-sif) on 13.2 at 15:00
+[ADPC Call](https://meet.google.com/bju-dnib-sif) on 13.2 at 15:00
 
-[ADPC RPC Marketplace RFP - AMA Session for RFP Respondents](meet.google.com/rqv-egnv-rui) on 13.2 at 21:00
+[ADPC RPC Marketplace RFP - AMA Session for RFP Respondents](https://meet.google.com/rqv-egnv-rui) on 13.2 at 21:00
 
 
 ## **Uniswap**
@@ -104,11 +104,11 @@ If there are things in Uniswap you think we should be aware of or involved with,
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
-[Governance Community Call](meet.google.com/fuj-mbkg-vdu) on 11.2 at 15:00.
+[Governance Community Call](https://meet.google.com/fuj-mbkg-vdu) on 11.2 at 15:00.
 
 
 ## **Hop**
@@ -124,7 +124,7 @@ If there are things in Hop you think we should be aware of or involved with, ple
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Polygon**
@@ -140,7 +140,7 @@ If there are things in Polygon you think we should be aware of or involved with,
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Starknet**
@@ -156,7 +156,7 @@ If there are things in Starknet you think we should be aware of or involved with
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Everclear**
@@ -182,7 +182,7 @@ We’re interested in discussing the EverScale proposal with other delegates and
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Wormhole**
@@ -193,7 +193,7 @@ Wormhole’s governance hasn’t seen any new developments over the last week. I
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **Lisk**
@@ -209,7 +209,7 @@ If there are things in Lisk you think we should be aware of or involved with, pl
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 
 ## **ZkSync**
@@ -218,11 +218,11 @@ ZKSync’s governance hasn’t seen any new developments over the last week. If 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
-[Standing ZKsync Proposal Review Call](http://meet.google.com/qvr-txgr-vja ) on 12.2 at 16:30
+[Standing ZKsync Proposal Review Call](https://meet.google.com/qvr-txgr-vja ) on 12.2 at 16:30
 
 
 ## **Scroll**
@@ -238,14 +238,14 @@ If there are things in Scroll you think we should be aware of or involved with, 
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
+You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
-[Malaysia Local Nodes Program](meet.google.com/rpj-dtkh-qxf) on 11.2 at 13:00.
+[Malaysia Local Nodes Program](https://meet.google.com/rpj-dtkh-qxf) on 11.2 at 13:00.
 
-[Scroll LRTs Vision and Roadmap - Weekly DAO & Governance Call](meet.google.com/smr-hxgd-btt) on 12.2 at 12:30.
+[Scroll LRTs Vision and Roadmap - Weekly DAO & Governance Call](https://meet.google.com/smr-hxgd-btt) on 12.2 at 12:30.
 
-[Delegate Training Discussion](meet.google.com/yaj-mpsb-yng) on 12.2 at 17:30.
+[Delegate Training Discussion](https://meet.google.com/yaj-mpsb-yng) on 12.2 at 17:30.
 
-[Weekly DAO & Governance Call](meet.google.com/mhz-ncvc-ipd) on 12.2 at 18:00.
+[Weekly DAO & Governance Call](https://meet.google.com/mhz-ncvc-ipd) on 12.2 at 18:00.

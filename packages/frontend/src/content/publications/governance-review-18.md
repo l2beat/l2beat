@@ -100,7 +100,7 @@ We’re happy to discuss all the active votes as well as their implications for 
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Optimism Office Hours](http://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
 
 ## **Arbitrum**
@@ -213,21 +213,21 @@ We also want to remind you that, being the DAO Advocate for the ARDC, we’re in
 
 **When/where to catch us:**
 
-You can find us to discuss all of the above and more during our [Arbitrum Office Hours](http://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
+You can find us to discuss all of the above and more during our [Arbitrum Office Hours](https://meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
 
 
-* [Arbitrum DAO Onboarding](https://l2beat.com/governance/publications/meet.google.com/mrq-sitk-mfu) on Monday 27.5 at 1:00 pm
-* [Developer Relationships Fellowship](https://l2beat.com/governance/publications/meet.google.com/znp-vzuf-xpo) on Monday 27.5 at 10:00 pm
-* [ARDC Weekly Sync](http://meet.google.com/dyi-ymiy-ugn) on Tuesday 28.5 at 12:00 pm
-* [Business Development Fellowship](https://l2beat.com/governance/publications/meet.google.com/oie-cbfa-ckc) on Tuesday 28.5 at 3:00 pm
-* [Education Fellowship](https://l2beat.com/governance/publications/meet.google.com/coo-idns-srt) on Tuesday 28.5 at 10:00 pm
-* [Ecosystem Mapping Fellowship](https://l2beat.com/governance/publications/meet.google.com/qag-vhir-bjf) on Wednesday 29.5 at 1:00 pm
-* [Arbitrum Open Governance Call](http://meet.google.com/ouo-uskg-niq) on Wednesday 29.5 at 2:00 pm
-* [ADPC Call](http://meet.google.com/bju-dnib-sif) on Thursday 30.5 at 2:00 pm
-* [Social Media Fellowship](https://l2beat.com/governance/publications/meet.google.com/ybo-huqw-jnr) on Thursday 30.5 at 5:00 pm
+* [Arbitrum DAO Onboarding](https://meet.google.com/mrq-sitk-mfu) on Monday 27.5 at 1:00 pm
+* [Developer Relationships Fellowship](https://meet.google.com/znp-vzuf-xpo) on Monday 27.5 at 10:00 pm
+* [ARDC Weekly Sync](https://meet.google.com/dyi-ymiy-ugn) on Tuesday 28.5 at 12:00 pm
+* [Business Development Fellowship](https://meet.google.com/oie-cbfa-ckc) on Tuesday 28.5 at 3:00 pm
+* [Education Fellowship](https://meet.google.com/coo-idns-srt) on Tuesday 28.5 at 10:00 pm
+* [Ecosystem Mapping Fellowship](https://meet.google.com/qag-vhir-bjf) on Wednesday 29.5 at 1:00 pm
+* [Arbitrum Open Governance Call](https://meet.google.com/ouo-uskg-niq) on Wednesday 29.5 at 2:00 pm
+* [ADPC Call](https://meet.google.com/bju-dnib-sif) on Thursday 30.5 at 2:00 pm
+* [Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on Thursday 30.5 at 5:00 pm
 
 
 ## **Uniswap**
@@ -252,7 +252,7 @@ The [delegate rewards proposal](https://gov.uniswap.org/t/temp-check-uniswap-del
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Uniswap Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -269,7 +269,7 @@ We were not aware of any significant governance-related news in Hop over the las
 
 **When/where to catch us:**
 
-You can find us to discuss all things Hop during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all things Hop during our [Hop Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
@@ -286,13 +286,13 @@ We were not aware of any significant governance-related news in Polygon over the
 
 **When/where to catch us:**
 
-You can find us to discuss all things Polygon during our [Polygon Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all things Polygon during our [Polygon Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
 
 
-* [Polygon Protocol Governance Call](http://meet.google.com/kez-vsmk-kng) on Thursday 30.5 at 3:00 pm
+* [Polygon Protocol Governance Call](https://meet.google.com/kez-vsmk-kng) on Thursday 30.5 at 3:00 pm
 
 
 ## **Starknet**
@@ -303,7 +303,7 @@ We were not aware of any significant governance-related news in Starknet over th
 
 **When/where to catch us:**
 
-You can find us to discuss all things Starknet during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
+You can find us to discuss all things Starknet during our [Starknet Office Hours](https://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
 ## **Connext**
@@ -335,9 +335,9 @@ Given that Connext Foundation and Proxima Labs both have significant token alloc
 
 **When/where to catch us:**
 
-You can find us to discuss all the above and more during our [Connext Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
+You can find us to discuss all the above and more during our [Connext Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC)**
 
 
-* [Connext Delegates Call](meet.google.com/vqi-tdhd-aaq) on Friday 31.5 at 3:00 pm
+* [Connext Delegates Call](https://meet.google.com/vqi-tdhd-aaq) on Friday 31.5 at 3:00 pm
