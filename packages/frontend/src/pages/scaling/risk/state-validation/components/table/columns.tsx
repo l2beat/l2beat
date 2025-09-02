@@ -142,7 +142,7 @@ export const scalingRiskStateValidationOptimisticColumns = [
         emptyMode="n/a"
       />
     ),
-  }), 
+  }),
   optimisticColumnHelper.accessor('executionDelay', {
     header: 'Execution Delay',
     cell: (ctx) => (
