@@ -59,8 +59,8 @@ export class LayerZeroV2Plugin implements Plugin {
   }
 
   decode(input: LogToDecode) {
-    const packetSent = parsePacketSent(input.log)
-
+    // TODO: whitelist
+    const packetSent = parsePacketSent(input.log, null)
     if (packetSent) {
       const packet = decodePacket(packetSent.encodedPayload)
 
@@ -78,8 +78,8 @@ export class LayerZeroV2Plugin implements Plugin {
       this.logger.warn('Failed to decode packet', { tx: input.tx.hash })
     }
 
-    const packetDelivered = parsePacketDelivered(input.log)
-
+    // TODO: whitelist
+    const packetDelivered = parsePacketDelivered(input.log, null)
     if (packetDelivered) {
       const endpoint = NETWORKS.find((n) => n.chain === input.tx.chain)
 

@@ -1,3 +1,4 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
 import {
   type Abi,
@@ -118,7 +119,10 @@ export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<
 
 export function createEventParser<T extends `event ${string}(${string}`>(
   eventSignature: T,
-): (log: Log) => ParsedEvent<ParseAbiItem<T>> | undefined {
+): (
+  log: Log,
+  adddressWhitelist: EthereumAddress[] | null,
+) => ParsedEvent<ParseAbiItem<T>> | undefined {
   const eventName = eventSignature.slice(
     'event '.length,
     eventSignature.indexOf('('),
@@ -129,8 +133,16 @@ export function createEventParser<T extends `event ${string}(${string}`>(
 
   return function parseEvent(
     log: Log,
+    adddressWhitelist: EthereumAddress[] | null,
   ): ParsedEvent<ParseAbiItem<T>> | undefined {
     if (!topic0 || log.topics?.[0] !== topic0) return undefined
+    if (
+      adddressWhitelist &&
+      !adddressWhitelist.includes(EthereumAddress(log.address))
+    ) {
+      return
+    }
+
     try {
       const { args } = decodeEventLog({
         abi,

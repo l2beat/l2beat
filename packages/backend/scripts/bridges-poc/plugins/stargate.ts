@@ -29,14 +29,14 @@ export class StargatePlugin implements Plugin {
   name = 'stargate'
 
   decode(input: LogToDecode) {
-    const oftSent = parseOFTSent(input.log)
-
+    // TODO: whitelist
+    const oftSent = parseOFTSent(input.log, null)
     if (oftSent) {
       return OFTSent.create(input.tx, { guid: oftSent.guid })
     }
 
-    const oftReceived = parseOFTReceived(input.log)
-
+    // TODO: whitelist
+    const oftReceived = parseOFTReceived(input.log, null)
     if (oftReceived) {
       return OFTReceived.create(input.tx, { guid: oftReceived.guid })
     }

@@ -56,7 +56,8 @@ export class PortalPlugin implements Plugin {
   }
 
   decode(input: LogToDecode) {
-    const parsed = parseTransferRedeemed(input.log)
+    // TODO: whitelist
+    const parsed = parseTransferRedeemed(input.log, null)
     if (!parsed) return
 
     return TransferRedeemed.create(input.tx, {

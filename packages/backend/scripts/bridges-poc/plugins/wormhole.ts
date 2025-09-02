@@ -32,7 +32,8 @@ export class WormholePlugin implements Plugin {
   }
 
   decode(input: LogToDecode) {
-    const parsed = parseLogMessagePublished(input.log)
+    // TODO: whitelist
+    const parsed = parseLogMessagePublished(input.log, null)
     if (!parsed) return
 
     const network = NETWORKS.find((n) => n.chain === input.tx.chain)
