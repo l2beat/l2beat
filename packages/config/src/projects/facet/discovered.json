@@ -1,6 +1,6 @@
 {
   "name": "facet",
-  "timestamp": 1756118684,
+  "timestamp": 1756809496,
   "configHash": "0x15a76bf8d2d07e27eea063062ecdc83f6e17d05092b545536b082e380b4ba34b",
   "entries": [
     {
@@ -15,7 +15,7 @@
       "type": "Contract",
       "template": "facet/FacetEtherBridge",
       "sourceHashes": [
-        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2",
+        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e",
         "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
       ],
       "proxyType": "EIP1967 proxy",
@@ -38,7 +38,7 @@
         }
       },
       "implementationNames": {
-        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "ERC1967Factory",
+        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "FacetEtherBridgeV6",
         "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": "FacetEtherBridgeV6"
       },
       "category": { "name": "External Bridges", "priority": 1 }
@@ -177,15 +177,15 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
-        "anchorL2BlockNumber": 1804060,
-        "anchorProposalId": 46,
-        "anchorRoot": "0x764b001719792043ff4551a4f31cdbe72cec19181998d211bd5a4337874fcf9b",
+        "anchorL2BlockNumber": 1861660,
+        "anchorProposalId": 78,
+        "anchorRoot": "0x297a39995ea6f5ec43d796869a98ea222fdaef75a0baf14c2ca5d9d88722dff5",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 75,
+        "getProposalsLength": 113,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1754499659,
@@ -435,23 +435,28 @@
   ],
   "abis": {
     "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": [
-      "error DeploymentFailed()",
-      "error SaltDoesNotStartWithCaller()",
-      "error Unauthorized()",
-      "error UpgradeFailed()",
-      "event AdminChanged(address indexed proxy, address indexed admin)",
-      "event Deployed(address indexed proxy, address indexed implementation, address indexed admin)",
-      "event Upgraded(address indexed proxy, address indexed implementation)",
-      "function adminOf(address proxy) view returns (address admin)",
-      "function changeAdmin(address proxy, address admin)",
-      "function deploy(address implementation, address admin) payable returns (address proxy)",
-      "function deployAndCall(address implementation, address admin, bytes data) payable returns (address proxy)",
-      "function deployDeterministic(address implementation, address admin, bytes32 salt) payable returns (address proxy)",
-      "function deployDeterministicAndCall(address implementation, address admin, bytes32 salt, bytes data) payable returns (address proxy)",
-      "function initCodeHash() view returns (bytes32 result)",
-      "function predictDeterministicAddress(bytes32 salt) view returns (address predicted)",
-      "function upgrade(address proxy, address implementation) payable",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+      "constructor()",
+      "error FeatureDisabled()",
+      "error InvalidAmount()",
+      "error InvalidInitialization()",
+      "error NotFactory()",
+      "error NotInitializing()",
+      "error ZeroAdminAddress()",
+      "event Initialized(uint64 version)",
+      "function adminMarkComplete(address recipient, bytes32 withdrawalId)",
+      "function adminWithdraw(address recipient, uint256 amount)",
+      "function adminWithdrawFCT(address recipient, uint256 amount)",
+      "function bridgeAndCall(address recipient, address dumbContractToCall, bytes functionCalldata, uint64) payable",
+      "function deposit() payable",
+      "function donateETH() payable",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getAdmin() view returns (address)",
+      "function getDumbContract() pure returns (address)",
+      "function getSigner() view returns (address)",
+      "function initialize()",
+      "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
+      "function setAdmin(address admin)",
+      "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
     ],
     "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
       "error InvalidProof()",
@@ -824,6 +829,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23217606, "facet": 1856178 },
+  "usedBlockNumbers": { "ethereum": 23274872, "facet": 1912297 },
   "permissionsConfigHash": "0x0fce2db250d4177647709f445b4f4e0d924a8700b3acd3798704c94903377789"
 }
