@@ -20,7 +20,10 @@ export const zksyncprover: BaseProject = {
     description:
       'Plonk proving system designed by Matter Labs to prove custom predefined state transitions of ZKsync Lite.',
     links: {
-      documentation: ['https://github.com/matter-labs/zksync/tree/master/docs'],
+      documentation: [
+        'https://github.com/matter-labs/zksync/tree/master/docs',
+        'https://docs.lite.zksync.io/userdocs/',
+      ],
       repositories: ['https://github.com/matter-labs/zksync/tree/master'],
     },
     badges: [],
