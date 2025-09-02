@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
@@ -26,6 +27,7 @@ type Props = {
 }
 
 export function ScalingRiskStateValidationTabs({ zk, optimistic }: Props) {
+  const [tableTab, setTableTab] = useState<'zk' | 'optimistic'>('zk')
   const filterEntries = useFilterEntries()
 
   const entries = {
@@ -72,6 +74,8 @@ export function ScalingRiskStateValidationTabs({ zk, optimistic }: Props) {
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
             <ScalingRiskStateValidationTable
+              tableTab={tableTab}
+              setTableTab={setTableTab}
               zk={zk.rollups}
               optimistic={optimistic.rollups}
             />
@@ -81,6 +85,8 @@ export function ScalingRiskStateValidationTabs({ zk, optimistic }: Props) {
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
             <ScalingRiskStateValidationTable
+              tableTab={tableTab}
+              setTableTab={setTableTab}
               zk={zk.validiumsAndOptimiums}
               optimistic={optimistic.validiumsAndOptimiums}
             />
@@ -90,6 +96,8 @@ export function ScalingRiskStateValidationTabs({ zk, optimistic }: Props) {
           <DirectoryTabsContent value="others">
             <OthersInfo />
             <ScalingRiskStateValidationTable
+              tableTab={tableTab}
+              setTableTab={setTableTab}
               zk={zk.others}
               optimistic={optimistic.others}
             />

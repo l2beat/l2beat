@@ -214,6 +214,11 @@ export const eigenda: BaseProject = {
         frequency: 1, // x second
         sinceTimestamp: 1719187200, // 2024-06-24
       },
+      {
+        size: 'NO_CAP',
+        frequency: 1, // x second
+        sinceTimestamp: 1753833600, // 2025-07-30
+      },
     ],
     finality: 600, // ~10 minutes
     sovereignProjectsTrackingConfig: [
@@ -397,6 +402,13 @@ An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
+    {
+      title: 'EigenDA V2 launch',
+      url: 'https://x.com/0xkydo/status/1950571973790363737',
+      date: '2025-07-30T00:00:00Z',
+      description: 'EigenDA V2 launch on Ethereum mainnet.',
+      type: 'general',
+    },
     {
       title: 'EigenDA launch on mainnet',
       url: 'https://blog.eigenlayer.xyz/mainnet-launch-eigenlayer-eigenda/',

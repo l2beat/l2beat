@@ -195,7 +195,14 @@
     ["0x3dad0c9c", "cleanupERC20"],
     ["0x04e45aaf", "exactInputSingle"],
     ["0x87517c45", "approve"],
-    ["0x3593564c", "execute"]
+    ["0x3593564c", "execute"],
+    ["0xffbb2f63", "setVaultModule"],
+    ["0x4d2e3d92", "setVaultType"],
+    ["0x0accafb0", "setPrice"],
+    ["0x5fbfb9cf", "createAccount"],
+    ["0x31547ea6", "voteFor"],
+    ["0xa87a20ce", "updateAnswer"],
+    ["0x51cff8d9", "withdraw"]
   ],
   "IMPLEMENTATIONS": [
     [

@@ -8,14 +8,9 @@ const ENTRYPOINTS_FILENAME = 'entrypoints.json'
 
 export async function generateEntrypoints(
   configReader: ConfigReader,
-  chain: string,
   project: string,
 ) {
-  const entrypoints = generateEntrypointsForProject(
-    project,
-    chain,
-    configReader,
-  )
+  const entrypoints = generateEntrypointsForProject(project, configReader)
   const projectDir = configReader.getProjectPath(project)
   const outputFilePath = join(projectDir, ENTRYPOINTS_FILENAME)
   await writeFile(outputFilePath, JSON.stringify(entrypoints, null, 2) + '\n')
@@ -23,10 +18,9 @@ export async function generateEntrypoints(
 
 function generateEntrypointsForProject(
   project: string,
-  chain: string,
   configReader: ConfigReader,
 ) {
-  const discovery = configReader.readDiscovery(project, chain)
+  const discovery = configReader.readDiscovery(project)
   const entrypoints: Record<ChainSpecificAddress, Entrypoint> = {}
   discovery.entries
     .filter((e) => e.type !== 'Reference')

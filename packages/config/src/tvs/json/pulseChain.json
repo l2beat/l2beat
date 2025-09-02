@@ -720,7 +720,7 @@
         "decimals": 18,
         "sinceTimestamp": 1684137600
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -815,7 +815,7 @@
         "decimals": 6,
         "sinceTimestamp": 1684137600
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -1437,7 +1437,7 @@
         "decimals": 18,
         "sinceTimestamp": 1684137600
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },

@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
-import { ChainConverter } from '@l2beat/shared-pure'
 import type { Config } from '../../config'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import type { Peripherals } from '../../peripherals/Peripherals'
@@ -41,14 +40,12 @@ export function createUpdateMonitorModule(
     config.updateMonitor.updateMessagesRetentionPeriodDays,
   )
 
-  const chainConverter = new ChainConverter(config.chains)
   const discoveryOutputCache = new DiscoveryOutputCache()
   const projectService = new ProjectService()
 
   const updateNotifier = new UpdateNotifier(
     peripherals.database,
     discordClient,
-    chainConverter,
     logger,
     updateMessagesService,
     projectService,
@@ -77,7 +74,6 @@ export function createUpdateMonitorModule(
     cacheUri,
   )
 
-  const chainNames = chains.map((c) => c.name)
   const updateMonitor = new UpdateMonitor(
     runner,
     updateNotifier,
@@ -85,18 +81,14 @@ export function createUpdateMonitorModule(
     configReader,
     peripherals.database,
     clock,
-    chainConverter,
     discoveryOutputCache,
     logger,
     !!config.updateMonitor.runOnStart,
-    chainNames,
   )
 
   const updateMonitorController = new UpdateMonitorController(
     peripherals.database,
-    chains,
     configReader,
-    chainConverter,
     projectService,
   )
   const updateMonitorRouter = createUpdateMonitorRouter(updateMonitorController)

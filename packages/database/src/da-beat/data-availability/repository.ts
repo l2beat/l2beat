@@ -151,6 +151,23 @@ export class DataAvailabilityRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async getMaxHistoricalRecordByDaLayer(
+    daLayers: string[],
+  ): Promise<DataAvailabilityRecord[]> {
+    if (daLayers.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .selectAll()
+      .where('daLayer', 'in', daLayers)
+      .whereRef('projectId', '=', 'daLayer')
+      .orderBy(['daLayer', 'totalSize desc', 'timestamp desc'])
+      .distinctOn('daLayer')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   // Test only
   async getAll(): Promise<DataAvailabilityRecord[]> {
     const rows = await this.db

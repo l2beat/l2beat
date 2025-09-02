@@ -11,7 +11,6 @@ import type { StructureConfig } from '../config/StructureConfig'
 import type { EntryParameters, StructureOutput } from './types'
 
 export function getStructureOutput(
-  chain: string,
   config: StructureConfig,
   timestamp: UnixTime,
   usedBlockNumbers: Record<string, number>,
@@ -27,7 +26,6 @@ export function getStructureOutput(
 
   return withoutUndefinedKeys({
     name: config.name,
-    chain,
     timestamp,
     configHash: hashJsonStable(strippedConfig),
     sharedModules: undefinedIfEmpty(config.sharedModules),
