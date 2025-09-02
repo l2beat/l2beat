@@ -67,32 +67,32 @@ export class PortalPlugin implements Plugin {
     })
   }
 
-  async match(action: Event, db: EventDb): Promise<MatchResult | undefined> {
-    if (!TransferRedeemed.checkType(action)) {
+  async match(event: Event, db: EventDb): Promise<MatchResult | undefined> {
+    if (!TransferRedeemed.checkType(event)) {
       return
     }
 
-    const outboundAction = db.find(LogMessagePublished, {
-      sender: action.payload.emitterAddress,
-      wormholeChainId: action.payload.emitterWormholeChainId,
-      sequence: action.payload.sequence,
+    const outboundEvent = db.find(LogMessagePublished, {
+      sender: event.payload.emitterAddress,
+      wormholeChainId: event.payload.emitterWormholeChainId,
+      sequence: event.payload.sequence,
     })
-    if (!outboundAction) {
+    if (!outboundEvent) {
       return
     }
 
-    const rpc = this.rpcs.get(outboundAction.tx.chain)
+    const rpc = this.rpcs.get(outboundEvent.tx.chain)
     if (!rpc) {
-      this.logger.warn('RPC not configured', { chain: outboundAction.tx.chain })
+      this.logger.warn('RPC not configured', { chain: outboundEvent.tx.chain })
       return
     }
 
     const tokenBridge = NETWORKS.find(
-      (n) => n.chain === outboundAction.tx.chain,
+      (n) => n.chain === outboundEvent.tx.chain,
     )?.tokenBridge
     if (!tokenBridge) {
       this.logger.warn('Network not configured', {
-        chain: outboundAction.tx.chain,
+        chain: outboundEvent.tx.chain,
       })
       return
     }
@@ -105,11 +105,11 @@ export class PortalPlugin implements Plugin {
           encodeFunctionData({
             abi: ABI,
             functionName: 'parseTransfer',
-            args: [outboundAction.payload.payload],
+            args: [outboundEvent.payload.payload],
           }),
         ),
       },
-      outboundAction.tx.blockNumber,
+      outboundEvent.tx.blockNumber,
     )
 
     const parsedTransfer = decodeFunctionResult({
@@ -124,18 +124,18 @@ export class PortalPlugin implements Plugin {
       message: {
         type: 'portal.WormholeMessage',
         messageId: generateId('M'),
-        inbound: outboundAction,
-        outbound: action,
+        inbound: event,
+        outbound: outboundEvent,
       },
       transfer: {
         type: 'portal.Transfer',
         transferId: generateId('T'),
-        actions: [outboundAction, action],
+        events: [outboundEvent, event],
         outbound: {
-          tx: outboundAction.tx,
+          tx: outboundEvent.tx,
         },
         inbound: {
-          tx: action.tx,
+          tx: event.tx,
           tokenAddress,
           amount: parsedTransfer.amount.toString(),
         },

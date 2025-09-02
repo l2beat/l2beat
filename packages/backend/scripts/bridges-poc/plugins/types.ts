@@ -46,7 +46,7 @@ export interface TransferSide {
 export interface Transfer {
   transferId: string
   type: string
-  actions: Event[]
+  events: Event[]
   outbound: TransferSide
   inbound: TransferSide
 }
