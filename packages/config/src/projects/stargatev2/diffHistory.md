@@ -1,3 +1,136 @@
+Generated with discovered.json: 0x734cf2f190acfd6fc452843dc93f6b4831a1a4d6
+
+# Diff at Tue, 02 Sep 2025 10:08:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1144aeaf984988c003c97be3791eeda76896f8ca block: 1752074075
+- current timestamp: 1756805760
+
+## Description
+
+EURC pools added on ethereum and base (no tvs for now).
+
+## Watched changes
+
+```diff
+    contract TokenMessagingBase (base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47) {
+    +++ description: None
++++ description: The highest currently registered assetID
+      values.maxAssetId:
+-        13
++        23
+      values.pools.13:
++        "base:0x0000000000000000000000000000000000000000"
+      values.pools.14:
++        "base:0x0000000000000000000000000000000000000000"
+      values.pools.15:
++        "base:0x0000000000000000000000000000000000000000"
+      values.pools.16:
++        "base:0x0000000000000000000000000000000000000000"
+      values.pools.17:
++        "base:0x0000000000000000000000000000000000000000"
+      values.pools.18:
++        "base:0x0000000000000000000000000000000000000000"
+      values.pools.19:
++        "base:0x0000000000000000000000000000000000000000"
+      values.pools.20:
++        "base:0x0000000000000000000000000000000000000000"
+      values.pools.21:
++        "base:0x0000000000000000000000000000000000000000"
+      values.pools.22:
++        "base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2"
+    }
+```
+
+```diff
+    contract StargateMultiRewarder (eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881) {
+    +++ description: None
+      values.rewardTokens.1:
++        "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
+    }
+```
+
+```diff
+    contract CreditMessaging (eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d) {
+    +++ description: None
++++ description: The highest currently registered assetID
+      values.maxAssetId:
+-        22
++        23
+      values.pools.22:
++        "eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c"
+    }
+```
+
+```diff
+    contract TokenMessagingEthereum (eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980) {
+    +++ description: This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes
+      values.maxAssetId:
+-        22
++        23
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolEURC (base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolEURC (eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2.sol | 2743 ++++++++++++++++++++
+ ...:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c.sol | 2743 ++++++++++++++++++++
+ 2 files changed, 5486 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752074075 (main branch discovery), not current.
+
+```diff
+    contract StargatePool (eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D) {
+    +++ description: None
+      template:
++        "stargate/StargatePool"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FeeLibV1 (eth:0x6Dd69717B1194B81A92105B7e0F94cb40f68A3e3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Metis Token (eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e)
+    +++ description: Metis token contract.
+```
+
+```diff
+    contract StargatePool (eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3) {
+    +++ description: None
+      template:
++        "stargate/StargatePool"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LPToken (eth:0xF14EEe033D8b00101aB147F87cB238a2d3E74940)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x55aa12969e1d631a3e794302c4be66614be457b7
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

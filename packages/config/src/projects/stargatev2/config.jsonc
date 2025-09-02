@@ -275,22 +275,6 @@
           }
         }
       }
-    },
-    "eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": {
-      "ignoreRelatives": [
-        "endpoint",
-        "getAddressConfig",
-        "lpToken",
-        "owner",
-        "token"
-      ],
-      "ignoreInWatchMode": [
-        "plannerFee",
-        "poolBalance",
-        "treasuryFee",
-        "tvl",
-        "getTransferGasLimit"
-      ]
     }
   }
 }
