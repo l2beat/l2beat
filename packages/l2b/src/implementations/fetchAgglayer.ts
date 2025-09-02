@@ -2,7 +2,7 @@ import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 import fs from 'fs'
 
-interface RollupNamesMap {
+interface CommentsMap {
   [key: string]: string
 }
 
@@ -28,6 +28,9 @@ interface RollupData {
 interface RollupDataExtended extends RollupData {
   rollupID: number
   name: string
+  networkName?: string
+  gasTokenAddress?: string
+  comments?: string
 }
 
 interface ErrorWithMessage {
@@ -39,27 +42,24 @@ export class AgglayerDataFetcher {
   private rollupManagerAddress = '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'
   private outputFilePath: string
 
-  // Known rollup names
-  private rollupNames: RollupNamesMap = {
-    '1': 'polygon zkEVM',
-    '2': 'astar',
-    '3': 'OkX X Layer',
-    '4': 'OEV network (dead)',
-    '5': 'gptprotocol.org (dead)',
-    '6': 'witnesschain (dead)',
+  // Manual comments per rollupID (user-editable)
+  private comments: CommentsMap = {
+    '4': 'dead',
+    '5': 'dead',
+    '6': 'dead',
     '7': 'lumia.org',
-    '8': 'pay network (wirex)',
-    '9': 'silicon-zk testnet',
-    '10': 'silicon-zk',
-    '11': 'haust.network testnet',
-    '12': 'haust.network',
-    '13': 'ternoa.network',
-    '14': 'cdk-sov test (z-chain/token)',
-    '15': 'pentagon games testnet?',
-    '16': 'pentagon.games/pen-chain',
-    '17': 'Okto (wallet?)',
-    '20': 'Katana',
+    '8': 'wirexpaychain.com',
+    '9': 'testnet',
+    '10': 'mainnet',
+    '11': 'testnet',
+    '12': 'mainnet',
+    '14': 'cdk-sov test',
+    '15': 'testnet?',
+    '16': 'pentagon.games/pentagon-chain',
+    '17': 'wallet',
+    '20': 'op stack cdk sov',
     '21': 'Forknet.io',
+    '22': 'testnet?',
   }
 
   // Rollup type ID descriptions
@@ -92,6 +92,11 @@ export class AgglayerDataFetcher {
     'function rollupIDToRollupDataV2(uint32 rollupID) view returns (tuple(address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType, bytes32 lastPessimisticRoot, bytes32 programVKey) rollupData)',
   ]
 
+  private rollupContractAbi = [
+    'function networkName() view returns (string)',
+    'function gasTokenAddress() view returns (address)',
+  ]
+
   constructor(providerUrl: string, outputFilePath: string) {
     this.provider = new ethers.providers.JsonRpcProvider(providerUrl)
     this.outputFilePath = outputFilePath
@@ -99,7 +104,7 @@ export class AgglayerDataFetcher {
 
   // Helper function to safely access string map with fallback
   private getFromStringMap(
-    map: RollupNamesMap | RollupTypeNamesMap,
+    map: CommentsMap | RollupTypeNamesMap,
     key: string,
     fallback: string,
   ): string {
@@ -133,14 +138,41 @@ export class AgglayerDataFetcher {
           console.log(`No more rollups found after ID ${rollupID - 1}`)
           continueLoop = false
         } else {
+          // Query per-rollup contract for extras: networkName + gasTokenAddress
+          let networkName: string | undefined
+          let gasTokenAddress: string | undefined
+          try {
+            const rollupContract = new ethers.Contract(
+              data.rollupContract,
+              this.rollupContractAbi,
+              this.provider,
+            )
+            networkName = await rollupContract.networkName()
+          } catch (_e) {
+            // ignore; fallback will be used
+          }
+          try {
+            const rollupContract = new ethers.Contract(
+              data.rollupContract,
+              this.rollupContractAbi,
+              this.provider,
+            )
+            gasTokenAddress = await rollupContract.gasTokenAddress()
+          } catch (_e) {
+            // ignore; may be undefined
+          }
+
           // Add to our list with extended information
           rollupDataList.push({
             ...data,
             rollupID,
-            name: this.getFromStringMap(
-              this.rollupNames,
+            name: networkName ?? 'Unknown',
+            networkName,
+            gasTokenAddress,
+            comments: this.getFromStringMap(
+              this.comments,
               rollupID.toString(),
-              'Unknown',
+              '',
             ),
           })
 
@@ -168,6 +200,9 @@ export class AgglayerDataFetcher {
       return {
         rollupID: data.rollupID,
         name: data.name,
+        networkName: data.networkName,
+        gasTokenAddress: data.gasTokenAddress,
+        comments: data.comments,
         rollupContract: data.rollupContract,
         chainID: data.chainID.toString(),
         verifier: data.verifier,
@@ -205,6 +240,8 @@ export class AgglayerDataFetcher {
     const headers = [
       'RollupID',
       'Name',
+      'Comments',
+      'GasToken',
       'ChainID',
       'ForkID',
       'RollupTypeID',
@@ -224,9 +261,18 @@ export class AgglayerDataFetcher {
       )
       const rollupTypeString = `${rollupTypeID} (${rollupTypeName})`
 
+      const gasTokenDisplay = data.gasTokenAddress
+        ? data.gasTokenAddress.toLowerCase() !==
+          '0x0000000000000000000000000000000000000000'
+          ? 'custom'
+          : 'ETH'
+        : '?'
+
       rows.push([
         data.rollupID.toString(),
         data.name,
+        data.comments ?? '',
+        gasTokenDisplay,
         data.chainID.toString(),
         data.forkID.toString(),
         rollupTypeString,
