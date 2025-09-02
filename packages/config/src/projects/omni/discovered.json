@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "timestamp": 1756805190,
-  "configHash": "0x1579affe7ab0c693d701abbdd21d419966009d958511be4e4d866db7e6ea36b9",
+  "configHash": "0xcf97bcecfece8995708b0ebc2b69f461377deef9dc1903f84af9d9ccfe0e2769",
   "entries": [
     {
       "name": "Giveth EOA 2",
@@ -1026,8 +1026,6 @@
       ],
       "proxyType": "immutable",
       "description": "Contract handling inbound messages for the Hashi protocol.",
-      "sinceTimestamp": 1726019595,
-      "sinceBlock": 35938697,
       "values": {
         "$immutable": true,
         "HASHI": "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
@@ -1046,8 +1044,6 @@
         "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1634244030,
-      "sinceBlock": 18573208,
       "values": {
         "$immutable": true,
         "bridgeContract": "gno:0x0000000000000000000000000000000000000000",
@@ -1116,8 +1112,6 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1686655675,
-      "sinceBlock": 28432566,
       "values": {
         "$immutable": false,
         "$implementation": "gno:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1167,8 +1161,6 @@
         "0xdcb8211bc83ab560c19e3bc532a958bc0582fa7a02d0c53df72f3cf293f598d5"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1634245065,
-      "sinceBlock": 18573414,
       "values": {
         "$immutable": true,
         "FOREIGN_TO_HOME_FEE": "0x03be2b2875cb41e0e77355e802a16769bb8dfcf825061cde185c73bf94f12625",
@@ -1207,8 +1199,6 @@
         "0x40a5e7e16f2ed78de499e7ab33bb60f2d3e668b003b8253c8ed3659066c6bee2"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1634246385,
-      "sinceBlock": 18573677,
       "values": {
         "$immutable": true,
         "bridge": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
@@ -1250,8 +1240,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
-      "sinceTimestamp": 1726022850,
-      "sinceBlock": 35939330,
       "values": {
         "$admin": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
         "$implementation": "gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5",
@@ -1317,8 +1305,6 @@
         "0x42c489ed63dc75d73bab6e89bc470b7c805b0c16cbbc0e9287cc824cc88b0b79"
       ],
       "proxyType": "Eternal Storage proxy",
-      "sinceTimestamp": 1579258310,
-      "sinceBlock": 7904954,
       "values": {
         "$admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "$implementation": "gno:0xA033535983d1aBcc2648af730EDCb198909903D7",
@@ -1396,8 +1382,6 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1651741965,
-      "sinceBlock": 21984719,
       "values": {
         "$immutable": false,
         "$implementation": "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -1462,8 +1446,6 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1603125660,
-      "sinceBlock": 12596066,
       "values": {
         "$immutable": false,
         "$implementation": "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -1507,8 +1489,6 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["getCurrentEpoch", "head"],
-      "sinceTimestamp": 1748854670,
-      "sinceBlock": 40374651,
       "values": {
         "$immutable": true,
         "GENESIS_TIME": 1606824023,
@@ -1556,8 +1536,6 @@
         "0x2cd195f97f037ce704ea4e143bdfa9e5fa791b350bcca9c8f248e4256fb9d829"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1748856160,
-      "sinceBlock": 40374946,
       "values": {
         "$immutable": true,
         "PROVIDER": "sp1-helios",
@@ -1590,8 +1568,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Custom multisignature contract for Validator addresses.",
-      "sinceTimestamp": 1579258260,
-      "sinceBlock": 7904944,
       "values": {
         "$admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "$implementation": "gno:0xb056BFEdc397D427697a75E3ff115a0954de4791",
@@ -1662,8 +1638,6 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
-      "sinceTimestamp": 1748854505,
-      "sinceBlock": 40374619,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
@@ -1681,8 +1655,6 @@
         "0x43d4a4b8ebf5f34d224efe2343c5abc3fc5042025c06fb8dd82efc9257fbaa92"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1720614180,
-      "sinceBlock": 34894600,
       "values": { "$immutable": true },
       "implementationNames": {
         "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": "Hashi"
@@ -1713,8 +1685,6 @@
       ],
       "proxyType": "immutable",
       "description": "Contract handling outbound messages for the Hashi protocol.",
-      "sinceTimestamp": 1720614455,
-      "sinceBlock": 34894655,
       "values": { "$immutable": true },
       "implementationNames": {
         "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": "Yaho"
@@ -1754,8 +1724,6 @@
         "0x7f6c0a3df8db7d08785d2a343cc1b3c8584ec7c60e54c2cf81d7bc9898d441d5"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1634246015,
-      "sinceBlock": 18573603,
       "values": {
         "$immutable": true,
         "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
@@ -1798,8 +1766,6 @@
         "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1634244420,
-      "sinceBlock": 18573286,
       "values": {
         "$immutable": true,
         "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
@@ -1834,8 +1800,6 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1686041905,
-      "sinceBlock": 28315765,
       "values": {
         "$immutable": false,
         "$implementation": "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -1872,8 +1836,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "ignoreInWatchMode": ["getCurrentDay"],
-      "sinceTimestamp": 1596501010,
-      "sinceBlock": 11300566,
       "values": {
         "$admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "$implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
@@ -3078,6 +3040,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "gnosis": 41916093, "ethereum": 23274516 },
+  "usedBlockNumbers": { "ethereum": 23274516, "gnosis": 41916093 },
   "permissionsConfigHash": "0xdd14a223281ad3007f536bad13ce1c6e2547595fe29cce02186ba8e2b58df53b"
 }
