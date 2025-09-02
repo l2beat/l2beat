@@ -17,6 +17,7 @@ export const abstract: ScalingProject = zkStackL2({
     slug: 'abstract',
     description:
       'Abstract is a ZK Rollup built on top of Ethereum using the ZK stack, designed to securely power consumer-facing blockchain applications at scale with low fees and fast transaction speeds.',
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://abs.xyz/'],
       bridges: [
