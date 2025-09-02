@@ -17,6 +17,13 @@
       ]
     },
     {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
+    },
+    {
       "name": "DACommittee",
       "address": "eth:0x4b2Bf1Cb06CB636e8A14540F76c477E61d8B6669",
       "type": "Contract",
@@ -677,5 +684,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 19825385 },
-  "permissionsConfigHash": "0x25575e7b6fa97fd2639b893f46f9bda66fc69c0b5ddb9834a65408a1cb0dd5cb"
+  "permissionsConfigHash": "0x0cae6b731df73a3f2767f3cd488cd6b11bf672001d11d4debc7c2c9f6b99e890"
 }

@@ -5,6 +5,12 @@
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
+      "address": "eth:0x0405107a60391Eb51821be373ff978115Ee58488",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sharp-verifier"
+    },
+    {
       "address": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "type": "EOA",
       "proxyType": "EOA",
@@ -15,6 +21,13 @@
           "role": ".operators"
         }
       ]
+    },
+    {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "name": "OrderRegistry",
@@ -61,6 +74,12 @@
           "role": ".$admin"
         }
       ]
+    },
+    {
+      "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "address": "eth:0x63881ac44293E22F3c3183a0C4113586ABb3e653",
@@ -931,5 +950,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 21981156 },
-  "permissionsConfigHash": "0x7d9eead5c581c8c38167050b2f180289ca124d361cda04a3b19016cfd13b35f2"
+  "permissionsConfigHash": "0xbaeee990a0a2e17c209d82d6c9a76a51494568a9f89b21fb1dd7b2e327891541"
 }

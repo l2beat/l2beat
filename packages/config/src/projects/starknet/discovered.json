@@ -878,6 +878,13 @@
       ]
     },
     {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
+    },
+    {
       "address": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "type": "EOA",
       "proxyType": "EOA",
@@ -893,6 +900,12 @@
       "address": "eth:0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "address": "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
@@ -4298,5 +4311,5 @@
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b"
   },
   "usedBlockNumbers": { "ethereum": 22480922 },
-  "permissionsConfigHash": "0xf63f109dd14704ed5b2cdad81f8ec5b5aa661bc58387a1a2696b07b689c420a9"
+  "permissionsConfigHash": "0x4c314c06b6e96953e5ca81b43a77839399f989a1dcd03369aeaec50a2ae81e00"
 }
