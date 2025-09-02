@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "timestamp": 1756812807,
-  "configHash": "0xff566c5b5584443b98a94053405ec37fe4abd66c069eaa848c138f993caece7b",
+  "configHash": "0x35e75efbc85fe42ba6b4a8065e2d11b691d1309ce5bbe220c7e1c91cf4c5195f",
   "entries": [
     {
       "name": "PredicatePermitter",
@@ -1654,6 +1654,6 @@
     "intmax/Rollup": "0x9efdc4c4aebfdd09e6ab16141180d3f9fa8e1bfe833622003535a1d9b98836c6",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "usedBlockNumbers": { "scroll": 20493313, "ethereum": 23275143 },
+  "usedBlockNumbers": { "ethereum": 23275143, "scroll": 20493313 },
   "permissionsConfigHash": "0x9a240030134b12857a0ad3b1c1459da05f8a936a431230313e2252e94d582823"
 }

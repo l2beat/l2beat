@@ -1,7 +1,7 @@
 {
   "name": "zkfair",
   "timestamp": 1745306051,
-  "configHash": "0xa11fd6426d41fd89c596596527c0e7a2c6d22201bd4b20c0c4fef9af48ad99ed",
+  "configHash": "0x2d77c20ac331d73275d165ea5e5ce548280e49c359eb546b126335364a2f785b",
   "entries": [
     {
       "name": "ZKFairAdmin",

@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "timestamp": 1752069683,
-  "configHash": "0x778c2de12ef7dd6c467152d1d3b5af99ebb113c78ed5c2b1ca9c29f4b082a547",
+  "configHash": "0x5bb34c1f79b760dd2adb5c7301ae3bf8541edda6751452c11c9837cb629fea79",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {

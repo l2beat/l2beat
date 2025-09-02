@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "timestamp": 1753344203,
-  "configHash": "0x5908abdfe2cd32900e061d05cdf3bc404af4adaaeefd3c6a6abc94f346e7ae36",
+  "configHash": "0x76811e7113e4117818d6c6889e8ed0e54c5d34c22d7f8f30d415709ca8e4f8be",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -5726,6 +5726,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "nova": 83830010, "ethereum": 22987703 },
+  "usedBlockNumbers": { "ethereum": 22987703, "nova": 83830010 },
   "permissionsConfigHash": "0x097aab79b9e7f7ff6f3acab1ac062708c128cc253ecbdc42d4bbe1d326108454"
 }

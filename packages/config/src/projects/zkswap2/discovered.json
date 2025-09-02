@@ -1,7 +1,7 @@
 {
   "name": "zkswap2",
   "timestamp": 1678088327,
-  "configHash": "0x5f30e5450fa7beb52f386c1fb0309866ac8f1a48ab16cbfee2fcdb8312fbb66f",
+  "configHash": "0xd9a0c668127ea488ca1b33eb31a93b8c6f39a4a042237509dc96a2389758e3af",
   "entries": [
     {
       "name": "UpgradeGatekeeper",
