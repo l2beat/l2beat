@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x71630046947fb4d48c8d7289221c6730bd6e2059
+
+# Diff at Tue, 02 Sep 2025 09:21:15 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@1144aeaf984988c003c97be3791eeda76896f8ca block: 1755014032
+- current timestamp: 1756804792
+
+## Description
+
+Multisig changes.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 3 (base:0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      values.$members.2:
+-        "base:0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x84b1fcfd93f9b75d16d19a942f4fa9038d4956a6
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

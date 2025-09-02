@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xd00f774b795bbc886d701954231c39ae0628a1d3
+
+# Diff at Tue, 02 Sep 2025 11:43:14 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@a1c1980a59e1040a5ec42c06890371ce5f315602 block: 1755850487
+- current timestamp: 1756812807
+
+## Description
+
+A `.transfer` has been turned into a `.call`. Nothing more.
+
+## Watched changes
+
+```diff
+    contract Liquidity (eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3) {
+    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check.
+      sourceHashes.1:
+-        "0x317092e18b9969dafe50d31933b2ce36261479b3a6832281c652af1125e002ee"
++        "0xe050f1745884847699cff3db5506410a82629972bb6fd8a52199442b01351485"
+      values.$implementation:
+-        "eth:0x4fd8BF5f45832a007448fcDE29049919F8cf6D0d"
++        "eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA"
+      values.$pastUpgrades.2:
++        ["2025-08-30T13:25:23.000Z","0x93f7c96b159e82cd555266aa0451fb2d3a7eb8475edf83f66a15fa617de1eca0",["eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0x4fd8BF5f45832a007448fcDE29049919F8cf6D0d:
+-        "Liquidity"
+      implementationNames.eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA:
++        "Liquidity"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1755850487 => .flat}/Liquidity/Liquidity.sol     | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x887b021c9947830808a20b2b748167b198bdce18
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

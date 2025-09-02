@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x674bd7e762537fe41a0751f1d588af882563bb59
+
+# Diff at Tue, 02 Sep 2025 09:13:34 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@1144aeaf984988c003c97be3791eeda76896f8ca block: 1756453192
+- current timestamp: 1756804333
+
+## Description
+
+Multisig update.
+
+## Watched changes
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x59C09F33d7D901b8B57644D68a45b123e9Bbd0E5"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x1b48ab3f55afb4ebed8bad76602b3303275dd5d7
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
