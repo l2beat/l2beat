@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
-  createEventType,
   createEventParser,
+  createEventType,
   type LogToDecode,
   type Plugin,
 } from './types'

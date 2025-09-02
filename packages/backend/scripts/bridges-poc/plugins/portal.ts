@@ -3,10 +3,10 @@ import type { RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { decodeFunctionResult, encodeFunctionData, parseAbi } from 'viem'
 import {
+  createEventParser,
+  createEventType,
   type Event,
   type EventDb,
-  createEventType,
-  createEventParser,
   generateId,
   type LogToDecode,
   type MatchResult,
