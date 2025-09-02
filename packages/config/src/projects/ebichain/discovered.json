@@ -1,7 +1,7 @@
 {
   "name": "ebichain",
   "timestamp": 1756214657,
-  "configHash": "0x3f24e40e616dd47e402757ed38cf845509671d892d9ce8850f22743aac36b81a",
+  "configHash": "0x00a70bc35086d39c13dd0766254e27bfc0a81593d09219e6ab0cd0c6a67cab06",
   "entries": [
     {
       "name": "SequencerInbox",

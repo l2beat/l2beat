@@ -40,9 +40,7 @@ async function getProjectsChangeReportWithFns() {
   const result: Record<string, ProjectChangeReport> = {}
 
   const db = getDb()
-  let updateDiffs = await db.updateDiff.getAll()
-  // TODO(radomski): Quick fix
-  updateDiffs = []
+  const updateDiffs = await db.updateDiff.getAll()
 
   const byProject = groupBy(updateDiffs, (diff) => diff.projectId)
   for (const [projectId, diffs] of Object.entries(byProject)) {
@@ -71,16 +69,16 @@ async function getProjectsChangeReportWithFns() {
       result[projectId] ??= {}
       result[projectId][chain] = {
         implementationChange: changesByType.implementationChange.map((c) =>
-          EthereumAddress(c.address),
+          ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
         ),
         highSeverityFieldChange: changesByType.highSeverityFieldChange.map(
-          (c) => EthereumAddress(c.address),
+          (c) => ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
         ),
         ultimateUpgraderChange: changesByType.ultimateUpgraderChange.map((c) =>
-          EthereumAddress(c.address),
+          ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
         ),
         becameVerified: changesByType.becameVerified.map((c) =>
-          EthereumAddress(c.address),
+          ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
         ),
       }
     }

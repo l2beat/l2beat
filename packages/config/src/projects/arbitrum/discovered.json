@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "timestamp": 1755156465,
-  "configHash": "0x7342383200e491a94d758d6300483eb103d5c738d08df38c53d3767fdf5f38c8",
+  "configHash": "0x5a955d6081aa4c19f532a44dc5a03620afb3a3755a0e31ba374d6b0259a65c5f",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -8667,6 +8667,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 23137799, "arbitrum": 368262380 },
+  "usedBlockNumbers": { "arbitrum": 368262380, "ethereum": 23137799 },
   "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7"
 }

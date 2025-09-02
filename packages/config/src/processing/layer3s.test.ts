@@ -143,4 +143,22 @@ describe('layer3s', () => {
       })
     }
   })
+
+  describe('others', () => {
+    describe('live projects without proof system have reasons for being other', () => {
+      const liveProjectsWithoutProofSystem = layer3s.filter(
+        (layer3) =>
+          !layer3.isUpcoming &&
+          !layer3.archivedAt &&
+          !layer3.proofSystem &&
+          layer3.reviewStatus !== 'initialReview',
+      )
+
+      for (const layer3 of liveProjectsWithoutProofSystem) {
+        it(`${layer3.id} should have reasons for being other`, () => {
+          expect(layer3.reasonsForBeingOther?.length ?? 0).toBeGreaterThan(0)
+        })
+      }
+    })
+  })
 })

@@ -1,4 +1,212 @@
-Generated with discovered.json: 0x18ebe4ed7b72a79f18dc942c96e314cccc1ca946
+Generated with discovered.json: 0xeea4bd5a8467a9b9d76338b8f1c5727db556de2b
+
+# Diff at Tue, 02 Sep 2025 15:08:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f5ac0f88bdc411ecf49ff6c20d5dd0db181a0c91 block: 1756805190
+- current timestamp: 1756805190
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756805190 (main branch discovery), not current.
+
+```diff
+    contract Yaru (gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5) {
+    +++ description: Contract handling inbound messages for the Hashi protocol.
+      sinceTimestamp:
+-        1726019595
+      sinceBlock:
+-        35938697
+    }
+```
+
+```diff
+    contract PermittableToken (gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4) {
+    +++ description: None
+      sinceTimestamp:
+-        1634244030
+      sinceBlock:
+-        18573208
+    }
+```
+
+```diff
+    contract GnosisSafe (gno:0x507A7777E6DbF4680951E63fB3753a20F2c37706) {
+    +++ description: None
+      sinceTimestamp:
+-        1686655675
+      sinceBlock:
+-        28432566
+    }
+```
+
+```diff
+    contract OmnibridgeFeeManager (gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55) {
+    +++ description: None
+      sinceTimestamp:
+-        1634245065
+      sinceBlock:
+-        18573414
+    }
+```
+
+```diff
+    contract SelectorTokenGasLimitManager (gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED) {
+    +++ description: None
+      sinceTimestamp:
+-        1634246385
+      sinceBlock:
+-        18573677
+    }
+```
+
+```diff
+    contract HashiManager_Gnosis (gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      sinceTimestamp:
+-        1726022850
+      sinceBlock:
+-        35939330
+    }
+```
+
+```diff
+    contract HomeAMB (gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59) {
+    +++ description: None
+      sinceTimestamp:
+-        1579258310
+      sinceBlock:
+-        7904954
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0) {
+    +++ description: None
+      sinceTimestamp:
+-        1651741965
+      sinceBlock:
+-        21984719
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd) {
+    +++ description: None
+      sinceTimestamp:
+-        1603125660
+      sinceBlock:
+-        12596066
+    }
+```
+
+```diff
+    contract SP1Helios (gno:0x7CE84Eea8Fbe3cD9Afb40475E7257837E18745C8) {
+    +++ description: None
+      sinceTimestamp:
+-        1748854670
+      sinceBlock:
+-        40374651
+    }
+```
+
+```diff
+    contract SP1HeliosAdapter (gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf) {
+    +++ description: None
+      sinceTimestamp:
+-        1748856160
+      sinceBlock:
+-        40374946
+    }
+```
+
+```diff
+    contract BridgeValidators_Gnosis (gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) {
+    +++ description: Custom multisignature contract for Validator addresses.
+      sinceTimestamp:
+-        1579258260
+      sinceBlock:
+-        7904944
+    }
+```
+
+```diff
+    contract SP1Verifier (gno:0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sinceTimestamp:
+-        1748854505
+      sinceBlock:
+-        40374619
+    }
+```
+
+```diff
+    contract Hashi (gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615) {
+    +++ description: None
+      sinceTimestamp:
+-        1720614180
+      sinceBlock:
+-        34894600
+    }
+```
+
+```diff
+    contract Yaho (gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8) {
+    +++ description: Contract handling outbound messages for the Hashi protocol.
+      sinceTimestamp:
+-        1720614455
+      sinceBlock:
+-        34894655
+    }
+```
+
+```diff
+    contract MultiTokenForwardingRulesManager (gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286) {
+    +++ description: None
+      sinceTimestamp:
+-        1634246015
+      sinceBlock:
+-        18573603
+    }
+```
+
+```diff
+    contract TokenFactory (gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2) {
+    +++ description: None
+      sinceTimestamp:
+-        1634244420
+      sinceBlock:
+-        18573286
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623) {
+    +++ description: None
+      sinceTimestamp:
+-        1686041905
+      sinceBlock:
+-        28315765
+    }
+```
+
+```diff
+    contract HomeOmnibridge (gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d) {
+    +++ description: None
+      sinceTimestamp:
+-        1596501010
+      sinceBlock:
+-        11300566
+    }
+```
+
+Generated with discovered.json: 0xbd2818a5ad3b7631ba0db87217e404c3bdd73500
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

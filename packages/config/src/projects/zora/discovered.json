@@ -1,7 +1,7 @@
 {
   "name": "zora",
   "timestamp": 1755507657,
-  "configHash": "0xa31dcd43e28bc84f7d6e9a09960319230d0dac3a711c4239877aff1e8edb648f",
+  "configHash": "0x251ac273d3e58925aabf139c96b64df3e0dda6293d54e715396fdf8d66dbf522",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
