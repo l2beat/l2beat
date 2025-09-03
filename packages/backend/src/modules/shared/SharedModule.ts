@@ -1,23 +1,18 @@
-import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
-import type { Config } from '../../config'
 import { DiscordWebhookClient } from '../../peripherals/discord/DiscordWebhookClient'
-import type { Providers } from '../../providers/Providers'
-import type { Clock } from '../../tools/Clock'
 import { EventIndexer } from '../../tools/EventIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import type { ApplicationModule } from '../ApplicationModule'
 import { AnomalyNotifier } from '../anomalies/AnomalyNotifier'
 import { RealTimeLivenessProcessor } from '../anomalies/RealTimeLivenessProcessor'
+import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockIndexer } from './BlockIndexer'
 
-export function createSharedModule(
-  config: Config,
-  logger: Logger,
-  clock: Clock,
-  providers: Providers,
-  db: Database,
-): ApplicationModule | undefined {
+export function createSharedModule({
+  config,
+  logger,
+  db,
+  clock,
+  providers,
+}: ModuleDependencies): ApplicationModule | undefined {
   if (!config.shared) {
     logger.info('Shared module disabled')
     return

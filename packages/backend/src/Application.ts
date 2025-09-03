@@ -3,7 +3,6 @@ import { createDatabase } from '@l2beat/database'
 import { HttpClient } from '@l2beat/shared'
 import { ApiServer } from './api/ApiServer'
 import type { Config } from './config'
-import type { ApplicationModule } from './modules/ApplicationModule'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
@@ -12,6 +11,7 @@ import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createSharedModule } from './modules/shared/SharedModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
+import type { ApplicationModule, ModuleDependencies } from './modules/types'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
@@ -23,56 +23,45 @@ export class Application {
 
   constructor(config: Config, logger: Logger) {
     const appLogger = logger.for(this)
-
     appLogger.info('Initializing App')
-
     appLogger.info('Initializing DB', {
       poolSize: config.database.connectionPoolSize,
       appName: config.database.connection.application_name,
     })
 
-    const database = createDatabase({
+    const db = createDatabase({
       ...config.database.connection,
       ...config.database.connectionPoolSize,
     })
-
     const clock = new Clock(
       config.clock.minBlockTimestamp,
       config.clock.safeTimeOffsetSeconds,
       config.clock.hourlyCutoffDays,
       config.clock.sixHourlyCutoffDays,
     )
-
     const http = new HttpClient()
-    const peripherals = new Peripherals(database, http, logger)
+    const peripherals = new Peripherals(db, http, logger)
     const providers = new Providers(config, logger)
-
-    const trackedTxsModule = createTrackedTxsModule(
+    const deps: ModuleDependencies = {
       config,
       logger,
-      peripherals,
-      providers,
       clock,
-    )
+      providers,
+      peripherals,
+      db,
+    }
 
     const modules: (ApplicationModule | undefined)[] = [
-      createMetricsModule(config),
-      createSharedModule(config, logger, clock, providers, database),
-      initActivityModule(config, logger, clock, providers, database),
-      initDataAvailabilityModule(
-        config,
-        logger,
-        clock,
-        providers,
-        database,
-        peripherals,
-      ),
-      createUpdateMonitorModule(config, logger, peripherals, clock),
-      createFlatSourcesModule(config, logger, peripherals),
-      trackedTxsModule,
-      initTvsModule(config, logger, database, providers, clock),
-      createVerifiersModule(config, logger, peripherals, clock),
-      createDaBeatModule(config, logger, peripherals, providers, clock),
+      createMetricsModule(deps),
+      createSharedModule(deps),
+      initActivityModule(deps),
+      initDataAvailabilityModule(deps),
+      createUpdateMonitorModule(deps),
+      createFlatSourcesModule(deps),
+      createTrackedTxsModule(deps),
+      initTvsModule(deps),
+      createVerifiersModule(deps),
+      createDaBeatModule(deps),
     ]
 
     const apiServer = new ApiServer(
