@@ -11,7 +11,20 @@ export class SyncMetadataRepository extends BaseRepository {
   async upsertMany(records: Insertable<SyncMetadataRecord>[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
+    const uniqueRecords: Insertable<SyncMetadataRecord>[] = []
+    for (const record of records) {
+      if (
+        uniqueRecords.some(
+          (r) => r.feature === record.feature && r.id === record.id,
+        )
+      ) {
+        continue
+      }
+
+      uniqueRecords.push(record)
+    }
+
+    const rows = uniqueRecords.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
         .insertInto('SyncMetadata')
