@@ -1,14 +1,12 @@
 {
   "SequencerInbox_Espresso": {
     "hash": "0x0a398182f2a6b3798d40b111a9b690e9e8dcd3203805d462cdd68b528c4807d5",
-    "address": "0x2948690217F3C2fDD6166343da8A7Ac2B7f5c134",
-    "chain": "ethereum",
+    "address": "eth:0x2948690217F3C2fDD6166343da8A7Ac2B7f5c134",
     "blockNumber": 22622481
   },
   "SequencerInbox_Espresso_1": {
     "hash": "0x724a7b4f0fa3a5ce6b00cc932e70b6b83a05d1a846a341cbf8477dc95f6c916c",
-    "address": "0x2C381da225148f7d6390f0EE4A162F958ec40e7A",
-    "chain": "ethereum",
+    "address": "eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A",
     "blockNumber": 23116694
   }
 }

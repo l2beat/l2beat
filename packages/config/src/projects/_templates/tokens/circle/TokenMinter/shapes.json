@@ -1,14 +1,12 @@
 {
   "TokenMinter": {
     "hash": "0xe3726a2ed0f748a5239bddbe87c3c53ab18fe03308c167092fb98d970396ec63",
-    "address": "0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6",
-    "chain": "base",
+    "address": "base:0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6",
     "blockNumber": 29519230
   },
   "TokenMinterV2": {
     "hash": "0x4f65c99b21662a49a87fe117a196b5c67b5e8414afb355272fa80cd5830591fb",
-    "address": "0xfd78EE919681417d192449715b2594ab58f5D002",
-    "chain": "ethereum",
+    "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
     "blockNumber": 22366580
   }
 }

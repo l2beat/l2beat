@@ -1,8 +1,7 @@
 {
   "EigenDARelayRegistry": {
     "hash": "0x2a5d28cd901637b2eed614152fc63ba60a2a5e10127efe030849aec4cfe64007",
-    "address": "0xF6D82FBBdf700c086389e72C3023812e956ECa9e",
-    "chain": "ethereum",
+    "address": "eth:0xF6D82FBBdf700c086389e72C3023812e956ECa9e",
     "blockNumber": 22596592
   }
 }

@@ -1,8 +1,7 @@
 {
   "RiscZeroVerifierRouter": {
     "hash": "0x09d9c9ba25591eb4e658e547eb5f5cc798449477bf745e6fa9f516a339f88364",
-    "address": "0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-    "chain": "ethereum",
+    "address": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
     "blockNumber": 22961594
   }
 }

@@ -1,14 +1,12 @@
 {
   "L2ERC721Bridge_v1_0_0": {
     "hash": "0x5e60fa0150197ecbd302b46ad0cc0b6f3f024342d97f052ed2f9a8c2a6ed3846",
-    "address": "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
-    "chain": "optimism",
+    "address": "oeth:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
     "blockNumber": 134041720
   },
   "L2ERC721Bridge_v1_7_1beta_2": {
     "hash": "0xf8e3171eeccb9b5e31480276120e77545d7f33ae218b16ee367370dc484149f2",
-    "address": "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
-    "chain": "ink",
+    "address": "ink:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
     "blockNumber": 10183769
   }
 }

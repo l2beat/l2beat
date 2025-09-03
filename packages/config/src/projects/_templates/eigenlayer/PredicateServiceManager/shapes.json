@@ -1,8 +1,7 @@
 {
   "PredicateServiceManager": {
     "hash": "0x55b4084f8591b2c3c51011b50fe478e7761ce2cab412359b4df3b6941fcba322",
-    "address": "0x1BafAF26d236FbEA3E86075370B554eC0477bFD0",
-    "chain": "ethereum",
+    "address": "eth:0x1BafAF26d236FbEA3E86075370B554eC0477bFD0",
     "blockNumber": 22872700
   }
 }

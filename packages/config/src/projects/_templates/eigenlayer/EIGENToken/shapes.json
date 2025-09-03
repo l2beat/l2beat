@@ -1,14 +1,12 @@
 {
   "Eigen": {
     "hash": "0x857392f0c602177fab038b9cc445ed977e9367e7ac3b70515f6296d459a585af",
-    "address": "0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0",
-    "chain": "ethereum",
+    "address": "eth:0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0",
     "blockNumber": 22188285
   },
   "EIGENToken_2": {
     "hash": "0xb8dbca65e053a47c078cebe919fab85c18b0b261e0b86e6a776e6262ba02a097",
-    "address": "0x2C4A81e257381F87F5A5C4bd525116466D972E50",
-    "chain": "ethereum",
+    "address": "eth:0x2C4A81e257381F87F5A5C4bd525116466D972E50",
     "blockNumber": 23083543
   }
 }

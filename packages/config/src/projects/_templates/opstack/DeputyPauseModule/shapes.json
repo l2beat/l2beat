@@ -1,14 +1,12 @@
 {
   "DeputyPauseModule": {
     "hash": "0x9ce85f452c217be52c8f91f907759e771e78bbcd9d8cda37e90e3cdd9a70cf15",
-    "address": "0x126a736B18E0a64fBA19D421647A530E327E112C",
-    "chain": "ethereum",
+    "address": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
     "blockNumber": 22437265
   },
   "DeputyPauseModule_v1_2_0": {
     "hash": "0x6d8659eec5f14dbbacd2c5fb2ebcfab040b98237fc8ea869b3317a9e425da7bf",
-    "address": "0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
-    "chain": "ethereum",
+    "address": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
     "blockNumber": 22995199
   }
 }

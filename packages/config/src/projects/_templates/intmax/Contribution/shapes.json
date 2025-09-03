@@ -1,8 +1,7 @@
 {
   "Contribution": {
     "hash": "0x04d47a14538cc31c1d5699cd1ba8e634345861e576bb09735cacd8e7569495da",
-    "address": "0x09665baEFbfaAE3E9b3AC854717C2ab5534d2D25",
-    "chain": "ethereum",
+    "address": "eth:0x09665baEFbfaAE3E9b3AC854717C2ab5534d2D25",
     "blockNumber": 22972987
   }
 }

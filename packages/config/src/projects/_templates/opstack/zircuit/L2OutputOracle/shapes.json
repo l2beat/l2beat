@@ -1,8 +1,7 @@
 {
   "L2OutputOracle": {
     "hash": "0x5c9c6bf3e729a43f2616db0dda98893b4011faf62a7ce137ee88e758028f8047",
-    "address": "0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315",
-    "chain": "ethereum",
+    "address": "eth:0xb82E8B7B3a93290EE38dB201686AbDc9FDF6A315",
     "blockNumber": 23086994
   }
 }

@@ -1,26 +1,22 @@
 {
   "EigenPod": {
     "hash": "0xda9b2195cd2d07052198378564d56758772451df9c7849c8d958ef8e2207e059",
-    "address": "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
-    "chain": "ethereum",
+    "address": "eth:0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
     "blockNumber": 22188285
   },
   "EigenPod.sol": {
     "hash": "0xb9003523799a738cfe8c3050cc6ae9ff810658b91b1917bf4942e87c30247657",
-    "address": "0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e",
-    "chain": "ethereum",
+    "address": "eth:0xB132a8DaD03A507f1b9D2F467A4936Df2161C63e",
     "blockNumber": 22424645
   },
   "EigenPod_2": {
     "hash": "0xde563a9e55789a1e2e556d02f4dd7eb0f5266ad6ff6816f3406321b92603eb14",
-    "address": "0xcb27A4819A64FBA93ABD4D480e4466aEc0503745",
-    "chain": "ethereum",
+    "address": "eth:0xcb27A4819A64FBA93ABD4D480e4466aEc0503745",
     "blockNumber": 23083567
   },
   "EigenPod_v1_6_1": {
     "hash": "0x36ccc9d7f0d91f9e9d190872b03eef97633be88c0151c76c22f3a7d9ccbd26c6",
-    "address": "0x792FfeA0D8734695670697f8b9f03DE3F666419D",
-    "chain": "ethereum",
+    "address": "eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D",
     "blockNumber": 23267842
   }
 }

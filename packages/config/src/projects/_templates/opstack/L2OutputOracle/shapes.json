@@ -1,68 +1,57 @@
 {
   "L2OutputOracle_v1_2_0": {
     "hash": "0xcca8986d0789aa489ba57cd234e886bd92cb5a0d477e1f5ae5e6e030e15fb183",
-    "address": "0x0af92E6944900abA4B9BAC1417bA13ED6F45c27f",
-    "chain": "ethereum",
+    "address": "eth:0x0af92E6944900abA4B9BAC1417bA13ED6F45c27f",
     "blockNumber": 22188285
   },
   "L2OutputOracle_v1_3_0": {
     "hash": "0x45368d302fba850124115aa8ee67238f47d47d89c2b1b8c5dfd39818369e6cea",
-    "address": "0xD1230865641561653406906Fb08873F011c19080",
-    "chain": "ethereum",
+    "address": "eth:0xD1230865641561653406906Fb08873F011c19080",
     "blockNumber": 22188285
   },
   "L2OutputOracle_v1_3_1": {
     "hash": "0x66cdacb7ee63d044769108a364e635bea065ba30dc12d4e5ec83f8b90c228d3a",
-    "address": "0xC3B5Ddf3C1Bf4b6cF905533E0584288EF179E805",
-    "chain": "base",
+    "address": "base:0xC3B5Ddf3C1Bf4b6cF905533E0584288EF179E805",
     "blockNumber": 28446407
   },
   "L2OutputOracle_v1_4_0_zircuit": {
     "hash": "0x2f020370d4312debb7d9c97dbf80a48a0a0ee81d261d6d239d6b01d0dd076c81",
-    "address": "0xaaF7FCc7252eb739E0001D8727800deAE04A84f1",
-    "chain": "ethereum",
+    "address": "eth:0xaaF7FCc7252eb739E0001D8727800deAE04A84f1",
     "blockNumber": 22188285
   },
   "L2OutputOracle_v1_4_0_zircuit_getorf": {
     "hash": "0x3190c62a59b62169498d1f61c08c5c722c70cc0a6aaa37b185fd3f8014941b96",
-    "address": "0x98DFF0828C8f870c31E209f35dF7ed22d194Ea9B",
-    "chain": "ethereum",
+    "address": "eth:0x98DFF0828C8f870c31E209f35dF7ed22d194Ea9B",
     "blockNumber": 22188285
   },
   "L2OutputOracle_v1_6_0": {
     "hash": "0x373b0cddb16922a75ab98dfce0c4913a0970c018bfa1d55d123d4ff6511179a6",
-    "address": "0x1C90963D451316E3DBFdD5A30354EE56C29016EB",
-    "chain": "ethereum",
+    "address": "eth:0x1C90963D451316E3DBFdD5A30354EE56C29016EB",
     "blockNumber": 22188285
   },
   "L2OutputOracle_v1_7_0": {
     "hash": "0xdbe40da010f1cfaa643259f5ca1e966b3c7ecdae7b0af2d8aa07a6181a307831",
-    "address": "0x5Fe6BFbb2C2c78c0baF0bFbb86420903E2E9f8a5",
-    "chain": "ethereum",
+    "address": "eth:0x5Fe6BFbb2C2c78c0baF0bFbb86420903E2E9f8a5",
     "blockNumber": 22188285
   },
   "L2OutputOracle_v1_8_0": {
     "hash": "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3",
-    "address": "0xf31575705C047eC4D3Eb05F0917B9aA404179e3A",
-    "chain": "ethereum",
+    "address": "eth:0xf31575705C047eC4D3Eb05F0917B9aA404179e3A",
     "blockNumber": 22188285
   },
   "L2OutputOracle_v1_8_0_soon-v2": {
     "hash": "0xc308d0e8c98d070154567f6e8fc7c99c648506f9d557f38c98fea53c9c11a499",
-    "address": "0x3131933F07dC5822ced67416F3744B2C0D0D22B2",
-    "chain": "ethereum",
+    "address": "eth:0x3131933F07dC5822ced67416F3744B2C0D0D22B2",
     "blockNumber": 22188285
   },
   "L2OutputOracle_v1_8_0_soon": {
     "hash": "0x3703a67e457793b9a26cf1ac8548b5ea17dd768da63011587bb1af5c1f7c1d99",
-    "address": "0x2B11300E3A6eaBA8C7AF4Fae8A92589eA417D7eE",
-    "chain": "ethereum",
+    "address": "eth:0x2B11300E3A6eaBA8C7AF4Fae8A92589eA417D7eE",
     "blockNumber": 22188285
   },
   "L2OutputOracle_v1_8_1beta2": {
     "hash": "0x82ce2b4d2c7dcca833593de12c2cf9aef63b23af286529708131f3aa909484ce",
-    "address": "0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61",
-    "chain": "ethereum",
+    "address": "eth:0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61",
     "blockNumber": 22188285
   }
 }

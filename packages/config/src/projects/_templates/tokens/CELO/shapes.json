@@ -1,8 +1,7 @@
 {
   "CELO": {
     "hash": "0x428c89f5d64258fe92919fe01d530631a074664ff9c244072e9e5453c7d7a1a7",
-    "address": "0x64fE3f9201E6534D2d744c7C57D134E709131a6e",
-    "chain": "ethereum",
+    "address": "eth:0x64fE3f9201E6534D2d744c7C57D134E709131a6e",
     "blockNumber": 22882513
   }
 }

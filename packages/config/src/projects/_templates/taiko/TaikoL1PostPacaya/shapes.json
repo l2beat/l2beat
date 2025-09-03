@@ -2,41 +2,37 @@
   "TaikoL1": {
     "hash": "0xc4ae3ca2fcf606673a1324989a7ac169b3fdb6780917814506e56898484e99d7",
     "address": [
-      "0x4e030b19135869F6fd926614754B7F9c184E2B83",
-      "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
-      "0x497B13f9192B09244de9b5F0964830969FB26F07"
+      "eth:0x4e030b19135869F6fd926614754B7F9c184E2B83",
+      "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+      "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
     ],
-    "chain": "ethereum",
     "blockNumber": 22565516
   },
   "TaikoL1PostPacaya_sharingPct75": {
     "hash": "0xd3d952e9a5655549b172292d82b0e6e7b2223cab5ef6819f2790ed53304f56a7",
     "address": [
-      "0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319",
-      "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
-      "0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
+      "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319",
+      "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+      "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
     ],
-    "chain": "ethereum",
     "blockNumber": 22923197
   },
   "TaikoL1PostPacaya_maxbatches8": {
     "hash": "0x036f854f425618da3e66dad1cd29e352eda6ce3f728eb078bc043f82fe653157",
     "address": [
-      "0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F",
-      "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
-      "0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
+      "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F",
+      "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+      "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
     ],
-    "chain": "ethereum",
     "blockNumber": 23123976
   },
   "TaikoL1PostPacaya_2908": {
     "hash": "0x4a046242c16270e33ec006d5d7d18a68040b417d8355d24cc6a44926ce444f6e",
     "address": [
-      "0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
-      "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
-      "0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
+      "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
+      "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+      "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
     ],
-    "chain": "ethereum",
     "blockNumber": 23246164
   }
 }

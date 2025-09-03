@@ -1,8 +1,7 @@
 {
   "CeloSuperchainConfig": {
     "hash": "0x5878c16afef31b4e412ce5caa14cd12c8d09fc38c614c9f93f417700e844dbae",
-    "address": "0x693cFD911523ccaE1a14AdE2501ae4a0A463b446",
-    "chain": "ethereum",
+    "address": "eth:0x693cFD911523ccaE1a14AdE2501ae4a0A463b446",
     "blockNumber": 22188285
   }
 }

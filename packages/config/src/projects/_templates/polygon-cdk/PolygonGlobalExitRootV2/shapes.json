@@ -1,14 +1,12 @@
 {
   "PolygonZkEVMGlobalExitRootV2": {
     "hash": "0x5cd6999aa568aa00dc997f5d179426b88bf3797f4618bc4cce28b6cf5f8e76d6",
-    "address": "0x9Bdda421219900454E94e01d641fE64c60D8f4C8",
-    "chain": "ethereum",
+    "address": "eth:0x9Bdda421219900454E94e01d641fE64c60D8f4C8",
     "blockNumber": 22188285
   },
   "PolygonGlobalExitRootV2_al030": {
     "hash": "0xee95e594827e19497b882d82113115b70cb33dc53c346f5bf09b38891f560067",
-    "address": "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48",
-    "chain": "ethereum",
+    "address": "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48",
     "blockNumber": 22768020
   }
 }

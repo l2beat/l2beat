@@ -1,20 +1,17 @@
 {
   "ChainAdmin_v1": {
     "hash": "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086",
-    "address": "0x2cf3bD6a9056b39999F3883955E183F655345063",
-    "chain": "ethereum",
+    "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063",
     "blockNumber": 22188285
   },
   "ChainAdmin_v2": {
     "hash": "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c",
-    "address": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661",
-    "chain": "ethereum",
+    "address": "eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661",
     "blockNumber": 22188285
   },
   "ChainAdminOwnable": {
     "hash": "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832",
-    "address": "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
-    "chain": "ethereum",
+    "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
     "blockNumber": 22572509
   }
 }
