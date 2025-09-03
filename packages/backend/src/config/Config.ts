@@ -49,7 +49,7 @@ export interface Config {
     readonly timeout: number
   }
   readonly da: DataAvailabilityTrackingConfig | false
-  readonly shared: SharedModuleConfig | false
+  readonly blockSync: BlockSyncModuleConfig | false
   readonly discord: DiscordWebhookConfig
 
   readonly flags: ResolvedFeatureFlag[]
@@ -271,6 +271,6 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampProjects: TimestampDaIndexedConfig[]
 }
 
-export interface SharedModuleConfig {
+export interface BlockSyncModuleConfig {
   ethereumWsUrl: string
 }

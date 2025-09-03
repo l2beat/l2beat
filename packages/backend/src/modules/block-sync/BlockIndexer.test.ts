@@ -2,8 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import { type Block, type Log, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { IndexerService } from '../../../tools/uif/IndexerService'
-import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
+import type { IndexerService } from '../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
 import type { BlockProcessor } from '../types'
 import { BlockIndexer, type BlockIndexerDeps } from './BlockIndexer'
 
@@ -33,7 +33,7 @@ describe(BlockIndexer.name, () => {
         mode: 'LATEST_ONLY',
         blockProvider: mockBlockProvider,
         logsProvider: mockLogsProvider,
-        processors: [mockProcessor],
+        blockProcessors: [mockProcessor],
       })
 
       const newSafeHeight = await indexer.update(0, block.number)
@@ -71,7 +71,7 @@ describe(BlockIndexer.name, () => {
         mode: 'CONTINUOUS',
         blockProvider: mockBlockProvider,
         logsProvider: mockLogsProvider,
-        processors: [mockProcessor],
+        blockProcessors: [mockProcessor],
       })
 
       const newSafeHeight = await indexer.update(8, 10)
@@ -113,7 +113,7 @@ describe(BlockIndexer.name, () => {
         mode: 'LATEST_ONLY',
         blockProvider: mockBlockProvider,
         logsProvider: mockLogsProvider,
-        processors: [mockProcessor1, mockProcessor2],
+        blockProcessors: [mockProcessor1, mockProcessor2],
       })
 
       const newSafeHeight = await indexer.update(0, block.number)
@@ -152,7 +152,7 @@ function createIndexer(deps?: Partial<BlockIndexerDeps>): BlockIndexer {
     source: 'test',
     blockProvider: mockObject<BlockProvider>({}),
     logsProvider: mockObject<LogsProvider>({}),
-    processors: [],
+    blockProcessors: [],
     ...deps,
   })
 }
