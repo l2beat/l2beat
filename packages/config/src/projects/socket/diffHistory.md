@@ -8,7 +8,7 @@ Generated with discovered.json: 0x17da33b783a3e9fc8ec46bec765a9611a5c8c48c
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Removed delegation.
 
 ## Watched changes
 
