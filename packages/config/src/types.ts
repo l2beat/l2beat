@@ -1007,7 +1007,7 @@ export interface ProjectPermissionedAccount {
   url: string
   address: ChainSpecificAddress
   isVerified: boolean
-  type: 'EOA' | 'Contract'
+  type: 'EOA' | 'Contract' | 'Reference'
 }
 
 export interface ProjectContracts {

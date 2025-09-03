@@ -414,10 +414,9 @@ export class ProjectDiscovery {
         'Values must be Ethereum addresses',
       )
       const address = ChainSpecificAddress(account)
-      const isEOA = this.isEOA(address)
-      const type = isEOA ? 'EOA' : 'Contract'
       const entry = this.getEntryByAddress(address)
       assert(isNonNullable(entry), `Could not find ${address} in discovery`)
+      const type = entry?.type
       const isVerified = isEntryVerified(entry)
 
       const raw = ChainSpecificAddress.address(address)
