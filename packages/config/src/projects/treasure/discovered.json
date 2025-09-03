@@ -91,6 +91,13 @@
       }
     },
     {
+      "name": "BridgeHub",
+      "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "address": "eth:0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283",
       "type": "EOA",
       "proxyType": "EOA",
@@ -526,6 +533,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "ChainTypeManager",
+      "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "name": "Verifier",
       "address": "eth:0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
       "type": "Contract",
@@ -558,6 +572,13 @@
           "role": ".tokenMultiplierSetter"
         }
       ]
+    },
+    {
+      "name": "ProtocolUpgradeHandler",
+      "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C",
@@ -965,5 +986,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23037387 },
-  "permissionsConfigHash": "0x5e270a45acd77c6da93452cb32028f64132edfc02173e04544ae7b7af1348bab"
+  "permissionsConfigHash": "0x81fc2563eebe98308acf943a7099965cec2e2318304f1b501ccafb3e8352ca39"
 }

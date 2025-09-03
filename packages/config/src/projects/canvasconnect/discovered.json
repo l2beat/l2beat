@@ -30,6 +30,13 @@
       ]
     },
     {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
+    },
+    {
       "name": "GpsFactRegistryAdapter",
       "address": "eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
       "type": "Contract",
@@ -686,5 +693,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 19825363 },
-  "permissionsConfigHash": "0x6a09402ff75a0733ca544b49412ab5077a455798a1c296b8c89866e080e8ee60"
+  "permissionsConfigHash": "0xa214918106fea64c94b9aaf568da513c9b6618ab5c829f97d7bdf74317bff005"
 }

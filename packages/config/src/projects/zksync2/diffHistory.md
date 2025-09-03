@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x8fe776b891988e3af0d98cf9c150370d7efb87f3
+
+# Diff at Wed, 03 Sep 2025 15:52:21 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fbfe8da4086c70042fea30347d68132d3f574015 block: 1754308257
+- current timestamp: 1754308257
+
+## Description
+
+Rerun to add References to entrypoints of shared modules
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754308257 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference RollupL1DAValidator (eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference L1AssetRouter (eth:0x8829AD80E425C646DAB305381ff105169FeEcE56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference L1NativeTokenVault (eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference DualVerifier (eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference L1Nullifier (eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9f9ee3a94c2dcc36a0e6e7c4c23cf5354a351dbb
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

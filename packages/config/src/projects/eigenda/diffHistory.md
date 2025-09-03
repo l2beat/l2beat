@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x82817ca3ff697213cfbea04287afc72505716b7c
+
+# Diff at Wed, 03 Sep 2025 15:51:50 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fbfe8da4086c70042fea30347d68132d3f574015 block: 1756300615
+- current timestamp: 1756300615
+
+## Description
+
+Rerun to add References to entrypoints of shared modules
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756300615 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerPauserMultisig (eth:0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EIGEN Token (eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x93e620dcdca582f11459bc2b536e098eb0bee866
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

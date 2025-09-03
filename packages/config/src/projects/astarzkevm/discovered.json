@@ -134,6 +134,13 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "PolygonSharedBridge",
+      "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
       "address": "eth:0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C",
       "type": "EOA",
       "proxyType": "EOA"
@@ -152,6 +159,20 @@
       "address": "eth:0x4324c3960c7B2567D0C13ba17493bb364c407937",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PolygonRollupManager",
+      "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
+      "name": "PolygonGlobalExitRootV2",
+      "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "address": "eth:0x68B62E4C9E69cd637c61f19Fb64976D466De1d58",
@@ -603,5 +624,5 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 20325048 },
-  "permissionsConfigHash": "0x506f564bd1fbb1d66b9f4704e9e5e27e44fceb927768f1ee41508bf513794c22"
+  "permissionsConfigHash": "0xfd723da2fdd1f0622486693cce69c11da86ea764814eec6e622c5339ba2b2cb1"
 }

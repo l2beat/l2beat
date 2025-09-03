@@ -187,6 +187,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SP1VerifierGateway",
+      "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sp1"
+    },
+    {
       "name": "GnosisSafe",
       "address": "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
       "type": "Contract",
@@ -1500,5 +1507,5 @@
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x23a763ed39c139851f257aef8c5edb090d6cbf04040b6f63dace0d3e157a3ab0"
   },
   "usedBlockNumbers": { "ethereum": 23245358 },
-  "permissionsConfigHash": "0xa5ffea58ac49123db7a8a26ef03b20656b43e0c1a08b02a194f18c3923eaa852"
+  "permissionsConfigHash": "0x762d5cfac34e5a5736b38ff5bed62a69c7abc78d48e02b9fe8a45f5be60cb7bd"
 }

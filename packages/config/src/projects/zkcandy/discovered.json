@@ -27,6 +27,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "BridgeHub",
+      "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "name": "zkCandyZkEvmAdmin",
       "address": "eth:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2",
       "type": "Contract",
@@ -279,6 +286,13 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "name": "ChainTypeManager",
+      "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "address": "eth:0xc300Cc8f451C9EF8DaDE822bd0f9636117209F70",
       "type": "EOA",
       "proxyType": "EOA",
@@ -320,6 +334,13 @@
       "implementationNames": {
         "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": "L1VerifierFflonk"
       }
+    },
+    {
+      "name": "ProtocolUpgradeHandler",
+      "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0xf218a2F1E0ec05121D26483c504280a98Ffaf674",
@@ -1052,5 +1073,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23037398 },
-  "permissionsConfigHash": "0x99b0fe13d3099738f3fda008aabb144ba573e62692797e2c697997b7021b668c"
+  "permissionsConfigHash": "0x974e2728aa45301039af6665fb1dc901403bc965b85852a79f3c1d2c9ae339c0"
 }

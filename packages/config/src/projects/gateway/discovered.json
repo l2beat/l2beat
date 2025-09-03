@@ -70,6 +70,20 @@
       }
     },
     {
+      "name": "BridgeHub",
+      "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "name": "Matter Labs Multisig",
+      "address": "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "name": "GatewayTransactionFilterer",
       "address": "eth:0x5540DE94485dB078025318428F813C5d88215823",
       "type": "Contract",
@@ -143,6 +157,12 @@
         "eth:0x5540DE94485dB078025318428F813C5d88215823": "TransparentUpgradeableProxy",
         "eth:0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde": "GatewayTransactionFilterer"
       }
+    },
+    {
+      "address": "eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
     },
     {
       "name": "ProxyAdmin",
@@ -455,6 +475,13 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "RollupL1DAValidator",
+      "address": "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "address": "eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2",
       "type": "EOA",
       "proxyType": "EOA",
@@ -466,6 +493,13 @@
           "role": ".validatorsVTL"
         }
       ]
+    },
+    {
+      "name": "L1AssetRouter",
+      "address": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "name": "ValidatorTimelock",
@@ -507,6 +541,13 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "name": "ChainTypeManager",
+      "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "name": "DualVerifier",
       "address": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
       "type": "Contract",
@@ -532,6 +573,13 @@
       "implementationNames": {
         "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A": "DualVerifier"
       }
+    },
+    {
+      "name": "ProtocolUpgradeHandler",
+      "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9",
@@ -1030,5 +1078,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "gateway": 38821, "ethereum": 23268469 },
-  "permissionsConfigHash": "0xc9612065a65c83a2f6add1c1967a5cff59fc49529ee171a5be5efaedf4b1708c"
+  "permissionsConfigHash": "0xdc3272d2455cd78cc0f2a434e312348e80692974c646d6c6061748973566daab"
 }

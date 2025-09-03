@@ -5,6 +5,13 @@
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
+      "name": "PolygonSharedBridge",
+      "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
       "name": "PolygonPessimisticConsensus",
       "address": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
       "type": "Contract",
@@ -85,6 +92,20 @@
           "role": ".forceBatchAddress"
         }
       ]
+    },
+    {
+      "name": "PolygonRollupManager",
+      "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
+      "name": "PolygonGlobalExitRootV2",
+      "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "address": "eth:0x610DE9141a2c51A9A9624278AA97fbE54b27c102",
@@ -214,5 +235,5 @@
     "polygon-cdk/PolygonPessimisticConsensus": "0xe243e1961d0062de8984cb8f88f047117bb8998497751cfd58b4dcf414cd66b5"
   },
   "usedBlockNumbers": { "ethereum": 23081994 },
-  "permissionsConfigHash": "0x9e9d974f6fcc9707e2c69b704a5f1f50f5b78c18816eb17ffbc833d35ad8b058"
+  "permissionsConfigHash": "0x3693c4d4a3fb5d43f5597f345afb564e362e63e969a204582d1dd836d37ad6c1"
 }

@@ -27,6 +27,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "BridgeHub",
+      "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "name": "GrvtChainAdminMultisig",
       "address": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
       "type": "Contract",
@@ -327,6 +334,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "L1AssetRouter",
+      "address": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "name": "ValidatorTimelock",
       "address": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
       "type": "Contract",
@@ -423,6 +437,13 @@
       }
     },
     {
+      "name": "ChainTypeManager",
+      "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "name": "L1VerifierFflonk",
       "address": "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
       "type": "Contract",
@@ -447,6 +468,13 @@
       "implementationNames": {
         "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": "L1VerifierFflonk"
       }
+    },
+    {
+      "name": "L1Nullifier",
+      "address": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "name": "GRVTBridgeProxy",
@@ -498,6 +526,13 @@
         "eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65": "TransparentUpgradeableProxy",
         "eth:0xf7B67bDDb74B5eD3De49e1a6Da4D1d7460F00780": "GRVTBridgeProxy"
       }
+    },
+    {
+      "name": "ProtocolUpgradeHandler",
+      "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "name": "GrvtZkEvm",
@@ -1413,5 +1448,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23037384 },
-  "permissionsConfigHash": "0x3b77fb66234d672996f347713b2776df33efdbed31b6389636b8b3bfb88fad52"
+  "permissionsConfigHash": "0x2687b5aa6ceb5e3ee77abcd7d47107a45fd378b5507d2b23ff82e405601d5437"
 }

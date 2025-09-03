@@ -218,6 +218,13 @@
       }
     },
     {
+      "name": "SP1VerifierGateway",
+      "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sp1"
+    },
+    {
       "name": "TimelockController",
       "address": "eth:0x45828180bbE489350D621d002968A0585406d487",
       "type": "Contract",
@@ -293,6 +300,12 @@
       "address": "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sp1"
     },
     {
       "name": "Avail Multisig 1",
@@ -746,5 +759,5 @@
     "succinct/SP1Vector": "0x4b4bab1769276ac2be7215b73aff7dda8735ad26ed07bdfed49c63583ddc2025"
   },
   "usedBlockNumbers": { "ethereum": 23175000 },
-  "permissionsConfigHash": "0xc2306ad6948cdc3a8dfad6b122680f0eb46009227a1b026bdb2cac25f4042687"
+  "permissionsConfigHash": "0x6e91a48efda7ca7923827204ece2136b574fc36d65f534747718f5b651f2c603"
 }
