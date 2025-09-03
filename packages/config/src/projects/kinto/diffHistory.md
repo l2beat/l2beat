@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x64c30e1ea255fe619e8d2b6e71f270af40de1664
+
+# Diff at Wed, 03 Sep 2025 11:23:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f81a67544a1eef3c7f105dd59187ddee7ac70879 block: 1755591879
+- current timestamp: 1756898514
+
+## Description
+
+ms signer change.
+
+## Watched changes
+
+```diff
+    contract Kinto Multisig (eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x5D973Ea995d14799E528B14472346bfDE21eAe2e"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "2 of 3 (67%)"
+    }
+```
+
 Generated with discovered.json: 0xb021dec618b02691ca9077f0709d194e055b6173
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
