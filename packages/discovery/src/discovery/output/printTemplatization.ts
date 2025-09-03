@@ -73,7 +73,7 @@ export function printTemplatization(
         nestedLines.push(
           ...[
             name,
-            `${shape.chain} @ ${shape.blockNumber}`,
+            `@ ${shape.blockNumber}`,
             ...addressLines.map((address) => address.toString()),
             `hash: ${shape.hash}`,
           ],
