@@ -61,7 +61,7 @@ export class AgglayerDataFetcher {
     '20': 'op stack cdk sov',
     '21': 'Forknet.io',
     '22': 'testnet?',
-    '23': 'mainnet?'
+    '23': 'mainnet?',
   }
 
   // Rollup type ID descriptions
