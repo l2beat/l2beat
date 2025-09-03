@@ -1,7 +1,7 @@
 {
   "name": "scroll",
-  "timestamp": 1756804385,
-  "configHash": "0x6e386ff7bfe037be174acda5e779881498f60bf10f0347ee3fcbf4b3fdcff488",
+  "timestamp": 1756895025,
+  "configHash": "0x186e82d8884d1a93981c196ae1876b191af61de78325bf2a3e885fa2a43f4a1b",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -994,11 +994,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1756801151,
+        "getFirstUnfinalizedMessageEnqueueTime": 1756889267,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 961906,
-        "nextUnfinalizedQueueIndex": 961901,
+        "nextCrossDomainMessageIndex": 961992,
+        "nextUnfinalizedQueueIndex": 961987,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1814,11 +1814,6 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "address": "eth:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "PlonkVerifierV2-1",
       "address": "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7",
       "type": "Contract",
@@ -1943,7 +1938,7 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424",
+          "eth:0xDF1aa0495C815A1b9156796a741885a4834EC012",
           "eth:0xc1985e3712b33a5303e097e9CeD22E91338ba64d"
         ],
         "$threshold": 1,
@@ -1951,7 +1946,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2081,14 +2076,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 376319,
+        "lastFinalizedBatchIndex": 377033,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 376337,
-          "lastFinalizedBatchIndex": 376319,
-          "lastFinalizeTimestamp": 1756803251,
+          "lastCommittedBatchIndex": 377081,
+          "lastFinalizedBatchIndex": 377033,
+          "lastFinalizeTimestamp": 1756890767,
           "flags": 1,
           "reserved": 0
         },
@@ -2555,6 +2550,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xDF1aa0495C815A1b9156796a741885a4834EC012",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xE47D966E2c7e94fC20ffAf5119d1926381C40f2a",
       "type": "EOA",
       "proxyType": "EOA",
@@ -2851,7 +2851,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 25322411508622,
+        "totalBridgedUSDC": 25250897574807,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3908,9 +3908,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xddd9f1baaf9a8dadf31ca25cb1fb2ddb2505b0d5481a591ea7d2abfc396f0d79",
+        "messageRoot": "0x05f97f9d885106c290ec27bf46b518abe3c486baa3a2fc969a282039cdaf21e8",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 208841,
+        "nextMessageIndex": 208908,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -4369,11 +4369,6 @@
       }
     },
     {
-      "address": "scr:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ProxyAdmin",
       "address": "scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45",
       "type": "Contract",
@@ -4461,7 +4456,7 @@
         "$immutable": false,
         "$implementation": "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
         "$members": [
-          "scr:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424",
+          "scr:0xDF1aa0495C815A1b9156796a741885a4834EC012",
           "scr:0xc1985e3712b33a5303e097e9CeD22E91338ba64d"
         ],
         "$threshold": 1,
@@ -4469,7 +4464,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4960,6 +4955,11 @@
       "implementationNames": {
         "scr:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e": "ProxyAdmin"
       }
+    },
+    {
+      "address": "scr:0xDF1aa0495C815A1b9156796a741885a4834EC012",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L2GatewayRouter",
@@ -7498,6 +7498,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "scroll": 20488088, "ethereum": 23274449 },
-  "permissionsConfigHash": "0x89101ff15afb68cf17ea6a03c5084f8f21983ecf6456fd5e5ecd9a9069f931bd"
+  "usedBlockNumbers": { "ethereum": 23281964, "scroll": 20550206 },
+  "permissionsConfigHash": "0x38572e7ef44089f04e4f6ff13c9b6485f1fe1187ef9b2963df564d511a7e874f"
 }

@@ -31,54 +31,47 @@ export class BlockIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    let adjustedFrom = from
+    let blockNumber = from
     if (
-      adjustedFrom !== to &&
+      blockNumber !== to &&
       (from === this.$.minHeight || this.$.mode === 'LATEST_ONLY')
     ) {
-      adjustedFrom = to
-      this.logger.info('Range adjusted', {
-        from: adjustedFrom,
-        to,
-        mode: this.$.mode,
-      })
+      blockNumber = to
     }
 
-    const delay = to - adjustedFrom
+    const delay = to - blockNumber
     this.logger.info(`Delay from the tip: ${delay} blocks`, { delay })
 
-    for (let blockNumber = adjustedFrom; blockNumber <= to; blockNumber++) {
-      this.logger.info('Fetching block and logs', { blockNumber })
-      const start = Date.now()
-      const block =
-        await this.$.blockProvider.getBlockWithTransactions(blockNumber)
-      const logs = await this.$.logsProvider.getLogs(blockNumber, blockNumber)
-      const duration = Date.now() - start
-      this.logger.info('Fetched', {
-        duration,
-        transactionsCount: block.transactions.length,
-        logsCount: logs.length,
-      })
+    this.logger.info('Fetching block and logs', { blockNumber })
+    const start = Date.now()
+    const block =
+      await this.$.blockProvider.getBlockWithTransactions(blockNumber)
+    const logs = await this.$.logsProvider.getLogs(blockNumber, blockNumber)
+    const duration = Date.now() - start
+    this.logger.info('Fetched', {
+      duration,
+      transactionsCount: block.transactions.length,
+      logsCount: logs.length,
+    })
 
-      for (const processor of this.$.processors) {
-        try {
-          const start = Date.now()
-          await processor.processBlock(block, logs)
-          const duration = Date.now() - start
-          this.logger.info(
-            `${processor.constructor.name} finished in ${duration.toFixed(2)}ms`,
-            { processor: processor.constructor.name, duration },
-          )
-        } catch (error) {
-          this.logger.error(
-            `Processor ${processor.constructor.name} failed to process block`,
-            { blockNumber, error },
-          )
-        }
+    for (const processor of this.$.processors) {
+      try {
+        const start = Date.now()
+        await processor.processBlock(block, logs)
+        const duration = Date.now() - start
+        this.logger.info(
+          `${processor.constructor.name} finished in ${duration.toFixed(2)}ms`,
+          { processor: processor.constructor.name, duration },
+        )
+      } catch (error) {
+        this.logger.error(
+          `Processor ${processor.constructor.name} failed to process block`,
+          { blockNumber, error },
+        )
       }
     }
 
-    return to
+    return blockNumber
   }
 
   override async invalidate(targetHeight: number): Promise<number> {

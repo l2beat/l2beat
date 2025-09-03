@@ -1,7 +1,7 @@
 {
   "name": "worldchain",
   "timestamp": 1756453110,
-  "configHash": "0x34359ee0df58d2e54f934f827fc163c383c97480b423142eeafef9d7b0c8805b",
+  "configHash": "0x4ba1c233e0791920c985d2d493421eaaba3d09cbd02bc38781ffd728a20ec059",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

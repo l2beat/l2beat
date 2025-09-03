@@ -52,21 +52,15 @@ describe(BlockIndexer.name, () => {
     })
 
     it('fetches block and calls processors in CONTINUOUS mode', async () => {
-      const blocks = [mockBlock(8), mockBlock(9), mockBlock(10)]
-      const logs = [mockLogs(8), mockLogs(9), mockLogs(10)]
+      const blocks = [mockBlock(8)]
+      const logs = [mockLogs(8)]
 
       const mockBlockProvider = mockObject<BlockProvider>({
-        getBlockWithTransactions: mockFn()
-          .resolvesToOnce(blocks[0])
-          .resolvesToOnce(blocks[1])
-          .resolvesToOnce(blocks[2]),
+        getBlockWithTransactions: mockFn().resolvesToOnce(blocks[0]),
       })
 
       const mockLogsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn()
-          .resolvesToOnce(logs[0])
-          .resolvesToOnce(logs[1])
-          .resolvesToOnce(logs[2]),
+        getLogs: mockFn().resolvesToOnce(logs[0]),
       })
 
       const mockProcessor = mockObject<BlockProcessor>({
@@ -86,33 +80,13 @@ describe(BlockIndexer.name, () => {
         mockBlockProvider.getBlockWithTransactions,
       ).toHaveBeenNthCalledWith(1, blocks[0].number)
 
-      expect(
-        mockBlockProvider.getBlockWithTransactions,
-      ).toHaveBeenNthCalledWith(2, blocks[1].number)
-
-      expect(
-        mockBlockProvider.getBlockWithTransactions,
-      ).toHaveBeenNthCalledWith(3, blocks[2].number)
-
       expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
         1,
         blocks[0],
         logs[0],
       )
 
-      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
-        2,
-        blocks[1],
-        logs[1],
-      )
-
-      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
-        3,
-        blocks[2],
-        logs[2],
-      )
-
-      expect(newSafeHeight).toEqual(10)
+      expect(newSafeHeight).toEqual(8)
     })
 
     it('handles processor errors', async () => {
