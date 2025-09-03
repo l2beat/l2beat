@@ -19,7 +19,7 @@ export async function getDataAvailabilityLivenessData(
       metadata: getMetadata(manifest, {
         title: 'Data Availability Liveness - L2BEAT',
         description:
-          'Learn more about the risks of data availability solutions.',
+          'Monitor liveness metrics of data availability solutions and recent anomalies.',
         openGraph: {
           url,
           image:
