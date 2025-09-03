@@ -67,6 +67,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "BridgeHub",
+      "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "address": "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484",
       "type": "EOA",
       "proxyType": "EOA",
@@ -146,6 +153,13 @@
         "eth:0x4968A0E4b025eD7d095753E54058377969b41abC": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
+    },
+    {
+      "name": "Matter Labs Multisig",
+      "address": "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0x5063b3D23C3640d51c9E2aef41063B1d482C70ff",
@@ -690,6 +704,20 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "ProxyAdmin",
+      "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "name": "ChainTypeManager",
+      "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "name": "DualVerifier",
       "address": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
       "type": "Contract",
@@ -725,6 +753,13 @@
       "address": "eth:0xE0b3Ef5A61324acceE3798B6D9Da5B47b0312b7c",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ProtocolUpgradeHandler",
+      "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "name": "L1USDCBridge",
@@ -1300,5 +1335,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23145178 },
-  "permissionsConfigHash": "0x2f309e13b0c4036fd65773fcd7a5d43a94cc4c6dd77a06ab4755a7e8397fd3b9"
+  "permissionsConfigHash": "0xe2d9c77c0a1cd8a7244db8b346d2babe844fbd47b02f4699b3d7f82c4697f9b6"
 }

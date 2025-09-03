@@ -1,8 +1,7 @@
 {
   "IndexRegistry.sol": {
     "hash": "0x0a21d40cd8eeee384b8feb55d745d69c6793753a08622872cc24972811a97da9",
-    "address": "0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c",
-    "chain": "ethereum",
+    "address": "eth:0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c",
     "blockNumber": 22424686
   }
 }

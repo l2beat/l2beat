@@ -1,8 +1,7 @@
 {
   "QuotaManager": {
     "hash": "0x515420aaad70e32a5f53c329c15df869122650ffc387b0ef64bb3de9748b3797",
-    "address": "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64",
-    "chain": "ethereum",
+    "address": "eth:0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64",
     "blockNumber": 22579860
   }
 }

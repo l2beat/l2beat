@@ -1,8 +1,7 @@
 {
   "ERC20Portal": {
     "hash": "0x4d9461f610606f687a0d0180aa13890df326becb8f2e8ff8acdd713c311ceae9",
-    "address": "0xc700D6aDd016eECd59d989C028214Eaa0fCC0051",
-    "chain": "ethereum",
+    "address": "eth:0xc700D6aDd016eECd59d989C028214Eaa0fCC0051",
     "blockNumber": 22709685
   }
 }

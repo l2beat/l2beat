@@ -1,8 +1,7 @@
 {
   "EmergencyProposer": {
     "hash": "0x435ceb597bcf7bd820f593bdbc0e3ce4d223cc2203b368911d2b29fa6bc5e048",
-    "address": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
-    "chain": "ethereum",
+    "address": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
     "blockNumber": 22780541
   }
 }

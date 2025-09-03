@@ -1,14 +1,12 @@
 {
   "PriceRegistryV1": {
     "hash": "0x24b66df82f92b1b0453e29e73d9693a2671b512379ccba03e3ea38cf35ffbc3c",
-    "address": "0x020082A7a9c2510e1921116001152DEE4da81985",
-    "chain": "ethereum",
+    "address": "eth:0x020082A7a9c2510e1921116001152DEE4da81985",
     "blockNumber": 22188285
   },
   "PriceRegistryV1_2_0": {
     "hash": "0xb3ac732170b6c82e6eb8e400fac9618c85fcdce082a404030cee9be7bd700bdf",
-    "address": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
-    "chain": "ethereum",
+    "address": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
     "blockNumber": 22188285
   }
 }

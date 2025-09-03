@@ -7,10 +7,10 @@ import type {
   RealTimeLivenessRecord,
 } from '@l2beat/database'
 import { type Block, formatAsAsciiTable, UnixTime } from '@l2beat/shared-pure'
-import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
-import type { Clock } from '../../../tools/Clock'
-import { TaskQueue } from '../../../tools/queue/TaskQueue'
-import { formatDuration, formatSubtype } from './utils/format'
+import type { DiscordWebhookClient } from '../../peripherals/discord/DiscordWebhookClient'
+import type { Clock } from '../../tools/Clock'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
+import { formatDuration, formatSubtype } from './format'
 
 export type AnomalyNotificationType =
   | 'anomaly-detected'

@@ -459,6 +459,13 @@
       ]
     },
     {
+      "name": "SP1VerifierGateway",
+      "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sp1"
+    },
+    {
       "name": "KromaSecurityCouncil",
       "address": "eth:0x3de211088dF516da72efe68D386b561BEE256Ec4",
       "type": "Contract",
@@ -2420,5 +2427,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 22924020 },
-  "permissionsConfigHash": "0xbed2d56fd23906f604712e46b71b4501e6bf26d291c058a6cdc596666c7d7462"
+  "permissionsConfigHash": "0xac6e384d69bb8d752a5f1c06e948131fe962cd26688913cdb528e3daf12ad7cd"
 }

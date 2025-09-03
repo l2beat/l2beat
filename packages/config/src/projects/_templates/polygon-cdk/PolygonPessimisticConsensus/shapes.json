@@ -1,8 +1,7 @@
 {
   "PolygonPessimisticConsensus": {
     "hash": "0x555aef5e938f2211fc99363d15a2fcb7a9dc24ee5154f0d6be32a136d7dfbdf7",
-    "address": "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
-    "chain": "ethereum",
+    "address": "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
     "blockNumber": 23081993
   }
 }

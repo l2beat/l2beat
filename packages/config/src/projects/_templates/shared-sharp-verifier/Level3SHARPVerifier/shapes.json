@@ -1,8 +1,7 @@
 {
   "SHARPVerifier": {
     "hash": "0x4a3316e3eb418f807ad2271f24b4764f4069731c7be4041cf2574e66ee2b20cc",
-    "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-    "chain": "ethereum",
+    "address": "eth:0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
     "blockNumber": 22188285
   }
 }

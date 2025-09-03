@@ -39,6 +39,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
+    },
+    {
       "name": "OrderRegistry",
       "address": "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
       "type": "Contract",
@@ -761,5 +768,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 19825376 },
-  "permissionsConfigHash": "0xb5384eb38bbf98ab8d91b5ea84f2b7f6f41a08d2f46e20b5eb59ef60a84a2cc2"
+  "permissionsConfigHash": "0x3dd4c3416e4ea233c251c36e36e5edb123aa9c4db8fe35cb6748dad047d32a1a"
 }

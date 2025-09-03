@@ -1,20 +1,17 @@
 {
   "TaikoWrapper": {
     "hash": "0x9cee3ca82b3cd60de871679b86db583cbf35a0a911ded84676f9fdcc1a77c8ca",
-    "address": "0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b",
-    "chain": "ethereum",
+    "address": "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b",
     "blockNumber": 22565516
   },
   "TaikoWrapper_preconfRouterObligatory": {
     "hash": "0x6f1f57d97885434b7f6b769ef9377a6fa75456740c69110c6bb37fb53a7fc68f",
-    "address": "0xa2D216dD9c84cb2e738240aac0956BE98293be61",
-    "chain": "ethereum",
+    "address": "eth:0xa2D216dD9c84cb2e738240aac0956BE98293be61",
     "blockNumber": 23123976
   },
   "TaikoWrapper_2908": {
     "hash": "0xb219932acfe503395c533757b638bdb5327f27434f87222d3e135534243f0b51",
-    "address": "0x52D6FC6F6db9E370c336f64f61ff3C29568d1859",
-    "chain": "ethereum",
+    "address": "eth:0x52D6FC6F6db9E370c336f64f61ff3C29568d1859",
     "blockNumber": 23259637
   }
 }

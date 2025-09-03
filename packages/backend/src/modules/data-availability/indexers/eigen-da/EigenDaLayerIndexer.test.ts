@@ -45,18 +45,19 @@ describe(EigenDaLayerIndexer.name, () => {
   })
 
   describe(EigenDaLayerIndexer.prototype.multiUpdate.name, () => {
-    it('should fetch data and save to database', async () => {
+    it('should fetch data, save to database and update sync metadata', async () => {
       const configurations = [createConfiguration(DA_LAYER, DA_LAYER)]
       const throughput = 12345678
       const expectedTotalSize = BigInt(
         Math.round(throughput * (UnixTime.HOUR - 1)),
       )
 
-      const { indexer, repository, eigenClient } = mockIndexer({
-        configurations,
-        daLayer: DA_LAYER,
-        throughput,
-      })
+      const { indexer, repository, eigenClient, syncMetadataRepository } =
+        mockIndexer({
+          configurations,
+          daLayer: DA_LAYER,
+          throughput,
+        })
 
       const from = UnixTime.fromDate(new Date('2022-01-01T12:30:00Z')) // 1641038200
       const expectedAdjustedFrom = UnixTime.toStartOf(from, 'hour') // 1641038400 (1:00 PM)
@@ -83,6 +84,12 @@ describe(EigenDaLayerIndexer.name, () => {
           configurationId: configurations[0].id,
         },
       ])
+
+      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenOnlyCalledWith(
+        'dataAvailability',
+        configurations.map((c) => c.properties.projectId),
+        expectedAdjustedTo,
+      )
 
       expect(safeHeight).toEqual(expectedAdjustedTo)
     })
@@ -196,6 +203,10 @@ function mockIndexer($: {
     upsertMany: mockFn().resolvesTo(undefined),
   })
 
+  const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+    updateSyncedUntil: mockFn().resolvesTo(undefined),
+  })
+
   const eigenClient = mockObject<EigenApiClient>({
     getMetrics: mockFn().resolvesTo($.throughput ?? 1000000),
   })
@@ -212,7 +223,9 @@ function mockIndexer($: {
   })
 
   const db = mockDatabase({
+    transaction: mockFn(async (fun) => await fun()),
     dataAvailability: repository,
+    syncMetadata: syncMetadataRepository,
   })
 
   const indexer = new EigenDaLayerIndexer({
@@ -230,6 +243,7 @@ function mockIndexer($: {
   return {
     indexer,
     repository,
+    syncMetadataRepository,
     eigenClient,
     indexerService,
     db,

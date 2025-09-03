@@ -1,8 +1,7 @@
 {
   "ValidatorUtils": {
     "hash": "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8",
-    "address": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
-    "chain": "ethereum",
+    "address": "eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
     "blockNumber": 22188285
   }
 }

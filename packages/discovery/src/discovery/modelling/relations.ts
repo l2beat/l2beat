@@ -30,14 +30,14 @@ const addressTypeContractTemplate: InlineTemplate = {
 addressType(
   @self,
   contract).`,
-  when: (c) => c.type === 'Contract',
+  when: (c) => c.type === 'Contract' || c.targetType === 'Contract',
 }
 const addressTypeEOATemplate: InlineTemplate = {
   content: `
 addressType(
   @self,
   eoa).`,
-  when: (c) => c.type === 'EOA',
+  when: (c) => c.type === 'EOA' || c.targetType === 'EOA',
 }
 const canActIndependentlyTemplate: InlineTemplate = {
   content: `
@@ -92,7 +92,11 @@ export function buildPermissionsModel(
   contractPermission: ContractPermission,
   structureEntry: StructureEntry,
   addressToNameMap: Record<string, string>,
-): string {
+): string | undefined {
+  if (structureEntry.type === 'Reference') {
+    return
+  }
+
   const relationsModel: string[] = []
 
   const contractValues = contractValuesForInterpolation(

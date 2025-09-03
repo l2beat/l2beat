@@ -1,14 +1,12 @@
 {
   "PolygonRollupManager_al030": {
     "hash": "0x05a5fd7dbd65634dc3a3eea806b01583e307d843c5fa9c7e6e01ffda1b1acb47",
-    "address": "0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab",
-    "chain": "ethereum",
+    "address": "eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab",
     "blockNumber": 22768020
   },
   "PolygonRollupManager_al031": {
     "hash": "0xe1a044e355c430aefc18f156be2c4f677baa559d3fb102b60b836bb4e2b91220",
-    "address": "0x42B9fF0644741e3353162678596e7D6aA6a13240",
-    "chain": "ethereum",
+    "address": "eth:0x42B9fF0644741e3353162678596e7D6aA6a13240",
     "blockNumber": 23046667
   }
 }

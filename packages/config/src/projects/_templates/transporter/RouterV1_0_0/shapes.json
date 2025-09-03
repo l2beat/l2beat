@@ -1,8 +1,7 @@
 {
   "RouterV1_0_0": {
     "hash": "0xa94cfe197937dba7daa80daaa739c4f88fbd91f326e45ade5b3b3c0f23cdc9d5",
-    "address": "0xE561d5E02207fb5eB32cca20a699E0d8919a1476",
-    "chain": "ethereum",
+    "address": "eth:0xE561d5E02207fb5eB32cca20a699E0d8919a1476",
     "blockNumber": 22188285
   }
 }

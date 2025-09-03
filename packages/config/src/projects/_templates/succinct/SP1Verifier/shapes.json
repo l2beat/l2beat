@@ -1,20 +1,17 @@
 {
   "SP1Verifier": {
     "hash": "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b",
-    "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-    "chain": "ethereum",
+    "address": "eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
     "blockNumber": 22188285
   },
   "SP1Verifier_v5": {
     "hash": "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42",
-    "address": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-    "chain": "arbitrum",
+    "address": "arb1:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
     "blockNumber": 343837105
   },
   "SP1Verifier_Groth16": {
     "hash": "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582",
-    "address": "0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
-    "chain": "ethereum",
+    "address": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
     "blockNumber": 22985449
   }
 }
