@@ -1,7 +1,7 @@
 {
   "name": "silicon",
   "timestamp": 1753192487,
-  "configHash": "0xd3acaeb6ee0981535a825607f5287341068a4c39a666037e3b6344b78584eb64",
+  "configHash": "0x50a2fc4e80be007492571bfcdea18acdf9426ad8c4055d542e6bb07df7bcc057",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

@@ -1,7 +1,7 @@
 {
   "name": "lachain",
   "timestamp": 1753944315,
-  "configHash": "0x2b4b5f53bb0e36180935e149770ce1effbc7b24913bdc1348343a7ad73303fb8",
+  "configHash": "0x1e304686781c4eb1a740a441459c4adc5a00ae4fcd6016be524298417682d81a",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

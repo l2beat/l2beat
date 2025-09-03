@@ -1,28 +1,4 @@
-Generated with discovered.json: 0xcb7b0f9cf98da6b68d157112cd91c5eb2e64f1ee
-
-# Diff at Tue, 02 Sep 2025 17:18:36 GMT:
-
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a1c1980a59e1040a5ec42c06890371ce5f315602 block: 1756453341
-- current timestamp: 1756453341
-
-## Description
-
-Rerun to add References to entrypoints of shared modules
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1756453341 (main branch discovery), not current.
-
-```diff
-+   Status: CREATED
-    reference SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
-    +++ description: None
-```
-
-Generated with discovered.json: 0x6558cac6ccb743850c9285f36d3c0eeb80f8c2d5
+Generated with discovered.json: 0xbcf9c5ccb6f120610f823ceea4c57f1abfc77953
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

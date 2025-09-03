@@ -1,40 +1,4 @@
-Generated with discovered.json: 0x818cc25886b853d2c63aa89ce16057662e2d2d68
-
-# Diff at Tue, 02 Sep 2025 17:21:25 GMT:
-
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a1c1980a59e1040a5ec42c06890371ce5f315602 block: 1755787720
-- current timestamp: 1755787720
-
-## Description
-
-Rerun to add References to entrypoints of shared modules
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1755787720 (main branch discovery), not current.
-
-```diff
-+   Status: CREATED
-    reference BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    reference ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    reference ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3)
-    +++ description: None
-```
-
-Generated with discovered.json: 0x23addb14c8c99035be799591a96e836c0cdf1b9c
+Generated with discovered.json: 0x5ba8971cae0b0cd2407031b9572bb702e81a3c97
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

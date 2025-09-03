@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xe0e93e09b1d54156d10ec68ceae00431f4e426dc
+Generated with discovered.json: 0xcaa9ddd3f740ae51d0c04f5944a879a8793637ab
 
-# Diff at Tue, 02 Sep 2025 17:18:13 GMT:
+# Diff at Tue, 02 Sep 2025 14:42:38 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a1c1980a59e1040a5ec42c06890371ce5f315602 block: 1741355279
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ac83bbe73046e5a2b78d713bc6fc2c43f9d130e9 block: 1741355279
 - current timestamp: 1741355279
 
 ## Description
 
-Rerun to add References to entrypoints of shared modules
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -17,9 +17,13 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1741355279 (main branch discovery), not current.
 
 ```diff
-+   Status: CREATED
-    reference SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60)
-    +++ description: None
+    contract GpsFactRegistryAdapter (eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).
+      usedTypes.0.arg.760308386675154762009993173725077399730170358078020153308029499928875469870:
++        "Starknet Aggregator (since v0.14.0)"
+      usedTypes.0.arg.793595346346724189681221050719974054861327641387231526786912662354259445535:
++        "StarkNet OS (since v0.14.0)"
+    }
 ```
 
 Generated with discovered.json: 0x0885dc6ad764a22dea600cab61a36e2c7f10a211

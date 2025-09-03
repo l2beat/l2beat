@@ -1,40 +1,4 @@
-Generated with discovered.json: 0x4e970eb9b4b3b36106d7cce35486651a3aae3814
-
-# Diff at Tue, 02 Sep 2025 17:17:47 GMT:
-
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a1c1980a59e1040a5ec42c06890371ce5f315602 block: 1753192367
-- current timestamp: 1753192367
-
-## Description
-
-Rerun to add References to entrypoints of shared modules
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1753192367 (main branch discovery), not current.
-
-```diff
-+   Status: CREATED
-    reference PolygonSharedBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    reference PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    reference PolygonGlobalExitRootV2 (eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb)
-    +++ description: None
-```
-
-Generated with discovered.json: 0xa0df70432cefbda6ac8cbd809cfae0a791adfb4e
+Generated with discovered.json: 0x87d2ab05ffa2c31623a7c6f2d397847a964c4041
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

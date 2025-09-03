@@ -1,7 +1,7 @@
 {
   "name": "vector",
   "timestamp": 1755605082,
-  "configHash": "0x5020648bcc8108e19d6c3a77cf0b2a57b4c77df9ff3a35664e2813692d306202",
+  "configHash": "0x185a0da6ac4a37bf6fa9e542efd3a6e44b3ff20ac5c1c75fbae6f85947383089",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
