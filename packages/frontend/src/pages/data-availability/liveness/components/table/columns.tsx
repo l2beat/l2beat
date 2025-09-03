@@ -58,7 +58,12 @@ export const publicColumns = [
       if (!bridge) {
         return null
       }
-      return <DaLivenessIntervalCell data={bridge.data} isSynced={true} />
+      return (
+        <DaLivenessIntervalCell
+          data={bridge.data}
+          isSynced={!!bridge.data?.isSynced}
+        />
+      )
     },
     meta: {
       additionalRows: (ctx) => {
@@ -68,7 +73,7 @@ export const publicColumns = [
             <DaLivenessIntervalCell
               key={bridge.slug}
               data={bridge.data}
-              isSynced={true}
+              isSynced={!!bridge.data?.isSynced}
             />
           ))
       },

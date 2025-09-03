@@ -57,7 +57,10 @@ export interface DaBridgeLivenessEntry
   extends Omit<CommonDaEntry, 'id' | 'tab' | 'icon' | 'backgroundColor'> {
   relayerType: TableReadyValue | undefined
   validationType: (TableReadyValue & { zkCatalogId?: ProjectId }) | undefined
-  data: LivenessResponse[string]['proofSubmissions']
+  data: LivenessResponse[string]['proofSubmissions'] & {
+    warning: string | undefined
+    isSynced: boolean
+  }
   anomalies: LivenessAnomaly[]
   explanation: string | undefined
   hasTrackedContractsChanged: boolean
@@ -109,7 +112,11 @@ function getDaLivenessEntry(
         },
         relayerType: b.daBridge.relayerType,
         validationType: b.daBridge.validationType,
-        data: proofSubmissions,
+        data: {
+          ...proofSubmissions,
+          warning: b.livenessInfo?.warnings?.proofSubmissions,
+          isSynced: !syncWarning,
+        },
         anomalies: bridgeLiveness.anomalies,
         explanation: b.livenessInfo?.explanation,
         hasTrackedContractsChanged,

@@ -8,7 +8,9 @@ import type {
 } from '~/server/features/scaling/liveness/types'
 
 export type DaLivenessBridgeTableEntry = Omit<DaBridgeLivenessEntry, 'data'> & {
-  data: LivenessDataPoint | undefined
+  data:
+    | (LivenessDataPoint & { warning: string | undefined; isSynced: boolean })
+    | undefined
 }
 
 export type DaLivenessTableEntry = Omit<DaLivenessEntry, 'bridges'> & {
@@ -21,9 +23,18 @@ export function toDaLivenessTableEntry(
 ): DaLivenessTableEntry {
   return {
     ...entry,
-    bridges: entry.bridges.map((bridge) => ({
-      ...bridge,
-      data: bridge.data?.[timeRange],
-    })),
+    bridges: entry.bridges.map((bridge) => {
+      const data = bridge.data?.[timeRange]
+      return {
+        ...bridge,
+        data: data
+          ? {
+              ...data,
+              warning: bridge.data.warning,
+              isSynced: bridge.data.isSynced,
+            }
+          : undefined,
+      }
+    }),
   }
 }

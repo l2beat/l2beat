@@ -6,17 +6,20 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
+import { WarningBar } from '~/components/WarningBar'
 import { useIsClient } from '~/hooks/useIsClient'
+import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { LivenessDurationCell } from '~/pages/scaling/liveness/components/LivenessDurationCell'
 import { DurationCell } from '~/pages/scaling/liveness/components/table/DurationCell'
 import { IntervalsHeader } from '~/pages/scaling/liveness/components/table/IntervalsHeader'
 import type { LivenessDataPoint } from '~/server/features/scaling/liveness/types'
+import type { DaLivenessBridgeTableEntry } from './toDaLivenessTableEntry'
 
 export function DaLivenessIntervalCell({
   data,
   isSynced,
 }: {
-  data: LivenessDataPoint | undefined
+  data: DaLivenessBridgeTableEntry['data'] | undefined
   isSynced: boolean
 }) {
   const isClient = useIsClient()
@@ -37,13 +40,13 @@ export function DaLivenessIntervalCell({
         <SyncStatusWrapper isSynced={isSynced}>
           <DurationCell durationInSeconds={durationInSeconds} />
         </SyncStatusWrapper>
-        {/* {data.warning && (
+        {data.warning && (
           <RoundedWarningIcon className="size-5" sentiment="warning" />
-        )} */}
+        )}
       </TooltipTrigger>
       <TooltipContent>
         <LivenessTooltip data={data} />
-        {/* {data.warning && (
+        {data.warning && (
           <WarningBar
             className="mt-2"
             icon={RoundedWarningIcon}
@@ -51,7 +54,7 @@ export function DaLivenessIntervalCell({
             color="yellow"
             ignoreMarkdown
           />
-        )} */}
+        )}
       </TooltipContent>
     </Tooltip>
   )
