@@ -15,17 +15,15 @@ export const moonchain: ScalingProject = underReviewL3({
     description:
       'MXCzkEVM Moonchain is a Layer3 Ethereum-compatible Optimistic Rollup on Arbitrum, focused on data exchange and communication in the IoT DePIN sector.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     links: {
-      websites: ['https://moonchain.com'],
+      websites: ['https://mchain.ai'],
       bridges: [
         'https://bridge.moonchain.com/',
-        'https://mns.moonchain.com/',
         'https://miningv2.matchx.io/',
         'https://swap.moonchain.com/',
         'https://nft.moonchain.com/',
       ],
-      documentation: ['https://doc.moonchain.com/'],
+      documentation: ['https://docs.mchain.ai/'],
       explorers: ['https://explorer.moonchain.com'],
       repositories: ['https://github.com/mxczkevm'],
       socialMedia: [
@@ -37,6 +35,10 @@ export const moonchain: ScalingProject = underReviewL3({
       ],
     },
   },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Optimistic',
+  },
   associatedTokens: ['MXC'],
   chainConfig: {
     name: 'moonchain',
@@ -47,7 +49,7 @@ export const moonchain: ScalingProject = underReviewL3({
     apis: [
       {
         type: 'rpc',
-        url: 'https://rpc.moonchain.com',
+        url: 'https://rpc.mxc.com',
         callsPerMinute: 3000,
       },
       { type: 'blockscoutV2', url: 'https://explorer-v1.moonchain.com/api/v2' },

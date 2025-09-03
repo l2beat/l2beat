@@ -13,10 +13,10 @@ export const mawari: ScalingProject = upcomingL2({
     description:
       "Mawari is the world's first DePIN for Spatial Computing. The Mawari Network powers real-time streaming of immersive AI-driven experiences with near 0 latency.",
     purposes: ['AI'],
-    category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://mawari.net/'],
+      bridges: ['https://mawari-network-testnet.bridge.caldera.xyz'],
       documentation: ['https://docs.mawari.net'],
       explorers: ['https://mawari-network-testnet.explorer.caldera.xyz/'],
       socialMedia: [
@@ -29,5 +29,8 @@ export const mawari: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

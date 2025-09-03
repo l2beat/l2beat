@@ -1,8 +1,7 @@
 {
   "PartialValidatorTimelock": {
     "hash": "0xd9d75803ad400a022f418f774013872f60ee705b53725d4076fb34c53ea273d6",
-    "address": "0xcA027Fa98cdce4515E76ECf8dfb4189B16eE72A2",
-    "chain": "gateway",
+    "address": "gateway:0xcA027Fa98cdce4515E76ECf8dfb4189B16eE72A2",
     "blockNumber": 15675
   }
 }

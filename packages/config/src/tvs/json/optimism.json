@@ -479,7 +479,7 @@
         "decimals": 18,
         "sinceTimestamp": 1624401464
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -690,7 +690,7 @@
         "sinceTimestamp": 1680743131
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -716,7 +716,7 @@
         "sinceTimestamp": 1680743131
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -806,7 +806,7 @@
         "sinceTimestamp": 1673221013
       },
       "category": "ether",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -832,7 +832,7 @@
         "sinceTimestamp": 1641759454
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -1573,8 +1573,8 @@
         "decimals": 18,
         "sinceTimestamp": 1708387200
       },
-      "category": "other",
-      "source": "native",
+      "category": "stablecoin",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -1600,7 +1600,7 @@
         "sinceTimestamp": 1673221028
       },
       "category": "ether",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -1870,7 +1870,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false
     },
@@ -1927,7 +1927,7 @@
         "sinceTimestamp": 1695081600
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -2578,7 +2578,7 @@
         "sinceTimestamp": 1718928000
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [

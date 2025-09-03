@@ -365,7 +365,7 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
       input.push(config.namespace)
       break
     case 'avail':
-      input.push(config.appId)
+      input.push(...config.appIds.sort((a, b) => a.localeCompare(b)))
       break
     case 'eigen-da':
       input.push(config.customerId)

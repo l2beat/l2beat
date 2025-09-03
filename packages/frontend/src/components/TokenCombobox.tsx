@@ -18,7 +18,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from './core/Popover'
 import { linkVariants } from './link/CustomLink'
 
-const MAX_PER_SOURCE = 10
+const MAX_TOKENS = 25
 
 interface Props {
   tokens: ProjectToken[]
@@ -40,48 +40,45 @@ export function TokenCombobox({ tokens, value, setValue, className }: Props) {
   }
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        className={cn('group/popover-trigger h-8 justify-between', className)}
-      >
-        {value ? <TokenItem token={value} /> : 'Tokens'}
-        <ChevronIcon className="size-3 shrink-0 transition-transform group-data-[state=open]/popover-trigger:rotate-180" />
-      </PopoverTrigger>
-      <PopoverContent className="p-0" align="start">
-        <Command shouldFilter={false}>
-          <Input value={value} setValue={setValue} />
-          <CommandList>
-            <CommandEmpty>
-              <p>Can&apos;t find a token you&apos;re looking for?</p>
-              <a
-                className={linkVariants()}
-                href={externalLinks.tokenRequest}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Request it here
-              </a>
-            </CommandEmpty>
-            <TokenGroup value={value} tokens={tokens} onSelect={onSelect} />
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  )
-}
-
-function Input({ value, setValue }: Pick<Props, 'value' | 'setValue'>) {
-  return (
-    <CommandInput
-      placeholder="Start typing to find more..."
-      className="min-w-48"
-    >
-      <CommandInputActionButton
-        onClick={value !== undefined ? () => setValue(undefined) : undefined}
-      >
-        {value !== undefined ? 'Clear' : undefined}
-      </CommandInputActionButton>
-    </CommandInput>
+    <div className={cn('flex items-center gap-2', className)}>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger className="group/popover-trigger h-8 justify-between">
+          {value ? (
+            <TokenItem token={value} />
+          ) : (
+            'Select token for chart preview'
+          )}
+          <ChevronIcon className="size-3 shrink-0 transition-transform group-data-[state=open]/popover-trigger:rotate-180" />
+        </PopoverTrigger>
+        <PopoverContent className="p-0" align="start">
+          <Command shouldFilter={false}>
+            <CommandInput
+              placeholder="Start typing to find more..."
+              className="min-w-48"
+            />
+            <CommandList>
+              <CommandEmpty>
+                <p>Can&apos;t find a token you&apos;re looking for?</p>
+                <a
+                  className={linkVariants()}
+                  href={externalLinks.tokenRequest}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Request it here
+                </a>
+              </CommandEmpty>
+              <TokenGroup value={value} tokens={tokens} onSelect={onSelect} />
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+      {value && (
+        <CommandInputActionButton onClick={() => setValue(undefined)}>
+          Clear
+        </CommandInputActionButton>
+      )}
+    </div>
   )
 }
 
@@ -97,11 +94,11 @@ function TokenGroup({ tokens, value, onSelect }: TokenGroupProps) {
   if (filteredTokens.length === 0) {
     return null
   }
-  const moreCount = filteredTokens.length - MAX_PER_SOURCE
+  const moreCount = filteredTokens.length - MAX_TOKENS
   return (
     <>
       <CommandGroup>
-        {filteredTokens.slice(0, MAX_PER_SOURCE).map((token) => (
+        {filteredTokens.slice(0, MAX_TOKENS).map((token) => (
           <CommandItem
             key={token.id.toString()}
             value={token.id.toString()}

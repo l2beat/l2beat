@@ -1,8 +1,7 @@
 {
   "EspressoTEEVerifier": {
     "hash": "0x7914b3894035170507ca8bd719f2e22ed393a5817b53cdf5e2126b837b35519f",
-    "address": "0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb",
-    "chain": "arbitrum",
+    "address": "arb1:0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb",
     "blockNumber": 322488866
   }
 }

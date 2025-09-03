@@ -22,7 +22,6 @@ export const pepeunchained2: ScalingProject = orbitStackL2({
     slug: 'pepe-unchained',
     description:
       'Pepe Unchained is an Optimium utilizing the Orbit Stack. It focuses on memes and provides a home for meme creators, traders, and communities to thrive.',
-    category: 'Other',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://pepeunchained.com/'],

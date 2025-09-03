@@ -21,7 +21,6 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -79,8 +78,8 @@ const inclusionDelay = discovery.getContractValue<PacayaConfig>(
 
 const whitelistedOperatorsCount = discovery.getContractValue<PacayaConfig>(
   'PreconfWhitelist',
-  'operatorCount',
-)
+  'registeredOperators',
+).length
 
 const chainId = 167000
 
@@ -107,7 +106,6 @@ export const taiko: ScalingProject = {
     description:
       'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko aims at combining based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',
     purposes: ['Universal'],
-    category: 'Other', // NOTE: will be moved to Others if they keep the ability not to use ZK proofs
     links: {
       websites: ['https://taiko.xyz'],
       bridges: ['https://bridge.taiko.xyz/'],
@@ -307,7 +305,7 @@ export const taiko: ScalingProject = {
         'A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a block, and SGX (Geth) is mandatory. A block can be proved without providing a ZK proof as SGX (Geth) + SGX (Reth) is a valid combination.',
       sentiment: 'bad',
       value: 'Multi-proofs',
-      secondLine: formatExecutionDelay(taikoChainConfig.cooldownWindow),
+      executionDelay: taikoChainConfig.cooldownWindow,
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
@@ -360,7 +358,7 @@ export const taiko: ScalingProject = {
         references: [
           {
             title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-            url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
+            url: 'https://etherscan.io/address/0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8#code',
           },
         ],
         risks: [
@@ -383,18 +381,18 @@ export const taiko: ScalingProject = {
     operator: {
       name: 'The system uses whitelist-based rotating operators',
       description: `The system uses a whitelist-based sequencing mechanism to allow for fast preconfirmations on the L2. On the L1, whitelisted preconfirmers (or the fallback operator) can sequence Taiko L2 blocks by proposing them on the TaikoL1 contract.
-        The whitelist is managed by the \`PreconfWhitelist\` contract, which currently has ${whitelistedOperatorsCount} operators registered.
+        The whitelist is managed by the \`PreconfWhitelist\` contract, which currently has ${whitelistedOperatorsCount} active operators registered.
         The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the ${formatSeconds(taikoChainConfig.provingWindow)} proving window.
         Currently, proving a block requires the block proposer to run a SGX instance with Geth, plus either SGX (Reth), SP1, or RISC0 to prove the block.
         Unless the block proposer proves the block within the proving window, it will forfeit half of its liveness bond to the TaikoL1 smart contract.`,
       references: [
         {
           title: 'TaikoL1.sol - Etherscan source code, proposeBatch function',
-          url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
+          url: 'https://etherscan.io/address/0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8#code',
         },
         {
           title: 'PreconfWhitelist.sol - Etherscan source code',
-          url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
+          url: 'https://etherscan.io/address/0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8#code',
         },
       ],
       risks: [FRONTRUNNING_RISK],

@@ -5,11 +5,14 @@ import partition from 'lodash/partition'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import { getShapeFromAnalyzedContract } from '../analysis/findShape'
 import type { TemplateService } from '../analysis/TemplateService'
+import type { ColorConfig } from '../config/ColorConfig'
+import { makeEntryColorConfig } from '../config/colorUtils'
 
 export function printTemplatization(
   logger: Logger,
   analyses: Analysis[],
   verbose: boolean,
+  colorConfig: ColorConfig,
   templateService: TemplateService,
 ) {
   const contracts = analyses.filter((a) => a.type === 'Contract')
@@ -39,10 +42,20 @@ export function printTemplatization(
         contract,
       )
 
+      const entryConfig = makeEntryColorConfig(
+        colorConfig,
+        contract.address,
+        templateService.loadContractTemplateColor(
+          contract.extendedTemplate?.template,
+        ),
+      )
+
       const firstLinePrefix = i === templatized.length - 1 ? '└─' : '├─'
       const nestedLinePrefix = i === templatized.length - 1 ? '  ' : '│ '
       const indent = ' '.repeat(2)
-      const name = chalk.blue(contract.name)
+      const name = chalk.blue(
+        entryConfig.name ?? entryConfig.displayName ?? contract.name,
+      )
       const template = `${contract.extendedTemplate?.template} ${contract.extendedTemplate?.reason}`
       const templateColor =
         contract.extendedTemplate?.reason === 'byShapeMatch'
@@ -60,7 +73,7 @@ export function printTemplatization(
         nestedLines.push(
           ...[
             name,
-            `${shape.chain} @ ${shape.blockNumber}`,
+            `@ ${shape.blockNumber}`,
             ...addressLines.map((address) => address.toString()),
             `hash: ${shape.hash}`,
           ],
@@ -87,9 +100,19 @@ export function printTemplatization(
   if (untemplatized.length > 0) {
     logs.push(chalk.redBright(chalk.bold('Untemplatized')))
     for (const [i, contract] of untemplatized.entries()) {
+      const entryConfig = makeEntryColorConfig(
+        colorConfig,
+        contract.address,
+        templateService.loadContractTemplateColor(
+          contract.extendedTemplate?.template,
+        ),
+      )
+
       const prefix = i === untemplatized.length - 1 ? '└─' : '├─'
       const indent = ' '.repeat(2)
-      const name = chalk.blue(contract.name)
+      const name = chalk.blue(
+        entryConfig.name ?? entryConfig.displayName ?? contract.name,
+      )
       const log = `${contract.address} ${name}`
       logs.push(`${indent}${chalk.gray(prefix)} ${log}`)
     }

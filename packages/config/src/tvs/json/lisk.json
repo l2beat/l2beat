@@ -50,7 +50,7 @@
         "decimals": 6,
         "sinceTimestamp": 1748849495
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {

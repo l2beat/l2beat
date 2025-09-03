@@ -1,152 +1,127 @@
 {
   "L1CrossDomainMessenger_l3": {
     "hash": "0x0f1d8bf933c0c0c46123cb5280a294a6d89fdaea823e25784f8a58da99bad653",
-    "address": "0x71fA82Ea96672797954C28032b337aA40AAFC99f",
-    "chain": "base",
+    "address": "base:0x71fA82Ea96672797954C28032b337aA40AAFC99f",
     "blockNumber": 28446407
   },
   "L1CrossDomainMessenger_v1_0_0": {
     "hash": "0xaff375ae74ed132384e4286ac5de5830f7c8e7c3f2bb6b31f4f2251e0dc2b8d2",
-    "address": "0x675924D68200F2C967Ba12349d5d510676C7214c",
-    "chain": "ethereum",
+    "address": "eth:0x675924D68200F2C967Ba12349d5d510676C7214c",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v1_4_0": {
     "hash": "0xebfb36a18bcaa176678925149b43fdc5f9f943d98a6405ae1cbc26f4c168ff88",
-    "address": "0x8CfF5bDb1B428B979E3D87087dA8549A28065DDB",
-    "chain": "ethereum",
+    "address": "eth:0x8CfF5bDb1B428B979E3D87087dA8549A28065DDB",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v1_4_1": {
     "hash": "0x6d9fd2364c536d73c3e3064034991a037e4e43313e72fb130782bf63ca586437",
-    "address": "0x55b6A23e45611e5856beC4b97c433908Ef84d8c5",
-    "chain": "base",
+    "address": "base:0x55b6A23e45611e5856beC4b97c433908Ef84d8c5",
     "blockNumber": 28446407
   },
   "L1CrossDomainMessenger_v1_5_0": {
     "hash": "0x430d270834512dafe98bf268d6912f12a10c5a6287e7463830a22e4616dd63a0",
-    "address": "0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308",
-    "chain": "ethereum",
+    "address": "eth:0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v1_7_0": {
     "hash": "0xcec1afd157e4ccd04657ae8c428d6fc2aef84d29e92d58582dc06dcb4f0f2074",
-    "address": "0xc5c3DF92714aAf510F8dD9a4c9C67D35f7d7376b",
-    "chain": "ethereum",
+    "address": "eth:0xc5c3DF92714aAf510F8dD9a4c9C67D35f7d7376b",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v1_7_1": {
     "hash": "0x62b0361291c40e624393723bdac21e4ecdb590904474346417c941734984bb25",
-    "address": "0x84efcFCE2dEe08072d5D57BF232D379b6E92A836",
-    "chain": "ethereum",
+    "address": "eth:0x84efcFCE2dEe08072d5D57BF232D379b6E92A836",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_1_1": {
     "hash": "0xa5412b02e8b3af8383f1867f3324f5951f12edb80be357efdbc8b1c9df0aca59",
-    "address": "0x4795EaC1a2581F2Db6419203D063711C5a90aD50",
-    "chain": "ethereum",
+    "address": "eth:0x4795EaC1a2581F2Db6419203D063711C5a90aD50",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_3_0": {
     "hash": "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25",
-    "address": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
-    "chain": "ethereum",
+    "address": "eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_3_0_boba": {
     "hash": "0xf3c7ecc8a3ece866c00e54f90a65843e8fd20e40ebc52fac59682640c2e1ca4b",
-    "address": "0x3b48597212f2622511585914CC4D4152c9B1B077",
-    "chain": "ethereum",
+    "address": "eth:0x3b48597212f2622511585914CC4D4152c9B1B077",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_3_0_zircuit": {
     "hash": "0x1e3673770550301c22eadd847cc822cfbc995c36019d1dfce07b2ec9cffd930f",
-    "address": "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834",
-    "chain": "ethereum",
+    "address": "eth:0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_4_0": {
     "hash": "0x4d4c8988a076d9b4f8e7056a3223ce908cacc5888a54ae3940f1c8d7b7aae742",
-    "address": "0xe691A05BE8323Ce70A30A7ef733962A0d3b238E2",
-    "chain": "ethereum",
+    "address": "eth:0xe691A05BE8323Ce70A30A7ef733962A0d3b238E2",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_4_0_allgas": {
     "hash": "0x6bee26e08bb3e482693649b598e8c0423de9025ebebdc773e9a2f9aa6f362478",
-    "address": "0x307c7773097445400d2F2a51D65e38AEa8231868",
-    "chain": "ethereum",
+    "address": "eth:0x307c7773097445400d2F2a51D65e38AEa8231868",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_4_0_facet": {
     "hash": "0xa7921942f5ee71c3376b7248987c8cedb6060c2bbab4f50927686cde0f024360",
-    "address": "0xa711dC056C2Db08ee2Ba89be3ED504f48Bf4dbfA",
-    "chain": "ethereum",
+    "address": "eth:0xa711dC056C2Db08ee2Ba89be3ED504f48Bf4dbfA",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_4_0_lightlink": {
     "hash": "0xa22fc4a393301224447cd798adfb870c71a158c78028b18ef2d501128ac6bbcb",
-    "address": "0x38104856c02f83f4048c0FBA3D7613042FEAc988",
-    "chain": "ethereum",
+    "address": "eth:0x38104856c02f83f4048c0FBA3D7613042FEAc988",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_4_0_soon": {
     "hash": "0xb085c0ecb42d97e9bd5fab260dd0fb686b8e112ba9b1ec07ece067a8ce17e2a3",
-    "address": "0x6846B4E0b9992E154fE7d315667B1e385445C503",
-    "chain": "ethereum",
+    "address": "eth:0x6846B4E0b9992E154fE7d315667B1e385445C503",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_4_1_beta1": {
     "hash": "0x93ebd74dfe06be45dd404d6630b032e9ded9b2cde0627380a1540ac8ca2f9e8b",
-    "address": "0x21971eCC803C30A181ee111803253C869083baF1",
-    "chain": "ethereum",
+    "address": "eth:0x21971eCC803C30A181ee111803253C869083baF1",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_4_1_beta2": {
     "hash": "0x63e8f4931670a580e9e4b27d106235189507cc22a57c6c7aecd8f8a79d8d08ee",
-    "address": "0xDE47b113E4157ed15fA46c5572562aC11146c5eA",
-    "chain": "ethereum",
+    "address": "eth:0xDE47b113E4157ed15fA46c5572562aC11146c5eA",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_5_0": {
     "hash": "0xfaa50769db48b1d2c04c06a8a0a4771b87b3c0ff20a508115bfdb2b576fdb454",
-    "address": "0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231",
-    "chain": "ethereum",
+    "address": "eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231",
     "blockNumber": 22188285
   },
   "L1CrossDomainMessenger_v2_4_0_zircuit": {
     "hash": "0x931681cb03b7ea6b4521cf57be98c5303f045f088c4cb9e282b889be911da623",
-    "address": "0xA5B66A9FBCE3d57dA2b3Bd764d0a05B95052f73F",
-    "chain": "ethereum",
+    "address": "eth:0xA5B66A9FBCE3d57dA2b3Bd764d0a05B95052f73F",
     "blockNumber": 22336762
   },
   "L1CrossDomainMessenger_v2_6_0": {
     "hash": "0x03bcdc719cb7bd0a1377c01bb50b30a6122b308f673b7d7b15a3bb8628e6bd8c",
-    "address": "0x5D5a095665886119693F0B41d8DFeE78da033e8B",
-    "chain": "ethereum",
+    "address": "eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B",
     "blockNumber": 22346130
   },
   "L1CrossDomainMessengerCGT": {
     "hash": "0x4a84a5f83a1bfd93c2f1f066a4af23bab0de4929f91fe164cac53a77f2461edf",
-    "address": "0xC08f08571Ea50EDaA1F71Fd6d72a68d164B0C618",
-    "chain": "ethereum",
+    "address": "eth:0xC08f08571Ea50EDaA1F71Fd6d72a68d164B0C618",
     "blockNumber": 22395854
   },
   "L1CrossDomainMessenger_v2_6_0_celo": {
     "hash": "0x6831ab5545aca99fd05c64f6718bff61dc5cbdb7d5b248257ea6e95a132024c3",
-    "address": "0x807124F75FF2120b2f26D7e6f9e39C03ee9DE212",
-    "chain": "ethereum",
+    "address": "eth:0x807124F75FF2120b2f26D7e6f9e39C03ee9DE212",
     "blockNumber": 22882513
   },
   "L1CrossDomainMessenger_v2_9_0": {
     "hash": "0x21cd6c80343ba49cbb9f3e96c5f4ca0bc77bc617825495fbaad1026ed9a42026",
-    "address": "0xD26bB3aaAa4cB5638A8581A4c4b1d937D8E05c54",
-    "chain": "ethereum",
+    "address": "eth:0xD26bB3aaAa4cB5638A8581A4c4b1d937D8E05c54",
     "blockNumber": 22995199
   },
   "L1CrossDomainMessenger_v2_6_0_fraxtal": {
     "hash": "0xd5047c4d0e194d60832d6fcddd0cfba77cc45a190d31800813ba676c19a7e751",
-    "address": "0x597959A313643Ed15d45dfbCC422321E72A84515",
-    "chain": "ethereum",
+    "address": "eth:0x597959A313643Ed15d45dfbCC422321E72A84515",
     "blockNumber": 23174078
   }
 }

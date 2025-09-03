@@ -1,8 +1,7 @@
 {
   "OptimisticGovernor": {
     "hash": "0xcecd27c998c8fd83d7532693da2bdff346a1dbedbaab4744f21d2bcf1986e9de",
-    "address": "0x8692B776d1Ff0664177c90465038056Dc64f8991",
-    "chain": "ethereum",
+    "address": "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991",
     "blockNumber": 22780541
   }
 }

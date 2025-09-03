@@ -1,8 +1,7 @@
 {
   "PauseController": {
     "hash": "0xb77c71261ba124ec5867a07a7ea820670c5142e6878b94bb7c4d74e3de75b1bc",
-    "address": "0x57e26d997852e7e94915e250446C3bf43F41d98D",
-    "chain": "ethereum",
+    "address": "eth:0x57e26d997852e7e94915e250446C3bf43F41d98D",
     "blockNumber": 23073921
   }
 }

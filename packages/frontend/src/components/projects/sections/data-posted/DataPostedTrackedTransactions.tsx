@@ -148,8 +148,8 @@ function TransactionDetails({
 
         {transaction.type === 'avail' && (
           <div className="mb-1 text-secondary text-sm">
-            <span>App ID: </span>
-            <span>{transaction.appId}</span>
+            <span>App IDs: </span>
+            <span>{transaction.appIds.join(', ')}</span>
           </div>
         )}
       </div>

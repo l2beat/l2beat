@@ -13,10 +13,10 @@ export const happychain: ScalingProject = upcomingL2({
     description:
       'HappyChain is an Ethereum L2 chain that brings free-to-play and zero-friction onboarding onchain.',
     purposes: ['Universal', 'Gaming'],
-    category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://linktr.ee/happychaindevs', 'https://demo.happy.tech'],
+      documentation: ['https://docs.happy.tech'],
       socialMedia: [
         'https://x.com/HappyChainDevs',
         'https://mirror.xyz/0x20Af38e22e1722F97f5A1b5afc96c00EECd566b2',
@@ -27,5 +27,8 @@ export const happychain: ScalingProject = upcomingL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

@@ -69,10 +69,10 @@ export const intmaxprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0xd734aa793e515feaa69cd93eeeeba1f383e521f360a04220c62485e7c8d746fd',
+        hash: '0x664dceea25b57766a5b550cf25cca24a7305f36fd60a5835f9e0505bec14ce8e',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
-          'https://scrollscan.com/address/0xaBA5fD516B665C12d7577Db36831474ac16aEe0a',
+          'https://scrollscan.com/address/0x1d38545a33740Ab3480d9035bB3126914404423d',
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('intmax')],

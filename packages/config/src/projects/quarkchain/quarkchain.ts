@@ -13,7 +13,6 @@ export const quarkchain: ScalingProject = upcomingL2({
     description:
       'QuarkChain is an L2 that aims to serve as infrastructure for AI and dApps. It is planning to integrate EthStorage to open up new possibilities for fully on-chain AI with all models and training data stored there.',
     purposes: ['AI'],
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://quarkchain.io/'],
       bridges: [
@@ -30,5 +29,8 @@ export const quarkchain: ScalingProject = upcomingL2({
         'https://t.me/quarkchainio',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

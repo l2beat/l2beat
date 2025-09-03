@@ -29,19 +29,27 @@ export const agglayer: BaseProject = {
   },
   milestones: [
     {
-      title: 'Agglayer CDK goes Multistack',
-      url: 'https://x.com/Agglayer/status/1920114795333759063',
-      date: '2025-05-07T00:00:00Z',
-      description:
-        'Agglayer CDK (formerly Polygon CDK) goes multistack to unify Web3: Introducing the CDK OP Stack configuration, with native Agglayer connection',
-      type: 'general',
-    },
-    {
       title: 'Agglayer v0.3 goes live – Multichain support',
       url: 'https://x.com/Agglayer/status/1937204244559327391',
       date: '2025-06-23T00:00:00Z',
       description:
         'Agglayer v0.3 Is Live: Lays Groundwork for non-CDK Chains to Securely join Agglayer, starting with Polygon PoS',
+      type: 'general',
+    },
+    {
+      title: 'Agglayer Vault Bridge is available',
+      url: 'https://x.com/Agglayer/status/1920489030497489127',
+      date: '2025-05-08T00:00:00Z',
+      description:
+        'Vault Bridge leverages bridge deposits to provide chains a built-in revenue stream',
+      type: 'general',
+    },
+    {
+      title: 'Agglayer CDK goes Multistack',
+      url: 'https://x.com/Agglayer/status/1920114795333759063',
+      date: '2025-05-07T00:00:00Z',
+      description:
+        'Agglayer CDK (formerly Polygon CDK) goes multistack to unify Web3: Introducing the CDK OP Stack configuration, with native Agglayer connection',
       type: 'general',
     },
     {
@@ -111,11 +119,14 @@ export const agglayer: BaseProject = {
   ],
   ecosystemConfig: {
     links: {
-      buildOn: 'https://visualizer.agglayer.dev/',
+      buildOn: 'https://docs.agglayer.dev/',
       learnMore: 'https://www.agglayer.dev/learn',
       governanceDelegateToL2BEAT:
         'https://governance.polygon.technology/community-members/0x1B686eE8E31c5959D9F5BBd8122a58682788eeaD/',
       governanceProposals: 'https://governance.polygon.technology/proposals/',
+    },
+    firstBanner: {
+      mainText: 'Build an Agglayer chain',
     },
     token: {
       tokenId: 'polygonzkevm-POL',

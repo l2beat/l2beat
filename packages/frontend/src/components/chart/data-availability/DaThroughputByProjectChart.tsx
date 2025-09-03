@@ -6,7 +6,7 @@ import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -28,6 +28,7 @@ import { getDaDataParams } from './getDaDataParams'
 
 interface Props {
   data: DaThroughputChartDataPoint[] | undefined
+  project?: ChartProject
   syncedUntil: UnixTime | undefined
   isLoading: boolean
   customColors: Record<string, string> | undefined
@@ -39,6 +40,7 @@ const colorsCache = new Map<string, string>()
 
 export function DaThroughputByProjectChart({
   data,
+  project,
   syncedUntil,
   isLoading,
   customColors,
@@ -166,6 +168,7 @@ export function DaThroughputByProjectChart({
         onItemClick: toggleDataKey,
       }}
       isLoading={isLoading}
+      project={project}
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>

@@ -14,7 +14,6 @@ export const unite: ScalingProject = underReviewL3({
     description:
       'Unite Blockchain is a revolutionary Layer 3 (L3) EVM-compatible blockchain, designed to transform the landscape of mobile web3 gaming. It is the first L3 blockchain solution for Mass-Market Mobile Games.',
     purposes: ['Gaming'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       documentation: ['https://unite-1.gitbook.io/unite-docs'],
@@ -26,6 +25,7 @@ export const unite: ScalingProject = underReviewL3({
       ],
     },
   },
+  dataAvailability: undefined,
   proofSystem: {
     type: 'Optimistic',
   },
@@ -36,17 +36,6 @@ export const unite: ScalingProject = underReviewL3({
     name: 'unite',
     gasTokens: ['UNITE'],
     chainId: 88899,
-    apis: [
-      {
-        type: 'rpc',
-        url: 'https://unite-mainnet.g.alchemy.com/public',
-        callsPerMinute: 1500,
-      },
-    ],
-  },
-  activityConfig: {
-    type: 'block',
-    startBlock: 1,
-    adjustCount: { type: 'SubtractOne' },
+    apis: [],
   },
 })

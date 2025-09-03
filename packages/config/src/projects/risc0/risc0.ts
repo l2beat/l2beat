@@ -34,9 +34,17 @@ export const risc0: BaseProject = {
     {
       title: 'rv32im circuit soundness vulnerability',
       url: 'https://x.com/RiscZero/status/1935404812146725042',
-      date: '2024-06-18T00:00:00Z',
+      date: '2025-06-18T00:00:00Z',
       description:
-        'Release of Risc0 2.1.0 with a fix of a missing constraint in rv32im circuit that affected any 3-register RISC-V instruction.',
+        'Release of risc0-zkVM 2.1.0 with a fix of a missing constraint in rv32im circuit that affected any 3-register RISC-V instruction.',
+      type: 'incident',
+    },
+    {
+      title: 'Underconstrained division vulnerability',
+      url: 'https://x.com/RiscZero/status/1952503598056882225',
+      date: '2025-08-05T00:00:00Z',
+      description:
+        'Release of risc0-zkVM 2.2.0 with a fix of a signed integer division soundness vulnerability.',
       type: 'incident',
     },
   ],
@@ -95,6 +103,7 @@ export const risc0: BaseProject = {
           'https://etherscan.io/address/0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
           'https://arbiscan.io/address/0xac292cf957dd5ba174cda13b05c16afc71700327',
           'https://etherscan.io/address/0x34Eda8BfFb539AeC33078819847B36D221c6641c',
+          'https://etherscan.io/address/0x2a098988600d87650Fb061FfAff08B97149Fa84D',
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('taiko'), ProjectId('bob'), ProjectId('hibachi')],

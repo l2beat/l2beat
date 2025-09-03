@@ -1,15 +1,23 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import capitalize from 'lodash/capitalize'
+import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
+import { LineChartIcon } from '~/icons/LineChart'
 import { cn } from '~/utils/cn'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { categoryToLabel } from './categoryToLabel'
 import { BridgedUsingCell } from './cells/BridgedUsingCell'
 import { TokenAddressCell } from './cells/TokenAddressCell'
 import { TokenNameCell } from './cells/TokenNameCell'
 import { TokenValueCell } from './cells/TokenValueCell'
-import type { TokenRow } from './TvsBreakdownTokenTable'
+import type { TokenRow } from './ProjectTvsBreakdownTokenTable'
 
 const columnHelper = createColumnHelper<TokenRow>()
 export const columns = [
@@ -83,7 +91,21 @@ export const columns = [
       if (address === 'multiple')
         return <div className="font-medium text-xs">Multiple</div>
 
-      return <TokenAddressCell address={address.address} url={address.url} />
+      return <TokenAddressCell {...address} />
+    },
+  }),
+  columnHelper.accessor('priceUsd', {
+    id: 'priceUsd',
+    header: 'Price',
+    meta: {
+      align: 'right',
+    },
+    cell: (ctx) => {
+      return (
+        <div className="font-medium text-xs">
+          {formatCurrency(ctx.row.original.priceUsd, 'usd')}
+        </div>
+      )
     },
   }),
   columnHelper.accessor('valueForProject', {
@@ -99,27 +121,41 @@ export const columns = [
     },
   }),
   columnHelper.display({
-    id: 'expand',
+    id: 'actions',
     meta: {
       align: 'right',
     },
     cell: (ctx) => {
-      if (!ctx.row.getCanExpand()) return null
+      const { setSelectedToken } = useSelectedTokenContext()
       const isExpended = ctx.row.getIsExpanded()
       const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
 
       return (
-        <button
-          onClick={toggleExpandedHandler}
-          className="h-full cursor-pointer px-2 align-middle"
-        >
-          <ChevronIcon
-            className={cn(
-              'w-[10px] transition-transform duration-300',
-              isExpended && 'rotate-180',
-            )}
-          />
-        </button>
+        <div className="flex items-center gap-1">
+          <Tooltip>
+            <TooltipTrigger asChild disabledOnMobile>
+              <button onClick={() => setSelectedToken(ctx.row.original)}>
+                <a href="#token-chart">
+                  <LineChartIcon className="size-4" />
+                </a>
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              Click to preview historical chart for this token
+            </TooltipContent>
+          </Tooltip>
+          <button
+            onClick={toggleExpandedHandler}
+            className="h-full cursor-pointer p-1 align-middle"
+          >
+            <ChevronIcon
+              className={cn(
+                'size-3 transition-transform duration-300',
+                isExpended && 'rotate-180',
+              )}
+            />
+          </button>
+        </div>
       )
     },
   }),

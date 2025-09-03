@@ -1,8 +1,7 @@
 {
   "SequencerInbox_v32_celestianitro": {
     "hash": "0x7c44d7be0909b7d0aaf2c476c9c337b43f59f311d40469f3e0cc99dc46308b56",
-    "address": "0xa8968d1dbA3F93FB7412d15F4139C0f63537e9E2",
-    "chain": "arbitrum",
+    "address": "arb1:0xa8968d1dbA3F93FB7412d15F4139C0f63537e9E2",
     "blockNumber": 322488866
   }
 }

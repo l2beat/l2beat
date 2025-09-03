@@ -3,7 +3,7 @@ import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -34,29 +34,27 @@ interface Props {
   dataWithConfiguredThroughputs:
     | ProjectChartDataWithConfiguredThroughput[]
     | undefined
-  projectId: ProjectId
+  project: ChartProject
   isLoading: boolean
   milestones: Milestone[]
   syncedUntil: UnixTime | undefined
   resolution: DaThroughputResolution
 }
 
+const hiddenDataKeys = ['projectMax'] as const
+
 export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
+  project,
   isLoading,
-  projectId,
   milestones,
   syncedUntil,
   resolution,
 }: Props) {
   const projectChartMeta = useMemo(
-    () => getProjectChartMeta(projectId),
-    [projectId],
+    () => getProjectChartMeta(project.id),
+    [project.id],
   )
-  const hiddenDataKeys = useMemo(
-    () => ['projectMax'],
-    [],
-  ) as (keyof typeof projectChartMeta)[]
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     projectChartMeta,
@@ -90,6 +88,7 @@ export function ProjectDaAbsoluteThroughputChart({
     <ChartContainer
       meta={projectChartMeta}
       data={chartData}
+      project={project}
       className="mb-2"
       isLoading={isLoading}
       interactiveLegend={{
@@ -100,19 +99,21 @@ export function ProjectDaAbsoluteThroughputChart({
     >
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <defs>
-          {projectId === 'ethereum' && (
+          {project.id === 'ethereum' && (
             <EthereumFillGradientDef id="ethereum-fill" />
           )}
-          {projectId === 'celestia' && (
+          {project.id === 'celestia' && (
             <FuchsiaFillGradientDef id="celestia-fill" />
           )}
-          {projectId === 'avail' && <SkyFillGradientDef id="avail-fill" />}
-          {projectId === 'eigenda' && <LimeFillGradientDef id="eigenda-fill" />}
+          {project.id === 'avail' && <SkyFillGradientDef id="avail-fill" />}
+          {project.id === 'eigenda' && (
+            <LimeFillGradientDef id="eigenda-fill" />
+          )}
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="project"
-          fill={`url(#${projectId}-fill)`}
+          fill={`url(#${project.id}-fill)`}
           fillOpacity={1}
           stroke={projectChartMeta.project?.color}
           strokeWidth={2}
@@ -219,6 +220,11 @@ export function ProjectDaThroughputCustomTooltip({
               configEntry.label === 'Actual data size' ? (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
                   No data
+                </span>
+              ) : entry.value === null &&
+                configEntry.label === 'Max capacity' ? (
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  No cap
                 </span>
               ) : (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">

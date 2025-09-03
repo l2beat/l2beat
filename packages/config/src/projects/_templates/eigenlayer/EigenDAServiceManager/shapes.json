@@ -1,14 +1,12 @@
 {
   "EigenDAServiceManager": {
     "hash": "0xb0f8e019272d9343047a9e89cbb9526954b9e2a1149fdc2476e7c29759b38951",
-    "address": "0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07",
-    "chain": "ethereum",
+    "address": "eth:0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07",
     "blockNumber": 22188285
   },
   "EigenDAServiceManager_v2": {
     "hash": "0x41471c5c89db3f645030775d3f3cc317047a179f36469fbd736db24baed6523e",
-    "address": "0xae448D008B6F69033AfdA361b46b36C472B6FEE0",
-    "chain": "ethereum",
+    "address": "eth:0xae448D008B6F69033AfdA361b46b36C472B6FEE0",
     "blockNumber": 22596592
   }
 }

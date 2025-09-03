@@ -1,20 +1,17 @@
 {
   "SequencerFeeVault_v1_1_0": {
     "hash": "0xf13800f6674424ad602d8daac646acfc10794f492253796903ac26b7fdb3eabf",
-    "address": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
-    "chain": "optimism",
+    "address": "oeth:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
     "blockNumber": 134041720
   },
   "SequencerFeeVault_v1_5_0beta_2": {
     "hash": "0xbf16b8057a2beae4130302910e769f47307e0e0e5afd365093b06effa159019c",
-    "address": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
-    "chain": "ink",
+    "address": "ink:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
     "blockNumber": 10183769
   },
   "SequencerFeeVault_v1_3_0": {
     "hash": "0xa6e80925a541b18f301edb66231f85cc8aee7aba084674ca3e2822f55d5295d1",
-    "address": "0xd53210eE20948eCFF8B6B8180E29657e0ce8492d",
-    "chain": "base",
+    "address": "base:0xd53210eE20948eCFF8B6B8180E29657e0ce8492d",
     "blockNumber": 29605802
   }
 }

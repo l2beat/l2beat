@@ -18,7 +18,6 @@ export function getStructureOutput(
 ): StructureOutput {
   return withoutUndefinedKeys({
     name: config.name,
-    chain: config.chain,
     timestamp,
     configHash: hashJsonStable(config),
     sharedModules: undefinedIfEmpty(config.sharedModules),

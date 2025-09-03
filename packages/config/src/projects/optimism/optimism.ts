@@ -23,7 +23,6 @@ export const optimism: ScalingProject = opStackL2({
     name: 'OP Mainnet',
     slug: 'op-mainnet',
     stateValidationImage: 'opfp',
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     description:
       'OP Mainnet is an EVM-equivalent Optimistic Rollup. It aims to be fast, simple, and secure.',

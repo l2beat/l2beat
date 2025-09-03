@@ -22,11 +22,13 @@ import { LivenessRepository } from './other/liveness/repository'
 import { NotificationsRepository } from './other/notifications/repository'
 import { RealTimeAnomaliesRepository } from './other/real-time-anomalies/repository'
 import { RealTimeLivenessRepository } from './other/real-time-liveness/repository'
+import { SyncMetadataRepository } from './other/sync-metadata/repository'
 import { VerifierStatusRepository } from './other/verifier-status/repository'
 import { TvsAmountRepository } from './tvs/amount/repository'
 import { TvsBlockTimestampRepository } from './tvs/block-timestamp/repository'
 import { TvsPriceRepository } from './tvs/price/repository'
 import { ProjectValueRepository } from './tvs/project-value/repository'
+import { TokenMetadataRepository } from './tvs/token-metadata/repository'
 import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
@@ -76,6 +78,7 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     liveness: new LivenessRepository(db),
     realTimeLiveness: new RealTimeLivenessRepository(db),
     verifierStatus: new VerifierStatusRepository(db),
+    syncMetadata: new SyncMetadataRepository(db),
     // #endregion
     //
     // #region Tvs
@@ -83,6 +86,7 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     tvsAmount: new TvsAmountRepository(db),
     tvsBlockTimestamp: new TvsBlockTimestampRepository(db),
     tvsTokenValue: new TokenValueRepository(db),
+    tvsTokenMetadata: new TokenMetadataRepository(db),
     tvsProjectValue: new ProjectValueRepository(db),
     // #endregion
     notifications: new NotificationsRepository(db),

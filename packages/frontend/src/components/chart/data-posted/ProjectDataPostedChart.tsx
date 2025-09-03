@@ -1,4 +1,6 @@
+import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DataPostedTimeRangeControls } from '~/pages/scaling/data-posted/DataPostedTimeRangeControls'
 import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
@@ -11,16 +13,21 @@ import { DataPostedChart } from './DataPostedChart'
 import { ProjectDataPostedChartStats } from './ProjectDataPostedChartStats'
 
 interface Props {
-  projectId: string
+  project: ChartProject
   defaultRange: DataPostedTimeRange
+  milestones: Milestone[]
 }
 
-export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
+export function ProjectDataPostedChart({
+  project,
+  defaultRange,
+  milestones,
+}: Props) {
   const [timeRange, setTimeRange] = useState<DataPostedTimeRange>(defaultRange)
 
   const { data, isLoading } = api.da.scalingProjectChart.useQuery({
     range: timeRange,
-    projectId,
+    projectId: project.id,
   })
 
   const chartData = useMemo(
@@ -47,12 +54,14 @@ export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
         />
       </ChartControlsWrapper>
       <DataPostedChart
+        milestones={milestones}
         resolution={rangeToResolution({ type: timeRange })}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
         className="mt-4"
         tickCount={4}
+        project={project}
       />
       <HorizontalSeparator className="my-4" />
       <ProjectDataPostedChartStats

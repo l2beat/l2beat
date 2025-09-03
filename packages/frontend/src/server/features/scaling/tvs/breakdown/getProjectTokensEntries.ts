@@ -7,10 +7,10 @@ import type {
 } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import {
+  assertUnreachable,
   ChainSpecificAddress,
-  EthereumAddress,
   TokenId,
-  type UnixTime,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import capitalize from 'lodash/capitalize'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
@@ -25,15 +25,13 @@ import {
   extractAddressesFromTokenConfig,
 } from './extractAddressesFromTokenConfig'
 
-type AddressData =
-  | {
-      address: string
-      url?: string
-      name?: string
-    }
-  | 'multiple'
+type AddressData = {
+  address: string
+  url?: string
+  name?: string
+}
 
-export interface TvsBreakdownTokenEntry extends FilterableEntry {
+export interface ProjectTvsBreakdownTokenEntry extends FilterableEntry {
   id: TvsToken['id']
   name: string
   symbol: TvsToken['symbol']
@@ -41,12 +39,13 @@ export interface TvsBreakdownTokenEntry extends FilterableEntry {
   valueForProject: number
   value: number
   amount: number
+  priceUsd: number
   category: TvsToken['category']
   source: TvsToken['source']
   isAssociated: TvsToken['isAssociated']
   isGasToken?: boolean
-  address?: AddressData
-  formula: Formula
+  address?: AddressData | 'multiple'
+  formula: FormulaWithMeta
   syncStatus?: string
   bridgedUsing?: {
     bridges: {
@@ -59,9 +58,9 @@ export interface TvsBreakdownTokenEntry extends FilterableEntry {
 
 export async function getProjectTokensEntries(
   project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
-): Promise<TvsBreakdownTokenEntry[]> {
+): Promise<ProjectTvsBreakdownTokenEntry[]> {
   if (env.MOCK) {
-    return getMockTvsBreakdownForProjectData()
+    return getMockTvsBreakdownForProjectData(project)
   }
 
   const db = getDb()
@@ -90,7 +89,7 @@ function getEntries(
   chains: ChainConfig[],
   targetTimestamp: UnixTime,
 ) {
-  const breakdown: TvsBreakdownTokenEntry[] = []
+  const breakdown: ProjectTvsBreakdownTokenEntry[] = []
 
   const projectTokens = project.tvsConfig
   const gasTokens = project.chainConfig?.gasTokens
@@ -100,8 +99,13 @@ function getEntries(
     if (!tokenValue) continue
 
     const { addresses } = extractAddressesFromTokenConfig(token)
-    const address = processAddresses(addresses, chains)
-    const tokenWithValues: TvsBreakdownTokenEntry = {
+    const address = processAddresses(
+      addresses,
+      chains,
+      project.contracts?.addresses,
+    )
+
+    const tokenWithValues: ProjectTvsBreakdownTokenEntry = {
       id: token.id,
       name: token.name,
       symbol: token.symbol,
@@ -109,8 +113,13 @@ function getEntries(
       source: token.source,
       isAssociated: token.isAssociated,
       address,
-      formula: token.valueForProject ?? token.amount,
+      formula: withExplorerUrl(
+        token.valueForProject ?? token.amount,
+        chains,
+        project.contracts?.addresses,
+      ),
       iconUrl: token.iconUrl ?? '',
+      priceUsd: tokenValue.priceUsd,
       valueForProject: tokenValue.valueForProject,
       value: tokenValue.value,
       amount: tokenValue.amount,
@@ -142,30 +151,119 @@ function getEntries(
   return breakdown.sort((a, b) => +b.valueForProject - +a.valueForProject)
 }
 
+// Ik its ugly but it works and is type safe
+type FormulaWithMeta =
+  | (Extract<Formula, { type: 'balanceOfEscrow' }> & {
+      addressMeta: AddressData
+      escrowAddressMeta: AddressData
+    })
+  | (Omit<Extract<Formula, { type: 'calculation' }>, 'arguments'> & {
+      arguments: FormulaWithMeta[]
+    })
+  | (Extract<
+      Formula,
+      { type: 'circulatingSupply' | 'totalSupply' | 'starknetTotalSupply' }
+    > & {
+      addressMeta: AddressData
+    })
+  | (Omit<Extract<Formula, { type: 'value' }>, 'amount'> & {
+      amount: FormulaWithMeta
+    })
+  | Extract<Formula, { type: 'const' }>
+
+function withExplorerUrl(
+  formula: Formula,
+  chains: ChainConfig[],
+  projectContracts: Record<string, ProjectContract[]> | undefined,
+): FormulaWithMeta {
+  switch (formula.type) {
+    case 'balanceOfEscrow': {
+      return {
+        ...formula,
+        escrowAddressMeta: processAddress(
+          {
+            address: formula.escrowAddress,
+            chain: formula.chain,
+          },
+          chains,
+          projectContracts,
+        ),
+        addressMeta: processAddress(
+          {
+            address: formula.address,
+            chain: formula.chain,
+          },
+          chains,
+          projectContracts,
+        ),
+      }
+    }
+    case 'calculation':
+      return {
+        ...formula,
+        arguments: formula.arguments.map((arg) =>
+          withExplorerUrl(arg, chains, projectContracts),
+        ),
+      }
+    case 'circulatingSupply':
+    case 'totalSupply':
+    case 'starknetTotalSupply': {
+      return {
+        ...formula,
+        addressMeta: processAddress(
+          {
+            address: formula.address,
+            chain: formula.chain,
+          },
+          chains,
+          projectContracts,
+        ),
+      }
+    }
+    case 'value':
+      return {
+        ...formula,
+        amount: withExplorerUrl(formula.amount, chains, projectContracts),
+      }
+    case 'const':
+      return formula
+    default:
+      assertUnreachable(formula)
+  }
+}
+
 function processAddresses(
   addresses: Address[],
   chains: ChainConfig[],
-  projectContracts?: Record<string, ProjectContract[]>,
-): TvsBreakdownTokenEntry['address'] {
+  projectContracts: Record<string, ProjectContract[]> | undefined,
+): AddressData | 'multiple' | undefined {
   if (addresses.length > 1) {
     return 'multiple'
   }
   if (addresses.length === 1 && addresses[0]) {
     const address = addresses[0]
-    const contractName = projectContracts?.[address.chain]?.find(
-      (c) =>
-        ChainSpecificAddress.address(c.address).toLowerCase() ===
-        address.address.toLowerCase(),
-    )?.name
-    const explorer = chains.find((c) => c.name === address.chain)?.explorerUrl
-
-    return {
-      address: address.address,
-      url: explorer ? `${explorer}/address/${address.address}` : undefined,
-      name: contractName,
-    }
+    return processAddress(address, chains, projectContracts)
   }
   return undefined
+}
+
+function processAddress(
+  address: Address,
+  chains: ChainConfig[],
+  projectContracts: Record<string, ProjectContract[]> | undefined,
+): AddressData {
+  const contractName = projectContracts?.[address.chain]?.find(
+    (c) =>
+      ChainSpecificAddress.address(c.address).toLowerCase() ===
+      address.address.toLowerCase(),
+  )?.name
+  const explorer = chains.find((c) => c.name === address.chain)?.explorerUrl
+
+  return {
+    address: address.address,
+    url: explorer ? `${explorer}/address/${address.address}` : undefined,
+    name: contractName,
+  }
 }
 
 function getSyncStatus(valueTimestamp: UnixTime, targetTimestamp: UnixTime) {
@@ -177,103 +275,35 @@ function getSyncStatus(valueTimestamp: UnixTime, targetTimestamp: UnixTime) {
   }
 }
 
-function getMockTvsBreakdownForProjectData(): TvsBreakdownTokenEntry[] {
-  return [
-    {
-      id: TokenId('1'),
-      name: 'Token 1',
-      valueForProject: 100,
-      value: 100,
-      amount: 100,
-      category: 'ether',
-      iconUrl:
-        'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-      symbol: 'ETH',
-      source: 'canonical',
-      isAssociated: true,
-      formula: {
-        type: 'balanceOfEscrow',
-        sinceTimestamp: 0,
-        decimals: 18,
-        address: EthereumAddress('0x0000000000000000000000000000000000000000'),
-        escrowAddress: EthereumAddress(
-          '0x0000000000000000000000000000000000000000',
-        ),
-        chain: 'ethereum',
-      },
-      filterable: [],
-    },
-    {
-      id: TokenId('2'),
-      name: 'Token 2',
-      valueForProject: 100,
-      value: 100,
-      amount: 100,
-      iconUrl:
-        'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-      symbol: 'TKN',
-      source: 'native',
-      isAssociated: true,
-      category: 'other',
-      formula: {
-        type: 'balanceOfEscrow',
-        address: EthereumAddress('0x0000000000000000000000000000000000000000'),
-        escrowAddress: EthereumAddress(
-          '0x0000000000000000000000000000000000000000',
-        ),
-        sinceTimestamp: 0,
-        decimals: 18,
-        chain: 'ethereum',
-      },
-      filterable: [],
-    },
-    {
-      id: TokenId('3'),
-      name: 'Token 3',
-      valueForProject: 100,
-      value: 100,
-      amount: 100,
-      iconUrl:
-        'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-      symbol: 'TKN',
-      source: 'external',
-      isAssociated: true,
-      category: 'stablecoin',
-      formula: {
-        type: 'balanceOfEscrow',
-        address: EthereumAddress('0x0000000000000000000000000000000000000000'),
-        escrowAddress: EthereumAddress(
-          '0x0000000000000000000000000000000000000000',
-        ),
-        sinceTimestamp: 0,
-        decimals: 18,
-        chain: 'ethereum',
-      },
-      filterable: [],
-    },
-    {
-      id: TokenId('4'),
-      name: 'Token 4',
-      valueForProject: 100,
-      value: 100,
-      amount: 100,
-      iconUrl:
-        'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-      symbol: 'ETH',
-      source: 'canonical',
-      isAssociated: true,
-      category: 'ether',
-      formula: {
-        type: 'balanceOfEscrow',
-        address: EthereumAddress('0x0000000000000000000000000000000000000000'),
-        sinceTimestamp: 0,
-        decimals: 18,
-        escrowAddress: EthereumAddress(
-          '0x0000000000000000000000000000000000000000',
-        ),
-        chain: 'ethereum',
-      },
-      filterable: [],
-    },
-  ]
+async function getMockTvsBreakdownForProjectData(
+  project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
+): Promise<ProjectTvsBreakdownTokenEntry[]> {
+  const projects = await ps.getProjects({
+    select: ['chainConfig'],
+  })
+  const chains = projects.map((x) => x.chainConfig)
+
+  const tokenValuesMap = new Map<TokenId, TokenValueRecord>(
+    project.tvsConfig.map(
+      (t) =>
+        [
+          TokenId(t.id),
+          {
+            timestamp: UnixTime.now(),
+            configurationId: 'any',
+            projectId: project.id,
+            tokenId: TokenId('1'),
+            valueForProject: 100,
+            valueForSummary: 100,
+            value: 100,
+            amount: 100,
+            priceUsd: 10,
+          },
+        ] as const,
+    ),
+  )
+
+  const entries = getEntries(project, tokenValuesMap, chains, UnixTime.now())
+
+  return entries
 }

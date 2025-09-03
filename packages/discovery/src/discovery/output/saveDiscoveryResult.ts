@@ -45,11 +45,7 @@ export async function saveDiscoveryResult(
 ): Promise<void> {
   const projectDiscoveryFolder =
     options.projectDiscoveryFolder ??
-    posix.join(
-      options.paths.discovery,
-      config.structure.name,
-      config.structure.chain,
-    )
+    posix.join(options.paths.discovery, config.structure.name)
   await mkdirp(projectDiscoveryFolder)
 
   const templateService = new TemplateService(options.paths.discovery)

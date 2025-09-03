@@ -1,8 +1,7 @@
 {
   "MIPS": {
     "hash": "0x3a10a9204d3b7ad786308b5b5f2ca78af017388be046c0d3abe7d4193bbf2a0e",
-    "address": "0xAFD640204D73B02C3521eA8ea3771182527Ff057",
-    "chain": "ethereum",
+    "address": "eth:0xAFD640204D73B02C3521eA8ea3771182527Ff057",
     "blockNumber": 22517869
   }
 }

@@ -72,7 +72,6 @@ export const immutablex: ScalingProject = {
       'Immutable X is a NFT-focused Validium providing zero gas fees, instant trades and scalability for applications.',
     purposes: ['NFT', 'Exchange'],
     stacks: ['StarkEx'],
-    category: 'Other',
     links: {
       websites: ['https://immutable.com/'],
       bridges: ['https://market.immutable.com/'],

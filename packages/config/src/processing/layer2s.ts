@@ -26,6 +26,7 @@ import { canvasconnect } from '../projects/canvasconnect/canvasconnect'
 import { capx } from '../projects/capx/capx'
 import { cartesiprthoneypot } from '../projects/cartesi-prt-honeypot/cartesi-prt-honeypot'
 import { celo } from '../projects/celo/celo'
+import { codex } from '../projects/codex/codex'
 import { corn } from '../projects/corn/corn'
 import { coti } from '../projects/coti/coti'
 import { creator } from '../projects/creator/creator'
@@ -49,6 +50,7 @@ import { facet } from '../projects/facet/facet'
 import { fhenix } from '../projects/fhenix/fhenix'
 import { fluence } from '../projects/fluence/fluence'
 import { fluent } from '../projects/fluent/fluent'
+import { forknet } from '../projects/forknet/forknet'
 import { form } from '../projects/form/form'
 import { fraxtal } from '../projects/fraxtal/fraxtal'
 import { fuel } from '../projects/fuel/fuel'
@@ -77,6 +79,7 @@ import { hypr } from '../projects/hypr/hypr'
 import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
+import { iotex } from '../projects/iotex/iotex'
 import { jovay } from '../projects/jovay/jovay'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
@@ -94,6 +97,7 @@ import { liftchain } from '../projects/liftchain/liftchain'
 import { lightlink } from '../projects/lightlink/lightlink'
 import { linea } from '../projects/linea/linea'
 import { lisk } from '../projects/lisk/lisk'
+import { litecoinvm } from '../projects/litecoinvm/litecoinvm'
 import { logx } from '../projects/logx/logx'
 import { loopring } from '../projects/loopring/loopring'
 import { lootchain } from '../projects/lootchain/lootchain'
@@ -117,6 +121,7 @@ import { namechain } from '../projects/namechain/namechain'
 import { nil } from '../projects/nil/nil'
 import { nova } from '../projects/nova/nova'
 import { oevnetwork } from '../projects/oevnetwork/oevnetwork'
+import { okto } from '../projects/okto/okto'
 import { ola } from '../projects/ola/ola'
 import { omgnetwork } from '../projects/omgnetwork/omgnetwork'
 import { openzk } from '../projects/openzk/openzk'
@@ -157,6 +162,7 @@ import { river } from '../projects/river/river'
 import { rss3 } from '../projects/rss3/rss3'
 import { rufus } from '../projects/rufus/rufus'
 import { scroll } from '../projects/scroll/scroll'
+import { sentient } from '../projects/sentient/sentient'
 import { settlus } from '../projects/settlus/settlus'
 import { shape } from '../projects/shape/shape'
 import { shibarium } from '../projects/shibarium/shibarium'
@@ -196,6 +202,7 @@ import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdin
 import { treasure } from '../projects/treasure/treasure'
 import { tusima } from '../projects/tusima/tusima'
 import { unichain } from '../projects/unichain/unichain'
+import { wilderworld } from '../projects/wilderworld/wilderworld'
 import { wirex } from '../projects/wirex/wirex'
 import { witness } from '../projects/witness/witness'
 import { wonder } from '../projects/wonder/wonder'
@@ -243,6 +250,7 @@ export const layer2s: ScalingProject[] = [
   capx,
   cartesiprthoneypot,
   celo,
+  codex,
   corn,
   coti,
   creator,
@@ -266,6 +274,7 @@ export const layer2s: ScalingProject[] = [
   fluence,
   fluent,
   form,
+  forknet,
   fraxtal,
   fuel,
   fuelv1,
@@ -293,6 +302,7 @@ export const layer2s: ScalingProject[] = [
   immutablex,
   immutablezkevm,
   ink,
+  iotex,
   jovay,
   karak,
   katana,
@@ -310,6 +320,7 @@ export const layer2s: ScalingProject[] = [
   lightlink,
   linea,
   lisk,
+  litecoinvm,
   logx,
   loopring,
   lootchain,
@@ -333,6 +344,7 @@ export const layer2s: ScalingProject[] = [
   nil,
   nova,
   oevnetwork,
+  okto,
   ola,
   omgnetwork,
   openzk,
@@ -375,6 +387,7 @@ export const layer2s: ScalingProject[] = [
   rufus,
   scroll,
   settlus,
+  sentient,
   shape,
   shibarium,
   silentData,
@@ -416,6 +429,7 @@ export const layer2s: ScalingProject[] = [
   unichain,
   wirex,
   witness,
+  wilderworld,
   wonder,
   worldchain,
   xchain,

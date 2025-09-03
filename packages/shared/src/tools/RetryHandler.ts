@@ -18,7 +18,7 @@ export class RetryHandler {
     this.$.logger = this.$.logger.for(this)
   }
 
-  async retry<T>(fn: () => Promise<T>): Promise<T> {
+  async retry<T>(fn: () => Promise<T>, error?: unknown): Promise<T> {
     let attempt = 0
 
     while (true) {
@@ -30,14 +30,16 @@ export class RetryHandler {
       this.$.logger.warn('Scheduling retry', {
         attempt: attempt,
         delay,
+        error: error instanceof Error ? error.message : error,
       })
       await new Promise((resolve) => setTimeout(resolve, delay))
 
       try {
         return await fn()
-      } catch (error) {
+      } catch (retryError) {
+        error = retryError
         if (attempt >= this.$.maxRetries) {
-          throw error
+          throw retryError
         }
       }
     }

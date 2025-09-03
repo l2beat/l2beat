@@ -18,7 +18,6 @@ export const bitlazer: ScalingProject = underReviewL3({
   display: {
     name: 'Bitlazer',
     slug: 'bitlazer',
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     description:
       'Bitlazer is an Orbit stack L3 with AnyTrust DA powering BTC-focused DeFi applications and payments.',
@@ -34,6 +33,10 @@ export const bitlazer: ScalingProject = underReviewL3({
       socialMedia: ['https://x.com/bitlazer', 'https://t.me/bitlazer_io'],
     },
   },
+  proofSystem: {
+    type: 'Optimistic',
+  },
+  dataAvailability: undefined,
   chainConfig: {
     name: 'bitlazer',
     gasTokens: ['lzrBTC'],

@@ -11,7 +11,6 @@ export const sischain: ScalingProject = underReviewL2({
     slug: 'sischain',
     description:
       'The SIS Chain is purpose-built for cross-chain activity – with fast execution, simple tooling, and native token utility at its core.',
-    category: 'Optimistic Rollup',
     purposes: ['Universal'],
     stacks: ['Arbitrum'],
     links: {
@@ -26,6 +25,10 @@ export const sischain: ScalingProject = underReviewL2({
         'https://linkedin.com/company/symbiosis-finance',
       ],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Optimistic',
   },
   chainConfig: {
     name: 'sischain',

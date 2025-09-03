@@ -88,6 +88,7 @@ export const boojum: BaseProject = {
           ProjectId('abstract'),
           ProjectId('sophon'),
           ProjectId('lens'),
+          ProjectId('cronoszkevm'),
         ],
       },
       {
@@ -108,7 +109,6 @@ export const boojum: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [
           ProjectId('zeronetwork'),
-          ProjectId('cronoszkevm'),
           ProjectId('lachain'),
           ProjectId('sxt'),
         ],
@@ -126,6 +126,7 @@ export const boojum: BaseProject = {
           ProjectId('abstract'),
           ProjectId('sophon'),
           ProjectId('lens'),
+          ProjectId('cronoszkevm'),
         ],
       },
       {
@@ -146,7 +147,6 @@ export const boojum: BaseProject = {
         verificationStatus: 'notVerified',
         usedBy: [
           ProjectId('zeronetwork'),
-          ProjectId('cronoszkevm'),
           ProjectId('lachain'),
           ProjectId('sxt'),
         ],

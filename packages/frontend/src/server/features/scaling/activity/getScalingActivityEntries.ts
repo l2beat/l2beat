@@ -103,9 +103,11 @@ function getEthereumEntry(
     name: 'Ethereum',
     shortName: undefined,
     icon: getProjectIcon('ethereum'),
+    isLayer3: false,
     slug: 'ethereum',
     tab,
     filterable: undefined,
+    backgroundColor: 'blue',
     data: {
       tps: data.tps,
       uops: data.uops,

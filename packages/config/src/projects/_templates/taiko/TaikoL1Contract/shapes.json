@@ -1,8 +1,7 @@
 {
   "TaikoL1Contract.sol": {
     "hash": "0x8c8d91a3b010953954bbd3ba9f4c55f76112bf6d7f298dcd584c2de94a4ad1a4",
-    "address": "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
-    "chain": "ethereum",
+    "address": "eth:0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
     "blockNumber": 22297586
   }
 }

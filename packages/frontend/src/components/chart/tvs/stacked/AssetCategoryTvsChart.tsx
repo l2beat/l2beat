@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -34,6 +34,7 @@ interface Props {
   isLoading: boolean
   tickCount?: number
   className?: string
+  project?: ChartProject
 }
 
 export const assetCategoryTvsChartMeta = {
@@ -69,6 +70,7 @@ export function AssetCategoryTvsChart({
   tickCount,
   dataKeys,
   toggleDataKey,
+  project,
 }: Props) {
   // If only one data key is selected we want to change the domain
   // Having it from 0 to MAX does make sense for stacked chart (better comparison)
@@ -79,6 +81,7 @@ export function AssetCategoryTvsChart({
       meta={assetCategoryTvsChartMeta}
       isLoading={isLoading}
       milestones={milestones}
+      project={project}
       interactiveLegend={{
         dataKeys,
         onItemClick: toggleDataKey,
@@ -86,7 +89,7 @@ export function AssetCategoryTvsChart({
       className={className}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent reverse />} />
+        <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="other"
           hide={!dataKeys.includes('other')}

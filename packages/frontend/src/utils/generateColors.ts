@@ -13,16 +13,16 @@ const MIN_LAB_DISTANCE = 20
 // Predefined base palette (12 colorblind-safe colors)
 const basePaletteHex = [
   // 7-color Okabe-Ito (without black and with slight tweak for yellow for better contrast):
-  '#E69F00',
-  '#56B4E9',
-  '#009E73',
-  '#F5C710', // orange, sky blue, bluish green, amber
-  '#0072B2',
-  '#D55E00',
-  '#CC79A7', // dark blue, vermilion, purple
+  '#e69f00',
+  '#56b4e9',
+  '#009e73',
+  '#f5c710', // orange, sky blue, bluish green, amber
+  '#0072b2',
+  '#d55e00',
+  '#cc79a7', // dark blue, vermilion, purple
   // Additional from CARTO Safe to extend to 11:
-  '#88CCEE',
-  '#DDCC77',
+  '#88ccee',
+  '#ddcc77',
   '#117733',
   '#661100', // light blue, light yellow, dark green, dark brown
 ]

@@ -5,6 +5,7 @@ export const PlausibleEvents = v.object({
   checkboxChanged: v.object({ name: v.string(), value: v.string() }),
   radioGroupChanged: v.object({ name: v.string(), value: v.string() }),
   directoryTabsChanged: v.object({ value: v.string() }),
+  tabsChanged: v.object({ name: v.string(), value: v.string() }),
   searchBarProjectSelected: v.object({ name: v.string() }),
   uopsExplorerSelected: v.undefined().optional(),
   trustedSetupFrameworkSelected: v.undefined().optional(),

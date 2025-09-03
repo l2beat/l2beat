@@ -7,6 +7,7 @@ import type { ProjectSectionId } from './types'
 
 export interface ExtendedProjectSectionProps {
   title: string
+  headerAccessory?: ReactNode
   id: ProjectSectionId
   nested?: boolean
   sectionOrder: string | undefined
@@ -40,6 +41,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
           id={props.id}
           sectionOrder={props.sectionOrder}
           nested={props.nested}
+          headerAccessory={props.headerAccessory}
           className="mb-4"
         />
         {props.isUnderReview ? (
@@ -65,36 +67,41 @@ interface ProjectDetailsSectionHeaderProps {
   sectionOrder: string | undefined
   nested: boolean | undefined
   className?: string
+  headerAccessory?: ReactNode
 }
 
 function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
   return (
-    <a
-      href={`#${props.id}`}
+    <div
       className={cn(
-        'flex items-center gap-4',
-        props.nested && 'gap-3',
+        'flex flex-col justify-between gap-4 md:flex-row md:items-center',
         props.className,
       )}
     >
-      {props.sectionOrder && (
-        <div
+      <a
+        href={`#${props.id}`}
+        className={cn('flex items-center gap-4', props.nested && 'gap-3')}
+      >
+        {props.sectionOrder && (
+          <div
+            className={cn(
+              'hidden size-[26px] items-center justify-center rounded bg-surface-secondary px-3 text-heading-18 text-secondary tabular-nums leading-none! md:flex',
+              props.nested && 'h-[26px] w-10',
+            )}
+          >
+            {props.sectionOrder}
+          </div>
+        )}
+        <span
           className={cn(
-            'hidden size-[26px] items-center justify-center rounded bg-surface-secondary px-3 text-heading-18 text-secondary tabular-nums leading-none! md:flex',
-            props.nested && 'h-[26px] w-10',
+            'text-heading-28',
+            props.nested && 'text-heading-24 leading-none!',
           )}
         >
-          {props.sectionOrder}
-        </div>
-      )}
-      <span
-        className={cn(
-          'text-heading-28',
-          props.nested && 'text-heading-24 leading-none!',
-        )}
-      >
-        {props.title}
-      </span>
-    </a>
+          {props.title}
+        </span>
+      </a>
+      {props.headerAccessory}
+    </div>
   )
 }

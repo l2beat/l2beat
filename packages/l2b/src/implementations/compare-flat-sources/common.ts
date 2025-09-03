@@ -14,7 +14,6 @@ import { join } from 'path'
 
 export interface Project {
   name: string
-  chain: string
   concatenatedSource: HashedFileContent
   sources: HashedFileContent[]
 }
@@ -34,27 +33,23 @@ export async function computeStackSimilarity(
   const configReader = new ConfigReader(paths.discovery)
   const configs = configReader
     .readAllDiscoveredProjects()
-    .flatMap(({ project, chains }) =>
-      chains.map((chain) => configReader.readConfig(project, chain)),
-    )
+    .flatMap((project) => configReader.readConfig(project))
 
   const stackProject = await Promise.all(
-    configs.map((config) =>
-      readProject(logger, config.name, config.chain, paths),
-    ),
+    configs.flatMap((config) => readProject(logger, config.name, paths)),
   )
   const projects = stackProject.filter((p) => p !== undefined) as Project[]
 
   const matrix: Record<string, Record<string, number>> = {}
   for (let row = 0; row < projects.length; row++) {
     const p1 = projects[row]
-    const path1 = encodeProjectPath(p1.name, p1.chain)
+    const path1 = p1.name
 
     matrix[path1] ??= {}
     matrix[path1][path1] = 1
     for (let col = row + 1; col < projects.length; col++) {
       const p2 = projects[col]
-      const path2 = encodeProjectPath(p2.name, p2.chain)
+      const path2 = p2.name
 
       const similarity = estimateSimilarity(
         p1.concatenatedSource,
@@ -72,7 +67,6 @@ export async function computeStackSimilarity(
 
 interface Similarity {
   name: string
-  chain: string
   similarity: number
 }
 
@@ -84,15 +78,12 @@ export function getMostSimilar(
   for (const [p1Path, row] of Object.entries(matrix)) {
     for (const [p2Path, similarity] of Object.entries(row)) {
       if (p1Path !== p2Path) {
-        const { name: p1Name } = decodeProjectPath(p1Path)
         if (
-          mostSimilar[p1Name] === undefined ||
-          similarity > mostSimilar[p1Name].similarity
+          mostSimilar[p1Path] === undefined ||
+          similarity > mostSimilar[p1Path].similarity
         ) {
-          const { name: p2Name, chain: p2Chain } = decodeProjectPath(p2Path)
-          mostSimilar[p1Name] = {
-            name: p2Name,
-            chain: p2Chain,
+          mostSimilar[p1Path] = {
+            name: p2Path,
             similarity,
           }
         }
@@ -113,23 +104,8 @@ export async function computeComparisonBetweenProjects(
   firstProject: Project
   secondProject: Project
 }> {
-  const { name: firstProjectName, chain: firstProjectChain } =
-    decodeProjectPath(firstProjectPath)
-  const { name: secondProjectName, chain: secondProjectChain } =
-    decodeProjectPath(secondProjectPath)
-
-  const firstProject = await readProject(
-    logger,
-    firstProjectName,
-    firstProjectChain,
-    paths,
-  )
-  const secondProject = await readProject(
-    logger,
-    secondProjectName,
-    secondProjectChain,
-    paths,
-  )
+  const firstProject = await readProject(logger, firstProjectPath, paths)
+  const secondProject = await readProject(logger, secondProjectPath, paths)
   assert(firstProject, `Project ${firstProjectPath} not found`)
   assert(secondProject, `Project ${secondProjectPath} not found`)
 
@@ -180,17 +156,15 @@ export function removeCommonPath(fileIds: FileId[]): FileId[] {
 async function readProject(
   logger: Logger,
   projectName: string,
-  chain: string,
   paths: DiscoveryPaths,
 ): Promise<Project | undefined> {
   try {
-    const sources = await getFlatSources(projectName, chain, paths)
+    const sources = await getFlatSources(projectName, paths)
     const concatenatedSources = sources.map((source) => source.content).join('')
     const concatenatedSourceHashChunks =
       buildSimilarityHashmap(concatenatedSources)
     return {
       name: projectName,
-      chain,
       concatenatedSource: {
         path: 'virtualPath.sol',
         hashChunks: concatenatedSourceHashChunks,
@@ -209,11 +183,10 @@ async function readProject(
 
 async function getFlatSources(
   project: string,
-  chain: string,
   paths: DiscoveryPaths,
 ): Promise<HashedFileContent[]> {
   const configReader = new ConfigReader(paths.discovery)
-  const basePath = configReader.getProjectChainPath(project, chain)
+  const basePath = configReader.getProjectPath(project)
   const path = join(basePath, '.flat')
 
   const filePaths = await listFilesRecursively(path)
@@ -251,20 +224,4 @@ export async function listFilesRecursively(path: string): Promise<string[]> {
   )
 
   return files.flat()
-}
-
-function encodeProjectPath(name: string, chain: string): string {
-  return `${chain}:${name}`
-}
-
-export function decodeProjectPath(projectPath: string): {
-  name: string
-  chain: string
-} {
-  if (!projectPath.includes(':')) {
-    return { name: projectPath, chain: 'ethereum' }
-  }
-
-  const [chain, name] = projectPath.split(':')
-  return { name, chain }
 }

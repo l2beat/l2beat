@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartTooltip,
@@ -26,6 +26,7 @@ export interface TvsChartDataPoint {
 
 interface Props {
   data: TvsChartDataPoint[] | undefined
+  project?: ChartProject
   unit: ChartUnit
   isLoading: boolean
   syncedUntil: number | undefined
@@ -35,6 +36,7 @@ interface Props {
 
 export function TvsChart({
   data,
+  project,
   unit,
   isLoading,
   milestones,
@@ -51,6 +53,7 @@ export function TvsChart({
 
   return (
     <ChartContainer
+      project={project}
       meta={chartMeta}
       data={data}
       isLoading={isLoading}

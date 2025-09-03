@@ -18,7 +18,9 @@ describe(BlockActivityIndexer.name, () => {
   describe(BlockActivityIndexer.prototype.update.name, () => {
     it('make update based on batchSize', async () => {
       const txsCountService = mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo([]),
+        getTxsCount: mockFn().resolvesTo({
+          records: [],
+        }),
       })
 
       const indexer = createIndexer({
@@ -32,7 +34,7 @@ describe(BlockActivityIndexer.name, () => {
       expect(newSafeHeight).toEqual(50)
     })
 
-    it('gets blocks counts, sum with current counts and saves to db', async () => {
+    it('gets blocks counts, sum with current counts, saves to db and updates sync metadata', async () => {
       const activityRepository = mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([
           activityRecord('a', START, 7, 7, 0, 8),
@@ -41,17 +43,27 @@ describe(BlockActivityIndexer.name, () => {
         upsertMany: mockFn().resolvesTo(undefined),
       })
 
+      const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+        updateSyncedUntil: mockFn().resolvesTo(undefined),
+      })
+
       const txsCountService = mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo([
-          activityRecord('a', START, 5, 5, 9, 10),
-          activityRecord('a', START + 1 * UnixTime.DAY, 4, 5, 13, 15),
-          activityRecord('a', START + 2 * UnixTime.DAY, 2, 2, 16, 20),
-        ]),
+        getTxsCount: mockFn().resolvesTo({
+          records: [
+            activityRecord('a', START, 5, 5, 9, 10),
+            activityRecord('a', START + 1 * UnixTime.DAY, 4, 5, 13, 15),
+            activityRecord('a', START + 2 * UnixTime.DAY, 2, 2, 16, 20),
+          ],
+          latestTimestamp: START + 2 * UnixTime.DAY,
+        }),
       })
 
       const indexer = createIndexer({
         txsCountService,
-        db: mockDatabase({ activity: activityRepository }),
+        db: mockDatabase({
+          activity: activityRepository,
+          syncMetadata: syncMetadataRepository,
+        }),
         batchSize: 100,
       })
 
@@ -63,6 +75,12 @@ describe(BlockActivityIndexer.name, () => {
         activityRecord('a', START + 1 * UnixTime.DAY, 7, 9, 11, 15),
         activityRecord('a', START + 2 * UnixTime.DAY, 2, 2, 16, 20),
       ])
+      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenCalledWith(
+        'activity',
+        ['a'],
+        START + 2 * UnixTime.DAY,
+        10,
+      )
       expect(newSafeHeight).toEqual(10)
     })
 
@@ -74,15 +92,23 @@ describe(BlockActivityIndexer.name, () => {
         upsertMany: mockFn().resolvesTo(undefined),
       })
 
+      const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+        updateSyncedUntil: mockFn().resolvesTo(undefined),
+      })
+
       const txsCountService = mockObject<TxsCountService>({
-        getTxsCount: mockFn().resolvesTo([
-          activityRecord('a', START, 0, 0, 9, 10),
-        ]),
+        getTxsCount: mockFn().resolvesTo({
+          records: [activityRecord('a', START, 0, 0, 9, 10)],
+          latestTimestamp: START,
+        }),
       })
 
       const indexer = createIndexer({
         txsCountService,
-        db: mockDatabase({ activity: activityRepository }),
+        db: mockDatabase({
+          activity: activityRepository,
+          syncMetadata: syncMetadataRepository,
+        }),
         batchSize: 100,
       })
 
@@ -99,6 +125,12 @@ describe(BlockActivityIndexer.name, () => {
           end: 10,
         },
       ])
+      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenCalledWith(
+        'activity',
+        ['a'],
+        START,
+        10,
+      )
       expect(newSafeHeight).toEqual(10)
     })
   })
@@ -260,6 +292,9 @@ function createIndexer(
       activity: mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([]),
         upsertMany: mockFn().resolvesTo(undefined),
+      }),
+      syncMetadata: mockObject<Database['syncMetadata']>({
+        updateSyncedUntil: mockFn().resolvesTo(undefined),
       }),
     }),
     projectId: ProjectId('a'),

@@ -8,7 +8,7 @@ import {
 } from 'react'
 
 interface HighlightedTableRowContextType {
-  highlightedSlug: string | undefined
+  highlightedId: string | undefined
 }
 
 const HighlightedTableRowContext = createContext<
@@ -24,18 +24,18 @@ export function HighlightedTableRowProvider({
   children,
   defaultValue,
 }: HighlightedTableRowProviderProps) {
-  const [highlightedSlug, setHighlightedSlug] = useState(defaultValue)
+  const [highlightedId, setHighlightedId] = useState(defaultValue)
 
   const handleHighlightChange = useCallback(() => {
     const params = new URLSearchParams(window.location.search)
     const highlight = params.get('highlight')
-    setHighlightedSlug(highlight ?? undefined)
+    setHighlightedId(highlight ?? undefined)
   }, [])
 
   useEffect(handleHighlightChange, [])
 
   return (
-    <HighlightedTableRowContext.Provider value={{ highlightedSlug }}>
+    <HighlightedTableRowContext.Provider value={{ highlightedId }}>
       {children}
     </HighlightedTableRowContext.Provider>
   )

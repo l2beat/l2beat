@@ -1,7 +1,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
-import { BasicDaTable } from '../../../components/BasicDaTable'
 import { customColumns } from './columns'
 
 export function DaSummaryCustomTable({ items }: { items: DaSummaryEntry[] }) {
@@ -17,5 +17,5 @@ export function DaSummaryCustomTable({ items }: { items: DaSummaryEntry[] }) {
     },
   })
 
-  return <BasicDaTable table={table} />
+  return <BasicTable table={table} />
 }

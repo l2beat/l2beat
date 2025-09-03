@@ -4,6 +4,7 @@ import {
   formatSeconds,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import {
   CONTRACTS,
   ESCROW,
@@ -281,10 +282,15 @@ export const arbitrum: ScalingProject = orbitStackL2({
       selfSequencingDelay,
       l1TimelockDelay,
     ),
-    stateValidation: RISK_VIEW.STATE_FP_INT(
-      challengeWindowSeconds,
-      challengeGracePeriodSeconds,
-    ),
+    stateValidation: {
+      ...RISK_VIEW.STATE_FP_INT(
+        challengeWindowSeconds,
+        challengeGracePeriodSeconds,
+      ),
+      initialBond: formatEther(
+        discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+      ),
+    },
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
@@ -314,6 +320,10 @@ export const arbitrum: ScalingProject = orbitStackL2({
       rollupNodeLink: 'https://github.com/OffchainLabs/nitro/',
     },
   ),
+  nonTemplateProofSystem: {
+    type: 'Optimistic',
+    name: 'BoLD',
+  },
   stateDerivation: {
     nodeSoftware: `The rollup node (Arbitrum Nitro) consists of four parts. The base layer is the core Geth server (with minor modifications to add hooks) that emulates the execution of EVM contracts and maintains Ethereum's state and [a fork of wasmer](https://github.com/OffchainLabs/wasmer) that is used for native WASM execution. The middle layer, ArbOS, provides additional Layer 2 functionalities such as decompressing data batches, accounting for Layer 1 gas costs, and supporting cross-chain bridge functionalities. The top layer consists of node software, primarily from Geth, that handles client connections (i.e., regular RPC node). [View Code](https://github.com/OffchainLabs/nitro/)`,
     compressionScheme: `The Sequencer's batches are compressed using a general-purpose data compression algorithm known as [Brotli](https://github.com/google/brotli), configured to its highest compression setting.`,

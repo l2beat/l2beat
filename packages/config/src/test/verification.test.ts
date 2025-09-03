@@ -31,7 +31,7 @@ describe('verification status', () => {
           return
         }
 
-        const discoveries = getDiscoveries(configReader, projectId, chain)
+        const discoveries = getDiscoveries(configReader, projectId)
         assert(
           discoveries.length > 0,
           `Failed to read discovery for ${projectId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
@@ -50,11 +50,10 @@ describe('verification status', () => {
 function getDiscoveries(
   configReader: ConfigReader,
   project: string,
-  chain: string,
 ): DiscoveryOutput[] {
   let discovery = undefined
   try {
-    discovery = configReader.readDiscovery(project, chain)
+    discovery = configReader.readDiscovery(project)
   } catch {}
   if (discovery === undefined) {
     return []
@@ -65,16 +64,14 @@ function getDiscoveries(
   if (sharedModules.length > 0) {
     for (const sharedModule of sharedModules) {
       try {
-        result.push(configReader.readDiscovery(sharedModule, chain))
+        result.push(configReader.readDiscovery(sharedModule))
       } catch {}
     }
   }
 
   const dependentDiscoveries = discovery.dependentDiscoveries ?? {}
-  for (const [projectName, chains] of Object.entries(dependentDiscoveries)) {
-    for (const chain of Object.keys(chains)) {
-      result.push(configReader.readDiscovery(projectName, chain))
-    }
+  for (const projectName of Object.keys(dependentDiscoveries)) {
+    result.push(configReader.readDiscovery(projectName))
   }
   return result
 }

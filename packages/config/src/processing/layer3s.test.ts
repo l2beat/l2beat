@@ -33,22 +33,6 @@ describe('layer3s', () => {
     })
   })
 
-  describe('others', () => {
-    for (const layer3 of layer3s) {
-      it(`every project with reasonsForBeingOther has Other category: ${layer3.display.name}`, () => {
-        if (layer3.reasonsForBeingOther) {
-          expect(layer3.display.category === 'Other').toEqual(true)
-        }
-      })
-
-      it(`every Other project has reasonsForBeingOther configured: ${layer3.display.name}`, () => {
-        if (layer3.display.category === 'Other') {
-          expect(!!layer3.reasonsForBeingOther).toEqual(true)
-        }
-      })
-    }
-  })
-
   describe('ecosystems', () => {
     const ecosystemIds = ecosystems.map((e) => e.id)
     for (const layer3 of layer3s) {
@@ -158,5 +142,23 @@ describe('layer3s', () => {
         expect(layer3.badges?.length).toEqual(uniq(layer3.badges).length)
       })
     }
+  })
+
+  describe('others', () => {
+    describe('live projects without proof system have reasons for being other', () => {
+      const liveProjectsWithoutProofSystem = layer3s.filter(
+        (layer3) =>
+          !layer3.isUpcoming &&
+          !layer3.archivedAt &&
+          !layer3.proofSystem &&
+          layer3.reviewStatus !== 'initialReview',
+      )
+
+      for (const layer3 of liveProjectsWithoutProofSystem) {
+        it(`${layer3.id} should have reasons for being other`, () => {
+          expect(layer3.reasonsForBeingOther?.length ?? 0).toBeGreaterThan(0)
+        })
+      }
+    })
   })
 })

@@ -8,6 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
 import isEmpty from 'lodash/isEmpty'
 import unionBy from 'lodash/unionBy'
 import {
@@ -33,7 +34,7 @@ import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
-  ProjectScalingProofSystem,
+  ProjectScalingRiskView,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -49,8 +50,8 @@ import type {
   ProjectRisk,
   ProjectScalingCapability,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
-  ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectScalingStateDerivation,
@@ -124,9 +125,7 @@ interface OrbitStackConfigCommon {
   upgradeability?: {
     upgradableBy?: ProjectUpgradeableActor[]
   }
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingDisplay['category']
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   nonTemplateProofSystem?: ProjectScalingProofSystem
   bridge: EntryParameters
   blockNumberOpcodeTimeSeconds?: number
@@ -161,7 +160,7 @@ interface OrbitStackConfigCommon {
   }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
   availDa?: {
-    appId: string
+    appIds: string[]
     sinceBlock: number // Block number on Avail Network
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
@@ -176,9 +175,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingDisplay['category']
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   upgradesAndGovernance?: string
 }
 
@@ -341,7 +338,6 @@ function orbitStackCommon(
     | 'architectureImage'
     | 'purposes'
     | 'stacks'
-    | 'category'
     | 'warning'
   >
 } {
@@ -481,13 +477,6 @@ function orbitStackCommon(
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       stacks: ['Arbitrum'],
-      category:
-        templateVars.display.category ??
-        (templateVars.reasonsForBeingOther
-          ? 'Other'
-          : postsToExternalDA
-            ? 'Optimium'
-            : 'Optimistic Rollup'),
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
@@ -805,7 +794,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
           },
           explanation: `${
             templateVars.display.name
-          } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
+          } posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
             selfSequencingDelaySeconds,
           )}. The state root is settled ${formatSeconds(
             challengePeriodSeconds,
@@ -875,7 +864,7 @@ function getDaTracking(
         daLayer: ProjectId('avail'),
         // TODO: update to value from discovery
         sinceBlock: templateVars.availDa.sinceBlock,
-        appId: templateVars.availDa.appId,
+        appIds: templateVars.availDa.appIds,
       },
     ]
   }
@@ -971,6 +960,19 @@ function getRiskView(
                   blockNumberOpcodeTimeSeconds
               : undefined,
           ),
+          initialBond: isPostBoLD
+            ? formatEther(
+                templateVars.discovery.getContractValue<number>(
+                  'RollupProxy',
+                  'baseStake',
+                ),
+              )
+            : formatEther(
+                templateVars.discovery.getContractValue<number>(
+                  'RollupProxy',
+                  'currentRequiredStake',
+                ),
+              ),
         }
       })(),
     dataAvailability:

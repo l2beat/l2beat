@@ -5,13 +5,7 @@ import { useTable } from '~/hooks/useTable'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/getScalingRiskEntries'
 import { getScalingRiskColumns } from './columns'
 
-export function ScalingRiskTable({
-  entries,
-  notReviewed,
-}: {
-  entries: ScalingRiskEntry[]
-  notReviewed?: boolean
-}) {
+export function ScalingRiskTable({ entries }: { entries: ScalingRiskEntry[] }) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,
@@ -30,10 +24,5 @@ export function ScalingRiskTable({
     },
   })
 
-  return (
-    <BasicTable
-      table={table}
-      rowColoringMode={notReviewed ? 'ignore-colors' : undefined}
-    />
-  )
+  return <BasicTable table={table} />
 }

@@ -1,8 +1,7 @@
 {
   "LORDSBridge": {
     "hash": "0x2f705f817a66ebdf99961fe9f40d30fe99be28e3a316d15a490048e7cb149b67",
-    "address": "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
-    "chain": "ethereum",
+    "address": "eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
     "blockNumber": 22188285
   }
 }

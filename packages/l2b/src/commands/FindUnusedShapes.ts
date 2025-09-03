@@ -18,16 +18,14 @@ export const FindUnusedShapes = command({
 
     const shapes = templateService.getAllShapes()
 
-    const chainConfigs = configReader
+    const projectConfigs = configReader
       .readAllDiscoveredProjects()
-      .flatMap(({ project, chains }) =>
-        chains.map((chain) => configReader.readConfig(project, chain)),
-      )
+      .flatMap((project) => configReader.readConfig(project))
 
     const allSourceHashesUsed = new Set<string>()
 
-    for (const config of chainConfigs) {
-      const discovery = configReader.readDiscovery(config.name, config.chain)
+    for (const config of projectConfigs) {
+      const discovery = configReader.readDiscovery(config.name)
 
       for (const entry of discovery.entries) {
         if (entry.sourceHashes) {

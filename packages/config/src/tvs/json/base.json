@@ -769,7 +769,7 @@
         "decimals": 18,
         "sinceTimestamp": 1686793895
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -1023,6 +1023,44 @@
         "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 18,
         "sinceTimestamp": 1711065600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-FOOM",
+      "priceId": "foom",
+      "symbol": "FOOM",
+      "name": "FOOM",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31308/large/f.png?1696530127",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xd0D56273290D339aaF1417D9bfa1bb8cFe8A0933",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1692316800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-FORT",
+      "priceId": "forta",
+      "symbol": "FORT",
+      "name": "Forta",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25060/large/Forta_lgo_%281%29.png?1696524210",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x41545f8b9472D758bB669ed8EaEEEcD7a9C4Ec29",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1686793895
       },
       "category": "other",
       "source": "canonical",
@@ -3506,7 +3544,7 @@
         "sinceTimestamp": 1718928000
       },
       "category": "other",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [

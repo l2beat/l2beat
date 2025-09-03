@@ -609,6 +609,21 @@
     "eth:0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6": {
       // WBTC Vault (Reya)
       "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    // TODO(radomski): To be removed
+    "eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c": {
+      "ignoreMethods": [
+        "delegationManager",
+        "DOMAIN_VERSION",
+        "eip712Domain",
+        "entryPoint",
+        "getDeposit",
+        "getDomainHash",
+        "getNonce",
+        "NAME",
+        "PACKED_USER_OP_TYPEHASH",
+        "VERSION"
+      ]
     }
   }
 }

@@ -8,6 +8,7 @@ import type {
 } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
@@ -164,7 +165,7 @@ export async function getBridgesProjectEntry(
       props: {
         id: 'tvs',
         title: 'Value Secured',
-        projectId: project.id,
+        project: getChartProject(project),
         tokens: tokens,
         milestones: project.milestones ?? [],
         defaultRange: project.archivedAt ? 'max' : '1y',

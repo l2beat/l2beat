@@ -21,3 +21,4 @@ export type BlipSexp =
   | ['delete', ...(string | number)[]]
   | ['shape', ...ShapeArg[]]
   | ['to_entries']
+  | ['length']

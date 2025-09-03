@@ -24,11 +24,7 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import {
-  formatChallengeAndExecutionDelay,
-  formatChallengePeriod,
-  formatDelay,
-} from '../common/formatDelays'
+import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -36,7 +32,7 @@ import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
-  ProjectScalingProofSystem,
+  ProjectScalingRiskView,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -52,10 +48,9 @@ import type {
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
-  ProjectScalingCategory,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
-  ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectScalingStateDerivation,
@@ -162,9 +157,7 @@ interface OpStackConfigCommon {
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hasSuperchainScUpgrades?: boolean
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingCategory
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   /** Set to true if projects posts blobs to Ethereum */
   usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
@@ -175,20 +168,24 @@ interface OpStackConfigCommon {
   }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
   availDa?: {
-    appId: string
+    appIds: string[]
     /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
+  /**
+   * Overrides the onchain check for superchain ecosystem
+   * Its needed cuz some project are using custom superchain config
+   * but still are a part of superchain config due to offchain agreements
+   */
+  isPartOfSuperchain?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   upgradesAndGovernance?: string
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingDisplay['category']
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
@@ -208,7 +205,6 @@ function opStackCommon(
     | 'architectureImage'
     | 'purposes'
     | 'stacks'
-    | 'category'
     | 'warning'
   >
 } {
@@ -238,9 +234,13 @@ function opStackCommon(
     'opstack',
     postsToEthereum(templateVars) ? 'rollup' : 'optimium',
   ]
-  const partOfSuperchain = isPartOfSuperchain(templateVars)
-  if (partOfSuperchain) {
+  const partOfSuperchainOnchain = isPartOfSuperchainOnchain(templateVars)
+
+  if (hasSuperchainConfig(templateVars)) {
     architectureImage.push('superchain')
+  }
+
+  if (templateVars.isPartOfSuperchain || partOfSuperchainOnchain) {
     automaticBadges.push(BADGES.Infra.Superchain)
   }
   if (fraudProofType !== 'None') {
@@ -293,13 +293,6 @@ function opStackCommon(
             ? 'kailua'
             : undefined,
       stacks: ['OP Stack'],
-      category:
-        templateVars.display.category ??
-        (templateVars.reasonsForBeingOther
-          ? 'Other'
-          : postsToEthereum(templateVars)
-            ? 'Optimistic Rollup'
-            : 'Optimium'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -311,7 +304,7 @@ function opStackCommon(
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Optimistic' }),
+      (hasNoProofs ? undefined : { type: 'Optimistic', name: 'OPFP' }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
@@ -361,6 +354,8 @@ function opStackCommon(
     },
     ecosystemInfo: {
       id: ProjectId('superchain'),
+      isPartOfSuperchain:
+        templateVars.isPartOfSuperchain ?? partOfSuperchainOnchain,
     },
     technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
@@ -448,7 +443,7 @@ function getDaTracking(
         daLayer: ProjectId('avail'),
         // TODO: update to value from discovery
         sinceBlock: templateVars.availDa.sinceBlock,
-        appId: templateVars.availDa.appId,
+        appIds: templateVars.availDa.appIds,
       },
     ]
   }
@@ -878,13 +873,13 @@ function getRiskView(
 
 function getRiskViewStateValidation(
   templateVars: OpStackConfigCommon,
-): TableReadyValue {
+): ProjectScalingRiskView['stateValidation'] {
   const fraudProofType = getFraudProofType(templateVars)
   switch (fraudProofType) {
     case 'None': {
       return {
         ...RISK_VIEW.STATE_NONE,
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
+        challengeDelay: getChallengePeriod(templateVars),
       }
     }
     case 'Permissioned': {
@@ -897,6 +892,12 @@ function getRiskViewStateValidation(
           RISK_VIEW.STATE_FP_INT().description +
           ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number[]>(
+            'DisputeGameFactory',
+            'initBonds',
+          )[1], // 1 is for permissioned games!
+        ),
       }
     }
     case 'Permissionless': {
@@ -905,14 +906,24 @@ function getRiskViewStateValidation(
           getChallengePeriod(templateVars),
           getExecutionDelay(templateVars),
         ),
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number[]>(
+            'DisputeGameFactory',
+            'initBonds',
+          )[0], // 0 is for permissionless games!
+        ),
       }
     }
     case 'Kailua': {
       return {
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
-        secondLine: formatChallengeAndExecutionDelay(
-          getChallengePeriod(templateVars) +
-            Number(getExecutionDelay(templateVars)),
+        executionDelay: getExecutionDelay(templateVars),
+        challengeDelay: getChallengePeriod(templateVars),
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number>(
+            'KailuaTreasury',
+            'participationBond',
+          ),
         ),
       }
     }
@@ -1598,7 +1609,20 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
 
-function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
+function isPartOfSuperchainOnchain(templateVars: OpStackConfigCommon): boolean {
+  if (!templateVars.discovery.hasContract('SuperchainConfig')) {
+    return false
+  }
+
+  // Some chains are not part of superchain, but they deploy their own version of the superchain config
+  // We need to check if the chain is part of superchain by checking the address of the superchain config
+  return (
+    templateVars.discovery.getContract('SuperchainConfig').address ===
+    'eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C'
+  )
+}
+
+function hasSuperchainConfig(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('SuperchainConfig')
 }
 

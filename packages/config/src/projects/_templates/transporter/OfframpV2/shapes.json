@@ -1,8 +1,7 @@
 {
   "EVM2EVMOffRamp": {
     "hash": "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890",
-    "address": "0x0aB48c500AbD8392620c3C4E4fdD5d7063C44554",
-    "chain": "ethereum",
+    "address": "eth:0x0aB48c500AbD8392620c3C4E4fdD5d7063C44554",
     "blockNumber": 22188285
   }
 }
