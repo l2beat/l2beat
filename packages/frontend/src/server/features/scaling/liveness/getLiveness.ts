@@ -302,6 +302,8 @@ function getMockLivenessData(): LivenessResponse {
     'myria',
     'scroll',
     'polygonzkevm',
+    'blobstream',
+    'vector',
   ] as const
 
   const projects = projectIds.reduce(
@@ -351,6 +353,27 @@ function getMockLivenessData(): LivenessResponse {
           UnixTime.now() - 4 * UnixTime.HOUR,
           'hour',
         ),
+      },
+    },
+    blobstream: {
+      ...projects.blobstream,
+      proofSubmissions: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.toStartOf(
+          UnixTime.now() - 4 * UnixTime.HOUR,
+          'hour',
+        ),
+      },
+    },
+    vector: {
+      ...projects.vector,
+      proofSubmissions: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.toStartOf(UnixTime.now(), 'hour'),
       },
     },
   }

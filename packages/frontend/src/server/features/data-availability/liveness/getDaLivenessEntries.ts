@@ -75,10 +75,6 @@ function getDaLivenessEntry(
   projectsChangeReport: ProjectsChangeReport,
   liveness: LivenessResponse,
 ): DaLivenessEntry | undefined {
-  if (bridges.length === 0) {
-    return undefined
-  }
-
   const daBridges = bridges
     .map((b): DaBridgeLivenessEntry | undefined => {
       const bridgeLiveness = liveness[b.id]
@@ -123,6 +119,10 @@ function getDaLivenessEntry(
       }
     })
     .filter((x) => x !== undefined)
+
+  if (daBridges.length === 0) {
+    return undefined
+  }
 
   return {
     ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
