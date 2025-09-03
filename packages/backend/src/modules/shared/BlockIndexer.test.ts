@@ -2,10 +2,10 @@ import { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import { type Block, type Log, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { IndexerService } from '../../../tools/uif/IndexerService'
-import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import type { BlockProcessor } from '../types'
+import type { IndexerService } from '../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
 import { BlockIndexer, type BlockIndexerDeps } from './BlockIndexer'
+import type { BlockProcessor } from './types'
 
 describe(BlockIndexer.name, () => {
   beforeEach(() => {

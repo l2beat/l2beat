@@ -3,8 +3,8 @@ import { Indexer } from '@l2beat/uif'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
-} from '../../../tools/uif/ManagedChildIndexer'
-import type { BlockProcessor } from '../types'
+} from '../../tools/uif/ManagedChildIndexer'
+import type { BlockProcessor } from './types'
 
 export type BlockIndexerMode = `CONTINUOUS` | `LATEST_ONLY`
 

@@ -19,11 +19,11 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { Config, TrackedTxsConfig } from '../../../config/Config'
-import { isChainIdMatching } from '../../tracked-txs/utils/isChainIdMatching'
-import { isProgramHashProven } from '../../tracked-txs/utils/isProgramHashProven'
-import type { AnomalyNotifier } from '../notifiers/AnomalyNotifier'
-import type { BlockProcessor } from '../types'
+import type { Config, TrackedTxsConfig } from '../../config/Config'
+import type { BlockProcessor } from '../shared/types'
+import { isChainIdMatching } from '../tracked-txs/utils/isChainIdMatching'
+import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
+import type { AnomalyNotifier } from './AnomalyNotifier'
 
 export class RealTimeLivenessProcessor implements BlockProcessor {
   private logger: Logger

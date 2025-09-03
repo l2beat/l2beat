@@ -7,9 +7,9 @@ import type { Clock } from '../../tools/Clock'
 import { EventIndexer } from '../../tools/EventIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
-import { BlockIndexer } from './indexers/BlockIndexer'
-import { AnomalyNotifier } from './notifiers/AnomalyNotifier'
-import { RealTimeLivenessProcessor } from './processors/RealTimeLivenessProcessor'
+import { AnomalyNotifier } from '../anomalies/AnomalyNotifier'
+import { RealTimeLivenessProcessor } from '../anomalies/RealTimeLivenessProcessor'
+import { BlockIndexer } from './BlockIndexer'
 
 export function createSharedModule(
   config: Config,
