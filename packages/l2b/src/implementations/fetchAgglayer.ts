@@ -53,7 +53,7 @@ export class AgglayerDataFetcher {
     '9': 'testnet',
     '10': 'mainnet',
     '11': 'testnet',
-    '12': 'mainnet',
+    '12': 'testnet?',
     '14': 'cdk-sov test',
     '15': 'testnet?',
     '16': 'pentagon.games/pentagon-chain',
@@ -61,6 +61,7 @@ export class AgglayerDataFetcher {
     '20': 'op stack cdk sov',
     '21': 'Forknet.io',
     '22': 'testnet?',
+    '23': 'mainnet?'
   }
 
   // Rollup type ID descriptions
