@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc66a48b9da773209cfba38b560583f8d7449dd6f
+
+# Diff at Wed, 03 Sep 2025 07:58:53 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@4750a1228b4aaf03d07fbccfeb1177cdf70172bc block: 1756735197
+- current timestamp: 1756886247
+
+## Description
+
+Added new pessimistic chain with standard SP1 verifier to agglayer (Haust Network).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.rollupCount:
+-        22
++        23
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.22:
++        {"rollupContract":"eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8","chainID":3864,"verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","forkID":12,"rollupTypeID":11,"rollupVerifierType":1,"programVKey":"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"}
+    }
+```
+
 Generated with discovered.json: 0x4323f03d6a0c64005c9af0210942d3be0d6f45b9
 
 # Diff at Mon, 01 Sep 2025 14:02:06 GMT:

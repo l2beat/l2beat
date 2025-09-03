@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xbe98d702a813bd855e9267a42a845e41ce93a4dc
+
+# Diff at Wed, 03 Sep 2025 07:56:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@4750a1228b4aaf03d07fbccfeb1177cdf70172bc block: 1755162034
+- current timestamp: 1756886128
+
+## Description
+
+Added new multisig member.
+
+## Watched changes
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x11BB5F79750de2Cc71e80cB2C59cF0a60EFFa95d"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 8 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xc96a83e5ed6887a9f947882d23ab4bbe67aa8c0c
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
