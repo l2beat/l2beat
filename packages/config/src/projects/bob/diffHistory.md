@@ -1,15 +1,17 @@
-Generated with discovered.json: 0x49250b41da5734d2515cab240f8c39d2d6bb201c
+Generated with discovered.json: 0x18309e202253511f689ed626caf4cb0ad7e18ba8
 
-# Diff at Wed, 03 Sep 2025 09:20:02 GMT:
+# Diff at Wed, 03 Sep 2025 12:05:12 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@5a6919b30a4f4dcccb2eda72a4f146550ce776be block: 1756804191
-- current timestamp: 1756891127
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f81a67544a1eef3c7f105dd59187ddee7ac70879 block: 1756804191
+- current timestamp: 1756900853
 
 ## Description
 
 - Scheduled tx: new risc zero verifier is being added.
 - KailuaTreasury has been updated to change a few immutables related to proving with no code changes.
+- added handler that will discover the new verifier as soon as it is deployed
+- add template for the groth16 verifier v3
 
 ## Watched changes
 
@@ -63,6 +65,30 @@ Generated with discovered.json: 0x49250b41da5734d2515cab240f8c39d2d6bb201c
 +   Status: CREATED
     contract KailuaGame (eth:0x9b9f9CD7A6BfCB55c18bfA35392F409F98B35B44)
     +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756804191 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      template:
++        "taiko/RiscZeroGroth16Verifier"
+      description:
++        "Verifier contract for RISC Zero Groth16 proofs (version 3.0.0)."
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      values.verifier7Manual:
++        "EXPECT_REVERT"
+    }
 ```
 
 Generated with discovered.json: 0x998241f4d73928dc7b2b4978e7c04c5b81ff0310
