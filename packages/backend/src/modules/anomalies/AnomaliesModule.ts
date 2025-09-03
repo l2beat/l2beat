@@ -8,9 +8,9 @@ export function createAnomaliesModule({
   clock,
   logger,
   db,
-  processors,
+  blockProcessors,
 }: ModuleDependencies): ApplicationModule | undefined {
-  if (!config.shared) {
+  if (!config.blockSync) {
     logger.info('Anomalies module disabled')
     return
   }
@@ -35,9 +35,9 @@ export function createAnomaliesModule({
 
   const start = () => {
     anomaliesNotifier?.start()
-    realTimeLivenessProcessor.init()
+    realTimeLivenessProcessor.start()
   }
 
-  processors.push(realTimeLivenessProcessor)
+  blockProcessors.push(realTimeLivenessProcessor)
   return { start }
 }

@@ -5,11 +5,11 @@ import { ApiServer } from './api/ApiServer'
 import type { Config } from './config'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
+import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
-import { createSharedModule } from './modules/shared/SharedModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import type { ApplicationModule, ModuleDependencies } from './modules/types'
@@ -50,7 +50,7 @@ export class Application {
       providers,
       peripherals,
       db,
-      processors: [],
+      blockProcessors: [],
     }
 
     const modules: (ApplicationModule | undefined)[] = [
@@ -64,7 +64,7 @@ export class Application {
       createVerifiersModule(deps),
       createDaBeatModule(deps),
       createAnomaliesModule(deps),
-      createSharedModule(deps),
+      createBlockSyncModule(deps),
     ]
 
     const apiServer = new ApiServer(

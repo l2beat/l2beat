@@ -4,7 +4,7 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../tools/uif/ManagedChildIndexer'
-import type { BlockProcessor } from './types'
+import type { BlockProcessor } from '../types'
 
 export type BlockIndexerMode = `CONTINUOUS` | `LATEST_ONLY`
 
@@ -14,7 +14,7 @@ export interface BlockIndexerDeps
   source: string
   blockProvider: BlockProvider
   logsProvider: LogsProvider
-  processors: BlockProcessor[]
+  blockProcessors: BlockProcessor[]
 }
 
 export class BlockIndexer extends ManagedChildIndexer {
@@ -54,7 +54,7 @@ export class BlockIndexer extends ManagedChildIndexer {
       logsCount: logs.length,
     })
 
-    for (const processor of this.$.processors) {
+    for (const processor of this.$.blockProcessors) {
       try {
         const start = Date.now()
         await processor.processBlock(block, logs)

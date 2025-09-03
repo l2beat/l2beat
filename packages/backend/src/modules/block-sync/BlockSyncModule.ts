@@ -3,24 +3,24 @@ import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockIndexer } from './BlockIndexer'
 
-export function createSharedModule({
+export function createBlockSyncModule({
   config,
   logger,
   db,
   providers,
-  processors,
+  blockProcessors,
 }: ModuleDependencies): ApplicationModule | undefined {
-  if (!config.shared) {
-    logger.info('Shared module disabled')
+  if (!config.blockSync) {
+    logger.info('BlockSync module disabled')
     return
   }
 
-  logger = logger.tag({ feature: 'shared', module: 'shared' })
+  logger = logger.tag({ feature: 'blockSync', module: 'blockSync' })
 
   const indexerService = new IndexerService(db)
 
   const eventIndexer = new EventIndexer(
-    config.shared.ethereumWsUrl,
+    config.blockSync.ethereumWsUrl,
     'ethereum',
     logger,
   )
@@ -29,7 +29,7 @@ export function createSharedModule({
     logger,
     minHeight: 1,
     parents: [eventIndexer],
-    processors,
+    blockProcessors,
     source: 'ethereum',
     mode: 'CONTINUOUS',
     blockProvider: providers.block.getBlockProvider('ethereum'),
@@ -37,7 +37,7 @@ export function createSharedModule({
     indexerService,
   })
 
-  logger = logger.for('SharedModule')
+  logger = logger.for('BlockSyncModule')
 
   const start = async () => {
     logger.info('Starting...')
