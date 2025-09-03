@@ -1,8 +1,7 @@
 {
   "MemoryPageFactRegistry": {
     "hash": "0x122eb6d5583cc680f59abc49750d9d6c0a65ca937e292b2ce67e18e8a8cdb114",
-    "address": "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
-    "chain": "ethereum",
+    "address": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
     "blockNumber": 22188285
   }
 }

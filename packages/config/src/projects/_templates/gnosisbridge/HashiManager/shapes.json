@@ -1,8 +1,7 @@
 {
   "HashiManager": {
     "hash": "0x824f58e3acf3f9403dc26549af4869336347109f24d07d82aa11897bed907b17",
-    "address": "0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
-    "chain": "ethereum",
+    "address": "eth:0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
     "blockNumber": 22338370
   }
 }

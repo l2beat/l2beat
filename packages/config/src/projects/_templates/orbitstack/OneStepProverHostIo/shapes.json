@@ -1,26 +1,22 @@
 {
   "OneStepProverHostIo": {
     "hash": "0x5b0a5e16100b7e163dcf39dc6a9034f12a7bad7a475cdffc73054b937be0683d",
-    "address": "0x17e7F68ce50A77e55C7834ddF31AEf86403B8010",
-    "chain": "ethereum",
+    "address": "eth:0x17e7F68ce50A77e55C7834ddF31AEf86403B8010",
     "blockNumber": 22188285
   },
   "OneStepProverHostIo_BoLD": {
     "hash": "0x95e26ae3077f12aa3b383e87c553884e67eaf30c17ca083768d76822d0916cb8",
-    "address": "0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf",
-    "chain": "ethereum",
+    "address": "eth:0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf",
     "blockNumber": 22188285
   },
   "OneStepProverHostIo_deri": {
     "hash": "0x0a8f8db8198082757cc8145891c633c20ed4313dab05beab40618258e534a1e8",
-    "address": "0x99a2A31300816C1FA3f40818AC9280fe7271F878",
-    "chain": "ethereum",
+    "address": "eth:0x99a2A31300816C1FA3f40818AC9280fe7271F878",
     "blockNumber": 22188285
   },
   "OneStepProverHostIo_v32": {
     "hash": "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32",
-    "address": "0x0003A96B27ce73505b43ea1b71a5aB06bec568C4",
-    "chain": "ethereum",
+    "address": "eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4",
     "blockNumber": 22188285
   }
 }

@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x131bf390fe087892d2910a5ddfc81646d4a7826c
+
+# Diff at Wed, 03 Sep 2025 10:28:14 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@5a6919b30a4f4dcccb2eda72a4f146550ce776be block: 1755513362
+- current timestamp: 1756895200
+
+## Description
+
+msig changes.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (arb1:0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) {
+    +++ description: None
+      values.owner:
+-        "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
++        "arb1:0x754286508D57Fae1256bC288461E075552175CBa"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (arb1:0x754286508D57Fae1256bC288461E075552175CBa)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/xai/.flat/SafeL2/SafeL2.sol       | 1152 ++++++++++++++++++++
+ .../src/projects/xai/.flat/SafeL2/SafeProxy.p.sol  |   37 +
+ 2 files changed, 1189 insertions(+)
+```
+
 Generated with discovered.json: 0x2d2867f64d11582dc716ae983bc6f4d480ba09ee
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

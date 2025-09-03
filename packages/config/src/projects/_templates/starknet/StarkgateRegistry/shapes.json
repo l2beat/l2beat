@@ -1,14 +1,12 @@
 {
   "StarkgateRegistry_v2_0_1": {
     "hash": "0xe185bff4846e41d1ea1bffd2a1905568a7206a93b2923a300f9b61990293218b",
-    "address": "0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7",
-    "chain": "ethereum",
+    "address": "eth:0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7",
     "blockNumber": 22188285
   },
   "StarkgateRegistry_v2_0_6": {
     "hash": "0x90444355cfe353ba90f2050035caf7c6ae157bfb6e54bf74a4117580f568bf95",
-    "address": "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC",
-    "chain": "ethereum",
+    "address": "eth:0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC",
     "blockNumber": 22188285
   }
 }

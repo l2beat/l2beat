@@ -1,8 +1,7 @@
 {
   "SP1Blobstream": {
     "hash": "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac",
-    "address": "0x46EbfC399d3913BB9b99E73675722417F9c5d416",
-    "chain": "ethereum",
+    "address": "eth:0x46EbfC399d3913BB9b99E73675722417F9c5d416",
     "blockNumber": 22188285
   }
 }

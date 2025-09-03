@@ -1,56 +1,47 @@
 {
   "OptimismMintableERC20Factory_v1_10_1": {
     "hash": "0x9650b4bba6299e410f01a369a95a2c57e1c3ca35f0d80c13f4f59fc468f370e5",
-    "address": "0x5493f4677A186f64805fe7317D6993ba4863988F",
-    "chain": "ethereum",
+    "address": "eth:0x5493f4677A186f64805fe7317D6993ba4863988F",
     "blockNumber": 22188285
   },
   "OptimismMintableERC20Factory_v1_10_1_beta1": {
     "hash": "0xb14bf64bdcf401ab646b648eb2eda9272eb929337864d2a7fbbad5bd256e47b0",
-    "address": "0x3FAe8259417036C02156DF91BdaF9d8F0ae5551f",
-    "chain": "ethereum",
+    "address": "eth:0x3FAe8259417036C02156DF91BdaF9d8F0ae5551f",
     "blockNumber": 22188285
   },
   "OptimismMintableERC20Factory_v1_10_1_beta4": {
     "hash": "0xa4526e33eb750144164c05badf980525f867cae82e7db6e108b17aeb61b99924",
-    "address": "0x0B3004b843dA84FE5D4C46AeB5E80F826e5CD69A",
-    "chain": "ethereum",
+    "address": "eth:0x0B3004b843dA84FE5D4C46AeB5E80F826e5CD69A",
     "blockNumber": 22188285
   },
   "OptimismMintableERC20Factory_v1_1_1": {
     "hash": "0xc8aea1ad75944084aeb3dc8b5c63135af405055da6baaffde3ed51e92c91e2eb",
-    "address": "0x2A033B70a4D7FAbc6E651E964D18fcf65D9d2aED",
-    "chain": "ethereum",
+    "address": "eth:0x2A033B70a4D7FAbc6E651E964D18fcf65D9d2aED",
     "blockNumber": 22188285
   },
   "OptimismMintableERC20Factory_v1_6_0": {
     "hash": "0x00d8fbe998d6c51cacd085e73a9c76bea61e6cafe5ec4e669d62cf085374ccff",
-    "address": "0xe1863A873f61fDD16560cAa7692a2A994b51E76A",
-    "chain": "ethereum",
+    "address": "eth:0xe1863A873f61fDD16560cAa7692a2A994b51E76A",
     "blockNumber": 22188285
   },
   "OptimismMintableERC20Factory_v1_6_1": {
     "hash": "0x3199ce561d915dec4e96a05f056d262ab4af7342a28a8c1b65b73aad49850d0e",
-    "address": "0xBF21bc9AFaF817145B3886caDAF0860A2A0D782F",
-    "chain": "ethereum",
+    "address": "eth:0xBF21bc9AFaF817145B3886caDAF0860A2A0D782F",
     "blockNumber": 22188285
   },
   "OptimismMintableERC20Factory_v1_9_0": {
     "hash": "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176",
-    "address": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
-    "chain": "ethereum",
+    "address": "eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
     "blockNumber": 22188285
   },
   "OptimismMintableERC20Factory_v1_9_0_zircuit": {
     "hash": "0xae58fedc9cba4efd31498542acf99901aec1544412fb8cf69fa5c7e804602cc7",
-    "address": "0xf885DA6A3B4c93905b02f36f9a13680922A554b0",
-    "chain": "ethereum",
+    "address": "eth:0xf885DA6A3B4c93905b02f36f9a13680922A554b0",
     "blockNumber": 22188285
   },
   "OptimismMintablePermitERC20Factory_v1_9_0": {
     "hash": "0x42f31c7757e8d3066477571abb4a04e8b817c654c63f6c9f12c96af2a3d000ca",
-    "address": "0x6cA98f43719231d38F6426DB64C7F3D5C7CE7876",
-    "chain": "ethereum",
+    "address": "eth:0x6cA98f43719231d38F6426DB64C7F3D5C7CE7876",
     "blockNumber": 22188285
   }
 }

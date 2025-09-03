@@ -4,7 +4,7 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "facet-ETH",
+      "id": "facet-ETH-1",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
@@ -23,44 +23,29 @@
     },
     {
       "mode": "auto",
-      "id": "facet-ETH-external",
+      "id": "facet-ETH-2",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "native",
-            "chain": "ethereum",
-            "escrowAddress": "0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD",
-            "decimals": 18,
-            "sinceTimestamp": 1733855495
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "native",
-            "chain": "ethereum",
-            "escrowAddress": "0x8F75466D69a52EF53C7363F38834bEfC027A2909",
-            "decimals": 18,
-            "sinceTimestamp": 1733855519
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "native",
-            "chain": "ethereum",
-            "escrowAddress": "0x0000000000000b07ED001607f5263D85bf28Ce4C",
-            "decimals": 18,
-            "sinceTimestamp": 1734701579
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x0000000000000b07ED001607f5263D85bf28Ce4C",
+        "decimals": 18,
+        "sinceTimestamp": 1734701579
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Facet fast bridge"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -79,7 +64,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Facet deprecated bridge"
+          }
+        ]
+      }
     }
   ]
 }

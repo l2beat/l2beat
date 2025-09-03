@@ -1,8 +1,7 @@
 {
   "MetisConfig": {
     "hash": "0x558909a2a0c5a264fed5f222b7ceecf453fa3ef587de764b74ae5f8290dde15c",
-    "address": "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
-    "chain": "ethereum",
+    "address": "eth:0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
     "blockNumber": 22517990
   }
 }
