@@ -8,10 +8,13 @@ import {
   type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
 import { getLiveness } from '../../scaling/liveness/getLiveness'
+import { getLowestSyncedUntil } from '../../scaling/liveness/getScalingLivenessEntries'
 import type {
   LivenessAnomaly,
   LivenessResponse,
 } from '../../scaling/liveness/types'
+import { getHasTrackedContractChanged } from '../../scaling/liveness/utils/getHasTrackedContractChanged'
+import { getLivenessSyncWarning } from '../../scaling/liveness/utils/isLivenessSynced'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { type CommonDaEntry, getCommonDaEntry } from '../getCommonDaEntry'
 
@@ -57,6 +60,7 @@ export interface DaBridgeLivenessEntry
   data: LivenessResponse[string]['proofSubmissions']
   anomalies: LivenessAnomaly[]
   explanation: string | undefined
+  hasTrackedContractsChanged: boolean
 }
 
 function getDaLivenessEntry(
@@ -75,7 +79,16 @@ function getDaLivenessEntry(
   const daBridges = bridges
     .map((b): DaBridgeLivenessEntry | undefined => {
       const bridgeLiveness = liveness[b.id]
-      if (!bridgeLiveness) return undefined
+      const proofSubmissions = bridgeLiveness?.proofSubmissions
+      if (!bridgeLiveness || !proofSubmissions) return undefined
+
+      const hasTrackedContractsChanged = getHasTrackedContractChanged(
+        b,
+        projectsChangeReport.projects[b.id],
+      )
+
+      const lowestSyncedUntil = getLowestSyncedUntil(bridgeLiveness)
+      const syncWarning = getLivenessSyncWarning(lowestSyncedUntil)
 
       return {
         name: b.daBridge.name,
@@ -92,12 +105,14 @@ function getDaLivenessEntry(
               : projectsChangeReport.getChanges(b.id).impactfulChange
                 ? 'impactful-change'
                 : undefined,
+          syncWarning,
         },
         relayerType: b.daBridge.relayerType,
         validationType: b.daBridge.validationType,
-        data: bridgeLiveness.proofSubmissions,
+        data: proofSubmissions,
         anomalies: bridgeLiveness.anomalies,
         explanation: b.livenessInfo?.explanation,
+        hasTrackedContractsChanged,
       }
     })
     .filter((x) => x !== undefined)

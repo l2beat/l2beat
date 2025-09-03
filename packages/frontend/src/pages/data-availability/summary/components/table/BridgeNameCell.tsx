@@ -3,6 +3,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { NoDataIcon } from '~/components/NoDataIcon'
 import { TableLink } from '~/components/table/TableLink'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
@@ -47,6 +48,9 @@ export function BridgeNameCell({
             {getUnderReviewText(bridge.statuses?.underReview)}
           </TooltipContent>
         </Tooltip>
+      )}
+      {bridge.statuses?.syncWarning && (
+        <NoDataIcon content={bridge.statuses.syncWarning} />
       )}
     </TableLink>
   )

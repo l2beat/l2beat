@@ -143,8 +143,7 @@ export const publicColumns = [
       return (
         <AnomalyIndicator
           anomalies={bridge.anomalies}
-          showComingSoon={false}
-          hasTrackedContractsChanged={false}
+          hasTrackedContractsChanged={bridge.hasTrackedContractsChanged}
         />
       )
     },
@@ -158,8 +157,7 @@ export const publicColumns = [
             <AnomalyIndicator
               key={bridge.slug}
               anomalies={bridge.anomalies}
-              showComingSoon={false}
-              hasTrackedContractsChanged={false}
+              hasTrackedContractsChanged={bridge.hasTrackedContractsChanged}
             />
           ))
       },
