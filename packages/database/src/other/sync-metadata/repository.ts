@@ -11,6 +11,7 @@ export class SyncMetadataRepository extends BaseRepository {
   async upsertMany(records: Insertable<SyncMetadataRecord>[]): Promise<number> {
     if (records.length === 0) return 0
 
+    //TODO: temporary fix to unblock backend
     const uniqueRecords: Insertable<SyncMetadataRecord>[] = []
     for (const record of records) {
       if (
