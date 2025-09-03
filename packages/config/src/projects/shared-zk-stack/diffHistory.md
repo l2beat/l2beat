@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xd5ea4f9ec3b9269af8c680de6b3419eb04e15ec9
+
+# Diff at Tue, 02 Sep 2025 12:50:16 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5c76cd9f009fe74629d27e4a1456e2856a34b3d4 block: 1755850298
+- current timestamp: 1756817344
+
+## Description
+
+Added a new ZK token minter according to this proposal: https://www.tally.xyz/gov/zksync/proposal/14920227315823844313255249182525601975564035647349569740836448589354658768084?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.2:
+-        "zksync:0x21b27952f8621f54f3CB652630E122Ec81dd2dc1"
+      values.accessControl.MINTER_ROLE.members.13:
++        "zksync:0x767bA4A501BBc0CfCF78733F471b209AaF9381dD"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        4
++        5
+    }
+```
+
 Generated with discovered.json: 0xf5c13787632f3ad2f9ca22ae22152e0e324d5bf0
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

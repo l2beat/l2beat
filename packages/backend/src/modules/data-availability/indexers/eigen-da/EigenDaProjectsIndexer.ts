@@ -73,7 +73,14 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
     }
 
     return async () => {
-      await this.$.db.dataAvailability.upsertMany(projectData)
+      await this.$.db.transaction(async () => {
+        await this.$.db.dataAvailability.upsertMany(projectData)
+        await this.$.db.syncMetadata.updateSyncedUntil(
+          'dataAvailability',
+          this.$.configurations.map((c) => c.properties.projectId),
+          adjustedTo,
+        )
+      })
       this.logger.info('Saved DA metrics into DB', {
         from,
         to: adjustedTo,

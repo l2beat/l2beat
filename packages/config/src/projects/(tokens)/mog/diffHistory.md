@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x889fda166ab3fb4aa102b08e9968b62995430115
+
+# Diff at Tue, 02 Sep 2025 16:08:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f5ac0f88bdc411ecf49ff6c20d5dd0db181a0c91 block: 1756285476
+- current timestamp: 1756285476
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756285476 (main branch discovery), not current.
+
+```diff
+    contract MOG (eth:0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a) {
+    +++ description: None
+      name:
+-        "Mog Coin Token"
++        "MOG"
+    }
+```
+
 Generated with discovered.json: 0x15062715c217a2210cca62f461b313de77f21410
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

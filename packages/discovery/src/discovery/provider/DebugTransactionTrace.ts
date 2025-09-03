@@ -11,12 +11,7 @@ export interface DebugTransactionCall {
   logs?: DebugTransactionLog[]
 }
 
-const DebugTransactionLog = v.object({
-  address: v.string(),
-  topics: v.array(v.string()),
-  data: v.string(),
-  position: v.string(),
-})
+const DebugTransactionLog = v.object({ topics: v.array(v.string()) })
 
 export type DebugTransactionLog = v.infer<typeof DebugTransactionLog>
 

@@ -1,7 +1,7 @@
 {
   "name": "ternoa",
   "timestamp": 1750776023,
-  "configHash": "0xe749bad6713424d467bc6e912d8999c020aec125f9d4f3ec7a5240c959b3d5f9",
+  "configHash": "0xbdfdf0c8bbf4f6937d5ec7c13247df276657ea3c3157f181161721e98043e747",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
