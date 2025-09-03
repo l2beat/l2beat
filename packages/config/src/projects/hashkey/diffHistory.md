@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x5ff45c319ace1952cabb385410cb2bcfca2eaa81
+
+# Diff at Mon, 01 Sep 2025 12:26:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c866ce2b374c140343b0aad96b18dfa13b694e8f block: 1744353755
+- current timestamp: 1756721254
+
+## Description
+
+Multisig update.
+
+## Watched changes
+
+```diff
+    contract Hashkey Multisig 3 (0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x936A3612A17FFAF824F80F4386e21d3a3F80EafD"
++        "eth:0xC10499Cdb8102229ED191b9637175e846e1E5824"
+    }
+```
+
+```diff
+    contract Hashkey Multisig 1 (0x441F31C4cdf772558D4EA31f3114de59aE145E7c) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x1524C875105840c7DCdd269463b0f968BB0B2358"
++        "eth:0xa4e139F57FCE42f5603a3A714c9a6613Ce09B2B6"
+    }
+```
+
+```diff
+    contract Hashkey Multisig 2 (0xC7fCbE26c1Db751d63869F72F782a56710f6be5A) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xaF462439A057f32A0f2Ce0353cBC6E0515c40dE3"
++        "eth:0xc36B2F7D3e7996C80086AF5adee5BbF91082D570"
+    }
+```
+
 Generated with discovered.json: 0x8a483a6b912d5e7aa53a45727f29b0e62d6632de
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

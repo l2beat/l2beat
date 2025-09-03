@@ -124,6 +124,7 @@
     },
     {
       "symbol": "EURC",
+      "category": "stablecoin",
       "address": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
     },
     {
@@ -916,6 +917,7 @@
     },
     {
       "symbol": "DOLA",
+      "category": "stablecoin",
       "address": "0x865377367054516e17014CcdED1e7d814EDC9ce4"
     },
     {
@@ -991,6 +993,7 @@
     },
     {
       "symbol": "EURT",
+      "category": "stablecoin",
       "address": "0xC581b735A1688071A1746c968e0798D642EDE491"
     },
     {
@@ -1024,6 +1027,7 @@
     },
     {
       "symbol": "sFRAX.legacy",
+      "category": "stablecoin",
       "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32"
     },
     {
@@ -1336,6 +1340,7 @@
     },
     {
       "symbol": "MIM",
+      "category": "stablecoin",
       "address": "0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3"
     },
     {
@@ -2275,6 +2280,7 @@
     },
     {
       "symbol": "wM",
+      "category": "stablecoin",
       "address": "0x437cc33344a0B27A429f795ff6B469C72698B291",
       "source": "native",
       "supply": "totalSupply" // normal wrapper, underlying M is bridged via wormhole, wM backs USDai on arbi
@@ -2802,6 +2808,7 @@
       "symbol": "sFRAX",
       "address": "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906",
       "source": "external",
+      "category": "stablecoin",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -3284,6 +3291,7 @@
     },
     {
       "symbol": "USDC.e",
+      "category": "stablecoin",
       "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
       "source": "canonical",
       "supply": "zero"
@@ -3431,6 +3439,7 @@
       "symbol": "sFRAX",
       "address": "0x2Dd1B4D4548aCCeA497050619965f91f78b3b532",
       "source": "external",
+      "category": "stablecoin",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -5741,6 +5750,7 @@
       "symbol": "sFRAX",
       "address": "0x2C37fb628b35dfdFD515d41B0cAAe11B542773C3",
       "source": "external",
+      "category": "stablecoin",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -5901,6 +5911,7 @@
   "xchain": [
     {
       "symbol": "USDC.e",
+      "category": "stablecoin",
       "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
       "source": "external",
       "supply": "totalSupply",
@@ -6656,6 +6667,7 @@
       "symbol": "wstUSR",
       "address": "0x2a52B289bA68bBd02676640aA9F605700c9e5699",
       "coingeckoId": "resolv-wstusr",
+      "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
@@ -6970,6 +6982,7 @@
     {
       "symbol": "USDT",
       "address": "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD",
+      "category": "stablecoin",
       "source": "external",
       "coingeckoId": "tether",
       "supply": "totalSupply",
@@ -6985,6 +6998,7 @@
     {
       "symbol": "USDC.e",
       "address": "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
+      "category": "stablecoin",
       "source": "external",
       "coingeckoId": "usd-coin", // the specific USDC.e for abstract has bad price history on CG
       "supply": "totalSupply",
@@ -7548,6 +7562,7 @@
     {
       "symbol": "USDC.e",
       "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
+      "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {

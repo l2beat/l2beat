@@ -1,7 +1,7 @@
 {
   "name": "redstone",
   "timestamp": 1743924215,
-  "configHash": "0xb3a832ed96cb79c047d5a5893869dc579784b4dbd90a3dffc8858c28a1b932b7",
+  "configHash": "0xb290fb39c1402e545fd195b96f28fb95b8d4c963d29c7ccc86ed3c46021a3f3f",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

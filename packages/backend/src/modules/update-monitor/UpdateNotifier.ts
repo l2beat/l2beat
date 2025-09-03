@@ -4,7 +4,7 @@ import type { Database } from '@l2beat/database'
 import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
 import {
   assert,
-  type EthereumAddress,
+  type ChainSpecificAddress,
   formatAsAsciiTable,
   ProjectId,
   UnixTime,
@@ -48,7 +48,7 @@ export class UpdateNotifier {
     name: string,
     diff: DiscoveryDiff[],
     dependents: string[],
-    unknownContracts: EthereumAddress[],
+    unknownContracts: ChainSpecificAddress[],
     timestamp: UnixTime,
   ) {
     const nonce = await this.getInternalMessageNonce()

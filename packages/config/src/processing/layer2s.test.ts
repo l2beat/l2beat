@@ -368,6 +368,24 @@ describe('layer2s', () => {
     })
   })
 
+  describe('others', () => {
+    describe('live projects without proof system have reasons for being other', () => {
+      const liveProjectsWithoutProofSystem = layer2s.filter(
+        (layer2) =>
+          !layer2.isUpcoming &&
+          !layer2.archivedAt &&
+          !layer2.proofSystem &&
+          layer2.reviewStatus !== 'initialReview',
+      )
+
+      for (const layer2 of liveProjectsWithoutProofSystem) {
+        it(`${layer2.id} should have reasons for being other`, () => {
+          expect(layer2.reasonsForBeingOther?.length ?? 0).toBeGreaterThan(0)
+        })
+      }
+    })
+  })
+
   describe('milestones', () => {
     describe('name', () => {
       describe('no longer than 50 characters', () => {

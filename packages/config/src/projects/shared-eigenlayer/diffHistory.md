@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x302cd20a6bc3e0f63abb678b564feb256e1db5bd
+
+# Diff at Mon, 01 Sep 2025 12:27:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c866ce2b374c140343b0aad96b18dfa13b694e8f block: 1754503221
+- current timestamp: 1756724373
+
+## Description
+
+Added some checks to the [EigenPod](https://disco.l2beat.com/diff/eth:0xcb27A4819A64FBA93ABD4D480e4466aEc0503745/eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D). No functional changes.
+
+## Watched changes
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      values.implementation:
+-        "eth:0xcb27A4819A64FBA93ABD4D480e4466aEc0503745"
++        "eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPod (0xcb27A4819A64FBA93ABD4D480e4466aEc0503745)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (0x792FfeA0D8734695670697f8b9f03DE3F666419D)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1754503221 => .flat}/EigenPod.sol               | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+```
+
 Generated with discovered.json: 0x5a23a0b86489615a1bc450b1e8bb6abe32a7837b
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

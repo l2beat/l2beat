@@ -319,7 +319,8 @@
         "chain": "ethereum",
         "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
         "decimals": 8,
-        "sinceTimestamp": 1699939643
+        "sinceTimestamp": 1699939643,
+        "untilTimestamp": 1754834400
       },
       "category": "btc",
       "source": "canonical",

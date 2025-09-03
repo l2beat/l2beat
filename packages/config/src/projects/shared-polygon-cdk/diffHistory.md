@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x4323f03d6a0c64005c9af0210942d3be0d6f45b9
+
+# Diff at Mon, 01 Sep 2025 14:02:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7eff8455e0ad9da942f60c025235f897aa05b120 block: 1755782050
+- current timestamp: 1756735197
+
+## Description
+
+new polygon cdk pessimistic chain (forknet.io) is sending pessimistic proofs, not officially launched yet though.
+
+new chain deployed (22, pessimistic).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.6:
++        21
+      values.rollupCount:
+-        21
++        22
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.21:
++        {"rollupContract":"eth:0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b","chainID":8338,"verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","forkID":12,"rollupTypeID":11,"rollupVerifierType":1,"programVKey":"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"}
+    }
+```
+
 Generated with discovered.json: 0xbdf8714d882db68e58324acb918282892a33130a
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

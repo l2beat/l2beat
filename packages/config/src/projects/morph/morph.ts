@@ -4,6 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -173,6 +174,9 @@ export const morph: ScalingProject = {
         ' The system currently operates with a single whitelisted challenger.',
       sentiment: 'bad',
       challengeDelay: challengeWindow,
+      initialBond: formatEther(
+        discovery.getContractValue<number>('L1Staking', 'stakingValue'),
+      ),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),

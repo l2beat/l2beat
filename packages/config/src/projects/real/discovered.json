@@ -1,7 +1,7 @@
 {
   "name": "real",
   "timestamp": 1754054742,
-  "configHash": "0xa93bb45636f651a3a6b1bc9488e67d146d185befc1583cd15215c42303385127",
+  "configHash": "0x1f744d912d5424c7f2971930e45c8f611ec69c22cf747af2e06928e4e0499061",
   "entries": [
     {
       "name": "OneStepProverHostIo",

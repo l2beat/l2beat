@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xb8085ec72d7f59275f166dd606e94f7aed5c67e5
+
+# Diff at Mon, 01 Sep 2025 12:53:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@7eff8455e0ad9da942f60c025235f897aa05b120 block: 1756214374
+- current timestamp: 1756720779
+
+## Description
+
+Added a description and fixed a permission that was not showing.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756214374 (main branch discovery), not current.
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) {
+    +++ description: None
+      values.l1l2MessageSetter:
++        ["linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"]
+      fieldMeta:
++        {"sender":{"description":"Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."}}
+    }
+```
+
+```diff
+    EOA  (linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec","description":"Can anchor L1 data on the L2. A check is supposed to be added to the proof system on L1 so that it is not possible to settle if the anchor is not correct. The function is permissioned because otherwise anyone can cause a liveness failure by posting an invalid anchor.","role":".l1l2MessageSetter"}]
+    }
+```
+
 Generated with discovered.json: 0xec517b1d3e1a935133c544a973c0be76d95a0cca
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

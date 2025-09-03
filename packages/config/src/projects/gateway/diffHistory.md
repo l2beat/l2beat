@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x9b6009906d2afa39dd2668dbd6f61076237f2ffb
+
+# Diff at Mon, 01 Sep 2025 13:06:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7eff8455e0ad9da942f60c025235f897aa05b120 block: 1756373713
+- current timestamp: 1756731927
+
+## Description
+
+VTL validators rotated.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.0:
+-        "eth:0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE"
+      values.validatorsVTL.1:
+-        "eth:0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF"
+    }
+```
+
 Generated with discovered.json: 0x50c44ee4315ccb059099380f7f5e84eb91ceb4a2
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

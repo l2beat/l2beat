@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x98a635e12ba5a020e1afbf1f83ca102698f0647f
+
+# Diff at Tue, 02 Sep 2025 15:11:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f5ac0f88bdc411ecf49ff6c20d5dd0db181a0c91 block: 1755516515
+- current timestamp: 1755516515
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755516515 (main branch discovery), not current.
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      usedTypes.0.arg.760308386675154762009993173725077399730170358078020153308029499928875469870:
++        "Starknet Aggregator (since v0.14.0)"
+      usedTypes.0.arg.793595346346724189681221050719974054861327641387231526786912662354259445535:
++        "StarkNet OS (since v0.14.0)"
+    }
+```
+
 Generated with discovered.json: 0x5f275f2ca9ad68c08cd5b34b0b1ed6c48855f2f0
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

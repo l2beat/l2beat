@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
@@ -92,7 +92,7 @@ function mockRecord(
     diff: [
       {
         name: 'Contract',
-        address: EthereumAddress.random(),
+        address: ChainSpecificAddress.random(),
         addressType: 'Contract',
         diff: [
           {

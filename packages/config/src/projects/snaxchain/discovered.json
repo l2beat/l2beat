@@ -1,7 +1,7 @@
 {
   "name": "snaxchain",
   "timestamp": 1756214657,
-  "configHash": "0x23c17624a147122a94a7e5facac4965a02915f99f682a7605e6b6a46b21ed291",
+  "configHash": "0x6eca0057f99cf0dc4f87e6db4d68103b5e9b5549da853f0e6993a793904e5cd9",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

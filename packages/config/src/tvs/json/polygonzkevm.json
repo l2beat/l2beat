@@ -316,7 +316,7 @@
       "symbol": "DOLA",
       "name": "Dola USD Stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/14287/large/dola.png?1696513984",
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
       "amount": {
@@ -1278,7 +1278,7 @@
         "decimals": 18,
         "sinceTimestamp": 1708387200
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {

@@ -9,7 +9,6 @@ import type {
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationZkEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 const zkColumnHelper = createColumnHelper<ScalingRiskStateValidationZkEntry>()
 
@@ -168,9 +167,7 @@ export const scalingRiskStateValidationOptimisticColumns = [
         value={
           ctx.row.original.initialBond !== undefined
             ? {
-                value: formatCurrency(ctx.row.original.initialBond, 'eth', {
-                  decimals: 0,
-                }),
+                value: 'Ξ' + ctx.row.original.initialBond,
               }
             : undefined
         }

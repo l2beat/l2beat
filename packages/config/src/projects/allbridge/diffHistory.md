@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x009ac54285bca6e0869a61759382050a7faa5f80
+
+# Diff at Mon, 01 Sep 2025 14:19:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7eff8455e0ad9da942f60c025235f897aa05b120 block: 1748581691
+- current timestamp: 1756736264
+
+## Description
+
+new chain whitelisted.
+
+## Watched changes
+
+```diff
+    contract AllbridgeMessenger (eth:0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA) {
+    +++ description: None
+      values.otherChainIds:
+-        "0x0000010101010101010101010101000000000000000000000000000000000000"
++        "0x0000010101010101010101010101010000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xff9a0a9b1e3e6df52bd78c25dd3df84dba901b5f
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
