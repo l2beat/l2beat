@@ -1,7 +1,4 @@
-import {
-  ChainSpecificAddress,
-  Hash256,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 export type ShapeSchema = v.infer<typeof ShapeSchema>

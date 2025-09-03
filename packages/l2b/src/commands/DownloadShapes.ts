@@ -9,12 +9,12 @@ import {
   TemplateService,
 } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { command, positional, string } from 'cmd-ts'
 import { mkdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { rimraf } from 'rimraf'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 export const DownloadShapes = command({
   name: 'download-shapes',
