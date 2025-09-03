@@ -1,8 +1,5 @@
-import { DiscordWebhookClient } from '../../peripherals/discord/DiscordWebhookClient'
 import { EventIndexer } from '../../tools/EventIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import { AnomalyNotifier } from '../anomalies/AnomalyNotifier'
-import { RealTimeLivenessProcessor } from '../anomalies/RealTimeLivenessProcessor'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockIndexer } from './BlockIndexer'
 
@@ -10,23 +7,13 @@ export function createSharedModule({
   config,
   logger,
   db,
-  clock,
   providers,
+  processors,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.shared) {
     logger.info('Shared module disabled')
     return
   }
-
-  const anomaliesNotifier = config.discord.anomaliesWebhookUrl
-    ? new AnomalyNotifier(
-        logger,
-        clock,
-        new DiscordWebhookClient(config.discord.anomaliesWebhookUrl),
-        db,
-        config.discord.anomaliesMinDuration,
-      )
-    : undefined
 
   logger = logger.tag({ feature: 'shared', module: 'shared' })
 
@@ -37,14 +24,6 @@ export function createSharedModule({
     'ethereum',
     logger,
   )
-
-  const realTimeLivenessProcessor = new RealTimeLivenessProcessor(
-    config,
-    logger,
-    db,
-    anomaliesNotifier,
-  )
-  const processors = [realTimeLivenessProcessor]
 
   const blockIndexer = new BlockIndexer({
     logger,
@@ -73,14 +52,7 @@ export function createSharedModule({
 
     eventIndexer.start()
     blockIndexer.start()
-    anomaliesNotifier?.start()
-
-    for (const processor of processors) {
-      processor.init()
-    }
   }
 
-  return {
-    start,
-  }
+  return { start }
 }

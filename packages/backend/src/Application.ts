@@ -4,6 +4,7 @@ import { HttpClient } from '@l2beat/shared'
 import { ApiServer } from './api/ApiServer'
 import type { Config } from './config'
 import { initActivityModule } from './modules/activity/ActivityModule'
+import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
@@ -49,11 +50,11 @@ export class Application {
       providers,
       peripherals,
       db,
+      processors: [],
     }
 
     const modules: (ApplicationModule | undefined)[] = [
       createMetricsModule(deps),
-      createSharedModule(deps),
       initActivityModule(deps),
       initDataAvailabilityModule(deps),
       createUpdateMonitorModule(deps),
@@ -62,6 +63,8 @@ export class Application {
       initTvsModule(deps),
       createVerifiersModule(deps),
       createDaBeatModule(deps),
+      createAnomaliesModule(deps),
+      createSharedModule(deps),
     ]
 
     const apiServer = new ApiServer(

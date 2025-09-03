@@ -5,6 +5,7 @@ import type { Config } from '../config'
 import type { Peripherals } from '../peripherals/Peripherals'
 import type { Providers } from '../providers/Providers'
 import type { Clock } from '../tools/Clock'
+import type { BlockProcessor } from './shared/types'
 
 export interface ApplicationModule {
   routers?: Router[]
@@ -18,4 +19,5 @@ export interface ModuleDependencies {
   providers: Providers
   peripherals: Peripherals
   db: Database
+  processors: BlockProcessor[]
 }
