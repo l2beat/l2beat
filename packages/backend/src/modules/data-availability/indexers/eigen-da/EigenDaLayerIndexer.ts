@@ -49,7 +49,14 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
     this.logger.info('Da Layer data fetched')
 
     return async () => {
-      await this.$.db.dataAvailability.upsertMany([daLayerData])
+      await this.$.db.transaction(async () => {
+        await this.$.db.dataAvailability.upsertMany([daLayerData])
+        await this.$.db.syncMetadata.updateSyncedUntil(
+          'dataAvailability',
+          this.$.configurations.map((c) => c.properties.projectId),
+          adjustedTo,
+        )
+      })
       this.logger.info('Saved DA layer metrics into DB', {
         from: adjustedFrom,
         to: adjustedTo,
