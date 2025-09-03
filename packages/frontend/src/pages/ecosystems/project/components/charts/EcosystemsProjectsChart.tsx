@@ -22,12 +22,14 @@ import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
 
 interface Props {
+  id: string
   data: EcosystemProjectsCountData
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }
 
 export function EcosystemsProjectsChart({
+  id,
   data,
   className,
   ecosystemMilestones,
@@ -93,7 +95,7 @@ export function EcosystemsProjectsChart({
         </AreaChart>
       </ChartContainer>
       <HorizontalSeparator className="mb-3 sm:hidden" />
-      <Stats stats={data.stats} />
+      {id !== 'agglayer' && <Stats stats={data.stats} />}
     </EcosystemWidget>
   )
 }

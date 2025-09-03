@@ -43,9 +43,10 @@ export abstract class ClientCore {
   async fetch(url: string, init: RequestInit): Promise<json> {
     try {
       return await this.rateLimiter.call(() => this._fetch(url, init))
-    } catch {
-      return await this.retryHandler.retry(() =>
-        this.rateLimiter.call(() => this._fetch(url, init)),
+    } catch (error) {
+      return await this.retryHandler.retry(
+        () => this.rateLimiter.call(() => this._fetch(url, init)),
+        error,
       )
     }
   }

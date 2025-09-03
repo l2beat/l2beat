@@ -1,7 +1,7 @@
 {
   "name": "wirex",
   "timestamp": 1754397932,
-  "configHash": "0x68f38f012a33e055a7139a279e7c2faec350a191372d4ed638ec5f249342d204",
+  "configHash": "0x9d28fe23097e80d848dbda22851871f511de1ad7aef334fa0e42206fca371754",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

@@ -1,7 +1,7 @@
 {
   "name": "yieldfi",
   "timestamp": 1755603175,
-  "configHash": "0xf48269b3ccef287cf1718ed3a361eb48ea27ff6d0563b8dae753407177ae27ee",
+  "configHash": "0x02161d6783e0ac75e4e2326280a8e0065ff561bff0d97561ce983a0248e4d599",
   "entries": [
     {
       "name": "Manager",

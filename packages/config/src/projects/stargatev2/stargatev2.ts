@@ -175,6 +175,13 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     escrows: [
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
+          'eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c',
+        ),
+        tokens: ['EURC'],
+        description: 'Stargate liquidity pool for EURC on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(
           'eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7',
         ),
         tokens: ['USDC'],
@@ -250,6 +257,13 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
         ),
         tokens: ['USDT'],
         description: 'Stargate liquidity pool for USDT on Optimism.',
+      }),
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(
+          'base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2',
+        ),
+        tokens: ['EURC'],
+        description: 'Stargate liquidity pool for EURC on Base.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(

@@ -1,7 +1,7 @@
 {
   "name": "socket",
-  "timestamp": 1755601095,
-  "configHash": "0x3a1e326bc1eb553dc7f5676f51bdd7f8e209f4940967786c90fda9321dbcc48c",
+  "timestamp": 1756805259,
+  "configHash": "0xc963b0b9e9a016f8436485f084841e89814fb85dfcdf8d7aee20b12d9b5dbbc5",
   "entries": [
     {
       "name": "WETH Vault (Kinto)",
@@ -347,7 +347,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 437,
+        "nonce": 438,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -730,11 +730,6 @@
       }
     },
     {
-      "address": "eth:0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "USDT Vault (Derive)",
       "address": "eth:0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
       "type": "Contract",
@@ -1047,7 +1042,7 @@
         "capacitorFactory__": "eth:0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "eth:0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 18636,
+        "globalMessageCount": 19437,
         "hasher__": "eth:0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "eth:0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -1965,17 +1960,16 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
           "eth:0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
           "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E",
           "eth:0xc31C4549356d46c37021393EeEb6f704B38061eC"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x6cb98df1bc26e62c494dcbf2f362c623e5e8cbb503b69ddf57a8e9a9a07117c7",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 265,
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 267,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -5121,6 +5115,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23174668 },
-  "permissionsConfigHash": "0x842db57db66f087e5c03063034812c8b5132bcf8838f82018ea9cb923df60b97"
+  "usedBlockNumbers": { "ethereum": 23274522 },
+  "permissionsConfigHash": "0x49a737967e5880971fb8ca69e5cab84bef3068ad7d440d8c841e532a68bc942f"
 }

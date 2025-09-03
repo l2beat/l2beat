@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x7f1361054bd308142d91f8c7ac03a8e79dddf62f
+
+# Diff at Tue, 02 Sep 2025 09:23:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1144aeaf984988c003c97be3791eeda76896f8ca block: 1756732125
+- current timestamp: 1756804910
+
+## Description
+
+New spokePool contract on Lens since an upgrade on the old one [failed](https://explorer.lens.xyz/tx/0x695cda61c9346f22d742c241025b2695b5fec415571810e863bc01c6ceec547e).
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      values.CrossChainContracts.232:
+-        "eth:0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12"
++        "eth:0xb234cA484866c811d0e6D3318866F583781ED045"
+    }
+```
+
 Generated with discovered.json: 0x675310b7fc60f7acf28632fb724fdfa2b202134a
 
 # Diff at Mon, 01 Sep 2025 14:18:24 GMT:

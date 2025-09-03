@@ -318,5 +318,5 @@ function getEcosystemUpdateLink(ecosystem: Project<'ecosystemConfig'>): string {
     .at(-1)
   assert(lastReport, 'No last report')
 
-  return `/publications/monthly-updates/${lastReport.id}#${ecosystem.id}`
+  return `/publications/${lastReport.id}#${ecosystem.id}`
 }

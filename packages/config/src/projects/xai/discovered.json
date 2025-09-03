@@ -1,7 +1,7 @@
 {
   "name": "xai",
-  "timestamp": 1755513362,
-  "configHash": "0x2266e7d4d573602b37e39e45bad94b33f55ee01d8d1f954cecf8eba6c871baa9",
+  "timestamp": 1756895200,
+  "configHash": "0x3e7bc855a0d06d39f43170f1e091a19c92531f735bb7ca5bcb6b6a703712cd26",
   "entries": [
     {
       "name": "XaiMultisig2",
@@ -200,6 +200,11 @@
         "arb1:0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1": "UpgradeExecutor"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "arb1:0x0EeF59Be9b361B32A672169CF07F3e5A0a7C25dA",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Outbox",
@@ -624,9 +629,15 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
-      "type": "EOA",
-      "proxyType": "EOA",
+      "name": "SafeL2",
+      "address": "arb1:0x754286508D57Fae1256bC288461E075552175CBa",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+      ],
+      "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -683,7 +694,33 @@
           "from": "arb1:0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
           "role": ".owner"
         }
-      ]
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1736283576,
+      "sinceBlock": 293049285,
+      "values": {
+        "$immutable": false,
+        "$implementation": "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "arb1:0x739bd9Ed651d200dc84d0b0dF444CA47CBFf520f",
+          "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3",
+          "arb1:0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894",
+          "arb1:0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
+          "arb1:0xbBE90F6748C82623F130A4486722a436c5a72440",
+          "arb1:0x0EeF59Be9b361B32A672169CF07F3e5A0a7C25dA"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x0a885df0e31708fe73d320372df7469335daade430da73ac42f3382522d89ed7",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 6,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "arb1:0x754286508D57Fae1256bC288461E075552175CBa": "SafeProxy",
+        "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
     },
     {
       "name": "Bridge",
@@ -727,7 +764,7 @@
         "allowedOutboxList": [
           "arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726"
         ],
-        "delayedMessageCount": 92070,
+        "delayedMessageCount": 92076,
         "inboxHistory": [
           "arb1:0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
           "arb1:0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
@@ -737,8 +774,8 @@
         "outboxHistory": ["arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
         "rollup": "arb1:0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "arb1:0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 160019,
-        "sequencerReportedSubMessageCount": 107727475
+        "sequencerMessageCount": 161529,
+        "sequencerReportedSubMessageCount": 108407391
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -868,7 +905,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 160019,
+        "batchCount": 161529,
         "batchPosterManager": "arb1:0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["arb1:0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "arb1:0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -902,7 +939,7 @@
         "rollup": "arb1:0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 92070,
+        "totalDelayedMessagesRead": 92076,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1189,13 +1226,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 13776,
+        "firstUnresolvedNode": 14157,
         "inbox": "arb1:0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 13775,
-        "latestNodeCreated": 13927,
+        "latestConfirmed": 14156,
+        "latestNodeCreated": 14308,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1394,7 +1431,7 @@
       "sinceBlock": 157193603,
       "values": {
         "$immutable": true,
-        "owner": "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
+        "owner": "arb1:0x754286508D57Fae1256bC288461E075552175CBa"
       },
       "implementationNames": {
         "arb1:0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723": "ProxyAdmin"
@@ -1510,7 +1547,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "arb1:0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
         "esXaiAddress": "arb1:0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
-        "getPoolsCount": 312,
+        "getPoolsCount": 313,
         "nodeLicenseAddress": "arb1:0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "refereeAddress": "arb1:0xfD41041180571C5D371BEA3D9550E55653671198",
         "STAKE_KEYS_ADMIN_ROLE": "0x4744ee11e24f5fc5de82fa6dba03b134899d8fd3405c7e9a26e120c89c8d9c28",
@@ -1561,7 +1598,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 62,
+        "nonce": 64,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1696,7 +1733,7 @@
           "8918378995433789954337",
           "156250000000000000000000000"
         ],
-        "challengeCounter": 14667,
+        "challengeCounter": 15047,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1983,6 +2020,55 @@
       "function whitelistAmounts(address) view returns (uint16)",
       "function xaiAddress() view returns (address)"
     ],
+    "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
     "arb1:0x302275067251F5FcdB9359Bda735fD8f7A4A54c0": [
       "error AlreadyInit()",
       "error AlreadySpent(uint256 index)",
@@ -2168,6 +2254,9 @@
       "function requireRejectable(address rollup) view",
       "function stakedNodes(address rollup, address staker) view returns (uint64[])",
       "function timedOutChallenges(address rollup, uint64 startIndex, uint64 max) view returns (uint64[], bool hasMore)"
+    ],
+    "arb1:0x754286508D57Fae1256bC288461E075552175CBa": [
+      "constructor(address _singleton)"
     ],
     "arb1:0x7be08B013de2b23a6329De51C4994f841dcE1a10": [
       "constructor(uint256 _maxDataSize, address reader4844_, bool _isUsingFeeToken)",
@@ -2816,6 +2905,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 369691682 },
-  "permissionsConfigHash": "0xfabe95fd8855bcec83d5298a5037c9b29154739c2df6cb58d344e8962795ae9c"
+  "usedBlockNumbers": { "arbitrum": 375226537 },
+  "permissionsConfigHash": "0xee24c6d79a52f9e2e224669d8d55723f83ef82690401bef3bbc6ee8018427d52"
 }

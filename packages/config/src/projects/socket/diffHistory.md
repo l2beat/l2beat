@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x39c7629ebe39bd7e4508e71904954f3272a5018d
+
+# Diff at Tue, 02 Sep 2025 15:31:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f5ac0f88bdc411ecf49ff6c20d5dd0db181a0c91 block: 1756805259
+- current timestamp: 1756805259
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756805259 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B"}
+    }
+```
+
+Generated with discovered.json: 0x20572a2b202f608030b913190c13eb8bfb52ec63
+
+# Diff at Tue, 02 Sep 2025 09:30:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1144aeaf984988c003c97be3791eeda76896f8ca block: 1755601095
+- current timestamp: 1756805259
+
+## Description
+
+kinto team multisig single signer change.
+
+undelegate a 7702 EOA.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c) {
+    +++ description: None
+      sourceHashes:
+-        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      proxyType:
+-        "EIP7702 EOA"
++        "EOA"
+      values:
+-        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B"}
+    }
+```
+
+```diff
+    contract KintoMultisig (eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x5D973Ea995d14799E528B14472346bfDE21eAe2e"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "2 of 3 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x42bbc6fd7172637141ade434835b9f613d273e86
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
