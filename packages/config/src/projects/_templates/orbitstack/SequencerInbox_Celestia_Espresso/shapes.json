@@ -1,20 +1,17 @@
 {
   "SequencerInbox": {
     "hash": "0xe5b0341ccf50d77e60d2ef63d66c4e6c36835a85d9c0f58b35fc728a7cbc1d9c",
-    "address": "0x805dc3546d99AfB35EfB261b907679b67A08256e",
-    "chain": "arbitrum",
+    "address": "arb1:0x805dc3546d99AfB35EfB261b907679b67A08256e",
     "blockNumber": 322488866
   },
   "SequencerInbox_Espresso_Nitro_3_3_2": {
     "hash": "0xf1a5a4430f78320a8b5b4d9025165b70183401a8085b8ebff664afc68b00ce92",
-    "address": "0xF39c8d67B55Fef4851f9267304aA1A030E0DecAC",
-    "chain": "arbitrum",
+    "address": "arb1:0xF39c8d67B55Fef4851f9267304aA1A030E0DecAC",
     "blockNumber": 333824645
   },
   "SequencerInbox_Celestia_Espresso_vBlobs": {
     "hash": "0xcdaa3b1ff5e1273f61b232e8a628be7cb2d01589513ea173153802912905243c",
-    "address": "0x481863c96f949F5E13932ec2F65470C0CF83808d",
-    "chain": "arbitrum",
+    "address": "arb1:0x481863c96f949F5E13932ec2F65470C0CF83808d",
     "blockNumber": 355528153
   }
 }

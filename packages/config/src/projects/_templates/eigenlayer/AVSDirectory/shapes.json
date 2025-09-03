@@ -1,14 +1,12 @@
 {
   "AVSDirectory": {
     "hash": "0xda5855140fd893c11984d2ce3e5c9833d7024c104ca1eaf0a5b756f81e55087c",
-    "address": "0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7",
-    "chain": "ethereum",
+    "address": "eth:0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7",
     "blockNumber": 22188285
   },
   "AVSDirectory.sol": {
     "hash": "0x9d891889c1fcc1bd08979780a1502190faf4e8230d94e47de322da41bf7e5143",
-    "address": "0xA396D855D70e1A1ec1A0199ADB9845096683B6A2",
-    "chain": "ethereum",
+    "address": "eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2",
     "blockNumber": 22375190
   }
 }

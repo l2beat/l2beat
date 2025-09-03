@@ -1,6 +1,6 @@
 import {
   assert,
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   type EthereumAddress,
   formatJson,
   Hash256,
@@ -372,11 +372,15 @@ export class TemplateService {
       return
     }
 
+    const address =
+      addresses.length > 1
+        ? addresses.map((a) => ChainSpecificAddress.fromLong(chain, a))
+        : // biome-ignore lint/style/noNonNullAssertion: just checked
+          ChainSpecificAddress.fromLong(chain, addresses[0]!)
+
     shapes[fileName] = {
       hash: masterHash,
-      // biome-ignore lint/style/noNonNullAssertion: just checked
-      address: addresses.length > 1 ? addresses : addresses[0]!,
-      chain,
+      address,
       blockNumber,
     }
 

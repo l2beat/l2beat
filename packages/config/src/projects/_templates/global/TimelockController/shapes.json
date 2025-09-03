@@ -1,20 +1,17 @@
 {
   "TimelockController": {
     "hash": "0xc4d0d6be09d9d589447b5e4983d9fb98fc772a22d463cef44caa7bd943eff26d",
-    "address": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
-    "chain": "ethereum",
+    "address": "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
     "blockNumber": 22188285
   },
   "TimelockController_Vector": {
     "hash": "0x98201d53847b5f763bccbb14f9d4e7ffa8a4ed16c8a4a388949f76850c3d1671",
-    "address": "0x45828180bbE489350D621d002968A0585406d487",
-    "chain": "ethereum",
+    "address": "eth:0x45828180bbE489350D621d002968A0585406d487",
     "blockNumber": 22417833
   },
   "TimelockController_risczero": {
     "hash": "0x5b8836fe706f4142d9d19316f7ae849ba43b55173015f72bc3f9216f7a86cf0d",
-    "address": "0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
-    "chain": "ethereum",
+    "address": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
     "blockNumber": 22944504
   }
 }

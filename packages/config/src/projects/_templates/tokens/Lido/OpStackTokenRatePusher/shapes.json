@@ -1,8 +1,7 @@
 {
   "OpStackTokenRatePusher": {
     "hash": "0x914444eb1e15eba41dafc9099a1e9e51a554ff786ce9f7b5159cb306f4779477",
-    "address": "0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
-    "chain": "ethereum",
+    "address": "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
     "blockNumber": 22188285
   }
 }

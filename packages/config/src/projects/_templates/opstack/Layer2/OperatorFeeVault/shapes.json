@@ -1,8 +1,7 @@
 {
   "OperatorFeeVault": {
     "hash": "0xc35c98e4b7bad72da3eda4ed9193d928885e62142aaf1ab37e3a298cf7a51371",
-    "address": "0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537",
-    "chain": "optimism",
+    "address": "oeth:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537",
     "blockNumber": 135717996
   }
 }

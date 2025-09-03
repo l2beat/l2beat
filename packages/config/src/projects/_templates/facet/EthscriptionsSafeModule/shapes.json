@@ -1,8 +1,7 @@
 {
   "EthscriptionsSafeModule": {
     "hash": "0x3b42bbbb2e985d16af9ccbee812a73e53882232fc47dab8cf43369b5b853df33",
-    "address": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
-    "chain": "ethereum",
+    "address": "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
     "blockNumber": 22188285
   }
 }

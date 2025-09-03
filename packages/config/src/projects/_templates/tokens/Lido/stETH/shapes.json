@@ -1,8 +1,7 @@
 {
   "Lido": {
     "hash": "0xdc88f413a8e8c93a3ee2d7f0ca94090b4b1feb8393663061d7bccedc81812975",
-    "address": "0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
-    "chain": "ethereum",
+    "address": "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
     "blockNumber": 22188285
   }
 }

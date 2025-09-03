@@ -1,8 +1,7 @@
 {
   "L1ArbitrumTimelock": {
     "hash": "0x2b1c83d005613e3b0fd4bc9ef90faf86e00bc099fd61088045e83ee3892c6f5e",
-    "address": "0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3",
-    "chain": "ethereum",
+    "address": "eth:0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3",
     "blockNumber": 22188285
   }
 }

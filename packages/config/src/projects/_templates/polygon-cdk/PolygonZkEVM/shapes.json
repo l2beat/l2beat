@@ -1,20 +1,17 @@
 {
   "PolygonValidiumEtrog": {
     "hash": "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c",
-    "address": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
-    "chain": "ethereum",
+    "address": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
     "blockNumber": 22188285
   },
   "PolygonValidiumStorageMigration": {
     "hash": "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7",
-    "address": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
-    "chain": "ethereum",
+    "address": "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
     "blockNumber": 22188285
   },
   "PolygonZkEVMEtrog": {
     "hash": "0x5912938b92e53d8eb670cbaff45effa91dca7caafcb389b57bf161cdd7585fa3",
-    "address": "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
-    "chain": "ethereum",
+    "address": "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
     "blockNumber": 22188285
   }
 }

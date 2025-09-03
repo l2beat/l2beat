@@ -1,14 +1,12 @@
 {
   "SpokePool": {
     "hash": "0x10d81ccfd26fbcb9926942a46436a7bedd3946646911a43f3f0e13dc7eb81517",
-    "address": "0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a",
-    "chain": "ethereum",
+    "address": "eth:0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a",
     "blockNumber": 22780541
   },
   "SpokePool_7702": {
     "hash": "0x40060e8b2904995f3cb0149fcbf73924c9b1e2e164a823a7957d703a9f7c6fe5",
-    "address": "0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80",
-    "chain": "ethereum",
+    "address": "eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80",
     "blockNumber": 22823774
   }
 }

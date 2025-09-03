@@ -1,8 +1,7 @@
 {
   "Lib_AddressManager": {
     "hash": "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e",
-    "address": "0x918778e825747a892b17C66fe7D24C618262867d",
-    "chain": "ethereum",
+    "address": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
     "blockNumber": 22518079
   }
 }

@@ -1,8 +1,7 @@
 {
   "VerifierGateway": {
     "hash": "0xb3dccf29ca6ba3adf1d49f4ebb767cdb55ad46411e6cded20047cc3b2bdd428f",
-    "address": "0x8C520BB75590deaBC30c4fcaFD8778A43E5481b9",
-    "chain": "ethereum",
+    "address": "eth:0x8C520BB75590deaBC30c4fcaFD8778A43E5481b9",
     "blockNumber": 22565516
   }
 }

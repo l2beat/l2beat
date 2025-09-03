@@ -1,80 +1,67 @@
 {
   "Bridge": {
     "hash": "0xb920455f1e366c7a89719abdd8d8174e4e7d353f2d4b7dea11b0571bf9526eae",
-    "address": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
-    "chain": "ethereum",
+    "address": "eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
     "blockNumber": 22188285
   },
   "Bridge_BoLD": {
     "hash": "0xbce819ea96dfba398ca731b4457e9b9a01621df028c459eb74b15b6a687130b1",
-    "address": "0x93e8f92327bFa8096F5F6ee5f2a49183D3B3b898",
-    "chain": "ethereum",
+    "address": "eth:0x93e8f92327bFa8096F5F6ee5f2a49183D3B3b898",
     "blockNumber": 22188285
   },
   "Bridge_arbitrum": {
     "hash": "0x5dbde25ce90571f7dd8e189ec68615bd76cab9ddb0ba7690b721e9e03c70b6ed",
-    "address": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
-    "chain": "ethereum",
+    "address": "eth:0x1066CEcC8880948FE55e427E94F1FF221d626591",
     "blockNumber": 22188285
   },
   "Bridge_rari": {
     "hash": "0x9aa08a5801ef32353cbf88ebb6d778d6a9502187dea541e243cec49c41420f32",
-    "address": "0x74faA20aE77FFAb036369b24066Cc5d4251900D2",
-    "chain": "arbitrum",
+    "address": "arb1:0x74faA20aE77FFAb036369b24066Cc5d4251900D2",
     "blockNumber": 322488866
   },
   "Bridge_superposition": {
     "hash": "0x55f3048e868b865115b52aeb3d84b856d34786d8c32f79ae01314c2d0ea8b6aa",
-    "address": "0xe3Ba68E1c99314464768b60915c03aE446210df1",
-    "chain": "arbitrum",
+    "address": "arb1:0xe3Ba68E1c99314464768b60915c03aE446210df1",
     "blockNumber": 322488866
   },
   "ERC20Bridge": {
     "hash": "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1",
-    "address": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
-    "chain": "ethereum",
+    "address": "eth:0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
     "blockNumber": 22188285
   },
   "ERC20Bridge_apechain": {
     "hash": "0x730e8c5ec2de9c1ede82d8374adbf127fb1b095f21f58aad54f58469ae135857",
-    "address": "0x20B3C55fe4ecd989beB56E13b2A726110f0c3619",
-    "chain": "arbitrum",
+    "address": "arb1:0x20B3C55fe4ecd989beB56E13b2A726110f0c3619",
     "blockNumber": 322488866
   },
   "ERC20Bridge_decimals": {
     "hash": "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289",
-    "address": "0xEfA1De858293593732a09c9dAA238BEC49595751",
-    "chain": "ethereum",
+    "address": "eth:0xEfA1De858293593732a09c9dAA238BEC49595751",
     "blockNumber": 22188285
   },
   "ERC20Bridge_gastoken_corn": {
     "hash": "0x73087d4667e81f676a10708feb2774bab3a9a558a1987b8ac4f112cc464bba96",
-    "address": "0xd7FD189F1652378f32dA3db7926e51a7b0344797",
-    "chain": "ethereum",
+    "address": "eth:0xd7FD189F1652378f32dA3db7926e51a7b0344797",
     "blockNumber": 22188285
   },
   "ERC20Bridge_molten": {
     "hash": "0xc138999c828d091534e4fea5f3730160aa2a6366cea16b82a55b9c8de07670df",
-    "address": "0xC5Db571093C4600559e239497d147476F7543b15",
-    "chain": "arbitrum",
+    "address": "arb1:0xC5Db571093C4600559e239497d147476F7543b15",
     "blockNumber": 322488866
   },
   "ERC20Bridge_v32": {
     "hash": "0x6cdca102c8d3b82c196bf1961cd07e35b44717396edbfdd3241adc89ab895438",
-    "address": "0xF0bb18D200D4CB7b36853Eaa0D902F729B4602AB",
-    "chain": "arbitrum",
+    "address": "arb1:0xF0bb18D200D4CB7b36853Eaa0D902F729B4602AB",
     "blockNumber": 322488866
   },
   "Bridge_202506": {
     "hash": "0x51c0020e16ab14fa334bbb0c637103c261dee3865d1816e88356aaaa5b629bb9",
-    "address": "0x480214c3B0707a1e083A3Ae97209FCb671471109",
-    "chain": "ethereum",
+    "address": "eth:0x480214c3B0707a1e083A3Ae97209FCb671471109",
     "blockNumber": 22622481
   },
   "ERC20Bridge_customGas_Pepu": {
     "hash": "0xed8d9d55e8e0eb2bf48be3c3db0297f972f5f7b8062cacd31007ec5301db39c5",
-    "address": "0x4c62131fFb67348A95B4d2665A8298A1f93A1E65",
-    "chain": "ethereum",
+    "address": "eth:0x4c62131fFb67348A95B4d2665A8298A1f93A1E65",
     "blockNumber": 22924735
   }
 }

@@ -1,8 +1,7 @@
 {
   "ResolverRegistry": {
     "hash": "0xaf3dfb2d731a0031df7fce45e164a2730f66ed2997bc3081932341a0ad0f2155",
-    "address": "0xC82fB8FB873b0c56E1aeb9238d79b27e3d67f155",
-    "chain": "ethereum",
+    "address": "eth:0xC82fB8FB873b0c56E1aeb9238d79b27e3d67f155",
     "blockNumber": 23086994
   }
 }

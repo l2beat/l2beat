@@ -1,8 +1,7 @@
 {
   "EVMScriptRegistry": {
     "hash": "0x00350407c4a32b62d60dbac5ac3093bf4bffd482f40b2df2a9cd3268365b84e5",
-    "address": "0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb",
-    "chain": "ethereum",
+    "address": "eth:0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb",
     "blockNumber": 22188285
   }
 }

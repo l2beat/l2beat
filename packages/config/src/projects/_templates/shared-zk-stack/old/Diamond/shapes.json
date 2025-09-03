@@ -1,50 +1,42 @@
 {
   "AdminFacet.1_v0_24_2": {
     "hash": "0x9ae32beaa5dc29055f75d3cd08fbec35ed3eee3e2ff35de263a78f7d63c610f9",
-    "address": "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
-    "chain": "ethereum",
+    "address": "eth:0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
     "blockNumber": 22188285
   },
   "AdminFacet.1_v0_25_0": {
     "hash": "0x081a1805983e86cd6a80ed48c012c26bf9a39473c0f1e69b357afff240f027a0",
-    "address": "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a",
-    "chain": "ethereum",
+    "address": "eth:0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a",
     "blockNumber": 22188285
   },
   "ExecutorFacet.4_v0_24_2": {
     "hash": "0xe521f6bd6250a2c92af323768ad8a2274cc334725b5ed8960d8421f063fc3285",
-    "address": "0xaD193aDe635576d8e9f7ada71Af2137b16c64075",
-    "chain": "ethereum",
+    "address": "eth:0xaD193aDe635576d8e9f7ada71Af2137b16c64075",
     "blockNumber": 22188285
   },
   "ExecutorFacet.4_v0_25_0": {
     "hash": "0xdf47c6cd4fcffcfa4a670e1544e2391acc365cd7fd9b8e7583d58b28dff50c40",
-    "address": "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712",
-    "chain": "ethereum",
+    "address": "eth:0xBB13642F795014E0EAC2b0d52ECD5162ECb66712",
     "blockNumber": 22188285
   },
   "GettersFacet.2_v0_24_2": {
     "hash": "0xd272def5b4e3f0a68e3019d7d40675ca6d3e3fc35500e9aafe864bce8c697de2",
-    "address": "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
-    "chain": "ethereum",
+    "address": "eth:0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
     "blockNumber": 22188285
   },
   "GettersFacet.2_v0_25_0": {
     "hash": "0x981d4f2ae5949ab33c6ba83f6446595d3b853bf6f7157884304445d70b185374",
-    "address": "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9",
-    "chain": "ethereum",
+    "address": "eth:0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9",
     "blockNumber": 22188285
   },
   "MailboxFacet.3_v0_24_2": {
     "hash": "0x419cee160f60572fc9189007ec7c1e3c13e54d80bf1e78f837bc8fa001519685",
-    "address": "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
-    "chain": "ethereum",
+    "address": "eth:0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
     "blockNumber": 22188285
   },
   "MailboxFacet.3_v0_25_0": {
     "hash": "0x91db58e4059dfed7357e56dac17d2963c6f9cfb540f527988ed25172251a2584",
-    "address": "0x5575218cECd370E1d630d1AdB03c254B0B376821",
-    "chain": "ethereum",
+    "address": "eth:0x5575218cECd370E1d630d1AdB03c254B0B376821",
     "blockNumber": 22188285
   }
 }

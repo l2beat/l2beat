@@ -1,8 +1,7 @@
 {
   "OracleReportSanityChecker": {
     "hash": "0xd50222dc8dfe7cd169366ab34979e2962975f9b018fa27dc1443d09a8698dc92",
-    "address": "0x6232397ebac4f5772e53285B26c47914E9461E75",
-    "chain": "ethereum",
+    "address": "eth:0x6232397ebac4f5772e53285B26c47914E9461E75",
     "blockNumber": 22188285
   }
 }

@@ -1,8 +1,7 @@
 {
   "L1USDCGateway.sol": {
     "hash": "0x390ebeb0e223ceead94e94a21c34b8bc5bde0351a7c29ca6b8abb4776ce58524",
-    "address": "0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e",
-    "chain": "ethereum",
+    "address": "eth:0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e",
     "blockNumber": 22338265
   }
 }
