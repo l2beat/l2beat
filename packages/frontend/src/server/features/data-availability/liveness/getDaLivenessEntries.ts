@@ -1,4 +1,4 @@
-import type { Project } from '@l2beat/config'
+import type { Project, TableReadyValue } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaTabs'
 import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
@@ -41,7 +41,10 @@ export interface DaLivenessEntry extends CommonDaEntry {
 }
 
 export interface DaBridgeLivenessEntry
-  extends Omit<CommonDaEntry, 'id' | 'tab' | 'icon' | 'backgroundColor'> {}
+  extends Omit<CommonDaEntry, 'id' | 'tab' | 'icon' | 'backgroundColor'> {
+  relayerType: TableReadyValue | undefined
+  validationType: (TableReadyValue & { zkCatalogId?: ProjectId }) | undefined
+}
 
 function getDaLivenessEntry(
   layer: Project<'daLayer' | 'statuses'>,
@@ -69,6 +72,8 @@ function getDaLivenessEntry(
               ? 'impactful-change'
               : undefined,
       },
+      relayerType: b.daBridge.relayerType,
+      validationType: b.daBridge.validationType,
     }),
   )
 

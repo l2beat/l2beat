@@ -137,6 +137,12 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
   daBridge: {
     name: 'HotShot Light Client',
     daLayer: ProjectId('espresso'),
+    relayerType: {
+      value: 'Third-party',
+    },
+    validationType: {
+      value: 'Validity Proof',
+    },
     technology: {
       description: `
       ## Architecture

@@ -75,6 +75,12 @@ export const blobstream: BaseProject = {
   daBridge: {
     name: 'Blobstream',
     daLayer: ProjectId('celestia'),
+    relayerType: {
+      value: 'Third-party',
+    },
+    validationType: {
+      value: 'Validity Proof',
+    },
     usedIn: linkByDA({
       layer: ProjectId('celestia'),
       bridge: ProjectId('blobstream'),

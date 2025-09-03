@@ -30,6 +30,13 @@ export interface TableReadyValue {
   orderHint?: number
 }
 
+export type TableReadyValueWithPredefinedValue<T extends string> = Omit<
+  TableReadyValue,
+  'value'
+> & {
+  value: T
+}
+
 export interface ProjectTechnologyChoice {
   name: string
   description: string
@@ -671,6 +678,14 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
+  relayerType?: TableReadyValueWithPredefinedValue<'Third-party'>
+  validationType?: DaBridgeValidationType
+}
+
+type DaBridgeValidationType = TableReadyValueWithPredefinedValue<
+  'Validity Proof' | 'BLS Signature'
+> & {
+  zkCatalogId?: ProjectId
 }
 
 export interface DaBridgeRisks {

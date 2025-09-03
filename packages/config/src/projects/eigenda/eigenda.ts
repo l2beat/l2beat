@@ -311,6 +311,12 @@ export const eigenda: BaseProject = {
   daBridge: {
     name: 'DACert Verifier',
     daLayer: ProjectId('eigenda'),
+    relayerType: {
+      value: 'Third-party',
+    },
+    validationType: {
+      value: 'BLS Signature',
+    },
     technology: {
       description: `
 ## Architecture
