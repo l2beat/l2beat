@@ -1,7 +1,7 @@
 {
   "name": "inevm",
   "timestamp": 1753200951,
-  "configHash": "0x27ce55c3378ba8cbb6554069098b4f51a4e7d0e0baf419f9356cd51674fb8a44",
+  "configHash": "0xfdc08b01b3603d83337e15aeb00400dda0c586e305fa8f576a5664f9eea32022",
   "entries": [
     {
       "name": "CustomGateway",

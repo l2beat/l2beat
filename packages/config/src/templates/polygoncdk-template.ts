@@ -10,7 +10,7 @@ export function PolygoncdkDAC(template: TemplateVars): ProjectCustomDa {
   const technology: DaTechnology = {
     description: `
 ## Architecture
-![polygoncdk architecture](/images/da-layer-technology/polygoncdk/architecture${template.dac.membersCount}.png#center)
+![polygoncdk architecture](/images/da-layer-technology/polygoncdk/architecture.png#center)
 
 Polygon CDK validiums utilize a data availability solution that relies on a Data Availability Committee (DAC) to ensure data integrity and manage off-chain transaction data. 
 This architecture comprises the following components:

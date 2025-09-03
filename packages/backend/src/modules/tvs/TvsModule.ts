@@ -1,4 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type { TvsToken } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
@@ -53,7 +54,36 @@ export function initTvsModule(
   const syncOptimizer = new SyncOptimizer(clock)
   const indexerService = new IndexerService(database)
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const hourlyIndexer = new HourlyIndexer(logger, clock, {
+    onTick: async (targetTimestamp) => {
+      if (!config.tvs) return
+      const recordIds = []
+      for (const project of config.tvs.projects) {
+        const tokensWithRanges = getTokensWithRanges(project.tokens).filter(
+          (t) =>
+            t.sinceTimestamp <= targetTimestamp &&
+            (!t.untilTimestamp || t.untilTimestamp >= targetTimestamp),
+        )
+        recordIds.push(...tokensWithRanges.map((t) => t.id))
+
+        const { since, until } = getProjectSyncRange(tokensWithRanges)
+
+        if (since > targetTimestamp || (until && until < targetTimestamp)) {
+          continue
+        }
+
+        recordIds.push(project.projectId)
+      }
+
+      await database.syncMetadata.upsertMany(
+        recordIds.map((id) => ({
+          feature: 'tvs',
+          id,
+          target: targetTimestamp,
+        })),
+      )
+    },
+  })
 
   const priceIndexer = new TvsPriceIndexer({
     logger,
@@ -157,15 +187,7 @@ export function initTvsModule(
       return indexer
     })
 
-    const tokensWithRanges = project.tokens.map((t) => {
-      const { sinceTimestamp, untilTimestamp } = getTokenSyncRange(t)
-
-      return {
-        ...t,
-        sinceTimestamp,
-        untilTimestamp,
-      }
-    })
+    const tokensWithRanges = getTokensWithRanges(project.tokens)
 
     const tokenValueIndexer = new TokenValueIndexer({
       syncOptimizer,
@@ -189,21 +211,7 @@ export function initTvsModule(
 
     valueIndexers.push(tokenValueIndexer)
 
-    const since = tokensWithRanges.reduce(
-      (prev, curr) => (prev > curr.sinceTimestamp ? curr.sinceTimestamp : prev),
-      Number.POSITIVE_INFINITY,
-    )
-
-    const hasUndefinedTimestamp = tokensWithRanges.some(
-      (token) => token.untilTimestamp === undefined,
-    )
-
-    const until = hasUndefinedTimestamp
-      ? null
-      : tokensWithRanges
-          .map((t) => t.untilTimestamp)
-          .filter(notUndefined)
-          .reduce((prev, curr) => (prev < curr ? curr : prev), UnixTime(0))
+    const { since, until } = getProjectSyncRange(tokensWithRanges)
 
     const id = generateConfigurationId(
       [...tokensWithRanges]
@@ -255,5 +263,41 @@ export function initTvsModule(
 
   return {
     start,
+  }
+}
+
+type TokenWithRanges = ReturnType<typeof getTokensWithRanges>[number]
+function getTokensWithRanges(tokens: TvsToken[]) {
+  return tokens.map((t) => {
+    const { sinceTimestamp, untilTimestamp } = getTokenSyncRange(t)
+
+    return {
+      ...t,
+      sinceTimestamp,
+      untilTimestamp,
+    }
+  })
+}
+
+function getProjectSyncRange(tokens: TokenWithRanges[]) {
+  const since = tokens.reduce(
+    (prev, curr) => (prev > curr.sinceTimestamp ? curr.sinceTimestamp : prev),
+    Number.POSITIVE_INFINITY,
+  )
+
+  const hasUndefinedTimestamp = tokens.some(
+    (token) => token.untilTimestamp === undefined,
+  )
+
+  const until = hasUndefinedTimestamp
+    ? null
+    : tokens
+        .map((t) => t.untilTimestamp)
+        .filter(notUndefined)
+        .reduce((prev, curr) => (prev < curr ? curr : prev), UnixTime(0))
+
+  return {
+    since,
+    until,
   }
 }

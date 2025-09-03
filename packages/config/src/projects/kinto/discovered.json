@@ -1,7 +1,7 @@
 {
   "name": "kinto",
-  "timestamp": 1755591879,
-  "configHash": "0xaa0371cf04590f8767e7964648c703a3a644196a5176f02babd689ee4ff964f3",
+  "timestamp": 1756898514,
+  "configHash": "0x046fb6244ef6cf388a550b7c74e71790b09fe5bf4cbbf1717748c808688082f3",
   "entries": [
     {
       "name": "Hypernative",
@@ -421,13 +421,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2850,
+        "firstUnresolvedNode": 2880,
         "inbox": "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21107949,
-        "latestConfirmed": 2849,
-        "latestNodeCreated": 2862,
+        "latestConfirmed": 2879,
+        "latestNodeCreated": 2892,
         "loserStakeEscrow": "eth:0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -647,11 +647,6 @@
         "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b": "UpgradeExecutor"
       },
       "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "address": "eth:0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Certora 1",
@@ -922,7 +917,7 @@
           "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["eth:0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 6985,
+        "delayedMessageCount": 7078,
         "inboxHistory": [
           "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
           "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
@@ -930,8 +925,8 @@
         "outboxHistory": ["eth:0x655761AD5FC251F414D6993A73184B0669F278c8"],
         "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 5279,
-        "sequencerReportedSubMessageCount": 912727
+        "sequencerMessageCount": 5370,
+        "sequencerReportedSubMessageCount": 919356
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1310,17 +1305,16 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
           "eth:0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
           "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E",
           "eth:0xc31C4549356d46c37021393EeEb6f704B38061eC"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x6cb98df1bc26e62c494dcbf2f362c623e5e8cbb503b69ddf57a8e9a9a07117c7",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 265,
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 267,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1368,7 +1362,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 5279,
+        "batchCount": 5370,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -1396,7 +1390,7 @@
         "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 6984,
+        "totalDelayedMessagesRead": 7077,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1425,7 +1419,7 @@
       "sinceBlock": 234135,
       "values": {
         "$immutable": true,
-        "clock": 1755591722,
+        "clock": 1756898419,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -1465,7 +1459,7 @@
         "accessManager": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1755591722,
+        "clock": 1756898419,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1672,7 +1666,7 @@
         "appRegistry": "kinto:0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "kinto:0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "30080531576355860375",
+        "getDeposit": "29757149651238740375",
         "kintoID": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -1981,7 +1975,7 @@
         "entryPoint": "kinto:0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "kinto:0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 5377,
+        "getNonce": 5550,
         "getOwnersCount": 4,
         "inRecovery": 0,
         "insurancePolicy": 0,
@@ -2028,7 +2022,7 @@
         "capacitorFactory__": "kinto:0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "kinto:0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 65337,
+        "globalMessageCount": 66922,
         "hasher__": "kinto:0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "kinto:0x0000000000000000000000000000000000000000",
         "owner": "kinto:0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -2483,7 +2477,7 @@
         "kintoID": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "kinto:0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 75831
+        "totalWallets": 75844
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
@@ -3245,7 +3239,7 @@
           "kinto:0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1755590832,
+        "lastMonitoredAt": 1756897507,
         "name": "Kinto ID",
         "pendingSanctions": [
           {
@@ -4563,7 +4557,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 75499,
+        "totalSupply": 75512,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "walletFactory": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
@@ -6182,6 +6176,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "kinto": 912791, "ethereum": 23173906 },
-  "permissionsConfigHash": "0xe69bb223a27e1795b4bff31fcf2c30442c713e5dc193f743d5c201bb182f6007"
+  "usedBlockNumbers": { "ethereum": 23282254, "kinto": 919415 },
+  "permissionsConfigHash": "0xeea8cd185a13b07215343d2cf607f50968b828bc419e19084c2540e3654f5a9d"
 }

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x927c3fc9e8fa989df43cad435e114f4295fe742a
+
+# Diff at Tue, 02 Sep 2025 09:18:46 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@1144aeaf984988c003c97be3791eeda76896f8ca block: 1755507657
+- current timestamp: 1756804623
+
+## Description
+
+Fee market changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755507657 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Elasticity:
+-        7
++        8
+    }
+```
+
 Generated with discovered.json: 0xd01e4cd7139efe68c128464b8aeea2e2e291f094
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

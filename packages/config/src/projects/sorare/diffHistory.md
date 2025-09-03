@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x24ca010e9553c97fa48e943e5b5cd8f18b37d400
+
+# Diff at Tue, 02 Sep 2025 12:42:53 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5c76cd9f009fe74629d27e4a1456e2856a34b3d4 block: 1741183403
+- current timestamp: 1756816898
+
+## Description
+
+Changed admin multisig. Added mapping from Starknet.
+
+## Watched changes
+
+```diff
+    contract SorareAdminMultisig (eth:0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"
++        "eth:0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1741183403 (main branch discovery), not current.
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).
+      usedTypes.0.arg.760308386675154762009993173725077399730170358078020153308029499928875469870:
++        "Starknet Aggregator (since v0.14.0)"
+      usedTypes.0.arg.793595346346724189681221050719974054861327641387231526786912662354259445535:
++        "StarkNet OS (since v0.14.0)"
+    }
+```
+
 Generated with discovered.json: 0xe64a428571abc762d4b94a218ccd5127c8bfdac0
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

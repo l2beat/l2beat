@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb96fa4b77352e4c623e702cbb7a98a6a6af4475a
+
+# Diff at Tue, 02 Sep 2025 09:26:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1144aeaf984988c003c97be3791eeda76896f8ca block: 1755858507
+- current timestamp: 1756805138
+
+## Description
+
+ms member change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xCEA8039076E35a825854c5C2f85659430b06ec96) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xcb3bD5d7C40844fb599c14413F281A0241C45DFB"
++        "eth:0x0fCe5cd3FB6F3b3FB7f0f707070A0A7e2442f444"
+    }
+```
+
 Generated with discovered.json: 0xdd9cdfa9ecb9e74fb20f520b28c6f31e3ca21412
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

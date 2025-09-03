@@ -401,12 +401,27 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
 `,
   milestones: [
     {
+      title: 'Starknet 5h outage',
+      url: 'https://x.com/Starknet/status/1962740091937317247',
+      date: '2025-09-02T00:00:00.00Z',
+      description:
+        'Starknet experiences a reorg caused by a bug on the sequencing side.',
+      type: 'incident',
+    },
+    {
       title: 'Stage 1',
       url: 'https://x.com/Starknet/status/1922990242035814424',
       date: '2025-05-15T00:00:00.00Z',
       description:
         'Starknet is now Stage 1 by introducing a Security Council, upgrade delays and censorship resistance.',
       type: 'general',
+    },
+    {
+      title: 'Starknet 4h outage',
+      url: 'https://cointelegraph.com/news/starknet-details-bug-reorganization-blockss',
+      date: '2024-04-04T00:00:00Z',
+      description: 'A rounding error causes a 4-hour outage on Starknet.',
+      type: 'incident',
     },
     {
       title: 'Starknet starts using blobs',
@@ -724,6 +739,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742967335),
+          untilTimestamp: UnixTime(1756730495), // Sep-01-2025 02:41:35 PM UTC
           programHashes: [
             '2534935718742676028234156221136000178296467523045214874259117268197132196876', // Starknet OS
           ],
@@ -737,8 +753,22 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         ],
         query: {
           formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '793595346346724189681221050719974054861327641387231526786912662354259445535', // Starknet OS (since Starknet v0.14.0)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1732747391),
-          untilTimestamp: UnixTime(1742836319), // 2025/03/24 17:11 UTC
+          untilTimestamp: UnixTime(1756737695), // 2025/03/24 17:11 UTC
           programHashes: [
             '15787695375210609250491147414005894154890873413229882671403677761527504080', // Aggregator (since Starknet v0.13.3)
           ],
@@ -753,8 +783,23 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742836319),
+          untilTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
           programHashes: [
             '273279642033703284306509103355536170486431195329675679055627933497997642494', // Aggregator (since Starknet v0.13.4)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '760308386675154762009993173725077399730170358078020153308029499928875469870', // Aggregator (since Starknet v0.14.0)
           ],
         },
         _hackCostMultiplier: 0.17,

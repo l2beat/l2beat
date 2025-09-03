@@ -4,5 +4,11 @@
     "address": "0x4fd8BF5f45832a007448fcDE29049919F8cf6D0d",
     "chain": "ethereum",
     "blockNumber": 22972987
+  },
+  "Liquidity_v2": {
+    "hash": "0xe050f1745884847699cff3db5506410a82629972bb6fd8a52199442b01351485",
+    "address": "0xD31F61281A4b262aEa79cbBE09A436975a8b63EA",
+    "chain": "ethereum",
+    "blockNumber": 23275143
   }
 }

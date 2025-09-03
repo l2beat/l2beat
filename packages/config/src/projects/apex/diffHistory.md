@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x6348d84c9e0803c56c5a8e17b81a88eac3ab383c
+
+# Diff at Tue, 02 Sep 2025 14:16:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ac83bbe73046e5a2b78d713bc6fc2c43f9d130e9 block: 1753200107
+- current timestamp: 1753200107
+
+## Description
+
+Config: add new starknet proghash mappings.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753200107 (main branch discovery), not current.
+
+```diff
+    contract FinalizableGpsFactAdapterUSDT (eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`).
+      usedTypes.0.arg.760308386675154762009993173725077399730170358078020153308029499928875469870:
++        "Starknet Aggregator (since v0.14.0)"
+      usedTypes.0.arg.793595346346724189681221050719974054861327641387231526786912662354259445535:
++        "StarkNet OS (since v0.14.0)"
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDC (eth:0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).
+      usedTypes.0.arg.760308386675154762009993173725077399730170358078020153308029499928875469870:
++        "Starknet Aggregator (since v0.14.0)"
+      usedTypes.0.arg.793595346346724189681221050719974054861327641387231526786912662354259445535:
++        "StarkNet OS (since v0.14.0)"
+    }
+```
+
 Generated with discovered.json: 0xd9f1a3cf3b06d90fb8c22f56b7afd28dd0834f2a
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "hychain",
   "timestamp": 1747829483,
-  "configHash": "0x0c45bf2e59b8b6e51b16aea20dce77970510ab1984e6ef57d43c51dc4279eeab",
+  "configHash": "0xe4c24125a82d80ae6672bda0b23367fdb319082e4cee9f8e541533cbea1b8f1a",
   "entries": [
     {
       "name": "Outbox",

@@ -62,7 +62,7 @@ export const funki: ScalingProject = opStackL2({
       websites: ['https://funkichain.com'],
       bridges: ['https://funkichain.com/bridge', 'https://funkichain.com/swap'],
       documentation: ['https://docs.funkichain.com/'],
-      explorers: ['https://funkiscan.io/'],
+      explorers: ['https://explorer.funkichain.com/'],
       repositories: ['https://github.com/funkichain'],
       socialMedia: [
         'https://x.com/funkichain',
