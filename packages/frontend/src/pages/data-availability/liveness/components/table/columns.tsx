@@ -11,7 +11,9 @@ import { getDaCommonProjectColumns } from '~/components/table/utils/common-proje
 import { InfoIcon } from '~/icons/Info'
 import { BridgeNameCell } from '~/pages/data-availability/summary/components/table/BridgeNameCell'
 import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'
+import { useLivenessTimeRangeContext } from '~/pages/scaling/liveness/components/LivenessTimeRangeContext'
 import type { DaLivenessEntry } from '~/server/features/data-availability/liveness/getDaLivenessEntries'
+import { DaLivenessIntervalCell } from './DaLivenessIntervalCell'
 
 const columnHelper = createColumnHelper<DaLivenessEntry>()
 
@@ -46,6 +48,35 @@ export const publicColumns = [
         return ctx.row.original.bridges
           .slice(1)
           .map((bridge) => <BridgeNameCell key={bridge.slug} bridge={bridge} />)
+      },
+    },
+  }),
+  columnHelper.display({
+    id: 'attestation-delay',
+    header: 'Attestation Delay',
+    cell: (ctx) => {
+      const { timeRange } = useLivenessTimeRangeContext()
+      const bridge = ctx.row.original.bridges[0]
+      if (!bridge) {
+        return null
+      }
+      return (
+        <DaLivenessIntervalCell
+          data={bridge.data?.[timeRange]}
+          isSynced={true}
+        />
+      )
+    },
+    meta: {
+      additionalRows: (ctx) => {
+        return ctx.row.original.bridges.slice(1).map((bridge) => {
+          const { timeRange } = useLivenessTimeRangeContext()
+          return (
+            <div key={bridge.slug}>
+              {bridge.data?.[timeRange]?.averageInSeconds}
+            </div>
+          )
+        })
       },
     },
   }),

@@ -9,6 +9,11 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import {
+  LivenessTimeRangeContextProvider,
+  useLivenessTimeRangeContext,
+} from '~/pages/scaling/liveness/components/LivenessTimeRangeContext'
+import { LivenessTimeRangeControls } from '~/pages/scaling/liveness/components/LivenessTimeRangeControls'
 import type { DaLivenessEntry } from '~/server/features/data-availability/liveness/getDaLivenessEntries'
 import { DaLivenessTable } from './components/table/DaLivenessTable'
 
@@ -23,22 +28,33 @@ export function DataAvailabilityLivenessPage({
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <div>
+        <LivenessTimeRangeContextProvider>
           <MainPageHeader>Liveness</MainPageHeader>
-          <div className="lg:-mt-4 flex flex-col gap-6">
-            <DirectoryTabs defaultValue="public">
-              <DirectoryTabsList>
-                <DirectoryTabsTrigger value="public">
-                  Public <CountBadge>{publicSystems.length}</CountBadge>
-                </DirectoryTabsTrigger>
-              </DirectoryTabsList>
-              <DirectoryTabsContent value="public">
-                <DaLivenessTable items={publicSystems} />
-              </DirectoryTabsContent>
-            </DirectoryTabs>
-          </div>
-        </div>
+          <Controls />
+          <DirectoryTabs defaultValue="public">
+            <DirectoryTabsList>
+              <DirectoryTabsTrigger value="public">
+                Public <CountBadge>{publicSystems.length}</CountBadge>
+              </DirectoryTabsTrigger>
+            </DirectoryTabsList>
+            <DirectoryTabsContent value="public">
+              <DaLivenessTable items={publicSystems} />
+            </DirectoryTabsContent>
+          </DirectoryTabs>
+        </LivenessTimeRangeContextProvider>
       </SideNavLayout>
     </AppLayout>
+  )
+}
+
+function Controls() {
+  const { timeRange, setTimeRange } = useLivenessTimeRangeContext()
+
+  return (
+    <LivenessTimeRangeControls
+      timeRange={timeRange}
+      setTimeRange={setTimeRange}
+      className="max-md:ml-4"
+    />
   )
 }
