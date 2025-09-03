@@ -92,7 +92,11 @@ export function buildPermissionsModel(
   contractPermission: ContractPermission,
   structureEntry: StructureEntry,
   addressToNameMap: Record<string, string>,
-): string {
+): string | undefined {
+  if (structureEntry.type === 'Reference') {
+    return
+  }
+
   const relationsModel: string[] = []
 
   const contractValues = contractValuesForInterpolation(
