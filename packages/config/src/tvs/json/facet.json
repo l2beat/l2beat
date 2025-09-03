@@ -29,26 +29,12 @@
       "name": "Ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "native",
-            "chain": "ethereum",
-            "escrowAddress": "0x0000000000000b07ED001607f5263D85bf28Ce4C",
-            "decimals": 18,
-            "sinceTimestamp": 1734701579
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "native",
-            "chain": "ethereum",
-            "escrowAddress": "0x8F75466D69a52EF53C7363F38834bEfC027A2909",
-            "decimals": 18,
-            "sinceTimestamp": 1733855519
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x0000000000000b07ED001607f5263D85bf28Ce4C",
+        "decimals": 18,
+        "sinceTimestamp": 1734701579
       },
       "category": "ether",
       "source": "external",
