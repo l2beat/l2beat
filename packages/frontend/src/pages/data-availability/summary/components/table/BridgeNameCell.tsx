@@ -6,8 +6,8 @@ import {
 import { TableLink } from '~/components/table/TableLink'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
+import type { DaLivenessBridgeTableEntry } from '~/pages/data-availability/liveness/components/table/toDaLivenessTableEntry'
 import type { DaBridgeArchivedEntry } from '~/server/features/data-availability/archived/getDaArchivedEntries'
-import type { DaBridgeLivenessEntry } from '~/server/features/data-availability/liveness/getDaLivenessEntries'
 import type { DaBridgeRiskEntry } from '~/server/features/data-availability/risks/getDaRiskEntries'
 import type { DaBridgeSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
 import { getUnderReviewText } from '~/utils/project/underReview'
@@ -19,7 +19,7 @@ export function BridgeNameCell({
     | DaBridgeSummaryEntry
     | DaBridgeRiskEntry
     | DaBridgeArchivedEntry
-    | DaBridgeLivenessEntry
+    | DaLivenessBridgeTableEntry
 }) {
   const isUnverified = bridge.statuses?.verificationWarning === true
   return (
