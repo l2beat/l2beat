@@ -496,7 +496,7 @@
       ],
       "proxyType": "immutable",
       "description": "Defines and stores pauser and unpauser roles for EigenDA contracts.",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
@@ -688,24 +688,6 @@
       "name": "EigenLayerOwningMultisig",
       "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
       "type": "Reference",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can pause the DA bridge",
-          "role": ".pauserRegistry",
-          "via": [
-            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x0c431C66F4dE941d089625E5B423D00707977060",
-          "role": ".pausers"
-        }
-      ],
       "targetType": "Contract",
       "targetProject": "shared-eigenlayer"
     },
@@ -758,24 +740,6 @@
       "name": "EigenLayerPauserMultisig",
       "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390",
       "type": "Reference",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can pause the DA bridge",
-          "role": ".pauserRegistry",
-          "via": [
-            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x0c431C66F4dE941d089625E5B423D00707977060",
-          "role": ".pausers"
-        }
-      ],
       "targetType": "Contract",
       "targetProject": "shared-eigenlayer"
     },
@@ -1220,24 +1184,6 @@
       "name": "EigenLayerOperationsMultisig",
       "address": "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
       "type": "Reference",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can pause the DA bridge",
-          "role": ".pauserRegistry",
-          "via": [
-            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x0c431C66F4dE941d089625E5B423D00707977060",
-          "role": ".pausers"
-        }
-      ],
       "targetType": "Contract",
       "targetProject": "shared-eigenlayer"
     },
@@ -1999,5 +1945,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23232697 },
-  "permissionsConfigHash": "0x6f73f4754558ab0fcaa0674c43c056ed23cd4b3b70b886d4d535666a317bd743"
+  "permissionsConfigHash": "0x1b569c9fee7aabbabb82a34093d89c6c77fc074ae1f05a2631a1f76af4bbd67d"
 }

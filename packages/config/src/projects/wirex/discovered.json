@@ -71,13 +71,6 @@
       "name": "PolygonRollupManager",
       "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "type": "Reference",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
-          "role": "admin"
-        }
-      ],
       "targetType": "Contract",
       "targetProject": "shared-polygon-cdk"
     },
@@ -452,5 +445,5 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23074949 },
-  "permissionsConfigHash": "0xee20295a5c69c3af2cd75ab8ea67dc20f4b5e3a3d1197adf67e4ae457b865cde"
+  "permissionsConfigHash": "0x34084a0051db7ba3fbf9e84ccd2504fe3ccba077e28ec2621e07d92eaf551c84"
 }

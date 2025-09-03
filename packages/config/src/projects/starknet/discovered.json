@@ -904,62 +904,6 @@
     {
       "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "type": "Reference",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        }
-      ],
       "targetType": "EOA",
       "targetProject": "shared-sharp-verifier"
     },
@@ -4370,5 +4314,5 @@
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b"
   },
   "usedBlockNumbers": { "ethereum": 23275421 },
-  "permissionsConfigHash": "0x8102e72e5433200b38a76f3cbc02b29ac68f54ca67fd2687eb7ec80a44ae0925"
+  "permissionsConfigHash": "0xa4bcc30b8433bfc015e35619faca589eb4023cf9726f46b0e13db3f4a9473f61"
 }

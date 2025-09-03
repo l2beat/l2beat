@@ -25,20 +25,6 @@
       "name": "PolygonAdminMultisig",
       "address": "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
       "type": "Reference",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "role": ".admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-          "description": "sole address that can force batches.",
-          "role": ".forceBatchAddress"
-        }
-      ],
       "targetType": "Contract",
       "targetProject": "shared-polygon-cdk"
     },
@@ -112,13 +98,6 @@
       "name": "PolygonRollupManager",
       "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "type": "Reference",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-          "role": "admin"
-        }
-      ],
       "targetType": "Contract",
       "targetProject": "shared-polygon-cdk"
     },
@@ -770,5 +749,5 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 22975114 },
-  "permissionsConfigHash": "0xb1ad420d6107753e90a3e38f2e92dfff330f6d9d2e3a82eadb6e6203b79acb3e"
+  "permissionsConfigHash": "0x19022caa33168f59132b4f6becca3c57c0d1347e9d2137b6fea86343d0208c41"
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x51309a0731fda29fdf6b814de536cd6cae577d03
+Generated with discovered.json: 0x2cd3fb46f8ea8349dc9b7ef59bca9f807e2ab1be
 
-# Diff at Wed, 03 Sep 2025 10:48:49 GMT:
+# Diff at Wed, 03 Sep 2025 15:52:19 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@5a6919b30a4f4dcccb2eda72a4f146550ce776be block: 1756731927
+- comparing to: main@fbfe8da4086c70042fea30347d68132d3f574015 block: 1756731927
 - current timestamp: 1756731927
 
 ## Description
@@ -15,18 +15,6 @@ Rerun to add References to entrypoints of shared modules
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1756731927 (main branch discovery), not current.
-
-```diff
-    contract ChainAdminOwnable (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"interact","from":"eth:0x5540DE94485dB078025318428F813C5d88215823","description":"manage filter lists.","role":".owner"},{"permission":"interact","from":"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9","description":"manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","role":".getAdmin"},{"permission":"upgrade","from":"eth:0x5540DE94485dB078025318428F813C5d88215823","role":"admin","via":[{"address":"eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734"}]}]
-      directlyReceivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x5540DE94485dB078025318428F813C5d88215823","description":"manage filter lists.","role":".owner"}
-      directlyReceivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9","description":"manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","role":".getAdmin"}
-    }
-```
 
 ```diff
 +   Status: CREATED

@@ -759,5 +759,5 @@
     "succinct/SP1Vector": "0x4b4bab1769276ac2be7215b73aff7dda8735ad26ed07bdfed49c63583ddc2025"
   },
   "usedBlockNumbers": { "ethereum": 23175000 },
-  "permissionsConfigHash": "0xbd3266f9eb25ee2416496d4cf9109e86a725ed3c39c6aa3f09e2f2662f3a9b16"
+  "permissionsConfigHash": "0x6e91a48efda7ca7923827204ece2136b574fc36d65f534747718f5b651f2c603"
 }

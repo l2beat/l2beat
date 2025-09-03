@@ -707,13 +707,6 @@
       "name": "ProxyAdmin",
       "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
       "type": "Reference",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf553E6D903AA43420ED7e3bc2313bE9286A8F987",
-          "role": "admin"
-        }
-      ],
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
     },
@@ -1342,5 +1335,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23145178 },
-  "permissionsConfigHash": "0x945014f5eabba8cce46ac21e72deb715fffadd7bbdc3c392df6c3276a7e64b1a"
+  "permissionsConfigHash": "0xe2d9c77c0a1cd8a7244db8b346d2babe844fbd47b02f4699b3d7f82c4697f9b6"
 }

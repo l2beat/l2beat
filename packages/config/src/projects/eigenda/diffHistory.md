@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xaf1a4e5ca99640bce252e5c0c4207abe6873eb49
+Generated with discovered.json: 0x82817ca3ff697213cfbea04287afc72505716b7c
 
-# Diff at Wed, 03 Sep 2025 10:48:07 GMT:
+# Diff at Wed, 03 Sep 2025 15:51:50 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@5a6919b30a4f4dcccb2eda72a4f146550ce776be block: 1756300615
+- comparing to: main@fbfe8da4086c70042fea30347d68132d3f574015 block: 1756300615
 - current timestamp: 1756300615
 
 ## Description
@@ -15,16 +15,6 @@ Rerun to add References to entrypoints of shared modules
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1756300615 (main branch discovery), not current.
-
-```diff
-    contract PauserRegistry (eth:0x0c431C66F4dE941d089625E5B423D00707977060) {
-    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
-      receivedPermissions:
--        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry"}]
-      directlyReceivedPermissions:
-+        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry"}]
-    }
-```
 
 ```diff
 +   Status: CREATED

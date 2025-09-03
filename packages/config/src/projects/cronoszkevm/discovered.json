@@ -1272,5 +1272,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23190155 },
-  "permissionsConfigHash": "0xca0f05decdc169aaf44b634671e117ef200d1dfaa3eaab9e06c9086a9f39e36f"
+  "permissionsConfigHash": "0x8f75e5756eac527e61a6eafff002cb1fc0923be7108c77bf14fe0b3236f88403"
 }

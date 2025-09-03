@@ -1367,5 +1367,5 @@
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
   "usedBlockNumbers": { "ethereum": 22975778 },
-  "permissionsConfigHash": "0x9767a8c580a9b0478146b4f4823591b9acc5e9feeda69057770e41dc9f553fdc"
+  "permissionsConfigHash": "0x51d0c069f3a382afcd94612deb8d8dfd39375c1676565b3c1e9d03f380ccc9ea"
 }

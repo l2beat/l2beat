@@ -97,13 +97,6 @@
       "name": "PolygonRollupManager",
       "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "type": "Reference",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
-          "role": "admin"
-        }
-      ],
       "targetType": "Contract",
       "targetProject": "shared-polygon-cdk"
     },
@@ -242,5 +235,5 @@
     "polygon-cdk/PolygonPessimisticConsensus": "0xe243e1961d0062de8984cb8f88f047117bb8998497751cfd58b4dcf414cd66b5"
   },
   "usedBlockNumbers": { "ethereum": 23081994 },
-  "permissionsConfigHash": "0x5ae4a19d8f3d84ca7cf0f0f75a4d2abba2ca356fbfe709427d6a2666f8944c23"
+  "permissionsConfigHash": "0x3693c4d4a3fb5d43f5597f345afb564e362e63e969a204582d1dd836d37ad6c1"
 }

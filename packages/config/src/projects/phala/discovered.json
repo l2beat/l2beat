@@ -1507,5 +1507,5 @@
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x23a763ed39c139851f257aef8c5edb090d6cbf04040b6f63dace0d3e157a3ab0"
   },
   "usedBlockNumbers": { "ethereum": 23245358 },
-  "permissionsConfigHash": "0xfd9ca73cc1eba603539f542abef438405a698d02d5d370c55c81498744daf65b"
+  "permissionsConfigHash": "0x762d5cfac34e5a5736b38ff5bed62a69c7abc78d48e02b9fe8a45f5be60cb7bd"
 }

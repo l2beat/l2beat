@@ -772,5 +772,5 @@
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
   "usedBlockNumbers": { "ethereum": 23167648 },
-  "permissionsConfigHash": "0x922435912c4a074a901c82e2061bef3a85afdd5f44548eff04a981444f0d73fd"
+  "permissionsConfigHash": "0x654d2ab54bee8967a2baf88310cd725120a2b836958b4855014e43cdcad5c519"
 }
