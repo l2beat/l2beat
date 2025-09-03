@@ -22,8 +22,7 @@ export async function getDataAvailabilityLivenessData(
           'Monitor liveness metrics of data availability solutions and recent anomalies.',
         openGraph: {
           url,
-          image:
-            '/meta-images/data-availability/risk-analysis/opengraph-image.png',
+          image: '/meta-images/data-availability/liveness/opengraph-image.png',
         },
       }),
     },
