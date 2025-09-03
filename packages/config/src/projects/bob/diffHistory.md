@@ -1,3 +1,70 @@
+Generated with discovered.json: 0x49250b41da5734d2515cab240f8c39d2d6bb201c
+
+# Diff at Wed, 03 Sep 2025 09:20:02 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@5a6919b30a4f4dcccb2eda72a4f146550ce776be block: 1756804191
+- current timestamp: 1756891127
+
+## Description
+
+- Scheduled tx: new risc zero verifier is being added.
+- KailuaTreasury has been updated to change a few immutables related to proving with no code changes.
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.12:
++        {"id":"0xaee8ce52716542c6fedc0f10553f1b763702d9bef05dcdcdf8c5cb2ed8d6cabb","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30242f9d5b00000000000000000000000000000000000000000000000000000000000000000000000000000000844d5f01161e3559d36f23d0aa9e9620949af782","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0x72284bbB177B13db6F7b703846EEDfB24914B764)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d.
+```
+
+```diff
+    EOA  (eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0x72284bbB177B13db6F7b703846EEDfB24914B764"
++        "eth:0x0e4152204995877DF34BD26d6dab78baf9393Ae2"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0xD5A72E5C2d8fC5e12cba6F81FA67d9A5F4A48B6a"
++        "eth:0x9b9f9CD7A6BfCB55c18bfA35392F409F98B35B44"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0xD5A72E5C2d8fC5e12cba6F81FA67d9A5F4A48B6a)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x0e4152204995877DF34BD26d6dab78baf9393Ae2)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x9b9f9CD7A6BfCB55c18bfA35392F409F98B35B44)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
 Generated with discovered.json: 0x998241f4d73928dc7b2b4978e7c04c5b81ff0310
 
 # Diff at Tue, 02 Sep 2025 09:11:51 GMT:
