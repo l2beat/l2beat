@@ -228,7 +228,7 @@ describe('discovery config.jsonc', () => {
       const discovery = configReader.readDiscovery(c.name)
       const color = colorize(c.color, discovery, templateService)
 
-      expect(compareIntersection(color, discovery)).toBeTruthy()
+      expect(compareLeftKeysInRight(color, discovery)).toBeTruthy()
     }
   })
 
@@ -263,20 +263,17 @@ describe('discovery config.jsonc', () => {
   }).timeout(10000)
 })
 
-function compareIntersection(
-  obj1: Record<string, any>,
-  obj2: Record<string, any>,
+function compareLeftKeysInRight(
+  left: Record<string, any>,
+  right: Record<string, any>,
 ): boolean {
-  const keys1 = Object.keys(obj1)
-  const keys2 = Object.keys(obj2)
+  const keys = Object.keys(left)
 
-  const intersectionKeys = keys1.filter((key) => keys2.includes(key))
+  if (keys.length === 0) return true
 
-  if (intersectionKeys.length === 0) return true
-
-  return intersectionKeys.every((key) => {
-    const val1 = obj1[key]
-    const val2 = obj2[key]
+  return keys.every((key) => {
+    const val1 = left[key]
+    const val2 = right[key]
 
     // Deep comparison for objects
     if (
@@ -285,7 +282,7 @@ function compareIntersection(
       val1 !== null &&
       val2 !== null
     ) {
-      return compareIntersection(val1, val2)
+      return compareLeftKeysInRight(val1, val2)
     }
 
     return isDeepStrictEqual(val1, val2)
