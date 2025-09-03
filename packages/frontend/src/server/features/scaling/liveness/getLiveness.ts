@@ -38,7 +38,7 @@ async function getLivenessData(projectId?: ProjectId) {
   const [configurations, livenessProjects] = await Promise.all([
     db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
     ps.getProjects({
-      select: ['trackedTxsConfig', 'livenessInfo'],
+      select: ['trackedTxsConfig'],
       optional: ['livenessConfig'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),

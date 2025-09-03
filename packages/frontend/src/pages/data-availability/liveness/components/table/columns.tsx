@@ -1,9 +1,16 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TableLink } from '~/components/table/TableLink'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/DaCommonProjectColumns'
+import { InfoIcon } from '~/icons/Info'
 import { BridgeNameCell } from '~/pages/data-availability/summary/components/table/BridgeNameCell'
+import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'
 import type { DaLivenessEntry } from '~/server/features/data-availability/liveness/getDaLivenessEntries'
 
 const columnHelper = createColumnHelper<DaLivenessEntry>()
@@ -97,6 +104,77 @@ export const publicColumns = [
             <TableValueCell value={bridge.validationType} />
           </TableLink>
         ))
+      },
+    },
+  }),
+  columnHelper.display({
+    header: '30-day\nanomalies',
+    cell: (ctx) => {
+      const bridge = ctx.row.original.bridges[0]
+      if (!bridge) {
+        return null
+      }
+
+      return (
+        <AnomalyIndicator
+          anomalies={bridge.anomalies}
+          showComingSoon={false}
+          hasTrackedContractsChanged={false}
+        />
+      )
+    },
+    meta: {
+      tooltip:
+        'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
+      additionalRows: (ctx) => {
+        return ctx.row.original.bridges
+          .slice(1)
+          .map((bridge) => (
+            <AnomalyIndicator
+              key={bridge.slug}
+              anomalies={bridge.anomalies}
+              showComingSoon={false}
+              hasTrackedContractsChanged={false}
+            />
+          ))
+      },
+    },
+  }),
+  columnHelper.display({
+    id: 'explanation',
+    cell: (ctx) => {
+      const explanation = ctx.row.original.bridges[0]?.explanation
+      if (!explanation) {
+        return null
+      }
+
+      return (
+        <Tooltip>
+          <TooltipTrigger>
+            <InfoIcon variant="blue" />
+          </TooltipTrigger>
+          <TooltipContent>{explanation}</TooltipContent>
+        </Tooltip>
+      )
+    },
+    meta: {
+      cellClassName: 'pr-4!',
+      additionalRows: (ctx) => {
+        return ctx.row.original.bridges.slice(1).map((bridge) => {
+          const explanation = bridge?.explanation
+          if (!explanation) {
+            return null
+          }
+
+          return (
+            <Tooltip key={bridge.slug}>
+              <TooltipTrigger>
+                <InfoIcon variant="blue" />
+              </TooltipTrigger>
+              <TooltipContent>{explanation}</TooltipContent>
+            </Tooltip>
+          )
+        })
       },
     },
   }),
