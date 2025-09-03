@@ -1366,6 +1366,6 @@
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
-  "usedBlockNumbers": { "ethereum": 23276701 },
+  "usedBlockNumbers": { "ethereum": 22975778 },
   "permissionsConfigHash": "0x9767a8c580a9b0478146b4f4823591b9acc5e9feeda69057770e41dc9f553fdc"
 }

@@ -5,6 +5,28 @@
   "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
     {
+      "name": "EraChainAdminProxy",
+      "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063",
+      "type": "Reference",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin"
+        }
+      ],
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "name": "BridgeHub",
+      "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "type": "Reference",
+      "targetType": "Reference",
+      "targetProject": "gateway"
+    },
+    {
       "name": "ZKsync",
       "address": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
       "type": "Contract",
@@ -609,6 +631,68 @@
         "eth:0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142": "L1ERC20Bridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "RollupL1DAValidator",
+      "address": "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+      "type": "Reference",
+      "targetType": "Reference",
+      "targetProject": "gateway"
+    },
+    {
+      "name": "L1AssetRouter",
+      "address": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
+      "type": "Reference",
+      "targetType": "Reference",
+      "targetProject": "gateway"
+    },
+    {
+      "name": "L1NativeTokenVault",
+      "address": "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+      "type": "Reference",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+          "role": "admin"
+        }
+      ],
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "name": "ChainTypeManager",
+      "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "type": "Reference",
+      "targetType": "Reference",
+      "targetProject": "gateway"
+    },
+    {
+      "name": "DualVerifier",
+      "address": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "gateway"
+    },
+    {
+      "name": "L1Nullifier",
+      "address": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
     },
     {
       "name": "Bridgehub",
@@ -2448,6 +2532,6 @@
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23067513, "gateway": 18615 },
-  "permissionsConfigHash": "0x3b2469b292abc3ffedc9a75b5b93b405b35da1d9baf7a9a56f56024a3e808af1"
+  "usedBlockNumbers": { "gateway": 18615, "ethereum": 23067513 },
+  "permissionsConfigHash": "0x3c6ed5238c654bd6ad1d69b14de329ca429747b3d0fd477a14a9419569177fd6"
 }

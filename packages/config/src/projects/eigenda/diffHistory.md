@@ -1,3 +1,67 @@
+Generated with discovered.json: 0xaf1a4e5ca99640bce252e5c0c4207abe6873eb49
+
+# Diff at Wed, 03 Sep 2025 10:48:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@5a6919b30a4f4dcccb2eda72a4f146550ce776be block: 1756300615
+- current timestamp: 1756300615
+
+## Description
+
+Rerun to add References to entrypoints of shared modules
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756300615 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (eth:0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    reference AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerPauserMultisig (eth:0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EIGEN Token (eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x93e620dcdca582f11459bc2b536e098eb0bee866
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x51309a0731fda29fdf6b814de536cd6cae577d03
+
+# Diff at Wed, 03 Sep 2025 10:48:49 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@5a6919b30a4f4dcccb2eda72a4f146550ce776be block: 1756731927
+- current timestamp: 1756731927
+
+## Description
+
+Rerun to add References to entrypoints of shared modules
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756731927 (main branch discovery), not current.
+
+```diff
+    contract ChainAdminOwnable (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x5540DE94485dB078025318428F813C5d88215823","description":"manage filter lists.","role":".owner"},{"permission":"interact","from":"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9","description":"manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","role":".getAdmin"},{"permission":"upgrade","from":"eth:0x5540DE94485dB078025318428F813C5d88215823","role":"admin","via":[{"address":"eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734"}]}]
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x5540DE94485dB078025318428F813C5d88215823","description":"manage filter lists.","role":".owner"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9","description":"manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","role":".getAdmin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    reference BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference RollupL1DAValidator (eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference L1AssetRouter (eth:0x8829AD80E425C646DAB305381ff105169FeEcE56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9b6009906d2afa39dd2668dbd6f61076237f2ffb
 
 # Diff at Mon, 01 Sep 2025 13:06:39 GMT:

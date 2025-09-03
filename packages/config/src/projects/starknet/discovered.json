@@ -4370,5 +4370,5 @@
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b"
   },
   "usedBlockNumbers": { "ethereum": 23275421 },
-  "permissionsConfigHash": "0xf63f109dd14704ed5b2cdad81f8ec5b5aa661bc58387a1a2696b07b689c420a9"
+  "permissionsConfigHash": "0x8102e72e5433200b38a76f3cbc02b29ac68f54ca67fd2687eb7ec80a44ae0925"
 }

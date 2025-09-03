@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x3e09a10fe5442b53ce3466ee930c850db4e69ffe
+
+# Diff at Wed, 03 Sep 2025 10:48:19 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@5a6919b30a4f4dcccb2eda72a4f146550ce776be block: 1755162034
+- current timestamp: 1755162034
+
+## Description
+
+Rerun to add References to entrypoints of shared modules
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755162034 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc96a83e5ed6887a9f947882d23ab4bbe67aa8c0c
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
