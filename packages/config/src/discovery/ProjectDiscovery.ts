@@ -84,6 +84,14 @@ export class ProjectDiscovery {
         return configReader.readDiscovery(dependentProjectName)
       }),
     )
+
+    // Removing Reference entries because otherwise we get duplicates
+    // and incomplete data.
+    // TODO: refactor this whole logic around depenent projects and
+    // references to entrypoints to make it cleaner
+    this.discoveries.forEach((d) => removeReferences(d))
+    this.projectAndDependentDiscoveries.forEach((d) => removeReferences(d))
+
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
 
@@ -416,7 +424,7 @@ export class ProjectDiscovery {
       const address = ChainSpecificAddress(account)
       const entry = this.getEntryByAddress(address)
       assert(isNonNullable(entry), `Could not find ${address} in discovery`)
-      const type = entry?.type
+      const type = entry.type
       const isVerified = isEntryVerified(entry)
 
       const raw = ChainSpecificAddress.address(address)
@@ -1128,4 +1136,8 @@ function isEntryVerified(entry: EntryParameters): boolean {
 
 function allUnique(arr: string[]): boolean {
   return new Set(arr).size === arr.length
+}
+
+function removeReferences(discovery: DiscoveryOutput) {
+  discovery.entries = discovery.entries.filter((e) => e.type !== 'Reference')
 }
