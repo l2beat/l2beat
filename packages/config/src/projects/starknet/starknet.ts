@@ -401,12 +401,20 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
 `,
   milestones: [
     {
-      title: 'Starknet 5h outage',
+      title: 'Starknet is down for several hours',
       url: 'https://x.com/Starknet/status/1962740091937317247',
-      date: '2025-09-02T00:00:00.00Z',
+      date: '2025-09-02T12:00:00.00Z',
       description:
         'Starknet experiences a reorg caused by a bug on the sequencing side.',
       type: 'incident',
+    },
+    {
+      title: 'Grinta upgrade is deployed',
+      url: 'https://x.com/Starknet/status/1962457868277305357',
+      date: '2025-09-02T00:00:00.00Z',
+      description:
+        'Starknet activates the grinta upgrade with several improvements.',
+      type: 'general',
     },
     {
       title: 'Stage 1',
