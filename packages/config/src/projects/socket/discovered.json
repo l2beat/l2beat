@@ -1,7 +1,7 @@
 {
   "name": "socket",
   "timestamp": 1756899680,
-  "configHash": "0xc963b0b9e9a016f8436485f084841e89814fb85dfcdf8d7aee20b12d9b5dbbc5",
+  "configHash": "0x89ab0bc80dae59257b97858902f8f950d4cc97c9c94c0f99b35bc16122e86758",
   "entries": [
     {
       "name": "WETH Vault (Kinto)",

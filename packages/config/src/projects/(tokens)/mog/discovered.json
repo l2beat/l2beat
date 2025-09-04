@@ -1,7 +1,7 @@
 {
   "name": "mog",
   "timestamp": 1756285476,
-  "configHash": "0xb6272c6e08ad06aa6f2b75e19f643feef316966cd42bdb7964fa87fbf846e539",
+  "configHash": "0x781e7c4428e87c22100ab7dd57f1d32ca0c73ffc95a1a5acc0f10f6251fc24b6",
   "entries": [
     {
       "name": "OptimismMintableERC20",

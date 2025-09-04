@@ -1,7 +1,7 @@
 {
   "name": "myria",
   "timestamp": 1741185779,
-  "configHash": "0xd49eb9ef192e848ecb816f4e54267990c7e7ac200d1a1d1ac3bc2672913984cd",
+  "configHash": "0xc795e9882ffecc94bc70afb920fd7ab1d0bc810075ca25a06c01a4f7a636b5ac",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

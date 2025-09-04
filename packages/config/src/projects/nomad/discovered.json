@@ -1,7 +1,7 @@
 {
   "name": "nomad",
   "timestamp": 1740653555,
-  "configHash": "0x650dc2986bbf6af165e412d5a7c5f4de8e3f4fdfdb4f72c0b0116d07806461bc",
+  "configHash": "0x6dee4ee119c7768a472a0aa31f2fd3b47cc2c93fc99e2be71258e4c55d1be20b",
   "entries": [
     {
       "name": "ReplicaBeaconProxy",

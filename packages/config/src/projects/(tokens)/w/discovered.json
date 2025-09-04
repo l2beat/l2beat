@@ -1,7 +1,7 @@
 {
   "name": "w",
   "timestamp": 1752832725,
-  "configHash": "0x6470e562278160b1225f1881fcb60edca9b254b99abbd4d771f4da594e54eead",
+  "configHash": "0x3824067688095080abe9fda4ddfd8abd3776d63bdf41f56c885f85fc1407c175",
   "entries": [
     {
       "name": "WToken",
@@ -389,6 +389,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "arbitrum": 358957206, "base": 33021689 },
+  "usedBlockNumbers": { "base": 33021689, "arbitrum": 358957206 },
   "permissionsConfigHash": "0xbf26798ca05b0bc405679b225391e400f5344c4285f6147857aeccbf9996407e"
 }

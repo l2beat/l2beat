@@ -1,7 +1,7 @@
 {
   "name": "sxt",
   "timestamp": 1753944351,
-  "configHash": "0x62a02955d9802ab2b0151e8c8521e372196ed7b2dbf06b8f9863472bbd614f2e",
+  "configHash": "0x9ff7c6eaaf1d51c59f371822ce177e0a579d06eb686a29db965f8416ad7d417e",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

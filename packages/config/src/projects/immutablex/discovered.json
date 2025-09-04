@@ -1,7 +1,7 @@
 {
   "name": "immutablex",
   "timestamp": 1741355279,
-  "configHash": "0x992b67113d9c37c91fb97b560090d10d7a1c8fa3a837279d653fc5b777d6d766",
+  "configHash": "0xa1a2e4fe3951eaf4c5e1dafccd4c7afdaf4cde63dc345c678f473c35395ac45a",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
