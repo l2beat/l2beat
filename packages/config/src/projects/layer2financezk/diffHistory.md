@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x89cbd2750980396b5ed021562c1e68be26535e14
+
+# Diff at Wed, 03 Sep 2025 15:51:40 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fbfe8da4086c70042fea30347d68132d3f574015 block: 1715171711
+- current timestamp: 1715171711
+
+## Description
+
+Rerun to add References to entrypoints of shared modules
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1715171711 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa6263f952e74efafee2b257de13c8d5cf863e376
 
 # Diff at Tue, 02 Sep 2025 14:53:58 GMT:

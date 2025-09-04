@@ -1,7 +1,7 @@
 {
   "name": "zeronetwork",
   "timestamp": 1753944487,
-  "configHash": "0x76593721fbb7478e81a8228adca681d5f4c0b9b545897b5d11ef9ada9cd71b17",
+  "configHash": "0x9cb9f6f98f6f270a3423cc6b3e7d18442328e2cd521cd61efd5a55dbcb9e56c6",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -129,6 +129,13 @@
       }
     },
     {
+      "name": "BridgeHub",
+      "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "address": "eth:0x3Bc72A56F9036B94ad14BF082bF93731e0545255",
       "type": "EOA",
       "proxyType": "EOA"
@@ -193,6 +200,13 @@
         "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "RollupL1DAValidator",
+      "address": "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "name": "ValidatorTimelock",
@@ -263,6 +277,13 @@
       "implementationNames": {
         "eth:0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e": "L1VerifierPlonk"
       }
+    },
+    {
+      "name": "ChainTypeManager",
+      "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0xc858a504d6c267fe2d462D240b68A7D939B1fEC9",
@@ -597,9 +618,22 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "ProtocolUpgradeHandler",
+      "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "address": "eth:0xF322467cec88d3CDFa9376B19bD5AD40da665277",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
     }
   ],
   "abis": {
@@ -1020,5 +1054,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23037398 },
-  "permissionsConfigHash": "0x87d8eb0ae4a7e7818117fa0db8092ab4c0a5b462753f0a567b4ca4e25c20c171"
+  "permissionsConfigHash": "0x1775e247d21f83710d5f38b8453c14e6070fc5f541d2a56bbbfa5f1a84851848"
 }

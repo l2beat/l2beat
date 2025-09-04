@@ -46,6 +46,7 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
     to: number,
     configurations: Configuration<TvsToken>[],
   ) {
+    const tokenIds = configurations.map((c) => c.properties.id)
     const timestamps = this.$.syncOptimizer.getTimestampsToSync(
       from,
       to,
@@ -93,13 +94,21 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
     })
 
     return async () => {
-      await this.$.db.tvsTokenValue.insertMany(records)
+      const syncedUntil = timestamps[timestamps.length - 1]
+      await this.$.db.transaction(async () => {
+        await this.$.db.syncMetadata.updateSyncedUntil(
+          'tvs',
+          tokenIds,
+          syncedUntil,
+        )
+        await this.$.db.tvsTokenValue.insertMany(records)
+      })
       this.logger.info('Saved token values into DB', {
         timestamps: timestamps.length,
         tokens: records.length,
       })
 
-      return timestamps[timestamps.length - 1]
+      return syncedUntil
     }
   }
 

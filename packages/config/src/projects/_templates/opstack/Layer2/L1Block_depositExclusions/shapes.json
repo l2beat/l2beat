@@ -1,8 +1,7 @@
 {
   "L1Block_L1Block_depositExclusions": {
     "hash": "0xbb69c5830d6e822e4bf9c51ad08b5ade53450cf808a5cabc8665f40e5c6d7c1a",
-    "address": "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
-    "chain": "zircuit",
+    "address": "zircuit:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
     "blockNumber": 17187016
   }
 }

@@ -49,7 +49,7 @@ export const moonchain: ScalingProject = underReviewL3({
     apis: [
       {
         type: 'rpc',
-        url: 'https://rpc.moonchain.com',
+        url: 'https://rpc.mxc.com',
         callsPerMinute: 3000,
       },
       { type: 'blockscoutV2', url: 'https://explorer-v1.moonchain.com/api/v2' },

@@ -1,8 +1,7 @@
 {
   "SP1Vector": {
     "hash": "0x0e469131222e34f50c12fe74205439de113446461e0fbd31fff1a43b081dbbeb",
-    "address": "0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D",
-    "chain": "ethereum",
+    "address": "eth:0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D",
     "blockNumber": 22188285
   }
 }

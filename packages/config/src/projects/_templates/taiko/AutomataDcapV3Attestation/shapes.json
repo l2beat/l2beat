@@ -1,14 +1,12 @@
 {
   "AutomataDcapV3Attestation.sol": {
     "hash": "0xac51975c574b128e9dc1e8542c616ed655d4a2abc91d3233648ac688e530c68c",
-    "address": "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5",
-    "chain": "ethereum",
+    "address": "eth:0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5",
     "blockNumber": 22297586
   },
   "DcapAttestationPostPacaya": {
     "hash": "0x0568e673edec0254e0d0584958369ffcb951f679158dd2a7c167bbf5fcf2a5bf",
-    "address": "0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72",
-    "chain": "ethereum",
+    "address": "eth:0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72",
     "blockNumber": 22565516
   }
 }

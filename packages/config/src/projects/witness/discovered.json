@@ -1,7 +1,7 @@
 {
   "name": "witness",
   "timestamp": 1738234259,
-  "configHash": "0x673171663fa769e522fefabada91150c890285753fde0d88e9b75a190088b676",
+  "configHash": "0x849c985a32f63759045f1fddea3ca805e0671008f633c85bdf6e59767044391b",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -21,6 +21,13 @@
         "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": "FflonkVerifier"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "PolygonSharedBridge",
+      "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "address": "eth:0x353800524721e11B453f73f523dD8840c215a213",
@@ -103,6 +110,20 @@
         "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": "PolygonValidiumStorageMigration"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "PolygonRollupManager",
+      "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
+      "name": "PolygonGlobalExitRootV2",
+      "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "name": "ProxyAdmin",
@@ -417,5 +438,5 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 21736867 },
-  "permissionsConfigHash": "0x376916f71d8c6047976243009177b350f76677ed9935ce8c7952dd167f610d67"
+  "permissionsConfigHash": "0xce30b75302142d82b21b163b276443eef4cb29a69cb4218d0644b7af7ab25fe6"
 }

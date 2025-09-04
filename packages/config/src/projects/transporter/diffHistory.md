@@ -1,3 +1,70 @@
+Generated with discovered.json: 0x407f523d6c4ab6256ef4d71f044d56ec6021ff7e
+
+# Diff at Wed, 03 Sep 2025 11:49:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f81a67544a1eef3c7f105dd59187ddee7ac70879 block: 1755854301
+- current timestamp: 1756900016
+
+## Description
+
+1 new offramp, 2 new onramps added.
+
+## Watched changes
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.82:
++        {"sourceChainSelector":"4741433654826277614","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.offRamps.83:
++        {"sourceChainSelector":"8481857512324358265","offRamp":"eth:0xfC92C3b8a374F70cb46cf884D4f02bb120f0F0a3"}
+      values.offRamps.84:
++        {"sourceChainSelector":"17673274061779414707","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.4741433654826277614:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+      values.onRamps.8481857512324358265:
++        "eth:0xffBD6B0146C9E16A9f9E77DC8898cbfF6E2AA389"
+      values.onRamps.17673274061779414707:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract PriceRegistry (eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.74:
++        "eth:0x1bddbA5DC2cd6ED3343A8E94D02023cC720533B9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x1bddbA5DC2cd6ED3343A8E94D02023cC720533B9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (eth:0xfC92C3b8a374F70cb46cf884D4f02bb120f0F0a3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (eth:0xffBD6B0146C9E16A9f9E77DC8898cbfF6E2AA389)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x1bddbA5DC2cd6ED3343A8E94D02023cC720533B9.sol | 1297 ++++++++
+ ...:0xfC92C3b8a374F70cb46cf884D4f02bb120f0F0a3.sol | 3430 ++++++++++++++++++++
+ ...:0xffBD6B0146C9E16A9f9E77DC8898cbfF6E2AA389.sol | 2982 +++++++++++++++++
+ 3 files changed, 7709 insertions(+)
+```
+
 Generated with discovered.json: 0x825fe89a3f86ac2f1841a789fa83f60575d4f559
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

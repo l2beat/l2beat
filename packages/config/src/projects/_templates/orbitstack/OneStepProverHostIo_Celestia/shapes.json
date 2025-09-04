@@ -1,20 +1,17 @@
 {
   "OneStepProverHostIo_celestia_arbitrum": {
     "hash": "0xd8aa733150471ae7c5f80c9da64d49d363b060d6a993934483a9c749033b3678",
-    "address": "0x74D50DbaCfef02d3dAC141b0bC40195886d7ECF7",
-    "chain": "arbitrum",
+    "address": "arb1:0x74D50DbaCfef02d3dAC141b0bC40195886d7ECF7",
     "blockNumber": 336627087
   },
   "OneStepProverHostIo_celestia_ethereum": {
     "hash": "0x73c3c22d54ad12907dffd5f715cea7f724c65ba212d2b3da84ded2333fd76ce8",
-    "address": "0x856EA788977Bc771E8Ca87471baeC507A0f54771",
-    "chain": "ethereum",
+    "address": "eth:0x856EA788977Bc771E8Ca87471baeC507A0f54771",
     "blockNumber": 22444694
   },
   "OneStepProverHostIo_Celestia": {
     "hash": "0xc64fd51c7e519c9d2edb0591f13395e1d8401768093c931e7f5925c1e413ebc0",
-    "address": "0x3A765e7a1709C19F065F098AAF2940AAA7ac0AE3",
-    "chain": "arbitrum",
+    "address": "arb1:0x3A765e7a1709C19F065F098AAF2940AAA7ac0AE3",
     "blockNumber": 341763879
   }
 }

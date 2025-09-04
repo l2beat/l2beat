@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "timestamp": 1755516515,
-  "configHash": "0xc9df565cb63883ba53b4771ab1e9c43a1ddc4bcf7e5e32ffde77a87d1824dea4",
+  "configHash": "0x8c208b7a2d1fb7bbc6221d55e7e73d17cb0c0f10f7a894c01bc1a656505c5637",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -61,6 +61,19 @@
       "address": "eth:0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
+    },
+    {
+      "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "address": "eth:0x64F4396bb0669C72858Cc50C779b48EB25F45770",
@@ -759,5 +772,5 @@
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
   "usedBlockNumbers": { "ethereum": 23167648 },
-  "permissionsConfigHash": "0x1878ede5af5352a3434f168af83b9c2451d4043b08515586aae152b8da2b9bb8"
+  "permissionsConfigHash": "0x654d2ab54bee8967a2baf88310cd725120a2b836958b4855014e43cdcad5c519"
 }

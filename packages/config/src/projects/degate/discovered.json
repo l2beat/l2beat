@@ -1,7 +1,7 @@
 {
   "name": "degate",
   "timestamp": 1704441323,
-  "configHash": "0x654f3745e26a79a9d64cbe3a447acd697038bfe69e3a975a8570cf30975e59bc",
+  "configHash": "0x5de80cd0e1c2d3482777f4a733de5a7c416e08ab51dc25c00bcd997a7d1c8af8",
   "entries": [
     {
       "name": "BlockVerifier",

@@ -1,8 +1,7 @@
 {
   "UpgradeExecRouteBuilder": {
     "hash": "0x4ed0927cf3d1bda79c1506ba72809f27e5eca436a34b45c47d5e1fa221a685b3",
-    "address": "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a",
-    "chain": "arbitrum",
+    "address": "arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a",
     "blockNumber": 322488866
   }
 }

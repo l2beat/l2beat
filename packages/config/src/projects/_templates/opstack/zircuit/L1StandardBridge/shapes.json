@@ -1,8 +1,7 @@
 {
   "L1StandardBridge": {
     "hash": "0x2ffe3729df0a4fa39ab88f1451d7d0023e7f6d680f4a8d025a68111673392470",
-    "address": "0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb",
-    "chain": "ethereum",
+    "address": "eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb",
     "blockNumber": 23086994
   }
 }

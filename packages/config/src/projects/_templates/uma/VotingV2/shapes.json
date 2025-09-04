@@ -1,8 +1,7 @@
 {
   "VotingV2": {
     "hash": "0xef18268ad698461591028993ca19fa3b717ace3ee3371f86e68c1d0a3658d87e",
-    "address": "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
-    "chain": "ethereum",
+    "address": "eth:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
     "blockNumber": 22780541
   }
 }

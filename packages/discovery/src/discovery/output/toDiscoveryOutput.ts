@@ -94,5 +94,7 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     usedTypes: e.usedTypes,
     references: e.references,
     category: e.category,
+    targetType: e.targetType,
+    targetProject: e.targetProject,
   }
 }

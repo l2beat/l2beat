@@ -1,8 +1,7 @@
 {
   "AztecFeeDistributor": {
     "hash": "0x13139c06d2946718f6b4470f6346e54f4e2b26075fe5daa3b3a631092f7dd76e",
-    "address": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
-    "chain": "ethereum",
+    "address": "eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
     "blockNumber": 22188285
   }
 }

@@ -1,14 +1,12 @@
 {
   "LivenessModule_v1_2_0": {
     "hash": "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d",
-    "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-    "chain": "ethereum",
+    "address": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
     "blockNumber": 22188285
   },
   "LivenessModule_v1_2_1_beta_1": {
     "hash": "0x65f469a0117ead0804d2734755e6ac228f4d12914dcb21fffeebfaecfdca773f",
-    "address": "0x4B4F1aF8d43C8c140D2355Fea663fC9f762067C2",
-    "chain": "ethereum",
+    "address": "eth:0x4B4F1aF8d43C8c140D2355Fea663fC9f762067C2",
     "blockNumber": 22188285
   }
 }

@@ -1,8 +1,7 @@
 {
   "L1SharedAddressManager.sol": {
     "hash": "0x61eadd250e6fee2eea7d778ca5fdb6e04b0fa09044c65eba836b397f585e5535",
-    "address": "0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449",
-    "chain": "ethereum",
+    "address": "eth:0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449",
     "blockNumber": 22297586
   }
 }

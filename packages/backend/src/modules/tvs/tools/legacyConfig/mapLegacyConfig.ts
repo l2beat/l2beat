@@ -95,13 +95,25 @@ export async function mapLegacyConfig(
       const tokensByCoingeckoId = groupBy(symbolTokens, 'coingeckoId')
 
       for (const sameIdTokens of Object.values(tokensByCoingeckoId)) {
-        const token = mergeTokensWithSameId(
-          project,
-          legacyConfig.associatedTokens,
-          chains,
-          sameIdTokens,
+        const tokensByBridge = groupBy(
+          sameIdTokens.map((t) => ({
+            ...t,
+            bridge: t.escrow.bridgedUsing
+              ? JSON.stringify(t.escrow.bridgedUsing)
+              : undefined,
+          })),
+          'bridge',
         )
-        tokens.push(token)
+
+        for (const sameBridgeToken of Object.values(tokensByBridge)) {
+          const token = mergeTokensWithSameId(
+            project,
+            legacyConfig.associatedTokens,
+            chains,
+            sameBridgeToken,
+          )
+          tokens.push(token)
+        }
       }
     }
   }

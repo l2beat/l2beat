@@ -1,8 +1,7 @@
 {
   "PolygonDataCommittee": {
     "hash": "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f",
-    "address": "0xF4e87685e323818E0aE35dCdFc3B65106002E456",
-    "chain": "ethereum",
+    "address": "eth:0xF4e87685e323818E0aE35dCdFc3B65106002E456",
     "blockNumber": 22188285
   }
 }

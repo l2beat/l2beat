@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xb3ed1ad7bc6d739f77aa1b5b0911664a1ef4ac1a
+
+# Diff at Wed, 03 Sep 2025 15:52:03 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fbfe8da4086c70042fea30347d68132d3f574015 block: 1756886128
+- current timestamp: 1756886128
+
+## Description
+
+Rerun to add References to entrypoints of shared modules
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756886128 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xbe98d702a813bd855e9267a42a845e41ce93a4dc
+
+# Diff at Wed, 03 Sep 2025 07:56:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@4750a1228b4aaf03d07fbccfeb1177cdf70172bc block: 1755162034
+- current timestamp: 1756886128
+
+## Description
+
+Added new multisig member.
+
+## Watched changes
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x11BB5F79750de2Cc71e80cB2C59cF0a60EFFa95d"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 8 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xc96a83e5ed6887a9f947882d23ab4bbe67aa8c0c
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -12,7 +12,7 @@ export function flattenDiscoveredSources(
 ): Record<string, string> {
   const nameCounts = new Map<string, number>()
   for (const contract of results) {
-    if (contract.type === 'EOA') {
+    if (contract.type === 'EOA' || contract.type === 'Reference') {
       continue
     }
 
@@ -24,7 +24,10 @@ export function flattenDiscoveredSources(
   const flatSources: Record<string, string> = {}
   for (const analyzedContract of results) {
     try {
-      if (analyzedContract.type === 'EOA') {
+      if (
+        analyzedContract.type === 'EOA' ||
+        analyzedContract.type === 'Reference'
+      ) {
         continue
       }
 
@@ -89,7 +92,11 @@ export function flattenDiscoveredSources(
         flatSources[path] = flatContent
       }
     } catch (e) {
-      assert(analyzedContract.type !== 'EOA', 'This should never happen')
+      assert(
+        analyzedContract.type !== 'EOA' &&
+          analyzedContract.type !== 'Reference',
+        'This should never happen',
+      )
       logger.error(
         `Flattener error at ${analyzedContract.name}:\n${stringifyError(e)}`,
       )

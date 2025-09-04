@@ -22,7 +22,7 @@ export async function generateEntrypoints(
   }
   logger.info(`Generating entrypoints.json for project ${project}`)
   const entrypoints = generateEntrypointsForProject(project, configReader)
-  await writeFile(outputFilePath, JSON.stringify(entrypoints, null, 2) + '\n')
+  await writeFile(outputFilePath, JSON.stringify(entrypoints, null, 2))
 }
 
 function generateEntrypointsForProject(

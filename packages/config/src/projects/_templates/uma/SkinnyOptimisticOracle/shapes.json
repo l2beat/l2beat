@@ -1,8 +1,7 @@
 {
   "SkinnyOptimisticOracle": {
     "hash": "0xbe561564083bf80216ae0f5510f70415cf97a624ef4bad88fb98a43dc4231dd6",
-    "address": "0xeE3Afe347D5C74317041E2618C49534dAf887c24",
-    "chain": "ethereum",
+    "address": "eth:0xeE3Afe347D5C74317041E2618C49534dAf887c24",
     "blockNumber": 22780541
   }
 }

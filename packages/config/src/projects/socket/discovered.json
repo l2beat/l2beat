@@ -1,7 +1,7 @@
 {
   "name": "socket",
-  "timestamp": 1756805259,
-  "configHash": "0xc963b0b9e9a016f8436485f084841e89814fb85dfcdf8d7aee20b12d9b5dbbc5",
+  "timestamp": 1756899680,
+  "configHash": "0x89ab0bc80dae59257b97858902f8f950d4cc97c9c94c0f99b35bc16122e86758",
   "entries": [
     {
       "name": "WETH Vault (Kinto)",
@@ -849,13 +849,7 @@
     {
       "address": "eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "type": "EOA",
-      "sourceHashes": [
-        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
-      ],
-      "proxyType": "EIP7702 EOA",
-      "values": {
-        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B"
-      }
+      "proxyType": "EOA"
     },
     {
       "name": "USDC Vault (Derive)",
@@ -1042,7 +1036,7 @@
         "capacitorFactory__": "eth:0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "eth:0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 19437,
+        "globalMessageCount": 19530,
         "hasher__": "eth:0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "eth:0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -3361,58 +3355,6 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
-      "constructor(address _delegationManager, address _entryPoint)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ExecutionFailed()",
-      "error InvalidEIP712NameLength()",
-      "error InvalidEIP712VersionLength()",
-      "error InvalidShortString()",
-      "error NotDelegationManager()",
-      "error NotEntryPoint()",
-      "error NotEntryPointOrSelf()",
-      "error NotSelf()",
-      "error StringTooLong(string str)",
-      "error UnauthorizedCallContext()",
-      "error UnsupportedCallType(bytes1 callType)",
-      "error UnsupportedExecType(bytes1 execType)",
-      "event EIP712DomainChanged()",
-      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
-      "event SetDelegationManager(address indexed newDelegationManager)",
-      "event SetEntryPoint(address indexed entryPoint)",
-      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
-      "function DOMAIN_VERSION() view returns (string)",
-      "function NAME() view returns (string)",
-      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
-      "function VERSION() view returns (string)",
-      "function addDeposit() payable",
-      "function delegationManager() view returns (address)",
-      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function entryPoint() view returns (address)",
-      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
-      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
-      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
-      "function getDeposit() view returns (uint256)",
-      "function getDomainHash() view returns (bytes32)",
-      "function getNonce(uint192 _key) view returns (uint256)",
-      "function getNonce() view returns (uint256)",
-      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
-      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
-      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
-      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
-      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
-      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
-      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
-      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
-    ],
     "eth:0x64dF894688c5052BeAdC35371cF69151Ebc5D658": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
@@ -5115,6 +5057,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23274522 },
+  "usedBlockNumbers": { "ethereum": 23282350 },
   "permissionsConfigHash": "0x49a737967e5880971fb8ca69e5cab84bef3068ad7d440d8c841e532a68bc942f"
 }
