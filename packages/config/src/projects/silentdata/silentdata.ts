@@ -23,6 +23,8 @@ export const silentData: ScalingProject = opStackL2({
     description:
       'Silent Data is an enterprise focused OP Stack L2 aiming to achieve privacy by not making transaction data available. It is built for institutional scale and web3 innovation.',
     stacks: ['OP Stack'],
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     links: {
       websites: ['https://silentdata.com'],
       explorers: ['https://explorer-mainnet.rollup.silentdata.com/'],
