@@ -26,7 +26,7 @@ export const blessnet: ScalingProject = orbitStackL3({
       websites: ['https://bless.net/'],
       bridges: [
         'https://blessnet.bridge.caldera.xyz/',
-        'https://bridge.bless.net/',
+        'https://www.bless.net/bridge',
       ],
       documentation: ['https://docs.bless.net/'],
       explorers: ['https://scan.bless.net/'],
