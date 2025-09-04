@@ -1,7 +1,7 @@
 {
   "name": "facet",
   "timestamp": 1756809496,
-  "configHash": "0xc9c8ba1c69140ab3d886f3fac08396a167437a8be89f3c3eedc2fc59eff88f92",
+  "configHash": "0xbcb8a899c96b92e44b2de8d871c23826dc1cbdb4b5208adec8b032c81ae89e8e",
   "entries": [
     {
       "name": "Inbox",
@@ -829,6 +829,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23274872, "facet": 1913746 },
+  "usedBlockNumbers": { "facet": 1913746, "ethereum": 23274872 },
   "permissionsConfigHash": "0x0fce2db250d4177647709f445b4f4e0d924a8700b3acd3798704c94903377789"
 }
