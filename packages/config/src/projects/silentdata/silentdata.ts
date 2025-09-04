@@ -30,4 +30,6 @@ export const silentData: ScalingProject = opStackL2({
       ],
     },
   },
+  isNodeAvailable: 'UnderReview',
+  isPartOfSuperchain: true, // uses non-standard superchainconf but 'officially' part of superchain
 })

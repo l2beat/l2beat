@@ -1,7 +1,7 @@
 {
   "name": "silentdata",
-  "timestamp": 1756968689,
-  "configHash": "0x8c25d2093fca653d3744d9db8a2c49b555f74c4387236aaf80f89d63b70b175c",
+  "timestamp": 1756971267,
+  "configHash": "0xd709fbd67184081b4a084cdc288b48ea60e7ab0eb737e6fec19741e4b3a00eb8",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -62,7 +62,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1753442903,
       "sinceBlock": 22995864,
       "values": {
@@ -361,7 +361,14 @@
     {
       "address": "eth:0x3e3F6b6010237678723a33aE227d167B55888C20",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x1B99b322085dA031e68C1202fdB756b3FFbaC7A6",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "SuperchainConfig",
@@ -695,7 +702,14 @@
     {
       "address": "eth:0xD04464568a8a8A5da8c9218714e6d9f4BD40DF65",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x1B99b322085dA031e68C1202fdB756b3FFbaC7A6",
+          "role": ".challenger"
+        }
+      ]
     },
     {
       "name": "ProxyAdmin",
@@ -1567,6 +1581,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23288073 },
-  "permissionsConfigHash": "0xdc3d43657b2351d9cb6dc72da282ee99c94a6a1326d7a8fce2f88c4757cfa7e9"
+  "usedBlockNumbers": { "ethereum": 23288288 },
+  "permissionsConfigHash": "0x06b422c17cb850036222b568e5391fa55df413199a44cefe1af5a9dc25f2a6b9"
 }

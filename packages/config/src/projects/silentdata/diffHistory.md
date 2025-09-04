@@ -1,13 +1,17 @@
-Generated with discovered.json: 0x620ac5ca15f5ce6513efa5b8b5e0bb2f1d8203e6
+Generated with discovered.json: 0x5e5df231a33c97e678b6c91635440ca010945935
 
-# Diff at Thu, 04 Sep 2025 06:52:48 GMT:
+# Diff at Thu, 04 Sep 2025 07:35:35 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1756968689
+- current timestamp: 1756971267
 
 ## Description
 
-Initial discovery.
+Initial discovery:
+- standard op stack deployment (all template code)
+- permissioned opfp
+- all-EOA admins
+- no DA (no activity/rpc)
 
 ## Initial discovery
 
