@@ -1,13 +1,8 @@
 {
   "name": "polygon-pos",
-  "timestamp": 1756305761,
+  "timestamp": 1756994823,
   "configHash": "0x9bd4de84346c21ad5f26278fbf397dc6b9f8cc930f6e38efdb0becad41668dd2",
   "entries": [
-    {
-      "address": "eth:0x008C28DA422010B6b8A47Fdf0B4640297BfEB85B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "address": "eth:0x06f2caFB5276B11bAA6679ABE49D5A5C0A911f5B",
       "type": "EOA",
@@ -135,11 +130,6 @@
       }
     },
     {
-      "address": "eth:0x25bB61643e4881147E6aabb65e6DD45CF2904155",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "StateSender",
       "address": "eth:0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
       "type": "Contract",
@@ -154,7 +144,7 @@
       "sinceBlock": 10167763,
       "values": {
         "$immutable": true,
-        "counter": 3096216,
+        "counter": 3097977,
         "isOwner": false,
         "owner": "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -360,14 +350,10 @@
       }
     },
     {
-      "address": "eth:0x4096a34E582664F969753b34dA6E72D55b3C85C1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ERC20Predicate",
       "address": "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
       "type": "Contract",
+      "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x63f5481a49da196498b6cd77450d4e12da12c7608ab022b417dbed836935e0f7",
         "0xf159b16a5d3a5070602bdcce59b317b67354f3e0daade4bd67d39fc4b7e11476"
@@ -406,6 +392,16 @@
           ]
         ],
         "$upgradeCount": 5,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "eth:0x1F4c1E0afBeb5b5B86d7722549274434b29884F6",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -450,7 +446,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 776,
+        "nonce": 777,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -518,11 +514,6 @@
       "implementationNames": {
         "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": "StakingNFT"
       }
-    },
-    {
-      "address": "eth:0x4D915Dd2c56814BD3Db51a1dA35b302BCC9c8973",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Katana Foundation Engineering/Security Multisig",
@@ -683,13 +674,13 @@
         "CHECKPOINT_REWARD": "37108000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 87407,
-        "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3383902473826800878753576058",
+        "currentEpoch": 87903,
+        "currentValidatorSetSize": 104,
+        "currentValidatorSetTotalStake": "3392583088580261908973314193",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 87407,
+        "epoch": 87903,
         "eventsHub": "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -717,20 +708,20 @@
         "registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "3257524122390185974485718",
+        "rewardPerStake": "3263730633595258365543732",
         "rootChain": "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "tokenMatic": "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "11335939209428901681108",
+        "totalHeimdallFee": "11539939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "144468690089986887902251292",
-        "totalStaked": "11506371193872498318668959",
+        "totalRewardsLiquidated": "144954708824832485133876881",
+        "totalStaked": "11513761193872498318668959",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3383902473826800878753576058",
-          "stakerCount": 105
+          "amount": "3392583088580261908973314193",
+          "stakerCount": 104
         },
         "validatorThreshold": 105,
         "WITHDRAWAL_DELAY": 80,
@@ -740,11 +731,6 @@
         "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManagerProxy",
         "eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c": "StakeManager"
       }
-    },
-    {
-      "address": "eth:0x61D5a4d5Bd270e59E9320243e574288e2a199fED",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "ERC20PredicateBurnOnly",
@@ -963,7 +949,7 @@
       "sinceTimestamp": 1590849960,
       "sinceBlock": 10167725,
       "values": {
-        "_nextHeaderBlock": 874070000,
+        "_nextHeaderBlock": 879030000,
         "$immutable": false,
         "$implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -972,8 +958,8 @@
           "_registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 874060000,
-        "getLastChildBlock": 75720613,
+        "currentHeaderBlock": 879020000,
+        "getLastChildBlock": 76044709,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -1275,6 +1261,7 @@
         "MAP_TOKEN": "0x2cef46a936bdc5b7e6e8c71aa04560c41cf7d88bb26901a7e7f4936ff02accad",
         "MAPPER_ROLE": "0x2559c73ad5e64226de134fc607a00e9f0c0b7465b43c2ae69baaca347c607777",
         "MIGRATION_MANAGER_ROLE": "0x739a51874800ca2ea551f6738888eda63da7b0ffed906ab18243498239604e96",
+        "migrator": ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"],
         "PREDICATES": [
           "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
           "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
@@ -1378,11 +1365,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xAC3B242E2E561da9F4cE34746E67d004E6341FA0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1405,78 +1387,6 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642": "ValidatorShareFactory"
-      }
-    },
-    {
-      "name": "MultiSigWallet",
-      "address": "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1505129111,
-      "sinceBlock": 4262126,
-      "values": {
-        "$immutable": true,
-        "getConfirmationCount": [0, 0, 0, 0, 0],
-        "getConfirmations": [[], [], [], [], []],
-        "getOwners": [
-          "eth:0xAC3B242E2E561da9F4cE34746E67d004E6341FA0",
-          "eth:0xEe5207d3c88562fc814496Af0845B34CFD4afc8c",
-          "eth:0x61D5a4d5Bd270e59E9320243e574288e2a199fED",
-          "eth:0x25bB61643e4881147E6aabb65e6DD45CF2904155",
-          "eth:0x4096a34E582664F969753b34dA6E72D55b3C85C1",
-          "eth:0x4D915Dd2c56814BD3Db51a1dA35b302BCC9c8973"
-        ],
-        "isConfirmed": [false, false, false, false, false],
-        "MAX_OWNER_COUNT": 50,
-        "owners": [
-          "eth:0xAC3B242E2E561da9F4cE34746E67d004E6341FA0",
-          "eth:0xEe5207d3c88562fc814496Af0845B34CFD4afc8c",
-          "eth:0x61D5a4d5Bd270e59E9320243e574288e2a199fED",
-          "eth:0x25bB61643e4881147E6aabb65e6DD45CF2904155",
-          "eth:0x4096a34E582664F969753b34dA6E72D55b3C85C1"
-        ],
-        "required": 3,
-        "transactionCount": 4598,
-        "transactions": [
-          [
-            "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
-            0,
-            "0x7065cb48000000000000000000000000008c28da422010b6b8a47fdf0b4640297bfeb85b",
-            false
-          ],
-          ["eth:0x008C28DA422010B6b8A47Fdf0B4640297BfEB85B", 0, "0x", true],
-          [
-            "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
-            0,
-            "0x7065cb4800000000000000000000000036928500bc1dcd7af6a2b4008875cc336b927d57",
-            true
-          ],
-          [
-            "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
-            0,
-            "0xcc872b6600000000000000000000000000000000000000000000000000000002540be400",
-            true
-          ],
-          [
-            "eth:0xd697A61D5FB4e076125e0bE647f902b02bb3A0F1",
-            0,
-            "0xcc872b6600000000000000000000000000000000000000000000000000000002540be400",
-            true
-          ]
-        ]
-      },
-      "errors": {
-        "getConfirmationCount": "Processing error occurred.",
-        "getConfirmations": "Processing error occurred.",
-        "isConfirmed": "Processing error occurred.",
-        "owners": "Processing error occurred.",
-        "transactions": "Processing error occurred."
-      },
-      "implementationNames": {
-        "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828": "MultiSigWallet"
       }
     },
     {
@@ -1589,34 +1499,6 @@
       }
     },
     {
-      "name": "TetherToken",
-      "address": "eth:0xd697A61D5FB4e076125e0bE647f902b02bb3A0F1",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3673dd54b4d0b15651ddffe8ccc3b41b4ce5ac3ebdf3d28985770c9a13b16f8d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1505309109,
-      "sinceBlock": 4269627,
-      "values": {
-        "_totalSupply": 110000000000,
-        "$immutable": true,
-        "basisPointsRate": 0,
-        "decimals": 6,
-        "deprecated": false,
-        "maximumFee": 0,
-        "name": "Tether USD",
-        "owner": "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
-        "paused": false,
-        "symbol": "TT$",
-        "totalSupply": 110000000000,
-        "upgradedAddress": "eth:0x0000000000000000000000000000000000000000"
-      },
-      "implementationNames": {
-        "eth:0xd697A61D5FB4e076125e0bE647f902b02bb3A0F1": "TetherToken"
-      }
-    },
-    {
       "name": "",
       "address": "eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861",
       "type": "Contract",
@@ -1627,36 +1509,6 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861": ""
-      }
-    },
-    {
-      "name": "Tether USD Token",
-      "address": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x19ff7ee5145c2818dcae024f3bf78a4ae1900c509ac5b50e25be8234f0ccc7d3"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1511829681,
-      "sinceBlock": 4634748,
-      "values": {
-        "_totalSupply": "81785141416748620",
-        "$immutable": true,
-        "basisPointsRate": 0,
-        "decimals": 6,
-        "deprecated": false,
-        "getOwner": "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
-        "MAX_UINT": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maximumFee": 0,
-        "name": "Tether USD",
-        "owner": "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
-        "paused": false,
-        "symbol": "USDT",
-        "totalSupply": "81785141416748620",
-        "upgradedAddress": "eth:0x0000000000000000000000000000000000000000"
-      },
-      "implementationNames": {
-        "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": "TetherToken"
       }
     },
     {
@@ -1803,11 +1655,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xEe5207d3c88562fc814496Af0845B34CFD4afc8c",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1882,6 +1729,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+          "description": "can migrate the canonically bridged USDT token to a native or external version.",
+          "role": ".migrator"
+        },
         {
           "permission": "upgrade",
           "from": "eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68",
@@ -2852,39 +2705,6 @@
     "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642": [
       "function create(uint256 validatorId, address loggerAddress, address registry) returns (address)"
     ],
-    "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828": [
-      "function owners(uint256) view returns (address)",
-      "function removeOwner(address owner)",
-      "function revokeConfirmation(uint256 transactionId)",
-      "function isOwner(address) view returns (bool)",
-      "function confirmations(uint256, address) view returns (bool)",
-      "function getTransactionCount(bool pending, bool executed) view returns (uint256 count)",
-      "function addOwner(address owner)",
-      "function isConfirmed(uint256 transactionId) view returns (bool)",
-      "function getConfirmationCount(uint256 transactionId) view returns (uint256 count)",
-      "function transactions(uint256) view returns (address destination, uint256 value, bytes data, bool executed)",
-      "function getOwners() view returns (address[])",
-      "function getTransactionIds(uint256 from, uint256 to, bool pending, bool executed) view returns (uint256[] _transactionIds)",
-      "function getConfirmations(uint256 transactionId) view returns (address[] _confirmations)",
-      "function transactionCount() view returns (uint256)",
-      "function changeRequirement(uint256 _required)",
-      "function confirmTransaction(uint256 transactionId)",
-      "function submitTransaction(address destination, uint256 value, bytes data) returns (uint256 transactionId)",
-      "function MAX_OWNER_COUNT() view returns (uint256)",
-      "function required() view returns (uint256)",
-      "function replaceOwner(address owner, address newOwner)",
-      "function executeTransaction(uint256 transactionId)",
-      "constructor(address[] _owners, uint256 _required)",
-      "event Confirmation(address indexed sender, uint256 indexed transactionId)",
-      "event Revocation(address indexed sender, uint256 indexed transactionId)",
-      "event Submission(uint256 indexed transactionId)",
-      "event Execution(uint256 indexed transactionId)",
-      "event ExecutionFailure(uint256 indexed transactionId)",
-      "event Deposit(address indexed sender, uint256 value)",
-      "event OwnerAddition(address indexed owner)",
-      "event OwnerRemoval(address indexed owner)",
-      "event RequirementChange(uint256 required)"
-    ],
     "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
@@ -2946,40 +2766,6 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "eth:0xd697A61D5FB4e076125e0bE647f902b02bb3A0F1": [
-      "function name() view returns (string)",
-      "function deprecate(address _upgradedAddress)",
-      "function approve(address _spender, uint256 _value)",
-      "function deprecated() view returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address _from, address _to, uint256 _value)",
-      "function upgradedAddress() view returns (address)",
-      "function decimals() view returns (uint256)",
-      "function maximumFee() view returns (uint256)",
-      "function _totalSupply() view returns (uint256)",
-      "function unpause() returns (bool)",
-      "function paused() view returns (bool)",
-      "function balanceOf(address who) view returns (uint256)",
-      "function pause() returns (bool)",
-      "function owner() view returns (address)",
-      "function symbol() view returns (string)",
-      "function transfer(address _to, uint256 _value)",
-      "function setParams(uint256 newBasisPoints, uint256 newMaxFee)",
-      "function issue(uint256 amount)",
-      "function redeem(uint256 amount)",
-      "function allowance(address _owner, address _spender) view returns (uint256 remaining)",
-      "function basisPointsRate() view returns (uint256)",
-      "function transferOwnership(address newOwner)",
-      "constructor(uint256 _initialSupply, string _name, string _symbol, uint256 _decimals)",
-      "event Issue(uint256 amount)",
-      "event Redeem(uint256 amount)",
-      "event Deprecate(address newAddress)",
-      "event Params(uint256 feeBasisPoints, uint256 maxFee)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Pause()",
-      "event Unpause()"
-    ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -3028,52 +2814,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": [
-      "function name() view returns (string)",
-      "function deprecate(address _upgradedAddress)",
-      "function approve(address _spender, uint256 _value)",
-      "function deprecated() view returns (bool)",
-      "function addBlackList(address _evilUser)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address _from, address _to, uint256 _value)",
-      "function upgradedAddress() view returns (address)",
-      "function balances(address) view returns (uint256)",
-      "function decimals() view returns (uint256)",
-      "function maximumFee() view returns (uint256)",
-      "function _totalSupply() view returns (uint256)",
-      "function unpause()",
-      "function getBlackListStatus(address _maker) view returns (bool)",
-      "function allowed(address, address) view returns (uint256)",
-      "function paused() view returns (bool)",
-      "function balanceOf(address who) view returns (uint256)",
-      "function pause()",
-      "function getOwner() view returns (address)",
-      "function owner() view returns (address)",
-      "function symbol() view returns (string)",
-      "function transfer(address _to, uint256 _value)",
-      "function setParams(uint256 newBasisPoints, uint256 newMaxFee)",
-      "function issue(uint256 amount)",
-      "function redeem(uint256 amount)",
-      "function allowance(address _owner, address _spender) view returns (uint256 remaining)",
-      "function basisPointsRate() view returns (uint256)",
-      "function isBlackListed(address) view returns (bool)",
-      "function removeBlackList(address _clearedUser)",
-      "function MAX_UINT() view returns (uint256)",
-      "function transferOwnership(address newOwner)",
-      "function destroyBlackFunds(address _blackListedUser)",
-      "constructor(uint256 _initialSupply, string _name, string _symbol, uint256 _decimals)",
-      "event Issue(uint256 amount)",
-      "event Redeem(uint256 amount)",
-      "event Deprecate(address newAddress)",
-      "event Params(uint256 feeBasisPoints, uint256 maxFee)",
-      "event DestroyedBlackFunds(address _blackListedUser, uint256 _balance)",
-      "event AddedBlackList(address _user)",
-      "event RemovedBlackList(address _user)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Pause()",
-      "event Unpause()"
     ],
     "eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68": [
       "constructor(address _proxyTo)",
@@ -3313,12 +3053,12 @@
     "polygonposbridge/Governance": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/predicate": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
     "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
-    "polygonposbridge/RootChainManagerMigrator": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
+    "polygonposbridge/RootChainManagerMigrator": "0x7dd7e5d6f70c722c75f13a43c5509f47a2bb3377499f1d927c44150bdb3d97c5",
     "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
     "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23233122 },
-  "permissionsConfigHash": "0xa7fb426c9bdb1da7ee31887ecb67a7820321a03c52026c3d5933ffc6437fbe44"
+  "usedBlockNumbers": { "ethereum": 23290236 },
+  "permissionsConfigHash": "0x69fac3a807807bdaf4befd7e03c48082caa649600c4e9c1a31a82b47d22ea844"
 }
