@@ -403,7 +403,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
     {
       title: 'Starknet is down for several hours',
       url: 'https://x.com/Starknet/status/1962740091937317247',
-      date: '2025-09-02T12:00:00.00Z',
+      date: '2025-09-02T00:00:00.00Z',
       description:
         'Starknet experiences a reorg caused by a bug on the sequencing side.',
       type: 'incident',
