@@ -135,11 +135,10 @@ export async function makeConfig(
       timeout: env.integer(['ETHEREUM_BEACON_API_TIMEOUT'], 10000),
     },
     da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
-    // TODO: remove "shared" feature flag
-    blockSync: (flags.isEnabled('blockSync') || flags.isEnabled('shared')) && {
-      ethereumWsUrl: env.string(['ETHEREUM_WS_URL']),
+    blockSync: {
+      ethereumWsUrl: env.optionalString(['ETHEREUM_WS_URL']),
     },
-    discord: {
+    anomalies: flags.isEnabled('anomalies') && {
       anomaliesWebhookUrl: env.optionalString('ANOMALIES_DISCORD_WEBHOOK_URL'),
       anomaliesMinDuration: env.integer(
         'ANOMALIES_MIN_DURATION',

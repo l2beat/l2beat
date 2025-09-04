@@ -10,19 +10,19 @@ export function createAnomaliesModule({
   db,
   blockProcessors,
 }: ModuleDependencies): ApplicationModule | undefined {
-  if (!config.blockSync) {
+  if (!config.anomalies) {
     logger.info('Anomalies module disabled')
     return
   }
   logger = logger.tag({ feature: 'anomalies', module: 'anomalies' })
 
-  const anomaliesNotifier = config.discord.anomaliesWebhookUrl
+  const anomaliesNotifier = config.anomalies.anomaliesWebhookUrl
     ? new AnomalyNotifier(
         logger,
         clock,
-        new DiscordWebhookClient(config.discord.anomaliesWebhookUrl),
+        new DiscordWebhookClient(config.anomalies.anomaliesWebhookUrl),
         db,
-        config.discord.anomaliesMinDuration,
+        config.anomalies.anomaliesMinDuration,
       )
     : undefined
 
