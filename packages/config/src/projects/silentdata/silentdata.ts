@@ -1,19 +1,22 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { BADGES } from '../../common/badges'
+import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL2 } from '../../templates/underReview'
+import { opStackL2, PRIVATE_DA_PROVIDER } from '../../templates/opStack'
 
-export const silentData: ScalingProject = underReviewL2({
-  id: 'silentdata',
+const discovery = new ProjectDiscovery('silentdata')
+
+export const silentData: ScalingProject = opStackL2({
+  discovery,
+  genesisTimestamp: 1753442723, // from https://explorer-mainnet.rollup.silentdata.com/block/0
   capability: 'universal',
   addedAt: UnixTime(1753945535),
-  badges: [BADGES.DA.CustomDA, BADGES.Stack.OPStack, BADGES.VM.EVM],
+  overridingPurposes: ['Enterprise'],
+  daProvider: PRIVATE_DA_PROVIDER,
   display: {
     name: 'Silent Data',
     slug: 'silentdata',
     description:
-      'Silent Data is an OP Stack L2 combining programmable privacy with lightning-fast throughput, built for institutional scale and web3 innovation.',
-    purposes: ['Privacy'],
+      'Silent Data is an enterprise focused OP Stack L2 aiming to achieve privacy by not making transaction data available. It is built for institutional scale and web3 innovation.',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://silentdata.com'],
@@ -27,23 +30,4 @@ export const silentData: ScalingProject = underReviewL2({
       ],
     },
   },
-  proofSystem: {
-    type: 'Optimistic',
-  },
-  dataAvailability: undefined,
-  // no activity config due to no DA / rpc
-  escrows: [
-    {
-      address: EthereumAddress('0xCcd285b1ccf1cdaB36Da995B9fC68870E287694E'), // optiPortal
-      sinceTimestamp: UnixTime(1753442903),
-      tokens: ['ETH'],
-      chain: 'ethereum',
-    },
-    {
-      address: EthereumAddress('0xe97d73B0079e04f4ea4162b9173604a6213eF158'), // l1standardBridge
-      sinceTimestamp: UnixTime(1753442903),
-      tokens: '*',
-      chain: 'ethereum',
-    },
-  ],
 })

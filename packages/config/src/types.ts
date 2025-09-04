@@ -428,6 +428,7 @@ export type ProjectScalingPurpose =
   | 'RWA'
   | 'IoT'
   | 'Restaking'
+  | 'Enterprise'
 
 export type ProjectScalingStage =
   | StageNotApplicable

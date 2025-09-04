@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "silentdata",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xCcd285b1ccf1cdaB36Da995B9fC68870E287694E"]
+}
