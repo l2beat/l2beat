@@ -68,7 +68,7 @@ function logProjectsToDiscover(projects: string[], logger: Logger) {
 }
 
 function resolveProjects(projectQuery: string): string[] {
-  const entries = configReader.readAllDiscoveredProjects()
+  const entries = configReader.readAllConfiguredProjects()
 
   const isAddressPredicate = EthereumAddress.check(projectQuery)
   const predicate: Predicate = isAddressPredicate

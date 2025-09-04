@@ -49,8 +49,8 @@ export interface Config {
     readonly timeout: number
   }
   readonly da: DataAvailabilityTrackingConfig | false
-  readonly blockSync: BlockSyncModuleConfig | false
-  readonly discord: DiscordWebhookConfig
+  readonly blockSync: BlockSyncModuleConfig
+  readonly anomalies: AnomaliesConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -196,7 +196,7 @@ export interface DiscordConfig {
   readonly callsPerMinute: number
 }
 
-export interface DiscordWebhookConfig {
+export interface AnomaliesConfig {
   readonly anomaliesWebhookUrl?: string
   readonly anomaliesMinDuration: number
 }
@@ -272,5 +272,5 @@ export interface DataAvailabilityTrackingConfig {
 }
 
 export interface BlockSyncModuleConfig {
-  ethereumWsUrl: string
+  ethereumWsUrl?: string
 }

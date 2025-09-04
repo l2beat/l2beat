@@ -26,6 +26,8 @@ import type { BlockProcessor } from '../types'
 import type { AnomalyNotifier } from './AnomalyNotifier'
 
 export class RealTimeLivenessProcessor implements BlockProcessor {
+  chain = 'ethereum'
+
   private logger: Logger
   private trackedTxsConfig: TrackedTxsConfig
   private transfers: (TrackedTxLivenessConfig & {
