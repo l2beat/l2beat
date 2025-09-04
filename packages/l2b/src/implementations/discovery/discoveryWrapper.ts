@@ -4,6 +4,7 @@ import {
   type DiscoveryModuleConfig,
   type DiscoveryPaths,
   discover,
+  generateEntrypoints,
   getChainConfigs,
   modelPermissionsCommand,
   type TemplateService,
@@ -12,8 +13,8 @@ import { updateDiffHistory } from './updateDiffHistory'
 
 export interface Options {
   logger: Logger
+  configReader: ConfigReader
   description?: string
-  configReader?: ConfigReader
   templateService?: TemplateService
   paths?: DiscoveryPaths
   debug?: boolean
@@ -37,5 +38,13 @@ export async function discoverAndUpdateDiffHistory(
     options.description,
     config.overwriteCache,
     options.logger,
+  )
+  await generateEntrypoints(
+    options.configReader,
+    config.project,
+    options.logger,
+    {
+      updateOnly: true,
+    },
   )
 }
