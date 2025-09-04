@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2, PRIVATE_DA_PROVIDER } from '../../templates/opStack'
@@ -12,6 +13,10 @@ export const silentData: ScalingProject = opStackL2({
   addedAt: UnixTime(1753945535),
   overridingPurposes: ['Enterprise'],
   daProvider: PRIVATE_DA_PROVIDER,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'Silent Data',
     slug: 'silentdata',
