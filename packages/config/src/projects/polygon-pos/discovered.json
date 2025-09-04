@@ -1,7 +1,7 @@
 {
   "name": "polygon-pos",
-  "timestamp": 1756995205,
-  "configHash": "0x9bd4de84346c21ad5f26278fbf397dc6b9f8cc930f6e38efdb0becad41668dd2",
+  "timestamp": 1756995439,
+  "configHash": "0x1b9345e670dac1e44a407657afd83c439d437ae917989872cd0b488f9307d1b7",
   "entries": [
     {
       "address": "eth:0x06f2caFB5276B11bAA6679ABE49D5A5C0A911f5B",
@@ -3059,6 +3059,6 @@
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23290267 },
+  "usedBlockNumbers": { "ethereum": 23290286 },
   "permissionsConfigHash": "0x69fac3a807807bdaf4befd7e03c48082caa649600c4e9c1a31a82b47d22ea844"
 }
