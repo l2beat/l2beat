@@ -1,6 +1,6 @@
 {
   "name": "polygon-pos",
-  "timestamp": 1756994823,
+  "timestamp": 1756995205,
   "configHash": "0x9bd4de84346c21ad5f26278fbf397dc6b9f8cc930f6e38efdb0becad41668dd2",
   "entries": [
     {
@@ -144,7 +144,7 @@
       "sinceBlock": 10167763,
       "values": {
         "$immutable": true,
-        "counter": 3097977,
+        "counter": 3097981,
         "isOwner": false,
         "owner": "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -676,7 +676,7 @@
         "checkpointRewardDelta": 10,
         "currentEpoch": 87903,
         "currentValidatorSetSize": 104,
-        "currentValidatorSetTotalStake": "3392583088580261908973314193",
+        "currentValidatorSetTotalStake": "3392716333548774109853314193",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
@@ -720,7 +720,7 @@
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3392583088580261908973314193",
+          "amount": "3392716333548774109853314193",
           "stakerCount": 104
         },
         "validatorThreshold": 105,
@@ -3059,6 +3059,6 @@
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23290236 },
+  "usedBlockNumbers": { "ethereum": 23290267 },
   "permissionsConfigHash": "0x69fac3a807807bdaf4befd7e03c48082caa649600c4e9c1a31a82b47d22ea844"
 }
