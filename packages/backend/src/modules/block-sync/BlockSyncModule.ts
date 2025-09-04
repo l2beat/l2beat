@@ -1,7 +1,8 @@
-import { EventIndexer } from '../../tools/EventIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockIndexer } from './BlockIndexer'
+import { BlockNumberIndexer } from './BlockNumberIndexer'
+import { WsBlockNumberIndexer } from './WsBlockNumberIndexer'
 
 export function createBlockSyncModule({
   config,
@@ -10,8 +11,10 @@ export function createBlockSyncModule({
   providers,
   blockProcessors,
 }: ModuleDependencies): ApplicationModule | undefined {
-  if (!config.blockSync) {
-    logger.info('BlockSync module disabled')
+  if (blockProcessors.length === 0) {
+    // This module is special in that it is only created if other modules
+    // create some blockProcessors. Otherwise we don't need to initialize
+    // anything.
     return
   }
 
@@ -19,16 +22,22 @@ export function createBlockSyncModule({
 
   const indexerService = new IndexerService(db)
 
-  const eventIndexer = new EventIndexer(
-    config.blockSync.ethereumWsUrl,
-    'ethereum',
-    logger,
-  )
+  const blockNumberIndexer = config.blockSync.ethereumWsUrl
+    ? new WsBlockNumberIndexer(
+        config.blockSync.ethereumWsUrl,
+        'ethereum',
+        logger,
+      )
+    : new BlockNumberIndexer(
+        providers.block.getBlockProvider('ethereum'),
+        'ethereum',
+        logger,
+      )
 
   const blockIndexer = new BlockIndexer({
     logger,
     minHeight: 1,
-    parents: [eventIndexer],
+    parents: [blockNumberIndexer],
     blockProcessors,
     source: 'ethereum',
     mode: 'CONTINUOUS',
@@ -50,7 +59,7 @@ export function createBlockSyncModule({
       })
     }
 
-    eventIndexer.start()
+    blockNumberIndexer.start()
     blockIndexer.start()
   }
 
