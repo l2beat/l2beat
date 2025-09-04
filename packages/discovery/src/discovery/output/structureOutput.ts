@@ -10,6 +10,17 @@ import { hashJsonStable } from '../config/hashJsonStable'
 import type { StructureConfig } from '../config/StructureConfig'
 import type { EntryParameters, StructureOutput } from './types'
 
+export function generateStructureHash(config: StructureConfig): Hash256 {
+  // Exclude from configHash generation the following fields:
+  //   - .import - because imports modify the config, so hash will change if necessary.
+  //               Simply adding an import is not significant.
+  //   - .entrypoints - because otherwise any change in any project would
+  //                    require rediscovery of everything.
+  // TODO: find proper way of handling such situations
+  const { import: _i, entrypoints: _e, ...strippedConfig } = config
+  return hashJsonStable(strippedConfig)
+}
+
 export function getStructureOutput(
   config: StructureConfig,
   timestamp: UnixTime,
@@ -19,7 +30,7 @@ export function getStructureOutput(
   return withoutUndefinedKeys({
     name: config.name,
     timestamp,
-    configHash: hashJsonStable(config),
+    configHash: generateStructureHash(config),
     sharedModules: undefinedIfEmpty(config.sharedModules),
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
