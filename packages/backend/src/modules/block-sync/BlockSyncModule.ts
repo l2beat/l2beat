@@ -1,3 +1,4 @@
+import type { Indexer } from '@l2beat/uif'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockIndexer } from './BlockIndexer'
@@ -22,32 +23,42 @@ export function createBlockSyncModule({
 
   const indexerService = new IndexerService(db)
 
-  const blockNumberIndexer = config.blockSync.ethereumWsUrl
-    ? new WsBlockNumberIndexer(
-        config.blockSync.ethereumWsUrl,
-        'ethereum',
-        logger,
-      )
-    : new BlockNumberIndexer(
-        providers.block.getBlockProvider('ethereum'),
-        'ethereum',
-        logger,
-      )
+  const chains = blockProcessors
+    .map((x) => x.chain)
+    .filter((x, i, a) => a.indexOf(x) === i)
 
-  const blockIndexer = new BlockIndexer({
-    logger,
-    minHeight: 1,
-    parents: [blockNumberIndexer],
-    blockProcessors,
-    source: 'ethereum',
-    mode: 'CONTINUOUS',
-    blockProvider: providers.block.getBlockProvider('ethereum'),
-    logsProvider: providers.logs.getLogsProvider('ethereum'),
-    indexerService,
-  })
+  const indexers: Indexer[] = []
+  for (const chain of chains) {
+    const blockNumberIndexer =
+      chain === 'ethereum' && config.blockSync.ethereumWsUrl
+        ? new WsBlockNumberIndexer(
+            config.blockSync.ethereumWsUrl,
+            chain,
+            logger,
+          )
+        : new BlockNumberIndexer(
+            providers.block.getBlockProvider(chain),
+            chain,
+            logger,
+          )
+
+    const blockIndexer = new BlockIndexer({
+      logger,
+      minHeight: 1,
+      parents: [blockNumberIndexer],
+      blockProcessors: blockProcessors.filter((x) => x.chain === chain),
+      source: chain,
+      mode: 'CONTINUOUS',
+      blockProvider: providers.block.getBlockProvider(chain),
+      logsProvider: providers.logs.getLogsProvider(chain),
+      indexerService,
+    })
+
+    indexers.push(blockNumberIndexer)
+    indexers.push(blockIndexer)
+  }
 
   logger = logger.for('BlockSyncModule')
-
   const start = async () => {
     logger.info('Starting...')
 
@@ -59,8 +70,9 @@ export function createBlockSyncModule({
       })
     }
 
-    blockNumberIndexer.start()
-    blockIndexer.start()
+    for (const indexer of indexers) {
+      await indexer.start()
+    }
   }
 
   return { start }
