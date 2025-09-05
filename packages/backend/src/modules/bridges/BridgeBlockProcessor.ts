@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { type Block, EthereumAddress, type Log } from '@l2beat/shared-pure'
-import { logToViemLog } from '../../../scripts/bridges/utils/viem'
+import type { Log as ViemLog } from 'viem'
 import type { BlockProcessor } from '../types'
 import type { BridgeMatcher } from './BridgeMatcher'
 import type { BridgePlugin, LogToDecode, TxDetails } from './plugins/types'
@@ -76,4 +76,20 @@ function getLogsToDecode(chain: string, block: Block, logs: Log[]) {
   }
 
   return toDecode
+}
+
+function logToViemLog(log: Log): ViemLog {
+  return {
+    blockNumber: BigInt(log.blockNumber),
+    transactionHash: log.transactionHash as `0x${string}`,
+    address: log.address as `0x${string}`,
+    topics: log.topics as [`0x${string}`, ...`0x${string}`[]] | [],
+    data: log.data as `0x${string}`,
+    logIndex: log.logIndex,
+
+    // Unsupported values for now
+    blockHash: 'UNSUPPORTED' as `0x${string}`,
+    transactionIndex: -1,
+    removed: false,
+  }
 }
