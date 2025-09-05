@@ -16,7 +16,11 @@ export const okto: ScalingProject = upcomingL2({
     links: {
       websites: ['https://okto.tech/'],
       documentation: ['https://docsv2.okto.tech/docs'],
-      socialMedia: ['https://x.com/okto_web3'],
+      repositories: ['https://github.com/okto-hq'],
+      socialMedia: [
+        'https://x.com/okto_web3',
+        'https://discord.gg/okto-916349620383252511',
+      ],
     },
   },
   ecosystemInfo: {
