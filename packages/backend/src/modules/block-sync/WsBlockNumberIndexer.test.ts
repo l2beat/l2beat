@@ -1,15 +1,20 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect } from 'earl'
-import { EventIndexer } from './EventIndexer'
-import { MockWebSocket } from './test/MockWebSocket'
+import { MockWebSocket } from '../../tools/test/MockWebSocket'
+import { WsBlockNumberIndexer } from './WsBlockNumberIndexer'
 
-describe(EventIndexer.prototype.start.name, () => {
+describe(WsBlockNumberIndexer.prototype.start.name, () => {
   it('should tick with latest block number from event', async () => {
     const mockWebSocket = new MockWebSocket()
 
-    const indexer = new EventIndexer('url', 'source', Logger.SILENT, () => {
-      return mockWebSocket.mockObject
-    })
+    const indexer = new WsBlockNumberIndexer(
+      'url',
+      'source',
+      Logger.SILENT,
+      () => {
+        return mockWebSocket.mockObject
+      },
+    )
     await indexer.start()
 
     let blockNumber = 123456

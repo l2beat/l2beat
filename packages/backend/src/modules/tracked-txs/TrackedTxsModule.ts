@@ -1,17 +1,9 @@
-import type { Logger } from '@l2beat/backend-tools'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import partition from 'lodash/partition'
-import type { Config } from '../../config'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import type { Peripherals } from '../../peripherals/Peripherals'
-import type { Providers } from '../../providers/Providers'
-import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import type {
-  ApplicationModule,
-  ApplicationModuleWithIndexer,
-} from '../ApplicationModule'
+import type { ApplicationModule, ModuleDependencies } from '../types'
 import { L2CostsAggregatorIndexer } from './modules/l2-costs/indexers/L2CostsAggregatorIndexer'
 import { L2CostsPricesIndexer } from './modules/l2-costs/indexers/L2CostsPricesIndexer'
 import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
@@ -22,12 +14,10 @@ import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 
 export function createTrackedTxsModule(
-  config: Config,
-  logger: Logger,
-  peripherals: Peripherals,
-  providers: Providers,
-  clock: Clock,
-): ApplicationModuleWithIndexer<TrackedTxsIndexer> | undefined {
+  deps: ModuleDependencies,
+): ApplicationModule | undefined {
+  let { config, logger, peripherals, providers, clock } = deps
+
   if (!config.trackedTxsConfig) {
     logger.info('TrackedTxsModule disabled')
     return
@@ -68,8 +58,8 @@ export function createTrackedTxsModule(
     (project) => project.configurations,
   )
 
-  const livenessModule = createLivenessModule(config, logger, peripherals)
-  const l2costsModule = createL2CostsModule(config, logger, peripherals)
+  const livenessModule = createLivenessModule(deps)
+  const l2costsModule = createL2CostsModule(deps)
 
   const subModules: (ApplicationModule | undefined)[] = [
     livenessModule,
@@ -171,6 +161,5 @@ export function createTrackedTxsModule(
 
   return {
     start,
-    indexer: trackedTxsIndexer,
   }
 }

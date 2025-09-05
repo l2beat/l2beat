@@ -1,7 +1,7 @@
 {
   "name": "publicgoodsnetwork",
   "timestamp": 1756214657,
-  "configHash": "0xca1451617930be42ffc74ef2b99980275329a4c046fe832fe325c261db06b5c6",
+  "configHash": "0x83a27c1511f6206d693834be0bc62ad7fe2812cabd858bc17366352ef65fc4b4",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

@@ -1,5 +1,5 @@
 {
-  "import": ["globalTokens.jsonc"],
+  "import": ["globalTokens.jsonc", "globalEntrypoints.jsonc"],
   "categories": {
     "core": {
       "name": "Local Infrastructure",

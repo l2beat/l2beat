@@ -1,12 +1,7 @@
-import type { Logger } from '@l2beat/backend-tools'
 import type { AdjustCount } from '@l2beat/config'
-import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Config } from '../../config'
-import type { Providers } from '../../providers/Providers'
-import type { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import type { ApplicationModule } from '../ApplicationModule'
+import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
@@ -17,13 +12,13 @@ import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { DayTxsCountService } from './services/txs/DayTxsCountService'
 import { SlotTxsCountService } from './services/txs/SlotTxsCountService'
 
-export function initActivityModule(
-  config: Config,
-  logger: Logger,
-  clock: Clock,
-  providers: Providers,
-  database: Database,
-): ApplicationModule | undefined {
+export function initActivityModule({
+  config,
+  logger,
+  db: database,
+  clock,
+  providers,
+}: ModuleDependencies): ApplicationModule | undefined {
   if (!config.activity) {
     logger.info('Activity module disabled')
     return

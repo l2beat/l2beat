@@ -1,14 +1,14 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { RootIndexer } from '@l2beat/uif'
 import { type RawData, WebSocket } from 'ws'
-import { NewHeadsEvent } from './types'
+import { NewHeadsEvent } from '../../tools/types'
 
-export class EventIndexer extends RootIndexer {
+export class WsBlockNumberIndexer extends RootIndexer {
   private blockNumber = 0
   private reconnectTimeout: NodeJS.Timeout | undefined = undefined
 
   constructor(
-    private readonly url: string,
+    url: string,
     source: string,
     logger: Logger,
     // we need to be able to mock WebSocket in tests

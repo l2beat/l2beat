@@ -90,6 +90,17 @@ export class DiscoveryEngine {
 
       await Promise.all(
         leftToAnalyze.map(async ({ address, templates }) => {
+          const sharedItem = sharedModuleIndex[address]
+          if (sharedItem) {
+            resolved[address.toString()] = {
+              name: sharedItem.name,
+              type: 'Reference',
+              address: sharedItem.address,
+              targetType: sharedItem.type,
+              targetProject: sharedItem.project,
+            }
+            return
+          }
           const skipReason = shouldSkip(
             address,
             config,
@@ -115,6 +126,7 @@ export class DiscoveryEngine {
             provider,
             address,
             makeEntryStructureConfig(config, address),
+            config.entrypoints,
             templates,
           )
           resolved[address.toString()] = analysis

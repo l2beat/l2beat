@@ -19,13 +19,15 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { Config, TrackedTxsConfig } from '../../../config/Config'
-import { isChainIdMatching } from '../../tracked-txs/utils/isChainIdMatching'
-import { isProgramHashProven } from '../../tracked-txs/utils/isProgramHashProven'
-import type { AnomalyNotifier } from '../notifiers/AnomalyNotifier'
+import type { Config, TrackedTxsConfig } from '../../config/Config'
+import { isChainIdMatching } from '../tracked-txs/utils/isChainIdMatching'
+import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
+import type { AnomalyNotifier } from './AnomalyNotifier'
 
 export class RealTimeLivenessProcessor implements BlockProcessor {
+  chain = 'ethereum'
+
   private logger: Logger
   private trackedTxsConfig: TrackedTxsConfig
   private transfers: (TrackedTxLivenessConfig & {
@@ -55,7 +57,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     this.mapConfigurations(config.trackedTxsConfig)
   }
 
-  async init() {
+  async start() {
     await this.deleteForArchivedProjects()
   }
 

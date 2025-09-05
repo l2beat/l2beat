@@ -1,7 +1,7 @@
 {
   "name": "apex",
   "timestamp": 1753200107,
-  "configHash": "0x0f7e61fa2ea2c8dcce728126f5847622ca2e9437161344907fff2ca0ca8570a2",
+  "configHash": "0x642e49ddb0c8e5eefa09cc191ac32ce8751b09caba6315d2967a61c3aa2b0e3a",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -113,6 +113,13 @@
           }
         }
       ]
+    },
+    {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "address": "eth:0x4F753A937318A64b2867b16a55f5aea83A4C44dB",
@@ -1360,5 +1367,5 @@
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
   "usedBlockNumbers": { "ethereum": 22975778 },
-  "permissionsConfigHash": "0xf59eaf475e3d59b216427f6fd0f76cf8354e8dc7bfd33e34549042ea29600682"
+  "permissionsConfigHash": "0x51d0c069f3a382afcd94612deb8d8dfd39375c1676565b3c1e9d03f380ccc9ea"
 }

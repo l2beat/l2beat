@@ -1,7 +1,7 @@
 {
   "name": "sxt",
   "timestamp": 1753944351,
-  "configHash": "0x62a02955d9802ab2b0151e8c8521e372196ed7b2dbf06b8f9863472bbd614f2e",
+  "configHash": "0x9ff7c6eaaf1d51c59f371822ce177e0a579d06eb686a29db965f8416ad7d417e",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -43,6 +43,13 @@
           "role": ".tokenMultiplierSetter"
         }
       ]
+    },
+    {
+      "name": "BridgeHub",
+      "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0x34b6Ca118e1e665Ff4583c39615d864aD2C19c7A",
@@ -111,6 +118,13 @@
       "address": "eth:0x5CA3F8EEBa12D83408fc097c2dAd79212456F20F",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "RollupL1DAValidator",
+      "address": "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "name": "zkVmDiamond",
@@ -497,6 +511,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "ChainTypeManager",
+      "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "name": "ChainAdminOwnable",
       "address": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD",
       "type": "Contract",
@@ -573,6 +594,19 @@
           "role": ".validatorsVTL"
         }
       ]
+    },
+    {
+      "name": "ProtocolUpgradeHandler",
+      "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
     }
   ],
   "abis": {
@@ -967,5 +1001,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23037387 },
-  "permissionsConfigHash": "0xc3ef68eaac80b9bb762fb0d3da5381d8bfcd4f56e6c7986a62b3153938ded40a"
+  "permissionsConfigHash": "0x98c6bd98f1ee9aea76cd8f4ee8baa00cbdd59fd6a596a10579d046f87e6478b9"
 }

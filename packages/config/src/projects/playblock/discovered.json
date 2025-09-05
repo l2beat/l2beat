@@ -1,7 +1,7 @@
 {
   "name": "playblock",
   "timestamp": 1742892328,
-  "configHash": "0x3cf4350a4eb5bd3c07281327fc1668f787d4172e74b2a8abf6638404f9ea8d61",
+  "configHash": "0xea6e2c9ef740d9820ac12ed5e841646824c587970232c670b649541cfb524763",
   "entries": [
     {
       "name": "RollupProxy",

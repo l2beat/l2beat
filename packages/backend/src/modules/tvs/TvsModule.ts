@@ -1,14 +1,9 @@
-import type { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
-import type { Database } from '@l2beat/database'
 import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
-import type { Config } from '../../config'
-import type { Providers } from '../../providers/Providers'
-import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import type { ApplicationModule } from '../ApplicationModule'
+import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockTimestampIndexer } from './indexers/BlockTimestampIndexer'
 import { CirculatingSupplyAmountIndexer } from './indexers/CirculatingSupplyAmountIndexer'
 import { OnchainAmountIndexer } from './indexers/OnchainAmountIndexer'
@@ -25,13 +20,13 @@ import { getTokenSyncRange } from './tools/getTokenSyncRange'
 import { SyncOptimizer } from './tools/SyncOptimizer'
 import { isOnchainAmountConfig } from './types'
 
-export function initTvsModule(
-  config: Config,
-  logger: Logger,
-  database: Database,
-  providers: Providers,
-  clock: Clock,
-): ApplicationModule | undefined {
+export function initTvsModule({
+  config,
+  logger,
+  db,
+  providers,
+  clock,
+}: ModuleDependencies): ApplicationModule | undefined {
   if (!config.tvs) {
     logger.info('TvsModule disabled')
     return
@@ -52,7 +47,7 @@ export function initTvsModule(
   })
 
   const syncOptimizer = new SyncOptimizer(clock)
-  const indexerService = new IndexerService(database)
+  const indexerService = new IndexerService(db)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock, {
     onTick: async (targetTimestamp) => {
@@ -75,7 +70,7 @@ export function initTvsModule(
         recordIds.push(project.projectId)
       }
 
-      await database.syncMetadata.upsertMany(
+      await db.syncMetadata.upsertMany(
         recordIds.map((id) => ({
           feature: 'tvs',
           id,
@@ -98,7 +93,7 @@ export function initTvsModule(
     })),
     priceProvider: providers.price,
     syncOptimizer,
-    db: database,
+    db: db,
   })
 
   const amountIndexers = new Map<string, Indexer>()
@@ -118,7 +113,7 @@ export function initTvsModule(
       })),
     circulatingSupplyProvider: providers.circulatingSupply,
     syncOptimizer,
-    db: database,
+    db: db,
   })
   amountIndexers.set(
     CirculatingSupplyAmountIndexer.SOURCE(),
@@ -141,7 +136,7 @@ export function initTvsModule(
           properties: block,
         },
       ],
-      db: database,
+      db: db,
       logger,
     })
     blockTimestampIndexers.set(block.chainName, blockTimestampIndexer)
@@ -169,7 +164,7 @@ export function initTvsModule(
         maxHeight: c.untilTimestamp ?? null,
         properties: c,
       })),
-      db: database,
+      db: db,
       logger,
     })
     amountIndexers.set(chain, amountIndexer)
@@ -178,7 +173,7 @@ export function initTvsModule(
   const valueIndexers: Indexer[] = []
 
   for (const project of config.tvs.projects) {
-    const dbStorage = new DBStorage(database, logger)
+    const dbStorage = new DBStorage(db, logger)
     const valueService = new ValueService(dbStorage, logger)
 
     const amountSources = project.amountSources.map((source) => {
@@ -205,7 +200,7 @@ export function initTvsModule(
           properties: t,
         }
       }),
-      db: database,
+      db: db,
       logger,
     })
 
@@ -237,7 +232,7 @@ export function initTvsModule(
           properties: { project: project.projectId },
         },
       ],
-      db: database,
+      db: db,
       logger,
     })
 

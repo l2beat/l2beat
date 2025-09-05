@@ -27,6 +27,7 @@ import { hashJsonStable } from '../config/hashJsonStable'
 import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
 import { StructureContract } from '../config/StructureConfig'
+import { generateStructureHash } from '../output/structureOutput'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
@@ -278,7 +279,8 @@ export class TemplateService {
       }
     }
 
-    if (discovery.configHash !== hashJsonStable(config.structure)) {
+    const structureHash = generateStructureHash(config.structure)
+    if (discovery.configHash !== structureHash) {
       return 'project config or used template has changed'
     }
 

@@ -1,4 +1,5 @@
 import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
+import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { ContractValueType } from '../config/ColorConfig'
 import type { Permission } from '../config/PermissionConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
@@ -78,7 +79,7 @@ export interface ContractCategory {
 }
 
 export type StructureEntry = {
-  type: 'Contract' | 'EOA' | 'Reference'
+  type: Analysis['type']
   address: ChainSpecificAddress
   name?: string
   implementationNames?: Record<ChainSpecificAddress, string>
@@ -92,6 +93,8 @@ export type StructureEntry = {
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
   usedTypes?: DiscoveryCustomType[]
+  targetType?: Analysis['type']
+  targetProject?: string
 }
 
 export type ColorEntry = {

@@ -428,6 +428,7 @@ export type ProjectScalingPurpose =
   | 'RWA'
   | 'IoT'
   | 'Restaking'
+  | 'Enterprise'
 
 export type ProjectScalingStage =
   | StageNotApplicable
@@ -1007,7 +1008,7 @@ export interface ProjectPermissionedAccount {
   url: string
   address: ChainSpecificAddress
   isVerified: boolean
-  type: 'EOA' | 'Contract'
+  type: 'EOA' | 'Contract' | 'Reference'
 }
 
 export interface ProjectContracts {
