@@ -45,6 +45,7 @@ export async function discoverAndUpdateDiffHistory(
     options.logger,
     {
       updateOnly: true,
+      keepLegacy: true,
     },
   )
 }

@@ -74,7 +74,19 @@ export const Entrypoint = v.object({
   name: v.string().optional(),
   type: v.string(),
   project: v.string(),
+  isLegacy: v.boolean().optional(),
 })
+
+export const _EntrypointsFile = {
+  entrypoints: v
+    .record(
+      v.string().transform((v) => ChainSpecificAddress(v)),
+      Entrypoint,
+    )
+    .optional(),
+}
+export const EntrypointsFile = v.object(_EntrypointsFile)
+export type EntrypointsFile = v.infer<typeof EntrypointsFile>
 
 export type StructureConfig = v.infer<typeof StructureConfig>
 export const _StructureConfig = {
@@ -94,13 +106,9 @@ export const _StructureConfig = {
     .optional(),
   sharedModules: v.array(v.string()).default([]),
   types: v.record(v.string(), DiscoveryCustomType).optional(),
-  entrypoints: v
-    .record(
-      v.string().transform((v) => ChainSpecificAddress(v).toString()),
-      Entrypoint,
-    )
-    .optional(),
+  ..._EntrypointsFile,
 }
+
 // NOTE(radomski): Big hack, shouldn't be like this
 export const StructureConfig = v.object({
   name: v.string().check((v) => v.length >= 1),
