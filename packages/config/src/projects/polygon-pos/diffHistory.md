@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x64ed115d330b7770ecb5e0b48e454e8407721ead
+
+# Diff at Thu, 04 Sep 2025 14:18:29 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d743f6902f92e327733e86997dce78d4197e750f block: 1756124354
+- current timestamp: 1756995439
+
+## Description
+
+- [ERC20Predicate](https://disco.l2beat.com/diff/eth:0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB/eth:0x1F4c1E0afBeb5b5B86d7722549274434b29884F6): added a `migrateTokens` function that can be called by managers. [Here](https://app.blocksec.com/explorer/tx/eth/0x3b4c28808336605520ed240fee7ef8e7dd2cfd0f0509082cd9c099fd60c6e0f1) an example of a migration of a token (USDT). By looking at the example, a "migration" in this context means moving out funds from the bridge through an arbitrary call to the token contract, with the goal of migrating canonical tokens to a an external or native version.
+- The ERC20Predicate manager is the "RootChainManager" contract, so its implementation has been updated as well to allow for token migration. Upgrade [here](https://disco.l2beat.com/diff/eth:0x639f13D5f30B47c792b6851238c05D0b623C77DE/eth:0xF0235dCa8fb0D3999685724dCBB9DD00c5d62DFa). A "migration manager" role has been added. Only USDT can be migrated as it is hardcoded and the `updateTokenMigrationStatus` function checks that the `rootToken` is USDT. The migrator is ofc the PolygonMultisig.
+
+## Watched changes
+
+```diff
+    contract ERC20Predicate (eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xdb2c7a7688883aa90817563334c9613daee6ccad8d086ff273d6b484340444ab"
++        "0xf159b16a5d3a5070602bdcce59b317b67354f3e0daade4bd67d39fc4b7e11476"
+      values.$implementation:
+-        "eth:0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
++        "eth:0x1F4c1E0afBeb5b5B86d7722549274434b29884F6"
+      values.$pastUpgrades.4:
++        ["2025-08-26T13:11:11.000Z","0xfd9678899c41baea6024682e80529ab4971f2ec9c3a36bd074d15e7a3a095718",["eth:0x1F4c1E0afBeb5b5B86d7722549274434b29884F6"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.implementation:
+-        "eth:0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
++        "eth:0x1F4c1E0afBeb5b5B86d7722549274434b29884F6"
+      implementationNames.eth:0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB:
+-        "ERC20Predicate"
+      implementationNames.eth:0x1F4c1E0afBeb5b5B86d7722549274434b29884F6:
++        "ERC20Predicate"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        105
++        104
+    }
+```
+
+```diff
+    contract RootChainManager (eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      template:
+-        "polygonposbridge/RootChainManager"
++        "polygonposbridge/RootChainManagerMigrator"
+      sourceHashes.1:
+-        "0x0f4d3951fb826a28e98a0923400b0173d459b26141d47b08227689849ce11141"
++        "0x4d461641f48e1fc41d08d5f5672126575c15044e75679ad3abcd25a23d4575d1"
+      description:
+-        "Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router."
+      values.$implementation:
+-        "eth:0x639f13D5f30B47c792b6851238c05D0b623C77DE"
++        "eth:0xF0235dCa8fb0D3999685724dCBB9DD00c5d62DFa"
+      values.$pastUpgrades.12:
++        ["2025-08-26T13:11:11.000Z","0xfd9678899c41baea6024682e80529ab4971f2ec9c3a36bd074d15e7a3a095718",["eth:0xF0235dCa8fb0D3999685724dCBB9DD00c5d62DFa"]]
+      values.$upgradeCount:
+-        12
++        13
+      values.implementation:
+-        "eth:0x639f13D5f30B47c792b6851238c05D0b623C77DE"
++        "eth:0xF0235dCa8fb0D3999685724dCBB9DD00c5d62DFa"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MAPPER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4"]},"MIGRATION_MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]}}
+      values.MIGRATION_MANAGER_ROLE:
++        "0x739a51874800ca2ea551f6738888eda63da7b0ffed906ab18243498239604e96"
+      values.migrator:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.USDT_ADDRESS:
++        "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      implementationNames.eth:0x639f13D5f30B47c792b6851238c05D0b623C77DE:
+-        "RootChainManager"
+      implementationNames.eth:0xF0235dCa8fb0D3999685724dCBB9DD00c5d62DFa:
++        "RootChainManager"
+    }
+```
+
+```diff
+    contract PolygonMultisig (eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","description":"can migrate the canonically bridged USDT token to a native or external version.","role":".migrator"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ERC20Predicate/ERC20Predicate.sol              |  28 +
+ .../polygon-pos/.flat/GnosisSafe/GnosisSafe.sol    | 953 +++++++++++++++++++++
+ .../polygon-pos/.flat/GnosisSafe/Proxy.p.sol       |  39 +
+ .../RootChainManager/RootChainManager.sol          |  95 +-
+ 4 files changed, 1113 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x6dfacb46f648278740b92b158a7d79710f12972f
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
