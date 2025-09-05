@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type TokenValueRecord, toRecord, toRow } from './entity'
+import { sql } from 'kysely'
 
 export class TokenValueRepository extends BaseRepository {
   async insertMany(records: TokenValueRecord[]) {
@@ -153,5 +154,40 @@ export class TokenValueRepository extends BaseRepository {
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('TokenValue').executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getTvsChartBySource(projectIds: string[]): Promise<
+    {
+      timestamp: string
+      source: string
+      value: string | number | bigint
+    }[]
+  > {
+    const timePart = sql`${sql.ref('TokenValue.timestamp')}::time`
+
+    const rows = await this.db
+      .selectFrom('TokenValue')
+      .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
+      .select([
+        'TokenValue.timestamp',
+        'TokenMetadata.source',
+        this.db.fn.sum('valueForSummary').as('value'),
+      ])
+      .where(timePart, '=', sql`'00:00:00'::time`)
+      .where(
+        'timestamp',
+        '>=',
+        UnixTime.toDate(UnixTime.now() - UnixTime.DAY * 365),
+      )
+      .where('TokenMetadata.projectId', 'in', projectIds)
+      .groupBy(['TokenValue.timestamp', 'TokenMetadata.source'])
+      .orderBy('TokenValue.timestamp', 'desc')
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: row.timestamp.toISOString(),
+      source: row.source,
+      value: row.value,
+    }))
   }
 }
