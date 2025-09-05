@@ -1,16 +1,18 @@
 {
   "name": "stargatev2",
-  "timestamp": 1756805760,
-  "configHash": "0x442b0cdc176dda902c24e7f505c7420c78b959c3829bc63799d88608d3926cca",
+  "timestamp": 1757064416,
+  "configHash": "0x22c5661e736f57c319b2a084096d00980172fef41e2b01d30b0ed08247d2ea54",
   "entries": [
     {
       "name": "TokenMessagingArbitrum",
       "address": "arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837025,
       "sinceBlock": 215658770,
       "values": {
@@ -22,7 +24,7 @@
         "MSG_TYPE_TAXI": 1,
         "oApp": "arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
-        "owner": "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d",
+        "owner": "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150",
         "planner": "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
           "arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3",
@@ -87,15 +89,15 @@
         "localEid": 30110,
         "lpToken": "arb1:0x993614e1c8c9C5AbE49462Ce5702431978Fd767F",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d",
-        "plannerFee": "685812819671559608",
-        "poolBalance": "729283748000000000000",
+        "owner": "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150",
+        "plannerFee": "696575622443380569",
+        "poolBalance": "930468794000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "arb1:0x0000000000000000000000000000000000000000",
-        "treasuryFee": 82048343,
-        "tvl": "1295358532000000000000"
+        "treasuryFee": 82324281,
+        "tvl": "140134791000000000000"
       },
       "implementationNames": {
         "arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F": "StargatePoolNative"
@@ -139,15 +141,15 @@
         "localEid": 30110,
         "lpToken": "arb1:0x8D66Ff1845b1baCC6E87D867CA4680d05A349cA8",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d",
-        "plannerFee": "920059728536904663",
-        "poolBalance": 825226007593,
+        "owner": "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150",
+        "plannerFee": "929073361628200190",
+        "poolBalance": 539510367281,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "arb1:0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
-        "treasuryFee": 82793195115,
-        "tvl": 590377067304
+        "treasuryFee": 83423242968,
+        "tvl": 357724911453
       },
       "implementationNames": {
         "arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": "StargatePoolMigratable"
@@ -195,15 +197,15 @@
         "localEid": 30110,
         "lpToken": "arb1:0x6Ea313859A5D9F6fF2a68f529e6361174bFD2225",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d",
-        "plannerFee": "506710913415616480",
-        "poolBalance": 8988433980552,
+        "owner": "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150",
+        "plannerFee": "512680707668919106",
+        "poolBalance": 13861310561083,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-        "treasuryFee": 280088570027,
-        "tvl": 183656032564
+        "treasuryFee": 286743843930,
+        "tvl": 171787289074
       },
       "implementationNames": {
         "arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": "StargatePoolUSDC"
@@ -246,15 +248,15 @@
         "localEid": 30184,
         "lpToken": "base:0x53983F31E8E0D0c3Fd0b8d85654989A1336317d7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "base:0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109",
-        "plannerFee": "567049690376754794",
-        "poolBalance": 12909740668965,
+        "owner": "base:0x7c20d58Cb9f3F3CF73b79a3fBDA3fFf412D7D82D",
+        "plannerFee": "589197853799763526",
+        "poolBalance": 14598161904190,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-        "treasuryFee": 207966317124,
-        "tvl": 118393920726
+        "treasuryFee": 211247344352,
+        "tvl": 115775952462
       },
       "implementationNames": {
         "base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26": "StargatePoolUSDC"
@@ -264,10 +266,12 @@
       "name": "TokenMessagingBase",
       "address": "base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837023,
       "sinceBlock": 15023838,
       "values": {
@@ -279,7 +283,7 @@
         "MSG_TYPE_TAXI": 1,
         "oApp": "base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
-        "owner": "base:0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109",
+        "owner": "base:0x7c20d58Cb9f3F3CF73b79a3fBDA3fFf412D7D82D",
         "planner": "base:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
           "base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26",
@@ -406,15 +410,15 @@
         "localEid": 30184,
         "lpToken": "base:0x98fB8522d891F43B771e2d27367b41Ba138D0B80",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "base:0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109",
-        "plannerFee": "530390753827938592",
-        "poolBalance": "995568107000000000000",
+        "owner": "base:0x7c20d58Cb9f3F3CF73b79a3fBDA3fFf412D7D82D",
+        "plannerFee": "551014775484553679",
+        "poolBalance": "2345083487000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "base:0x0000000000000000000000000000000000000000",
-        "treasuryFee": 96101130,
-        "tvl": "366245725000000000000"
+        "treasuryFee": 97137682,
+        "tvl": "364513443000000000000"
       },
       "implementationNames": {
         "base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7": "StargatePoolNative"
@@ -444,7 +448,7 @@
         "$immutable": true,
         "admin": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "getTransferGasLimit": 2300,
-        "owner": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
+        "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
       },
       "implementationNames": {
         "eth:0x1041D127b2d4BC700F0F563883bC689502606918": "Treasurer"
@@ -456,6 +460,15 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "description": "Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+          "description": "execute Stargate messages sent via LayerZero at the destination.",
+          "role": ".getExecutorConfig"
+        }
+      ],
       "sinceTimestamp": 1706308043,
       "sinceBlock": 19093746,
       "values": {
@@ -489,18 +502,19 @@
       "name": "EndpointV2",
       "address": "eth:0x1a44076050125825900e736c501f859c50fE728c",
       "type": "Contract",
+      "template": "layerzero/EndpointV2",
       "sourceHashes": [
         "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
       ],
       "proxyType": "immutable",
-      "description": "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.",
+      "description": "A contract that is part of the LayerZero messaging protocol. The Stargate OApp owner can configure verification (MessageLib) and execution settings here.",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
         "$immutable": true,
         "blockedLibrary": "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
-        "delegatesCreditMessaging": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "delegatesTokenMessaging": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705",
+        "delegatesCreditMessaging": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
+        "delegatesTokenMessaging": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "eid": 30101,
         "EMPTY_PAYLOAD_HASH": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getReceiveLibrary": {
@@ -535,10 +549,12 @@
       "name": "BlockedMessageLib",
       "address": "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
       "type": "Contract",
+      "template": "layerzero/BlockedMessageLib",
       "sourceHashes": [
         "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
       ],
       "proxyType": "immutable",
+      "description": "Simple LayerZero library that blocks all messages if configured.",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -595,14 +611,14 @@
         "localEid": 30101,
         "lpToken": "eth:0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705",
+        "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "plannerFee": "22609067955088607",
-        "poolBalance": "296645630000000000000",
+        "poolBalance": "483329450000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "eth:0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 445127,
+        "treasuryFee": 408856,
         "tvl": "932764979000000000000"
       },
       "implementationNames": {
@@ -623,29 +639,6 @@
       "address": "eth:0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "StargateMultiRewarder",
-      "address": "eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3ba9eb19565a1f8da529d4ad153c9ed3c8e64a7f5912a29c4aee7b7fc14d3cda"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1716837491,
-      "sinceBlock": 19963242,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "rewardTokens": [
-          "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
-          "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
-        ],
-        "staking": "eth:0xFF551fEDdbeDC0AeE764139cCD9Cb644Bb04A6BD"
-      },
-      "implementationNames": {
-        "eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881": "StargateMultiRewarder"
-      }
     },
     {
       "address": "eth:0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c",
@@ -683,6 +676,14 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1647498793,
       "sinceBlock": 14402408,
@@ -702,7 +703,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 1027,
+        "nonce": 1028,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -714,10 +715,12 @@
       "name": "CreditMessaging",
       "address": "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
       "type": "Contract",
+      "template": "stargate/CreditMessaging",
       "sourceHashes": [
         "0xb151141227bb08ead5b1a7d464402bf23feaf60625a773cb8ced48745eb66fe6"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.",
       "sinceTimestamp": 1716837383,
       "sinceBlock": 19963233,
       "values": {
@@ -726,7 +729,7 @@
         "maxAssetId": 23,
         "oApp": "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
-        "owner": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705",
+        "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
           "eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7",
@@ -768,11 +771,12 @@
       "name": "TokenMessagingEthereum",
       "address": "eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
-      "description": "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837371,
       "sinceBlock": 19963232,
       "values": {
@@ -784,7 +788,7 @@
         "MSG_TYPE_TAXI": 1,
         "oApp": "eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
-        "owner": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705",
+        "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "queueCapacity": 512
@@ -802,10 +806,12 @@
       "name": "ReadLib1002",
       "address": "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
       "type": "Contract",
+      "template": "layerzero/ReadLib1002",
       "sourceHashes": [
         "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
       ],
       "proxyType": "immutable",
+      "description": "LayerZero library used to read state from remote blockchains.",
       "sinceTimestamp": 1730488859,
       "sinceBlock": 21094853,
       "values": {
@@ -868,15 +874,15 @@
         "localEid": 30101,
         "lpToken": "eth:0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "830005952037656309",
-        "poolBalance": "7505164315000000000000",
+        "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
+        "plannerFee": "836618044221346467",
+        "poolBalance": "3582806223000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "eth:0x0000000000000000000000000000000000000000",
-        "treasuryFee": 5062532,
-        "tvl": "3149480277000000000000"
+        "treasuryFee": 5906744,
+        "tvl": "5242602834000000000000"
       },
       "implementationNames": {
         "eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": "StargatePoolNative"
@@ -945,6 +951,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x8A403992b0d9CA20f009063C7bE6F20814Cb8AEB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Stargate Verifier",
       "address": "eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18",
       "type": "Contract",
@@ -952,6 +963,15 @@
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
       "proxyType": "immutable",
+      "description": "One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "description": "verify Stargate messages sent via LayerZero.",
+          "role": ".getUlnConfig"
+        }
+      ],
       "sinceTimestamp": 1716344279,
       "sinceBlock": 19922400,
       "values": {
@@ -1008,38 +1028,18 @@
         "localEid": 30101,
         "lpToken": "eth:0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "165055967469080591",
-        "poolBalance": 4135292919611,
+        "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
+        "plannerFee": "165304344392065179",
+        "poolBalance": 4253639834897,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 224896961170,
+        "treasuryFee": 226595050804,
         "tvl": 126548850639
       },
       "implementationNames": {
         "eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973": "StargatePoolMigratable"
-      }
-    },
-    {
-      "name": "",
-      "address": "eth:0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
-          "role": "admin"
-        }
-      ],
-      "sinceTimestamp": 1687808651,
-      "sinceBlock": 17565746,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5": ""
       }
     },
     {
@@ -1075,6 +1075,15 @@
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
       "proxyType": "immutable",
+      "description": "One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "description": "verify Stargate messages sent via LayerZero.",
+          "role": ".getUlnConfig"
+        }
+      ],
       "sinceTimestamp": 1706489567,
       "sinceBlock": 19108732,
       "values": {
@@ -1097,11 +1106,12 @@
       "name": "SendUln302",
       "address": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
       "type": "Contract",
+      "template": "layerzero/SendUln302",
       "sourceHashes": [
         "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
       ],
       "proxyType": "immutable",
-      "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
+      "description": "Send Library used by LayerZero, defining the protocol/execution of sent messages.",
       "sinceTimestamp": 1706307839,
       "sinceBlock": 19093729,
       "values": {
@@ -1134,6 +1144,32 @@
       ],
       "proxyType": "immutable",
       "description": "Custom multisignature contract allowing offchain signing and execution on multiple target chains.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+          "description": "configure the default send/receive libraries used for verification, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
+          "description": "configure the settings of this library, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+          "description": "configure the settings of this library, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "description": "configure the settings of this library, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1748566235,
       "sinceBlock": 22592087,
@@ -1164,6 +1200,93 @@
       },
       "implementationNames": {
         "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478": "OneSig"
+      }
+    },
+    {
+      "name": "Stargate Multisig 2",
+      "address": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
+      "type": "Contract",
+      "template": "layerzero/OneSigMultisig",
+      "sourceHashes": [
+        "0x6a2feeb0055614ee29c746b6052e64dc677ffa602b25dfeb74cbf948bc6d9b74"
+      ],
+      "proxyType": "immutable",
+      "description": "Custom multisignature contract allowing offchain signing and execution on multiple target chains.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
+          "description": "set OApp delegate, planner and critical configurations.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
+          "description": "set OApp delegate and crosschain peers, manage assets and other critical configurations.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1755895787,
+      "sinceBlock": 23199114,
+      "values": {
+        "$immutable": true,
+        "$members": [
+          "eth:0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
+          "eth:0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
+          "eth:0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
+          "eth:0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
+          "eth:0x8A403992b0d9CA20f009063C7bE6F20814Cb8AEB",
+          "eth:0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
+        ],
+        "$threshold": 3,
+        "executorRequired": true,
+        "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
+        "LEAF_ENCODING_VERSION": 1,
+        "nonce": 0,
+        "ONE_SIG_ID": 30101,
+        "seed": "0x7fc77f9996dcec5457f6b2911fdeffc01f0fbc4e9ee1a4100979d004ea0709e6",
+        "totalExecutors": 1,
+        "totalSigners": 6,
+        "VERSION": "0.0.1"
+      },
+      "fieldMeta": {
+        "executorRequired": {
+          "description": "if true, only executor OR any signer can execute a correctly signed tx. else anyone can."
+        }
+      },
+      "implementationNames": {
+        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413": "OneSig"
       }
     },
     {
@@ -1203,15 +1326,15 @@
         "localEid": 30101,
         "lpToken": "eth:0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "842968944477371566",
-        "poolBalance": 38516751102461,
+        "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
+        "plannerFee": "843852550712890547",
+        "poolBalance": 31531195723207,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 349434391045,
-        "tvl": 718691183641
+        "treasuryFee": 352042466722,
+        "tvl": 718621183641
       },
       "implementationNames": {
         "eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7": "StargatePoolUSDC"
@@ -1221,11 +1344,12 @@
       "name": "ReceiveUln302",
       "address": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
       "type": "Contract",
+      "template": "layerzero/ReceiveUln302",
       "sourceHashes": [
         "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
       ],
       "proxyType": "immutable",
-      "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
+      "description": "Receive Library used by LayerZero, defining the validation of received messages.",
       "sinceTimestamp": 1706307863,
       "sinceBlock": 19093731,
       "values": {
@@ -1252,41 +1376,6 @@
       },
       "implementationNames": {
         "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": "ReceiveUln302"
-      }
-    },
-    {
-      "name": "PriceFeed",
-      "address": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1687808675,
-      "sinceBlock": 17565748,
-      "values": {
-        "$admin": "eth:0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
-        "$implementation": "eth:0x319AE539b5BA554b09A46791cdb88b10E4d8F627",
-        "$pastUpgrades": [
-          [
-            "2023-06-26T19:44:35.000Z",
-            "0xd7e8b45283a17ffe10a55914b49e6114acd56dedba1a154159a9b71e9f9205df",
-            ["eth:0xF641db6860FD5f6643D05bD75405a2586a63a141"]
-          ],
-          [
-            "2024-03-11T19:13:11.000Z",
-            "0xb0be4d7a78cc69d7a3609a84216cbf0bae5b0ade84c45b35c05dafda6c84faec",
-            ["eth:0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"]
-          ],
-          [
-            "2024-07-04T23:54:11.000Z",
-            "0x35c84fce2bd551b2e80f13f545f49c65ed2a20c3c2d46eecc10c825112a86ccc",
-            ["eth:0x319AE539b5BA554b09A46791cdb88b10E4d8F627"]
-          ]
-        ],
-        "$upgradeCount": 3
-      },
-      "implementationNames": {
-        "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "OptimizedTransparentUpgradeableProxy",
-        "eth:0x319AE539b5BA554b09A46791cdb88b10E4d8F627": ""
       }
     },
     {
@@ -1325,7 +1414,7 @@
         "localEid": 30101,
         "lpToken": "eth:0xF14EEe033D8b00101aB147F87cB238a2d3E74940",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705",
+        "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "plannerFee": 1573303374785334,
         "poolBalance": "8403571000000000000",
         "sharedDecimals": 6,
@@ -1340,22 +1429,17 @@
       }
     },
     {
-      "name": "",
-      "address": "eth:0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1716344279,
-      "sinceBlock": 19922400,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006": ""
-      }
-    },
-    {
       "address": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
+          "description": "send credits (asset claims) from pools on this chain to other pools.",
+          "role": ".planner"
+        }
+      ]
     },
     {
       "address": "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7",
@@ -1376,10 +1460,12 @@
       "name": "TokenMessagingLinea",
       "address": "linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837017,
       "sinceBlock": 4931061,
       "values": {
@@ -1391,7 +1477,7 @@
         "MSG_TYPE_TAXI": 1,
         "oApp": "linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
-        "owner": "linea:0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c",
+        "owner": "linea:0xD37bA986553f7ac25BdF9867A60b10ebf182E51e",
         "planner": "linea:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
           "linea:0x0000000000000000000000000000000000000000",
@@ -1456,15 +1542,15 @@
         "localEid": 30183,
         "lpToken": "linea:0x23A46eFDa973Bd4e97Ee84bAc87018537538D078",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "linea:0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c",
-        "plannerFee": "289455910015632299",
-        "poolBalance": "566216699000000000000",
+        "owner": "linea:0xD37bA986553f7ac25BdF9867A60b10ebf182E51e",
+        "plannerFee": "294291548677261080",
+        "poolBalance": "3954935088000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "linea:0x0000000000000000000000000000000000000000",
-        "treasuryFee": 37088100,
-        "tvl": "837045649000000000000"
+        "treasuryFee": 37543472,
+        "tvl": "721721109000000000000"
       },
       "implementationNames": {
         "linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075": "StargatePoolNative"
@@ -1518,15 +1604,15 @@
         "localEid": 30111,
         "lpToken": "oeth:0x9f58A79D81477130C0C6D74b96e1397db9765ab1",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
-        "plannerFee": "829067973208094379",
-        "poolBalance": 299051120274,
+        "owner": "oeth:0xec230013182261343F235B8c92b443f90A8A3c86",
+        "plannerFee": "829331026292859625",
+        "poolBalance": 302064852429,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "oeth:0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-        "treasuryFee": 24892987277,
-        "tvl": 292141215328
+        "treasuryFee": 24957668141,
+        "tvl": 281924752991
       },
       "implementationNames": {
         "oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD": "StargatePoolMigratable"
@@ -1569,15 +1655,15 @@
         "localEid": 30111,
         "lpToken": "oeth:0x8D66Ff1845b1baCC6E87D867CA4680d05A349cA8",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
-        "plannerFee": "346298302116733168",
-        "poolBalance": 2746725088469,
+        "owner": "oeth:0xec230013182261343F235B8c92b443f90A8A3c86",
+        "plannerFee": "347879312814033274",
+        "poolBalance": 3342672411378,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "oeth:0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
-        "treasuryFee": 51068697718,
-        "tvl": 203039181004
+        "treasuryFee": 51600134748,
+        "tvl": 189484843819
       },
       "implementationNames": {
         "oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": "StargatePoolUSDC"
@@ -1624,15 +1710,15 @@
         "localEid": 30111,
         "lpToken": "oeth:0x6Ea313859A5D9F6fF2a68f529e6361174bFD2225",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
-        "plannerFee": "954524315692846982",
-        "poolBalance": "734531590000000000000",
+        "owner": "oeth:0xec230013182261343F235B8c92b443f90A8A3c86",
+        "plannerFee": "965100897845213596",
+        "poolBalance": "702269284000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "oeth:0x0000000000000000000000000000000000000000",
-        "treasuryFee": 33509700,
-        "tvl": "1341995013000000000000"
+        "treasuryFee": 33566106,
+        "tvl": "1332445060000000000000"
       },
       "implementationNames": {
         "oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": "StargatePoolNative"
@@ -1642,10 +1728,12 @@
       "name": "TokenMessagingOptimism",
       "address": "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837031,
       "sinceBlock": 120619127,
       "values": {
@@ -1657,7 +1745,7 @@
         "MSG_TYPE_TAXI": 1,
         "oApp": "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
-        "owner": "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
+        "owner": "oeth:0xec230013182261343F235B8c92b443f90A8A3c86",
         "planner": "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
           "oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0",
@@ -1728,15 +1816,15 @@
         "localEid": 30214,
         "lpToken": "scr:0x1eA77149Dfd4C80A753aaa39AaFC22453aefcc99",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "scr:0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
-        "plannerFee": 3923687696461583,
-        "poolBalance": 3124256232584,
+        "owner": "scr:0xe46B47Be62785C20C6f3cb89f7043Ea045e6f88E",
+        "plannerFee": 7743495848009354,
+        "poolBalance": 2170796401665,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-        "treasuryFee": 38088330478,
-        "tvl": 87840748271
+        "treasuryFee": 38416272631,
+        "tvl": 87366562580
       },
       "implementationNames": {
         "scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4": "StargatePoolUSDC"
@@ -1746,10 +1834,12 @@
       "name": "TokenMessagingScroll",
       "address": "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837029,
       "sinceBlock": 6044870,
       "values": {
@@ -1761,7 +1851,7 @@
         "MSG_TYPE_TAXI": 1,
         "oApp": "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
-        "owner": "scr:0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
+        "owner": "scr:0xe46B47Be62785C20C6f3cb89f7043Ea045e6f88E",
         "planner": "scr:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
           "scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4",
@@ -1826,15 +1916,15 @@
         "localEid": 30214,
         "lpToken": "scr:0x73424Acc8749b5c76c7AbBB1B17D1F18Ce0Bb092",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "scr:0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
-        "plannerFee": "186159535372557397",
-        "poolBalance": "1410978972000000000000",
+        "owner": "scr:0xe46B47Be62785C20C6f3cb89f7043Ea045e6f88E",
+        "plannerFee": "187953818118500048",
+        "poolBalance": "1417167949000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "scr:0x0000000000000000000000000000000000000000",
-        "treasuryFee": 30563410,
-        "tvl": "47242378000000000000"
+        "treasuryFee": 30629343,
+        "tvl": "38370935000000000000"
       },
       "implementationNames": {
         "scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583": "StargatePoolNative"
@@ -2774,46 +2864,6 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881": [
-      "constructor(address _staking)",
-      "error MultiRewarderDisconnectedStakingToken(address token)",
-      "error MultiRewarderIncorrectNative(uint256 expected, uint256 actual)",
-      "error MultiRewarderMaxActiveRewardTokens()",
-      "error MultiRewarderMaxPoolsForRewardToken()",
-      "error MultiRewarderNativeTransferFailed(address to, uint256 amount)",
-      "error MultiRewarderPoolFinished(address rewardToken)",
-      "error MultiRewarderRenounceOwnershipDisabled()",
-      "error MultiRewarderStartInPast(uint256 start)",
-      "error MultiRewarderUnauthorizedCaller(address caller)",
-      "error MultiRewarderUnregisteredToken(address token)",
-      "error MultiRewarderZeroDuration()",
-      "error MultiRewarderZeroRewardRate()",
-      "error RewarderAlreadyConnected(address stakingToken)",
-      "event AllocPointsSet(address indexed rewardToken, address[] indexed stakeToken, uint48[] allocPoint)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PoolRegistered(address indexed rewardToken, address indexed stakeToken)",
-      "event RewardExtended(address indexed rewardToken, uint256 amountAdded, uint48 newEnd)",
-      "event RewardRegistered(address indexed rewardToken)",
-      "event RewardSet(address indexed rewardToken, uint256 amountAdded, uint256 amountPeriod, uint48 start, uint48 duration)",
-      "event RewardStopped(address indexed rewardToken, address indexed receiver, bool pullTokens)",
-      "event RewarderConnected(address indexed stakingToken)",
-      "event RewardsClaimed(address indexed user, address[] rewardTokens, uint256[] amounts)",
-      "function allocPointsByReward(address rewardToken) view returns (address[], uint48[])",
-      "function allocPointsByStake(address stakingToken) view returns (address[], uint48[])",
-      "function connect(address stakingToken)",
-      "function extendReward(address rewardToken, uint256 amount) payable",
-      "function getRewards(address stakingToken, address user) view returns (address[], uint256[])",
-      "function onUpdate(address stakingToken, address user, uint256 oldStake, uint256 oldSupply, uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership() view",
-      "function rewardDetails(address rewardToken) view returns (tuple(uint256 rewardPerSec, uint160 totalAllocPoints, uint48 start, uint48 end, bool exists))",
-      "function rewardTokens() view returns (address[])",
-      "function setAllocPoints(address rewardToken, address[] stakingTokens, uint48[] allocPoints)",
-      "function setReward(address rewardToken, uint256 amount, uint48 start, uint48 duration) payable",
-      "function staking() view returns (address)",
-      "function stopReward(address rewardToken, address receiver, bool pullTokens)",
-      "function transferOwnership(address newOwner)"
-    ],
     "eth:0x5ebB3f2feaA15271101a927869B3A56837e73056": [
       "error LZ_Treasury_LzTokenNotEnabled()",
       "error Transfer_NativeFailed(address _to, uint256 _value)",
@@ -3593,6 +3643,59 @@
       "function verifySignatures(bytes32 _digest, bytes _signatures) view",
       "function verifyTransactionProof(bytes32 _merkleRoot, tuple(tuple(address to, uint256 value, bytes data)[] calls, bytes32[] proof) _transaction) view"
     ],
+    "eth:0xBE634B030FEAaB661300667EaF82510a3a025413": [
+      "constructor(uint64 _oneSigId, address[] _signers, uint256 _threshold, address[] _executors, bool _executorRequired, bytes32 _seed)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed(uint256 index)",
+      "error ExecutorAlreadyActive(address executor)",
+      "error ExecutorNotFound(address executor)",
+      "error InvalidExecutor()",
+      "error InvalidProofOrNonce()",
+      "error InvalidSigner()",
+      "error MerkleRootExpired()",
+      "error OnlyExecutorOrSigner()",
+      "error OnlySelfCall()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SignatureError()",
+      "error SignerAlreadyAdded(address signer)",
+      "error SignerNotFound(address signer)",
+      "error TotalSignersLessThanThreshold(uint256 totalSigners, uint256 threshold)",
+      "error UnsortedSigners()",
+      "error ZeroThreshold()",
+      "event ExecutorRequiredSet(bool required)",
+      "event ExecutorSet(address indexed executor, bool active)",
+      "event SeedSet(bytes32 seed)",
+      "event SignerSet(address indexed signer, bool active)",
+      "event ThresholdSet(uint256 threshold)",
+      "event TransactionExecuted(bytes32 merkleRoot, uint256 nonce)",
+      "function LEAF_ENCODING_VERSION() view returns (uint8)",
+      "function ONE_SIG_ID() view returns (uint64)",
+      "function VERSION() view returns (string)",
+      "function canExecuteTransaction(address _sender) view returns (bool)",
+      "function encodeLeaf(uint64 _nonce, tuple(address to, uint256 value, bytes data)[] _calls) view returns (bytes32)",
+      "function executeTransaction(tuple(tuple(address to, uint256 value, bytes data)[] calls, bytes32[] proof) _transaction, bytes32 _merkleRoot, uint256 _expiry, bytes _signatures) payable",
+      "function executorRequired() view returns (bool)",
+      "function getExecutors() view returns (address[])",
+      "function getSigners() view returns (address[])",
+      "function isExecutor(address _executor) view returns (bool)",
+      "function isSigner(address _signer) view returns (bool)",
+      "function nonce() view returns (uint64)",
+      "function seed() view returns (bytes32)",
+      "function setExecutor(address _executor, bool _active)",
+      "function setExecutorRequired(bool _executorRequired)",
+      "function setSeed(bytes32 _seed)",
+      "function setSigner(address _signer, bool _active)",
+      "function setThreshold(uint256 _threshold)",
+      "function threshold() view returns (uint256)",
+      "function totalExecutors() view returns (uint256)",
+      "function totalSigners() view returns (uint256)",
+      "function verifyMerkleRoot(bytes32 _merkleRoot, uint256 _expiry, bytes _signatures) view",
+      "function verifyNSignatures(bytes32 _digest, bytes _signatures, uint256 _threshold) view",
+      "function verifySignatures(bytes32 _digest, bytes _signatures) view",
+      "function verifyTransactionProof(bytes32 _merkleRoot, tuple(tuple(address to, uint256 value, bytes data)[] calls, bytes32[] proof) _transaction) view"
+    ],
     "eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
@@ -3716,16 +3819,6 @@
       "function verifiable(tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) _config, bytes32 _headerHash, bytes32 _payloadHash) view returns (bool)",
       "function verify(bytes _packetHeader, bytes32 _payloadHash, uint64 _confirmations)",
       "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
-    ],
-    "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
@@ -4655,19 +4748,26 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "layerzero/BlockedMessageLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "layerzero/EndpointV2": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861",
-    "stargate/StargatePool": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
-    "stargate/StargatePoolMigratable": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
-    "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
-    "stargate/StargatePoolUSDC": "0xee5bd04121bdc9ef8dc02de489da5da4ae9b8fc2efc1603e357af2542eab241c"
+    "layerzero/ReadLib1002": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "layerzero/ReceiveUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "layerzero/SendUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "stargate/CreditMessaging": "0x8532f05a5616874028312a6ee4696d48701c52f2df4ac7e70309cac1ad4f3bfb",
+    "stargate/StargatePool": "0x2e9b8d746bcabdd12a23a51e3ec02583b33f9937043c82d9dc220a28aed533a4",
+    "stargate/StargatePoolMigratable": "0x2e9b8d746bcabdd12a23a51e3ec02583b33f9937043c82d9dc220a28aed533a4",
+    "stargate/StargatePoolNative": "0x2e9b8d746bcabdd12a23a51e3ec02583b33f9937043c82d9dc220a28aed533a4",
+    "stargate/StargatePoolUSDC": "0x1150d104a92f403d118b8039cd7e224230d6cd0e47def51876c761a8c195e299",
+    "stargate/TokenMessaging": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "usedBlockNumbers": {
-    "ethereum": 23274564,
-    "scroll": 20488930,
-    "optimism": 140603491,
-    "linea": 22818477,
-    "arbitrum": 374868416,
-    "base": 35008206
+    "ethereum": 23296006,
+    "arbitrum": 375904214,
+    "scroll": 20669356,
+    "linea": 22945235,
+    "optimism": 140732819,
+    "base": 35137534
   },
-  "permissionsConfigHash": "0x15c4a41fc8de19c3d627524a980e60ac3d22f513810c5c21ace62c8c71511472"
+  "permissionsConfigHash": "0xa4c10d856b0c52f778ff00e838fb4d5aac5df3ae6525922c55a3252447de9d44"
 }

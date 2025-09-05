@@ -151,10 +151,12 @@
       "name": "EndpointV2",
       "address": "eth:0x1a44076050125825900e736c501f859c50fE728c",
       "type": "Contract",
+      "template": "layerzero/EndpointV2",
       "sourceHashes": [
         "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
       ],
       "proxyType": "immutable",
+      "description": "Part of the LayerZero messaging protocol. OApp owners can configure custom verification (MessageLib) and execution settings here.",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -202,10 +204,12 @@
       "name": "BlockedMessageLib",
       "address": "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
       "type": "Contract",
+      "template": "layerzero/BlockedMessageLib",
       "sourceHashes": [
         "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
       ],
       "proxyType": "immutable",
+      "description": "Simple LayerZero library that blocks all messages if configured.",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -804,10 +808,12 @@
       "name": "ReadLib1002",
       "address": "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
       "type": "Contract",
+      "template": "layerzero/ReadLib1002",
       "sourceHashes": [
         "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
       ],
       "proxyType": "immutable",
+      "description": "LayerZero library used to read state from remote blockchains.",
       "sinceTimestamp": 1730488859,
       "sinceBlock": 21094853,
       "values": {
@@ -1095,10 +1101,12 @@
       "name": "SendUln302",
       "address": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
       "type": "Contract",
+      "template": "layerzero/SendUln302",
       "sourceHashes": [
         "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
       ],
       "proxyType": "immutable",
+      "description": "Send Library used by LayerZero, defining the protocol/execution of sent messages.",
       "sinceTimestamp": 1706307839,
       "sinceBlock": 19093729,
       "values": {
@@ -1188,6 +1196,32 @@
       ],
       "proxyType": "immutable",
       "description": "Custom multisignature contract allowing offchain signing and execution on multiple target chains.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+          "description": "configure the default send/receive libraries used for verification, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
+          "description": "configure the settings of this library, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+          "description": "configure the settings of this library, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "description": "configure the settings of this library, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1748566235,
       "sinceBlock": 22592087,
@@ -1224,10 +1258,12 @@
       "name": "ReceiveUln302",
       "address": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
       "type": "Contract",
+      "template": "layerzero/ReceiveUln302",
       "sourceHashes": [
         "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
       ],
       "proxyType": "immutable",
+      "description": "Receive Library used by LayerZero, defining the validation of received messages.",
       "sinceTimestamp": 1706307863,
       "sinceBlock": 19093731,
       "values": {
@@ -3700,8 +3736,13 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861"
+    "layerzero/BlockedMessageLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "layerzero/EndpointV2": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861",
+    "layerzero/ReadLib1002": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "layerzero/ReceiveUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "layerzero/SendUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "usedBlockNumbers": { "ethereum": 22882451 },
-  "permissionsConfigHash": "0xc90c2bf4cee0f08ecbfa21c04ee5078fefcbda2709ea6d4533da241d0083aaaa"
+  "permissionsConfigHash": "0x97aa839c444823eba72a0fccaed5e05f9281cb5a398125294bf36e9009167b3f"
 }
