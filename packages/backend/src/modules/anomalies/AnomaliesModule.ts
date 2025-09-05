@@ -34,8 +34,11 @@ export function createAnomaliesModule({
   )
 
   const start = () => {
+    logger = logger.for('AnomaliesModule')
+    logger.info('Starting')
     anomaliesNotifier?.start()
     realTimeLivenessProcessor.start()
+    logger.info('Started')
   }
 
   blockProcessors.push(realTimeLivenessProcessor)

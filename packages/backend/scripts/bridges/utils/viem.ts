@@ -8,11 +8,11 @@ export function logToViemLog(log: EVMLog): Log {
     address: log.address as Hex,
     topics: log.topics as [Hex, ...Hex[]] | [],
     data: log.data as Hex,
+    logIndex: log.logIndex,
 
     // Unsupported values for now
     blockHash: 'UNSUPPORTED' as Hex,
     transactionIndex: -1,
-    logIndex: -1,
     removed: false,
   }
 }

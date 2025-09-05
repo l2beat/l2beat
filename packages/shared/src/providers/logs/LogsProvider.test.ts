@@ -98,5 +98,6 @@ function log(blockNumber: number): Log {
     blockNumber,
     transactionHash: '0xTxHash',
     data: `0x${blockNumber.toString(16)}`,
+    logIndex: 0,
   }
 }

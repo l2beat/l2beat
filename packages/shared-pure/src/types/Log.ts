@@ -4,4 +4,5 @@ export interface Log {
   data: string
   blockNumber: number
   transactionHash: string
+  logIndex: number
 }
