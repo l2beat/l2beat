@@ -4,11 +4,11 @@ import {
   type DiscoveryModuleConfig,
   type DiscoveryPaths,
   discover,
-  generateEntrypoints,
   getChainConfigs,
   modelPermissionsCommand,
   type TemplateService,
 } from '@l2beat/discovery'
+import { generateEntrypointsCommand } from '@l2beat/discovery/dist/discovery/shared-modules/generateEntrypoints'
 import { updateDiffHistory } from './updateDiffHistory'
 
 export interface Options {
@@ -39,7 +39,7 @@ export async function discoverAndUpdateDiffHistory(
     config.overwriteCache,
     options.logger,
   )
-  await generateEntrypoints(
+  await generateEntrypointsCommand(
     options.configReader,
     config.project,
     options.logger,
