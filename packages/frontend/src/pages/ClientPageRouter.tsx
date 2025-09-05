@@ -17,6 +17,7 @@ import { MultisigReportPage } from './multisig-report/MultisigReportPage'
 import { GovernancePublicationPage } from './publications/governance/GovernancePublicationPage'
 import { MonthlyUpdatePage } from './publications/monthly-updates/MonthlyUpdatePage'
 import { PublicationsPage } from './publications/PublicationsPage'
+import { RedirectPage } from './redirect/RedirectPage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
 import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
@@ -92,6 +93,8 @@ const pages = {
   MonthlyUpdatePage,
   // Publications
   PublicationsPage,
+  // Other
+  RedirectPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {
