@@ -65,6 +65,12 @@ export const vector: BaseProject = {
   daBridge: {
     name: 'Vector',
     daLayer: ProjectId('avail'),
+    relayerType: {
+      value: 'Third-party',
+    },
+    validationType: {
+      value: 'Validity Proof',
+    },
     technology: {
       description: `
 ## Architecture

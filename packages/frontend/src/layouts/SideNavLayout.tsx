@@ -158,6 +158,11 @@ const groups = compact<NavGroup>([
         shortTitle: 'Throughput',
         href: '/data-availability/throughput',
       },
+      {
+        title: 'Liveness',
+        shortTitle: 'Liveness',
+        href: '/data-availability/liveness',
+      },
     ],
     secondaryLinks: [
       {

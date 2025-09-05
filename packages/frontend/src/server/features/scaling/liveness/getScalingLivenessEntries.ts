@@ -124,7 +124,7 @@ function getScalingLivenessEntry(
   }
 }
 
-function getLowestSyncedUntil(liveness: LivenessProject): UnixTime {
+export function getLowestSyncedUntil(liveness: LivenessProject): UnixTime {
   let lowestSyncedUntil = UnixTime.now()
 
   for (const subtype of TrackedTxsConfigSubtypeValues) {
