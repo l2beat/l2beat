@@ -1,3 +1,267 @@
+Generated with discovered.json: 0x73f6bf49f898f921d069cb43d9523bb68c4cd23b
+
+# Diff at Fri, 05 Sep 2025 09:33:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6cd15987e9ebf76a374fdd067e5e25baf948c56c block: 1756805760
+- current timestamp: 1757064416
+
+## Description
+
+Switch owner from Multisig to EOA on all chains, except for a new multisig on ethereum.
+
+## Watched changes
+
+```diff
+    contract TokenMessagingArbitrum (arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD) {
+    +++ description: None
+      values.owner:
+-        "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
++        "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150"
+    }
+```
+
+```diff
+    contract StargatePoolNative (arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F) {
+    +++ description: None
+      values.owner:
+-        "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
++        "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150"
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) {
+    +++ description: None
+      values.owner:
+-        "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
++        "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) {
+    +++ description: None
+      values.owner:
+-        "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
++        "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26) {
+    +++ description: None
+      values.owner:
+-        "base:0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109"
++        "base:0x7c20d58Cb9f3F3CF73b79a3fBDA3fFf412D7D82D"
+    }
+```
+
+```diff
+    contract TokenMessagingBase (base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47) {
+    +++ description: None
+      values.owner:
+-        "base:0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109"
++        "base:0x7c20d58Cb9f3F3CF73b79a3fBDA3fFf412D7D82D"
+    }
+```
+
+```diff
+    contract StargatePoolNative (base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7) {
+    +++ description: None
+      values.owner:
+-        "base:0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109"
++        "base:0x7c20d58Cb9f3F3CF73b79a3fBDA3fFf412D7D82D"
+    }
+```
+
+```diff
+    contract Treasurer (eth:0x1041D127b2d4BC700F0F563883bC689502606918) {
+    +++ description: None
+      values.owner:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
+      values.delegatesCreditMessaging:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+      values.delegatesTokenMessaging:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+    contract StargatePool (eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D) {
+    +++ description: None
+      values.owner:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+    contract StargateMultiRewarder (eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881) {
+    +++ description: None
+      values.owner:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+    contract CreditMessaging (eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d) {
+    +++ description: None
+      values.owner:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+    contract TokenMessagingEthereum (eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980) {
+    +++ description: This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes
+      values.owner:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+    contract StargatePoolNative (eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931) {
+    +++ description: None
+      values.owner:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973) {
+    +++ description: None
+      values.owner:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7) {
+    +++ description: None
+      values.owner:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+    contract StargatePool (eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3) {
+    +++ description: None
+      values.owner:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+    contract TokenMessagingLinea (linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD) {
+    +++ description: None
+      values.owner:
+-        "linea:0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c"
++        "linea:0xD37bA986553f7ac25BdF9867A60b10ebf182E51e"
+    }
+```
+
+```diff
+    contract StargatePoolNative (linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075) {
+    +++ description: None
+      values.owner:
+-        "linea:0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c"
++        "linea:0xD37bA986553f7ac25BdF9867A60b10ebf182E51e"
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD) {
+    +++ description: None
+      values.owner:
+-        "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
++        "oeth:0xec230013182261343F235B8c92b443f90A8A3c86"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) {
+    +++ description: None
+      values.owner:
+-        "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
++        "oeth:0xec230013182261343F235B8c92b443f90A8A3c86"
+    }
+```
+
+```diff
+    contract StargatePoolNative (oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) {
+    +++ description: None
+      values.owner:
+-        "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
++        "oeth:0xec230013182261343F235B8c92b443f90A8A3c86"
+    }
+```
+
+```diff
+    contract TokenMessagingOptimism (oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6) {
+    +++ description: None
+      values.owner:
+-        "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
++        "oeth:0xec230013182261343F235B8c92b443f90A8A3c86"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4) {
+    +++ description: None
+      values.owner:
+-        "scr:0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB"
++        "scr:0xe46B47Be62785C20C6f3cb89f7043Ea045e6f88E"
+    }
+```
+
+```diff
+    contract TokenMessagingScroll (scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038) {
+    +++ description: None
+      values.owner:
+-        "scr:0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB"
++        "scr:0xe46B47Be62785C20C6f3cb89f7043Ea045e6f88E"
+    }
+```
+
+```diff
+    contract StargatePoolNative (scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583) {
+    +++ description: None
+      values.owner:
+-        "scr:0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB"
++        "scr:0xe46B47Be62785C20C6f3cb89f7043Ea045e6f88E"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Stargate Multisig 2 (eth:0xBE634B030FEAaB661300667EaF82510a3a025413)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+## Source code changes
+
+```diff
+.../stargatev2/.flat/Stargate Multisig 2.sol       | 1396 ++++++++++++++++++++
+ 1 file changed, 1396 insertions(+)
+```
+
 Generated with discovered.json: 0x6992b6a744b2da54d2801d2feceb57c70d0e35fb
 
 # Diff at Tue, 02 Sep 2025 10:08:57 GMT:
