@@ -46,7 +46,7 @@ export async function generateEntrypointsCommand(
   const projectDir = configReader.getProjectPath(project)
   const outputFilePath = join(projectDir, ENTRYPOINTS_FILENAME)
   const existingFile = fileExistsCaseSensitive(outputFilePath)
-    ? EntrypointsFile.parse(readFileSync(outputFilePath, 'utf-8'))
+    ? EntrypointsFile.parse(JSON.parse(readFileSync(outputFilePath, 'utf-8')))
     : undefined
 
   const generator = (project: string) =>
