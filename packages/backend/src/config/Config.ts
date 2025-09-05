@@ -51,6 +51,7 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
+  readonly bridgesEnabled: boolean
 
   readonly flags: ResolvedFeatureFlag[]
 }

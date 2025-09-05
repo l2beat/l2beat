@@ -145,6 +145,7 @@ export async function makeConfig(
         60 * 60, // 1 hour
       ),
     },
+    bridgesEnabled: flags.isEnabled('bridges'),
     // Must be last
     flags: flags.getResolved(),
   }
