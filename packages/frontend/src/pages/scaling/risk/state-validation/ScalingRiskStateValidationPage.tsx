@@ -6,17 +6,17 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type {
   ScalingRiskStateValidationOptimisticEntry,
-  ScalingRiskStateValidationZkEntry,
+  ScalingRiskStateValidationValidityEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 import { ScalingRiskStateValidationTabs } from './components/ScalingRiskStateValidationTabs'
 
 interface Props extends AppLayoutProps {
-  zk: TabbedScalingEntries<ScalingRiskStateValidationZkEntry>
+  validity: TabbedScalingEntries<ScalingRiskStateValidationValidityEntry>
   optimistic: TabbedScalingEntries<ScalingRiskStateValidationOptimisticEntry>
 }
 
 export function ScalingRiskStateValidationPage({
-  zk,
+  validity,
   optimistic,
   ...props
 }: Props) {
@@ -25,7 +25,10 @@ export function ScalingRiskStateValidationPage({
       <SideNavLayout>
         <MainPageHeader>State Validation</MainPageHeader>
         <TableFilterContextProvider>
-          <ScalingRiskStateValidationTabs zk={zk} optimistic={optimistic} />
+          <ScalingRiskStateValidationTabs
+            validity={validity}
+            optimistic={optimistic}
+          />
         </TableFilterContextProvider>
       </SideNavLayout>
     </AppLayout>

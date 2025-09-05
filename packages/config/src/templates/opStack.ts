@@ -312,7 +312,13 @@ function opStackCommon(
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Optimistic', name: 'OPFP' }),
+      (hasNoProofs
+        ? undefined
+        : {
+            type: 'Optimistic',
+            name: 'OPFP',
+            challengeProtocol: 'Interactive',
+          }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(

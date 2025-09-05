@@ -68,6 +68,7 @@ export const bob: ScalingProject = opStackL2({
     type: 'Optimistic',
     name: 'OP Kailua',
     zkCatalogId: ProjectId('risc0'),
+    challengeProtocol: 'Single-step',
   },
   chainConfig: {
     name: 'bob',

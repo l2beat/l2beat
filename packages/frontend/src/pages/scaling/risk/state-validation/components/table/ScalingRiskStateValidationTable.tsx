@@ -11,36 +11,36 @@ import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type {
   ScalingRiskStateValidationOptimisticEntry,
-  ScalingRiskStateValidationZkEntry,
+  ScalingRiskStateValidationValidityEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 import {
-  scalingRiskStateValidationColumns,
   scalingRiskStateValidationOptimisticColumns,
+  scalingRiskStateValidationValidityColumns,
 } from './columns'
 
 export function ScalingRiskStateValidationTable({
   tableTab,
   setTableTab,
-  zk,
+  validity,
   optimistic,
 }: {
-  tableTab: 'zk' | 'optimistic'
-  setTableTab: (tab: 'zk' | 'optimistic') => void
-  zk: ScalingRiskStateValidationZkEntry[]
+  tableTab: 'validity' | 'optimistic'
+  setTableTab: (tab: 'validity' | 'optimistic') => void
+  validity: ScalingRiskStateValidationValidityEntry[]
   optimistic: ScalingRiskStateValidationOptimisticEntry[]
 }) {
   return (
     <Tabs
       name="riskStateValidaitonTableTab"
       value={tableTab}
-      onValueChange={(value) => setTableTab(value as 'zk' | 'optimistic')}
+      onValueChange={(value) => setTableTab(value as 'validity' | 'optimistic')}
       variant="highlighted"
     >
       <TabsList>
-        <TabsTrigger value="zk">
-          Zero-knowledge
+        <TabsTrigger value="validity">
+          Validity
           <CountBadge className="group-data-[state=active]/tabs-trigger:bg-primary-invert group-data-[state=active]/tabs-trigger:text-brand">
-            {zk.length}
+            {validity.length}
           </CountBadge>
         </TabsTrigger>
         <TabsTrigger value="optimistic">
@@ -50,8 +50,8 @@ export function ScalingRiskStateValidationTable({
           </CountBadge>
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="zk">
-        <ScalingRiskZkTable entries={zk} />
+      <TabsContent value="validity">
+        <ScalingRiskValidityTable entries={validity} />
       </TabsContent>
       <TabsContent value="optimistic">
         <ScalingRiskOptimisticTable entries={optimistic} />
@@ -60,15 +60,15 @@ export function ScalingRiskStateValidationTable({
   )
 }
 
-export function ScalingRiskZkTable({
+export function ScalingRiskValidityTable({
   entries,
 }: {
-  entries: ScalingRiskStateValidationZkEntry[]
+  entries: ScalingRiskStateValidationValidityEntry[]
 }) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,
-    columns: scalingRiskStateValidationColumns,
+    columns: scalingRiskStateValidationValidityColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

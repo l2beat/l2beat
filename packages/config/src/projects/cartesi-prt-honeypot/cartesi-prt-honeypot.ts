@@ -91,6 +91,7 @@ export const cartesiprthoneypot: ScalingProject = {
   proofSystem: {
     type: 'Optimistic',
     name: 'Dave',
+    challengeProtocol: 'Interactive',
   },
   scopeOfAssessment: {
     inScope: [

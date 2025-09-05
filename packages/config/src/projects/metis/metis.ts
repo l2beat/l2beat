@@ -82,7 +82,11 @@ export const metis: ScalingProject = {
       ],
     },
   },
-  proofSystem: { type: 'Optimistic', name: 'OPFP' },
+  proofSystem: {
+    type: 'Optimistic',
+    name: 'OPFP',
+    challengeProtocol: 'Interactive',
+  },
   stage: getStage(
     {
       stage0: {
