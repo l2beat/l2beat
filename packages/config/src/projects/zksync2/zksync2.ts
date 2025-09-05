@@ -30,7 +30,6 @@ export const zksync2: ScalingProject = zkStackL2({
       explorers: [
         'https://explorer.zksync.io/',
         'https://era.zksync.network/',
-        'https://zksync-era.l2scan.co/',
         'https://zksync.blockscout.com/',
         'https://hyperscan.xyz/',
       ],
