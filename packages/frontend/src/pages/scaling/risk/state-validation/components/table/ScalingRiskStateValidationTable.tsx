@@ -14,8 +14,8 @@ import type {
   ScalingRiskStateValidationValidityEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 import {
-  scalingRiskStateValidationColumns,
   scalingRiskStateValidationOptimisticColumns,
+  scalingRiskStateValidationValidityColumns,
 } from './columns'
 
 export function ScalingRiskStateValidationTable({
@@ -68,7 +68,7 @@ export function ScalingRiskValidityTable({
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,
-    columns: scalingRiskStateValidationColumns,
+    columns: scalingRiskStateValidationValidityColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
