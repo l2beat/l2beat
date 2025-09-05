@@ -7,10 +7,11 @@ import { TrustedSetupCell } from '~/pages/zk-catalog/v2/components/TrustedSetupC
 import { VerifiedCountWithDetails } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import type {
   ScalingRiskStateValidationOptimisticEntry,
-  ScalingRiskStateValidationZkEntry,
+  ScalingRiskStateValidationValidityEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 
-const zkColumnHelper = createColumnHelper<ScalingRiskStateValidationZkEntry>()
+const zkColumnHelper =
+  createColumnHelper<ScalingRiskStateValidationValidityEntry>()
 
 export const scalingRiskStateValidationColumns = [
   ...getScalingCommonProjectColumns(
