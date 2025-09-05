@@ -1,16 +1,18 @@
 {
   "name": "stargatev2",
   "timestamp": 1757064416,
-  "configHash": "0x442b0cdc176dda902c24e7f505c7420c78b959c3829bc63799d88608d3926cca",
+  "configHash": "0x22c5661e736f57c319b2a084096d00980172fef41e2b01d30b0ed08247d2ea54",
   "entries": [
     {
       "name": "TokenMessagingArbitrum",
       "address": "arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837025,
       "sinceBlock": 215658770,
       "values": {
@@ -264,10 +266,12 @@
       "name": "TokenMessagingBase",
       "address": "base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837023,
       "sinceBlock": 15023838,
       "values": {
@@ -456,6 +460,15 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "description": "Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+          "description": "execute Stargate messages sent via LayerZero at the destination.",
+          "role": ".getExecutorConfig"
+        }
+      ],
       "sinceTimestamp": 1706308043,
       "sinceBlock": 19093746,
       "values": {
@@ -489,11 +502,12 @@
       "name": "EndpointV2",
       "address": "eth:0x1a44076050125825900e736c501f859c50fE728c",
       "type": "Contract",
+      "template": "layerzero/EndpointV2",
       "sourceHashes": [
         "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
       ],
       "proxyType": "immutable",
-      "description": "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.",
+      "description": "A contract that is part of the LayerZero messaging protocol. The Stargate OApp owner can configure verification (MessageLib) and execution settings here.",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -535,10 +549,12 @@
       "name": "BlockedMessageLib",
       "address": "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
       "type": "Contract",
+      "template": "layerzero/BlockedMessageLib",
       "sourceHashes": [
         "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
       ],
       "proxyType": "immutable",
+      "description": "Simple LayerZero library that blocks all messages if configured.",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -625,29 +641,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "StargateMultiRewarder",
-      "address": "eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3ba9eb19565a1f8da529d4ad153c9ed3c8e64a7f5912a29c4aee7b7fc14d3cda"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1716837491,
-      "sinceBlock": 19963242,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
-        "rewardTokens": [
-          "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
-          "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
-        ],
-        "staking": "eth:0xFF551fEDdbeDC0AeE764139cCD9Cb644Bb04A6BD"
-      },
-      "implementationNames": {
-        "eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881": "StargateMultiRewarder"
-      }
-    },
-    {
       "address": "eth:0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c",
       "type": "EOA",
       "proxyType": "EOA"
@@ -683,6 +676,14 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1647498793,
       "sinceBlock": 14402408,
@@ -714,10 +715,12 @@
       "name": "CreditMessaging",
       "address": "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
       "type": "Contract",
+      "template": "stargate/CreditMessaging",
       "sourceHashes": [
         "0xb151141227bb08ead5b1a7d464402bf23feaf60625a773cb8ced48745eb66fe6"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.",
       "sinceTimestamp": 1716837383,
       "sinceBlock": 19963233,
       "values": {
@@ -768,11 +771,12 @@
       "name": "TokenMessagingEthereum",
       "address": "eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
-      "description": "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837371,
       "sinceBlock": 19963232,
       "values": {
@@ -802,10 +806,12 @@
       "name": "ReadLib1002",
       "address": "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
       "type": "Contract",
+      "template": "layerzero/ReadLib1002",
       "sourceHashes": [
         "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
       ],
       "proxyType": "immutable",
+      "description": "LayerZero library used to read state from remote blockchains.",
       "sinceTimestamp": 1730488859,
       "sinceBlock": 21094853,
       "values": {
@@ -957,6 +963,15 @@
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
       "proxyType": "immutable",
+      "description": "One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "description": "verify Stargate messages sent via LayerZero.",
+          "role": ".getUlnConfig"
+        }
+      ],
       "sinceTimestamp": 1716344279,
       "sinceBlock": 19922400,
       "values": {
@@ -1028,26 +1043,6 @@
       }
     },
     {
-      "name": "",
-      "address": "eth:0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
-          "role": "admin"
-        }
-      ],
-      "sinceTimestamp": 1687808651,
-      "sinceBlock": 17565746,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5": ""
-      }
-    },
-    {
       "name": "ProxyAdmin",
       "address": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
       "type": "Contract",
@@ -1080,6 +1075,15 @@
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
       "proxyType": "immutable",
+      "description": "One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "description": "verify Stargate messages sent via LayerZero.",
+          "role": ".getUlnConfig"
+        }
+      ],
       "sinceTimestamp": 1706489567,
       "sinceBlock": 19108732,
       "values": {
@@ -1102,11 +1106,12 @@
       "name": "SendUln302",
       "address": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
       "type": "Contract",
+      "template": "layerzero/SendUln302",
       "sourceHashes": [
         "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
       ],
       "proxyType": "immutable",
-      "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
+      "description": "Send Library used by LayerZero, defining the protocol/execution of sent messages.",
       "sinceTimestamp": 1706307839,
       "sinceBlock": 19093729,
       "values": {
@@ -1139,6 +1144,32 @@
       ],
       "proxyType": "immutable",
       "description": "Custom multisignature contract allowing offchain signing and execution on multiple target chains.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+          "description": "configure the default send/receive libraries used for verification, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
+          "description": "configure the settings of this library, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+          "description": "configure the settings of this library, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "description": "configure the settings of this library, affecting all OApps that have not set up a custom security config.",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1748566235,
       "sinceBlock": 22592087,
@@ -1181,6 +1212,50 @@
       ],
       "proxyType": "immutable",
       "description": "Custom multisignature contract allowing offchain signing and execution on multiple target chains.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
+          "description": "set OApp delegate, planner and critical configurations.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
+          "description": "set OApp delegate and crosschain peers, manage assets and other critical configurations.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3",
+          "description": "set critical configurations of the pool, potentially stealing funds.",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1755895787,
       "sinceBlock": 23199114,
@@ -1269,11 +1344,12 @@
       "name": "ReceiveUln302",
       "address": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
       "type": "Contract",
+      "template": "layerzero/ReceiveUln302",
       "sourceHashes": [
         "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
       ],
       "proxyType": "immutable",
-      "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
+      "description": "Receive Library used by LayerZero, defining the validation of received messages.",
       "sinceTimestamp": 1706307863,
       "sinceBlock": 19093731,
       "values": {
@@ -1300,41 +1376,6 @@
       },
       "implementationNames": {
         "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": "ReceiveUln302"
-      }
-    },
-    {
-      "name": "PriceFeed",
-      "address": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1687808675,
-      "sinceBlock": 17565748,
-      "values": {
-        "$admin": "eth:0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
-        "$implementation": "eth:0x319AE539b5BA554b09A46791cdb88b10E4d8F627",
-        "$pastUpgrades": [
-          [
-            "2023-06-26T19:44:35.000Z",
-            "0xd7e8b45283a17ffe10a55914b49e6114acd56dedba1a154159a9b71e9f9205df",
-            ["eth:0xF641db6860FD5f6643D05bD75405a2586a63a141"]
-          ],
-          [
-            "2024-03-11T19:13:11.000Z",
-            "0xb0be4d7a78cc69d7a3609a84216cbf0bae5b0ade84c45b35c05dafda6c84faec",
-            ["eth:0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"]
-          ],
-          [
-            "2024-07-04T23:54:11.000Z",
-            "0x35c84fce2bd551b2e80f13f545f49c65ed2a20c3c2d46eecc10c825112a86ccc",
-            ["eth:0x319AE539b5BA554b09A46791cdb88b10E4d8F627"]
-          ]
-        ],
-        "$upgradeCount": 3
-      },
-      "implementationNames": {
-        "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "OptimizedTransparentUpgradeableProxy",
-        "eth:0x319AE539b5BA554b09A46791cdb88b10E4d8F627": ""
       }
     },
     {
@@ -1388,22 +1429,17 @@
       }
     },
     {
-      "name": "",
-      "address": "eth:0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1716344279,
-      "sinceBlock": 19922400,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006": ""
-      }
-    },
-    {
       "address": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
+          "description": "send credits (asset claims) from pools on this chain to other pools.",
+          "role": ".planner"
+        }
+      ]
     },
     {
       "address": "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7",
@@ -1424,10 +1460,12 @@
       "name": "TokenMessagingLinea",
       "address": "linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837017,
       "sinceBlock": 4931061,
       "values": {
@@ -1690,10 +1728,12 @@
       "name": "TokenMessagingOptimism",
       "address": "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837031,
       "sinceBlock": 120619127,
       "values": {
@@ -1794,10 +1834,12 @@
       "name": "TokenMessagingScroll",
       "address": "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
       "type": "Contract",
+      "template": "stargate/TokenMessaging",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "proxyType": "immutable",
+      "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
       "sinceTimestamp": 1716837029,
       "sinceBlock": 6044870,
       "values": {
@@ -2822,46 +2864,6 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881": [
-      "constructor(address _staking)",
-      "error MultiRewarderDisconnectedStakingToken(address token)",
-      "error MultiRewarderIncorrectNative(uint256 expected, uint256 actual)",
-      "error MultiRewarderMaxActiveRewardTokens()",
-      "error MultiRewarderMaxPoolsForRewardToken()",
-      "error MultiRewarderNativeTransferFailed(address to, uint256 amount)",
-      "error MultiRewarderPoolFinished(address rewardToken)",
-      "error MultiRewarderRenounceOwnershipDisabled()",
-      "error MultiRewarderStartInPast(uint256 start)",
-      "error MultiRewarderUnauthorizedCaller(address caller)",
-      "error MultiRewarderUnregisteredToken(address token)",
-      "error MultiRewarderZeroDuration()",
-      "error MultiRewarderZeroRewardRate()",
-      "error RewarderAlreadyConnected(address stakingToken)",
-      "event AllocPointsSet(address indexed rewardToken, address[] indexed stakeToken, uint48[] allocPoint)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PoolRegistered(address indexed rewardToken, address indexed stakeToken)",
-      "event RewardExtended(address indexed rewardToken, uint256 amountAdded, uint48 newEnd)",
-      "event RewardRegistered(address indexed rewardToken)",
-      "event RewardSet(address indexed rewardToken, uint256 amountAdded, uint256 amountPeriod, uint48 start, uint48 duration)",
-      "event RewardStopped(address indexed rewardToken, address indexed receiver, bool pullTokens)",
-      "event RewarderConnected(address indexed stakingToken)",
-      "event RewardsClaimed(address indexed user, address[] rewardTokens, uint256[] amounts)",
-      "function allocPointsByReward(address rewardToken) view returns (address[], uint48[])",
-      "function allocPointsByStake(address stakingToken) view returns (address[], uint48[])",
-      "function connect(address stakingToken)",
-      "function extendReward(address rewardToken, uint256 amount) payable",
-      "function getRewards(address stakingToken, address user) view returns (address[], uint256[])",
-      "function onUpdate(address stakingToken, address user, uint256 oldStake, uint256 oldSupply, uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership() view",
-      "function rewardDetails(address rewardToken) view returns (tuple(uint256 rewardPerSec, uint160 totalAllocPoints, uint48 start, uint48 end, bool exists))",
-      "function rewardTokens() view returns (address[])",
-      "function setAllocPoints(address rewardToken, address[] stakingTokens, uint48[] allocPoints)",
-      "function setReward(address rewardToken, uint256 amount, uint48 start, uint48 duration) payable",
-      "function staking() view returns (address)",
-      "function stopReward(address rewardToken, address receiver, bool pullTokens)",
-      "function transferOwnership(address newOwner)"
-    ],
     "eth:0x5ebB3f2feaA15271101a927869B3A56837e73056": [
       "error LZ_Treasury_LzTokenNotEnabled()",
       "error Transfer_NativeFailed(address _to, uint256 _value)",
@@ -3818,16 +3820,6 @@
       "function verify(bytes _packetHeader, bytes32 _payloadHash, uint64 _confirmations)",
       "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
-    "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
@@ -4756,19 +4748,26 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "layerzero/BlockedMessageLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "layerzero/EndpointV2": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861",
-    "stargate/StargatePool": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
-    "stargate/StargatePoolMigratable": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
-    "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
-    "stargate/StargatePoolUSDC": "0xee5bd04121bdc9ef8dc02de489da5da4ae9b8fc2efc1603e357af2542eab241c"
+    "layerzero/ReadLib1002": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "layerzero/ReceiveUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "layerzero/SendUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "stargate/CreditMessaging": "0x8532f05a5616874028312a6ee4696d48701c52f2df4ac7e70309cac1ad4f3bfb",
+    "stargate/StargatePool": "0x2e9b8d746bcabdd12a23a51e3ec02583b33f9937043c82d9dc220a28aed533a4",
+    "stargate/StargatePoolMigratable": "0x2e9b8d746bcabdd12a23a51e3ec02583b33f9937043c82d9dc220a28aed533a4",
+    "stargate/StargatePoolNative": "0x2e9b8d746bcabdd12a23a51e3ec02583b33f9937043c82d9dc220a28aed533a4",
+    "stargate/StargatePoolUSDC": "0x1150d104a92f403d118b8039cd7e224230d6cd0e47def51876c761a8c195e299",
+    "stargate/TokenMessaging": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "usedBlockNumbers": {
     "ethereum": 23296006,
-    "scroll": 20669356,
     "arbitrum": 375904214,
-    "optimism": 140732819,
+    "scroll": 20669356,
     "linea": 22945235,
+    "optimism": 140732819,
     "base": 35137534
   },
-  "permissionsConfigHash": "0xeec49a2612a55fc62fe9aeecb94b99391e3b1d032659fe3db121a5759c9e5acc"
+  "permissionsConfigHash": "0xa4c10d856b0c52f778ff00e838fb4d5aac5df3ae6525922c55a3252447de9d44"
 }
