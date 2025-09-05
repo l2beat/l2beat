@@ -11,22 +11,21 @@ import {
   parseAbi,
 } from 'viem'
 
-export type ChainAddress = string
-export type ChainHash = string
-
-export interface TxDetails {
+export interface BridgeEventContext {
   timestamp: number
   chain: string
-  hash: ChainHash
   blockNumber: number
   blockHash: string
+  txHash: string
+  txTo?: EthereumAddress
+  logIndex: number
 }
 
 export interface BridgeEvent<T = unknown> {
   eventId: string
-  matchable: boolean
   type: string
-  tx: TxDetails
+  expiresAt: number
+  ctx: BridgeEventContext
   args: T
 }
 
@@ -37,8 +36,8 @@ export interface BridgeMessage {
 }
 
 export interface TransferSide {
-  tx: TxDetails
-  tokenAddress?: ChainAddress
+  tx: BridgeEventContext
+  tokenAddress?: EthereumAddress
   tokenId?: string
   amount?: string
   valueUsd?: number
@@ -57,26 +56,29 @@ export function generateId(type: string) {
 
 export interface BridgeEventType<T> {
   type: string
-  create(tx: BridgeEvent['tx'], payload: T): BridgeEvent<T>
+  create(ctx: BridgeEventContext, payload: T): BridgeEvent<T>
   checkType(action: BridgeEvent): action is BridgeEvent<T>
 }
 
 export function createBridgeEventType<T>(
   type: string,
-  options?: { matchable: true },
+  options?: { ttlMs?: number },
 ): BridgeEventType<T> {
   if (!/\w+\.\w+/.test(type)) {
     throw new Error('Actions type must have the format: "plugin.action"')
   }
 
+  const ONE_DAY_MS = 24 * 60 * 60 * 1000
+  const ttl = options?.ttlMs ?? ONE_DAY_MS
+
   return {
     type,
-    create(tx: BridgeEvent['tx'], payload: T): BridgeEvent<T> {
+    create(ctx: BridgeEventContext, payload: T): BridgeEvent<T> {
       return {
         eventId: generateId('E'),
-        matchable: !!options?.matchable,
         type,
-        tx,
+        expiresAt: Date.now() + ttl,
+        ctx,
         // Ensure it can be saved to db
         args: JSON.parse(JSON.stringify(payload)),
       }
@@ -87,11 +89,10 @@ export function createBridgeEventType<T>(
   }
 }
 
-export interface LogToDecode {
+export interface LogToCapture {
   log: Log
-  tx: TxDetails
   txLogs: Log[]
-  txTo?: ChainAddress
+  ctx: BridgeEventContext
 }
 
 export interface MatchResult {
@@ -110,8 +111,8 @@ export interface EventDb {
 export interface BridgePlugin {
   name: string
   chains: string[]
-  decode?: (
-    input: LogToDecode,
+  capture?: (
+    input: LogToCapture,
     // biome-ignore lint/suspicious/noConfusingVoidType: Otherwise it's painful to write
   ) => BridgeEvent | undefined | void | Promise<BridgeEvent | undefined | void>
   match?: (

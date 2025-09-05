@@ -4,7 +4,7 @@ import {
   createBridgeEventType,
   createEventParser,
   type EventDb,
-  type LogToDecode,
+  type LogToCapture,
   type MatchResult,
 } from './types'
 
@@ -22,24 +22,24 @@ export const OFTSent = createBridgeEventType<{
 
 export const OFTReceived = createBridgeEventType<{
   guid: string
-}>('stargate.OFTReceived', { matchable: true })
+}>('stargate.OFTReceived')
 
 // NOTE: This is just an example plugin! Not production ready!
 export class StargatePlugin implements BridgePlugin {
   name = 'stargate'
   chains = ['ethereum', 'arbitrum', 'base']
 
-  decode(input: LogToDecode) {
+  capture(input: LogToCapture) {
     // TODO: whitelist
     const oftSent = parseOFTSent(input.log, null)
     if (oftSent) {
-      return OFTSent.create(input.tx, { guid: oftSent.guid })
+      return OFTSent.create(input.ctx, { guid: oftSent.guid })
     }
 
     // TODO: whitelist
     const oftReceived = parseOFTReceived(input.log, null)
     if (oftReceived) {
-      return OFTReceived.create(input.tx, { guid: oftReceived.guid })
+      return OFTReceived.create(input.ctx, { guid: oftReceived.guid })
     }
   }
 

@@ -3,7 +3,11 @@ import { type Block, EthereumAddress, type Log } from '@l2beat/shared-pure'
 import type { Log as ViemLog } from 'viem'
 import type { BlockProcessor } from '../types'
 import type { BridgeMatcher } from './BridgeMatcher'
-import type { BridgePlugin, LogToDecode, TxDetails } from './plugins/types'
+import type {
+  BridgeEventContext,
+  BridgePlugin,
+  LogToCapture,
+} from './plugins/types'
 
 export class BridgeBlockProcessor implements BlockProcessor {
   constructor(
@@ -21,7 +25,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
     for (const logToDecode of toDecode) {
       for (const plugin of this.plugins) {
         try {
-          const event = await plugin.decode?.(logToDecode)
+          const event = await plugin.capture?.(logToDecode)
           if (event) {
             count++
             this.bridgeMatcher.addEvent(event)
@@ -40,38 +44,33 @@ export class BridgeBlockProcessor implements BlockProcessor {
 }
 
 function getLogsToDecode(chain: string, block: Block, logs: Log[]) {
-  const toDecode: LogToDecode[] = []
+  const toDecode: LogToCapture[] = []
   const viemLogs = logs.map(logToViemLog)
 
-  const txToMap: Record<string, EthereumAddress> = {}
-  const txs = block.transactions
+  const contexts = block.transactions
     .filter((x) => !!x.hash) // TODO: why can this be missing!?
     .map(
-      (tx): TxDetails => ({
+      (tx): Omit<BridgeEventContext, 'logIndex'> => ({
         timestamp: block.timestamp,
         chain,
         blockHash: block.hash,
         blockNumber: block.number,
         // biome-ignore lint/style/noNonNullAssertion: We just checked
-        hash: tx.hash!,
+        txHash: tx.hash!,
+        txTo: tx.to !== undefined ? EthereumAddress(tx.to) : undefined,
       }),
     )
-  for (const tx of block.transactions) {
-    if (tx.hash && tx.to) {
-      txToMap[tx.hash] = EthereumAddress(tx.to)
-    }
-  }
 
   for (const log of viemLogs) {
-    const tx = txs.find((x) => x.hash === log.transactionHash)
+    const tx = contexts.find((x) => x.txHash === log.transactionHash)
     if (!tx) {
       continue
     }
+    const ctx: BridgeEventContext = { ...tx, logIndex: log.logIndex ?? -1 }
     toDecode.push({
       log,
-      tx,
+      ctx,
       txLogs: viemLogs.filter((x) => x.transactionHash === log.transactionHash),
-      txTo: txToMap[tx.hash],
     })
   }
 
