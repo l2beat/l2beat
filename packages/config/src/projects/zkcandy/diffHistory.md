@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x10589fe1d4ee3fdd2be1cb4c760ea3199334d618
+Generated with discovered.json: 0x8e0dc1b0212f9472c325d1c75f92a97659bfbca8
 
 # Diff at Thu, 04 Sep 2025 11:14:42 GMT:
 
@@ -87,7 +87,7 @@ Everything is templetized so i guess it's a standard upgrade. I updated the zk c
  2 files changed, 6 insertions(+), 6 deletions(-)
 ```
 
-Generated with discovered.json: 0x4b11cb899055b1c78f96b78689240a0482153f84
+Generated with discovered.json: 0x349b2f876456a0892148ef87fe74d9f58d210a5f
 
 # Diff at Wed, 03 Sep 2025 15:51:38 GMT:
 
