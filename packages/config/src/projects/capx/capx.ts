@@ -16,7 +16,13 @@ export const capx: ScalingProject = upcomingL2({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://capx.ai/'],
-      socialMedia: ['https://discord.com/invite/capx', 'https://x.com/0xCapx'],
+      documentation: ['https://docs.capx.ai/welcome'],
+      repositories: ['https://github.com/Capx-AI'],
+      socialMedia: [
+        'https://discord.com/invite/capx', 
+        'https://x.com/0xCapx',
+        'https://t.me/capxai',
+      ],
       explorers: ['https://capxscan.com'],
     },
   },
