@@ -30,7 +30,7 @@ export interface BridgeEvent<T = unknown> {
   args: T
 }
 
-export interface Message {
+export interface BridgeMessage {
   type: string
   outbound: BridgeEvent
   inbound: BridgeEvent
@@ -44,7 +44,7 @@ export interface TransferSide {
   valueUsd?: number
 }
 
-export interface Transfer {
+export interface BridgeTransfer {
   type: string
   events: BridgeEvent[]
   outbound: TransferSide
@@ -95,8 +95,8 @@ export interface LogToDecode {
 }
 
 export interface MatchResult {
-  message?: Message
-  transfer?: Transfer
+  message?: BridgeMessage
+  transfer?: BridgeTransfer
 }
 
 export interface EventDb {

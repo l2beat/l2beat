@@ -16,13 +16,13 @@ export function createBridgeRouter(bridgeMatcher: BridgeMatcher) {
   })
 
   const Params = v.object({
-    kind: v.enum(['all', 'matched', 'unmatched']),
+    kind: v.enum(['all', 'unmatched', 'messages', 'transfers']),
     type: v.string(),
   })
 
   router.get('/bridges/:kind/:type', (ctx) => {
     const params = Params.validate(ctx.params)
-    const json = bridgeMatcher.getEvents(params.kind, params.type)
+    const json = bridgeMatcher.getByType(params.kind, params.type)
     ctx.body = json
   })
 
@@ -41,12 +41,15 @@ function statsToHtml(
     `
     }
 
+    const objectEntries = Object.entries(stats)
+    if (objectEntries.length === 0) {
+      return ''
+    }
+
     return `
     <h2>${kind}</h2>
     <ul>
-      ${Object.entries(stats)
-        .map(([type, count]) => entry(kind, type, count))
-        .join('')}
+      ${objectEntries.map(([type, count]) => entry(kind, type, count)).join('')}
     </ul>  
   `
   }
@@ -59,7 +62,8 @@ function statsToHtml(
     <body>
       <h1>Bridge Stats</h1>
       ${entries('unmatched', stats.unmatched)}
-      ${entries('matched', stats.matched)}
+      ${entries('messages', stats.messages)}
+      ${entries('transfers', stats.transfers)}
       ${entries('all', stats.all)}
     </body>
     </html>

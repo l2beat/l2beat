@@ -1,11 +1,17 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { EventDbImpl } from './EventDb'
-import type { BridgeEvent, BridgePlugin } from './plugins/types'
+import type {
+  BridgeEvent,
+  BridgeMessage,
+  BridgePlugin,
+  BridgeTransfer,
+} from './plugins/types'
 
 export class BridgeMatcher {
   private all: BridgeEvent[] = []
   private unmatched: BridgeEvent[] = []
-  private matched: BridgeEvent[] = []
+  private messages: BridgeMessage[] = []
+  private transfers: BridgeTransfer[] = []
   private running = false
 
   constructor(
@@ -52,7 +58,12 @@ export class BridgeMatcher {
             const result = await plugin.match?.(event, eventDb)
             if (result) {
               matched.add(event)
-              this.matched.push(event)
+              if (result.message) {
+                this.messages.push(result.message)
+              }
+              if (result.transfer) {
+                this.transfers.push(result.transfer)
+              }
               this.logger.info('Matched', result)
             }
           } catch (e) {
@@ -69,22 +80,26 @@ export class BridgeMatcher {
   }
 
   getStats() {
-    function eventBreakdown(events: BridgeEvent[]) {
+    function breakdown(things: { type: string }[]) {
       const byType: Record<string, number> = {}
-      for (const event of events) {
-        byType[event.type] = (byType[event.type] ?? 0) + 1
+      for (const thing of things) {
+        byType[thing.type] = (byType[thing.type] ?? 0) + 1
       }
       return byType
     }
 
     return {
-      all: eventBreakdown(this.all),
-      unmatched: eventBreakdown(this.unmatched),
-      matched: eventBreakdown(this.matched),
+      all: breakdown(this.all),
+      unmatched: breakdown(this.unmatched),
+      messages: breakdown(this.messages),
+      transfers: breakdown(this.transfers),
     }
   }
 
-  getEvents(kind: 'all' | 'matched' | 'unmatched', type: string) {
+  getByType(
+    kind: 'all' | 'unmatched' | 'messages' | 'transfers',
+    type: string,
+  ) {
     return this[kind].filter((x) => x.type === type)
   }
 }
