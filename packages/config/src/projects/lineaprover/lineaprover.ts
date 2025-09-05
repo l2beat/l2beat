@@ -57,7 +57,7 @@ export const lineaprover: BaseProject = {
 
     Linea prover includes Wizard-IOP framework for extending polynomial IOPs with more powerful queries, Arcane compiler of Wizard-IOP into polynomial IOP and Vortex list polynomial commitment (LPC) scheme.
 
-    Wizard-IOP represents an extension of polynomial IOP with a wider range of queries, including inclusion check, permutation check, range check etc. Vortex LPC is a batchable polynomial commitment that is based on [Ligero](https://eprint.iacr.org/2022/1608) with lattice-based hash functions. To achieve succinct proof size, Linea prover performs multiple rounds of self-recursion by arithmetizing the Vortex verifier in the Wizard-IOP framework. During these rounds Plonk+KZG schemes over curves BW6, BLS12-377, and BN254 are used, creating a dependency on 3 trusted setups (todo: link to trusted setups section).
+    Wizard-IOP represents an extension of polynomial IOP with a wider range of queries, including inclusion check, permutation check, range check etc. Vortex LPC is a batchable polynomial commitment that is based on [Ligero](https://eprint.iacr.org/2022/1608) with lattice-based hash functions. To achieve succinct proof size, Linea prover performs multiple rounds of self-recursion by arithmetizing the Vortex verifier in the Wizard-IOP framework. During these rounds Plonk+KZG schemes over curves BW6, BLS12-377, and BN254 are used, creating a dependency on 3 trusted setups, see [below](#trusted-setup) for more details.
 
     ### EVM circuits
 
@@ -73,7 +73,7 @@ export const lineaprover: BaseProject = {
 
     ### Final wrap
 
-    In the end the Linea proof is wrapped in a [gnark](https://github.com/Consensys/gnark) implementation of Plonk over BN254 curve for even more efficiency onchain. For Plonk, Aztec Ignition trusted setup ceremony is used (todo: link to trusted setups section).
+    In the end the Linea proof is wrapped in a [gnark](https://github.com/Consensys/gnark) implementation of Plonk over BN254 curve for even more efficiency onchain. For Plonk, Aztec Ignition trusted setup ceremony is used.
     `,
     trustedSetups: [
       {

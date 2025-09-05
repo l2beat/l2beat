@@ -82,7 +82,7 @@ export const openvmprover: BaseProject = {
 
     ### Final wrap
 
-The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve for efficient onchain processing. KZG commitment relies on Perpetual Powers of Tau trusted setup ceremony (todo: link to trusted setups section).
+The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve for efficient onchain processing. KZG commitment relies on Perpetual Powers of Tau trusted setup ceremony, see [below](#trusted-setup) for more details.
 `,
     trustedSetups: [
       {

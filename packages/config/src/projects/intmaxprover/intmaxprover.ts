@@ -59,7 +59,7 @@ export const intmaxprover: BaseProject = {
 
     INTMAX circuits are based on recursive architecture, where generating a new STARK requires validating a previous STARK proof (e.g. processing a new balance update requires validating all previous balance updates). Several entities are responsible for providing these recursive proofs: users or [balance provers](https://docs.network.intmax.io/developers-hub/intmax-nodes/provers#balance-prover) for balance updates, [validity provers](https://docs.network.intmax.io/developers-hub/intmax-nodes/validity-prover) for validity circuit, [claim](https://docs.network.intmax.io/developers-hub/intmax-nodes/claim-aggregator) and [withdrawal](https://docs.network.intmax.io/developers-hub/intmax-nodes/withdrawal-aggregator) aggregators for processing claim and withdrawal proofs.
 
-    Only claim and withdrawal proofs are posted onchain to be verified, all other proofs are verified only by the nodes in INTMAX network. Onchain proofs are wrapped in a [gnark](https://github.com/Consensys/gnark) implementation of Plonk over BN254 curve, which requires a trusted setup (todo: link to trusted setups section).
+    Only claim and withdrawal proofs are posted onchain to be verified, all other proofs are verified only by the nodes in INTMAX network. Onchain proofs are wrapped in a [gnark](https://github.com/Consensys/gnark) implementation of Plonk over BN254 curve, which requires a trusted setup (see [below](#trusted-setup) for more details).
     `,
     trustedSetups: [
       {
