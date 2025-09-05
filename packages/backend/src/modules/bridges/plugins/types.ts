@@ -24,6 +24,7 @@ export interface TxDetails {
 
 export interface BridgeEvent<T = unknown> {
   eventId: string
+  matchable: boolean
   type: string
   tx: TxDetails
   args: T
@@ -60,7 +61,10 @@ export interface BridgeEventType<T> {
   checkType(action: BridgeEvent): action is BridgeEvent<T>
 }
 
-export function createBridgeEventType<T>(type: string): BridgeEventType<T> {
+export function createBridgeEventType<T>(
+  type: string,
+  options?: { matchable: true },
+): BridgeEventType<T> {
   if (!/\w+\.\w+/.test(type)) {
     throw new Error('Actions type must have the format: "plugin.action"')
   }
@@ -70,6 +74,7 @@ export function createBridgeEventType<T>(type: string): BridgeEventType<T> {
     create(tx: BridgeEvent['tx'], payload: T): BridgeEvent<T> {
       return {
         eventId: generateId('E'),
+        matchable: !!options?.matchable,
         type,
         tx,
         // Ensure it can be saved to db

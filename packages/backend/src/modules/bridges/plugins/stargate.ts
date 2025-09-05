@@ -22,7 +22,7 @@ export const OFTSent = createBridgeEventType<{
 
 export const OFTReceived = createBridgeEventType<{
   guid: string
-}>('stargate.OFTReceived')
+}>('stargate.OFTReceived', { matchable: true })
 
 // NOTE: This is just an example plugin! Not production ready!
 export class StargatePlugin implements BridgePlugin {

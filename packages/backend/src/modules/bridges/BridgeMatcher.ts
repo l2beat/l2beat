@@ -17,7 +17,9 @@ export class BridgeMatcher {
 
   addEvent(event: BridgeEvent) {
     this.events.push(event)
-    this.unmatched.push(event)
+    if (event.matchable) {
+      this.unmatched.push(event)
+    }
   }
 
   start() {
