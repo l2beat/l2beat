@@ -3,8 +3,9 @@ import { EventDbImpl } from './EventDb'
 import type { BridgeEvent, BridgePlugin } from './plugins/types'
 
 export class BridgeMatcher {
-  public events: BridgeEvent[] = []
-  public unmatched: BridgeEvent[] = []
+  private all: BridgeEvent[] = []
+  private unmatched: BridgeEvent[] = []
+  private matched: BridgeEvent[] = []
   private running = false
 
   constructor(
@@ -16,7 +17,7 @@ export class BridgeMatcher {
   }
 
   addEvent(event: BridgeEvent) {
-    this.events.push(event)
+    this.all.push(event)
     if (event.matchable) {
       this.unmatched.push(event)
     }
@@ -41,7 +42,7 @@ export class BridgeMatcher {
   }
 
   async doMatching() {
-    const eventDb = new EventDbImpl(this.events)
+    const eventDb = new EventDbImpl(this.all)
     const matched = new Set<BridgeEvent>()
 
     for (const event of this.unmatched) {
@@ -51,6 +52,7 @@ export class BridgeMatcher {
             const result = await plugin.match?.(event, eventDb)
             if (result) {
               matched.add(event)
+              this.matched.push(event)
               this.logger.info('Matched', result)
             }
           } catch (e) {
@@ -64,5 +66,25 @@ export class BridgeMatcher {
       this.logger.info('Matched', { count: matched.size })
       this.unmatched = this.unmatched.filter((x) => !matched.has(x))
     }
+  }
+
+  getStats() {
+    function eventBreakdown(events: BridgeEvent[]) {
+      const byType: Record<string, number> = {}
+      for (const event of events) {
+        byType[event.type] = (byType[event.type] ?? 0) + 1
+      }
+      return byType
+    }
+
+    return {
+      all: eventBreakdown(this.all),
+      unmatched: eventBreakdown(this.unmatched),
+      matched: eventBreakdown(this.matched),
+    }
+  }
+
+  getEvents(kind: 'all' | 'matched' | 'unmatched', type: string) {
+    return this[kind].filter((x) => x.type === type)
   }
 }

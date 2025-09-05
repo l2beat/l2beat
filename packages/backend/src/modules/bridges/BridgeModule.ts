@@ -1,6 +1,7 @@
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BridgeBlockProcessor } from './BridgeBlockProcessor'
 import { BridgeMatcher } from './BridgeMatcher'
+import { createBridgeRouter } from './BridgeRouter'
 import { createBridgePlugins } from './plugins'
 
 export function createBridgeModule({
@@ -30,6 +31,8 @@ export function createBridgeModule({
     blockProcessors.push(processor)
   }
 
+  const bridgeRouter = createBridgeRouter(bridgeMatcher)
+
   const start = () => {
     logger = logger.for('BridgeModule')
     logger.info('Starting')
@@ -40,5 +43,5 @@ export function createBridgeModule({
     })
   }
 
-  return { start }
+  return { routers: [bridgeRouter], start }
 }
