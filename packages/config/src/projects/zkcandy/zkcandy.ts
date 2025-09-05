@@ -27,7 +27,6 @@ export const zkcandy: ScalingProject = zkStackL2({
     slug: 'zkcandy',
     description:
       "zkCandy is a Gaming Validium built on ZKsync's ZK stack for the next generation of GameFi - Supercharged by iCandy, the largest game developer in ANZ and SEA.",
-    stacks: ['ZK Stack'],
     links: {
       websites: ['https://zkcandy.io', 'https://icandy.io/'],
       socialMedia: [

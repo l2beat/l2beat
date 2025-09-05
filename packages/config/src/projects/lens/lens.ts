@@ -25,7 +25,6 @@ export const lens: ScalingProject = zkStackL2({
     slug: 'lens',
     description:
       "Lens Network is the main social networking hub for the user base of Lens Protocol, built on a Validium using ZKsync's ZK Stack technology.",
-    stacks: ['ZK Stack'],
     architectureImage: 'zkstack-validium-vector',
     links: {
       websites: ['https://lens.xyz'],
