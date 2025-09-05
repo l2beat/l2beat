@@ -17,16 +17,25 @@ export class BridgeBlockProcessor implements BlockProcessor {
 
   async processBlock(block: Block, logs: Log[]): Promise<void> {
     const toDecode = getLogsToDecode(this.chain, block, logs)
+    let count = 0
     for (const logToDecode of toDecode) {
       for (const plugin of this.plugins) {
         try {
           const event = await plugin.decode?.(logToDecode)
-          if (event) this.bridgeMatcher.addEvent(event)
+          if (event) {
+            count++
+            this.bridgeMatcher.addEvent(event)
+          }
         } catch (e) {
           this.logger.error(e)
         }
       }
     }
+    this.logger.info('Block processed', {
+      chain: this.chain,
+      blockNumber: block.number,
+      events: count,
+    })
   }
 }
 

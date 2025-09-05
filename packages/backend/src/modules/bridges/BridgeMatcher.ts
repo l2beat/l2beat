@@ -3,14 +3,14 @@ import { EventDbImpl } from './EventDb'
 import type { BridgeEvent, BridgePlugin } from './plugins/types'
 
 export class BridgeMatcher {
-  private events: BridgeEvent[] = []
-  private unmatched: BridgeEvent[] = []
+  public events: BridgeEvent[] = []
+  public unmatched: BridgeEvent[] = []
   private running = false
 
   constructor(
     private plugins: BridgePlugin[],
     private logger: Logger,
-    private intervalMs = 10 * 60 * 1000,
+    private intervalMs = 10_1000,
   ) {
     this.logger = logger.for(this)
   }
@@ -59,6 +59,7 @@ export class BridgeMatcher {
     }
 
     if (matched.size > 0) {
+      this.logger.info('Matched', { count: matched.size })
       this.unmatched = this.unmatched.filter((x) => !matched.has(x))
     }
   }

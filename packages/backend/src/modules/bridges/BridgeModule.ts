@@ -34,7 +34,10 @@ export function createBridgeModule({
     logger = logger.for('BridgeModule')
     logger.info('Starting')
     bridgeMatcher.start()
-    logger.info('Started')
+    logger.info('Started', {
+      chains: chains.length,
+      plugins: plugins.length,
+    })
   }
 
   return { start }
