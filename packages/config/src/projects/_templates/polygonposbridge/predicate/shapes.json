@@ -48,5 +48,10 @@
     "hash": "0x6e1b7753cf25b1dc926ed1048285f85b9cc596dbcebdadc1fdabd6830ac08f1e",
     "address": "eth:0x37A9b4e7c327c449858dba9F5e39CE6771cBc31b",
     "blockNumber": 22231805
+  },
+  "ERC20Predicate_migrator": {
+    "hash": "0xf159b16a5d3a5070602bdcce59b317b67354f3e0daade4bd67d39fc4b7e11476",
+    "address": "eth:0x1F4c1E0afBeb5b5B86d7722549274434b29884F6",
+    "blockNumber": 23290158
   }
 }
