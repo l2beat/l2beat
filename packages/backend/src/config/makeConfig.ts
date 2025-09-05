@@ -57,7 +57,6 @@ export async function makeConfig(
               ? { rejectUnauthorized: false }
               : undefined,
           },
-          freshStart: env.boolean('FRESH_START', false),
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connectionPoolSize: {
             // defaults used by knex
@@ -67,7 +66,6 @@ export async function makeConfig(
           isReadonly,
         }
       : {
-          freshStart: false,
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connection: {
             connectionString: env.string('DATABASE_URL'),

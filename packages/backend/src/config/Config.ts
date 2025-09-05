@@ -73,7 +73,6 @@ export interface DatabaseConfig {
       rejectUnauthorized?: boolean
     }
   }
-  readonly freshStart: boolean
   readonly enableQueryLogging: boolean
   readonly requiredMajorVersion?: number
   readonly connectionPoolSize: {
