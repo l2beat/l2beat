@@ -44,6 +44,7 @@ import { novastro } from '../projects/novastro/novastro'
 import { oceanum } from '../projects/oceanum/oceanum'
 import { onchain } from '../projects/onchain/onchain'
 import { onyx } from '../projects/onyx/onyx'
+import { ouroboro } from '../projects/ouroboro/ouroboro'
 import { perennial } from '../projects/perennial/perennial'
 import { playblock } from '../projects/playblock/playblock'
 import { pmon } from '../projects/pmon/pmon'
@@ -130,6 +131,7 @@ export const layer3s: ScalingProject[] = [
   vemphorizon,
   l3x,
   lumiterra,
+  ouroboro,
   playblock,
   spheron,
   superposition,
