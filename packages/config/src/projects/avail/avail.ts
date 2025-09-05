@@ -34,7 +34,7 @@ export const avail: BaseProject = {
       socialMedia: [
         'https://x.com/AvailProject',
         'https://t.me/AvailCommunity',
-        'https://discord.com/invite/y6fHnxZQX8',
+        'https://discord.com/invite/AvailProject',
         'https://www.linkedin.com/company/availproject/',
       ],
     },
