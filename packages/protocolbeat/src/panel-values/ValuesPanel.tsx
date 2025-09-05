@@ -61,7 +61,11 @@ function Display({
   const addresses = getAddressesToCopy(selected)
 
   const dialog = addresses && canAddShape(selected) && !isReadOnly && (
-    <TemplateDialog.Root>
+    <TemplateDialog.Root
+      key={`${project}-${selected.address}`}
+      project={project}
+      selectedName={selected.name}
+    >
       <TemplateDialog.Trigger>Add shape</TemplateDialog.Trigger>
       <TemplateDialog.Body
         addresses={addresses}
