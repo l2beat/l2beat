@@ -25,7 +25,7 @@ export const stargate: Bridge = {
         'https://github.com/LayerZero-Labs/LayerZero',
       ],
       socialMedia: [
-        'https://discord.com/invite/TMWHAfS',
+        'https://discord.com/invite/eG5TgNpUE7',
         'https://t.me/joinchat/LEM0ELklmO1kODdh',
         'https://medium.com/stargate-official',
         'https://twitter.com/StargateFinance',
