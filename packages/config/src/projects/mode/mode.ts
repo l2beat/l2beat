@@ -24,6 +24,7 @@ export const mode: ScalingProject = opStackL2({
       bridges: ['https://app.mode.network/'],
       documentation: ['https://docs.mode.network/'],
       explorers: ['https://modescan.io'],
+      repositories: ['https://github.com/mode-network'],
       socialMedia: [
         'https://twitter.com/modenetwork',
         'https://discord.gg/modenetworkofficial',
