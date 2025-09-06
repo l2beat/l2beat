@@ -1,7 +1,7 @@
 {
   "name": "abstract",
   "timestamp": 1755156245,
-  "configHash": "0x525773a513c4a4cac48957fdc757f774e44649392cf877169bca0b27b3aaa6b6",
+  "configHash": "0x9e00cde2c623cd8ba823c5d76bf9a226e0bfebc3461dc205f51f4a36f419347f",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

@@ -7763,5 +7763,23 @@
         ]
       }
     }
+  ],
+  "polygonpos": [
+    {
+      "symbol": "USDT0",
+      "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+      "coingeckoId": "usdt0",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
   ]
 }

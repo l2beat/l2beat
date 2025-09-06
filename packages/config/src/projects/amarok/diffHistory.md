@@ -1,4 +1,27 @@
-Generated with discovered.json: 0x434bab5a7a4cd88e129be4cffe414eaf36f51b15
+Generated with discovered.json: 0xade2635c385d03af20869f63a8728d27b1e0641c
+
+# Diff at Fri, 05 Sep 2025 09:16:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6cd15987e9ebf76a374fdd067e5e25baf948c56c block: 1756736025
+- current timestamp: 1757063689
+
+## Description
+
+bridge paused.
+
+## Watched changes
+
+```diff
+    contract ConnextBridge (eth:0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0xd9168a80258b5f1dc39aa2d985c86f47b4ce9259
 
 # Diff at Mon, 01 Sep 2025 14:18:15 GMT:
 

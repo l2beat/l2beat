@@ -14,5 +14,15 @@
     "tvl",
     "getTransferGasLimit",
     "deficitOffset"
-  ]
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set critical configurations of the pool, potentially stealing funds."
+        }
+      ]
+    }
+  }
 }

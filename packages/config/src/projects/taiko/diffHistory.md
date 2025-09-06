@@ -1,4 +1,76 @@
-Generated with discovered.json: 0xb922d794f9f0fc154e3c0c80957b458b070da718
+Generated with discovered.json: 0x297bb2d31f5cf198e31a17eeac9687cf46a6d5be
+
+# Diff at Fri, 05 Sep 2025 09:35:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6cd15987e9ebf76a374fdd067e5e25baf948c56c block: 1756804828
+- current timestamp: 1757064809
+
+## Description
+
+New operator registered, new pending owner (DAO/SC) for some contracts.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.
+      description:
+-        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
++        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
+      values.operatorCount:
+-        3
++        4
+      values.registeredOperators.3:
++        {"proposer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7","sequencer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"}
+      values.registeredOperatorsCount:
+-        3
++        4
+    }
+```
+
+```diff
+    contract L2AddressManager (taiko:0x1670000000000000000000000000000000000006) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.pendingOwner:
+-        "taiko:0x0000000000000000000000000000000000000000"
++        "taiko:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract TaikoAnchor (taiko:0x1670000000000000000000000000000000010001) {
+    +++ description: Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.
+      values.pendingOwner:
+-        "taiko:0x0000000000000000000000000000000000000000"
++        "taiko:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract DefaultResolver (taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.pendingOwner:
+-        "taiko:0x0000000000000000000000000000000000000000"
++        "taiko:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract Taiko L2 Multisig (taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8) {
+    +++ description: None
+      values.$members.0:
++        "taiko:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "5 of 7 (71%)"
+    }
+```
+
+Generated with discovered.json: 0x38e69c2c69134a9801e7ea6f8ca6e149fb23eeb2
 
 # Diff at Tue, 02 Sep 2025 09:26:15 GMT:
 
