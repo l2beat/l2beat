@@ -19,7 +19,13 @@ export async function getLivenessSection(
 ): Promise<
   | Omit<
       LivenessSectionProps,
-      'projectId' | 'id' | 'title' | 'sectionOrder' | 'milestones' | 'project'
+      | 'projectId'
+      | 'id'
+      | 'title'
+      | 'sectionOrder'
+      | 'milestones'
+      | 'project'
+      | 'hideSubtypeSwitch'
     >
   | undefined
 > {

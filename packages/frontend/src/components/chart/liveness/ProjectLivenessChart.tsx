@@ -25,6 +25,7 @@ interface Props {
   milestones: Milestone[]
   defaultRange: LivenessChartTimeRange
   isArchived: boolean
+  hideSubtypeSwitch?: boolean
 }
 
 export function ProjectLivenessChart({
@@ -35,6 +36,7 @@ export function ProjectLivenessChart({
   milestones,
   isArchived,
   defaultRange,
+  hideSubtypeSwitch,
 }: Props) {
   const [timeRange, setTimeRange] =
     useState<LivenessChartTimeRange>(defaultRange)
@@ -79,11 +81,13 @@ export function ProjectLivenessChart({
       <div className="flex flex-col gap-1">
         <ProjectChartTimeRange range={chartRange} />
         <ChartControlsWrapper className="flex-wrap-reverse">
-          <LivenessChartSubtypeControls
-            subtype={subtype}
-            setSubtype={setSubtype}
-            configuredSubtypes={configuredSubtypes}
-          />
+          {!hideSubtypeSwitch && (
+            <LivenessChartSubtypeControls
+              subtype={subtype}
+              setSubtype={setSubtype}
+              configuredSubtypes={configuredSubtypes}
+            />
+          )}
           <LivenessChartTimeRangeControls
             timeRange={timeRange}
             setTimeRange={setTimeRange}

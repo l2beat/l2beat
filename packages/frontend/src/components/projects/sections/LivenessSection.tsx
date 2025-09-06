@@ -23,6 +23,7 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
   defaultRange: LivenessChartTimeRange
   isArchived: boolean
+  hideSubtypeSwitch: boolean
 }
 
 export function LivenessSection({
@@ -34,6 +35,7 @@ export function LivenessSection({
   milestones,
   defaultRange,
   isArchived,
+  hideSubtypeSwitch,
   ...sectionProps
 }: LivenessSectionProps) {
   const ongoingAnomalies = anomalies.filter((a) => a.end === undefined)
@@ -56,6 +58,7 @@ export function LivenessSection({
         milestones={milestones}
         defaultRange={defaultRange}
         isArchived={isArchived}
+        hideSubtypeSwitch={hideSubtypeSwitch}
       />
       <div className="mt-4">
         <TrackedTransactions {...trackedTransactions} />
