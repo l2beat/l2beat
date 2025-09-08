@@ -1,7 +1,9 @@
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { CurrentPriceRepository } from './CurrentPriceRepository'
-import type { CurrentPriceRecord } from './entity'
+import {
+  type CurrentPriceRecord,
+  CurrentPriceRepository,
+} from './CurrentPriceRepository'
 
 describeDatabase(CurrentPriceRepository.name, (database) => {
   const repository = database.currentPrice

@@ -1,8 +1,9 @@
 import { expect } from 'earl'
-
 import { describeDatabase } from '../test/database'
-import type { IndexerConfigurationRecord } from '../uif/indexer-configuration/entity'
-import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
+import {
+  type IndexerConfigurationRecord,
+  IndexerConfigurationRepository,
+} from './IndexerConfigurationRepository'
 
 describeDatabase(IndexerConfigurationRepository.name, (db) => {
   const repository = db.indexerConfiguration
