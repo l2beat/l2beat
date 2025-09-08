@@ -23,7 +23,7 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
   defaultRange: LivenessChartTimeRange
   isArchived: boolean
-  hideSubtypeSwitch: boolean
+  hideSubtypeSwitch?: boolean
   isForDaBridge?: boolean
 }
 
