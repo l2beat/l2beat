@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
 import type { DataAvailabilityTrackingConfig } from '../../config/Config'
@@ -177,14 +177,22 @@ function createIndexers(
 
     const hourlyIndexer = new HourlyIndexer(logger, clock, {
       onTick: async (targetTimestamp) => {
-        await database.syncMetadata.upsertMany(
-          uniqBy(configurations, (e) => e.projectId).map((c) => ({
-            feature: 'dataAvailability',
+        await database.syncMetadata.upsertMany([
+          ...uniqBy(daLayerConfigurations, (e) => e.projectId).map((c) => ({
+            feature: 'dataAvailability' as const,
             id: c.projectId,
             target: targetTimestamp,
-            syncedUntil: null,
           })),
-        )
+          // We only sync projects data at 02:00:00
+          ...(UnixTime.toStartOf(targetTimestamp, 'day') + 2 * UnixTime.HOUR ===
+          targetTimestamp
+            ? uniqBy(projectConfigurations, (e) => e.projectId).map((c) => ({
+                feature: 'dataAvailability' as const,
+                id: c.projectId,
+                target: targetTimestamp,
+              }))
+            : []),
+        ])
       },
     })
     eigenIndexers.push(hourlyIndexer)

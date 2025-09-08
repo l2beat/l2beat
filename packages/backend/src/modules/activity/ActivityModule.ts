@@ -49,7 +49,7 @@ export function initActivityModule({
                 config.activity.projects.map((p) => ({
                   feature: 'activity',
                   id: p.id,
-                  target: UnixTime.toStartOf(targetTimestamp, 'day'),
+                  target: targetTimestamp,
                   blockTarget: blockNumber,
                 })),
               )
@@ -98,7 +98,7 @@ export function initActivityModule({
                 config.activity.projects.map((project) => ({
                   feature: 'activity',
                   id: project.id,
-                  target: UnixTime.toStartOf(targetTimestamp, 'day'),
+                  target: targetTimestamp,
                 })),
               )
             },
