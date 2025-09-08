@@ -37,7 +37,7 @@ export async function getScalingRiskStateValidationEntries() {
     ],
   )
 
-  const [zkProjects, optimisticProjects] = partition(
+  const [validityProjects, optimisticProjects] = partition(
     projects.filter(
       (p) =>
         p.scalingInfo.proofSystem &&
@@ -46,8 +46,8 @@ export async function getScalingRiskStateValidationEntries() {
     (p) => p.scalingInfo.proofSystem?.type === 'Validity',
   )
 
-  const zkEntries = zkProjects.map((project) =>
-    getScalingRiskStateValidationZkEntry(
+  const validityEntries = validityProjects.map((project) =>
+    getScalingRiskStateValidationValidityEntry(
       project,
       projectsChangeReport.getChanges(project.id),
       zkCatalogProjects,
@@ -62,12 +62,13 @@ export async function getScalingRiskStateValidationEntries() {
   )
 
   return {
-    zk: groupByScalingTabs(zkEntries),
+    validity: groupByScalingTabs(validityEntries),
     optimistic: groupByScalingTabs(optimisticEntries),
   }
 }
 
-export interface ScalingRiskStateValidationZkEntry extends CommonScalingEntry {
+export interface ScalingRiskStateValidationValidityEntry
+  extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem
   isa: string | undefined
   trustedSetupsByProofSystem?: Record<
@@ -86,11 +87,11 @@ export interface ScalingRiskStateValidationZkEntry extends CommonScalingEntry {
   executionDelay: number | undefined
 }
 
-function getScalingRiskStateValidationZkEntry(
+function getScalingRiskStateValidationValidityEntry(
   project: Project<'scalingInfo' | 'statuses' | 'display' | 'scalingRisks'>,
   changes: ProjectChanges,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
-): ScalingRiskStateValidationZkEntry {
+): ScalingRiskStateValidationValidityEntry {
   const proofSystem = project.scalingInfo?.proofSystem
   assert(proofSystem, 'Proof system is required')
 
@@ -158,7 +159,7 @@ function getScalingRiskStateValidationOptimisticEntry(
 function getTrustedSetupsByProofSystem(
   project: Project<'zkCatalogInfo'>,
   projectId: ProjectId,
-): ScalingRiskStateValidationZkEntry['trustedSetupsByProofSystem'] {
+): ScalingRiskStateValidationValidityEntry['trustedSetupsByProofSystem'] {
   const relevantVerifiers = project.zkCatalogInfo.verifierHashes.filter((v) =>
     v.usedBy.includes(projectId),
   )
