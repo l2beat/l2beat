@@ -49,6 +49,7 @@ const sanctionExpirySeconds = discovery.getContractValue<number>(
 
 export const kinto: ScalingProject = orbitStackL2({
   capability: 'appchain',
+  archivedAt: UnixTime(1757291567),
   addedAt: UnixTime(1716336000), // 2024-05-22T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera, BADGES.VM.AppChain],
@@ -56,6 +57,8 @@ export const kinto: ScalingProject = orbitStackL2({
   display: {
     name: 'Kinto',
     slug: 'kinto',
+    headerWarning:
+      'Kinto [is shutting down](https://x.com/KintoXYZ/status/1964721235675537573).',
     architectureImage: 'kinto',
     description:
       'Kinto is an Orbit stack L2 with account abstraction and KYC enabled for all users, supporting both modern financial institutions and decentralized protocols.',
