@@ -11,12 +11,12 @@ import type { Event } from './plugins/types'
 
 const CONFIG = [
   {
-    name: 'arbitrum',
-    block: 363451284,
+    name: 'base',
+    block: 35059380,
   },
   {
-    name: 'base',
-    block: 33582730,
+    name: 'optimism',
+    block: 140655349,
   },
 ]
 

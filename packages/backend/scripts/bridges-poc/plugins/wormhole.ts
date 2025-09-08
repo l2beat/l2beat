@@ -22,6 +22,7 @@ export const LogMessagePublished = createEventType<{
   sequence: string
   wormholeChainId: number
   sender: EthereumAddress
+  txHash: string
 }>('wormhole.LogMessagePublished')
 
 export class WormholePlugin implements Plugin {
@@ -47,6 +48,7 @@ export class WormholePlugin implements Plugin {
       sequence: parsed.sequence.toString(),
       wormholeChainId: network.wormholeChainId,
       sender: EthereumAddress(parsed.sender),
+      txHash: input.tx.hash,
     })
   }
 }
