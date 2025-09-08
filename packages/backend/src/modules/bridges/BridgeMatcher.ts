@@ -18,7 +18,7 @@ export class BridgeMatcher {
     private bridgeStore: BridgeStore,
     private plugins: BridgePlugin[],
     private logger: Logger,
-    private intervalMs = 10_1000,
+    private intervalMs = 10_000,
   ) {
     this.logger = logger.for(this)
   }
