@@ -353,6 +353,8 @@ model BridgeEvent {
   blockHash   String   @db.VarChar(66)
   txHash      String   @db.VarChar(66)
   txTo        String?  @db.VarChar(42)
+  matched     Boolean
+  grouped     Boolean
   logIndex    Int
   args        Json
 
@@ -360,18 +362,20 @@ model BridgeEvent {
 }
 
 model BridgeMessage {
-  messageId   String   @db.VarChar(40)
-  type        String   @db.VarChar(64)
-  durationMs  Int
-  expiresAt   DateTime @db.Timestamp(6)
-  srcTime     DateTime @db.Timestamp(6)
-  srcChain    String   @db.VarChar(32)
-  srcTxHash   String   @db.VarChar(66)
-  srcLogIndex Int
-  dstTime     DateTime @db.Timestamp(6)
-  dstChain    String   @db.VarChar(32)
-  dstTxHash   String   @db.VarChar(66)
-  dstLogIndex Int
+  messageId   String    @db.VarChar(40)
+  type        String    @db.VarChar(64)
+  durationMs  Int?
+  expiresAt   DateTime  @db.Timestamp(6)
+  srcTime     DateTime? @db.Timestamp(6)
+  srcChain    String?   @db.VarChar(32)
+  srcTxHash   String?   @db.VarChar(66)
+  srcLogIndex Int?
+  srcEventId  String?   @db.VarChar(40)
+  dstTime     DateTime? @db.Timestamp(6)
+  dstChain    String?   @db.VarChar(32)
+  dstTxHash   String?   @db.VarChar(66)
+  dstLogIndex Int?
+  dstEventId  String?   @db.VarChar(40)
 
   @@id([messageId])
 }

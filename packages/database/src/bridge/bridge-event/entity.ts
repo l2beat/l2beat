@@ -13,6 +13,8 @@ export interface BridgeEventRecord {
   txHash: string
   txTo: EthereumAddress | undefined
   logIndex: number
+  matched: boolean
+  grouped: boolean
   args: unknown
 }
 
@@ -28,6 +30,8 @@ export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
     txHash: row.txHash,
     txTo: row.txTo as EthereumAddress | undefined,
     logIndex: row.logIndex,
+    matched: row.matched,
+    grouped: row.grouped,
     args: row.args,
   }
 }
@@ -44,6 +48,8 @@ export function toRow(record: BridgeEventRecord): Insertable<BridgeEvent> {
     txHash: record.txHash,
     txTo: record.txTo ?? null,
     logIndex: record.logIndex,
+    matched: record.matched,
+    grouped: record.grouped,
     args: record.args,
   }
 }

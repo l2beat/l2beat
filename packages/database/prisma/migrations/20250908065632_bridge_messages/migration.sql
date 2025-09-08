@@ -9,6 +9,8 @@ CREATE TABLE "BridgeEvent" (
     "blockHash" VARCHAR(66) NOT NULL,
     "txHash" VARCHAR(66) NOT NULL,
     "txTo" VARCHAR(42),
+    "matched" BOOLEAN NOT NULL,
+    "grouped" BOOLEAN NOT NULL,
     "logIndex" INTEGER NOT NULL,
     "args" JSONB NOT NULL,
 
@@ -19,16 +21,18 @@ CREATE TABLE "BridgeEvent" (
 CREATE TABLE "BridgeMessage" (
     "messageId" VARCHAR(40) NOT NULL,
     "type" VARCHAR(64) NOT NULL,
-    "durationMs" INTEGER NOT NULL,
+    "durationMs" INTEGER,
     "expiresAt" TIMESTAMP(6) NOT NULL,
-    "srcTime" TIMESTAMP(6) NOT NULL,
-    "srcChain" VARCHAR(32) NOT NULL,
-    "srcTxHash" VARCHAR(66) NOT NULL,
-    "srcLogIndex" INTEGER NOT NULL,
-    "dstTime" TIMESTAMP(6) NOT NULL,
-    "dstChain" VARCHAR(32) NOT NULL,
-    "dstTxHash" VARCHAR(66) NOT NULL,
-    "dstLogIndex" INTEGER NOT NULL,
+    "srcTime" TIMESTAMP(6),
+    "srcChain" VARCHAR(32),
+    "srcTxHash" VARCHAR(66),
+    "srcLogIndex" INTEGER,
+    "srcEventId" VARCHAR(40),
+    "dstTime" TIMESTAMP(6),
+    "dstChain" VARCHAR(32),
+    "dstTxHash" VARCHAR(66),
+    "dstLogIndex" INTEGER,
+    "dstEventId" VARCHAR(40),
 
     CONSTRAINT "BridgeMessage_pkey" PRIMARY KEY ("messageId")
 );

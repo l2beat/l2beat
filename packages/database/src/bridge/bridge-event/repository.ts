@@ -29,6 +29,32 @@ export class BridgeEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getExpired(currentTime: UnixTime): Promise<BridgeEventRecord[]> {
+    const rows = await this.db
+      .selectFrom('BridgeEvent')
+      .where('expiresAt', '<=', UnixTime.toDate(currentTime))
+      .selectAll()
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async updateMatched(eventIds: string[]): Promise<void> {
+    await this.db
+      .updateTable('BridgeEvent')
+      .set({ matched: true })
+      .where('eventId', 'in', eventIds)
+      .execute()
+  }
+
+  async updateGrouped(eventIds: string[]): Promise<void> {
+    await this.db
+      .updateTable('BridgeEvent')
+      .set({ grouped: true })
+      .where('eventId', 'in', eventIds)
+      .execute()
+  }
+
   async deleteExpired(currentTime: UnixTime): Promise<number> {
     const result = await this.db
       .deleteFrom('BridgeEvent')
