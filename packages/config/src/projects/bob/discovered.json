@@ -1,6 +1,6 @@
 {
   "name": "bob",
-  "timestamp": 1756900853,
+  "timestamp": 1757326876,
   "configHash": "0xc5f6d626ec2c2975ecaec3b725156ca2a358171d9d00a248d99ae25c54fd8dae",
   "entries": [
     {
@@ -174,6 +174,13 @@
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
             "value": 0,
             "data": "0xd0a6af3073c457ba000000000000000000000000000000000000000000000000000000000000000000000000000000009f9994eb4cb5200198fefb470f8b50301662e696"
+          },
+          {
+            "id": "0xaee8ce52716542c6fedc0f10553f1b763702d9bef05dcdcdf8c5cb2ed8d6cabb",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30242f9d5b00000000000000000000000000000000000000000000000000000000000000000000000000000000844d5f01161e3559d36f23d0aa9e9620949af782"
           }
         ],
         "callsScheduled": [
@@ -432,7 +439,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 21924000,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x3153E43D89f2Fe800cE911083b0E7e42b5FFAa21",
+        "lastResolved": "eth:0x27472405bD6F87516caef5c6817e58CA5695b0e3",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
@@ -643,6 +650,32 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "name": "RiscZeroSetVerifier",
+      "address": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85",
+      "type": "Contract",
+      "template": "risc0/RiscZeroSetVerifier",
+      "sourceHashes": [
+        "0x5e5ad63d9792c63d8edff748005e7da98af9a6dcd9bf0fbdcb17b7c1e9ab7edd"
+      ],
+      "proxyType": "immutable",
+      "description": "Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.",
+      "sinceTimestamp": 1756842743,
+      "sinceBlock": 23277627,
+      "values": {
+        "$immutable": true,
+        "imageInfo": [
+          "0x70909b25db0db00f1d4b4016aeb876f53568a3e5a8e6397cb562d79947a02cc9",
+          "https://gateway.pinata.cloud/ipfs/bafybeicclqbjn5ief3ycqif6wv3n3wr43szv2locrmml5h7d4fkrz4jrum"
+        ],
+        "SELECTOR": "0x242f9d5b",
+        "VERIFIER": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+        "VERSION": "0.9.0"
+      },
+      "implementationNames": {
+        "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": "RiscZeroSetVerifier"
+      }
+    },
+    {
       "address": "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
       "type": "EOA",
       "proxyType": "EOA"
@@ -782,6 +815,35 @@
       ]
     },
     {
+      "name": "RiscZeroVerifierEmergencyStop",
+      "address": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782",
+      "type": "Contract",
+      "template": "risc0/RiscZeroVerifierEmergencyStop",
+      "sourceHashes": [
+        "0x215b7779ba88b0e55cbc280c1640649f7ac41a2b2d76176efef0cfd88fe563f6"
+      ],
+      "proxyType": "immutable",
+      "description": "A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.",
+      "sinceTimestamp": 1756842755,
+      "sinceBlock": 23277628,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+        "paused": false,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "verifier": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85"
+      },
+      "fieldMeta": {
+        "paused": {
+          "severity": "HIGH",
+          "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
+        }
+      },
+      "implementationNames": {
+        "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782": "RiscZeroVerifierEmergencyStop"
+      }
+    },
+    {
       "name": "OptimismPortal2",
       "address": "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
       "type": "Contract",
@@ -847,8 +909,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 21000,
-          "prevBlockNum": 23281616
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 23316917
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -900,7 +962,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "verifier5Manual": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
         "verifier6Manual": "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696",
-        "verifier7Manual": "EXPECT_REVERT"
+        "verifier7Manual": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782"
       },
       "implementationNames": {
         "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": "RiscZeroVerifierRouter"
@@ -937,7 +999,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x9b9f9CD7A6BfCB55c18bfA35392F409F98B35B44",
-        "gameCount": 99,
+        "gameCount": 109,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A",
@@ -1566,7 +1628,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660588",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660595",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1748,6 +1810,12 @@
         {
           "permission": "interact",
           "from": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
+          "description": "pause the verifier.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782",
           "description": "pause the verifier.",
           "role": ".owner"
         },
@@ -2198,6 +2266,21 @@
       "function unpause()",
       "function version() view returns (string)"
     ],
+    "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": [
+      "constructor(address verifier, bytes32 imageId, string _imageUrl)",
+      "error SelectorMismatch(bytes4 received, bytes4 expected)",
+      "error VerificationFailed()",
+      "error VerifierAddressZero()",
+      "event VerifiedRoot(bytes32 indexed root, bytes seal)",
+      "function SELECTOR() view returns (bytes4)",
+      "function VERIFIER() view returns (address)",
+      "function VERSION() view returns (string)",
+      "function containsRoot(bytes32 root) view returns (bool)",
+      "function imageInfo() view returns (bytes32, string)",
+      "function submitMerkleRoot(bytes32 root, bytes seal)",
+      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
+      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
+    ],
     "eth:0x5493f4677A186f64805fe7317D6993ba4863988F": [
       "constructor()",
       "event Initialized(uint8 version)",
@@ -2343,6 +2426,29 @@
       "function setAnchorState(address _game)",
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
+    ],
+    "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782": [
+      "constructor(address _verifier, address guardian)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error InvalidProofOfExploit()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function acceptOwnership()",
+      "function estop(tuple(bytes seal, bytes32 claimDigest) receipt)",
+      "function estop()",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function verifier() view returns (address)",
+      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
+      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
     ],
     "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E": [
       "constructor(address _admin)",
@@ -2859,10 +2965,11 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "risc0/KailuaGame": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
     "risc0/KailuaTreasury": "0xd380054459d0d0b82a4da06bf538b8ecad2fa61a2270945c6fc558f81ee7774c",
+    "risc0/RiscZeroSetVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "risc0/RiscZeroVerifierEmergencyStop": "0x51834983916be3dbcb2599e427fff7336cf176a2a5839ac470883eb1d9703763",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23282448 },
-  "permissionsConfigHash": "0x2f6fddac0acdb875219027f1e05582042dfc22b42d64b46bb7d5cd4f30904ded"
+  "usedBlockNumbers": { "ethereum": 23317740 },
+  "permissionsConfigHash": "0x4ecb49a683dcd66916bcbfadd4de0af5757b2c75e30c51957c6cfe5f6d7a1c61"
 }
