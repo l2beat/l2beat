@@ -190,4 +190,48 @@ export class TokenValueRepository extends BaseRepository {
       value: row.value,
     }))
   }
+
+  async getTvsTableBySource(
+    projectIds: string[],
+    depth: number,
+  ): Promise<
+    {
+      projectId: string
+      source: string
+      value: string | number | bigint
+    }[]
+  > {
+    const lt = this.db
+      .selectFrom('TokenValue')
+      .select(['tokenId', this.db.fn.max('timestamp').as('maxTimestamp')])
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '>=', UnixTime.toDate(depth))
+      .groupBy(['tokenId'])
+      .as('lt')
+
+    const rows = await this.db
+      .selectFrom('TokenMetadata')
+      .innerJoin(lt, 'lt.tokenId', 'TokenMetadata.tokenId')
+      .innerJoin('TokenValue', (join) =>
+        join
+          .onRef('TokenValue.tokenId', '=', 'TokenMetadata.tokenId')
+          .onRef('TokenValue.timestamp', '=', 'lt.maxTimestamp'),
+      )
+      .select([
+        'TokenMetadata.projectId',
+        'TokenMetadata.source',
+        this.db.fn.sum('TokenValue.valueForSummary').as('value'),
+      ])
+      .where('TokenMetadata.projectId', 'in', projectIds)
+      .where('timestamp', '>=', UnixTime.toDate(depth))
+      .groupBy(['TokenMetadata.projectId', 'TokenMetadata.source'])
+      .orderBy(['TokenMetadata.projectId', 'TokenMetadata.source'])
+      .execute()
+
+    return rows.map((row) => ({
+      projectId: row.projectId,
+      source: row.source,
+      value: row.value,
+    }))
+  }
 }

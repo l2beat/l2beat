@@ -1,4 +1,6 @@
 import { createHash } from 'crypto'
+import { readFileSync } from 'fs'
+import path from 'path'
 import { createClient, type RedisClientType } from 'redis'
 
 const DEFAULT_EXPIRATION = 10 * 60 // 10 minutes
@@ -15,12 +17,20 @@ export class Cache {
     })
   }
 
-  generateKey(query: string, input: string[]) {
-    const inputHash = createHash('sha1')
-      .update(input.join(''))
+  generateKey(query: string, input: unknown): string {
+    // generate hash of the query file contents and input
+    // to ensure that if the query changes, the cache is invalidated
+    const queryFilePath = path.join(__dirname, `../queries/${query}.ts`)
+    const file = readFileSync(queryFilePath, 'utf8')
+    const queryHash = createHash('md5').update(file).digest('hex').slice(0, 12)
+
+    // also hash the input to ensure that different inputs generate different keys
+    const inputHash = createHash('md5')
+      .update(JSON.stringify(input))
       .digest('hex')
       .slice(0, 12)
-    return `${query}::${inputHash}`
+
+    return `${query}::${queryHash}::${inputHash}`
   }
 
   async write(key: string, data: unknown, expires?: number) {
@@ -32,13 +42,13 @@ export class Cache {
     await this.client.disconnect()
   }
 
-  async read<T>(key: string): Promise<T | undefined> {
+  async read(key: string): Promise<unknown | undefined> {
     await this.client.connect()
     const data = await this.client.get(key)
     await this.client.disconnect()
     if (!data) {
       return undefined
     }
-    return JSON.parse(data) as T
+    return JSON.parse(data)
   }
 }

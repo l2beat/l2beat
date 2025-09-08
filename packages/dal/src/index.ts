@@ -1,16 +1,24 @@
 import { ProjectService } from '@l2beat/config'
-import { getTvsChart } from './queries/getTvsChart'
+import { execute } from './queries'
+import { getLogger } from './utils'
 
 main().catch(() => {
   process.exit(1)
 })
 
 async function main() {
+  const logger = getLogger()
   const rollups = await getRollups()
   try {
-    await getTvsChart(rollups)
+    const result = await execute({
+      name: 'getTvsChartQuery',
+      args: [rollups],
+    })
+
+    const size = Buffer.byteLength(JSON.stringify(result), 'utf8')
+    logger.info(`Data size: ${size / 1024} KB`)
   } catch (error) {
-    console.error('Error occurred while fetching TVS chart:', error)
+    logger.error('Error occurred while fetching TVS chart:', error)
   }
 
   process.exit(0)
