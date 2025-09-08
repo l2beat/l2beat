@@ -1,9 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
-import { describeDatabase } from '../../test/database'
-import type { UpdateMessageRecord } from './entity'
-import { UpdateMessageRepository } from './repository'
+import { describeDatabase } from '../test/database'
+import {
+  UpdateMessageRepository,
+  type UpdateMessageRecord,
+} from './UpdateMessageRepository'
 
 describeDatabase(UpdateMessageRepository.name, (db) => {
   const repository = db.updateMessage

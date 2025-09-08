@@ -1,5 +1,23 @@
-import { BaseRepository } from '../../BaseRepository'
-import { type DiscoveryCacheRecord, toRecord, toRow } from './entity'
+import { BaseRepository } from '../BaseRepository'
+import type { Insertable, Selectable } from 'kysely'
+import type { DiscoveryCache } from '../kysely/generated/types'
+
+export interface DiscoveryCacheRecord {
+  key: string
+  value: string
+}
+
+export function toRecord(
+  row: Selectable<DiscoveryCache>,
+): DiscoveryCacheRecord {
+  return row
+}
+
+export function toRow(
+  record: DiscoveryCacheRecord,
+): Insertable<DiscoveryCache> {
+  return record
+}
 
 export class DiscoveryCacheRepository extends BaseRepository {
   async upsert(record: DiscoveryCacheRecord): Promise<string> {

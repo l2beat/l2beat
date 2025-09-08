@@ -1,9 +1,10 @@
 import { Hash256 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
-import { describeDatabase } from '../../test/database'
-import type { UpdateMonitorRecord } from './entity'
-import { UpdateMonitorRepository } from './repository'
+import { describeDatabase } from '../test/database'
+import {
+  UpdateMonitorRepository,
+  type UpdateMonitorRecord,
+} from './UpdateMonitorRepository'
 
 const CONFIG_HASH = Hash256.random()
 

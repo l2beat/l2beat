@@ -1,6 +1,7 @@
+import { BaseRepository } from '../BaseRepository'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
-import type { UpdateDiff } from '../../kysely/generated/types'
+import type { UpdateDiff } from '../kysely/generated/types'
 
 type UpdateDiffType =
   | 'ultimateUpgraderChange'
@@ -36,5 +37,38 @@ export function toRecord(row: Selectable<UpdateDiff>): UpdateDiffRecord {
     timestamp: UnixTime.fromDate(row.timestamp),
     diffBaseTimestamp: UnixTime.fromDate(row.diffBaseTimestamp),
     diffHeadTimestamp: UnixTime.fromDate(row.diffHeadTimestamp),
+  }
+}
+
+export class UpdateDiffRepository extends BaseRepository {
+  async insertMany(records: UpdateDiffRecord[]): Promise<number> {
+    if (records.length === 0) return 0
+
+    await this.db
+      .insertInto('UpdateDiff')
+      .values(records.map(toRow))
+      .onConflict((cb) =>
+        cb.columns(['projectId', 'address', 'type']).doNothing(),
+      )
+      .execute()
+
+    return records.length
+  }
+
+  async getAll() {
+    const rows = await this.db.selectFrom('UpdateDiff').selectAll().execute()
+    return rows.map(toRecord)
+  }
+
+  async deleteByProjectAndChain(projectId: string) {
+    await this.db
+      .deleteFrom('UpdateDiff')
+      .where('projectId', '=', projectId)
+      .execute()
+  }
+
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('UpdateDiff').executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

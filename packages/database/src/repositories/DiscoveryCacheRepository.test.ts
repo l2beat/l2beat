@@ -1,8 +1,8 @@
 import { expect } from 'earl'
 
-import { describeDatabase } from '../../test/database'
-import type { DiscoveryCacheRecord } from './entity'
-import { DiscoveryCacheRepository } from './repository'
+import { describeDatabase } from '../test/database'
+import type { DiscoveryCacheRecord } from '../discovery/discovery-cache/entity'
+import { DiscoveryCacheRepository } from './DiscoveryCacheRepository'
 
 describeDatabase(DiscoveryCacheRepository.name, (db) => {
   const repository = db.discoveryCache
