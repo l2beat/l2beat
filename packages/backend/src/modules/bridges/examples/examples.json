@@ -10,5 +10,17 @@
       "block": 361391483,
       "tx": "0x9fdc94bf02e1efd47970137e4f4642810c733c834a23d48fd0de946d32deb6e3"
     }
+  },
+  "cctpv1": {
+    "outboud": {
+      "chain": "base",
+      "block": 33539279,
+      "tx": "0xe757960a024b26b7f01042acac11c941a9d88df296f150a3424a3ca20516df5a"
+    },
+    "inbound": {
+      "chain": "ethereum",
+      "block": 23031165,
+      "tx": "0xad842eb3b6a603a78cccc24ea9b3d418f2b38bc13da0f542aedb237ed4740c61"
+    }
   }
 }
