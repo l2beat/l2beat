@@ -1,24 +1,29 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import { command, run } from 'cmd-ts'
+import { command, positional, run, string } from 'cmd-ts'
 import { logToViemLog } from '../../../../scripts/bridges/utils/viem'
 import { createBridgePlugins } from '../plugins'
 import type { BridgeEvent } from '../plugins/types'
+import { MemoryEventDb } from './EventDb'
 import * as examples from './examples.json'
+
+const args = {
+  name: positional({
+    type: string,
+    displayName: 'name',
+  }),
+}
 
 const cmd = command({
   name: 'bridges:example',
-  args: {},
+  args,
   handler: async (args) => {
     const logger = Logger.INFO
 
-    const project = 'stargate'
-
-    const example = examples[project]
-
+    const example = examples[args.name as keyof typeof examples]
     if (!example) {
-      logger.error(`${project}: example not found, see examples.json`)
+      logger.error(`${args.name}: example not found, see examples.json`)
       return
     }
 
@@ -67,13 +72,15 @@ const cmd = command({
       }
     }
 
+    const eventDb = new MemoryEventDb(events)
+
     for (const event of events) {
       for (const plugin of plugins) {
         if (!plugin.match) {
           continue
         }
 
-        const matched = plugin.match(event)
+        const matched = plugin.match(event, eventDb)
 
         if (matched) {
           logger.info('Matched', matched)
