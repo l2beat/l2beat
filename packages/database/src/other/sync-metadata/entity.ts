@@ -45,12 +45,9 @@ export function toRowWithoutTarget(
 ): Omit<Insertable<SyncMetadata>, 'target' | 'blockTarget'> {
   return {
     ...record,
-    syncedUntil:
-      record.syncedUntil !== null
-        ? record.syncedUntil
-          ? UnixTime.toDate(record.syncedUntil)
-          : undefined
-        : null,
-    blockSyncedUntil: record.blockSyncedUntil,
+    syncedUntil: record.syncedUntil
+      ? UnixTime.toDate(record.syncedUntil)
+      : null,
+    blockSyncedUntil: record.blockSyncedUntil ? record.blockSyncedUntil : null,
   }
 }

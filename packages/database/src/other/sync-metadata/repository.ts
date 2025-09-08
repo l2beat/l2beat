@@ -19,9 +19,17 @@ export class SyncMetadataRepository extends BaseRepository {
         .onConflict((cb) =>
           cb.columns(['feature', 'id']).doUpdateSet((eb) => ({
             target: eb.ref('excluded.target'),
-            syncedUntil: eb.ref('excluded.syncedUntil'),
+            // Keep the existing value if the excluded value is null
+            syncedUntil: eb.fn.coalesce(
+              eb.ref('excluded.syncedUntil'),
+              eb.ref('SyncMetadata.syncedUntil'),
+            ),
             blockTarget: eb.ref('excluded.blockTarget'),
-            blockSyncedUntil: eb.ref('excluded.blockSyncedUntil'),
+            // Keep the existing value if the excluded value is null
+            blockSyncedUntil: eb.fn.coalesce(
+              eb.ref('excluded.blockSyncedUntil'),
+              eb.ref('SyncMetadata.blockSyncedUntil'),
+            ),
           })),
         )
         .execute()
