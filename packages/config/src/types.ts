@@ -678,7 +678,7 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
-  relayerType?: TableReadyValueWithPredefinedValue<'Third-party'>
+  relayerType?: TableReadyValueWithPredefinedValue<'Permissioned'>
   validationType?: DaBridgeValidationType
 }
 

@@ -76,10 +76,13 @@ export const blobstream: BaseProject = {
     name: 'Blobstream',
     daLayer: ProjectId('celestia'),
     relayerType: {
-      value: 'Third-party',
+      value: 'Permissioned',
+      description:
+        'Only whitelisted relayers can post attestations to this bridge.',
     },
     validationType: {
       value: 'Validity Proof',
+      zkCatalogId: ProjectId('sp1'),
     },
     usedIn: linkByDA({
       layer: ProjectId('celestia'),

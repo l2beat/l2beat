@@ -138,7 +138,9 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
     name: 'HotShot Light Client',
     daLayer: ProjectId('espresso'),
     relayerType: {
-      value: 'Third-party',
+      value: 'Permissioned',
+      description:
+        'Only whitelisted relayers can post attestations to this bridge.',
     },
     validationType: {
       value: 'Validity Proof',

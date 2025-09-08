@@ -66,10 +66,13 @@ export const vector: BaseProject = {
     name: 'Vector',
     daLayer: ProjectId('avail'),
     relayerType: {
-      value: 'Third-party',
+      value: 'Permissioned',
+      description:
+        'Only whitelisted relayers can post attestations to this bridge.',
     },
     validationType: {
       value: 'Validity Proof',
+      zkCatalogId: ProjectId('sp1'),
     },
     technology: {
       description: `

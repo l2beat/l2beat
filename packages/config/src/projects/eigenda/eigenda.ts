@@ -312,7 +312,9 @@ export const eigenda: BaseProject = {
     name: 'DACert Verifier',
     daLayer: ProjectId('eigenda'),
     relayerType: {
-      value: 'Third-party',
+      value: 'Permissioned',
+      description:
+        'Only whitelisted relayers can post attestations to this bridge.',
     },
     validationType: {
       value: 'BLS Signature',
