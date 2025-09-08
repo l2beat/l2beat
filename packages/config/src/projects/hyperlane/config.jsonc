@@ -9,15 +9,14 @@
     "eth:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
     "eth:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
     "eth:0xef899e92DA472E014bE795Ecce948308958E25A2",
-    "eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
-    "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+    "eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c"
   ],
   "names": {
     "eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": "HyperlaneMultisig",
     "eth:0x33F1A13044C7BC52DdB80dE103D2FfefEfd009DD": "StaticAggregationIsm_default",
     "eth:0xfE7990a48Eb8d74407fF258e874040738F8602EB": "StaticAggregationIsm_eclipse",
-    "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e": "StaticMessageIdMultisigIsm",
-    "eth:0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896": "StaticMerkleRootMultisigIsm"
+    "eth:0x23BB2C56F6767B4E2fD882c62097Ce91Ab3F6724": "StaticMessageIdMultisigIsm",
+    "eth:0x17d9C293Bc6EBeDE84BB1F1de9061C2df10B622c": "StaticMerkleRootMultisigIsm"
   },
   "overrides": {
     "eth:0x33F1A13044C7BC52DdB80dE103D2FfefEfd009DD": {

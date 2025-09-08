@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb2ecb2b75a0aa09c2252d9eee56fdc053d003880
+Generated with discovered.json: 0x43a2ac8b8c37dd33647c57332c4e3f72f918651b
 
-# Diff at Mon, 08 Sep 2025 14:53:21 GMT:
+# Diff at Mon, 08 Sep 2025 15:40:29 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@48f0161c75908020b4454ff29490575d534b39f4 block: 1756805138
@@ -64,6 +64,12 @@ can only be decoded from the bytecode (added to disco hardcoded)
 ```
 
 ```diff
+-   Status: DELETED
+    contract StaticMessageIdMultisigIsm (eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e)
+    +++ description: None
+```
+
+```diff
 +   Status: CREATED
     contract PausableIsm (eth:0x0e80C192a0c6a930F8f7170bDCCE31786BB5DC17)
     +++ description: None
@@ -102,12 +108,10 @@ can only be decoded from the bytecode (added to disco hardcoded)
 ## Source code changes
 
 ```diff
-.../{.flat@1756805138 => .flat}/PausableIsm.sol    |    2 +-
- .../StaticAggregationIsm_default.sol}              |    0
- .../StaticAggregationIsm_eclipse.sol}              |    0
- ...0x23BB2C56F6767B4E2fD882c62097Ce91Ab3F6724.sol} |    0
- ...:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e.sol | 1120 ++++++++++++++++++++
- 5 files changed, 1121 insertions(+), 1 deletion(-)
+./src/projects/hyperlane/{.flat@1756805138 => .flat}/PausableIsm.sol    | 2 +-
+ .../StaticAggregationIsm_default.sol}                                   | 0
+ .../StaticAggregationIsm_eclipse.sol}                                   | 0
+ 3 files changed, 1 insertion(+), 1 deletion(-)
 ```
 
 ## Config/verification related changes

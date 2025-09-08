@@ -1,7 +1,7 @@
 {
   "name": "hyperlane",
   "timestamp": 1757342440,
-  "configHash": "0x12f7fe831a7324e94d3878a02823ff953b4303b05db7669b629e71bdc7583978",
+  "configHash": "0xf32ad34ae84769a89df9c3e57dfa49651405a04dc63009cfea2e1888fe106370",
   "entries": [
     {
       "address": "eth:0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -1054,21 +1054,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "StaticMessageIdMultisigIsm",
-      "address": "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xcbe0772264e40c53d9f37e0b741f047eedea2a861fac2bf97d68c334b088ccf1"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1726245995,
-      "sinceBlock": 20742975,
-      "values": { "$immutable": true, "moduleType": 5 },
-      "implementationNames": {
-        "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e": "StaticMessageIdMultisigIsm"
-      }
-    },
-    {
       "name": "StaticAggregationIsm_eclipse",
       "address": "eth:0xfE7990a48Eb8d74407fF258e874040738F8602EB",
       "type": "Contract",
@@ -1557,11 +1542,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e": [
-      "function moduleType() view returns (uint8)",
-      "function validatorsAndThreshold(bytes) pure returns (address[], uint8)",
-      "function verify(bytes _metadata, bytes _message) view returns (bool)"
-    ],
     "eth:0xfE7990a48Eb8d74407fF258e874040738F8602EB": [
       "function moduleType() view returns (uint8)",
       "function modulesAndThreshold(bytes) view returns (address[], uint8)",
@@ -1577,5 +1557,5 @@
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
   "usedBlockNumbers": { "ethereum": 23319033 },
-  "permissionsConfigHash": "0x9476442da4034e0576e109970a2b3979e14143ea77fab258eff27e7c13eb9f25"
+  "permissionsConfigHash": "0xbd451051a9f439f7f159d9df3e35ae827b49753881b846cf3d865b6bb9ce36f1"
 }
