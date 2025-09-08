@@ -5,28 +5,32 @@ export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 // Records
 
 export type { ActivityRecord } from './repositories/ActivityRepository'
-export type { BridgeEventRecord } from './bridge/bridge-event/entity'
-export type { BridgeEventStatsRecord } from './bridge/bridge-event/repository'
-export type { BridgeMessageRecord } from './bridge/bridge-message/entity'
-export type { BridgeMessageStatsRecord } from './bridge/bridge-message/repository'
-export type { BlobRecord } from './da-beat/blob/entity'
-export type { CurrentPriceRecord } from './da-beat/current-price/entity'
+export type {
+  BridgeEventRecord,
+  BridgeEventStatsRecord,
+} from './repositories/BridgeEventRepository'
+export type {
+  BridgeMessageRecord,
+  BridgeMessageStatsRecord,
+} from './repositories/BridgeMessageRepository'
+export type { BlobRecord } from './repositories/BlobsRepository'
+export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
-} from './da-beat/data-availability/entity'
-export type { StakeRecord } from './da-beat/stake/entity'
+} from './repositories/DataAvailabilityRepository'
+export type { StakeRecord } from './repositories/StakeRepository'
 export type { DiscoveryCacheRecord } from './discovery/discovery-cache/entity'
 export type { UpdateDiffRecord } from './discovery/update-diff/entity'
 export type { UpdateMessageRecord } from './discovery/update-message/entity'
 export type { UpdateMonitorRecord } from './discovery/update-monitor/entity'
 export type { UpdateNotifierRecord } from './discovery/update-notifier/entity'
-export type { AggregatedL2CostRecord } from './other/aggregated-l2-cost/entity'
-export type { AggregatedLivenessRecord } from './other/aggregated-liveness/entity'
-export type { AnomalyRecord } from './other/anomalies/entity'
-export type { AnomalyStatsRecord } from './other/anomaly-stats/entity'
-export type { L2CostRecord } from './other/l2-cost/entity'
-export type { L2CostPriceRecord } from './other/l2-cost-price/entity'
+export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepository'
+export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
+export type { AnomalyRecord } from './repositories/AnomaliesRepository'
+export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
+export type { L2CostRecord } from './repositories/L2CostRepository'
+export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
 export type { NotificationRecord } from './repositories/NotificationsRepository'
 export type { RealTimeAnomalyRecord } from './repositories/RealTimeAnomaliesRepository'
