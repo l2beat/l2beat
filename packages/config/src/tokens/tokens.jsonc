@@ -2267,6 +2267,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "cgETH.hashkey",
+      "category": "ether",
+      "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "clBTC",
       "category": "btc",
       "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
@@ -3193,6 +3208,21 @@
     }
   ],
   "optimism": [
+    {
+      "symbol": "cgETH.hashkey",
+      "category": "ether",
+      "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
     {
       "symbol": "clBTC",
       "category": "btc",

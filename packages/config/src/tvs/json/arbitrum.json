@@ -1300,6 +1300,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-cgETH.hashkey",
+      "priceId": "cgeth-hashkey-cloud",
+      "symbol": "cgETH.hashkey",
+      "name": "cgETH Hashkey Cloud",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54162/large/Cgeth_Hashkey.png?1738482570",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1738686713
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-CHEESE",
       "priceId": "cheese-2",
       "symbol": "CHEESE",
@@ -1319,6 +1345,32 @@
         "bridges": [
           {
             "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-clBTC",
+      "priceId": "clbtc",
+      "symbol": "clBTC",
+      "name": "clBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54164/large/clBTC.png?1738482999",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1738687729
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
             "slug": "portal"
           }
         ]
@@ -5447,6 +5499,39 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-MORPHO",
+      "priceId": "morpho",
+      "symbol": "MORPHO",
+      "name": "Morpho Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29837/large/Morpho-token-icon.png?1726771230",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1732060800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1732060800
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",

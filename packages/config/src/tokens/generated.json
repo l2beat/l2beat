@@ -6612,6 +6612,28 @@
       "supply": "zero"
     },
     {
+      "name": "cgETH Hashkey Cloud",
+      "coingeckoId": "cgeth-hashkey-cloud",
+      "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+      "symbol": "cgETH.hashkey",
+      "decimals": 18,
+      "deploymentTimestamp": 1738687009,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54162/large/Cgeth_Hashkey.png?1738482570",
+      "chainId": 10,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "clBTC",
       "coingeckoId": "clbtc",
       "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
@@ -11863,6 +11885,28 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "cgETH Hashkey Cloud",
+      "coingeckoId": "cgeth-hashkey-cloud",
+      "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+      "symbol": "cgETH.hashkey",
+      "decimals": 18,
+      "deploymentTimestamp": 1738686713,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54162/large/Cgeth_Hashkey.png?1738482570",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "name": "ChainLink Token",
