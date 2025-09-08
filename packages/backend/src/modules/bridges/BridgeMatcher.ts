@@ -2,7 +2,6 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { BridgeMessageRecord, Database } from '@l2beat/database'
 import type { BridgeStore } from './BridgeStore'
 import {
-  type BridgeEvent,
   type BridgeMessage,
   type BridgePlugin,
   type BridgeTransfer,
@@ -42,12 +41,12 @@ export class BridgeMatcher {
   }
 
   async doMatching() {
-    const matched = new Set<BridgeEvent>()
+    const matchedIds = new Set<string>()
     const messages: BridgeMessage[] = []
     const transfers: BridgeTransfer[] = []
 
     for (const event of this.bridgeStore.getUnmatched()) {
-      if (matched.has(event)) {
+      if (matchedIds.has(event.eventId)) {
         continue
       }
       for (const plugin of this.plugins) {
@@ -59,7 +58,7 @@ export class BridgeMatcher {
         }
 
         if (result) {
-          matched.add(event)
+          matchedIds.add(event.eventId)
           this.bridgeStore.markMatched(event)
           if (result.message) {
             messages.push(result.message)
@@ -77,9 +76,9 @@ export class BridgeMatcher {
       }
     }
 
-    if (matched.size > 0) {
+    if (matchedIds.size > 0) {
       this.logger.info('Matched', {
-        count: matched.size,
+        count: matchedIds.size,
         messages: messages.length,
         transfers: transfers.length,
       })
