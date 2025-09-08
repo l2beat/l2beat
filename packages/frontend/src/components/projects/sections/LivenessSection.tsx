@@ -24,6 +24,7 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   defaultRange: LivenessChartTimeRange
   isArchived: boolean
   hideSubtypeSwitch: boolean
+  isForDaBridge?: boolean
 }
 
 export function LivenessSection({
@@ -36,16 +37,16 @@ export function LivenessSection({
   defaultRange,
   isArchived,
   hideSubtypeSwitch,
+  isForDaBridge,
   ...sectionProps
 }: LivenessSectionProps) {
   const ongoingAnomalies = anomalies.filter((a) => a.end === undefined)
   return (
     <ProjectSection {...sectionProps}>
       <p className="mb-4 text-paragraph-15 md:text-paragraph-16">
-        This section shows how &quot;live&quot; the project&apos;s operators are
-        by displaying how frequently they submit transactions of the selected
-        type. It also highlights anomalies - significant deviations from their
-        typical schedule.
+        {!isForDaBridge
+          ? 'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.'
+          : 'This section shows how frequently DA attestations are submitted. It also highlights anomalies - significant deviations from the typical schedule.'}
       </p>
       {!isArchived && <OngoingAnomalies anomalies={ongoingAnomalies} />}
 

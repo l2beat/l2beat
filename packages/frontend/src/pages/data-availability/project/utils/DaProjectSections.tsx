@@ -131,6 +131,7 @@ export async function getRegularDaProjectSections({
         id: 'da-bridge-liveness',
         title: 'Liveness',
         hideSubtypeSwitch: true,
+        isForDaBridge: true,
       },
     })
   }
