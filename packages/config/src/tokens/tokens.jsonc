@@ -2267,6 +2267,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "clBTC",
+      "category": "btc",
+      "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "HYPER",
       "address": "0xC9d23ED2ADB0f551369946BD377f8644cE1ca5c4",
       "source": "native",
@@ -3179,6 +3194,21 @@
   ],
   "optimism": [
     {
+      "symbol": "clBTC",
+      "category": "btc",
+      "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "BUIDL",
       "address": "0xa1cdab15bba75a80df4089cafba013e376957cf5",
       "source": "native",
@@ -3599,6 +3629,50 @@
     }
   ],
   "base": [
+    {
+      "symbol": "cgETH.hashkey",
+      "category": "ether",
+      "address": "0xf587B7116879a529353Cc71eE959cD69FD5CAE48",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "clBTC",
+      "category": "btc",
+      "address": "0x8d2757EA27AaBf172DA4CCa4e5474c76016e3dC5",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "ENA",
+      "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+      "source": "external",
+      "coingeckoId": "ethena",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "WBTC",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "category": "btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "WMTX",
       "address": "0x3e31966d4f81C72D2a55310A6365A56A4393E98D",
