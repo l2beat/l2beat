@@ -1,4 +1,4 @@
-import type { TvsPriceRecord } from '@l2beat/database/dist/tvs/price/entity'
+import type { TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import {
   CoingeckoId,
