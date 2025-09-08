@@ -1,5 +1,6 @@
 import { CoingeckoQueryService } from '@l2beat/shared'
 import partition from 'lodash/partition'
+import uniqBy from 'lodash/uniqBy'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -26,6 +27,15 @@ export function createTrackedTxsModule(
   logger = logger.tag({ module: 'tracked-txs' })
 
   const indexerService = new IndexerService(peripherals.database)
+  const bigQueryClient = peripherals.getClient(
+    BigQueryClient,
+    config.trackedTxsConfig.bigQuery,
+  )
+
+  const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
+  const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
+    (project) => project.configurations,
+  )
 
   const hourlyIndexer = new HourlyIndexer(logger, clock, {
     onTick: async (targetTimestamp) => {
@@ -34,12 +44,14 @@ export function createTrackedTxsModule(
         (c) => c.type === 'l2costs',
       )
       await peripherals.database.syncMetadata.upsertMany([
-        ...l2CostsConfigs.map((c) => ({
+        // There might be multiple configurations for the same project
+        // so we need to uniq them
+        ...uniqBy(l2CostsConfigs, (c) => c.projectId).map((c) => ({
           feature: 'l2costs' as const,
           id: c.projectId,
           target: targetTimestamp,
         })),
-        ...livenessConfigs.map((c) => ({
+        ...uniqBy(livenessConfigs, (c) => c.projectId).map((c) => ({
           feature: 'liveness' as const,
           id: c.projectId,
           target: targetTimestamp,
@@ -47,16 +59,6 @@ export function createTrackedTxsModule(
       ])
     },
   })
-  const bigQueryClient = peripherals.getClient(
-    BigQueryClient,
-    config.trackedTxsConfig.bigQuery,
-  )
-
-  const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
-
-  const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
-    (project) => project.configurations,
-  )
 
   const livenessModule = createLivenessModule(deps)
   const l2costsModule = createL2CostsModule(deps)
