@@ -79,6 +79,52 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       ])
     })
 
+    it('should update specified fields', async () => {
+      await repository.upsertMany([
+        {
+          feature: 'activity',
+          id: 'arbitrum',
+          target: roundedHour,
+          blockTarget: 100,
+          syncedUntil: roundedHour - UnixTime.HOUR,
+          blockSyncedUntil: 99,
+        },
+      ])
+
+      const results = await repository.getAll()
+      expect(results).toEqual([
+        {
+          feature: 'activity',
+          id: 'arbitrum',
+          target: roundedHour,
+          blockTarget: 100,
+          syncedUntil: roundedHour - UnixTime.HOUR,
+          blockSyncedUntil: 99,
+        },
+      ])
+
+      await repository.upsertMany([
+        {
+          feature: 'activity',
+          id: 'arbitrum',
+          target: roundedHour + UnixTime.HOUR,
+          blockTarget: 110,
+        },
+      ])
+
+      const results2 = await repository.getAll()
+      expect(results2).toEqualUnsorted([
+        {
+          feature: 'activity',
+          id: 'arbitrum',
+          target: roundedHour + UnixTime.HOUR,
+          blockTarget: 110,
+          syncedUntil: roundedHour - UnixTime.HOUR,
+          blockSyncedUntil: 99,
+        },
+      ])
+    })
+
     it('empty array not to be rejected', async () => {
       await expect(repository.upsertMany([])).not.toBeRejected()
     })
