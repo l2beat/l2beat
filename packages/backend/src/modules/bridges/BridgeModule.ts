@@ -22,6 +22,7 @@ export function createBridgeModule({
   const chains = plugins
     .flatMap((x) => x.chains)
     .filter((x, i, a) => a.indexOf(x) === i)
+  const bridgeStore = new BridgeStore(db)
 
   for (const chain of chains) {
     const processor = new BridgeBlockProcessor(
@@ -33,7 +34,6 @@ export function createBridgeModule({
     blockProcessors.push(processor)
   }
 
-  const bridgeStore = new BridgeStore(db)
   const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
   const bridgeMatcher = new BridgeMatcher(bridgeStore, db, plugins, logger)
 
