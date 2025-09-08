@@ -59,6 +59,8 @@ export const kinto: ScalingProject = orbitStackL2({
     architectureImage: 'kinto',
     description:
       'Kinto is an Orbit stack L2 with account abstraction and KYC enabled for all users, supporting both modern financial institutions and decentralized protocols.',
+    headerWarning:
+      '[Kinto will shutdown on September 30, 2025](https://x.com/KintoXYZ/status/1964721235675537573). After this deadline, all remaining assets will be converted to USDC and a permament distribution contract will be deployed on Ethereum mainnet.',
     links: {
       websites: ['https://kinto.xyz'],
       bridges: ['https://engen.kinto.xyz'],

@@ -73,6 +73,7 @@ export const getScalingTvsColumns = (
                       }
                 }
                 change={data.change.total}
+                associatedTokens={ctx.row.original.tvs.associatedTokens}
               />
             )
           },
