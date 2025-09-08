@@ -79,10 +79,12 @@ export class BridgeEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByType(type: string): Promise<BridgeEventRecord[]> {
+  async getByType(type: string, limit = 100): Promise<BridgeEventRecord[]> {
     const rows = await this.db
       .selectFrom('BridgeEvent')
       .where('type', '=', type)
+      .limit(limit)
+      .orderBy('timestamp', 'desc')
       .selectAll()
       .execute()
 
