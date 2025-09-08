@@ -231,6 +231,32 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-cgETH.hashkey",
+      "priceId": "cgeth-hashkey-cloud",
+      "symbol": "cgETH.hashkey",
+      "name": "cgETH Hashkey Cloud",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54162/large/Cgeth_Hashkey.png?1738482570",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1738687009
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "optimism-CHZ",
       "priceId": "chiliz",
       "symbol": "CHZ",
@@ -247,6 +273,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-clBTC",
+      "priceId": "clbtc",
+      "symbol": "clBTC",
+      "name": "clBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54164/large/clBTC.png?1738482999",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1738687863
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
