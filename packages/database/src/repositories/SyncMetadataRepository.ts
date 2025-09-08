@@ -46,13 +46,10 @@ export function toRowWithoutTarget(
 ): Omit<Insertable<SyncMetadata>, 'target' | 'blockTarget'> {
   return {
     ...record,
-    syncedUntil:
-      record.syncedUntil !== null
-        ? record.syncedUntil
-          ? UnixTime.toDate(record.syncedUntil)
-          : undefined
-        : null,
-    blockSyncedUntil: record.blockSyncedUntil,
+    syncedUntil: record.syncedUntil
+      ? UnixTime.toDate(record.syncedUntil)
+      : null,
+    blockSyncedUntil: record.blockSyncedUntil ? record.blockSyncedUntil : null,
   }
 }
 
@@ -64,21 +61,7 @@ export class SyncMetadataRepository extends BaseRepository {
   async upsertMany(records: Insertable<SyncMetadataRecord>[]): Promise<number> {
     if (records.length === 0) return 0
 
-    //TODO: temporary fix to unblock backend
-    const uniqueRecords: Insertable<SyncMetadataRecord>[] = []
-    for (const record of records) {
-      if (
-        uniqueRecords.some(
-          (r) => r.feature === record.feature && r.id === record.id,
-        )
-      ) {
-        continue
-      }
-
-      uniqueRecords.push(record)
-    }
-
-    const rows = uniqueRecords.map(toRow)
+    const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
         .insertInto('SyncMetadata')
@@ -86,9 +69,17 @@ export class SyncMetadataRepository extends BaseRepository {
         .onConflict((cb) =>
           cb.columns(['feature', 'id']).doUpdateSet((eb) => ({
             target: eb.ref('excluded.target'),
-            syncedUntil: eb.ref('excluded.syncedUntil'),
+            // Keep the existing value if the excluded value is null
+            syncedUntil: eb.fn.coalesce(
+              eb.ref('excluded.syncedUntil'),
+              eb.ref('SyncMetadata.syncedUntil'),
+            ),
             blockTarget: eb.ref('excluded.blockTarget'),
-            blockSyncedUntil: eb.ref('excluded.blockSyncedUntil'),
+            // Keep the existing value if the excluded value is null
+            blockSyncedUntil: eb.fn.coalesce(
+              eb.ref('excluded.blockSyncedUntil'),
+              eb.ref('SyncMetadata.blockSyncedUntil'),
+            ),
           })),
         )
         .execute()

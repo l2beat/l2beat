@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
+import uniqBy from 'lodash/uniqBy'
 import type { DataAvailabilityTrackingConfig } from '../../config/Config'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
@@ -110,7 +111,7 @@ function createIndexers(
       {
         onTick: async (targetTimestamp, blockNumber) => {
           await database.syncMetadata.upsertMany(
-            configurations.map((c) => ({
+            uniqBy(configurations, (e) => e.projectId).map((c) => ({
               feature: 'dataAvailability',
               id: c.projectId,
               target: targetTimestamp,
@@ -177,7 +178,7 @@ function createIndexers(
     const hourlyIndexer = new HourlyIndexer(logger, clock, {
       onTick: async (targetTimestamp) => {
         await database.syncMetadata.upsertMany(
-          configurations.map((c) => ({
+          uniqBy(configurations, (e) => e.projectId).map((c) => ({
             feature: 'dataAvailability',
             id: c.projectId,
             target: targetTimestamp,

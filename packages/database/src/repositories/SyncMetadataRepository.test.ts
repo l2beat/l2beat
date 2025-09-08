@@ -35,19 +35,11 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           blockTarget: 100,
           blockSyncedUntil: 100,
         },
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
       ]
       await repository.upsertMany(records)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted(records.slice(0, 2))
+      expect(results).toEqualUnsorted(records)
 
       await repository.upsertMany([
         {
@@ -77,6 +69,52 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           syncedUntil: roundedHour,
           blockTarget: 225,
           blockSyncedUntil: 200,
+        },
+      ])
+    })
+
+    it('should update specified fields', async () => {
+      await repository.upsertMany([
+        {
+          feature: 'activity',
+          id: 'arbitrum',
+          target: roundedHour,
+          blockTarget: 100,
+          syncedUntil: roundedHour - UnixTime.HOUR,
+          blockSyncedUntil: 99,
+        },
+      ])
+
+      const results = await repository.getAll()
+      expect(results).toEqual([
+        {
+          feature: 'activity',
+          id: 'arbitrum',
+          target: roundedHour,
+          blockTarget: 100,
+          syncedUntil: roundedHour - UnixTime.HOUR,
+          blockSyncedUntil: 99,
+        },
+      ])
+
+      await repository.upsertMany([
+        {
+          feature: 'activity',
+          id: 'arbitrum',
+          target: roundedHour + UnixTime.HOUR,
+          blockTarget: 110,
+        },
+      ])
+
+      const results2 = await repository.getAll()
+      expect(results2).toEqualUnsorted([
+        {
+          feature: 'activity',
+          id: 'arbitrum',
+          target: roundedHour + UnixTime.HOUR,
+          blockTarget: 110,
+          syncedUntil: roundedHour - UnixTime.HOUR,
+          blockSyncedUntil: 99,
         },
       ])
     })
