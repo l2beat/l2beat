@@ -44,7 +44,7 @@ The Arbitrum Foundation [has officially announced](https://forum.arbitrum.founda
 
 ### **DRIP August Update**
 
-Entropy has published an post showing an DRIP [August update](https://forum.arbitrum.foundation/t/drip-august-update/29903) that confirms Season One went live on Sept 3 at 13:00 UTC. The program runs 20 weeks across 10 bi-weekly epochs (discovery, performance focus, then taper) with a 16M ARB base budget and up to 8M ARB discretionary. Season One targets leverage looping on Arbitrum One by rewarding borrowing against eligible yield-bearing ETH and stable assets across participating lenders. Entropy says the effort has already helped spur new deployments and listings, and [public dashboards](https://arbitrumdrip.com/) will track results. After parting ways with Objective Labs, Entropy’s data team is handling evaluation for now.
+Entropy has published a post showing a DRIP [August update](https://forum.arbitrum.foundation/t/drip-august-update/29903) that confirms Season One went live on Sept 3 at 13:00 UTC. The program runs 20 weeks across 10 bi-weekly epochs (discovery, performance focus, then taper) with a 16M ARB base budget and up to 8M ARB discretionary. Season One targets leverage looping on Arbitrum One by rewarding borrowing against eligible yield-bearing ETH and stable assets across participating lenders. Entropy says the effort has already helped spur new deployments and listings, and [public dashboards](https://arbitrumdrip.com/) will track results. After parting ways with Objective Labs, Entropy’s data team is handling evaluation for now.
 
 **Discuss with L2BEAT**
 
