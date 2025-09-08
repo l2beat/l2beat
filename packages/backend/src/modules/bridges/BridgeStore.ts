@@ -1,4 +1,5 @@
 import type { BridgeEventRecord, Database } from '@l2beat/database'
+import type { UnixTime } from '@l2beat/shared-pure'
 import type {
   BridgeEvent,
   BridgeEventDb,
@@ -86,6 +87,37 @@ export class BridgeStore implements BridgeEventDb {
       await this.db.bridgeEvent.updateMatched(matchedIds)
       await this.db.bridgeEvent.updateGrouped(groupedIds)
     })
+  }
+
+  async deleteExpired(now: UnixTime) {
+    const expired = new Set<string>()
+    for (const [type, events] of this.events.entries()) {
+      let some = false
+      for (const event of events) {
+        if (event.expiresAt <= now) {
+          some = true
+          expired.add(event.eventId)
+        }
+      }
+      if (some) {
+        this.events.set(
+          type,
+          events.filter((x) => x.expiresAt > now),
+        )
+      }
+    }
+
+    this.unmatched = this.unmatched.filter((x) => x.expiresAt > now)
+    this.newEvents = this.newEvents.filter((x) => x.expiresAt > now)
+
+    for (const id of expired) {
+      this.matchedIds.delete(id)
+      this.groupedIds.delete(id)
+      this.newMatched.delete(id)
+      this.newGrouped.delete(id)
+    }
+
+    await this.db.bridgeEvent.deleteExpired(now)
   }
 
   find<T>(

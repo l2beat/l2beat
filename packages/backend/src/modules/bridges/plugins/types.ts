@@ -1,4 +1,4 @@
-import { EthereumAddress, type UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
 import {
   type Abi,
@@ -62,7 +62,7 @@ export interface BridgeEventType<T> {
 
 export function createBridgeEventType<T>(
   type: string,
-  options?: { ttlMs?: number },
+  options?: { ttl?: number },
 ): BridgeEventType<T> {
   if (!/\w+\.\w+/.test(type)) {
     throw new Error('BridgeEventType must have the format: "protocol.event"')
@@ -71,8 +71,7 @@ export function createBridgeEventType<T>(
     throw new Error('BridgeEventType cannot be longer than 64')
   }
 
-  const ONE_DAY_MS = 24 * 60 * 60 * 1000
-  const ttl = options?.ttlMs ?? ONE_DAY_MS
+  const ttl = options?.ttl ?? UnixTime.DAY
 
   return {
     type,
@@ -80,7 +79,7 @@ export function createBridgeEventType<T>(
       return {
         eventId: generateId('evt'),
         type,
-        expiresAt: Date.now() + ttl,
+        expiresAt: ctx.timestamp + ttl,
         ctx,
         // Ensure it can be saved to db
         args: JSON.parse(JSON.stringify(payload)),

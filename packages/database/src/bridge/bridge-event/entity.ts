@@ -22,7 +22,7 @@ export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
   return {
     eventId: row.eventId,
     type: row.type,
-    expiresAt: UnixTime.fromDate(row.timestamp),
+    expiresAt: UnixTime.fromDate(row.expiresAt),
     timestamp: UnixTime.fromDate(row.timestamp),
     chain: row.chain,
     blockNumber: row.blockNumber,
@@ -40,7 +40,7 @@ export function toRow(record: BridgeEventRecord): Insertable<BridgeEvent> {
   return {
     eventId: record.eventId,
     type: record.type,
-    expiresAt: UnixTime.toDate(record.timestamp),
+    expiresAt: UnixTime.toDate(record.expiresAt),
     timestamp: UnixTime.toDate(record.timestamp),
     chain: record.chain,
     blockNumber: record.blockNumber,

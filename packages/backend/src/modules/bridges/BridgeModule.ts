@@ -1,5 +1,6 @@
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BridgeBlockProcessor } from './BridgeBlockProcessor'
+import { BridgeCleaner } from './BridgeCleaner'
 import { BridgeMatcher } from './BridgeMatcher'
 import { createBridgeRouter } from './BridgeRouter'
 import { BridgeStore } from './BridgeStore'
@@ -23,6 +24,7 @@ export function createBridgeModule({
     .filter((x, i, a) => a.indexOf(x) === i)
 
   const bridgeStore = new BridgeStore(db)
+  const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
 
   const bridgeMatcher = new BridgeMatcher(bridgeStore, db, plugins, logger)
   for (const chain of chains) {
@@ -42,6 +44,7 @@ export function createBridgeModule({
     logger.info('Starting')
     await bridgeStore.start()
     bridgeMatcher.start()
+    bridgeCleaner.start()
     logger.info('Started', {
       chains: chains.length,
       plugins: plugins.length,
