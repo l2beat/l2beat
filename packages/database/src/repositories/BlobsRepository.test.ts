@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { BlobsRepository, type BlobRecord } from './BlobsRepository'
+import { type BlobRecord, BlobsRepository } from './BlobsRepository'
 
 describeDatabase(BlobsRepository.name, (db) => {
   const repository = db.blobs

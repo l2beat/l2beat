@@ -1,5 +1,5 @@
-import { BaseRepository } from '../BaseRepository'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { TokenMetadata } from '../kysely/generated/types'
 
 type TokenCategory =

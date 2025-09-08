@@ -1,5 +1,5 @@
-import { BaseRepository } from '../BaseRepository'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { CurrentPrice } from '../kysely/generated/types'
 
 export interface CurrentPriceRecord {

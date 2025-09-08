@@ -1,8 +1,8 @@
 import type { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { Insertable, Selectable } from 'kysely'
 import type { L2Cost } from '../kysely/generated/types'
 
 export interface L2CostRecord {

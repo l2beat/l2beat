@@ -2,8 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
-  L2CostPriceRepository,
   type L2CostPriceRecord,
+  L2CostPriceRepository,
 } from './L2CostPriceRepository'
 
 const NOW = UnixTime.now()

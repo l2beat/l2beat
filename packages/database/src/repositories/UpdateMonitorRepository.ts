@@ -1,7 +1,7 @@
-import { BaseRepository } from '../BaseRepository'
 import type { DiscoveryOutput } from '@l2beat/discovery'
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { UpdateMonitor } from '../kysely/generated/types'
 
 export interface UpdateMonitorRecord {

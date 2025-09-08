@@ -2,8 +2,8 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
-  AnomalyStatsRepository,
   type AnomalyStatsRecord,
+  AnomalyStatsRepository,
 } from './AnomalyStatsRepository'
 
 describeDatabase(AnomalyStatsRepository.name, (db) => {

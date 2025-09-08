@@ -1,6 +1,6 @@
-import { BaseRepository } from '../BaseRepository'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { VerifierStatus } from '../kysely/generated/types'
 
 export interface VerifierStatusRecord {

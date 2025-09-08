@@ -2,8 +2,8 @@ import { Hash256 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
-  FlatSourcesRepository,
   type FlatSourcesRecord,
+  FlatSourcesRepository,
 } from './FlatSourcesRepository'
 
 const CONTENT_HASH = Hash256.random()

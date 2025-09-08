@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { StakeRepository, type StakeRecord } from './StakeRepository'
+import { type StakeRecord, StakeRepository } from './StakeRepository'
 
 describeDatabase(StakeRepository.name, (database) => {
   const repository = database.stake

@@ -1,7 +1,7 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { BaseRepository } from '../BaseRepository'
 import type { DiscoveryDiff } from '@l2beat/discovery'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { UpdateNotifier } from '../kysely/generated/types'
 
 export interface UpdateNotifierRecord {

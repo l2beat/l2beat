@@ -1,10 +1,10 @@
-import { BaseRepository } from '../BaseRepository'
 import {
   type ProjectId,
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { AnomalyStats } from '../kysely/generated/types'
 
 export interface AnomalyStatsRecord {

@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 import { describeDatabase } from '../test/database'
-import { L2CostRepository, type L2CostRecord } from './L2CostRepository'
+import { type L2CostRecord, L2CostRepository } from './L2CostRepository'
 
 describeDatabase(L2CostRepository.name, (db) => {
   const repository = db.l2Cost

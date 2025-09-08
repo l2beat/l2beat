@@ -2,8 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
-  NotificationsRepository,
   type NotificationRecord,
+  NotificationsRepository,
 } from './NotificationsRepository'
 
 describeDatabase(NotificationsRepository.name, (db) => {

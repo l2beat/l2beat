@@ -1,6 +1,6 @@
-import { BaseRepository } from '../BaseRepository'
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { FlatSources } from '../kysely/generated/types'
 
 export interface FlatSourcesRecord {

@@ -1,6 +1,6 @@
-import { BaseRepository } from '../BaseRepository'
 import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { RealTimeAnomaly } from '../kysely/generated/types'
 
 export type RealTimeAnomalyStatus = 'ongoing' | 'recovered'

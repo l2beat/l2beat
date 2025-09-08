@@ -3,9 +3,9 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import type { Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { Insertable, Selectable } from 'kysely'
 import type { AggregatedLiveness } from '../kysely/generated/types'
 
 export interface AggregatedLivenessRecord {

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { BaseRepository } from '../BaseRepository'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { L2CostPrice } from '../kysely/generated/types'
 
 export interface L2CostPriceRecord {

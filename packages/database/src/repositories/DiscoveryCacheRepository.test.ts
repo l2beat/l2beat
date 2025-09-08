@@ -1,7 +1,6 @@
 import { expect } from 'earl'
-
-import { describeDatabase } from '../test/database'
 import type { DiscoveryCacheRecord } from '../discovery/discovery-cache/entity'
+import { describeDatabase } from '../test/database'
 import { DiscoveryCacheRepository } from './DiscoveryCacheRepository'
 
 describeDatabase(DiscoveryCacheRepository.name, (db) => {

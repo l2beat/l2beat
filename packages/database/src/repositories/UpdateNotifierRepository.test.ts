@@ -2,8 +2,8 @@ import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
-  UpdateNotifierRepository,
   type UpdateNotifierRecord,
+  UpdateNotifierRepository,
 } from './UpdateNotifierRepository'
 
 const PROJECT1 = 'project1'

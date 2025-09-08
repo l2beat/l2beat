@@ -1,6 +1,6 @@
-import { BaseRepository } from '../BaseRepository'
 import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { BridgeEvent } from '../kysely/generated/types'
 
 export interface BridgeEventRecord {

@@ -1,6 +1,6 @@
-import { BaseRepository } from '../BaseRepository'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { AggregatedL2Cost } from '../kysely/generated/types'
 
 export interface AggregatedL2CostRecord {

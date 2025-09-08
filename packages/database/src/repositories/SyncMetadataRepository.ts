@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { BaseRepository } from '../BaseRepository'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { SyncMetadata } from '../kysely/generated/types'
 
 export type SyncMetadataFeature =

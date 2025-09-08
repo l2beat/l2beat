@@ -1,7 +1,7 @@
-import { BaseRepository } from '../BaseRepository'
 import type { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { RealTimeLiveness } from '../kysely/generated/types'
 
 export interface RealTimeLivenessRecord {

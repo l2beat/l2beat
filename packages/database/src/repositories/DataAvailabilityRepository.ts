@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { BaseRepository } from '../BaseRepository'
 import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
 import type { DataAvailability } from '../kysely/generated/types'
 
 export interface DataAvailabilityRecord {
@@ -8,13 +8,6 @@ export interface DataAvailabilityRecord {
   projectId: string
   daLayer: string
   configurationId: string
-  totalSize: bigint
-}
-
-export interface SummedDataAvailabilityRecord {
-  timestamp: UnixTime
-  daLayer: string
-  projectId: string
   totalSize: bigint
 }
 
@@ -32,17 +25,6 @@ export function toRecord(
     projectId: row.projectId,
     daLayer: row.daLayer,
     configurationId: row.configurationId,
-    totalSize: BigInt(row.totalSize),
-  }
-}
-
-export function toSummedRecord(
-  row: Omit<Selectable<DataAvailability>, 'configurationId'>,
-): SummedDataAvailabilityRecord {
-  return {
-    timestamp: UnixTime.fromDate(row.timestamp),
-    daLayer: row.daLayer,
-    projectId: row.projectId,
     totalSize: BigInt(row.totalSize),
   }
 }

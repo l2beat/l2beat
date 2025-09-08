@@ -2,7 +2,7 @@ import { createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { LivenessRepository, type LivenessRecord } from './LivenessRepository'
+import { type LivenessRecord, LivenessRepository } from './LivenessRepository'
 
 describeDatabase(LivenessRepository.name, (db) => {
   const repository = db.liveness
