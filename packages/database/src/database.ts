@@ -1,6 +1,8 @@
 import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
+import { BridgeEventRepository } from './bridge/bridge-event/repository'
+import { BridgeMessageRepository } from './bridge/bridge-message/repository'
 import { BlobsRepository } from './da-beat/blob/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
 import { DataAvailabilityRepository } from './da-beat/data-availability/repository'
@@ -44,6 +46,11 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
 
     // #region Activity
     activity: new ActivityRepository(db),
+    // #endregion
+
+    // #region Bridges
+    bridgeEvent: new BridgeEventRepository(db),
+    bridgeMessage: new BridgeMessageRepository(db),
     // #endregion
 
     // #region DA BEAT

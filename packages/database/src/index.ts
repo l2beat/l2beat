@@ -5,6 +5,10 @@ export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 // Records
 
 export type { ActivityRecord } from './activity/entity'
+export type { BridgeEventRecord } from './bridge/bridge-event/entity'
+export type { BridgeEventStatsRecord } from './bridge/bridge-event/repository'
+export type { BridgeMessageRecord } from './bridge/bridge-message/entity'
+export type { BridgeMessageStatsRecord } from './bridge/bridge-message/repository'
 export type { BlobRecord } from './da-beat/blob/entity'
 export type { CurrentPriceRecord } from './da-beat/current-price/entity'
 export type {
