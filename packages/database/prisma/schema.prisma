@@ -359,6 +359,7 @@ model BridgeEvent {
   args        Json
 
   @@id([eventId])
+  @@index([type])
 }
 
 model BridgeMessage {
@@ -378,4 +379,5 @@ model BridgeMessage {
   dstEventId  String?   @db.VarChar(40)
 
   @@id([messageId])
+  @@index([type])
 }

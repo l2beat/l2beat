@@ -35,11 +35,12 @@ export function createBridgeModule({
     blockProcessors.push(processor)
   }
 
-  const bridgeRouter = createBridgeRouter(bridgeMatcher)
+  const bridgeRouter = createBridgeRouter(db)
 
-  const start = () => {
+  const start = async () => {
     logger = logger.for('BridgeModule')
     logger.info('Starting')
+    await bridgeStore.start()
     bridgeMatcher.start()
     logger.info('Started', {
       chains: chains.length,

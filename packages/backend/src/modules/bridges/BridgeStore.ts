@@ -40,9 +40,9 @@ export class BridgeStore implements BridgeEventDb {
   }
 
   private categorizeEvent(event: BridgeEvent) {
-    const array = this.events.get(event.eventId) ?? []
+    const array = this.events.get(event.type) ?? []
     array.push(event)
-    this.events.set(event.eventId, array)
+    this.events.set(event.type, array)
   }
 
   markMatched(event: BridgeEvent) {

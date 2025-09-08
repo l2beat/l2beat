@@ -36,3 +36,9 @@ CREATE TABLE "BridgeMessage" (
 
     CONSTRAINT "BridgeMessage_pkey" PRIMARY KEY ("messageId")
 );
+
+-- CreateIndex
+CREATE INDEX "BridgeEvent_type_idx" ON "BridgeEvent"("type");
+
+-- CreateIndex
+CREATE INDEX "BridgeMessage_type_idx" ON "BridgeMessage"("type");

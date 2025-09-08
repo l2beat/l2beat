@@ -2,6 +2,13 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type BridgeEventRecord, toRecord, toRow } from './entity'
 
+export interface BridgeEventStatsRecord {
+  type: string
+  count: number
+  matched: number
+  grouped: number
+}
+
 export class BridgeEventRepository extends BaseRepository {
   async insertMany(records: BridgeEventRecord[]): Promise<number> {
     if (records.length === 0) return 0
@@ -27,6 +34,25 @@ export class BridgeEventRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getStats(): Promise<BridgeEventStatsRecord[]> {
+    const rows = await this.db
+      .selectFrom('BridgeEvent')
+      .select((eb) => [
+        'type',
+        eb.fn.countAll().as('count'),
+        eb.fn.count('matched').filterWhere('matched', '=', true).as('matched'),
+        eb.fn.count('grouped').filterWhere('grouped', '=', true).as('grouped'),
+      ])
+      .groupBy('type')
+      .execute()
+    return rows.map((x) => ({
+      type: x.type,
+      count: Number(x.count),
+      matched: Number(x.matched),
+      grouped: Number(x.grouped),
+    }))
   }
 
   async getExpired(currentTime: UnixTime): Promise<BridgeEventRecord[]> {
