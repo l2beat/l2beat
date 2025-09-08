@@ -35,7 +35,7 @@ export function LinkWithThumbnail({
         src={props.src}
         alt={`Thumbnail of ${props.title}`}
         className={cn(
-          'aspect-video w-full object-cover object-left will-change-transform',
+          'aspect-video w-full object-cover object-center will-change-transform',
           orientation === 'vertical' &&
             'rounded-md border border-divider transition-[scale] group-hover:scale-[1.03]',
           orientation === 'horizontal' &&

@@ -69,7 +69,7 @@ describe('opengraph images', () => {
 
     if (missingUpdates.length > 0) {
       throw new Error(
-        `Missing opengraph images for monthly updates: ${missingUpdates.join(', ')}. Please add them.`,
+        `Missing opengraph images for monthly updates: ${missingUpdates.join(', ')}. Run \`pnpm og-images\` to generate them.`,
       )
     }
   })
