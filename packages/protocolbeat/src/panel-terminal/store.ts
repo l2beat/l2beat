@@ -110,7 +110,6 @@ function executeStreaming(
         resolve()
       }
     } catch (error) {
-      console.log('Catch error', error)
       set((state) => ({ output: state.output + `Error: ${error}` }))
       set((state) => ({
         command: { ...state.command, stream: undefined, inFlight: false },
