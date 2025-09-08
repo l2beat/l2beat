@@ -51,8 +51,8 @@ export const publicColumns = [
     },
   }),
   columnHelper.display({
-    id: 'attestation-delay',
-    header: 'Attestation Delay',
+    id: 'attestation-frequency',
+    header: 'Attestation Frequency',
     cell: (ctx) => {
       const bridge = ctx.row.original.bridges[0]
       if (!bridge) {
