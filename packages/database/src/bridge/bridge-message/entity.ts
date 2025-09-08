@@ -5,8 +5,8 @@ import type { BridgeMessage } from '../../kysely/generated/types'
 export interface BridgeMessageRecord {
   messageId: string
   type: string
-  durationMs: number | undefined
-  expiresAt: UnixTime
+  duration: number | undefined
+  timestamp: UnixTime
   srcTime: UnixTime | undefined
   srcChain: string | undefined
   srcTxHash: string | undefined
@@ -23,8 +23,8 @@ export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
   return {
     messageId: row.messageId,
     type: row.type,
-    durationMs: row.durationMs ?? undefined,
-    expiresAt: UnixTime.fromDate(row.expiresAt),
+    duration: row.duration ?? undefined,
+    timestamp: UnixTime.fromDate(row.timestamp),
     srcTime: row.srcTime !== null ? UnixTime.fromDate(row.srcTime) : undefined,
     srcChain: row.srcChain ?? undefined,
     srcTxHash: row.srcTxHash ?? undefined,
@@ -42,8 +42,8 @@ export function toRow(record: BridgeMessageRecord): Insertable<BridgeMessage> {
   return {
     messageId: record.messageId,
     type: record.type,
-    durationMs: record.durationMs,
-    expiresAt: UnixTime.toDate(record.expiresAt),
+    duration: record.duration,
+    timestamp: UnixTime.toDate(record.timestamp),
     srcTime:
       record.srcTime !== undefined ? UnixTime.toDate(record.srcTime) : null,
     srcChain: record.srcChain,

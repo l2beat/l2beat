@@ -140,6 +140,7 @@ describe(RealTimeLivenessProcessor.name, () => {
             data: '0xdata',
             transactionHash: txHash1,
             blockNumber: block.number,
+            logIndex: 0,
           },
           {
             address: to,
@@ -147,6 +148,7 @@ describe(RealTimeLivenessProcessor.name, () => {
             data: '0xdata',
             transactionHash: txHash2,
             blockNumber: block.number,
+            logIndex: 1,
           },
         ]
 

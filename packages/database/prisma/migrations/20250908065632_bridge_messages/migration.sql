@@ -21,8 +21,8 @@ CREATE TABLE "BridgeEvent" (
 CREATE TABLE "BridgeMessage" (
     "messageId" VARCHAR(40) NOT NULL,
     "type" VARCHAR(64) NOT NULL,
-    "durationMs" INTEGER,
-    "expiresAt" TIMESTAMP(6) NOT NULL,
+    "duration" INTEGER,
+    "timestamp" TIMESTAMP(6) NOT NULL,
     "srcTime" TIMESTAMP(6),
     "srcChain" VARCHAR(32),
     "srcTxHash" VARCHAR(66),

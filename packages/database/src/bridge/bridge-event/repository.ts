@@ -40,6 +40,8 @@ export class BridgeEventRepository extends BaseRepository {
   }
 
   async updateMatched(eventIds: string[]): Promise<void> {
+    if (eventIds.length === 0) return
+
     await this.db
       .updateTable('BridgeEvent')
       .set({ matched: true, grouped: true })
@@ -48,6 +50,8 @@ export class BridgeEventRepository extends BaseRepository {
   }
 
   async updateGrouped(eventIds: string[]): Promise<void> {
+    if (eventIds.length === 0) return
+
     await this.db
       .updateTable('BridgeEvent')
       .set({ grouped: true })

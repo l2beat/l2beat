@@ -6,9 +6,14 @@ import type {
 } from './plugins/types'
 
 export class BridgeStore implements BridgeEventDb {
-  private events: BridgeEvent[] = []
+  private events = new Map<string, BridgeEvent[]>()
   private unmatched: BridgeEvent[] = []
+  private matchedIds = new Set<string>()
   private groupedIds = new Set<string>()
+
+  private newEvents: BridgeEvent[] = []
+  private newMatched = new Set<string>()
+  private newGrouped = new Set<string>()
 
   constructor(private db: Database) {}
 
@@ -16,45 +21,90 @@ export class BridgeStore implements BridgeEventDb {
     const records = await this.db.bridgeEvent.getAll()
     for (const record of records) {
       const event = fromDbRecord(record)
+      this.categorizeEvent(event)
+
       if (!record.matched) {
         this.unmatched.push(event)
+      } else {
+        this.matchedIds.add(event.eventId)
       }
       if (record.grouped) {
-        this.groupedIds.add(record.eventId)
+        this.groupedIds.add(event.eventId)
       }
-      this.events.push(event)
     }
   }
 
-  // TODO: implement!
+  addEvent(event: BridgeEvent) {
+    this.categorizeEvent(event)
+    this.newEvents.push(event)
+  }
 
-  addEvent(event: BridgeEvent) {}
-  markMatched(event: BridgeEvent) {}
-  markGrouped(event: BridgeEvent) {}
+  private categorizeEvent(event: BridgeEvent) {
+    const array = this.events.get(event.eventId) ?? []
+    array.push(event)
+    this.events.set(event.eventId, array)
+  }
 
-  async flush(): Promise<void> {}
+  markMatched(event: BridgeEvent) {
+    this.matchedIds.add(event.eventId)
+    this.newMatched.add(event.eventId)
+    this.markGrouped(event)
+
+    const index = this.unmatched.indexOf(event)
+    if (index !== -1) {
+      this.unmatched.splice(index, 1)
+    }
+  }
+
+  markGrouped(event: BridgeEvent) {
+    this.groupedIds.add(event.eventId)
+    this.newGrouped.add(event.eventId)
+  }
 
   getUnmatched(): BridgeEvent[] {
-    return []
+    return [...this.unmatched]
+  }
+
+  async save(): Promise<void> {
+    const records = this.newEvents.map((e) =>
+      toDbRecord(e, {
+        matched: this.matchedIds.has(e.eventId),
+        grouped: this.groupedIds.has(e.eventId),
+      }),
+    )
+    const matchedIds = Array.from(this.newMatched)
+    const groupedIds = Array.from(this.newGrouped).filter(
+      (x) => !this.matchedIds.has(x),
+    )
+
+    this.newEvents.length = 0
+    this.newMatched.clear()
+    this.newGrouped.clear()
+
+    await this.db.transaction(async () => {
+      await this.db.bridgeEvent.insertMany(records)
+      await this.db.bridgeEvent.updateMatched(matchedIds)
+      await this.db.bridgeEvent.updateGrouped(groupedIds)
+    })
   }
 
   find<T>(
     type: BridgeEventType<T>,
     query?: Partial<T>,
   ): BridgeEvent<T> | undefined {
-    return this.events.find((a): a is BridgeEvent<T> => {
-      if (!type.checkType(a)) return false
+    return this.events.get(type.type)?.find((a): a is BridgeEvent<T> => {
       if (!query) return true
       return matchesQuery(a.args, query)
     })
   }
 
   findAll<T>(type: BridgeEventType<T>, query?: Partial<T>): BridgeEvent<T>[] {
-    return this.events.filter((a): a is BridgeEvent<T> => {
-      if (!type.checkType(a)) return false
-      if (!query) return true
-      return matchesQuery(a.args, query)
-    })
+    return (
+      this.events.get(type.type)?.filter((a): a is BridgeEvent<T> => {
+        if (!query) return true
+        return matchesQuery(a.args, query)
+      }) ?? []
+    )
   }
 }
 
@@ -83,7 +133,6 @@ function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
   }
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: TODO: use
 function toDbRecord(
   event: BridgeEvent,
   options: { matched: boolean; grouped: boolean },

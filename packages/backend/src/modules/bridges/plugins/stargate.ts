@@ -1,9 +1,9 @@
 import {
   type BridgeEvent,
+  type BridgeEventDb,
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
-  type BridgeEventDb,
   type LogToCapture,
   type MatchResult,
 } from './types'

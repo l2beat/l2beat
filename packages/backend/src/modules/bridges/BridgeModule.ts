@@ -24,12 +24,12 @@ export function createBridgeModule({
 
   const bridgeStore = new BridgeStore(db)
 
-  const bridgeMatcher = new BridgeMatcher(bridgeStore, plugins, logger)
+  const bridgeMatcher = new BridgeMatcher(bridgeStore, db, plugins, logger)
   for (const chain of chains) {
     const processor = new BridgeBlockProcessor(
       chain,
       plugins.filter((x) => x.chains.includes(chain)),
-      bridgeMatcher,
+      bridgeStore,
       logger,
     )
     blockProcessors.push(processor)

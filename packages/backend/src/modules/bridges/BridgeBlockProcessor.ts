@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import { type Block, EthereumAddress, type Log } from '@l2beat/shared-pure'
 import type { Log as ViemLog } from 'viem'
 import type { BlockProcessor } from '../types'
-import type { BridgeMatcher } from './BridgeMatcher'
+import type { BridgeStore } from './BridgeStore'
 import type {
   BridgeEventContext,
   BridgePlugin,
@@ -13,7 +13,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
   constructor(
     public chain: string,
     private plugins: BridgePlugin[],
-    private bridgeMatcher: BridgeMatcher,
+    private bridgeStore: BridgeStore,
     private logger: Logger,
   ) {
     this.logger = logger.for(this)
@@ -28,13 +28,14 @@ export class BridgeBlockProcessor implements BlockProcessor {
           const event = await plugin.capture?.(logToDecode)
           if (event) {
             count++
-            this.bridgeMatcher.addEvent(event)
+            this.bridgeStore.addEvent(event)
           }
         } catch (e) {
           this.logger.error(e)
         }
       }
     }
+    await this.bridgeStore.save()
     this.logger.info('Block processed', {
       chain: this.chain,
       blockNumber: block.number,

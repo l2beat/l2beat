@@ -116,13 +116,11 @@ export interface BridgePlugin {
   chains: string[]
   capture?: (
     input: LogToCapture,
-    // biome-ignore lint/suspicious/noConfusingVoidType: Otherwise it's painful to write
-  ) => BridgeEvent | undefined | void | Promise<BridgeEvent | undefined | void>
+  ) => BridgeEvent | undefined | Promise<BridgeEvent | undefined>
   match?: (
     event: BridgeEvent,
     db: BridgeEventDb,
-    // biome-ignore lint/suspicious/noConfusingVoidType: Otherwise it's painful to write
-  ) => MatchResult | undefined | void | Promise<MatchResult | undefined | void>
+  ) => MatchResult | undefined | Promise<MatchResult | undefined>
 }
 
 export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<

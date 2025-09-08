@@ -364,8 +364,8 @@ model BridgeEvent {
 model BridgeMessage {
   messageId   String    @db.VarChar(40)
   type        String    @db.VarChar(64)
-  durationMs  Int?
-  expiresAt   DateTime  @db.Timestamp(6)
+  duration    Int?
+  timestamp   DateTime  @db.Timestamp(6)
   srcTime     DateTime? @db.Timestamp(6)
   srcChain    String?   @db.VarChar(32)
   srcTxHash   String?   @db.VarChar(66)

@@ -1,31 +1,26 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type { BridgeMessageRecord, Database } from '@l2beat/database'
 import type { BridgeStore } from './BridgeStore'
-import type {
-  BridgeEvent,
-  BridgeMessage,
-  BridgePlugin,
-  BridgeTransfer,
+import {
+  type BridgeEvent,
+  type BridgeMessage,
+  type BridgePlugin,
+  type BridgeTransfer,
+  generateId,
+  type MatchResult,
 } from './plugins/types'
 
 export class BridgeMatcher {
-  private all: BridgeEvent[] = []
-  private unmatched: BridgeEvent[] = []
-  private messages: BridgeMessage[] = []
-  private transfers: BridgeTransfer[] = []
   private running = false
 
   constructor(
     private bridgeStore: BridgeStore,
+    private db: Database,
     private plugins: BridgePlugin[],
     private logger: Logger,
     private intervalMs = 10_000,
   ) {
     this.logger = logger.for(this)
-  }
-
-  addEvent(event: BridgeEvent) {
-    this.all.push(event)
-    this.unmatched.push(event)
   }
 
   start() {
@@ -48,56 +43,76 @@ export class BridgeMatcher {
 
   async doMatching() {
     const matched = new Set<BridgeEvent>()
+    const messages: BridgeMessage[] = []
+    const transfers: BridgeTransfer[] = []
 
-    for (const event of this.unmatched) {
-      if (!matched.has(event)) {
-        for (const plugin of this.plugins) {
-          try {
-            const result = await plugin.match?.(event, this.bridgeStore)
-            if (result) {
-              matched.add(event)
-              if (result.message) {
-                this.messages.push(result.message)
-              }
-              if (result.transfer) {
-                this.transfers.push(result.transfer)
-              }
-              this.logger.info('Matched', result)
-            }
-          } catch (e) {
-            this.logger.error(e)
+    for (const event of this.bridgeStore.getUnmatched()) {
+      if (matched.has(event)) {
+        continue
+      }
+      for (const plugin of this.plugins) {
+        let result: MatchResult | undefined
+        try {
+          result = await plugin.match?.(event, this.bridgeStore)
+        } catch (e) {
+          this.logger.error(e)
+        }
+
+        if (result) {
+          matched.add(event)
+          this.bridgeStore.markMatched(event)
+          if (result.message) {
+            messages.push(result.message)
+            this.bridgeStore.markGrouped(result.message.inbound)
+            this.bridgeStore.markGrouped(result.message.outbound)
           }
+          if (result.transfer) {
+            transfers.push(result.transfer)
+            for (const transferEvent of result.transfer.events) {
+              this.bridgeStore.markGrouped(transferEvent)
+            }
+          }
+          this.logger.info('Matched', result)
         }
       }
     }
 
     if (matched.size > 0) {
-      this.logger.info('Matched', { count: matched.size })
-      this.unmatched = this.unmatched.filter((x) => !matched.has(x))
+      this.logger.info('Matched', {
+        count: matched.size,
+        messages: messages.length,
+        transfers: transfers.length,
+      })
+      await this.bridgeStore.save()
+    }
+    if (messages.length > 0) {
+      await this.db.bridgeMessage.insertMany(messages.map(toMessageRecord))
     }
   }
+}
 
-  getStats() {
-    function breakdown(things: { type: string }[]) {
-      const byType: Record<string, number> = {}
-      for (const thing of things) {
-        byType[thing.type] = (byType[thing.type] ?? 0) + 1
-      }
-      return byType
-    }
+function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
+  return {
+    messageId: generateId('M'),
+    type: message.type,
+    duration: Math.abs(
+      message.inbound.ctx.timestamp - message.outbound.ctx.timestamp,
+    ),
+    timestamp: Math.max(
+      message.outbound.ctx.timestamp,
+      message.inbound.ctx.timestamp,
+    ),
 
-    return {
-      all: breakdown(this.all),
-      unmatched: breakdown(this.unmatched),
-      messages: breakdown(this.messages),
-      transfers: breakdown(this.transfers),
-    }
-  }
+    srcChain: message.outbound.ctx.chain,
+    srcTime: message.outbound.ctx.timestamp,
+    srcEventId: message.outbound.eventId,
+    srcLogIndex: message.outbound.ctx.logIndex,
+    srcTxHash: message.outbound.ctx.txHash,
 
-  getByType(
-    kind: 'all' | 'unmatched' | 'messages' | 'transfers',
-    type: string,
-  ) {
-    return this[kind].filter((x) => x.type === type)
+    dstChain: message.inbound.ctx.chain,
+    dstTime: message.inbound.ctx.timestamp,
+    dstEventId: message.inbound.eventId,
+    dstLogIndex: message.inbound.ctx.logIndex,
+    dstTxHash: message.inbound.ctx.txHash,
   }
 }

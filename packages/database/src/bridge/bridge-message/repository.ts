@@ -29,10 +29,10 @@ export class BridgeMessageRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async deleteExpired(currentTime: UnixTime): Promise<number> {
+  async deleteBefore(timestamp: UnixTime): Promise<number> {
     const result = await this.db
       .deleteFrom('BridgeMessage')
-      .where('expiresAt', '<=', UnixTime.toDate(currentTime))
+      .where('timestamp', '<', UnixTime.toDate(timestamp))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
