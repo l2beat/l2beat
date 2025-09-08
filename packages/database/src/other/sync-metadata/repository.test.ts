@@ -33,19 +33,11 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           blockTarget: 100,
           blockSyncedUntil: 100,
         },
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
       ]
       await repository.upsertMany(records)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted(records.slice(0, 2))
+      expect(results).toEqualUnsorted(records)
 
       await repository.upsertMany([
         {
