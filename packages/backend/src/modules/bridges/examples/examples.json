@@ -22,5 +22,17 @@
       "block": 23031165,
       "tx": "0xad842eb3b6a603a78cccc24ea9b3d418f2b38bc13da0f542aedb237ed4740c61"
     }
+  },
+  "mayan": {
+    "outboud": {
+      "chain": "base",
+      "block": 35059380,
+      "tx": "0xf31d79e452692369a486f9ea470a17e123651e02dd50060a710f28e5a268bf5a"
+    },
+    "inbound": {
+      "chain": "optimism",
+      "block": 140655349,
+      "tx": "0x8fee2c8243140764b8ba74ae2c11f22495e7c5eae15f384f37fa3c826eebe465"
+    }
   }
 }

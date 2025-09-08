@@ -28,7 +28,7 @@ const cmd = command({
     }
 
     const chains = initChains([example.outboud, example.inbound], logger)
-    const plugins = createBridgePlugins()
+    const plugins = createBridgePlugins(logger)
 
     const events: BridgeEvent[] = []
     for (const chain of chains) {
@@ -74,7 +74,7 @@ const cmd = command({
 
     const eventDb = new MemoryEventDb(events)
 
-    for (const event of events) {
+    eventLoop: for (const event of events) {
       for (const plugin of plugins) {
         if (!plugin.match) {
           continue
@@ -84,6 +84,7 @@ const cmd = command({
 
         if (matched) {
           logger.info('Matched', matched)
+          break eventLoop // This breaks out of both loops
         }
       }
     }

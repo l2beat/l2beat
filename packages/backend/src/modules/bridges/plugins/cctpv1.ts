@@ -64,11 +64,13 @@ export class CCTPv1Plugin implements BridgePlugin {
     }
 
     return {
-      message: {
-        type: 'cctpv1.Message',
-        inbound: event,
-        outbound: outboundEvent,
-      },
+      messages: [
+        {
+          type: 'cctpv1.Message',
+          inbound: event,
+          outbound: outboundEvent,
+        },
+      ],
     }
   }
 }

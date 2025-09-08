@@ -98,7 +98,7 @@ export interface LogToCapture {
 }
 
 export interface MatchResult {
-  message?: BridgeMessage
+  messages?: BridgeMessage[]
   transfer?: BridgeTransfer
 }
 

@@ -52,11 +52,13 @@ export class StargatePlugin implements BridgePlugin {
     if (!oftSent) return
 
     return {
-      message: {
-        type: 'stargate.Message',
-        outbound: oftSent,
-        inbound: oftReceived,
-      },
+      messages: [
+        {
+          type: 'stargate.Message',
+          outbound: oftSent,
+          inbound: oftReceived,
+        },
+      ],
     }
   }
 }
