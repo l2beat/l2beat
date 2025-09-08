@@ -3,8 +3,8 @@ import type {
   AnomalyStatsRecord,
   Database,
   RealTimeAnomalyRecord,
+  RealTimeLivenessRecord,
 } from '@l2beat/database'
-import type { RealTimeLivenessRecord } from '@l2beat/database/dist/other/real-time-liveness/entity'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type Block,

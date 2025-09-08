@@ -4,35 +4,54 @@ export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 
 // Records
 
-export type { ActivityRecord } from './activity/entity'
-export type { BridgeEventRecord } from './bridge/bridge-event/entity'
-export type { BridgeEventStatsRecord } from './bridge/bridge-event/repository'
-export type { BridgeMessageRecord } from './bridge/bridge-message/entity'
-export type { BridgeMessageStatsRecord } from './bridge/bridge-message/repository'
-export type { BlobRecord } from './da-beat/blob/entity'
-export type { CurrentPriceRecord } from './da-beat/current-price/entity'
+export type { ActivityRecord } from './repositories/ActivityRepository'
+export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepository'
+export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
+export type { AnomalyRecord } from './repositories/AnomaliesRepository'
+export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
+export type { BlobRecord } from './repositories/BlobsRepository'
+export type {
+  BridgeEventRecord,
+  BridgeEventStatsRecord,
+} from './repositories/BridgeEventRepository'
+export type {
+  BridgeMessageRecord,
+  BridgeMessageStatsRecord,
+} from './repositories/BridgeMessageRepository'
+export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
-} from './da-beat/data-availability/entity'
-export type { StakeRecord } from './da-beat/stake/entity'
-export type { DiscoveryCacheRecord } from './discovery/discovery-cache/entity'
-export type { UpdateDiffRecord } from './discovery/update-diff/entity'
-export type { UpdateMessageRecord } from './discovery/update-message/entity'
-export type { UpdateMonitorRecord } from './discovery/update-monitor/entity'
-export type { UpdateNotifierRecord } from './discovery/update-notifier/entity'
-export type { AggregatedL2CostRecord } from './other/aggregated-l2-cost/entity'
-export type { AggregatedLivenessRecord } from './other/aggregated-liveness/entity'
-export type { AnomalyRecord } from './other/anomalies/entity'
-export type { AnomalyStatsRecord } from './other/anomaly-stats/entity'
-export type { L2CostRecord } from './other/l2-cost/entity'
-export type { L2CostPriceRecord } from './other/l2-cost-price/entity'
-export type { LivenessRecord } from './other/liveness/entity'
-export type { NotificationRecord } from './other/notifications/entity'
-export type { RealTimeAnomalyRecord } from './other/real-time-anomalies/entity'
-export type { RealTimeLivenessRecord } from './other/real-time-liveness/entity'
-export type { VerifierStatusRecord } from './other/verifier-status/entity'
-export type { ProjectValueRecord } from './tvs/project-value/entity'
-export type { TokenValueRecord } from './tvs/token-value/entity'
-export type { IndexerConfigurationRecord } from './uif/indexer-configuration/entity'
-export type { IndexerStateRecord } from './uif/indexer-state/entity'
+} from './repositories/DataAvailabilityRepository'
+export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
+export type { FlatSourcesRecord } from './repositories/FlatSourcesRepository'
+export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
+export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
+export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
+export type { L2CostRecord } from './repositories/L2CostRepository'
+export type { LivenessRecord } from './repositories/LivenessRepository'
+export type { NotificationRecord } from './repositories/NotificationsRepository'
+export type {
+  ProjectValueRecord,
+  SummedByTimestampProjectValueRecord,
+} from './repositories/ProjectValueRepository'
+export type {
+  RealTimeAnomalyRecord,
+  RealTimeAnomalyStatus,
+} from './repositories/RealTimeAnomaliesRepository'
+export type { RealTimeLivenessRecord } from './repositories/RealTimeLivenessRepository'
+export type { StakeRecord } from './repositories/StakeRepository'
+export type {
+  SyncMetadataFeature,
+  SyncMetadataRecord,
+} from './repositories/SyncMetadataRepository'
+export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
+export type { TokenValueRecord } from './repositories/TokenValueRepository'
+export type { TvsAmountRecord } from './repositories/TvsAmountRepository'
+export type { TvsBlockTimestampRecord } from './repositories/TvsBlockTimestampRepository'
+export type { TvsPriceRecord } from './repositories/TvsPriceRepository'
+export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'
+export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository'
+export type { UpdateMonitorRecord } from './repositories/UpdateMonitorRepository'
+export type { UpdateNotifierRecord } from './repositories/UpdateNotifierRepository'
+export type { VerifierStatusRecord } from './repositories/VerifierStatusRepository'
