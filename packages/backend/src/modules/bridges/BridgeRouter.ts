@@ -75,7 +75,7 @@ function statsToHtml(
   html += '<h2>Messages</h2>'
   html += '<ul>'
   for (const { type, count, averageDuration } of messages) {
-    html += `<li><a href="/bridges/all/${type}">${type}</a>: ${count}, avg = ${averageDuration} seconds</li>`
+    html += `<li><a href="/bridges/messages/${type}">${type}</a>: ${count}, avg = ${averageDuration} seconds</li>`
   }
   html += '</ul>'
 
