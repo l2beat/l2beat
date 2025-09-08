@@ -34,10 +34,11 @@ export function createBridgeModule({
     blockProcessors.push(processor)
   }
 
-  const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
   const bridgeMatcher = new BridgeMatcher(bridgeStore, db, plugins, logger)
 
   const bridgeRouter = createBridgeRouter(db)
+
+  const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
 
   const start = async () => {
     logger = logger.for('BridgeModule')
