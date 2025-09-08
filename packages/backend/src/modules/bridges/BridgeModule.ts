@@ -2,10 +2,12 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BridgeBlockProcessor } from './BridgeBlockProcessor'
 import { BridgeMatcher } from './BridgeMatcher'
 import { createBridgeRouter } from './BridgeRouter'
+import { BridgeStore } from './BridgeStore'
 import { createBridgePlugins } from './plugins'
 
 export function createBridgeModule({
   config,
+  db,
   logger,
   blockProcessors,
 }: ModuleDependencies): ApplicationModule | undefined {
@@ -20,7 +22,9 @@ export function createBridgeModule({
     .flatMap((x) => x.chains)
     .filter((x, i, a) => a.indexOf(x) === i)
 
-  const bridgeMatcher = new BridgeMatcher(plugins, logger)
+  const bridgeStore = new BridgeStore(db)
+
+  const bridgeMatcher = new BridgeMatcher(bridgeStore, plugins, logger)
   for (const chain of chains) {
     const processor = new BridgeBlockProcessor(
       chain,

@@ -42,7 +42,7 @@ export class BridgeEventRepository extends BaseRepository {
   async updateMatched(eventIds: string[]): Promise<void> {
     await this.db
       .updateTable('BridgeEvent')
-      .set({ matched: true })
+      .set({ matched: true, grouped: true })
       .where('eventId', 'in', eventIds)
       .execute()
   }

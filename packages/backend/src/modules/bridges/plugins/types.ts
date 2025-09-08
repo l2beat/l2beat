@@ -103,7 +103,7 @@ export interface MatchResult {
   transfer?: BridgeTransfer
 }
 
-export interface EventDb {
+export interface BridgeEventDb {
   find<T>(
     type: BridgeEventType<T>,
     query?: Partial<T>,
@@ -120,7 +120,7 @@ export interface BridgePlugin {
   ) => BridgeEvent | undefined | void | Promise<BridgeEvent | undefined | void>
   match?: (
     event: BridgeEvent,
-    db: EventDb,
+    db: BridgeEventDb,
     // biome-ignore lint/suspicious/noConfusingVoidType: Otherwise it's painful to write
   ) => MatchResult | undefined | void | Promise<MatchResult | undefined | void>
 }

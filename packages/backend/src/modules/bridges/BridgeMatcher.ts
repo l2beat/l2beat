@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { EventDbImpl } from './EventDb'
+import type { BridgeStore } from './BridgeStore'
 import type {
   BridgeEvent,
   BridgeMessage,
@@ -15,6 +15,7 @@ export class BridgeMatcher {
   private running = false
 
   constructor(
+    private bridgeStore: BridgeStore,
     private plugins: BridgePlugin[],
     private logger: Logger,
     private intervalMs = 10_1000,
@@ -46,14 +47,13 @@ export class BridgeMatcher {
   }
 
   async doMatching() {
-    const eventDb = new EventDbImpl(this.all)
     const matched = new Set<BridgeEvent>()
 
     for (const event of this.unmatched) {
       if (!matched.has(event)) {
         for (const plugin of this.plugins) {
           try {
-            const result = await plugin.match?.(event, eventDb)
+            const result = await plugin.match?.(event, this.bridgeStore)
             if (result) {
               matched.add(event)
               if (result.message) {

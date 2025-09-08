@@ -3,7 +3,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
-  type EventDb,
+  type BridgeEventDb,
   type LogToCapture,
   type MatchResult,
 } from './types'
@@ -43,7 +43,7 @@ export class StargatePlugin implements BridgePlugin {
     }
   }
 
-  match(oftReceived: BridgeEvent, db: EventDb): MatchResult | undefined {
+  match(oftReceived: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (!OFTReceived.checkType(oftReceived)) {
       return
     }
