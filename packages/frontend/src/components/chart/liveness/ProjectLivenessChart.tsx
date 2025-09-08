@@ -12,6 +12,7 @@ import {
   rangeToResolution,
 } from '~/server/features/scaling/liveness/utils/chartRange'
 import { api } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getDefaultSubtype } from './getDefaultSubtype'
 import { LivenessChart } from './LivenessChart'
@@ -78,7 +79,12 @@ export function ProjectLivenessChart({
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col gap-1">
+      <div
+        className={cn(
+          'flex flex-col gap-1',
+          hideSubtypeSwitch && 'flex-row justify-between',
+        )}
+      >
         <ProjectChartTimeRange range={chartRange} />
         <ChartControlsWrapper className="flex-wrap-reverse">
           {!hideSubtypeSwitch && (
