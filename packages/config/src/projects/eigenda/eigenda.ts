@@ -318,6 +318,8 @@ export const eigenda: BaseProject = {
     },
     validationType: {
       value: 'BLS Signature',
+      description:
+        'The DA attestation requires onchain BLS signatures verification to be accepted by the bridge, and the total stake of signers is verified to have reached the required threshold.',
     },
     technology: {
       description: `
