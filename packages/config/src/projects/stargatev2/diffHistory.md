@@ -1,3 +1,346 @@
+Generated with discovered.json: 0x9912e323c7692df251e5fa2afd86546bc525d7e8
+
+# Diff at Mon, 08 Sep 2025 15:12:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48f0161c75908020b4454ff29490575d534b39f4 block: 1757064416
+- current timestamp: 1757343231
+
+## Description
+
+Treasurer admin changed to Stargate MS 2 (also see recent permission changes).
+
+added more permissions to the templates
+
+## Watched changes
+
+```diff
+    contract Treasurer (eth:0x1041D127b2d4BC700F0F563883bC689502606918) {
+    +++ description: Permissions proxy allowing addresses to act through it.
+      values.admin:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Stargate Multisig (eth:0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
+    contract Stargate Multisig 2 (eth:0xBE634B030FEAaB661300667EaF82510a3a025413) {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      receivedPermissions.13:
++        {"permission":"interact","from":"eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x1041D127b2d4BC700F0F563883bC689502606918","role":".admin"}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../Stargate Multisig/GnosisSafe.sol => /dev/null  | 953 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757064416 (main branch discovery), not current.
+
+```diff
+    contract StargatePoolNative (arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F) {
+    +++ description: None
+      values.planner:
++        "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "arb1:0x146c8e409C113ED87C6183f4d25c50251DFfbb3a"
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) {
+    +++ description: None
+      values.planner:
++        "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "arb1:0x146c8e409C113ED87C6183f4d25c50251DFfbb3a"
+    }
+```
+
+```diff
+    EOA  (arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"},{"permission":"interact","from":"arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"},{"permission":"interact","from":"arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}]
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) {
+    +++ description: None
+      values.planner:
++        "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "arb1:0x146c8e409C113ED87C6183f4d25c50251DFfbb3a"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26) {
+    +++ description: None
+      values.planner:
++        "base:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "base:0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7"
+    }
+```
+
+```diff
+    contract StargatePoolEURC (base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2) {
+    +++ description: None
+      values.planner:
++        "base:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "base:0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7"
+    }
+```
+
+```diff
+    contract StargatePoolNative (base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7) {
+    +++ description: None
+      values.planner:
++        "base:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "base:0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7"
+    }
+```
+
+```diff
+    EOA  (base:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"},{"permission":"interact","from":"base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"},{"permission":"interact","from":"base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}]
+    }
+```
+
+```diff
+    contract Treasurer (eth:0x1041D127b2d4BC700F0F563883bC689502606918) {
+    +++ description: Permissions proxy allowing addresses to act through it.
+      template:
++        "stargate/Treasurer"
+      description:
++        "Permissions proxy allowing addresses to act through it."
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer"},{"permission":"interact","from":"eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer"},{"permission":"interact","from":"eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer"},{"permission":"interact","from":"eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer"},{"permission":"interact","from":"eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer"},{"permission":"interact","from":"eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer"}]
+    }
+```
+
+```diff
+    contract StargatePool (eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D) {
+    +++ description: None
+      values.planner:
++        "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "eth:0x1041D127b2d4BC700F0F563883bC689502606918"
+    }
+```
+
+```diff
+    contract Stargate Multisig (eth:0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3","description":"withdraw fees and tokens that are not the pool token (sent by mistake).","role":".treasurer","via":[{"address":"eth:0x1041D127b2d4BC700F0F563883bC689502606918"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x1041D127b2d4BC700F0F563883bC689502606918","role":".admin"}]
+    }
+```
+
+```diff
+    contract StargatePoolNative (eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931) {
+    +++ description: None
+      values.planner:
++        "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "eth:0x1041D127b2d4BC700F0F563883bC689502606918"
+    }
+```
+
+```diff
+    contract StargatePoolEURC (eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c) {
+    +++ description: None
+      values.planner:
++        "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "eth:0x1041D127b2d4BC700F0F563883bC689502606918"
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973) {
+    +++ description: None
+      values.planner:
++        "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "eth:0x1041D127b2d4BC700F0F563883bC689502606918"
+    }
+```
+
+```diff
+    contract Stargate Multisig 2 (eth:0xBE634B030FEAaB661300667EaF82510a3a025413) {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x1041D127b2d4BC700F0F563883bC689502606918","description":"set the admin address and withdraw treasury fees from the contract.","role":".owner"}
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7) {
+    +++ description: None
+      values.planner:
++        "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "eth:0x1041D127b2d4BC700F0F563883bC689502606918"
+    }
+```
+
+```diff
+    contract StargatePool (eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3) {
+    +++ description: None
+      values.planner:
++        "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "eth:0x1041D127b2d4BC700F0F563883bC689502606918"
+    }
+```
+
+```diff
+    EOA  (eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}
+    }
+```
+
+```diff
+    contract StargatePoolNative (linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075) {
+    +++ description: None
+      values.planner:
++        "linea:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "linea:0xf5F74d2508e97A3a7CCA2ccb75c8325D66b46152"
+    }
+```
+
+```diff
+    EOA  (linea:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}]
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD) {
+    +++ description: None
+      values.planner:
++        "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) {
+    +++ description: None
+      values.planner:
++        "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9"
+    }
+```
+
+```diff
+    EOA  (oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"},{"permission":"interact","from":"oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"},{"permission":"interact","from":"oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}]
+    }
+```
+
+```diff
+    contract StargatePoolNative (oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) {
+    +++ description: None
+      values.planner:
++        "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4) {
+    +++ description: None
+      values.planner:
++        "scr:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "scr:0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a"
+    }
+```
+
+```diff
+    contract StargatePoolNative (scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583) {
+    +++ description: None
+      values.planner:
++        "scr:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.treasurer:
++        "scr:0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a"
+    }
+```
+
+```diff
+    EOA  (scr:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"},{"permission":"interact","from":"scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}]
+    }
+```
+
 Generated with discovered.json: 0xaa2911bce73a57218905b6b83b49419e5fa53498
 
 # Diff at Fri, 05 Sep 2025 11:15:34 GMT:

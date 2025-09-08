@@ -1,6 +1,6 @@
 {
   "name": "eclipse",
-  "timestamp": 1751902931,
+  "timestamp": 1757342204,
   "configHash": "0x2206f314a2afc5d06ebab433b2088ffe9910c127068e59af25bad4c793ae891a",
   "entries": [
     {
@@ -212,7 +212,6 @@
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547",
-          "eth:0xCD2fA978D163c0068167dDff8b6951f0E626e6A4",
           "eth:0x950815d0e585095B06111CD101440fb1E95AB2a5",
           "eth:0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2",
           "eth:0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
@@ -221,8 +220,8 @@
         "domainSeparator": "0x4fc4aca3db1cad217783537dbcbcb1d69e3377e64c4890ff913a3639c94b9386",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 26,
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -507,11 +506,6 @@
     },
     {
       "address": "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xCD2fA978D163c0068167dDff8b6951f0E626e6A4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1086,6 +1080,6 @@
     "eclipse/Upgrader0to1": "0x62b4c472e65c2ae7518c7fb7fa8791913f6109336e1376e07f6b5a001a5f2e8b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22868281 },
-  "permissionsConfigHash": "0xc2072cb9dee1810a11bcb06b388ed2584dbd44450e99e5467f2b9fbe8f4d29f6"
+  "usedBlockNumbers": { "ethereum": 23319013 },
+  "permissionsConfigHash": "0x37572f0021a1cefa92d5dc3c0d29302294e49269e66c0e1d3aa78c626c046a81"
 }

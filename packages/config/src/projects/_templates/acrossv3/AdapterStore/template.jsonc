@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A helper contract for chain adapters on the hub chain that support OFT messaging. Handles token -> messenger mapping."
+}

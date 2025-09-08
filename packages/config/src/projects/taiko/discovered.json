@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1757064809,
+  "timestamp": 1757344306,
   "configHash": "0x4ce0046b1b1d4d175fc76be54c2ba1cc4045338d799b22034581b13660591a62",
   "entries": [
     {
@@ -398,68 +398,68 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1326788,
-          "blockId_": 2124327,
+          "batchId_": 1327640,
+          "blockId_": 2237335,
           "ts_": {
-            "parentHash": "0x89d7b5d1a3cd854b32318aaa89b9e5671e741b4a301378875a583f58d4ea0891",
-            "blockHash": "0xe1c280e6d287cd4fdfb60f91c40ac974ca26358da7bed941e9f33ae2c4d0dc83",
-            "stateRoot": "0x04489d10b368400b99406a3e3dc778064eb14201c383ce9f028a2c12ee248d68",
-            "prover": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+            "parentHash": "0x3974af895467ca31506a2504069280791f5e2be649e494ef6896499d0fa301a4",
+            "blockHash": "0x3f21923ef67b2fb28d99c5990122fa406110c2585fc34ffcbaa1c1e1a7004658",
+            "stateRoot": "0x2cc52e48b1e551540cbb264059d3ba0176cfca5835f539fb556ede92207ff143",
+            "prover": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
             "inProvingWindow": true,
-            "createdAt": 1757054555
+            "createdAt": 1757334503
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1326789,
-          "blockHash_": "0x8617d679c0e54762d6154dc0699dcdead1faf69e081f8cf2b61d0764f20d9723",
+          "blockId_": 1327642,
+          "blockHash_": "0x8b6e796ae74f7957365d9920787ae1627996362250defd1b670f684e6ef7d324",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1741853327
+          "verifiedAt_": 1741868411
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1326789,
-          "blockId_": 2124424,
+          "batchId_": 1327642,
+          "blockId_": 2237570,
           "ts_": {
-            "parentHash": "0xe1c280e6d287cd4fdfb60f91c40ac974ca26358da7bed941e9f33ae2c4d0dc83",
-            "blockHash": "0x8617d679c0e54762d6154dc0699dcdead1faf69e081f8cf2b61d0764f20d9723",
+            "parentHash": "0x873b1aeb7d3f7ae8f592940443a227eae46c4c7b9ae0000f68e211fb3222ad0f",
+            "blockHash": "0x8b6e796ae74f7957365d9920787ae1627996362250defd1b670f684e6ef7d324",
             "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "prover": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+            "prover": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
             "inProvingWindow": true,
-            "createdAt": 1757054075
+            "createdAt": 1757335763
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1326788,
-            "lastSynecdAt": 1757062907
+            "lastSyncedBlockId": 1327640,
+            "lastSynecdAt": 1757342171
           },
           {
-            "numBlocks": 1326821,
-            "lastVerifiedBlockId": 1326789,
+            "numBlocks": 1327665,
+            "lastVerifiedBlockId": 1327642,
             "provingPaused": false,
-            "lastProposedIn": 23296003,
+            "lastProposedIn": 23319157,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1326788,
-          "lastSyncedAt": 1757062907
+          "lastSyncedBatchId": 1327640,
+          "lastSyncedAt": 1757342171
         },
         "getStats2": {
-          "numBatches": 1326821,
-          "lastVerifiedBatchId": 1326789,
+          "numBatches": 1327665,
+          "lastVerifiedBatchId": 1327642,
           "paused": false,
-          "lastProposedIn": 23296003,
+          "lastProposedIn": 23319157,
           "lastUnpausedAt": 1716571955
         },
         "impl": "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
         "inboxWrapper": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 23296003,
+        "lastProposedIn": 23319157,
         "newFork": "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8",
         "oldFork": "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
@@ -500,14 +500,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1326788,
-            "lastSyncedAt": 1757062907
+            "lastSyncedBatchId": 1327640,
+            "lastSyncedAt": 1757342171
           },
           "stats2": {
-            "numBatches": 1326821,
-            "lastVerifiedBatchId": 1326789,
+            "numBatches": 1327665,
+            "lastVerifiedBatchId": 1327642,
             "paused": false,
-            "lastProposedIn": 23296003,
+            "lastProposedIn": 23319157,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -728,7 +728,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1757064803,
+        "clock": 1757344295,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -983,7 +983,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 135,
+        "nonce": 136,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2784,7 +2784,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37866,
+        "nextMessageId": 37869,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -3128,7 +3128,7 @@
           "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
         ],
         "getOperatorForCurrentEpoch": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-        "getOperatorForNextEpoch": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
+        "getOperatorForNextEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
         "havingPerfectOperators": false,
         "impl": "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc",
         "inNonReentrant": false,
@@ -3192,16 +3192,6 @@
     },
     {
       "address": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "taiko:0x0aED2375549D1115e180bd0caea829C429Ea50B3",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "taiko:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3331,7 +3321,7 @@
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
       "values": {
-        "$admin": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
+        "$admin": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
         "$implementation": "taiko:0x0167000000000000000000000000000000000006",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
@@ -3369,9 +3359,9 @@
             "address": "taiko:0x98161D67f762A9E589E502348579FA38B1Ac47A8"
           }
         ],
-        "owner": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
+        "owner": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
         "paused": false,
-        "pendingOwner": "taiko:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
+        "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT"
       },
       "fieldMeta": {
@@ -3417,7 +3407,7 @@
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
       "values": {
-        "$admin": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
+        "$admin": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
         "$implementation": "taiko:0xE6d1efcC6AC8969474308C99a3805c332D33a1E0",
         "$pastUpgrades": [
           [
@@ -3448,12 +3438,12 @@
         "inNonReentrant": false,
         "isOnL1": false,
         "l1ChainId": 1,
-        "owner": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
+        "owner": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
         "pacayaForkHeight": 1166000,
         "parentGasExcess": 1344899430,
         "parentGasTarget": 40000000,
         "paused": false,
-        "pendingOwner": "taiko:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
+        "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT",
         "resolver": "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8",
         "signalService": "taiko:0x1670000000000000000000000000000000000005",
@@ -3465,27 +3455,7 @@
       }
     },
     {
-      "address": "taiko:0x1eE487CEdCe52c370DB11e62987F3ABe873E145A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "taiko:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "taiko:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "taiko:0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "taiko:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3503,7 +3473,7 @@
       "sinceTimestamp": 1747550747,
       "sinceBlock": 1158363,
       "values": {
-        "$admin": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
+        "$admin": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
         "$implementation": "taiko:0xDaD5a963618b340bC88F267920907bE567Fd88c4",
         "$pastUpgrades": [
           [
@@ -3561,9 +3531,9 @@
             "address": "taiko:0xA9d23408b9bA935c230493c40C73824Df71A0975"
           }
         ],
-        "owner": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
+        "owner": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
         "paused": false,
-        "pendingOwner": "taiko:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
+        "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
         "resolver": "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8"
       },
       "implementationNames": {
@@ -3591,15 +3561,15 @@
       ]
     },
     {
-      "name": "Taiko L2 Multisig",
-      "address": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
+      "name": "DelegateController",
+      "address": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
       "type": "Contract",
-      "template": "GnosisSafe",
+      "unverified": true,
       "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        null,
+        "0x126c01552edc6ec0f433f57a1cb50dee6524ae96dc62ca10278748794a267e90"
       ],
-      "proxyType": "gnosis safe",
+      "proxyType": "EIP1967 proxy",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3612,6 +3582,16 @@
           "from": "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8",
           "description": "can update the contract address for a given name",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "taiko:0x1670000000000000000000000000000000000001",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "taiko:0x1670000000000000000000000000000000000005",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -3626,61 +3606,6 @@
         {
           "permission": "upgrade",
           "from": "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8",
-          "role": "admin"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1717127507,
-      "sinceBlock": 13440,
-      "values": {
-        "$immutable": false,
-        "$implementation": "taiko:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "$members": [
-          "taiko:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163",
-          "taiko:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a",
-          "taiko:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
-          "taiko:0x1eE487CEdCe52c370DB11e62987F3ABe873E145A",
-          "taiko:0x0aED2375549D1115e180bd0caea829C429Ea50B3",
-          "taiko:0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
-          "taiko:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
-        ],
-        "$threshold": 5,
-        "domainSeparator": "0x10d700a8909250d8d8a725e5f8db8c2d4951a586749a9b3a0f66425cbe4609f2",
-        "getChainId": 167000,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 50,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8": "GnosisSafeProxy",
-        "taiko:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
-      }
-    },
-    {
-      "address": "taiko:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "DelegateController",
-      "address": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
-      "type": "Contract",
-      "unverified": true,
-      "sourceHashes": [
-        null,
-        "0x126c01552edc6ec0f433f57a1cb50dee6524ae96dc62ca10278748794a267e90"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "taiko:0x1670000000000000000000000000000000000001",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "taiko:0x1670000000000000000000000000000000000005",
           "role": "admin"
         },
         {
@@ -5887,9 +5812,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8": [
-      "constructor(address _singleton)"
-    ],
     "taiko:0xDaD5a963618b340bC88F267920907bE567Fd88c4": [
       "constructor()",
       "error ACCESS_DENIED()",
@@ -5991,56 +5913,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function withdraw(address _token, address _to)"
-    ],
-    "taiko:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
-      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ]
   },
   "usedTemplates": {
@@ -6079,6 +5951,6 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23296039, "taiko": 2129638 },
-  "permissionsConfigHash": "0xd2232322011dd2e74b2f9b9963d74fe0f05fe8219aba436ebcf442a763215199"
+  "usedBlockNumbers": { "ethereum": 23319187, "taiko": 2240391 },
+  "permissionsConfigHash": "0x66eeb7f851cabe8cd19f31ac140c9d18e0239855b6c0ee01f233058133bd12c1"
 }
