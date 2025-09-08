@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xf8cab9d11c101fc8a4382aa320d75482b515dbf3
+
+# Diff at Mon, 08 Sep 2025 14:37:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48f0161c75908020b4454ff29490575d534b39f4 block: 1751902931
+- current timestamp: 1757342204
+
+## Description
+
+ms signer removed.
+
+## Watched changes
+
+```diff
+    contract Eclipse Multisig (eth:0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xCD2fA978D163c0068167dDff8b6951f0E626e6A4"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0xb65b452876608192c114cf7dde7ec2fd08e082c1
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
