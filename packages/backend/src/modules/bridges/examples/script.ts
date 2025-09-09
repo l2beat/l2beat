@@ -5,19 +5,14 @@ import { command, positional, run, string } from 'cmd-ts'
 import { logToViemLog } from '../../../../scripts/bridges/utils/viem'
 import { createBridgePlugins } from '../plugins'
 import type { BridgeEvent } from '../plugins/types'
-import { MemoryEventDb } from './EventDb'
 import * as examples from './examples.json'
-
-const args = {
-  name: positional({
-    type: string,
-    displayName: 'name',
-  }),
-}
+import { InMemoryEventDb } from './InMemoryEventDb'
 
 const cmd = command({
   name: 'bridges:example',
-  args,
+  args: {
+    name: positional({ type: string, displayName: 'name' }),
+  },
   handler: async (args) => {
     const logger = Logger.INFO
 
@@ -27,21 +22,35 @@ const cmd = command({
       return
     }
 
-    const chains = initChains([example.outboud, example.inbound], logger)
+    const http = new HttpClient()
+    const env = getEnv()
+
+    const chains = example.map(({ chain, tx }) => {
+      return {
+        txHash: tx,
+        name: chain,
+        rpc: new RpcClient({
+          url: env.string(`${chain.toUpperCase()}_RPC_URL`),
+          sourceName: chain,
+          http,
+          logger,
+          callsPerMinute: 600,
+          retryStrategy: 'SCRIPT',
+        }),
+      }
+    })
+
     const plugins = createBridgePlugins(logger)
 
     const events: BridgeEvent[] = []
     for (const chain of chains) {
-      const block = await chain.rpc.getBlockWithTransactions(chain.block)
-      const transaction = block.transactions.find(
-        (t) => t.hash?.toLowerCase() === chain.tx,
-      )
-      assert(
-        transaction && transaction.hash,
-        `Transaction not found: ${chain.tx} @ ${chain.name}`,
-      )
-      const logs = await chain.rpc.getLogs(chain.block, chain.block)
-      const txLogs = logs.filter((l) => l.transactionHash === chain.tx)
+      const tx = await chain.rpc.getTransaction(chain.txHash)
+      assert(tx.blockNumber)
+      const block = await chain.rpc.getBlockWithTransactions(tx.blockNumber)
+      const logs = await chain.rpc.getLogs(block.number, block.number)
+      const txLogs = logs
+        .filter((l) => l.transactionHash === tx.hash)
+        .map(logToViemLog)
 
       for (const log of txLogs) {
         for (const plugin of plugins) {
@@ -49,18 +58,16 @@ const cmd = command({
             continue
           }
           const event = await plugin.capture({
-            log: logToViemLog(log),
-            txLogs: txLogs.map(logToViemLog),
+            log: log,
+            txLogs: txLogs,
             ctx: {
               timestamp: block.timestamp,
               chain: chain.name,
               blockNumber: block.number,
               blockHash: block.hash,
-              txHash: transaction.hash,
-              txTo: transaction.to
-                ? EthereumAddress(transaction.to)
-                : undefined,
-              logIndex: log.logIndex,
+              txHash: tx.hash,
+              txTo: tx.to ? EthereumAddress(tx.to) : undefined,
+              logIndex: log.logIndex ?? -1,
             },
           })
 
@@ -72,9 +79,9 @@ const cmd = command({
       }
     }
 
-    const eventDb = new MemoryEventDb(events)
+    const eventDb = new InMemoryEventDb(events)
 
-    eventLoop: for (const event of events) {
+    outer: for (const event of events) {
       for (const plugin of plugins) {
         if (!plugin.match) {
           continue
@@ -84,39 +91,11 @@ const cmd = command({
 
         if (matched) {
           logger.info('Matched', matched)
-          break eventLoop // This breaks out of both loops
+          break outer
         }
       }
     }
   },
 })
-
-function initChains(
-  chains: {
-    chain: string
-    block: number
-    tx: string
-  }[],
-  logger: Logger,
-) {
-  const http = new HttpClient()
-  const env = getEnv()
-
-  return chains.map(({ chain, block, tx }) => {
-    return {
-      block,
-      tx,
-      name: chain,
-      rpc: new RpcClient({
-        url: env.string(`${chain.toUpperCase()}_RPC_URL`),
-        sourceName: chain,
-        http,
-        logger,
-        callsPerMinute: 600,
-        retryStrategy: 'SCRIPT',
-      }),
-    }
-  })
-}
 
 run(cmd, process.argv.slice(2))

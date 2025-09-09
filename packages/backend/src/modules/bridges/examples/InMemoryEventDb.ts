@@ -4,7 +4,7 @@ import type {
   BridgeEventType,
 } from '../plugins/types'
 
-export class MemoryEventDb implements BridgeEventDb {
+export class InMemoryEventDb implements BridgeEventDb {
   constructor(public actions: BridgeEvent[]) {}
 
   find<T>(
