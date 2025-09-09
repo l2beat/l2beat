@@ -30,33 +30,22 @@ const NETWORKS = [
   {
     chainId: 1,
     eid: 30101,
-    chainShortName: 'ethereum',
+    chain: 'ethereum',
     address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
   },
   {
     chainId: 42161,
     eid: 30110,
-    chainShortName: 'arbitrum',
+    chain: 'arbitrum',
     address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
   },
   {
     chainId: 8453,
     eid: 30184,
-    chainShortName: 'base',
+    chain: 'base',
     address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
   },
 ]
-
-//
-// stargatePool ethereum
-// 0x77b2043768d28E9C9aB44E1aBfC95944bcE57931  # StargatePoolNative
-// 0xc026395860Db2d07ee33e05fE50ed7bD583189C7  # StargatePoolUSDC
-// stargatePool arbitrum
-// 0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F  # StargatePoolNative
-// 0xe8CDF27AcD73a434D661C84887215F7598e7d0d3  # StargatePoolUSDC
-// stargatePool base
-// 0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6f7C7  # StargatePoolNative
-// 0x27a16dc786820B16E5c9028b75B99F6f604b5d26  # StargatePoolUSDC
 
 // NOTE: This is just an example plugin! Not production ready!
 export class LayerZeroV2Plugin implements BridgePlugin {
@@ -64,13 +53,13 @@ export class LayerZeroV2Plugin implements BridgePlugin {
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
-    const endpoint = NETWORKS.find((b) => b.chainShortName === input.ctx.chain)
-    if (!endpoint) {
+    const network = NETWORKS.find((b) => b.chain === input.ctx.chain)
+    if (!network) {
       // TODO: warn
       return
     }
     // TODO: whitelist
-    const packetSent = parsePacketSent(input.log, [endpoint.address])
+    const packetSent = parsePacketSent(input.log, [network.address])
     if (packetSent) {
       const packet = decodePacket(packetSent.encodedPayload)
       if (!packet) {
@@ -90,13 +79,13 @@ export class LayerZeroV2Plugin implements BridgePlugin {
     }
 
     // TODO: whitelist
-    const packetDelivered = parsePacketDelivered(input.log, [endpoint.address])
+    const packetDelivered = parsePacketDelivered(input.log, [network.address])
     if (packetDelivered) {
       const guid = createLayerZeroGuid(
         packetDelivered.origin.nonce,
         packetDelivered.origin.srcEid,
         packetDelivered.origin.sender,
-        endpoint.eid,
+        network.eid,
         packetDelivered.receiver,
       )
 
