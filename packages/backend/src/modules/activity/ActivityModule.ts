@@ -49,7 +49,7 @@ export function initActivityModule({
                 {
                   feature: 'activity',
                   id: project.id,
-                  target: UnixTime.toStartOf(targetTimestamp, 'day'),
+                  target: targetTimestamp,
                   blockTarget: blockNumber,
                 },
               ])
@@ -98,7 +98,7 @@ export function initActivityModule({
                 {
                   feature: 'activity',
                   id: project.id,
-                  target: UnixTime.toStartOf(targetTimestamp, 'day'),
+                  target: targetTimestamp,
                   blockTarget: slotTarget,
                 },
               ])
