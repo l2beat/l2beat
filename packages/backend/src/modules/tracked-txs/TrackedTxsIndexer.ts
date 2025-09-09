@@ -60,7 +60,7 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
           uniq(
             activeConfigurations
               .filter((c) => c.properties.type === updater.type)
-              .map((c) => c.id),
+              .map((c) => c.properties.projectId),
           ),
           unixTo,
         )

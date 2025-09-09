@@ -7,7 +7,6 @@ export type SyncMetadataFeature =
   | 'activity'
   | 'l2costs'
   | 'liveness'
-  | 'anomalies'
   | 'dataAvailability'
   | 'tvs'
 
