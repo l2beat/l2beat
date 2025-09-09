@@ -1,3 +1,92 @@
+Generated with discovered.json: 0x4bee562ef15ee71396aeac9381097512e04af8bd
+
+# Diff at Mon, 08 Sep 2025 15:13:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48f0161c75908020b4454ff29490575d534b39f4 block: 1757064809
+- current timestamp: 1757344306
+
+## Description
+
+Remaining gov functions transfered to DAO/SC.
+
+## Watched changes
+
+```diff
+    contract L2AddressManager (taiko:0x1670000000000000000000000000000000000006) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.$admin:
+-        "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8"
++        "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"
+      values.owner:
+-        "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8"
++        "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"
+      values.pendingOwner:
+-        "taiko:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "taiko:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract TaikoAnchor (taiko:0x1670000000000000000000000000000000010001) {
+    +++ description: Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.
+      values.$admin:
+-        "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8"
++        "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"
+      values.owner:
+-        "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8"
++        "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"
+      values.pendingOwner:
+-        "taiko:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "taiko:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract DefaultResolver (taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.$admin:
+-        "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8"
++        "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"
+      values.owner:
+-        "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8"
++        "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"
+      values.pendingOwner:
+-        "taiko:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "taiko:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Taiko L2 Multisig (taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8)
+    +++ description: None
+```
+
+```diff
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000006","description":"can update the contract address for a given name","role":".owner"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8","description":"can update the contract address for a given name","role":".owner"}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000006","role":"admin"}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000010001","role":"admin"}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8","role":"admin"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafeL2.sol => /dev/null                  | 1032 --------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ 2 files changed, 1067 deletions(-)
+```
+
 Generated with discovered.json: 0x297bb2d31f5cf198e31a17eeac9687cf46a6d5be
 
 # Diff at Fri, 05 Sep 2025 09:35:03 GMT:

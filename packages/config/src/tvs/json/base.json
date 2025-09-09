@@ -446,6 +446,53 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "base-cgETH.hashkey",
+      "priceId": "cgeth-hashkey-cloud",
+      "symbol": "cgETH.hashkey",
+      "name": "cgETH Hashkey Cloud",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54162/large/Cgeth_Hashkey.png?1738482570",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xf587B7116879a529353Cc71eE959cD69FD5CAE48",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1738454400
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "cgeth-hashkey-cloud",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0xf587B7116879a529353Cc71eE959cD69FD5CAE48",
+              "chain": "base",
+              "decimals": 18,
+              "sinceTimestamp": 1738454400
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "cgeth-hashkey-cloud",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xf587B7116879a529353Cc71eE959cD69FD5CAE48",
+              "chain": "base",
+              "escrowAddress": "0x0A4BE3Db775Da63ceA7713f78A338D9656E69D5D",
+              "decimals": 18,
+              "sinceTimestamp": 1738454400
+            }
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "base-CLANKER",
       "priceId": "tokenbot-2",
@@ -460,6 +507,53 @@
         "sinceTimestamp": 1731196800
       },
       "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "base-clBTC",
+      "priceId": "clbtc",
+      "symbol": "clBTC",
+      "name": "clBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54164/large/clBTC.png?1738482999",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x8d2757EA27AaBf172DA4CCa4e5474c76016e3dC5",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1738454400
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "clbtc",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x8d2757EA27AaBf172DA4CCa4e5474c76016e3dC5",
+              "chain": "base",
+              "decimals": 18,
+              "sinceTimestamp": 1738454400
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "clbtc",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x8d2757EA27AaBf172DA4CCa4e5474c76016e3dC5",
+              "chain": "base",
+              "escrowAddress": "0x429410525068b694160d686Eacf72Ce12B665991",
+              "decimals": 18,
+              "sinceTimestamp": 1738454400
+            }
+          }
+        ]
+      },
+      "category": "btc",
       "source": "native",
       "isAssociated": false
     },
@@ -794,6 +888,32 @@
     },
     {
       "mode": "auto",
+      "id": "base-ENA-1",
+      "priceId": "ethena",
+      "symbol": "ENA",
+      "name": "ENA",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1718327185
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "base-EQB",
       "priceId": "equilibria-finance",
       "symbol": "EQB",
@@ -1041,7 +1161,8 @@
         "chain": "ethereum",
         "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 18,
-        "sinceTimestamp": 1692316800
+        "sinceTimestamp": 1692316800,
+        "untilTimestamp": 1756821600
       },
       "category": "other",
       "source": "canonical",
@@ -3272,6 +3393,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-WBTC-1",
+      "priceId": "layerzero-bridged-wbtc-base",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66849/large/btc.png?1750793694",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1750723200
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

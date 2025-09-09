@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
-import type { TvsPriceRecord } from '@l2beat/database/dist/tvs/price/entity'
+import type { Database, TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'

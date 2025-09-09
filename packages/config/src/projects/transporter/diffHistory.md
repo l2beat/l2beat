@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xea3c027f0a7e7a81ca0b87c1a0685f85f5d73d31
+
+# Diff at Mon, 08 Sep 2025 15:25:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48f0161c75908020b4454ff29490575d534b39f4 block: 1756900016
+- current timestamp: 1757344975
+
+## Description
+
+new off + onramp.
+
+## Watched changes
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.85:
++        {"sourceChainSelector":"5936861837188149645","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.5936861837188149645:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
 Generated with discovered.json: 0x407f523d6c4ab6256ef4d71f044d56ec6021ff7e
 
 # Diff at Wed, 03 Sep 2025 11:49:28 GMT:

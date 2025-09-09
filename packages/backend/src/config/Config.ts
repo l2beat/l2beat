@@ -51,6 +51,7 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
+  readonly bridgesEnabled: boolean
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -72,7 +73,6 @@ export interface DatabaseConfig {
       rejectUnauthorized?: boolean
     }
   }
-  readonly freshStart: boolean
   readonly enableQueryLogging: boolean
   readonly requiredMajorVersion?: number
   readonly connectionPoolSize: {

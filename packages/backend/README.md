@@ -61,9 +61,6 @@ TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
 If you used a different database setup modify those values accordingly. The `TEST_DB_URL` is used by
 only the test suite. Omitting this variable will cause the database tests to be skipped.
 
-You might want to clear the database before running the backend. You can do it by setting
-`FRESH_START=true` env variable.
-
 ### Features
 
 The backend can do a lot of things and you most likely don't want to run it all locally. You can

@@ -96,19 +96,27 @@ export const risc0: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0x21c5fdd9b4d576b17581f50b755482ba7a2134a3b5186e8e454acfa1f69511ab',
+        hash: '0x1dcf73cbd51c9eba43c437c5a5ebc5328ca2d7a590c701a9a9bc1136eceeeea7',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
-          'https://etherscan.io/address/0x20ff7c2cf391a5f096a2cc181cb41916680f8e97',
           'https://etherscan.io/address/0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
-          'https://arbiscan.io/address/0xac292cf957dd5ba174cda13b05c16afc71700327',
           'https://etherscan.io/address/0x34Eda8BfFb539AeC33078819847B36D221c6641c',
+        ],
+        verificationStatus: 'notVerified',
+        usedBy: [ProjectId('taiko'), ProjectId('bob')],
+        description:
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_1, bytes16 value of CONTROL_ROOT_2.',
+      },
+      {
+        hash: '0xc6fcb1951eb5b45a669431346a01577df99f30d72baa9d5c7eea40ec6cccfab9',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
           'https://etherscan.io/address/0x2a098988600d87650Fb061FfAff08B97149Fa84D',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('taiko'), ProjectId('bob'), ProjectId('hibachi')],
+        usedBy: [ProjectId('bob')],
         description:
-          'Custom verifier ID: the value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_1, bytes16 value of CONTROL_ROOT_2.',
       },
     ],
   },
