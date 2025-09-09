@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import { CCTPv1Plugin } from './cctpv1'
 import { LayerZeroV2Plugin } from './layerzerov2'
 import { MayanPlugin } from './mayan'
+import { StargatePlugin } from './stargate'
 import { StargateV2BusPlugin } from './stargatev2bus'
 import { StargateV2TaxiPlugin } from './stargatev2taxi'
 import type { BridgePlugin } from './types'
@@ -15,5 +16,6 @@ export function createBridgePlugins(logger: Logger): BridgePlugin[] {
     new StargateV2TaxiPlugin(), // should be run before LayerZeroV2
     new LayerZeroV2Plugin(logger),
     new WormholePlugin(logger),
+    new StargatePlugin(logger),
   ]
 }
