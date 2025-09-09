@@ -17,10 +17,13 @@ async function main() {
   const queryExecutor = new QueryExecutor(db, logger, cache)
 
   try {
-    const result = await queryExecutor.execute({
-      name: 'getTvsChartQuery',
-      args: [rollups],
-    })
+    const result = await queryExecutor.execute(
+      {
+        name: 'getTvsChartQuery',
+        args: [rollups],
+      },
+      10,
+    )
 
     const size = Buffer.byteLength(JSON.stringify(result), 'utf8')
     logger.info(`Data size: ${size / 1024} KB`)

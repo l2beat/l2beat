@@ -3,8 +3,6 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import { createClient, type RedisClientType } from 'redis'
 
-const DEFAULT_EXPIRATION = 60 // 1 minute
-
 export class Cache {
   private client: RedisClientType
   constructor(redisUrl: string) {
@@ -33,11 +31,11 @@ export class Cache {
     return `${query}::${queryHash}::${inputHash}`
   }
 
-  async write(key: string, data: unknown, expires?: number) {
+  async write(key: string, data: unknown, expires: number) {
     // TODO add persistent connection and session handling
     await this.client.connect()
     await this.client.set(key, JSON.stringify(data), {
-      EX: expires ?? DEFAULT_EXPIRATION,
+      EX: expires,
     })
     await this.client.disconnect()
   }

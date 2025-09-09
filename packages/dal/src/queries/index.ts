@@ -8,12 +8,10 @@ export type Query =
   | {
       name: 'getTvsChartQuery'
       args: DropFirst<Parameters<typeof getTvsChartQuery>>
-      expires?: 10
     }
   | {
       name: 'getTvsTableQuery'
       args: DropFirst<Parameters<typeof getTvsTableQuery>>
-      expires?: 10
     }
 
 // Map command `type` to return type

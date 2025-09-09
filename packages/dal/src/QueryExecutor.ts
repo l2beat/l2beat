@@ -3,6 +3,8 @@ import type { Database } from '@l2beat/database'
 import type { Cache } from './cache/Cache'
 import { execute, type Query, type QueryResult } from './queries'
 
+const DEFAULT_EXPIRATION = 60 // 1 minute
+
 export class QueryExecutor {
   constructor(
     private readonly db: Database,
@@ -10,7 +12,10 @@ export class QueryExecutor {
     private readonly cache: Cache,
   ) {}
 
-  async execute<Q extends Query>(query: Q): Promise<QueryResult<Q['name']>> {
+  async execute<Q extends Query>(
+    query: Q,
+    expires?: number,
+  ): Promise<QueryResult<Q['name']>> {
     const key = this.cache.generateKey('getTvsChartQuery', query.args)
 
     this.logger.info(`Checking cache (key: ${key})`)
@@ -35,7 +40,14 @@ export class QueryExecutor {
 
     start = Date.now()
 
-    await this.cache.write(key, JSON.stringify(result), query.expires)
+    this.logger.info(
+      `Writing to cache (will expire in ${expires ?? DEFAULT_EXPIRATION} seconds)`,
+    )
+    await this.cache.write(
+      key,
+      JSON.stringify(result),
+      expires ?? DEFAULT_EXPIRATION,
+    )
 
     end = Date.now()
     this.logger.info(`Writing to cache took ${end - start}ms`)
