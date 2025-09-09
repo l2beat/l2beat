@@ -50,42 +50,7 @@ export class BridgeMatcher {
       this.logger,
     )
 
-    for (const event of this.bridgeStore.getUnmatched()) {
-      if (matchedIds.has(event.eventId)) {
-        continue
-      }
-      for (const plugin of this.plugins) {
-        let result: MatchResult | undefined
-        try {
-          result = await plugin.match?.(event, this.bridgeStore)
-        } catch (e) {
-          this.logger.error(e)
-        }
-
-        if (result) {
-          matchedIds.add(event.eventId)
-          this.bridgeStore.markMatched(event)
-          if (result.messages) {
-            for (const message of result.messages) {
-              messages.push(message)
-              this.bridgeStore.markGrouped(message.inbound)
-              this.bridgeStore.markGrouped(message.outbound)
-            }
-          }
-          if (result.transfers) {
-            for (const transfer of result.transfers) {
-              transfers.push(transfer)
-              for (const transferEvent of transfer.events) {
-                this.bridgeStore.markGrouped(transferEvent)
-              }
-            }
-          }
-          this.logger.info('Matched', result)
-        }
-      }
-    }
-
-    if (matchedIds.size > 0) {
+    if (result.matchedIds.size > 0) {
       this.logger.info('Matched', {
         count: result.matchedIds.size,
         messages: result.messages.length,
