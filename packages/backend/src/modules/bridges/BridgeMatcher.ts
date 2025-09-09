@@ -67,10 +67,12 @@ export class BridgeMatcher {
               this.bridgeStore.markGrouped(message.outbound)
             }
           }
-          if (result.transfer) {
-            transfers.push(result.transfer)
-            for (const transferEvent of result.transfer.events) {
-              this.bridgeStore.markGrouped(transferEvent)
+          if (result.transfers) {
+            for (const transfer of result.transfers) {
+              transfers.push(transfer)
+              for (const transferEvent of transfer.events) {
+                this.bridgeStore.markGrouped(transferEvent)
+              }
             }
           }
           this.logger.info('Matched', result)

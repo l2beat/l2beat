@@ -46,6 +46,7 @@ export const StargateV2OFTSent = createBridgeEventType<{
 
 export const StargateV2OFTReceived = createBridgeEventType<{
   guid: string
+  receiver: string
 }>('stargatev2.OFTReceived')
 
 export class StargateV2TaxiPlugin implements BridgePlugin {
@@ -81,6 +82,7 @@ export class StargateV2TaxiPlugin implements BridgePlugin {
       // TODO: this will also capture for the bus
       return StargateV2OFTReceived.create(input.ctx, {
         guid: oftReceived.guid,
+        receiver: oftReceived.toAddress,
       })
     }
   }

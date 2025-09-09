@@ -62,20 +62,17 @@ export class LayerZeroV2Plugin implements BridgePlugin {
     const packetSent = parsePacketSent(input.log, [network.address])
     if (packetSent) {
       const packet = decodePacket(packetSent.encodedPayload)
-      if (!packet) {
-        // TODO: log error
-        return undefined
+      if (packet) {
+        const guid = createLayerZeroGuid(
+          packet.header.nonce,
+          packet.header.srcEid,
+          packet.header.sender,
+          packet.header.dstEid,
+          packet.header.receiver,
+        )
+
+        return PacketSent.create(input.ctx, { guid })
       }
-
-      const guid = createLayerZeroGuid(
-        packet.header.nonce,
-        packet.header.srcEid,
-        packet.header.sender,
-        packet.header.dstEid,
-        packet.header.receiver,
-      )
-
-      return PacketSent.create(input.ctx, { guid })
     }
 
     // TODO: whitelist
