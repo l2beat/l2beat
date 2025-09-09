@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xda54a28019bc8dfb8bbffc8fbb94c92bfa96099d
+
+# Diff at Wed, 03 Sep 2025 11:42:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f81a67544a1eef3c7f105dd59187ddee7ac70879 block: 1756805259
+- current timestamp: 1756899680
+
+## Description
+
+Removed delegation.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c) {
+    +++ description: None
+      sourceHashes:
+-        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      proxyType:
+-        "EIP7702 EOA"
++        "EOA"
+      values:
+-        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B"}
+    }
+```
+
 Generated with discovered.json: 0x39c7629ebe39bd7e4508e71904954f3272a5018d
 
 # Diff at Tue, 02 Sep 2025 15:31:53 GMT:

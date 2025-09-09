@@ -2,6 +2,7 @@ import type { Database } from '@l2beat/database'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { clampRangeToDay, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import uniq from 'lodash/uniq'
 import type { TrackedTxProject } from '../../config/Config'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -56,9 +57,11 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
         const filteredTxs = txs.filter((tx) => tx.type === updater.type)
         this.$.db.syncMetadata.updateSyncedUntil(
           updater.type,
-          activeConfigurations
-            .filter((c) => c.properties.type === updater.type)
-            .map((c) => c.id),
+          uniq(
+            activeConfigurations
+              .filter((c) => c.properties.type === updater.type)
+              .map((c) => c.id),
+          ),
           unixTo,
         )
         await updater.update(filteredTxs)

@@ -1,20 +1,17 @@
 {
   "L1Block_v1_2_0": {
     "hash": "0xbdd7533735ef92fffadfbee431b476e72f2f048487c921c5570443e3cba5cb30",
-    "address": "0x07dbe8500fc591d1852B76feE44d5a05e13097Ff",
-    "chain": "optimism",
+    "address": "oeth:0x07dbe8500fc591d1852B76feE44d5a05e13097Ff",
     "blockNumber": 134041720
   },
   "L1Block_v1_5_1beta_1": {
     "hash": "0x936b7b7eb2a88a64e3eceaf897abfa2dc6e48b4c75eba2da34ff927b98413b6b",
-    "address": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
-    "chain": "ink",
+    "address": "ink:0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
     "blockNumber": 10183769
   },
   "L1Block_v1_6_0": {
     "hash": "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108",
-    "address": "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
-    "chain": "optimism",
+    "address": "oeth:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
     "blockNumber": 135717996
   }
 }

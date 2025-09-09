@@ -160,6 +160,7 @@ export const polygonpos: ScalingProject = {
     name: 'polygonpos',
     chainId,
     explorerUrl: 'https://polygonscan.com',
+    sinceTimestamp: UnixTime(1590856200),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -320,7 +321,7 @@ export const polygonpos: ScalingProject = {
       actors: [
         discovery.getMultisigPermission(
           'PolygonMultisig',
-          'Can propose and execute code upgrades.',
+          'Can propose and execute code upgrades. Can arbitrarily moves tokens out of the ERC20 escrow without a contract upgrade.',
         ),
       ],
     },

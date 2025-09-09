@@ -1,8 +1,7 @@
 {
   "L1UsdcBridge": {
     "hash": "0x8182c41b90d2731cf134f6ee88e35b295a33340568b1d9ccd50ce0c8caa11100",
-    "address": "0x3C3b95e46DD24C5c85A49A4D7029D0ceA0fEe1D9",
-    "chain": "ethereum",
+    "address": "eth:0x3C3b95e46DD24C5c85A49A4D7029D0ceA0fEe1D9",
     "blockNumber": 22188285
   }
 }

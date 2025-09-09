@@ -239,7 +239,9 @@ export function generateClingoForProjectOnChain(
         templateService,
         addressToNameMap,
       )
-      generatedClingo.push(clingoFromPermissions)
+      if (clingoFromPermissions !== undefined) {
+        generatedClingo.push(clingoFromPermissions)
+      }
       const clingoFromModelLp = generateClingoFromModelLp(
         entry,
         templateService,

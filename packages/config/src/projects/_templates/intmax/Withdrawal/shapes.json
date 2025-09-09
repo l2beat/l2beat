@@ -1,14 +1,12 @@
 {
   "Withdrawal": {
     "hash": "0x89b2cb04df88855ad4b770af6142b4e15034008b3b07a28ee1397052af0bb787",
-    "address": "0xDFC6EB6642FEAF99629c6629b2f7dC7eB9F1a0A3",
-    "chain": "scroll",
+    "address": "scr:0xDFC6EB6642FEAF99629c6629b2f7dC7eB9F1a0A3",
     "blockNumber": 17474807
   },
   "Withdrawal_v5_0_0": {
     "hash": "0xa0c1878c4a72a8a9f029a05bac051e29d9c4e7ee5711c74e323d1e00a8a489eb",
-    "address": "0x614ef91D1971A4dB458ABde03c62247afc57A753",
-    "chain": "scroll",
+    "address": "scr:0x614ef91D1971A4dB458ABde03c62247afc57A753",
     "blockNumber": 19518196
   }
 }

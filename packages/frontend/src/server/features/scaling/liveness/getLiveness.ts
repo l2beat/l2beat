@@ -1,9 +1,9 @@
 import type {
+  AggregatedLivenessRecord,
   AnomalyRecord,
   IndexerConfigurationRecord,
   RealTimeAnomalyRecord,
 } from '@l2beat/database'
-import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
 import type { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'

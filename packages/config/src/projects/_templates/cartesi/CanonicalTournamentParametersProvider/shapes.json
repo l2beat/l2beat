@@ -1,8 +1,7 @@
 {
   "CanonicalTournamentParametersProvider": {
     "hash": "0x7ed0779ae4b12f1654a45c0513dde6eea5def66d068f43599eccfb05b69c71b5",
-    "address": "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c",
-    "chain": "ethereum",
+    "address": "eth:0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c",
     "blockNumber": 22716869
   }
 }

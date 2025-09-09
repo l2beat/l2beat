@@ -1,7 +1,7 @@
 {
   "name": "abstract",
   "timestamp": 1755156245,
-  "configHash": "0x525773a513c4a4cac48957fdc757f774e44649392cf877169bca0b27b3aaa6b6",
+  "configHash": "0x9e00cde2c623cd8ba823c5d76bf9a226e0bfebc3461dc205f51f4a36f419347f",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -442,6 +442,13 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "BridgeHub",
+      "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "name": "Safe",
       "address": "eth:0x325407EEC948b97429068AF0cd8A8D95F06315a4",
       "type": "Contract",
@@ -479,6 +486,12 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "eth:0x3846c3A30E62075Fa916216b35EF04B8F53931f6",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "address": "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
       "type": "EOA",
       "proxyType": "EOA",
@@ -489,6 +502,12 @@
           "role": ".validatorsVTL"
         }
       ]
+    },
+    {
+      "address": "eth:0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0x45CC620803974f13a0f1A11517685581FF098000",
@@ -632,6 +651,13 @@
         "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "RollupL1DAValidator",
+      "address": "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0x77D1124E9061d238430Df3F4311111BDf69a4CFA",
@@ -816,6 +842,12 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xafc7805c640C4A9E5D28f6A5Eae23b50e59B831c",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "address": "eth:0xbB943Cf3c5b90f2eD04F53658CCA49286601e808",
       "type": "EOA",
       "proxyType": "EOA"
@@ -824,6 +856,19 @@
       "address": "eth:0xc12F6A2D93C0788366FC91aeBf21b33CCCb0c0d8",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ChainTypeManager",
+      "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0xCe20135Ac0253650E28Ea14911c69F1fADD8b06f",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
     },
     {
       "name": "DualVerifier",
@@ -853,9 +898,40 @@
       }
     },
     {
+      "address": "eth:0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0xdF28907A6A272fa06333a197d7F0379A0f8f00aa",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "name": "ProtocolUpgradeHandler",
+      "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "address": "eth:0xE57e5D24660d83bf8A40Ca2269d31D4A2F4F3C47",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0xfBbBa4FbAA3A99bA842924d4c47C14d6d61D9615",
@@ -1301,5 +1377,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23137781 },
-  "permissionsConfigHash": "0x8e408f94ce25ddbaaba7f4be10c1e3b0717601171b9f5b9d5f3a0a8228d19779"
+  "permissionsConfigHash": "0x2613882ddf7205e7781b0eef7ebb903c746aa70f3b10807d338f15973dd1fa65"
 }

@@ -1,8 +1,7 @@
 {
   "BalanceClaimer": {
     "hash": "0x162e189e2a50fea3f598cf9b4d21593d1e1fe9ec0d11aa9fa653dc980399677d",
-    "address": "0xda926133e23F6681a5B9445A439F80889d030EFb",
-    "chain": "ethereum",
+    "address": "eth:0xda926133e23F6681a5B9445A439F80889d030EFb",
     "blockNumber": 22188285
   }
 }

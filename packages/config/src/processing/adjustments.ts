@@ -101,7 +101,9 @@ function adjustContracts(
 }
 
 function adjustBadges(project: ScalingProject, l3s: ScalingProject[]) {
-  const hostsL3 = l3s.some((l3) => l3.hostChain === project.id)
+  const hostsL3 = l3s
+    .filter((p) => p.archivedAt === undefined)
+    .some((l3) => l3.hostChain === project.id)
   if (hostsL3) {
     project.badges = mergeBadges(project.badges ?? [], [
       BADGES.Other.L3HostChain,

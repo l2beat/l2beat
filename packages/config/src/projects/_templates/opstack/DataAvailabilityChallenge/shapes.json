@@ -1,14 +1,12 @@
 {
   "DataAvailabilityChallenge": {
     "hash": "0xc3e65c7b165290e34daf0095d095072dd3684f21965a97ddedde3ab52b34b04a",
-    "address": "0x0d93eAA86eb6948b977857750A5512Bef6B05C51",
-    "chain": "ethereum",
+    "address": "eth:0x0d93eAA86eb6948b977857750A5512Bef6B05C51",
     "blockNumber": 22188285
   },
   "DataAvailabilityChallenge_automata": {
     "hash": "0x61fee1dc963816dc535a7c3634947d11e5adf660665a8996c384ba8d74c0aab2",
-    "address": "0x5206FAA5f1686697188FAe8e6347eAc5575Ed6e3",
-    "chain": "ethereum",
+    "address": "eth:0x5206FAA5f1686697188FAe8e6347eAc5575Ed6e3",
     "blockNumber": 22188285
   }
 }

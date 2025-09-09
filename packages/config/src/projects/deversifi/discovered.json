@@ -1,7 +1,7 @@
 {
   "name": "deversifi",
   "timestamp": 1741185503,
-  "configHash": "0x243562b725083bf3bcb9aea82295d70af05edd0119dcec891cabbb213755e473",
+  "configHash": "0x818eb27517125b92e47020fd32a62f74efd5084bebd96c2384c60b04bfab45f7",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -118,6 +118,13 @@
       "address": "eth:0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "address": "eth:0x478615F37FcCB0DF69C191a8674233f6899D092e",
@@ -1003,5 +1010,5 @@
     "starkex/StarkExchangeOld": "0x1349c13ead4263acc9bf71f1282c62684eebc9e54c3c2e0c9e4ce04e120b146e"
   },
   "usedBlockNumbers": { "ethereum": 21981331 },
-  "permissionsConfigHash": "0xd6b18fe52d7ce4acc4ebd64b220aaaa3618e8ea500cd55ae64785aa588060af8"
+  "permissionsConfigHash": "0x767392ec38db016f18059abce1fa918e970f4eed6d181ab4e4b71a414aad4444"
 }

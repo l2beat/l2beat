@@ -1,8 +1,7 @@
 {
   "GatewayWallet": {
     "hash": "0x3c7ddc87aeb7595467ac7d4919823954068ac25a492948abebba618e2a522c0e",
-    "address": "0x899a4f5f5422cC5E8183280182e7096Fb923C762",
-    "chain": "base",
+    "address": "base:0x899a4f5f5422cC5E8183280182e7096Fb923C762",
     "blockNumber": 34110983
   }
 }

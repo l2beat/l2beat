@@ -1,7 +1,7 @@
 {
   "name": "sophon",
   "timestamp": 1756886128,
-  "configHash": "0x4873adbfd531a9b3153217a8ffb761dfcd41010936ad31531cc9b83282d79bec",
+  "configHash": "0x4d503348c329e17575b1aa62e51559cfe440269f3e393596bee254b15d8524d8",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -394,6 +394,13 @@
       }
     },
     {
+      "name": "BridgeHub",
+      "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "address": "eth:0x3b6036d410cA018661324766680674921a8b2d89",
       "type": "EOA",
       "proxyType": "EOA"
@@ -409,6 +416,13 @@
           "role": ".validatorsVTL"
         }
       ]
+    },
+    {
+      "name": "Matter Labs Multisig",
+      "address": "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0x50B238788747B26c408681283D148659F9da7Cf9",
@@ -621,6 +635,20 @@
       }
     },
     {
+      "name": "ProxyAdmin",
+      "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
+      "name": "ChainTypeManager",
+      "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
+    {
       "address": "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
       "type": "EOA",
       "proxyType": "EOA",
@@ -718,6 +746,13 @@
         "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": "ChainAdmin"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "ProtocolUpgradeHandler",
+      "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "name": "SophonChainAdminMultisig",
@@ -1338,5 +1373,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23281224 },
-  "permissionsConfigHash": "0x1a693ae42526a7fd7d23db2e0c603494f3f351972f2b9d49f3a4186c52eb662d"
+  "permissionsConfigHash": "0xb3dad9239a2706b3d55c8221b00a0c2939555860de1f72f5712d765d400063fb"
 }

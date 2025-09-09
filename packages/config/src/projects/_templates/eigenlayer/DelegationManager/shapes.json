@@ -1,20 +1,17 @@
 {
   "DelegationManager": {
     "hash": "0x236f85a005803b10e03d97356b1569532271b43a19b27c7479079c51b731709e",
-    "address": "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda",
-    "chain": "ethereum",
+    "address": "eth:0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda",
     "blockNumber": 22188285
   },
   "DelegationManager.sol": {
     "hash": "0x3be3c1a5b3c5a2b2e3d0af8a02c711c6eead5686cab112054a0e80e945fdc766",
-    "address": "0xA75112d1df37FA53a431525CD47A7d7faCEA7E73",
-    "chain": "ethereum",
+    "address": "eth:0xA75112d1df37FA53a431525CD47A7d7faCEA7E73",
     "blockNumber": 22424645
   },
   "DelegationManager_redistribution": {
     "hash": "0x070312684717f779729ea8c996718a93f984ef1cc6afd216b9b80007e7d49e7c",
-    "address": "0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89",
-    "chain": "ethereum",
+    "address": "eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89",
     "blockNumber": 23083543
   }
 }

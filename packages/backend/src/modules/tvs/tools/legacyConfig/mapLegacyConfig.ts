@@ -12,6 +12,7 @@ import type {
 import type { RpcClient } from '@l2beat/shared'
 import { assert, type LegacyToken, TokenId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import { projectIdToChain } from '../../../../config/chainMap'
 import type { ProjectTvsConfig } from '../../types'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
 import type { LocalStorage } from '../LocalStorage'
@@ -95,13 +96,25 @@ export async function mapLegacyConfig(
       const tokensByCoingeckoId = groupBy(symbolTokens, 'coingeckoId')
 
       for (const sameIdTokens of Object.values(tokensByCoingeckoId)) {
-        const token = mergeTokensWithSameId(
-          project,
-          legacyConfig.associatedTokens,
-          chains,
-          sameIdTokens,
+        const tokensByBridge = groupBy(
+          sameIdTokens.map((t) => ({
+            ...t,
+            bridge: t.escrow.bridgedUsing
+              ? JSON.stringify(t.escrow.bridgedUsing)
+              : undefined,
+          })),
+          'bridge',
         )
-        tokens.push(token)
+
+        for (const sameBridgeToken of Object.values(tokensByBridge)) {
+          const token = mergeTokensWithSameId(
+            project,
+            legacyConfig.associatedTokens,
+            chains,
+            sameBridgeToken,
+          )
+          tokens.push(token)
+        }
       }
     }
   }
@@ -234,7 +247,7 @@ export function createToken(
             {
               type: 'totalSupply',
               address: legacyToken.address,
-              chain: project.id,
+              chain: projectIdToChain(project.id),
               decimals: legacyToken.decimals,
               sinceTimestamp,
               ...(untilTimestamp ? { untilTimestamp } : {}),
@@ -252,7 +265,7 @@ export function createToken(
         amountFormula = {
           type: 'totalSupply',
           address: legacyToken.address,
-          chain: project.id,
+          chain: projectIdToChain(project.id),
           decimals: legacyToken.decimals,
           sinceTimestamp,
           ...(untilTimestamp ? { untilTimestamp } : {}),

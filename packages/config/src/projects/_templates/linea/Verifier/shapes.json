@@ -1,26 +1,22 @@
 {
   "PlonkVerifierForMultiTypeDataAggregation": {
     "hash": "0x47f89dc90dfffe4c8914bdac8b7c92bc4cbee0df1bf52f3926e43fe0934a2ff4",
-    "address": "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
-    "chain": "ethereum",
+    "address": "eth:0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
     "blockNumber": 22272939
   },
   "PlonkVerifierMainnetFull": {
     "hash": "0x7ffe47dd82e25e61467c2b267669b2c48ea49c8a7f1a744fea45ab189bc8b455",
-    "address": "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7",
-    "chain": "ethereum",
+    "address": "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7",
     "blockNumber": 22394879
   },
   "Verifier_Type0": {
     "hash": "0xb87d66914fca067b6c490e46194aeef92a6c4930a9a6e53bfd2833813b0685a8",
-    "address": "0xED39C0C41A7651006953AB58Ecb3039363620995",
-    "chain": "ethereum",
+    "address": "eth:0xED39C0C41A7651006953AB58Ecb3039363620995",
     "blockNumber": 23217842
   },
   "Verifier_Type1": {
     "hash": "0x64013fe6cc4367b6dbbeb934bdb33f30aa57f2e6ebd6342fd05f2beb795c59c4",
-    "address": "0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873",
-    "chain": "ethereum",
+    "address": "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873",
     "blockNumber": 23217842
   }
 }

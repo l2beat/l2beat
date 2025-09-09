@@ -1,8 +1,7 @@
 {
   "SimpleMultisig": {
     "hash": "0x6bc7d8216e748e0328df7fb13aaa1da4a5ea3a89b0918b80569c91386c4afe14",
-    "address": "0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33",
-    "chain": "ethereum",
+    "address": "eth:0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33",
     "blockNumber": 22887891
   }
 }

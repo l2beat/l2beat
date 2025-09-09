@@ -1,11 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
-import type { Config } from '../../config'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
-import type { Peripherals } from '../../peripherals/Peripherals'
-import type { Clock } from '../../tools/Clock'
-import type { ApplicationModule } from '../ApplicationModule'
+import type { ApplicationModule, ModuleDependencies } from '../types'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
 import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
 import { createDiscoveryRunner } from './createDiscoveryRunner'
@@ -15,12 +12,12 @@ import { UpdateMessagesService } from './UpdateMessagesService'
 import { UpdateMonitor } from './UpdateMonitor'
 import { UpdateNotifier } from './UpdateNotifier'
 
-export function createUpdateMonitorModule(
-  config: Config,
-  logger: Logger,
-  peripherals: Peripherals,
-  clock: Clock,
-): ApplicationModule | undefined {
+export function createUpdateMonitorModule({
+  config,
+  logger,
+  peripherals,
+  clock,
+}: ModuleDependencies): ApplicationModule | undefined {
   if (!config.updateMonitor) {
     logger.info('UpdateMonitor module disabled')
     return

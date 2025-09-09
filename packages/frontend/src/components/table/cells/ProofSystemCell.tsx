@@ -10,12 +10,14 @@ interface ProofSystemCellProps {
   proofSystem: ProjectScalingProofSystem | undefined
   slug: string
   stacks?: ProjectScalingStack[]
+  hideType?: boolean
 }
 
 export function ProofSystemCell({
   proofSystem,
   slug,
   stacks,
+  hideType,
 }: ProofSystemCellProps) {
   return (
     <TableLink
@@ -29,10 +31,19 @@ export function ProofSystemCell({
     >
       <TwoRowCell>
         <TwoRowCell.First>
-          <TypeInfo stacks={stacks}>{proofSystem?.type ?? 'None'}</TypeInfo>
+          {hideType && proofSystem?.name ? (
+            <TypeInfo stacks={stacks}>{proofSystem.name}</TypeInfo>
+          ) : (
+            <TypeInfo stacks={stacks}>{proofSystem?.type ?? 'None'}</TypeInfo>
+          )}
         </TwoRowCell.First>
-        {proofSystem?.name && (
+        {proofSystem?.name && !hideType && (
           <TwoRowCell.Second>{proofSystem?.name}</TwoRowCell.Second>
+        )}
+        {hideType && proofSystem?.challengeProtocol && (
+          <TwoRowCell.Second>
+            {proofSystem?.challengeProtocol}
+          </TwoRowCell.Second>
         )}
       </TwoRowCell>
     </TableLink>

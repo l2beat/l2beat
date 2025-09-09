@@ -1,8 +1,7 @@
 {
   "DepositContract": {
     "hash": "0x50e829416130215b875975340a7567d915ecf66f25070a50813ca972a4322191",
-    "address": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-    "chain": "ethereum",
+    "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
     "blockNumber": 22188285
   }
 }

@@ -1,14 +1,12 @@
 {
   "L1CrossDomainMessenger": {
     "hash": "0xda7b05d88be95072ae926d6f2b176d60c2d568f45ef6c67071b28159388c81e7",
-    "address": "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36",
-    "chain": "ethereum",
+    "address": "eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36",
     "blockNumber": 22517869
   },
   "L1CrossDomainMessenger_2": {
     "hash": "0x27041f5f59b6e2efc5f1041e1ffb068e899b3da3761cafa4259df6c44b760893",
-    "address": "0xc1Ce5240B42AB158027095f658d530F9989b414F",
-    "chain": "ethereum",
+    "address": "eth:0xc1Ce5240B42AB158027095f658d530F9989b414F",
     "blockNumber": 23019103
   }
 }

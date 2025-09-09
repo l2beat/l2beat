@@ -323,6 +323,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
   nonTemplateProofSystem: {
     type: 'Optimistic',
     name: 'BoLD',
+    challengeProtocol: 'Interactive',
   },
   stateDerivation: {
     nodeSoftware: `The rollup node (Arbitrum Nitro) consists of four parts. The base layer is the core Geth server (with minor modifications to add hooks) that emulates the execution of EVM contracts and maintains Ethereum's state and [a fork of wasmer](https://github.com/OffchainLabs/wasmer) that is used for native WASM execution. The middle layer, ArbOS, provides additional Layer 2 functionalities such as decompressing data batches, accounting for Layer 1 gas costs, and supporting cross-chain bridge functionalities. The top layer consists of node software, primarily from Geth, that handles client connections (i.e., regular RPC node). [View Code](https://github.com/OffchainLabs/nitro/)`,

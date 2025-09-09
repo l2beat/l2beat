@@ -1,8 +1,5 @@
-import {
-  ConfigReader,
-  generateEntrypoints,
-  getDiscoveryPaths,
-} from '@l2beat/discovery'
+import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
+import { generateEntrypointsCommand } from '@l2beat/discovery/dist/discovery/shared-modules/generateEntrypoints'
 import { command, positional, string } from 'cmd-ts'
 
 export const GenerateEntrypoints = command({
@@ -18,6 +15,6 @@ export const GenerateEntrypoints = command({
   handler: async (args) => {
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
-    await generateEntrypoints(configReader, args.project)
+    await generateEntrypointsCommand(configReader, args.project)
   },
 })

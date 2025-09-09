@@ -1,6 +1,7 @@
 import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import uniq from 'lodash/uniq'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
@@ -93,7 +94,9 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         await this.$.db.dataAvailability.upsertMany(records)
         await this.$.db.syncMetadata.updateSyncedUntil(
           'dataAvailability',
-          this.$.configurations.map((c) => c.properties.projectId),
+          // There might be multiple configurations for the same project
+          // so we need to uniq them
+          uniq(this.$.configurations.map((c) => c.properties.projectId)),
           latestTimestamp,
           adjustedTo,
         )
