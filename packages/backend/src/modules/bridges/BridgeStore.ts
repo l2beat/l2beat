@@ -37,6 +37,7 @@ export class BridgeStore implements BridgeEventDb {
 
   addEvent(event: BridgeEvent) {
     this.categorizeEvent(event)
+    this.unmatched.push(event)
     this.newEvents.push(event)
   }
 
