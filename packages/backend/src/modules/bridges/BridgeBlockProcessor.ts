@@ -78,7 +78,7 @@ function getLogsToDecode(chain: string, block: Block, logs: Log[]) {
   return toDecode
 }
 
-function logToViemLog(log: Log): ViemLog {
+export function logToViemLog(log: Log): ViemLog {
   return {
     blockNumber: BigInt(log.blockNumber),
     transactionHash: log.transactionHash as `0x${string}`,
