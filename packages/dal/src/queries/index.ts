@@ -8,10 +8,12 @@ type Query =
   | {
       name: 'getTvsChartQuery'
       args: DropFirst<Parameters<typeof getTvsChartQuery>>
+      expires?: 10
     }
   | {
       name: 'getTvsTableQuery'
       args: DropFirst<Parameters<typeof getTvsTableQuery>>
+      expires?: 10
     }
 
 // Map command `type` to return type
@@ -63,7 +65,7 @@ export async function execute<Q extends Query>(
 
   start = Date.now()
 
-  await cache.write(key, JSON.stringify(result), 3600)
+  await cache.write(key, JSON.stringify(result), query.expires)
 
   end = Date.now()
   logger.info(`Writing to cache took ${end - start}ms`)
