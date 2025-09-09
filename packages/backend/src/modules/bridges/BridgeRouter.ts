@@ -22,7 +22,7 @@ export function createBridgeRouter(db: Database) {
   })
 
   const Params = v.object({
-    kind: v.enum(['all', 'ungrouped', 'messages']),
+    kind: v.enum(['all', 'unmatched', 'messages']),
     type: v.string(),
   })
 
@@ -33,8 +33,8 @@ export function createBridgeRouter(db: Database) {
       ctx.body = messages
     } else {
       let events = await db.bridgeEvent.getByType(params.type)
-      if (params.kind === 'ungrouped') {
-        events = events.filter((x) => !x.grouped)
+      if (params.kind === 'unmatched') {
+        events = events.filter((x) => !x.matched)
       }
       ctx.body = events
     }
@@ -55,12 +55,12 @@ function statsToHtml(
   html += '</body>'
   html += '<h1>Bridge Stats</h1>'
 
-  html += '<h2>Not grouped events</h2>'
+  html += '<h2>Unmatched events</h2>'
   html += '<ul>'
-  for (const { type, count, grouped } of events) {
-    const ungrouped = count - grouped
-    if (ungrouped !== 0) {
-      html += `<li><a href="/bridges/ungrouped/${type}">${type}</a>: ${ungrouped}</li>`
+  for (const { type, count, matched } of events) {
+    const unmatched = count - matched
+    if (unmatched !== 0) {
+      html += `<li><a href="/bridges/unmatched/${type}">${type}</a>: ${unmatched}</li>`
     }
   }
   html += '</ul>'
