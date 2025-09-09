@@ -19,7 +19,7 @@ import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
 
-type TrustedSetupVerifierData = {
+export type TrustedSetupVerifierData = {
   count: number
   attesters: (ZkCatalogAttester & { icon: string })[]
 }
@@ -30,10 +30,10 @@ export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
   creator?: string
   tvs: number
   techStack: ProjectZkCatalogInfo['techStack']
-  trustedSetups: Record<
+  trustedSetupsByProofSystem: Record<
     string,
     {
-      trustedSetup: (TrustedSetup & {
+      trustedSetups: (TrustedSetup & {
         proofSystem: ZkCatalogTag
       })[]
       verifiers: {
@@ -98,7 +98,7 @@ function getZkCatalogEntry(
     return acc + projectTvs
   }, 0)
 
-  const trustedSetups = getTrustedSetupsWithVerifiersAndAttesters(
+  const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
     project,
     allProjects,
   )
@@ -113,14 +113,14 @@ function getZkCatalogEntry(
     creator: project.zkCatalogInfo.creator,
     tvs: tvsForProject,
     techStack: project.zkCatalogInfo.techStack,
-    trustedSetups,
+    trustedSetupsByProofSystem,
     filterable: [
       ...[
         ...(project.zkCatalogInfo.techStack.finalWrap ?? []),
         ...(project.zkCatalogInfo.techStack.zkVM ?? []),
       ].map((techStack) => ({
-        id: 'techStack' as const,
-        value: `${techStack.type}: ${techStack.name}`,
+        id: techStack.type,
+        value: techStack.name,
       })),
     ],
   }
@@ -132,13 +132,13 @@ function getTrustedSetupsWithVerifiersAndAttesters(
     never,
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
   >[],
-): ZkCatalogEntry['trustedSetups'] {
+): ZkCatalogEntry['trustedSetupsByProofSystem'] {
   const grouped = groupBy(
     project.zkCatalogInfo.trustedSetups,
     (e) => `${e.proofSystem.type}-${e.proofSystem.id}`,
   )
   return Object.fromEntries(
-    Object.entries(grouped).map(([key, ts]) => {
+    Object.entries(grouped).map(([key, trustedSetups]) => {
       const trustedSetupVerifiers = project.zkCatalogInfo.verifierHashes.filter(
         (v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`,
       )
@@ -151,11 +151,20 @@ function getTrustedSetupsWithVerifiersAndAttesters(
       return [
         key,
         {
-          trustedSetup: ts,
+          trustedSetups,
           verifiers: {
-            successful: getVerifiers(groupedByStatus, 'successful'),
-            unsuccessful: getVerifiers(groupedByStatus, 'unsuccessful'),
-            notVerified: getVerifiers(groupedByStatus, 'notVerified'),
+            successful: getVerifiersWithAttesters(
+              groupedByStatus,
+              'successful',
+            ),
+            unsuccessful: getVerifiersWithAttesters(
+              groupedByStatus,
+              'unsuccessful',
+            ),
+            notVerified: getVerifiersWithAttesters(
+              groupedByStatus,
+              'notVerified',
+            ),
           },
           projectsUsedIn: getProjectsUsedIn(
             uniq(trustedSetupVerifiers.flatMap((v) => v.usedBy)),
@@ -167,7 +176,7 @@ function getTrustedSetupsWithVerifiersAndAttesters(
   )
 }
 
-function getVerifiers(
+export function getVerifiersWithAttesters(
   verifiers: Record<string, ProjectZkCatalogInfo['verifierHashes']>,
   key: 'successful' | 'unsuccessful' | 'notVerified',
 ): TrustedSetupVerifierData | undefined {

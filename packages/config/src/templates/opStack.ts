@@ -24,11 +24,7 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import {
-  formatChallengeAndExecutionDelay,
-  formatChallengePeriod,
-  formatDelay,
-} from '../common/formatDelays'
+import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -36,7 +32,7 @@ import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
-  ProjectScalingProofSystem,
+  ProjectScalingRiskView,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -52,10 +48,9 @@ import type {
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
-  ProjectScalingCategory,
   ProjectScalingDa,
+  ProjectScalingProofSystem,
   ProjectScalingPurpose,
-  ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectScalingStateDerivation,
@@ -87,6 +82,14 @@ export const EIGENDA_DA_PROVIDER: DAProvider = {
   technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
   bridge: DA_BRIDGES.NONE,
   badge: BADGES.DA.EigenDA,
+}
+
+export const PRIVATE_DA_PROVIDER: DAProvider = {
+  layer: DA_LAYERS.NONE,
+  riskView: RISK_VIEW.DATA_EXTERNAL,
+  technology: TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
+  bridge: DA_BRIDGES.NONE,
+  badge: BADGES.DA.CustomDA,
 }
 
 export function DACHALLENGES_DA_PROVIDER(
@@ -162,9 +165,7 @@ interface OpStackConfigCommon {
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hasSuperchainScUpgrades?: boolean
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingCategory
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   /** Set to true if projects posts blobs to Ethereum */
   usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
@@ -175,7 +176,7 @@ interface OpStackConfigCommon {
   }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
   availDa?: {
-    appId: string
+    appIds: string[]
     /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
@@ -192,9 +193,7 @@ interface OpStackConfigCommon {
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   upgradesAndGovernance?: string
-  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ProjectScalingDisplay['category']
-  }
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
@@ -214,7 +213,6 @@ function opStackCommon(
     | 'architectureImage'
     | 'purposes'
     | 'stacks'
-    | 'category'
     | 'warning'
   >
 } {
@@ -303,13 +301,6 @@ function opStackCommon(
             ? 'kailua'
             : undefined,
       stacks: ['OP Stack'],
-      category:
-        templateVars.display.category ??
-        (templateVars.reasonsForBeingOther
-          ? 'Other'
-          : postsToEthereum(templateVars)
-            ? 'Optimistic Rollup'
-            : 'Optimium'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -321,7 +312,13 @@ function opStackCommon(
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Optimistic' }),
+      (hasNoProofs
+        ? undefined
+        : {
+            type: 'Optimistic',
+            name: 'OPFP',
+            challengeProtocol: 'Interactive',
+          }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
@@ -460,7 +457,7 @@ function getDaTracking(
         daLayer: ProjectId('avail'),
         // TODO: update to value from discovery
         sinceBlock: templateVars.availDa.sinceBlock,
-        appId: templateVars.availDa.appId,
+        appIds: templateVars.availDa.appIds,
       },
     ]
   }
@@ -890,13 +887,13 @@ function getRiskView(
 
 function getRiskViewStateValidation(
   templateVars: OpStackConfigCommon,
-): TableReadyValue {
+): ProjectScalingRiskView['stateValidation'] {
   const fraudProofType = getFraudProofType(templateVars)
   switch (fraudProofType) {
     case 'None': {
       return {
         ...RISK_VIEW.STATE_NONE,
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
+        challengeDelay: getChallengePeriod(templateVars),
       }
     }
     case 'Permissioned': {
@@ -909,6 +906,12 @@ function getRiskViewStateValidation(
           RISK_VIEW.STATE_FP_INT().description +
           ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number[]>(
+            'DisputeGameFactory',
+            'initBonds',
+          )[1], // 1 is for permissioned games!
+        ),
       }
     }
     case 'Permissionless': {
@@ -917,14 +920,24 @@ function getRiskViewStateValidation(
           getChallengePeriod(templateVars),
           getExecutionDelay(templateVars),
         ),
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number[]>(
+            'DisputeGameFactory',
+            'initBonds',
+          )[0], // 0 is for permissionless games!
+        ),
       }
     }
     case 'Kailua': {
       return {
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
-        secondLine: formatChallengeAndExecutionDelay(
-          getChallengePeriod(templateVars) +
-            Number(getExecutionDelay(templateVars)),
+        executionDelay: getExecutionDelay(templateVars),
+        challengeDelay: getChallengePeriod(templateVars),
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number>(
+            'KailuaTreasury',
+            'participationBond',
+          ),
         ),
       }
     }

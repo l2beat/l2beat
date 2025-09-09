@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
-import type { TvsAmountRecord } from '@l2beat/database/dist/tvs/amount/entity'
+import type { Database, TvsAmountRecord } from '@l2beat/database'
 import type {
   BalanceProvider,
   StarknetTotalSupplyProvider,

@@ -1,8 +1,12 @@
 {
   "SuccinctGatewaySP1": {
     "hash": "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37",
-    "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-    "chain": "ethereum",
+    "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
     "blockNumber": 22188285
+  },
+  "SP1VerifierGateway_Ownable2Step": {
+    "hash": "0xae43138d235a7d6bdc28d5f7a1d652c8b9faecc9208b0f4c21490db6c906fa6c",
+    "address": "eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67",
+    "blockNumber": 23216770
   }
 }

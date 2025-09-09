@@ -1,7 +1,6 @@
 import {
   ConfigReader,
   colorize,
-  combineStructureAndColor,
   DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
@@ -44,11 +43,9 @@ export const onChainProjects: string[] = [
 describe('discovery config.jsonc', () => {
   const templateService = new TemplateService(paths.discovery)
 
-  const chainConfigs = configReader
+  const configs = configReader
     .readAllDiscoveredProjects()
-    .flatMap(({ project, chains }) =>
-      chains.map((chain) => configReader.readConfig(project, chain)),
-    )
+    .flatMap((project) => configReader.readConfig(project))
 
   const projectIds = layer2s
     .map((p) => p.id.toString())
@@ -58,7 +55,7 @@ describe('discovery config.jsonc', () => {
 
   it('every config name corresponds to ProjectId', () => {
     const notCorresponding =
-      chainConfigs
+      configs
         ?.flat()
         ?.filter((c) => !c.name.startsWith('shared-'))
         // TODO!: Please remove this check once transporter bridge is back in the config
@@ -79,8 +76,8 @@ describe('discovery config.jsonc', () => {
   it('every config name is equal to the name in discovery.json', () => {
     const notEqual = []
 
-    for (const c of chainConfigs) {
-      const discovery = configReader.readDiscovery(c.name, c.chain)
+    for (const c of configs) {
+      const discovery = configReader.readDiscovery(c.name)
       if (discovery.name !== c.name) {
         notEqual.push(c.name)
       }
@@ -97,8 +94,8 @@ describe('discovery config.jsonc', () => {
   it('every discovery.json has sorted entries', () => {
     const notSorted: string[] = []
 
-    for (const c of chainConfigs ?? []) {
-      const discovery = configReader.readDiscovery(c.name, c.chain)
+    for (const c of configs ?? []) {
+      const discovery = configReader.readDiscovery(c.name)
 
       if (
         !isDeepStrictEqual(
@@ -119,20 +116,20 @@ describe('discovery config.jsonc', () => {
   })
 
   it('committed discovery config hash, template hashes and shapeFilesHash are up to date', () => {
-    for (const c of chainConfigs) {
-      const discovery = configReader.readDiscovery(c.name, c.chain)
+    for (const c of configs) {
+      const discovery = configReader.readDiscovery(c.name)
       const reason = templateService.discoveryNeedsRefresh(discovery, c)
 
       assert(
         reason === undefined,
-        `${c.chain}/${c.name} project is outdated: ${reason}.\n Run "l2b refresh-discovery"`,
+        `${c.name} project is outdated: ${reason}.\n Run "l2b refresh-discovery"`,
       )
     }
   })
 
   it('discovery.json does not include errors', () => {
-    for (const c of chainConfigs) {
-      const discovery = configReader.readDiscovery(c.name, c.chain)
+    for (const c of configs) {
+      const discovery = configReader.readDiscovery(c.name)
 
       assert(
         discovery.entries.every((c) => c.errors === undefined),
@@ -145,9 +142,9 @@ describe('discovery config.jsonc', () => {
     // this test ensures that every named override resolves to an address
     // do not remove it unless you know what you are doing
     describe('every override correspond to existing contract', () => {
-      for (const c of chainConfigs ?? []) {
+      for (const c of configs ?? []) {
         for (const key of Object.keys(c.structure.overrides ?? {})) {
-          it(`${c.name} on ${c.chain} with the override ${key}`, () => {
+          it(`${c.name} with the override ${key}`, () => {
             expect(() =>
               makeEntryStructureConfig(c.structure, ChainSpecificAddress(key)),
             ).not.toThrow()
@@ -157,11 +154,11 @@ describe('discovery config.jsonc', () => {
     })
 
     describe('all shared modules exist', () => {
-      for (const c of chainConfigs ?? []) {
-        it(`${c.name} on ${c.chain}`, () => {
+      for (const c of configs ?? []) {
+        it(c.name, () => {
           for (const sharedModule of c.structure.sharedModules) {
             assert(
-              chainConfigs?.flat()?.some((x) => x.name === sharedModule),
+              configs?.flat()?.some((x) => x.name === sharedModule),
               `Shared module ${sharedModule} does not exist (${c.name})`,
             )
           }
@@ -171,9 +168,9 @@ describe('discovery config.jsonc', () => {
 
     // inversion logic depends on this
     describe('all accessControl fields keys are accessControl', () => {
-      for (const c of chainConfigs ?? []) {
-        const discovery = configReader.readDiscovery(c.name, c.chain)
-        it(`${c.name}:${c.chain}`, () => {
+      for (const c of configs ?? []) {
+        const discovery = configReader.readDiscovery(c.name)
+        it(c.name, () => {
           for (const entry of discovery.entries) {
             const fields = makeEntryStructureConfig(
               c.structure,
@@ -196,7 +193,7 @@ describe('discovery config.jsonc', () => {
   // TODO(radomski): We have to skip this test because we have to duplicate
   // names for different chains, we don't have a catch-all chain
   it.skip('every name in config.jsonc is unique', () => {
-    for (const c of chainConfigs ?? []) {
+    for (const c of configs ?? []) {
       if (c.color.names === undefined) {
         continue
       }
@@ -210,16 +207,16 @@ describe('discovery config.jsonc', () => {
   })
 
   it('discovered.json hash matches the one stored in diffHistory.md', () => {
-    for (const c of chainConfigs ?? []) {
-      const currentHash = configReader.readDiscoveryHash(c.name, c.chain)
-      const savedHash = configReader.readDiffHistoryHash(c.name, c.chain)
+    for (const c of configs ?? []) {
+      const currentHash = configReader.readDiscoveryHash(c.name)
+      const savedHash = configReader.readDiffHistoryHash(c.name)
       assert(
         savedHash !== undefined,
-        `The diffHistory.md of ${c.chain}:${c.name} has to contain a hash of the discovered.json. Perhaps you generated the discovered.json without generating the diffHistory.md?`,
+        `The diffHistory.md of ${c.name} has to contain a hash of the discovered.json. Perhaps you generated the discovered.json without generating the diffHistory.md?`,
       )
       assert(
         currentHash === savedHash,
-        `The hash for ${c.chain}:${
+        `The hash for ${
           c.name
         } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
       )
@@ -227,32 +224,24 @@ describe('discovery config.jsonc', () => {
   })
 
   it('is colorized correctly', () => {
-    for (const c of chainConfigs ?? []) {
-      const discovery = configReader.readDiscovery(c.name, c.chain)
+    for (const c of configs ?? []) {
+      const discovery = configReader.readDiscovery(c.name)
       const color = colorize(c.color, discovery, templateService)
 
-      const colorized = combineStructureAndColor(discovery, color)
-      const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)
-      assert(
-        !changed,
-        `${c.name} is not colorized correctly. Run l2b colorize.`,
-      )
+      expect(compareLeftKeysInRight(color, discovery)).toBeTruthy()
     }
   })
 
   it('model-permissions is up to date', () => {
-    for (const c of chainConfigs) {
+    for (const c of configs) {
+      const discoveries = new DiscoveryRegistry()
       const dependencies = getDependenciesToDiscoverForProject(
         c.name,
         configReader,
       )
-      const discoveries = new DiscoveryRegistry()
       for (const dependency of dependencies) {
-        const discovery = configReader.readDiscovery(
-          dependency.project,
-          dependency.chain,
-        )
-        discoveries.set(dependency.project, dependency.chain, discovery)
+        const discovery = configReader.readDiscovery(dependency)
+        discoveries.set(dependency, discovery)
       }
       const clingoInput = generateClingoForDiscoveries(
         discoveries,
@@ -261,9 +250,7 @@ describe('discovery config.jsonc', () => {
       )
       const hash = generatePermissionConfigHash(clingoInput)
       assert(
-        hash ===
-          discoveries.get(c.name, c.chain)?.discoveryOutput
-            .permissionsConfigHash,
+        hash === discoveries.get(c.name)?.discoveryOutput.permissionsConfigHash,
         [
           '',
           `Permissions model of "${c.name}" is not up to date.`,
@@ -274,17 +261,30 @@ describe('discovery config.jsonc', () => {
       )
     }
   }).timeout(10000)
-
-  describe('every chain in a project has the same timestamp', () => {
-    const projects = configReader.readAllDiscoveredProjects()
-    for (const { project, chains } of projects) {
-      it(`${project}`, () => {
-        const timestamps = chains.map(
-          (c) => configReader.readDiscovery(project, c).timestamp,
-        )
-
-        expect(timestamps.every((t) => t === timestamps[0])).toEqual(true)
-      })
-    }
-  })
 })
+
+function compareLeftKeysInRight(
+  left: Record<string, any>,
+  right: Record<string, any>,
+): boolean {
+  const keys = Object.keys(left)
+
+  if (keys.length === 0) return true
+
+  return keys.every((key) => {
+    const val1 = left[key]
+    const val2 = right[key]
+
+    // Deep comparison for objects
+    if (
+      typeof val1 === 'object' &&
+      typeof val2 === 'object' &&
+      val1 !== null &&
+      val2 !== null
+    ) {
+      return compareLeftKeysInRight(val1, val2)
+    }
+
+    return isDeepStrictEqual(val1, val2)
+  })
+}

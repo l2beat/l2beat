@@ -13,14 +13,13 @@ export const tea: ScalingProject = upcomingL2({
     description:
       'Tea is an upcoming Layer 2 solution built on the OP Stack. It aims to provide a collaborative space for Web3 builders and users.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
     stacks: ['OP Stack'],
     links: {
-      websites: ['https://tea.xyz/assam'],
+      websites: ['https://tea.xyz/sepolia'],
       bridges: [
         'https://tea-assam-fo46m5b966-32f74f2af939fed4.testnets.rollbridge.app',
       ],
-      explorers: ['https://assam.tea.xyz/'],
+      explorers: ['https://sepolia.tea.xyz/'],
       documentation: ['https://docs.tea.xyz/tea'],
       repositories: ['https://github.com/teaxyz'],
       socialMedia: [
@@ -28,10 +27,14 @@ export const tea: ScalingProject = upcomingL2({
         'https://t.me/teaprotocol',
         'https://linkedin.com/company/teaxyz/',
         'https://discord.com/invite/tea-906608167901876256',
+        'https://youtube.com/@teaxyz_',
       ],
     },
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

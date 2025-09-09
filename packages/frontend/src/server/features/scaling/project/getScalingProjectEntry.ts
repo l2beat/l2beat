@@ -3,6 +3,7 @@ import type {
   ProjectAssociatedToken,
   ProjectCustomColors,
   ProjectScalingCategory,
+  ProjectScalingProofSystem,
   ProjectScalingStage,
   ReasonForBeingInOther,
   WarningWithSentiment,
@@ -31,6 +32,7 @@ import { getDataAvailabilitySection } from '~/utils/project/technology/getDataAv
 import { getOperatorSection } from '~/utils/project/technology/getOperatorSection'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/getOtherConsiderationsSection'
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
+import { getStateValidationSection } from '~/utils/project/technology/getStateValidationSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
 import { getScalingTvsSection } from '~/utils/project/tvs/getScalingTvsSection'
 import {
@@ -75,7 +77,8 @@ export interface ProjectScalingEntry {
     links: ProjectLink[]
     hostChain?: string
     chainId?: number
-    category: ProjectScalingCategory
+    category?: ProjectScalingCategory
+    proofSystemType?: ProjectScalingProofSystem['type']
     purposes: string[]
     tvs?: {
       breakdown?: {
@@ -191,6 +194,7 @@ export async function getScalingProjectEntry(
           : 'multiple'
       : undefined,
     category: project.scalingInfo.type,
+    proofSystemType: project.scalingInfo.proofSystem?.type,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
     links: getProjectLinks(project.display.links),
@@ -472,7 +476,10 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (project.scalingStage.stage !== 'NotApplicable') {
+  if (
+    project.scalingStage.stage !== 'NotApplicable' &&
+    project.scalingInfo.type
+  ) {
     sections.push({
       type: 'StageSection',
       props: {
@@ -523,20 +530,14 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (project.scalingTechnology.stateValidation) {
+  const stateValidationSection = await getStateValidationSection(project)
+  if (stateValidationSection) {
     sections.push({
       type: 'StateValidationSection',
       props: {
         id: 'state-validation',
         title: 'State validation',
-        stateValidation: project.scalingTechnology.stateValidation,
-        diagram: getDiagramParams(
-          'state-validation',
-          project.scalingTechnology.stateValidationImage ?? project.slug,
-        ),
-        isUnderReview:
-          !!project.statuses.reviewStatus ||
-          !!project.scalingTechnology.stateValidation.isUnderReview,
+        ...stateValidationSection,
       },
     })
   }

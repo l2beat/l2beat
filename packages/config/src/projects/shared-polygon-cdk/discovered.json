@@ -1,0 +1,2223 @@
+{
+  "name": "shared-polygon-cdk",
+  "timestamp": 1757064266,
+  "configHash": "0x3f04906e4a1864096931bcea2145f657cce58db4a5e57ff164334b7b377a2637",
+  "entries": [
+    {
+      "address": "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "sinceTimestamp": 1748550023,
+      "sinceBlock": 22590744,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
+      }
+    },
+    {
+      "name": "AggLayerGateway",
+      "address": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+      "type": "Contract",
+      "template": "polygon-cdk/AgglayerGateway",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0xcff13dcdde38e51b46f4031f59890897a98923c5e1bc777cca891e310c188dba"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.",
+      "sinceTimestamp": 1750087643,
+      "sinceBlock": 22717971,
+      "values": {
+        "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346",
+        "$pastUpgrades": [
+          [
+            "2025-06-16T15:27:23.000Z",
+            "0xe7c64d567589723d0920e6104296a434fb24193d2ccd33814d0b3fd753be5db2",
+            ["eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "AGGCHAIN_DEFAULT_VKEY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "AL_ADD_PP_ROUTE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "AL_FREEZE_PP_ROUTE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          }
+        },
+        "addPpRouteAC": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"],
+        "aggchainDefaultVKeyAC": [
+          "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+        ],
+        "aggchainVKeys": {
+          "0x00040001": [
+            {
+              "selector": "0x00040001",
+              "newVKey": "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f"
+            }
+          ]
+        },
+        "aggchainVKeysUpdated": {},
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "freezePpRouteAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
+        "routes": {
+          "0x00000004": [
+            {
+              "selector": "0x00000004",
+              "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+              "pessimisticVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            }
+          ]
+        }
+      },
+      "fieldMeta": {
+        "aggchainVKeys": {
+          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey()."
+        },
+        "aggchainVKeysUpdated": {
+          "description": "emitted when an existing aggchainVKey in `aggchainVKeys` is updated."
+        },
+        "routes": {
+          "severity": "HIGH",
+          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey."
+        }
+      },
+      "implementationNames": {
+        "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": "TransparentUpgradeableProxy",
+        "eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346": "AggLayerGateway"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "eth:0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SharedProxyAdmin",
+      "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1679653103,
+      "sinceBlock": 16896716,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      },
+      "implementationNames": {
+        "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": ".trustedAggregatorAC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x21887c89368bf918346c62460e0c339113801C28",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PolygonAdminMultisig",
+      "address": "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
+          "role": ".addPpRouteAC",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add or update default aggchain verification keys (aggchainVkey) for any given selectors.",
+          "role": ".aggchainDefaultVKeyAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "freeze routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
+          "role": ".freezePpRouteAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
+          "role": ".proxiedTokensManager",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
+          "role": ".createRollupAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types, migrate to pessimistic proofs and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.",
+          "role": ".tweakParametersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1678956815,
+      "sinceBlock": 16839348,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
+          "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
+          "eth:0x54c401eD03D086fE13221E5422165f3b024265d9",
+          "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
+          "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2",
+          "eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
+          "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
+          "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
+          "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
+          "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
+          "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
+          "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
+        ],
+        "$threshold": 5,
+        "domainSeparator": "0xd8cfae7b548133655e0a54436471b813794d3d208ff7a47b740e06ea90b3d0b8",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 12 (42%)",
+        "nonce": 88,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "PolygonSharedBridge",
+      "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Contract",
+      "template": "polygon-cdk/PolygonSharedBridge_al030",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0xf77e37156ee166ea86bbe304138c8d57dd299347f411e731fa2086e15153a780"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The shared bridge contract, escrowing user funds sent to Agglayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
+      "ignoreInWatchMode": ["getRoot"],
+      "sinceTimestamp": 1679653127,
+      "sinceBlock": 16896718,
+      "values": {
+        "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b",
+        "$pastUpgrades": [
+          [
+            "2023-03-24T10:18:47.000Z",
+            "0x28f93532243dd8a8cc92ce630ef1920f40de15af7db2903efbf42f21fdf8152c",
+            ["eth:0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C"]
+          ],
+          [
+            "2024-02-13T11:00:59.000Z",
+            "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24",
+            ["eth:0x0FeB850B183C57534b56b7d56520133C8f9BDB65"]
+          ],
+          [
+            "2025-06-23T14:46:23.000Z",
+            "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
+            ["eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "BRIDGE_VERSION": "al-v0.3.0",
+        "gasTokenAddress": "eth:0x0000000000000000000000000000000000000000",
+        "gasTokenMetadata": "0x",
+        "gasTokenNetwork": 0,
+        "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+        "getRoot": "0x3e08b12cd4cde23c05ca845347df338fe27ddb8f0502858b797e1922634c4c57",
+        "getWrappedTokenBridgeImplementation": "eth:0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
+        "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+        "isEmergencyState": false,
+        "networkID": 0,
+        "pendingProxiedTokensManager": "eth:0x0000000000000000000000000000000000000000",
+        "polygonRollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "proxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+        "WETHToken": "eth:0x0000000000000000000000000000000000000000",
+        "wrappedTokenBytecodeStorer": "eth:0x6b0E6Cf8108BbC39A53AF11B65d6C47d06037f80"
+      },
+      "fieldMeta": {
+        "isEmergencyState": {
+          "severity": "HIGH",
+          "description": "pauses the bridge, managed by the PolygonRollupManager."
+        },
+        "proxiedTokensManager": {
+          "severity": "HIGH",
+          "description": "is the default proxy admin of all newly deployed wrapped tokens (tokens bridged from other chains to this chain). this permission is enforced by the proxy bytecode in the wrappedTokenBytecodeStorer."
+        }
+      },
+      "implementationNames": {
+        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "TransparentUpgradeableProxy",
+        "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b": "PolygonZkEVMBridgeV2"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PolygonSecurityCouncil",
+      "address": "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
+          "role": ".emergencyCouncilAdminAC"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1678429487,
+      "sinceBlock": 16795950,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
+          "eth:0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
+          "eth:0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
+          "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
+          "eth:0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
+          "eth:0x49c15936864690bCd6af0ecaca8E874adFF30E86",
+          "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0",
+          "eth:0x21887c89368bf918346c62460e0c339113801C28"
+        ],
+        "$threshold": 6,
+        "domainSeparator": "0x33ea3e28c0dfd2e84cb64bd76585cb4f6ed8e2e6f5fe17293c8c09fa01db36d7",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "6 of 8 (75%)",
+        "nonce": 10,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x49c15936864690bCd6af0ecaca8E874adFF30E86",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PolygonRollupManager",
+      "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "type": "Contract",
+      "template": "polygon-cdk/PolygonRollupManager_al030",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xe1a044e355c430aefc18f156be2c4f677baa559d3fb102b60b836bb4e2b91220"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
+      "ignoreInWatchMode": [
+        "getRollupExitRoot",
+        "lastAggregationTimestamp",
+        "totalSequencedBatches",
+        "totalVerifiedBatches"
+      ],
+      "sinceTimestamp": 1679653163,
+      "sinceBlock": 16896721,
+      "values": {
+        "_HALT_AGGREGATION_TIMEOUT": "1 week",
+        "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "eth:0x42B9fF0644741e3353162678596e7D6aA6a13240",
+        "$pastUpgrades": [
+          [
+            "2023-03-24T10:19:23.000Z",
+            "0xe34243804e1f7257acb09c97d0d6f023663200c39ee85a1e6927b0b391710bbb",
+            ["eth:0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF"]
+          ],
+          [
+            "2023-09-20T08:30:35.000Z",
+            "0x25c342d7c5b4137b5439c16fd5fa1577c116277859202b2c68fcd9f73b3fc2ac",
+            ["eth:0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"]
+          ],
+          [
+            "2023-11-09T09:22:59.000Z",
+            "0x1db1400138d6778d303b9a13e816432d11f8dfca00ef6ec6ffcb6698cb447a31",
+            ["eth:0xb1585916487AcEdD99952086f2950763D253b923"]
+          ],
+          [
+            "2024-02-13T11:00:59.000Z",
+            "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24",
+            ["eth:0x3b82Da772c825283d85d5d6717A77C6Ff582053b"]
+          ],
+          [
+            "2024-10-30T11:11:59.000Z",
+            "0x8c1be5b5d844d6e04b2c224cd810cda091d70e6d5c2e5e0464993f7df1ab8403",
+            ["eth:0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"]
+          ],
+          [
+            "2025-02-03T14:55:59.000Z",
+            "0xb499c5a8f315d72886e44eabcbf6428fb9672f3ea8eb55adcbfda0ae0612233e",
+            ["eth:0xA33619940bceb9be7c9679Dd80FA2918C2476382"]
+          ],
+          [
+            "2025-06-23T14:46:23.000Z",
+            "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
+            ["eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab"]
+          ],
+          [
+            "2025-07-30T13:35:23.000Z",
+            "0x289865ea6d92cdf5be21123b6ce61447f500ba14c229f02153113f8419af1695",
+            ["eth:0x42B9fF0644741e3353162678596e7D6aA6a13240"]
+          ]
+        ],
+        "$upgradeCount": 8,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "TRUSTED_AGGREGATOR": {
+            "adminRole": "TRUSTED_AGGREGATOR_ADMIN",
+            "members": [
+              "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+              "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+            ]
+          },
+          "ADD_ROLLUP_TYPE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "ADD_EXISTING_ROLLUP": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "UPDATE_ROLLUP": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+            ]
+          },
+          "OBSOLETE_ROLLUP_TYPE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "CREATE_ROLLUP": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+              "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+            ]
+          },
+          "STOP_EMERGENCY": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "TWEAK_PARAMETERS": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "TRUSTED_AGGREGATOR_ADMIN": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "SET_FEE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "EMERGENCY_COUNCIL": {
+            "adminRole": "EMERGENCY_COUNCIL_ADMIN",
+            "members": ["eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
+          },
+          "EMERGENCY_COUNCIL_ADMIN": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
+          }
+        },
+        "aggLayerGateway": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+        "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "createRollupAC": [
+          "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+        ],
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"],
+        "emergencyCouncilAdminAC": [
+          "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"
+        ],
+        "emergencyStateCount": 1,
+        "getBatchFee": "100000000000000000",
+        "getRollupExitRoot": "0xbb06a1d46c7fccacc368ee260f0d54fd17a0bb0f1ab9b08a728bbeded7987135",
+        "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+        "isEmergencyState": false,
+        "lastAggregationTimestamp": 1757064059,
+        "lastDeactivatedEmergencyStateTimestamp": 1711323791,
+        "pessimisticProofSenders": [14, 17, 18, 19, 20, 3, 21, 22],
+        "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+        "ROLLUP_MANAGER_VERSION": "al-v0.3.1",
+        "rollupCount": 23,
+        "rollupsDataV2": [
+          {
+            "rollupContract": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+            "chainID": 1101,
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 6,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+            "chainID": 3776,
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+            "chainID": 196,
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "forkID": 12,
+            "rollupTypeID": 11,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "rollupContract": "eth:0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
+            "chainID": 4913,
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
+            "chainID": 1511670449,
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+            "chainID": 1702448187,
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+            "chainID": 994873017,
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 7,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+            "chainID": 31415,
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0xA87df42CD53E998b3A610B8bCe3719871b0bb940",
+            "chainID": 511252203,
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+            "chainID": 2355,
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 7,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0xB234F18738d9531CAD6ae6d9A587d09fe200272C",
+            "chainID": 999,
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",
+            "chainID": 938,
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupTypeID": 4,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+            "chainID": 752025,
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 7,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
+            "chainID": 9369,
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "forkID": 12,
+            "rollupTypeID": 11,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "rollupContract": "eth:0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
+            "chainID": 623,
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 7,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
+            "chainID": 3344,
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupTypeID": 7,
+            "rollupVerifierType": 0,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0x7449449460b5B732A9754CA3d9A7916122A9190d",
+            "chainID": 801,
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "forkID": 12,
+            "rollupTypeID": 11,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "rollupContract": "eth:0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
+            "chainID": 45056,
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "forkID": 12,
+            "rollupTypeID": 11,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "rollupContract": "eth:0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
+            "chainID": 8088,
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "forkID": 12,
+            "rollupTypeID": 11,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "rollupContract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+            "chainID": 747474,
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 12,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0xaf6a4CDe41B9C7FCe858E1B875765cdEDB8f84c8",
+            "chainID": 838,
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "forkID": 12,
+            "rollupTypeID": 11,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "rollupContract": "eth:0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b",
+            "chainID": 8338,
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "forkID": 12,
+            "rollupTypeID": 11,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "rollupContract": "eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8",
+            "chainID": 3864,
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "forkID": 12,
+            "rollupTypeID": 11,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          }
+        ],
+        "rollupTypeCount": 12,
+        "rollupTypes": [
+          {
+            "consensusImplementation": "eth:0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
+            "verifier": "eth:0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
+            "forkID": 7,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "verifier": "eth:0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
+            "forkID": 8,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "forkID": 9,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "verifier": "eth:0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+            "forkID": 11,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "forkID": 12,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+            "verifier": "eth:0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+            "forkID": 13,
+            "rollupVerifierType": 0,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "verifier": "eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "forkID": 12,
+            "rollupVerifierType": 1,
+            "obsolete": false,
+            "programVKey": "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
+          },
+          {
+            "consensusImplementation": "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "verifier": "eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "forkID": 12,
+            "rollupVerifierType": 1,
+            "obsolete": false,
+            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+          },
+          {
+            "consensusImplementation": "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "forkID": 12,
+            "rollupVerifierType": 1,
+            "obsolete": false,
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "consensusImplementation": "eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682",
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupVerifierType": 2,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          }
+        ],
+        "totalSequencedBatches": 804387,
+        "totalVerifiedBatches": 803894,
+        "trustedAggregatorAC": [
+          "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+          "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+        ],
+        "tweakParametersAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+      },
+      "fieldMeta": {
+        "isEmergencyState": {
+          "severity": "HIGH",
+          "description": "pauses all connected chains and the bridge, allows for immediate upgrades through the timelock."
+        },
+        "rollupsDataV2": {
+          "severity": "LOW",
+          "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]"
+        },
+        "rollupTypes": {
+          "description": "struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey"
+        },
+        "pessimisticProofSenders": {
+          "description": "Lists any rollupID that sends a pessimistic proof."
+        }
+      },
+      "implementationNames": {
+        "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": "TransparentUpgradeableProxy",
+        "eth:0x42B9fF0644741e3353162678596e7D6aA6a13240": "PolygonRollupManager"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x54c401eD03D086fE13221E5422165f3b024265d9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PolygonGlobalExitRootV2",
+      "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "type": "Contract",
+      "template": "polygon-cdk/PolygonGlobalExitRootV2",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xee95e594827e19497b882d82113115b70cb33dc53c346f5bf09b38891f560067"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
+      "ignoreInWatchMode": ["getRoot", "depositCount"],
+      "sinceTimestamp": 1679653151,
+      "sinceBlock": 16896720,
+      "values": {
+        "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48",
+        "$pastUpgrades": [
+          [
+            "2023-03-24T10:19:11.000Z",
+            "0x9946be78d6c6d19dd1c6c7134a8fac27e76d32cad36dae2398d28fe6ff838f10",
+            ["eth:0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3"]
+          ],
+          [
+            "2024-02-13T11:00:59.000Z",
+            "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24",
+            ["eth:0x2E38cD55163137483E30580Cb468C2dFf1d85077"]
+          ],
+          [
+            "2024-10-30T11:11:59.000Z",
+            "0x8c1be5b5d844d6e04b2c224cd810cda091d70e6d5c2e5e0464993f7df1ab8403",
+            ["eth:0x9Bdda421219900454E94e01d641fE64c60D8f4C8"]
+          ],
+          [
+            "2025-06-23T14:46:23.000Z",
+            "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
+            ["eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "depositCount": 69033,
+        "GER_VERSION": "al-v0.3.0",
+        "getRoot": "0xfc2bf72abff377400faaaf86c37ed55b9e679e6abfa13ec6431988fd189d3d4a",
+        "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      },
+      "implementationNames": {
+        "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "TransparentUpgradeableProxy",
+        "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48": "PolygonZkEVMGlobalExitRootV2"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": ".trustedAggregatorAC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PolygonCreateRollupMultisig",
+      "address": "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
+          "role": ".createRollupAC"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1722533147,
+      "sinceBlock": 20435175,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
+          "eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
+          "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
+          "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+          "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
+          "eth:0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
+          "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
+          "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x771bc24f4d160e0eb868dd1295227792c9121e52ca89c5940d820985422c484e",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 8 (38%)",
+        "nonce": 21,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Timelock",
+      "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+      "type": "Contract",
+      "template": "polygon-cdk/Timelock",
+      "sourceHashes": [
+        "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
+          "role": ".addPpRouteAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
+          "role": ".proxiedTokensManager"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types, migrate to pessimistic proofs and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        }
+      ],
+      "sinceTimestamp": 1679653187,
+      "sinceBlock": 16896723,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          }
+        },
+        "getMinDelay": 259200,
+        "getMinDelayFormatted": "3d",
+        "polygonZkEVM": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "scheduledTransactionsDecoded": [
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F",
+              "data": { "_versionString": "v2.0.0-RC1-fork.5" }
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0xb1585916487AcEdD99952086f2950763D253b923",
+              "data": { "_versionString": "v3.0.0-incaberry" }
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgrade",
+            "inputs": {
+              "proxy": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+              "implementation": "eth:0x2E38cD55163137483E30580Cb468C2dFf1d85077"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgrade",
+            "inputs": {
+              "proxy": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+              "implementation": "eth:0x0FeB850B183C57534b56b7d56520133C8f9BDB65"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0x3b82Da772c825283d85d5d6717A77C6Ff582053b",
+              "data": {
+                "trustedAggregator": "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+                "_pendingStateTimeout": 432000,
+                "_trustedAggregatorTimeout": 432000,
+                "admin": "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+                "timelock": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+                "emergencyCouncil": "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
+                "polygonZkEVM": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+                "zkEVMVerifier": "eth:0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
+                "zkEVMForkID": 7,
+                "zkEVMChainID": 1101
+              }
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "0xf34eb8eb",
+            "inputs": {
+              "calldata": "0000000000000000000000009cf80f7eb1c76ec5ae7a88b417e373449b73ac300000000000000000000000001c3a3da552b8662cd69538356b1e7c2e9cc1ebd800000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000005d547970653a2056616c696469756d2c2056657273696f6e3a206574726f672c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d415955000000"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+              "verifier": "eth:0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
+              "forkID": 8,
+              "rollupCompatibilityID": 0,
+              "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
+              "description": "Type: zkEVM, Version: incaberry, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+              "newRollupTypeID": 2,
+              "upgradeData": "0x"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+              "verifier": "eth:0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
+              "forkID": 8,
+              "rollupCompatibilityID": 0,
+              "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
+              "description": "Type: Validium, Version: incaberry, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+            },
+            "predecessor": "0x8bae5e2a8aaf4501e263b917591e7fcf9b1d28c85962a8847a845aff916b50ad",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+              "newRollupTypeID": 3,
+              "upgradeData": "0x1c8b9370"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+              "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+              "forkID": 9,
+              "rollupCompatibilityID": 0,
+              "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
+              "description": "Type: zkEVM, Version: eldelberry2, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "0"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "grantRole",
+            "inputs": {
+              "role": "0x66156603fe29d13f97c6f3e3dff4ef71919f9aa61c555be0182d954e94221aac",
+              "account": "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "0"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+              "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+              "forkID": 9,
+              "rollupCompatibilityID": 0,
+              "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
+              "description": "Type: Validium, Version: eldelberry2, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "0"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "grantRole",
+            "inputs": {
+              "role": "0xa0fab074aba36a6fa69f1a83ee86e5abfb8433966eb57efb13dc2fc2f24ddd08",
+              "account": "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+              "verifier": "eth:0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+              "forkID": 11,
+              "rollupCompatibilityID": 0,
+              "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
+              "description": "Type: zkEVM, Version: eggfruit N=25 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+              "implementation": "eth:0x9Bdda421219900454E94e01d641fE64c60D8f4C8",
+              "data": {}
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgrade",
+            "inputs": {
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
+              "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+              "forkID": 12,
+              "rollupCompatibilityID": 0,
+              "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
+              "description": "Type: zkEVM, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+              "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+              "forkID": 12,
+              "rollupCompatibilityID": 0,
+              "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
+              "description": "Type: Validium, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+              "verifier": "eth:0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+              "forkID": 13,
+              "rollupCompatibilityID": 0,
+              "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
+              "description": "Type: Validium, Version: fork.13 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+            "value": "0",
+            "function": "updateDelay",
+            "inputs": { "newDelay": 259200 },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0xA33619940bceb9be7c9679Dd80FA2918C2476382",
+              "data": {}
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "0xabcb5198",
+            "inputs": {
+              "calldata": "00000000000000000000000018c45dd422f6587357a6d3b23307e75d42b2bc5b000000000000000000000000e00a3cbfc45241b33c0a44c78e26168cbc55ec63000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e00062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a5120000000000000000000000000000000000000000000000000000000000000061547970653a2050657373696d69737469632c2056657273696f6e3a2076302e322e312c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d41595500000000000000000000000000000000000000000000000000000000000000"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+              "verifier": "eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+              "forkID": 12,
+              "rollupVerifierType": 1,
+              "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "description": "Type: Pessimistic, Version: v0.2.5, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU",
+              "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+              "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+              "forkID": 12,
+              "rollupVerifierType": 1,
+              "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "description": "Type: Pessimistic, Version: v0.3.3, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU",
+              "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab",
+              "data": {}
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+              "implementation": "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b",
+              "data": {}
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgrade",
+            "inputs": {
+              "proxy": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+              "implementation": "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "eth:0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
+              "newRollupTypeID": 11,
+              "upgradeData": "0x"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "eth:0x7449449460b5B732A9754CA3d9A7916122A9190d",
+              "newRollupTypeID": 11,
+              "upgradeData": "0x"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "eth:0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
+              "newRollupTypeID": 11,
+              "upgradeData": "0x"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "eth:0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
+              "newRollupTypeID": 11,
+              "upgradeData": "0x"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+              "newRollupTypeID": 11,
+              "upgradeData": "0x"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682",
+              "verifier": "eth:0x0000000000000000000000000000000000000000",
+              "forkID": 0,
+              "rollupVerifierType": 2,
+              "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "description": "Type: aggchainFEP",
+              "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0x42B9fF0644741e3353162678596e7D6aA6a13240",
+              "data": {}
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          }
+        ],
+        "timelockAdminAC": [
+          "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+        ]
+      },
+      "implementationNames": {
+        "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": "PolygonZkEVMTimelock"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x42B9fF0644741e3353162678596e7D6aA6a13240": [
+      "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _aggLayerGateway)",
+      "error AccessControlOnlyCanRenounceRolesForSelf()",
+      "error AddressDoNotHaveRequiredRole()",
+      "error AggchainDataMustBeZeroForPessimisticVerifierType()",
+      "error AllBatchesMustBeVerified()",
+      "error AllSequencedMustBeVerified()",
+      "error AllzkEVMSequencedBatchesMustBeVerified()",
+      "error BatchFeeOutOfRange()",
+      "error CannotUpdateWithUnconsolidatedPendingState()",
+      "error ChainIDAlreadyExist()",
+      "error ChainIDOutOfRange()",
+      "error EmptyVerifySequencesData()",
+      "error ExceedMaxVerifyBatches()",
+      "error FinalNumBatchBelowLastVerifiedBatch()",
+      "error FinalNumBatchDoesNotMatchPendingState()",
+      "error FinalNumSequenceBelowLastVerifiedSequence()",
+      "error FinalNumSequenceDoesNotMatchPendingState()",
+      "error FinalPendingStateNumInvalid()",
+      "error HaltTimeoutNotExpired()",
+      "error InitBatchMustMatchCurrentForkID()",
+      "error InitNumBatchAboveLastVerifiedBatch()",
+      "error InitNumBatchDoesNotMatchPendingState()",
+      "error InitSequenceMustMatchCurrentForkID()",
+      "error InitSequenceNumDoesNotMatchPendingState()",
+      "error InvalidConstructorInputs()",
+      "error InvalidImplementationAddress()",
+      "error InvalidInputsForRollupType()",
+      "error InvalidNewLocalExitRoot()",
+      "error InvalidPessimisticProof()",
+      "error InvalidProof()",
+      "error InvalidRangeBatchTimeTarget()",
+      "error InvalidRangeMultiplierBatchFee()",
+      "error InvalidRangeMultiplierZkGasPrice()",
+      "error InvalidRangeSequenceTimeTarget()",
+      "error InvalidRollup()",
+      "error InvalidRollupType()",
+      "error InvalidVerifierAddress()",
+      "error InvalidVerifierType()",
+      "error L1InfoTreeLeafCountInvalid()",
+      "error MustSequenceSomeBatch()",
+      "error MustSequenceSomeBlob()",
+      "error NewAccInputHashDoesNotExist()",
+      "error NewPendingStateTimeoutMustBeLower()",
+      "error NewRollupTypeMustBePessimisticOrALGateway()",
+      "error NewStateRootNotInsidePrime()",
+      "error NewTrustedAggregatorTimeoutMustBeLower()",
+      "error NotAllowedAddress()",
+      "error OldAccInputHashDoesNotExist()",
+      "error OldStateRootDoesNotExist()",
+      "error OnlyEmergencyState()",
+      "error OnlyNotEmergencyState()",
+      "error OnlyRollupAdmin()",
+      "error OnlyStateTransitionChains()",
+      "error PendingStateDoesNotExist()",
+      "error PendingStateInvalid()",
+      "error PendingStateNotConsolidable()",
+      "error PendingStateNumExist()",
+      "error ReentrancyGuardReentrantCall()",
+      "error RollbackBatchIsNotEndOfSequence()",
+      "error RollbackBatchIsNotValid()",
+      "error RollupAddressAlreadyExist()",
+      "error RollupIDNotAscendingOrder()",
+      "error RollupMustExist()",
+      "error RollupTypeDoesNotExist()",
+      "error RollupTypeObsolete()",
+      "error SenderMustBeRollup()",
+      "error StateTransitionChainsNotAllowed()",
+      "error StoredRootMustBeDifferentThanNewRoot()",
+      "error TrustedAggregatorTimeoutNotExpired()",
+      "error UpdateNotCompatible()",
+      "error UpdateToOldRollupTypeID()",
+      "error UpdateToSameRollupTypeID()",
+      "error zkGasPriceOfRange()",
+      "event AddExistingRollup(uint32 indexed rollupID, uint64 forkID, address rollupAddress, uint64 chainID, uint8 rollupVerifierType, uint64 lastVerifiedBatchBeforeUpgrade, bytes32 programVKey, bytes32 initPessimisticRoot)",
+      "event AddNewRollupType(uint32 indexed rollupTypeID, address consensusImplementation, address verifier, uint64 forkID, uint8 rollupVerifierType, bytes32 genesis, string description, bytes32 programVKey)",
+      "event CompletedMigration(uint32 indexed rollupID)",
+      "event CreateNewAggchain(uint32 indexed rollupID, uint32 rollupTypeID, address rollupAddress, uint64 chainID, uint8 rollupVerifierType, bytes initializeBytesAggchain)",
+      "event CreateNewRollup(uint32 indexed rollupID, uint32 rollupTypeID, address rollupAddress, uint64 chainID, address gasTokenAddress)",
+      "event EmergencyStateActivated()",
+      "event EmergencyStateDeactivated()",
+      "event InitMigration(uint32 indexed rollupID, uint32 newRollupTypeID)",
+      "event Initialized(uint8 version)",
+      "event ObsoleteRollupType(uint32 indexed rollupTypeID)",
+      "event OnSequenceBatches(uint32 indexed rollupID, uint64 lastBatchSequenced)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RollbackBatches(uint32 indexed rollupID, uint64 indexed targetBatch, bytes32 accInputHashToRollback)",
+      "event SetBatchFee(uint256 newBatchFee)",
+      "event SetTrustedAggregator(address newTrustedAggregator)",
+      "event UpdateRollup(uint32 indexed rollupID, uint32 newRollupTypeID, uint64 lastVerifiedBatchBeforeUpgrade)",
+      "event UpdateRollupManagerVersion(string rollupManagerVersion)",
+      "event VerifyBatchesTrustedAggregator(uint32 indexed rollupID, uint64 numBatch, bytes32 stateRoot, bytes32 exitRoot, address indexed aggregator)",
+      "event VerifyPessimisticStateTransition(uint32 indexed rollupID, bytes32 prevPessimisticRoot, bytes32 newPessimisticRoot, bytes32 prevLocalExitRoot, bytes32 newLocalExitRoot, bytes32 l1InfoRoot, address indexed trustedAggregator)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function ROLLUP_MANAGER_VERSION() view returns (string)",
+      "function activateEmergencyState()",
+      "function addExistingRollup(address rollupAddress, address verifier, uint64 forkID, uint64 chainID, bytes32 initRoot, uint8 rollupVerifierType, bytes32 programVKey, bytes32 initPessimisticRoot)",
+      "function addNewRollupType(address consensusImplementation, address verifier, uint64 forkID, uint8 rollupVerifierType, bytes32 genesis, string description, bytes32 programVKey)",
+      "function aggLayerGateway() view returns (address)",
+      "function attachAggchainToAL(uint32 rollupTypeID, uint64 chainID, bytes initializeBytesAggchain)",
+      "function bridgeAddress() view returns (address)",
+      "function calculateRewardPerBatch() view returns (uint256)",
+      "function chainIDToRollupID(uint64 chainID) view returns (uint32 rollupID)",
+      "function deactivateEmergencyState()",
+      "function getBatchFee() view returns (uint256)",
+      "function getForcedBatchFee() view returns (uint256)",
+      "function getInputPessimisticBytes(uint32 rollupID, bytes32 l1InfoTreeRoot, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot, bytes aggchainData) view returns (bytes)",
+      "function getInputSnarkBytes(uint32 rollupID, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 oldStateRoot, bytes32 newStateRoot) view returns (bytes)",
+      "function getLastVerifiedBatch(uint32 rollupID) view returns (uint64)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRollupBatchNumToStateRoot(uint32 rollupID, uint64 batchNum) view returns (bytes32)",
+      "function getRollupExitRoot() view returns (bytes32)",
+      "function getRollupSequencedBatches(uint32 rollupID, uint64 batchNum) view returns (tuple(bytes32 accInputHash, uint64 sequencedTimestamp, uint64 previousLastBatchSequenced))",
+      "function globalExitRootManager() view returns (address)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initMigration(uint32 rollupID, uint32 newRollupTypeID, bytes upgradeData)",
+      "function initialize()",
+      "function isEmergencyState() view returns (bool)",
+      "function isRollupMigrating(uint32 rollupID) view returns (bool)",
+      "function lastAggregationTimestamp() view returns (uint64)",
+      "function lastDeactivatedEmergencyStateTimestamp() view returns (uint64)",
+      "function obsoleteRollupType(uint32 rollupTypeID)",
+      "function onSequenceBatches(uint64 newSequencedBatches, bytes32 newAccInputHash) returns (uint64)",
+      "function pol() view returns (address)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rollbackBatches(address rollupContract, uint64 targetBatch)",
+      "function rollupAddressToID(address rollupAddress) view returns (uint32 rollupID)",
+      "function rollupCount() view returns (uint32)",
+      "function rollupIDToRollupData(uint32 rollupID) view returns (tuple(address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 _legacyLastPendingState, uint64 _legacyLastPendingStateConsolidated, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType) rollupData)",
+      "function rollupIDToRollupDataDeserialized(uint32 rollupID) view returns (address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 legacyLastPendingState, uint64 legacyLastPendingStateConsolidated, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType)",
+      "function rollupIDToRollupDataV2(uint32 rollupID) view returns (tuple(address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType, bytes32 lastPessimisticRoot, bytes32 programVKey) rollupData)",
+      "function rollupIDToRollupDataV2Deserialized(uint32 rollupID) view returns (address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType, bytes32 lastPessimisticRoot, bytes32 programVKey)",
+      "function rollupTypeCount() view returns (uint32)",
+      "function rollupTypeMap(uint32 rollupTypeID) view returns (address consensusImplementation, address verifier, uint64 forkID, uint8 rollupVerifierType, bool obsolete, bytes32 genesis, bytes32 programVKey)",
+      "function setBatchFee(uint256 newBatchFee)",
+      "function totalSequencedBatches() view returns (uint64)",
+      "function totalVerifiedBatches() view returns (uint64)",
+      "function updateRollup(address rollupContract, uint32 newRollupTypeID, bytes upgradeData)",
+      "function updateRollupByRollupAdmin(address rollupContract, uint32 newRollupTypeID)",
+      "function verifyBatchesTrustedAggregator(uint32 rollupID, uint64 pendingStateNum, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 newStateRoot, address beneficiary, bytes32[24] proof)",
+      "function verifyPessimisticTrustedAggregator(uint32 rollupID, uint32 l1InfoTreeLeafCount, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot, bytes proof, bytes aggchainData)"
+    ],
+    "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error AlreadyClaimed()",
+      "error AmountDoesNotMatchMsgValue()",
+      "error BridgeAddressNotAllowed()",
+      "error DestinationNetworkInvalid()",
+      "error EtherTransferFailed()",
+      "error FailedInnerCall()",
+      "error FailedProxyDeployment()",
+      "error GasTokenNetworkMustBeZeroOnEther()",
+      "error GlobalExitRootInvalid()",
+      "error InvalidInitializeFunction()",
+      "error InvalidProxyAdmin(address proxyAdmin)",
+      "error InvalidSmtProof()",
+      "error InvalidZeroAddress()",
+      "error InvalidZeroProxyAdminOwner(address proxyAdmin)",
+      "error MerkleTreeFull()",
+      "error MessageFailed()",
+      "error MsgValueNotZero()",
+      "error NativeTokenIsEther()",
+      "error NoValueInMessagesOnGasTokenNetworks()",
+      "error NotValidAmount()",
+      "error NotValidOwner()",
+      "error NotValidSignature()",
+      "error NotValidSpender()",
+      "error OnlyEmergencyState()",
+      "error OnlyNotEmergencyState()",
+      "error OnlyPendingProxiedTokensManager()",
+      "error OnlyProxiedTokensManager()",
+      "error OnlyRollupManager()",
+      "error SafeERC20FailedOperation(address token)",
+      "event AcceptProxiedTokensManagerRole(address oldProxiedTokensManager, address newProxiedTokensManager)",
+      "event BridgeEvent(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata, uint32 depositCount)",
+      "event ClaimEvent(uint256 globalIndex, uint32 originNetwork, address originAddress, address destinationAddress, uint256 amount)",
+      "event EmergencyStateActivated()",
+      "event EmergencyStateDeactivated()",
+      "event Initialized(uint8 version)",
+      "event NewWrappedToken(uint32 originNetwork, address originTokenAddress, address wrappedTokenAddress, bytes metadata)",
+      "event TransferProxiedTokensManagerRole(address currentProxiedTokensManager, address newProxiedTokensManager)",
+      "function BRIDGE_VERSION() view returns (string)",
+      "function INIT_BYTECODE_TRANSPARENT_PROXY() view returns (bytes)",
+      "function WETHToken() view returns (address)",
+      "function acceptProxiedTokensManagerRole()",
+      "function activateEmergencyState()",
+      "function bridgeAsset(uint32 destinationNetwork, address destinationAddress, uint256 amount, address token, bool forceUpdateGlobalExitRoot, bytes permitData) payable",
+      "function bridgeMessage(uint32 destinationNetwork, address destinationAddress, bool forceUpdateGlobalExitRoot, bytes metadata) payable",
+      "function bridgeMessageWETH(uint32 destinationNetwork, address destinationAddress, uint256 amountWETH, bool forceUpdateGlobalExitRoot, bytes metadata)",
+      "function calculateRoot(bytes32 leafHash, bytes32[32] smtProof, uint32 index) pure returns (bytes32)",
+      "function claimAsset(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originTokenAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
+      "function claimMessage(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
+      "function claimedBitMap(uint256) view returns (uint256)",
+      "function computeTokenProxyAddress(uint32 originNetwork, address originTokenAddress) view returns (address)",
+      "function deactivateEmergencyState()",
+      "function depositCount() view returns (uint256)",
+      "function gasTokenAddress() view returns (address)",
+      "function gasTokenMetadata() view returns (bytes)",
+      "function gasTokenNetwork() view returns (uint32)",
+      "function getLeafValue(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes32 metadataHash) pure returns (bytes32)",
+      "function getProxiedTokensManager() view returns (address)",
+      "function getRoot() view returns (bytes32)",
+      "function getTokenMetadata(address token) view returns (bytes)",
+      "function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)",
+      "function getWrappedTokenBridgeImplementation() view returns (address)",
+      "function globalExitRootManager() view returns (address)",
+      "function initialize()",
+      "function initialize(uint32 _networkID, address _gasTokenAddress, uint32 _gasTokenNetwork, address _globalExitRootManager, address _polygonRollupManager, bytes _gasTokenMetadata)",
+      "function isClaimed(uint32 leafIndex, uint32 sourceBridgeNetwork) view returns (bool)",
+      "function isEmergencyState() view returns (bool)",
+      "function lastUpdatedDepositCount() view returns (uint32)",
+      "function networkID() view returns (uint32)",
+      "function pendingProxiedTokensManager() view returns (address)",
+      "function polygonRollupManager() view returns (address)",
+      "function proxiedTokensManager() view returns (address)",
+      "function tokenInfoToWrappedToken(bytes32) view returns (address)",
+      "function transferProxiedTokensManagerRole(address newProxiedTokensManager)",
+      "function updateGlobalExitRoot()",
+      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)",
+      "function wrappedTokenBytecodeStorer() view returns (address)",
+      "function wrappedTokenToTokenInfo(address) view returns (uint32 originNetwork, address originTokenAddress)"
+    ],
+    "eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AggchainVKeyAlreadyExists()",
+      "error AggchainVKeyNotFound()",
+      "error InvalidInitialization()",
+      "error InvalidProofBytesLength()",
+      "error InvalidZeroAddress()",
+      "error NotInitializing()",
+      "error OnlyAggLayerAdmin()",
+      "error OnlyPendingAggLayerAdmin()",
+      "error PPSelectorCannotBeZero()",
+      "error RouteAlreadyExists(bytes4 selector, address verifier)",
+      "error RouteIsAlreadyFrozen(bytes4 selector)",
+      "error RouteIsFrozen(bytes4 selector)",
+      "error RouteNotFound(bytes4 selector)",
+      "error VKeyCannotBeZero()",
+      "event AddDefaultAggchainVKey(bytes4 selector, bytes32 newVKey)",
+      "event Initialized(uint64 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RouteAdded(bytes4 selector, address verifier, bytes32 pessimisticVKey)",
+      "event RouteFrozen(bytes4 selector, address verifier, bytes32 pessimisticVKey)",
+      "event UnsetDefaultAggchainVKey(bytes4 selector)",
+      "event UpdateDefaultAggchainVKey(bytes4 selector, bytes32 previousVKey, bytes32 newVKey)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function addDefaultAggchainVKey(bytes4 defaultAggchainSelector, bytes32 newAggchainVKey)",
+      "function addPessimisticVKeyRoute(bytes4 pessimisticVKeySelector, address verifier, bytes32 pessimisticVKey)",
+      "function defaultAggchainVKeys(bytes4 defaultAggchainSelector) view returns (bytes32 defaultAggchainVKey)",
+      "function freezePessimisticVKeyRoute(bytes4 pessimisticVKeySelector)",
+      "function getDefaultAggchainVKey(bytes4 defaultAggchainSelector) view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address defaultAdmin, address aggchainDefaultVKeyRole, address addRouteRole, address freezeRouteRole, bytes4 pessimisticVKeySelector, address verifier, bytes32 pessimisticVKey)",
+      "function pessimisticVKeyRoutes(bytes4 pessimisticVKeySelector) view returns (address verifier, bytes32 pessimisticVKey, bool frozen)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unsetDefaultAggchainVKey(bytes4 defaultAggchainSelector)",
+      "function updateDefaultAggchainVKey(bytes4 defaultAggchainSelector, bytes32 newDefaultAggchainVKey)",
+      "function verifyPessimisticProof(bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48": [
+      "constructor(address _rollupManager, address _bridgeAddress)",
+      "error GlobalExitRootAlreadySet()",
+      "error GlobalExitRootNotFound()",
+      "error InvalidZeroAddress()",
+      "error MerkleTreeFull()",
+      "error OnlyAllowedContracts()",
+      "error OnlyGlobalExitRootRemover()",
+      "error OnlyGlobalExitRootUpdater()",
+      "error OnlyPendingGlobalExitRootRemover()",
+      "error OnlyPendingGlobalExitRootUpdater()",
+      "event InitL1InfoRootMap(uint32 leafCount, bytes32 currentL1InfoRoot)",
+      "event Initialized(uint8 version)",
+      "event UpdateL1InfoTree(bytes32 indexed mainnetExitRoot, bytes32 indexed rollupExitRoot)",
+      "event UpdateL1InfoTreeV2(bytes32 currentL1InfoRoot, uint32 indexed leafCount, uint256 blockhash, uint64 minTimestamp)",
+      "function GER_VERSION() view returns (string)",
+      "function bridgeAddress() view returns (address)",
+      "function calculateRoot(bytes32 leafHash, bytes32[32] smtProof, uint32 index) pure returns (bytes32)",
+      "function depositCount() view returns (uint256)",
+      "function getLastGlobalExitRoot() view returns (bytes32)",
+      "function getLeafValue(bytes32 newGlobalExitRoot, uint256 lastBlockHash, uint64 timestamp) pure returns (bytes32)",
+      "function getRoot() view returns (bytes32)",
+      "function globalExitRootMap(bytes32) view returns (uint256)",
+      "function initialize()",
+      "function l1InfoRootMap(uint32 leafCount) view returns (bytes32 l1InfoRoot)",
+      "function lastMainnetExitRoot() view returns (bytes32)",
+      "function lastRollupExitRoot() view returns (bytes32)",
+      "function rollupManager() view returns (address)",
+      "function updateExitRoot(bytes32 newRoot)",
+      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)"
+    ],
+    "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin, address _polygonZkEVM)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256 duration)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256 timestamp)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function isOperation(bytes32 id) view returns (bool registered)",
+      "function isOperationDone(bytes32 id) view returns (bool done)",
+      "function isOperationPending(bytes32 id) view returns (bool pending)",
+      "function isOperationReady(bytes32 id) view returns (bool ready)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function polygonZkEVM() view returns (address)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "polygon-cdk/AgglayerGateway": "0xe3233eedc0609119210c56c62004ae0e2f7b5e9d45e5d46aee3f9c2cbdc606d3",
+    "polygon-cdk/PolygonGlobalExitRootV2": "0x1cc88444958b7582ad850833989c9a1ef2474d9c0804f38e0d9cde437f73e74b",
+    "polygon-cdk/PolygonRollupManager_al030": "0x3c5b4cb44f69f247050cec379ef9c049f6c8bd7fca6aabab3b5159c190daa867",
+    "polygon-cdk/PolygonSharedBridge_al030": "0xa81aeeb573b6377dccef7c71fac6ad2e784a6c7be283b8020ec4ac648d780e46",
+    "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+  },
+  "usedBlockNumbers": { "ethereum": 23295994 },
+  "permissionsConfigHash": "0xd18e3cb59729a51f2eda4291afc54ac6559021862018826e4e39e3326a643691"
+}

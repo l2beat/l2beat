@@ -2,6 +2,8 @@ import type { Database } from '@l2beat/database'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { clampRangeToDay, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import uniq from 'lodash/uniq'
+import type { TrackedTxProject } from '../../config/Config'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
@@ -13,9 +15,10 @@ import type { TxUpdaterInterface } from './types/TxUpdaterInterface'
 
 interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<TrackedTxConfigEntry>, 'name'> {
-  updaters: TxUpdaterInterface[]
+  updaters: TxUpdaterInterface<'liveness' | 'l2costs'>[]
   trackedTxsClient: TrackedTxsClient
   db: Database
+  projects: TrackedTxProject[]
 }
 
 export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry> {
@@ -34,8 +37,17 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
   ) {
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
+    // we need to filter out configurations from projects that are archived
+    // it has to be done here otherwise indexer would delete data from inactive configurations/projects
+    const activeConfigurations = configurations.filter((c) => {
+      const project = this.$.projects.find(
+        (p) => p.id === c.properties.projectId,
+      )
+      return project && !project.isArchived
+    })
+
     const txs = await this.$.trackedTxsClient.getData(
-      configurations,
+      activeConfigurations,
       unixFrom,
       unixTo,
     )
@@ -43,6 +55,15 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     return async () => {
       for (const updater of this.$.updaters) {
         const filteredTxs = txs.filter((tx) => tx.type === updater.type)
+        this.$.db.syncMetadata.updateSyncedUntil(
+          updater.type,
+          uniq(
+            activeConfigurations
+              .filter((c) => c.properties.type === updater.type)
+              .map((c) => c.properties.projectId),
+          ),
+          unixTo,
+        )
         await updater.update(filteredTxs)
       }
       this.logger.info('Saved txs into DB', {

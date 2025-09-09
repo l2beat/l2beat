@@ -377,85 +377,33 @@ describe('config and discovery resolution', () => {
     })
   })
 
-  describe('readAllConfiguredProjects with grouping', () => {
-    it('should read all configured projects including grouped ones', () => {
-      mockFs({
-        '/base/project1/config.jsonc': JSON.stringify({
-          name: 'project1',
-          initialAddresses: ['eth:0x1234567890123456789012345678901234567890'],
-        }),
-        '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
-          name: 'usdc',
-          initialAddresses: ['eth:0x1234567890123456789012345678901234567890'],
-        }),
-        '/base/(defi)/uniswap/config.jsonc': JSON.stringify({
-          name: 'uniswap',
-          initialAddresses: ['eth:0x1234567890123456789012345678901234567890'],
-        }),
-      })
-
-      const reader = new ConfigReader('/base')
-      const result = reader.readAllConfiguredProjects()
-
-      expect(result).toEqual([
-        { project: 'project1', chains: ['ethereum'] },
-        { project: 'usdc', chains: ['ethereum'] },
-        { project: 'uniswap', chains: ['ethereum'] },
-      ])
-    })
-  })
-
   describe('readAllDiscoveredProjects with grouping', () => {
     it('should read all discovered projects including grouped ones', () => {
       mockFs({
-        '/base/project1/ethereum/discovered.json': JSON.stringify({
-          chain: 'ethereum',
-        }),
-        '/base/(tokens)/usdc/ethereum/discovered.json': JSON.stringify({
-          chain: 'ethereum',
-        }),
-        '/base/(defi)/uniswap/ethereum/discovered.json': JSON.stringify({
-          chain: 'ethereum',
-        }),
-        '/base/(defi)/aave/polygon/discovered.json': JSON.stringify({
-          chain: 'polygon',
-        }),
+        '/base/project1/discovered.json': JSON.stringify({}),
+        '/base/(tokens)/usdc/discovered.json': JSON.stringify({}),
+        '/base/(defi)/uniswap/discovered.json': JSON.stringify({}),
+        '/base/(defi)/aave/discovered.json': JSON.stringify({}),
       })
 
       const reader = new ConfigReader('/base')
       const result = reader.readAllDiscoveredProjects()
 
-      expect(result).toEqual([
-        { project: 'project1', chains: ['ethereum'] },
-        { project: 'usdc', chains: ['ethereum'] },
-        { project: 'aave', chains: ['polygon'] },
-        { project: 'uniswap', chains: ['ethereum'] },
-      ])
+      expect(result).toEqual(['project1', 'usdc', 'aave', 'uniswap'])
     })
 
     it('should skip projects in skipTokens group', () => {
       mockFs({
-        '/base/project1/ethereum/discovered.json': JSON.stringify({
-          chain: 'ethereum',
-        }),
-        '/base/(tokens)/usdc/ethereum/discovered.json': JSON.stringify({
-          chain: 'ethereum',
-        }),
-        '/base/(defi)/uniswap/ethereum/discovered.json': JSON.stringify({
-          chain: 'ethereum',
-        }),
-        '/base/(defi)/aave/polygon/discovered.json': JSON.stringify({
-          chain: 'polygon',
-        }),
+        '/base/project1/discovered.json': JSON.stringify({}),
+        '/base/(tokens)/usdc/discovered.json': JSON.stringify({}),
+        '/base/(defi)/uniswap/discovered.json': JSON.stringify({}),
+        '/base/(defi)/aave/discovered.json': JSON.stringify({}),
       })
 
       const reader = new ConfigReader('/base')
       const result = reader.readAllDiscoveredProjects({ skipGroup: 'defi' })
 
-      expect(result).toEqual([
-        { project: 'project1', chains: ['ethereum'] },
-        { project: 'usdc', chains: ['ethereum'] },
-      ])
+      expect(result).toEqual(['project1', 'usdc'])
     })
   })
 
@@ -470,34 +418,27 @@ describe('config and discovery resolution', () => {
       })
 
       const reader = new ConfigReader('/base')
-      const config = reader.readConfig('usdc', 'ethereum')
+      const config = reader.readConfig('usdc')
 
       expect(config.structure.name).toEqual('usdc')
-      expect(config.structure.chain).toEqual('ethereum')
       expect(config.structure.maxAddresses).toEqual(10)
     })
   })
 
   describe('readDiscovery with grouping', () => {
     it('should read discovery from grouped project', () => {
-      const discoveryData = {
-        chain: 'ethereum',
-        entries: [],
-        abis: {},
-      }
+      const discoveryData = { entries: [], abis: {} }
 
       mockFs({
         '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
           initialAddresses: [],
         }),
-        '/base/(tokens)/usdc/ethereum/discovered.json':
-          JSON.stringify(discoveryData),
+        '/base/(tokens)/usdc/discovered.json': JSON.stringify(discoveryData),
       })
 
       const reader = new ConfigReader('/base')
-      const discovery = reader.readDiscovery('usdc', 'ethereum')
+      const discovery = reader.readDiscovery('usdc')
 
-      expect(discovery.chain).toEqual('ethereum')
       expect(discovery.entries).toEqual([])
       expect(discovery.abis).toEqual({})
     })

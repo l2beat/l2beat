@@ -3,15 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "pnpm prebuild&& next dev --turbopack",
+    "prebuild": "pnpm build:config && node ./scripts/getChains.mjs",
     "build": "next build",
     "start": "next start",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
-    "typecheck": "tsc --noEmit",
-    "test": "mocha"
+    "typecheck": "if [ ! -e ./src/chains.json ]; then echo \"[]\" > ./src/chains.json; fi && tsc --noEmit",
+    "test": "mocha",
+    "build:config": "cd ../config && pnpm build"
   },
   "dependencies": {
     "@l2beat/validate": "workspace:*",
@@ -29,6 +31,7 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
+    "@l2beat/config": "workspace:*",
     "@types/node": "^20",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",

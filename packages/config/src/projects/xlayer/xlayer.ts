@@ -20,7 +20,7 @@ const bridge = discovery.getContract('PolygonSharedBridge')
 
 export const xlayer: ScalingProject = {
   addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
-  badges: [BADGES.DA.CustomDA, BADGES.Infra.Agglayer, BADGES.RaaS.Gateway],
+  badges: [BADGES.DA.CustomDA, BADGES.Infra.Agglayer],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.SMALL_DAC,
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -39,8 +39,8 @@ export const xlayer: ScalingProject = {
       explorers: ['https://okx.com/explorer/xlayer'],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
     },
-    category: 'Other',
     purposes: ['Universal'],
+    stacks: ['Agglayer CDK'],
   },
   dataAvailability: {
     layer: DA_LAYERS.NONE,

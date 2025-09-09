@@ -1,26 +1,22 @@
 {
   "L1ERC20Gateway": {
     "hash": "0x12b277cae4866b3d1f1772fcb7f861dc23247452179f0736c9dbe7012f6c14f6",
-    "address": "0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02",
-    "chain": "ethereum",
+    "address": "eth:0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02",
     "blockNumber": 22188285
   },
   "L1ERC20Gateway_arbitrum": {
     "hash": "0x019cdda76fc455f2628f7f7f87fae92c1264e1d2e32cd2d47e6494780c790c61",
-    "address": "0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
-    "chain": "ethereum",
+    "address": "eth:0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
     "blockNumber": 22188285
   },
   "L1OrbitERC20Gateway": {
     "hash": "0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8",
-    "address": "0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848",
-    "chain": "ethereum",
+    "address": "eth:0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848",
     "blockNumber": 22188285
   },
   "L1OrbitERC20Gateway_gasToken": {
     "hash": "0x58abad5f338bc4be7d8039fe95309d2627ff20dd8dc73da45278e512c6ff2866",
-    "address": "0xF5CE2B2a046f5C5440506F76d512375fdB301BCa",
-    "chain": "arbitrum",
+    "address": "arb1:0xF5CE2B2a046f5C5440506F76d512375fdB301BCa",
     "blockNumber": 322488866
   }
 }

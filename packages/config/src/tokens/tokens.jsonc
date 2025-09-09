@@ -1,6 +1,12 @@
 {
   "ethereum": [
     {
+      "symbol": "eDLLR",
+      "category": "stablecoin",
+      "coingeckoId": "sovryn-dollar",
+      "address": "0xbdBb63F938c8961AF31eaD3deBa5C96e6A323DD1"
+    },
+    {
       "symbol": "PC",
       "address": "0xA1Aa371E450C5AeE7fff259cbF5ccA9384227272"
     },
@@ -32,6 +38,11 @@
     {
       "symbol": "PLUME",
       "address": "0x4C1746A800D224393fE2470C70A35717eD4eA5F1"
+    },
+    {
+      "symbol": "TRN",
+      "coingeckoId": "t3rn",
+      "address": "0x0d292b4a8fcfed626dc73242cec1da0503b891fd"
     },
     {
       "symbol": "TRALA",
@@ -113,6 +124,7 @@
     },
     {
       "symbol": "EURC",
+      "category": "stablecoin",
       "address": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
     },
     {
@@ -427,10 +439,6 @@
     {
       "symbol": "MORPHO",
       "address": "0x58D97B57BB95320F9a05dC918Aef65434969c2B2"
-    },
-    {
-      "symbol": "Mog",
-      "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a"
     },
     {
       "symbol": "USD0++",
@@ -909,6 +917,7 @@
     },
     {
       "symbol": "DOLA",
+      "category": "stablecoin",
       "address": "0x865377367054516e17014CcdED1e7d814EDC9ce4"
     },
     {
@@ -984,6 +993,7 @@
     },
     {
       "symbol": "EURT",
+      "category": "stablecoin",
       "address": "0xC581b735A1688071A1746c968e0798D642EDE491"
     },
     {
@@ -1017,6 +1027,7 @@
     },
     {
       "symbol": "sFRAX.legacy",
+      "category": "stablecoin",
       "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32"
     },
     {
@@ -1329,6 +1340,7 @@
     },
     {
       "symbol": "MIM",
+      "category": "stablecoin",
       "address": "0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3"
     },
     {
@@ -2255,6 +2267,36 @@
   ],
   "arbitrum": [
     {
+      "symbol": "cgETH.hashkey",
+      "category": "ether",
+      "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "clBTC",
+      "category": "btc",
+      "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "HYPER",
       "address": "0xC9d23ED2ADB0f551369946BD377f8644cE1ca5c4",
       "source": "native",
@@ -2268,6 +2310,7 @@
     },
     {
       "symbol": "wM",
+      "category": "stablecoin",
       "address": "0x437cc33344a0B27A429f795ff6B469C72698B291",
       "source": "native",
       "supply": "totalSupply" // normal wrapper, underlying M is bridged via wormhole, wM backs USDai on arbi
@@ -2795,6 +2838,7 @@
       "symbol": "sFRAX",
       "address": "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906",
       "source": "external",
+      "category": "stablecoin",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -3146,6 +3190,13 @@
       "address": "0xf18e4466f26b4ca55bbab890b314a54976e45b17",
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "TRN",
+      "address": "0x1114982539A2Bfb84e8B9e4e320bbC04532a9e44",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "coingeckoId": "t3rn"
     }
   ],
   "nova": [
@@ -3157,6 +3208,36 @@
     }
   ],
   "optimism": [
+    {
+      "symbol": "cgETH.hashkey",
+      "category": "ether",
+      "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "clBTC",
+      "category": "btc",
+      "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
     {
       "symbol": "BUIDL",
       "address": "0xa1cdab15bba75a80df4089cafba013e376957cf5",
@@ -3270,6 +3351,7 @@
     },
     {
       "symbol": "USDC.e",
+      "category": "stablecoin",
       "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
       "source": "canonical",
       "supply": "zero"
@@ -3417,6 +3499,7 @@
       "symbol": "sFRAX",
       "address": "0x2Dd1B4D4548aCCeA497050619965f91f78b3b532",
       "source": "external",
+      "category": "stablecoin",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -3576,6 +3659,50 @@
     }
   ],
   "base": [
+    {
+      "symbol": "cgETH.hashkey",
+      "category": "ether",
+      "address": "0xf587B7116879a529353Cc71eE959cD69FD5CAE48",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "clBTC",
+      "category": "btc",
+      "address": "0x8d2757EA27AaBf172DA4CCa4e5474c76016e3dC5",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "ENA",
+      "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+      "source": "external",
+      "coingeckoId": "ethena",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "WBTC",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "category": "btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "WMTX",
       "address": "0x3e31966d4f81C72D2a55310A6365A56A4393E98D",
@@ -5727,6 +5854,7 @@
       "symbol": "sFRAX",
       "address": "0x2C37fb628b35dfdFD515d41B0cAAe11B542773C3",
       "source": "external",
+      "category": "stablecoin",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -5887,6 +6015,7 @@
   "xchain": [
     {
       "symbol": "USDC.e",
+      "category": "stablecoin",
       "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
       "source": "external",
       "supply": "totalSupply",
@@ -6050,6 +6179,52 @@
     }
   ],
   "bob": [
+    {
+      "symbol": "WBTC",
+      "category": "btc",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "source": "external",
+      "coingeckoId": "wrapped-bitcoin",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "pumpBTC",
+      "category": "btc",
+      "coingeckoId": "pumpbtc",
+      "address": "0x1fCca65fb6Ae3b2758b9b2B394CB227eAE404e1E",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech (Express/Tunnel) and native minting"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "oUSDT",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USDC",
       "address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
@@ -6596,6 +6771,7 @@
       "symbol": "wstUSR",
       "address": "0x2a52B289bA68bBd02676640aA9F605700c9e5699",
       "coingeckoId": "resolv-wstusr",
+      "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
@@ -6910,6 +7086,7 @@
     {
       "symbol": "USDT",
       "address": "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD",
+      "category": "stablecoin",
       "source": "external",
       "coingeckoId": "tether",
       "supply": "totalSupply",
@@ -6925,6 +7102,7 @@
     {
       "symbol": "USDC.e",
       "address": "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
+      "category": "stablecoin",
       "source": "external",
       "coingeckoId": "usd-coin", // the specific USDC.e for abstract has bad price history on CG
       "supply": "totalSupply",
@@ -7466,6 +7644,7 @@
     {
       "symbol": "USDC",
       "category": "stablecoin",
+      "coingeckoId": "usd-coin",
       "address": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
       "source": "external",
       "bridgedUsing": {
@@ -7488,6 +7667,7 @@
     {
       "symbol": "USDC.e",
       "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
+      "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
@@ -7684,6 +7864,24 @@
         "bridges": [
           {
             "name": "Agglayer shared bridge (vault bridge)"
+          }
+        ]
+      }
+    }
+  ],
+  "polygonpos": [
+    {
+      "symbol": "USDT0",
+      "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+      "coingeckoId": "usdt0",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }

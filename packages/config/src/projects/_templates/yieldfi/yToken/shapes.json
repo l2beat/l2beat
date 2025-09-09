@@ -1,0 +1,12 @@
+{
+  "yToken.sol": {
+    "hash": "0xc584cf0791972d811cbb10b6ed2caf5e040fbcdd5219bf8386cdf9654fa19585",
+    "address": "eth:0x5bf44d32260AeE6b807c490e92eF0481D15Ab493",
+    "blockNumber": 23174841
+  },
+  "yvToken.sol": {
+    "hash": "0xe0d5f5bf90b1a9a74c7ac96f5bcbbf52030da73aa7927629913cc14c0d2a2264",
+    "address": "eth:0xb94758e90263b48D8f150FFc314b957e2475e247",
+    "blockNumber": 23174841
+  }
+}

@@ -14,7 +14,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -56,7 +55,6 @@ export const metis: ScalingProject = {
   capability: 'universal',
   addedAt: UnixTime(1637945259), // 2021-11-26T16:47:39Z
   badges: [BADGES.VM.EVM, BADGES.Fork.OVM, BADGES.DA.EthereumBlobs],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Metis Andromeda',
     shortName: 'Metis',
@@ -65,7 +63,6 @@ export const metis: ScalingProject = {
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM. It uses a decentralized Sequencer pool running Tendermint consensus and MPC module to sign transaction batches.',
     purposes: ['Universal'],
     stacks: ['OVM'],
-    category: 'Other',
     links: {
       websites: ['https://metis.io'],
       bridges: ['https://bridge.metis.io'],
@@ -85,7 +82,11 @@ export const metis: ScalingProject = {
       ],
     },
   },
-  proofSystem: undefined,
+  proofSystem: {
+    type: 'Optimistic',
+    name: 'OPFP',
+    challengeProtocol: 'Interactive',
+  },
   stage: getStage(
     {
       stage0: {
@@ -93,7 +94,7 @@ export const metis: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: 'UnderReview',
-        stateVerificationOnL1: false,
+        stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
@@ -221,8 +222,8 @@ export const metis: ScalingProject = {
       ...RISK_VIEW.STATE_FP_INT(CHALLENGE_PERIOD_SECONDS),
       description:
         RISK_VIEW.STATE_FP_INT().description +
-        ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
-      sentiment: 'bad',
+        ' Anyone can submit challenges, however, only the Metis Security Council can delete disputed batches.',
+      sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
@@ -246,12 +247,11 @@ export const metis: ScalingProject = {
         title: 'Challenges',
         description: `Games are created on demand by the permissioned GameCreator should a dispute arise. Users can signal the need for a dispute through the dispute() function of the \`DisputeGameFactory\`. If a game is not created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
           DISPUTE_TIMEOUT_PERIOD,
-        )}, anyone can call \`disputeTimeout()\`. This function calls \`saveDisputedBatchTimeout()\` on the \`StateCommitmentChain\`, which marks the batch as disputed. This blocks L2->L1 messaging and withdrawals for the disputed batch and any subsequent batches until the dispute is deleted. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Verifier contract address, which currently corresponds to the \`Metis Multisig\`.`,
+        )}, anyone can call \`disputeTimeout()\`. This function calls \`saveDisputedBatchTimeout()\` on the \`StateCommitmentChain\`, which marks the batch as disputed. This blocks L2->L1 messaging and withdrawals for the disputed batch and any subsequent batches until the dispute is deleted. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Fraud_Verifier contract address, which currently corresponds to the \`Metis Security Council\`.`,
         risks: [
           {
             category: 'Funds can be frozen if',
-            text: 'an invalid state root is successfully disputed but it is not deleted by the permissioned MVM_Verifier.',
-            isCritical: true,
+            text: 'an invalid state root is successfully disputed but it is not deleted by the permissioned MVM_Fraud_Verifier (Metis Security Council).',
           },
         ],
         references: [

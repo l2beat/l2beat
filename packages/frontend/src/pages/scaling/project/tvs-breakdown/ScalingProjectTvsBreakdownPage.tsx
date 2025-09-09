@@ -1,15 +1,21 @@
+import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
-import { ProjectTokenChart } from '~/components/chart/tvs/ProjectTokenChart'
+import { useMemo } from 'react'
 import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
-import { TokenSummaryBox } from '~/components/chart/tvs/TokenSummaryBox'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import {
   TvsChartControlsContextProvider,
   useTvsChartControlsContext,
 } from '~/components/chart/tvs/TvsChartControlsContext'
+import { ProjectTokenChart } from '~/components/chart/tvs/token/ProjectTokenChart'
+import {
+  SelectedTokenContextProvider,
+  useSelectedTokenContext,
+} from '~/components/chart/tvs/token/SelectedTokenContext'
+import { TokenSummaryBox } from '~/components/chart/tvs/token/TokenSummaryBox'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -26,7 +32,7 @@ import { api } from '~/trpc/React'
 import { RequestTokenBox } from './components/RequestTokenBox'
 import { TvsBreakdownPageHeader } from './components/TvsBreakdownPageHeader'
 import { TvsBreakdownSummaryBox } from './components/TvsBreakdownSummaryBox'
-import { TvsBreakdownTokenTable } from './components/tables/TvsBreakdownTokenTable'
+import { ProjectTvsBreakdownTokenTable } from './components/tables/ProjectTvsBreakdownTokenTable'
 
 interface Props extends AppLayoutProps, ScalingProjectTvsBreakdown {
   queryState: DehydratedState
@@ -44,8 +50,6 @@ export function ScalingProjectTvsBreakdownPage({
   defaultRange,
   ...props
 }: Props) {
-  const [selectedToken, setSelectedToken] = useState<ProjectToken>()
-
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
@@ -56,57 +60,83 @@ export function ScalingProjectTvsBreakdownPage({
             icon={icon}
             tvsBreakdownTimestamp={dataTimestamp}
           />
-          <div className="md:space-y-6">
-            <PrimaryCard>
-              <TvsChartControlsContextProvider defaultRange={defaultRange}>
-                <Controls projectId={project.id} />
-                <ProjectBridgeTypeTvsChart
-                  project={project}
-                  milestones={milestones}
+          <div
+            className="smooth-scroll group/section-wrapper md:space-y-6"
+            data-project-page={true}
+          >
+            <SelectedTokenContextProvider>
+              <PrimaryCard>
+                <TvsChartControlsContextProvider defaultRange={defaultRange}>
+                  <Controls projectId={project.id} />
+                  <ProjectBridgeTypeTvsChart
+                    project={project}
+                    milestones={milestones}
+                  />
+                  <ProjectAssetCategoryTvsChart
+                    project={project}
+                    milestones={milestones}
+                  />
+                </TvsChartControlsContextProvider>
+                <TvsChartControlsContextProvider defaultRange={defaultRange}>
+                  <InteractiveTokenChart
+                    entries={entries}
+                    project={project}
+                    milestones={milestones}
+                  />
+                </TvsChartControlsContextProvider>
+                <HorizontalSeparator className="my-4" />
+                <TvsBreakdownSummaryBox
+                  {...project7dData}
+                  warning={project.tvsInfo?.warnings[0]}
                 />
-                <ProjectAssetCategoryTvsChart
-                  project={project}
-                  milestones={milestones}
-                />
-              </TvsChartControlsContextProvider>
-              <TvsChartControlsContextProvider defaultRange={defaultRange}>
-                <TokenCombobox
-                  tokens={entries ?? []}
-                  value={selectedToken}
-                  setValue={setSelectedToken}
-                />
-
-                {selectedToken && (
-                  <>
-                    <TokenControls
-                      token={selectedToken}
-                      projectId={project.id}
-                      className="mt-2"
-                    />
-                    <ProjectTokenChart
-                      project={project}
-                      milestones={milestones}
-                      token={selectedToken}
-                    />
-                    <TokenSummaryBox token={selectedToken} />
-                  </>
-                )}
-              </TvsChartControlsContextProvider>
-              <HorizontalSeparator className="my-4" />
-              <TvsBreakdownSummaryBox
-                {...project7dData}
-                warning={project.tvsInfo?.warnings[0]}
-              />
-            </PrimaryCard>
-            <TableFilterContextProvider>
-              <TvsBreakdownTokenTable entries={entries} />
-            </TableFilterContextProvider>
+              </PrimaryCard>
+              <TableFilterContextProvider>
+                <ProjectTvsBreakdownTokenTable entries={entries} />
+              </TableFilterContextProvider>
+            </SelectedTokenContextProvider>
           </div>
           <RequestTokenBox />
           <ScrollToTopButton />
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>
+  )
+}
+
+function InteractiveTokenChart({
+  entries,
+  project,
+  milestones,
+}: {
+  project: ChartProject
+  entries: ProjectToken[]
+  milestones: Milestone[]
+}) {
+  const { selectedToken, setSelectedToken } = useSelectedTokenContext()
+  return (
+    <section id="token-chart" className="scroll-mt-3">
+      <TokenCombobox
+        tokens={entries ?? []}
+        value={selectedToken}
+        setValue={setSelectedToken}
+      />
+
+      {selectedToken && (
+        <>
+          <TokenControls
+            token={selectedToken}
+            projectId={project.id}
+            className="mt-2"
+          />
+          <ProjectTokenChart
+            project={project}
+            milestones={milestones}
+            token={selectedToken}
+          />
+          <TokenSummaryBox token={selectedToken} />
+        </>
+      )}
+    </section>
   )
 }
 

@@ -1,8 +1,7 @@
 {
   "MVM_CanonicalTransaction": {
     "hash": "0xc5bc8dddf764177767a3613d96c31c0fcc86db07c909c72cbf2f6a2443942109",
-    "address": "0xC878771A4ff7466B7be8b59FB8766719AEa8d562",
-    "chain": "ethereum",
+    "address": "eth:0xC878771A4ff7466B7be8b59FB8766719AEa8d562",
     "blockNumber": 22517869
   }
 }

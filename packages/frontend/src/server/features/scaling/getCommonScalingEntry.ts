@@ -12,6 +12,7 @@ export interface CommonScalingEntry
   extends CommonProjectEntry,
     FilterableEntry {
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
+  isLayer3: boolean
 }
 
 export function getCommonScalingEntry({
@@ -47,6 +48,7 @@ export function getCommonScalingEntry({
     slug: project.slug,
     icon: getProjectIcon(project.slug),
     name: project.name,
+    isLayer3: project.scalingInfo.layer === 'layer3',
     nameSecondLine:
       project.scalingInfo.layer === 'layer2'
         ? undefined
@@ -57,7 +59,14 @@ export function getCommonScalingEntry({
     statuses,
     tab,
     filterable: [
-      { id: 'type', value: project.scalingInfo.type },
+      ...(project.scalingInfo.type
+        ? [
+            {
+              id: 'type' as const,
+              value: project.scalingInfo.type,
+            },
+          ]
+        : []),
       ...(project.scalingInfo.stacks ?? ['No stack']).map((stack) => ({
         id: 'stack' as const,
         value: stack,

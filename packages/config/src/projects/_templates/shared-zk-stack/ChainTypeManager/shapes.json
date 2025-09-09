@@ -1,14 +1,12 @@
 {
   "ChainTypeManager": {
     "hash": "0xf6789714ce74a28098dbbf1bb19c228c5c72b5a0756925b2f1c4b8ea9c072e37",
-    "address": "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb",
-    "chain": "ethereum",
+    "address": "eth:0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb",
     "blockNumber": 22188285
   },
   "ChainTypeManager_v27": {
     "hash": "0x5462a6c55c6e9f2d98c21f2588b2b9a4de1dc41ba0c10906f8965e21849a3a52",
-    "address": "0x6D598c77AF57Bfa17201483400615c61819dD45A",
-    "chain": "ethereum",
+    "address": "eth:0x6D598c77AF57Bfa17201483400615c61819dD45A",
     "blockNumber": 22374168
   }
 }

@@ -27,7 +27,6 @@ export const layer2finance: ScalingProject = {
     description:
       'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
     purposes: ['Exchange'],
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://layer2.finance/'],
       bridges: ['https://app.l2.finance/'],

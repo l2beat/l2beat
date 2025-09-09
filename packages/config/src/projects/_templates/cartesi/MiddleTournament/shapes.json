@@ -1,8 +1,7 @@
 {
   "MiddleTournament": {
     "hash": "0xae62ff1fdcc1be0d64d4c17798c0bf6c133a9bdee804f44c19bf2cf045464843",
-    "address": "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE",
-    "chain": "ethereum",
+    "address": "eth:0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE",
     "blockNumber": 22680005
   }
 }

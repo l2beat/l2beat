@@ -17,7 +17,6 @@ import {
   modelPermissions,
   TemplateService,
 } from '@l2beat/discovery'
-import { getDependenciesToDiscoverForProject } from '@l2beat/discovery/dist/discovery/modelling/modelPermissions'
 import {
   assert,
   formatAsciiBorder,
@@ -45,37 +44,29 @@ export async function updateDiffHistory(
 ) {
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
-  const chains = configReader.readAllDiscoveredChainsForProject(projectName)
-  for (const chain of chains) {
-    await updateDiffHistoryForChain(
-      configReader,
-      projectName,
-      chain,
-      description,
-      overwriteCache,
-      logger,
-    )
-  }
+  await updateDiffHistoryForChain(
+    configReader,
+    projectName,
+    description,
+    overwriteCache,
+    logger,
+  )
 }
 
 export async function updateDiffHistoryForChain(
   configReader: ConfigReader,
   projectName: string,
-  chain: string,
   description?: string,
   overwriteCache = false,
   logger: Logger = getPlainLogger(),
 ) {
   // Get discovered.json from main branch and compare to current
-  logger.info(`Updating diffHistory for: ${projectName} on ${chain}`)
-  const curDiscovery = configReader.readDiscovery(projectName, chain)
+  logger.info(`Updating diffHistory for: ${projectName}`)
+  const curDiscovery = configReader.readDiscovery(projectName)
   const discoveryFolder =
     '.' +
     path.sep +
-    relative(
-      process.cwd(),
-      configReader.getProjectChainPath(projectName, chain),
-    )
+    relative(process.cwd(), configReader.getProjectPath(projectName))
 
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`, logger)
@@ -103,7 +94,6 @@ export async function updateDiffHistoryForChain(
       discoveryFolder,
       discoveryFromMainBranch,
       projectName,
-      chain,
       saveSources,
       overwriteCache,
       configReader,
@@ -178,7 +168,7 @@ export async function updateDiffHistoryForChain(
   const diffHistoryExistsAfterRevert =
     existsSync(diffHistoryPath) && statSync(diffHistoryPath).isFile()
   if (diffHistoryExistsAfterRevert) {
-    updateDiffHistoryHash(configReader, diffHistoryPath, projectName, chain)
+    updateDiffHistoryHash(configReader, diffHistoryPath, projectName)
   }
 }
 
@@ -215,33 +205,26 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   discoveryFolder: string,
   discoveryFromMainBranch: DiscoveryOutput | undefined,
   projectName: string,
-  chain: string,
   saveSources: boolean,
   overwriteCache: boolean,
   configReader: ConfigReader,
   logger: Logger,
 ) {
   if (discoveryFromMainBranch === undefined) {
-    logger.info(`No previous discovery found for ${projectName} on ${chain}`)
+    logger.info(`No previous discovery found for ${projectName}`)
     return { prevDiscovery: undefined, codeDiff: undefined }
   }
 
   const discoveries = new DiscoveryRegistry()
   // We rediscover on the past block number, but with current configs and dependencies
-  const rawConfig = configReader.readRawConfig(projectName)
-  const dependencies: { project: string; chain: string }[] =
-    rawConfig.modelCrossChainPermissions
-      ? getDependenciesToDiscoverForProject(projectName, configReader)
-      : [{ project: projectName, chain }]
+  const dependencies: string[] = [projectName]
 
   for (const dependency of dependencies) {
     // TODO(radomski): Remove the duplication after the PR containing this code is merged
     let timestamp =
-      discoveryFromMainBranch.dependentDiscoveries?.[dependency.project]?.[
-        dependency.chain
-      ]?.timestamp
+      discoveryFromMainBranch.dependentDiscoveries?.[dependency]?.timestamp
 
-    if (dependency.project === projectName && dependency.chain === chain) {
+    if (dependency === projectName) {
       timestamp = discoveryFromMainBranch.timestamp
     }
 
@@ -250,19 +233,18 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       // Those dependencies might not have been referenced in the old discovery.
       // In that case we don't fail - the diff will show all those "added".
       logger.info(
-        `No block number found for dependency ${dependency.project} on ${dependency.chain}, skipping its rediscovery.`,
+        `No block number found for dependency ${dependency}, skipping its rediscovery.`,
       )
       continue
     }
 
     const prevStructure = await rediscoverStructureOnBlock(
-      dependency.project,
-      dependency.chain,
+      dependency,
       { blockNumber: undefined, timestamp } as Timing,
       saveSources,
       overwriteCache,
     )
-    discoveries.set(prevStructure.name, prevStructure.chain, prevStructure)
+    discoveries.set(prevStructure.name, prevStructure)
   }
 
   const discoveryPaths = getDiscoveryPaths()
@@ -273,12 +255,10 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     configReader,
     templateService,
     discoveryPaths,
-    {
-      debug: false,
-    },
+    { debug: false },
   )
 
-  const targetDiscovery = discoveries.get(projectName, chain)
+  const targetDiscovery = discoveries.get(projectName)
   combinePermissionsIntoDiscovery(
     targetDiscovery.discoveryOutput,
     permissionsOutput,

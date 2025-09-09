@@ -1,32 +1,27 @@
 {
   "SuperchainConfig": {
     "hash": "0x280407852e66d748a811537f910566851115897f01a3de6b9cc11aebe341b900",
-    "address": "0xDA90C58e1BE0d55eA246C33CDF5Fd2Ed379c02be",
-    "chain": "ethereum",
+    "address": "eth:0xDA90C58e1BE0d55eA246C33CDF5Fd2Ed379c02be",
     "blockNumber": 22188285
   },
   "SuperchainConfig_v1_0_0": {
     "hash": "0x65dcaf0bdde7cc90f916020b1615321a4b086bfd802f2c27f6ed226fc486b65d",
-    "address": "0x314774a6Cfc3838E5a5a1DE3723EEa995aAD4e8f",
-    "chain": "ethereum",
+    "address": "eth:0x314774a6Cfc3838E5a5a1DE3723EEa995aAD4e8f",
     "blockNumber": 22188285
   },
   "SuperchainConfig_v1_1_0": {
     "hash": "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d",
-    "address": "0x8486fB8acCE33702EAd543D234e904eDfB35E220",
-    "chain": "ethereum",
+    "address": "eth:0x8486fB8acCE33702EAd543D234e904eDfB35E220",
     "blockNumber": 22188285
   },
   "SuperchainConfig_v1_1_1_beta1": {
     "hash": "0x3f0bcc82f3184c1cb2e9aa6d3ecdd7c863186eea851dda56dd7e100d9174b840",
-    "address": "0x1d31a15050DBE75c6c060D6da696332a5CB943e1",
-    "chain": "ethereum",
+    "address": "eth:0x1d31a15050DBE75c6c060D6da696332a5CB943e1",
     "blockNumber": 22188285
   },
   "SuperchainConfigNoGuard_1": {
     "hash": "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686",
-    "address": "0x4da82a327773965b8d4D85Fa3dB8249b387458E7",
-    "chain": "ethereum",
+    "address": "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7",
     "blockNumber": 22987846
   }
 }

@@ -168,6 +168,7 @@ describe(RpcClient.name, () => {
               transactionHash:
                 '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
               data: '0xdata',
+              logIndex: '0x12ab',
             },
           ],
         }),
@@ -189,6 +190,7 @@ describe(RpcClient.name, () => {
           transactionHash:
             '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
           data: '0xdata',
+          logIndex: 0x12ab,
         },
       ])
 
@@ -234,6 +236,7 @@ describe(RpcClient.name, () => {
                 transactionHash:
                   '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
                 data: '0xdata',
+                logIndex: '0x12ab',
               },
             ],
           })
@@ -246,6 +249,7 @@ describe(RpcClient.name, () => {
                 transactionHash:
                   '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
                 data: '0xdata',
+                logIndex: '0x34cd',
               },
             ],
           }),
@@ -315,6 +319,7 @@ describe(RpcClient.name, () => {
           transactionHash:
             '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
           data: '0xdata',
+          logIndex: 0x12ab,
         },
         {
           address: mockAddresses[1],
@@ -323,6 +328,7 @@ describe(RpcClient.name, () => {
           transactionHash:
             '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
           data: '0xdata',
+          logIndex: 0x34cd,
         },
       ])
     })

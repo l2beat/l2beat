@@ -1,5 +1,4 @@
-import type { Database } from '@l2beat/database'
-import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
+import type { AggregatedLivenessRecord, Database } from '@l2beat/database'
 import {
   clampRangeToDay,
   ProjectId,

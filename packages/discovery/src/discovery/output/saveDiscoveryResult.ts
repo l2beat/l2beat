@@ -45,11 +45,7 @@ export async function saveDiscoveryResult(
 ): Promise<void> {
   const projectDiscoveryFolder =
     options.projectDiscoveryFolder ??
-    posix.join(
-      options.paths.discovery,
-      config.structure.name,
-      config.structure.chain,
-    )
+    posix.join(options.paths.discovery, config.structure.name)
   await mkdirp(projectDiscoveryFolder)
 
   const templateService = new TemplateService(options.paths.discovery)
@@ -99,13 +95,13 @@ async function saveSources(
 ): Promise<void> {
   const sourcesFolder = options.sourcesFolder ?? '.code'
   const sourcesPath = posix.join(rootPath, sourcesFolder)
-  const allContractNames = results.map((c) =>
-    c.type !== 'EOA' ? c.name : 'EOA',
-  )
+  const allContractNames = results
+    .filter((c) => c.type !== 'Reference')
+    .map((c) => (c.type !== 'EOA' ? c.name : 'EOA'))
 
   await rimraf(sourcesPath)
   for (const contract of results) {
-    if (contract.type === 'EOA') {
+    if (contract.type === 'EOA' || contract.type === 'Reference') {
       continue
     }
 
@@ -210,7 +206,7 @@ function remapNames(
   discoveryOutput: DiscoveryOutput,
 ): Analysis[] {
   return results.map((entry) => {
-    if (entry.type === 'EOA') {
+    if (entry.type === 'EOA' || entry.type === 'Reference') {
       return entry
     }
 

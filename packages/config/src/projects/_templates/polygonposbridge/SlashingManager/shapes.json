@@ -1,9 +1,7 @@
-[
-  {
+{
+  "SlashingManager": {
     "hash": "0x64d3fd0840fb5d9eedf5977cce8c443d31adfc2323458db3d2d9461d889ea994",
-    "description": "SlashingManager",
-    "address": "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
-    "chain": "ethereum",
+    "address": "eth:0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
     "blockNumber": 22231805
   }
-]
+}

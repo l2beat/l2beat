@@ -1,8 +1,7 @@
 {
   "GatewayMinter": {
     "hash": "0x525585e7459a78092c75ba3666a1a0b6ceee863111052fc114675a13b4d06322",
-    "address": "0xc2ff68068362AEa1ca22a3896d05B2B812ce51B1",
-    "chain": "base",
+    "address": "base:0xc2ff68068362AEa1ca22a3896d05B2B812ce51B1",
     "blockNumber": 34110983
   }
 }

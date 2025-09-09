@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Voyage XP tokens are non-transferrable, soulbound tokens that are distributed to recognize the community’s contribution toward the growth of the Linea ecosystem."
+}

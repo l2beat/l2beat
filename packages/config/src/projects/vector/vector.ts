@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DaCommitteeSecurityRisk,
   DaRelayerFailureRisk,
@@ -34,6 +34,34 @@ export const vector: BaseProject = {
     },
     badges: [],
   },
+  trackedTxsConfig: [
+    {
+      projectId: ProjectId('vector'),
+      sinceTimestamp: 1719974843,
+      type: 'liveness',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x02993cdC11213985b9B13224f3aF289F03bf298d'),
+        selector: '0x8455a3cf',
+        signature:
+          'function commitHeaderRange(bytes proof, bytes publicValues)',
+      },
+    },
+    {
+      projectId: ProjectId('vector'),
+      sinceTimestamp: 1719974843,
+      type: 'l2costs',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x02993cdC11213985b9B13224f3aF289F03bf298d'),
+        selector: '0x8455a3cf',
+        signature:
+          'function commitHeaderRange(bytes proof, bytes publicValues)',
+      },
+    },
+  ],
   daBridge: {
     name: 'Vector',
     daLayer: ProjectId('avail'),

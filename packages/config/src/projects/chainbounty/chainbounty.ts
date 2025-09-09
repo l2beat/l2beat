@@ -13,7 +13,6 @@ export const chainbounty: ScalingProject = underReviewL3({
     description:
       'ChainBounty is a decentralized platform that helps solve security challenges in the crypto space.',
     purposes: ['Universal'],
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://chainbounty.io/'],
@@ -28,6 +27,10 @@ export const chainbounty: ScalingProject = underReviewL3({
         'https://medium.com/@ChainBountyX',
       ],
     },
+  },
+  dataAvailability: undefined,
+  proofSystem: {
+    type: 'Optimistic',
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),

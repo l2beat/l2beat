@@ -663,6 +663,15 @@
                             "type": "object",
                             "properties": { "type": { "const": "tradable" } },
                             "required": ["type"]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": { "const": "YieldFiMinters" },
+                              "permissionlessMinting": { "type": "boolean" },
+                              "mintingWithPermit": { "type": "boolean" }
+                            },
+                            "required": ["type"]
                           }
                         ]
                       },
@@ -748,6 +757,20 @@
                 "description": { "type": "string" },
                 "severity": { "enum": ["HIGH", "LOW"] }
               }
+            }
+          },
+          "entrypoints": {
+            "type": "object",
+            "propertyNames": { "type": "string" },
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "type": { "type": "string" },
+                "project": { "type": "string" },
+                "isLegacy": { "type": "boolean" }
+              },
+              "required": ["type", "project"]
             }
           },
           "categories": {

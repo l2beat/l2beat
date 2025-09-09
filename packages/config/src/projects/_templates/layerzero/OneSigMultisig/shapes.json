@@ -1,8 +1,7 @@
 {
   "OneSig": {
     "hash": "0x6a2feeb0055614ee29c746b6052e64dc677ffa602b25dfeb74cbf948bc6d9b74",
-    "address": "0xBe010A7e3686FdF65E93344ab664D065A0B02478",
-    "chain": "ethereum",
+    "address": "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478",
     "blockNumber": 22882331
   }
 }

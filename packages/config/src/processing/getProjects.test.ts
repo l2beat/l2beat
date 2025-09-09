@@ -136,25 +136,25 @@ describe('getProjects', () => {
 
   describe('synchronization with scaling projects - layer2s and layer3s', () => {
     it('each scaling project should have a corresponding entry in the DA-BEAT', () => {
+      const daLayers = projects.filter((x) => x.daLayer !== undefined)
+      const daBridges = projects.filter((x) => x.daBridge !== undefined)
+
       // It can be squashed, but it's more readable this way
       const target = [...layer2s, ...layer3s].filter(
         (project) =>
           !project.isUpcoming &&
           !project.reviewStatus &&
           !project.archivedAt &&
-          // TODO: Ideally the category check should be removed, but
-          // hyperliquid and polygon-pos are exceptions that would fail the test
-          (project.display.category === 'Optimium' ||
-            project.display.category === 'Validium') &&
           // It makes no sense to list them on the DA-BEAT
           project.dataAvailability &&
           project.dataAvailability.layer.value !== 'None' &&
+          project.dataAvailability.bridge.projectId &&
+          daBridges
+            .map((x) => x.id)
+            .includes(project.dataAvailability.bridge.projectId) &&
           // Will be listed on the DA-BEAT automatically
           !project.customDa,
       )
-
-      const daLayers = projects.filter((x) => x.daLayer !== undefined)
-      const daBridges = projects.filter((x) => x.daBridge !== undefined)
 
       const daBeatProjectIds = daLayers
         .flatMap((project) => project.daLayer?.usedWithoutBridgeIn ?? [])
@@ -219,7 +219,14 @@ describe('getProjects', () => {
 
   describe('chain config', () => {
     const chains = projects
-      .map((x) => x.chainConfig)
+      .map((x) =>
+        x.chainConfig
+          ? {
+              projectId: x.id,
+              ...x.chainConfig,
+            }
+          : undefined,
+      )
       .filter((x) => x !== undefined)
 
     it('every name is lowercase a-z0-9 <20 characters', () => {
@@ -233,6 +240,17 @@ describe('getProjects', () => {
       for (const chain of chains) {
         expect(encountered.has(chain.name)).toEqual(false)
         encountered.add(chain.name)
+      }
+    })
+
+    it('every name is equal to projectId', () => {
+      // in many places chain name and project id are used interchangeably so we need them to be the same
+      // do not add new projects here!
+      const KNOWN_EXCEPTIONS = ['polygonpos', 'g7']
+
+      for (const chain of chains) {
+        if (KNOWN_EXCEPTIONS.includes(chain.name)) continue
+        expect(chain.name).toEqual(chain.projectId)
       }
     })
 
@@ -489,16 +507,18 @@ describe('getProjects', () => {
     describe('every appId is unique for Avail projects', () => {
       const appIds = new Map<string, string>()
       for (const project of projects) {
-        if (project.daTrackingConfig) {
+        const trackingConfig = project.daTrackingConfig
+        if (trackingConfig) {
           it(project.id, () => {
-            assert(project.daTrackingConfig) // type issue
-            for (const config of project.daTrackingConfig) {
+            for (const config of trackingConfig) {
               if (config.type === 'avail') {
-                assert(
-                  !appIds.has(config.appId),
-                  `Duplicate appId (${config.appId}) detected [${project.id}, ${appIds.get(config.appId)}]`,
-                )
-                appIds.set(config.appId, project.id)
+                for (const appId of config.appIds) {
+                  assert(
+                    !appIds.has(appId),
+                    `Duplicate appId (${appId}) detected [${project.id}, ${appIds.get(appId)}]`,
+                  )
+                  appIds.set(appId, project.id)
+                }
               }
             }
           })

@@ -30,22 +30,6 @@ describe('layer2s', () => {
     }
   })
 
-  describe('others', () => {
-    for (const layer2 of layer2s) {
-      it(`every project with reasonsForBeingOther has Other category: ${layer2.display.name}`, () => {
-        if (layer2.reasonsForBeingOther) {
-          expect(layer2.display.category === 'Other').toEqual(true)
-        }
-      })
-
-      it(`every Other project has reasonsForBeingOther configured: ${layer2.display.name}`, () => {
-        if (layer2.display.category === 'Other') {
-          expect(!!layer2.reasonsForBeingOther).toEqual(true)
-        }
-      })
-    }
-  })
-
   describe('ecosystems', () => {
     const ecosystemIds = ecosystems.map((e) => e.id)
     it('every project with ecosystemInfo has valid ecosystem configured', () => {
@@ -379,6 +363,24 @@ describe('layer2s', () => {
           check('exitMechanisms')
           check('massExit')
           check('otherConsiderations')
+        })
+      }
+    })
+  })
+
+  describe('others', () => {
+    describe('live projects without proof system have reasons for being other', () => {
+      const liveProjectsWithoutProofSystem = layer2s.filter(
+        (layer2) =>
+          !layer2.isUpcoming &&
+          !layer2.archivedAt &&
+          !layer2.proofSystem &&
+          layer2.reviewStatus !== 'initialReview',
+      )
+
+      for (const layer2 of liveProjectsWithoutProofSystem) {
+        it(`${layer2.id} should have reasons for being other`, () => {
+          expect(layer2.reasonsForBeingOther?.length ?? 0).toBeGreaterThan(0)
         })
       }
     })

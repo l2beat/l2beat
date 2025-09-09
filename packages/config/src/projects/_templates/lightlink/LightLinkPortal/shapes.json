@@ -1,8 +1,7 @@
 {
   "LightLinkPortal": {
     "hash": "0xc0e63a4f63935a0e855262aed5e9a5b1ae7e6b33e52a78c8ca729cbe4672a8a5",
-    "address": "0x3B1ADfe78B9B4107c47267AE97e2a91b1D8811fD",
-    "chain": "ethereum",
+    "address": "eth:0x3B1ADfe78B9B4107c47267AE97e2a91b1D8811fD",
     "blockNumber": 22188285
   }
 }

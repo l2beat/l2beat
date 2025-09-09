@@ -1,0 +1,12 @@
+{
+  "HybridLockReleaseUSDCTokenPool": {
+    "hash": "0x8ad42f30b603ea0a91acc0140aa1c0909847b0e7fe07fa87d55c1461db0f0d3b",
+    "address": "eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF",
+    "blockNumber": 23195668
+  },
+  "HybridLockReleaseUSDCTokenPool_2": {
+    "hash": "0x332df04c10e8b401345c56d79399b778c5ea8517925ca5b8a8125d645c229fc4",
+    "address": "eth:0xc2e3A3C18ccb634622B57fF119a1C8C7f12e8C0c",
+    "blockNumber": 23195668
+  }
+}

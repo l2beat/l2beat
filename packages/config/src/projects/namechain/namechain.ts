@@ -12,7 +12,6 @@ export const namechain: ScalingProject = upcomingL2({
     description:
       'Namechain is an upcoming Ethereum L2 chain built on the Linea tech stack. It’s designed to be the home of Ethereum Name Service (ENS) and accompanying identity applications.',
     purposes: ['Identity'],
-    category: 'ZK Rollup',
     links: {
       websites: ['https://app.ens.domains/ens-v2'],
       documentation: ['https://roadmap.ens.domains/l2-roadmap/'],
@@ -23,5 +22,8 @@ export const namechain: ScalingProject = upcomingL2({
         'https://farcaster.xyz/ensdomains',
       ],
     },
+  },
+  proofSystem: {
+    type: 'Validity',
   },
 })

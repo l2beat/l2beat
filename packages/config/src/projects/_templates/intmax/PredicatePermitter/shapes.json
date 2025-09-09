@@ -1,8 +1,7 @@
 {
   "PredicatePermitter": {
     "hash": "0xa18a357397dde9746d412ff4a4546bc85d954de9f122809482a88b62eeb314be",
-    "address": "0xef082Ff43805B93Ed375Fd47A964Fe136cCB9021",
-    "chain": "ethereum",
+    "address": "eth:0xef082Ff43805B93Ed375Fd47A964Fe136cCB9021",
     "blockNumber": 23023892
   }
 }

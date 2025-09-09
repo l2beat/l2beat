@@ -1,16 +1,10 @@
-import type { Logger } from '@l2beat/backend-tools'
 import { CoingeckoQueryService } from '@l2beat/shared'
-import type { Config } from '../../config'
+import partition from 'lodash/partition'
+import uniqBy from 'lodash/uniqBy'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import type { Peripherals } from '../../peripherals/Peripherals'
-import type { Providers } from '../../providers/Providers'
-import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import type {
-  ApplicationModule,
-  ApplicationModuleWithIndexer,
-} from '../ApplicationModule'
+import type { ApplicationModule, ModuleDependencies } from '../types'
 import { L2CostsAggregatorIndexer } from './modules/l2-costs/indexers/L2CostsAggregatorIndexer'
 import { L2CostsPricesIndexer } from './modules/l2-costs/indexers/L2CostsPricesIndexer'
 import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
@@ -21,12 +15,10 @@ import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 
 export function createTrackedTxsModule(
-  config: Config,
-  logger: Logger,
-  peripherals: Peripherals,
-  providers: Providers,
-  clock: Clock,
-): ApplicationModuleWithIndexer<TrackedTxsIndexer> | undefined {
+  deps: ModuleDependencies,
+): ApplicationModule | undefined {
+  let { config, logger, peripherals, providers, clock } = deps
+
   if (!config.trackedTxsConfig) {
     logger.info('TrackedTxsModule disabled')
     return
@@ -35,24 +27,41 @@ export function createTrackedTxsModule(
   logger = logger.tag({ module: 'tracked-txs' })
 
   const indexerService = new IndexerService(peripherals.database)
-
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
   const bigQueryClient = peripherals.getClient(
     BigQueryClient,
     config.trackedTxsConfig.bigQuery,
   )
 
-  const trackedTxsClient = new TrackedTxsClient(
-    bigQueryClient,
-    config.trackedTxsConfig.projects,
-  )
-
+  const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
   const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
     (project) => project.configurations,
   )
 
-  const livenessModule = createLivenessModule(config, logger, peripherals)
-  const l2costsModule = createL2CostsModule(config, logger, peripherals)
+  const hourlyIndexer = new HourlyIndexer(logger, clock, {
+    onTick: async (targetTimestamp) => {
+      const [l2CostsConfigs, livenessConfigs] = partition(
+        runtimeConfigurations,
+        (c) => c.type === 'l2costs',
+      )
+      await peripherals.database.syncMetadata.upsertMany([
+        // There might be multiple configurations for the same project
+        // so we need to uniq them
+        ...uniqBy(l2CostsConfigs, (c) => c.projectId).map((c) => ({
+          feature: 'l2costs' as const,
+          id: c.projectId,
+          target: targetTimestamp,
+        })),
+        ...uniqBy(livenessConfigs, (c) => c.projectId).map((c) => ({
+          feature: 'liveness' as const,
+          id: c.projectId,
+          target: targetTimestamp,
+        })),
+      ])
+    },
+  })
+
+  const livenessModule = createLivenessModule(deps)
+  const l2costsModule = createL2CostsModule(deps)
 
   const subModules: (ApplicationModule | undefined)[] = [
     livenessModule,
@@ -79,6 +88,7 @@ export function createTrackedTxsModule(
     })),
     updaters,
     db: peripherals.database,
+    projects: config.trackedTxsConfig.projects,
   })
 
   let l2CostPricesIndexer: L2CostsPricesIndexer | undefined
@@ -153,6 +163,5 @@ export function createTrackedTxsModule(
 
   return {
     start,
-    indexer: trackedTxsIndexer,
   }
 }

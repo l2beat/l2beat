@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type UnixTime } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import type {
   AddressAnalyzer,
@@ -11,7 +11,7 @@ import {
   buildSharedModuleIndex,
   makeEntryStructureConfig,
 } from '../config/structureUtils'
-import type { IProvider } from '../provider/IProvider'
+import type { AllProviders } from '../provider/AllProviders'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
@@ -29,8 +29,9 @@ export class DiscoveryEngine {
   }
 
   async discover(
-    provider: IProvider,
+    allProviders: AllProviders,
     config: StructureConfig,
+    timestamp: UnixTime,
   ): Promise<Analysis[]> {
     const sharedModuleIndex = buildSharedModuleIndex(config)
     const resolved: Record<string, Analysis> = {}
@@ -86,8 +87,20 @@ export class DiscoveryEngine {
       toAnalyze = {}
 
       const total = this.objectCount + leftToAnalyze.length
+
       await Promise.all(
         leftToAnalyze.map(async ({ address, templates }) => {
+          const sharedItem = sharedModuleIndex[address]
+          if (sharedItem) {
+            resolved[address.toString()] = {
+              name: sharedItem.name,
+              type: 'Reference',
+              address: sharedItem.address,
+              targetType: sharedItem.type,
+              targetProject: sharedItem.project,
+            }
+            return
+          }
           const skipReason = shouldSkip(
             address,
             config,
@@ -107,10 +120,13 @@ export class DiscoveryEngine {
             return
           }
 
+          const chain = ChainSpecificAddress.longChain(address)
+          const provider = await allProviders.get(chain, timestamp)
           const analysis = await this.addressAnalyzer.analyze(
             provider,
             address,
             makeEntryStructureConfig(config, address),
+            config.entrypoints,
             templates,
           )
           resolved[address.toString()] = analysis

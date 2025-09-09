@@ -1,8 +1,7 @@
 {
   "TaikoToken.sol": {
     "hash": "0xea41529d3c7a5cd7651ff173711c111016d65e4345f6f60dc2af04d8ddef375f",
-    "address": "0x87C752b0F70cAa237Edd7571B0845470A37DE040",
-    "chain": "ethereum",
+    "address": "eth:0x87C752b0F70cAa237Edd7571B0845470A37DE040",
     "blockNumber": 22474718
   }
 }

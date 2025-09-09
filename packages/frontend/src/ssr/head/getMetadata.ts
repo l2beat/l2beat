@@ -11,6 +11,7 @@ export interface Metadata {
   title: string
   description: string
   openGraph: OpenGraph
+  excludeFromSearchEngines?: boolean
 }
 
 type PartialMetadata = {
@@ -21,9 +22,13 @@ type PartialMetadata = {
     image?: string
     type?: 'article' | 'website'
   }
+  excludeFromSearchEngines?: boolean
 }
 
-export function getMetadata(manifest: Manifest, metadata: PartialMetadata) {
+export function getMetadata(
+  manifest: Manifest,
+  metadata: PartialMetadata,
+): Metadata {
   const { title, description, openGraph, ...rest } = metadata ?? {}
   return {
     title: title ?? 'L2BEAT - The state of the layer two ecosystem',

@@ -1,8 +1,7 @@
 {
   "DelayedExecutor": {
     "hash": "0x6a59350278d90840dff5cb37a714e105c3003955a6c304046fb1222f61374eed",
-    "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-    "chain": "ethereum",
+    "address": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
     "blockNumber": 22188285
   }
 }

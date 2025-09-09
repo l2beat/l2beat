@@ -1,16 +1,12 @@
-[
-  {
+{
+  "RootChain_polygonpos": {
     "hash": "0xd35b67d8f30e644710988f565f06bbc06eee75ae1ed4b4d46c3e193266e7163c",
-    "description": "RootChain_polygonpos",
-    "address": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
-    "chain": "ethereum",
+    "address": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
     "blockNumber": 22231805
   },
-  {
+  "RootChain_shibarium": {
     "hash": "0x53df93798909c51b914d7f286a3fb02bd08bbc999d189bb089c2a7bb6f273426",
-    "description": "RootChain_shibarium",
-    "address": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
-    "chain": "ethereum",
+    "address": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
     "blockNumber": 22231805
   }
-]
+}

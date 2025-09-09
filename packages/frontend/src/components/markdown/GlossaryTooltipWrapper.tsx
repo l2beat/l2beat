@@ -70,5 +70,9 @@ export function GlossaryTooltipWrapper({
     return cleanupRoots
   }, [children])
 
-  return <div ref={containerRef}>{children}</div>
+  return (
+    <div ref={containerRef} className="inline">
+      {children}
+    </div>
+  )
 }

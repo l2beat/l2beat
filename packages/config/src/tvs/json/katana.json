@@ -41,6 +41,24 @@
     },
     {
       "mode": "auto",
+      "id": "katana-cbBTC",
+      "priceId": "coinbase-wrapped-btc",
+      "symbol": "cbBTC",
+      "name": "Coinbase Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4f4E170C129758A71572EBB3Aa69A8E75ca8b79C",
+        "chain": "katana",
+        "decimals": 8,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
       "id": "katana-CRV",
       "priceId": "curve-dao-token",
       "symbol": "CRV",
@@ -189,6 +207,24 @@
       "amount": {
         "type": "totalSupply",
         "address": "0x1e5eFCA3D0dB2c6d5C67a4491845c43253eB9e4e",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-PAXG",
+      "priceId": "pax-gold",
+      "symbol": "PAXG",
+      "name": "Paxos Gold",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9519/large/paxgold.png?1696509604",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB62f7FC2d804Ec32CfF70ce9bC8638892Cd2740C",
         "chain": "katana",
         "decimals": 18,
         "sinceTimestamp": 1746742811

@@ -10,7 +10,6 @@ export const oceanum: ScalingProject = upcomingL3({
   display: {
     name: 'Oceanum',
     slug: 'oceanum',
-    category: 'Optimium',
     stacks: ['Arbitrum'],
     description:
       'Oceanum is an AI-specific L3 with Caldera, bringing AI agent scaling across multiple blockchains by Bluwhale.',
@@ -31,5 +30,8 @@ export const oceanum: ScalingProject = upcomingL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
+  },
+  proofSystem: {
+    type: 'Optimistic',
   },
 })

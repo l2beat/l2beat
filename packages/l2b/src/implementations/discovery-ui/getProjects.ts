@@ -5,28 +5,18 @@ export function getProjects(configReader: ConfigReader, skipTokens: boolean) {
   const entries = configReader.readAllDiscoveredProjects(
     skipTokens ? { skipGroup: 'tokens' } : {},
   )
-  const projectToDiscovery = new Map<string, DiscoveryOutput[]>()
+  const projectToDiscovery = new Map<string, DiscoveryOutput>()
   for (const entry of entries) {
-    projectToDiscovery.set(
-      entry.project,
-      entry.chains.map((chain) =>
-        configReader.readDiscovery(entry.project, chain),
-      ),
-    )
+    projectToDiscovery.set(entry, configReader.readDiscovery(entry))
   }
 
   const response: ApiProjectsResponse = [...projectToDiscovery.entries()]
-    .map(([name, discoveries]) => ({
+    .map(([name, discovery]) => ({
       name,
-      addresses: discoveries.flatMap((x) =>
-        x.entries.map((e) => e.address.toLowerCase()),
-      ),
-      contractNames: discoveries.flatMap((x) =>
-        x.entries
-          .map((e) => e.name?.toLowerCase())
-          .filter((x) => x !== undefined),
-      ),
-      chains: discoveries.map((x) => x.chain),
+      addresses: discovery.entries.map((e) => e.address.toLowerCase()),
+      contractNames: discovery.entries
+        .map((e) => e.name?.toLowerCase())
+        .filter((x) => x !== undefined),
     }))
     .sort((a, b) => a.name.localeCompare(b.name))
 

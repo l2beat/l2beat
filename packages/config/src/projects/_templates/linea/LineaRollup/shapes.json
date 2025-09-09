@@ -1,8 +1,7 @@
 {
   "LineaRollup": {
     "hash": "0xd9038151917d14b4d25257789abe9a10cecf3a5b4c0c2520860ce1338757ceff",
-    "address": "0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0",
-    "chain": "ethereum",
+    "address": "eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0",
     "blockNumber": 22188285
   }
 }

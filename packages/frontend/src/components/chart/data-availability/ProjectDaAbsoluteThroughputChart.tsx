@@ -41,6 +41,8 @@ interface Props {
   resolution: DaThroughputResolution
 }
 
+const hiddenDataKeys = ['projectMax'] as const
+
 export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
   project,
@@ -53,10 +55,6 @@ export function ProjectDaAbsoluteThroughputChart({
     () => getProjectChartMeta(project.id),
     [project.id],
   )
-  const hiddenDataKeys = useMemo(
-    () => ['projectMax'],
-    [],
-  ) as (keyof typeof projectChartMeta)[]
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     projectChartMeta,
@@ -222,6 +220,11 @@ export function ProjectDaThroughputCustomTooltip({
               configEntry.label === 'Actual data size' ? (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
                   No data
+                </span>
+              ) : entry.value === null &&
+                configEntry.label === 'Max capacity' ? (
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  No cap
                 </span>
               ) : (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">

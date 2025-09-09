@@ -1,8 +1,7 @@
 {
   "MiddleTournamentFactory": {
     "hash": "0x92ef63615b5b5a7d557d4c53c42a5ffac816aca8411b41bf16297f1fd763cee5",
-    "address": "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4",
-    "chain": "ethereum",
+    "address": "eth:0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4",
     "blockNumber": 22716598
   }
 }

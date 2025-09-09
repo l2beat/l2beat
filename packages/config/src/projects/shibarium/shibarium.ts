@@ -32,7 +32,6 @@ export const shibarium: ScalingProject = {
   display: {
     name: 'Shibarium',
     slug: 'shibarium',
-    category: 'Other',
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:

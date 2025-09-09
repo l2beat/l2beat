@@ -116,7 +116,7 @@ export async function getEcosystemEntry(
     return undefined
   }
 
-  const [allScalingProjects, projects] = await Promise.all([
+  const [allScalingProjects, projects, zkCatalogProjects] = await Promise.all([
     ps.getProjects({
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
@@ -138,8 +138,12 @@ export async function getEcosystemEntry(
         'milestones',
         'archivedAt',
         'isUpcoming',
+        'hasTestnet',
       ],
       where: ['isScaling'],
+    }),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
     }),
   ])
 
@@ -232,6 +236,7 @@ export async function getEcosystemEntry(
           tvs.projects[project.id.toString()],
           projectsActivity[project.id.toString()],
           !!projectsOngoingAnomalies[project.id.toString()],
+          zkCatalogProjects,
         )
 
         const result: EcosystemProjectEntry = {
@@ -251,7 +256,9 @@ export async function getEcosystemEntry(
         return result
       })
       .sort(compareTvs),
-    upcomingProjects: upcomingProjects.map(getScalingUpcomingEntry),
+    upcomingProjects: upcomingProjects.map((p) =>
+      getScalingUpcomingEntry(p, zkCatalogProjects),
+    ),
     allMilestones: getMilestones([ecosystem, ...ecosystemProjects]),
     ecosystemMilestones: getMilestones([ecosystem]),
     images: {
@@ -287,7 +294,7 @@ function getMilestones(
 function getGovernanceLinks(
   ecosystem: Project<'ecosystemConfig'>,
 ): EcosystemGovernanceLinks {
-  const lastPublication = getCollection('publications')
+  const lastPublication = getCollection('governance-publications')
     .filter((p) => p.id.includes('review'))
     .sort((a, b) => a.data.publishedOn.getTime() - b.data.publishedOn.getTime())
     .at(-1)
@@ -311,5 +318,5 @@ function getEcosystemUpdateLink(ecosystem: Project<'ecosystemConfig'>): string {
     .at(-1)
   assert(lastReport, 'No last report')
 
-  return `/publications/monthly-updates/${lastReport.id}#${ecosystem.id}`
+  return `/publications/${lastReport.id}#${ecosystem.id}`
 }

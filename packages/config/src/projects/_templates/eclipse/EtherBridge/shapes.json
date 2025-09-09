@@ -1,8 +1,7 @@
 {
   "EtherBridge": {
     "hash": "0x6c9915deb3c1995718bd3919c08d1b3cd20ae7957820fa959345c6a6df1b2ab2",
-    "address": "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9",
-    "chain": "ethereum",
+    "address": "eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9",
     "blockNumber": 22868281
   }
 }

@@ -22,7 +22,6 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
   CLIENT_SIDE_PARTNERS: coerceBoolean.default(false),
-  CLIENT_SIDE_ZK_CATALOG_V2: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -119,6 +118,5 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
     CLIENT_SIDE_PARTNERS: process.env.CLIENT_SIDE_PARTNERS,
-    CLIENT_SIDE_ZK_CATALOG_V2: process.env.CLIENT_SIDE_ZK_CATALOG_V2,
   }
 }
