@@ -76,7 +76,7 @@
     {
       "mode": "auto",
       "id": "worldchain-USDC-1",
-      "priceId": "bridged-usdc-world-chain",
+      "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "Bridged USDC (world-chain-mainnet)",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50792/large/usdc.png?1729233082",
