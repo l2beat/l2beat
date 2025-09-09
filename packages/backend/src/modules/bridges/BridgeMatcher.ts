@@ -2,6 +2,8 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { BridgeMessageRecord, Database } from '@l2beat/database'
 import type { BridgeStore } from './BridgeStore'
 import {
+  type BridgeEvent,
+  type BridgeEventDb,
   type BridgeMessage,
   type BridgePlugin,
   type BridgeTransfer,
@@ -41,54 +43,74 @@ export class BridgeMatcher {
   }
 
   async doMatching() {
-    const matchedIds = new Set<string>()
-    const messages: BridgeMessage[] = []
-    const transfers: BridgeTransfer[] = []
+    const result = await match(
+      this.bridgeStore,
+      this.bridgeStore.getUnmatched(),
+      this.plugins,
+      this.logger,
+    )
 
-    for (const event of this.bridgeStore.getUnmatched()) {
-      if (matchedIds.has(event.eventId)) {
-        continue
-      }
-      for (const plugin of this.plugins) {
-        let result: MatchResult | undefined
-        try {
-          result = await plugin.match?.(event, this.bridgeStore)
-        } catch (e) {
-          this.logger.error(e)
-        }
-
-        if (result) {
-          matchedIds.add(event.eventId)
-          this.bridgeStore.markMatched(event)
-          if (result.messages) {
-            for (const message of result.messages) {
-              messages.push(message)
-              this.bridgeStore.markGrouped(message.inbound)
-              this.bridgeStore.markGrouped(message.outbound)
-            }
-          }
-          if (result.transfer) {
-            transfers.push(result.transfer)
-            for (const transferEvent of result.transfer.events) {
-              this.bridgeStore.markGrouped(transferEvent)
-            }
-          }
-          this.logger.info('Matched', result)
-        }
-      }
-    }
-
-    if (matchedIds.size > 0) {
+    if (result.matchedIds.size > 0) {
       this.logger.info('Matched', {
-        count: matchedIds.size,
-        messages: messages.length,
-        transfers: transfers.length,
+        count: result.matchedIds.size,
+        messages: result.messages.length,
+        transfers: result.transfers.length,
       })
+      this.bridgeStore.markMatched([...result.matchedIds])
       await this.bridgeStore.save()
     }
-    if (messages.length > 0) {
-      await this.db.bridgeMessage.insertMany(messages.map(toMessageRecord))
+    if (result.messages.length > 0) {
+      await this.db.bridgeMessage.insertMany(
+        result.messages.map(toMessageRecord),
+      )
     }
+  }
+}
+
+export async function match(
+  db: BridgeEventDb,
+  events: BridgeEvent[],
+  plugins: BridgePlugin[],
+  logger: Logger,
+) {
+  const matchedIds = new Set<string>()
+  const messages: BridgeMessage[] = []
+  const transfers: BridgeTransfer[] = []
+
+  for (const event of events) {
+    if (matchedIds.has(event.eventId)) {
+      continue
+    }
+    for (const plugin of plugins) {
+      let result: MatchResult | undefined
+      try {
+        result = await plugin.match?.(event, db)
+      } catch (e) {
+        logger.error(e)
+      }
+
+      if (result) {
+        matchedIds.add(event.eventId)
+        for (const message of result.messages ?? []) {
+          messages.push(message)
+          matchedIds.add(message.inbound.eventId)
+          matchedIds.add(message.outbound.eventId)
+        }
+        for (const transfer of result.transfers ?? []) {
+          transfers.push(transfer)
+          for (const transferEvent of transfer.events) {
+            matchedIds.add(transferEvent.eventId)
+          }
+        }
+        break
+      }
+    }
+  }
+
+  return {
+    matchedIds,
+    messages,
+    transfers,
   }
 }
 

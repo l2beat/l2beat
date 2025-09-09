@@ -99,7 +99,7 @@ export interface LogToCapture {
 
 export interface MatchResult {
   messages?: BridgeMessage[]
-  transfer?: BridgeTransfer
+  transfers?: BridgeTransfer[]
 }
 
 export interface BridgeEventDb {
