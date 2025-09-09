@@ -30,7 +30,7 @@ export function DaLivenessIntervalCell({
 
   const durationInSeconds = data?.averageInSeconds
 
-  if (durationInSeconds === undefined) {
+  if (!data || durationInSeconds === undefined) {
     return <NotApplicableBadge />
   }
 
