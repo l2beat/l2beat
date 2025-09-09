@@ -103,7 +103,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
         className="-mx-4 md:-mx-6 pb-1! lg:hidden"
         charts={[byBridgeTypeChart, byAssetSourceChart]}
       />
-      <div className="mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
+      <div className="mb-3 grid h-[300px] grid-cols-2 gap-x-6 max-lg:hidden">
         {etherPercentageChart}
         {stablecoinPercentageChart}
       </div>

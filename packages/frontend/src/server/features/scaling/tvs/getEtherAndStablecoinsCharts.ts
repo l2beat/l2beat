@@ -96,14 +96,12 @@ export async function getEtherAndStablecoinsCharts({
     }
   }
 
-  const top10Stablecoins = Object.entries(latestStablecoins)
+  const stablecoins = Object.entries(latestStablecoins)
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 10)
     .map((e) => e[0])
 
-  const top10Ether = Object.entries(latestEther)
+  const ethers = Object.entries(latestEther)
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 10)
     .map((e) => e[0])
 
   const minTimestamp = data.at(0)?.timestamp
@@ -115,7 +113,7 @@ export async function getEtherAndStablecoinsCharts({
     number,
     Record<'stablecoins' | 'ether', Record<string, number>>
   > = {}
-  for (const id of top10Stablecoins) {
+  for (const id of stablecoins) {
     const values = stablecoinsEntries.find((e) => e[0] === id)?.[1]
     const groupedByTimestamp = groupBy(values, (e) => e.timestamp)
 
@@ -134,7 +132,7 @@ export async function getEtherAndStablecoinsCharts({
     }
   }
 
-  for (const id of top10Ether) {
+  for (const id of ethers) {
     const values = etherEntries.find((e) => e[0] === id)?.[1]
     const groupedByTimestamp = groupBy(values, (e) => e.timestamp)
     for (const timestamp of timestamps) {

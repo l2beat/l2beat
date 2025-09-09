@@ -67,7 +67,7 @@ export function ScalingTvsTabs(props: Props) {
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="validiumsAndOptimiums">
-            Validiums & Optimiums{' '}
+            Validiums & Optimiums
             <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="others">
