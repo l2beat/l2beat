@@ -3,7 +3,7 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import { createClient, type RedisClientType } from 'redis'
 
-const DEFAULT_EXPIRATION = 10 * 60 // 10 minutes
+const DEFAULT_EXPIRATION = 60 // 1 minute
 
 export class Cache {
   private client: RedisClientType
@@ -30,7 +30,7 @@ export class Cache {
       .digest('hex')
       .slice(0, 12)
 
-    return `${query}::${queryHash}::${inputHash}`
+    return `${query}::${queryHash}::${inputHash}-2`
   }
 
   async write(key: string, data: unknown, expires?: number) {
