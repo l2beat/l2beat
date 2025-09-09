@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import {
@@ -47,18 +48,22 @@ const NETWORKS = [
   },
 ]
 
-// NOTE: This is just an example plugin! Not production ready!
 export class LayerZeroV2Plugin implements BridgePlugin {
   name = 'layerzerov2'
   chains = ['ethereum', 'arbitrum', 'base']
 
+  constructor(private logger: Logger) {}
+
   capture(input: LogToCapture) {
     const network = NETWORKS.find((b) => b.chain === input.ctx.chain)
     if (!network) {
-      // TODO: warn
+      this.logger.warn('Network not configured', {
+        plugin: this.name,
+        ctx: input.ctx,
+      })
       return
     }
-    // TODO: whitelist
+
     const packetSent = parsePacketSent(input.log, [network.address])
     if (packetSent) {
       const packet = decodePacket(packetSent.encodedPayload)
@@ -75,7 +80,6 @@ export class LayerZeroV2Plugin implements BridgePlugin {
       }
     }
 
-    // TODO: whitelist
     const packetDelivered = parsePacketDelivered(input.log, [network.address])
     if (packetDelivered) {
       const guid = createLayerZeroGuid(
@@ -135,7 +139,6 @@ export function createLayerZeroGuid(
 
 export function normalizeAddress(address: string): string {
   const addr = address.startsWith('0x') ? address.slice(2) : address
-
   return '0x' + addr.padStart(64, '0')
 }
 

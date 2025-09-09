@@ -9,11 +9,11 @@ import { WormholePlugin } from './wormhole'
 
 export function createBridgePlugins(logger: Logger): BridgePlugin[] {
   return [
-    new MayanPlugin(),
+    new MayanPlugin(), // Should be run before CCTPv1
     new CCTPv1Plugin(),
-    new StargateV2BusPlugin(),
+    new StargateV2BusPlugin(), // should be run before LayeyZeroV2
     new StargateV2TaxiPlugin(), // should be run before LayerZeroV2
-    new LayerZeroV2Plugin(),
+    new LayerZeroV2Plugin(logger),
     new WormholePlugin(logger),
   ]
 }
