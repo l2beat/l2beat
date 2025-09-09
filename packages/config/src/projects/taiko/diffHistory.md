@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xcf9453f3f3efc755bf71b0d92039c78b84a29b5c
+
+# Diff at Tue, 09 Sep 2025 07:35:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@395d7487e1620571da9defc848ebbef6daf736b9 block: 1757344306
+- current timestamp: 1757403234
+
+## Description
+
+move of preconfWhitelist gov to the DAO.
+
+the single non-DAO-governed contract left is ProverSet, so the migration seems to be complete.
+
+## Watched changes
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      receivedPermissions.28:
++        {"permission":"upgrade","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":"admin"}
+    }
+```
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":"admin"}]
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
 Generated with discovered.json: 0x4bee562ef15ee71396aeac9381097512e04af8bd
 
 # Diff at Mon, 08 Sep 2025 15:13:18 GMT:

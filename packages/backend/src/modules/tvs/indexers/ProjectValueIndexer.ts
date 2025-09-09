@@ -82,7 +82,7 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
         await this.$.db.tvsProjectValue.upsertMany(records)
         await this.$.db.syncMetadata.updateSyncedUntil(
           'tvs',
-          [configuration.id],
+          [configuration.properties.project],
           syncedUntil,
         )
       })
