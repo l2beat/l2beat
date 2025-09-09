@@ -20,21 +20,14 @@ export interface WarningWithSentiment {
   sentiment: 'bad' | 'warning' | 'neutral'
 }
 
-export interface TableReadyValue {
-  value: string
+export interface TableReadyValue<T extends string = string> {
+  value: T
   secondLine?: string
   description?: string
   sentiment?: Sentiment
   warning?: WarningWithSentiment
   /** Taken into account when sorting. Defaults to 0. */
   orderHint?: number
-}
-
-export type TableReadyValueWithPredefinedValue<T extends string> = Omit<
-  TableReadyValue,
-  'value'
-> & {
-  value: T
 }
 
 export interface ProjectTechnologyChoice {
@@ -678,11 +671,11 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
-  relayerType?: TableReadyValueWithPredefinedValue<'Permissioned'>
+  relayerType?: TableReadyValue<'Permissioned'>
   validationType?: DaBridgeValidationType
 }
 
-type DaBridgeValidationType = TableReadyValueWithPredefinedValue<
+type DaBridgeValidationType = TableReadyValue<
   'Validity Proof' | 'BLS Signature'
 > & {
   zkCatalogId?: ProjectId
