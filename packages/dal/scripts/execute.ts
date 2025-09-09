@@ -24,7 +24,6 @@ async function main() {
 
     const size = Buffer.byteLength(JSON.stringify(result), 'utf8')
     logger.info(`Data size: ${size / 1024} KB`)
-    console.log(result)
   } catch (error) {
     logger.error('Error occurred while fetching TVS chart:', error)
   }
