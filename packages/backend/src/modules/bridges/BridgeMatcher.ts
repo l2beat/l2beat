@@ -60,10 +60,12 @@ export class BridgeMatcher {
         if (result) {
           matchedIds.add(event.eventId)
           this.bridgeStore.markMatched(event)
-          if (result.message) {
-            messages.push(result.message)
-            this.bridgeStore.markGrouped(result.message.inbound)
-            this.bridgeStore.markGrouped(result.message.outbound)
+          if (result.messages) {
+            for (const message of result.messages) {
+              messages.push(message)
+              this.bridgeStore.markGrouped(message.inbound)
+              this.bridgeStore.markGrouped(message.outbound)
+            }
           }
           if (result.transfer) {
             transfers.push(result.transfer)
