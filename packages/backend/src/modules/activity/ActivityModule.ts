@@ -30,7 +30,7 @@ export function initActivityModule({
 
   const indexers: ActivityIndexer[] = []
 
-  config.activity.projects.forEach((project) => {
+  for (const project of config.activity.projects) {
     switch (project.activityConfig.type) {
       case 'block': {
         const blockTargetIndexer = new BlockTargetIndexer(
@@ -45,14 +45,14 @@ export function initActivityModule({
                 return
               }
 
-              await database.syncMetadata.upsertMany(
-                config.activity.projects.map((p) => ({
+              await database.syncMetadata.upsertMany([
+                {
                   feature: 'activity',
-                  id: p.id,
-                  target: targetTimestamp,
+                  id: project.id,
+                  target: UnixTime.toStartOf(targetTimestamp, 'day'),
                   blockTarget: blockNumber,
-                })),
-              )
+                },
+              ])
             },
           },
         )
@@ -89,18 +89,19 @@ export function initActivityModule({
           providers.slotTimestamp,
           project,
           {
-            onTick: async (targetTimestamp) => {
+            onTick: async (targetTimestamp, slotTarget) => {
               if (!config.activity) {
                 return
               }
 
-              await database.syncMetadata.upsertMany(
-                config.activity.projects.map((project) => ({
+              await database.syncMetadata.upsertMany([
+                {
                   feature: 'activity',
                   id: project.id,
-                  target: targetTimestamp,
-                })),
-              )
+                  target: UnixTime.toStartOf(targetTimestamp, 'day'),
+                  blockTarget: slotTarget,
+                },
+              ])
             },
           },
         )
@@ -134,13 +135,13 @@ export function initActivityModule({
               return
             }
 
-            await database.syncMetadata.upsertMany(
-              config.activity.projects.map((project) => ({
+            await database.syncMetadata.upsertMany([
+              {
                 feature: 'activity',
                 id: project.id,
                 target: targetTimestamp,
-              })),
-            )
+              },
+            ])
           },
         })
 
@@ -165,7 +166,7 @@ export function initActivityModule({
         break
       }
     }
-  })
+  }
 
   return {
     start: async () => {
