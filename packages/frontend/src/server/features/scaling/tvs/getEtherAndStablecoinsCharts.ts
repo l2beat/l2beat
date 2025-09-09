@@ -4,6 +4,7 @@ import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
 import { getDb } from '~/server/database'
+import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { getTimestampedValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getTvsProjects } from './utils/getTvsProjects'
@@ -107,9 +108,9 @@ export async function getEtherAndStablecoinsCharts({
   const minTimestamp = data.at(0)?.timestamp
   assert(minTimestamp, 'No data')
 
-  const timestamps = generateTimestamps([minTimestamp, to], resolution)
+  const timestamps = generateTimestamps([minTimestamp, to], 'daily')
 
-  const chart: Record<
+  const chartData: Record<
     number,
     Record<'stablecoins' | 'ether', Record<string, number>>
   > = {}
@@ -121,14 +122,14 @@ export async function getEtherAndStablecoinsCharts({
       const value =
         groupedByTimestamp[timestamp]?.reduce((acc, e) => acc + e.value, 0) ?? 0
 
-      if (!chart[timestamp]) {
-        chart[timestamp] = {
+      if (!chartData[timestamp]) {
+        chartData[timestamp] = {
           stablecoins: {},
           ether: {},
         }
       }
 
-      chart[timestamp].stablecoins[id] = value
+      chartData[timestamp].stablecoins[id] = value
     }
   }
 
@@ -138,20 +139,52 @@ export async function getEtherAndStablecoinsCharts({
     for (const timestamp of timestamps) {
       const value =
         groupedByTimestamp[timestamp]?.reduce((acc, e) => acc + e.value, 0) ?? 0
-      if (!chart[timestamp]) {
-        chart[timestamp] = {
+      if (!chartData[timestamp]) {
+        chartData[timestamp] = {
           stablecoins: {},
           ether: {},
         }
       }
-      chart[timestamp].ether[id] = value
+      chartData[timestamp].ether[id] = value
     }
   }
 
+  const chart = Object.entries(chartData).map(([timestamp, values]) => {
+    return [+timestamp, values.stablecoins, values.ether] as const
+  })
+
+  const etherData = chart.at(-1)?.[2] ?? {}
+  const etherData7dAgo = chart.at(-7)?.[2] ?? {}
+
+  const stablecoinsData = chart.at(-1)?.[1] ?? {}
+  const stablecoinsData7dAgo = chart.at(-7)?.[1] ?? {}
+
   return {
-    chart: Object.entries(chart).map(([timestamp, values]) => {
-      return [+timestamp, values.stablecoins, values.ether] as const
-    }),
+    chart,
+    ether: Object.fromEntries(
+      Object.entries(etherData).map(([symbol, value]) => {
+        const sevenDaysAgoValue = etherData7dAgo[symbol] ?? 0
+        return [
+          symbol,
+          {
+            value,
+            change: calculatePercentageChange(value, sevenDaysAgoValue),
+          },
+        ]
+      }),
+    ),
+    stablecoins: Object.fromEntries(
+      Object.entries(stablecoinsData).map(([symbol, value]) => {
+        const sevenDaysAgoValue = stablecoinsData7dAgo[symbol] ?? 0
+        return [
+          symbol,
+          {
+            value,
+            change: calculatePercentageChange(value, sevenDaysAgoValue),
+          },
+        ]
+      }),
+    ),
     syncedUntil: UnixTime.now(),
   }
 }

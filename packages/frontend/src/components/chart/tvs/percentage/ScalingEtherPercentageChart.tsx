@@ -7,8 +7,8 @@ import {
   Treemap,
 } from 'recharts'
 import { ChartTooltipWrapper } from '~/components/core/chart/Chart'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { OverflowWrapper } from '~/components/core/OverflowWrapper'
+import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
@@ -28,24 +28,38 @@ export function ScalingEtherPercentageChart({ filter, range }: Props) {
     filter,
   })
   const allItemNames = useMemo(() => {
-    return Object.keys(data?.chart.at(-1)?.[2] ?? {})
+    return Object.keys(data?.ether ?? {})
   }, [data])
 
-  const chartData: { name: string; value: number }[] | undefined =
-    useMemo(() => {
-      const last = data?.chart.at(-1)?.[2] ?? {}
-      return Object.entries(last)
-        .map(([name, value]) => {
-          if (excluded.includes(name)) {
-            return
-          }
-          return {
-            name,
-            value,
-          }
-        })
-        .filter((e) => e !== undefined)
-    }, [data, excluded])
+  const maxChange = useMemo(() => {
+    return Math.max(
+      ...Object.values(data?.ether ?? {}).map((data) => data.change),
+    )
+  }, [data])
+
+  const minChange = useMemo(() => {
+    return Math.min(
+      ...Object.values(data?.ether ?? {}).map((data) => data.change),
+    )
+  }, [data])
+
+  const chartData:
+    | { name: string; value: number; change: number }[]
+    | undefined = useMemo(() => {
+    const last = data?.ether ?? {}
+    return Object.entries(last)
+      .map(([name, data]) => {
+        if (excluded.includes(name)) {
+          return
+        }
+        return {
+          name,
+          value: data.value,
+          change: data.change,
+        }
+      })
+      .filter((e) => e !== undefined)
+  }, [data, excluded])
 
   return (
     <div className="h-[188px] min-h-[188px] md:h-[228px] md:min-h-[228px] 2xl:h-[258px] 2xl:min-h-[258px]">
@@ -55,7 +69,13 @@ export function ScalingEtherPercentageChart({ filter, range }: Props) {
           dataKey="value"
           stroke="#fff"
           fill="#8884d8"
-          content={<CustomizedContent colors={COLORS} />}
+          content={
+            <CustomizedContent
+              colors={COLORS}
+              maxChange={maxChange}
+              minChange={minChange}
+            />
+          }
           isAnimationActive={false}
         >
           <Tooltip content={<CustomTooltip />} />
@@ -84,10 +104,6 @@ export function ScalingEtherPercentageChart({ filter, range }: Props) {
                       })
                     }
                   >
-                    <ChartDataIndicator
-                      type={{ shape: 'square' }}
-                      backgroundColor={COLORS[index] ?? COLORS.at(-1)}
-                    />
                     <span
                       className={cn(
                         'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
@@ -122,10 +138,20 @@ const COLORS = [
 ]
 
 // biome-ignore lint/suspicious/noExplicitAny: POC
-const CustomizedContent = (props:any) => {
-  const { x, y, width, height, index, colors, name } = props
+const CustomizedContent = (props: any) => {
+  const { x, y, width, height, name, change, maxChange, minChange } = props
 
   const fontSize = Math.min(width / 8, height / 4)
+  const opacity = Math.round(
+    (1 - (change > 0 ? change / maxChange : change / minChange)) * 50,
+  )
+  console.log(minChange, maxChange)
+  const fill =
+    change === 0
+      ? 'var(--secondary)'
+      : change > 0
+        ? `color-mix(in oklch, var(--positive), white ${opacity}%)`
+        : `color-mix(in oklch, var(--negative), white ${opacity}%)`
   return (
     <g>
       <rect
@@ -136,7 +162,7 @@ const CustomizedContent = (props:any) => {
         rx={4}
         ry={4}
         style={{
-          fill: colors[index] ?? colors.at(-1),
+          fill,
           stroke: '#fff',
           strokeWidth: 4,
           strokeOpacity: 1,
@@ -163,7 +189,10 @@ function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
 
   const actualPayload = payload[0]
   assert(
-    actualPayload && actualPayload.payload.name && actualPayload.value,
+    actualPayload &&
+      actualPayload.payload.name &&
+      actualPayload.value &&
+      actualPayload.payload.change,
     'No payload',
   )
   return (
@@ -172,9 +201,9 @@ function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {actualPayload.payload.name}
         </div>
-        <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
+        <ValueWithPercentageChange change={actualPayload.payload.change}>
           {formatCurrency(actualPayload.value, 'usd')}
-        </span>
+        </ValueWithPercentageChange>
       </div>
     </ChartTooltipWrapper>
   )
