@@ -6,9 +6,8 @@ import type {
   MatchResult,
 } from './types'
 import { LogMessagePublished } from './wormhole'
-
 export class MayanMctpPlugin implements BridgePlugin {
-  name = 'mayan'
+  name = 'MayanMctp'
   chains = ['ethereum', 'arbitrum', 'base']
 
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
@@ -33,7 +32,7 @@ export class MayanMctpPlugin implements BridgePlugin {
     return {
       messages: [
         {
-          type: 'cctpv1.Message',
+          type: 'CCTPv1.Message',
           inbound: event,
           outbound: messageSent,
         },

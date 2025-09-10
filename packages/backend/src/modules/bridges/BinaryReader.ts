@@ -32,6 +32,14 @@ export class BinaryReader {
     return this.readBytes((this.data.length - this.offset) / 2)
   }
 
+  readUint8() {
+    return Number(this.readBytes(1))
+  }
+
+  readUint16() {
+    return Number(this.readBytes(2))
+  }
+
   readUint32() {
     return Number(this.readBytes(4))
   }

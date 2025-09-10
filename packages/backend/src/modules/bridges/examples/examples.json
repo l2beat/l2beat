@@ -19,7 +19,7 @@
       "tx": "0xad842eb3b6a603a78cccc24ea9b3d418f2b38bc13da0f542aedb237ed4740c61"
     }
   ],
-  "mayan": [
+  "mayan-mctp": [
     {
       "chain": "base",
       "tx": "0xf31d79e452692369a486f9ea470a17e123651e02dd50060a710f28e5a268bf5a"
