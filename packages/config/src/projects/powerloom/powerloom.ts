@@ -2,10 +2,12 @@ import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 
 const discovery = new ProjectDiscovery('powerloom')
 
 export const powerloom: ScalingProject = orbitStackL2({
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS, REASON_FOR_BEING_OTHER.SMALL_DAC],
   discovery,
   capability: 'universal',
   addedAt: UnixTime(1741768931),
