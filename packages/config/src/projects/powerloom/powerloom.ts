@@ -60,7 +60,7 @@ export const powerloom: ScalingProject = orbitStackL2({
       ),
       name: 'L1OrbitUSDCGateway',
       sinceTimestamp: UnixTime(1741768931),
-      tokens: ['POWER'],
+      tokens: ['USDC'],
     }),
   ],
 })
