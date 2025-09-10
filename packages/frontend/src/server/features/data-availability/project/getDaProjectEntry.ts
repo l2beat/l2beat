@@ -131,10 +131,11 @@ export async function getDaProjectEntry(
       getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
       getDaProjectsTvs(allUsedIn.map((x) => x.id)),
       getProjectsChangeReport(),
-      getLiveness(),
+      selected ? getLiveness() : undefined,
     ])
 
-  const projectLiveness = selected ? liveness[selected.id] : undefined
+  const projectLiveness =
+    selected && liveness ? liveness[selected.id] : undefined
   const ongoingAnomalies = projectLiveness?.anomalies.filter(
     (a) => a.end === undefined,
   )
