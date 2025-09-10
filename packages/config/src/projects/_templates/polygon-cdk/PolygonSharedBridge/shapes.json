@@ -1,8 +1,7 @@
 {
   "PolygonZkEVMBridgeV2": {
     "hash": "0x058729592838a622eff2eb394278ff5d53065feeca04c216a67e973178ac1ac2",
-    "address": "0x0FeB850B183C57534b56b7d56520133C8f9BDB65",
-    "chain": "ethereum",
+    "address": "eth:0x0FeB850B183C57534b56b7d56520133C8f9BDB65",
     "blockNumber": 22188285
   }
 }

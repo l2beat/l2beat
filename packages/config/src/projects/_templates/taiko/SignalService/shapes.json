@@ -1,14 +1,12 @@
 {
   "SignalService.sol": {
     "hash": "0xf99b7d5f650d3734e945c5040d8e4776dfdc97ff745666e084c1d471b7973f38",
-    "address": "0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3",
-    "chain": "ethereum",
+    "address": "eth:0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3",
     "blockNumber": 22297586
   },
   "SignalService": {
     "hash": "0xc978dbfc097ca447823c4a1eb83078cd63532727420b19287acc0f87e884285f",
-    "address": "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c",
-    "chain": "ethereum",
+    "address": "eth:0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c",
     "blockNumber": 22565516
   }
 }

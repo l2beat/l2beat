@@ -1,8 +1,7 @@
 {
   "StaticAggregationIsm": {
     "hash": "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9",
-    "address": "0x59f2ba715A3d4bA4beC4e7ea7988eC3c579ecE77",
-    "chain": "ethereum",
+    "address": "eth:0x59f2ba715A3d4bA4beC4e7ea7988eC3c579ecE77",
     "blockNumber": 22188285
   }
 }

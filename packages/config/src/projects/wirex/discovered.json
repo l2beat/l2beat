@@ -1,7 +1,7 @@
 {
   "name": "wirex",
   "timestamp": 1754397932,
-  "configHash": "0x9d28fe23097e80d848dbda22851871f511de1ad7aef334fa0e42206fca371754",
+  "configHash": "0xbffdf1c353f610128f0f3974e2dc157077cb7ad265d10b4e340e141b606cd1e0",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -35,6 +35,13 @@
       ]
     },
     {
+      "name": "PolygonSharedBridge",
+      "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
       "type": "Contract",
@@ -61,9 +68,23 @@
       }
     },
     {
+      "name": "PolygonRollupManager",
+      "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
       "address": "eth:0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PolygonGlobalExitRootV2",
+      "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "name": "PolygonDataCommittee",
@@ -424,5 +445,5 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23074949 },
-  "permissionsConfigHash": "0xe9be5f4b75740f13b418677d2d4ce188d4075e7fe5920aa8c90c34488f7568f1"
+  "permissionsConfigHash": "0x34084a0051db7ba3fbf9e84ccd2504fe3ccba077e28ec2621e07d92eaf551c84"
 }

@@ -1,20 +1,17 @@
 {
   "L1FeeVault_v1_0_0": {
     "hash": "0xa5448c99f954f5f48195d1e118c0513d52fe9a6357928d1d29f617258ca935ff",
-    "address": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
-    "chain": "optimism",
+    "address": "oeth:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
     "blockNumber": 134041720
   },
   "L1FeeVault_v1_5_0beta_2": {
     "hash": "0x6cd48142610d7634a3e49c7a9f181be68c6ca47b0ed2777c884a26a219ebb034",
-    "address": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
-    "chain": "unichain",
+    "address": "unichain:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
     "blockNumber": 12933871
   },
   "L1FeeVault_v1_3_0": {
     "hash": "0x2bbc4761e06b3858a304723900de8a855d85d9eb247116f2315f3714a47ad71b",
-    "address": "0x0c9034b92351cF8f067379a1fFA4fa35f5AF9dCC",
-    "chain": "base",
+    "address": "base:0x0c9034b92351cF8f067379a1fFA4fa35f5AF9dCC",
     "blockNumber": 29605802
   }
 }

@@ -1,15 +1,14 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
-import type { Config } from '../../config'
+import uniqBy from 'lodash/uniqBy'
 import type { DataAvailabilityTrackingConfig } from '../../config/Config'
-import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import type { ApplicationModule } from '../ApplicationModule'
+import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlobIndexer } from './indexers/BlobIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DaIndexer } from './indexers/DaIndexer'
@@ -18,14 +17,13 @@ import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndex
 import { BlobService } from './services/BlobService'
 import { DaService } from './services/DaService'
 
-export function initDataAvailabilityModule(
-  config: Config,
-  logger: Logger,
-  clock: Clock,
-  providers: Providers,
-  database: Database,
-  _peripherals: Peripherals,
-): ApplicationModule | undefined {
+export function initDataAvailabilityModule({
+  config,
+  logger,
+  clock,
+  providers,
+  db,
+}: ModuleDependencies): ApplicationModule | undefined {
   if (!config.da) {
     logger.info('Data availability module disabled')
     return
@@ -39,7 +37,7 @@ export function initDataAvailabilityModule(
   const { targetIndexers, daIndexers, eigenIndexers } = createIndexers(
     config.da,
     clock,
-    database,
+    db,
     logger,
     providers,
   )
@@ -113,7 +111,7 @@ function createIndexers(
       {
         onTick: async (targetTimestamp, blockNumber) => {
           await database.syncMetadata.upsertMany(
-            configurations.map((c) => ({
+            uniqBy(configurations, (e) => e.projectId).map((c) => ({
               feature: 'dataAvailability',
               id: c.projectId,
               target: targetTimestamp,
@@ -179,14 +177,22 @@ function createIndexers(
 
     const hourlyIndexer = new HourlyIndexer(logger, clock, {
       onTick: async (targetTimestamp) => {
-        await database.syncMetadata.upsertMany(
-          configurations.map((c) => ({
-            feature: 'dataAvailability',
+        await database.syncMetadata.upsertMany([
+          ...uniqBy(daLayerConfigurations, (e) => e.projectId).map((c) => ({
+            feature: 'dataAvailability' as const,
             id: c.projectId,
             target: targetTimestamp,
-            syncedUntil: null,
           })),
-        )
+          // We only sync projects data at 02:00:00
+          ...(UnixTime.toStartOf(targetTimestamp, 'day') + 2 * UnixTime.HOUR ===
+          targetTimestamp
+            ? uniqBy(projectConfigurations, (e) => e.projectId).map((c) => ({
+                feature: 'dataAvailability' as const,
+                id: c.projectId,
+                target: targetTimestamp,
+              }))
+            : []),
+        ])
       },
     })
     eigenIndexers.push(hourlyIndexer)

@@ -1,0 +1,245 @@
+{
+  "entrypoints": {
+    "eth:0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1": {
+      "name": "EcdsaPointsXColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x032e5cDb729Ce94638ACA9e82A22688109B43046": {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x0405107a60391Eb51821be373ff978115Ee58488": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1": {
+      "name": "PedersenHashPointsXColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x05C98569CA566a2035b87dE7d1b623C950798035": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2": {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed": {
+      "name": "PedersenHashPointsYColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {
+      "name": "SHARP Multisig",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x243682b9A01455ac671c97D8dE686EBd4EE25791": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400": {
+      "name": "FriStatementContract",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd": {
+      "name": "MerkleStatementContract",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x351666E9EeA6E012f08695ccd1923f37519563f1": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x3d57526c1C8D63fa2A8704487Df65e9000166c8E": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x42AF9498647Be47A256C9cc8278eE94473Cb7771": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": {
+      "name": "SHARPVerifierCallProxy",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x4742f8723CAE9C17Cb1D54708898904fB43621c9": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8": {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x53daC4aB94955f35657463252a7b25F343A14451": {
+      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515": {
+      "name": "CairoBootloaderProgram",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x59232aC80E6d403b6381393e52f4665ECA328558": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x955B978F3ee7818dA71fA25c676062E6BC462Fec": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc": {
+      "name": "PoseidonPoseidonFullRoundKey1Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": {
+      "name": "SHARPVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xA9db7bDfbc3664C8954f490e4d94B8607a080f23": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xAaAe0edF6536de72E7163D293518c40011179f8a": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF": {
+      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540": {
+      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD": {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xe155154845950573EC5F518fC0D4950AB71303ff": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xE3929Ea107238Ce59d64A3cE497f12b57846B716": {
+      "name": "EcdsaPointsYColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460": {
+      "name": "MemoryPageFactRegistry",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xebc8416179fE90854fe8B3f774801165572cfD7F": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xedFfEA8296945aA91FC035Aefc8c33D737dBc573": {
+      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc": {
+      "name": "PoseidonPoseidonFullRoundKey1Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    }
+  }
+}

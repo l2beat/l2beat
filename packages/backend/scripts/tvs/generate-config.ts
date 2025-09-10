@@ -272,7 +272,7 @@ function updateConfigWithTvs(
       continue
     }
 
-    // if the token was tracked before, but has zero value, set the untilTimestamp to the last non-zero value
+    // if the token was tracked before, but has zero value, suggest setting the untilTimestamp to the last non-zero value
     const currentUntilTimestamp = getTokenSyncRange(currentToken).untilTimestamp
 
     if (
@@ -280,13 +280,16 @@ function updateConfigWithTvs(
       currentUntilTimestamp > lastNonZeroValue.timestamp
     ) {
       logger.warn(
-        `Token ${token.tokenId} has zero value, setting untilTimestamp to: ${lastNonZeroValue.timestamp}`,
+        `Token ${token.tokenId} has zero value, consider setting untilTimestamp to: ${lastNonZeroValue.timestamp}`,
       )
     }
 
-    setTokenSyncRange(tokenConfig, {
-      untilTimestamp: lastNonZeroValue.timestamp,
-    })
+    //if untilTimestamp is already set propagate it to new config
+    if (currentUntilTimestamp) {
+      setTokenSyncRange(tokenConfig, {
+        untilTimestamp: currentUntilTimestamp,
+      })
+    }
 
     updatedTokens.push(tokenConfig)
   }

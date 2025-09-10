@@ -1,8 +1,7 @@
 {
   "ValidatorRegistry.sol": {
     "hash": "0xa7a26ec21e6beb982a3ab02a6e6c3d45d1812885147523f76ec9a1a55072dbcf",
-    "address": "0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6",
-    "chain": "ethereum",
+    "address": "eth:0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6",
     "blockNumber": 22323961
   }
 }

@@ -15,6 +15,7 @@ export const sentient: ScalingProject = upcomingL2({
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://sentient.foundation/'],
+      repositories: ['https://github.com/sentient-agi'],
       socialMedia: ['https://x.com/SentientAGI'],
     },
   },

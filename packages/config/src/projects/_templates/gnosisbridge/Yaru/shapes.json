@@ -1,8 +1,7 @@
 {
   "Yaru": {
     "hash": "0x08b3a970ed97adf129059abd1030e73ebd6904533643bd35cfce0459bf3a0641",
-    "address": "0x30f64a297cc66a873FB603d1e89D5891962C25ba",
-    "chain": "ethereum",
+    "address": "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba",
     "blockNumber": 22281732
   }
 }

@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "silentdata",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xCcd285b1ccf1cdaB36Da995B9fC68870E287694E"],
+  "overrides": {
+    "eth:0x139Cf05B34D0EC49D3BFB9704EC4cEbA6ae95dD1": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0x1B99b322085dA031e68C1202fdB756b3FFbaC7A6": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
+    }
+  }
+}

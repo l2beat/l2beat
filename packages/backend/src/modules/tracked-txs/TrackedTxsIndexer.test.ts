@@ -51,7 +51,15 @@ describe(TrackedTxsIndexer.name, () => {
         trackedTxsClient,
         projects: [
           mockObject<TrackedTxProject>({
-            id: ProjectId('test'),
+            id: ProjectId('test1'),
+            isArchived: false,
+          }),
+          mockObject<TrackedTxProject>({
+            id: ProjectId('test2'),
+            isArchived: false,
+          }),
+          mockObject<TrackedTxProject>({
+            id: ProjectId('test3'),
             isArchived: false,
           }),
         ],
@@ -59,15 +67,15 @@ describe(TrackedTxsIndexer.name, () => {
 
       const configurations: Configuration<TrackedTxConfigEntry>[] = [
         actual<TrackedTxConfigEntry>('a', 100, null, {
-          projectId: ProjectId('test'),
+          projectId: ProjectId('test1'),
           type: 'liveness',
         }),
         actual<TrackedTxConfigEntry>('b', 100, null, {
-          projectId: ProjectId('test'),
+          projectId: ProjectId('test2'),
           type: 'l2costs',
         }),
         actual<TrackedTxConfigEntry>('c', 100, null, {
-          projectId: ProjectId('test'),
+          projectId: ProjectId('test3'),
           type: 'liveness',
         }),
       ]
@@ -92,13 +100,13 @@ describe(TrackedTxsIndexer.name, () => {
       expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenNthCalledWith(
         1,
         'liveness',
-        ['a', 'c'],
+        ['test1', 'test3'],
         UnixTime(to),
       )
       expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenNthCalledWith(
         2,
         'l2costs',
-        ['b'],
+        ['test2'],
         UnixTime(to),
       )
       expect(safeHeight).toEqual(to)

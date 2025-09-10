@@ -1,8 +1,7 @@
 {
   "OptimismPortal": {
     "hash": "0x106b0e020294fd04557c64727796c1a7afc80dba9c83e38e52b5282d4d1531f5",
-    "address": "0xEdE953bab7C50B2e5150316Ae0574F0cbA4068a9",
-    "chain": "ethereum",
+    "address": "eth:0xEdE953bab7C50B2e5150316Ae0574F0cbA4068a9",
     "blockNumber": 22297664
   }
 }

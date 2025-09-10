@@ -17,6 +17,8 @@ const mainnetSpokedisputeBlocks = discovery.getContractValue<number>(
   'disputeBlocks',
 )
 
+const paused = discovery.getContractValue<boolean>('ConnextBridge', 'paused')
+
 export const amarok: Bridge = {
   type: 'bridge',
   id: ProjectId('amarok'),
@@ -25,17 +27,22 @@ export const amarok: Bridge = {
     name: 'Connext',
     slug: 'connext',
     warning:
-      'This project [is winding down](https://bridge.connext.network/) and operations are migrating to [the Everclear Hub](https://l2beat.com/scaling/projects/everclear).',
+      'This project [is winding down](https://bridge.connext.network/) and operations are migrating to [the Everclear Hub](https://l2beat.com/scaling/projects/everclear).' +
+      (paused ? ' The main bridge escrow is paused.' : ''),
     description:
       'Connext is a multilayered system that aggregates various native AMBs in a Hub-and-Spoke architecture with Ethereum being the Hub receiving\
     messages from other domains. It implements a liquidity network on top of its Hub-and-Spoke architecture.',
     category: 'Liquidity Network',
     links: {
       bridges: ['https://bridge.connext.network/', 'https://connextscan.io/'],
-      websites: ['https://blog.connext.network/'],
+      websites: ['https://connext.network/'],
       documentation: ['https://docs.connext.network/'],
+      explorers: ['https://explorer.everclear.org/intents'],
       repositories: ['https://github.com/connext/monorepo'],
-      socialMedia: ['https://x.com/EverclearOrg', 'https://discord.gg/connext'],
+      socialMedia: [
+        'https://x.com/EverclearOrg',
+        'https://discord.com/invite/everclear',
+      ],
     },
   },
   milestones: [

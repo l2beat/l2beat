@@ -1,7 +1,7 @@
 {
   "name": "myria",
   "timestamp": 1741185779,
-  "configHash": "0xd49eb9ef192e848ecb816f4e54267990c7e7ac200d1a1d1ac3bc2672913984cd",
+  "configHash": "0xc795e9882ffecc94bc70afb920fd7ab1d0bc810075ca25a06c01a4f7a636b5ac",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -184,6 +184,13 @@
       "address": "eth:0x30cF77FC391B4Feba1AB31B01fEd442Bc759c0a8",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "address": "eth:0x52E6ECB50D8C89fE9CBad2ef44Ce962A430D8714",
@@ -690,5 +697,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 21981354 },
-  "permissionsConfigHash": "0x962ddafa82e70765aa0ba8a574a439bac0db16eee0c9f422a46736397a224628"
+  "permissionsConfigHash": "0x13539b2d31e14624324e158e2f105b4c4add7621d9dc722ca6967d27eedb134c"
 }

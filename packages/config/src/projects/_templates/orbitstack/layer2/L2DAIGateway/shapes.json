@@ -1,8 +1,7 @@
 {
   "L2DAIGateway": {
     "hash": "0x88d1226b13a00325eaaf0822116a64fc4a6a5dc3b56c15fc942a24a6be815715",
-    "address": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
-    "chain": "arbitrum",
+    "address": "arb1:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
     "blockNumber": 322488866
   }
 }

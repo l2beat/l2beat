@@ -1,7 +1,7 @@
 {
   "name": "satellite",
   "timestamp": 1717494911,
-  "configHash": "0x589894b5759238ff326f96a1eb689236363d4139c06b692bed53cb2b42b62765",
+  "configHash": "0xf2fc637065ec8f84c369f39690bd36a7e6d7e1fa51a477efdbed16fcc3df36bc",
   "entries": [
     {
       "address": "eth:0x027c1882B975E2cd771AE068b0389FA38B9dda73",

@@ -1,14 +1,12 @@
 {
   "RegistryCoordinator": {
     "hash": "0x223309c7d816ce318a9371a50683d99b1ace4ccb775c4a4b3e6ec1238f0a5c68",
-    "address": "0xdcabf0bE991d4609096CCe316df08d091356E03F",
-    "chain": "ethereum",
+    "address": "eth:0xdcabf0bE991d4609096CCe316df08d091356E03F",
     "blockNumber": 22188285
   },
   "RegistryCoordinator_v2": {
     "hash": "0x7e7c9cae80b660c369700ce034c417e93999b08e43dabd1c37a1e76599552575",
-    "address": "0x2088435ABcB1234A9427B755931C9064C93a2595",
-    "chain": "ethereum",
+    "address": "eth:0x2088435ABcB1234A9427B755931C9064C93a2595",
     "blockNumber": 22596592
   }
 }

@@ -1,8 +1,7 @@
 {
   "Wormhole": {
     "hash": "0xed43992073f048d50955578734b2138957f1a16aae92f681f512d7135d3658fe",
-    "address": "0x621199f6beB2ba6fbD962E8A52A320EA4F6D4aA3",
-    "chain": "arbitrum",
+    "address": "arb1:0x621199f6beB2ba6fbD962E8A52A320EA4F6D4aA3",
     "blockNumber": 351071173
   }
 }

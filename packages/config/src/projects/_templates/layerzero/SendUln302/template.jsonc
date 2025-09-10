@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Send Library used by LayerZero, defining the protocol/execution of sent messages.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure the settings of this library, affecting all OApps that have not set up a custom security config."
+        }
+      ]
+    }
+  }
+}

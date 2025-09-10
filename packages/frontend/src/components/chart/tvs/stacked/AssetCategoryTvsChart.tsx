@@ -12,6 +12,7 @@ import {
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../../types'
@@ -175,7 +176,7 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-44 xs:w-56! flex-col">
+      <div className="flex w-46 flex-col sm:w-66!">
         <div className="font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>
@@ -214,11 +215,20 @@ function CustomTooltip({
                     {config.label}
                   </span>
                 </span>
-                <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.value !== null && entry.value !== undefined
-                    ? formatCurrency(entry.value, unit)
-                    : 'No data'}
-                </span>
+                <div className="flex items-end justify-end gap-1 max-sm:flex-col sm:items-center">
+                  <span className="whitespace-nowrap font-medium text-label-value-15">
+                    {entry.value !== null && entry.value !== undefined
+                      ? formatCurrency(entry.value, unit)
+                      : 'No data'}
+                  </span>
+                  {entry.value !== null &&
+                    entry.value !== undefined &&
+                    total !== null && (
+                      <span className="font-medium text-label-value-13 text-secondary sm:text-label-value-15">
+                        ({formatPercent(entry.value / total)})
+                      </span>
+                    )}
+                </div>
               </div>
             )
           })}

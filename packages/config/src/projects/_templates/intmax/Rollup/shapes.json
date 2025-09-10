@@ -1,8 +1,7 @@
 {
   "Rollup": {
     "hash": "0xfbb7d02542bc666f4b049d5138aced4257fcc21b784009966f830eae7b197643",
-    "address": "0xF34299210fB8505232649e9BEa14a84DD75e746b",
-    "chain": "scroll",
+    "address": "scr:0xF34299210fB8505232649e9BEa14a84DD75e746b",
     "blockNumber": 17474807
   }
 }

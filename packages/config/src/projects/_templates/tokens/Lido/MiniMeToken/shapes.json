@@ -1,8 +1,7 @@
 {
   "MiniMeToken": {
     "hash": "0x1098670857010f37e15b128a92baa1ccb42e961bd5e02b478a0c69fd8d66eb46",
-    "address": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
-    "chain": "ethereum",
+    "address": "eth:0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
     "blockNumber": 22188285
   }
 }

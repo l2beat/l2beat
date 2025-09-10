@@ -1,7 +1,7 @@
 {
   "name": "lumia",
   "timestamp": 1753192367,
-  "configHash": "0x635d409aeda5e1936764a0fa10f3138febc2647a50741fbb024978ee63c6989e",
+  "configHash": "0xdae21db93212f3a49a1596721199d324914ce46334c45f4fbf6f3dca1c627b7d",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -74,6 +74,27 @@
         "eth:0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB": "PolygonDataCommittee"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "PolygonSharedBridge",
+      "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
+      "name": "PolygonRollupManager",
+      "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
+      "name": "PolygonGlobalExitRootV2",
+      "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "address": "eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
@@ -425,5 +446,5 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 22975137 },
-  "permissionsConfigHash": "0x99bffd58b08a3f87c234b26b22bb5452a5f61a3b3ee6704790d46347808d5c01"
+  "permissionsConfigHash": "0xe72eadf6fb77e48d547d5555f1ef82ec4589892da25dc229c7a8c65bf1df00c6"
 }

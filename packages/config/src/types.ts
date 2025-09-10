@@ -368,6 +368,8 @@ export interface ProjectScalingProofSystem {
   name?: string
   /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
   zkCatalogId?: string
+  /** Challenge protocol of the proof system. Configured only for optimistic proof systems. */
+  challengeProtocol?: 'Interactive' | 'Single-step'
 }
 
 export type ProjectScalingCapability = 'universal' | 'appchain'
@@ -428,6 +430,7 @@ export type ProjectScalingPurpose =
   | 'RWA'
   | 'IoT'
   | 'Restaking'
+  | 'Enterprise'
 
 export type ProjectScalingStage =
   | StageNotApplicable
@@ -1007,7 +1010,7 @@ export interface ProjectPermissionedAccount {
   url: string
   address: ChainSpecificAddress
   isVerified: boolean
-  type: 'EOA' | 'Contract'
+  type: 'EOA' | 'Contract' | 'Reference'
 }
 
 export interface ProjectContracts {

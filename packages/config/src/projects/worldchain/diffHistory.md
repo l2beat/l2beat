@@ -1,4 +1,29 @@
-Generated with discovered.json: 0xde61ccbd002c6dc7807ce8ddb3ca1b7ec5024115
+Generated with discovered.json: 0xcbec4e3fdc837aa5c892db56860599af069c5e2d
+
+# Diff at Mon, 08 Sep 2025 14:40:31 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6e5af02c5100c2570f6cffd305339a1ef7226578 block: 1756453110
+- current timestamp: 1757342364
+
+## Description
+
+gas limit increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        48000000
++        50000000
+    }
+```
+
+Generated with discovered.json: 0x686f04ff2ed746071820120d1e16db69622ce007
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

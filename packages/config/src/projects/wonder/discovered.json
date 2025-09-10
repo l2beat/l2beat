@@ -1,9 +1,16 @@
 {
   "name": "wonder",
   "timestamp": 1753944481,
-  "configHash": "0xebd1ae837e32b1bed4a63a8932e8918b3fad005886da5f90557441d50fe56693",
+  "configHash": "0x0e31faa33a0a26137234693b06e84ae93b55ed5307f488d8dbbe373911954b84",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
+    {
+      "name": "BridgeHub",
+      "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
+    },
     {
       "name": "Wonder Multisig",
       "address": "eth:0x4665ad531c35b02dE090E21FC57B69946434bf2b",
@@ -279,6 +286,13 @@
           "role": ".validatorsVTL"
         }
       ]
+    },
+    {
+      "name": "ChainTypeManager",
+      "address": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "name": "zkVmDiamond",
@@ -602,6 +616,13 @@
       "address": "eth:0xd6347fFF922b3fFdeAD6Fea21032A9c9fDf8d3B6",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ProtocolUpgradeHandler",
+      "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0xE77207Eb0B345Bbe4C3345e0C5F6A626523fefd8",
@@ -1052,5 +1073,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23037398 },
-  "permissionsConfigHash": "0xe293970dedf4a6d10897ca7e932ca4c81ed55346bdfc4f1856b186ac6391f93c"
+  "permissionsConfigHash": "0x1370941e63dbf97b345ac9d35f395b013386115719452921347cfe7790e7d659"
 }

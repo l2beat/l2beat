@@ -1,8 +1,7 @@
 {
   "L1SharedBridge": {
     "hash": "0x23ebe4dfc517328a5acc1f6f8aa84be593be5db9d6357fcdcd69c62ca60853f7",
-    "address": "0xF5A14DCdde1143443f06033200D345c2a2828A99",
-    "chain": "ethereum",
+    "address": "eth:0xF5A14DCdde1143443f06033200D345c2a2828A99",
     "blockNumber": 22188285
   }
 }

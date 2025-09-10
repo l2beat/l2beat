@@ -7,25 +7,26 @@ import { TrustedSetupCell } from '~/pages/zk-catalog/v2/components/TrustedSetupC
 import { VerifiedCountWithDetails } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import type {
   ScalingRiskStateValidationOptimisticEntry,
-  ScalingRiskStateValidationZkEntry,
+  ScalingRiskStateValidationValidityEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 
-const zkColumnHelper = createColumnHelper<ScalingRiskStateValidationZkEntry>()
+const validityColumnHelper =
+  createColumnHelper<ScalingRiskStateValidationValidityEntry>()
 
-export const scalingRiskStateValidationColumns = [
+export const scalingRiskStateValidationValidityColumns = [
   ...getScalingCommonProjectColumns(
-    zkColumnHelper,
+    validityColumnHelper,
     (row) => `/scaling/projects/${row.slug}#state-validation`,
   ),
-  zkColumnHelper.accessor('proofSystem', {
+  validityColumnHelper.accessor('proofSystem', {
     header: 'Proof system',
-    cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
+    cell: (ctx) => <ProofSystemCell {...ctx.row.original} hideType />,
     meta: {
       tooltip:
         'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
     },
   }),
-  zkColumnHelper.accessor('executionDelay', {
+  validityColumnHelper.accessor('executionDelay', {
     header: 'Execution Delay',
     cell: (ctx) => (
       <TableValueCell
@@ -42,7 +43,7 @@ export const scalingRiskStateValidationColumns = [
       />
     ),
   }),
-  zkColumnHelper.accessor('isa', {
+  validityColumnHelper.accessor('isa', {
     header: 'ISA',
     cell: (ctx) => (
       <TableValueCell
@@ -61,7 +62,7 @@ export const scalingRiskStateValidationColumns = [
         'Instruction Set Architecture (ISA) specifies the virtual machine or computational model that the proof system targets when generating proofs.',
     },
   }),
-  zkColumnHelper.accessor('trustedSetupsByProofSystem', {
+  validityColumnHelper.accessor('trustedSetupsByProofSystem', {
     header: 'Trusted setup',
     cell: (ctx) => {
       const trustedSetupEntries = Object.entries(
@@ -84,7 +85,7 @@ export const scalingRiskStateValidationColumns = [
         'Trusted setup information for the proof system used by this project',
     },
   }),
-  zkColumnHelper.display({
+  validityColumnHelper.display({
     id: 'verifiers',
     header: 'Verifiers',
     cell: (ctx) => {
@@ -120,7 +121,7 @@ export const scalingRiskStateValidationOptimisticColumns = [
   ),
   optimisticColumnHelper.accessor('proofSystem', {
     header: 'Proof system',
-    cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
+    cell: (ctx) => <ProofSystemCell {...ctx.row.original} hideType />,
     meta: {
       tooltip:
         'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',

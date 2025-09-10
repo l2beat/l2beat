@@ -1,14 +1,12 @@
 {
   "FaultDisputeGame.sol": {
     "hash": "0x41942b2c90ded6bd7da7f87e7398c6b118638d9c97de7bede373140ecabc23d1",
-    "address": "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
-    "chain": "ethereum",
+    "address": "eth:0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
     "blockNumber": 22517630
   },
   "FaultDisputeGame_2": {
     "hash": "0xdb0bc4b729d8cc8e76dd61589bf15ae77b281c791ca8a7c9c615f855d0e1be37",
-    "address": "0xD362F83945118dC953924Da1E30D7029b9Cf113d",
-    "chain": "ethereum",
+    "address": "eth:0xD362F83945118dC953924Da1E30D7029b9Cf113d",
     "blockNumber": 23019188
   }
 }
