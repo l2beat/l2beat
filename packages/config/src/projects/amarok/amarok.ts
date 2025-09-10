@@ -36,7 +36,10 @@ export const amarok: Bridge = {
       documentation: ['https://docs.connext.network/'],
       explorers: ['https://explorer.everclear.org/intents'],
       repositories: ['https://github.com/connext/monorepo'],
-      socialMedia: ['https://x.com/EverclearOrg', 'https://discord.com/invite/everclear'],
+      socialMedia: [
+        'https://x.com/EverclearOrg',
+        'https://discord.com/invite/everclear',
+      ],
     },
   },
   milestones: [
