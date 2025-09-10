@@ -614,6 +614,12 @@ export const linea: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Linea halts for 1 hour',
+      url: 'https://x.com/DeclanFox14/status/1965677827488903320',
+      date: '2025-09-10T00:00:00Z',
+      type: 'incident',
+    },
+    {
       title: 'Proof system is complete',
       url: 'https://x.com/LineaBuild/status/1932172959587913816',
       date: '2024-06-09T00:00:00Z',
