@@ -1,18 +1,18 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL3 } from '../../templates/underReview'
+import { orbitStackL3 } from '../../templates/orbitStack'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
-export const onyx: ScalingProject = underReviewL3({
-  id: 'onyx',
+const discovery = new ProjectDiscovery('onyx')
+
+export const onyx: ScalingProject = orbitStackL3({
+  discovery,
   capability: 'universal',
   addedAt: UnixTime(1744637831),
   hostChain: ProjectId('base'),
-  badges: [
+  additionalBadges: [
     BADGES.RaaS.Conduit,
-    BADGES.Stack.Orbit,
-    BADGES.DA.DAC,
-    BADGES.VM.EVM,
   ],
   associatedTokens: ['XCN'],
   display: {
@@ -20,7 +20,6 @@ export const onyx: ScalingProject = underReviewL3({
     slug: 'onyx',
     description:
       'Onyx is a modular blockchain designed for financial-grade applications, offering near-instant confirmations and low fees.',
-    purposes: ['Universal'],
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://onyx.org/'],
@@ -35,11 +34,10 @@ export const onyx: ScalingProject = underReviewL3({
       ],
     },
   },
-  dataAvailability: undefined,
-  proofSystem: {
-    type: 'Optimistic',
-  },
-  chainConfig: {
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+ chainConfig: {
     name: 'onyx',
     gasTokens: ['XCN'],
     chainId: 80888,
@@ -51,20 +49,9 @@ export const onyx: ScalingProject = underReviewL3({
       },
     ],
   },
-  ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
-  },
-  activityConfig: {
+ activityConfig: {
     type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
-  },
-  escrows: [
-    {
-      address: EthereumAddress('0xcdf10130c75D42a3880Ae521734EaA8631aC2905'), // bridge
-      sinceTimestamp: UnixTime(1737855297),
-      tokens: ['XCN'],
-      chain: 'base',
-    },
-  ],
+  }
 })
