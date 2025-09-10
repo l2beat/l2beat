@@ -29,20 +29,20 @@ export function ScalingStablecoinPercentageChart({ filter, range }: Props) {
   })
 
   const allItemNames = useMemo(() => {
-    return Object.keys(data?.chart.at(-1)?.[1] ?? {})
+    return Object.keys(data?.stablecoins ?? {})
   }, [data])
 
   const chartData: { name: string; value: number }[] | undefined =
     useMemo(() => {
-      const last = data?.chart.at(-1)?.[1] ?? {}
+      const last = data?.stablecoins ?? {}
       return Object.entries(last)
-        .map(([name, value]) => {
+        .map(([name, data]) => {
           if (excluded.includes(name)) {
             return
           }
           return {
             name,
-            value,
+            value: data.value,
           }
         })
         .filter((e) => e !== undefined)

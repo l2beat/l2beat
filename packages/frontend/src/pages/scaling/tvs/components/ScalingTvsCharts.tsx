@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
+import { ScalingEtherAndStablecoinPercentageChart } from '~/components/chart/tvs/percentage/ScalingEtherAndStablecoinPercentageChart'
 import { ScalingEtherPercentageChart } from '~/components/chart/tvs/percentage/ScalingEtherPercentageChart'
 import { ScalingStablecoinPercentageChart } from '~/components/chart/tvs/percentage/ScalingStablecoinPercentageChart'
 import { ScalingAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ScalingAssetCategoryTvsChart'
@@ -103,6 +104,10 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
         className="-mx-4 md:-mx-6 pb-1! lg:hidden"
         charts={[byBridgeTypeChart, byAssetSourceChart]}
       />
+      <p className="mb-3 text-label-value-16">
+        Version 1: separate charts with colors based on the percentage change
+        (ETH) and predefined colors (Stablecoins)
+      </p>
       <div className="mb-3 grid h-[300px] grid-cols-2 gap-x-6 max-lg:hidden">
         {etherPercentageChart}
         {stablecoinPercentageChart}
@@ -111,6 +116,15 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
         className="-mx-4 md:-mx-6 pb-1! lg:hidden"
         charts={[etherPercentageChart, stablecoinPercentageChart]}
       />
+      <p className="mb-3 text-label-value-16">
+        Version 2: combined charts with colors based on the percentage change
+      </p>
+      <div className="mb-3">
+        <ScalingEtherAndStablecoinPercentageChart
+          filter={filter}
+          range={timeRange}
+        />
+      </div>
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
           <Checkbox
