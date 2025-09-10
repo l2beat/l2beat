@@ -3,6 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
+import { BADGES } from '../../common/badges'
 
 const discovery = new ProjectDiscovery('powerloom')
 
@@ -11,6 +12,7 @@ export const powerloom: ScalingProject = orbitStackL2({
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
   ],
+  additionalBadges: [BADGES.RaaS.Conduit],
   discovery,
   capability: 'universal',
   addedAt: UnixTime(1741768931),
