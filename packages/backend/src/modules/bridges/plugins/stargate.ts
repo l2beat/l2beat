@@ -10,17 +10,23 @@ import {
 const parseOFTSent = createEventParser(
   'event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)',
 )
-export const StargateV2OFTSentBus = createBridgeEventType<{
+export const StargateV2OFTSentBusRode = createBridgeEventType<{
   guid: string
   emitter: EthereumAddress
   token: string
   ticketId: number
   receiver: string
   destinationEid: number
+  tokenAddress: EthereumAddress
+  amountSentLD: number
+  amountReceivedLD: number
+  amountSD: number
 }>('stargatev2.OFTSentBus')
 
 export const StargateV2OFTSentTaxi = createBridgeEventType<{
   guid: string
+  amountSentLD: number
+  amountReceivedLD: number
 }>('stargatev2.OFTSentTaxi')
 
 const parseOFTReceived = createEventParser(
@@ -31,7 +37,9 @@ export const StargateV2OFTReceived = createBridgeEventType<{
   receiver: string
   emitter: EthereumAddress
   token: string
+  tokenAddress: EthereumAddress
   destinationEid: number
+  amountReceivedLD: number
 }>('stargatev2.OFTReceived')
 
 const parseBusDriven = createEventParser(
@@ -54,10 +62,14 @@ const NETWORKS = [
     eid: 30101,
     nativePool: {
       address: EthereumAddress('0x77b2043768d28E9C9aB44E1aBfC95944bcE57931'),
+      tokenAddress: EthereumAddress.ZERO,
       token: 'ETH',
     },
     usdcPool: {
       address: EthereumAddress('0xc026395860Db2d07ee33e05fE50ed7bD583189C7'),
+      tokenAddress: EthereumAddress(
+        '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+      ),
       token: 'USDC',
     },
     tokenMessaging: EthereumAddress(
@@ -69,10 +81,14 @@ const NETWORKS = [
     eid: 30110,
     nativePool: {
       address: EthereumAddress('0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F'),
+      tokenAddress: EthereumAddress.ZERO,
       token: 'ETH',
     },
     usdcPool: {
       address: EthereumAddress('0xe8CDF27AcD73a434D661C84887215F7598e7d0d3'),
+      tokenAddress: EthereumAddress(
+        '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+      ),
       token: 'USDC',
     },
     tokenMessaging: EthereumAddress(
@@ -84,10 +100,14 @@ const NETWORKS = [
     eid: 30184,
     nativePool: {
       address: EthereumAddress('0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7'),
+      tokenAddress: EthereumAddress.ZERO,
       token: 'ETH',
     },
     usdcPool: {
       address: EthereumAddress('0x27a16dc786820B16E5c9028b75B99F6f604b5d26'),
+      tokenAddress: EthereumAddress(
+        '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+      ),
       token: 'USDC',
     },
     tokenMessaging: EthereumAddress(
@@ -141,19 +161,25 @@ export class StargatePlugin implements BridgePlugin {
             (t) => t.address === EthereumAddress(input.log.address),
           )
           if (pool) {
-            return StargateV2OFTSentBus.create(input.ctx, {
+            return StargateV2OFTSentBusRode.create(input.ctx, {
               guid: oftSent.guid,
               ticketId: Number(busRode.ticketId),
               receiver: decodeBusPassenger(busRode.passenger).receiver,
               emitter: EthereumAddress(input.log.address),
               token: pool.token,
               destinationEid: oftSent.dstEid,
+              tokenAddress: pool.tokenAddress,
+              amountSentLD: Number(oftSent.amountSentLD),
+              amountReceivedLD: Number(oftSent.amountReceivedLD),
+              amountSD: Number(decodeBusPassenger(busRode.passenger).amountSD),
             })
           }
         }
       } else if (oftSent) {
         return StargateV2OFTSentTaxi.create(input.ctx, {
           guid: oftSent.guid,
+          amountSentLD: Number(oftSent.amountSentLD),
+          amountReceivedLD: Number(oftSent.amountReceivedLD),
         })
       }
     }
@@ -190,7 +216,9 @@ export class StargatePlugin implements BridgePlugin {
       receiver: oftReceived.toAddress,
       emitter: EthereumAddress(input.log.address),
       token: pool.token,
+      tokenAddress: pool.tokenAddress,
       destinationEid,
+      amountReceivedLD: Number(oftReceived.amountReceivedLD),
     })
   }
 

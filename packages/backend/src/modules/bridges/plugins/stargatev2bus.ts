@@ -2,12 +2,13 @@ import { PacketDelivered, PacketSent } from './layerzerov2'
 import {
   StargateV2BusDriven,
   StargateV2OFTReceived,
-  StargateV2OFTSentBus,
+  StargateV2OFTSentBusRode,
 } from './stargate'
 import type {
   BridgeEvent,
   BridgeEventDb,
   BridgePlugin,
+  BridgeTransfer,
   MatchResult,
 } from './types'
 
@@ -46,7 +47,7 @@ export class StargateV2BusPlugin implements BridgePlugin {
       i < busDriven.args.startTicketId + busDriven.args.numPassengers;
       i++
     ) {
-      const oftSent = db.find(StargateV2OFTSentBus, {
+      const oftSent = db.find(StargateV2OFTSentBusRode, {
         ticketId: i,
         destinationEid: destinationEid,
         token: token,
@@ -58,7 +59,7 @@ export class StargateV2BusPlugin implements BridgePlugin {
       oftSents.push(oftSent)
     }
 
-    const transfers = []
+    const transfers: BridgeTransfer[] = []
     for (const ticket of oftSents) {
       const received = oftReceived.find(
         (o) =>
@@ -66,7 +67,6 @@ export class StargateV2BusPlugin implements BridgePlugin {
           // It is an edge case to have duplicate receivers in the same Bus
           o.args.receiver.toLowerCase() === ticket.args.receiver.toLowerCase(),
       )
-      // TODO: additionally match by associated message (incl guid)
       if (!received) {
         return
       }
@@ -74,8 +74,16 @@ export class StargateV2BusPlugin implements BridgePlugin {
       transfers.push({
         type: 'stargatev2bus.App',
         events: [ticket],
-        outbound: { tx: ticket.ctx },
-        inbound: { tx: received.ctx },
+        outbound: {
+          tx: ticket.ctx,
+          tokenAddress: ticket.args.tokenAddress,
+          amount: ticket.args.amountSentLD.toString(),
+        },
+        inbound: {
+          tx: received.ctx,
+          tokenAddress: received.args.tokenAddress,
+          amount: received.args.amountReceivedLD.toString(),
+        },
       })
     }
 
