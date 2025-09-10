@@ -40,10 +40,21 @@ export class StargateV2TaxiPlugin implements BridgePlugin {
           outbound: packetSent,
           inbound: packetDelivered,
         },
+      ],
+      transfers: [
         {
           type: 'stargatev2taxi.App',
-          outbound: event,
-          inbound: oftReceived,
+          events: [event, oftReceived],
+          outbound: {
+            tx: event.ctx,
+            tokenAddress: event.args.tokenAddress,
+            amount: event.args.amountSentLD.toString(),
+          },
+          inbound: {
+            tx: oftReceived.ctx,
+            tokenAddress: oftReceived.args.tokenAddress,
+            amount: oftReceived.args.amountReceivedLD.toString(),
+          },
         },
       ],
     }
