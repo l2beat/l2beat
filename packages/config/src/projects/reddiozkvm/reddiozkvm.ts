@@ -22,7 +22,10 @@ export const reddiozkvm: ScalingProject = underReviewL2({
         'https://reddio.com/redSonic',
       ],
       documentation: ['https://docs.reddio.com/'],
-      explorers: ['https://explorer.reddio.com/'],
+      explorers: [
+        'https://reddio.cloud.blockscout.com/',
+        'https://explorer.reddio.com/',
+      ],
       repositories: ['https://github.com/reddio-com/reddio'],
       socialMedia: [
         'https://twitter.com/reddio_com',
