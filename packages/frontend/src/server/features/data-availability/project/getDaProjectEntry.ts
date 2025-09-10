@@ -100,7 +100,14 @@ export async function getDaProjectEntry(
   const bridges = (
     await ps.getProjects({
       select: ['daBridge', 'display', 'statuses'],
-      optional: ['permissions', 'contracts', 'discoveryInfo'],
+      optional: [
+        'permissions',
+        'contracts',
+        'discoveryInfo',
+        'trackedTxsConfig',
+        'livenessConfig',
+        'archivedAt',
+      ],
     })
   ).filter((x) => x.daBridge.daLayer === layer.id)
 
@@ -136,7 +143,7 @@ export async function getDaProjectEntry(
   )
 
   const sections = await getRegularDaProjectSections({
-    layer: layer,
+    layer,
     bridge: selected,
     isVerified: true,
     projectsChangeReport,
