@@ -9286,7 +9286,7 @@
       "amount": {
         "type": "totalSupply",
         "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-        "chain": "polygonpos",
+        "chain": "polygon-pos",
         "decimals": 6,
         "sinceTimestamp": 1737590400
       },
