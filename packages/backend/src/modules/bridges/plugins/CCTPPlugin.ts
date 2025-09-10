@@ -9,6 +9,7 @@ import {
   type LogToCapture,
   type MatchResult,
 } from './types'
+import { NETWORKS } from './wormhole'
 
 const parseMessageSent = createEventParser('event MessageSent(bytes message)')
 
@@ -27,7 +28,7 @@ export const CCTPv1MessageSent = createBridgeEventType<{
 
 export const CCTPv1MessageReceived = createBridgeEventType<{
   caller: EthereumAddress
-  sourceDomain: number
+  sourceDomain: string
   nonce: number
   messageBody: string
 }>('CCTPv1.MessageReceived')
@@ -45,7 +46,7 @@ export const CCTPv2MessageReceived = createBridgeEventType<{
   app?: string
   hookData?: string
   caller: EthereumAddress
-  sourceDomain: number
+  sourceDomain: string
   nonce: number
   sender: EthereumAddress
   finalityThresholdExecuted: number
@@ -95,7 +96,10 @@ export class CCTPPlugin implements BridgePlugin {
     if (v1MessageReceived) {
       return CCTPv1MessageReceived.create(input.ctx, {
         caller: EthereumAddress(v1MessageReceived.caller),
-        sourceDomain: Number(v1MessageReceived.sourceDomain),
+        sourceDomain:
+          NETWORKS.find(
+            (n) => n.wormholeChainId === Number(v1MessageReceived.sourceDomain),
+          )?.chain || '???',
         nonce: Number(v1MessageReceived.nonce),
         messageBody: v1MessageReceived.messageBody,
       })
@@ -110,7 +114,10 @@ export class CCTPPlugin implements BridgePlugin {
         app: burnMessage ? 'TokenMessengerV2' : undefined,
         hookData: burnMessage?.hookData,
         caller: EthereumAddress(v2MessageReceived.caller),
-        sourceDomain: Number(v2MessageReceived.sourceDomain),
+        sourceDomain:
+          NETWORKS.find(
+            (n) => n.wormholeChainId === Number(v2MessageReceived.sourceDomain),
+          )?.chain || '???',
         nonce: Number(v2MessageReceived.nonce),
         sender: EthereumAddress(`0x${v2MessageReceived.sender.slice(-40)}`),
         finalityThresholdExecuted: Number(
