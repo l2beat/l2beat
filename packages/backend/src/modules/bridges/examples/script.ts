@@ -81,18 +81,13 @@ const cmd = command({
 
     const eventDb = new InMemoryEventDb(events)
 
-    outer: for (const event of events) {
-      for (const plugin of plugins) {
-        if (!plugin.match) {
-          continue
-        }
-
-        const matched = plugin.match(event, eventDb)
-
-        if (matched) {
-          logger.info('Matched', matched)
-          break outer
-        }
+    for (const plugin of plugins) {
+      if (!plugin.match) {
+        continue
+      }
+      const matched = plugin.match(event, eventDb)
+      if (matched) {
+        logger.info('Matched', matched)
       }
     }
   },

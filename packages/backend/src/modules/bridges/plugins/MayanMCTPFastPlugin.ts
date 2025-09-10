@@ -1,6 +1,6 @@
 
 
-import { MessageReceived, MessageSent } from './cctpv2'
+import { CCTPv2BurnMessageSent, CCTPv2BurnMessageReceived } from './CCTPPlugin'
 import {
   BridgeEvent,
   BridgeEventDb,
@@ -35,23 +35,20 @@ export class MayanMCTPFastPlugin implements BridgePlugin {
     if (!OrderFulfilled.checkType(orderFulfilled)) {
       return
     }
-    console.log('orderFulfilled found', orderFulfilled)
     // find MessageReceived with the same txHash as OrderFulfilled
-    const messageReceived = db.find(MessageReceived, {
+    const messageReceived = db.find(CCTPv2BurnMessageReceived, {
       txHash: orderFulfilled.args.txHash
     })
     if (!messageReceived) {
       return
     }
-    console.log('messageReceived found', messageReceived)
     // find MessageSent with the same body as MessageReceived
-    const messageSent = db.find(MessageSent, {
-      message: messageReceived.args.messageBody,
+    const messageSent = db.find(CCTPv2BurnMessageSent, {
+      hookData: messageReceived.args.hookData,
     })
     if (!messageSent) {
       return
     }
-    console.log('messageSent found', messageSent)
 
     return {
       messages: [
@@ -107,18 +104,18 @@ Dst message passed to msg tranmitter
 00                                                                // referrerBps
 
 // encodePacked struct in a hook data
-  	struct OrderPayload {
-		 uint8 payloadType;
-		 bytes32 destAddr;
-		 bytes32 tokenOut;
-		 uint64 amountOutMin;
-		 uint64 gasDrop;
-		 uint64 redeemFee;
-		 uint64 refundFee;
-		 uint64 deadline;
-		 bytes32 referrerAddr;
-		 uint8 referrerBps;
-	}
+    struct OrderPayload {
+     uint8 payloadType;
+     bytes32 destAddr;
+     bytes32 tokenOut;
+     uint64 amountOutMin;
+     uint64 gasDrop;
+     uint64 redeemFee;
+     uint64 refundFee;
+     uint64 deadline;
+     bytes32 referrerAddr;
+     uint8 referrerBps;
+  }
 
 CCTPMessage from Mayan via CCTP Token Transfer consists of:
 

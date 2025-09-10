@@ -1,4 +1,4 @@
-import { MessageReceived, MessageSent } from './cctpv1'
+import { CCTPv1MessageSent, CCTPv1MessageReceived } from './CCTPPlugin'
 import type {
   BridgeEvent,
   BridgeEventDb,
@@ -7,17 +7,17 @@ import type {
 } from './types'
 import { LogMessagePublished } from './wormhole'
 
-export class MayanPlugin implements BridgePlugin {
+export class MayanMctpPlugin implements BridgePlugin {
   name = 'mayan'
   chains = ['ethereum', 'arbitrum', 'base']
 
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!MessageReceived.checkType(event)) {
+    if (!CCTPv1MessageReceived.checkType(event)) {
       return
     }
 
-    const messageSent = db.find(MessageSent, {
-      message: event.args.messageBody,
+    const messageSent = db.find(CCTPv1MessageSent, {
+      messageBody: event.args.messageBody,
     })
     if (!messageSent) {
       return
