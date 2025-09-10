@@ -46,6 +46,7 @@ type SectionId =
   | 'sequencing'
   | 'throughput'
   | 'data-posted'
+  | 'proof-system'
 
 type GroupId = 'da-layer' | 'da-bridge'
 

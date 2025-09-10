@@ -93,5 +93,16 @@ export async function getZkCatalogProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
+  if (project.zkCatalogInfo.proofSystemInfo) {
+    sections.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'proof-system',
+        title: 'Proof System',
+        content: project.zkCatalogInfo.proofSystemInfo,
+      },
+    })
+  }
+
   return { ...common, sections }
 }

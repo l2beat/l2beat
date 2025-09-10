@@ -1,7 +1,12 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
+import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
+import { MobileProjectNavigation } from '~/components/projects/navigation/MobileProjectNavigation'
+import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
+import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
@@ -22,6 +27,10 @@ export function ZkCatalogProjectPage({
   queryState,
   ...props
 }: Props) {
+  const navigationSections = projectDetailsToNavigationSections(
+    projectEntry.sections,
+  )
+  const isNavigationEmpty = navigationSections.length === 0
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
@@ -30,8 +39,12 @@ export function ZkCatalogProjectPage({
             className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
             data-project-page
           >
+            {!isNavigationEmpty && (
+              <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
+                <MobileProjectNavigation sections={navigationSections} />
+              </div>
+            )}
             <div className="relative z-0 max-md:bg-surface-primary">
-              <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
               <div className="pt-6 max-md:px-4 lg:w-[calc(100%-196px)] lg:pt-4">
                 <ProjectHeader
                   project={projectEntry}
@@ -54,10 +67,26 @@ export function ZkCatalogProjectPage({
               <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
                 <div>
                   <ProjectZkCatalogSummary project={projectEntry} />
+                  <HighlightableLinkContextProvider>
+                    <ProjectDetails items={projectEntry.sections} />
+                  </HighlightableLinkContextProvider>
                 </div>
+                {!isNavigationEmpty && (
+                  <div className="mt-2 hidden shrink-0 lg:block">
+                    <DesktopProjectNavigation
+                      project={{
+                        title: projectEntry.shortName ?? projectEntry.name,
+                        slug: projectEntry.slug,
+                        isUnderReview: !!projectEntry.underReviewStatus,
+                        icon: projectEntry.icon,
+                      }}
+                      sections={navigationSections}
+                    />
+                  </div>
+                )}
               </div>
+              <ScrollToTopButton />
             </div>
-            <ScrollToTopButton />
           </div>
         </SideNavLayout>
       </HydrationBoundary>
