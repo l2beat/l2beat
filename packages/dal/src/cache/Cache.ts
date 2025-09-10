@@ -32,21 +32,24 @@ export class Cache {
   }
 
   async write(key: string, data: unknown, expires: number) {
-    // TODO add persistent connection and session handling
-    await this.client.connect()
+    await this.connect()
     await this.client.set(key, JSON.stringify(data), {
       EX: expires,
     })
-    await this.client.disconnect()
   }
 
   async read(key: string): Promise<unknown | undefined> {
-    await this.client.connect()
+    await this.connect()
     const data = await this.client.get(key)
-    await this.client.disconnect()
     if (!data) {
       return undefined
     }
     return JSON.parse(data)
+  }
+
+  private async connect() {
+    // opening a connection takes significant time so it's better to keep it open
+    if (this.client.isReady) return
+    await this.client.connect()
   }
 }
