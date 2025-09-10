@@ -12,7 +12,6 @@ import { WormholePlugin } from './wormhole'
 
 export function createBridgePlugins(logger: Logger): BridgePlugin[] {
   return [
-    new StargatePlugin(),
     new MayanSwift(),
     new MayanMctpPlugin(),
     new MayanMctpFastPlugin(),
