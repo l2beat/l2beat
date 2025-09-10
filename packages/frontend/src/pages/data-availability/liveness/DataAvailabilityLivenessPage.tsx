@@ -15,6 +15,7 @@ import {
 } from '~/pages/scaling/liveness/components/LivenessTimeRangeContext'
 import { LivenessTimeRangeControls } from '~/pages/scaling/liveness/components/LivenessTimeRangeControls'
 import type { DaLivenessEntry } from '~/server/features/data-availability/liveness/getDaLivenessEntries'
+import { PublicSystemInfo } from '../components/DaCategoryInfo'
 import { DaLivenessTable } from './components/table/DaLivenessTable'
 
 interface Props extends AppLayoutProps {
@@ -38,6 +39,7 @@ export function DataAvailabilityLivenessPage({
               </DirectoryTabsTrigger>
             </DirectoryTabsList>
             <DirectoryTabsContent value="public">
+              <PublicSystemInfo />
               <DaLivenessTable items={publicSystems} />
             </DirectoryTabsContent>
           </DirectoryTabs>
