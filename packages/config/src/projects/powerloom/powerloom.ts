@@ -1,8 +1,7 @@
-import { ChainSpecificAddress, EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { ScalingProject } from '../../internalTypes'
-import { underReviewL2 } from '../../templates/underReview'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { ScalingProject } from '../../internalTypes'
+import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('powerloom')
 
@@ -56,7 +55,9 @@ export const powerloom: ScalingProject = orbitStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress('eth:0x23593421341152D5322F8869c0638DAAc4aED57C'),
+      address: ChainSpecificAddress(
+        'eth:0x23593421341152D5322F8869c0638DAAc4aED57C',
+      ),
       name: 'L1OrbitUSDCGateway',
       sinceTimestamp: UnixTime(1741768931),
       tokens: ['POWER'],
