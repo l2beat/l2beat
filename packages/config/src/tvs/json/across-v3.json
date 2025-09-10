@@ -1407,8 +1407,7 @@
         "chain": "linea",
         "escrowAddress": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
         "decimals": 6,
-        "sinceTimestamp": 1709742598,
-        "untilTimestamp": 1756666800
+        "sinceTimestamp": 1709742598
       },
       "valueForSummary": {
         "type": "value",
@@ -1416,8 +1415,7 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1709742598,
-          "untilTimestamp": 1756666800
+          "sinceTimestamp": 1709742598
         },
         "priceId": "bridged-tether-linea"
       },
@@ -1581,7 +1579,7 @@
     },
     {
       "mode": "auto",
-      "id": "across-v3-WBTC",
+      "id": "across-v3-WBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
