@@ -1,8 +1,7 @@
 {
   "PauserRegistry.sol": {
     "hash": "0x3b8d61b335423f5ba47369c8a865fa7f3296ba457e10069b0b9c46bcb03aa1e8",
-    "address": "0x0c431C66F4dE941d089625E5B423D00707977060",
-    "chain": "ethereum",
+    "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060",
     "blockNumber": 22425027
   }
 }

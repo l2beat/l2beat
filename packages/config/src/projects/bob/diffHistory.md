@@ -1,3 +1,160 @@
+Generated with discovered.json: 0x3f37f2651510da90fad2308d2b2c13c7f8389cf4
+
+# Diff at Mon, 08 Sep 2025 10:22:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@be9ffaec1ec417b3f28ad840def15862a3b29b8f block: 1756900853
+- current timestamp: 1757326876
+
+## Description
+
+- Added RiscZeroSetVerifier contract that allows verifying a set of proofs at once (identified by a Merkle root). Once a set of proofs is verified, each individual proof could be efficiently verified just by checking Merkle inclusion.
+- Guest program for this verifier could be found here: https://github.com/risc0/risc0-ethereum/tree/main/crates/aggregation.
+- This contract does not verify any zkp on itself and rather redirects them to actual verifeirs.
+- Templatized this RiscZeroSetVerifier.
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.9:
++        {"id":"0xaee8ce52716542c6fedc0f10553f1b763702d9bef05dcdcdf8c5cb2ed8d6cabb","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30242f9d5b00000000000000000000000000000000000000000000000000000000000000000000000000000000844d5f01161e3559d36f23d0aa9e9620949af782"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      values.verifier7Manual:
+-        "EXPECT_REVERT"
++        "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782"
+    }
+```
+
+```diff
+    EOA  (eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412) {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782","description":"pause the verifier.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85)
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782)
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/bob/.flat/RiscZeroSetVerifier.sol | 816 +++++++++++++++++++++
+ ...:0x844D5f01161E3559d36f23d0Aa9E9620949aF782.sol | 315 ++++++++
+ 2 files changed, 1131 insertions(+)
+```
+
+Generated with discovered.json: 0x235b7cc359f9a2112797866f8ecade24e094eae9
+
+# Diff at Wed, 03 Sep 2025 12:05:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f81a67544a1eef3c7f105dd59187ddee7ac70879 block: 1756804191
+- current timestamp: 1756900853
+
+## Description
+
+- Scheduled tx: new risc zero verifier is being added.
+- KailuaTreasury has been updated to change a few immutables related to proving with no code changes.
+- added handler that will discover the new verifier as soon as it is deployed
+- add template for the groth16 verifier v3
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.12:
++        {"id":"0xaee8ce52716542c6fedc0f10553f1b763702d9bef05dcdcdf8c5cb2ed8d6cabb","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30242f9d5b00000000000000000000000000000000000000000000000000000000000000000000000000000000844d5f01161e3559d36f23d0aa9e9620949af782","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0x72284bbB177B13db6F7b703846EEDfB24914B764)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d.
+```
+
+```diff
+    EOA  (eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0x72284bbB177B13db6F7b703846EEDfB24914B764"
++        "eth:0x0e4152204995877DF34BD26d6dab78baf9393Ae2"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0xD5A72E5C2d8fC5e12cba6F81FA67d9A5F4A48B6a"
++        "eth:0x9b9f9CD7A6BfCB55c18bfA35392F409F98B35B44"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0xD5A72E5C2d8fC5e12cba6F81FA67d9A5F4A48B6a)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x0e4152204995877DF34BD26d6dab78baf9393Ae2)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x9b9f9CD7A6BfCB55c18bfA35392F409F98B35B44)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756804191 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      template:
++        "taiko/RiscZeroGroth16Verifier"
+      description:
++        "Verifier contract for RISC Zero Groth16 proofs (version 3.0.0)."
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      values.verifier7Manual:
++        "EXPECT_REVERT"
+    }
+```
+
 Generated with discovered.json: 0x998241f4d73928dc7b2b4978e7c04c5b81ff0310
 
 # Diff at Tue, 02 Sep 2025 09:11:51 GMT:

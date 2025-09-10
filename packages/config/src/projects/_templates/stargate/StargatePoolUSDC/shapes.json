@@ -1,8 +1,7 @@
 {
   "StargatePoolUSDC": {
     "hash": "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640",
-    "address": "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0",
-    "chain": "optimism",
+    "address": "oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0",
     "blockNumber": 136932647
   }
 }

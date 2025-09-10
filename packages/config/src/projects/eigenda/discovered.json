@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "timestamp": 1756300615,
-  "configHash": "0xcec53a7329f78629f72fb573f231ad544e6dec68db910e0212f8268645dd3e6c",
+  "configHash": "0x13c8b5912a0a8b3e8bec9a220e34cfcf4e326c034d828317713ea5323d64fada",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {
@@ -583,6 +583,13 @@
       }
     },
     {
+      "name": "AVSDirectory",
+      "address": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
+    },
+    {
       "name": "EigenLayerRewardsInitiatorMultisig",
       "address": "eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A",
       "type": "Contract",
@@ -678,6 +685,20 @@
       }
     },
     {
+      "name": "EigenLayerOwningMultisig",
+      "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
+    },
+    {
+      "name": "DelegationManager",
+      "address": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
+    },
+    {
       "address": "eth:0x3C20b05f44ef008A5b848761e58e5Ca9594163e9",
       "type": "EOA",
       "proxyType": "EOA"
@@ -714,6 +735,13 @@
       "address": "eth:0x4985238672d91Baed43dF1B2431F67bc332A1753",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "EigenLayerPauserMultisig",
+      "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
     },
     {
       "address": "eth:0x5262498E7D4fbbb08425b2a06D91157acDC50aDA",
@@ -1153,6 +1181,13 @@
       }
     },
     {
+      "name": "EigenLayerOperationsMultisig",
+      "address": "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
+    },
+    {
       "address": "eth:0xc201C95e809292c6ad242F4bbD8B342AD06571FB",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1284,6 +1319,13 @@
           "role": ".relayers"
         }
       ]
+    },
+    {
+      "name": "EIGEN Token",
+      "address": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenlayer"
     },
     {
       "address": "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4",
@@ -1903,5 +1945,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23232697 },
-  "permissionsConfigHash": "0xf3585dbd30175eabdeeef71d8b29d376a4503bc783c2b486135156437dff68a4"
+  "permissionsConfigHash": "0x1b569c9fee7aabbabb82a34093d89c6c77fc074ae1f05a2631a1f76af4bbd67d"
 }

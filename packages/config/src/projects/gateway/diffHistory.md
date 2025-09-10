@@ -1,3 +1,86 @@
+Generated with discovered.json: 0x07770e810a531ce09ea538078a1bbcefca9b58a0
+
+# Diff at Mon, 08 Sep 2025 14:38:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48f0161c75908020b4454ff29490575d534b39f4 block: 1756731927
+- current timestamp: 1757342233
+
+## Description
+
+New whitelisted sender: EOA (https://etherscan.io/address/0x5555555590930f501c88B73Ea43B3EEb5A71643c#tokentxns)
+
+## Watched changes
+
+```diff
+    contract GatewayTransactionFilterer (eth:0x5540DE94485dB078025318428F813C5d88215823) {
+    +++ description: A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3).
++++ description: Addresses that are whitelisted as senders for requestL2Transaction() calls.
+      values.whitelistedSenders.3:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+Generated with discovered.json: 0x6b624b17da9f9f2cea345be2a09e07da8ab9beae
+
+# Diff at Wed, 03 Sep 2025 15:52:19 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fbfe8da4086c70042fea30347d68132d3f574015 block: 1756731927
+- current timestamp: 1756731927
+
+## Description
+
+Rerun to add References to entrypoints of shared modules
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756731927 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference RollupL1DAValidator (eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference L1AssetRouter (eth:0x8829AD80E425C646DAB305381ff105169FeEcE56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9b6009906d2afa39dd2668dbd6f61076237f2ffb
 
 # Diff at Mon, 01 Sep 2025 13:06:39 GMT:

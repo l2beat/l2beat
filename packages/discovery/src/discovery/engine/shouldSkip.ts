@@ -1,11 +1,14 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { StructureConfig } from '../config/StructureConfig'
-import { makeEntryStructureConfig } from '../config/structureUtils'
+import {
+  makeEntryStructureConfig,
+  type SharedModuleIndexEntry,
+} from '../config/structureUtils'
 
 export function shouldSkip(
   address: ChainSpecificAddress,
   config: StructureConfig,
-  sharedModuleIndex: Set<ChainSpecificAddress>,
+  sharedModuleIndex: Record<ChainSpecificAddress, SharedModuleIndexEntry>,
   depth: number,
   counter: number,
 ): string | undefined {
@@ -13,7 +16,7 @@ export function shouldSkip(
     return 'ignored'
   }
 
-  if (sharedModuleIndex.has(address)) {
+  if (address in sharedModuleIndex) {
     return 'part of a shared module'
   }
 

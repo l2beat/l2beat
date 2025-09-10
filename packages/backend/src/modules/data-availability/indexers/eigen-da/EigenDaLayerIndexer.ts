@@ -2,6 +2,7 @@ import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import uniq from 'lodash/uniq'
 import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { ManagedMultiIndexer } from '../../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -49,7 +50,14 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
     this.logger.info('Da Layer data fetched')
 
     return async () => {
-      await this.$.db.dataAvailability.upsertMany([daLayerData])
+      await this.$.db.transaction(async () => {
+        await this.$.db.dataAvailability.upsertMany([daLayerData])
+        await this.$.db.syncMetadata.updateSyncedUntil(
+          'dataAvailability',
+          uniq(this.$.configurations.map((c) => c.properties.projectId)),
+          adjustedTo,
+        )
+      })
       this.logger.info('Saved DA layer metrics into DB', {
         from: adjustedFrom,
         to: adjustedTo,

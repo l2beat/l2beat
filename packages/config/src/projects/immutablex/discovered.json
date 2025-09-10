@@ -1,7 +1,7 @@
 {
   "name": "immutablex",
   "timestamp": 1741355279,
-  "configHash": "0x992b67113d9c37c91fb97b560090d10d7a1c8fa3a837279d653fc5b777d6d766",
+  "configHash": "0xa1a2e4fe3951eaf4c5e1dafccd4c7afdaf4cde63dc345c678f473c35395ac45a",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -68,6 +68,13 @@
       "address": "eth:0x3d395f623D8954d71132F5caC10778CA275806e0",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "address": "eth:0x48AF849535DDFa560A0EB0FbDEf436688169B949",
@@ -845,5 +852,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 21995398 },
-  "permissionsConfigHash": "0xb441bf5defac26ca131d8c5f0b493c4e981473d9c08223a52a5196ccb3f2a07e"
+  "permissionsConfigHash": "0x2e3c6932f53c27418f88e5d51abf7d0355b6a041603ddcad3195b768d44b96c8"
 }

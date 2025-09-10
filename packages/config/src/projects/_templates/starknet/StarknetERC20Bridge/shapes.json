@@ -1,14 +1,12 @@
 {
   "StarknetERC20Bridge_v2_0_4": {
     "hash": "0xbe08cd77d92ae2b4d333c5d2850e16d06e16d98de2a8435e0a49dc35ad73b915",
-    "address": "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
-    "chain": "ethereum",
+    "address": "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
     "blockNumber": 22188285
   },
   "StarknetERC20Bridge_v2_0_5": {
     "hash": "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a",
-    "address": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
-    "chain": "ethereum",
+    "address": "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
     "blockNumber": 22188285
   }
 }

@@ -17,26 +17,31 @@ import { TableSortingProvider } from '~/components/table/sorting/TableSortingCon
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type {
   ScalingRiskStateValidationOptimisticEntry,
-  ScalingRiskStateValidationZkEntry,
+  ScalingRiskStateValidationValidityEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 import { ScalingRiskStateValidationTable } from './table/ScalingRiskStateValidationTable'
 
 type Props = {
-  zk: TabbedScalingEntries<ScalingRiskStateValidationZkEntry>
+  validity: TabbedScalingEntries<ScalingRiskStateValidationValidityEntry>
   optimistic: TabbedScalingEntries<ScalingRiskStateValidationOptimisticEntry>
 }
 
-export function ScalingRiskStateValidationTabs({ zk, optimistic }: Props) {
-  const [tableTab, setTableTab] = useState<'zk' | 'optimistic'>('zk')
+export function ScalingRiskStateValidationTabs({
+  validity,
+  optimistic,
+}: Props) {
+  const [tableTab, setTableTab] = useState<'validity' | 'optimistic'>(
+    'validity',
+  )
   const filterEntries = useFilterEntries()
 
   const entries = {
-    rollups: [...zk.rollups, ...optimistic.rollups].filter(filterEntries),
+    rollups: [...validity.rollups, ...optimistic.rollups].filter(filterEntries),
     validiumsAndOptimiums: [
-      ...zk.validiumsAndOptimiums,
+      ...validity.validiumsAndOptimiums,
       ...optimistic.validiumsAndOptimiums,
     ].filter(filterEntries),
-    others: [...zk.others, ...optimistic.others].filter(filterEntries),
+    others: [...validity.others, ...optimistic.others].filter(filterEntries),
   }
 
   const initialSort = {
@@ -48,9 +53,9 @@ export function ScalingRiskStateValidationTabs({ zk, optimistic }: Props) {
     <>
       <TableFilters
         entries={[
-          ...zk.rollups,
-          ...zk.validiumsAndOptimiums,
-          ...zk.others,
+          ...validity.rollups,
+          ...validity.validiumsAndOptimiums,
+          ...validity.others,
           ...optimistic.rollups,
           ...optimistic.validiumsAndOptimiums,
           ...optimistic.others,
@@ -76,7 +81,7 @@ export function ScalingRiskStateValidationTabs({ zk, optimistic }: Props) {
             <ScalingRiskStateValidationTable
               tableTab={tableTab}
               setTableTab={setTableTab}
-              zk={zk.rollups}
+              validity={validity.rollups}
               optimistic={optimistic.rollups}
             />
           </DirectoryTabsContent>
@@ -87,7 +92,7 @@ export function ScalingRiskStateValidationTabs({ zk, optimistic }: Props) {
             <ScalingRiskStateValidationTable
               tableTab={tableTab}
               setTableTab={setTableTab}
-              zk={zk.validiumsAndOptimiums}
+              validity={validity.validiumsAndOptimiums}
               optimistic={optimistic.validiumsAndOptimiums}
             />
           </DirectoryTabsContent>
@@ -98,7 +103,7 @@ export function ScalingRiskStateValidationTabs({ zk, optimistic }: Props) {
             <ScalingRiskStateValidationTable
               tableTab={tableTab}
               setTableTab={setTableTab}
-              zk={zk.others}
+              validity={validity.others}
               optimistic={optimistic.others}
             />
           </DirectoryTabsContent>

@@ -1,14 +1,12 @@
 {
   "Deal.sol": {
     "hash": "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f",
-    "address": "0x85774B6c4a2F72315050084eFa3b982dF5a7ea67",
-    "chain": "zksync2",
+    "address": "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67",
     "blockNumber": 62911546
   },
   "DealOld.sol": {
     "hash": "0xb9b776e9b6525098ad513429df04ffcbefd09096a7a9fcc141453948338414de",
-    "address": "0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE",
-    "chain": "zksync2",
+    "address": "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE",
     "blockNumber": 49035867
   }
 }

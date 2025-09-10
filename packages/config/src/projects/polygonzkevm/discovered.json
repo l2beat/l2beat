@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
   "timestamp": 1753192091,
-  "configHash": "0xa96fe8e6d9e9adc20cb478e92138ab8c18b6a063d39ec4831f102bd5890dbe46",
+  "configHash": "0x6854ae8a0189b4775cbf28cdcc79b6354ed71e4c358e6322c604dfcb33e88123",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -20,6 +20,20 @@
           "role": ".trustedSequencer"
         }
       ]
+    },
+    {
+      "name": "PolygonAdminMultisig",
+      "address": "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
+    },
+    {
+      "name": "PolygonSharedBridge",
+      "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "name": "daiBridge",
@@ -79,6 +93,13 @@
       "address": "eth:0x4E83124eD15b13265240B61EC9627797CCE1032E",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PolygonRollupManager",
+      "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "name": "PolygonZkEVM",
@@ -167,6 +188,13 @@
         "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E": "PolygonZkEVMEtrog"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "PolygonGlobalExitRootV2",
+      "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "name": "usdcBridge",
@@ -721,5 +749,5 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 22975114 },
-  "permissionsConfigHash": "0xe2a601467af8fec2b3e8650272ec1a7f397510c9a6a0c879314bdc7077687a5d"
+  "permissionsConfigHash": "0x19022caa33168f59132b4f6becca3c57c0d1347e9d2137b6fea86343d0208c41"
 }

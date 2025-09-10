@@ -1,7 +1,6 @@
 import {
   ConfigReader,
   colorize,
-  combineStructureAndColor,
   DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
@@ -229,12 +228,7 @@ describe('discovery config.jsonc', () => {
       const discovery = configReader.readDiscovery(c.name)
       const color = colorize(c.color, discovery, templateService)
 
-      const colorized = combineStructureAndColor(discovery, color)
-      const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)
-      assert(
-        !changed,
-        `${c.name} is not colorized correctly. Run l2b colorize.`,
-      )
+      expect(compareLeftKeysInRight(color, discovery)).toBeTruthy()
     }
   })
 
@@ -268,3 +262,29 @@ describe('discovery config.jsonc', () => {
     }
   }).timeout(10000)
 })
+
+function compareLeftKeysInRight(
+  left: Record<string, any>,
+  right: Record<string, any>,
+): boolean {
+  const keys = Object.keys(left)
+
+  if (keys.length === 0) return true
+
+  return keys.every((key) => {
+    const val1 = left[key]
+    const val2 = right[key]
+
+    // Deep comparison for objects
+    if (
+      typeof val1 === 'object' &&
+      typeof val2 === 'object' &&
+      val1 !== null &&
+      val2 !== null
+    ) {
+      return compareLeftKeysInRight(val1, val2)
+    }
+
+    return isDeepStrictEqual(val1, val2)
+  })
+}

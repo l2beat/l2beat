@@ -1,7 +1,7 @@
 {
   "name": "shibarium",
   "timestamp": 1745483963,
-  "configHash": "0x52270c9791dbaed8dd28acef43d69d220edd35fd1ae14e7b487b4d5f8747ccff",
+  "configHash": "0x08363aa153e2e2206330e23b751a180ae75917ee3f8cf6102e4f7aa2e20b5318",
   "entries": [
     {
       "name": "ERC1155Predicate",

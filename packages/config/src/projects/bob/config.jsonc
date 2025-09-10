@@ -58,6 +58,14 @@
             "method": "getVerifier",
             "args": ["0x73c457ba"]
           }
+        },
+        "verifier7Manual": {
+          "handler": {
+            "type": "call",
+            "method": "getVerifier",
+            "args": ["0x242f9d5b"],
+            "expectRevert": true
+          }
         }
       }
     },

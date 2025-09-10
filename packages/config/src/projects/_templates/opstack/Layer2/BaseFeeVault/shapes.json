@@ -1,20 +1,17 @@
 {
   "BaseFeeVault_v1_0_0": {
     "hash": "0x0c18a8a786c9a78d1ea6a3f71ee3369ae8acc817629b8bf4934b05f8a38a41a2",
-    "address": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
-    "chain": "optimism",
+    "address": "oeth:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
     "blockNumber": 134041720
   },
   "BaseFeeVault_v1_5_0beta_2": {
     "hash": "0x0706f7ff4b2f4c1e03bff710e9b98afa6f716ae6ac7b5e61797f9cb40a58221a",
-    "address": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
-    "chain": "ink",
+    "address": "ink:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
     "blockNumber": 10183769
   },
   "BaseFeeVault_v1_3_0": {
     "hash": "0x0834e3a66bf6d3446ab3f5e42dde52e5ce5072d98b3b4a7e049ca96280b9f635",
-    "address": "0x4E207bDF8aece56de86821f5370b2b993D08C9E9",
-    "chain": "base",
+    "address": "base:0x4E207bDF8aece56de86821f5370b2b993D08C9E9",
     "blockNumber": 29605802
   }
 }

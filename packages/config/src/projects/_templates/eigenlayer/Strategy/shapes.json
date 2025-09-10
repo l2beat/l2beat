@@ -1,38 +1,32 @@
 {
   "EigenStrategy": {
     "hash": "0x4c5ff062896caf72eb8999dc0f839adca5dbec7dd71c1aa6d0b1defce8ee6046",
-    "address": "0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428",
-    "chain": "ethereum",
+    "address": "eth:0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428",
     "blockNumber": 22188285
   },
   "StrategyBase": {
     "hash": "0x6be5dd10217b2d3a9bca287766865129906f886adb603752ddcb21538ef683ea",
-    "address": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
-    "chain": "ethereum",
+    "address": "eth:0xe9FA8F904d97854C7389b68923262ADCC6C27827",
     "blockNumber": 22188285
   },
   "StrategyBaseTVLLimits": {
     "hash": "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd",
-    "address": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-    "chain": "ethereum",
+    "address": "eth:0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
     "blockNumber": 22188285
   },
   "StrategyBase.sol": {
     "hash": "0xa8977021c807da9ada79ae0a11a62aa80d60ee5c15615df7acdd595f6dfbca9d",
-    "address": "0x0EC17ef9c00F360DB28CA8008684a4796b11E456",
-    "chain": "ethereum",
+    "address": "eth:0x0EC17ef9c00F360DB28CA8008684a4796b11E456",
     "blockNumber": 22424645
   },
   "Strategy_2": {
     "hash": "0x162ffe3ef6e872099c9fd14d63e6aa37922cde251b0e9af8360ccf20aa375274",
-    "address": "0xD4d1746142642Db4c1ab17b03B9c58baac913E5B",
-    "chain": "ethereum",
+    "address": "eth:0xD4d1746142642Db4c1ab17b03B9c58baac913E5B",
     "blockNumber": 23083601
   },
   "Strategy_bEIGEN": {
     "hash": "0xb58160c9903763d4c6dd724e3ce4e687fa5eeff34a50885a3a3b614aee688553",
-    "address": "0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be",
-    "chain": "ethereum",
+    "address": "eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be",
     "blockNumber": 23083608
   }
 }

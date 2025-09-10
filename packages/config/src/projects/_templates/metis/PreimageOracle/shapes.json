@@ -1,8 +1,7 @@
 {
   "PreimageOracle.sol": {
     "hash": "0x715f5c63ded74faed65181ca2796a35f260a2a074d16724707812a58ded43498",
-    "address": "0x789a64284e29d2225430606D3D89a9336870BBbC",
-    "chain": "ethereum",
+    "address": "eth:0x789a64284e29d2225430606D3D89a9336870BBbC",
     "blockNumber": 22517630
   }
 }

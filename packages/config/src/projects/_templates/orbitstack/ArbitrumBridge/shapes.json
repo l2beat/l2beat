@@ -1,50 +1,42 @@
 {
   "Bridge": {
     "hash": "0xb920455f1e366c7a89719abdd8d8174e4e7d353f2d4b7dea11b0571bf9526eae",
-    "address": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
-    "chain": "ethereum",
+    "address": "eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
     "blockNumber": 22188285
   },
   "Bridge_arbitrum": {
     "hash": "0x5dbde25ce90571f7dd8e189ec68615bd76cab9ddb0ba7690b721e9e03c70b6ed",
-    "address": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
-    "chain": "ethereum",
+    "address": "eth:0x1066CEcC8880948FE55e427E94F1FF221d626591",
     "blockNumber": 22188285
   },
   "Bridge_rari": {
     "hash": "0x9aa08a5801ef32353cbf88ebb6d778d6a9502187dea541e243cec49c41420f32",
-    "address": "0x74faA20aE77FFAb036369b24066Cc5d4251900D2",
-    "chain": "arbitrum",
+    "address": "arb1:0x74faA20aE77FFAb036369b24066Cc5d4251900D2",
     "blockNumber": 322488866
   },
   "ERC20Bridge": {
     "hash": "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1",
-    "address": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
-    "chain": "ethereum",
+    "address": "eth:0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
     "blockNumber": 22188285
   },
   "ERC20Bridge_apechain": {
     "hash": "0x730e8c5ec2de9c1ede82d8374adbf127fb1b095f21f58aad54f58469ae135857",
-    "address": "0x20B3C55fe4ecd989beB56E13b2A726110f0c3619",
-    "chain": "arbitrum",
+    "address": "arb1:0x20B3C55fe4ecd989beB56E13b2A726110f0c3619",
     "blockNumber": 322488866
   },
   "ERC20Bridge_gastoken_corn": {
     "hash": "0x73087d4667e81f676a10708feb2774bab3a9a558a1987b8ac4f112cc464bba96",
-    "address": "0xd7FD189F1652378f32dA3db7926e51a7b0344797",
-    "chain": "ethereum",
+    "address": "eth:0xd7FD189F1652378f32dA3db7926e51a7b0344797",
     "blockNumber": 22188285
   },
   "ERC20Bridge_molten": {
     "hash": "0xc138999c828d091534e4fea5f3730160aa2a6366cea16b82a55b9c8de07670df",
-    "address": "0xC5Db571093C4600559e239497d147476F7543b15",
-    "chain": "arbitrum",
+    "address": "arb1:0xC5Db571093C4600559e239497d147476F7543b15",
     "blockNumber": 322488866
   },
   "ERC20Bridge_v32": {
     "hash": "0x6cdca102c8d3b82c196bf1961cd07e35b44717396edbfdd3241adc89ab895438",
-    "address": "0xF0bb18D200D4CB7b36853Eaa0D902F729B4602AB",
-    "chain": "arbitrum",
+    "address": "arb1:0xF0bb18D200D4CB7b36853Eaa0D902F729B4602AB",
     "blockNumber": 322488866
   }
 }

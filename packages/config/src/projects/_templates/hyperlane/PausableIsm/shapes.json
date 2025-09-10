@@ -1,20 +1,17 @@
 {
   "PausableIsm": {
     "hash": "0xae61e6bab6bf081177748ce44a09cc1a93feaf4a4a3ef1cfbf916c61ac989f6c",
-    "address": "0xcCBC73C251bCcAa5fEF457BDD404B0fb2a776B33",
-    "chain": "ethereum",
+    "address": "eth:0xcCBC73C251bCcAa5fEF457BDD404B0fb2a776B33",
     "blockNumber": 22923900
   },
   "PausableIsm_1": {
     "hash": "0x47d13762d1ce665a34136f6aebec34983d77330992ac2d74b57c2b6c9d028de2",
-    "address": "0xBa32ca8BcD3AEd8bd5d9CB93B9967580C53aD728",
-    "chain": "ethereum",
+    "address": "eth:0xBa32ca8BcD3AEd8bd5d9CB93B9967580C53aD728",
     "blockNumber": 22966922
   },
   "PausableIsm_v904": {
     "hash": "0xc3e01cdc19c1b0970c3e92b9e8be45ed0fe4ae69242b992dba1f4894b62b1569",
-    "address": "0x8047Ac910670E8596CA57Bf7F7ddB8a706079c60",
-    "chain": "ethereum",
+    "address": "eth:0x8047Ac910670E8596CA57Bf7F7ddB8a706079c60",
     "blockNumber": 23137805
   }
 }

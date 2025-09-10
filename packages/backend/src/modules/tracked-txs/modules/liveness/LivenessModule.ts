@@ -1,15 +1,13 @@
-import type { Logger } from '@l2beat/backend-tools'
-
-import type { Config } from '../../../../config'
-import type { Peripherals } from '../../../../peripherals/Peripherals'
-import type { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
+import type { ApplicationModule, ModuleDependencies } from '../../../types'
 import { LivenessUpdater } from './LivenessUpdater'
 
-export function createLivenessModule(
-  config: Config,
-  logger: Logger,
-  peripherals: Peripherals,
-): ApplicationModuleWithUpdater<LivenessUpdater> | undefined {
+export function createLivenessModule({
+  config,
+  logger,
+  peripherals,
+}: ModuleDependencies):
+  | (ApplicationModule & { updater: LivenessUpdater })
+  | undefined {
   if (!config.trackedTxsConfig || !config.trackedTxsConfig.uses.liveness) {
     logger.info('Liveness module disabled')
     return

@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xc9f5b144cc506d0066234d4d87fb19c397e36e0d
+
+# Diff at Tue, 09 Sep 2025 07:40:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@395d7487e1620571da9defc848ebbef6daf736b9 block: 1757064266
+- current timestamp: 1757403523
+
+## Description
+
+haust (pessimistic) is sending proofs.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.8:
++        23
+    }
+```
+
+Generated with discovered.json: 0x17a9bf37efd559368b0efb86447b3f069a72b64f
+
+# Diff at Fri, 05 Sep 2025 09:26:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6cd15987e9ebf76a374fdd067e5e25baf948c56c block: 1756886247
+- current timestamp: 1757064266
+
+## Description
+
+haust is sending pessimmistic proofs.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.7:
++        22
+    }
+```
+
+Generated with discovered.json: 0x0f63ad6e774b9cd03b48b65ea5ca85f699668dd6
+
+# Diff at Wed, 03 Sep 2025 07:58:53 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@4750a1228b4aaf03d07fbccfeb1177cdf70172bc block: 1756735197
+- current timestamp: 1756886247
+
+## Description
+
+Added new pessimistic chain with standard SP1 verifier to agglayer (Haust Network).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.rollupCount:
+-        22
++        23
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.22:
++        {"rollupContract":"eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8","chainID":3864,"verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","forkID":12,"rollupTypeID":11,"rollupVerifierType":1,"programVKey":"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"}
+    }
+```
+
 Generated with discovered.json: 0x4323f03d6a0c64005c9af0210942d3be0d6f45b9
 
 # Diff at Mon, 01 Sep 2025 14:02:06 GMT:

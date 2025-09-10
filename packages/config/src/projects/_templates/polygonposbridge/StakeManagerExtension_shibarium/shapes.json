@@ -1,8 +1,7 @@
 {
   "StakeManagerExtension.sol": {
     "hash": "0x6c5643dd27ff09baeb85b5fb025f64da4c191a2c42e30f5b72c33b0b8d74dbf4",
-    "address": "0x17174796E0eF24330aed565c87Ba5e85431DE19e",
-    "chain": "ethereum",
+    "address": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
     "blockNumber": 22287330
   }
 }

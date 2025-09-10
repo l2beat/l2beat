@@ -1,9 +1,15 @@
 {
   "name": "sorare",
   "timestamp": 1756816898,
-  "configHash": "0xde42db0d14ac6cdbff380fba8f6353ca8c33037a65e2cc7af3ea32588f7430ee",
+  "configHash": "0x811f0ef67fab8de25cfaa4e4725bba4b135c930a384a9229a02886f6cfe57133",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
+    {
+      "address": "eth:0x0405107a60391Eb51821be373ff978115Ee58488",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sharp-verifier"
+    },
     {
       "address": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "type": "EOA",
@@ -15,6 +21,13 @@
           "role": ".operators"
         }
       ]
+    },
+    {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "name": "OrderRegistry",
@@ -61,6 +74,12 @@
           "role": ".$admin"
         }
       ]
+    },
+    {
+      "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "address": "eth:0x63881ac44293E22F3c3183a0C4113586ABb3e653",
@@ -933,5 +952,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 23275484 },
-  "permissionsConfigHash": "0x1a417da53e1dca4e39e72efb151f4e44da70a4ba3680b2f4819f47cd424e2980"
+  "permissionsConfigHash": "0xb74b4c6e3bbcebf661680cdc27dc049cad85280b62f36b801f73676872eae7fd"
 }

@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "timestamp": 1752069683,
-  "configHash": "0x5bb34c1f79b760dd2adb5c7301ae3bf8541edda6751452c11c9837cb629fea79",
+  "configHash": "0xc8ef46cbbf6e0b7340780c5d21ebd280396fa760d148257a73171bfadf9858d6",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -26,6 +26,13 @@
           "role": ".relayers"
         }
       ]
+    },
+    {
+      "name": "SP1VerifierGateway",
+      "address": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sp1"
     },
     {
       "address": "arb1:0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
@@ -215,6 +222,13 @@
       ]
     },
     {
+      "name": "SP1VerifierGateway",
+      "address": "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sp1"
+    },
+    {
       "address": "base:0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
       "type": "EOA",
       "proxyType": "EOA"
@@ -400,6 +414,13 @@
           "role": ".relayers"
         }
       ]
+    },
+    {
+      "name": "SP1VerifierGateway",
+      "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sp1"
     },
     {
       "address": "eth:0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
@@ -910,5 +931,5 @@
     "ethereum": 22882089,
     "arbitrum": 355902117
   },
-  "permissionsConfigHash": "0xae8e7b71029b6720c7deb37a4d87c1d694da0a15e6dd2de5dbde3720c6d6b0c6"
+  "permissionsConfigHash": "0x5a541dcb65801853ce6ea4af75affb5f42e80374ae6a9a45a382da1490de41e3"
 }

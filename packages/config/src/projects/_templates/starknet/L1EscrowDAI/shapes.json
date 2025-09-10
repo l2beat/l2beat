@@ -1,8 +1,7 @@
 {
   "L1DaiGateway": {
     "hash": "0xea3ba1600e1949cef23ec7d1ebcf724de2bb6be9602c2339dd29582e6c00c9f5",
-    "address": "0x9F96fE0633eE838D0298E8b8980E6716bE81388d",
-    "chain": "ethereum",
+    "address": "eth:0x9F96fE0633eE838D0298E8b8980E6716bE81388d",
     "blockNumber": 22188285
   }
 }

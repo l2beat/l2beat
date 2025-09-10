@@ -330,3 +330,54 @@ model Blob {
 
   @@index([blockNumber])
 }
+
+model SyncMetadata {
+  feature          String    @db.VarChar(255)
+  id               String    @db.VarChar(255)
+  target           DateTime  @db.Timestamp(6)
+  syncedUntil      DateTime? @db.Timestamp(6)
+  blockTarget      Int?
+  blockSyncedUntil Int?
+
+  @@id([feature, id])
+  @@index([feature, id])
+}
+
+model BridgeEvent {
+  eventId     String   @db.VarChar(40)
+  type        String   @db.VarChar(64)
+  expiresAt   DateTime @db.Timestamp(6)
+  timestamp   DateTime @db.Timestamp(6)
+  chain       String   @db.VarChar(32)
+  blockNumber Int
+  blockHash   String   @db.VarChar(66)
+  txHash      String   @db.VarChar(66)
+  txTo        String?  @db.VarChar(42)
+  matched     Boolean
+  grouped     Boolean
+  logIndex    Int
+  args        Json
+
+  @@id([eventId])
+  @@index([type])
+}
+
+model BridgeMessage {
+  messageId   String    @db.VarChar(40)
+  type        String    @db.VarChar(64)
+  duration    Int?
+  timestamp   DateTime  @db.Timestamp(6)
+  srcTime     DateTime? @db.Timestamp(6)
+  srcChain    String?   @db.VarChar(32)
+  srcTxHash   String?   @db.VarChar(66)
+  srcLogIndex Int?
+  srcEventId  String?   @db.VarChar(40)
+  dstTime     DateTime? @db.Timestamp(6)
+  dstChain    String?   @db.VarChar(32)
+  dstTxHash   String?   @db.VarChar(66)
+  dstLogIndex Int?
+  dstEventId  String?   @db.VarChar(40)
+
+  @@id([messageId])
+  @@index([type])
+}

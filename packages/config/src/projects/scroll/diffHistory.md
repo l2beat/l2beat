@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x9c61971f9b4fd3a9f43779411130e6feb88165fa
+
+# Diff at Wed, 03 Sep 2025 10:26:23 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@5a6919b30a4f4dcccb2eda72a4f146550ce776be block: 1756804385
+- current timestamp: 1756895025
+
+## Description
+
+msig changes.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x9479ABfebefEea3c846163012a472b44F305b3d7) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424"
++        "eth:0xDF1aa0495C815A1b9156796a741885a4834EC012"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x9479ABfebefEea3c846163012a472b44F305b3d7) {
+    +++ description: None
+      values.$members.0:
+-        "scr:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424"
++        "scr:0xDF1aa0495C815A1b9156796a741885a4834EC012"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756804385 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyThreshold(uint256):
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyFactor(uint256):
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xaa5e9334:
++        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xc63b9e2d:
++        ["ops-fast"]
+    }
+```
+
 Generated with discovered.json: 0x01674f4e5705e128f8ed162b5a0b0e349723a306
 
 # Diff at Tue, 02 Sep 2025 15:24:07 GMT:

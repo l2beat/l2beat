@@ -1,8 +1,7 @@
 {
   "frxETH": {
     "hash": "0x35d2793b796cde40be8f1ddaa988ae1c8fd2ad9f55b4b4d74946d35832703efa",
-    "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
-    "chain": "ethereum",
+    "address": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
     "blockNumber": 22188285
   }
 }

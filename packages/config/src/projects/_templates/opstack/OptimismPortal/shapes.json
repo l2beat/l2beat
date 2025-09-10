@@ -1,110 +1,92 @@
 {
   "FraxchainPortal_v2_5_0": {
     "hash": "0xddf64101e7b6f558921307e9d122e69bbb712db51cff893729c03c588865838f",
-    "address": "0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23",
-    "chain": "ethereum",
+    "address": "eth:0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23",
     "blockNumber": 22188285
   },
   "OptimismPortal_l3": {
     "hash": "0x6e489861cb95dc8cd7a9c4b516a6588bc69b5ae094a652879afc52f8ef7f1959",
-    "address": "0xCEa36be2e9724d88cB107C552c602a8025DB88bA",
-    "chain": "base",
+    "address": "base:0xCEa36be2e9724d88cB107C552c602a8025DB88bA",
     "blockNumber": 28446407
   },
   "OptimismPortal_v1_10_0": {
     "hash": "0x77dff740c401aa2b4cdb05f0661e7578cdb0cd0aebfd642fb728b3c6a389253c",
-    "address": "0x3fe449Ef47228F03f979F9D955196494243cdf7E",
-    "chain": "ethereum",
+    "address": "eth:0x3fe449Ef47228F03f979F9D955196494243cdf7E",
     "blockNumber": 22188285
   },
   "OptimismPortal_v1_10_0_blast": {
     "hash": "0xd40fa201f3d213c5e7a8e44bcd59d3f28c198741c50a733c20af045c60a2914d",
-    "address": "0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391",
-    "chain": "ethereum",
+    "address": "eth:0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391",
     "blockNumber": 22188285
   },
   "OptimismPortal_v1_6_0": {
     "hash": "0x8d871731877bb6dfe48e64a821acb08680fe17b500908486a34315093c236d0b",
-    "address": "0x436e9FC7894e26718637f086d42B4a06439C8ae0",
-    "chain": "ethereum",
+    "address": "eth:0x436e9FC7894e26718637f086d42B4a06439C8ae0",
     "blockNumber": 22188285
   },
   "OptimismPortal_v1_7_0_MNT": {
     "hash": "0x3a064711ad01291b3644b5f657fd8317cd07f19222c9f216e25557d4d69ea295",
-    "address": "0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7",
-    "chain": "ethereum",
+    "address": "eth:0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7",
     "blockNumber": 22188285
   },
   "OptimismPortal_v1_7_2": {
     "hash": "0xd7fe53899c31d6d8e73b6724694736dc3c3c4ebc8f4ddbe989fe9d3dba26692d",
-    "address": "0x098927F692C86fA1722115652b9d2d7BE8cBa6D3",
-    "chain": "ethereum",
+    "address": "eth:0x098927F692C86fA1722115652b9d2d7BE8cBa6D3",
     "blockNumber": 22188285
   },
   "OptimismPortal_v2_0_2": {
     "hash": "0xb7c0fa59b37014e507a0e86791007823e5a5548fe3523b6fcf3fb383c0e8c24e",
-    "address": "0xb6714d9808909b9383B09aD7Ea4Bc7E59b3B0E20",
-    "chain": "ethereum",
+    "address": "eth:0xb6714d9808909b9383B09aD7Ea4Bc7E59b3B0E20",
     "blockNumber": 22188285
   },
   "OptimismPortal_v2_1_0": {
     "hash": "0x347fa20f8dfc82ef7433b3eb7915a248528d908fc77907c0d879f96a00106732",
-    "address": "0xc5b17F1DF579D033DB17174B837fe4D2dF05b050",
-    "chain": "ethereum",
+    "address": "eth:0xc5b17F1DF579D033DB17174B837fe4D2dF05b050",
     "blockNumber": 22188285
   },
   "OptimismPortal_v2_5_0": {
     "hash": "0xe35fb7bc0433439337b3eadda3d6fb7991918162f62a337a695e8c7f948cdd35",
-    "address": "0xD8056243180C4b56a7d2ccd5df9c2696E1261826",
-    "chain": "ethereum",
+    "address": "eth:0xD8056243180C4b56a7d2ccd5df9c2696E1261826",
     "blockNumber": 22188285
   },
   "OptimismPortal_v2_6_0": {
     "hash": "0x90ab8a3636fafa5cb0ab4305b2d912546ceb47ebc3abed324bfa1727a9c74acc",
-    "address": "0xCEa36be2e9724d88cB107C552c602a8025DB88bA",
-    "chain": "ethereum",
+    "address": "eth:0xCEa36be2e9724d88cB107C552c602a8025DB88bA",
     "blockNumber": 22188285
   },
   "OptimismPortal_v2_8_0": {
     "hash": "0x8c9491e689f31c280886abc8ea05ec6ac8d5394be56da8048ab9efeca67c4a3c",
-    "address": "0xF666CE8Bf4d1b1be67eCe022132B36ee2e89c031",
-    "chain": "ethereum",
+    "address": "eth:0xF666CE8Bf4d1b1be67eCe022132B36ee2e89c031",
     "blockNumber": 22188285
   },
   "OptimismPortal_v2_8_1_beta-1_b3": {
     "hash": "0x268c4512b5cec8430ffcee3078214e3356c1983d934c7fc35982efd9e197dda3",
-    "address": "0x602267995C801D85b4b854817D0a2231f64C3D7D",
-    "chain": "base",
+    "address": "base:0x602267995C801D85b4b854817D0a2231f64C3D7D",
     "blockNumber": 28446407
   },
   "OptimismPortal_v2_8_1_beta_1": {
     "hash": "0x025eaa1cbd7fa48ee7b33fc45374ef90b0676ec3a15bd7224a4cb394cc343b7d",
-    "address": "0x387422038358EE160aC57Dcd7aF73F9CC9401749",
-    "chain": "ethereum",
+    "address": "eth:0x387422038358EE160aC57Dcd7aF73F9CC9401749",
     "blockNumber": 22188285
   },
   "OptimismPortal_v2_8_1_beta_1_facet": {
     "hash": "0x67a50e00d3fb9626bce6a635a533dd909d5a48bf86cacb4d5cee89aa02f7635b",
-    "address": "0x059249eBf6e7F1B6c7E7bFb9079f6BCd8581635E",
-    "chain": "ethereum",
+    "address": "eth:0x059249eBf6e7F1B6c7E7bFb9079f6BCd8581635E",
     "blockNumber": 22188285
   },
   "OptimismPortal_v2_1_0_zircuit": {
     "hash": "0x67780cfd4e258f37c824b516a488799359ec5e535fb56f62fbd71765730fa32b",
-    "address": "0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a",
-    "chain": "ethereum",
+    "address": "eth:0x6335a030fdCBa6c5704a74EF3BeDdd6550c0375a",
     "blockNumber": 22336762
   },
   "OptimismPortalCGT": {
     "hash": "0x5c3bff13328150b2e8d53d43b6317fe29b36be456289a1724d7e6b548b702fb5",
-    "address": "0x553D60F9D5912e2ba9C3133550BC8eA551Fb0c0f",
-    "chain": "ethereum",
+    "address": "eth:0x553D60F9D5912e2ba9C3133550BC8eA551Fb0c0f",
     "blockNumber": 22395854
   },
   "OptimismPortal_v2_8_1_beta4": {
     "hash": "0xb9ed3314327cfa4bdab9614d4772040c01df636f632f7317611422dec046197f",
-    "address": "0xd30B971922D42AA46C8A6432C332547432C89E14",
-    "chain": "ethereum",
+    "address": "eth:0xd30B971922D42AA46C8A6432C332547432C89E14",
     "blockNumber": 23175245
   }
 }

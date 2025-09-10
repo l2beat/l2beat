@@ -65,6 +65,7 @@ export const facet: ScalingProject = {
   proofSystem: {
     type: 'Optimistic',
     zkCatalogId: ProjectId('sp1'),
+    challengeProtocol: 'Single-step',
   },
   stage: getStage(
     {
@@ -130,6 +131,14 @@ export const facet: ScalingProject = {
           'eth:0x0000000000000b07ED001607f5263D85bf28Ce4C',
         ),
         tokens: ['ETH'],
+        source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Facet fast bridge',
+            },
+          ],
+        },
         description: 'Fast external bridge contract.',
       }),
       discovery.getEscrowDetails({
@@ -137,6 +146,14 @@ export const facet: ScalingProject = {
           'eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909',
         ),
         tokens: ['ETH', 'WETH'],
+        source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Facet deprecated bridge',
+            },
+          ],
+        },
         description: 'L1ETHLockbox (deprecated).',
       }),
     ],
