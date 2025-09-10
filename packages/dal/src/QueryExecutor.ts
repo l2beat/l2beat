@@ -52,6 +52,6 @@ export class QueryExecutor {
     end = Date.now()
     this.logger.info(`Writing to cache took ${end - start}ms`)
 
-    return result
+    return result as QueryResult<Q['name']>
   }
 }
