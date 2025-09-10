@@ -92,7 +92,7 @@ function getDaLivenessEntry(
       return {
         name: b.daBridge.name,
         slug: b.slug,
-        href: `/data-availability/projects/${layer.slug}/${b.slug}`,
+        href: `/data-availability/projects/${layer.slug}/${b.slug}#da-bridge-liveness`,
         statuses: {
           verificationWarning: !getIsProjectVerified(
             b.statuses.unverifiedContracts,

@@ -17,11 +17,11 @@ import type { DaLivenessTableEntry } from './toDaLivenessTableEntry'
 const columnHelper = createColumnHelper<DaLivenessTableEntry>()
 
 export const publicColumns = [
-  ...getDaCommonProjectColumns(columnHelper, (row) => `${row.href}#da-layer`),
+  ...getDaCommonProjectColumns(columnHelper, (row) => row.href ?? ''),
   columnHelper.accessor('name', {
     header: 'DA Layer',
     cell: (ctx) => (
-      <TableLink href={`${ctx.row.original.href}#da-layer`}>
+      <TableLink href={ctx.row.original.href}>
         <ProjectNameCell project={ctx.row.original} />
       </TableLink>
     ),
