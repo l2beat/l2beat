@@ -85,9 +85,11 @@ const cmd = command({
       if (!plugin.match) {
         continue
       }
-      const matched = plugin.match(event, eventDb)
-      if (matched) {
-        logger.info('Matched', matched)
+      for (const event of events) {
+        const matched = plugin.match(event, eventDb)
+        if (matched) {
+          logger.info('Matched', matched)
+        }
       }
     }
   },

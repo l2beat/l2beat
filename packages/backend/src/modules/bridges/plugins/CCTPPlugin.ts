@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { BinaryReader } from '../BinaryReader'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -8,7 +9,6 @@ import {
   type LogToCapture,
   type MatchResult,
 } from './types'
-import { BinaryReader } from '../BinaryReader'
 
 const parseMessageSent = createEventParser('event MessageSent(bytes message)')
 
@@ -120,14 +120,19 @@ export class CCTPPlugin implements BridgePlugin {
         sourceDomain: Number(v2MessageReceived.sourceDomain),
         nonce: Number(v2MessageReceived.nonce),
         sender: EthereumAddress(v2MessageReceived.sender),
-        finalityThresholdExecuted: Number(v2MessageReceived.finalityThresholdExecuted),
+        finalityThresholdExecuted: Number(
+          v2MessageReceived.finalityThresholdExecuted,
+        ),
         messageBody: v2MessageReceived.messageBody,
-        txHash: input.ctx.txHash
+        txHash: input.ctx.txHash,
       })
     }
   }
 
-  match(messageReceived: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(
+    messageReceived: BridgeEvent,
+    db: BridgeEventDb,
+  ): MatchResult | undefined {
     if (CCTPv1MessageReceived.checkType(messageReceived)) {
       const messageSent = db.find(CCTPv1MessageSent, {
         messageBody: messageReceived.args.messageBody,

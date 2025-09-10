@@ -1,4 +1,4 @@
-import { CCTPv1MessageSent, CCTPv1MessageReceived } from './CCTPPlugin'
+import { CCTPv1MessageReceived, CCTPv1MessageSent } from './CCTPPlugin'
 import type {
   BridgeEvent,
   BridgeEventDb,

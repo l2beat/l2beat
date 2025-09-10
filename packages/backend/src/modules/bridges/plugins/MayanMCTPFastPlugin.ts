@@ -1,14 +1,12 @@
-
-
-import { CCTPv2BurnMessageSent, CCTPv2BurnMessageReceived } from './CCTPPlugin'
+import { CCTPv2BurnMessageReceived, CCTPv2BurnMessageSent } from './CCTPPlugin'
 import {
-  BridgeEvent,
-  BridgeEventDb,
-  BridgePlugin,
-  LogToCapture,
-  MatchResult,
+  type BridgeEvent,
+  type BridgeEventDb,
+  type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  type LogToCapture,
+  type MatchResult,
 } from './types'
 
 const parseOrderFulfilled = createEventParser(
@@ -30,14 +28,16 @@ export class MayanMCTPFastPlugin implements BridgePlugin {
     }
   }
 
-
-  match(orderFulfilled: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(
+    orderFulfilled: BridgeEvent,
+    db: BridgeEventDb,
+  ): MatchResult | undefined {
     if (!OrderFulfilled.checkType(orderFulfilled)) {
       return
     }
     // find MessageReceived with the same txHash as OrderFulfilled
     const messageReceived = db.find(CCTPv2BurnMessageReceived, {
-      txHash: orderFulfilled.args.txHash
+      txHash: orderFulfilled.args.txHash,
     })
     if (!messageReceived) {
       return
@@ -66,7 +66,6 @@ export class MayanMCTPFastPlugin implements BridgePlugin {
     }
   }
 }
-
 
 /*
 MsgBody:
