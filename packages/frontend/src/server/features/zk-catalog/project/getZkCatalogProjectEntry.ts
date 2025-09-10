@@ -63,6 +63,11 @@ export async function getZkCatalogProjectEntry(
     tvs,
   )
 
+  const sortedMilestones =
+    project.milestones?.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ) ?? []
+
   const header: ProjectZkCatalogEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
@@ -100,6 +105,17 @@ export async function getZkCatalogProjectEntry(
         id: 'proof-system',
         title: 'Proof System',
         content: project.zkCatalogInfo.proofSystemInfo,
+      },
+    })
+  }
+
+  if (project.milestones && project.milestones.length > 0) {
+    sections.push({
+      type: 'MilestonesAndIncidentsSection',
+      props: {
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
+        milestones: sortedMilestones,
       },
     })
   }
