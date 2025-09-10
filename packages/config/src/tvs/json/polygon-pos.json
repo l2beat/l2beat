@@ -9278,6 +9278,32 @@
     },
     {
       "mode": "auto",
+      "id": "polygon-pos-USDT0",
+      "priceId": "usdt0",
+      "symbol": "USDT0",
+      "name": "USDT0",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+        "chain": "polygonpos",
+        "decimals": 6,
+        "sinceTimestamp": 1737590400
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polygon-pos-VENT",
       "priceId": "vent-finance",
       "symbol": "VENT",

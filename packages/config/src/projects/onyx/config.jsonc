@@ -1,5 +1,9 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "onyx",
-  "import": ["../globalConfig.jsonc"]
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "base:0xcdf10130c75D42a3880Ae521734EaA8631aC2905",
+    "base:0x167D43d1D60DE2320B5E143F9c6a058092A913C2"
+  ]
 }
