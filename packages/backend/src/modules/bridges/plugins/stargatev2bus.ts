@@ -55,6 +55,7 @@ export class StargateV2BusPlugin implements BridgePlugin {
           // TODO: refactor to make this matching more robust
           o.args.receiver.toLowerCase() === ticket.args.receiver.toLowerCase(),
       )
+      // TODO: additionally match by associated message (incl guid)
       if (!received) {
         return
       }
