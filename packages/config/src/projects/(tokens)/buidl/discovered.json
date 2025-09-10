@@ -4,7 +4,7 @@
   "configHash": "0xa8fe8a4a8528cf2f6752a6023660d9719b08e60e5457bf8a566452bc749f3694",
   "entries": [
     {
-      "name": "DSToken",
+      "name": "BlackRock USD Institutional Digital Liquidity Fund Token",
       "address": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
       "type": "Contract",
       "sourceHashes": [

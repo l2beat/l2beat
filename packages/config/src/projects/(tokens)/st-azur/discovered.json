@@ -4,7 +4,7 @@
   "configHash": "0x75dc7b712be356bf9a0856434e4c41d2bcc5079797442f244a454e57e7302353",
   "entries": [
     {
-      "name": "RewardPoolV2",
+      "name": "Staked $AZUR Token",
       "address": "eth:0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB",
       "type": "Contract",
       "sourceHashes": [

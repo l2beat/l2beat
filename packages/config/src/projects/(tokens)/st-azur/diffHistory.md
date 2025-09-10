@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x01f41e055d4ba8523d8340b06d231401348a3430
+
+# Diff at Wed, 10 Sep 2025 16:36:26 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@e79218dfb0e44fc654f84ade8da48b85c69f1abb block: 1753693931
+- current timestamp: 1753693931
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753693931 (main branch discovery), not current.
+
+```diff
+    contract Staked $AZUR Token (eth:0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB) {
+    +++ description: None
+      name:
+-        "RewardPoolV2"
++        "Staked $AZUR Token"
+    }
+```
+
 Generated with discovered.json: 0x30c8560ad2e28d8271889c4d9915bc5ea22c0f06
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

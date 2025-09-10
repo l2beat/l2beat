@@ -4,7 +4,7 @@
   "configHash": "0x1ed6775455620f538ac76eedf31a22309ca7ceb172adbdbaedfe8fff285eb102",
   "entries": [
     {
-      "name": "RSETH_OFT",
+      "name": "KelpDao Restaked ETH Token",
       "address": "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993",
       "type": "Contract",
       "sourceHashes": [

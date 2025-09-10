@@ -4,7 +4,7 @@
   "configHash": "0x3824067688095080abe9fda4ddfd8abd3776d63bdf41f56c885f85fc1407c175",
   "entries": [
     {
-      "name": "WToken",
+      "name": "Wormhole Token",
       "address": "arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
       "type": "Contract",
       "sourceHashes": [
@@ -82,7 +82,7 @@
       }
     },
     {
-      "name": "WToken",
+      "name": "Wormhole Token",
       "address": "base:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
       "type": "Contract",
       "sourceHashes": [
