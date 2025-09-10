@@ -65,6 +65,18 @@
     {
       "chain": "ethereum",
       "tx": "0x275c210329f04b7a6b413e725938d58cd5c4f36597d42d2fb1b27d6a1ad9d8bb"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xbdc64d28438d6be5252c997b9761eb08b2223db099959d4a2e5f3f6438e76242"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x9c4e3027ae29b5704a91b6f0e442416e1e56bd04f3c26638e95d2eb856d40ec8"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0xb61d23e02b537e2bed19cf10e8d14c9d6a386649cd3ee103419e641b2a4202f6"
     }
   ]
 }
