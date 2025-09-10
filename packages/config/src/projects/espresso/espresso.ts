@@ -139,6 +139,7 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
     daLayer: ProjectId('espresso'),
     relayerType: {
       value: 'Permissioned',
+      sentiment: 'warning',
       description:
         'Only whitelisted relayers can post attestations to this bridge.',
     },

@@ -67,6 +67,7 @@ export const vector: BaseProject = {
     daLayer: ProjectId('avail'),
     relayerType: {
       value: 'Permissioned',
+      sentiment: 'warning',
       description:
         'Only whitelisted relayers can post attestations to this bridge.',
     },

@@ -313,6 +313,7 @@ export const eigenda: BaseProject = {
     daLayer: ProjectId('eigenda'),
     relayerType: {
       value: 'Permissioned',
+      sentiment: 'warning',
       description:
         'Only whitelisted relayers can post attestations to this bridge.',
     },
