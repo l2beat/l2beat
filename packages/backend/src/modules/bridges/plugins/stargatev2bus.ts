@@ -79,8 +79,6 @@ export class StargateV2BusPlugin implements BridgePlugin {
       })
     }
 
-    console.log('here')
-
     return {
       messages: [
         {
