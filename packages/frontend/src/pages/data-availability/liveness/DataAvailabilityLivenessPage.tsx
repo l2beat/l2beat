@@ -30,7 +30,9 @@ export function DataAvailabilityLivenessPage({
     <AppLayout {...props}>
       <SideNavLayout>
         <LivenessTimeRangeContextProvider>
-          <MainPageHeader>Liveness</MainPageHeader>
+          <MainPageHeader description="DA bridges liveness shows how actively different DA layers are posting data availability attestations to Ethereum, and whether there are any significant deviations from their usual submission schedule.">
+            Liveness
+          </MainPageHeader>
           <Controls />
           <DirectoryTabs defaultValue="public">
             <DirectoryTabsList>
