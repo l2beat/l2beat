@@ -1,4 +1,4 @@
-import type { SearchBarPage } from './SearchBarEntry'
+import type { SearchBarEntry } from './types'
 
 export const searchBarPages = withIndex([
   {
@@ -121,4 +121,7 @@ function withIndex(arr: Omit<SearchBarPage, 'type'>[]): (SearchBarPage & {
   index: number
 })[] {
   return arr.map((e, i) => ({ ...e, index: i, type: 'page' }))
+}
+export type SearchBarPage = SearchBarEntry & {
+  type: 'page'
 }

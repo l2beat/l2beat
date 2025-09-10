@@ -16,18 +16,19 @@ import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { useRouter } from '~/hooks/useRouter'
 import { useTracking } from '~/hooks/useTracking'
+import type { SearchBarProject } from '~/server/features/projects/search-bar/types'
+import { api } from '~/trpc/React'
 import { useSearchBarContext } from './SearchBarContext'
-import type { AnySearchBarEntry, SearchBarProject } from './SearchBarEntry'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
 import { searchBarPages } from './searchBarPages'
+import type { AnySearchBarEntry } from './types'
 
 interface Props {
-  allProjects: SearchBarProject[]
   recentlyAdded: SearchBarProject[]
 }
 
-export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
+export function SearchBarDialog({ recentlyAdded }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const { track } = useTracking()
   const [value, setValue] = useState('')
@@ -36,19 +37,13 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
+  const { data: allProjects } = api.projects.searchBar.useQuery(value, {
+    enabled: value !== '',
+  })
+
   const filteredProjects = useMemo(
-    () =>
-      value === ''
-        ? recentlyAdded
-        : fuzzysort
-            .go(value, allProjects, {
-              limit: 15,
-              keys: ['name', (e) => e.tags?.join() ?? ''],
-              scoreFn: (match) =>
-                match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1),
-            })
-            .map((match) => match.obj),
-    [value, recentlyAdded, allProjects],
+    () => allProjects ?? recentlyAdded,
+    [recentlyAdded, allProjects],
   )
 
   const filteredPages = useMemo(

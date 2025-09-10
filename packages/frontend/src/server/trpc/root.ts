@@ -4,6 +4,7 @@ import { costsRouter } from './routers/costs'
 import { daRouter } from './routers/da'
 import { livenessRouter } from './routers/liveness'
 import { tvsRouter } from './routers/tvs'
+import { projectsRouter } from './routers/projects'
 
 /**
  * This is the primary router for your server.
@@ -16,6 +17,7 @@ export const appRouter = router({
   tvs: tvsRouter,
   da: daRouter,
   liveness: livenessRouter,
+  projects: projectsRouter,
 })
 
 // export type definition of API

@@ -1,9 +1,12 @@
 import type { Project } from '@l2beat/config'
+import fuzzysort from 'fuzzysort'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
-import type { SearchBarProject } from './SearchBarEntry'
+import type { SearchBarProject } from './types'
 
-export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
+export async function getSearchBarProjects(
+  search: string,
+): Promise<SearchBarProject[]> {
   const projects = await ps.getProjects({
     optional: [
       'scalingInfo',
@@ -17,7 +20,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
     ],
   })
 
-  return projects.flatMap((p): SearchBarProject[] => {
+  const searchBarProjects = projects.flatMap((p): SearchBarProject[] => {
     const results: SearchBarProject[] = []
     if (
       !p.isZkCatalog &&
@@ -36,7 +39,6 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
       iconUrl: getProjectIcon(p.slug),
       kind: getKind(p),
       isUpcoming: !!p.isUpcoming,
-      addedAt: p.addedAt,
       tags: [p.slug],
     } satisfies Partial<SearchBarProject>
 
@@ -75,7 +77,6 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
           href: `/data-availability/projects/${p.slug}/no-bridge`,
           category: 'da',
           tags: [p.slug, 'no-bridge'],
-          addedAt: p.addedAt,
         })
       }
     }
@@ -90,13 +91,21 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
           href: `/data-availability/projects/${layer.slug}/${p.slug}`,
           category: 'da',
           tags: [layer.slug, p.slug],
-          addedAt: p.addedAt,
         })
       }
     }
 
     return results
   })
+
+  return fuzzysort
+    .go(search, searchBarProjects, {
+      limit: 15,
+      keys: ['name', (e) => e.tags?.join() ?? ''],
+      scoreFn: (match) =>
+        match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1),
+    })
+    .map((match) => match.obj)
 }
 
 function getKind(
