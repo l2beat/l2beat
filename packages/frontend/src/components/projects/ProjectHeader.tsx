@@ -12,9 +12,10 @@ interface Project {
 interface Props {
   project: Project
   ongoingAnomaly?: 'single' | 'multiple'
+  secondLine?: string
 }
 
-export function ProjectHeader({ project, ongoingAnomaly }: Props) {
+export function ProjectHeader({ project, ongoingAnomaly, secondLine }: Props) {
   return (
     <div className="mb-6 flex items-start justify-between gap-4">
       <div
@@ -32,7 +33,16 @@ export function ProjectHeader({ project, ongoingAnomaly }: Props) {
               alt={`${project.name} logo`}
             />
           )}
-          <span className="text-heading-28 leading-none!">{project.name}</span>
+          <div className="flex flex-col">
+            <span className="text-heading-28 leading-none!">
+              {project.name}
+            </span>
+            {secondLine && (
+              <span className="font-bold text-label-value-15 text-secondary">
+                {secondLine}
+              </span>
+            )}
+          </div>
         </h1>
         {!!ongoingAnomaly && (
           <a

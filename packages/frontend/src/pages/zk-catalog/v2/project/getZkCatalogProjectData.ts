@@ -1,5 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/getZkCatalogProjectEntry'
+import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
