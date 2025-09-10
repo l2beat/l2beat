@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x62fc30863a8a2cff36b7baa63cd32deb8d89396e
+Generated with discovered.json: 0x7c70acdb9756ee29c80a77b1a9a142c6e7b38bcc
 
-# Diff at Wed, 10 Sep 2025 13:27:44 GMT:
+# Diff at Wed, 10 Sep 2025 14:02:57 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current timestamp: 1757509668
+- current timestamp: 1757512909
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery.
 
 ## Initial discovery
 

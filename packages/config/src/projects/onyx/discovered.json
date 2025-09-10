@@ -1,6 +1,6 @@
 {
   "name": "onyx",
-  "timestamp": 1757509668,
+  "timestamp": 1757512909,
   "configHash": "0x16b9de8977d0100b5f832306a10d24d148cecb895b08c538dfd257c2fc4ba502",
   "entries": [
     {
@@ -321,7 +321,7 @@
         "isPostBoLD": false,
         "lastStakeBlock": 31776136,
         "latestConfirmed": 3113,
-        "latestNodeCreated": 3113,
+        "latestNodeCreated": 3114,
         "loserStakeEscrow": "base:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "base:0x10e9F660ed21e662e7f3fB4a49B0Bd9B219bEf95",
@@ -818,8 +818,8 @@
         "outboxHistory": ["base:0x10e9F660ed21e662e7f3fB4a49B0Bd9B219bEf95"],
         "rollup": "base:0x50752f7988d0195d4d5fb09a1A22B8354b5A8c0b",
         "sequencerInbox": "base:0xdA2445f1cA60bC2C739A96298746aDBB6706f011",
-        "sequencerMessageCount": 40464,
-        "sequencerReportedSubMessageCount": 18254419
+        "sequencerMessageCount": 40465,
+        "sequencerReportedSubMessageCount": 18265523
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -956,7 +956,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 40464,
+        "batchCount": 40465,
         "batchPosterManager": "base:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "base:0x107c739629aCced04e3197EAa6b44CdEe0cE246c",
@@ -1826,6 +1826,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "base": 35360160 },
+  "usedBlockNumbers": { "base": 35361781 },
   "permissionsConfigHash": "0xc000d8f0fe8a5adbcbe466f4dcaa39b0b5ffea78af0bbfcc333868a423acfda7"
 }
