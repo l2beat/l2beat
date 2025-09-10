@@ -1,10 +1,13 @@
 import type { ProjectZkCatalogInfo } from '@l2beat/config'
 import React from 'react'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
-import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/getTrustedSetupsWithVerifiersAndAttesters'
+import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
+import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TechStackCell } from '../../components/TechStackCell'
 import { TrustedSetupCellTooltip } from '../../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../../components/VerifiedCountWithDetails'
@@ -27,9 +30,12 @@ export function ProjectZkCatalogSummary({ project }: Props) {
         trustedSetupsByProofSystem={project.header.trustedSetupsByProofSystem}
       />
       <TechStackSection techStack={project.header.techStack} />
-      {project.header.description && (
-        <AboutSection description={project.header.description} />
-      )}
+      <div className="mt-4 flex gap-6">
+        <TvsStat {...project.header.tvs} />
+        {project.header.description && (
+          <AboutSection description={project.header.description} />
+        )}
+      </div>
     </section>
   )
 }
@@ -90,6 +96,27 @@ function TechStackSection({
           className="flex flex-row flex-wrap gap-6"
         />
       </div>
+    </div>
+  )
+}
+
+function TvsStat({ value, change }: { value: number; change: number }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="font-semibold text-secondary text-subtitle-12">TVS</span>
+      {value ? (
+        <span className="mb-0.5 flex items-center gap-2">
+          <ValueWithPercentageChange
+            className="!text-base !font-medium !leading-[100%] text-nowrap"
+            changeClassName="text-label-value-14 font-bold"
+            change={change}
+          >
+            {formatCurrency(value, 'usd')}
+          </ValueWithPercentageChange>
+        </span>
+      ) : (
+        <NoDataBadge />
+      )}
     </div>
   )
 }

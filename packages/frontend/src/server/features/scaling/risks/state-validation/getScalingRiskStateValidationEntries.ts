@@ -12,8 +12,8 @@ import {
   getProjectsChangeReport,
   type ProjectChanges,
 } from '~/server/features/projects-change-report/getProjectsChangeReport'
-import { getVerifiersWithAttesters } from '~/server/features/zk-catalog/getTrustedSetupsWithVerifiersAndAttesters'
 import type { TrustedSetupVerifierData } from '~/server/features/zk-catalog/getZkCatalogEntries'
+import { getVerifiersWithAttesters } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { ps } from '~/server/projects'
 import {
   type CommonScalingEntry,

@@ -3,17 +3,18 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'
-import type { SsrHelpers } from '~/trpc/server'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import {
   getUnderReviewStatus,
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
+import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import {
   getTrustedSetupsWithVerifiersAndAttesters,
   type TrustedSetupsByProofSystem,
-} from '../getTrustedSetupsWithVerifiersAndAttesters'
+} from '../utils/getTrustedSetupsWithVerifiersAndAttesters'
+import { getZkCatalogProjectTvs } from '../utils/getZkCatalogProjectTvs'
 
 export interface ProjectZkCatalogEntry {
   name: string
@@ -31,6 +32,10 @@ export interface ProjectZkCatalogEntry {
     links: ProjectLink[]
     trustedSetupsByProofSystem: TrustedSetupsByProofSystem
     techStack: ProjectZkCatalogInfo['techStack']
+    tvs: {
+      value: number
+      change: number
+    }
   }
   sections: ProjectDetailsSection[]
 }
@@ -40,15 +45,22 @@ export async function getZkCatalogProjectEntry(
     'display' | 'zkCatalogInfo' | 'statuses',
     'archivedAt' | 'milestones'
   >,
-  helpers: SsrHelpers,
 ): Promise<ProjectZkCatalogEntry> {
-  const allProjects = await ps.getProjects({
-    optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
-  })
+  const [allProjects, tvs] = await Promise.all([
+    ps.getProjects({
+      optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
+    }),
+    get7dTvsBreakdown({ type: 'layer2' }),
+  ])
 
   const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
     project,
     allProjects,
+  )
+  const { tvs: tvsForProject, change } = getZkCatalogProjectTvs(
+    project,
+    allProjects,
+    tvs,
   )
 
   const header: ProjectZkCatalogEntry['header'] = {
@@ -59,6 +71,10 @@ export async function getZkCatalogProjectEntry(
     links: getProjectLinks(project.display.links),
     trustedSetupsByProofSystem,
     techStack: project.zkCatalogInfo.techStack,
+    tvs: {
+      value: tvsForProject,
+      change,
+    },
   }
 
   const common = {

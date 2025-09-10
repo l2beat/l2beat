@@ -9,8 +9,8 @@ import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { getLogger } from '~/server/utils/logger'
-import { getProjectIcon } from '../utils/getProjectIcon'
-import type { TrustedSetupVerifierData } from './getZkCatalogEntries'
+import { getProjectIcon } from '../../utils/getProjectIcon'
+import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
 
 export type TrustedSetupsByProofSystem = Record<
   string,

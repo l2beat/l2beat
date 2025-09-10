@@ -21,7 +21,7 @@ export async function getZkCatalogProjectData(
 
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
-    getZkCatalogProjectEntry(project, helpers),
+    getZkCatalogProjectEntry(project),
   ])
 
   return {

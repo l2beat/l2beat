@@ -1,6 +1,5 @@
 import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
 import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAttesters'
-import uniq from 'lodash/uniq'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import {
   get7dTvsBreakdown,
@@ -9,11 +8,11 @@ import {
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
-import { getLogger } from '~/server/utils/logger'
 import {
   getTrustedSetupsWithVerifiersAndAttesters,
   type TrustedSetupsByProofSystem,
-} from './getTrustedSetupsWithVerifiersAndAttesters'
+} from './utils/getTrustedSetupsWithVerifiersAndAttesters'
+import { getZkCatalogProjectTvs } from './utils/getZkCatalogProjectTvs'
 
 export type TrustedSetupVerifierData = {
   count: number
@@ -53,37 +52,14 @@ function getZkCatalogEntry(
   >[],
   tvs: SevenDayTvsBreakdown,
 ): ZkCatalogEntry {
-  const usedInVerifiers = uniq(
-    project.zkCatalogInfo.verifierHashes.flatMap((v) => v.usedBy),
-  )
-  const projectsForTvs = uniq(
-    usedInVerifiers.flatMap((vp) => {
-      const project = allProjects.find((p) => p.id === vp)
-      if (!project) {
-        const logger = getLogger().for('getZkCatalogEntry')
-        logger.warn(`Project ${vp} not found`)
-        return []
-      }
-
-      // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
-      if (project.daBridge) {
-        return project.daBridge.usedIn.flatMap((p) => p.id)
-      }
-      return vp
-    }),
-  )
-
-  const tvsForProject = projectsForTvs.reduce((acc, p) => {
-    const projectTvs = tvs.projects[p]?.breakdown.total
-    if (!projectTvs) {
-      return acc
-    }
-    return acc + projectTvs
-  }, 0)
-
   const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
     project,
     allProjects,
+  )
+  const { tvs: tvsForProject } = getZkCatalogProjectTvs(
+    project,
+    allProjects,
+    tvs,
   )
 
   return {
