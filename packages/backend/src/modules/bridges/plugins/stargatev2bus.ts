@@ -1,8 +1,8 @@
 import { PacketDelivered, PacketSent } from './layerzerov2'
 import {
   StargateV2BusDriven,
-  StargateV2BusRode,
   StargateV2OFTReceived,
+  StargateV2OFTSentBus,
 } from './stargate'
 import type {
   BridgeEvent,
@@ -15,44 +15,55 @@ export class StargateV2BusPlugin implements BridgePlugin {
   name = 'stargatev2bus'
   chains = ['ethereum', 'arbitrum', 'base']
 
-  match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!StargateV2BusDriven.checkType(event)) {
+  match(busDriven: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+    if (!StargateV2BusDriven.checkType(busDriven)) {
       return
     }
 
-    const tickets = []
-
-    for (
-      let i = event.args.startTicketId;
-      i < event.args.startTicketId + event.args.numPassengers;
-      i++
-    ) {
-      const ticket = db.find(StargateV2BusRode, { ticketId: i })
-      if (!ticket) {
-        return
-      }
-      tickets.push(ticket)
-    }
-
-    const packetSent = db.find(PacketSent, { guid: event.args.guid })
+    const packetSent = db.find(PacketSent, { guid: busDriven.args.guid })
     if (!packetSent) {
       return
     }
 
-    const packetDelivered = db.find(PacketDelivered, { guid: event.args.guid })
+    const packetDelivered = db.find(PacketDelivered, {
+      guid: busDriven.args.guid,
+    })
     if (!packetDelivered) {
       return
     }
 
     const oftReceived = db.findAll(StargateV2OFTReceived, {
-      guid: event.args.guid,
+      guid: busDriven.args.guid,
     })
 
+    const token = oftReceived[0].args.token
+    const destinationEid = oftReceived[0].args.destinationEid
+
+    const oftSents = []
+
+    for (
+      let i = busDriven.args.startTicketId;
+      i < busDriven.args.startTicketId + busDriven.args.numPassengers;
+      i++
+    ) {
+      const oftSent = db.find(StargateV2OFTSentBus, {
+        ticketId: i,
+        destinationEid: destinationEid,
+        token: token,
+      })
+      if (!oftSent) {
+        return
+      }
+
+      oftSents.push(oftSent)
+    }
+
     const transfers = []
-    for (const ticket of tickets) {
+    for (const ticket of oftSents) {
       const received = oftReceived.find(
         (o) =>
-          // TODO: refactor to make this matching more robust
+          // Bus is driven only for a single token
+          // It is an edge case to have duplicate receivers in the same Bus
           o.args.receiver.toLowerCase() === ticket.args.receiver.toLowerCase(),
       )
       // TODO: additionally match by associated message (incl guid)
@@ -67,6 +78,8 @@ export class StargateV2BusPlugin implements BridgePlugin {
         inbound: { tx: received.ctx },
       })
     }
+
+    console.log('here')
 
     return {
       messages: [
