@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { BinaryReader } from '../BinaryReader'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -8,7 +9,6 @@ import {
   type LogToCapture,
   type MatchResult,
 } from './types'
-import { BinaryReader } from '../BinaryReader'
 
 const parseMessageSent = createEventParser('event MessageSent(bytes message)')
 
@@ -72,7 +72,7 @@ export class CCTPPlugin implements BridgePlugin {
         })
       }
 
-      if (version == 1) {
+      if (version === 1) {
         const message = decodeV2Message(messageSent.message)
         if (!message) {
           return
@@ -113,14 +113,19 @@ export class CCTPPlugin implements BridgePlugin {
         sourceDomain: Number(v2MessageReceived.sourceDomain),
         nonce: Number(v2MessageReceived.nonce),
         sender: EthereumAddress(`0x${v2MessageReceived.sender.slice(-40)}`),
-        finalityThresholdExecuted: Number(v2MessageReceived.finalityThresholdExecuted),
+        finalityThresholdExecuted: Number(
+          v2MessageReceived.finalityThresholdExecuted,
+        ),
         messageBody: v2MessageReceived.messageBody,
-        txHash: input.ctx.txHash
+        txHash: input.ctx.txHash,
       })
     }
   }
 
-  match(messageReceived: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(
+    messageReceived: BridgeEvent,
+    db: BridgeEventDb,
+  ): MatchResult | undefined {
     if (CCTPv1MessageReceived.checkType(messageReceived)) {
       const messageSent = db.find(CCTPv1MessageSent, {
         messageBody: messageReceived.args.messageBody,
@@ -151,7 +156,9 @@ export class CCTPPlugin implements BridgePlugin {
       return {
         messages: [
           {
-            type: messageSent.args.fast ? 'CCTPv2.FastMessage' : 'CCTPv2.SlowMessage',
+            type: messageSent.args.fast
+              ? 'CCTPv2.FastMessage'
+              : 'CCTPv2.SlowMessage',
             inbound: messageReceived,
             outbound: messageSent,
           },
@@ -207,8 +214,8 @@ export function decodeV2Message(encodedHex: string) {
     const sender = reader.readBytes(32)
     const recipient = reader.readBytes(32)
     const destinationCaller = reader.readBytes(32)
-    const minFinalityThreshold = reader.readUint32()  // only in V2
-    const finalityThresholdExecuted = reader.readUint32()  // only in V2
+    const minFinalityThreshold = reader.readUint32() // only in V2
+    const finalityThresholdExecuted = reader.readUint32() // only in V2
     const messageBody = reader.readRemainingBytes()
     return {
       version,
@@ -254,5 +261,3 @@ export function decodeBurnMessage(encodedHex: string) {
     return undefined
   }
 }
-
-

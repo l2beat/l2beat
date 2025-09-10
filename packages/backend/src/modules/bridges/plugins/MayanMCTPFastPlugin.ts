@@ -1,3 +1,4 @@
+import { BinaryReader } from '../BinaryReader'
 import { CCTPv2MessageReceived, CCTPv2MessageSent } from './CCTPPlugin'
 import {
   type BridgeEvent,
@@ -8,7 +9,6 @@ import {
   type LogToCapture,
   type MatchResult,
 } from './types'
-import { BinaryReader } from '../BinaryReader'
 
 const parseOrderFulfilled = createEventParser(
   'event OrderFulfilled(uint32 sourceDomain, bytes32 sourceNonce, uint256 amount)',
@@ -26,7 +26,10 @@ export class MayanMctpFastPlugin implements BridgePlugin {
   capture(input: LogToCapture) {
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
-      return OrderFulfilled.create(input.ctx, { txHash: input.ctx.txHash, amount: orderFulfilled.amount.toString() })
+      return OrderFulfilled.create(input.ctx, {
+        txHash: input.ctx.txHash,
+        amount: orderFulfilled.amount.toString(),
+      })
     }
   }
 
@@ -70,7 +73,9 @@ export class MayanMctpFastPlugin implements BridgePlugin {
     return {
       messages: [
         {
-          type: messageSent.args.fast ? 'CCTPv2.FastMessage' : 'CCTPv2.SlowMessage',
+          type: messageSent.args.fast
+            ? 'CCTPv2.FastMessage'
+            : 'CCTPv2.SlowMessage',
           outbound: messageSent,
           inbound: messageReceived,
         },

@@ -2,7 +2,6 @@
 Mayan SWIFT Protocol
 */
 
-import { CCTPv1MessageReceived, CCTPv1MessageSent } from './CCTPPlugin'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -12,12 +11,8 @@ import {
   type LogToCapture,
   type MatchResult,
 } from './types'
-import { LogMessagePublished } from './wormhole'
 
-
-const parseOrderCreated = createEventParser(
-  'event OrderCreated(bytes32 key)',
-)
+const parseOrderCreated = createEventParser('event OrderCreated(bytes32 key)')
 
 const parseOrderFulfilled = createEventParser(
   'event OrderFulfilled(bytes32 key, uint64 sequence, uint256 netAmount)',
@@ -40,17 +35,25 @@ export class MayanSwift implements BridgePlugin {
   capture(input: LogToCapture) {
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
-      return OrderFulfilled.create(input.ctx, { txHash: input.ctx.txHash, key: orderFulfilled.key.toString() })
+      return OrderFulfilled.create(input.ctx, {
+        txHash: input.ctx.txHash,
+        key: orderFulfilled.key.toString(),
+      })
     }
 
     const orderCreated = parseOrderCreated(input.log, null)
     if (orderCreated) {
-      return OrderCreated.create(input.ctx, { txHash: input.ctx.txHash, key: orderCreated.key.toString() })
+      return OrderCreated.create(input.ctx, {
+        txHash: input.ctx.txHash,
+        key: orderCreated.key.toString(),
+      })
     }
-
   }
 
-  match(orderFulfilled: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(
+    orderFulfilled: BridgeEvent,
+    db: BridgeEventDb,
+  ): MatchResult | undefined {
     if (!OrderFulfilled.checkType(orderFulfilled)) {
       return
     }
@@ -61,7 +64,6 @@ export class MayanSwift implements BridgePlugin {
     if (!orderCreated) {
       return
     }
-
 
     return {
       messages: [
