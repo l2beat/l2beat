@@ -56,7 +56,7 @@ function Controls() {
     <LivenessTimeRangeControls
       timeRange={timeRange}
       setTimeRange={setTimeRange}
-      className="max-md:ml-4"
+      className="max-md:mt-4 max-md:ml-4"
     />
   )
 }
