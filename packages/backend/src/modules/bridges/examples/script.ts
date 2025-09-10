@@ -2,7 +2,8 @@ import { getEnv, Logger } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { command, positional, run, string } from 'cmd-ts'
-import { logToViemLog } from '../../../../scripts/bridges/utils/viem'
+import { logToViemLog } from '../BridgeBlockProcessor'
+import { match } from '../BridgeMatcher'
 import { createBridgePlugins } from '../plugins'
 import type { BridgeEvent } from '../plugins/types'
 import * as examples from './examples.json'
@@ -81,16 +82,9 @@ const cmd = command({
 
     const eventDb = new InMemoryEventDb(events)
 
-    for (const plugin of plugins) {
-      if (!plugin.match) {
-        continue
-      }
-      for (const event of events) {
-        const matched = plugin.match(event, eventDb)
-        if (matched) {
-          logger.info('Matched', matched)
-        }
-      }
+    const result = await match(eventDb, events, plugins, logger)
+    for (const message of result.messages) {
+      logger.info('Message', message)
     }
   },
 })
