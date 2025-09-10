@@ -1,8 +1,8 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL3 } from '../../templates/orbitStack'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('onyx')
 
@@ -11,9 +11,7 @@ export const onyx: ScalingProject = orbitStackL3({
   capability: 'universal',
   addedAt: UnixTime(1744637831),
   hostChain: ProjectId('base'),
-  additionalBadges: [
-    BADGES.RaaS.Conduit,
-  ],
+  additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['XCN'],
   display: {
     name: 'Onyx',
@@ -37,7 +35,7 @@ export const onyx: ScalingProject = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
- chainConfig: {
+  chainConfig: {
     name: 'onyx',
     gasTokens: ['XCN'],
     chainId: 80888,
@@ -49,9 +47,17 @@ export const onyx: ScalingProject = orbitStackL3({
       },
     ],
   },
- activityConfig: {
+  activityConfig: {
     type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
-  }
+  },
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'base:0x167D43d1D60DE2320B5E143F9c6a058092A913C2',
+      ),
+      tokens: '*',
+    }),
+  ],
 })

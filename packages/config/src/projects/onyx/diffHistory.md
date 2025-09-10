@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x88796d129deeca6b554907a55438ff208370bcbd
+Generated with discovered.json: 0x62fc30863a8a2cff36b7baa63cd32deb8d89396e
 
-# Diff at Wed, 10 Sep 2025 13:09:09 GMT:
+# Diff at Wed, 10 Sep 2025 13:27:44 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1757509668
@@ -31,8 +31,20 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract ERC20Gateway (base:0x167D43d1D60DE2320B5E143F9c6a058092A913C2)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+```diff
++   Status: CREATED
     contract ValidatorUtils (base:0x23264394923E4aEB990234180c37Bf757667C6f7)
     +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
++   Status: CREATED
+    contract GatewayRouter (base:0x3CaA4581e7bA1aF2607e0198aF4E4C208f09c98b)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
 ```
 
 ```diff
