@@ -1,8 +1,7 @@
 {
   "DAO.sol": {
     "hash": "0x0567fe67ea1d2872edb3f9420706c18e62259987f7e28a61ab4bdf9c44348e57",
-    "address": "0x52Af16664155608b845BE18aa29620EbF6eA2D3a",
-    "chain": "ethereum",
+    "address": "eth:0x52Af16664155608b845BE18aa29620EbF6eA2D3a",
     "blockNumber": 22474843
   }
 }

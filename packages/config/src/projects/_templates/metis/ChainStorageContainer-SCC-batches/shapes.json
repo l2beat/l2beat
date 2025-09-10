@@ -1,8 +1,7 @@
 {
   "ChainStorageContainer-SCC-batches": {
     "hash": "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0",
-    "address": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
-    "chain": "ethereum",
+    "address": "eth:0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
     "blockNumber": 22517869
   }
 }

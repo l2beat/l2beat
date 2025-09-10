@@ -1,8 +1,7 @@
 {
   "MVM_L2ChainManagerOnL1": {
     "hash": "0x8be6c2abbd355799e149ebae677a3814685c6b43ebad0b7853fe236af7a84fe7",
-    "address": "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5",
-    "chain": "ethereum",
+    "address": "eth:0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5",
     "blockNumber": 22517869
   }
 }

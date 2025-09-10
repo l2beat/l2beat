@@ -112,7 +112,7 @@ export function EcosystemsActivityChart({
         }}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-          <ChartLegend content={<ChartLegendContent reverse />} />
+          <ChartLegend content={<ChartLegendContent />} />
           {getStrokeOverFillAreaComponents({
             data: [
               {
@@ -140,7 +140,7 @@ export function EcosystemsActivityChart({
             },
             syncedUntil: data?.syncedUntil,
           })}
-          <ChartTooltip content={<ActivityCustomTooltip />} />
+          <ChartTooltip content={<ActivityCustomTooltip metric="uops" />} />
           <defs>
             <CustomFillGradientDef
               id="fillProjects"

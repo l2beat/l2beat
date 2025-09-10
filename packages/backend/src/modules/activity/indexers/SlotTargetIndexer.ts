@@ -12,6 +12,9 @@ export class SlotTargetIndexer extends RootIndexer {
     private readonly clock: Clock,
     private readonly slotTimestampProvider: SlotTimestampProvider,
     private readonly config: ActivityConfigProject,
+    private readonly options?: {
+      onTick?: (targetTimestamp: number, slotTarget: number) => Promise<void>
+    },
   ) {
     super(
       logger.tag({
@@ -39,10 +42,14 @@ export class SlotTargetIndexer extends RootIndexer {
       'SlotTargetIndexer should only be used for slot activity',
     )
 
-    return await this.slotTimestampProvider.getSlotNumberAtOrBefore(
+    const slotNumber = await this.slotTimestampProvider.getSlotNumberAtOrBefore(
       timestamp,
       this.config.chainName,
       (this.config.activityConfig as SlotActivityConfig).startSlot,
     )
+
+    await this.options?.onTick?.(timestamp, slotNumber)
+
+    return slotNumber
   }
 }

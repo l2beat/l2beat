@@ -1,8 +1,7 @@
 {
   "DAOFallbackProposer.sol": {
     "hash": "0x397ca5d98f464f3096b2ba95f9057ebbc27c56e4d878ebbae83c911594dd7c5b",
-    "address": "0x280eAbfd252f017B78e15b69580F249F45FB55Fa",
-    "chain": "ethereum",
+    "address": "eth:0x280eAbfd252f017B78e15b69580F249F45FB55Fa",
     "blockNumber": 22468063
   }
 }

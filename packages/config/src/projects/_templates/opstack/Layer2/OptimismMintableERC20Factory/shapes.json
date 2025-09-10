@@ -1,20 +1,17 @@
 {
   "OptimismMintableERC20Factory_v1_10_1beta_1": {
     "hash": "0x7235f633505819bfbed4f3905acfb40f5998a831cc47abc2f22f730a0bc3686a",
-    "address": "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012",
-    "chain": "ink",
+    "address": "ink:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012",
     "blockNumber": 10183769
   },
   "OptimismMintableERC20Factory_v1_1_0": {
     "hash": "0x33cbc2e27551e9c304842740517adbe533ed12516557dc9a8b7c63f7d599998b",
-    "address": "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012",
-    "chain": "optimism",
+    "address": "oeth:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012",
     "blockNumber": 134041720
   },
   "OptimismMintableERC20Factory_v1_9_0": {
     "hash": "0xaf8d1aec41a22039c90d3ea23d8b660cbe441037e0fe15f90b7c39c46c34d07d",
-    "address": "0x6922ac4DbDfEdEa3a1E5535f12c3171f2b964C91",
-    "chain": "base",
+    "address": "base:0x6922ac4DbDfEdEa3a1E5535f12c3171f2b964C91",
     "blockNumber": 29605802
   }
 }

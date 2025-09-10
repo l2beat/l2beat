@@ -92,7 +92,7 @@ export const immutablezkevm: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
-      secondLine: `${formatSeconds(withdrawalDelay)} challenge period`,
+      challengeDelay: withdrawalDelay,
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),

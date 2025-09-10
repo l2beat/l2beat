@@ -1,14 +1,12 @@
 {
   "L1AssetRouter": {
     "hash": "0x1912c5e1125a20bfd6b933a66a437e3d04e2404549b86b88ceadb233eff05477",
-    "address": "0x20E17D0280DeaBb78f7c193E3Ef05F62adC0936E",
-    "chain": "ethereum",
+    "address": "eth:0x20E17D0280DeaBb78f7c193E3Ef05F62adC0936E",
     "blockNumber": 22188285
   },
   "L1AssetRouter_v27": {
     "hash": "0xba83b7c168ffa78d2e714cfb804ca1cd4f33807f6e9b2abb2820457d6d2bf77a",
-    "address": "0xcaD49896F3d54d9A93eDdBFd370c8A4a1b239315",
-    "chain": "ethereum",
+    "address": "eth:0xcaD49896F3d54d9A93eDdBFd370c8A4a1b239315",
     "blockNumber": 22374168
   }
 }

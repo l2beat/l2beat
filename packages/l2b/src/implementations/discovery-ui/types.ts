@@ -8,7 +8,6 @@ export interface ApiProjectEntry {
   name: string
   addresses: string[]
   contractNames: string[]
-  chains: string[]
 }
 
 export interface ApiProjectResponse {
@@ -41,11 +40,10 @@ export interface ApiPreviewContract {
 
 export interface ApiProjectChain {
   project: string
-  chain: string
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
   eoas: ApiAddressEntry[]
-  blockNumber: number
+  blockNumbers: Record<string, number>
 }
 
 export type ApiAddressType =
@@ -66,6 +64,7 @@ export interface ApiAddressEntry {
   type: ApiAddressType
   referencedBy: ApiAddressReference[]
   address: ChainSpecificAddress
+  chain: string
 }
 
 export interface ApiAddressReference extends AddressFieldValue {

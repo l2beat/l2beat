@@ -1,8 +1,7 @@
 {
   "MVM_Verifier.sol": {
     "hash": "0x85cae352a6b900f9d20a913095da6267900b8e10f04d7277743dcdd0ce8c809e",
-    "address": "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E",
-    "chain": "ethereum",
+    "address": "eth:0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E",
     "blockNumber": 22517630
   }
 }

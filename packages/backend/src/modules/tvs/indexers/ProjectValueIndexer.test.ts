@@ -19,7 +19,7 @@ describe(ProjectValueIndexer.name, () => {
   ])
 
   describe(ProjectValueIndexer.prototype.multiUpdate.name, () => {
-    it('processes timestamps and saves aggregated records', async () => {
+    it('processes timestamps, saves aggregated records and updates sync metadata', async () => {
       const timestamps = [1000, 2000]
 
       const mockTokenValues: TokenValueRecord[] = [
@@ -37,9 +37,14 @@ describe(ProjectValueIndexer.name, () => {
       const projectRepository = mockObject<Database['tvsProjectValue']>({
         upsertMany: mockFn().resolvesToOnce(undefined),
       })
+      const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+        updateSyncedUntil: mockFn().resolvesToOnce(undefined),
+      })
       const db = mockObject<Database>({
+        transaction: mockFn(async (fun) => await fun()),
         tvsTokenValue: tokenRepository,
         tvsProjectValue: projectRepository,
+        syncMetadata: syncMetadataRepository,
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
@@ -60,7 +65,7 @@ describe(ProjectValueIndexer.name, () => {
       const result = await indexer.multiUpdate(100, 200, [
         config('id', 'project', 100, 200),
       ])
-      await result()
+      const to = await result()
 
       expect(tokenRepository.getByProject).toHaveBeenOnlyCalledWith(
         'project',
@@ -71,6 +76,13 @@ describe(ProjectValueIndexer.name, () => {
       expect(projectRepository.upsertMany).toHaveBeenCalledTimes(1)
       // 4 records per timestamp (2 timestamps)
       expect(projectRepository.upsertMany.calls[0].args[0].length).toEqual(8)
+
+      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenOnlyCalledWith(
+        'tvs',
+        ['project'],
+        timestamps[timestamps.length - 1],
+      )
+      expect(to).toEqual(timestamps[timestamps.length - 1])
     })
 
     it('returns early if no timestamps to process', async () => {

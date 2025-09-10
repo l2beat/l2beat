@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { Badge } from '~/components/badge/Badge'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
@@ -6,6 +7,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPer
 import { TableLink } from '~/components/table/TableLink'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/DaCommonProjectColumns'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
+import { formatTimestamp } from '~/utils/dates'
 import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
 
 export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
@@ -72,44 +74,88 @@ export const publicSystemsColumns = [
       ),
       columnHelper.accessor((e) => e.data?.maxThroughputPerSecond, {
         header: 'MAX CAPACITY',
-        cell: (ctx) => (
-          <TableValueCell
-            emptyMode="upcoming"
-            value={
-              ctx.row.original.data?.maxThroughputPerSecond
-                ? {
-                    value: formatBpsToMbps(
-                      ctx.row.original.data.maxThroughputPerSecond,
-                    ),
-                  }
-                : undefined
-            }
-          />
-        ),
+        cell: (ctx) => {
+          const maxThroughputPerSecond =
+            ctx.row.original.data?.maxThroughputPerSecond
+
+          if (maxThroughputPerSecond === 'NO_CAP') {
+            return (
+              <div className="text-left">
+                <Badge type="gray" size="small">
+                  No cap
+                </Badge>
+              </div>
+            )
+          }
+
+          return (
+            <TableValueCell
+              emptyMode="upcoming"
+              value={
+                maxThroughputPerSecond
+                  ? {
+                      value: formatBpsToMbps(maxThroughputPerSecond),
+                    }
+                  : undefined
+              }
+            />
+          )
+        },
         meta: {
           align: 'right',
           tooltip:
             'The maximum data throughput that can be maintained over time. For Ethereum, it refers to the target blob throughput, as the blob base fee increases exponentially when blob usage exceeds the target.',
         },
       }),
+      columnHelper.accessor((e) => e.data?.maxRegistered, {
+        header: 'MAX REGISTERED',
+        cell: (ctx) => {
+          const maxRegisteredThroughput = ctx.row.original.data?.maxRegistered
+          return (
+            <TableValueCell
+              emptyMode="upcoming"
+              value={
+                maxRegisteredThroughput
+                  ? {
+                      value: formatBpsToMbps(maxRegisteredThroughput.value),
+                      secondLine: `on ${formatTimestamp(
+                        maxRegisteredThroughput.timestamp,
+                      )}`,
+                    }
+                  : undefined
+              }
+            />
+          )
+        },
+        meta: {
+          align: 'right',
+          tooltip:
+            'The maximum recorded throughput (historically, calculated based on hourly data size).',
+        },
+      }),
     ],
   }),
   columnHelper.accessor((e) => e.data?.pastDayData?.avgCapacityUtilization, {
     header: 'past day avg\ncapacity used',
-    cell: (ctx) => (
-      <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
-        <TableValueCell
-          emptyMode="upcoming"
-          value={
-            ctx.row.original.data?.pastDayData?.avgCapacityUtilization
-              ? {
-                  value: `${ctx.row.original.data.pastDayData?.avgCapacityUtilization}%`,
-                }
-              : undefined
-          }
-        />
-      </SyncStatusWrapper>
-    ),
+    cell: (ctx) => {
+      const avgCapacityUtilization =
+        ctx.row.original.data?.pastDayData?.avgCapacityUtilization
+      return (
+        <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
+          <TableValueCell
+            emptyMode={avgCapacityUtilization === null ? 'n/a' : 'upcoming'}
+            value={
+              avgCapacityUtilization !== null &&
+              avgCapacityUtilization !== undefined
+                ? {
+                    value: `${avgCapacityUtilization}%`,
+                  }
+                : undefined
+            }
+          />
+        </SyncStatusWrapper>
+      )
+    },
     meta: {
       headClassName: 'pl-2',
       cellClassName: 'pl-2',

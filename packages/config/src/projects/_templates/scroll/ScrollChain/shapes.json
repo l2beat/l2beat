@@ -1,14 +1,12 @@
 {
   "ScrollChain.sol": {
     "hash": "0x73386ff4d9fbaf9cba78ae1e91ee43f11ff39acb8bcf332085ec42d7da6c2306",
-    "address": "0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f",
-    "chain": "ethereum",
+    "address": "eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f",
     "blockNumber": 22338265
   },
   "ScrollChain_Feynman": {
     "hash": "0xdccc4e7f3d13677c2f3cb12f608b3aa0a8bacb59c54feb3dc21fc3f42c4d4e25",
-    "address": "0x0a20703878E68E587c59204cc0EA86098B8c3bA7",
-    "chain": "ethereum",
+    "address": "eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7",
     "blockNumber": 23167969
   }
 }

@@ -1,8 +1,7 @@
 {
   "PEMCertChainLib.sol": {
     "hash": "0x97476fc6413c58015ddf51b5d2e37c3fdfc6b85ced25779773a1652ecc154c77",
-    "address": "0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
-    "chain": "ethereum",
+    "address": "eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
     "blockNumber": 22468063
   }
 }

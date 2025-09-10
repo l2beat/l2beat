@@ -1,20 +1,17 @@
 {
   "L2ERC20Bridge": {
     "hash": "0x06ae9715fb784184e109392e0c2013c69faaf598b8cbbc6debf154cef8d2d305",
-    "address": "0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4",
-    "chain": "facet",
+    "address": "facet:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4",
     "blockNumber": 1622097
   },
   "L2ERC20Bridge2": {
     "hash": "0x0ae2befecd05c40f439454b1c6b4a3173f71da052548e4f04bb99ab7470eb332",
-    "address": "0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850",
-    "chain": "facet",
+    "address": "facet:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850",
     "blockNumber": 1632336
   },
   "L2ERC20Bridge_bluebird": {
     "hash": "0x414ac7953be12604a6d533900a5bdffa100737e6f29bd553d88d5631817d37b5",
-    "address": "0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
-    "chain": "facet",
+    "address": "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
     "blockNumber": 1726398
   }
 }

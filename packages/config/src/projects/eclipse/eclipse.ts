@@ -92,7 +92,7 @@ export const eclipse: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
-      secondLine: `${formatSeconds(withdrawalDelaySeconds)} challenge period`,
+      challengeDelay: withdrawalDelaySeconds,
     },
     dataAvailability: RISK_VIEW.DATA_CELESTIA(false),
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),

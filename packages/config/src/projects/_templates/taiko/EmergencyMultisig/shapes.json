@@ -1,8 +1,7 @@
 {
   "EmergencyMultisig": {
     "hash": "0x5214d838c15a1ddc2fa952f428cd6eeb5b5146d215923c3d4667100066d7f73e",
-    "address": "0x437E450452E8Bc142bd5317199296EcB187c514b",
-    "chain": "ethereum",
+    "address": "eth:0x437E450452E8Bc142bd5317199296EcB187c514b",
     "blockNumber": 22538808
   }
 }

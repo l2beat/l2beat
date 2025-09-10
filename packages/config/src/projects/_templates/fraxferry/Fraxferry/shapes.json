@@ -1,38 +1,32 @@
 {
   "Fraxferry-0x3eF1d856EA62A2292B8690855042095a7aC48B4b": {
     "hash": "0x88288c617550b61f425cdad7bc8fbd84ddd53512a79ba1078759c172fef9869c",
-    "address": "0x2d2261f970F605C813f160E8BAEd455E9004A842",
-    "chain": "ethereum",
+    "address": "eth:0x2d2261f970F605C813f160E8BAEd455E9004A842",
     "blockNumber": 22188285
   },
   "Fraxferry-0x45D2d8e4aB0F5af1D29305301A1b31D5d41b3349": {
     "hash": "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2",
-    "address": "0x0F6136F9aBB7A0c21FbE076771625b39C544BDf5",
-    "chain": "ethereum",
+    "address": "eth:0x0F6136F9aBB7A0c21FbE076771625b39C544BDf5",
     "blockNumber": 22188285
   },
   "Fraxferry-0x6ac96F65156281a9383455D704b58A74ea9C9eC4": {
     "hash": "0xa41cfaa41b91276ffca29912369bb3b9cb237551a7e6e18d061a7adb07dcb6cc",
-    "address": "0x6ac96F65156281a9383455D704b58A74ea9C9eC4",
-    "chain": "ethereum",
+    "address": "eth:0x6ac96F65156281a9383455D704b58A74ea9C9eC4",
     "blockNumber": 22188285
   },
   "Fraxferry-0x9694dcF5b6CCF6216B05FE64945f62603e2d2367": {
     "hash": "0x25f69689b4f19737540bcc34f5b90ee060dc982de2506fa40bc7f93469782a4c",
-    "address": "0x2453b1FbD17ceA069A31C9D16A27f4F93a85Cc0d",
-    "chain": "ethereum",
+    "address": "eth:0x2453b1FbD17ceA069A31C9D16A27f4F93a85Cc0d",
     "blockNumber": 22188285
   },
   "Fraxferry-0xB6b0290A39E2F896bBd8fC19cf17FE393e993dE4": {
     "hash": "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b",
-    "address": "0x04ba20D2Cc47C63bce1166C2864F0241e4D0a0CC",
-    "chain": "ethereum",
+    "address": "eth:0x04ba20D2Cc47C63bce1166C2864F0241e4D0a0CC",
     "blockNumber": 22188285
   },
   "Fraxferry-0xfB788F9E20ef426a32A67986654750172A6c1788": {
     "hash": "0xdc63c2b7e66b801babcccf079126ff7839a3672d7e0e17081498dc9d38991771",
-    "address": "0x06Fa869caa1160754C6a0B744Da6454c5EA325d4",
-    "chain": "ethereum",
+    "address": "eth:0x06Fa869caa1160754C6a0B744Da6454c5EA325d4",
     "blockNumber": 22188285
   }
 }

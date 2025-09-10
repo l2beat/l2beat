@@ -1,8 +1,7 @@
 {
-  "Universal_Adapter": {
-    "hash": "0x45811d7c7fb7a921f66322f37a63fe336a5df0b31563d9ad40192b65a612b905",
-    "address": "0x22001f37B586792F25Ef9d19d99537C6446e0833",
-    "chain": "ethereum",
-    "blockNumber": 22867011
+  "universalAdapter_v2": {
+    "hash": "0x7ff8668a17d865513414130cf8749a6b7e7452c5ce078ffa50e1a7b74d7c333b",
+    "address": "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b",
+    "blockNumber": 23318936
   }
 }

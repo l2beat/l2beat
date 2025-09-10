@@ -1,8 +1,7 @@
 {
   "ScrollOwner.sol": {
     "hash": "0x92fd37cca83c3ecf2b4b1343a3287484d39591016bdd853e572e12c286c0d952",
-    "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-    "chain": "ethereum",
+    "address": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
     "blockNumber": 22338265
   }
 }

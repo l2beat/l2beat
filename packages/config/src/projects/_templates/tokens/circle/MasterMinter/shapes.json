@@ -1,8 +1,7 @@
 {
   "MasterMinter": {
     "hash": "0xf49a07669c94c3b5ba913378cfa842a379d9d3f4456a1070979d52d7f9d69c87",
-    "address": "0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1",
-    "chain": "base",
+    "address": "base:0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1",
     "blockNumber": 29519230
   }
 }

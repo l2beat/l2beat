@@ -36,17 +36,6 @@ export const unite: ScalingProject = underReviewL3({
     name: 'unite',
     gasTokens: ['UNITE'],
     chainId: 88899,
-    apis: [
-      {
-        type: 'rpc',
-        url: 'https://unite-mainnet.g.alchemy.com/public',
-        callsPerMinute: 1500,
-      },
-    ],
-  },
-  activityConfig: {
-    type: 'block',
-    startBlock: 1,
-    adjustCount: { type: 'SubtractOne' },
+    apis: [],
   },
 })

@@ -1,0 +1,3464 @@
+{
+  "name": "shared-eigenlayer",
+  "timestamp": 1756724373,
+  "configHash": "0xfff147ff2a79294afde6a06be0def3da92777c461ebf2547aac557ebce5c73c3",
+  "entries": [
+    {
+      "address": "eth:0x00000000000000000000000000000000000E16E4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "StrategiesBeacon",
+      "address": "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
+      "type": "Contract",
+      "template": "eigenlayer/StrategiesBeacon",
+      "sourceHashes": [
+        "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313"
+      ],
+      "proxyType": "immutable",
+      "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.",
+      "sinceTimestamp": 1723232219,
+      "sinceBlock": 20493176,
+      "values": {
+        "$immutable": true,
+        "implementation": "eth:0xD4d1746142642Db4c1ab17b03B9c58baac913E5B",
+        "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      },
+      "implementationNames": {
+        "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": "UpgradeableBeacon"
+      }
+    },
+    {
+      "name": "TokenHopper",
+      "address": "eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563",
+      "type": "Contract",
+      "template": "eigenlayer/TokenHopper",
+      "sourceHashes": [
+        "0x7a33b4c0c58212ece91ddbb1006f31ba22a346c26b7b89555d88d72b195aec84"
+      ],
+      "proxyType": "immutable",
+      "description": "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).",
+      "ignoreInWatchMode": ["latestPress", "canPress"],
+      "sinceTimestamp": 1727895695,
+      "sinceBlock": 20879772,
+      "values": {
+        "$immutable": true,
+        "canPress": false,
+        "getHopperConfiguration": {
+          "token": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "startTime": 1727308800,
+          "cooldownSeconds": 604800,
+          "actionGenerator": "eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE",
+          "doesExpire": false,
+          "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+        },
+        "isExpired": false,
+        "latestPress": 1756343099,
+        "owner": "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
+      },
+      "fieldMeta": {
+        "latestPress": {
+          "severity": "LOW",
+          "description": "Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals."
+        },
+        "getHopperConfiguration": {
+          "severity": "LOW",
+          "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."
+        }
+      },
+      "implementationNames": {
+        "eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563": "TokenHopper"
+      }
+    },
+    {
+      "name": "AVSDirectory",
+      "address": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+      "type": "Contract",
+      "template": "eigenlayer/AVSDirectory",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x9d891889c1fcc1bd08979780a1502190faf4e8230d94e47de322da41bf7e5143"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["avs"],
+      "sinceTimestamp": 1711141931,
+      "sinceBlock": 19492759,
+      "values": {
+        "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+        "$implementation": "eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2",
+        "$pastUpgrades": [
+          [
+            "2024-03-22T21:12:11.000Z",
+            "0x40573c645ceaa15139d3fe9a736ff5cc230ccb1c11961dcd9a3152d990c1fb71",
+            ["eth:0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7"]
+          ],
+          [
+            "2025-04-17T22:30:11.000Z",
+            "0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",
+            ["eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "avs": [
+          "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "eth:0xD25c2c5802198CB8541987b73A8db4c9BCaE5cC7",
+          "eth:0x9FC952BdCbB7Daca7d420fA55b942405B073A89d",
+          "eth:0x71a77037870169d47aad6c2C9360861A4C0df2bF",
+          "eth:0x6026b61bDD2252160691CB3F6005B6B72E0Ec044",
+          "eth:0x35F4f28A8d3Ff20EEd10e087e8F96Ea2641E6AA2",
+          "eth:0x23221c5bB90C7c57ecc1E75513e2E4257673F0ef",
+          "eth:0xed2f4d90b073128ae6769a9A8D51547B1Df766C8",
+          "eth:0xE5445838C475A2980e6a88054ff1514230b83aEb",
+          "eth:0xd50E0931703302B080880C45148F5D83ea66aE2a",
+          "eth:0xF7fcff55d5FDAf2C3Bbeb140Be5e62a2c7D26Db3",
+          "eth:0xB6827E919b55B45290cf54F006EE4a231e06F088",
+          "eth:0x1DE75EaAb2df55d467494A172652579E6FA4540E",
+          "eth:0x07E26BF8060e33fA3771d88128b75493750515c1",
+          "eth:0x1F2c296448f692af840843d993fFC0546619Dcdb",
+          "eth:0x22CAc0e6A1465F043428e8AeF737b3cb09D0eEDa",
+          "eth:0xe8E59c6C8B56F2c178f63BCFC4ce5e5e2359c8fc",
+          "eth:0xb3AcAF09a1B801E36655B786da4EAA6aE9F5DC37",
+          "eth:0x18343Aa10e3D2F3A861e5649627324aEAD987Adf",
+          "eth:0xCE06c5fe42d22fF827A519396583Fd9f5176E3D3",
+          "eth:0xE7D0894Ac9266f5cbe8f8E750aC6cbe128FbbeB7",
+          "eth:0x84AdF221Af49E67DB62C5B16d86aFcaD2eF0b262",
+          "eth:0xb19f05CDc5EF266766AC1287A1EeF29283058773",
+          "eth:0x2d86E90ED40a034C753931eE31b1bD5E1970113d",
+          "eth:0x75195699F659ed67083691c2C48F23d0B907b559",
+          "eth:0xA5bD40e5406CB2d2440Db1D1bcF9dfD022B6C124",
+          "eth:0x8EF368e31cd0b51941bf85bC11D8C71589489Fe4",
+          "eth:0xd75c834B09ec626992Ff3Ce388AE7115791Fb282",
+          "eth:0xaCB91045B8bBa06f9026e1A30855B6C4A1c5BaC6",
+          "eth:0x83742C346E9f305dcA94e20915aB49A483d33f3E",
+          "eth:0xd6B9B1B29A30127fb99e1201E91a3e021658E9fb",
+          "eth:0xe008064DF9f019d0BFF0735fe6887d70b23825Ca",
+          "eth:0xb73a87E8F7f9129816d40940Ca19DFa396944C71",
+          "eth:0xFC569B3b74e15cf48AA684144e072e839Fd89380",
+          "eth:0xF75Bc9850F4C44E682537C477c4Bb08f71f695Da",
+          "eth:0xd6967ed3910C18E3546ABC1A67c61E75e2633fD9",
+          "eth:0xB3e069FD6dDA251AcBDE09eDa547e0AB207016ee",
+          "eth:0xA95Efd0CeFd326ff8eb5cFa8F0370CF7ED471D18",
+          "eth:0xa3F64D3102a035db35c42A9001BBc83e08c7a366",
+          "eth:0x461591A7e68906eDBcD643E010A7e1AE3B023c6d",
+          "eth:0xBc77233855e3274E1903771675Eb71E602D9DC2e",
+          "eth:0xeF2A435e5EE44B2041100EF8cbC8ae035166606c",
+          "eth:0x3aDdEb54ddd43Eb40235eC32DfA7928F28A44bb5",
+          "eth:0x852dD23aE808A20C48D7b7b03D23C3F5360928e1",
+          "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
+          "eth:0x29B2E51d2bF840116797F8A27e40c05aE3e244D9",
+          "eth:0xcA5608C29f13B813Ee6999a6686bea850bcdf36F",
+          "eth:0x045fC77EdAf8F9252577b2805D7F26f113848520",
+          "eth:0x466745F7c06fBBab48af7b64E9E9bea249fD6Ee5",
+          "eth:0x7a49D7101a969eE8Ba68b5Ed4aF42E03Fa40B1eA",
+          "eth:0xB3e9F71637f0089F81dAeb3b6999d391F13736Dd",
+          "eth:0x44577f44D2A131c8033663996636d00Ce1F46808",
+          "eth:0xb6EC8E5c6dB00089737Bd9637cFF76bD8Bbe0474",
+          "eth:0x42F15F9E4dF4994317453477e80e24797CC1A929",
+          "eth:0x35DebC00531Ac8771be5dbEf015feFD084efA958",
+          "eth:0x6201bc0A699e3b10f324204e6F8EcdD0983De227",
+          "eth:0x6f943318b05AD7c6EE596A220510A6D64B518dd8",
+          "eth:0x0328635BA5FF28476118595234b5b7236b906c0B",
+          "eth:0x10Ea82DdCE695dc44789633D362179B63CD18E64",
+          "eth:0xC9E94BF890c9b4F11685d576bC65B08e0E87556F",
+          "eth:0x4ca852BD78D9B7295874A7D223023Bff011b7EB3",
+          "eth:0x328c822874991C31DdF400CD8388027Af66270A8",
+          "eth:0x500C4E641b5d61026f26148Ab9363EB3241C08f3",
+          "eth:0x05006D61cA5fE53DF316802f3aC91973d4B95F99",
+          "eth:0x96b6a29D7B98519Ae66E6398BD27A76B30a5dC3f",
+          "eth:0x203b9Acb40DfBB911f1e39C784EAB639418dae04",
+          "eth:0x5Bf17dFaA1B76Bb6C5C47F568636877F94C09b65",
+          "eth:0x506D3bDef8C9E671928F1ffF135E0e0642B59AA4",
+          "eth:0x5b4AD76a6a2F4a0A8C7CBf499e6533B57da2eF2d",
+          "eth:0x1d32272FfdA06e9EDE3CA854D8D9AaAe8328d795",
+          "eth:0x47806C11CA33BE2360bb2A5891C5D0D1BaFBE7Dc",
+          "eth:0x902038d2D5278dd6504C135FFA49bf635D475f7e",
+          "eth:0xcF20a2c0065a8b2888c1702fe7885952ae523Aa2",
+          "eth:0x15f4314d4c5da6e36eC40b3BC2A279685F0d84b2",
+          "eth:0x9110e4e9e561514dE3be844D6fF9eF7cAcE65415",
+          "eth:0xd314209cE0ae9aDfD7643BB9d8becD62290D826a",
+          "eth:0xeadDFE246Cc8b309FfC6dDb4AB677Be49E8512AB",
+          "eth:0xD24a5F9A0E578f38e2B76d422b0a355ffee88F2E",
+          "eth:0x875B5ff698B74B26f39C223c4996871F28AcDdea"
+        ],
+        "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+        "domainSeparator": "0xa376b8f73e544301999d5aabb44e4d306777f6f0f08bf031c1c4bbc027313aeb",
+        "OPERATOR_AVS_REGISTRATION_TYPEHASH": "0xda2c89bafdd34776a2b8bb9c83c82f419e20cc8c67207f70edd58249b92661bd",
+        "OPERATOR_SET_FORCE_DEREGISTRATION_TYPEHASH": "0x4ee65f64218c67b68da66fd0db16560040a6b973290b9e71912d661ee53fe495",
+        "OPERATOR_SET_REGISTRATION_TYPEHASH": "0x809c5ac049c45b7a7f050a20f00c16cf63797efbf8b1eb8d749fdfa39ff8f929",
+        "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+        "paused": 0,
+        "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+        "version": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": "TransparentUpgradeableProxy",
+        "eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2": "AVSDirectory"
+      }
+    },
+    {
+      "address": "eth:0x17919FAC7024d5b770322E5Cb81607D247654116",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PermissionController",
+      "address": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+      "type": "Contract",
+      "template": "eigenlayer/PermissionController",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x01bb93f0533bf79f9680aee1f8f98c14501de40b31d642ccaab5b297dc809f1e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.",
+      "sinceTimestamp": 1744052255,
+      "sinceBlock": 22218956,
+      "values": {
+        "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+        "$implementation": "eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1",
+        "$pastUpgrades": [
+          [
+            "2025-04-07T18:57:35.000Z",
+            "0x805a4483038511f3087a95d16a06a0c2c5a2c7f09da0138d4159a896247ebce7",
+            ["eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "version": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5": "TransparentUpgradeableProxy",
+        "eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1": "PermissionController"
+      }
+    },
+    {
+      "address": "eth:0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2E158da11961426E2A1Cc9e79f40244486b6845C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x33E816008E7bc7798A73d0eaa640CC24f34d1626",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x347660a632B0Aac5B70dCd5e6C3444a7C933a137",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x34C37613e1680efD9e203C979658e1d058b4B2BC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EigenLayerOwningMultisig",
+      "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+          "role": ".pausers"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1686681203,
+      "sinceBlock": 17472874,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "eth:0xFEA47018D632A77bA579846c840d5706705Dc598"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xbc80366740d76b8af95de2e845557588b8a3dc40db68b5b15b8f1cb36a4c7e45",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 27,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "DelegationManager",
+      "address": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+      "type": "Contract",
+      "template": "eigenlayer/DelegationManager",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x070312684717f779729ea8c996718a93f984ef1cc6afd216b9b80007e7d49e7c"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.",
+      "sinceTimestamp": 1686348935,
+      "sinceBlock": 17445563,
+      "values": {
+        "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+        "$implementation": "eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89",
+        "$pastUpgrades": [
+          [
+            "2023-06-09T22:15:35.000Z",
+            "0x0445e4e9a7cab1da004f9c1dda8f56d27bdd14f18c3a4640ed44e0a2b60f84e7",
+            ["eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+          ],
+          [
+            "2023-06-09T22:16:35.000Z",
+            "0x7748101d59e54a345c328c4ec60713a378445cb1a35da6042bcab6ee22fcfd8b",
+            ["eth:0xf97E97649Da958d290e84E6D571c32F4b7F475e4"]
+          ],
+          [
+            "2024-04-08T16:35:59.000Z",
+            "0x39a8f50ef3a5e0cba11b2556bcf3f95ece0797de15b2fdde2f5820361da19b13",
+            ["eth:0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"]
+          ],
+          [
+            "2025-04-17T22:30:11.000Z",
+            "0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",
+            ["eth:0xA75112d1df37FA53a431525CD47A7d7faCEA7E73"]
+          ],
+          [
+            "2025-07-21T21:02:35.000Z",
+            "0xf5d819a6b5fcc031b468d79e83bdb64e0417817f2b0b4f26e5b4ff84284af5a2",
+            ["eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89"]
+          ]
+        ],
+        "$upgradeCount": 5,
+        "allocationManager": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+        "beaconChainETHStrategy": "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
+        "DELEGATION_APPROVAL_TYPEHASH": "0x14bde674c9f64b2ad00eaaee4a8bed1fabef35c7507e3c5b9cfc9436909a2dad",
+        "domainSeparator": "0x97aaae396c09a3be5493f06d25136bb99c8076172fccf4d7be0faa3a6f370b81",
+        "eigenPodManager": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+        "minWithdrawalDelayBlocks": 100800,
+        "paused": 0,
+        "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+        "permissionController": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+        "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+        "version": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A": "TransparentUpgradeableProxy",
+        "eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89": "DelegationManager"
+      }
+    },
+    {
+      "address": "eth:0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1710958955,
+      "sinceBlock": 19477666,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
+      },
+      "implementationNames": {
+        "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "eth:0x45dcD05251F3327EcCd4766a9264DBDAab3A4065",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EigenLayerOperationsMultisig2",
+      "address": "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "description": "executes scheduled operations after the delay",
+          "role": ".executors"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "description": "executes scheduled operations after the delay",
+          "role": ".executors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
+            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
+            {
+              "address": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+              "delay": 2073600
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "delay": 2073600,
+          "role": ".proposers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "delay": 864000,
+          "role": ".proposers"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1732236023,
+      "sinceBlock": 21239749,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3",
+          "eth:0x9229C290F60F303884073F28EB8E81F9B82506d5",
+          "eth:0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927",
+          "eth:0xc5280E368648b0e192b355c7d8330593bA7af700",
+          "eth:0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x61ee3be2a1999f4d0139ce35b0a2142d8ad067c74102210278661869542d9630",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 14,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0x47190787E49bF1832e5333180B73d99e7d1a331A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x4a3CD82B73821d075799680AcDff3e884B726777",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EigenLayerPauserMultisig",
+      "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+          "role": ".pausers"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1686325811,
+      "sinceBlock": 17443669,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x7474E1D80E844e6EdB430841DeEF702a6B747863",
+          "eth:0x45dcD05251F3327EcCd4766a9264DBDAab3A4065",
+          "eth:0xE34e8Cab673cA3fC60AD8bf8e503f4CA4Afb2D89",
+          "eth:0x9b2C61521AF4AB9f4BE25297838F72a56462B578",
+          "eth:0x347660a632B0Aac5B70dCd5e6C3444a7C933a137",
+          "eth:0xEFca484E497a9de170Da32abfa11650957dD2a95",
+          "eth:0x2E158da11961426E2A1Cc9e79f40244486b6845C",
+          "eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734",
+          "eth:0x4a3CD82B73821d075799680AcDff3e884B726777",
+          "eth:0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xfbfd4ff7bef5c0320a947b1a9f8c619140699fe97b75752b6683fab61bd6c249",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 10 (10%)",
+        "nonce": 29,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x5050389572f2d220ad927CcbeA0D406831012390": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0x55b067375146e015677F739CBBd04104d46744E8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x57af860e3a1C16641CDDDa92898266D2df7Dfa71",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UpgradeableBeacon",
+      "address": "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
+      "type": "Contract",
+      "template": "eigenlayer/StrategiesBeacon",
+      "sourceHashes": [
+        "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313"
+      ],
+      "proxyType": "immutable",
+      "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.",
+      "sinceTimestamp": 1686348959,
+      "sinceBlock": 17445565,
+      "values": {
+        "$immutable": true,
+        "implementation": "eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D",
+        "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      },
+      "implementationNames": {
+        "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073": "UpgradeableBeacon"
+      }
+    },
+    {
+      "address": "eth:0x5CCF59B92bb50377Ce8aF5Fed188B400B868d060",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "StrategyFactory",
+      "address": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+      "type": "Contract",
+      "template": "eigenlayer/StrategyFactory",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x00392f5dcb8592d0f6f83640dbd27a38aa84cfbafabae75f5e3219f0f0f73ae4"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Factory contract for permissionless strategy creation via beacon proxies.",
+      "sinceTimestamp": 1723232243,
+      "sinceBlock": 20493178,
+      "values": {
+        "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+        "$implementation": "eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66",
+        "$pastUpgrades": [
+          [
+            "2024-08-09T19:37:23.000Z",
+            "0x5902550cb862b59ffcde620f813c350e6b860d4e518ce22987345337e055cf55",
+            ["eth:0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74"]
+          ],
+          [
+            "2025-04-17T22:30:11.000Z",
+            "0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",
+            ["eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "owner": "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+        "paused": 0,
+        "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+        "strategyBeacon": "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
+        "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+        "version": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647": "TransparentUpgradeableProxy",
+        "eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66": "StrategyFactory"
+      }
+    },
+    {
+      "address": "eth:0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x65C4799061c0D1e3E87ADdB65b02E92a558F842F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x6DD76040589433cc4Fc14e49db02592a25c0eC70",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TimelockControllerBeigen",
+      "address": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+      "type": "Contract",
+      "template": "eigenlayer/TimelockControllerOwning",
+      "sourceHashes": [
+        "0x12390526d42e4274ef9e5135daddbb0595f5b9ace39b78e269965424334da88c"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
+      "sinceTimestamp": 1732299167,
+      "sinceBlock": 21244979,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+              "eth:0xFEA47018D632A77bA579846c840d5706705Dc598"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+              "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"]
+          }
+        },
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "cancellers": ["eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"],
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executors": ["eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"],
+        "getMinDelay": 2073600,
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "proposers": [
+          "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+        ],
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      },
+      "implementationNames": {
+        "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53": "TimelockController"
+      }
+    },
+    {
+      "address": "eth:0x7474E1D80E844e6EdB430841DeEF702a6B747863",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "RewardsCoordinator",
+      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "type": "Contract",
+      "template": "eigenlayer/RewardsCoordinator",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x834e9e144a27f28147a1d93de8045120205831ebea6457dc3748a624877591df"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.",
+      "sinceTimestamp": 1721406755,
+      "sinceBlock": 20341793,
+      "values": {
+        "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+        "$implementation": "eth:0xa505c0116aD65071F0130061F94745b7853220aB",
+        "$pastUpgrades": [
+          [
+            "2024-07-19T16:32:35.000Z",
+            "0x4bbe87b7d5fe27023599c6801806ca7bc875a1247dbc5d083608906cccaf910a",
+            ["eth:0x5bf7c13D5FAdba224ECB3D5C0a67A231D1628785"]
+          ],
+          [
+            "2024-09-28T05:46:11.000Z",
+            "0x1d48a09a7b2985e2714c87e0d98a68eb51da3938b5e0c663b633bcf985b535a5",
+            ["eth:0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2"]
+          ],
+          [
+            "2025-01-21T20:49:35.000Z",
+            "0xef2204dcbb42fffa76f11d266a475be5f14a0f377acfa83cbfb9042db77d93e7",
+            ["eth:0x29A954e9e7F12936Db89b183ECdf879fBBB99F14"]
+          ],
+          [
+            "2025-04-17T22:30:11.000Z",
+            "0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",
+            ["eth:0xa505c0116aD65071F0130061F94745b7853220aB"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "activationDelay": 604800,
+        "allocationManager": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+        "beaconChainETHStrategy": "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
+        "CALCULATION_INTERVAL_SECONDS": 86400,
+        "defaultOperatorSplitBips": 1000,
+        "delegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+        "GENESIS_REWARDS_TIMESTAMP": 1710979200,
+        "MAX_FUTURE_LENGTH": 2592000,
+        "MAX_RETROACTIVE_LENGTH": 14515200,
+        "MAX_REWARDS_DURATION": 6048000,
+        "owner": "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+        "paused": 2,
+        "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+        "permissionController": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+        "rewardsUpdater": "eth:0x8f94F55fD8c9E090296283137C303fE97d32A9e2",
+        "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+        "version": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda": "TransparentUpgradeableProxy",
+        "eth:0xa505c0116aD65071F0130061F94745b7853220aB": "RewardsCoordinator"
+      }
+    },
+    {
+      "name": "EigenPod",
+      "address": "eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D",
+      "type": "Contract",
+      "template": "eigenlayer/EigenPod",
+      "sourceHashes": [
+        "0x36ccc9d7f0d91f9e9d190872b03eef97633be88c0151c76c22f3a7d9ccbd26c6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1756414187,
+      "sinceBlock": 23242109,
+      "values": {
+        "$immutable": true,
+        "activeValidatorCount": 0,
+        "currentCheckpoint": {
+          "beaconBlockRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "proofsRemaining": 0,
+          "podBalanceGwei": 0,
+          "balanceDeltasGwei": 0,
+          "prevBeaconBalanceGwei": 0
+        },
+        "currentCheckpointTimestamp": 0,
+        "eigenPodManager": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+        "ethPOS": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
+        "getConsolidationRequestFee": 1,
+        "getWithdrawalRequestFee": 1,
+        "lastCheckpointTimestamp": 0,
+        "podOwner": "eth:0x0000000000000000000000000000000000000000",
+        "proofSubmitter": "eth:0x0000000000000000000000000000000000000000",
+        "version": "1.6.1",
+        "withdrawableRestakedExecutionLayerGwei": 0
+      },
+      "implementationNames": {
+        "eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D": "EigenPod"
+      }
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1728099143,
+      "sinceBlock": 20896663,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": ["eth:0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5"],
+        "$threshold": 1,
+        "domainSeparator": "0x8d93468ebffa79901f086f2e11f14ab0aa2568948ed9d84f653bc646af4dec93",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "bEIGEN token",
+      "address": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+      "type": "Contract",
+      "template": "eigenlayer/bEIGENToken",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x06b65d2894679524c6c376c7f4f4de01c85bb91d59784505b3aca00b9e976a09"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The token backing EIGEN and used for intersubjective staking.",
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1710958955,
+      "sinceBlock": 19477666,
+      "values": {
+        "$admin": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
+        "$implementation": "eth:0xF2b225815F70c9b327DC9db758A36c92A4279b17",
+        "$pastUpgrades": [
+          [
+            "2024-03-20T18:22:35.000Z",
+            "0xd2601d188881524bbdfdb54765d58370650ffbb316488fd5fd3cbd319eff6e58",
+            ["eth:0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3"]
+          ],
+          [
+            "2024-09-28T18:27:23.000Z",
+            "0x7872b53468133d1b46178a3bceb24fb05be5bda619b0d9cf90283f31c633498c",
+            ["eth:0xF2b225815F70c9b327DC9db758A36c92A4279b17"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "CLOCK_MODE": "mode=timestamp",
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0x5dd88b27402a52ec3e227839f0f448d699f04c912202aa0d2b25bb86127a6e96",
+        "EIGEN": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "bEIGEN",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "Minters": ["eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563"],
+        "name": "Backing Eigen",
+        "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+        "symbol": "bEIGEN",
+        "totalSupply": "1744454796558241769230769289",
+        "transferRestrictionsDisabledAfter": 0
+      },
+      "fieldMeta": {
+        "transferRestrictionsDisabledAfter": {
+          "severity": "HIGH",
+          "description": "Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0."
+        }
+      },
+      "implementationNames": {
+        "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": "TransparentUpgradeableProxy",
+        "eth:0xF2b225815F70c9b327DC9db758A36c92A4279b17": "BackingEigen"
+      }
+    },
+    {
+      "name": "StrategyManager",
+      "address": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+      "type": "Contract",
+      "template": "eigenlayer/StrategyManager",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x60a5779b3a2f393b1ced806a8d45492e70d92e11a9943b66a8511672ae88c7d3"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.",
+      "sinceTimestamp": 1686348947,
+      "sinceBlock": 17445564,
+      "values": {
+        "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+        "$implementation": "eth:0x46aefd30415be99e20169eE7046F65784B46d123",
+        "$pastUpgrades": [
+          [
+            "2023-06-09T22:15:47.000Z",
+            "0x1a21d3f2c0010ef91f57e2be2f5a85cddacc6c882d1868b89cbf1bb43c552e39",
+            ["eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+          ],
+          [
+            "2023-06-09T22:16:35.000Z",
+            "0x81b4b8a4240e0ffeb65a97334f9c09c674c1e6f983ad78fd49695e4e7c1d5115",
+            ["eth:0x5d25EEf8CfEdaA47d31fE2346726dE1c21e342Fb"]
+          ],
+          [
+            "2024-04-08T16:35:59.000Z",
+            "0x39a8f50ef3a5e0cba11b2556bcf3f95ece0797de15b2fdde2f5820361da19b13",
+            ["eth:0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"]
+          ],
+          [
+            "2025-04-17T22:30:11.000Z",
+            "0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",
+            ["eth:0xba4b2b8A076851A3044882493C2e36503d50b925"]
+          ],
+          [
+            "2025-07-21T21:02:35.000Z",
+            "0xf5d819a6b5fcc031b468d79e83bdb64e0417817f2b0b4f26e5b4ff84284af5a2",
+            ["eth:0x46aefd30415be99e20169eE7046F65784B46d123"]
+          ]
+        ],
+        "$upgradeCount": 5,
+        "allocationManager": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+        "DEFAULT_BURN_ADDRESS": "eth:0x00000000000000000000000000000000000E16E4",
+        "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+        "DEPOSIT_TYPEHASH": "0x4337f82d142e41f2a8c10547cd8c859bddb92262a61058e77842e24d9dea9224",
+        "domainSeparator": "0x7c2f5724769520ee7544a4791200f9aa455f6f21afc2d346341bbce85843ac90",
+        "getPendingOperatorSets": [],
+        "getStrategiesWithBurnableShares": [[], []],
+        "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+        "paused": 0,
+        "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+        "strategyWhitelister": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+        "version": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A": "TransparentUpgradeableProxy",
+        "eth:0x46aefd30415be99e20169eE7046F65784B46d123": "StrategyManager"
+      }
+    },
+    {
+      "name": "EigenLayerProxyAdmin",
+      "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1686348935,
+      "sinceBlock": 17445563,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      },
+      "implementationNames": {
+        "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "eth:0x8f94F55fD8c9E090296283137C303fE97d32A9e2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EigenPodManager",
+      "address": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+      "type": "Contract",
+      "template": "eigenlayer/EigenPodManager",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x1d0e4cec5c013a815e3c94572dfa980117f415c1f63d79ba522cf437c672534f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["numPods"],
+      "sinceTimestamp": 1686348947,
+      "sinceBlock": 17445564,
+      "values": {
+        "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+        "$implementation": "eth:0xE48D7CaeC1790b293667e4bB2dE1E00536F2bABd",
+        "$pastUpgrades": [
+          [
+            "2023-06-09T22:15:47.000Z",
+            "0x91d2c5fe26523df0e735f27df02925f42f66843eba7a414acc6bbdcc10bd6785",
+            ["eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+          ],
+          [
+            "2023-06-09T22:16:47.000Z",
+            "0x080396d23f4e4b23c8c5dc9491368b3c9ea0eaa96627b60d66259fe35322054e",
+            ["eth:0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"]
+          ],
+          [
+            "2024-04-08T16:35:59.000Z",
+            "0x39a8f50ef3a5e0cba11b2556bcf3f95ece0797de15b2fdde2f5820361da19b13",
+            ["eth:0xe4297e3DaDBc7D99e26a2954820f514CB50C5762"]
+          ],
+          [
+            "2024-09-04T16:00:47.000Z",
+            "0x7c4214538630d20d915cd9871694ba7a2eece833dccabc7e43a8a9d2c73bc267",
+            ["eth:0x731A0aD160e407393Ff662231Add6Dd145AD3FEa"]
+          ],
+          [
+            "2025-04-17T22:30:11.000Z",
+            "0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",
+            ["eth:0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77"]
+          ],
+          [
+            "2025-05-07T20:56:59.000Z",
+            "0xa21ccea07638809e5c429ef2b354259ff13aee47b3a5c0452143e2bd162a0968",
+            ["eth:0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9"]
+          ],
+          [
+            "2025-07-21T21:02:35.000Z",
+            "0xf5d819a6b5fcc031b468d79e83bdb64e0417817f2b0b4f26e5b4ff84284af5a2",
+            ["eth:0xE48D7CaeC1790b293667e4bB2dE1E00536F2bABd"]
+          ]
+        ],
+        "$upgradeCount": 7,
+        "beaconChainETHStrategy": "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
+        "burnableETHShares": 0,
+        "delegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+        "eigenPodBeacon": "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
+        "ethPOS": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
+        "numPods": 33991,
+        "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+        "paused": 0,
+        "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+        "pectraForkTimestamp": 1746612311,
+        "proofTimestampSetter": "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+        "version": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "TransparentUpgradeableProxy",
+        "eth:0xE48D7CaeC1790b293667e4bB2dE1E00536F2bABd": "EigenPodManager"
+      }
+    },
+    {
+      "address": "eth:0x9229C290F60F303884073F28EB8E81F9B82506d5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EigenLayerBeigenOwningMultisig",
+      "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1732299383,
+      "sinceBlock": 21244997,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0xFEA47018D632A77bA579846c840d5706705Dc598",
+          "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x1542cf85fb6cec5b245438ef03d3528f790a462ecce87d74ff782f7ff9977496",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "AllocationManager",
+      "address": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+      "type": "Contract",
+      "template": "eigenlayer/AllocationManager",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xa704abda563be08e6ca83769e716b07daf54f505f36b9a0278f751eb355c802e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.",
+      "sinceTimestamp": 1744052255,
+      "sinceBlock": 22218956,
+      "values": {
+        "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+        "$implementation": "eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345",
+        "$pastUpgrades": [
+          [
+            "2025-04-07T18:57:35.000Z",
+            "0x8a175833c16d3e56c8c4ee6851de69c63f17560dd8dac16c5cafdc343a817ff6",
+            ["eth:0x740058839A1668Af5700e5d7B062007275e77D25"]
+          ],
+          [
+            "2025-07-21T21:02:35.000Z",
+            "0xf5d819a6b5fcc031b468d79e83bdb64e0417817f2b0b4f26e5b4ff84284af5a2",
+            ["eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "ALLOCATION_CONFIGURATION_DELAY": 126000,
+        "DEALLOCATION_DELAY": 100800,
+        "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+        "eigenStrategy": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+        "paused": 0,
+        "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+        "permissionController": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+        "version": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39": "TransparentUpgradeableProxy",
+        "eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345": "AllocationManager"
+      }
+    },
+    {
+      "address": "eth:0x957236B539bfA49b650B66426BcaFbF477C1c334",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x985145F0f4dACe1387b856191C3574381B9DE524",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "RewardAllStakersActionGenerator",
+      "address": "eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE",
+      "type": "Contract",
+      "template": "eigenlayer/RewardAllStakersActionGenerator",
+      "sourceHashes": [
+        "0x519834dae9f17d3adac32cfef3f2d1e84185152157b8e20a0ff5837d33eb423a"
+      ],
+      "proxyType": "immutable",
+      "description": "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.",
+      "sinceTimestamp": 1727895359,
+      "sinceBlock": 20879744,
+      "values": {
+        "$immutable": true,
+        "amounts": ["321855128516280769230770", "965565385548842307692308"],
+        "bEIGEN": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+        "CALCULATION_INTERVAL_SECONDS": 604800,
+        "EIGEN": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+        "firstSubmissionStartTimestamp": 1723680000,
+        "firstSubmissionTriggerCutoff": 1727913600,
+        "rewardsCoordinator": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      },
+      "implementationNames": {
+        "eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": "RewardAllStakersActionGenerator"
+      }
+    },
+    {
+      "address": "eth:0x9b2C61521AF4AB9f4BE25297838F72a56462B578",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xA75600b7914f78486b7d15E962A5247444A78445",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xa9f99347795212D054e8B41314c71D53faED3d28",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "bEIGEN-Strategy",
+      "address": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+      "type": "Contract",
+      "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xb58160c9903763d4c6dd724e3ce4e687fa5eeff34a50885a3a3b614aee688553"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
+      "ignoreInWatchMode": ["totalShares"],
+      "sinceTimestamp": 1713414611,
+      "sinceBlock": 19679966,
+      "values": {
+        "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+        "$implementation": "eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be",
+        "$pastUpgrades": [
+          [
+            "2024-04-18T04:30:11.000Z",
+            "0x1e60f03a48d638e436087faed31f404435ea0af12795342b5de9f63d27772295",
+            ["eth:0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428"]
+          ],
+          [
+            "2025-04-17T22:30:11.000Z",
+            "0xf5cdad33da1d1a2f3a9b315ed67eab912df6e23fa98b4561f42ae1b4f5594ba2",
+            ["eth:0x90B074DDD680bD06C72e28b09231A0F848205729"]
+          ],
+          [
+            "2025-07-21T21:02:35.000Z",
+            "0xf5d819a6b5fcc031b468d79e83bdb64e0417817f2b0b4f26e5b4ff84284af5a2",
+            ["eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
+        "paused": 0,
+        "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+        "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+        "totalShares": "426145802284078551513792860",
+        "underlyingToken": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+        "version": "1.5.0"
+      },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7": "TransparentUpgradeableProxy",
+        "eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be": "EigenStrategy"
+      }
+    },
+    {
+      "address": "eth:0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xAF4D94Cd299211de542530399290877E2c85F061",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PauserRegistry",
+      "address": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+      "type": "Contract",
+      "template": "eigenlayer/EigenLayerPauserRegistry",
+      "sourceHashes": [
+        "0xe9ee049170eb130e342de2dc60d0af26bed01b9483da5f0a828cfa5095aca44c"
+      ],
+      "proxyType": "immutable",
+      "description": "Defines and stores pauser and unpauser roles for EigenLayer contracts.",
+      "sinceTimestamp": 1744052255,
+      "sinceBlock": 22218956,
+      "values": {
+        "$immutable": true,
+        "pausers": [
+          "eth:0x5050389572f2d220ad927CcbeA0D406831012390",
+          "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+        ],
+        "unpauser": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      },
+      "implementationNames": {
+        "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806": "PauserRegistry"
+      }
+    },
+    {
+      "name": "EigenLayerTokenMultisig",
+      "address": "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1697498675,
+      "sinceBlock": 18366203,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xc13Ce61C12C0eF93b4165400491A719918Af1c6c",
+          "eth:0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc",
+          "eth:0x985145F0f4dACe1387b856191C3574381B9DE524",
+          "eth:0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E",
+          "eth:0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a",
+          "eth:0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x1402d1fac147648503e0981151b32afe3fec9a5207c84371b09867cbdc7a67a2",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 85,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "EigenLayerOperationsMultisig",
+      "address": "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "description": "can cancel scheduled operations",
+          "role": ".cancellers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "description": "can cancel scheduled operations",
+          "role": ".cancellers"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
+            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
+            {
+              "address": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+              "delay": 2073600
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "delay": 2073600,
+          "role": ".proposers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+          "role": ".pausers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "delay": 864000,
+          "role": ".proposers"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1686327791,
+      "sinceBlock": 17443829,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF",
+          "eth:0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830",
+          "eth:0x957236B539bfA49b650B66426BcaFbF477C1c334",
+          "eth:0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",
+          "eth:0xFBB1A3C8C8A99A2A4797250dF87E307Dc3f01Fe0",
+          "eth:0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x34c8be0f1205a420b291c5ce97375b669d2d120e32d7aa5ea9f2497a0fbcc3e2",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 75,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TimelockControllerOwning",
+      "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+      "type": "Contract",
+      "template": "eigenlayer/TimelockControllerOwning",
+      "sourceHashes": [
+        "0x12390526d42e4274ef9e5135daddbb0595f5b9ace39b78e269965424334da88c"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
+      "sinceTimestamp": 1732234379,
+      "sinceBlock": 21239612,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "eth:0xFEA47018D632A77bA579846c840d5706705Dc598"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+              "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"]
+          }
+        },
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "cancellers": ["eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"],
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executors": ["eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"],
+        "getMinDelay": 864000,
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "proposers": [
+          "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+        ],
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      },
+      "implementationNames": {
+        "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockController"
+      }
+    },
+    {
+      "address": "eth:0xc13Ce61C12C0eF93b4165400491A719918Af1c6c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xc5280E368648b0e192b355c7d8330593bA7af700",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "StrategyBase",
+      "address": "eth:0xD4d1746142642Db4c1ab17b03B9c58baac913E5B",
+      "type": "Contract",
+      "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0x162ffe3ef6e872099c9fd14d63e6aa37922cde251b0e9af8360ccf20aa375274"
+      ],
+      "proxyType": "immutable",
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
+      "ignoreInWatchMode": ["totalShares"],
+      "sinceTimestamp": 1752178079,
+      "sinceBlock": 22891063,
+      "values": {
+        "$immutable": true,
+        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
+        "paused": 0,
+        "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+        "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+        "totalShares": 0,
+        "underlyingToken": "eth:0x0000000000000000000000000000000000000000",
+        "version": "1.5.0"
+      },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "eth:0xD4d1746142642Db4c1ab17b03B9c58baac913E5B": "StrategyBase"
+      }
+    },
+    {
+      "address": "eth:0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xE34e8Cab673cA3fC60AD8bf8e503f4CA4Afb2D89",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xe7fFd467F7526abf9c8796EDeE0AD30110419127",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EIGEN token",
+      "address": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+      "type": "Contract",
+      "template": "eigenlayer/EIGENToken",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xb8dbca65e053a47c078cebe919fab85c18b0b261e0b86e6a776e6262ba02a097"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.",
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1697499563,
+      "sinceBlock": 18366276,
+      "values": {
+        "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+        "$implementation": "eth:0x2C4A81e257381F87F5A5C4bd525116466D972E50",
+        "$pastUpgrades": [
+          [
+            "2023-10-16T23:39:23.000Z",
+            "0x0ba1c010d668a69e16ec93f5554e6bae75b2213b76dd29f9667a549cd6bac675",
+            ["eth:0xB0e9a10f09ED4304df238624d014205B0786572F"]
+          ],
+          [
+            "2024-03-20T00:37:35.000Z",
+            "0xfcff4a62e4ebf275073172f537ba6628ae9b426b50d74b3ffd4974763fe1082f",
+            ["eth:0xfe288960BEb8b189303f49B070CB0bA52e44cF32"]
+          ],
+          [
+            "2024-04-04T16:39:23.000Z",
+            "0x1eb1b7a3310abbe835214ff252cb5551699ba4f17e58afd294babb812215751e",
+            ["eth:0x7EC354C84680112d3cfF1544ec1Eb19ca583700b"]
+          ],
+          [
+            "2024-09-28T18:27:23.000Z",
+            "0x7872b53468133d1b46178a3bceb24fb05be5bda619b0d9cf90283f31c633498c",
+            ["eth:0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"]
+          ],
+          [
+            "2025-07-21T21:16:23.000Z",
+            "0xec20b63c1c01cccf3d778b362574a7321bc278144d9a6a448f6943187ee9ee6e",
+            ["eth:0x2C4A81e257381F87F5A5C4bd525116466D972E50"]
+          ]
+        ],
+        "$upgradeCount": 5,
+        "bEIGEN": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+        "CLOCK_MODE": "mode=timestamp",
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0xb02444d2dadc9e25bc38100c9cf14cc5e25f7e6f14581d071671d81340d3c978",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIGEN",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "name": "Eigen",
+        "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+        "symbol": "EIGEN",
+        "totalSupply": "1744454796558241769230769289",
+        "transferRestrictionsDisabledAfter": 0,
+        "version": "1.6.0"
+      },
+      "fieldMeta": {
+        "transferRestrictionsDisabledAfter": {
+          "severity": "HIGH",
+          "description": "Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0."
+        }
+      },
+      "implementationNames": {
+        "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "TransparentUpgradeableProxy",
+        "eth:0x2C4A81e257381F87F5A5C4bd525116466D972E50": "Eigen"
+      }
+    },
+    {
+      "address": "eth:0xED732DEb32034e603bEEEdA84605dAbb8933594b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xEFca484E497a9de170Da32abfa11650957dD2a95",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFBB1A3C8C8A99A2A4797250dF87E307Dc3f01Fe0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1747086011,
+      "sinceBlock": 22469919,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0xfe5AF706c1b7fd30FE540ABaBB8A3f5DE68420F9",
+          "eth:0x55b067375146e015677F739CBBd04104d46744E8",
+          "eth:0x6DD76040589433cc4Fc14e49db02592a25c0eC70",
+          "eth:0x47190787E49bF1832e5333180B73d99e7d1a331A",
+          "eth:0xa9f99347795212D054e8B41314c71D53faED3d28",
+          "eth:0x5CCF59B92bb50377Ce8aF5Fed188B400B868d060",
+          "eth:0xA75600b7914f78486b7d15E962A5247444A78445",
+          "eth:0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553",
+          "eth:0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x97c5f2a6c3d87933daaa1c2383a704a7bab8f0f4da83013893fc4990859b9cab",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 9 (22%)",
+        "nonce": 9,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0xfe5AF706c1b7fd30FE540ABaBB8A3f5DE68420F9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EigenLayerCommunityMultisig",
+      "address": "eth:0xFEA47018D632A77bA579846c840d5706705Dc598",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
+            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1686680867,
+      "sinceBlock": 17472847,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x17919FAC7024d5b770322E5Cb81607D247654116",
+          "eth:0x34C37613e1680efD9e203C979658e1d058b4B2BC",
+          "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+          "eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1",
+          "eth:0xED732DEb32034e603bEEEdA84605dAbb8933594b",
+          "eth:0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815",
+          "eth:0x65C4799061c0D1e3E87ADdB65b02E92a558F842F",
+          "eth:0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60",
+          "eth:0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95",
+          "eth:0xAF4D94Cd299211de542530399290877E2c85F061",
+          "eth:0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e",
+          "eth:0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f",
+          "eth:0x33E816008E7bc7798A73d0eaa640CC24f34d1626"
+        ],
+        "$threshold": 9,
+        "domainSeparator": "0x80ea1f4244338ed9d96d172e60fd4459f4a8237651f29e743de9096eefa5c0fa",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "9 of 13 (69%)",
+        "nonce": 6,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xFEA47018D632A77bA579846c840d5706705Dc598": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": [
+      "constructor(address implementation_)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function implementation() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)"
+    ],
+    "eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563": [
+      "constructor(tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp) config, address initialOwner)",
+      "event ButtonPressed(address indexed caller, uint256 newCooldownHorizon)",
+      "event FundsRetrieved(uint256 amount)",
+      "event HopperLoaded(tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp) config)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function canPress() view returns (bool)",
+      "function getHopperConfiguration() view returns (tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp))",
+      "function isExpired() view returns (bool)",
+      "function latestPress() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pressButton()",
+      "function renounceOwnership()",
+      "function retrieveFunds()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66": [
+      "constructor(address _strategyManager, address _pauserRegistry, string _version)",
+      "error AlreadyBlacklisted()",
+      "error BlacklistedToken()",
+      "error CurrentlyPaused()",
+      "error InputAddressZero()",
+      "error InvalidNewPausedStatus()",
+      "error InvalidShortString()",
+      "error OnlyPauser()",
+      "error OnlyUnpauser()",
+      "error StrategyAlreadyExists()",
+      "error StringTooLong(string str)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event StrategyBeaconModified(address previousBeacon, address newBeacon)",
+      "event StrategySetForToken(address token, address strategy)",
+      "event TokenBlacklisted(address token)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function blacklistTokens(address[] tokens)",
+      "function deployNewStrategy(address token) returns (address newStrategy)",
+      "function deployedStrategies(address) view returns (address)",
+      "function initialize(address _initialOwner, uint256 _initialPausedStatus, address _strategyBeacon)",
+      "function isBlacklisted(address) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function removeStrategiesFromWhitelist(address[] strategiesToRemoveFromWhitelist)",
+      "function renounceOwnership()",
+      "function strategyBeacon() view returns (address)",
+      "function strategyManager() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause(uint256 newPausedStatus)",
+      "function version() view returns (string)",
+      "function whitelistStrategies(address[] strategiesToWhitelist)"
+    ],
+    "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x2C4A81e257381F87F5A5C4bd525116466D972E50": [
+      "constructor(address _bEIGEN, string _version)",
+      "error InvalidShortString()",
+      "error StringTooLong(string str)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint8 version)",
+      "event Mint(address indexed minter, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetAllowedFrom(address indexed from, bool isAllowedFrom)",
+      "event SetAllowedTo(address indexed to, bool isAllowedTo)",
+      "event TokenUnwrapped(address indexed account, uint256 amount)",
+      "event TokenWrapped(address indexed account, uint256 amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event TransferRestrictionsDisabled()",
+      "function CLOCK_MODE() pure returns (string)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function allowedFrom(address) view returns (bool)",
+      "function allowedTo(address) view returns (bool)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function bEIGEN() view returns (address)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function checkpoints(address account, uint32 pos) view returns (tuple(uint32 fromBlock, uint224 votes))",
+      "function clock() view returns (uint48)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function delegate(address delegatee)",
+      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
+      "function delegates(address account) view returns (address)",
+      "function disableTransferRestrictions()",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getPastTotalSupply(uint256 timepoint) view returns (uint256)",
+      "function getPastVotes(address account, uint256 timepoint) view returns (uint256)",
+      "function getVotes(address account) view returns (uint256)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(address initialOwner, address[] minters, uint256[] mintingAllowances, uint256[] mintAllowedAfters)",
+      "function mint()",
+      "function mintAllowedAfter(address) view returns (uint256)",
+      "function mintingAllowance(address) view returns (uint256)",
+      "function multisend(address[] receivers, uint256[] amounts)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function numCheckpoints(address account) view returns (uint32)",
+      "function owner() view returns (address)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function renounceOwnership()",
+      "function setAllowedFrom(address from, bool isAllowedFrom)",
+      "function setAllowedTo(address to, bool isAllowedTo)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function transferRestrictionsDisabledAfter() view returns (uint256)",
+      "function unwrap(uint256 amount)",
+      "function version() view returns (string)",
+      "function wrap(uint256 amount)"
+    ],
+    "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x46aefd30415be99e20169eE7046F65784B46d123": [
+      "constructor(address _allocationManager, address _delegation, address _pauserRegistry, string _version)",
+      "error CurrentlyPaused()",
+      "error InputAddressZero()",
+      "error InvalidNewPausedStatus()",
+      "error InvalidShortString()",
+      "error InvalidSignature()",
+      "error MaxStrategiesExceeded()",
+      "error OnlyDelegationManager()",
+      "error OnlyPauser()",
+      "error OnlyStrategyWhitelister()",
+      "error OnlyUnpauser()",
+      "error SharesAmountTooHigh()",
+      "error SharesAmountZero()",
+      "error SignatureExpired()",
+      "error StakerAddressZero()",
+      "error StrategyAlreadyInSlash()",
+      "error StrategyNotFound()",
+      "error StrategyNotWhitelisted()",
+      "error StringTooLong(string str)",
+      "event BurnOrRedistributableSharesDecreased(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy, uint256 shares)",
+      "event BurnOrRedistributableSharesIncreased(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy, uint256 shares)",
+      "event BurnableSharesDecreased(address strategy, uint256 shares)",
+      "event Deposit(address staker, address strategy, uint256 shares)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event StrategyAddedToDepositWhitelist(address strategy)",
+      "event StrategyRemovedFromDepositWhitelist(address strategy)",
+      "event StrategyWhitelisterChanged(address previousAddress, address newAddress)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function DEFAULT_BURN_ADDRESS() view returns (address)",
+      "function DEPOSIT_TYPEHASH() view returns (bytes32)",
+      "function addShares(address staker, address strategy, uint256 shares) returns (uint256, uint256)",
+      "function addStrategiesToDepositWhitelist(address[] strategiesToWhitelist)",
+      "function allocationManager() view returns (address)",
+      "function burnShares(address strategy)",
+      "function calculateStrategyDepositDigestHash(address staker, address strategy, address token, uint256 amount, uint256 nonce, uint256 expiry) view returns (bytes32)",
+      "function clearBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId) returns (uint256[])",
+      "function clearBurnOrRedistributableSharesByStrategy(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy) returns (uint256)",
+      "function delegation() view returns (address)",
+      "function depositIntoStrategy(address strategy, address token, uint256 amount) returns (uint256 depositShares)",
+      "function depositIntoStrategyWithSignature(address strategy, address token, uint256 amount, address staker, uint256 expiry, bytes signature) returns (uint256 depositShares)",
+      "function domainSeparator() view returns (bytes32)",
+      "function getBurnOrRedistributableCount(tuple(address avs, uint32 id) operatorSet, uint256 slashId) view returns (uint256)",
+      "function getBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId) view returns (address[], uint256[])",
+      "function getBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy) view returns (uint256)",
+      "function getBurnableShares(address strategy) view returns (uint256)",
+      "function getDeposits(address staker) view returns (address[], uint256[])",
+      "function getPendingOperatorSets() view returns (tuple(address avs, uint32 id)[])",
+      "function getPendingSlashIds(tuple(address avs, uint32 id) operatorSet) view returns (uint256[])",
+      "function getStakerStrategyList(address staker) view returns (address[])",
+      "function getStrategiesWithBurnableShares() view returns (address[], uint256[])",
+      "function increaseBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy, uint256 sharesToBurn)",
+      "function initialize(address initialOwner, address initialStrategyWhitelister, uint256 initialPausedStatus)",
+      "function nonces(address signer) view returns (uint256 nonce)",
+      "function owner() view returns (address)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function removeDepositShares(address staker, address strategy, uint256 depositSharesToRemove) returns (uint256)",
+      "function removeStrategiesFromDepositWhitelist(address[] strategiesToRemoveFromWhitelist)",
+      "function renounceOwnership()",
+      "function setStrategyWhitelister(address newStrategyWhitelister)",
+      "function stakerDepositShares(address staker, address strategy) view returns (uint256 shares)",
+      "function stakerStrategyList(address staker, uint256) view returns (address strategies)",
+      "function stakerStrategyListLength(address staker) view returns (uint256)",
+      "function strategyIsWhitelistedForDeposit(address strategy) view returns (bool whitelisted)",
+      "function strategyWhitelister() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause(uint256 newPausedStatus)",
+      "function version() view returns (string)",
+      "function withdrawSharesAsTokens(address staker, address strategy, address token, uint256 shares)"
+    ],
+    "eth:0x5050389572f2d220ad927CcbeA0D406831012390": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be": [
+      "constructor(address _strategyManager, address _pauserRegistry, string _version)",
+      "error BalanceExceedsMaxTotalDeposits()",
+      "error CurrentlyPaused()",
+      "error InputAddressZero()",
+      "error InvalidNewPausedStatus()",
+      "error InvalidShortString()",
+      "error MaxPerDepositExceedsMax()",
+      "error NewSharesZero()",
+      "error OnlyPauser()",
+      "error OnlyStrategyManager()",
+      "error OnlyUnderlyingToken()",
+      "error OnlyUnpauser()",
+      "error StringTooLong(string str)",
+      "error TotalSharesExceedsMax()",
+      "error WithdrawalAmountExceedsTotalDeposits()",
+      "event ExchangeRateEmitted(uint256 rate)",
+      "event Initialized(uint8 version)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event StrategyTokenSet(address token, uint8 decimals)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function EIGEN() view returns (address)",
+      "function deposit(address token, uint256 amount) returns (uint256 newShares)",
+      "function explanation() pure returns (string)",
+      "function initialize(address _EIGEN, address _bEIGEN)",
+      "function initialize(address _underlyingToken)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function shares(address user) view returns (uint256)",
+      "function sharesToUnderlying(uint256 amountShares) view returns (uint256)",
+      "function sharesToUnderlyingView(uint256 amountShares) view returns (uint256)",
+      "function strategyManager() view returns (address)",
+      "function totalShares() view returns (uint256)",
+      "function underlyingToShares(uint256 amountUnderlying) view returns (uint256)",
+      "function underlyingToSharesView(uint256 amountUnderlying) view returns (uint256)",
+      "function underlyingToken() view returns (address)",
+      "function unpause(uint256 newPausedStatus)",
+      "function userUnderlying(address user) returns (uint256)",
+      "function userUnderlyingView(address user) view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw(address recipient, address token, uint256 amountShares) returns (uint256 amountOut)"
+    ],
+    "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073": [
+      "constructor(address implementation_)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function implementation() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)"
+    ],
+    "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89": [
+      "constructor(address _strategyManager, address _eigenPodManager, address _allocationManager, address _pauserRegistry, address _permissionController, uint32 _MIN_WITHDRAWAL_DELAY, string _version)",
+      "error ActivelyDelegated()",
+      "error CallerCannotUndelegate()",
+      "error CurrentlyPaused()",
+      "error FullySlashed()",
+      "error InputAddressZero()",
+      "error InputArrayLengthMismatch()",
+      "error InputArrayLengthZero()",
+      "error InvalidDepositScalingFactor()",
+      "error InvalidNewPausedStatus()",
+      "error InvalidPermissions()",
+      "error InvalidShortString()",
+      "error InvalidSignature()",
+      "error InvalidSnapshotOrdering()",
+      "error NotActivelyDelegated()",
+      "error OnlyAllocationManager()",
+      "error OnlyEigenPodManager()",
+      "error OnlyPauser()",
+      "error OnlyStrategyManagerOrEigenPodManager()",
+      "error OnlyUnpauser()",
+      "error OperatorNotRegistered()",
+      "error OperatorsCannotUndelegate()",
+      "error SaltSpent()",
+      "error SignatureExpired()",
+      "error StringTooLong(string str)",
+      "error WithdrawalDelayNotElapsed()",
+      "error WithdrawalNotQueued()",
+      "error WithdrawerNotCaller()",
+      "event DelegationApproverUpdated(address indexed operator, address newDelegationApprover)",
+      "event DepositScalingFactorUpdated(address staker, address strategy, uint256 newDepositScalingFactor)",
+      "event Initialized(uint8 version)",
+      "event OperatorMetadataURIUpdated(address indexed operator, string metadataURI)",
+      "event OperatorRegistered(address indexed operator, address delegationApprover)",
+      "event OperatorSharesDecreased(address indexed operator, address staker, address strategy, uint256 shares)",
+      "event OperatorSharesIncreased(address indexed operator, address staker, address strategy, uint256 shares)",
+      "event OperatorSharesSlashed(address indexed operator, address strategy, uint256 totalSlashedShares)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event SlashingWithdrawalCompleted(bytes32 withdrawalRoot)",
+      "event SlashingWithdrawalQueued(bytes32 withdrawalRoot, tuple(address staker, address delegatedTo, address withdrawer, uint256 nonce, uint32 startBlock, address[] strategies, uint256[] scaledShares) withdrawal, uint256[] sharesToWithdraw)",
+      "event StakerDelegated(address indexed staker, address indexed operator)",
+      "event StakerForceUndelegated(address indexed staker, address indexed operator)",
+      "event StakerUndelegated(address indexed staker, address indexed operator)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function DELEGATION_APPROVAL_TYPEHASH() view returns (bytes32)",
+      "function allocationManager() view returns (address)",
+      "function beaconChainETHStrategy() view returns (address)",
+      "function calculateDelegationApprovalDigestHash(address staker, address operator, address approver, bytes32 approverSalt, uint256 expiry) view returns (bytes32)",
+      "function calculateWithdrawalRoot(tuple(address staker, address delegatedTo, address withdrawer, uint256 nonce, uint32 startBlock, address[] strategies, uint256[] scaledShares) withdrawal) pure returns (bytes32)",
+      "function completeQueuedWithdrawal(tuple(address staker, address delegatedTo, address withdrawer, uint256 nonce, uint32 startBlock, address[] strategies, uint256[] scaledShares) withdrawal, address[] tokens, bool receiveAsTokens)",
+      "function completeQueuedWithdrawals(tuple(address staker, address delegatedTo, address withdrawer, uint256 nonce, uint32 startBlock, address[] strategies, uint256[] scaledShares)[] withdrawals, address[][] tokens, bool[] receiveAsTokens)",
+      "function convertToDepositShares(address staker, address[] strategies, uint256[] withdrawableShares) view returns (uint256[])",
+      "function cumulativeWithdrawalsQueued(address staker) view returns (uint256 totalQueued)",
+      "function decreaseDelegatedShares(address staker, uint256 curDepositShares, uint64 beaconChainSlashingFactorDecrease)",
+      "function delegateTo(address operator, tuple(bytes signature, uint256 expiry) approverSignatureAndExpiry, bytes32 approverSalt)",
+      "function delegatedTo(address staker) view returns (address operator)",
+      "function delegationApprover(address operator) view returns (address)",
+      "function delegationApproverSaltIsSpent(address delegationApprover, bytes32 salt) view returns (bool spent)",
+      "function depositScalingFactor(address staker, address strategy) view returns (uint256)",
+      "function domainSeparator() view returns (bytes32)",
+      "function eigenPodManager() view returns (address)",
+      "function getDepositedShares(address staker) view returns (address[], uint256[])",
+      "function getOperatorShares(address operator, address[] strategies) view returns (uint256[])",
+      "function getOperatorsShares(address[] operators, address[] strategies) view returns (uint256[][])",
+      "function getQueuedWithdrawal(bytes32 withdrawalRoot) view returns (tuple(address staker, address delegatedTo, address withdrawer, uint256 nonce, uint32 startBlock, address[] strategies, uint256[] scaledShares) withdrawal, uint256[] shares)",
+      "function getQueuedWithdrawalRoots(address staker) view returns (bytes32[])",
+      "function getQueuedWithdrawals(address staker) view returns (tuple(address staker, address delegatedTo, address withdrawer, uint256 nonce, uint32 startBlock, address[] strategies, uint256[] scaledShares)[] withdrawals, uint256[][] shares)",
+      "function getSlashableSharesInQueue(address operator, address strategy) view returns (uint256)",
+      "function getWithdrawableShares(address staker, address[] strategies) view returns (uint256[] withdrawableShares, uint256[] depositShares)",
+      "function increaseDelegatedShares(address staker, address strategy, uint256 prevDepositShares, uint256 addedShares)",
+      "function initialize(uint256 initialPausedStatus)",
+      "function isDelegated(address staker) view returns (bool)",
+      "function isOperator(address operator) view returns (bool)",
+      "function minWithdrawalDelayBlocks() view returns (uint32)",
+      "function modifyOperatorDetails(address operator, address newDelegationApprover)",
+      "function operatorShares(address operator, address strategy) view returns (uint256 shares)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function pendingWithdrawals(bytes32 withdrawalRoot) view returns (bool pending)",
+      "function permissionController() view returns (address)",
+      "function queueWithdrawals(tuple(address[] strategies, uint256[] depositShares, address __deprecated_withdrawer)[] params) returns (bytes32[])",
+      "function queuedWithdrawals(bytes32 withdrawalRoot) view returns (tuple(address staker, address delegatedTo, address withdrawer, uint256 nonce, uint32 startBlock, address[] strategies, uint256[] scaledShares) withdrawal)",
+      "function redelegate(address newOperator, tuple(bytes signature, uint256 expiry) newOperatorApproverSig, bytes32 approverSalt) returns (bytes32[] withdrawalRoots)",
+      "function registerAsOperator(address initDelegationApprover, uint32 allocationDelay, string metadataURI)",
+      "function slashOperatorShares(address operator, tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy, uint64 prevMaxMagnitude, uint64 newMaxMagnitude) returns (uint256 totalDepositSharesToSlash)",
+      "function strategyManager() view returns (address)",
+      "function undelegate(address staker) returns (bytes32[] withdrawalRoots)",
+      "function unpause(uint256 newPausedStatus)",
+      "function updateOperatorMetadataURI(address operator, string metadataURI)",
+      "function version() view returns (string)"
+    ],
+    "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256 duration)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256 timestamp)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function isOperation(bytes32 id) view returns (bool registered)",
+      "function isOperationDone(bytes32 id) view returns (bool done)",
+      "function isOperationPending(bytes32 id) view returns (bool pending)",
+      "function isOperationReady(bytes32 id) view returns (bool ready)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
+    "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D": [
+      "constructor(address _ethPOS, address _eigenPodManager, string _version)",
+      "error BeaconTimestampBeforeLatestCheckpoint()",
+      "error BeaconTimestampTooFarInPast()",
+      "error CannotCheckpointTwiceInSingleBlock()",
+      "error CheckpointAlreadyActive()",
+      "error CredentialsAlreadyVerified()",
+      "error CurrentlyPaused()",
+      "error FeeQueryFailed()",
+      "error ForkTimestampZero()",
+      "error InputAddressZero()",
+      "error InputArrayLengthMismatch()",
+      "error InsufficientFunds()",
+      "error InsufficientWithdrawableBalance()",
+      "error InvalidEIP4788Response()",
+      "error InvalidProof()",
+      "error InvalidProofLength()",
+      "error InvalidProofLength()",
+      "error InvalidPubKeyLength()",
+      "error InvalidShortString()",
+      "error InvalidValidatorFieldsLength()",
+      "error MsgValueNot32ETH()",
+      "error NoActiveCheckpoint()",
+      "error NoBalanceToCheckpoint()",
+      "error OnlyEigenPodManager()",
+      "error OnlyEigenPodOwner()",
+      "error OnlyEigenPodOwnerOrProofSubmitter()",
+      "error PredeployFailed()",
+      "error StringTooLong(string str)",
+      "error TimestampOutOfRange()",
+      "error ValidatorInactiveOnBeaconChain()",
+      "error ValidatorIsExitingBeaconChain()",
+      "error ValidatorNotActiveInPod()",
+      "error ValidatorNotSlashedOnBeaconChain()",
+      "error WithdrawalCredentialsNotForEigenPod()",
+      "event CheckpointCreated(uint64 indexed checkpointTimestamp, bytes32 indexed beaconBlockRoot, uint256 validatorCount)",
+      "event CheckpointFinalized(uint64 indexed checkpointTimestamp, int256 totalShareDeltaWei)",
+      "event ConsolidationRequested(bytes32 indexed sourcePubkeyHash, bytes32 indexed targetPubkeyHash)",
+      "event EigenPodStaked(bytes32 pubkeyHash)",
+      "event ExitRequested(bytes32 indexed validatorPubkeyHash)",
+      "event Initialized(uint8 version)",
+      "event NonBeaconChainETHReceived(uint256 amountReceived)",
+      "event ProofSubmitterUpdated(address prevProofSubmitter, address newProofSubmitter)",
+      "event RestakedBeaconChainETHWithdrawn(address indexed recipient, uint256 amount)",
+      "event SwitchToCompoundingRequested(bytes32 indexed validatorPubkeyHash)",
+      "event ValidatorBalanceUpdated(bytes32 pubkeyHash, uint64 balanceTimestamp, uint64 newValidatorBalanceGwei)",
+      "event ValidatorCheckpointed(uint64 indexed checkpointTimestamp, bytes32 indexed pubkeyHash)",
+      "event ValidatorRestaked(bytes32 pubkeyHash)",
+      "event ValidatorWithdrawn(uint64 indexed checkpointTimestamp, bytes32 indexed pubkeyHash)",
+      "event WithdrawalRequested(bytes32 indexed validatorPubkeyHash, uint64 withdrawalAmountGwei)",
+      "function activeValidatorCount() view returns (uint256)",
+      "function checkpointBalanceExitedGwei(uint64) view returns (uint64)",
+      "function currentCheckpoint() view returns (tuple(bytes32 beaconBlockRoot, uint24 proofsRemaining, uint64 podBalanceGwei, int64 balanceDeltasGwei, uint64 prevBeaconBalanceGwei))",
+      "function currentCheckpointTimestamp() view returns (uint64)",
+      "function eigenPodManager() view returns (address)",
+      "function ethPOS() view returns (address)",
+      "function getConsolidationRequestFee() view returns (uint256)",
+      "function getParentBlockRoot(uint64 timestamp) view returns (bytes32)",
+      "function getWithdrawalRequestFee() view returns (uint256)",
+      "function initialize(address _podOwner)",
+      "function lastCheckpointTimestamp() view returns (uint64)",
+      "function podOwner() view returns (address)",
+      "function proofSubmitter() view returns (address)",
+      "function recoverTokens(address[] tokenList, uint256[] amountsToWithdraw, address recipient)",
+      "function requestConsolidation(tuple(bytes srcPubkey, bytes targetPubkey)[] requests) payable",
+      "function requestWithdrawal(tuple(bytes pubkey, uint64 amountGwei)[] requests) payable",
+      "function setProofSubmitter(address newProofSubmitter)",
+      "function stake(bytes pubkey, bytes signature, bytes32 depositDataRoot) payable",
+      "function startCheckpoint(bool revertIfNoBalance)",
+      "function validatorPubkeyHashToInfo(bytes32 validatorPubkeyHash) view returns (tuple(uint64 validatorIndex, uint64 restakedBalanceGwei, uint64 lastCheckpointedAt, uint8 status))",
+      "function validatorPubkeyToInfo(bytes validatorPubkey) view returns (tuple(uint64 validatorIndex, uint64 restakedBalanceGwei, uint64 lastCheckpointedAt, uint8 status))",
+      "function validatorStatus(bytes validatorPubkey) view returns (uint8)",
+      "function validatorStatus(bytes32 pubkeyHash) view returns (uint8)",
+      "function verifyCheckpointProofs(tuple(bytes32 balanceContainerRoot, bytes proof) balanceContainerProof, tuple(bytes32 pubkeyHash, bytes32 balanceRoot, bytes proof)[] proofs)",
+      "function verifyStaleBalance(uint64 beaconTimestamp, tuple(bytes32 beaconStateRoot, bytes proof) stateRootProof, tuple(bytes32[] validatorFields, bytes proof) proof)",
+      "function verifyWithdrawalCredentials(uint64 beaconTimestamp, tuple(bytes32 beaconStateRoot, bytes proof) stateRootProof, uint40[] validatorIndices, bytes[] validatorFieldsProofs, bytes32[][] validatorFields)",
+      "function version() view returns (string)",
+      "function withdrawRestakedBeaconChainETH(address recipient, uint256 amountWei)",
+      "function withdrawableRestakedExecutionLayerGwei() view returns (uint64)"
+    ],
+    "eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": [
+      "constructor(address _rewardsCoordinator, uint32 _firstSubmissionStartTimestamp, uint256 _firstSubmissionTriggerCutoff, uint256[2] _amounts, tuple(address strategy, uint96 multiplier)[][2] _strategiesAndMultipliers, address _bEIGEN, address _EIGEN)",
+      "function CALCULATION_INTERVAL_SECONDS() view returns (uint32)",
+      "function EIGEN() view returns (address)",
+      "function amounts(uint256) view returns (uint256)",
+      "function bEIGEN() view returns (address)",
+      "function firstSubmissionStartTimestamp() view returns (uint32)",
+      "function firstSubmissionTriggerCutoff() view returns (uint256)",
+      "function generateHopperActions(address hopper, address) view returns (tuple(address target, bytes callData)[])",
+      "function rewardsCoordinator() view returns (address)",
+      "function strategiesAndMultipliers(uint256, uint256) view returns (address strategy, uint96 multiplier)"
+    ],
+    "eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2": [
+      "constructor(address _delegation, address _pauserRegistry, string _version)",
+      "error CurrentlyPaused()",
+      "error InputAddressZero()",
+      "error InvalidNewPausedStatus()",
+      "error InvalidShortString()",
+      "error InvalidSignature()",
+      "error OnlyPauser()",
+      "error OnlyUnpauser()",
+      "error OperatorAlreadyRegisteredToAVS()",
+      "error OperatorNotRegisteredToAVS()",
+      "error OperatorNotRegisteredToEigenLayer()",
+      "error SaltSpent()",
+      "error SignatureExpired()",
+      "error StringTooLong(string str)",
+      "event AVSMetadataURIUpdated(address indexed avs, string metadataURI)",
+      "event Initialized(uint8 version)",
+      "event OperatorAVSRegistrationStatusUpdated(address indexed operator, address indexed avs, uint8 status)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function OPERATOR_AVS_REGISTRATION_TYPEHASH() view returns (bytes32)",
+      "function OPERATOR_SET_FORCE_DEREGISTRATION_TYPEHASH() view returns (bytes32)",
+      "function OPERATOR_SET_REGISTRATION_TYPEHASH() view returns (bytes32)",
+      "function avsOperatorStatus(address avs, address operator) view returns (uint8)",
+      "function calculateOperatorAVSRegistrationDigestHash(address operator, address avs, bytes32 salt, uint256 expiry) view returns (bytes32)",
+      "function cancelSalt(bytes32 salt)",
+      "function delegation() view returns (address)",
+      "function deregisterOperatorFromAVS(address operator)",
+      "function domainSeparator() view returns (bytes32)",
+      "function initialize(address initialOwner, uint256 initialPausedStatus)",
+      "function operatorSaltIsSpent(address operator, bytes32 salt) view returns (bool isSpent)",
+      "function owner() view returns (address)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function registerOperatorToAVS(address operator, tuple(bytes signature, bytes32 salt, uint256 expiry) operatorSignature)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function unpause(uint256 newPausedStatus)",
+      "function updateAVSMetadataURI(string metadataURI)",
+      "function version() view returns (string)"
+    ],
+    "eth:0xa505c0116aD65071F0130061F94745b7853220aB": [
+      "constructor(tuple(address delegationManager, address strategyManager, address allocationManager, address pauserRegistry, address permissionController, uint32 CALCULATION_INTERVAL_SECONDS, uint32 MAX_REWARDS_DURATION, uint32 MAX_RETROACTIVE_LENGTH, uint32 MAX_FUTURE_LENGTH, uint32 GENESIS_REWARDS_TIMESTAMP, string version) params)",
+      "error AmountExceedsMax()",
+      "error AmountIsZero()",
+      "error CurrentlyPaused()",
+      "error DurationExceedsMax()",
+      "error DurationIsZero()",
+      "error EarningsNotGreaterThanClaimed()",
+      "error InputAddressZero()",
+      "error InputArrayLengthMismatch()",
+      "error InputArrayLengthZero()",
+      "error InvalidAddressZero()",
+      "error InvalidCalculationIntervalSecondsRemainder()",
+      "error InvalidClaimProof()",
+      "error InvalidDurationRemainder()",
+      "error InvalidEarner()",
+      "error InvalidEarnerLeafIndex()",
+      "error InvalidGenesisRewardsTimestampRemainder()",
+      "error InvalidNewPausedStatus()",
+      "error InvalidOperatorSet()",
+      "error InvalidPermissions()",
+      "error InvalidProofLength()",
+      "error InvalidRoot()",
+      "error InvalidRootIndex()",
+      "error InvalidShortString()",
+      "error InvalidStartTimestampRemainder()",
+      "error InvalidTokenLeafIndex()",
+      "error NewRootMustBeForNewCalculatedPeriod()",
+      "error OnlyPauser()",
+      "error OnlyUnpauser()",
+      "error OperatorsNotInAscendingOrder()",
+      "error PreviousSplitPending()",
+      "error RewardsEndTimestampNotElapsed()",
+      "error RootAlreadyActivated()",
+      "error RootDisabled()",
+      "error RootNotActivated()",
+      "error SplitExceedsMax()",
+      "error StartTimestampTooFarInFuture()",
+      "error StartTimestampTooFarInPast()",
+      "error StrategiesNotInAscendingOrder()",
+      "error StrategyNotWhitelisted()",
+      "error StringTooLong(string str)",
+      "error SubmissionNotRetroactive()",
+      "error UnauthorizedCaller()",
+      "event AVSRewardsSubmissionCreated(address indexed avs, uint256 indexed submissionNonce, bytes32 indexed rewardsSubmissionHash, tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, uint256 amount, uint32 startTimestamp, uint32 duration) rewardsSubmission)",
+      "event ActivationDelaySet(uint32 oldActivationDelay, uint32 newActivationDelay)",
+      "event ClaimerForSet(address indexed earner, address indexed oldClaimer, address indexed claimer)",
+      "event DefaultOperatorSplitBipsSet(uint16 oldDefaultOperatorSplitBips, uint16 newDefaultOperatorSplitBips)",
+      "event DistributionRootDisabled(uint32 indexed rootIndex)",
+      "event DistributionRootSubmitted(uint32 indexed rootIndex, bytes32 indexed root, uint32 indexed rewardsCalculationEndTimestamp, uint32 activatedAt)",
+      "event Initialized(uint8 version)",
+      "event OperatorAVSSplitBipsSet(address indexed caller, address indexed operator, address indexed avs, uint32 activatedAt, uint16 oldOperatorAVSSplitBips, uint16 newOperatorAVSSplitBips)",
+      "event OperatorDirectedAVSRewardsSubmissionCreated(address indexed caller, address indexed avs, bytes32 indexed operatorDirectedRewardsSubmissionHash, uint256 submissionNonce, tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, tuple(address operator, uint256 amount)[] operatorRewards, uint32 startTimestamp, uint32 duration, string description) operatorDirectedRewardsSubmission)",
+      "event OperatorDirectedOperatorSetRewardsSubmissionCreated(address indexed caller, bytes32 indexed operatorDirectedRewardsSubmissionHash, tuple(address avs, uint32 id) operatorSet, uint256 submissionNonce, tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, tuple(address operator, uint256 amount)[] operatorRewards, uint32 startTimestamp, uint32 duration, string description) operatorDirectedRewardsSubmission)",
+      "event OperatorPISplitBipsSet(address indexed caller, address indexed operator, uint32 activatedAt, uint16 oldOperatorPISplitBips, uint16 newOperatorPISplitBips)",
+      "event OperatorSetSplitBipsSet(address indexed caller, address indexed operator, tuple(address avs, uint32 id) operatorSet, uint32 activatedAt, uint16 oldOperatorSetSplitBips, uint16 newOperatorSetSplitBips)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event RewardsClaimed(bytes32 root, address indexed earner, address indexed claimer, address indexed recipient, address token, uint256 claimedAmount)",
+      "event RewardsForAllSubmitterSet(address indexed rewardsForAllSubmitter, bool indexed oldValue, bool indexed newValue)",
+      "event RewardsSubmissionForAllCreated(address indexed submitter, uint256 indexed submissionNonce, bytes32 indexed rewardsSubmissionHash, tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, uint256 amount, uint32 startTimestamp, uint32 duration) rewardsSubmission)",
+      "event RewardsSubmissionForAllEarnersCreated(address indexed tokenHopper, uint256 indexed submissionNonce, bytes32 indexed rewardsSubmissionHash, tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, uint256 amount, uint32 startTimestamp, uint32 duration) rewardsSubmission)",
+      "event RewardsUpdaterSet(address indexed oldRewardsUpdater, address indexed newRewardsUpdater)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function CALCULATION_INTERVAL_SECONDS() view returns (uint32)",
+      "function GENESIS_REWARDS_TIMESTAMP() view returns (uint32)",
+      "function MAX_FUTURE_LENGTH() view returns (uint32)",
+      "function MAX_RETROACTIVE_LENGTH() view returns (uint32)",
+      "function MAX_REWARDS_DURATION() view returns (uint32)",
+      "function activationDelay() view returns (uint32)",
+      "function allocationManager() view returns (address)",
+      "function beaconChainETHStrategy() view returns (address)",
+      "function calculateEarnerLeafHash(tuple(address earner, bytes32 earnerTokenRoot) leaf) pure returns (bytes32)",
+      "function calculateTokenLeafHash(tuple(address token, uint256 cumulativeEarnings) leaf) pure returns (bytes32)",
+      "function checkClaim(tuple(uint32 rootIndex, uint32 earnerIndex, bytes earnerTreeProof, tuple(address earner, bytes32 earnerTokenRoot) earnerLeaf, uint32[] tokenIndices, bytes[] tokenTreeProofs, tuple(address token, uint256 cumulativeEarnings)[] tokenLeaves) claim) view returns (bool)",
+      "function claimerFor(address earner) view returns (address claimer)",
+      "function createAVSRewardsSubmission(tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, uint256 amount, uint32 startTimestamp, uint32 duration)[] rewardsSubmissions)",
+      "function createOperatorDirectedAVSRewardsSubmission(address avs, tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, tuple(address operator, uint256 amount)[] operatorRewards, uint32 startTimestamp, uint32 duration, string description)[] operatorDirectedRewardsSubmissions)",
+      "function createOperatorDirectedOperatorSetRewardsSubmission(tuple(address avs, uint32 id) operatorSet, tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, tuple(address operator, uint256 amount)[] operatorRewards, uint32 startTimestamp, uint32 duration, string description)[] operatorDirectedRewardsSubmissions)",
+      "function createRewardsForAllEarners(tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, uint256 amount, uint32 startTimestamp, uint32 duration)[] rewardsSubmissions)",
+      "function createRewardsForAllSubmission(tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, uint256 amount, uint32 startTimestamp, uint32 duration)[] rewardsSubmissions)",
+      "function cumulativeClaimed(address earner, address token) view returns (uint256 totalClaimed)",
+      "function currRewardsCalculationEndTimestamp() view returns (uint32)",
+      "function defaultOperatorSplitBips() view returns (uint16)",
+      "function delegationManager() view returns (address)",
+      "function disableRoot(uint32 rootIndex)",
+      "function getCurrentClaimableDistributionRoot() view returns (tuple(bytes32 root, uint32 rewardsCalculationEndTimestamp, uint32 activatedAt, bool disabled))",
+      "function getCurrentDistributionRoot() view returns (tuple(bytes32 root, uint32 rewardsCalculationEndTimestamp, uint32 activatedAt, bool disabled))",
+      "function getDistributionRootAtIndex(uint256 index) view returns (tuple(bytes32 root, uint32 rewardsCalculationEndTimestamp, uint32 activatedAt, bool disabled))",
+      "function getDistributionRootsLength() view returns (uint256)",
+      "function getOperatorAVSSplit(address operator, address avs) view returns (uint16)",
+      "function getOperatorPISplit(address operator) view returns (uint16)",
+      "function getOperatorSetSplit(address operator, tuple(address avs, uint32 id) operatorSet) view returns (uint16)",
+      "function getRootIndexFromHash(bytes32 rootHash) view returns (uint32)",
+      "function initialize(address initialOwner, uint256 initialPausedStatus, address _rewardsUpdater, uint32 _activationDelay, uint16 _defaultSplitBips)",
+      "function isAVSRewardsSubmissionHash(address avs, bytes32 hash) view returns (bool valid)",
+      "function isOperatorDirectedAVSRewardsSubmissionHash(address avs, bytes32 hash) view returns (bool valid)",
+      "function isOperatorDirectedOperatorSetRewardsSubmissionHash(address avs, bytes32 hash) view returns (bool valid)",
+      "function isRewardsForAllSubmitter(address submitter) view returns (bool valid)",
+      "function isRewardsSubmissionForAllEarnersHash(address avs, bytes32 hash) view returns (bool valid)",
+      "function isRewardsSubmissionForAllHash(address avs, bytes32 hash) view returns (bool valid)",
+      "function owner() view returns (address)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function permissionController() view returns (address)",
+      "function processClaim(tuple(uint32 rootIndex, uint32 earnerIndex, bytes earnerTreeProof, tuple(address earner, bytes32 earnerTokenRoot) earnerLeaf, uint32[] tokenIndices, bytes[] tokenTreeProofs, tuple(address token, uint256 cumulativeEarnings)[] tokenLeaves) claim, address recipient)",
+      "function processClaims(tuple(uint32 rootIndex, uint32 earnerIndex, bytes earnerTreeProof, tuple(address earner, bytes32 earnerTokenRoot) earnerLeaf, uint32[] tokenIndices, bytes[] tokenTreeProofs, tuple(address token, uint256 cumulativeEarnings)[] tokenLeaves)[] claims, address recipient)",
+      "function renounceOwnership()",
+      "function rewardsUpdater() view returns (address)",
+      "function setActivationDelay(uint32 _activationDelay)",
+      "function setClaimerFor(address claimer)",
+      "function setClaimerFor(address earner, address claimer)",
+      "function setDefaultOperatorSplit(uint16 split)",
+      "function setOperatorAVSSplit(address operator, address avs, uint16 split)",
+      "function setOperatorPISplit(address operator, uint16 split)",
+      "function setOperatorSetSplit(address operator, tuple(address avs, uint32 id) operatorSet, uint16 split)",
+      "function setRewardsForAllSubmitter(address _submitter, bool _newValue)",
+      "function setRewardsUpdater(address _rewardsUpdater)",
+      "function strategyManager() view returns (address)",
+      "function submissionNonce(address avs) view returns (uint256 nonce)",
+      "function submitRoot(bytes32 root, uint32 rewardsCalculationEndTimestamp)",
+      "function transferOwnership(address newOwner)",
+      "function unpause(uint256 newPausedStatus)",
+      "function version() view returns (string)"
+    ],
+    "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806": [
+      "constructor(address[] _pausers, address _unpauser)",
+      "error InputAddressZero()",
+      "error OnlyUnpauser()",
+      "event PauserStatusChanged(address pauser, bool canPause)",
+      "event UnpauserChanged(address previousUnpauser, address newUnpauser)",
+      "function isPauser(address) view returns (bool)",
+      "function setIsPauser(address newPauser, bool canPause)",
+      "function setUnpauser(address newUnpauser)",
+      "function unpauser() view returns (address)"
+    ],
+    "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256 duration)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256 timestamp)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function isOperation(bytes32 id) view returns (bool registered)",
+      "function isOperationDone(bytes32 id) view returns (bool done)",
+      "function isOperationPending(bytes32 id) view returns (bool pending)",
+      "function isOperationReady(bytes32 id) view returns (bool ready)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
+    "eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345": [
+      "constructor(address _delegation, address _eigenStrategy, address _pauserRegistry, address _permissionController, uint32 _DEALLOCATION_DELAY, uint32 _ALLOCATION_CONFIGURATION_DELAY, string _version)",
+      "error AlreadyMemberOfSet()",
+      "error CurrentlyPaused()",
+      "error Empty()",
+      "error InputAddressZero()",
+      "error InputArrayLengthMismatch()",
+      "error InsufficientMagnitude()",
+      "error InvalidAVSRegistrar()",
+      "error InvalidCaller()",
+      "error InvalidNewPausedStatus()",
+      "error InvalidOperator()",
+      "error InvalidOperatorSet()",
+      "error InvalidPermissions()",
+      "error InvalidRedistributionRecipient()",
+      "error InvalidShortString()",
+      "error InvalidSnapshotOrdering()",
+      "error InvalidStrategy()",
+      "error InvalidWadToSlash()",
+      "error ModificationAlreadyPending()",
+      "error NonexistentAVSMetadata()",
+      "error NotMemberOfSet()",
+      "error OnlyPauser()",
+      "error OnlyUnpauser()",
+      "error OperatorNotSlashable()",
+      "error OutOfBounds()",
+      "error SameMagnitude()",
+      "error StrategiesMustBeInAscendingOrder()",
+      "error StrategyAlreadyInOperatorSet()",
+      "error StrategyNotInOperatorSet()",
+      "error StringTooLong(string str)",
+      "error UninitializedAllocationDelay()",
+      "event AVSMetadataURIUpdated(address indexed avs, string metadataURI)",
+      "event AVSRegistrarSet(address avs, address registrar)",
+      "event AllocationDelaySet(address operator, uint32 delay, uint32 effectBlock)",
+      "event AllocationUpdated(address operator, tuple(address avs, uint32 id) operatorSet, address strategy, uint64 magnitude, uint32 effectBlock)",
+      "event EncumberedMagnitudeUpdated(address operator, address strategy, uint64 encumberedMagnitude)",
+      "event Initialized(uint8 version)",
+      "event MaxMagnitudeUpdated(address operator, address strategy, uint64 maxMagnitude)",
+      "event OperatorAddedToOperatorSet(address indexed operator, tuple(address avs, uint32 id) operatorSet)",
+      "event OperatorRemovedFromOperatorSet(address indexed operator, tuple(address avs, uint32 id) operatorSet)",
+      "event OperatorSetCreated(tuple(address avs, uint32 id) operatorSet)",
+      "event OperatorSlashed(address operator, tuple(address avs, uint32 id) operatorSet, address[] strategies, uint256[] wadSlashed, string description)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event RedistributionAddressSet(tuple(address avs, uint32 id) operatorSet, address redistributionRecipient)",
+      "event StrategyAddedToOperatorSet(tuple(address avs, uint32 id) operatorSet, address strategy)",
+      "event StrategyRemovedFromOperatorSet(tuple(address avs, uint32 id) operatorSet, address strategy)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function ALLOCATION_CONFIGURATION_DELAY() view returns (uint32)",
+      "function DEALLOCATION_DELAY() view returns (uint32)",
+      "function addStrategiesToOperatorSet(address avs, uint32 operatorSetId, address[] strategies)",
+      "function clearDeallocationQueue(address operator, address[] strategies, uint16[] numToClear)",
+      "function createOperatorSets(address avs, tuple(uint32 operatorSetId, address[] strategies)[] params)",
+      "function createRedistributingOperatorSets(address avs, tuple(uint32 operatorSetId, address[] strategies)[] params, address[] redistributionRecipients)",
+      "function delegation() view returns (address)",
+      "function deregisterFromOperatorSets(tuple(address operator, address avs, uint32[] operatorSetIds) params)",
+      "function eigenStrategy() view returns (address)",
+      "function getAVSRegistrar(address avs) view returns (address)",
+      "function getAllocatableMagnitude(address operator, address strategy) view returns (uint64)",
+      "function getAllocatedSets(address operator) view returns (tuple(address avs, uint32 id)[])",
+      "function getAllocatedStake(tuple(address avs, uint32 id) operatorSet, address[] operators, address[] strategies) view returns (uint256[][])",
+      "function getAllocatedStrategies(address operator, tuple(address avs, uint32 id) operatorSet) view returns (address[])",
+      "function getAllocation(address operator, tuple(address avs, uint32 id) operatorSet, address strategy) view returns (tuple(uint64 currentMagnitude, int128 pendingDiff, uint32 effectBlock))",
+      "function getAllocationDelay(address operator) view returns (bool, uint32)",
+      "function getAllocations(address[] operators, tuple(address avs, uint32 id) operatorSet, address strategy) view returns (tuple(uint64 currentMagnitude, int128 pendingDiff, uint32 effectBlock)[])",
+      "function getEncumberedMagnitude(address operator, address strategy) view returns (uint64)",
+      "function getMaxMagnitude(address operator, address strategy) view returns (uint64)",
+      "function getMaxMagnitudes(address[] operators, address strategy) view returns (uint64[])",
+      "function getMaxMagnitudes(address operator, address[] strategies) view returns (uint64[])",
+      "function getMaxMagnitudesAtBlock(address operator, address[] strategies, uint32 blockNumber) view returns (uint64[])",
+      "function getMemberCount(tuple(address avs, uint32 id) operatorSet) view returns (uint256)",
+      "function getMembers(tuple(address avs, uint32 id) operatorSet) view returns (address[])",
+      "function getMinimumSlashableStake(tuple(address avs, uint32 id) operatorSet, address[] operators, address[] strategies, uint32 futureBlock) view returns (uint256[][] slashableStake)",
+      "function getOperatorSetCount(address avs) view returns (uint256)",
+      "function getRedistributionRecipient(tuple(address avs, uint32 id) operatorSet) view returns (address)",
+      "function getRegisteredSets(address operator) view returns (tuple(address avs, uint32 id)[])",
+      "function getSlashCount(tuple(address avs, uint32 id) operatorSet) view returns (uint256)",
+      "function getStrategiesInOperatorSet(tuple(address avs, uint32 id) operatorSet) view returns (address[])",
+      "function getStrategyAllocations(address operator, address strategy) view returns (tuple(address avs, uint32 id)[], tuple(uint64 currentMagnitude, int128 pendingDiff, uint32 effectBlock)[])",
+      "function initialize(uint256 initialPausedStatus)",
+      "function isMemberOfOperatorSet(address operator, tuple(address avs, uint32 id) operatorSet) view returns (bool)",
+      "function isOperatorRedistributable(address operator) view returns (bool)",
+      "function isOperatorSet(tuple(address avs, uint32 id) operatorSet) view returns (bool)",
+      "function isOperatorSlashable(address operator, tuple(address avs, uint32 id) operatorSet) view returns (bool)",
+      "function isRedistributingOperatorSet(tuple(address avs, uint32 id) operatorSet) view returns (bool)",
+      "function modifyAllocations(address operator, tuple(tuple(address avs, uint32 id) operatorSet, address[] strategies, uint64[] newMagnitudes)[] params)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function permissionController() view returns (address)",
+      "function registerForOperatorSets(address operator, tuple(address avs, uint32[] operatorSetIds, bytes data) params)",
+      "function removeStrategiesFromOperatorSet(address avs, uint32 operatorSetId, address[] strategies)",
+      "function setAVSRegistrar(address avs, address registrar)",
+      "function setAllocationDelay(address operator, uint32 delay)",
+      "function slashOperator(address avs, tuple(address operator, uint32 operatorSetId, address[] strategies, uint256[] wadsToSlash, string description) params) returns (uint256, uint256[])",
+      "function unpause(uint256 newPausedStatus)",
+      "function updateAVSMetadataURI(address avs, string metadataURI)",
+      "function version() view returns (string)"
+    ],
+    "eth:0xD4d1746142642Db4c1ab17b03B9c58baac913E5B": [
+      "constructor(address _strategyManager, address _pauserRegistry, string _version)",
+      "error BalanceExceedsMaxTotalDeposits()",
+      "error CurrentlyPaused()",
+      "error InputAddressZero()",
+      "error InvalidNewPausedStatus()",
+      "error InvalidShortString()",
+      "error MaxPerDepositExceedsMax()",
+      "error NewSharesZero()",
+      "error OnlyPauser()",
+      "error OnlyStrategyManager()",
+      "error OnlyUnderlyingToken()",
+      "error OnlyUnpauser()",
+      "error StringTooLong(string str)",
+      "error TotalSharesExceedsMax()",
+      "error WithdrawalAmountExceedsTotalDeposits()",
+      "event ExchangeRateEmitted(uint256 rate)",
+      "event Initialized(uint8 version)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event StrategyTokenSet(address token, uint8 decimals)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function deposit(address token, uint256 amount) returns (uint256 newShares)",
+      "function explanation() pure returns (string)",
+      "function initialize(address _underlyingToken)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function shares(address user) view returns (uint256)",
+      "function sharesToUnderlying(uint256 amountShares) view returns (uint256)",
+      "function sharesToUnderlyingView(uint256 amountShares) view returns (uint256)",
+      "function strategyManager() view returns (address)",
+      "function totalShares() view returns (uint256)",
+      "function underlyingToShares(uint256 amountUnderlying) view returns (uint256)",
+      "function underlyingToSharesView(uint256 amountUnderlying) view returns (uint256)",
+      "function underlyingToken() view returns (address)",
+      "function unpause(uint256 newPausedStatus)",
+      "function userUnderlying(address user) returns (uint256)",
+      "function userUnderlyingView(address user) view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw(address recipient, address token, uint256 amountShares) returns (uint256 amountOut)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xE48D7CaeC1790b293667e4bB2dE1E00536F2bABd": [
+      "constructor(address _ethPOS, address _eigenPodBeacon, address _delegationManager, address _pauserRegistry, string _version)",
+      "error CurrentlyPaused()",
+      "error EigenPodAlreadyExists()",
+      "error InputAddressZero()",
+      "error InvalidNewPausedStatus()",
+      "error InvalidShortString()",
+      "error InvalidStrategy()",
+      "error LegacyWithdrawalsNotCompleted()",
+      "error OnlyDelegationManager()",
+      "error OnlyEigenPod()",
+      "error OnlyPauser()",
+      "error OnlyProofTimestampSetter()",
+      "error OnlyUnpauser()",
+      "error SharesNegative()",
+      "error SharesNotMultipleOfGwei()",
+      "error StringTooLong(string str)",
+      "event BeaconChainETHDeposited(address indexed podOwner, uint256 amount)",
+      "event BeaconChainETHWithdrawalCompleted(address indexed podOwner, uint256 shares, uint96 nonce, address delegatedAddress, address withdrawer, bytes32 withdrawalRoot)",
+      "event BeaconChainSlashingFactorDecreased(address staker, uint64 prevBeaconChainSlashingFactor, uint64 newBeaconChainSlashingFactor)",
+      "event BurnableETHSharesIncreased(uint256 shares)",
+      "event Initialized(uint8 version)",
+      "event NewTotalShares(address indexed podOwner, int256 newTotalShares)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event PectraForkTimestampSet(uint64 newPectraForkTimestamp)",
+      "event PodDeployed(address indexed eigenPod, address indexed podOwner)",
+      "event PodSharesUpdated(address indexed podOwner, int256 sharesDelta)",
+      "event ProofTimestampSetterSet(address newProofTimestampSetter)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function addShares(address staker, address strategy, uint256 shares) returns (uint256, uint256)",
+      "function beaconChainETHStrategy() view returns (address)",
+      "function beaconChainSlashingFactor(address podOwner) view returns (uint64)",
+      "function burnableETHShares() view returns (uint256)",
+      "function createPod() returns (address)",
+      "function delegationManager() view returns (address)",
+      "function eigenPodBeacon() view returns (address)",
+      "function ethPOS() view returns (address)",
+      "function getPod(address podOwner) view returns (address)",
+      "function hasPod(address podOwner) view returns (bool)",
+      "function increaseBurnOrRedistributableShares(tuple(address avs, uint32 id), uint256, address, uint256 addedSharesToBurn)",
+      "function initialize(address initialOwner, uint256 _initPausedStatus)",
+      "function numPods() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function ownerToPod(address podOwner) view returns (address)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function pectraForkTimestamp() view returns (uint64)",
+      "function podOwnerDepositShares(address podOwner) view returns (int256 shares)",
+      "function proofTimestampSetter() view returns (address)",
+      "function recordBeaconChainETHBalanceUpdate(address podOwner, uint256 prevRestakedBalanceWei, int256 balanceDeltaWei)",
+      "function removeDepositShares(address staker, address strategy, uint256 depositSharesToRemove) returns (uint256)",
+      "function renounceOwnership()",
+      "function setPectraForkTimestamp(uint64 timestamp)",
+      "function setProofTimestampSetter(address newProofTimestampSetter)",
+      "function stake(bytes pubkey, bytes signature, bytes32 depositDataRoot) payable",
+      "function stakerDepositShares(address user, address strategy) view returns (uint256 depositShares)",
+      "function transferOwnership(address newOwner)",
+      "function unpause(uint256 newPausedStatus)",
+      "function version() view returns (string)",
+      "function withdrawSharesAsTokens(address staker, address strategy, address, uint256 shares)"
+    ],
+    "eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1": [
+      "constructor(string _version)",
+      "error AdminAlreadyPending()",
+      "error AdminAlreadySet()",
+      "error AdminNotPending()",
+      "error AdminNotSet()",
+      "error AppointeeAlreadySet()",
+      "error AppointeeNotSet()",
+      "error CannotHaveZeroAdmins()",
+      "error InvalidShortString()",
+      "error NotAdmin()",
+      "error StringTooLong(string str)",
+      "event AdminRemoved(address indexed account, address admin)",
+      "event AdminSet(address indexed account, address admin)",
+      "event AppointeeRemoved(address indexed account, address indexed appointee, address target, bytes4 selector)",
+      "event AppointeeSet(address indexed account, address indexed appointee, address target, bytes4 selector)",
+      "event Initialized(uint8 version)",
+      "event PendingAdminAdded(address indexed account, address admin)",
+      "event PendingAdminRemoved(address indexed account, address admin)",
+      "function acceptAdmin(address account)",
+      "function addPendingAdmin(address account, address admin)",
+      "function canCall(address account, address caller, address target, bytes4 selector) view returns (bool)",
+      "function getAdmins(address account) view returns (address[])",
+      "function getAppointeePermissions(address account, address appointee) view returns (address[], bytes4[])",
+      "function getAppointees(address account, address target, bytes4 selector) view returns (address[])",
+      "function getPendingAdmins(address account) view returns (address[])",
+      "function isAdmin(address account, address caller) view returns (bool)",
+      "function isPendingAdmin(address account, address pendingAdmin) view returns (bool)",
+      "function removeAdmin(address account, address admin)",
+      "function removeAppointee(address account, address appointee, address target, bytes4 selector)",
+      "function removePendingAdmin(address account, address admin)",
+      "function setAppointee(address account, address appointee, address target, bytes4 selector)",
+      "function version() view returns (string)"
+    ],
+    "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xF2b225815F70c9b327DC9db758A36c92A4279b17": [
+      "constructor(address _EIGEN)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Backed()",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint8 version)",
+      "event IsMinterModified(address indexed minterAddress, bool newStatus)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetAllowedFrom(address indexed from, bool isAllowedFrom)",
+      "event SetAllowedTo(address indexed to, bool isAllowedTo)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event TransferRestrictionsDisabled()",
+      "function CLOCK_MODE() pure returns (string)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function EIGEN() view returns (address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function allowedFrom(address) view returns (bool)",
+      "function allowedTo(address) view returns (bool)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 amount)",
+      "function checkpoints(address account, uint32 pos) view returns (tuple(uint32 fromBlock, uint224 votes))",
+      "function clock() view returns (uint48)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function delegate(address delegatee)",
+      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
+      "function delegates(address account) view returns (address)",
+      "function disableTransferRestrictions()",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getPastTotalSupply(uint256 timepoint) view returns (uint256)",
+      "function getPastVotes(address account, uint256 timepoint) view returns (uint256)",
+      "function getVotes(address account) view returns (uint256)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(address initialOwner)",
+      "function isMinter(address) view returns (bool)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function numCheckpoints(address account) view returns (uint32)",
+      "function owner() view returns (address)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function renounceOwnership()",
+      "function setAllowedFrom(address from, bool isAllowedFrom)",
+      "function setAllowedTo(address to, bool isAllowedTo)",
+      "function setIsMinter(address minterAddress, bool newStatus)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function transferRestrictionsDisabledAfter() view returns (uint256)"
+    ],
+    "eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xFEA47018D632A77bA579846c840d5706705Dc598": [
+      "constructor(address _singleton)"
+    ]
+  },
+  "usedTemplates": {
+    "eigenlayer/AllocationManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/AVSDirectory": "0xc57750a5155e09049ae1ea4afd500090b460c5844ccb1d2d973da7af0d8d96f7",
+    "eigenlayer/bEIGENToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/DelegationManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/EigenLayerPauserRegistry": "0x650c2bb1c48c3b4074538696cc4c8cc5a1610e60b132f774c9b120c619c34086",
+    "eigenlayer/EigenPod": "0x272665b09a47d2ea7de03261d45c149901717f76ba1cbaf1e015c17a1778a868",
+    "eigenlayer/EigenPodManager": "0xf1378651f0f74d64b9ef4ecb62fc6b0908c5fa61d0228aea84689e975859f4cf",
+    "eigenlayer/EIGENToken": "0x47c3793e522d863027dd4d7d9ae9f79149767db55e073a2fb68ac71a6be7412b",
+    "eigenlayer/PermissionController": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/RewardAllStakersActionGenerator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/RewardsCoordinator": "0x6808f3647434cff5e6faad71aaaa768e5a2232d0d0bba9b3998cb36a0efe79d9",
+    "eigenlayer/StrategiesBeacon": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/Strategy": "0x5b542b237664461cc9425426a34e0cf216d43947d261781837a5c00bbebfbc9b",
+    "eigenlayer/StrategyFactory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/StrategyManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/TimelockControllerOwning": "0xaf1ebe8a6cc93d2ab3ea744cf16dd3a829de773907808c85af29327d02934811",
+    "eigenlayer/TokenHopper": "0x2d11e019aadd23bb3977879af9e11d7021f86ccb0c073820375d508372480683",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "ethereum": 23267842 },
+  "permissionsConfigHash": "0xcfa377361d44087910caada935ab419f3e244a8236f7c9f5579e119de97e3d30"
+}

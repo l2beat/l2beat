@@ -1,20 +1,12 @@
 import { assert, formatSeconds, type ProjectId } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type {
-  ProjectScalingRiskView,
-  Sentiment,
-  TableReadyValue,
-  WarningWithSentiment,
-} from '../types'
+import type { ProjectScalingRiskView } from '../internalTypes'
+import type { Sentiment, TableReadyValue, WarningWithSentiment } from '../types'
 import { getDacSentiment } from './dataAvailability'
-import {
-  formatChallengeAndExecutionDelay,
-  formatChallengePeriod,
-} from './formatDelays'
 
 // State validation
 
-export const STATE_NONE: TableReadyValue = {
+export const STATE_NONE: ProjectScalingRiskView['stateValidation'] = {
   value: 'None',
   description:
     'Currently the system permits invalid state roots. More details in project overview.',
@@ -22,7 +14,7 @@ export const STATE_NONE: TableReadyValue = {
   orderHint: Number.NEGATIVE_INFINITY,
 }
 
-export const STATE_FP: TableReadyValue = {
+export const STATE_FP: ProjectScalingRiskView['stateValidation'] = {
   value: 'Fraud proofs',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect.',
@@ -30,7 +22,7 @@ export const STATE_FP: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_FP_1R: TableReadyValue = {
+export const STATE_FP_1R: ProjectScalingRiskView['stateValidation'] = {
   value: 'Fraud proofs (1R)',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve.',
@@ -41,22 +33,19 @@ export const STATE_FP_1R: TableReadyValue = {
 export function STATE_FP_INT(
   challengePeriodSeconds?: number,
   executionDelaySeconds?: number,
-): TableReadyValue {
+): ProjectScalingRiskView['stateValidation'] {
   return {
     value: 'Fraud proofs (INT)',
     description:
       'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
-    secondLine: executionDelaySeconds
-      ? formatChallengeAndExecutionDelay(
-          executionDelaySeconds + Number(challengePeriodSeconds),
-        )
-      : formatChallengePeriod(challengePeriodSeconds),
+    executionDelay: executionDelaySeconds,
+    challengeDelay: challengePeriodSeconds,
     sentiment: 'good',
     orderHint: Number.POSITIVE_INFINITY,
   }
 }
 
-export const STATE_FP_INT_ZK: TableReadyValue = {
+export const STATE_FP_INT_ZK: ProjectScalingRiskView['stateValidation'] = {
   value: 'Fraud proofs (INT, ZK)',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. ZK proofs are used to adjudicate the correctness of the last step.',
@@ -64,7 +53,7 @@ export const STATE_FP_INT_ZK: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_FP_1R_ZK: TableReadyValue = {
+export const STATE_FP_1R_ZK: ProjectScalingRiskView['stateValidation'] = {
   value: 'Fraud proofs (1R, ZK)',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve. ZK proofs are used to prove the correctness of the state transition.',
@@ -72,7 +61,7 @@ export const STATE_FP_1R_ZK: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_FP_HYBRID_ZK: TableReadyValue = {
+export const STATE_FP_HYBRID_ZK: ProjectScalingRiskView['stateValidation'] = {
   value: 'Fraud proofs (1R, ZK)',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used.',
@@ -80,7 +69,7 @@ export const STATE_FP_HYBRID_ZK: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_ZKP_OPTIMISTIC: TableReadyValue = {
+export const STATE_ZKP_OPTIMISTIC: ProjectScalingRiskView['stateValidation'] = {
   value: 'Fraud proofs (1R, ZK)',
   description:
     'Actors watching the chain can challenge state proposals, and challenged proposals must provide ZK proofs. SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
@@ -88,7 +77,7 @@ export const STATE_ZKP_OPTIMISTIC: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_ZKP_SN: TableReadyValue = {
+export const STATE_ZKP_SN: ProjectScalingRiskView['stateValidation'] = {
   value: 'Validity proofs (SN)',
   description:
     'SNARKs are succinct zero knowledge proofs that ensure state correctness, but require trusted setup.',
@@ -96,7 +85,7 @@ export const STATE_ZKP_SN: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_ZKP_ST: TableReadyValue = {
+export const STATE_ZKP_ST: ProjectScalingRiskView['stateValidation'] = {
   value: 'Validity proofs (ST)',
   description:
     'STARKs are zero knowledge proofs that ensure state correctness.',
@@ -104,7 +93,7 @@ export const STATE_ZKP_ST: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_ZKP_ST_SN_WRAP: TableReadyValue = {
+export const STATE_ZKP_ST_SN_WRAP: ProjectScalingRiskView['stateValidation'] = {
   value: 'Validity proofs (ST, SN)',
   description:
     'STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup.',
@@ -112,7 +101,9 @@ export const STATE_ZKP_ST_SN_WRAP: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export function STATE_ZKP_L3(L2: string): TableReadyValue {
+export function STATE_ZKP_L3(
+  L2: string,
+): ProjectScalingRiskView['stateValidation'] {
   return {
     value: 'Validity proofs',
     description: `Zero knowledge cryptography is used to ensure state correctness. Proofs are first verified on ${L2} and finally on Ethereum.`,
@@ -121,7 +112,7 @@ export function STATE_ZKP_L3(L2: string): TableReadyValue {
   }
 }
 
-export const STATE_EXITS_ONLY: TableReadyValue = {
+export const STATE_EXITS_ONLY: ProjectScalingRiskView['stateValidation'] = {
   value: 'Exits only',
   description:
     'Exits from the network are subject to a period when they can be challenged. The internal network state is left unchecked.',
@@ -134,7 +125,7 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   hasAtLeastFiveExternalChallengers?: boolean,
   challengeWindowSeconds?: number,
   executionDelaySeconds?: number,
-): TableReadyValue {
+): ProjectScalingRiskView['stateValidation'] {
   const challengePeriod = challengeWindowSeconds
     ? ` There is a ${formatSeconds(challengeWindowSeconds)} challenge period.`
     : ''
@@ -169,11 +160,8 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   return {
     value: 'Fraud proofs (INT)',
     description: descriptionBase + challengePeriod,
-    secondLine: executionDelaySeconds
-      ? formatChallengeAndExecutionDelay(
-          Number(challengeWindowSeconds) + executionDelaySeconds,
-        )
-      : formatChallengePeriod(challengeWindowSeconds),
+    executionDelay: executionDelaySeconds,
+    challengeDelay: challengeWindowSeconds,
     sentiment: sentiment,
     orderHint: nOfChallengers,
   }

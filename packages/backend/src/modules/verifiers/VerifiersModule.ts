@@ -1,16 +1,12 @@
-import type { Logger } from '@l2beat/backend-tools'
-import type { Config } from '../../config'
-import type { Peripherals } from '../../peripherals/Peripherals'
-import type { Clock } from '../../tools/Clock'
-import type { ApplicationModule } from '../ApplicationModule'
+import type { ApplicationModule, ModuleDependencies } from '../types'
 import { VerifiersStatusRefresher } from './VerifiersStatusRefresher'
 
-export function createVerifiersModule(
-  config: Config,
-  logger: Logger,
-  peripherals: Peripherals,
-  clock: Clock,
-): ApplicationModule | undefined {
+export function createVerifiersModule({
+  config,
+  logger,
+  peripherals,
+  clock,
+}: ModuleDependencies): ApplicationModule | undefined {
   if (!config.verifiers) {
     logger.info('VerifiersModule disabled')
     return

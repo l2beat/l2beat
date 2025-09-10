@@ -1,8 +1,7 @@
 {
   "ChainOracle": {
     "hash": "0x219c5860c98ee65c799aa9b6549168915088c6de2369583a157ee3a60cf65b47",
-    "address": "0x79B3E839333a74137e78b0DaF84FC12512a8c704",
-    "chain": "ethereum",
+    "address": "eth:0x79B3E839333a74137e78b0DaF84FC12512a8c704",
     "blockNumber": 22188285
   }
 }

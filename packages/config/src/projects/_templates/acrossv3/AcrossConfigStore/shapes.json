@@ -1,8 +1,7 @@
 {
   "AcrossConfigStore": {
     "hash": "0x926aa3c074cb5463671ec24c946524d9e03d3aa56a9847ca738b17b747c0e076",
-    "address": "0x3B03509645713718B78951126E0A6de6f10043f5",
-    "chain": "ethereum",
+    "address": "eth:0x3B03509645713718B78951126E0A6de6f10043f5",
     "blockNumber": 22780541
   }
 }

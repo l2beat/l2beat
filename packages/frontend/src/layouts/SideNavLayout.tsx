@@ -34,7 +34,11 @@ export function SideNavLayout({
     <SidebarProvider>
       <div className="relative flex flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>
-        <MobileTopNavbar groups={groups} logoLink={LOGO_LINK} />
+        <MobileTopNavbar
+          groups={groups}
+          logoLink={LOGO_LINK}
+          sideLinks={sideLinks}
+        />
         <NavSidebar
           logoLink={LOGO_LINK}
           groups={groups}
@@ -154,6 +158,11 @@ const groups = compact<NavGroup>([
         shortTitle: 'Throughput',
         href: '/data-availability/throughput',
       },
+      {
+        title: 'Liveness',
+        shortTitle: 'Liveness',
+        href: '/data-availability/liveness',
+      },
     ],
     secondaryLinks: [
       {
@@ -206,7 +215,11 @@ const groups = compact<NavGroup>([
   },
 ])
 
-const sideLinks = [
+const sideLinks = compact([
+  env.CLIENT_SIDE_PARTNERS && {
+    title: 'Publications',
+    href: '/publications',
+  },
   {
     title: 'About Us',
     href: '/about-us',
@@ -240,4 +253,4 @@ const sideLinks = [
     title: 'FAQ',
     href: '/faq',
   },
-]
+])

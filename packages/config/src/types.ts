@@ -20,8 +20,8 @@ export interface WarningWithSentiment {
   sentiment: 'bad' | 'warning' | 'neutral'
 }
 
-export interface TableReadyValue {
-  value: string
+export interface TableReadyValue<T extends string = string> {
+  value: T
   secondLine?: string
   description?: string
   sentiment?: Sentiment
@@ -368,6 +368,8 @@ export interface ProjectScalingProofSystem {
   name?: string
   /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
   zkCatalogId?: string
+  /** Challenge protocol of the proof system. Configured only for optimistic proof systems. */
+  challengeProtocol?: 'Interactive' | 'Single-step'
 }
 
 export type ProjectScalingCapability = 'universal' | 'appchain'
@@ -428,6 +430,7 @@ export type ProjectScalingPurpose =
   | 'RWA'
   | 'IoT'
   | 'Restaking'
+  | 'Enterprise'
 
 export type ProjectScalingStage =
   | StageNotApplicable
@@ -488,13 +491,20 @@ export interface StageNotApplicable {
   stage: 'NotApplicable'
 }
 export interface ProjectScalingRisks {
-  self: ProjectScalingRiskView
-  host: ProjectScalingRiskView | undefined
-  stacked: ProjectScalingRiskView | undefined
+  self: ProjectRiskView
+  host: ProjectRiskView | undefined
+  stacked: ProjectRiskView | undefined
 }
 
-export interface ProjectScalingRiskView {
-  stateValidation: TableReadyValue
+export interface ProjectRiskView {
+  stateValidation: TableReadyValue & {
+    /** @unit seconds */
+    executionDelay?: number
+    /** @unit seconds */
+    challengeDelay?: number
+    /** @unit ETH */
+    initialBond?: string
+  }
   dataAvailability: TableReadyValue
   exitWindow: TableReadyValue
   sequencerFailure: TableReadyValue
@@ -625,7 +635,7 @@ export interface DaLayerThroughput {
    * Batch size for data availability. Together with batchFrequency it determines max throughput.
    * @unit B - bytes
    */
-  size: number
+  size: number | 'NO_CAP'
   /**
    * Desired size of blob data per block. Should be less than or equal to size.
    * @unit B - bytes
@@ -664,6 +674,14 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
+  relayerType?: TableReadyValue<'Permissioned'>
+  validationType?: DaBridgeValidationType
+}
+
+type DaBridgeValidationType = TableReadyValue<
+  'Validity Proof' | 'BLS Signature'
+> & {
+  zkCatalogId?: ProjectId
 }
 
 export interface DaBridgeRisks {
@@ -1000,7 +1018,7 @@ export interface ProjectPermissionedAccount {
   url: string
   address: ChainSpecificAddress
   isVerified: boolean
-  type: 'EOA' | 'Contract'
+  type: 'EOA' | 'Contract' | 'Reference'
 }
 
 export interface ProjectContracts {
@@ -1098,7 +1116,7 @@ export interface ProjectDiscoveryInfo {
   isDiscoDriven: boolean
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
-  timestampPerChain: Record<string, number>
+  baseTimestamp: number | undefined
   hasDiscoUi: boolean
 }
 // #endregion

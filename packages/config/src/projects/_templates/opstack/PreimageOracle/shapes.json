@@ -1,32 +1,27 @@
 {
   "PreimageOracle_v1_0_0": {
     "hash": "0x665ede6663477caf46bd510bb4ba7de3f2a6d8f51f840d058bad706018c67453",
-    "address": "0xE7Fd68F6a389DE7D7C9cFCfCE15486885abeDD44",
-    "chain": "ethereum",
+    "address": "eth:0xE7Fd68F6a389DE7D7C9cFCfCE15486885abeDD44",
     "blockNumber": 22188285
   },
   "PreimageOracle_v1_1_2": {
     "hash": "0xda65cfcdd58c88318ad76812d92be7f0d10716f389549846646b82ceecf47b2b",
-    "address": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
-    "chain": "ethereum",
+    "address": "eth:0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
     "blockNumber": 22188285
   },
   "PreimageOracle_v1_1_3_beta2": {
     "hash": "0xbc9931ce25f444e5c25ff4a9177edd7ad6ddfb9b58e19aeb6d97d5486b963d85",
-    "address": "0x5B9bEf4d8C36FB013c70d0A6F455807c6BD5270b",
-    "chain": "ethereum",
+    "address": "eth:0x5B9bEf4d8C36FB013c70d0A6F455807c6BD5270b",
     "blockNumber": 22188285
   },
   "PreimageOracle_v1_1_3_beta6": {
     "hash": "0x8c37077a8801302e54dcb780e14b286adb904da070ed5ecf51e5f039aa5b1288",
-    "address": "0xfaB0F466955D87e596Ca87E20c505bB6470D0DC4",
-    "chain": "ethereum",
+    "address": "eth:0xfaB0F466955D87e596Ca87E20c505bB6470D0DC4",
     "blockNumber": 22188285
   },
   "PreimageOracle_v1_1_4": {
     "hash": "0xd9838f1f137bd5397f583f33c414ec9c0fc3dc69401213fae0f09c36d4ac8e47",
-    "address": "0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
-    "chain": "ethereum",
+    "address": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
     "blockNumber": 22188285
   }
 }

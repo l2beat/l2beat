@@ -1,32 +1,27 @@
 {
   "DisputeGameFactory_v1_0_0": {
     "hash": "0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14",
-    "address": "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
-    "chain": "ethereum",
+    "address": "eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
     "blockNumber": 22188285
   },
   "DisputeGameFactory_v1_0_1": {
     "hash": "0x85ca17941ef36ac6b28a4f8f89803d0d41ef419c47586dcd3acdb47ee9617285",
-    "address": "0x4bbA758F006Ef09402eF31724203F316ab74e4a0",
-    "chain": "ethereum",
+    "address": "eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0",
     "blockNumber": 22188285
   },
   "DisputeGameFactory_v1_0_1_beta1": {
     "hash": "0xf7cf2190d189b696e5692189e19febdf104cd3fd154808bff23d7849e5ed343d",
-    "address": "0x71442A5586bde0f5EfD6588D01c2B2820D9D236D",
-    "chain": "ethereum",
+    "address": "eth:0x71442A5586bde0f5EfD6588D01c2B2820D9D236D",
     "blockNumber": 22188285
   },
   "DisputeGameFactory_v1_0_1_beta3": {
     "hash": "0xe74de8a6ebfd4ec156cf8699ce372d14df81ea1ce6e0a4b4460f1b3575aa658a",
-    "address": "0xe8b013bEE7Bd603e2f0B4825638559d645A4C4CB",
-    "chain": "ethereum",
+    "address": "eth:0xe8b013bEE7Bd603e2f0B4825638559d645A4C4CB",
     "blockNumber": 22188285
   },
   "DisputeGameFactory_v1_2_0": {
     "hash": "0x93342e3d1e616bd6c727a5f73b09c0811bdab764dc9ad7346278593fb66b3689",
-    "address": "0x33D1e8571a85a538ed3D5A4d88f46C112383439D",
-    "chain": "ethereum",
+    "address": "eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D",
     "blockNumber": 22995199
   }
 }
