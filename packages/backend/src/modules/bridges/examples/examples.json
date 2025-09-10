@@ -28,5 +28,15 @@
       "chain": "optimism",
       "tx": "0x8fee2c8243140764b8ba74ae2c11f22495e7c5eae15f384f37fa3c826eebe465"
     }
+  ],
+  "mayan-mctp-fast": [
+    {
+      "chain": "ethereum",
+      "tx": "0x6a3439c2875764b29b8be902265985397c5fd2782e7f2be0821a5bda713a48ff"
+    },
+    {
+      "chain": "base",
+      "tx": "0x9f2d722cfc23e8a248d8380860f6f2212cf9d0cb93cf4f76804da31dae26b090"
+    }
   ]
 }
