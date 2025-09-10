@@ -105,6 +105,9 @@ function getDaLivenessEntry(
                 ? 'impactful-change'
                 : undefined,
           syncWarning,
+          ongoingAnomaly: bridgeLiveness.anomalies.some(
+            (a) => a.end === undefined,
+          ),
         },
         relayerType: b.daBridge.relayerType,
         validationType: b.daBridge.validationType,
