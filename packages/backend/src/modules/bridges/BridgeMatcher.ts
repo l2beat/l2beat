@@ -77,11 +77,11 @@ export async function match(
   const messages: BridgeMessage[] = []
   const transfers: BridgeTransfer[] = []
 
-  for (const event of events) {
-    if (matchedIds.has(event.eventId)) {
-      continue
-    }
-    for (const plugin of plugins) {
+  for (const plugin of plugins) {
+    for (const event of events) {
+      if (matchedIds.has(event.eventId)) {
+        continue
+      }
       let result: MatchResult | undefined
       try {
         result = await plugin.match?.(event, db)
@@ -102,7 +102,6 @@ export async function match(
             matchedIds.add(transferEvent.eventId)
           }
         }
-        break
       }
     }
   }
