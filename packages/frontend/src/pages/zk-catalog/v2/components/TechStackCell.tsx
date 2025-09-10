@@ -1,18 +1,21 @@
 import type { ProjectZkCatalogInfo } from '@l2beat/config'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { cn } from '~/utils/cn'
 import { TechStackTag } from './TechStackTag'
 
 export function TechStackCell({
   techStack,
+  className,
 }: {
   techStack: ProjectZkCatalogInfo['techStack']
+  className?: string
 }) {
   if (!techStack.zkVM && !techStack.finalWrap && !techStack.snark) {
     return <NoDataBadge />
   }
 
   return (
-    <div className="space-y-2 py-4">
+    <div className={cn('space-y-2 py-4', className)}>
       {techStack.zkVM && (
         <div className="flex flex-col gap-0.5">
           <span className="font-medium text-[11px] text-secondary leading-none">

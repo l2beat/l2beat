@@ -1,4 +1,4 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -30,6 +30,7 @@ export interface ProjectZkCatalogEntry {
     description?: string
     links: ProjectLink[]
     trustedSetupsByProofSystem: TrustedSetupsByProofSystem
+    techStack: ProjectZkCatalogInfo['techStack']
   }
   sections: ProjectDetailsSection[]
 }
@@ -57,6 +58,7 @@ export async function getZkCatalogProjectEntry(
     emergencyWarning: project.statuses.emergencyWarning,
     links: getProjectLinks(project.display.links),
     trustedSetupsByProofSystem,
+    techStack: project.zkCatalogInfo.techStack,
   }
 
   const common = {

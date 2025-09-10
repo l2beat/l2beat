@@ -1,9 +1,11 @@
+import type { ProjectZkCatalogInfo } from '@l2beat/config'
 import React from 'react'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/getTrustedSetupsWithVerifiersAndAttesters'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
+import { TechStackCell } from '../../components/TechStackCell'
 import { TrustedSetupCellTooltip } from '../../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../../components/VerifiedCountWithDetails'
 
@@ -21,9 +23,10 @@ export function ProjectZkCatalogSummary({ project }: Props) {
       <div className="md:hidden">
         <MobileProjectLinks projectLinks={project.header.links} />
       </div>
-      <TrustedSetupsByProofSystem
+      <TrustedSetupsByProofSystemSection
         trustedSetupsByProofSystem={project.header.trustedSetupsByProofSystem}
       />
+      <TechStackSection techStack={project.header.techStack} />
       {project.header.description && (
         <AboutSection description={project.header.description} />
       )}
@@ -31,13 +34,13 @@ export function ProjectZkCatalogSummary({ project }: Props) {
   )
 }
 
-function TrustedSetupsByProofSystem({
+function TrustedSetupsByProofSystemSection({
   trustedSetupsByProofSystem,
 }: {
   trustedSetupsByProofSystem: TrustedSetupsByProofSystem
 }) {
   return (
-    <div className="flex flex-1 flex-col gap-2 text-base">
+    <div className="flex flex-col gap-3">
       <h2 className="font-semibold text-subtitle-12 uppercase max-md:hidden">
         Trusted Setups
       </h2>
@@ -66,6 +69,26 @@ function TrustedSetupsByProofSystem({
             )
           },
         )}
+      </div>
+    </div>
+  )
+}
+
+function TechStackSection({
+  techStack,
+}: {
+  techStack: ProjectZkCatalogInfo['techStack']
+}) {
+  return (
+    <div className="mt-3 flex flex-col gap-2">
+      <h2 className="font-semibold text-subtitle-12 uppercase max-md:hidden">
+        Tech Stack
+      </h2>
+      <div className="rounded-sm border border-divider p-4">
+        <TechStackCell
+          techStack={techStack}
+          className="flex flex-row flex-wrap gap-6"
+        />
       </div>
     </div>
   )
