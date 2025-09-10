@@ -159,6 +159,7 @@ import { redstone } from '../projects/redstone/redstone'
 import { reya } from '../projects/reya/reya'
 import { rise } from '../projects/rise/rise'
 import { river } from '../projects/river/river'
+import { roninNetwork } from '../projects/ronin-network/ronin-network'
 import { rss3 } from '../projects/rss3/rss3'
 import { rufus } from '../projects/rufus/rufus'
 import { scroll } from '../projects/scroll/scroll'
@@ -377,6 +378,7 @@ export const layer2s: ScalingProject[] = [
   rayls,
   real,
   reddioex,
+  roninNetwork,
   reddiozkvm,
   redstone,
   reya,
