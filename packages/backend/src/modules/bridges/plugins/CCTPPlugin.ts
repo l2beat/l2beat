@@ -10,7 +10,7 @@ import {
 } from './types'
 import { BinaryReader } from '../BinaryReader'
 
-const parseV1MessageSent = createEventParser('event MessageSent(bytes message)')
+const parseMessageSent = createEventParser('event MessageSent(bytes message)')
 
 const parseV1MessageReceived = createEventParser(
   'event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)',
@@ -58,31 +58,29 @@ export class CCTPPlugin implements BridgePlugin {
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
-    const messageSent = parseV1MessageSent(input.log, null)
+    const messageSent = parseMessageSent(input.log, null)
     if (messageSent) {
-      const message = decodeMessage(messageSent.message)
-      if (!message) {
-        return
-      }
-
-      if (message.version === 0) {
-        const rawBody = extractV1MessageBody(messageSent.message)
-        if (!rawBody) {
+      const version = decodeMessageVersion(messageSent.message)
+      if (version === 0) {
+        const message = decodeV1Message(messageSent.message)
+        if (!message) {
           return
         }
-        // TODO: is this even correct?
         return CCTPv1MessageSent.create(input.ctx, {
-          messageBody: rawBody,
+          messageBody: message.rawBody,
           txHash: input.ctx.txHash,
         })
       }
 
-      if (message.version === 1) {
-        // TODO: also recipient is TokenBurnMessenger
+      if (version == 1) {
+        const message = decodeV2Message(messageSent.message)
+        if (!message) {
+          return
+        }
         const burnMessage = decodeBurnMessage(message.messageBody)
 
         return CCTPv2MessageSent.create(input.ctx, {
-          // TODO: link to circle docs
+          // https://developers.circle.com/cctp/technical-guide#messages-and-finality
           fast: message.minFinalityThreshold <= 1000,
           app: burnMessage ? 'TokenMessengerV2' : undefined,
           hookData: burnMessage?.hookData,
@@ -163,8 +161,16 @@ export class CCTPPlugin implements BridgePlugin {
   }
 }
 
-// https://basescan.org/address/0x7db629f6acc20be49a0a7565c21cc178e9ac21e3#code#F4#L78
-export function decodeMessage(encodedHex: string) {
+export function decodeMessageVersion(encodedHex: string) {
+  try {
+    return new BinaryReader(encodedHex).readUint32()
+  } catch {
+    return undefined
+  }
+}
+
+// https://basescan.org/address/0xad09780d193884d503182ad4588450c416d6f9d4#code#L1285
+export function decodeV1Message(encodedHex: string) {
   try {
     const reader = new BinaryReader(encodedHex)
     const version = reader.readUint32()
@@ -174,8 +180,35 @@ export function decodeMessage(encodedHex: string) {
     const sender = reader.readBytes(32)
     const recipient = reader.readBytes(32)
     const destinationCaller = reader.readBytes(32)
-    const minFinalityThreshold = reader.readUint32()
-    const finalityThresholdExecuted = reader.readUint32()
+    const rawBody = reader.readRemainingBytes()
+    return {
+      version,
+      sourceDomain,
+      destinationDomain,
+      nonce,
+      sender,
+      recipient,
+      destinationCaller,
+      rawBody,
+    }
+  } catch {
+    return undefined
+  }
+}
+
+// https://basescan.org/address/0x7db629f6acc20be49a0a7565c21cc178e9ac21e3#code#F4#L78
+export function decodeV2Message(encodedHex: string) {
+  try {
+    const reader = new BinaryReader(encodedHex)
+    const version = reader.readUint32()
+    const sourceDomain = reader.readUint32()
+    const destinationDomain = reader.readUint32()
+    const nonce = reader.readUint256()
+    const sender = reader.readBytes(32)
+    const recipient = reader.readBytes(32)
+    const destinationCaller = reader.readBytes(32)
+    const minFinalityThreshold = reader.readUint32()  // only in V2
+    const finalityThresholdExecuted = reader.readUint32()  // only in V2
     const messageBody = reader.readRemainingBytes()
     return {
       version,
@@ -222,13 +255,4 @@ export function decodeBurnMessage(encodedHex: string) {
   }
 }
 
-// https://basescan.org/address/0xad09780d193884d503182ad4588450c416d6f9d4#code#L1296
-function extractV1MessageBody(encodedHex: string) {
-  try {
-    const reader = new BinaryReader(encodedHex)
-    reader.skipBytes(116) // Don't ask why
-    return reader.readRemainingBytes()
-  } catch {
-    return undefined
-  }
-}
+
