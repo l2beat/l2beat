@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { BinaryReader } from '../BinaryReader'
 import {
   type BridgePlugin,
   createBridgeEventType,
@@ -18,15 +19,15 @@ export const StargateV2OFTSentBusRode = createBridgeEventType<{
   receiver: string
   destinationEid: number
   tokenAddress: EthereumAddress
-  amountSentLD: number
-  amountReceivedLD: number
-  amountSD: number
+  amountSentLD: string
+  amountReceivedLD: string
+  amountSD: string
 }>('stargatev2.OFTSentBus')
 
 export const StargateV2OFTSentTaxi = createBridgeEventType<{
   guid: string
-  amountSentLD: number
-  amountReceivedLD: number
+  amountSentLD: string
+  amountReceivedLD: string
   tokenAddress: EthereumAddress
 }>('stargatev2.OFTSentTaxi')
 
@@ -40,7 +41,7 @@ export const StargateV2OFTReceived = createBridgeEventType<{
   token: string
   tokenAddress: EthereumAddress
   destinationEid: number
-  amountReceivedLD: number
+  amountReceivedLD: string
 }>('stargatev2.OFTReceived')
 
 const parseBusDriven = createEventParser(
@@ -151,27 +152,28 @@ export class StargatePlugin implements BridgePlugin {
         const busRodeLog = input.txLogs.find((l) => parseBusRode(l, null))
         if (busRodeLog) {
           const busRode = parseBusRode(busRodeLog, [network.tokenMessaging])
+          const passenger = busRode && decodeBusPassenger(busRode.passenger)
 
-          if (busRode) {
+          if (busRode && passenger) {
             return StargateV2OFTSentBusRode.create(input.ctx, {
               guid: oftSent.guid,
               ticketId: Number(busRode.ticketId),
-              receiver: decodeBusPassenger(busRode.passenger).receiver,
+              receiver: passenger.receiver,
               emitter: EthereumAddress(input.log.address),
               token: pool.token,
               destinationEid: oftSent.dstEid,
               tokenAddress: pool.tokenAddress,
-              amountSentLD: Number(oftSent.amountSentLD),
-              amountReceivedLD: Number(oftSent.amountReceivedLD),
-              amountSD: Number(decodeBusPassenger(busRode.passenger).amountSD),
+              amountSentLD: oftSent.amountSentLD.toString(),
+              amountReceivedLD: oftSent.amountReceivedLD.toString(),
+              amountSD: passenger.amountSD.toString(),
             })
           }
         }
       }
       return StargateV2OFTSentTaxi.create(input.ctx, {
         guid: oftSent.guid,
-        amountSentLD: Number(oftSent.amountSentLD),
-        amountReceivedLD: Number(oftSent.amountReceivedLD),
+        amountSentLD: oftSent.amountSentLD.toString(),
+        amountReceivedLD: oftSent.amountReceivedLD.toString(),
         tokenAddress: pool.tokenAddress,
       })
     }
@@ -200,7 +202,7 @@ export class StargatePlugin implements BridgePlugin {
         token: pool.token,
         tokenAddress: pool.tokenAddress,
         destinationEid,
-        amountReceivedLD: Number(oftReceived.amountReceivedLD),
+        amountReceivedLD: oftReceived.amountReceivedLD.toString(),
       })
     }
 
@@ -217,18 +219,21 @@ export class StargatePlugin implements BridgePlugin {
 }
 
 // Decode passenger bytes per encodePacked(uint16, bytes32, uint64, bool)
-function decodeBusPassenger(passengerBytes: string) {
-  const bytes = passengerBytes.toLowerCase()
-  if (bytes.length < 88)
-    throw new Error(`Passenger bytes too short: ${bytes.length}`)
-  const assetId = Number.parseInt(bytes.slice(2, 6), 16)
-  const receiver = '0x' + bytes.slice(6, 70)
-  const amountSD = BigInt('0x' + bytes.slice(70, 86))
-  const nativeDrop = Number.parseInt(bytes.slice(86, 88), 16) !== 0
-  return {
-    assetId: String(assetId),
-    receiver: `0x${receiver.slice(-40)}`,
-    amountSD,
-    nativeDrop: nativeDrop ? 'true' : 'false',
-  } as const
+// TODO: link to solidity source code
+export function decodeBusPassenger(encodedHex: string) {
+  try {
+    const reader = new BinaryReader(encodedHex)
+    const assetId = reader.readUint16()
+    const receiver = EthereumAddress(`0x${reader.readBytes(32).slice(-40)}`)
+    const amountSD = reader.readUint64()
+    const nativeDrop = reader.readUint8() !== 0
+    return {
+      assetId,
+      receiver,
+      amountSD,
+      nativeDrop,
+    }
+  } catch {
+    return undefined
+  }
 }

@@ -10,6 +10,7 @@ import {
   type LogToCapture,
   type MatchResult,
 } from './types'
+import { BinaryReader } from '../BinaryReader'
 
 const parsePacketSent = createEventParser(
   'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
@@ -122,15 +123,10 @@ export function createLayerZeroGuid(
   receiver: string,
 ): string {
   const nonceBytes = '0x' + nonce.toString(16).padStart(16, '0')
-
   const srcEidBytes = '0x' + srcEid.toString(16).padStart(8, '0')
-
   const senderBytes32 = '0x' + normalizeAddress(sender).slice(2)
-
   const dstEidBytes = '0x' + dstEid.toString(16).padStart(8, '0')
-
   const receiverBytes32 = '0x' + normalizeAddress(receiver).slice(2)
-
   return solidityKeccak256(
     ['bytes', 'bytes', 'bytes', 'bytes', 'bytes'],
     [nonceBytes, srcEidBytes, senderBytes32, dstEidBytes, receiverBytes32],
@@ -144,89 +140,35 @@ export function normalizeAddress(address: string): string {
 
 export const LAYERZERO_CONSTANTS = {
   PACKET_VERSION: 1,
-  PACKET_HEADER_LENGTH: 81, // 1 + 8 + 4 + 32 + 4 + 32 = 81 bytes
   EID_LENGTH: 4,
   NONCE_LENGTH: 8,
   SENDER_LENGTH: 32,
   RECEIVER_LENGTH: 32,
 } as const
 
-export interface DecodedPacketHeader {
-  version: number
-  nonce: bigint
-  srcEid: number
-  sender: string
-  dstEid: number
-  receiver: string
-}
-
-export function decodePacket(encodedPayload: string) {
+export function decodePacket(encodedHex: string) {
   try {
-    const header = decodePacketHeader(encodedPayload)
-
-    if (!header) return null
-
-    const hex = encodedPayload.startsWith('0x')
-      ? encodedPayload.slice(2)
-      : encodedPayload
-
-    const headerLength = LAYERZERO_CONSTANTS.PACKET_HEADER_LENGTH * 2
-
-    const payload =
-      hex.length > headerLength ? '0x' + hex.slice(headerLength) : '0x'
-
+    const reader = new BinaryReader(encodedHex)
+    const version = reader.readUint8()
+    const nonce = reader.readUint64()
+    const srcEid = reader.readUint32()
+    const sender = reader.readBytes(32)
+    const dstEid = reader.readUint32()
+    const receiver = reader.readBytes(32)
+    const payload = reader.readRemainingBytes()
     return {
-      header,
+      header: {
+        version,
+        nonce,
+        srcEid,
+        sender,
+        dstEid,
+        receiver,
+      },
       payload,
     }
   } catch (error) {
     console.error('Failed to decode packet:', error)
-    return null
-  }
-}
-
-export function decodePacketHeader(
-  encodedPayload: string,
-): DecodedPacketHeader | null {
-  try {
-    const hex = encodedPayload.startsWith('0x')
-      ? encodedPayload.slice(2)
-      : encodedPayload
-
-    if (hex.length < LAYERZERO_CONSTANTS.PACKET_HEADER_LENGTH * 2) {
-      return null
-    }
-
-    let offset = 0
-    const version = Number.parseInt(hex.slice(offset, offset + 2), 16)
-    offset += 2
-
-    const nonce = BigInt('0x' + hex.slice(offset, offset + 16))
-    offset += 16
-
-    const srcEid = Number.parseInt(hex.slice(offset, offset + 8), 16)
-    offset += 8
-
-    const sender = '0x' + hex.slice(offset, offset + 64)
-    offset += 64
-
-    const dstEid = Number.parseInt(hex.slice(offset, offset + 8), 16)
-    offset += 8
-
-    const receiver = '0x' + hex.slice(offset, offset + 64)
-
-    offset += 64
-
-    return {
-      version,
-      nonce,
-      srcEid,
-      sender,
-      dstEid,
-      receiver,
-    }
-  } catch (error) {
-    console.error('Failed to decode packet header:', error)
     return null
   }
 }
