@@ -1,9 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Cache } from './cache/Cache'
 import { execute, type Query, type QueryResult } from './queries'
 
 const DEFAULT_EXPIRATION = 60 // 1 minute
+
+export type QueryResultWithTimestamp<N extends Query['name']> = {
+  data: QueryResult<N>
+  timestamp: number
+}
 
 export class QueryExecutor {
   constructor(
@@ -15,7 +21,7 @@ export class QueryExecutor {
   async execute<Q extends Query>(
     query: Q,
     expires?: number,
-  ): Promise<QueryResult<Q['name']>> {
+  ): Promise<QueryResultWithTimestamp<Q['name']>> {
     const key = this.cache.generateKey('getTvsChartQuery', query.args)
 
     this.logger.info(`Checking cache (key: ${key})`)
@@ -26,7 +32,7 @@ export class QueryExecutor {
     if (cached) {
       const end = Date.now()
       this.logger.info(`Cache hit! Took ${end - start}ms`)
-      return cached as QueryResult<Q['name']>
+      return cached as QueryResultWithTimestamp<Q['name']>
     }
 
     this.logger.info('Cache miss, querying DB...')
@@ -52,6 +58,9 @@ export class QueryExecutor {
     end = Date.now()
     this.logger.info(`Writing to cache took ${end - start}ms`)
 
-    return result as QueryResult<Q['name']>
+    return {
+      data: result as QueryResult<Q['name']>,
+      timestamp: UnixTime.now(),
+    }
   }
 }

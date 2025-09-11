@@ -1,7 +1,13 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { readFileSync } from 'fs'
 import path from 'path'
 import { createClient, type RedisClientType } from 'redis'
+
+export interface CacheItem<T = unknown> {
+  data: T
+  timestamp: number
+}
 
 export class Cache {
   private client: RedisClientType
@@ -32,19 +38,24 @@ export class Cache {
   }
 
   async write(key: string, data: unknown, expires: number) {
+    const item: CacheItem = {
+      data,
+      timestamp: UnixTime.now(),
+    }
+
     await this.connect()
-    await this.client.set(key, JSON.stringify(data), {
+    await this.client.set(key, JSON.stringify(item), {
       EX: expires,
     })
   }
 
-  async read(key: string): Promise<unknown | undefined> {
+  async read<T>(key: string): Promise<CacheItem<T> | undefined> {
     await this.connect()
     const data = await this.client.get(key)
     if (!data) {
       return undefined
     }
-    return JSON.parse(data)
+    return JSON.parse(data) as CacheItem<T>
   }
 
   private async connect() {
