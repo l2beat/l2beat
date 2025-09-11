@@ -1,4 +1,4 @@
-import { PacketDelivered, PacketSent } from './layerzerov2'
+import { PacketDelivered, PacketSent } from './layerzero-v2'
 import {
   StargateV2BusDriven,
   StargateV2OFTReceived,
@@ -13,7 +13,7 @@ import type {
 } from './types'
 
 export class StargateV2BusPlugin implements BridgePlugin {
-  name = 'stargatev2bus'
+  name = 'stargate-v2-bus'
   chains = ['ethereum', 'arbitrum', 'base']
 
   match(busDriven: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
@@ -72,7 +72,7 @@ export class StargateV2BusPlugin implements BridgePlugin {
       }
 
       transfers.push({
-        type: 'stargatev2bus.App',
+        type: 'stargate-v2-bus.App',
         events: [ticket, received],
         outbound: {
           tx: ticket.ctx,
@@ -90,7 +90,7 @@ export class StargateV2BusPlugin implements BridgePlugin {
     return {
       messages: [
         {
-          type: 'layerzerov2.Message',
+          type: 'layerzero-v2.Message',
           outbound: packetSent,
           inbound: packetDelivered,
         },

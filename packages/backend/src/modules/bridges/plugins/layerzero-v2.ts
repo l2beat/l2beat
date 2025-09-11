@@ -21,11 +21,11 @@ const parsePacketDelivered = createEventParser(
 
 export const PacketSent = createBridgeEventType<{
   guid: string
-}>('layerzerov2.PacketSent')
+}>('layerzero-v2.PacketSent')
 
 export const PacketDelivered = createBridgeEventType<{
   guid: string
-}>('layerzerov2.PacketDelivered')
+}>('layerzero-v2.PacketDelivered')
 
 const NETWORKS = [
   {
@@ -49,7 +49,7 @@ const NETWORKS = [
 ]
 
 export class LayerZeroV2Plugin implements BridgePlugin {
-  name = 'layerzerov2'
+  name = 'layerzero-v2'
   chains = ['ethereum', 'arbitrum', 'base']
 
   constructor(private logger: Logger) {}
@@ -105,7 +105,7 @@ export class LayerZeroV2Plugin implements BridgePlugin {
     return {
       messages: [
         {
-          type: 'layerzerov2.Message',
+          type: 'layerzero-v2.Message',
           outbound: packetSent,
           inbound: event,
         },

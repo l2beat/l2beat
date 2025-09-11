@@ -5,7 +5,7 @@ Mayan MCTP Protocol
 - swap: wormhole msg from Solana on dst is present, OrderFulfilled on dst is present, Wormhole msg on src to Solana is present with Order info
 */
 
-import { CCTPv1MessageReceived, CCTPv1MessageSent } from './CCTPPlugin'
+import { CCTPv1MessageReceived, CCTPv1MessageSent } from './cctp'
 import type {
   BridgeEvent,
   BridgeEventDb,
@@ -13,8 +13,9 @@ import type {
   MatchResult,
 } from './types'
 import { LogMessagePublished } from './wormhole'
+
 export class MayanMctpPlugin implements BridgePlugin {
-  name = 'MayanMctp'
+  name = 'mayanmctp'
   chains = ['ethereum', 'arbitrum', 'base']
 
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
@@ -39,12 +40,12 @@ export class MayanMctpPlugin implements BridgePlugin {
     return {
       messages: [
         {
-          type: 'CCTPv1.Message',
+          type: 'cctp-v1.Message',
           inbound: event,
           outbound: messageSent,
         },
         {
-          type: 'mayan.WormholeMessage',
+          type: 'mayanmctp.WormholeMessage',
           inbound: event,
           outbound: logMessagePublished,
         },
