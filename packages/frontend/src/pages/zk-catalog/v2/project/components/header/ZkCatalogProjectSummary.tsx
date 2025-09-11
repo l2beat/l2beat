@@ -3,6 +3,7 @@ import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
+import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
@@ -23,18 +24,28 @@ export function ProjectZkCatalogSummary({ project }: Props) {
       data-role="project-section"
       className="w-full border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
     >
+      <div className="md:hidden">
+        <TvsStat {...project.header.tvs} />
+        <HorizontalSeparator className="my-4" />
+      </div>
       <TrustedSetupsByProofSystemSection
         trustedSetupsByProofSystem={project.header.trustedSetupsByProofSystem}
       />
       <HorizontalSeparator className="my-4 md:hidden" />
       <TechStackSection techStack={project.header.techStack} />
-      <div className="mt-4 flex gap-6">
-        <TvsStat {...project.header.tvs} />
+      <div className="flex gap-6 md:mt-4">
+        <div className="max-md:hidden">
+          <TvsStat {...project.header.tvs} />
+        </div>
         {project.header.description && (
-          <AboutSection description={project.header.description} />
+          <AboutSection
+            description={project.header.description}
+            className="max-md:hidden"
+          />
         )}
       </div>
-      <div className="md:hidden">
+      <HorizontalSeparator className="-mx-4 mt-4 w-[calc(100%+2rem)] md:hidden" />
+      <div className="md:hidden ">
         <MobileProjectLinks projectLinks={project.header.links} />
       </div>
     </section>
@@ -146,7 +157,7 @@ function TechStackSection({
       <div className="rounded-sm border-divider md:border md:p-4">
         <TechStackCell
           techStack={techStack}
-          className="flex flex-row flex-wrap py-0 md:gap-6"
+          className="flex flex-row flex-wrap py-0 max-md:flex-col md:gap-6"
           labelClassName="text-2xs mb-1.5"
           tagWrapperClassName="flex-wrap"
         />
@@ -157,21 +168,29 @@ function TechStackSection({
 
 function TvsStat({ value, change }: { value: number; change: number }) {
   return (
-    <div className="flex flex-col gap-2">
-      <span className="font-semibold text-secondary text-subtitle-12">TVS</span>
-      {value ? (
-        <span className="mb-0.5 flex items-center gap-2">
-          <ValueWithPercentageChange
-            className="!text-base !font-medium !leading-[100%] text-nowrap"
-            changeClassName="text-label-value-14 font-bold"
-            change={change}
-          >
-            {formatCurrency(value, 'usd')}
-          </ValueWithPercentageChange>
-        </span>
-      ) : (
-        <NoDataBadge />
-      )}
-    </div>
+    <ProjectSummaryStat
+      title={
+        <div>
+          <span className="lg:max-xl:hidden">Total Value Secured</span>
+          <span className="max-lg:hidden xl:hidden">TVS</span>
+        </div>
+      }
+      className="w-full md:gap-2"
+      value={
+        value ? (
+          <span className="mb-0.5 flex items-center gap-2">
+            <ValueWithPercentageChange
+              className="!text-base !font-medium !leading-[100%] text-nowrap"
+              changeClassName="text-label-value-14 font-bold"
+              change={change}
+            >
+              {formatCurrency(value, 'usd')}
+            </ValueWithPercentageChange>
+          </span>
+        ) : (
+          <NoDataBadge />
+        )
+      }
+    />
   )
 }
