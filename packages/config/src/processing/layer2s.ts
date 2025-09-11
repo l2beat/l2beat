@@ -140,7 +140,6 @@ import { phala } from '../projects/phala/phala'
 import { plumenetwork } from '../projects/plumenetwork/plumenetwork'
 import { polygonpos } from '../projects/polygon-pos/polygon-pos'
 import { polygonmiden } from '../projects/polygonmiden/polygonmiden'
-import { polygonpos2 } from '../projects/polygonpos2/polygonpos2'
 import { polygonzkevm } from '../projects/polygonzkevm/polygonzkevm'
 import { polynomial } from '../projects/polynomial/polynomial'
 import { powerloom } from '../projects/powerloom/powerloom'
@@ -363,7 +362,6 @@ export const layer2s: ScalingProject[] = [
   plumenetwork,
   polygonmiden,
   polygonpos,
-  polygonpos2,
   polygonzkevm,
   polynomial,
   powerloom,
