@@ -1,7 +1,7 @@
 {
   "name": "winr",
-  "timestamp": 1757578007,
-  "configHash": "0xda767053a2794b82bf3b2e9f5e11650a2741820d78ecb5e6919f9cb972690102",
+  "timestamp": 1757580178,
+  "configHash": "0x0d8cddc19c05743d63c4ce6494164261757f3bbc9e774a6732c380413bc3ab62",
   "entries": [
     {
       "address": "arb1:0x026919DbCFab70a2A45775088C933331A7B25Ac6",
@@ -181,7 +181,7 @@
         ],
         "$upgradeCount": 2,
         "anyTrustFastConfirmer": "arb1:0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4",
-        "arbOsFromWmRoot": "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d",
+        "arbOsFromWmRoot": "Celestia Nitro ArbOS v40 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "arb1:0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
         "chainId": 777777,
@@ -190,13 +190,13 @@
         "confirmPeriodBlocks": 300,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 7776,
+        "firstUnresolvedNode": 7777,
         "inbox": "arb1:0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22746527,
-        "latestConfirmed": 7775,
-        "latestNodeCreated": 7775,
+        "latestConfirmed": 7776,
+        "latestNodeCreated": 7776,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "arb1:0xBA99217992620b76aae0D574c70bD313B30D3D1d",
@@ -287,7 +287,8 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
-            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
+            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
+            "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
           }
         }
       ],
@@ -795,7 +796,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 23756,
+        "batchCount": 23757,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
@@ -892,7 +893,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 4930,
+        "nonce": 4931,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1291,8 +1292,8 @@
         "outboxHistory": ["arb1:0xBA99217992620b76aae0D574c70bD313B30D3D1d"],
         "rollup": "arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerInbox": "arb1:0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
-        "sequencerMessageCount": 23756,
-        "sequencerReportedSubMessageCount": 64551039
+        "sequencerMessageCount": 23757,
+        "sequencerReportedSubMessageCount": 64552124
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -2046,6 +2047,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 377960058 },
+  "usedBlockNumbers": { "arbitrum": 377968760 },
   "permissionsConfigHash": "0xcf02d5ab3bb44f2a4ce02ec7e463244b5feb9be0fbfbbb569ab99a86d2804ecc"
 }
