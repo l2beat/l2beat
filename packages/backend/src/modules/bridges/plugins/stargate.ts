@@ -136,52 +136,38 @@ export class StargatePlugin implements BridgePlugin {
       return
     }
 
-    return (
-      this.parseOftSent(input, network) ||
-      this.captureOftReceived(input, network) ||
-      this.captureBusDriven(input, network)
-    )
-  }
-
-  private parseOftSent(
-    input: LogToCapture,
-    network: (typeof NETWORKS)[number],
-  ) {
     const oftSent = parseOFTSent(input.log, [
       network.nativePool.address,
       network.usdcPool.address,
     ])
-    const pool = [network.nativePool, network.usdcPool].find(
-      (t) => t.address === EthereumAddress(input.log.address),
-    )
+    if (oftSent) {
+      const pool = [network.nativePool, network.usdcPool].find(
+        (t) => t.address === EthereumAddress(input.log.address),
+      )
+      if (!pool) {
+        return
+      }
+      if (oftSent.guid === GUID_ZERO) {
+        const busRodeLog = input.txLogs.find((l) => parseBusRode(l, null))
+        if (busRodeLog) {
+          const busRode = parseBusRode(busRodeLog, [network.tokenMessaging])
 
-    if (!pool) {
-      return
-    }
-
-    if (oftSent && oftSent.guid === GUID_ZERO) {
-      const busRodeLog = input.txLogs.find((l) => parseBusRode(l, null))
-      if (busRodeLog) {
-        const busRode = parseBusRode(busRodeLog, [network.tokenMessaging])
-
-        if (busRode) {
-          return StargateV2OFTSentBusRode.create(input.ctx, {
-            guid: oftSent.guid,
-            ticketId: Number(busRode.ticketId),
-            receiver: decodeBusPassenger(busRode.passenger).receiver,
-            emitter: EthereumAddress(input.log.address),
-            token: pool.token,
-            destinationEid: oftSent.dstEid,
-            tokenAddress: pool.tokenAddress,
-            amountSentLD: Number(oftSent.amountSentLD),
-            amountReceivedLD: Number(oftSent.amountReceivedLD),
-            amountSD: Number(decodeBusPassenger(busRode.passenger).amountSD),
-          })
+          if (busRode) {
+            return StargateV2OFTSentBusRode.create(input.ctx, {
+              guid: oftSent.guid,
+              ticketId: Number(busRode.ticketId),
+              receiver: decodeBusPassenger(busRode.passenger).receiver,
+              emitter: EthereumAddress(input.log.address),
+              token: pool.token,
+              destinationEid: oftSent.dstEid,
+              tokenAddress: pool.tokenAddress,
+              amountSentLD: Number(oftSent.amountSentLD),
+              amountReceivedLD: Number(oftSent.amountReceivedLD),
+              amountSD: Number(decodeBusPassenger(busRode.passenger).amountSD),
+            })
+          }
         }
       }
-    }
-
-    if (oftSent) {
       return StargateV2OFTSentTaxi.create(input.ctx, {
         guid: oftSent.guid,
         amountSentLD: Number(oftSent.amountSentLD),
@@ -189,59 +175,44 @@ export class StargatePlugin implements BridgePlugin {
         tokenAddress: pool.tokenAddress,
       })
     }
-  }
 
-  private captureOftReceived(
-    input: LogToCapture,
-    network: (typeof NETWORKS)[number],
-  ) {
     const oftReceived = parseOFTReceived(input.log, [
       network.nativePool.address,
       network.usdcPool.address,
     ])
-    if (!oftReceived) {
-      return
+    if (oftReceived) {
+      const pool = [network.nativePool, network.usdcPool].find(
+        (t) => t.address === EthereumAddress(input.log.address),
+      )
+      if (!pool) {
+        return
+      }
+      const destinationEid = NETWORKS.find(
+        (n) => n.chain === input.ctx.chain,
+      )?.eid
+      if (!destinationEid) {
+        return
+      }
+      return StargateV2OFTReceived.create(input.ctx, {
+        guid: oftReceived.guid,
+        receiver: oftReceived.toAddress,
+        emitter: EthereumAddress(input.log.address),
+        token: pool.token,
+        tokenAddress: pool.tokenAddress,
+        destinationEid,
+        amountReceivedLD: Number(oftReceived.amountReceivedLD),
+      })
     }
 
-    const pool = [network.nativePool, network.usdcPool].find(
-      (t) => t.address === EthereumAddress(input.log.address),
-    )
-    if (!pool) {
-      return
-    }
-
-    const destinationEid = NETWORKS.find(
-      (n) => n.chain === input.ctx.chain,
-    )?.eid
-    if (!destinationEid) {
-      return
-    }
-
-    return StargateV2OFTReceived.create(input.ctx, {
-      guid: oftReceived.guid,
-      receiver: oftReceived.toAddress,
-      emitter: EthereumAddress(input.log.address),
-      token: pool.token,
-      tokenAddress: pool.tokenAddress,
-      destinationEid,
-      amountReceivedLD: Number(oftReceived.amountReceivedLD),
-    })
-  }
-
-  private captureBusDriven(
-    input: LogToCapture,
-    network: (typeof NETWORKS)[number],
-  ) {
     const busDriven = parseBusDriven(input.log, [network.tokenMessaging])
-    if (!busDriven) {
-      return
+    if (busDriven) {
+      return StargateV2BusDriven.create(input.ctx, {
+        startTicketId: Number(busDriven.startTicketId),
+        numPassengers: busDriven.numPassengers,
+        guid: busDriven.guid,
+        destinationEid: busDriven.dstEid,
+      })
     }
-    return StargateV2BusDriven.create(input.ctx, {
-      startTicketId: Number(busDriven.startTicketId),
-      numPassengers: busDriven.numPassengers,
-      guid: busDriven.guid,
-      destinationEid: busDriven.dstEid,
-    })
   }
 }
 
