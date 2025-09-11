@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x2ab179b47225d8cf6f5f042d9927b45327187f29
+
+# Diff at Thu, 11 Sep 2025 08:08:01 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@665b233e3787b7a0fd24453d6e587ffdc2c1541d block: 1756452867
+- current timestamp: 1757578007
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "Celestia Nitro 3.3.2 wasmModuleRoot"
++        "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3"
++        "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d"
+    }
+```
+
 Generated with discovered.json: 0x5491cd45611bdca128c9c0876fbb8b67c1769d96
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
