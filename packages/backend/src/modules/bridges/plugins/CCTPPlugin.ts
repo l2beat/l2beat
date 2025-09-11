@@ -79,7 +79,6 @@ export class CCTPPlugin implements BridgePlugin {
           return
         }
         const burnMessage = decodeBurnMessage(message.messageBody)
-        console.log(burnMessage)
 
         return CCTPv2MessageSent.create(input.ctx, {
           // https://developers.circle.com/cctp/technical-guide#messages-and-finality
