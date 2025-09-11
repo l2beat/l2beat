@@ -1,5 +1,4 @@
 import type { ProjectZkCatalogInfo } from '@l2beat/config'
-import React from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
@@ -50,36 +49,46 @@ function TrustedSetupsByProofSystemSection({
       <h2 className="font-semibold text-subtitle-12 uppercase max-md:hidden">
         Trusted Setups
       </h2>
-      <div className="grid grid-cols-3 gap-x-1 gap-y-4 rounded-sm border border-divider p-4">
-        {Object.entries(trustedSetupsByProofSystem).map(
-          ([key, { trustedSetups, projectsUsedIn, verifiers }]) => {
-            const proofSystem = trustedSetups[0]?.proofSystem
-            if (trustedSetups.length === 0 || !proofSystem) return null
+      <div className="rounded-sm border border-divider px-4">
+        <table className="w-full border-separate border-spacing-y-4">
+          <tbody>
+            {Object.entries(trustedSetupsByProofSystem).map(
+              ([key, { trustedSetups, projectsUsedIn, verifiers }]) => {
+                const proofSystem = trustedSetups[0]?.proofSystem
+                if (trustedSetups.length === 0 || !proofSystem) return null
 
-            return (
-              <React.Fragment key={key}>
-                <TrustedSetupCellTooltip trustedSetups={trustedSetups} />
-                {projectsUsedIn && (
-                  <div className="flex items-center gap-1.5">
-                    <p className="font-medium text-label-value-12 text-secondary">
-                      Used in
-                    </p>
-                    <ProjectsUsedIn
-                      noL2ClassName="text-label-value-12 font-medium text-secondary"
-                      usedIn={projectsUsedIn}
-                    />
-                  </div>
-                )}
-                <div className="flex items-center gap-2">
-                  <p className="font-medium text-label-value-12 text-secondary">
-                    Verifiers
-                  </p>
-                  <VerifiedCountWithDetails data={verifiers} horizontal />
-                </div>
-              </React.Fragment>
-            )
-          },
-        )}
+                return (
+                  <tr key={key} className="h-8 align-middle">
+                    <td>
+                      <TrustedSetupCellTooltip trustedSetups={trustedSetups} />
+                    </td>
+                    <td>
+                      {projectsUsedIn && (
+                        <div className="flex items-center gap-1.5">
+                          <p className="font-medium text-label-value-12 text-secondary">
+                            Used in
+                          </p>
+                          <ProjectsUsedIn
+                            noL2ClassName="text-label-value-12 font-medium text-secondary"
+                            usedIn={projectsUsedIn}
+                          />
+                        </div>
+                      )}
+                    </td>
+                    <td>
+                      <div className="flex items-center gap-2">
+                        <p className="font-medium text-label-value-12 text-secondary">
+                          Verifiers
+                        </p>
+                        <VerifiedCountWithDetails data={verifiers} horizontal />
+                      </div>
+                    </td>
+                  </tr>
+                )
+              },
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   )
