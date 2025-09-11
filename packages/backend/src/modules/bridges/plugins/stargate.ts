@@ -225,7 +225,7 @@ export function decodeBusPassenger(encodedHex: string) {
   try {
     const reader = new BinaryReader(encodedHex)
     const assetId = reader.readUint16()
-    const receiver = EthereumAddress(`0x${reader.readBytes(32).slice(-40)}`)
+    const receiver = reader.readAddress()
     const amountSD = reader.readUint64()
     const nativeDrop = reader.readUint8() !== 0
     return {
