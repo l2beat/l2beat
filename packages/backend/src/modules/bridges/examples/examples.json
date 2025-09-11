@@ -152,5 +152,23 @@
       "chain": "ethereum",
       "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
     }
+  ],
+  "usdt0": [
+    {
+      "chain": "ethereum",
+      "tx": "0xbc456cfa0f1e2d6e410f6317d026c23eba0bb2ac2f556ce3c7936b4aa6e7afbe"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x3cabb123406c909e712c68493a7c1f74452d21a28e9a5aee9443f4f497e1ca58"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x9bec261577671eb4293dd57bb7c137e4d28479550f70e97e89a8250344b20007"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+    }
   ]
 }
