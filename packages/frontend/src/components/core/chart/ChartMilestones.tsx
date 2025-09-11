@@ -136,17 +136,17 @@ function ChartMilestone({
           <Icon />
         </a>
       </TooltipTrigger>
-      <TooltipContent side="bottom">
+      <TooltipContent side="bottom" forceMount>
         <div className="mb-1 whitespace-nowrap">
           {formatDate(triggerMilestone.date.slice(0, 10))}
         </div>
-        <div className="mb-2 flex max-w-[216px] font-bold">
+        <div className="flex max-w-[216px] font-bold">
           <Icon className="mt-px size-3.5 shrink-0" />
           <span className="ml-1.5 text-left">{triggerMilestone.title}</span>
         </div>
-        <div className="mb-1 max-w-[216px] text-left">
+        {triggerMilestone.description && <div className="mt-2 max-w-[216px] text-left">
           {triggerMilestone.description}
-        </div>
+        </div>}
       </TooltipContent>
     </Tooltip>
   )
@@ -174,16 +174,16 @@ export function MilestoneDrawerContent({
           <Icon className="size-[18px] shrink-0" />
           <span>{tooltipMilestone.title}</span>
         </DialogTitle>
-        <p className="mb-4 ml-6 text-secondary text-xs">
+        <p className="ml-6 text-secondary text-xs">
           {formatDate(tooltipMilestone.date.slice(0, 10))}
           {tooltipMilestone.projectName
             ? ` • ${tooltipMilestone.projectName}`
             : ''}
         </p>
-        <p className="mb-2 text-sm leading-[140%]">
+        {tooltipMilestone.description && <p className="text-sm leading-[140%]">
           {tooltipMilestone.description}
-        </p>
-        <CustomLink href={tooltipMilestone.url}>Learn more</CustomLink>
+        </p>}
+        <CustomLink href={tooltipMilestone.url} className='mt-2'>Learn more</CustomLink>
       </DrawerHeader>
       <DrawerFooter className="flex flex-row items-center justify-between px-0 pt-6 pb-8">
         <Button
