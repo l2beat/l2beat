@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
+import { BinaryReader } from '../BinaryReader'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -10,7 +11,6 @@ import {
   type LogToCapture,
   type MatchResult,
 } from './types'
-import { BinaryReader } from '../BinaryReader'
 
 const parsePacketSent = createEventParser(
   'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
