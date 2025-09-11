@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "timestamp": 1756895025,
-  "configHash": "0x108b27e8fb48e87da8d4383080236547331dfe8851179e8549d3f978dedbce3a",
+  "configHash": "0xc55f65155f28177b711e34a8a919eeb5a637eaf56c006c3888e821d72709abe8",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -3195,8 +3195,8 @@
               "setOverhead(uint256)": ["ops-fast"],
               "setCommitScalar(uint256)": ["ops-fast"],
               "setBlobScalar(uint256)": ["ops-fast"],
-              "0xaa5e9334": ["ops-fast"],
-              "0xc63b9e2d": ["ops-fast"]
+              "setPenaltyThreshold(uint256)": ["ops-fast"],
+              "setPenaltyFactor(uint256)": ["ops-fast"]
             },
             "scr:0x5300000000000000000000000000000000000005": {
               "updateMinWithdrawAmount(uint256)": ["ops-fast"],

@@ -1,7 +1,7 @@
 {
   "name": "unichain",
-  "timestamp": 1755525939,
-  "configHash": "0x4dfba900ee11e5461d02aca7be9f5d13bbd9758c5a77d08a737daefab69a7132",
+  "timestamp": 1757590394,
+  "configHash": "0x80dd6ffffaf43b4a95a5265c353ddbe74c869d0be81a8fc84bc5ce0763130ac9",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -182,8 +182,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 515958,
-          "prevBlockNum": 23168388
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 23339458
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -332,12 +332,12 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0xea5C30E47Fe71282871938FB918532E065AB3062",
+        "anchorGame": "eth:0x0F2701ae132735Ed506163501D385AafFDc056f8",
         "disputeGameFactory": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x7bda8c9d2915fa3e69c168e42dcba2d86dbd0b3cbb5f9aab70f293673eb396bc",
-          24169640
+          "0xf74eee4563232b1cd3d5b3bc40cf2465953090a34cceab7ca6213a7df8472e81",
+          26233146
         ],
         "initVersion": 1,
         "paused": false,
@@ -402,7 +402,7 @@
         ],
         "$upgradeCount": 3,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 6780,
+        "gameCount": 7354,
         "gameImpls": [
           "eth:0x4F0f6B7877A174A4fd41DF80dB80DeF8883bc772",
           "eth:0xC56EF9c3F3e9fD6713055b4577AC4AF8303E63e1",
@@ -1451,7 +1451,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292645718",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292646796",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1557,7 +1557,7 @@
         "proxyAdminOwner": "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833",
         "symbol": "WETH",
         "systemConfig": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-        "totalSupply": "20080000000000000000",
+        "totalSupply": "20320000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -2185,7 +2185,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621815",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622021",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2238,7 +2238,7 @@
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 933745043,
+        "l1BaseFee": 248109278,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -2425,7 +2425,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 933745043,
+        "basefee": 248109278,
         "baseFeeScalar": 2000,
         "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
         "blobBaseFee": 1,
@@ -2437,15 +2437,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xaae056c6a67fa99257a4b11f34f5fa49bb4662cc37b3382e9d24ad9a74b57913",
+        "hash": "0x4cfa109a6463d39bba21f4fe3d5834e20e3d9930f37742394ebc5a89c1d5d062",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23168420,
+        "number": 23339539,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 4,
-        "timestamp": 1755525875,
+        "sequenceNumber": 6,
+        "timestamp": 1757590331,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -4861,6 +4861,6 @@
     "opstack/SystemConfig_pauseId": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "usedBlockNumbers": { "unichain": 24777580, "ethereum": 23168425 },
+  "usedBlockNumbers": { "unichain": 26842035, "ethereum": 23339544 },
   "permissionsConfigHash": "0xeacbf41baabcae16d20cdedc44f6e4d739a50464a153eb6a5ea8e3e41289dd17"
 }

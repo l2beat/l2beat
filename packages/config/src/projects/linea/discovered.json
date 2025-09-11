@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "timestamp": 1756720779,
-  "configHash": "0x12103cbdc67491e257fc6165103870ddffd7572f9e4582d89c9faa68685923e9",
+  "configHash": "0xb555ae23206254fbd35ae8de0105dd64ca7ec66f24d65ae32ade6708fb007f71",
   "entries": [
     {
       "name": "TokenBridge",
@@ -3480,6 +3480,6 @@
     "linea/Roles": "0xa53488bfd173ae836ebda33b0560f0f0dd61141e44bc38b9ce23133023bde792",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "linea": 22778234, "ethereum": 23267544 },
+  "usedBlockNumbers": { "ethereum": 23267544, "linea": 22778234 },
   "permissionsConfigHash": "0x42675d6fc2ff4a6ece45a816fa7c18ee1113d9e4543cde2b9590dd394d797942"
 }

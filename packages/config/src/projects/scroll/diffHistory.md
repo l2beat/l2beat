@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x7a373e9a4890b44a32113691adc53463590c6840
+
+# Diff at Thu, 11 Sep 2025 11:07:40 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@665b233e3787b7a0fd24453d6e587ffdc2c1541d block: 1756895025
+- current timestamp: 1756895025
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756895025 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xaa5e9334:
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xc63b9e2d:
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyThreshold(uint256):
++        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyFactor(uint256):
++        ["ops-fast"]
+    }
+```
+
 Generated with discovered.json: 0x9c61971f9b4fd3a9f43779411130e6feb88165fa
 
 # Diff at Wed, 03 Sep 2025 10:26:23 GMT:

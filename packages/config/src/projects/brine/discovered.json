@@ -1,7 +1,7 @@
 {
   "name": "brine",
   "timestamp": 1741185671,
-  "configHash": "0x8d1d8c0afa2fc75385db0e597230e43eec6154fd418a4bdd5a8e930b1b192c80",
+  "configHash": "0x95e3bb5537507d97e1eae6bbbcb2d0146a66f0b67c0cbb7efd465afe6b032250",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

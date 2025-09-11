@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
   "timestamp": 1754908695,
-  "configHash": "0x9db267fd6fac26a2ace8c8042cd3f9d38fc136ecc0745a3891a964db2a1d7116",
+  "configHash": "0xe84814adb0f62b614aa54e384f62f023d8b78fd7bfa661f6a7b64590f28ba486",
   "entries": [
     {
       "name": "Permit2",
@@ -1286,6 +1286,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "everclear": 2176553, "ethereum": 23117260 },
+  "usedBlockNumbers": { "ethereum": 23117260, "everclear": 2176553 },
   "permissionsConfigHash": "0xb2a08bfe600cd501406e6f2a49b12a26efcaefedc30c2d503c88db9f16c82bd5"
 }

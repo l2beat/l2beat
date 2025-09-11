@@ -1,7 +1,7 @@
 {
   "name": "reddioex",
   "timestamp": 1715171819,
-  "configHash": "0x75197971d2a06eb3de1a24de62ba12b0777e992019aacf58a8893cc9b59c3e63",
+  "configHash": "0x55a6095346353968e07dc170e1f6a2748144d4ba155ed4c5740bfa52eae233a3",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

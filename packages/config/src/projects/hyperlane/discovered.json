@@ -1,7 +1,7 @@
 {
   "name": "hyperlane",
   "timestamp": 1757342440,
-  "configHash": "0xf32ad34ae84769a89df9c3e57dfa49651405a04dc63009cfea2e1888fe106370",
+  "configHash": "0x4291491db12ea9e14adac2e25ff6625206789533b5fe950ca21d2763921c70e8",
   "entries": [
     {
       "address": "eth:0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",

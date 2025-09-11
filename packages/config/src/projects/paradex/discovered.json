@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "timestamp": 1755516515,
-  "configHash": "0x8c208b7a2d1fb7bbc6221d55e7e73d17cb0c0f10f7a894c01bc1a656505c5637",
+  "configHash": "0xff0ea8b66dd54c212f64f84fe4aeed4cd2b81d97a8e1d2474fc783e604e5446f",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
