@@ -7,8 +7,6 @@ import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
-import { getLiveness } from '../../scaling/liveness/getLiveness'
-import type { LivenessResponse } from '../../scaling/liveness/types'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import {
   type CommonDaEntry,
@@ -26,27 +24,20 @@ import { getDaUsers } from '../utils/getDaUsers'
 export async function getDaRiskEntries(): Promise<
   TabbedDaEntries<DaRiskEntry>
 > {
-  const [
-    layers,
-    bridges,
-    dacs,
-    economicSecurity,
-    projectsChangeReport,
-    liveness,
-  ] = await Promise.all([
-    ps.getProjects({
-      select: ['daLayer', 'statuses'],
-      whereNot: ['archivedAt'],
-    }),
-    ps.getProjects({ select: ['daBridge', 'statuses'] }),
-    ps.getProjects({
-      select: ['customDa', 'statuses'],
-      whereNot: ['archivedAt'],
-    }),
-    getDaProjectsEconomicSecurity(),
-    getProjectsChangeReport(),
-    getLiveness(),
-  ])
+  const [layers, bridges, dacs, economicSecurity, projectsChangeReport] =
+    await Promise.all([
+      ps.getProjects({
+        select: ['daLayer', 'statuses'],
+        whereNot: ['archivedAt'],
+      }),
+      ps.getProjects({ select: ['daBridge', 'statuses'] }),
+      ps.getProjects({
+        select: ['customDa', 'statuses'],
+        whereNot: ['archivedAt'],
+      }),
+      getDaProjectsEconomicSecurity(),
+      getProjectsChangeReport(),
+    ])
 
   const uniqueProjectsInUse = getDaUsers(layers, bridges, dacs)
   const tvsPerProject = await getDaProjectsTvs(uniqueProjectsInUse)
@@ -61,7 +52,6 @@ export async function getDaRiskEntries(): Promise<
         getTvs,
         economicSecurity[project.id],
         projectsChangeReport,
-        liveness,
       ),
     )
 
@@ -90,11 +80,9 @@ function getDaRiskEntry(
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   economicSecurity: number | undefined,
   projectsChangeReport: ProjectsChangeReport,
-  liveness: LivenessResponse,
 ): DaRiskEntry {
-  const daBridges = bridges.map((b): DaBridgeRiskEntry => {
-    const bridgeLiveness = liveness[b.id]
-    return {
+  const daBridges = bridges.map(
+    (b): DaBridgeRiskEntry => ({
       name: b.daBridge.name,
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
@@ -109,14 +97,11 @@ function getDaRiskEntry(
             : projectsChangeReport.getChanges(b.id).impactfulChange
               ? 'impactful-change'
               : undefined,
-        ongoingAnomaly: bridgeLiveness?.anomalies.some(
-          (a) => a.end === undefined,
-        ),
       },
       risks: b.daBridge.risks,
       tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)).latest,
-    }
-  })
+    }),
+  )
 
   if (layer.daLayer.usedWithoutBridgeIn.length > 0 || bridges.length === 0) {
     daBridges.unshift({
