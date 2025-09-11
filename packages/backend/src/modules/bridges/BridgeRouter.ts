@@ -103,13 +103,14 @@ function statsToHtml(
     html += '<li>chains</li>'
     html += '<ul>'
     for (const chain of chains) {
-      html += `<li>${chain.sourceChain} -> ${chain.destinationChain}: ${chain.count} </li>`
+      html += `<li>${chain.sourceChain} -> ${chain.destinationChain}: ${chain.count}</li>`
       html += '<ul>'
       html += `<li>avg = ${chain.averageDuration} seconds</li>`
       html += `<li>outbound = ${chain.outboundValueSum} $</li>`
       html += `<li>inbound = ${chain.inboundValueSum} $</li>`
       html += '</ul>'
     }
+    html += '</ul>'
     html += '</ul>'
   }
   html += '</ul>'
