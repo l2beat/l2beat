@@ -11,6 +11,7 @@ export function createBridgeModule({
   db,
   logger,
   blockProcessors,
+  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.bridgesEnabled) {
     logger.info('Bridges module disabled')
@@ -34,7 +35,13 @@ export function createBridgeModule({
     blockProcessors.push(processor)
   }
 
-  const bridgeMatcher = new BridgeMatcher(bridgeStore, db, plugins, logger)
+  const bridgeMatcher = new BridgeMatcher(
+    bridgeStore,
+    providers.price,
+    db,
+    plugins,
+    logger,
+  )
 
   const bridgeRouter = createBridgeRouter(db)
 

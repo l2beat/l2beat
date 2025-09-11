@@ -4,6 +4,8 @@ import type {
   BridgeTransferRecord,
   Database,
 } from '@l2beat/database'
+import type { PriceProvider } from '@l2beat/shared'
+import { assert, CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { BigIntWithDecimals } from '../tvs/tools/bigIntWithDecimals'
 import type { BridgeStore } from './BridgeStore'
 import {
@@ -24,6 +26,7 @@ export class BridgeMatcher {
 
   constructor(
     private bridgeStore: BridgeStore,
+    private priceService: PriceProvider,
     private db: Database,
     private plugins: BridgePlugin[],
     private logger: Logger,
@@ -53,6 +56,7 @@ export class BridgeMatcher {
   async doMatching() {
     const result = await match(
       this.bridgeStore,
+      this.priceService,
       this.bridgeStore.getUnmatched(),
       this.plugins,
       this.logger,
@@ -83,6 +87,7 @@ export class BridgeMatcher {
 
 export async function match(
   db: BridgeEventDb,
+  priceService: PriceProvider,
   events: BridgeEvent[],
   plugins: BridgePlugin[],
   logger: Logger,
@@ -149,18 +154,27 @@ export async function match(
           token.decimals,
         )
 
-        const price = 1
+        const price = await priceService.getUsdPriceHistoryHourly(
+          CoingeckoId(token.coingeckoId),
+          UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour'),
+          UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour'),
+        )
+
+        assert(
+          price.length === 1,
+          `${token.coingeckoId}: Failed to fetch price @ ${UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour')}`,
+        )
 
         const value = BigIntWithDecimals.multiply(
           amount,
-          BigIntWithDecimals.fromNumber(price),
+          BigIntWithDecimals.fromNumber(price[0].value),
         )
 
         outbound = {
           ...outbound,
           financials: {
             amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
-            price: price,
+            price: price[0].value,
             valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
             symbol: token.symbol,
           },
@@ -177,18 +191,27 @@ export async function match(
             token.decimals,
           )
 
-          const price = 1
+          const price = await priceService.getUsdPriceHistoryHourly(
+            CoingeckoId(token.coingeckoId),
+            UnixTime.toStartOf(transfer.inbound.event.ctx.timestamp, 'hour'),
+            UnixTime.toStartOf(transfer.inbound.event.ctx.timestamp, 'hour'),
+          )
+
+          assert(
+            price.length === 1,
+            `${token.coingeckoId}: Failed to fetch price @ ${UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour')}`,
+          )
 
           const value = BigIntWithDecimals.multiply(
             amount,
-            BigIntWithDecimals.fromNumber(price),
+            BigIntWithDecimals.fromNumber(price[0].value),
           )
 
           inbound = {
             ...inbound,
             financials: {
               amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
-              price: price,
+              price: price[0].value,
               valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
               symbol: token.symbol,
             },

@@ -1,5 +1,11 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
-import { HttpClient, RpcClient } from '@l2beat/shared'
+import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient,
+  PriceProvider,
+  RpcClient,
+} from '@l2beat/shared'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { command, positional, run, string } from 'cmd-ts'
 import { logToViemLog } from '../BridgeBlockProcessor'
@@ -25,6 +31,17 @@ const cmd = command({
 
     const http = new HttpClient()
     const env = getEnv()
+    const coingeckoClient = new CoingeckoClient({
+      http,
+      logger,
+      sourceName: 'coingecko',
+      callsPerMinute: 600,
+      retryStrategy: 'SCRIPT',
+      apiKey: env.string('COINGECKO_API_KEY'),
+    })
+    const priceProvider = new PriceProvider(
+      new CoingeckoQueryService(coingeckoClient),
+    )
 
     const chains = example.map(({ chain, tx }) => {
       return {
@@ -82,7 +99,7 @@ const cmd = command({
 
     const eventDb = new InMemoryEventDb(events)
 
-    const result = await match(eventDb, events, plugins, logger)
+    const result = await match(eventDb, priceProvider, events, plugins, logger)
     for (const [index, message] of result.messages.entries()) {
       logger.info(`Message #${index + 1}`, message)
     }
