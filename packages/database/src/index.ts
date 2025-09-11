@@ -18,7 +18,10 @@ export type {
   BridgeMessageRecord,
   BridgeMessageStatsRecord,
 } from './repositories/BridgeMessageRepository'
-export type { BridgeTransferRecord } from './repositories/BridgeTransferRepository'
+export type {
+  BridgeTransferRecord,
+  BridgeTransfersStatsRecord,
+} from './repositories/BridgeTransferRepository'
 export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
   DataAvailabilityRecord,

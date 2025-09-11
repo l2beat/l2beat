@@ -21,4 +21,24 @@ export const BRIDGES_TOKENS = [
       },
     ],
   },
+  {
+    id: 'ether',
+    coingeckoId: 'ethereum',
+    symbol: 'ETH',
+    decimals: 18, // TODO: decimals per chain
+    addresses: [
+      {
+        chain: 'ethereum',
+        address: 'native',
+      },
+      {
+        chain: 'arbitrum',
+        address: 'native',
+      },
+      {
+        chain: 'base',
+        address: 'native',
+      },
+    ],
+  },
 ]

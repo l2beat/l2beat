@@ -38,7 +38,7 @@ export interface BridgeMessage {
 export interface TransferSide {
   event: BridgeEvent
   token?: {
-    address: EthereumAddress
+    address: EthereumAddress | 'native'
     amount: string
   }
 }

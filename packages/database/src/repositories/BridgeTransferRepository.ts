@@ -87,6 +87,16 @@ export function toRow(
     srcTxHash: record.srcTxHash,
     srcLogIndex: record.srcLogIndex,
     srcEventId: record.srcEventId,
+    srcTokenAddress: record.srcTokenAddress
+      ? record.srcTokenAddress === 'native'
+        ? 'native'
+        : EthereumAddress(record.srcTokenAddress)
+      : undefined,
+    srcRawAmount: record.srcRawAmount,
+    srcSymbol: record.srcSymbol,
+    srcAmount: record.srcAmount,
+    srcPrice: record.srcPrice,
+    srcValueUsd: record.srcValueUsd,
     dstTime:
       record.dstTime !== undefined ? UnixTime.toDate(record.dstTime) : null,
     dstChain: record.dstChain,
@@ -106,7 +116,7 @@ export function toRow(
   }
 }
 
-export interface BridgeMessageStatsRecord {
+export interface BridgeTransfersStatsRecord {
   type: string
   count: number
   averageDuration: number
@@ -146,7 +156,7 @@ export class BridgeTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getStats(): Promise<BridgeMessageStatsRecord[]> {
+  async getStats(): Promise<BridgeTransfersStatsRecord[]> {
     const rows = await this.db
       .selectFrom('BridgeTransfer')
       .select((eb) => [
