@@ -75,6 +75,18 @@ export const blobstream: BaseProject = {
   daBridge: {
     name: 'Blobstream',
     daLayer: ProjectId('celestia'),
+    relayerType: {
+      value: 'Permissioned',
+      sentiment: 'warning',
+      description:
+        'Only whitelisted relayers can post attestations to this bridge.',
+    },
+    validationType: {
+      value: 'Validity Proof',
+      description:
+        'The DA attestation requires onchain SNARK proof verification to be accepted by the bridge. Operators signatures and their corresponding stake are verified as part of the proof.',
+      zkCatalogId: ProjectId('sp1'),
+    },
     usedIn: linkByDA({
       layer: ProjectId('celestia'),
       bridge: ProjectId('blobstream'),

@@ -492,6 +492,39 @@
     },
     {
       "mode": "auto",
+      "id": "linea-LINEA",
+      "priceId": "linea",
+      "symbol": "LINEA",
+      "name": "Linea",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68507/large/linea-logo.jpeg?1756025484",
+      "amount": {
+        "type": "calculation",
+        "operator": "min",
+        "arguments": [
+          {
+            "type": "circulatingSupply",
+            "apiId": "linea",
+            "decimals": 18,
+            "sinceTimestamp": 1757548800,
+            "address": "0x1789e0043623282D5DCc7F213d703C6D8BAfBB04",
+            "chain": "ethereum"
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1789e0043623282D5DCc7F213d703C6D8BAfBB04",
+            "escrowAddress": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+            "chain": "ethereum",
+            "decimals": 18,
+            "sinceTimestamp": 1757548800
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
       "id": "linea-LINK",
       "priceId": "chainlink",
       "symbol": "LINK",

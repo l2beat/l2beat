@@ -131,7 +131,7 @@ export function createEventParser<T extends `event ${string}(${string}`>(
   eventSignature: T,
 ): (
   log: Log,
-  adddressWhitelist: EthereumAddress[] | null,
+  addressWhitelist: EthereumAddress[] | null,
 ) => ParsedEvent<ParseAbiItem<T>> | undefined {
   const eventName = eventSignature.slice(
     'event '.length,
@@ -143,12 +143,12 @@ export function createEventParser<T extends `event ${string}(${string}`>(
 
   return function parseEvent(
     log: Log,
-    adddressWhitelist: EthereumAddress[] | null,
+    addressWhitelist: EthereumAddress[] | null,
   ): ParsedEvent<ParseAbiItem<T>> | undefined {
     if (!topic0 || log.topics?.[0] !== topic0) return undefined
     if (
-      adddressWhitelist &&
-      !adddressWhitelist.includes(EthereumAddress(log.address))
+      addressWhitelist &&
+      !addressWhitelist.includes(EthereumAddress(log.address))
     ) {
       return
     }

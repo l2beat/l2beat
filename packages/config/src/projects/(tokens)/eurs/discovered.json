@@ -4,7 +4,7 @@
   "configHash": "0xf97712a7fa80193c68bab4c4942ee789de135ef00c3148e6429734f6b85de344",
   "entries": [
     {
-      "name": "EURSToken",
+      "name": "STASIS EURS Token",
       "address": "eth:0xdB25f211AB05b1c97D595516F45794528a807ad8",
       "type": "Contract",
       "sourceHashes": [
@@ -82,5 +82,5 @@
   },
   "usedTemplates": {},
   "usedBlockNumbers": { "ethereum": 22945155 },
-  "permissionsConfigHash": "0xf1b8adc215ec05b286e3042b2a2321c497962dac11ab48c5b60c78207be2f052"
+  "permissionsConfigHash": "0xd0945dc661337d675366ac98d880c7805fa71320906389175164c0915ad7a0b6"
 }
