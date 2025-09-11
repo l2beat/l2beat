@@ -1,3 +1,94 @@
+Generated with discovered.json: 0xa51b873b9855c35af4b3a839ee0cb29a92ad98b8
+
+# Diff at Thu, 11 Sep 2025 15:01:07 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@665b233e3787b7a0fd24453d6e587ffdc2c1541d block: 1756462910
+- current timestamp: 1757602797
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Lib_AddressManager (eth:0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values._1088_MVM_FraudVerifier:
+-        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
++        "eth:0xAd07701EE9348d2B9e7De061883C10574c543279"
+      values.1088_MVM_FraudVerifier:
+-        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
++        "eth:0xAd07701EE9348d2B9e7De061883C10574c543279"
+    }
+```
+
+```diff
+    contract StateCommitmentChain (eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: None
+      template:
+-        "metis/MVM_StateCommitmentChain"
+      sourceHashes.1:
+-        "0xc9988c7d5840913f9a08b776cd81c6474c41bcb476822f537b3763d33f8e30e3"
++        "0x0e8553402b55057406811a803b14c4778f42fcf02523b10e695ec073a98202a9"
+      description:
+-        "The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots."
+      values.$implementation:
+-        "eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7"
++        "eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1"
+      values.getLastSequencerTimestamp:
+-        1756461959
++        1757598107
+      values.getLastSequencerTimestampByChainId:
+-        1756461959
++        [0,0,0,0,0]
+      values.getTotalBatches:
+-        31709
++        32190
+      values.getTotalBatchesByChainId:
+-        31709
++        [0,0,0,0,0]
+      values.getTotalElements:
+-        21090197
++        21186707
+      values.getTotalElementsByChainId:
+-        21090197
++        [0,0,0,0,0]
+      implementationNames.eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7:
+-        "MVM_StateCommitmentChain"
+      implementationNames.eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1:
++        "MVM_StateCommitmentChain"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"getLastSequencerTimestampByChainId":"Processing error occurred.","getTotalBatchesByChainId":"Processing error occurred.","getTotalElementsByChainId":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract Metis Security Council (eth:0xbf1752DE62d825aF0634F514226F881a449874b6) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"stateDeleterMetis","from":"eth:0x918778e825747a892b17C66fe7D24C618262867d","description":"Can delete batches from the StateCommitmentChain.","role":".1088_MVM_FraudVerifier"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xAd07701EE9348d2B9e7De061883C10574c543279)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/metis/.flat/Safe/Safe.sol         | 1088 ++++++++++++++++++++
+ .../src/projects/metis/.flat/Safe/SafeProxy.p.sol  |   37 +
+ .../MVM_StateCommitmentChain.sol                   |    5 +
+ 3 files changed, 1130 insertions(+)
+```
+
 Generated with discovered.json: 0x462559aeffb7505251dbc4b88d42769c3cd5037e
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
