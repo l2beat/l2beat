@@ -1,9 +1,15 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { CoingeckoId, EthereumAddress } from '@l2beat/shared-pure'
 
-export const BRIDGES_TOKENS = [
+export interface InteropToken {
+  coingeckoId: CoingeckoId
+  symbol: string
+  decimals: number
+  addresses: { chain: string; address: EthereumAddress | 'native' }[]
+}
+
+export const INTEROP_TOKENS: InteropToken[] = [
   {
-    id: 'usdc',
-    coingeckoId: 'usd-coin',
+    coingeckoId: CoingeckoId('usd-coin'),
     symbol: 'USDC',
     decimals: 6, // TODO: decimals per chain
     addresses: [
@@ -22,8 +28,7 @@ export const BRIDGES_TOKENS = [
     ],
   },
   {
-    id: 'ether',
-    coingeckoId: 'ethereum',
+    coingeckoId: CoingeckoId('ethereum'),
     symbol: 'ETH',
     decimals: 18, // TODO: decimals per chain
     addresses: [

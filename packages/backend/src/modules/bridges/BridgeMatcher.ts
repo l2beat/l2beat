@@ -4,10 +4,8 @@ import type {
   BridgeTransferRecord,
   Database,
 } from '@l2beat/database'
-import type { PriceProvider } from '@l2beat/shared'
-import { assert, CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { BigIntWithDecimals } from '../tvs/tools/bigIntWithDecimals'
 import type { BridgeStore } from './BridgeStore'
+import type { FinancialsService } from './financials/FinancialsService'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -17,16 +15,14 @@ import {
   type BridgeTransferWithFinancials,
   generateId,
   type MatchResult,
-  type TransferSideWithFinancials,
 } from './plugins/types'
-import { BRIDGES_TOKENS } from './tokens/config'
 
 export class BridgeMatcher {
   private running = false
 
   constructor(
     private bridgeStore: BridgeStore,
-    private priceService: PriceProvider,
+    private financialsService: FinancialsService,
     private db: Database,
     private plugins: BridgePlugin[],
     private logger: Logger,
@@ -56,7 +52,6 @@ export class BridgeMatcher {
   async doMatching() {
     const result = await match(
       this.bridgeStore,
-      this.priceService,
       this.bridgeStore.getUnmatched(),
       this.plugins,
       this.logger,
@@ -78,23 +73,26 @@ export class BridgeMatcher {
     }
 
     if (result.transfers.length > 0) {
-      await this.db.bridgeTransfer.insertMany(
-        result.transfers.map(toTransferRecord),
+      const transfers: BridgeTransferWithFinancials[] = await Promise.all(
+        result.transfers.map(
+          async (b) => await this.financialsService.addFinancials(b),
+        ),
       )
+
+      await this.db.bridgeTransfer.insertMany(transfers.map(toTransferRecord))
     }
   }
 }
 
 export async function match(
   db: BridgeEventDb,
-  priceService: PriceProvider,
   events: BridgeEvent[],
   plugins: BridgePlugin[],
   logger: Logger,
 ) {
   const matchedIds = new Set<string>()
   const messages: BridgeMessage[] = []
-  const bridgeTransfers: BridgeTransfer[] = []
+  const transfers: BridgeTransfer[] = []
 
   for (const plugin of plugins) {
     for (const event of events) {
@@ -116,116 +114,13 @@ export async function match(
           matchedIds.add(message.outbound.eventId)
         }
         for (const transfer of result.transfers ?? []) {
-          bridgeTransfers.push(transfer)
+          transfers.push(transfer)
           for (const transferEvent of transfer.events) {
             matchedIds.add(transferEvent.eventId)
           }
         }
       }
     }
-  }
-
-  const tokens = new Map(
-    BRIDGES_TOKENS.flatMap((t) =>
-      t.addresses.map((tt) => ({
-        key: `${tt.chain}:${tt.address}`,
-        value: {
-          coingeckoId: t.coingeckoId,
-          symbol: t.symbol,
-          decimals: t.decimals,
-        },
-      })),
-    ).map(({ key, value }) => [key, value]),
-  )
-
-  const transfers: BridgeTransferWithFinancials[] = []
-
-  for (const transfer of bridgeTransfers) {
-    let outbound: TransferSideWithFinancials = transfer.outbound
-    let inbound: TransferSideWithFinancials = transfer.inbound
-
-    if (transfer.outbound.token) {
-      const token = tokens.get(
-        `${transfer.outbound.event.ctx.chain}:${transfer.outbound.token.address}`,
-      )
-      if (token) {
-        const amount = BigIntWithDecimals(
-          BigInt(transfer.outbound.token.amount),
-          token.decimals,
-        )
-
-        const price = await priceService.getUsdPriceHistoryHourly(
-          CoingeckoId(token.coingeckoId),
-          UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour'),
-          UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour'),
-        )
-
-        assert(
-          price.length === 1,
-          `${token.coingeckoId}: Failed to fetch price @ ${UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour')}`,
-        )
-
-        const value = BigIntWithDecimals.multiply(
-          amount,
-          BigIntWithDecimals.fromNumber(price[0].value),
-        )
-
-        outbound = {
-          ...outbound,
-          financials: {
-            amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
-            price: price[0].value,
-            valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
-            symbol: token.symbol,
-          },
-        }
-      }
-
-      if (transfer.inbound.token) {
-        const token = tokens.get(
-          `${transfer.inbound.event.ctx.chain}:${transfer.inbound.token.address}`,
-        )
-        if (token) {
-          const amount = BigIntWithDecimals(
-            BigInt(transfer.inbound.token.amount),
-            token.decimals,
-          )
-
-          const price = await priceService.getUsdPriceHistoryHourly(
-            CoingeckoId(token.coingeckoId),
-            UnixTime.toStartOf(transfer.inbound.event.ctx.timestamp, 'hour'),
-            UnixTime.toStartOf(transfer.inbound.event.ctx.timestamp, 'hour'),
-          )
-
-          assert(
-            price.length === 1,
-            `${token.coingeckoId}: Failed to fetch price @ ${UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour')}`,
-          )
-
-          const value = BigIntWithDecimals.multiply(
-            amount,
-            BigIntWithDecimals.fromNumber(price[0].value),
-          )
-
-          inbound = {
-            ...inbound,
-            financials: {
-              amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
-              price: price[0].value,
-              valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
-              symbol: token.symbol,
-            },
-          }
-        }
-      }
-    }
-
-    transfers.push({
-      type: transfer.type,
-      events: transfer.events,
-      outbound,
-      inbound,
-    })
   }
 
   return {

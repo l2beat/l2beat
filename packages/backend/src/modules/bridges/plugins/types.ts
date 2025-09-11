@@ -43,6 +43,13 @@ export interface TransferSide {
   }
 }
 
+export interface BridgeTransfer {
+  type: string
+  events: BridgeEvent[]
+  outbound: TransferSide
+  inbound: TransferSide
+}
+
 export type TransferSideWithFinancials = TransferSide & {
   financials?: {
     valueUsd: number
@@ -50,13 +57,6 @@ export type TransferSideWithFinancials = TransferSide & {
     amount: number
     symbol: string
   }
-}
-
-export interface BridgeTransfer {
-  type: string
-  events: BridgeEvent[]
-  outbound: TransferSide
-  inbound: TransferSide
 }
 
 export type BridgeTransferWithFinancials = BridgeTransfer & {

@@ -4,6 +4,8 @@ import { BridgeCleaner } from './BridgeCleaner'
 import { BridgeMatcher } from './BridgeMatcher'
 import { createBridgeRouter } from './BridgeRouter'
 import { BridgeStore } from './BridgeStore'
+import { FinancialsService } from './financials/FinancialsService'
+import { INTEROP_TOKENS } from './financials/tokens'
 import { createBridgePlugins } from './plugins'
 
 export function createBridgeModule({
@@ -35,9 +37,14 @@ export function createBridgeModule({
     blockProcessors.push(processor)
   }
 
+  const financialsService = new FinancialsService(
+    INTEROP_TOKENS,
+    providers.price,
+  )
+
   const bridgeMatcher = new BridgeMatcher(
     bridgeStore,
-    providers.price,
+    financialsService,
     db,
     plugins,
     logger,
