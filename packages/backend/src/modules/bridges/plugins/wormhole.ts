@@ -88,9 +88,10 @@ export class WormholePlugin implements BridgePlugin {
     return LogMessagePublished.create(input.ctx, {
       payload: parsed.payload,
       sequence: parsed.sequence.toString(),
-      wormholeChainId: NETWORKS.find(
-        (n) => n.wormholeChainId === Number(network.wormholeChainId),
-      )?.chain || '???',
+      wormholeChainId:
+        NETWORKS.find(
+          (n) => n.wormholeChainId === Number(network.wormholeChainId),
+        )?.chain || '???',
       sender: EthereumAddress(parsed.sender),
       txHash: input.ctx.txHash,
     })

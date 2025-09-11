@@ -1,21 +1,17 @@
-import type { Logger } from '@l2beat/backend-tools'
-import { EthereumAddress } from '@l2beat/shared-pure'
 import {
+  type BridgeEvent,
+  type BridgeEventDb,
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
   type LogToCapture,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type MatchResult
+  type MatchResult,
 } from './types'
-import { NETWORKS } from './wormhole'
-import { LogMessagePublished } from './wormhole'
+import { LogMessagePublished, NETWORKS } from './wormhole'
 
-
-const parseLogTransferRedeemed = createEventParser('event TransferRedeemed(uint16 indexed emitterChainId, bytes32 indexed emitterAddress,uint64 indexed sequence)',
+const parseLogTransferRedeemed = createEventParser(
+  'event TransferRedeemed(uint16 indexed emitterChainId, bytes32 indexed emitterAddress,uint64 indexed sequence)',
 )
-
 
 export const TransferRedeemed = createBridgeEventType<{
   sequence: string
@@ -34,9 +30,10 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
 
     return TransferRedeemed.create(input.ctx, {
       sequence: parsed.sequence.toString(),
-      srcWormholeChainId: NETWORKS.find(
-        (n) => n.wormholeChainId === Number(parsed.emitterChainId),
-      )?.chain || '???',
+      srcWormholeChainId:
+        NETWORKS.find(
+          (n) => n.wormholeChainId === Number(parsed.emitterChainId),
+        )?.chain || '???',
       sender: parsed.emitterAddress,
       txHash: input.ctx.txHash,
     })
@@ -49,7 +46,7 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
     if (TransferRedeemed.checkType(transferRedeemed)) {
       const logMessagePublished = db.find(LogMessagePublished, {
         sequence: transferRedeemed.args.sequence,
-        wormholeChainId: transferRedeemed.args.srcWormholeChainId
+        wormholeChainId: transferRedeemed.args.srcWormholeChainId,
       })
       if (!logMessagePublished) {
         return
