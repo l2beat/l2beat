@@ -1,14 +1,18 @@
-Generated with discovered.json: 0xa51b873b9855c35af4b3a839ee0cb29a92ad98b8
+Generated with discovered.json: 0x3a4cc1c47ed6eeb0818df69e092cca650cbaadc7
 
-# Diff at Thu, 11 Sep 2025 15:01:07 GMT:
+# Diff at Thu, 11 Sep 2025 17:04:44 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@665b233e3787b7a0fd24453d6e587ffdc2c1541d block: 1756462910
-- current timestamp: 1757602797
+- current timestamp: 1757610208
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+-  StateCommitmentChain implementation change:
+https://disco.l2beat.com/diff/eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7/eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1
+explicit require makes deletion only possible for batches that are already marked disputed
+
+-
 
 ## Watched changes
 
@@ -26,43 +30,17 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract StateCommitmentChain (eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
-    +++ description: None
-      template:
--        "metis/MVM_StateCommitmentChain"
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
       sourceHashes.1:
 -        "0xc9988c7d5840913f9a08b776cd81c6474c41bcb476822f537b3763d33f8e30e3"
 +        "0x0e8553402b55057406811a803b14c4778f42fcf02523b10e695ec073a98202a9"
-      description:
--        "The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots."
       values.$implementation:
 -        "eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7"
 +        "eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1"
-      values.getLastSequencerTimestamp:
--        1756461959
-+        1757598107
-      values.getLastSequencerTimestampByChainId:
--        1756461959
-+        [0,0,0,0,0]
-      values.getTotalBatches:
--        31709
-+        32190
-      values.getTotalBatchesByChainId:
--        31709
-+        [0,0,0,0,0]
-      values.getTotalElements:
--        21090197
-+        21186707
-      values.getTotalElementsByChainId:
--        21090197
-+        [0,0,0,0,0]
       implementationNames.eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7:
 -        "MVM_StateCommitmentChain"
       implementationNames.eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1:
 +        "MVM_StateCommitmentChain"
-      category:
--        {"name":"Local Infrastructure","priority":5}
-      errors:
-+        {"getLastSequencerTimestampByChainId":"Processing error occurred.","getTotalBatchesByChainId":"Processing error occurred.","getTotalElementsByChainId":"Processing error occurred."}
     }
 ```
 
@@ -76,15 +54,15 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Safe (eth:0xAd07701EE9348d2B9e7De061883C10574c543279)
+    contract Metis Security Council Minority (eth:0xAd07701EE9348d2B9e7De061883C10574c543279)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../src/projects/metis/.flat/Safe/Safe.sol         | 1088 ++++++++++++++++++++
- .../src/projects/metis/.flat/Safe/SafeProxy.p.sol  |   37 +
+.../.flat/Metis Security Council Minority/Safe.sol | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
  .../MVM_StateCommitmentChain.sol                   |    5 +
  3 files changed, 1130 insertions(+)
 ```

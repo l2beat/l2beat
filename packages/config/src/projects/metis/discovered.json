@@ -1,6 +1,6 @@
 {
   "name": "metis",
-  "timestamp": 1757602797,
+  "timestamp": 1757610208,
   "configHash": "0x316d86f6b4cd569877f4efaa9aafdbafb1782a6a934ff2d2abda34c66ae45342",
   "entries": [
     {
@@ -784,11 +784,21 @@
       "name": "StateCommitmentChain",
       "address": "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
       "type": "Contract",
+      "template": "metis/MVM_StateCommitmentChain",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0x0e8553402b55057406811a803b14c4778f42fcf02523b10e695ec073a98202a9"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.",
+      "ignoreInWatchMode": [
+        "getLastSequencerTimestamp",
+        "getTotalBatches",
+        "getTotalElements",
+        "getLastSequencerTimestampByChainId",
+        "getTotalBatchesByChainId",
+        "getTotalElementsByChainId"
+      ],
       "sinceTimestamp": 1710487823,
       "sinceBlock": 19438866,
       "values": {
@@ -803,23 +813,19 @@
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
         "getLastSequencerTimestamp": 1757598107,
-        "getLastSequencerTimestampByChainId": [0, 0, 0, 0, 0],
+        "getLastSequencerTimestampByChainId": 1757598107,
         "getTotalBatches": 32190,
-        "getTotalBatchesByChainId": [0, 0, 0, 0, 0],
+        "getTotalBatchesByChainId": 32190,
         "getTotalElements": 21186707,
-        "getTotalElementsByChainId": [0, 0, 0, 0, 0],
+        "getTotalElementsByChainId": 21186707,
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
-      },
-      "errors": {
-        "getLastSequencerTimestampByChainId": "Processing error occurred.",
-        "getTotalBatchesByChainId": "Processing error occurred.",
-        "getTotalElementsByChainId": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "L1ChugSplashProxy",
         "eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1": "MVM_StateCommitmentChain"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xa6D8941F935932a531A856C2e48046DA73a1098E",
@@ -866,7 +872,7 @@
       ]
     },
     {
-      "name": "Safe",
+      "name": "Metis Security Council Minority",
       "address": "eth:0xAd07701EE9348d2B9e7De061883C10574c543279",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2138,8 +2144,9 @@
     "metis/METISToken": "0xe4c7c8a93327a313a78b8443c90b3cfe44501c5ddc41bab647f77de5ff00152f",
     "metis/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/MVM_DiscountOracle": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/MVM_StateCommitmentChain": "0x8496d4b5edbf854305227b9e0e5b8c845600e4bad4d3bd9aa391933a57a5e82e",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "usedBlockNumbers": { "ethereum": 23340575 },
-  "permissionsConfigHash": "0x2ba06db0c192fc7ce026b318aef6256d76d3637b12636ca0bcbc20aa7c0d7c0c"
+  "usedBlockNumbers": { "ethereum": 23341189 },
+  "permissionsConfigHash": "0xe99ad71762ecac79986d9c844cabce15888dac2f64c979dd000da184c6a2b8eb"
 }
