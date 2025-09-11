@@ -8,7 +8,6 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
       'scalingInfo',
       'daLayer',
       'daBridge',
-      'isZkCatalog',
       'isScaling',
       'isDaLayer',
       'isBridge',
