@@ -170,9 +170,9 @@ function TvsStat({ value, change }: { value: number; change: number }) {
   return (
     <ProjectSummaryStat
       title={
-        <div>
-          <span className="lg:max-xl:hidden">Total Value Secured</span>
-          <span className="max-lg:hidden xl:hidden">TVS</span>
+        <div className="font-semibold text-subtitle-12">
+          <span className="md:hidden">Total Value Secured</span>
+          <span className="max-md:hidden">TVS</span>
         </div>
       }
       className="w-full md:gap-2"
