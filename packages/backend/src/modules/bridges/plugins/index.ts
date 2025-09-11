@@ -9,8 +9,8 @@ import { StargateV2BusPlugin } from './stargate-v2-bus'
 import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
 import type { BridgePlugin } from './types'
 import { Usdt0Plugin } from './usdt0'
-import { WormholeTokenBridgePlugin } from './wormholetokenbridge'
 import { WormholePlugin } from './wormhole'
+import { WormholeTokenBridgePlugin } from './wormholetokenbridge'
 
 export function createBridgePlugins(logger: Logger): BridgePlugin[] {
   return [
