@@ -8,8 +8,8 @@ import { StargatePlugin } from './stargate'
 import { StargateV2BusPlugin } from './stargate-v2-bus'
 import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
 import type { BridgePlugin } from './types'
-import { WormholeTokenBridgePlugin } from './WormholeTokenBridgePlugin'
 import { Usdt0Plugin } from './usdt0'
+import { WormholeTokenBridgePlugin } from './WormholeTokenBridgePlugin'
 import { WormholePlugin } from './wormhole'
 
 export function createBridgePlugins(logger: Logger): BridgePlugin[] {
