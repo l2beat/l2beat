@@ -83,8 +83,11 @@ const cmd = command({
     const eventDb = new InMemoryEventDb(events)
 
     const result = await match(eventDb, events, plugins, logger)
-    for (const message of result.messages) {
-      logger.info('Message', message)
+    for (const [index, message] of result.messages.entries()) {
+      logger.info(`Message #${index + 1}`, message)
+    }
+    for (const [index, transfer] of result.transfers.entries()) {
+      logger.info(`Transfer #${index + 1}`, transfer)
     }
   },
 })

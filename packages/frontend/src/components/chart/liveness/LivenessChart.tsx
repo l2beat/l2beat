@@ -287,7 +287,7 @@ function LivenessCustomTooltip({
 
 function Stat({ name, seconds }: { name: string; seconds: number }) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-1.5">
       <span className="font-medium text-label-value-14">{name}</span>
       <span className="text-heading-16">{formatDuration(seconds)}</span>
     </div>

@@ -22,6 +22,7 @@
     "fill-ts": "node -r esbuild-register scripts/fillts",
     "tokens": "node -r esbuild-register scripts/tokens/tokens.ts",
     "tokens:verify": "sh scripts/tokens/verify.sh",
+    "tokens:generate-names": "node -r esbuild-register scripts/tokens/generateTokenNames.ts",
     "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts",
     "stargatev2-pools": "node -r esbuild-register scripts/stargatev2-pools",
     "diff": "./scripts/diff/diff.sh",

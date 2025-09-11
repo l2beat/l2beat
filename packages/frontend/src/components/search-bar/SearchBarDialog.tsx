@@ -1,4 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
+import { Command as CommandPrimitive } from 'cmdk'
 import fuzzysort from 'fuzzysort'
 import groupBy from 'lodash/groupBy'
 import { useMemo, useRef, useState } from 'react'
@@ -12,62 +13,59 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/Command'
+import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { useRouter } from '~/hooks/useRouter'
 import { useTracking } from '~/hooks/useTracking'
+import type { SearchBarProject } from '~/server/features/projects/search-bar/types'
+import { api } from '~/trpc/React'
+import { Skeleton } from '../core/Skeleton'
 import { useSearchBarContext } from './SearchBarContext'
-import type { AnySearchBarEntry, SearchBarProject } from './SearchBarEntry'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
 import { searchBarPages } from './searchBarPages'
+import type { AnySearchBarEntry } from './types'
 
 interface Props {
-  allProjects: SearchBarProject[]
   recentlyAdded: SearchBarProject[]
 }
 
-export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
+export function SearchBarDialog({ recentlyAdded }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const { track } = useTracking()
   const [value, setValue] = useState('')
+  const debouncedValue = useDebouncedValue(value, 200)
   const { open, setOpen } = useSearchBarContext()
   const router = useRouter()
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
-  const filteredProjects = useMemo(
-    () =>
-      value === ''
-        ? recentlyAdded
-        : fuzzysort
-            .go(value, allProjects, {
-              limit: 15,
-              keys: ['name', (e) => e.tags?.join() ?? ''],
-              scoreFn: (match) =>
-                match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1),
-            })
-            .map((match) => match.obj),
-    [value, recentlyAdded, allProjects],
+  const { data: allProjects, isFetching } = api.projects.searchBar.useQuery(
+    debouncedValue,
+    {
+      enabled: debouncedValue !== '',
+    },
   )
 
   const filteredPages = useMemo(
     () =>
       fuzzysort
-        .go(value, searchBarPages, {
+        .go(debouncedValue, searchBarPages, {
           keys: ['name', (e) => e.tags?.join() ?? ''],
         })
         .flatMap((match) => match.obj)
         .sort((a, b) => a.index - b.index),
 
-    [value],
+    [debouncedValue],
   )
 
   const grouped = useMemo(() => {
+    if (!allProjects) return []
     return Object.entries(
-      groupBy([...filteredProjects, ...filteredPages], (p) => p.category),
+      groupBy([...allProjects, ...filteredPages], (p) => p.category),
     )
-  }, [filteredProjects, filteredPages])
+  }, [allProjects, filteredPages])
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
     e?.preventDefault()
@@ -113,11 +111,26 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
           </CommandInputActionButton>
         </CommandInput>
         <CommandList className="max-h-screen supports-[height:100dvh]:max-h-dvh md:h-[270px] md:max-h-[270px]">
+          {((value !== debouncedValue && value !== '') || isFetching) && (
+            <CommandPrimitive.Loading>
+              <CommandGroup>
+                <div className="flex h-8 items-center px-2 py-3">
+                  <Skeleton className="h-4 w-[150px] rounded-sm" />
+                </div>
+                <SearchBarItemSkeleton />
+                <SearchBarItemSkeleton />
+                <SearchBarItemSkeleton />
+                <SearchBarItemSkeleton />
+                <SearchBarItemSkeleton />
+                <SearchBarItemSkeleton />
+              </CommandGroup>
+            </CommandPrimitive.Loading>
+          )}
           <CommandEmpty>No results found.</CommandEmpty>
 
-          {filteredProjects.length > 0 && value === '' && (
+          {value === '' && (
             <CommandGroup heading="Recently added projects">
-              {filteredProjects.map((project) => {
+              {recentlyAdded.map((project) => {
                 return (
                   <SearchBarItem
                     key={project.id}
@@ -148,7 +161,8 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
               })}
             </CommandGroup>
           )}
-          {value !== '' &&
+          {value === debouncedValue &&
+            value !== '' &&
             grouped.length > 0 &&
             grouped.map(([group, items], groupIndex) => (
               <CommandGroup
@@ -169,7 +183,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                         // https://github.com/pacocoursey/cmdk/issues/171#issuecomment-1775421795
                         groupIndex === 0 && index === 0
                           ? '-'
-                          : `${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`
+                          : entryToValue(item)
                       }
                     >
                       {item.type === 'project' && (
@@ -222,9 +236,33 @@ function SearchBarItem({
       value={value}
     >
       {children}
-      {label && <div className="ml-auto text-secondary text-xs">{label}</div>}
+      {label && (
+        <div className="ml-auto text-secondary text-xs leading-none">
+          {label}
+        </div>
+      )}
     </CommandItem>
   )
+}
+
+function SearchBarItemSkeleton() {
+  return (
+    <div className="flex h-11 items-center justify-between px-2 py-3">
+      <div className="flex items-center gap-2">
+        <Skeleton className="size-5 rounded-sm" />
+        <Skeleton className="h-[15px] w-20 rounded-sm" />
+      </div>
+      <Skeleton className="h-3.5 w-[45px] rounded-sm" />
+    </div>
+  )
+}
+
+function entryToValue(entry: AnySearchBarEntry) {
+  if (entry.type === 'page') {
+    return `${entry.category}-${entry.name}-${entry.type}`
+  }
+
+  return `${entry.category}-${entry.id}-${entry.type}-${entry.kind}`
 }
 
 function entryToLabel(entry: AnySearchBarEntry) {
