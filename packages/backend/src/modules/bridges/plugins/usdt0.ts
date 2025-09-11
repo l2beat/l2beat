@@ -75,7 +75,6 @@ export class Usdt0Plugin implements BridgePlugin {
   capture(input: LogToCapture) {
     const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
     if (!network) return
-    if (EthereumAddress(input.log.address) !== network.adapter) return
 
     const oftSent = parseOFTSent(input.log, [network.adapter])
     if (oftSent) {
