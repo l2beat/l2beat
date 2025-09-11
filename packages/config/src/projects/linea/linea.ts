@@ -154,6 +154,7 @@ export const linea: ScalingProject = {
     zkCatalogId: ProjectId('lineaprover'),
   },
   config: {
+    associatedTokens: ['LINEA'],
     escrows: [
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
@@ -168,6 +169,7 @@ export const linea: ScalingProject = {
         ),
         sinceTimestamp: UnixTime(1691060675),
         excludedTokens: ['rsETH'],
+        premintedTokens: ['LINEA'],
         tokens: '*',
       }),
     ],
