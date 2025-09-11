@@ -50,7 +50,7 @@ function TrustedSetupsByProofSystemSection({
       <h2 className="font-semibold text-subtitle-12 uppercase max-md:hidden">
         Trusted Setups
       </h2>
-      <div className="grid grid-cols-3 gap-y-4 rounded-sm border border-divider p-4">
+      <div className="grid grid-cols-3 gap-x-1 gap-y-4 rounded-sm border border-divider p-4">
         {Object.entries(trustedSetupsByProofSystem).map(
           ([key, { trustedSetups, projectsUsedIn, verifiers }]) => {
             const proofSystem = trustedSetups[0]?.proofSystem
@@ -70,7 +70,12 @@ function TrustedSetupsByProofSystemSection({
                     />
                   </div>
                 )}
-                <VerifiedCountWithDetails data={verifiers} />
+                <div className="flex items-center gap-2">
+                  <p className="font-medium text-label-value-12 text-secondary">
+                    Verifiers
+                  </p>
+                  <VerifiedCountWithDetails data={verifiers} horizontal />
+                </div>
               </React.Fragment>
             )
           },
