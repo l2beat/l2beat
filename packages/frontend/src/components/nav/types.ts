@@ -22,4 +22,5 @@ export interface NavLink {
   disabled?: boolean
   accessory?: React.ReactNode
   subLinks?: NavLink[]
+  exactMatch?: boolean
 }

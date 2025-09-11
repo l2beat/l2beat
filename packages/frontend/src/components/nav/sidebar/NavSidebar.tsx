@@ -65,7 +65,9 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
                 <SidebarGroupItem key={group.title}>
                   <SidebarGroupLink
                     href={group.href}
-                    isActive={getIsActive(group.href, pathname)}
+                    isActive={getIsActive(group.href, pathname, {
+                      exact: group.exactMatch,
+                    })}
                   >
                     {group.icon}
                     <span>{group.title}</span>
@@ -80,7 +82,9 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
             <SidebarGroupItem key={link.title}>
               <SidebarGroupSmallLink
                 href={link.href}
-                isActive={getIsActive(link.href, pathname)}
+                isActive={getIsActive(link.href, pathname, {
+                  exact: link.exactMatch,
+                })}
               >
                 {link.title}
                 {link.accessory}
@@ -110,7 +114,7 @@ function NavCollapsibleItem({
   )
   const isGroupActive = pathname.startsWith('/' + group.match)
   const isAnyLinkActive = allGroupLinks.some((link) =>
-    getIsActive(link.href, pathname),
+    getIsActive(link.href, pathname, { exact: link.exactMatch }),
   )
   const breakpoint = useBreakpoint()
 
@@ -162,19 +166,23 @@ function NavCollapsibleItem({
             <SidebarGroupSubItem key={item.title}>
               <SidebarGroupLinkLevel1
                 href={item.href}
-                isActive={getIsActive(item.href, pathname)}
+                isActive={getIsActive(item.href, pathname, {
+                  exact: item.exactMatch,
+                })}
               >
                 <span className="leading-tight">{item.title}</span>
               </SidebarGroupLinkLevel1>
               {item.subLinks && item.subLinks.length > 0 && (
-                <SidebarGroup className="mt-2.5 gap-2">
+                <SidebarGroup className="mt-2.5 mb-2 gap-2">
                   {item.subLinks.map((subItem) => (
                     <SidebarGroupLinkLevel2
                       key={subItem.title}
                       href={subItem.href}
-                      isActive={getIsActive(subItem.href, pathname)}
+                      isActive={getIsActive(subItem.href, pathname, {
+                        exact: subItem.exactMatch,
+                      })}
                     >
-                      <span className="leading-tight">{subItem.title}</span>
+                      {subItem.title}
                     </SidebarGroupLinkLevel2>
                   ))}
                 </SidebarGroup>
@@ -188,7 +196,9 @@ function NavCollapsibleItem({
                 <SidebarGroupLinkLevel1
                   href={item.href}
                   key={item.title}
-                  isActive={getIsActive(item.href, pathname)}
+                  isActive={getIsActive(item.href, pathname, {
+                    exact: item.exactMatch,
+                  })}
                 >
                   <span>{item.title}</span>
                 </SidebarGroupLinkLevel1>
@@ -201,6 +211,14 @@ function NavCollapsibleItem({
   )
 }
 
-function getIsActive(href: string, pathname: string) {
+function getIsActive(
+  href: string,
+  pathname: string,
+  opts?: { exact?: boolean },
+) {
+  if (opts?.exact) {
+    return pathname === href
+  }
+
   return pathname === href || pathname.startsWith(href + '/')
 }

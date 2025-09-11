@@ -84,7 +84,9 @@ const groups = compact<NavGroup>([
         subLinks: [
           {
             title: 'Overview',
+            shortTitle: 'Risks',
             href: '/scaling/risk',
+            exactMatch: true,
           },
           {
             title: 'Data Availability',
