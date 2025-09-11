@@ -3,6 +3,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { LiveIndicator } from '~/components/LiveIndicator'
 import { NoDataIcon } from '~/components/NoDataIcon'
 import { TableLink } from '~/components/table/TableLink'
 import { UnderReviewIcon } from '~/icons/UnderReview'
@@ -51,6 +52,17 @@ export function BridgeNameCell({
       )}
       {bridge.statuses?.syncWarning && (
         <NoDataIcon content={bridge.statuses.syncWarning} />
+      )}
+      {bridge.statuses?.ongoingAnomaly && (
+        <Tooltip>
+          <TooltipTrigger>
+            <LiveIndicator />
+          </TooltipTrigger>
+          <TooltipContent>
+            There's an ongoing anomaly. Check detailed page for more
+            information.
+          </TooltipContent>
+        </Tooltip>
       )}
     </TableLink>
   )
