@@ -223,6 +223,7 @@ export async function getEcosystemEntry(
       allScalingProjects.length,
       tvs.projects,
       projectsActivity,
+      ecosystem.ecosystemConfig.startedAt,
     ),
     banners: {
       firstBanner: ecosystem.ecosystemConfig.firstBanner,

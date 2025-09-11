@@ -22,6 +22,7 @@ export function getEcosystemProjectsChartData(
   allScalingProjectsCount: number,
   projectsTvs: Record<string, ProjectSevenDayTvsBreakdown>,
   projectsActivity: ActivityLatestUopsData,
+  startedAt: UnixTime | undefined,
 ): EcosystemProjectsCountData {
   const minTimestamp = Math.min(
     ...entries.map((e) =>
@@ -30,7 +31,7 @@ export function getEcosystemProjectsChartData(
   )
 
   const timestamps = generateTimestamps(
-    [minTimestamp, UnixTime.toStartOf(UnixTime.now(), 'day')],
+    [Math.max(minTimestamp, startedAt ?? -Number.NEGATIVE_INFINITY), UnixTime.toStartOf(UnixTime.now(), 'day')],
     'daily',
   )
   const chart = timestamps.map((timestamp) => {
