@@ -111,7 +111,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
           </CommandInputActionButton>
         </CommandInput>
         <CommandList className="max-h-screen supports-[height:100dvh]:max-h-dvh md:h-[270px] md:max-h-[270px]">
-          {isFetching && (
+          {((value !== debouncedValue && value !== '') || isFetching) && (
             <CommandPrimitive.Loading>
               <CommandGroup>
                 <div className="flex h-8 items-center px-2 py-3">
@@ -128,7 +128,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
           )}
           <CommandEmpty>No results found.</CommandEmpty>
 
-          {debouncedValue === '' && (
+          {value === '' && (
             <CommandGroup heading="Recently added projects">
               {recentlyAdded.map((project) => {
                 return (
@@ -161,7 +161,8 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
               })}
             </CommandGroup>
           )}
-          {debouncedValue !== '' &&
+          {value === debouncedValue &&
+            value !== '' &&
             grouped.length > 0 &&
             grouped.map(([group, items], groupIndex) => (
               <CommandGroup
