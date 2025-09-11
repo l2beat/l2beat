@@ -9,6 +9,7 @@ import {
   type LogToCapture,
   type MatchResult,
 } from './types'
+import { NETWORKS } from './wormhole'
 
 const parseOrderFulfilled = createEventParser(
   'event OrderFulfilled(uint32 sourceDomain, bytes32 sourceNonce, uint256 amount)',
@@ -17,6 +18,7 @@ const parseOrderFulfilled = createEventParser(
 export const OrderFulfilled = createBridgeEventType<{
   txHash: string
   amount: string
+  sourceDomain: string
 }>('MayanMctpFast.OrderFullfilled')
 
 export class MayanMctpFastPlugin implements BridgePlugin {
@@ -29,6 +31,10 @@ export class MayanMctpFastPlugin implements BridgePlugin {
       return OrderFulfilled.create(input.ctx, {
         txHash: input.ctx.txHash,
         amount: orderFulfilled.amount.toString(),
+        sourceDomain:
+          NETWORKS.find(
+            (n) => n.wormholeChainId === Number(orderFulfilled.sourceDomain),
+          )?.chain || '???',
       })
     }
   }
