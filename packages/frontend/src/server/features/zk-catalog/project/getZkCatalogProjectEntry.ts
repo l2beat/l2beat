@@ -4,6 +4,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getTrustedSetupsSection } from '~/utils/project/trusted-setups/getTrustedSetupsSection'
 import {
   getUnderReviewStatus,
   type UnderReviewStatus,
@@ -119,6 +120,16 @@ export async function getZkCatalogProjectEntry(
       },
     })
   }
+
+  const trustedSetupsSection = getTrustedSetupsSection(project)
+  sections.push({
+    type: 'TrustedSetupSection',
+    props: {
+      id: 'trusted-setups',
+      title: 'Trusted Setups',
+      ...trustedSetupsSection,
+    },
+  })
 
   return { ...common, sections }
 }
