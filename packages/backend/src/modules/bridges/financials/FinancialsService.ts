@@ -8,6 +8,11 @@ import type {
 } from '../plugins/types'
 import type { InteropToken } from './tokens'
 
+interface CachedPrice {
+  value: number
+  timestamp: number
+}
+
 export class FinancialsService {
   tokensMap: Map<
     string,
@@ -17,6 +22,8 @@ export class FinancialsService {
       decimals: number
     }
   >
+
+  private priceCache = new Map<string, CachedPrice>()
 
   constructor(
     tokens: InteropToken[],
@@ -54,27 +61,22 @@ export class FinancialsService {
           token.decimals,
         )
 
-        const price = await this.priceProvider.getUsdPriceHistoryHourly(
-          token.coingeckoId,
-          UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour'),
-          UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour'),
+        const timestamp = UnixTime.toStartOf(
+          transfer.outbound.event.ctx.timestamp,
+          'hour',
         )
-
-        assert(
-          price.length === 1,
-          `${token.coingeckoId}: Failed to fetch price @ ${UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour')}`,
-        )
+        const price = await this.getPrice(token.coingeckoId, timestamp)
 
         const value = BigIntWithDecimals.multiply(
           amount,
-          BigIntWithDecimals.fromNumber(price[0].value),
+          BigIntWithDecimals.fromNumber(price),
         )
 
         outbound = {
           ...outbound,
           financials: {
             amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
-            price: price[0].value,
+            price: price,
             valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
             symbol: token.symbol,
           },
@@ -92,27 +94,25 @@ export class FinancialsService {
           token.decimals,
         )
 
-        const price = await this.priceProvider.getUsdPriceHistoryHourly(
-          CoingeckoId(token.coingeckoId),
-          UnixTime.toStartOf(transfer.inbound.event.ctx.timestamp, 'hour'),
-          UnixTime.toStartOf(transfer.inbound.event.ctx.timestamp, 'hour'),
+        const timestamp = UnixTime.toStartOf(
+          transfer.inbound.event.ctx.timestamp,
+          'hour',
         )
-
-        assert(
-          price.length === 1,
-          `${token.coingeckoId}: Failed to fetch price @ ${UnixTime.toStartOf(transfer.outbound.event.ctx.timestamp, 'hour')}`,
+        const price = await this.getPrice(
+          CoingeckoId(token.coingeckoId),
+          timestamp,
         )
 
         const value = BigIntWithDecimals.multiply(
           amount,
-          BigIntWithDecimals.fromNumber(price[0].value),
+          BigIntWithDecimals.fromNumber(price),
         )
 
         inbound = {
           ...inbound,
           financials: {
             amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
-            price: price[0].value,
+            price: price,
             valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
             symbol: token.symbol,
           },
@@ -126,5 +126,41 @@ export class FinancialsService {
       outbound,
       inbound,
     }
+  }
+
+  private async getPrice(
+    coingeckoId: CoingeckoId,
+    timestamp: UnixTime,
+  ): Promise<number> {
+    const cacheKey = this.getCacheKey(coingeckoId, timestamp)
+    const cachedPrice = this.priceCache.get(cacheKey)
+    if (cachedPrice) {
+      return cachedPrice.value
+    }
+
+    const price = await this.priceProvider.getUsdPriceHistoryHourly(
+      coingeckoId,
+      timestamp,
+      timestamp,
+    )
+
+    assert(
+      price.length === 1,
+      `${coingeckoId}: Failed to fetch price @ ${timestamp}`,
+    )
+
+    this.priceCache.set(cacheKey, {
+      value: price[0].value,
+      timestamp: Date.now(),
+    })
+
+    return price[0].value
+  }
+
+  private getCacheKey(
+    coingeckoId: CoingeckoId,
+    hourTimestamp: UnixTime,
+  ): string {
+    return `${coingeckoId}:${hourTimestamp}`
   }
 }
