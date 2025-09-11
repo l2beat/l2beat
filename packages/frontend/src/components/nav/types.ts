@@ -21,4 +21,5 @@ export interface NavLink {
   href: string
   disabled?: boolean
   accessory?: React.ReactNode
+  subLinks?: NavLink[]
 }

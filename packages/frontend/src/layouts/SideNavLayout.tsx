@@ -81,6 +81,21 @@ const groups = compact<NavGroup>([
         title: 'Risk Analysis',
         shortTitle: 'Risks',
         href: '/scaling/risk',
+        subLinks: [
+          {
+            title: 'Overview',
+            href: '/scaling/risk',
+          },
+          {
+            title: 'Data Availability',
+            shortTitle: 'DA',
+            href: '/scaling/data-availability',
+          },
+          {
+            title: 'State Validation',
+            href: '/scaling/risk/state-validation',
+          },
+        ],
       },
       {
         title: 'Value Secured',
@@ -91,11 +106,7 @@ const groups = compact<NavGroup>([
         title: 'Activity',
         href: '/scaling/activity',
       },
-      {
-        title: 'Data Availability',
-        shortTitle: 'DA',
-        href: '/scaling/data-availability',
-      },
+
       {
         title: 'Liveness',
         href: '/scaling/liveness',

@@ -15,9 +15,11 @@ import {
   SidebarGroup,
   SidebarGroupItem,
   SidebarGroupLink,
+  SidebarGroupLinkLevel1,
+  SidebarGroupLinkLevel2,
   SidebarGroupSmallLink,
-  SidebarGroupSub,
-  SidebarGroupSubButton,
+  SidebarGroupSubItem,
+  SidebarGroupWrapper,
   SidebarHeader,
   SidebarSeparator,
 } from '../../core/Sidebar'
@@ -53,7 +55,7 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
       <SidebarContent className="mt-2!">
         {groups.map((group) => {
           return (
-            <SidebarGroup key={group.title}>
+            <SidebarGroupWrapper key={group.title}>
               {group.type === 'multiple' && (
                 <SidebarGroupItem>
                   <NavCollapsibleItem group={group} />
@@ -70,10 +72,10 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
                   </SidebarGroupLink>
                 </SidebarGroupItem>
               )}
-            </SidebarGroup>
+            </SidebarGroupWrapper>
           )
         })}
-        <SidebarGroup className="mt-8 gap-1.5">
+        <SidebarGroupWrapper className="mt-8 gap-1.5">
           {sideLinks.map((link) => (
             <SidebarGroupItem key={link.title}>
               <SidebarGroupSmallLink
@@ -85,7 +87,7 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
               </SidebarGroupSmallLink>
             </SidebarGroupItem>
           ))}
-        </SidebarGroup>
+        </SidebarGroupWrapper>
       </SidebarContent>
       <SidebarFooter>
         <div className="flex gap-2 lg:justify-between">
@@ -155,31 +157,45 @@ function NavCollapsibleItem({
         </div>
       )}
       <CollapsibleContent>
-        <SidebarGroupSub>
+        <SidebarGroup>
           {group.links.map((item) => (
-            <SidebarGroupSubButton
-              href={item.href}
-              key={item.title}
-              isActive={getIsActive(item.href, pathname)}
-            >
-              <span className="leading-tight">{item.title}</span>
-            </SidebarGroupSubButton>
+            <SidebarGroupSubItem key={item.title}>
+              <SidebarGroupLinkLevel1
+                href={item.href}
+                isActive={getIsActive(item.href, pathname)}
+              >
+                <span className="leading-tight">{item.title}</span>
+              </SidebarGroupLinkLevel1>
+              {item.subLinks && item.subLinks.length > 0 && (
+                <SidebarGroup className="mt-2.5 gap-2">
+                  {item.subLinks.map((subItem) => (
+                    <SidebarGroupLinkLevel2
+                      key={subItem.title}
+                      href={subItem.href}
+                      isActive={getIsActive(subItem.href, pathname)}
+                    >
+                      <span className="leading-tight">{subItem.title}</span>
+                    </SidebarGroupLinkLevel2>
+                  ))}
+                </SidebarGroup>
+              )}
+            </SidebarGroupSubItem>
           ))}
           {group.secondaryLinks && group.secondaryLinks.length > 0 && (
             <>
               <SidebarSeparator />
               {group.secondaryLinks.map((item) => (
-                <SidebarGroupSubButton
+                <SidebarGroupLinkLevel1
                   href={item.href}
                   key={item.title}
                   isActive={getIsActive(item.href, pathname)}
                 >
                   <span>{item.title}</span>
-                </SidebarGroupSubButton>
+                </SidebarGroupLinkLevel1>
               ))}
             </>
           )}
-        </SidebarGroupSub>
+        </SidebarGroup>
       </CollapsibleContent>
     </Collapsible>
   )
