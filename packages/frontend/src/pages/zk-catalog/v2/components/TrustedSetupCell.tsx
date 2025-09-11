@@ -1,5 +1,6 @@
 import type { TrustedSetup, ZkCatalogTag } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import type { ComponentProps } from 'react'
 import {
   Tooltip,
   TooltipContent,
@@ -17,15 +18,23 @@ interface Props {
     proofSystem: ZkCatalogTag
   })[]
   projectsUsedIn?: UsedInProjectWithIcon[]
+  dotSize?: ComponentProps<typeof TrustedSetupRiskDot>['size']
 }
 
-export function TrustedSetupCell({ trustedSetups, projectsUsedIn }: Props) {
+export function TrustedSetupCell({
+  trustedSetups,
+  projectsUsedIn,
+  dotSize,
+}: Props) {
   const proofSystem = trustedSetups[0]?.proofSystem
   if (trustedSetups.length === 0 || !proofSystem) return null
 
   return (
     <div className="flex flex-col items-start gap-2">
-      <TrustedSetupCellTooltip trustedSetups={trustedSetups} />
+      <TrustedSetupCellTooltip
+        trustedSetups={trustedSetups}
+        dotSize={dotSize}
+      />
       {projectsUsedIn && (
         <div className="flex items-center gap-1.5">
           <p className="font-medium text-label-value-12 text-secondary">
@@ -43,10 +52,12 @@ export function TrustedSetupCell({ trustedSetups, projectsUsedIn }: Props) {
 
 export function TrustedSetupCellTooltip({
   trustedSetups,
+  dotSize,
 }: {
   trustedSetups: (TrustedSetup & {
     proofSystem: ZkCatalogTag
   })[]
+  dotSize?: ComponentProps<typeof TrustedSetupRiskDot>['size']
 }) {
   const proofSystem = trustedSetups[0]?.proofSystem
   assert(proofSystem, 'proofSystem is required')
@@ -58,7 +69,7 @@ export function TrustedSetupCellTooltip({
         {worstRisk === 'N/A' ? (
           <span className="text-2xl leading-none">🤩</span>
         ) : (
-          <TrustedSetupRiskDot risk={worstRisk} size="md" />
+          <TrustedSetupRiskDot risk={worstRisk} size={dotSize} />
         )}
         <TechStackTag tag={proofSystem} withoutTooltip />
       </TooltipTrigger>
