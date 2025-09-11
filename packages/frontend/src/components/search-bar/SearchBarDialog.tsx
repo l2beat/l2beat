@@ -18,6 +18,7 @@ import { useRouter } from '~/hooks/useRouter'
 import { useTracking } from '~/hooks/useTracking'
 import type { SearchBarProject } from '~/server/features/projects/search-bar/types'
 import { api } from '~/trpc/React'
+import { Skeleton } from '../core/Skeleton'
 import { useSearchBarContext } from './SearchBarContext'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
@@ -37,13 +38,11 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
-  const { data: allProjects } = api.projects.searchBar.useQuery(value, {
-    enabled: value !== '',
-  })
-
-  const filteredProjects = useMemo(
-    () => allProjects ?? recentlyAdded,
-    [recentlyAdded, allProjects],
+  const { data: allProjects, isFetching } = api.projects.searchBar.useQuery(
+    value,
+    {
+      enabled: value !== '',
+    },
   )
 
   const filteredPages = useMemo(
@@ -59,10 +58,11 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   )
 
   const grouped = useMemo(() => {
+    if (!allProjects) return []
     return Object.entries(
-      groupBy([...filteredProjects, ...filteredPages], (p) => p.category),
+      groupBy([...allProjects, ...filteredPages], (p) => p.category),
     )
-  }, [filteredProjects, filteredPages])
+  }, [allProjects, filteredPages])
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
     e?.preventDefault()
@@ -108,91 +108,110 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
           </CommandInputActionButton>
         </CommandInput>
         <CommandList className="max-h-screen supports-[height:100dvh]:max-h-dvh md:h-[270px] md:max-h-[270px]">
-          <CommandEmpty>No results found.</CommandEmpty>
-
-          {filteredProjects.length > 0 && value === '' && (
-            <CommandGroup heading="Recently added projects">
-              {filteredProjects.map((project) => {
-                return (
-                  <SearchBarItem
-                    key={project.id}
-                    onSelect={() => onItemSelect(project)}
-                    label={entryToLabel(project)}
-                  >
-                    <img
-                      src={project.iconUrl}
-                      alt={`${project.name} logo`}
-                      className="rounded-sm"
-                      width={20}
-                      height={20}
-                    />
-                    <div className="flex flex-col">
-                      <div className="font-medium text-sm leading-none tracking-[-1%]">
-                        {project.name}
-                      </div>
-                      {project.scalingCategory && (
-                        <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
-                          {project.isUpcoming
-                            ? 'Upcoming'
-                            : project.scalingCategory}
-                        </div>
-                      )}
-                    </div>
-                  </SearchBarItem>
-                )
-              })}
+          {isFetching ? (
+            <CommandGroup>
+              <div className="flex h-8 items-center px-2 py-3">
+                <Skeleton className="h-4 w-[150px] rounded-sm" />
+              </div>
+              <SearchBarItemSkeleton />
+              <SearchBarItemSkeleton />
+              <SearchBarItemSkeleton />
+              <SearchBarItemSkeleton />
+              <SearchBarItemSkeleton />
+              <SearchBarItemSkeleton />
             </CommandGroup>
-          )}
-          {value !== '' &&
-            grouped.length > 0 &&
-            grouped.map(([group, items], groupIndex) => (
-              <CommandGroup
-                heading={searchBarCategories[group as SearchBarCategory].name}
-                key={group}
-              >
-                {items.map((item, index) => {
-                  return (
-                    <SearchBarItem
-                      key={item.href}
-                      onSelect={() => onItemSelect(item)}
-                      label={entryToLabel(item)}
-                      value={
-                        // I know it looks ugly but there is a bug in CMDK that scrolls to wrong item sometimes.
-                        // For example try to search "nea" without this hack.
-                        // It will scroll to "Neva" but highlight "Rainbow Bridge" (highlight is correct cuz near is tag for it)
-                        // Using '-' as value makes first item always selected.
-                        // https://github.com/pacocoursey/cmdk/issues/171#issuecomment-1775421795
-                        groupIndex === 0 && index === 0
-                          ? '-'
-                          : `${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`
-                      }
-                    >
-                      {item.type === 'project' && (
+          ) : (
+            <>
+              {<CommandEmpty>No results found.</CommandEmpty>}
+
+              {value === '' && (
+                <CommandGroup heading="Recently added projects">
+                  {recentlyAdded.map((project) => {
+                    return (
+                      <SearchBarItem
+                        key={project.id}
+                        onSelect={() => onItemSelect(project)}
+                        label={entryToLabel(project)}
+                      >
                         <img
-                          src={item.iconUrl}
-                          alt={`${item.name} logo`}
+                          src={project.iconUrl}
+                          alt={`${project.name} logo`}
                           className="rounded-sm"
                           width={20}
                           height={20}
                         />
-                      )}
-                      <div className="flex flex-col">
-                        <div className="font-medium text-sm leading-none tracking-[-1%]">
-                          {item.name}
-                        </div>
-                        {item.type === 'project' && item.scalingCategory && (
-                          <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
-                            {item.isUpcoming
-                              ? 'Upcoming'
-                              : item.scalingCategory}
+                        <div className="flex flex-col">
+                          <div className="font-medium text-sm leading-none tracking-[-1%]">
+                            {project.name}
                           </div>
-                        )}
-                      </div>
-                    </SearchBarItem>
-                  )
-                })}
-              </CommandGroup>
-            ))}
+                          {project.scalingCategory && (
+                            <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
+                              {project.isUpcoming
+                                ? 'Upcoming'
+                                : project.scalingCategory}
+                            </div>
+                          )}
+                        </div>
+                      </SearchBarItem>
+                    )
+                  })}
+                </CommandGroup>
+              )}
+              {value !== '' &&
+                grouped.length > 0 &&
+                grouped.map(([group, items], groupIndex) => (
+                  <CommandGroup
+                    heading={
+                      searchBarCategories[group as SearchBarCategory].name
+                    }
+                    key={group}
+                  >
+                    {items.map((item, index) => {
+                      return (
+                        <SearchBarItem
+                          key={item.href}
+                          onSelect={() => onItemSelect(item)}
+                          label={entryToLabel(item)}
+                          value={
+                            // I know it looks ugly but there is a bug in CMDK that scrolls to wrong item sometimes.
+                            // For example try to search "nea" without this hack.
+                            // It will scroll to "Neva" but highlight "Rainbow Bridge" (highlight is correct cuz near is tag for it)
+                            // Using '-' as value makes first item always selected.
+                            // https://github.com/pacocoursey/cmdk/issues/171#issuecomment-1775421795
+                            groupIndex === 0 && index === 0
+                              ? '-'
+                              : `${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`
+                          }
+                        >
+                          {item.type === 'project' && (
+                            <img
+                              src={item.iconUrl}
+                              alt={`${item.name} logo`}
+                              className="rounded-sm"
+                              width={20}
+                              height={20}
+                            />
+                          )}
+                          <div className="flex flex-col">
+                            <div className="font-medium text-sm leading-none tracking-[-1%]">
+                              {item.name}
+                            </div>
+                            {item.type === 'project' &&
+                              item.scalingCategory && (
+                                <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
+                                  {item.isUpcoming
+                                    ? 'Upcoming'
+                                    : item.scalingCategory}
+                                </div>
+                              )}
+                          </div>
+                        </SearchBarItem>
+                      )
+                    })}
+                  </CommandGroup>
+                ))}
+            </>
+          )}
         </CommandList>
       </Command>
     </CommandDialog>
@@ -217,8 +236,24 @@ function SearchBarItem({
       value={value}
     >
       {children}
-      {label && <div className="ml-auto text-secondary text-xs">{label}</div>}
+      {label && (
+        <div className="ml-auto text-secondary text-xs leading-none">
+          {label}
+        </div>
+      )}
     </CommandItem>
+  )
+}
+
+function SearchBarItemSkeleton() {
+  return (
+    <div className="flex h-11 items-center justify-between px-2 py-3">
+      <div className="flex items-center gap-2">
+        <Skeleton className="size-5 rounded-sm" />
+        <Skeleton className="h-[15px] w-20 rounded-sm" />
+      </div>
+      <Skeleton className="h-3.5 w-[45px] rounded-sm" />
+    </div>
   )
 }
 
