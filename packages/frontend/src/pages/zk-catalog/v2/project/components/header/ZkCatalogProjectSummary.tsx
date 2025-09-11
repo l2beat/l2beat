@@ -146,7 +146,8 @@ function TechStackSection({
       <div className="rounded-sm border-divider md:border md:p-4">
         <TechStackCell
           techStack={techStack}
-          className="flex flex-row flex-wrap gap-6 py-0"
+          className="flex flex-row flex-wrap py-0 md:gap-6"
+          labelClassName="text-2xs mb-1.5"
         />
       </div>
     </div>
