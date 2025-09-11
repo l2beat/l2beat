@@ -9,7 +9,6 @@ export function getSearchBarProjectEntries<
     | 'scalingInfo'
     | 'daLayer'
     | 'daBridge'
-    | 'isZkCatalog'
     | 'isScaling'
     | 'isDaLayer'
     | 'isBridge'
@@ -17,7 +16,6 @@ export function getSearchBarProjectEntries<
 >(project: T, allProjects: T[]) {
   const results: SearchBarProject[] = []
   if (
-    !project.isZkCatalog &&
     !project.isScaling &&
     !project.isBridge &&
     !project.daLayer &&
@@ -35,15 +33,6 @@ export function getSearchBarProjectEntries<
     isUpcoming: false,
     tags: [project.slug],
   } satisfies Partial<SearchBarProject>
-
-  if (project.isZkCatalog) {
-    results.push({
-      ...common,
-      id: `${project.id}-zk-catalog`,
-      href: `/zk-catalog/${project.slug}`,
-      category: 'zkCatalog',
-    })
-  }
 
   if (project.isScaling) {
     results.push({
