@@ -14,12 +14,12 @@ import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
-import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
-import { ScalingDaTable } from './table/ScalingDaTable'
+import type { ScalingRiskDaEntry } from '~/server/features/scaling/risks/data-availability/getScalingRiskDaEntries'
+import { ScalingRiskDaTable } from './table/ScalingRiskDaTable'
 
-type Props = TabbedScalingEntries<ScalingDaEntry>
+type Props = TabbedScalingEntries<ScalingRiskDaEntry>
 
-export function ScalingDaTables(props: Props) {
+export function ScalingRiskDaTables(props: Props) {
   const filterEntries = useFilterEntries()
 
   const entries = {
@@ -58,19 +58,19 @@ export function ScalingDaTables(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <ScalingDaTable entries={entries.rollups} />
+            <ScalingRiskDaTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
-            <ScalingDaTable entries={entries.validiumsAndOptimiums} />
+            <ScalingRiskDaTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
             <OthersInfo />
-            <ScalingDaTable entries={entries.others} hideType />
+            <ScalingRiskDaTable entries={entries.others} hideType />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

@@ -28,6 +28,6 @@ export function getBadgeLink(
   }
 
   if (badge.action.type === 'selfDaHighlight') {
-    return `/scaling/data-availability?tab=${getScalingTab(project)}&highlight=${project.slug}`
+    return `/scaling/risk/data-availability?tab=${getScalingTab(project)}&highlight=${project.slug}`
   }
 }

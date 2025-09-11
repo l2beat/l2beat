@@ -13,22 +13,22 @@ import {
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
-import { getDaLayerRisks } from '../../data-availability/utils/getDaLayerRisks'
-import type { ProjectsEconomicSecurity } from '../../data-availability/utils/getDaProjectsEconomicSecurity'
-import { getDaProjectsEconomicSecurity } from '../../data-availability/utils/getDaProjectsEconomicSecurity'
+import { getDaLayerRisks } from '../../../data-availability/utils/getDaLayerRisks'
+import type { ProjectsEconomicSecurity } from '../../../data-availability/utils/getDaProjectsEconomicSecurity'
+import { getDaProjectsEconomicSecurity } from '../../../data-availability/utils/getDaProjectsEconomicSecurity'
 import {
   getDaProjectsTvs,
   pickTvsForProjects,
-} from '../../data-availability/utils/getDaProjectsTvs'
-import { getDaUsers } from '../../data-availability/utils/getDaUsers'
-import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
-import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import type { CommonScalingEntry } from '../getCommonScalingEntry'
-import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
-import { compareTvs } from '../tvs/utils/compareTvs'
+} from '../../../data-availability/utils/getDaProjectsTvs'
+import { getDaUsers } from '../../../data-availability/utils/getDaUsers'
+import type { ProjectChanges } from '../../../projects-change-report/getProjectsChangeReport'
+import { getProjectsChangeReport } from '../../../projects-change-report/getProjectsChangeReport'
+import type { CommonScalingEntry } from '../../getCommonScalingEntry'
+import { getCommonScalingEntry } from '../../getCommonScalingEntry'
+import { getProjectsLatestTvsUsd } from '../../tvs/getLatestTvsUsd'
+import { compareTvs } from '../../tvs/utils/compareTvs'
 
-export async function getScalingDaEntries() {
+export async function getScalingRiskDaEntries() {
   const [
     tvs,
     projectsChangeReport,
@@ -73,7 +73,7 @@ export async function getScalingDaEntries() {
         getTvs,
         projectsEconomicSecurity,
       )
-      return getScalingDaEntry(
+      return getScalingRiskDaEntry(
         project,
         risks,
         daLayers,
@@ -88,7 +88,7 @@ export async function getScalingDaEntries() {
   return groupByScalingTabs(entries)
 }
 
-export interface ScalingDaEntry extends CommonScalingEntry {
+export interface ScalingRiskDaEntry extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem | undefined
   dataAvailability: ProjectScalingDa
   stacks: ProjectScalingStack[] | undefined
@@ -102,7 +102,7 @@ export interface ScalingDaEntry extends CommonScalingEntry {
     | undefined
 }
 
-function getScalingDaEntry(
+function getScalingRiskDaEntry(
   project: Project<
     'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
     'customDa'
@@ -112,7 +112,7 @@ function getScalingDaEntry(
   changes: ProjectChanges,
   tvs: number | undefined,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
-): ScalingDaEntry {
+): ScalingRiskDaEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
     dataAvailability: project.scalingDa,

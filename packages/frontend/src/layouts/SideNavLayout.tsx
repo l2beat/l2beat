@@ -89,7 +89,7 @@ const groups = compact<NavGroup>([
           {
             title: 'Data Availability',
             shortTitle: 'DA',
-            href: '/scaling/data-availability',
+            href: '/scaling/risk/data-availability',
           },
           {
             title: 'State Validation',

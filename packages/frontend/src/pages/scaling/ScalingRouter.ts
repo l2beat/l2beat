@@ -7,10 +7,10 @@ import { validateRoute } from '~/utils/validateRoute'
 import { getScalingActivityData } from './activity/getScalingActivityData'
 import { getScalingArchivedData } from './archived/getScalingArchivedData'
 import { getScalingCostsData } from './costs/getScalingCostsData'
-import { getScalingDataAvailabilityData } from './data-availability/getScalingDataAvailabilityData'
 import { getScalingLivenessData } from './liveness/getScalingLivenessData'
 import { getScalingProjectData } from './project/getScalingProjectData'
 import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
+import { getScalingRiskDataAvailabilityData } from './risk/data-availability/getScalingRiskDataAvailabilityData'
 import { getScalingRiskData } from './risk/getScalingRiskData'
 import { getScalingRiskStateValidationData } from './risk/state-validation/getScalingRiskStateValidationData'
 import { getScalingSummaryData } from './summary/getScalingSummaryData'
@@ -63,6 +63,12 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
+  router.get('/scaling/risk/data-availability', async (req, res) => {
+    const data = await getScalingRiskDataAvailabilityData(req, manifest, cache)
+    const html = render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
   router.get(
     '/scaling/tvs',
     validateRoute({
@@ -81,12 +87,6 @@ export function createScalingRouter(
 
   router.get('/scaling/tvs/breakdown', async (req, res) => {
     const data = await getScalingTvsBreakdownData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/scaling/data-availability', async (req, res) => {
-    const data = await getScalingDataAvailabilityData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
