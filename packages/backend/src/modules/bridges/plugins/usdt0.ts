@@ -98,7 +98,6 @@ export class Usdt0Plugin implements BridgePlugin {
   }
 
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    
     if (!Usdt0OFTReceived.checkType(event)) return
 
     const oftSent = db.find(Usdt0OFTSent, { guid: event.args.guid })
