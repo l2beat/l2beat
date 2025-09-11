@@ -86,6 +86,18 @@ export const searchBarPages = withIndex([
     href: '/data-availability/throughput',
   },
   {
+    category: 'da',
+    name: 'Liveness',
+    tags: ['pages', 'da', 'data', 'availability', 'liveness'],
+    href: '/data-availability/liveness',
+  },
+  {
+    category: 'da',
+    name: 'Archived',
+    tags: ['pages', 'da', 'data', 'availability', 'archived'],
+    href: '/data-availability/archived',
+  },
+  {
     category: 'zkCatalog',
     name: 'ZK Catalog',
     href: '/zk-catalog',
