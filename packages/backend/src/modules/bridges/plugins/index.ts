@@ -1,24 +1,26 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { CCTPPlugin } from './CCTPPlugin'
-import { LayerZeroV2Plugin } from './layerzerov2'
-import { MayanMctpFastPlugin } from './MayanMCTPFastPlugin'
-import { MayanMctpPlugin } from './MayanMctpPlugin'
-import { MayanSwift } from './MayanSwift'
+import { CCTPPlugin } from './cctp'
+import { LayerZeroV2Plugin } from './layerzero-v2'
+import { MayanMctpPlugin } from './mayanmctp'
+import { MayanMctpFastPlugin } from './mayanmctp-fast'
+import { MayanSwiftPlugin } from './mayanswift'
 import { StargatePlugin } from './stargate'
-import { StargateV2BusPlugin } from './stargatev2bus'
-import { StargateV2TaxiPlugin } from './stargatev2taxi'
+import { StargateV2BusPlugin } from './stargate-v2-bus'
+import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
 import type { BridgePlugin } from './types'
 import { WormholeTokenBridgePlugin } from './WormholeTokenBridgePlugin'
+import { Usdt0Plugin } from './usdt0'
 import { WormholePlugin } from './wormhole'
 
 export function createBridgePlugins(logger: Logger): BridgePlugin[] {
   return [
-    new MayanSwift(),
-    new MayanMctpPlugin(),
-    new MayanMctpFastPlugin(),
+    new MayanSwiftPlugin(), // should be run before CCTP
+    new MayanMctpPlugin(), // should be run before CCTP
+    new MayanMctpFastPlugin(), // should be run before CCTP
     new CCTPPlugin(),
     new StargateV2BusPlugin(), // should be run before LayeyZeroV2
     new StargateV2TaxiPlugin(), // should be run before LayerZeroV2
+    new Usdt0Plugin(), // should be run before LayerZeroV2
     new LayerZeroV2Plugin(logger),
     new WormholeTokenBridgePlugin(), // should be run before Wormhole
     new WormholePlugin(logger),

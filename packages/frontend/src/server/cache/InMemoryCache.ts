@@ -94,9 +94,8 @@ export class InMemoryCache implements ICache {
         result,
         timestamp: UnixTime.now(),
       })
-    } catch (error) {
+    } catch {
       // If revalidation fails, we keep the stale data
-      console.error('Background revalidation failed:', error)
     }
   }
 
