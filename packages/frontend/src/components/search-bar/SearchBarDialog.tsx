@@ -169,7 +169,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                         // https://github.com/pacocoursey/cmdk/issues/171#issuecomment-1775421795
                         groupIndex === 0 && index === 0
                           ? '-'
-                          : `${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`
+                          : entryToValue(item)
                       }
                     >
                       {item.type === 'project' && (
@@ -225,6 +225,14 @@ function SearchBarItem({
       {label && <div className="ml-auto text-secondary text-xs">{label}</div>}
     </CommandItem>
   )
+}
+
+function entryToValue(entry: AnySearchBarEntry) {
+  if (entry.type === 'page') {
+    return `${entry.category}-${entry.name}-${entry.type}`
+  }
+
+  return `${entry.category}-${entry.id}-${entry.type}-${entry.kind}`
 }
 
 function entryToLabel(entry: AnySearchBarEntry) {
