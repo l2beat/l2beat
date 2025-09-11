@@ -7,10 +7,12 @@ export function TechStackCell({
   techStack,
   className,
   labelClassName,
+  tagWrapperClassName,
 }: {
   techStack: ProjectZkCatalogInfo['techStack']
   className?: string
   labelClassName?: string
+  tagWrapperClassName?: string
 }) {
   if (!techStack.zkVM && !techStack.finalWrap && !techStack.snark) {
     return <NoDataBadge />
@@ -21,12 +23,17 @@ export function TechStackCell({
     labelClassName,
   )
 
+  const mergedTagWrapperClassName = cn(
+    'flex flex-nowrap gap-x-[5px] gap-y-1 overflow-x-auto md:max-h-[50px] md:min-w-[250px] md:flex-wrap',
+    tagWrapperClassName,
+  )
+
   return (
     <div className={cn('space-y-2 py-4', className)}>
       {techStack.zkVM && (
         <div className="flex flex-col gap-0.5">
           <span className={mergedLabelClassName}>zkVM</span>
-          <div className="flex flex-nowrap gap-x-[5px] gap-y-1 overflow-x-auto md:max-h-[50px] md:min-w-[250px] md:flex-wrap">
+          <div className={mergedTagWrapperClassName}>
             {techStack.zkVM.map((zkVM, i) => (
               <TechStackTag key={`${zkVM.name}-${i}`} tag={zkVM} />
             ))}
@@ -36,7 +43,7 @@ export function TechStackCell({
       {techStack.snark && (
         <div className="flex flex-col gap-0.5">
           <span className={mergedLabelClassName}>SNARK</span>
-          <div className="flex flex-nowrap gap-x-[5px] gap-y-1 overflow-x-auto md:max-h-[50px] md:min-w-[250px] md:flex-wrap">
+          <div className={mergedTagWrapperClassName}>
             {techStack.snark.map((snark, i) => (
               <TechStackTag key={`${snark.name}-${i}`} tag={snark} />
             ))}
@@ -46,7 +53,7 @@ export function TechStackCell({
       {techStack.finalWrap && (
         <div className="flex flex-col gap-0.5">
           <span className={mergedLabelClassName}>Final wrap</span>
-          <div className="flex flex-nowrap gap-x-[5px] gap-y-1 overflow-x-auto md:max-h-[50px] md:min-w-[250px] md:flex-wrap">
+          <div className={mergedTagWrapperClassName}>
             {techStack.finalWrap.map((finalWrap, i) => (
               <TechStackTag key={`${finalWrap.name}-${i}`} tag={finalWrap} />
             ))}

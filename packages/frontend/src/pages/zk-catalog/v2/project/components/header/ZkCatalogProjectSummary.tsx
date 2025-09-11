@@ -148,6 +148,7 @@ function TechStackSection({
           techStack={techStack}
           className="flex flex-row flex-wrap py-0 md:gap-6"
           labelClassName="text-2xs mb-1.5"
+          tagWrapperClassName="flex-wrap"
         />
       </div>
     </div>
