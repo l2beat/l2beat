@@ -22,7 +22,7 @@ export const StargateV2OFTSentBusRode = createBridgeEventType<{
   amountSentLD: string
   amountReceivedLD: string
   amountSD: string
-}>('stargatev2.OFTSentBus')
+}>('stargatev2.OFTSentBusRode')
 
 export const StargateV2OFTSentTaxi = createBridgeEventType<{
   guid: string

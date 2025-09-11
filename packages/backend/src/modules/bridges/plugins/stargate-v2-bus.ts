@@ -33,56 +33,58 @@ export class StargateV2BusPlugin implements BridgePlugin {
       return
     }
 
-    const oftReceived = db.findAll(StargateV2OFTReceived, {
+    const oftReceivedBatch = db.findAll(StargateV2OFTReceived, {
       guid: busDriven.args.guid,
     })
 
-    const token = oftReceived[0].args.token
-    const destinationEid = oftReceived[0].args.destinationEid
+    // a batch is always for a single token and destinationEid
+    const token = oftReceivedBatch[0].args.token
+    const destinationEid = oftReceivedBatch[0].args.destinationEid
 
-    const oftSents = []
+    const oftSentBusRodeBatch = []
 
     for (
       let i = busDriven.args.startTicketId;
       i < busDriven.args.startTicketId + busDriven.args.numPassengers;
       i++
     ) {
-      const oftSent = db.find(StargateV2OFTSentBusRode, {
+      const oftSentBusRode = db.find(StargateV2OFTSentBusRode, {
         ticketId: i,
         destinationEid: destinationEid,
         token: token,
       })
-      if (!oftSent) {
+      if (!oftSentBusRode) {
         return
       }
 
-      oftSents.push(oftSent)
+      oftSentBusRodeBatch.push(oftSentBusRode)
     }
 
     const transfers: BridgeTransfer[] = []
-    for (const ticket of oftSents) {
-      const received = oftReceived.find(
+    for (const oftSentBusRode of oftSentBusRodeBatch) {
+      const matchedOftReceived = oftReceivedBatch.find(
         (o) =>
           // Bus is driven only for a single token
           // It is an edge case to have duplicate receivers in the same Bus
-          o.args.receiver.toLowerCase() === ticket.args.receiver.toLowerCase(),
+          o.args.receiver.toLowerCase() ===
+          oftSentBusRode.args.receiver.toLowerCase(),
       )
-      if (!received) {
+      if (!matchedOftReceived) {
         return
       }
 
       transfers.push({
         type: 'stargate-v2-bus.App',
-        events: [ticket, received],
+        events: [oftSentBusRode, matchedOftReceived],
         outbound: {
-          tx: ticket.ctx,
-          tokenAddress: ticket.args.tokenAddress,
-          amount: ticket.args.amountSentLD.toString(),
+          tx: oftSentBusRode.ctx,
+          tokenAddress: oftSentBusRode.args.tokenAddress,
+          amount: oftSentBusRode.args.amountSentLD.toString(),
         },
         inbound: {
-          tx: received.ctx,
-          tokenAddress: received.args.tokenAddress,
-          amount: received.args.amountReceivedLD.toString(),
+          tx: matchedOftReceived.ctx,
+          tokenAddress: matchedOftReceived.args.tokenAddress,
+          amount: matchedOftReceived.args.amountReceivedLD.toString(),
         },
       })
     }
