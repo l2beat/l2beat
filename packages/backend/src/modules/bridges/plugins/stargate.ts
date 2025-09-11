@@ -219,7 +219,8 @@ export class StargatePlugin implements BridgePlugin {
 }
 
 // Decode passenger bytes per encodePacked(uint16, bytes32, uint64, bool)
-// TODO: link to solidity source code
+// https://etherscan.io/address/0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980#code#F39#L6
+// https://etherscan.io/address/0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980#code#F39#L39
 export function decodeBusPassenger(encodedHex: string) {
   try {
     const reader = new BinaryReader(encodedHex)

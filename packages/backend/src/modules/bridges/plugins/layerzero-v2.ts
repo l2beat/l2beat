@@ -146,6 +146,10 @@ export const LAYERZERO_CONSTANTS = {
   RECEIVER_LENGTH: 32,
 } as const
 
+// https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F14#L41
+// https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F8#L8
+// https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F30#L53
+
 export function decodePacket(encodedHex: string) {
   try {
     const reader = new BinaryReader(encodedHex)
