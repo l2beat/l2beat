@@ -98,5 +98,59 @@
       "chain": "arbitrum",
       "tx": "0xb61d23e02b537e2bed19cf10e8d14c9d6a386649cd3ee103419e641b2a4202f6"
     }
+  ],
+  "layerzeromix": [
+    {
+      "chain": "base",
+      "tx": "0xc59b27455553b8a20f691327acf7cf0e14515d60c0b5dbea9ae7e06c5f3d47e5"
+    },
+    {
+      "chain": "base",
+      "tx": "0xdac6499f4b968b4330e297264fc0bf0eee4dd42f74a0604514132ade26d89b82"
+    },
+    {
+      "chain": "base",
+      "tx": "0xe29f0e3966732713f85eb140a0522223babb6616a245326dc9c53342d9be5acc"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x275c210329f04b7a6b413e725938d58cd5c4f36597d42d2fb1b27d6a1ad9d8bb"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xbdc64d28438d6be5252c997b9761eb08b2223db099959d4a2e5f3f6438e76242"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x9c4e3027ae29b5704a91b6f0e442416e1e56bd04f3c26638e95d2eb856d40ec8"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0xb61d23e02b537e2bed19cf10e8d14c9d6a386649cd3ee103419e641b2a4202f6"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x9b8bc656e135bcace1b4befe727b9b708199ba1c4640df5d3392d7b51286bc01"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xc3f745e5d599c9edf440ebb8cdc81328a6e6ab0454df1c5c8f007f29c013ea72"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xbc456cfa0f1e2d6e410f6317d026c23eba0bb2ac2f556ce3c7936b4aa6e7afbe"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x3cabb123406c909e712c68493a7c1f74452d21a28e9a5aee9443f4f497e1ca58"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x9bec261577671eb4293dd57bb7c137e4d28479550f70e97e89a8250344b20007"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+    }
   ]
 }

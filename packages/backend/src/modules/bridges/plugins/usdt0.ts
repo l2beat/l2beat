@@ -10,7 +10,6 @@ import {
   type MatchResult,
 } from './types'
 
-// USDT0 uses OFT events with the same signature as Stargate v2
 const parseOFTSent = createEventParser(
   'event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)',
 )
@@ -34,7 +33,7 @@ export const Usdt0OFTReceived = createBridgeEventType<{
 const NETWORKS = [
   {
     chain: 'ethereum',
-    adapter: EthereumAddress('0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee'),
+    adapter: EthereumAddress('0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee'), // special case: locking adapter (not relevant for the current decoder)
     tokenAddress: EthereumAddress('0xdAC17F958D2ee523a2206206994597C13D831ec7'),
   },
   {
@@ -76,6 +75,7 @@ export class Usdt0Plugin implements BridgePlugin {
   capture(input: LogToCapture) {
     const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
     if (!network) return
+    if (EthereumAddress(input.log.address) !== network.adapter) return
 
     const oftSent = parseOFTSent(input.log, [network.adapter])
     if (oftSent) {
@@ -98,10 +98,11 @@ export class Usdt0Plugin implements BridgePlugin {
   }
 
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!Usdt0OFTSent.checkType(event)) return
+    
+    if (!Usdt0OFTReceived.checkType(event)) return
 
-    const oftReceived = db.find(Usdt0OFTReceived, { guid: event.args.guid })
-    if (!oftReceived) return
+    const oftSent = db.find(Usdt0OFTSent, { guid: event.args.guid })
+    if (!oftSent) return
 
     const packetSent = db.find(PacketSent, { guid: event.args.guid })
     if (!packetSent) return
@@ -120,20 +121,19 @@ export class Usdt0Plugin implements BridgePlugin {
       transfers: [
         {
           type: 'usdt0.App',
-          events: [event, oftReceived],
+          events: [oftSent, event],
           outbound: {
-            tx: event.ctx,
-            tokenAddress: event.args.tokenAddress,
-            amount: event.args.amountSentLD.toString(),
+            tx: oftSent.ctx,
+            tokenAddress: oftSent.args.tokenAddress,
+            amount: oftSent.args.amountSentLD.toString(),
           },
           inbound: {
-            tx: oftReceived.ctx,
-            tokenAddress: oftReceived.args.tokenAddress,
-            amount: oftReceived.args.amountReceivedLD.toString(),
+            tx: event.ctx,
+            tokenAddress: event.args.tokenAddress,
+            amount: event.args.amountReceivedLD.toString(),
           },
         },
       ],
     }
   }
 }
-
