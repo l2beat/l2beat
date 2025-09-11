@@ -1,8 +1,7 @@
 {
   "bEIGENToken": {
     "hash": "0x06b65d2894679524c6c376c7f4f4de01c85bb91d59784505b3aca00b9e976a09",
-    "address": "0xF2b225815F70c9b327DC9db758A36c92A4279b17",
-    "chain": "ethereum",
+    "address": "eth:0xF2b225815F70c9b327DC9db758A36c92A4279b17",
     "blockNumber": 23083608
   }
 }

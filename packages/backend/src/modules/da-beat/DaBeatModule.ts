@@ -1,19 +1,14 @@
-import type { Logger } from '@l2beat/backend-tools'
-import type { Config } from '../../config'
-import type { Peripherals } from '../../peripherals/Peripherals'
-import type { Providers } from '../../providers/Providers'
-import type { Clock } from '../../tools/Clock'
-import type { ApplicationModule } from '../ApplicationModule'
+import type { ApplicationModule, ModuleDependencies } from '../types'
 import { DaBeatPricesRefresher } from './DaBeatPricesRefresher'
 import { DaBeatStakeRefresher } from './DaBeatStakeRefresher'
 
-export function createDaBeatModule(
-  config: Config,
-  logger: Logger,
-  peripherals: Peripherals,
-  providers: Providers,
-  clock: Clock,
-): ApplicationModule | undefined {
+export function createDaBeatModule({
+  config,
+  logger,
+  peripherals,
+  providers,
+  clock,
+}: ModuleDependencies): ApplicationModule | undefined {
   const daBeatConfig = config.daBeat
   if (!daBeatConfig) {
     logger.info('DABeat module disabled')

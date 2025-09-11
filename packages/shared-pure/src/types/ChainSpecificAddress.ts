@@ -98,7 +98,8 @@ ChainSpecificAddress.from = function from(
   shortChainName: string,
   pureAddress: string | EthereumAddress,
 ) {
-  return ChainSpecificAddress(`${shortChainName}:${pureAddress}`)
+  const pureAddressPadded = EthereumAddress.from(pureAddress)
+  return ChainSpecificAddress(`${shortChainName}:${pureAddressPadded}`)
 }
 
 ChainSpecificAddress.fromLong = function from(

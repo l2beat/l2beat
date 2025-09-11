@@ -1,20 +1,17 @@
 {
   "L1VerifierFflonk": {
     "hash": "0x7199ba2c08de647ce48cb5748d0bc975132606e38c5627ae23ff9b385dcf3b2d",
-    "address": "0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF",
-    "chain": "ethereum",
+    "address": "eth:0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF",
     "blockNumber": 22423939
   },
   "L1VerifierFflonk_v28": {
     "hash": "0xb5da71a3ae0b3e2d792830222a0478c730acc075103b898ec899436fcc04323b",
-    "address": "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
-    "chain": "ethereum",
+    "address": "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
     "blockNumber": 22775246
   },
   "L1VerifierFflonk_v28_1": {
     "hash": "0xbdb60551820d621f81243ecaf8ec52d6fb937ab843ab674a3529b2bdefae7154",
-    "address": "0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5",
-    "chain": "gateway",
+    "address": "gateway:0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5",
     "blockNumber": 17025
   }
 }

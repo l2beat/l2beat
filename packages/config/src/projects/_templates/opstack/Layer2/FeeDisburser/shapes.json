@@ -1,8 +1,7 @@
 {
   "FeeDisburser.sol": {
     "hash": "0x62c0410a08a90b339fd9d345a563e2f93aa3afb72082cb32c23ab6dee23706ed",
-    "address": "0x45969D00739d518f0Dde41920B67cE30395135A0",
-    "chain": "base",
+    "address": "base:0x45969D00739d518f0Dde41920B67cE30395135A0",
     "blockNumber": 29605802
   }
 }

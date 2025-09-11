@@ -10,7 +10,6 @@
     "base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47",
     "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
     "eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
-    "eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881",
     "eth:0x1041D127b2d4BC700F0F563883bC689502606918"
   ],
   "names": {
@@ -33,6 +32,9 @@
     "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "PriceFeed"
   },
   "overrides": {
+    "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": {
+      "description": "Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint."
+    },
     "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6": {
       "ignoreRelatives": ["endpoint", "oApp", "owner"],
       "fields": {
@@ -196,11 +198,8 @@
     "eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881": {
       "ignoreRelatives": ["rewardTokens", "staking"]
     },
-    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": {
-      "ignoreRelatives": ["workerFeeLib", "priceFeed"]
-    },
     "eth:0x1a44076050125825900e736c501f859c50fE728c": {
-      "description": "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.",
+      "description": "A contract that is part of the LayerZero messaging protocol. The Stargate OApp owner can configure verification (MessageLib) and execution settings here.",
       "fields": {
         "getRegisteredLibraries": {
           "description": "MessageLibs registered for this Endpoint, enforcing the OApp owner's custom security stack.",
@@ -235,62 +234,46 @@
       }
     },
     "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": {
-      "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "fields": {
         "getUlnConfig": {
           "description": "The verification config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])",
           "handler": {
             "type": "call",
             "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
-          }
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "verify Stargate messages sent via LayerZero."
+            }
+          ]
         }
       }
     },
     "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": {
-      "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "fields": {
         "getExecutorConfig": {
           "description": "The executor config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [maxMessageSize, Executor])",
           "handler": {
             "type": "call",
-            "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
-          }
+            "args": ["0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881", 30110]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "execute Stargate messages sent via LayerZero at the destination."
+            }
+          ]
         }
       }
     },
-    "eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980": {
-      "description": "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes"
+    "eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18": {
+      "description": "One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.",
+      "ignoreRelatives": ["workerFeeLib", "priceFeed"]
     },
-    "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d": {
-      "fields": {
-        "maxAssetId": {
-          "description": "The highest currently registered assetID"
-        },
-        "pools": {
-          "handler": {
-            "type": "array",
-            "method": "stargateImpls",
-            "startIndex": 1,
-            "length": "{{ maxAssetId }}"
-          }
-        }
-      }
-    },
-    "eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": {
-      "ignoreRelatives": [
-        "endpoint",
-        "getAddressConfig",
-        "lpToken",
-        "owner",
-        "token"
-      ],
-      "ignoreInWatchMode": [
-        "plannerFee",
-        "poolBalance",
-        "treasuryFee",
-        "tvl",
-        "getTransferGasLimit"
-      ]
+    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": {
+      "description": "One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.",
+      "ignoreRelatives": ["workerFeeLib", "priceFeed"]
     }
   }
 }

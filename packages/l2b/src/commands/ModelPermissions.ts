@@ -45,7 +45,7 @@ export const ModelPermissions = command({
 
     let projects = [args.project]
     if (args.project === 'all') {
-      projects = configReader.readAllDiscoveredProjects().map((x) => x.project)
+      projects = configReader.readAllDiscoveredProjects()
     }
     for (const project of projects) {
       await modelPermissionsCommand(

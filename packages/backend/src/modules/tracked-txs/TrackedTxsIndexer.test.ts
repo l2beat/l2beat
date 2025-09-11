@@ -3,6 +3,7 @@ import type { Database } from '@l2beat/database'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import type { TrackedTxProject } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
 import type { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
@@ -23,7 +24,7 @@ describe(TrackedTxsIndexer.name, () => {
     _TEST_ONLY_resetUniqueIds()
   })
   describe(TrackedTxsIndexer.prototype.multiUpdate.name, () => {
-    it('fetches txs and calls updaters', async () => {
+    it('fetches txs, calls updaters and syncs metadata', async () => {
       const from = 100
       const to = 300
 
@@ -40,19 +41,43 @@ describe(TrackedTxsIndexer.name, () => {
         update: mockFn(async () => {}),
       })
 
-      const indexer = getMockTrackedTxsIndexer({
-        updaters: [livenessUpdater, l2costsUpdater],
-        trackedTxsClient,
+      const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+        updateSyncedUntil: mockFn(async () => {}),
       })
 
-      const parameters: Partial<TrackedTxConfigEntry> = {
-        projectId: ProjectId('test'),
-      }
+      const indexer = getMockTrackedTxsIndexer({
+        updaters: [livenessUpdater, l2costsUpdater],
+        syncMetadataRepository,
+        trackedTxsClient,
+        projects: [
+          mockObject<TrackedTxProject>({
+            id: ProjectId('test1'),
+            isArchived: false,
+          }),
+          mockObject<TrackedTxProject>({
+            id: ProjectId('test2'),
+            isArchived: false,
+          }),
+          mockObject<TrackedTxProject>({
+            id: ProjectId('test3'),
+            isArchived: false,
+          }),
+        ],
+      })
 
       const configurations: Configuration<TrackedTxConfigEntry>[] = [
-        actual<TrackedTxConfigEntry>('a', 100, null, parameters),
-        actual<TrackedTxConfigEntry>('b', 100, null, parameters),
-        actual<TrackedTxConfigEntry>('c', 100, null, parameters),
+        actual<TrackedTxConfigEntry>('a', 100, null, {
+          projectId: ProjectId('test1'),
+          type: 'liveness',
+        }),
+        actual<TrackedTxConfigEntry>('b', 100, null, {
+          projectId: ProjectId('test2'),
+          type: 'l2costs',
+        }),
+        actual<TrackedTxConfigEntry>('c', 100, null, {
+          projectId: ProjectId('test3'),
+          type: 'liveness',
+        }),
       ]
 
       const saveData = await indexer.multiUpdate(from, to, configurations)
@@ -72,6 +97,18 @@ describe(TrackedTxsIndexer.name, () => {
         1,
         trackedTxResults.filter((tx) => tx.type === 'l2costs'),
       )
+      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenNthCalledWith(
+        1,
+        'liveness',
+        ['test1', 'test3'],
+        UnixTime(to),
+      )
+      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenNthCalledWith(
+        2,
+        'l2costs',
+        ['test2'],
+        UnixTime(to),
+      )
       expect(safeHeight).toEqual(to)
     })
 
@@ -86,10 +123,17 @@ describe(TrackedTxsIndexer.name, () => {
 
       const indexer = getMockTrackedTxsIndexer({
         trackedTxsClient,
+        projects: [
+          mockObject<TrackedTxProject>({
+            id: ProjectId('test'),
+            isArchived: false,
+          }),
+        ],
       })
 
       const parameters: Partial<TrackedTxConfigEntry> = {
         projectId: ProjectId('test'),
+        type: 'liveness',
       }
 
       const configurations: Configuration<TrackedTxConfigEntry>[] = [
@@ -107,6 +151,61 @@ describe(TrackedTxsIndexer.name, () => {
       )
       expect(safeHeight).toEqual(expected)
     })
+
+    it('filters out archived projects', async () => {
+      const from = 100
+      const to = 300
+
+      const trackedTxResults = getMockTrackedTxResults()
+      const trackedTxsClient = mockObject<TrackedTxsClient>({
+        getData: async () => trackedTxResults,
+      })
+      const l2costsUpdater = mockObject<L2CostsUpdater>({
+        type: 'l2costs',
+        update: mockFn(async () => {}),
+      })
+      const livenessUpdater = mockObject<LivenessUpdater>({
+        type: 'liveness',
+        update: mockFn(async () => {}),
+      })
+
+      const indexer = getMockTrackedTxsIndexer({
+        updaters: [livenessUpdater, l2costsUpdater],
+        trackedTxsClient,
+        projects: [
+          mockObject<TrackedTxProject>({
+            id: ProjectId('test'),
+            isArchived: false,
+          }),
+          mockObject<TrackedTxProject>({
+            id: ProjectId('archived'),
+            isArchived: true,
+          }),
+        ],
+      })
+
+      const parameters: Partial<TrackedTxConfigEntry> = {
+        projectId: ProjectId('test'),
+      }
+
+      const configurations: Configuration<TrackedTxConfigEntry>[] = [
+        actual<TrackedTxConfigEntry>('a', 100, null, parameters),
+        actual<TrackedTxConfigEntry>('b', 100, null, parameters),
+        actual<TrackedTxConfigEntry>('c', 100, null, parameters),
+        actual<TrackedTxConfigEntry>('d', 100, null, {
+          projectId: ProjectId('archived'),
+        }),
+      ]
+
+      await indexer.multiUpdate(from, to, configurations)
+
+      expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
+        1,
+        [configurations[0], configurations[1], configurations[2]],
+        UnixTime(from),
+        UnixTime(to),
+      )
+    })
   })
 
   describe(TrackedTxsIndexer.prototype.removeData.name, () => {
@@ -121,6 +220,12 @@ describe(TrackedTxsIndexer.name, () => {
       const indexer = getMockTrackedTxsIndexer({
         l2CostRepository,
         livenessRepository,
+        projects: [
+          mockObject<TrackedTxProject>({
+            id: ProjectId('test'),
+            isArchived: false,
+          }),
+        ],
       })
 
       const configurations: RemovalConfiguration[] = [
@@ -151,9 +256,11 @@ function getMockTrackedTxsIndexer(params: {
   indexerService?: IndexerService
   configurations?: Configuration<TrackedTxConfigEntry>[]
   trackedTxsClient?: TrackedTxsClient
-  updaters?: TxUpdaterInterface[]
+  updaters?: TxUpdaterInterface<'liveness' | 'l2costs'>[]
   livenessRepository?: Database['liveness']
   l2CostRepository?: Database['l2Cost']
+  syncMetadataRepository?: Database['syncMetadata']
+  projects: TrackedTxProject[]
 }) {
   const {
     indexerService,
@@ -162,6 +269,8 @@ function getMockTrackedTxsIndexer(params: {
     updaters,
     l2CostRepository,
     livenessRepository,
+    syncMetadataRepository,
+    projects,
   } = params
 
   return new TrackedTxsIndexer({
@@ -171,15 +280,20 @@ function getMockTrackedTxsIndexer(params: {
     db: mockDatabase({
       l2Cost: l2CostRepository ?? mockObject<Database['l2Cost']>(),
       liveness: livenessRepository ?? mockObject<Database['liveness']>(),
+      syncMetadata:
+        syncMetadataRepository ??
+        mockObject<Database['syncMetadata']>({
+          updateSyncedUntil: mockFn(async () => {}),
+        }),
     }),
     indexerService: indexerService ?? mockObject<IndexerService>({}),
     trackedTxsClient: trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
     updaters: updaters ?? [
-      mockObject<TxUpdaterInterface>({
+      mockObject<TxUpdaterInterface<'liveness'>>({
         type: 'liveness',
         update: async () => {},
       }),
-      mockObject<TxUpdaterInterface>({
+      mockObject<TxUpdaterInterface<'l2costs'>>({
         type: 'l2costs',
         update: async () => {},
       }),
@@ -187,6 +301,7 @@ function getMockTrackedTxsIndexer(params: {
     logger: Logger.SILENT,
     parents: [],
     serializeConfiguration: () => '',
+    projects,
   })
 }
 

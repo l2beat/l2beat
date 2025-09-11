@@ -18,6 +18,7 @@ import { ChartMilestones } from './ChartMilestones'
 import { ChartNoDataSourceState } from './ChartNoDataSourceState'
 import { ChartNoDataState } from './ChartNoDataState'
 import { ChartProjectLogo } from './ChartProjectLogo'
+import { sortLegend } from './utils/sortLegend'
 
 export type ChartMeta = Record<
   string,
@@ -228,12 +229,10 @@ function ChartLegendContent({
   payload,
   verticalAlign = 'bottom',
   nameKey,
-  reverse = false,
   children,
 }: React.ComponentProps<'div'> &
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
     nameKey?: string
-    reverse?: boolean
   }) {
   const id = React.useId()
 
@@ -251,7 +250,7 @@ function ChartLegendContent({
     return null
   }
 
-  const actualPayload = reverse ? [...payload].reverse() : payload
+  const actualPayload = sortLegend(meta, payload, nameKey)
   return (
     <div
       className={cn(

@@ -1,8 +1,7 @@
 {
   "Store": {
     "hash": "0x6f43084dec3aeec07252527bcb44d7bfafac569030fc87e32d6a5661a0f3e0f1",
-    "address": "0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
-    "chain": "ethereum",
+    "address": "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
     "blockNumber": 22780541
   }
 }

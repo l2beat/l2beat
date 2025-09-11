@@ -6,6 +6,7 @@ import {
 } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
 import type { RenderData } from '~/ssr/types'
 import type { SsrHelpers } from '~/trpc/server'
 import { getSsrHelpers } from '~/trpc/server'
@@ -31,7 +32,12 @@ export async function getDataAvailabilityProjectData(
       manifest,
       metadata: getMetadata(manifest, {
         title: `${projectEntry.name} - L2BEAT`,
-        description: projectEntry.description,
+        description: getProjectMetadataDescription({
+          name: projectEntry.name,
+          display: {
+            description: projectEntry.description,
+          },
+        }),
         openGraph: {
           url,
           image: `/meta-images/data-availability/projects/${params.layer}/opengraph-image.png`,
@@ -56,7 +62,14 @@ async function getProjectEntry(
   const layer = await ps.getProject({
     slug: params.layer,
     select: ['daLayer', 'display', 'statuses'],
-    optional: ['isUpcoming', 'milestones', 'archivedAt', 'colors'],
+    optional: [
+      'isUpcoming',
+      'milestones',
+      'archivedAt',
+      'colors',
+      'trackedTxsConfig',
+      'livenessConfig',
+    ],
   })
 
   if (!layer) return

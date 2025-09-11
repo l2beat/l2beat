@@ -1,62 +1,52 @@
 {
   "ERC20Inbox": {
     "hash": "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92",
-    "address": "0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2",
-    "chain": "ethereum",
+    "address": "eth:0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2",
     "blockNumber": 22188285
   },
   "ERC20Inbox_apechain": {
     "hash": "0xb2c117c2e00734a82fe4ab27d5fe91a6e152c06bbcdbf83db021ad32b6be3e60",
-    "address": "0x85a77E293a81d4C35F304951e41378E5e43d1f53",
-    "chain": "ethereum",
+    "address": "eth:0x85a77E293a81d4C35F304951e41378E5e43d1f53",
     "blockNumber": 22188285
   },
   "ERC20Inbox_decimals-7702": {
     "hash": "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3",
-    "address": "0x6C051397fee2d79ccf92d1f3c5c6547fEBD838F4",
-    "chain": "ethereum",
+    "address": "eth:0x6C051397fee2d79ccf92d1f3c5c6547fEBD838F4",
     "blockNumber": 22188285
   },
   "Inbox": {
     "hash": "0x457c34030000c1767f1ef518c365b671181e9e701db9642be8572edc1c44068c",
-    "address": "0xc235c5194f2404234fc7C99b4dd15289BB735Cf5",
-    "chain": "ethereum",
+    "address": "eth:0xc235c5194f2404234fc7C99b4dd15289BB735Cf5",
     "blockNumber": 22188285
   },
   "Inbox_BoLD": {
     "hash": "0x421aa98d340c2ad3e475ce29bb1e72660c213f0997591e567c0fd3d3ae2365a8",
-    "address": "0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10",
-    "chain": "ethereum",
+    "address": "eth:0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10",
     "blockNumber": 22188285
   },
   "Inbox_arbitrum": {
     "hash": "0x6014bf86ee4c408054ad942b00365111c902b30d650ad8ed97b0cd56ca1d1e20",
-    "address": "0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94",
-    "chain": "ethereum",
+    "address": "eth:0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94",
     "blockNumber": 22188285
   },
   "Inbox_muster": {
     "hash": "0x84cd273689e720a0b7c657b57d9fb127684f3abb87fc4b337a2f0decd9464120",
-    "address": "0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C",
-    "chain": "ethereum",
+    "address": "eth:0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C",
     "blockNumber": 22188285
   },
   "Inbox_parallel": {
     "hash": "0x99872d99b7163c705118e0a168f99728c3c7089581779077707271cdaad30be3",
-    "address": "0x1162084C3C6575121146582Db5BE43189e8CEe6b",
-    "chain": "ethereum",
+    "address": "eth:0x1162084C3C6575121146582Db5BE43189e8CEe6b",
     "blockNumber": 22188285
   },
   "Inbox_superposition": {
     "hash": "0x086015cafdc216efb33a7f807a00f5a4754faaa6ba74a8f21e0f4601ae8e198b",
-    "address": "0xD2ed924DC094abBE7ea47D872C2a8625A803c2c8",
-    "chain": "arbitrum",
+    "address": "arb1:0xD2ed924DC094abBE7ea47D872C2a8625A803c2c8",
     "blockNumber": 322488866
   },
   "Inbox_kinto": {
     "hash": "0xa1b21b35992f15b6195b22f1c21b8e944919e03edcdc8342a98fcee0ef3f44c0",
-    "address": "0x296339ED40ec80746b239b04dE943bb8619784b7",
-    "chain": "ethereum",
+    "address": "eth:0x296339ED40ec80746b239b04dE943bb8619784b7",
     "blockNumber": 22437620
   }
 }

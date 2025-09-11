@@ -1,8 +1,7 @@
 {
   "LivenessGuard": {
     "hash": "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05",
-    "address": "0x24424336F04440b1c28685a38303aC33C9D14a25",
-    "chain": "ethereum",
+    "address": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
     "blockNumber": 22995199
   }
 }

@@ -7,21 +7,14 @@ import {
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('stargatev2')
 
-const discoveredOAppOwners = [
-  ...discovery.getPermissionedAccounts('CreditMessaging', 'owner'),
-  ...discovery.getPermissionedAccounts('TokenMessagingEthereum', 'owner'),
-]
-const discoveredDelegates = [
-  ...discovery.getPermissionedAccounts(
-    'EndpointV2',
-    'delegatesCreditMessaging',
-  ),
-  ...discovery.getPermissionedAccounts('EndpointV2', 'delegatesTokenMessaging'),
-]
 const discoveredSendLib = <string>(
   discovery.getContractValue('EndpointV2', 'getSendLibrary')
 )
@@ -41,6 +34,14 @@ const discoveredExecutorConfig = discovery.getContractValue<{
   maxMessageSize: number
   executor: string
 }>('SendUln302', 'getExecutorConfig')
+
+assert(
+  ChainSpecificAddress(discoveredReceiveLib.lib) ===
+    discovery.getContract('ReceiveUln302').address &&
+    ChainSpecificAddress(discoveredSendLib) ===
+      discovery.getContract('SendUln302').address,
+  "Update the contracts and risk section, the endpoint's message libraries have changed.",
+)
 
 export const stargatev2: Bridge = {
   type: 'bridge',
@@ -175,6 +176,13 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     escrows: [
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
+          'eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c',
+        ),
+        tokens: ['EURC'],
+        description: 'Stargate liquidity pool for EURC on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(
           'eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7',
         ),
         tokens: ['USDC'],
@@ -253,6 +261,13 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
+          'base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2',
+        ),
+        tokens: ['EURC'],
+        description: 'Stargate liquidity pool for EURC on Base.',
+      }),
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(
           'base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26',
         ),
         tokens: ['USDC'],
@@ -289,53 +304,7 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     ],
   },
   contracts: {
-    addresses: {
-      ethereum: [
-        discovery.getContractDetails(
-          'TokenMessagingEthereum',
-          "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately for higher fees.",
-        ),
-        discovery.getContractDetails(
-          'CreditMessaging',
-          'A LayerZero OApp owned by Stargate that is used for the virtual accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.',
-        ),
-        discovery.getContractDetails(
-          'Stargate Verifier',
-          'One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.',
-        ),
-        discovery.getContractDetails(
-          'Nethermind Verifier',
-          'One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.',
-        ),
-      ],
-    },
-    ...(() => {
-      assert(
-        ChainSpecificAddress(discoveredReceiveLib.lib) ===
-          discovery.getContract('ReceiveUln302').address &&
-          ChainSpecificAddress(discoveredSendLib) ===
-            discovery.getContract('SendUln302').address,
-        "Update the contracts and risk section, the endpoint's message libraries have changed.",
-      )
-      return [
-        discovery.getContractDetails(
-          'EndpointV2',
-          'A contract that is part of the LayerZero messaging protocol. The Stargate OApp owner can configure verification and execution settings here.',
-        ),
-        discovery.getContractDetails(
-          'Stargate Verifier',
-          'One out of the two DVN contracts that are currently registered to verify all cross chain messages.',
-        ),
-        discovery.getContractDetails(
-          'Nethermind Verifier',
-          'One out of the two DVN contracts that are currently registered to verify all cross chain messages.',
-        ),
-        discovery.getContractDetails(
-          'LayerZero Executor',
-          'Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint.',
-        ),
-      ]
-    })(),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [
       {
         category: 'Funds can be stolen if',
@@ -347,46 +316,6 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
       },
     ],
   },
-  permissions: {
-    ethereum: {
-      actors: [
-        ...(() => {
-          assert(
-            discoveredOAppOwners[0].address ===
-              discoveredOAppOwners[1].address &&
-              discoveredOAppOwners[1].address ===
-                discoveredDelegates[0].address &&
-              discoveredDelegates[0].address ===
-                discoveredDelegates[1].address &&
-              discoveredDelegates[1].address ===
-                discovery.getContract('Stargate Multisig').address,
-            'Update the permissions and risk section, the OApp owners or delegates are different from the Stargate Multisig.',
-          )
-          return [
-            discovery.getMultisigPermission(
-              'Stargate Multisig',
-              'Owner of all pools and the associated OApps, can create new pools and endpoints, set fees and modify the OApp configuration to change DVNs and executors.',
-            ),
-          ]
-        })(),
-        discovery.getMultisigPermission(
-          'LayerZero Multisig',
-          'The owner of the LayerZero contracts EndpointV2, Uln302 and Treasury. Can register and set default MessageLibraries (used e.g. for verification of Stargate messages) and change the Treasury address (LayerZero fee collector).',
-        ),
-        discovery.getPermissionDetails(
-          'Planner',
-          discovery.getPermissionedAccounts('CreditMessaging', 'planner'),
-          'Central actor who can move credits (see CreditMessaging contract) among chains and thus move liquidity claims of the Stargate pools. Abuse of this permission can impact liveness but not security.',
-        ),
-      ],
-    },
-  },
-  discoveryInfo: getDiscoveryInfo([
-    discovery,
-    discovery,
-    discovery,
-    discovery,
-    discovery,
-    discovery,
-  ]),
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

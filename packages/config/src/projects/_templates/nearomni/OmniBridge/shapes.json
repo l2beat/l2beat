@@ -1,8 +1,7 @@
 {
   "OmniBridge": {
     "hash": "0xe42ac15db175c2ae87aede625244b9c437f4c90625b9f70e20f9b85ee1b4e545",
-    "address": "0x53785920165FbDf33B3F56885DBC8D12854ac414",
-    "chain": "ethereum",
+    "address": "eth:0x53785920165FbDf33B3F56885DBC8D12854ac414",
     "blockNumber": 22517159
   }
 }

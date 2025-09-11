@@ -1,50 +1,42 @@
 {
   "FaultDisputeGame_v1_2_0": {
     "hash": "0xfcfd8e9eb9d6ec1518326de5385476d4d26b0682d70267add0084193ae403652",
-    "address": "0xB6846927447e4764acd53b0b354BEd939f9220d7",
-    "chain": "ethereum",
+    "address": "eth:0xB6846927447e4764acd53b0b354BEd939f9220d7",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_3_0": {
     "hash": "0x6a8cfd738d026b64f2e5aaaf5faac411dcdc8c0d8ef834587d82144340812a2c",
-    "address": "0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
-    "chain": "ethereum",
+    "address": "eth:0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_3_1": {
     "hash": "0xa13987d877e8aa4b0eabca173cb1a1050db47b0a5f0c82957392d483bbd419cf",
-    "address": "0x876e8eeE292F23F163C9bCA406eDD65bEAEFBEBC",
-    "chain": "ethereum",
+    "address": "eth:0x876e8eeE292F23F163C9bCA406eDD65bEAEFBEBC",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_3_1_base": {
     "hash": "0x823cda7296b41d649016e84fff45bf6a5200966fbef6c8f5ec451ccd231e9ead",
-    "address": "0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e",
-    "chain": "ethereum",
+    "address": "eth:0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_3_1_beta2": {
     "hash": "0xbd6116af9840987ef3c83075917f47592d6b1a13143aa7172a578125bdc983cf",
-    "address": "0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA",
-    "chain": "ethereum",
+    "address": "eth:0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_4_1": {
     "hash": "0xf5a782e7a87f4bc9ee32a988e6e97e11e371861c87f91e4563897a8e73c92b2e",
-    "address": "0x69361c9134D620B704C2a72c58523a4373eCe86f",
-    "chain": "ethereum",
+    "address": "eth:0x69361c9134D620B704C2a72c58523a4373eCe86f",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_4_1_base": {
     "hash": "0x20da1f21faca7c3b0d3794eeb651ae63540f2833b682c03552076e940d15e747",
-    "address": "0xAB91FB6cef84199145133f75cBD96B8a31F184ED",
-    "chain": "ethereum",
+    "address": "eth:0xAB91FB6cef84199145133f75cBD96B8a31F184ED",
     "blockNumber": 22437733
   },
   "FaultDisputeGame_v3_5_0": {
     "hash": "0x825c4efedd1d48e3087fc99ff4e29a742c8e2a95498e4165e580f93ae5d23e74",
-    "address": "0xd73Dd0F5665055B03eA0bFcac49bd4d26F1FFA4F",
-    "chain": "ethereum",
+    "address": "eth:0xd73Dd0F5665055B03eA0bFcac49bd4d26F1FFA4F",
     "blockNumber": 22995199
   }
 }

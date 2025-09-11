@@ -30,3 +30,4 @@ packages/l2b/**/cache/
 packages/config/cache/
 packages/backend/scripts/tvs/breakdown.json
 packages/backend/scripts/tvs/local-data.json
+packages/uops-dashboard/src/chains.json

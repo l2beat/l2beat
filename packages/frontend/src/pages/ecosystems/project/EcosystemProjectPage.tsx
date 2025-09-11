@@ -106,6 +106,7 @@ export function EcosystemProjectPage({
                   className="col-span-12 md:col-span-6 min-[1440px]:col-span-4"
                 />
                 <EcosystemsProjectsChart
+                  id={ecosystem.id}
                   data={ecosystem.projectsChartData}
                   ecosystemMilestones={ecosystem.ecosystemMilestones}
                   className="col-span-12 md:col-span-6 min-[1440px]:col-span-12"

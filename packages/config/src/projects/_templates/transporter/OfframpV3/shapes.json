@@ -1,8 +1,7 @@
 {
   "OfframpV3": {
     "hash": "0xb1f199a7932a8774b5c00ebb077762c4f11b71ec8e5ee8048b1cfff9cbe76735",
-    "address": "0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-    "chain": "ethereum",
+    "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
     "blockNumber": 23147220
   }
 }

@@ -35,12 +35,10 @@ export interface DiscoveryRunnerOptions {
   retryDelayMs?: number
 }
 
-export interface DiscoveryChainRunResult {
+export interface DiscoveryRunResult {
   discovery: DiscoveryOutput
   flatSources: Record<string, string>
 }
-
-export type DiscoveryRunResult = Record<string, DiscoveryChainRunResult>
 
 // 10 minutes
 const MAX_RETRIES = 30
@@ -68,7 +66,7 @@ export class DiscoveryRunner {
     configReader ??= new ConfigReader(discoveryPaths.discovery)
     const rawConfig = configReader.readRawConfig(projectName)
 
-    let toDiscover: { project: string }[] = []
+    let toDiscover: string[] = []
     if (rawConfig.modelCrossChainPermissions) {
       logger.info('Discovering dependencies for cross-chain modelling')
       toDiscover = getDependenciesToDiscoverForProject(
@@ -82,7 +80,7 @@ export class DiscoveryRunner {
       )
     } else {
       logger.info('Discovering only current project - no cross-chain modelling')
-      toDiscover.push({ project: projectName })
+      toDiscover.push(projectName)
     }
 
     if (dependentDiscoveries !== 'useCurrentTimestamp') {
@@ -112,39 +110,31 @@ export class DiscoveryRunner {
       discoveryPaths,
       { debug: false },
     )
-    const projectChains = discoveries.getChains(projectName)
-    const result: DiscoveryRunResult = {}
-    for (const chain of projectChains) {
-      const projectDiscovery = discoveries.get(projectName, chain)
-      combinePermissionsIntoDiscovery(
-        projectDiscovery.discoveryOutput,
-        permissionsOutput,
-      )
+    const projectDiscovery = discoveries.get(projectName)
+    combinePermissionsIntoDiscovery(
+      projectDiscovery.discoveryOutput,
+      permissionsOutput,
+    )
 
-      assert(projectDiscovery.analysis)
-      // TODO: Should not be here - drop it and use implementation name once it's ready
-      // if somebody changes the name and decides to re-colorize
-      // then .flat folder will be incorrect
-      // Duplicated from saveDiscoveryResult.ts
-      const remappedResults = remapNames(
-        projectDiscovery.analysis,
-        projectDiscovery.discoveryOutput,
-      )
-      const flatSources = flattenDiscoveredSources(
-        remappedResults,
-        Logger.SILENT,
-      )
+    assert(projectDiscovery.analysis)
+    // TODO: Should not be here - drop it and use implementation name once it's ready
+    // if somebody changes the name and decides to re-colorize
+    // then .flat folder will be incorrect
+    // Duplicated from saveDiscoveryResult.ts
+    const remappedResults = remapNames(
+      projectDiscovery.analysis,
+      projectDiscovery.discoveryOutput,
+    )
+    const flatSources = flattenDiscoveredSources(remappedResults, Logger.SILENT)
 
-      result[chain] = {
-        discovery: withoutUndefinedKeys(projectDiscovery.discoveryOutput),
-        flatSources,
-      }
+    return {
+      discovery: withoutUndefinedKeys(projectDiscovery.discoveryOutput),
+      flatSources,
     }
-    return result
   }
 
   private async discoverMany(
-    toDiscover: { project: string }[],
+    toDiscover: string[],
     dependentDiscoveries: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
     configReader: ConfigReader,
     logger: Logger,
@@ -155,21 +145,20 @@ export class DiscoveryRunner {
       if (dependentDiscoveries === 'useCurrentTimestamp') {
         dependencyTimestamp = UnixTime.now()
       } else {
-        dependencyTimestamp =
-          dependentDiscoveries?.[dependency.project]?.timestamp
+        dependencyTimestamp = dependentDiscoveries?.[dependency]?.timestamp
 
         if (dependencyTimestamp === undefined) {
           // We rediscover on the past block number, but with current configs and dependencies.
           // Those dependencies might not have been referenced in the old discovery.
           // In that case we don't fail - the diff will show all those "added".
           logger.info(
-            `No block number found for dependency ${dependency.project}, skipping its rediscovery.`,
+            `No block number found for dependency ${dependency}, skipping its rediscovery.`,
           )
           continue
         }
       }
 
-      const dependencyConfig = configReader.readConfig(dependency.project)
+      const dependencyConfig = configReader.readConfig(dependency)
       logger.info(
         `Discovering ${dependencyConfig.name} at timestamp ${dependencyTimestamp}`,
       )
@@ -183,19 +172,20 @@ export class DiscoveryRunner {
         analysis.map((c) => ChainSpecificAddress.longChain(c.address)),
       )
 
+      const usedBlockNumbers: Record<string, number> = {}
       for (const chain of chains) {
         const provider = await this.allProviders.get(chain, dependencyTimestamp)
-
-        const discovery = toRawDiscoveryOutput(
-          chain,
-          this.templateService,
-          dependencyConfig,
-          dependencyTimestamp,
-          { [chain]: provider.blockNumber },
-          analysis,
-        )
-        discoveries.set(dependency.project, chain, discovery, analysis)
+        usedBlockNumbers[chain] = provider.blockNumber
       }
+
+      const discovery = toRawDiscoveryOutput(
+        this.templateService,
+        dependencyConfig,
+        dependencyTimestamp,
+        usedBlockNumbers,
+        analysis,
+      )
+      discoveries.set(dependency, discovery, analysis)
     }
     return discoveries
   }
@@ -327,7 +317,7 @@ function remapNames(
   discoveryOutput: DiscoveryOutput,
 ): Analysis[] {
   return results.map((entry) => {
-    if (entry.type === 'EOA') {
+    if (entry.type === 'EOA' || entry.type === 'Reference') {
       return entry
     }
 

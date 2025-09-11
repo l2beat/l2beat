@@ -17,7 +17,7 @@ import {
   run,
   string,
 } from 'cmd-ts'
-import { formatDuration } from '../../src/modules/shared/notifiers/utils/format'
+import { formatDuration } from '../../src/modules/anomalies/format'
 
 const ps = new ProjectService()
 

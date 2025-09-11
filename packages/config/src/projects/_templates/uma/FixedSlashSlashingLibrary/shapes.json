@@ -1,8 +1,7 @@
 {
   "FixedSlashSlashingLibrary": {
     "hash": "0xae8d83b47cd1a3ae469689823d95cebdc5498a4d9eb62fb5138331c198a23805",
-    "address": "0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
-    "chain": "ethereum",
+    "address": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
     "blockNumber": 22780541
   }
 }

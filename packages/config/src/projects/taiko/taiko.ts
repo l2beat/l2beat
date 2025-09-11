@@ -21,7 +21,6 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -306,7 +305,7 @@ export const taiko: ScalingProject = {
         'A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a block, and SGX (Geth) is mandatory. A block can be proved without providing a ZK proof as SGX (Geth) + SGX (Reth) is a valid combination.',
       sentiment: 'bad',
       value: 'Multi-proofs',
-      secondLine: formatExecutionDelay(taikoChainConfig.cooldownWindow),
+      executionDelay: taikoChainConfig.cooldownWindow,
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
@@ -359,7 +358,7 @@ export const taiko: ScalingProject = {
         references: [
           {
             title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-            url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
+            url: 'https://etherscan.io/address/0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8#code',
           },
         ],
         risks: [
@@ -389,11 +388,11 @@ export const taiko: ScalingProject = {
       references: [
         {
           title: 'TaikoL1.sol - Etherscan source code, proposeBatch function',
-          url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
+          url: 'https://etherscan.io/address/0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8#code',
         },
         {
           title: 'PreconfWhitelist.sol - Etherscan source code',
-          url: 'https://etherscan.io/address/0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82#code',
+          url: 'https://etherscan.io/address/0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8#code',
         },
       ],
       risks: [FRONTRUNNING_RISK],

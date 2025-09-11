@@ -12,7 +12,36 @@
     "poolBalance",
     "treasuryFee",
     "tvl",
-    "getTransferGasLimit",
-    "deficitOffset"
-  ]
+    "getTransferGasLimit"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set critical configurations of the pool, potentially stealing funds."
+        }
+      ]
+    },
+    "treasurer": {
+      "copy": "getAddressConfig",
+      "edit": ["get", "treasurer"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw fees and tokens that are not the pool token (sent by mistake)."
+        }
+      ]
+    },
+    "planner": {
+      "copy": "getAddressConfig",
+      "edit": ["get", "planner"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the pool and set deficit offsets (affects crosschain liquidity and fees)."
+        }
+      ]
+    }
+  }
 }

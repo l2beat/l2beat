@@ -382,7 +382,7 @@ export const scroll: ScalingProject = {
   riskView: {
     stateValidation: {
       ...STATE_ZKP_ST_SN_WRAP,
-      secondLine: formatExecutionDelay(finalizationPeriod),
+      executionDelay: finalizationPeriod,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),

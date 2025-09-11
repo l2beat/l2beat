@@ -1,14 +1,12 @@
 {
   "EjectionManager": {
     "hash": "0xe0842698f9d2aadda65d129ee9797efd5820d2c146dc3f368826b9815f5b8c9f",
-    "address": "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f",
-    "chain": "ethereum",
+    "address": "eth:0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f",
     "blockNumber": 22188285
   },
   "EjectionManager_v2": {
     "hash": "0x94a826fe3f9609e445cfd3cd6d7d9709c559367e9cb49a9b6d7952cd3a116cd0",
-    "address": "0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A",
-    "chain": "ethereum",
+    "address": "eth:0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A",
     "blockNumber": 22596592
   }
 }

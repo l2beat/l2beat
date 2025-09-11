@@ -2,6 +2,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -56,7 +57,7 @@ export async function getScalingProjectData(
       manifest,
       metadata: getMetadata(manifest, {
         title: `${project.name} - L2BEAT`,
-        description: project.display.description,
+        description: getProjectMetadataDescription(project),
         openGraph: {
           url,
           image: `/meta-images/scaling/projects/${project.slug}/opengraph-image.png`,

@@ -1,9 +1,7 @@
-[
-  {
+{
+  "Registry_shibarium": {
     "hash": "0x8629d952a05ac151ee3cf2d7096112e2b03c6404c26409be4a6f9dfd8cdc30ba",
-    "description": "Registry_shibarium",
-    "address": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
-    "chain": "ethereum",
+    "address": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
     "blockNumber": 22231805
   }
-]
+}

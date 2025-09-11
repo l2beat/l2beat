@@ -1,0 +1,12 @@
+{
+  "UpgradeableOptimismMintableERC20_v1_0_0": {
+    "hash": "0x94248e74664f8475ee2ce5d1ea8f4c2f378f266ab7a4d8bcbdc6e1246ac8047f",
+    "address": "base:0x07a71B9B835c9ebA242836704d17DA0953324E1F",
+    "blockNumber": 31732779
+  },
+  "OptimismMintableERC20_v1_0_3": {
+    "hash": "0x7fb0fa7ed8efe5a3d2ff23b35029a32e2f7426f5f27bd5eef52ec128bb07a0e1",
+    "address": "base:0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71",
+    "blockNumber": 31822604
+  }
+}

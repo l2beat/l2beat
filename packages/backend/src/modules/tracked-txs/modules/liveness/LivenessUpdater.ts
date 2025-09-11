@@ -1,12 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, LivenessRecord } from '@l2beat/database'
 import type { TrackedTxId } from '@l2beat/shared'
-import type { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import type { TrackedTxResult } from '../../types/model'
 import type { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 
-export class LivenessUpdater implements TxUpdaterInterface {
-  type: TrackedTxsConfigType = 'liveness'
+export class LivenessUpdater implements TxUpdaterInterface<'liveness'> {
+  type = 'liveness' as const
 
   constructor(
     private readonly db: Database,
