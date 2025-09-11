@@ -144,9 +144,11 @@ function ChartMilestone({
           <Icon className="mt-px size-3.5 shrink-0" />
           <span className="ml-1.5 text-left">{triggerMilestone.title}</span>
         </div>
-        {triggerMilestone.description && <div className="mt-2 max-w-[216px] text-left">
-          {triggerMilestone.description}
-        </div>}
+        {triggerMilestone.description && (
+          <div className="mt-2 max-w-[216px] text-left">
+            {triggerMilestone.description}
+          </div>
+        )}
       </TooltipContent>
     </Tooltip>
   )
@@ -180,10 +182,14 @@ export function MilestoneDrawerContent({
             ? ` • ${tooltipMilestone.projectName}`
             : ''}
         </p>
-        {tooltipMilestone.description && <p className="text-sm leading-[140%]">
-          {tooltipMilestone.description}
-        </p>}
-        <CustomLink href={tooltipMilestone.url} className='mt-2'>Learn more</CustomLink>
+        {tooltipMilestone.description && (
+          <p className="text-sm leading-[140%]">
+            {tooltipMilestone.description}
+          </p>
+        )}
+        <CustomLink href={tooltipMilestone.url} className="mt-2">
+          Learn more
+        </CustomLink>
       </DrawerHeader>
       <DrawerFooter className="flex flex-row items-center justify-between px-0 pt-6 pb-8">
         <Button
