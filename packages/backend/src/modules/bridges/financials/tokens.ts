@@ -28,6 +28,25 @@ export const INTEROP_TOKENS: InteropToken[] = [
     ],
   },
   {
+    coingeckoId: CoingeckoId('tether'),
+    symbol: 'USDT',
+    decimals: 6, // TODO: decimals per chain
+    addresses: [
+      {
+        chain: 'ethereum',
+        address: EthereumAddress('0xdAC17F958D2ee523a2206206994597C13D831ec7'),
+      },
+      {
+        chain: 'arbitrum',
+        address: EthereumAddress('0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9'),
+      },
+      {
+        chain: 'base',
+        address: EthereumAddress('0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'),
+      },
+    ],
+  },
+  {
     coingeckoId: CoingeckoId('ethereum'),
     symbol: 'ETH',
     decimals: 18, // TODO: decimals per chain

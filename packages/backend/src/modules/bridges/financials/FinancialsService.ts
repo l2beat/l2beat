@@ -75,7 +75,7 @@ export class FinancialsService {
         outbound = {
           ...outbound,
           financials: {
-            amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
+            amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(6)),
             price: price,
             valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
             symbol: token.symbol,
@@ -111,7 +111,7 @@ export class FinancialsService {
         inbound = {
           ...inbound,
           financials: {
-            amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
+            amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(6)),
             price: price,
             valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
             symbol: token.symbol,
