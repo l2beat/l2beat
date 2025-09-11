@@ -121,14 +121,14 @@ export class Usdt0Plugin implements BridgePlugin {
           type: 'usdt0.App',
           events: [oftSent, event],
           outbound: {
-            tx: oftSent.ctx,
+            event: oftSent,
             token: {
               address: oftSent.args.tokenAddress,
               amount: oftSent.args.amountSentLD.toString(),
             },
           },
           inbound: {
-            tx: event.ctx,
+            event: event,
             token: {
               address: event.args.tokenAddress,
               amount: event.args.amountReceivedLD.toString(),

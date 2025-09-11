@@ -1,5 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { BridgeMessageRecord, Database } from '@l2beat/database'
+import type {
+  BridgeMessageRecord,
+  BridgeTransferRecord,
+  Database,
+} from '@l2beat/database'
 import { BigIntWithDecimals } from '../tvs/tools/bigIntWithDecimals'
 import type { BridgeStore } from './BridgeStore'
 import {
@@ -8,6 +12,7 @@ import {
   type BridgeMessage,
   type BridgePlugin,
   type BridgeTransfer,
+  type BridgeTransferWithFinancials,
   generateId,
   type MatchResult,
   type TransferSideWithFinancials,
@@ -67,6 +72,12 @@ export class BridgeMatcher {
         result.messages.map(toMessageRecord),
       )
     }
+
+    if (result.transfers.length > 0) {
+      await this.db.bridgeTransfer.insertMany(
+        result.transfers.map(toTransferRecord),
+      )
+    }
   }
 }
 
@@ -122,10 +133,7 @@ export async function match(
     ).map(({ key, value }) => [key, value]),
   )
 
-  const transfers: (BridgeTransfer & {
-    outbound: TransferSideWithFinancials
-    inbound: TransferSideWithFinancials
-  })[] = []
+  const transfers: BridgeTransferWithFinancials[] = []
 
   for (const transfer of bridgeTransfers) {
     let outbound: TransferSideWithFinancials = transfer.outbound
@@ -133,7 +141,7 @@ export async function match(
 
     if (transfer.outbound.token) {
       const token = tokens.get(
-        `${transfer.outbound.tx.chain}:${transfer.outbound.token.address}`,
+        `${transfer.outbound.event.ctx.chain}:${transfer.outbound.token.address}`,
       )
       if (token) {
         const amount = BigIntWithDecimals(
@@ -152,6 +160,7 @@ export async function match(
           ...outbound,
           financials: {
             amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
+            price: price,
             valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
             symbol: token.symbol,
           },
@@ -160,7 +169,7 @@ export async function match(
 
       if (transfer.inbound.token) {
         const token = tokens.get(
-          `${transfer.inbound.tx.chain}:${transfer.inbound.token.address}`,
+          `${transfer.inbound.event.ctx.chain}:${transfer.inbound.token.address}`,
         )
         if (token) {
           const amount = BigIntWithDecimals(
@@ -179,6 +188,7 @@ export async function match(
             ...inbound,
             financials: {
               amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
+              price: price,
               valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
               symbol: token.symbol,
             },
@@ -225,5 +235,48 @@ function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
     dstEventId: message.inbound.eventId,
     dstLogIndex: message.inbound.ctx.logIndex,
     dstTxHash: message.inbound.ctx.txHash,
+  }
+}
+
+function toTransferRecord(
+  transfer: BridgeTransferWithFinancials,
+): BridgeTransferRecord {
+  return {
+    messageId: generateId('T'),
+    type: transfer.type,
+    duration: Math.abs(
+      transfer.inbound.event.ctx.timestamp -
+        transfer.outbound.event.ctx.timestamp,
+    ),
+    timestamp: Math.max(
+      transfer.outbound.event.ctx.timestamp,
+      transfer.inbound.event.ctx.timestamp,
+    ),
+
+    srcChain: transfer.outbound.event.ctx.chain,
+    srcTime: transfer.outbound.event.ctx.timestamp,
+    srcEventId: transfer.outbound.event.eventId,
+    srcLogIndex: transfer.outbound.event.ctx.logIndex,
+    srcTxHash: transfer.outbound.event.ctx.txHash,
+
+    srcTokenAddress: transfer.outbound.token?.address,
+    srcRawAmount: transfer.outbound.token?.amount,
+    srcSymbol: transfer.outbound.financials?.symbol,
+    srcAmount: transfer.outbound.financials?.amount,
+    srcPrice: transfer.outbound.financials?.price,
+    srcValueUsd: transfer.outbound.financials?.valueUsd,
+
+    dstChain: transfer.inbound.event.ctx.chain,
+    dstTime: transfer.inbound.event.ctx.timestamp,
+    dstEventId: transfer.inbound.event.eventId,
+    dstLogIndex: transfer.inbound.event.ctx.logIndex,
+    dstTxHash: transfer.inbound.event.ctx.txHash,
+
+    dstTokenAddress: transfer.inbound.token?.address,
+    dstRawAmount: transfer.inbound.token?.amount,
+    dstSymbol: transfer.inbound.financials?.symbol,
+    dstAmount: transfer.inbound.financials?.amount,
+    dstPrice: transfer.inbound.financials?.price,
+    dstValueUsd: transfer.inbound.financials?.valueUsd,
   }
 }

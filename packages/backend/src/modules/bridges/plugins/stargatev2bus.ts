@@ -75,14 +75,14 @@ export class StargateV2BusPlugin implements BridgePlugin {
         type: 'stargatev2bus.App',
         events: [ticket, received],
         outbound: {
-          tx: ticket.ctx,
+          event: ticket,
           token: {
             address: ticket.args.tokenAddress,
             amount: ticket.args.amountSentLD.toString(),
           },
         },
         inbound: {
-          tx: received.ctx,
+          event: received,
           token: {
             address: received.args.tokenAddress,
             amount: received.args.amountReceivedLD.toString(),
