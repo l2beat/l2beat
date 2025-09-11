@@ -21,15 +21,15 @@ const parseOrderFulfilled = createEventParser(
 export const OrderCreated = createBridgeEventType<{
   txHash: string
   key: string
-}>('MayanMctpSwift.OrderCreated')
+}>('mayanswift.OrderCreated')
 
 export const OrderFulfilled = createBridgeEventType<{
   txHash: string
   key: string
-}>('MayanMctpSwift.OrderFullfilled')
+}>('mayanswift.OrderFullfilled')
 
-export class MayanSwift implements BridgePlugin {
-  name = 'MayanSwift'
+export class MayanSwiftPlugin implements BridgePlugin {
+  name = 'mayanswift'
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
@@ -68,9 +68,19 @@ export class MayanSwift implements BridgePlugin {
     return {
       messages: [
         {
-          type: 'MayanSwift.SWAP',
+          // TODO: Remove once transfers work
+          type: 'mayanswift.Swap',
           outbound: orderCreated,
           inbound: orderFulfilled,
+        },
+      ],
+      transfers: [
+        {
+          // TODO: Implement transfer properly
+          type: 'mayanswift.Swap',
+          events: [orderCreated, orderFulfilled],
+          outbound: { tx: orderCreated.ctx },
+          inbound: { tx: orderFulfilled.ctx },
         },
       ],
     }

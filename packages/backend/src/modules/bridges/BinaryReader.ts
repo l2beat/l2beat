@@ -12,11 +12,20 @@ export class BinaryReader {
     this.data = hexData.toLowerCase()
   }
 
+  get length() {
+    return (this.data.length - this.offset) / 2
+  }
+
   skipBytes(n: number) {
     if (this.offset + n * 2 > this.data.length) {
       throw new Error('Not enough data')
     }
     this.offset += n * 2
+  }
+
+  readAddress() {
+    const bytes = this.readBytes(32)
+    return `0x${bytes.slice(-40)}`
   }
 
   readBytes(n: number) {
@@ -29,7 +38,7 @@ export class BinaryReader {
   }
 
   readRemainingBytes() {
-    return this.readBytes((this.data.length - this.offset) / 2)
+    return this.readBytes(this.length)
   }
 
   readUint8() {

@@ -1,4 +1,4 @@
-import { PacketDelivered, PacketSent } from './layerzerov2'
+import { PacketDelivered, PacketSent } from './layerzero-v2'
 import { StargateV2OFTReceived, StargateV2OFTSentTaxi } from './stargate'
 import type {
   BridgeEvent,
@@ -8,7 +8,7 @@ import type {
 } from './types'
 
 export class StargateV2TaxiPlugin implements BridgePlugin {
-  name = 'stargatev2taxi'
+  name = 'stargate-v2-taxi'
   chains = ['ethereum', 'arbitrum', 'base']
 
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
@@ -36,14 +36,14 @@ export class StargateV2TaxiPlugin implements BridgePlugin {
     return {
       messages: [
         {
-          type: 'layerzerov2.Message',
+          type: 'layerzero-v2.Message',
           outbound: packetSent,
           inbound: packetDelivered,
         },
       ],
       transfers: [
         {
-          type: 'stargatev2taxi.App',
+          type: 'stargate-v2-taxi.App',
           events: [event, oftReceived],
           outbound: {
             tx: event.ctx,
