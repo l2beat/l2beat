@@ -8,6 +8,7 @@ import { StargatePlugin } from './stargate'
 import { StargateV2BusPlugin } from './stargatev2bus'
 import { StargateV2TaxiPlugin } from './stargatev2taxi'
 import type { BridgePlugin } from './types'
+import { Usdt0Plugin } from './usdt0'
 import { WormholePlugin } from './wormhole'
 
 export function createBridgePlugins(logger: Logger): BridgePlugin[] {
@@ -18,6 +19,7 @@ export function createBridgePlugins(logger: Logger): BridgePlugin[] {
     new CCTPPlugin(),
     new StargateV2BusPlugin(), // should be run before LayeyZeroV2
     new StargateV2TaxiPlugin(), // should be run before LayerZeroV2
+    new Usdt0Plugin(), // should be run before LayerZeroV2
     new LayerZeroV2Plugin(logger),
     new WormholePlugin(logger),
     new StargatePlugin(logger),
