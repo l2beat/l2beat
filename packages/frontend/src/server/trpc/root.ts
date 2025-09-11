@@ -3,8 +3,8 @@ import { activityRouter } from './routers/activity'
 import { costsRouter } from './routers/costs'
 import { daRouter } from './routers/da'
 import { livenessRouter } from './routers/liveness'
-import { tvsRouter } from './routers/tvs'
 import { projectsRouter } from './routers/projects'
+import { tvsRouter } from './routers/tvs'
 
 /**
  * This is the primary router for your server.
