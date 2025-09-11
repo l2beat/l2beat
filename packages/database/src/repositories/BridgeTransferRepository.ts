@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { BridgeTransfer } from '../kysely/generated/types'
@@ -122,6 +122,14 @@ export interface BridgeTransfersStatsRecord {
   averageDuration: number
   outboundValueSum: number
   inboundValueSum: number
+  chains: {
+    sourceChain: string
+    destinationChain: string
+    count: number
+    averageDuration: number
+    outboundValueSum: number
+    inboundValueSum: number
+  }[]
 }
 
 export class BridgeTransferRepository extends BaseRepository {
@@ -157,7 +165,7 @@ export class BridgeTransferRepository extends BaseRepository {
   }
 
   async getStats(): Promise<BridgeTransfersStatsRecord[]> {
-    const rows = await this.db
+    const overallStats = await this.db
       .selectFrom('BridgeTransfer')
       .select((eb) => [
         'type',
@@ -168,12 +176,42 @@ export class BridgeTransferRepository extends BaseRepository {
       ])
       .groupBy('type')
       .execute()
-    return rows.map((x) => ({
-      type: x.type,
-      count: Number(x.count),
-      averageDuration: Number(x.averageDuration),
-      outboundValueSum: Number(x.outboundValueSum),
-      inboundValueSum: Number(x.inboundValueSum),
+
+    const chainStats = await this.db
+      .selectFrom('BridgeTransfer')
+      .select((eb) => [
+        'type',
+        'srcChain',
+        'dstChain',
+        eb.fn.countAll().as('count'),
+        eb.fn.avg('duration').as('averageDuration'),
+        eb.fn.sum('srcValueUsd').as('outboundValueSum'),
+        eb.fn.sum('dstValueUsd').as('inboundValueSum'),
+      ])
+      .where('srcChain', 'is not', null)
+      .where('dstChain', 'is not', null)
+      .groupBy(['type', 'srcChain', 'dstChain'])
+      .execute()
+
+    return overallStats.map((overall) => ({
+      type: overall.type,
+      count: Number(overall.count),
+      averageDuration: Number(overall.averageDuration),
+      outboundValueSum: Number(overall.outboundValueSum),
+      inboundValueSum: Number(overall.inboundValueSum),
+      chains: chainStats
+        .filter((chain) => chain.type === overall.type)
+        .map((chain) => {
+          assert(chain.srcChain && chain.dstChain)
+          return {
+            sourceChain: chain.srcChain,
+            destinationChain: chain.dstChain,
+            count: Number(chain.count),
+            averageDuration: Number(chain.averageDuration),
+            outboundValueSum: Number(chain.outboundValueSum),
+            inboundValueSum: Number(chain.inboundValueSum),
+          }
+        }),
     }))
   }
 
