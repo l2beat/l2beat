@@ -37,10 +37,14 @@ export interface BridgeMessage {
 
 export interface TransferSide {
   tx: BridgeEventContext
-  tokenAddress?: EthereumAddress
-  tokenId?: string
-  amount?: string
-  valueUsd?: number
+  token?: {
+    address: EthereumAddress
+    amount: string
+  }
+}
+
+export type TransferSideWithFinancials = TransferSide & {
+  financials?: { valueUsd: number; amount: number; symbol: string }
 }
 
 export interface BridgeTransfer {

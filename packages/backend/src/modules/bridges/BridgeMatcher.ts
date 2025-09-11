@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BridgeMessageRecord, Database } from '@l2beat/database'
+import { BigIntWithDecimals } from '../tvs/tools/bigIntWithDecimals'
 import type { BridgeStore } from './BridgeStore'
 import {
   type BridgeEvent,
@@ -9,7 +10,9 @@ import {
   type BridgeTransfer,
   generateId,
   type MatchResult,
+  type TransferSideWithFinancials,
 } from './plugins/types'
+import { BRIDGES_TOKENS } from './tokens/config'
 
 export class BridgeMatcher {
   private running = false
@@ -75,7 +78,7 @@ export async function match(
 ) {
   const matchedIds = new Set<string>()
   const messages: BridgeMessage[] = []
-  const transfers: BridgeTransfer[] = []
+  const bridgeTransfers: BridgeTransfer[] = []
 
   for (const event of events) {
     if (matchedIds.has(event.eventId)) {
@@ -97,7 +100,7 @@ export async function match(
           matchedIds.add(message.outbound.eventId)
         }
         for (const transfer of result.transfers ?? []) {
-          transfers.push(transfer)
+          bridgeTransfers.push(transfer)
           for (const transferEvent of transfer.events) {
             matchedIds.add(transferEvent.eventId)
           }
@@ -105,6 +108,92 @@ export async function match(
         break
       }
     }
+  }
+
+  const tokens = new Map(
+    BRIDGES_TOKENS.flatMap((t) =>
+      t.addresses.map((tt) => ({
+        key: `${tt.chain}:${tt.address}`,
+        value: {
+          coingeckoId: t.coingeckoId,
+          symbol: t.symbol,
+          decimals: t.decimals,
+        },
+      })),
+    ).map(({ key, value }) => [key, value]),
+  )
+
+  const transfers: (BridgeTransfer & {
+    outbound: TransferSideWithFinancials
+    inbound: TransferSideWithFinancials
+  })[] = []
+
+  for (const transfer of bridgeTransfers) {
+    let outbound: TransferSideWithFinancials = transfer.outbound
+    let inbound: TransferSideWithFinancials = transfer.inbound
+
+    if (transfer.outbound.token) {
+      const token = tokens.get(
+        `${transfer.outbound.tx.chain}:${transfer.outbound.token.address}`,
+      )
+      if (token) {
+        const amount = BigIntWithDecimals(
+          BigInt(transfer.outbound.token.amount),
+          token.decimals,
+        )
+
+        const price = 1
+
+        const value = BigIntWithDecimals.multiply(
+          amount,
+          BigIntWithDecimals.fromNumber(price),
+        )
+
+        outbound = {
+          ...outbound,
+          financials: {
+            amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
+            valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
+            symbol: token.symbol,
+          },
+        }
+      }
+
+      if (transfer.inbound.token) {
+        const token = tokens.get(
+          `${transfer.inbound.tx.chain}:${transfer.inbound.token.address}`,
+        )
+        if (token) {
+          const amount = BigIntWithDecimals(
+            BigInt(transfer.inbound.token.amount),
+            token.decimals,
+          )
+
+          const price = 1
+
+          const value = BigIntWithDecimals.multiply(
+            amount,
+            BigIntWithDecimals.fromNumber(price),
+          )
+
+          inbound = {
+            ...inbound,
+            financials: {
+              amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
+              valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
+              symbol: token.symbol,
+            },
+          }
+        }
+      }
+    }
+
+    transfers.push({
+      type: transfer.type,
+      events: transfer.events,
+      outbound,
+      inbound,
+    })
   }
 
   return {
