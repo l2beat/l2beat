@@ -55,8 +55,10 @@ function isFlatCodeCurrent(
   }
 
   const discoHashes =
-    discoveries.flatMap((d) => d.entries).find((e) => e.address === address)
-      ?.sourceHashes ?? []
+    discoveries
+      .flatMap((d) => d.entries)
+      .filter((e) => e.type !== 'Reference')
+      .find((e) => e.address === address)?.sourceHashes ?? []
 
   const flatHashes = codePaths.map(({ path }) =>
     flatteningHash(readFileSync(path, 'utf-8')),
@@ -158,7 +160,8 @@ export function getCodePaths(
 
   for (const discovery of discoveries) {
     const entry = discovery.entries.find((x) => x.address === address)
-    if (!entry) {
+
+    if (!entry || entry.type === 'Reference') {
       continue
     }
 

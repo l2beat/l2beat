@@ -16,6 +16,7 @@ import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getLiveness } from '../../scaling/liveness/getLiveness'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getDaLayerRisks } from '../utils/getDaLayerRisks'
@@ -66,6 +67,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     durationStorage: number | undefined
     maxThroughputPerSecond: number | undefined
     usedIn: UsedInProjectWithIcon[]
+    ongoingAnomaly?: 'single' | 'multiple'
   }
   sections: ProjectDetailsSection[]
   discoUiHref?: string
@@ -124,12 +126,19 @@ export async function getDaProjectEntry(
     bridges.flatMap((x) => x.daBridge.usedIn),
   )
 
-  const [economicSecurity, tvsPerProject, projectsChangeReport] =
+  const [economicSecurity, tvsPerProject, projectsChangeReport, liveness] =
     await Promise.all([
       getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
       getDaProjectsTvs(allUsedIn.map((x) => x.id)),
       getProjectsChangeReport(),
+      selected ? getLiveness() : undefined,
     ])
+
+  const projectLiveness =
+    selected && liveness ? liveness[selected.id] : undefined
+  const ongoingAnomalies = projectLiveness?.anomalies.filter(
+    (a) => a.end === undefined,
+  )
 
   const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
 
@@ -215,6 +224,13 @@ export async function getDaProjectEntry(
           icon: getProjectIcon(x.slug),
           href: `/scaling/projects/${x.slug}`,
         })),
+      ongoingAnomaly: ongoingAnomalies
+        ? ongoingAnomalies.length === 0
+          ? undefined
+          : ongoingAnomalies.length === 1
+            ? 'single'
+            : 'multiple'
+        : undefined,
     },
     sections,
     projectVariants: bridges.map((bridge) => ({
