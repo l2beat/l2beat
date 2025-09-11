@@ -21,7 +21,7 @@ export const TransferRedeemed = createBridgeEventType<{
 }>('wormhole.LogTransferRedeemed')
 
 export class WormholeTokenBridgePlugin implements BridgePlugin {
-  name = 'wormholeTokenBridge'
+  name = 'wormholetokenbridge'
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
