@@ -1,8 +1,7 @@
 {
   "ValidiumL1DAValidator": {
     "hash": "0x9268ac939681805a58626cebbcf26606bf71106922be33c48712e455381762c8",
-    "address": "0x907b30407249949521Bf0c89A43558dae200146A",
-    "chain": "ethereum",
+    "address": "eth:0x907b30407249949521Bf0c89A43558dae200146A",
     "blockNumber": 22188285
   }
 }

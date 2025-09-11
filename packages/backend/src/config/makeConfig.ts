@@ -57,7 +57,6 @@ export async function makeConfig(
               ? { rejectUnauthorized: false }
               : undefined,
           },
-          freshStart: env.boolean('FRESH_START', false),
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connectionPoolSize: {
             // defaults used by knex
@@ -67,7 +66,6 @@ export async function makeConfig(
           isReadonly,
         }
       : {
-          freshStart: false,
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connection: {
             connectionString: env.string('DATABASE_URL'),
@@ -135,16 +133,17 @@ export async function makeConfig(
       timeout: env.integer(['ETHEREUM_BEACON_API_TIMEOUT'], 10000),
     },
     da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
-    shared: flags.isEnabled('shared') && {
-      ethereumWsUrl: env.string(['ETHEREUM_WS_URL']),
+    blockSync: {
+      ethereumWsUrl: env.optionalString(['ETHEREUM_WS_URL']),
     },
-    discord: {
+    anomalies: flags.isEnabled('anomalies') && {
       anomaliesWebhookUrl: env.optionalString('ANOMALIES_DISCORD_WEBHOOK_URL'),
       anomaliesMinDuration: env.integer(
         'ANOMALIES_MIN_DURATION',
         60 * 60, // 1 hour
       ),
     },
+    bridgesEnabled: flags.isEnabled('bridges'),
     // Must be last
     flags: flags.getResolved(),
   }

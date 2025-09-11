@@ -16,7 +16,7 @@ We believe in knowledge sharing and open access. Our code is and will remain ope
 
 ## Versioning and publishing (tooling)
 
-Some of the sub-packages are published to NPM. We use a tool called [changesets](https://github.com/changesets/changesets) to manage versioning, cross-dependency versioning and publishing new versions to NPM.  When you make a change, before merging to master:
+Some of the sub-packages are published to NPM. We use a tool called [changesets](https://github.com/changesets/changesets) to manage versioning, cross-dependency versioning and publishing new versions to NPM.  When you make a change, before merging to main:
 
 - run `pnpm changeset` and mark the packages you wish to publish, select what kind of a change it is (major,minor,patch) and provide the summary of the changes
 

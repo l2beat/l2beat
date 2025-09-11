@@ -11,7 +11,7 @@ import { VerifiedIcon } from '~/icons/Verified'
 import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
 
 interface Props {
-  data: ZkCatalogEntry['trustedSetups'][number]['verifiers']
+  data: ZkCatalogEntry['trustedSetupsByProofSystem'][string]['verifiers']
 }
 
 export function VerifiedCountWithDetails({ data }: Props) {

@@ -1,8 +1,7 @@
 {
   "BondToken": {
     "hash": "0x1d9754ae4e99e4320201bbc6f0e19aa5ecac917dcacaadba3b70cfa018910754",
-    "address": "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
-    "chain": "ethereum",
+    "address": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
     "blockNumber": 22780541
   }
 }

@@ -1,8 +1,7 @@
 {
   "EtherRouter": {
     "hash": "0x9e03a8813acf697f471971579204060db51665091a061d90320d055fcf64d4f5",
-    "address": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
-    "chain": "ethereum",
+    "address": "eth:0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
     "blockNumber": 22188285
   }
 }

@@ -649,7 +649,7 @@
         },
         "priceId": "bridged-usd-coin-optimism"
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {

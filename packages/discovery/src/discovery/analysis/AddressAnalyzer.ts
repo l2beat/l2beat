@@ -4,7 +4,7 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import type { DiscoveryCustomType } from '../config/StructureConfig'
+import type { DiscoveryCustomType, Entrypoint } from '../config/StructureConfig'
 import type { StructureContractConfig } from '../config/structureUtils'
 import type { HandlerResult } from '../handlers/Handler'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
@@ -25,7 +25,7 @@ import { codeIsEOA } from './codeIsEOA'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 import type { TemplateService } from './TemplateService'
 
-export type Analysis = AnalyzedContract | AnalyzedEOA
+export type Analysis = AnalyzedContract | AnalyzedEOA | Reference
 
 interface AnalyzedCommon {
   address: ChainSpecificAddress
@@ -49,6 +49,14 @@ export type AnalyzedContract = {
   type: 'Contract'
   name: string
 } & AnalyzedCommon
+
+export type Reference = {
+  name: string | undefined
+  address: ChainSpecificAddress
+  type: 'Reference'
+  targetType: Analysis['type']
+  targetProject: string
+}
 
 export interface ExtendedTemplate {
   template: string
@@ -75,6 +83,7 @@ export class AddressAnalyzer {
     provider: IProvider,
     address: ChainSpecificAddress,
     config: StructureContractConfig,
+    entrypoints: Record<ChainSpecificAddress, Entrypoint> = {},
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {
     const code = await provider.getBytecode(address)

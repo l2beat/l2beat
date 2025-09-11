@@ -1,8 +1,7 @@
 {
   "WstETH": {
     "hash": "0x6b938c3d38678ebb00f3860def4bdf9d5d8ab7008a6d598cc109fdf7a6c34e0e",
-    "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-    "chain": "ethereum",
+    "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
     "blockNumber": 22188285
   }
 }

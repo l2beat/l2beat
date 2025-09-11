@@ -1,20 +1,17 @@
 {
   "FinalizableGpsFactAdapterUSDC": {
     "hash": "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b",
-    "address": "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
-    "chain": "ethereum",
+    "address": "eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
     "blockNumber": 22188285
   },
   "FinalizableGpsFactAdapterUSDT": {
     "hash": "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b",
-    "address": "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
-    "chain": "ethereum",
+    "address": "eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
     "blockNumber": 22188285
   },
   "GpsFactRegistryAdapter": {
     "hash": "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0",
-    "address": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
-    "chain": "ethereum",
+    "address": "eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
     "blockNumber": 22188285
   }
 }

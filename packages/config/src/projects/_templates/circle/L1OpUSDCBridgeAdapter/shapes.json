@@ -1,8 +1,7 @@
 {
   "L1OpUSDCBridgeAdapter": {
     "hash": "0xd311a9b68b7e171b3bc43bd9e7ee705886c2fdd620360576ca49115fd9799d5d",
-    "address": "0x61488ae9dEDCA3f29F5e72bbf23ba975862c20bA",
-    "chain": "ethereum",
+    "address": "eth:0x61488ae9dEDCA3f29F5e72bbf23ba975862c20bA",
     "blockNumber": 22188285
   }
 }

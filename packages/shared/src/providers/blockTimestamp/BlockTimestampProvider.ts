@@ -18,7 +18,7 @@ export class BlockTimestampProvider {
     const block = this.$.blockProviders.find((b) => b.chain === chain)
 
     if (!indexer) {
-      assert(block, 'Missing BlockTimestamp data sources')
+      assert(block, `Missing BlockTimestamp data sources for chain ${chain}`)
       return await block.getBlockNumberAtOrBefore(timestamp)
     }
 

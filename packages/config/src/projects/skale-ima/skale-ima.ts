@@ -132,7 +132,7 @@ export const skaleIMA: Bridge = {
     ethereum: {
       actors: [
         discovery.getMultisigPermission(
-          'ProxyAdminOwner',
+          'Skale IMA Multisig',
           'This is an owner of DepositBox contracts proxies, can upgrade the implementation of those contracts, which potentially can introduce bug or introduce malicious behaviors.',
         ),
       ],

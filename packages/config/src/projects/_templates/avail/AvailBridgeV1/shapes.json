@@ -1,8 +1,7 @@
 {
   "AvailBridgeV1": {
     "hash": "0x069ad8329069dba1dfdae5d03c54eaa7e8c15f55fb8498db3b46e3b945330199",
-    "address": "0x737539737b44493F65c17eAfE165197b6410d254",
-    "chain": "ethereum",
+    "address": "eth:0x737539737b44493F65c17eAfE165197b6410d254",
     "blockNumber": 22330115
   }
 }

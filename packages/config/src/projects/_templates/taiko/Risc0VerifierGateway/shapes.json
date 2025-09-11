@@ -1,20 +1,17 @@
 {
   "Risc0Verifier.sol": {
     "hash": "0x3bb4317c77a14f8dabc9d24fa5867bfa8af8e388e54bdd58da2b8f43f2914c2b",
-    "address": "0xefe30A0D56a5804F695f971010597262CAd9A2c3",
-    "chain": "ethereum",
+    "address": "eth:0xefe30A0D56a5804F695f971010597262CAd9A2c3",
     "blockNumber": 22468063
   },
   "RiscZeroPostPacaya": {
     "hash": "0xd24723da846efa982924d892e9d3e52d38b6d85eab9d8e2f0a298ff07d18d994",
-    "address": "0x801878e56A8DA58d6a837006345CDD11a9E6a852",
-    "chain": "ethereum",
+    "address": "eth:0x801878e56A8DA58d6a837006345CDD11a9E6a852",
     "blockNumber": 22565516
   },
   "TaikoRisc0Verifier": {
     "hash": "0xbf2f7f196a5a1b3990b49d6d86c282eedd22259e4e1c970138b25b38cced4ac6",
-    "address": "0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be",
-    "chain": "ethereum",
+    "address": "eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be",
     "blockNumber": 22694475
   }
 }

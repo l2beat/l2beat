@@ -100,7 +100,14 @@ export async function getDaProjectEntry(
   const bridges = (
     await ps.getProjects({
       select: ['daBridge', 'display', 'statuses'],
-      optional: ['permissions', 'contracts', 'discoveryInfo'],
+      optional: [
+        'permissions',
+        'contracts',
+        'discoveryInfo',
+        'trackedTxsConfig',
+        'livenessConfig',
+        'archivedAt',
+      ],
     })
   ).filter((x) => x.daBridge.daLayer === layer.id)
 
@@ -136,7 +143,7 @@ export async function getDaProjectEntry(
   )
 
   const sections = await getRegularDaProjectSections({
-    layer: layer,
+    layer,
     bridge: selected,
     isVerified: true,
     projectsChangeReport,
@@ -197,7 +204,9 @@ export async function getDaProjectEntry(
       economicSecurity,
       durationStorage: layer.daLayer.pruningWindow,
       maxThroughputPerSecond: latestThroughput
-        ? latestThroughput.size / latestThroughput.frequency
+        ? latestThroughput.size === 'NO_CAP'
+          ? undefined
+          : latestThroughput.size / latestThroughput.frequency
         : undefined,
       usedIn: allUsedIn
         .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
@@ -302,7 +311,9 @@ export async function getEthereumDaProjectEntry(
       economicSecurity: economicSecurity,
       durationStorage: layer.daLayer.pruningWindow ?? 0,
       maxThroughputPerSecond: latestThroughput
-        ? latestThroughput.size / latestThroughput.frequency
+        ? latestThroughput.size === 'NO_CAP'
+          ? undefined
+          : latestThroughput.size / latestThroughput.frequency
         : undefined,
       usedIn: usedInByTvsDesc,
       bridgeName: bridge.daBridge.name,

@@ -1,15 +1,15 @@
 import type { UpdateNotifierRecord } from '@l2beat/database'
 import type { DiscoveryDiff } from '@l2beat/discovery'
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 
 describe(fieldThrottleDiff.name, () => {
   const OCCURRENCE_LIMIT = 2
 
-  const ADDRESS_A = EthereumAddress.random()
-  const ADDRESS_B = EthereumAddress.random()
-  const ADDRESS_C = EthereumAddress.random()
+  const ADDRESS_A = ChainSpecificAddress.random()
+  const ADDRESS_B = ChainSpecificAddress.random()
+  const ADDRESS_C = ChainSpecificAddress.random()
   const FIELDS_A = [{ key: 'foo' }, { key: 'bar' }, { key: 'baz' }]
   const FIELDS_B = [{ key: 'qux' }, { key: 'quax' }, { key: 'quaz' }]
   const FIELDS_C = [{ key: 'duck' }, { key: 'quack' }]
@@ -126,6 +126,5 @@ function mockRecord(diff: DiscoveryDiff[]): UpdateNotifierRecord {
     projectId: 'project',
     timestamp: 24392345,
     diff: diff,
-    chainId: ChainId.ETHEREUM,
   }
 }

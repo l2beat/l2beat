@@ -8,6 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
 import isEmpty from 'lodash/isEmpty'
 import unionBy from 'lodash/unionBy'
 import {
@@ -33,6 +34,7 @@ import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
+  ProjectScalingRiskView,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -50,7 +52,6 @@ import type {
   ProjectScalingDa,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
-  ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectScalingStateDerivation,
@@ -959,6 +960,19 @@ function getRiskView(
                   blockNumberOpcodeTimeSeconds
               : undefined,
           ),
+          initialBond: isPostBoLD
+            ? formatEther(
+                templateVars.discovery.getContractValue<number>(
+                  'RollupProxy',
+                  'baseStake',
+                ),
+              )
+            : formatEther(
+                templateVars.discovery.getContractValue<number>(
+                  'RollupProxy',
+                  'currentRequiredStake',
+                ),
+              ),
         }
       })(),
     dataAvailability:

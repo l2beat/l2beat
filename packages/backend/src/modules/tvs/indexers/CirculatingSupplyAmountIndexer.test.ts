@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
-import type { TvsAmountRecord } from '@l2beat/database/dist/tvs/amount/entity'
+import type { Database, TvsAmountRecord } from '@l2beat/database'
 import type { CirculatingSupplyProvider } from '@l2beat/shared'
 import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'

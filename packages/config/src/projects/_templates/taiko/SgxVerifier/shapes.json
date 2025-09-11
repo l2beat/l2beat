@@ -1,14 +1,12 @@
 {
   "SgxVerifier.sol": {
     "hash": "0x076c7d823685a1a394ad6ec677d2d7707207efa9e8e482f479c2cdfd92008904",
-    "address": "0x81DFEA931500cdcf0460e9EC45FA283A6B7f0838",
-    "chain": "ethereum",
+    "address": "eth:0x81DFEA931500cdcf0460e9EC45FA283A6B7f0838",
     "blockNumber": 22297586
   },
   "SGXPostPacaya": {
     "hash": "0x623df54827648dd7289a821d9020c19faccf1c24e7cea82e7157f2dc2c548511",
-    "address": "0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5",
-    "chain": "ethereum",
+    "address": "eth:0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5",
     "blockNumber": 22565516
   }
 }

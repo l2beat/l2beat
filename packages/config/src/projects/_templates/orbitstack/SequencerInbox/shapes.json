@@ -1,44 +1,37 @@
 {
   "SequencerInbox": {
     "hash": "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b",
-    "address": "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5",
-    "chain": "ethereum",
+    "address": "eth:0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5",
     "blockNumber": 22188285
   },
   "SequencerInbox_BoLD": {
     "hash": "0x2ed1d03b24d3bd002e3beedd7f0891a044867ed42912798e50803900c26fd0b8",
-    "address": "0x98a58ADAb0f8A66A1BF4544d804bc0475dff32c7",
-    "chain": "ethereum",
+    "address": "eth:0x98a58ADAb0f8A66A1BF4544d804bc0475dff32c7",
     "blockNumber": 22188285
   },
   "SequencerInbox_arbitrum": {
     "hash": "0x0bb7cd360bb26d8a487130df151eb05ce4afe4fd3452fcdbdd3cfa432e17cbb5",
-    "address": "0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7",
-    "chain": "ethereum",
+    "address": "eth:0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7",
     "blockNumber": 22188285
   },
   "SequencerInbox_muster": {
     "hash": "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc",
-    "address": "0xaEd84B70Be8117112a5aa0d93a7fBff463A03b18",
-    "chain": "ethereum",
+    "address": "eth:0xaEd84B70Be8117112a5aa0d93a7fBff463A03b18",
     "blockNumber": 22188285
   },
   "SequencerInbox_v10_2": {
     "hash": "0x08792f333db7e8a060c38033f92e3fc10c30e2648c56fc49c7460ee1c94343a0",
-    "address": "0x873484Ba63353C8b71210ce123B465512d408B27",
-    "chain": "ethereum",
+    "address": "eth:0x873484Ba63353C8b71210ce123B465512d408B27",
     "blockNumber": 22188285
   },
   "SequencerInbox_gravity": {
     "hash": "0x4030f12794a5a07697b98400d423a426b39fd6f2320b39ee377d700d4fafdc58",
-    "address": "0xC1fB0cCa6e751dEe25e3D537D309d336E8304d50",
-    "chain": "ethereum",
+    "address": "eth:0xC1fB0cCa6e751dEe25e3D537D309d336E8304d50",
     "blockNumber": 22396423
   },
   "SequencerInbox_BoLD_customGas": {
     "hash": "0xb57f3e67e08492b235337cda4f3ea0117e3e043cceaf8e9a7a51b57611ba99de",
-    "address": "0xfEB2537afD8519d16d0CcEa741A70f97f3D4288B",
-    "chain": "arbitrum",
+    "address": "arb1:0xfEB2537afD8519d16d0CcEa741A70f97f3D4288B",
     "blockNumber": 360996679
   }
 }

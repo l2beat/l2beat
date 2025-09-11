@@ -1,4 +1,9 @@
-import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -101,6 +106,34 @@ export const eigenda: BaseProject = {
     },
     badges: [],
   },
+  trackedTxsConfig: [
+    {
+      projectId: ProjectId('eigenda'),
+      sinceTimestamp: 1712353787,
+      type: 'liveness',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0'),
+        selector: '0x7794965a',
+        signature:
+          'function confirmBatch(tuple batchHeader, tuple nonSignerStakesAndSignature)',
+      },
+    },
+    {
+      projectId: ProjectId('eigenda'),
+      sinceTimestamp: 1712353787,
+      type: 'l2costs',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0'),
+        selector: '0x7794965a',
+        signature:
+          'function confirmBatch(tuple batchHeader, tuple nonSignerStakesAndSignature)',
+      },
+    },
+  ],
   colors: {
     primary: '#6258FF',
     secondary: '#6258FF',
@@ -180,6 +213,11 @@ export const eigenda: BaseProject = {
         size: 15728640, // 15 MB
         frequency: 1, // x second
         sinceTimestamp: 1719187200, // 2024-06-24
+      },
+      {
+        size: 'NO_CAP',
+        frequency: 1, // x second
+        sinceTimestamp: 1753833600, // 2025-07-30
       },
     ],
     finality: 600, // ~10 minutes
@@ -273,6 +311,17 @@ export const eigenda: BaseProject = {
   daBridge: {
     name: 'DACert Verifier',
     daLayer: ProjectId('eigenda'),
+    relayerType: {
+      value: 'Permissioned',
+      sentiment: 'warning',
+      description:
+        'Only whitelisted relayers can post attestations to this bridge.',
+    },
+    validationType: {
+      value: 'BLS Signature',
+      description:
+        'The DA attestation requires onchain BLS signatures verification to be accepted by the bridge, and the total stake of signers is verified to have reached the required threshold.',
+    },
     technology: {
       description: `
 ## Architecture
@@ -364,6 +413,13 @@ An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
+    {
+      title: 'EigenDA V2 launch',
+      url: 'https://x.com/0xkydo/status/1950571973790363737',
+      date: '2025-07-30T00:00:00Z',
+      description: 'EigenDA V2 launch on Ethereum mainnet.',
+      type: 'general',
+    },
     {
       title: 'EigenDA launch on mainnet',
       url: 'https://blog.eigenlayer.xyz/mainnet-launch-eigenlayer-eigenda/',

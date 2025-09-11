@@ -1,38 +1,32 @@
 {
   "DelayedWETH_v1_0_0": {
     "hash": "0xb1fe1fe741a2a22eb0e195e6bbd15f2f8de06e5586318a57ca82cbb6386f82e3",
-    "address": "0x96326f628d3E4DdA2645D4b8b6f337fC4B72aEB7",
-    "chain": "ethereum",
+    "address": "eth:0x96326f628d3E4DdA2645D4b8b6f337fC4B72aEB7",
     "blockNumber": 22188285
   },
   "DelayedWETH_v1_1_0": {
     "hash": "0xfff6f4cca21febd4323222e2ca87ec8b78edfdeeca942468fbf331e537815484",
-    "address": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
-    "chain": "ethereum",
+    "address": "eth:0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
     "blockNumber": 22188285
   },
   "DelayedWETH_v1_1_1_beta2": {
     "hash": "0x099fac9b8e9188e9fb447bc1bf35048043762d3b7e774ac2cd11b0840923abe5",
-    "address": "0xB8566D805b8DD2E2EC41542A2dc4Af96855f75d8",
-    "chain": "ethereum",
+    "address": "eth:0xB8566D805b8DD2E2EC41542A2dc4Af96855f75d8",
     "blockNumber": 22188285
   },
   "DelayedWETH_v1_2_0_beta3": {
     "hash": "0x2301d347829ef824a15e141e20cb7f1567a2425ebc534de28ee1f56ca3d48189",
-    "address": "0xDFBB69681F217aB3221E94AFCA4fEa51f5c6a779",
-    "chain": "ethereum",
+    "address": "eth:0xDFBB69681F217aB3221E94AFCA4fEa51f5c6a779",
     "blockNumber": 22188285
   },
   "DelayedWETH_v1_3_0": {
     "hash": "0x1c7d0fda5ed6d8fc7f5b5f7df5e307f0fcfd173fa5833ea9fce8875d5d44d86a",
-    "address": "0x5e40B9231B86984b5150507046e354dbFbeD3d9e",
-    "chain": "ethereum",
+    "address": "eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e",
     "blockNumber": 22188285
   },
   "DelayedWETH_v1_5_0": {
     "hash": "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1",
-    "address": "0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998",
-    "chain": "ethereum",
+    "address": "eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998",
     "blockNumber": 22995199
   }
 }

@@ -5,7 +5,7 @@ import {
   flatteningHash,
   get$Implementations,
 } from '@l2beat/discovery'
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { isDeepStrictEqual } from 'util'
@@ -45,23 +45,13 @@ function isFlatCodeCurrent(
   address: ChainSpecificAddress,
   codePaths: CodePathResult['codePaths'],
 ): boolean {
-  const chain = ChainSpecificAddress.longChain(address)
-
-  const discovery = configReader.readDiscovery(project, chain)
+  const discovery = configReader.readDiscovery(project)
 
   const discoveries = [discovery]
 
   for (const sharedModule of discovery.sharedModules ?? []) {
-    const sharedModuleChains =
-      configReader.readAllDiscoveredChainsForProject(sharedModule)
-
-    if (sharedModuleChains.includes(chain)) {
-      const sharedModuleDiscovery = configReader.readDiscovery(
-        sharedModule,
-        chain,
-      )
-      discoveries.push(sharedModuleDiscovery)
-    }
+    const sharedModuleDiscovery = configReader.readDiscovery(sharedModule)
+    discoveries.push(sharedModuleDiscovery)
   }
 
   const discoHashes =
@@ -164,8 +154,7 @@ export function getCodePaths(
   project: string,
   address: ChainSpecificAddress,
 ): CodePathResult {
-  const chain = ChainSpecificAddress.longChain(address)
-  const discoveries = getProjectDiscoveries(configReader, project, chain)
+  const discoveries = getProjectDiscoveries(configReader, project)
 
   for (const discovery of discoveries) {
     const entry = discovery.entries.find((x) => x.address === address)
@@ -178,10 +167,7 @@ export function getCodePaths(
 
     const name =
       similar.length > 1 ? `${entry.name}-${entry.address}` : `${entry.name}`
-    const root = join(
-      configReader.getProjectChainPath(discovery.name, chain),
-      '.flat',
-    )
+    const root = join(configReader.getProjectPath(discovery.name), '.flat')
 
     if (!hasImplementations) {
       return {

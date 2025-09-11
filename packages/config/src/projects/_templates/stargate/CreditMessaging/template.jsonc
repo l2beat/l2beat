@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set OApp delegate, planner and critical configurations."
+        }
+      ]
+    },
+    "planner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "send credits (asset claims) from pools on this chain to other pools."
+        }
+      ]
+    },
+    "maxAssetId": { "description": "The highest currently registered assetID" },
+    "pools": {
+      "handler": {
+        "type": "array",
+        "method": "stargateImpls",
+        "startIndex": 1,
+        "length": "{{ maxAssetId }}"
+      }
+    }
+  }
+}

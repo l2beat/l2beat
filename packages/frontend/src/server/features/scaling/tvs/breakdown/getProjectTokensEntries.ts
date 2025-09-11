@@ -31,7 +31,7 @@ type AddressData = {
   name?: string
 }
 
-export interface TvsBreakdownTokenEntry extends FilterableEntry {
+export interface ProjectTvsBreakdownTokenEntry extends FilterableEntry {
   id: TvsToken['id']
   name: string
   symbol: TvsToken['symbol']
@@ -39,6 +39,7 @@ export interface TvsBreakdownTokenEntry extends FilterableEntry {
   valueForProject: number
   value: number
   amount: number
+  priceUsd: number
   category: TvsToken['category']
   source: TvsToken['source']
   isAssociated: TvsToken['isAssociated']
@@ -57,7 +58,7 @@ export interface TvsBreakdownTokenEntry extends FilterableEntry {
 
 export async function getProjectTokensEntries(
   project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
-): Promise<TvsBreakdownTokenEntry[]> {
+): Promise<ProjectTvsBreakdownTokenEntry[]> {
   if (env.MOCK) {
     return getMockTvsBreakdownForProjectData(project)
   }
@@ -88,7 +89,7 @@ function getEntries(
   chains: ChainConfig[],
   targetTimestamp: UnixTime,
 ) {
-  const breakdown: TvsBreakdownTokenEntry[] = []
+  const breakdown: ProjectTvsBreakdownTokenEntry[] = []
 
   const projectTokens = project.tvsConfig
   const gasTokens = project.chainConfig?.gasTokens
@@ -104,7 +105,7 @@ function getEntries(
       project.contracts?.addresses,
     )
 
-    const tokenWithValues: TvsBreakdownTokenEntry = {
+    const tokenWithValues: ProjectTvsBreakdownTokenEntry = {
       id: token.id,
       name: token.name,
       symbol: token.symbol,
@@ -118,6 +119,7 @@ function getEntries(
         project.contracts?.addresses,
       ),
       iconUrl: token.iconUrl ?? '',
+      priceUsd: tokenValue.priceUsd,
       valueForProject: tokenValue.valueForProject,
       value: tokenValue.value,
       amount: tokenValue.amount,
@@ -275,7 +277,7 @@ function getSyncStatus(valueTimestamp: UnixTime, targetTimestamp: UnixTime) {
 
 async function getMockTvsBreakdownForProjectData(
   project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
-): Promise<TvsBreakdownTokenEntry[]> {
+): Promise<ProjectTvsBreakdownTokenEntry[]> {
   const projects = await ps.getProjects({
     select: ['chainConfig'],
   })
@@ -295,6 +297,7 @@ async function getMockTvsBreakdownForProjectData(
             valueForSummary: 100,
             value: 100,
             amount: 100,
+            priceUsd: 10,
           },
         ] as const,
     ),

@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["USDT_ADDRESS"],
+  "fields": {
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "migrator": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "MIGRATION_MANAGER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can migrate the canonically bridged USDT token to a native or external version."
+        }
+      ]
+    }
+  }
+}

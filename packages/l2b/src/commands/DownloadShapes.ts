@@ -9,6 +9,7 @@ import {
   TemplateService,
 } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { command, positional, string } from 'cmd-ts'
 import { mkdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
@@ -92,17 +93,8 @@ function createShapeDownloader(
       const outputFiles: Record<string, string> = {}
 
       const shape = shapeSchema[fileName]
-      const chainConfig = getChainConfig(shape.chain)
-      const httpClient = new HttpClient()
-      const client = getExplorerClient(httpClient, chainConfig.explorer)
       logger.info(`Fetching source code of ${fileName}`)
-
-      // 2. Download the source code and flatten it
-      const sources = await Promise.all(
-        Array.isArray(shape.address)
-          ? shape.address.map((address) => client.getContractSource(address))
-          : [client.getContractSource(shape.address)],
-      )
+      const sources = await getSources(shape.address)
 
       const sourceHashes: string[] = []
 
@@ -154,4 +146,23 @@ function createShapeDownloader(
       }
     }
   }
+}
+
+async function getSources(
+  address: ChainSpecificAddress | ChainSpecificAddress[],
+) {
+  const addresses = Array.isArray(address) ? address : [address]
+
+  return await Promise.all(
+    addresses.map(async (address) => {
+      const chainConfig = getChainConfig(
+        ChainSpecificAddress.longChain(address),
+      )
+      const httpClient = new HttpClient()
+      const client = getExplorerClient(httpClient, chainConfig.explorer)
+      return await client.getContractSource(
+        ChainSpecificAddress.address(address),
+      )
+    }),
+  )
 }

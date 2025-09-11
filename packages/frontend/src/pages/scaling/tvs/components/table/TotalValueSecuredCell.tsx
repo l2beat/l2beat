@@ -1,6 +1,15 @@
-import type { WarningWithSentiment } from '@l2beat/config'
-import { TokenBreakdown } from '~/components/breakdown/TokenBreakdown'
-import { ValueSecuredBreakdown } from '~/components/breakdown/ValueSecuredBreakdown'
+import type {
+  ProjectAssociatedToken,
+  WarningWithSentiment,
+} from '@l2beat/config'
+import {
+  TokenBreakdown,
+  TokenBreakdownTooltipContent,
+} from '~/components/breakdown/TokenBreakdown'
+import {
+  ValueSecuredBreakdown,
+  ValueSecuredBreakdownTooltipContent,
+} from '~/components/breakdown/ValueSecuredBreakdown'
 import {
   Tooltip,
   TooltipContent,
@@ -31,6 +40,7 @@ interface TotalValueSecuredCellProps {
       }
   change: number
   tvsWarnings?: WarningWithSentiment[]
+  associatedTokens?: ProjectAssociatedToken[]
 }
 
 export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
@@ -39,7 +49,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild disabled={tvsWarnings.length === 0}>
+      <TooltipTrigger asChild>
         <TableLink href={props.href}>
           <div className="flex flex-col items-end">
             <div className="flex items-center gap-1">
@@ -74,15 +84,29 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
         </TableLink>
       </TooltipTrigger>
       <TooltipContent className="flex flex-col gap-2">
-        {tvsWarnings?.map((warning, i) => (
-          <div key={i} className="flex gap-2">
-            <RoundedWarningIcon
-              className="size-4 shrink-0"
-              sentiment={warning.sentiment}
-            />
-            <span>{warning.value}</span>
-          </div>
-        ))}
+        {props.breakdown.type === 'bridgeType' ? (
+          <ValueSecuredBreakdownTooltipContent
+            canonical={props.breakdown.canonical}
+            external={props.breakdown.external}
+            native={props.breakdown.native}
+            tvsWarnings={tvsWarnings}
+            associatedTokenSymbols={props.associatedTokens?.map(
+              (t) => t.symbol,
+            )}
+            hideTotal
+          />
+        ) : (
+          <TokenBreakdownTooltipContent
+            total={props.total}
+            ether={props.breakdown.ether}
+            stablecoin={props.breakdown.stablecoin}
+            btc={props.breakdown.btc}
+            other={props.breakdown.other}
+            associated={props.breakdown.associated}
+            tvsWarnings={tvsWarnings}
+            associatedTokens={props.associatedTokens ?? []}
+          />
+        )}
       </TooltipContent>
     </Tooltip>
   )

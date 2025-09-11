@@ -1,20 +1,17 @@
 {
   "L1ETHBridge": {
     "hash": "0x3a64ad01421d13d01bcda2dccfa9afde7ed6dad28ed7471ada57175a7637e8bb",
-    "address": "0x79009BE75Ef97e17b2832CE349a1CE7e60dac262",
-    "chain": "ethereum",
+    "address": "eth:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262",
     "blockNumber": 22981943
   },
   "L1ETHBridge2": {
     "hash": "0x69944b23a896634033db21c6cc3f25d885368fb5c81ff579eb5433bafb47fc68",
-    "address": "0x13D21988F08997d20822d247A5015C4D13102F88",
-    "chain": "ethereum",
+    "address": "eth:0x13D21988F08997d20822d247A5015C4D13102F88",
     "blockNumber": 22995010
   },
   "L1ETHBridge_replay": {
     "hash": "0x2428a7345462c1359eba9d5cf1d2749c05cb9419787b7e2914c411bb0c244867",
-    "address": "0x4E2eBa30a786c0643699b92234d74a71e958C08E",
-    "chain": "ethereum",
+    "address": "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
     "blockNumber": 23088587
   }
 }

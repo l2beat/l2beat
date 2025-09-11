@@ -1,20 +1,17 @@
 {
   "RelayerProxyHub1": {
     "hash": "0x293656e6300059a6f65d693963085275a4b36a5e375b6101ce937d0f2938207e",
-    "address": "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
-    "chain": "ethereum",
+    "address": "eth:0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
     "blockNumber": 22823809
   },
   "RelayerProxyHub2": {
     "hash": "0x2caa39c242be8054678e58b07c53f52a796a2d1c50f065af98ccb92de4275ff7",
-    "address": "0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28",
-    "chain": "ethereum",
+    "address": "eth:0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28",
     "blockNumber": 22823809
   },
   "RelayerProxyHub3": {
     "hash": "0x6c908f2cfba26c3f8579904361d66ac752f7d6e58a7dade2ca752d80de50ee30",
-    "address": "0xB4F8D176466f5F544bAd53737bffAaeA17185c05",
-    "chain": "ethereum",
+    "address": "eth:0xB4F8D176466f5F544bAd53737bffAaeA17185c05",
     "blockNumber": 22823809
   }
 }

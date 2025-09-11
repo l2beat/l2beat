@@ -1,8 +1,7 @@
 {
   "LockingPool": {
     "hash": "0xff86f55c7d91dbdd408e8b44c6aa3647e5d7cef144de8a65bc84e13e3bf3524f",
-    "address": "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60",
-    "chain": "ethereum",
+    "address": "eth:0xD8f38c831E5032d23065Eaaee8c0620e17c04D60",
     "blockNumber": 22517869
   }
 }
