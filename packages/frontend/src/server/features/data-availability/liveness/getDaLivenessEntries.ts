@@ -23,7 +23,7 @@ import { getDaUsers } from '../utils/getDaUsers'
 export async function getDaLivenessEntries(): Promise<
   TabbedDaEntries<DaLivenessEntry>
 > {
-  const [layers, bridges, projectsChangeReport, liveness] = await Promise.all([
+  const [layers, bridges] = await Promise.all([
     ps.getProjects({
       select: ['daLayer', 'statuses'],
       whereNot: ['archivedAt'],
@@ -32,12 +32,16 @@ export async function getDaLivenessEntries(): Promise<
       select: ['daBridge', 'statuses', 'trackedTxsConfig'],
       optional: ['livenessInfo'],
     }),
-    getProjectsChangeReport(),
-    getLiveness(),
   ])
 
   const uniqueProjectsInUse = getDaUsers(layers, bridges, [])
-  const tvsPerProject = await getDaProjectsTvs(uniqueProjectsInUse)
+
+  const [projectsChangeReport, liveness, tvsPerProject] = await Promise.all([
+    getProjectsChangeReport(),
+    getLiveness(),
+    getDaProjectsTvs(uniqueProjectsInUse),
+  ])
+
   const getTvs = pickTvsForProjects(tvsPerProject)
 
   const layerEntries = layers
