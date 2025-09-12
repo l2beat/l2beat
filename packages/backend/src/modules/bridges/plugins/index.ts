@@ -23,5 +23,6 @@ export function createBridgePlugins(logger: Logger): BridgePlugin[] {
     new LayerZeroV2Plugin(logger),
     new WormholePlugin(logger),
     new StargatePlugin(logger),
+    new OpStackPlugin(logger)
   ]
 }
