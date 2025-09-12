@@ -1,6 +1,7 @@
 import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '../../utils/Manifest'
+import { getEthereumConnectData } from './ethereum-connect/getEthereumConnectData'
 import { getGovernanceData } from './GetGovernanceData'
 
 export function createGovernanceRouter(
@@ -15,8 +16,10 @@ export function createGovernanceRouter(
     res.status(200).send(html)
   })
 
-  router.get('/governance/ethereum-connect', (_, res) => {
-    res.redirect('https://form.typeform.com/to/YVrD7Ava')
+  router.get('/governance/ethereum-connect', (req, res) => {
+    const data = getEthereumConnectData(manifest, req.originalUrl)
+    const html = render(data, req.originalUrl)
+    res.status(200).send(html)
   })
 
   return router
