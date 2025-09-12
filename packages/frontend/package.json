@@ -67,6 +67,7 @@
     "lodash": "^4.17.21",
     "markdown-it": "^14.1.0",
     "next-themes": "^0.3.0",
+    "node-cron": "^4.2.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "recharts": "^2.15.1",
