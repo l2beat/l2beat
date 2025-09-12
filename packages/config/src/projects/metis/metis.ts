@@ -101,7 +101,7 @@ export const metis: ScalingProject = {
         principle: false,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: false,
+        securityCouncilProperlySetUp: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
