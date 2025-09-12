@@ -6,7 +6,7 @@ import type {
   BridgeTransferWithFinancials,
   TransferSideWithFinancials,
 } from '../plugins/types'
-import type { InteropToken } from './tokens'
+import type { InteropToken } from './generateInteropTokens'
 
 interface CachedPrice {
   value: number
@@ -33,7 +33,7 @@ export class FinancialsService {
       tokens
         .flatMap((t) =>
           t.addresses.map((tt) => ({
-            key: `${tt.chain}:${tt.address}`,
+            key: key(tt.chain, tt.address),
             value: {
               coingeckoId: t.coingeckoId,
               symbol: t.symbol,
@@ -67,7 +67,7 @@ export class FinancialsService {
       return undefined
     }
     const token = this.tokensMap.get(
-      `${side.event.ctx.chain}:${side.token.address}`,
+      key(side.event.ctx.chain, side.token.address),
     )
     if (token) {
       const amount = BigIntWithDecimals(
@@ -124,4 +124,8 @@ export class FinancialsService {
   ): string {
     return `${coingeckoId}:${hourTimestamp}`
   }
+}
+
+function key(chain: string, address: string) {
+  return `${chain}:${address.toLowerCase()}`
 }
