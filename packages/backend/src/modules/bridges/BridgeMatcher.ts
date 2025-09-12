@@ -1,12 +1,18 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { BridgeMessageRecord, Database } from '@l2beat/database'
+import type {
+  BridgeMessageRecord,
+  BridgeTransferRecord,
+  Database,
+} from '@l2beat/database'
 import type { BridgeStore } from './BridgeStore'
+import type { FinancialsService } from './financials/FinancialsService'
 import {
   type BridgeEvent,
   type BridgeEventDb,
   type BridgeMessage,
   type BridgePlugin,
   type BridgeTransfer,
+  type BridgeTransferWithFinancials,
   generateId,
   type MatchResult,
 } from './plugins/types'
@@ -16,6 +22,7 @@ export class BridgeMatcher {
 
   constructor(
     private bridgeStore: BridgeStore,
+    private financialsService: FinancialsService,
     private db: Database,
     private plugins: BridgePlugin[],
     private logger: Logger,
@@ -63,6 +70,16 @@ export class BridgeMatcher {
       await this.db.bridgeMessage.insertMany(
         result.messages.map(toMessageRecord),
       )
+    }
+
+    if (result.transfers.length > 0) {
+      const transfers: BridgeTransferWithFinancials[] = await Promise.all(
+        result.transfers.map(
+          async (b) => await this.financialsService.addFinancials(b),
+        ),
+      )
+
+      await this.db.bridgeTransfer.insertMany(transfers.map(toTransferRecord))
     }
   }
 }
@@ -136,5 +153,48 @@ function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
     dstEventId: message.inbound.eventId,
     dstLogIndex: message.inbound.ctx.logIndex,
     dstTxHash: message.inbound.ctx.txHash,
+  }
+}
+
+function toTransferRecord(
+  transfer: BridgeTransferWithFinancials,
+): BridgeTransferRecord {
+  return {
+    messageId: generateId('T'),
+    type: transfer.type,
+    duration: Math.abs(
+      transfer.inbound.event.ctx.timestamp -
+        transfer.outbound.event.ctx.timestamp,
+    ),
+    timestamp: Math.max(
+      transfer.outbound.event.ctx.timestamp,
+      transfer.inbound.event.ctx.timestamp,
+    ),
+
+    srcChain: transfer.outbound.event.ctx.chain,
+    srcTime: transfer.outbound.event.ctx.timestamp,
+    srcEventId: transfer.outbound.event.eventId,
+    srcLogIndex: transfer.outbound.event.ctx.logIndex,
+    srcTxHash: transfer.outbound.event.ctx.txHash,
+
+    srcTokenAddress: transfer.outbound.token?.address,
+    srcRawAmount: transfer.outbound.token?.amount,
+    srcSymbol: transfer.outbound.financials?.symbol,
+    srcAmount: transfer.outbound.financials?.amount,
+    srcPrice: transfer.outbound.financials?.price,
+    srcValueUsd: transfer.outbound.financials?.valueUsd,
+
+    dstChain: transfer.inbound.event.ctx.chain,
+    dstTime: transfer.inbound.event.ctx.timestamp,
+    dstEventId: transfer.inbound.event.eventId,
+    dstLogIndex: transfer.inbound.event.ctx.logIndex,
+    dstTxHash: transfer.inbound.event.ctx.txHash,
+
+    dstTokenAddress: transfer.inbound.token?.address,
+    dstRawAmount: transfer.inbound.token?.amount,
+    dstSymbol: transfer.inbound.financials?.symbol,
+    dstAmount: transfer.inbound.financials?.amount,
+    dstPrice: transfer.inbound.financials?.price,
+    dstValueUsd: transfer.inbound.financials?.valueUsd,
   }
 }

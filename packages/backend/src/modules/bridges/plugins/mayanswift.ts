@@ -1,4 +1,4 @@
-/* 
+/*
 Mayan SWIFT Protocol
 */
 
@@ -79,8 +79,8 @@ export class MayanSwiftPlugin implements BridgePlugin {
           // TODO: Implement transfer properly
           type: 'mayanswift.Swap',
           events: [orderCreated, orderFulfilled],
-          outbound: { tx: orderCreated.ctx },
-          inbound: { tx: orderFulfilled.ctx },
+          outbound: { event: orderCreated },
+          inbound: { event: orderFulfilled },
         },
       ],
     }

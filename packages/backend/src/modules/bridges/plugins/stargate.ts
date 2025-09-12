@@ -18,17 +18,17 @@ export const StargateV2OFTSentBusRode = createBridgeEventType<{
   ticketId: number
   receiver: string
   destinationEid: number
-  tokenAddress: EthereumAddress
+  tokenAddress: EthereumAddress | 'native'
   amountSentLD: string
   amountReceivedLD: string
   amountSD: string
-}>('stargatev2.OFTSentBusRode')
+}>('stargatev2.OFTSentBus')
 
 export const StargateV2OFTSentTaxi = createBridgeEventType<{
   guid: string
   amountSentLD: string
   amountReceivedLD: string
-  tokenAddress: EthereumAddress
+  tokenAddress: EthereumAddress | 'native'
 }>('stargatev2.OFTSentTaxi')
 
 const parseOFTReceived = createEventParser(
@@ -39,7 +39,7 @@ export const StargateV2OFTReceived = createBridgeEventType<{
   receiver: string
   emitter: EthereumAddress
   token: string
-  tokenAddress: EthereumAddress
+  tokenAddress: EthereumAddress | 'native'
   destinationEid: number
   amountReceivedLD: string
 }>('stargatev2.OFTReceived')
@@ -64,7 +64,7 @@ const NETWORKS = [
     eid: 30101,
     nativePool: {
       address: EthereumAddress('0x77b2043768d28E9C9aB44E1aBfC95944bcE57931'),
-      tokenAddress: EthereumAddress.ZERO,
+      tokenAddress: 'native' as const,
       token: 'ETH',
     },
     usdcPool: {
@@ -83,7 +83,7 @@ const NETWORKS = [
     eid: 30110,
     nativePool: {
       address: EthereumAddress('0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F'),
-      tokenAddress: EthereumAddress.ZERO,
+      tokenAddress: 'native' as const,
       token: 'ETH',
     },
     usdcPool: {
@@ -102,7 +102,7 @@ const NETWORKS = [
     eid: 30184,
     nativePool: {
       address: EthereumAddress('0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7'),
-      tokenAddress: EthereumAddress.ZERO,
+      tokenAddress: 'native' as const,
       token: 'ETH',
     },
     usdcPool: {
