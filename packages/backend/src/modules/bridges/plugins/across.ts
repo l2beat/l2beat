@@ -52,7 +52,7 @@ const NETWORKS = [
     address: EthereumAddress('0x6f26Bf09B1C792e3228e5467807a900A503c0281'),
   },
   {
-    chain: 'zksyncera',
+    chain: 'zksync2',
     chainId: 324,
     address: EthereumAddress('0xE0B015E54d54fc84a6cB9B666099c46adE9335FF'),
   },
