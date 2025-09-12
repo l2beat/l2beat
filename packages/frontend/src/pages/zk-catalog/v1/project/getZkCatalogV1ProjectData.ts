@@ -6,7 +6,7 @@ import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getZkCatalogProjectDetails } from './utils/getZkCatalogProjectDetails'
 
-export async function getZkCatalogProjectData(
+export async function getZkCatalogV1ProjectData(
   manifest: Manifest,
   slug: string,
   url: string,
@@ -39,7 +39,7 @@ export async function getZkCatalogProjectData(
       }),
     },
     ssr: {
-      page: 'ZkCatalogProjectPage',
+      page: 'ZkCatalogV1ProjectPage',
       props: {
         ...appLayoutProps,
         projectDetails,

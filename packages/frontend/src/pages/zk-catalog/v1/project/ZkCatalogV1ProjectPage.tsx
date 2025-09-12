@@ -22,7 +22,7 @@ interface Props extends AppLayoutProps {
   projectDetails: ZkCatalogProjectDetails
 }
 
-export function ZkCatalogProjectPage({ projectDetails, ...props }: Props) {
+export function ZkCatalogV1ProjectPage({ projectDetails, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
