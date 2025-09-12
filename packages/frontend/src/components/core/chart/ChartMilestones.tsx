@@ -136,7 +136,7 @@ function ChartMilestone({
           <Icon />
         </a>
       </TooltipTrigger>
-      <TooltipContent side="bottom" forceMount>
+      <TooltipContent side="bottom">
         <div className="mb-1 whitespace-nowrap">
           {formatDate(triggerMilestone.date.slice(0, 10))}
         </div>
