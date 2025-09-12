@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb289314fd297155555bbe71557ad5277540e26c9
 
 ## Description
 
-PausableIsm: package version bump, no other changes
+PausableIsm: package version bump, no other changes (https://disco.l2beat.com/diff/eth:0x0e80C192a0c6a930F8f7170bDCCE31786BB5DC17/eth:0x2D9c8c9632F5d1CAd8032F50589248B269d3b259)
 
 (other contracts were changed as a consequence of the pausableIsm upgrade)
 
