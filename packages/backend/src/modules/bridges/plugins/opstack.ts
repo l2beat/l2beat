@@ -13,7 +13,7 @@ const parseWithdrawalFinalized = createEventParser('event WithdrawalFinalized(by
 export const WithdrawalFinalized = createBridgeEventType<{
   chain: string
   withdrawalHash: string
-}>('opstack.WithdrawalFinalized', { ttl: 5 * UnixTime.DAY })
+}>('opstack.WithdrawalFinalized')
 
 const NETWORKS = [
   {
