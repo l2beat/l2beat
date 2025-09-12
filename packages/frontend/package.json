@@ -21,7 +21,8 @@
     "format:fix": "biome check --write .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "test-all-pages": "scripts/test-all-pages/test.sh"
+    "test-all-pages": "scripts/test-all-pages/test.sh",
+    "hot-cache": "tsx scripts/hot-cache/index.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
