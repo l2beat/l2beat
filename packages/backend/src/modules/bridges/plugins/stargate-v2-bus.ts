@@ -77,14 +77,18 @@ export class StargateV2BusPlugin implements BridgePlugin {
         type: 'stargate-v2-bus.App',
         events: [oftSentBusRode, matchedOftReceived],
         outbound: {
-          tx: oftSentBusRode.ctx,
-          tokenAddress: oftSentBusRode.args.tokenAddress,
-          amount: oftSentBusRode.args.amountSentLD.toString(),
+          event: oftSentBusRode,
+          token: {
+            address: oftSentBusRode.args.tokenAddress,
+            amount: oftSentBusRode.args.amountSentLD.toString(),
+          },
         },
         inbound: {
-          tx: matchedOftReceived.ctx,
-          tokenAddress: matchedOftReceived.args.tokenAddress,
-          amount: matchedOftReceived.args.amountReceivedLD.toString(),
+          event: matchedOftReceived,
+          token: {
+            address: matchedOftReceived.args.tokenAddress,
+            amount: matchedOftReceived.args.amountReceivedLD.toString(),
+          },
         },
       })
     }

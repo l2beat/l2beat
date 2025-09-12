@@ -36,11 +36,11 @@ export interface BridgeMessage {
 }
 
 export interface TransferSide {
-  tx: BridgeEventContext
-  tokenAddress?: EthereumAddress
-  tokenId?: string
-  amount?: string
-  valueUsd?: number
+  event: BridgeEvent
+  token?: {
+    address: EthereumAddress | 'native'
+    amount: string
+  }
 }
 
 export interface BridgeTransfer {
@@ -48,6 +48,20 @@ export interface BridgeTransfer {
   events: BridgeEvent[]
   outbound: TransferSide
   inbound: TransferSide
+}
+
+export type TransferSideWithFinancials = TransferSide & {
+  financials?: {
+    valueUsd: number
+    price: number
+    amount: number
+    symbol: string
+  }
+}
+
+export type BridgeTransferWithFinancials = BridgeTransfer & {
+  outbound: TransferSideWithFinancials
+  inbound: TransferSideWithFinancials
 }
 
 export function generateId(type: string) {

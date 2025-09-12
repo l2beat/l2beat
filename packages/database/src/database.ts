@@ -9,6 +9,7 @@ import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
 import { BridgeEventRepository } from './repositories/BridgeEventRepository'
 import { BridgeMessageRepository } from './repositories/BridgeMessageRepository'
+import { BridgeTransferRepository } from './repositories/BridgeTransferRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
@@ -51,6 +52,7 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     // #region Bridges
     bridgeEvent: new BridgeEventRepository(db),
     bridgeMessage: new BridgeMessageRepository(db),
+    bridgeTransfer: new BridgeTransferRepository(db),
     // #endregion
 
     // #region DA BEAT
