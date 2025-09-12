@@ -6,7 +6,6 @@ For general message passing:
     - ContractCallExecuted on DST chain
 
   TODO: handle other Axelar events (e.g. token transfer)
-  TODO: axelar uses chain names, they may differ from our naming
 */
 
 import { EthereumAddress } from '@l2beat/shared-pure'
@@ -32,21 +31,28 @@ const parseContractCallExecuted = createEventParser(
   'event ContractCallExecuted(bytes32 indexed commandId)',
 )
 
+export const NETWORKS = [
+  { axelarChainName: 'Ethereum', chain: 'ethereum' },
+  { axelarChainName: 'arbitrum', chain: 'arbitrum' },
+  { axelarChainName: 'Avalanche', chain: 'avalanche' },
+  { axelarChainName: 'base', chain: 'base' },
+]
+
 export const ContractCall = createBridgeEventType<{
   sender: EthereumAddress
-  destinationChain: string
   destinationContractAddress: string
   payloadHash: `0x${string}`
   txHash: string
+  $dstChain: string
 }>('axelar.ContractCall')
 
 export const ContractCallApproved = createBridgeEventType<{
   commandId: string
-  sourceChain: string
   sourceAddress: string
   contractAddress: EthereumAddress
   srcTxHash: `0x${string}`
   payloadHash: `0x${string}`
+  $srcChain: string
 }>('axelar.ContractCallApproved')
 
 export const ContractCallExecuted = createBridgeEventType<{
@@ -63,9 +69,9 @@ export class AxelarPlugin implements BridgePlugin {
       return ContractCall.create(input.ctx, {
         sender: EthereumAddress(parsed.sender),
         destinationContractAddress: parsed.destinationContractAddress,
-        destinationChain: parsed.destinationChain,
         payloadHash: parsed.payloadHash,
         txHash: input.ctx.txHash,
+        $dstChain: NETWORKS.find((x) => x.axelarChainName === parsed.destinationChain)?.chain ?? `AXL_${parsed.destinationChain}`
       })
     }
 
@@ -74,10 +80,10 @@ export class AxelarPlugin implements BridgePlugin {
       return ContractCallApproved.create(input.ctx, {
         commandId: parsedApproved.commandId,
         payloadHash: parsedApproved.payloadHash,
-        sourceChain: parsedApproved.sourceChain,
         sourceAddress: parsedApproved.sourceAddress,
         contractAddress: EthereumAddress(parsedApproved.contractAddress),
         srcTxHash: parsedApproved.sourceTxHash,
+        $srcChain: NETWORKS.find((x) => x.axelarChainName === parsedApproved.sourceChain)?.chain ?? `AXL_${parsedApproved.sourceChain}`
       })
     }
 

@@ -22,8 +22,9 @@ const parseDelivery = createEventParser(
 
 export const Delivery = createBridgeEventType<{
   recipientContract: string
-  sourceChain: string
+  sourceChain: number
   sequence: string
+  $srcChain: string
 }>('wormholeRelayer.Delivery')
 
 export class WormholeRelayerPlugin implements BridgePlugin {
@@ -36,7 +37,8 @@ export class WormholeRelayerPlugin implements BridgePlugin {
 
     return Delivery.create(input.ctx, {
       recipientContract: parsed.recipientContract,
-      sourceChain:
+      sourceChain: parsed.sourceChain,
+      $srcChain:
         NETWORKS.find((n) => n.wormholeChainId === Number(parsed.sourceChain))
           ?.chain || '???',
       sequence: parsed.sequence.toString(),
