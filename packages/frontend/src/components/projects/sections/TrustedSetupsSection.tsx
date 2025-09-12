@@ -51,7 +51,7 @@ export function TrustedSetupSection({
                   <h3 className="font-semibold text-secondary text-subtitle-12 uppercase">
                     Detailed description
                   </h3>
-                  <Markdown className="text-paragraph-14">
+                  <Markdown className="text-paragraph-15 md:text-paragraph-16">
                     {trustedSetup.description}
                   </Markdown>
                 </div>
