@@ -37,9 +37,11 @@ function createConnectionTag() {
   const suffix =
     env.DEPLOYMENT_ENV === 'production'
       ? 'prod'
-      : env.DEPLOYMENT_ENV === 'preview'
-        ? 'preview'
-        : 'dev'
+      : env.DEPLOYMENT_ENV === 'staging'
+        ? 'staging'
+        : env.DEPLOYMENT_ENV === 'preview'
+          ? 'preview'
+          : 'dev'
   const base = `FE-${suffix}`
 
   if (env.HEROKU_APP_NAME) {
@@ -63,6 +65,7 @@ function pool() {
         min: 50,
         max: 200,
       }
+    case 'staging':
     case 'preview':
       return {
         min: 2,
