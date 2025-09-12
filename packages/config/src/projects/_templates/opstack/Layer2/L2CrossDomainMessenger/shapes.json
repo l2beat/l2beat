@@ -8,5 +8,10 @@
     "hash": "0x232dce20746263348611758da13c5157e6731aa8b6a6fde61475eb230f8a87f0",
     "address": "ink:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
     "blockNumber": 10183769
+  },
+  "L2CrossDomainMessenger_metis": {
+    "hash": "0xb0aa46ed830058877d2309a8dbc2d6fcaedcebb1a787e272e4b9548df740d186",
+    "address": "metis-andromeda:0x4200000000000000000000000000000000000007",
+    "blockNumber": 21197158
   }
 }
