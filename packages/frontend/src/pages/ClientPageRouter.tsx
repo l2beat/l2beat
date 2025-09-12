@@ -4,6 +4,7 @@ import { BridgesProjectPage } from './bridges/project/BridgesProjectPage'
 import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
 import { DaRiskFrameworkPage } from './da-risk-framework/DaRiskFrameworkPage'
 import { DataAvailabilityArchivedPage } from './data-availability/archived/DataAvailabilityArchivedPage'
+import { DataAvailabilityLivenessPage } from './data-availability/liveness/DataAvailabilityLivenessPage'
 import { DataAvailabilityProjectPage } from './data-availability/project/DataAvailabilityProjectPage'
 import { DataAvailabilityRiskPage } from './data-availability/risk/DataAvailabilityRiskPage'
 import { DataAvailabilitySummaryPage } from './data-availability/summary/DataAvailabilitySummaryPage'
@@ -69,6 +70,7 @@ const pages = {
   DataAvailabilitySummaryPage,
   DataAvailabilityRiskPage,
   DataAvailabilityThroughputPage,
+  DataAvailabilityLivenessPage,
   DataAvailabilityProjectPage,
   DataAvailabilityArchivedPage,
   // ZK Catalog

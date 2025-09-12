@@ -3139,6 +3139,20 @@
       "supply": "zero"
     },
     {
+      "name": "Linea",
+      "coingeckoId": "linea",
+      "address": "0x1789e0043623282D5DCc7F213d703C6D8BAfBB04",
+      "symbol": "LINEA",
+      "decimals": 18,
+      "deploymentTimestamp": 1753892339,
+      "coingeckoListingTimestamp": 1757548800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68507/large/linea-logo.jpeg?1756025484",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Liquid Staked ETH",
       "coingeckoId": "liquid-staked-ethereum",
       "address": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549",

@@ -3,6 +3,7 @@ import { activityRouter } from './routers/activity'
 import { costsRouter } from './routers/costs'
 import { daRouter } from './routers/da'
 import { livenessRouter } from './routers/liveness'
+import { projectsRouter } from './routers/projects'
 import { tvsRouter } from './routers/tvs'
 
 /**
@@ -16,6 +17,7 @@ export const appRouter = router({
   tvs: tvsRouter,
   da: daRouter,
   liveness: livenessRouter,
+  projects: projectsRouter,
 })
 
 // export type definition of API

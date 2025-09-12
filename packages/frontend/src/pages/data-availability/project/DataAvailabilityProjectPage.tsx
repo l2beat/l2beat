@@ -58,7 +58,15 @@ export function DataAvailabilityProjectPage({
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
               <div className="pt-6 max-md:px-4 lg:w-[calc(100%-196px)] lg:pt-4">
-                <ProjectHeader project={entry} />
+                <ProjectHeader
+                  project={entry}
+                  ongoingAnomaly={
+                    entry.entryType === 'common'
+                      ? entry.header.ongoingAnomaly
+                      : undefined
+                  }
+                  livenessSectionHref="#da-bridge-liveness"
+                />
                 <ProjectSummaryBars
                   project={{
                     archivedAt: entry.archivedAt,

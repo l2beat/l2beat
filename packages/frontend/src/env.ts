@@ -16,7 +16,7 @@ const CLIENT_CONFIG = {
   NODE_ENV: z
     .enum(['development', 'test', 'production'])
     .default('development'),
-  DEPLOYMENT_ENV: z.enum(['preview', 'production']).optional(),
+  DEPLOYMENT_ENV: z.enum(['preview', 'staging', 'production']).optional(),
   CLIENT_SIDE_GITCOIN_ROUND_LIVE: featureFlag.default(false),
   CLIENT_SIDE_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
   CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),

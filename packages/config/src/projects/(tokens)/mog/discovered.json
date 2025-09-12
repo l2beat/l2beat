@@ -4,7 +4,7 @@
   "configHash": "0x781e7c4428e87c22100ab7dd57f1d32ca0c73ffc95a1a5acc0f10f6251fc24b6",
   "entries": [
     {
-      "name": "OptimismMintableERC20",
+      "name": "Mog Coin Token",
       "address": "base:0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71",
       "type": "Contract",
       "template": "tokens/OptimismMintableERC20",
@@ -55,7 +55,7 @@
       ]
     },
     {
-      "name": "MOG",
+      "name": "Mog Coin Token",
       "address": "eth:0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
       "type": "Contract",
       "sourceHashes": [
@@ -188,5 +188,5 @@
     "tokens/OptimismMintableERC20": "0xc3a07d61ea3f87a7c6f83d6e66e3e9dcee7812e0677383410b20fc9c6832b80c"
   },
   "usedBlockNumbers": { "ethereum": 23231445, "base": 34748064 },
-  "permissionsConfigHash": "0x79c44089114727f9f2d9a1fb01321ca326ca08d9104f51356d657eb7edbe38cd"
+  "permissionsConfigHash": "0xd35bc918a3e94c8e3d32d101d45e77133ac532f1d023ac70a2959326a4d552cb"
 }
