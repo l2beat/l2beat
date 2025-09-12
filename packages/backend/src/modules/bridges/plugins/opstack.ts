@@ -58,9 +58,7 @@ export class OpStackPlugin implements BridgePlugin {
         })
       }
     } else {
-      const network = NETWORKS.find(
-        (n) => n.chain === input.ctx.chain,
-      )
+      const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
       if (!network) return
 
       const mp = parseMessagePassed(input.log, [network.l2ToL1MessagePasser])
