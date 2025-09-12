@@ -11,6 +11,39 @@ on:
       - main
 
 jobs:
+  hot-cache:
+    name: Build frontend
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      TURBO_REMOTE_CACHE_UPLOAD_TIMEOUT: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build mocked frontend
+        run: pnpm build:frontend
+
+      - name: Run hot cache
+        run: pnpm hot-cache
+        env:
+          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+
   deploy-frontend:
     name: Deploy frontend
     runs-on: ubuntu-latest
