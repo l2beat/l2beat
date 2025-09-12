@@ -15,7 +15,8 @@ const parseLogTransferRedeemed = createEventParser(
 
 export const TransferRedeemed = createBridgeEventType<{
   sequence: string
-  srcWormholeChainId: string
+  $srcChain: string
+  srcWormholeChainId: number
   sender: string
   txHash: string
 }>('wormhole.LogTransferRedeemed')
@@ -30,10 +31,10 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
 
     return TransferRedeemed.create(input.ctx, {
       sequence: parsed.sequence.toString(),
-      srcWormholeChainId:
-        NETWORKS.find(
-          (n) => n.wormholeChainId === Number(parsed.emitterChainId),
-        )?.chain || '???',
+      $srcChain:
+        NETWORKS.find((x) => x.wormholeChainId === parsed.emitterChainId)
+          ?.chain ?? 'unknown',
+      srcWormholeChainId: parsed.emitterChainId,
       sender: parsed.emitterAddress,
       txHash: input.ctx.txHash,
     })
