@@ -25,5 +25,6 @@ export function createBridgePlugins(logger: Logger): BridgePlugin[] {
     new WormholeTokenBridgePlugin(), // should be run before Wormhole
     new WormholePlugin(logger),
     new StargatePlugin(logger),
+    new OpStackPlugin(logger)
   ]
 }
