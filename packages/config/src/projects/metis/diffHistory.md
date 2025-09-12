@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x3a4cc1c47ed6eeb0818df69e092cca650cbaadc7
+Generated with discovered.json: 0xa2715bae71823eb812feb92dc66e76433eb0aa36
 
-# Diff at Thu, 11 Sep 2025 17:04:44 GMT:
+# Diff at Fri, 12 Sep 2025 12:30:41 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@665b233e3787b7a0fd24453d6e587ffdc2c1541d block: 1756462910
-- current timestamp: 1757610208
+- current timestamp: 1757680168
 
 ## Description
 
@@ -53,6 +53,15 @@ explicit require makes deletion only possible for batches that are already marke
 ```
 
 ```diff
+    contract OVM_GasPriceOracle (metis-andromeda:0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      values.gasPrice:
+-        3148134044
++        3239968571
+    }
+```
+
+```diff
 +   Status: CREATED
     contract Metis Security Council Minority (eth:0xAd07701EE9348d2B9e7De061883C10574c543279)
     +++ description: None
@@ -65,6 +74,48 @@ explicit require makes deletion only possible for batches that are already marke
  .../SafeProxy.p.sol                                |   37 +
  .../MVM_StateCommitmentChain.sol                   |    5 +
  3 files changed, 1130 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756462910 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract OVM_DeployerWhitelist (metis-andromeda:0x4200000000000000000000000000000000000002)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2CrossDomainMessenger (metis-andromeda:0x4200000000000000000000000000000000000007)
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+```
+
+```diff
++   Status: CREATED
+    contract OVM_GasPriceOracle (metis-andromeda:0x420000000000000000000000000000000000000F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2StandardBridge (metis-andromeda:0x4200000000000000000000000000000000000010)
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
++   Status: CREATED
+    contract OVM_SequencerFeeVault (metis-andromeda:0x4200000000000000000000000000000000000011)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2StandardTokenFactory (metis-andromeda:0x4200000000000000000000000000000000000012)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x462559aeffb7505251dbc4b88d42769c3cd5037e
