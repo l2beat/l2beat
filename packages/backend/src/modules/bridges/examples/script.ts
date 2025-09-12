@@ -42,7 +42,7 @@ const cmd = command({
       sourceName: 'coingecko',
       callsPerMinute: 600,
       retryStrategy: 'SCRIPT',
-      apiKey: env.string('COINGECKO_API_KEY'),
+      apiKey: env.optionalString('COINGECKO_API_KEY'),
     })
     const priceProvider = new PriceProvider(
       new CoingeckoQueryService(coingeckoClient),

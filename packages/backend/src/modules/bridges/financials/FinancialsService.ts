@@ -1,5 +1,5 @@
 import type { PriceProvider } from '@l2beat/shared'
-import { assert, CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import { assert, type CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { BigIntWithDecimals } from '../../tvs/tools/bigIntWithDecimals'
 import type {
   BridgeTransfer,
@@ -48,83 +48,44 @@ export class FinancialsService {
   async addFinancials(
     transfer: BridgeTransfer,
   ): Promise<BridgeTransferWithFinancials> {
-    let outbound: TransferSideWithFinancials = transfer.outbound
-    let inbound: TransferSideWithFinancials = transfer.inbound
-
-    if (transfer.outbound.token) {
-      const token = this.tokensMap.get(
-        `${transfer.outbound.event.ctx.chain}:${transfer.outbound.token.address}`,
-      )
-      if (token) {
-        const amount = BigIntWithDecimals(
-          BigInt(transfer.outbound.token.amount),
-          token.decimals,
-        )
-
-        const timestamp = UnixTime.toStartOf(
-          transfer.outbound.event.ctx.timestamp,
-          'hour',
-        )
-        const price = await this.getPrice(token.coingeckoId, timestamp)
-
-        const value = BigIntWithDecimals.multiply(
-          amount,
-          BigIntWithDecimals.fromNumber(price),
-        )
-
-        outbound = {
-          ...outbound,
-          financials: {
-            amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(6)),
-            price: price,
-            valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
-            symbol: token.symbol,
-          },
-        }
-      }
-    }
-
-    if (transfer.inbound.token) {
-      const token = this.tokensMap.get(
-        `${transfer.inbound.event.ctx.chain}:${transfer.inbound.token.address}`,
-      )
-      if (token) {
-        const amount = BigIntWithDecimals(
-          BigInt(transfer.inbound.token.amount),
-          token.decimals,
-        )
-
-        const timestamp = UnixTime.toStartOf(
-          transfer.inbound.event.ctx.timestamp,
-          'hour',
-        )
-        const price = await this.getPrice(
-          CoingeckoId(token.coingeckoId),
-          timestamp,
-        )
-
-        const value = BigIntWithDecimals.multiply(
-          amount,
-          BigIntWithDecimals.fromNumber(price),
-        )
-
-        inbound = {
-          ...inbound,
-          financials: {
-            amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(6)),
-            price: price,
-            valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
-            symbol: token.symbol,
-          },
-        }
-      }
-    }
-
     return {
       type: transfer.type,
       events: transfer.events,
-      outbound,
-      inbound,
+      outbound: {
+        ...transfer.outbound,
+        financials: await this.getFinancials(transfer.outbound),
+      },
+      inbound: {
+        ...transfer.inbound,
+        financials: await this.getFinancials(transfer.inbound),
+      },
+    }
+  }
+
+  private async getFinancials(side: TransferSideWithFinancials) {
+    if (!side.token) {
+      return undefined
+    }
+    const token = this.tokensMap.get(
+      `${side.event.ctx.chain}:${side.token.address}`,
+    )
+    if (token) {
+      const amount = BigIntWithDecimals(
+        BigInt(side.token.amount),
+        token.decimals,
+      )
+      const timestamp = UnixTime.toStartOf(side.event.ctx.timestamp, 'hour')
+      const price = await this.getPrice(token.coingeckoId, timestamp)
+      const value = BigIntWithDecimals.multiply(
+        amount,
+        BigIntWithDecimals.fromNumber(price),
+      )
+      return {
+        amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(6)),
+        price: price,
+        valueUsd: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
+        symbol: token.symbol,
+      }
     }
   }
 
