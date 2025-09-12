@@ -19,15 +19,15 @@ export const StargateV2OFTSentBusRode = createBridgeEventType<{
   receiver: string
   destinationEid: number
   tokenAddress: EthereumAddress | 'native'
-  amountSentLD: number
-  amountReceivedLD: number
-  amountSD: number
+  amountSentLD: string
+  amountReceivedLD: string
+  amountSD: string
 }>('stargatev2.OFTSentBus')
 
 export const StargateV2OFTSentTaxi = createBridgeEventType<{
   guid: string
-  amountSentLD: number
-  amountReceivedLD: number
+  amountSentLD: string
+  amountReceivedLD: string
   tokenAddress: EthereumAddress | 'native'
 }>('stargatev2.OFTSentTaxi')
 
