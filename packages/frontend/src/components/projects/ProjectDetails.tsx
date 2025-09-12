@@ -25,6 +25,7 @@ import { TrustedSetupSection } from './sections/TrustedSetupsSection'
 import { ThroughputSection } from './sections/throughput/ThroughputSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
+import { VerifiersSection } from './sections/VerifiersSection'
 
 interface ProjectDetailsProps {
   nested?: boolean
@@ -182,6 +183,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'TrustedSetupSection':
             return (
               <TrustedSetupSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'VerifiersSection':
+            return (
+              <VerifiersSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

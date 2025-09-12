@@ -135,11 +135,11 @@ export const sp1: BaseProject = {
         verificationStatus: 'successful',
         usedBy: [],
         verificationSteps: `
-                  - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
-                  - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
-                  - Make sure that you have [go lang installed](https://go.dev/doc/install).
-                  - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
-                  `,
+      - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
+      - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
+      - Make sure that you have [go lang installed](https://go.dev/doc/install).
+      - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
+      `,
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
       },
       {

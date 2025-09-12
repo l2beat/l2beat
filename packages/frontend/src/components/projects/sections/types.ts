@@ -23,6 +23,7 @@ import type { StateValidationSectionProps } from './StateValidationSection'
 import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
 import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
+import type { VerifiersSectionProps } from './VerifiersSection'
 
 type SectionId =
   | 'tvs'
@@ -49,6 +50,7 @@ type SectionId =
   | 'data-posted'
   | 'proof-system'
   | 'trusted-setups'
+  | 'verifiers'
 
 type GroupId = 'da-layer' | 'da-bridge'
 
@@ -119,6 +121,11 @@ interface ProjectDetailsRiskAnalysisSection {
 interface ProjectDetailsTrustedSetupSection {
   type: 'TrustedSetupSection'
   props: ProjectDetailsProps<TrustedSetupSectionProps>
+}
+
+interface ProjectDetailsVerifiersSection {
+  type: 'VerifiersSection'
+  props: ProjectDetailsProps<VerifiersSectionProps>
 }
 
 interface L3ProjectDetailsRiskAnalysisSection {
@@ -215,4 +222,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsBridgesTvsSection
   | ProjectDetailsActivitySection
   | ProjectDetailsTrustedSetupSection
+  | ProjectDetailsVerifiersSection
 )

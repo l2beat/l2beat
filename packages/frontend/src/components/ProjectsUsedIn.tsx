@@ -31,7 +31,9 @@ export function ProjectsUsedIn({
   if (usedIn.length === 0) {
     return (
       <Tooltip>
-        <TooltipTrigger className={noL2ClassName}>No L2 😔</TooltipTrigger>
+        <TooltipTrigger className={noL2ClassName} asChild>
+          <div>No L2 😔</div>
+        </TooltipTrigger>
         <TooltipContent>
           There are no scaling projects listed on L2BEAT that use this solution.
         </TooltipContent>
@@ -71,7 +73,7 @@ export function ProjectsUsedIn({
         return (
           <Tooltip key={project.slug}>
             {noLink ? (
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <img
                   width={20}
                   height={20}
@@ -81,7 +83,7 @@ export function ProjectsUsedIn({
               </TooltipTrigger>
             ) : (
               <a href={project.href} className="size-5">
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                   <img
                     width={20}
                     height={20}

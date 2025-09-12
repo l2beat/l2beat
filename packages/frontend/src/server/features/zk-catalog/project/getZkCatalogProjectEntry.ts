@@ -4,7 +4,8 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
-import { getTrustedSetupsSection } from '~/utils/project/trusted-setups/getTrustedSetupsSection'
+import { getTrustedSetupsSection } from '~/utils/project/getTrustedSetupsSection'
+import { getVerifiersSection } from '~/utils/project/getVerifierssection'
 import {
   getUnderReviewStatus,
   type UnderReviewStatus,
@@ -128,6 +129,16 @@ export async function getZkCatalogProjectEntry(
       id: 'trusted-setups',
       title: 'Trusted Setups',
       ...trustedSetupsSection,
+    },
+  })
+
+  const verifiersSection = getVerifiersSection(project, allProjects)
+  sections.push({
+    type: 'VerifiersSection',
+    props: {
+      id: 'verifiers',
+      title: 'Verifier IDs',
+      ...verifiersSection,
     },
   })
 

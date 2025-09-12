@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { TrustedSetupSectionProps } from '~/components/projects/sections/TrustedSetupsSection'
-import type { ProjectSectionProps } from '../../../components/projects/sections/types'
+import type { ProjectSectionProps } from '../../components/projects/sections/types'
 
 export function getTrustedSetupsSection(
   project: Project<'zkCatalogInfo'>,
