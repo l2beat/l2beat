@@ -47,6 +47,25 @@ export const INTEROP_TOKENS: InteropToken[] = [
     ],
   },
   {
+    coingeckoId: CoingeckoId('weth'),
+    symbol: 'WETH',
+    decimals: 18, // TODO: decimals per chain
+    addresses: [
+      {
+        chain: 'ethereum',
+        address: EthereumAddress('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'),
+      },
+      {
+        chain: 'arbitrum',
+        address: EthereumAddress('0x82aF49447D8a07e3bd95BD0d56f35241523fBab1'),
+      },
+      {
+        chain: 'base',
+        address: EthereumAddress('0x4200000000000000000000000000000000000006'),
+      },
+    ],
+  },
+  {
     coingeckoId: CoingeckoId('ethereum'),
     symbol: 'ETH',
     decimals: 18, // TODO: decimals per chain
