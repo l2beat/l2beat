@@ -36,7 +36,7 @@ export const AcrossFilledRelay = createBridgeEventType<{
   depositId: number
   tokenAddress: EthereumAddress
   amount: string
-}>('across.Filled')
+}>('across.FilledRelay')
 
 const NETWORKS = [
   {
@@ -100,9 +100,9 @@ export class AcrossPlugin implements BridgePlugin {
         destinationChainId: Number(fd.destinationChainId),
         depositId: Number(fd.depositId),
         tokenAddress: EthereumAddress(
-          new BinaryReader(fd.outputToken).readAddress(),
+          new BinaryReader(fd.inputToken).readAddress(),
         ),
-        amount: fd.outputAmount.toString(),
+        amount: fd.inputAmount.toString(),
       })
     }
 
@@ -129,35 +129,35 @@ export class AcrossPlugin implements BridgePlugin {
     }
   }
 
-  match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!AcrossFilledRelay.checkType(event)) return
+  match(inbound: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+    if (!AcrossFilledRelay.checkType(inbound)) return
 
-    const { originChainId, depositId, tokenAddress, amount } = event.args
-    const fd = db.find(AcrossFundsDeposited, {
+    const { originChainId, depositId, tokenAddress, amount } = inbound.args
+    const outbound = db.find(AcrossFundsDeposited, {
       originChainId,
       depositId,
     })
-    if (!fd) return
+    if (!outbound) return
 
     return {
       messages: [
         {
           type: 'across.Message',
-          outbound: fd,
-          inbound: event,
+          outbound: outbound,
+          inbound: inbound,
         },
       ],
       transfers: [
         {
           type: 'across.App',
-          events: [fd, event], // FIX: is it okay to consume twice? (the message consumes the same events)
+          events: [outbound, inbound],
           outbound: {
-            tx: fd.ctx,
-            tokenAddress: fd.args.tokenAddress,
-            amount: fd.args.amount,
+            tx: outbound.ctx,
+            tokenAddress: outbound.args.tokenAddress,
+            amount: outbound.args.amount,
           },
           inbound: {
-            tx: event.ctx,
+            tx: inbound.ctx,
             tokenAddress,
             amount,
           },
