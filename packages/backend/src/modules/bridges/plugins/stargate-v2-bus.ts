@@ -1,4 +1,4 @@
-import { PacketDelivered, PacketSent } from './layerzerov2'
+import { PacketDelivered, PacketSent } from './layerzero-v2'
 import {
   StargateV2BusDriven,
   StargateV2OFTReceived,
@@ -13,7 +13,7 @@ import type {
 } from './types'
 
 export class StargateV2BusPlugin implements BridgePlugin {
-  name = 'stargatev2bus'
+  name = 'stargate-v2-bus'
   chains = ['ethereum', 'arbitrum', 'base']
 
   match(busDriven: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
@@ -33,47 +33,49 @@ export class StargateV2BusPlugin implements BridgePlugin {
       return
     }
 
-    const oftReceived = db.findAll(StargateV2OFTReceived, {
+    const oftReceivedBatch = db.findAll(StargateV2OFTReceived, {
       guid: busDriven.args.guid,
     })
 
-    const token = oftReceived[0].args.token
-    const destinationEid = oftReceived[0].args.destinationEid
+    // a batch is always for a single token and destinationEid
+    const token = oftReceivedBatch[0].args.token
+    const destinationEid = oftReceivedBatch[0].args.destinationEid
 
-    const oftSents = []
+    const oftSentBusRodeBatch = []
 
     for (
       let i = busDriven.args.startTicketId;
       i < busDriven.args.startTicketId + busDriven.args.numPassengers;
       i++
     ) {
-      const oftSent = db.find(StargateV2OFTSentBusRode, {
+      const oftSentBusRode = db.find(StargateV2OFTSentBusRode, {
         ticketId: i,
         destinationEid: destinationEid,
         token: token,
       })
-      if (!oftSent) {
+      if (!oftSentBusRode) {
         return
       }
 
-      oftSents.push(oftSent)
+      oftSentBusRodeBatch.push(oftSentBusRode)
     }
 
     const transfers: BridgeTransfer[] = []
-    for (const ticket of oftSents) {
-      const received = oftReceived.find(
+    for (const oftSentBusRode of oftSentBusRodeBatch) {
+      const matchedOftReceived = oftReceivedBatch.find(
         (o) =>
           // Bus is driven only for a single token
           // It is an edge case to have duplicate receivers in the same Bus
-          o.args.receiver.toLowerCase() === ticket.args.receiver.toLowerCase(),
+          o.args.receiver.toLowerCase() ===
+          oftSentBusRode.args.receiver.toLowerCase(),
       )
-      if (!received) {
+      if (!matchedOftReceived) {
         return
       }
 
       transfers.push({
-        type: 'stargatev2bus.App',
-        events: [ticket, received],
+        type: 'stargate-v2-bus.App',
+        events: [oftSentBusRode, matchedOftReceived],
         outbound: {
           event: ticket,
           token: {
@@ -94,7 +96,7 @@ export class StargateV2BusPlugin implements BridgePlugin {
     return {
       messages: [
         {
-          type: 'layerzerov2.Message',
+          type: 'layerzero-v2.Message',
           outbound: packetSent,
           inbound: packetDelivered,
         },

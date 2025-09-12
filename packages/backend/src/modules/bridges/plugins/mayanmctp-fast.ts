@@ -1,5 +1,5 @@
 import { BinaryReader } from '../BinaryReader'
-import { CCTPv2MessageReceived, CCTPv2MessageSent } from './CCTPPlugin'
+import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -19,10 +19,10 @@ export const OrderFulfilled = createBridgeEventType<{
   txHash: string
   amount: string
   sourceDomain: string
-}>('MayanMctpFast.OrderFullfilled')
+}>('mayanmctp-fast.OrderFullfilled')
 
 export class MayanMctpFastPlugin implements BridgePlugin {
-  name = 'MayanMctpFast'
+  name = 'mayanmctp-fast'
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
@@ -80,18 +80,18 @@ export class MayanMctpFastPlugin implements BridgePlugin {
       messages: [
         {
           type: messageSent.args.fast
-            ? 'CCTPv2.FastMessage'
-            : 'CCTPv2.SlowMessage',
+            ? 'cctp-v2.FastMessage'
+            : 'cctp-v2.SlowMessage',
           outbound: messageSent,
           inbound: messageReceived,
         },
         {
-          type: 'CCTPv2.BRIDGE',
+          type: 'cctp-v2.BRIDGE',
           outbound: messageSent,
           inbound: messageReceived,
         },
         {
-          type: 'MayanMctpFast.SWAP',
+          type: 'mayanmctp-fast.SWAP',
           outbound: messageSent,
           inbound: orderFulfilled,
         },

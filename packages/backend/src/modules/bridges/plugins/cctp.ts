@@ -24,14 +24,14 @@ const parseV2MessageReceived = createEventParser(
 export const CCTPv1MessageSent = createBridgeEventType<{
   messageBody: string
   txHash: string
-}>('CCTPv1.MessageSent')
+}>('cctp-v1.MessageSent')
 
 export const CCTPv1MessageReceived = createBridgeEventType<{
   caller: EthereumAddress
   sourceDomain: string
   nonce: number
   messageBody: string
-}>('CCTPv1.MessageReceived')
+}>('cctp-v1.MessageReceived')
 
 export const CCTPv2MessageSent = createBridgeEventType<{
   fast: boolean
@@ -40,7 +40,7 @@ export const CCTPv2MessageSent = createBridgeEventType<{
   amount?: string
   messageBody: string
   txHash: string
-}>('CCTPv2.MessageSent')
+}>('cctp-v2.MessageSent')
 
 export const CCTPv2MessageReceived = createBridgeEventType<{
   app?: string
@@ -52,10 +52,10 @@ export const CCTPv2MessageReceived = createBridgeEventType<{
   finalityThresholdExecuted: number
   messageBody: string
   txHash: string
-}>('CCTPv2.MessageReceived')
+}>('cctp-v2.MessageReceived')
 
 export class CCTPPlugin implements BridgePlugin {
-  name = 'CCTPMessageSent'
+  name = 'cctp'
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
@@ -144,7 +144,7 @@ export class CCTPPlugin implements BridgePlugin {
       return {
         messages: [
           {
-            type: 'CCTPv1.Message',
+            type: 'cctp-v1.Message',
             inbound: messageReceived,
             outbound: messageSent,
           },
@@ -164,8 +164,8 @@ export class CCTPPlugin implements BridgePlugin {
         messages: [
           {
             type: messageSent.args.fast
-              ? 'CCTPv2.FastMessage'
-              : 'CCTPv2.SlowMessage',
+              ? 'cctp-v2.FastMessage'
+              : 'cctp-v2.SlowMessage',
             inbound: messageReceived,
             outbound: messageSent,
           },

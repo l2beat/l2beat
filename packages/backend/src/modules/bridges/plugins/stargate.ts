@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { BinaryReader } from '../BinaryReader'
 import {
   type BridgePlugin,
   createBridgeEventType,
@@ -40,7 +41,7 @@ export const StargateV2OFTReceived = createBridgeEventType<{
   token: string
   tokenAddress: EthereumAddress | 'native'
   destinationEid: number
-  amountReceivedLD: number
+  amountReceivedLD: string
 }>('stargatev2.OFTReceived')
 
 const parseBusDriven = createEventParser(
@@ -136,128 +137,104 @@ export class StargatePlugin implements BridgePlugin {
       return
     }
 
-    return (
-      this.parseOftSent(input, network) ||
-      this.captureOftReceived(input, network) ||
-      this.captureBusDriven(input, network)
-    )
-  }
-
-  private parseOftSent(
-    input: LogToCapture,
-    network: (typeof NETWORKS)[number],
-  ) {
     const oftSent = parseOFTSent(input.log, [
       network.nativePool.address,
       network.usdcPool.address,
     ])
-    const pool = [network.nativePool, network.usdcPool].find(
-      (t) => t.address === EthereumAddress(input.log.address),
-    )
+    if (oftSent) {
+      const pool = [network.nativePool, network.usdcPool].find(
+        (t) => t.address === EthereumAddress(input.log.address),
+      )
+      if (!pool) {
+        return
+      }
+      if (oftSent.guid === GUID_ZERO) {
+        const busRodeLog = input.txLogs.find((l) => parseBusRode(l, null))
+        if (busRodeLog) {
+          const busRode = parseBusRode(busRodeLog, [network.tokenMessaging])
+          const passenger = busRode && decodeBusPassenger(busRode.passenger)
 
-    if (!pool) {
-      return
-    }
-
-    if (oftSent && oftSent.guid === GUID_ZERO) {
-      const busRodeLog = input.txLogs.find((l) => parseBusRode(l, null))
-      if (busRodeLog) {
-        const busRode = parseBusRode(busRodeLog, [network.tokenMessaging])
-
-        if (busRode) {
-          return StargateV2OFTSentBusRode.create(input.ctx, {
-            guid: oftSent.guid,
-            ticketId: Number(busRode.ticketId),
-            receiver: decodeBusPassenger(busRode.passenger).receiver,
-            emitter: EthereumAddress(input.log.address),
-            token: pool.token,
-            destinationEid: oftSent.dstEid,
-            tokenAddress: pool.tokenAddress,
-            amountSentLD: Number(oftSent.amountSentLD),
-            amountReceivedLD: Number(oftSent.amountReceivedLD),
-            amountSD: Number(decodeBusPassenger(busRode.passenger).amountSD),
-          })
+          if (busRode && passenger) {
+            return StargateV2OFTSentBusRode.create(input.ctx, {
+              guid: oftSent.guid,
+              ticketId: Number(busRode.ticketId),
+              receiver: passenger.receiver,
+              emitter: EthereumAddress(input.log.address),
+              token: pool.token,
+              destinationEid: oftSent.dstEid,
+              tokenAddress: pool.tokenAddress,
+              amountSentLD: oftSent.amountSentLD.toString(),
+              amountReceivedLD: oftSent.amountReceivedLD.toString(),
+              amountSD: passenger.amountSD.toString(),
+            })
+          }
         }
       }
-    }
-
-    if (oftSent) {
       return StargateV2OFTSentTaxi.create(input.ctx, {
         guid: oftSent.guid,
-        amountSentLD: Number(oftSent.amountSentLD),
-        amountReceivedLD: Number(oftSent.amountReceivedLD),
+        amountSentLD: oftSent.amountSentLD.toString(),
+        amountReceivedLD: oftSent.amountReceivedLD.toString(),
         tokenAddress: pool.tokenAddress,
       })
     }
-  }
 
-  private captureOftReceived(
-    input: LogToCapture,
-    network: (typeof NETWORKS)[number],
-  ) {
     const oftReceived = parseOFTReceived(input.log, [
       network.nativePool.address,
       network.usdcPool.address,
     ])
-    if (!oftReceived) {
-      return
+    if (oftReceived) {
+      const pool = [network.nativePool, network.usdcPool].find(
+        (t) => t.address === EthereumAddress(input.log.address),
+      )
+      if (!pool) {
+        return
+      }
+      const destinationEid = NETWORKS.find(
+        (n) => n.chain === input.ctx.chain,
+      )?.eid
+      if (!destinationEid) {
+        return
+      }
+      return StargateV2OFTReceived.create(input.ctx, {
+        guid: oftReceived.guid,
+        receiver: oftReceived.toAddress,
+        emitter: EthereumAddress(input.log.address),
+        token: pool.token,
+        tokenAddress: pool.tokenAddress,
+        destinationEid,
+        amountReceivedLD: oftReceived.amountReceivedLD.toString(),
+      })
     }
 
-    const pool = [network.nativePool, network.usdcPool].find(
-      (t) => t.address === EthereumAddress(input.log.address),
-    )
-    if (!pool) {
-      return
-    }
-
-    const destinationEid = NETWORKS.find(
-      (n) => n.chain === input.ctx.chain,
-    )?.eid
-    if (!destinationEid) {
-      return
-    }
-
-    return StargateV2OFTReceived.create(input.ctx, {
-      guid: oftReceived.guid,
-      receiver: oftReceived.toAddress,
-      emitter: EthereumAddress(input.log.address),
-      token: pool.token,
-      tokenAddress: pool.tokenAddress,
-      destinationEid,
-      amountReceivedLD: Number(oftReceived.amountReceivedLD),
-    })
-  }
-
-  private captureBusDriven(
-    input: LogToCapture,
-    network: (typeof NETWORKS)[number],
-  ) {
     const busDriven = parseBusDriven(input.log, [network.tokenMessaging])
-    if (!busDriven) {
-      return
+    if (busDriven) {
+      return StargateV2BusDriven.create(input.ctx, {
+        startTicketId: Number(busDriven.startTicketId),
+        numPassengers: busDriven.numPassengers,
+        guid: busDriven.guid,
+        destinationEid: busDriven.dstEid,
+      })
     }
-    return StargateV2BusDriven.create(input.ctx, {
-      startTicketId: Number(busDriven.startTicketId),
-      numPassengers: busDriven.numPassengers,
-      guid: busDriven.guid,
-      destinationEid: busDriven.dstEid,
-    })
   }
 }
 
 // Decode passenger bytes per encodePacked(uint16, bytes32, uint64, bool)
-function decodeBusPassenger(passengerBytes: string) {
-  const bytes = passengerBytes.toLowerCase()
-  if (bytes.length < 88)
-    throw new Error(`Passenger bytes too short: ${bytes.length}`)
-  const assetId = Number.parseInt(bytes.slice(2, 6), 16)
-  const receiver = '0x' + bytes.slice(6, 70)
-  const amountSD = BigInt('0x' + bytes.slice(70, 86))
-  const nativeDrop = Number.parseInt(bytes.slice(86, 88), 16) !== 0
-  return {
-    assetId: String(assetId),
-    receiver: `0x${receiver.slice(-40)}`,
-    amountSD,
-    nativeDrop: nativeDrop ? 'true' : 'false',
-  } as const
+// https://etherscan.io/address/0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980#code#F39#L6
+// https://etherscan.io/address/0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980#code#F39#L39
+export function decodeBusPassenger(encodedHex: string) {
+  try {
+    const reader = new BinaryReader(encodedHex)
+    const assetId = reader.readUint16()
+    const receiver = EthereumAddress(reader.readAddress())
+    const amountSD = reader.readUint64()
+    const nativeDrop = reader.readUint8() !== 0
+    return {
+      assetId,
+      receiver,
+      amountSD,
+      nativeDrop,
+    }
+  } catch {
+    return undefined
+  }
 }

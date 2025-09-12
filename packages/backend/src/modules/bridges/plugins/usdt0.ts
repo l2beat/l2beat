@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { PacketDelivered, PacketSent } from './layerzerov2'
+import { PacketDelivered, PacketSent } from './layerzero-v2'
 import {
   type BridgeEvent,
   type BridgeEventDb,
