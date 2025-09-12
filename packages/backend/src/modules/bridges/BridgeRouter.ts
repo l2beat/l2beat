@@ -24,7 +24,7 @@ export function createBridgeRouter(db: Database) {
   })
 
   const Params = v.object({
-    kind: v.enum(['all', 'unmatched', 'messages', 'transfers']),
+    kind: v.enum(['all', 'unmatched', 'unsupported', 'messages', 'transfers']),
     type: v.string(),
   })
 
@@ -39,7 +39,9 @@ export function createBridgeRouter(db: Database) {
     } else {
       let events = await db.bridgeEvent.getByType(params.type)
       if (params.kind === 'unmatched') {
-        events = events.filter((x) => !x.matched)
+        events = events.filter((x) => !x.matched && !x.unsupported)
+      } else if (params.kind === 'unsupported') {
+        events = events.filter((x) => x.unsupported)
       }
       ctx.body = events
     }
@@ -61,12 +63,21 @@ function statsToHtml(
   html += '</body>'
   html += '<h1>Bridge Stats</h1>'
 
-  html += '<h2>Unmatched events</h2>'
+  html += '<h2>Unmatched (not unsupported) events</h2>'
   html += '<ul>'
-  for (const { type, count, matched } of events) {
-    const unmatched = count - matched
+  for (const { type, count, matched, unsupported } of events) {
+    const unmatched = count - matched - unsupported
     if (unmatched !== 0) {
       html += `<li><a href="/bridges/unmatched/${type}">${type}</a>: ${unmatched}</li>`
+    }
+  }
+  html += '</ul>'
+
+  html += '<h2>Unsupported events</h2>'
+  html += '<ul>'
+  for (const { type, unsupported } of events) {
+    if (unsupported !== 0) {
+      html += `<li><a href="/bridges/unsupported/${type}">${type}</a>: ${unsupported}</li>`
     }
   }
   html += '</ul>'

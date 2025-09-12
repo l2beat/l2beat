@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { AxelarPlugin } from './axelar'
+import { AcrossPlugin } from './across'
 import { CCTPPlugin } from './cctp'
 import { LayerZeroV2Plugin } from './layerzero-v2'
 import { MayanMctpPlugin } from './mayanmctp'
@@ -20,7 +21,8 @@ export function createBridgePlugins(logger: Logger): BridgePlugin[] {
     new MayanMctpPlugin(), // should be run before CCTP
     new MayanMctpFastPlugin(), // should be run before CCTP
     new CCTPPlugin(),
-    new StargateV2BusPlugin(), // should be run before LayeyZeroV2
+    new StargatePlugin(logger),
+    new StargateV2BusPlugin(), // should be run before LayerZeroV2
     new StargateV2TaxiPlugin(), // should be run before LayerZeroV2
     new Usdt0Plugin(), // should be run before LayerZeroV2
     new LayerZeroV2Plugin(logger),
@@ -29,5 +31,6 @@ export function createBridgePlugins(logger: Logger): BridgePlugin[] {
     new WormholePlugin(logger),
     new StargatePlugin(logger),
     new AxelarPlugin(),
+    new AcrossPlugin(),
   ]
 }

@@ -212,5 +212,23 @@
       "chain": "ethereum",
       "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
     }
+  ],
+  "across": [
+    {
+      "chain": "base",
+      "tx": "0x51e7eb66f9be23a409f85c94310fa2c80a71e4be02c5c3db767433063fc13b5b"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0xb68c00270bce23603b8620e8491e96facdecdf48c062e8554bf6f7ba4ef2df5d"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0xba0253bf53087c24c15dce870df0c3615020efd33a1ae2be1781d15edf751c95"
+    },
+    {
+      "chain": "base",
+      "tx": "0xb02e7ee0dc9353b283c3fb9b38a03f729492312b40c7745d38645b7441a9b25e"
+    }
   ]
 }

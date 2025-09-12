@@ -354,7 +354,7 @@ model BridgeEvent {
   txHash      String   @db.VarChar(66)
   txTo        String?  @db.VarChar(42)
   matched     Boolean
-  grouped     Boolean
+  unsupported Boolean  @default(false)
   logIndex    Int
   args        Json
 
