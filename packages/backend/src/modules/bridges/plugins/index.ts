@@ -12,6 +12,7 @@ import type { BridgePlugin } from './types'
 import { Usdt0Plugin } from './usdt0'
 import { WormholePlugin } from './wormhole'
 import { WormholeTokenBridgePlugin } from './wormholetokenbridge'
+import { OpStackPlugin } from './opstack'
 
 export function createBridgePlugins(logger: Logger): BridgePlugin[] {
   return [
@@ -27,5 +28,6 @@ export function createBridgePlugins(logger: Logger): BridgePlugin[] {
     new WormholeTokenBridgePlugin(), // should be run before Wormhole
     new WormholePlugin(logger),
     new AcrossPlugin(),
+    new OpStackPlugin(),
   ]
 }
