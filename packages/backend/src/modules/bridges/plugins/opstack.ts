@@ -59,7 +59,7 @@ export class OpStackPlugin implements BridgePlugin {
       }
     } else {
       const network = NETWORKS.find(
-        (n) => n.l2ToL1MessagePasser === EthereumAddress(input.log.address),
+        (n) => n.chain === input.ctx.chain,
       )
       if (!network) return
 
