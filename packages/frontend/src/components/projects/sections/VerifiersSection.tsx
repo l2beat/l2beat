@@ -125,7 +125,9 @@ function VerifierCollapsibleWithDetails({
             <div className="font-bold text-label-value-16">
               Verification steps
             </div>
-            <Markdown>{verifierHash.verificationSteps}</Markdown>
+            <Markdown className="text-paragraph-15 md:text-paragraph-16">
+              {verifierHash.verificationSteps}
+            </Markdown>
           </div>
         )}
       </CollapsibleContent>
