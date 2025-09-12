@@ -1,8 +1,4 @@
-import type { AppLayoutProps } from '~/layouts/AppLayout'
-
-interface Props extends AppLayoutProps {}
-
-export function EthereumConnectPage(props: Props) {
+export function EthereumConnectPage() {
   return (
     <div>
       <div data-tf-live="01K4YW0GP4KT7KB36586RAQ969" />

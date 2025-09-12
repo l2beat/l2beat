@@ -1,14 +1,11 @@
-import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
-export async function getEthereumConnectData(
+export function getEthereumConnectData(
   manifest: Manifest,
   url: string,
-): Promise<RenderData> {
-  const appLayoutProps = await getAppLayoutProps()
-
+): RenderData {
   return {
     head: {
       manifest,
@@ -24,9 +21,7 @@ export async function getEthereumConnectData(
     },
     ssr: {
       page: 'EthereumConnectPage',
-      props: {
-        ...appLayoutProps,
-      },
+      props: undefined,
     },
   }
 }
