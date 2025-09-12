@@ -10,6 +10,8 @@ Generated with discovered.json: 0xb737ad48fc89f4c597e2ec587516b0958d056af5
 
 - [L2OutputOracle](https://disco.l2beat.com/diff/eth:0x1E5e634981564fc645dcbC6546aE618d7870B30a/eth:0x0e874B9acD8d284B9bF6f6c6CC95BCE6F66E5441): added a "finalityProvider" field that can arbitrarily set the challenge period for each L2 output.
 - [OptimismPortal](https://disco.l2beat.com/diff/eth:0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1/eth:0x4fEee20712abF5724C2BC0476BD87CBf1F1eE388): updated to support finalizing outputs with different challenge periods.
+- FinalityRelayerManager: allows to reduce the challenge period based on some BLS signers and staked amounts. No threshold is enforced, and "staked amounts" is just an input with no validation. The current challenge period is set to 3d, the manta quorum can reduce it by a maximum of 1d, the bitcoin quorum can reduce it by a maximum of 1d, and the minimum challenge period allowed is set to 12h. To me it looks like this is a partial deployment and the feature is not used yet.
+- BLSApkRegistry: used to register BLS keys and verify aggregated signatures.
 
 ## Watched changes
 
