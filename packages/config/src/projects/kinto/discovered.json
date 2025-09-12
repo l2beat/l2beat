@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "timestamp": 1756898514,
-  "configHash": "0x02d9edb78882a72e0bedb65163b2be10964ddc4e165844015503edfe0916d4f8",
+  "configHash": "0x69a0e8da6d913e4bd88592cc9b85a8f0e3f9b49542f0eebfc27d35fc55745cf6",
   "entries": [
     {
       "name": "Hypernative",
@@ -512,7 +512,8 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
-            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
+            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
+            "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
           }
         }
       ],
@@ -6176,6 +6177,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "kinto": 919415, "ethereum": 23282254 },
+  "usedBlockNumbers": { "ethereum": 23282254, "kinto": 919415 },
   "permissionsConfigHash": "0xeea8cd185a13b07215343d2cf607f50968b828bc419e19084c2540e3654f5a9d"
 }

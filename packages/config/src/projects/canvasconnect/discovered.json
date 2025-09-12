@@ -1,7 +1,7 @@
 {
   "name": "canvasconnect",
   "timestamp": 1715171555,
-  "configHash": "0x26096d2e61dd064a566010017875c6178081ba9d830514e17affdafd57b7352c",
+  "configHash": "0xb5806fb9864b791108efa24ed140d98ae770163fec76b8ba4b0f3ad1e93a1648",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

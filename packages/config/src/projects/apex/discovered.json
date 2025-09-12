@@ -1,7 +1,7 @@
 {
   "name": "apex",
   "timestamp": 1753200107,
-  "configHash": "0x642e49ddb0c8e5eefa09cc191ac32ce8751b09caba6315d2967a61c3aa2b0e3a",
+  "configHash": "0x9ca4bc0ae8f9a409e169f831a3d5fb824572caf13279d3bb28608b1dec5a3b44",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

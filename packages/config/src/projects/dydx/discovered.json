@@ -1,7 +1,7 @@
 {
   "name": "dydx",
   "timestamp": 1733483111,
-  "configHash": "0x9cb6ab9b2b01bc54921c35d0ff7fde0db8ab572d9b62c1f2e1f82d5530fc005c",
+  "configHash": "0xb1b7b291cfe85fb9ae9a16d4c60ca44d4dfa0c0641c81c0908c2022bcc8372f4",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",

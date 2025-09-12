@@ -1,7 +1,7 @@
 {
   "name": "kroma",
   "timestamp": 1752575723,
-  "configHash": "0xa65f99ca147ac0f4247bf220c7c3e871da01b5a031e1564b4869d3cce3ffc6d6",
+  "configHash": "0x34c3e68f4248eedaa1f00759033807cfd3cb6dd1b0e11bec8d370ba3e93ae22b",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {

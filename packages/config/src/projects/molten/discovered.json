@@ -1,7 +1,7 @@
 {
   "name": "molten",
   "timestamp": 1753200985,
-  "configHash": "0xa6b5cacd0cf7370c0b70f0212375a0e47bdf6e62b05d2c56226a2d0bcee67e12",
+  "configHash": "0x54f466b604011eb289ceebe5ede042c09d056919804229cbf29df6f59fe37bc7",
   "entries": [
     {
       "address": "arb1:0x0cc6aB203689bd8004511cC60f5b25DfB3A91431",
@@ -143,7 +143,8 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
-            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
+            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
+            "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
           }
         }
       ],

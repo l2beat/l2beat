@@ -1,7 +1,7 @@
 {
   "name": "rari",
   "timestamp": 1753201031,
-  "configHash": "0xf62f9361ae5513491e1814119b2253063db9d4d8dd205bcbb4611690c0d62c8d",
+  "configHash": "0x6aed2f30bf4bff32c6e52f6c1c8cc8f696600ceae6be3255053e8412c01d7ee1",
   "entries": [
     {
       "name": "ProxyAdmin",
@@ -460,7 +460,8 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
-            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
+            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
+            "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
           }
         }
       ],

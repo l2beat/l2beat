@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x47939f063765cd0b0695bec346375357fc1eff6e
+
+# Diff at Thu, 11 Sep 2025 09:26:10 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@665b233e3787b7a0fd24453d6e587ffdc2c1541d block: 1756891026
+- current timestamp: 1756891026
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756891026 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x00"
+      errors:
++        {"sequencerVersion":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      usedTypes.0.arg.0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d:
++        "Celestia Nitro ArbOS v40 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0xf5fda58e399b1a1d3330f0dba8615b1bbd9afabd
 
 # Diff at Wed, 03 Sep 2025 09:19:43 GMT:

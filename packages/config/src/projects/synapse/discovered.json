@@ -1,7 +1,7 @@
 {
   "name": "synapse",
   "timestamp": 1734022739,
-  "configHash": "0x01d413c93f17290862a8ce654220c00a9f1013dfdae6c725849c2f9fcfc76126",
+  "configHash": "0xa723c8c660a7d82fb80d1d061181c5f4fef68ce16af1a967578c742fffc633a7",
   "entries": [
     {
       "address": "eth:0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC",

@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "timestamp": 1756816147,
-  "configHash": "0x612d29c2985eab82172f5f1f19a1769f9dd7041a8cc84bd9f9924cfae3be8988",
+  "configHash": "0x92161f1cba2d12b57e06b9c340db882c95eeeffc80e89379f324aab36868d4ab",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
