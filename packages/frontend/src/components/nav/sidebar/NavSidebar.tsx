@@ -32,9 +32,10 @@ interface Props {
   groups: NavGroup[]
   logoLink: string
   sideLinks: NavLink[]
+  whatsNew: WhatsNewWidget | undefined
 }
 
-export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
+export function NavSidebar({ groups, logoLink, sideLinks, whatsNew }: Props) {
   const pathname = usePathname()
   return (
     <Sidebar>
@@ -89,7 +90,7 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <WhatsNewWidget />
+        {whatsNew && <WhatsNewWidget whatsNew={whatsNew} />}
         <div className="flex gap-2 lg:justify-between">
           <SocialLinks variant="gray" />
         </div>

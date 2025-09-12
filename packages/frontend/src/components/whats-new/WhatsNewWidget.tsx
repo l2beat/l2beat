@@ -1,15 +1,11 @@
-import { useWhatsNewContext } from './WhatsNewContext'
-
 export interface WhatsNewWidget {
+  id: string
   href: string
   image: string
   alt: string
 }
 
-export function WhatsNewWidget() {
-  const whatsNew = useWhatsNewContext()
-  if (!whatsNew) return null
-
+export function WhatsNewWidget({ whatsNew }: { whatsNew: WhatsNewWidget }) {
   return (
     <a href={whatsNew.href}>
       <img src={whatsNew.image} alt={whatsNew.alt} className="w-full" />
