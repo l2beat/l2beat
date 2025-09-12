@@ -32,8 +32,7 @@ export async function getZkCatalogProjectData(
         description: project.display.description,
         openGraph: {
           url,
-          // TODO: add zk catalog projects og images
-          image: `/meta-images/scaling/projects/${project.slug}/opengraph-image.png`,
+          image: `/meta-images/zk-catalog/projects/${project.slug}/opengraph-image.png`,
         },
       }),
     },
