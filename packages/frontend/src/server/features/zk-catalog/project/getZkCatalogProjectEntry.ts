@@ -5,7 +5,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import { ps } from '~/server/projects'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getTrustedSetupsSection } from '~/utils/project/getTrustedSetupsSection'
-import { getVerifiersSection } from '~/utils/project/getVerifierssection'
+import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import {
   getUnderReviewStatus,
   type UnderReviewStatus,
