@@ -12,7 +12,7 @@ on:
 
 jobs:
   hot-cache:
-    name: Build frontend
+    name: Run cache warmup
     runs-on: ubuntu-latest
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
