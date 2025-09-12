@@ -1,5 +1,12 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "powerloom",
-  "import": ["../globalConfig.jsonc"]
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x53b168016aA2E3469B5D76315311aAC4Ce0020DB",
+    "eth:0x23593421341152d5322f8869c0638daac4aed57c"
+  ],
+  "names": {
+    "eth:0x23593421341152d5322f8869c0638daac4aed57c": "L1OrbitUSDCGateway"
+  }
 }

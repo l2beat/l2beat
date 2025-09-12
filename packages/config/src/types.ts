@@ -20,8 +20,8 @@ export interface WarningWithSentiment {
   sentiment: 'bad' | 'warning' | 'neutral'
 }
 
-export interface TableReadyValue {
-  value: string
+export interface TableReadyValue<T extends string = string> {
+  value: T
   secondLine?: string
   description?: string
   sentiment?: Sentiment
@@ -368,6 +368,8 @@ export interface ProjectScalingProofSystem {
   name?: string
   /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
   zkCatalogId?: string
+  /** Challenge protocol of the proof system. Configured only for optimistic proof systems. */
+  challengeProtocol?: 'Interactive' | 'Single-step'
 }
 
 export type ProjectScalingCapability = 'universal' | 'appchain'
@@ -428,6 +430,7 @@ export type ProjectScalingPurpose =
   | 'RWA'
   | 'IoT'
   | 'Restaking'
+  | 'Enterprise'
 
 export type ProjectScalingStage =
   | StageNotApplicable
@@ -671,6 +674,14 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
+  relayerType?: TableReadyValue<'Permissioned'>
+  validationType?: DaBridgeValidationType
+}
+
+type DaBridgeValidationType = TableReadyValue<
+  'Validity Proof' | 'BLS Signature'
+> & {
+  zkCatalogId?: ProjectId
 }
 
 export interface DaBridgeRisks {
@@ -953,6 +964,7 @@ export interface ProjectEcosystemInfo {
 }
 
 export interface ProjectEcosystemConfig {
+  startedAt?: UnixTime
   token: {
     tokenId: string
     projectId: ProjectId

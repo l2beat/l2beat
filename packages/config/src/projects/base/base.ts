@@ -197,6 +197,12 @@ export const base: ScalingProject = opStackL2({
   ),
   milestones: [
     {
+      title: 'Base halts block production for 33mins',
+      url: 'https://status.base.org/incidents/kdq3t8s13gfs',
+      date: '2025-08-05T00:00:00Z',
+      type: 'incident',
+    },
+    {
       title: 'Base achieves Stage 1',
       url: 'https://base.mirror.xyz/tWDMlGp48fF0MeADcLQruUBq1Qxkou4O5x3ax8Rm3jA',
       date: '2025-04-29T00:00:00Z',

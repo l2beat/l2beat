@@ -20,7 +20,10 @@ export const zksyncprover: BaseProject = {
     description:
       'Plonk proving system designed by Matter Labs to prove custom predefined state transitions of ZKsync Lite.',
     links: {
-      documentation: ['https://github.com/matter-labs/zksync/tree/master/docs'],
+      documentation: [
+        'https://github.com/matter-labs/zksync/tree/master/docs',
+        'https://docs.lite.zksync.io/userdocs/',
+      ],
       repositories: ['https://github.com/matter-labs/zksync/tree/master'],
     },
     badges: [],
@@ -36,7 +39,11 @@ export const zksyncprover: BaseProject = {
         ZK_CATALOG_TAGS.Other.CustomCircuits,
       ],
     },
-    proofSystemInfo: '',
+    proofSystemInfo: `
+    ## Proof system
+
+    ZKSync Lite prover is a monolithic SNARK proving system that generates validity proofs for the state transition of ZKSync Lite L2. It is a [Plonk system](https://docs.lite.zksync.io/userdocs/security/#primitives) over BN254 curve with [custom circuits](https://github.com/matter-labs/zksync/tree/master/core/lib/circuit/src) designed to prove the specific state transition function of the L2, including deposits and withdrawals, transfers, swaps, NFT operations. The proof system itself is implemented in the [bellman library](https://github.com/matter-labs/bellman), while many base cryptographic primitives are implemented in [franklin library](https://github.com/matter-labs/franklin-crypto/tree/dev).    
+    `,
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,

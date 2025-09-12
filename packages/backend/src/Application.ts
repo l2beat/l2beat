@@ -6,6 +6,7 @@ import type { Config } from './config'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
 import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
+import { createBridgeModule } from './modules/bridges/BridgeModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
@@ -64,6 +65,7 @@ export class Application {
       createVerifiersModule(deps),
       createDaBeatModule(deps),
       createAnomaliesModule(deps),
+      createBridgeModule(deps),
       createBlockSyncModule(deps),
     ]
 

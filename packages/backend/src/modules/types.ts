@@ -24,6 +24,5 @@ export interface ModuleDependencies {
 
 export interface BlockProcessor {
   chain: string
-  start(): Promise<void>
   processBlock(block: Block, logs: Log[]): Promise<void>
 }

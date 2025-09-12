@@ -1,9 +1,19 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { BADGES } from '../../common/badges'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL2 } from '../../templates/underReview'
+import { orbitStackL2 } from '../../templates/orbitStack'
 
-export const powerloom: ScalingProject = underReviewL2({
-  id: 'powerloom',
+const discovery = new ProjectDiscovery('powerloom')
+
+export const powerloom: ScalingProject = orbitStackL2({
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
+  additionalBadges: [BADGES.RaaS.Conduit],
+  discovery,
   capability: 'universal',
   addedAt: UnixTime(1741768931),
   display: {
@@ -11,7 +21,6 @@ export const powerloom: ScalingProject = underReviewL2({
     slug: 'powerloom',
     description:
       'Powerloom Mainnet is the Layer-2 chain supporting Powerloom’s composable data network where devs, orgs, and end-users get access to ready-to-consume, affordable, and verifiable onchain datasets.',
-    purposes: ['Universal'],
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://powerloom.io/'],
@@ -28,10 +37,11 @@ export const powerloom: ScalingProject = underReviewL2({
       ],
     },
   },
-  dataAvailability: undefined,
-  proofSystem: {
-    type: 'Optimistic',
-  },
+  additionalPurposes: ['Information'],
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  isNodeAvailable: 'UnderReview',
   associatedTokens: ['POWER'],
   chainConfig: {
     name: 'powerloom',
@@ -45,20 +55,19 @@ export const powerloom: ScalingProject = underReviewL2({
       },
     ],
   },
-  ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
-  },
   activityConfig: {
     type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  escrows: [
-    {
-      address: EthereumAddress('0x53b168016aA2E3469B5D76315311aAC4Ce0020DB'), // bridge
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x23593421341152D5322F8869c0638DAAc4aED57C',
+      ),
+      name: 'L1OrbitUSDCGateway',
       sinceTimestamp: UnixTime(1741768931),
-      tokens: ['POWER'],
-      chain: 'ethereum',
-    },
+      tokens: ['USDC'],
+    }),
   ],
 })

@@ -1,7 +1,7 @@
 {
   "name": "base",
   "timestamp": 1755525868,
-  "configHash": "0xb8bd83ead10c3ed98153c7f7ec00b579156cad6132439b3f67de00a62b03f2f2",
+  "configHash": "0x9c5516a9ddf4e4d203e5c3f0ac2d9831bd64613b1003aad8cad4d5d8779b8b25",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -4673,6 +4673,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23168419, "base": 34368260 },
+  "usedBlockNumbers": { "base": 34368260, "ethereum": 23168419 },
   "permissionsConfigHash": "0x2e5de7c6727a927413418c89b4a12fab49446f93697ed3c22554952631140b8b"
 }

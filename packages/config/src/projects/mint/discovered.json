@@ -1,7 +1,7 @@
 {
   "name": "mint",
   "timestamp": 1756214657,
-  "configHash": "0xe4c0491396dd35e177df6b020588c75f262762da8c0dbaa86d37dff797562818",
+  "configHash": "0x6d43f440189fa6d122fd96477d2888e5ae00f2a70648319de3995fa941186430",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

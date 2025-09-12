@@ -3139,6 +3139,20 @@
       "supply": "zero"
     },
     {
+      "name": "Linea",
+      "coingeckoId": "linea",
+      "address": "0x1789e0043623282D5DCc7F213d703C6D8BAfBB04",
+      "symbol": "LINEA",
+      "decimals": 18,
+      "deploymentTimestamp": 1753892339,
+      "coingeckoListingTimestamp": 1757548800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68507/large/linea-logo.jpeg?1756025484",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Liquid Staked ETH",
       "coingeckoId": "liquid-staked-ethereum",
       "address": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549",
@@ -6612,6 +6626,50 @@
       "supply": "zero"
     },
     {
+      "name": "cgETH Hashkey Cloud",
+      "coingeckoId": "cgeth-hashkey-cloud",
+      "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+      "symbol": "cgETH.hashkey",
+      "decimals": 18,
+      "deploymentTimestamp": 1738687009,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54162/large/Cgeth_Hashkey.png?1738482570",
+      "chainId": 10,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "clBTC",
+      "coingeckoId": "clbtc",
+      "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
+      "symbol": "clBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1738687863,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54164/large/clBTC.png?1738482999",
+      "chainId": 10,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",
       "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
@@ -7443,6 +7501,28 @@
       "category": "ether",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDT0",
+      "coingeckoId": "usdt0",
+      "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+      "symbol": "USDT0",
+      "decimals": 6,
+      "deploymentTimestamp": 1599512847,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 137,
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
@@ -8351,7 +8431,7 @@
     },
     {
       "name": "Bridged USDC (world-chain-mainnet)",
-      "coingeckoId": "bridged-usdc-world-chain",
+      "coingeckoId": "usd-coin",
       "address": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
       "symbol": "USDC",
       "decimals": 6,
@@ -10300,6 +10380,34 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "cgETH Hashkey Cloud",
+      "coingeckoId": "cgeth-hashkey-cloud",
+      "address": "0xf587B7116879a529353Cc71eE959cD69FD5CAE48",
+      "symbol": "cgETH.hashkey",
+      "decimals": 18,
+      "deploymentTimestamp": 1738263005,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54162/large/Cgeth_Hashkey.png?1738482570",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "clBTC",
+      "coingeckoId": "clbtc",
+      "address": "0x8d2757EA27AaBf172DA4CCa4e5474c76016e3dC5",
+      "symbol": "clBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1737200929,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54164/large/clBTC.png?1738482999",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Coinbase Wrapped BTC",
       "coingeckoId": "coinbase-wrapped-btc",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
@@ -10376,6 +10484,28 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "ENA",
+      "coingeckoId": "ethena",
+      "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+      "symbol": "ENA",
+      "decimals": 18,
+      "deploymentTimestamp": 1718327185,
+      "coingeckoListingTimestamp": 1712016000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "name": "Ether",
@@ -11172,6 +11302,28 @@
       }
     },
     {
+      "name": "Wrapped BTC",
+      "coingeckoId": "layerzero-bridged-wbtc-base",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1726747351,
+      "coingeckoListingTimestamp": 1750723200,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66849/large/btc.png?1750793694",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Wrapped eETH",
       "coingeckoId": "wrapped-eeth",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
@@ -11749,6 +11901,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "cgETH Hashkey Cloud",
+      "coingeckoId": "cgeth-hashkey-cloud",
+      "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+      "symbol": "cgETH.hashkey",
+      "decimals": 18,
+      "deploymentTimestamp": 1738686713,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54162/large/Cgeth_Hashkey.png?1738482570",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "ChainLink Token",
       "coingeckoId": "chainlink",
       "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
@@ -11779,6 +11953,28 @@
         "bridges": [
           {
             "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "clBTC",
+      "coingeckoId": "clbtc",
+      "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
+      "symbol": "clBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1738687729,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54164/large/clBTC.png?1738482999",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
             "slug": "portal"
           }
         ]

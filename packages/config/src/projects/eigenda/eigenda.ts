@@ -311,6 +311,17 @@ export const eigenda: BaseProject = {
   daBridge: {
     name: 'DACert Verifier',
     daLayer: ProjectId('eigenda'),
+    relayerType: {
+      value: 'Permissioned',
+      sentiment: 'warning',
+      description:
+        'Only whitelisted relayers can post attestations to this bridge.',
+    },
+    validationType: {
+      value: 'BLS Signature',
+      description:
+        'The DA attestation requires onchain BLS signatures verification to be accepted by the bridge, and the total stake of signers is verified to have reached the required threshold.',
+    },
     technology: {
       description: `
 ## Architecture

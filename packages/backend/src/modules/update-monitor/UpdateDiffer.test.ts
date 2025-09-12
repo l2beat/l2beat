@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, UpdateDiffRecord } from '@l2beat/database'
-import type { UpdateDiffRepository } from '@l2beat/database/dist/discovery/update-diff/repository'
+import type { UpdateDiffRepository } from '@l2beat/database/dist/repositories/UpdateDiffRepository'
 import type {
   ConfigReader,
   DiscoveryDiff,

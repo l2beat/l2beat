@@ -1,0 +1,212 @@
+{
+  "stargate": [
+    {
+      "chain": "ethereum",
+      "tx": "0xca89268e8e787bc9ffd0d0f2d47369161634acea27c6a2374c8c9a9b8ed6189f"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x9fdc94bf02e1efd47970137e4f4642810c733c834a23d48fd0de946d32deb6e3"
+    }
+  ],
+  "cctpv1": [
+    {
+      "chain": "base",
+      "tx": "0xe757960a024b26b7f01042acac11c941a9d88df296f150a3424a3ca20516df5a"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xad842eb3b6a603a78cccc24ea9b3d418f2b38bc13da0f542aedb237ed4740c61"
+    }
+  ],
+  "mayan-mctp-bridge-fee-on-dst": [
+    {
+      "chain": "base",
+      "tx": "0xf31d79e452692369a486f9ea470a17e123651e02dd50060a710f28e5a268bf5a"
+    },
+    {
+      "chain": "optimism",
+      "tx": "0x8fee2c8243140764b8ba74ae2c11f22495e7c5eae15f384f37fa3c826eebe465"
+    }
+  ],
+  "mayan-mctp-fast-swap": [
+    {
+      "chain": "ethereum",
+      "tx": "0x6a3439c2875764b29b8be902265985397c5fd2782e7f2be0821a5bda713a48ff"
+    },
+    {
+      "chain": "base",
+      "tx": "0x9f2d722cfc23e8a248d8380860f6f2212cf9d0cb93cf4f76804da31dae26b090"
+    }
+  ],
+  "mayan-swift": [
+    {
+      "chain": "optimism",
+      "tx": "0xd8715e004dcf338ca7c85d227b0c505fa54d806491e537b26fdfa0ca82d2afed"
+    },
+    {
+      "chain": "base",
+      "tx": "0x71be50f2e73096510601186b1b69f2fc5da7ce1bb636e176297262b08c833ebf"
+    }
+  ],
+  "layerzerov2": [
+    {
+      "chain": "base",
+      "tx": "0x2612a784a94aeed2eba6ea170b368f86e6aff4a00af1b2d104646fba4180dca0"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x0eb86d1c6690d314971c0f1b038c06f278a7217a414e0b6ea28bcecb3f005743"
+    }
+  ],
+  "test": [
+    {
+      "chain": "ethereum",
+      "tx": "0x12aea72e1eed6a665c7043e732c460e0028562bade4683a0328a9bc074cc858f"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x14de80b2f7a133ae1d153d8d6b0d89dbbf7f78be7bf94c1a187024838ed29b69"
+    }
+  ],
+  "wormhole-token-bridge": [
+    {
+      "chain": "ethereum",
+      "tx": "0x3cfa65ab201ecf59f94f7d7ebbf82cfb8ca80154bb0cc62df25cca25c3362d3b"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0xe81f7b139c8077f1ce52f3661289c176459d556878961b70ad9f1625654dd89c"
+    }
+  ],
+  "stargatev2taxi": [
+    {
+      "chain": "arbitrum",
+      "tx": "0x9b8bc656e135bcace1b4befe727b9b708199ba1c4640df5d3392d7b51286bc01"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xc3f745e5d599c9edf440ebb8cdc81328a6e6ab0454df1c5c8f007f29c013ea72"
+    }
+  ],
+  "stargatev2bus": [
+    {
+      "chain": "base",
+      "tx": "0xc59b27455553b8a20f691327acf7cf0e14515d60c0b5dbea9ae7e06c5f3d47e5"
+    },
+    {
+      "chain": "base",
+      "tx": "0xdac6499f4b968b4330e297264fc0bf0eee4dd42f74a0604514132ade26d89b82"
+    },
+    {
+      "chain": "base",
+      "tx": "0xe29f0e3966732713f85eb140a0522223babb6616a245326dc9c53342d9be5acc"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x275c210329f04b7a6b413e725938d58cd5c4f36597d42d2fb1b27d6a1ad9d8bb"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xbdc64d28438d6be5252c997b9761eb08b2223db099959d4a2e5f3f6438e76242"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x9c4e3027ae29b5704a91b6f0e442416e1e56bd04f3c26638e95d2eb856d40ec8"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0xb61d23e02b537e2bed19cf10e8d14c9d6a386649cd3ee103419e641b2a4202f6"
+    }
+  ],
+  "layerzeromix": [
+    {
+      "chain": "base",
+      "tx": "0xc59b27455553b8a20f691327acf7cf0e14515d60c0b5dbea9ae7e06c5f3d47e5"
+    },
+    {
+      "chain": "base",
+      "tx": "0xdac6499f4b968b4330e297264fc0bf0eee4dd42f74a0604514132ade26d89b82"
+    },
+    {
+      "chain": "base",
+      "tx": "0xe29f0e3966732713f85eb140a0522223babb6616a245326dc9c53342d9be5acc"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x275c210329f04b7a6b413e725938d58cd5c4f36597d42d2fb1b27d6a1ad9d8bb"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xbdc64d28438d6be5252c997b9761eb08b2223db099959d4a2e5f3f6438e76242"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x9c4e3027ae29b5704a91b6f0e442416e1e56bd04f3c26638e95d2eb856d40ec8"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0xb61d23e02b537e2bed19cf10e8d14c9d6a386649cd3ee103419e641b2a4202f6"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x9b8bc656e135bcace1b4befe727b9b708199ba1c4640df5d3392d7b51286bc01"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xc3f745e5d599c9edf440ebb8cdc81328a6e6ab0454df1c5c8f007f29c013ea72"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xbc456cfa0f1e2d6e410f6317d026c23eba0bb2ac2f556ce3c7936b4aa6e7afbe"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x3cabb123406c909e712c68493a7c1f74452d21a28e9a5aee9443f4f497e1ca58"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x9bec261577671eb4293dd57bb7c137e4d28479550f70e97e89a8250344b20007"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+    }
+  ],
+  "usdt0": [
+    {
+      "chain": "ethereum",
+      "tx": "0xbc456cfa0f1e2d6e410f6317d026c23eba0bb2ac2f556ce3c7936b4aa6e7afbe"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x3cabb123406c909e712c68493a7c1f74452d21a28e9a5aee9443f4f497e1ca58"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0x9bec261577671eb4293dd57bb7c137e4d28479550f70e97e89a8250344b20007"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+    }
+  ],
+  "across": [
+    {
+      "chain": "base",
+      "tx": "0x51e7eb66f9be23a409f85c94310fa2c80a71e4be02c5c3db767433063fc13b5b"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0xb68c00270bce23603b8620e8491e96facdecdf48c062e8554bf6f7ba4ef2df5d"
+    },
+    {
+      "chain": "arbitrum",
+      "tx": "0xba0253bf53087c24c15dce870df0c3615020efd33a1ae2be1781d15edf751c95"
+    },
+    {
+      "chain": "base",
+      "tx": "0xb02e7ee0dc9353b283c3fb9b38a03f729492312b40c7745d38645b7441a9b25e"
+    }
+  ]
+}

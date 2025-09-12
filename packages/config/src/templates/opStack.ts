@@ -84,6 +84,14 @@ export const EIGENDA_DA_PROVIDER: DAProvider = {
   badge: BADGES.DA.EigenDA,
 }
 
+export const PRIVATE_DA_PROVIDER: DAProvider = {
+  layer: DA_LAYERS.NONE,
+  riskView: RISK_VIEW.DATA_EXTERNAL,
+  technology: TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
+  bridge: DA_BRIDGES.NONE,
+  badge: BADGES.DA.CustomDA,
+}
+
 export function DACHALLENGES_DA_PROVIDER(
   daChallengeWindow: string,
   daResolveWindow: string,
@@ -304,7 +312,13 @@ function opStackCommon(
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Optimistic', name: 'OPFP' }),
+      (hasNoProofs
+        ? undefined
+        : {
+            type: 'Optimistic',
+            name: 'OPFP',
+            challengeProtocol: 'Interactive',
+          }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(

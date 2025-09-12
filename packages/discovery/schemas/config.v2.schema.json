@@ -759,6 +759,20 @@
               }
             }
           },
+          "entrypoints": {
+            "type": "object",
+            "propertyNames": { "type": "string" },
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "type": { "type": "string" },
+                "project": { "type": "string" },
+                "isLegacy": { "type": "boolean" }
+              },
+              "required": ["type", "project"]
+            }
+          },
           "categories": {
             "type": "object",
             "propertyNames": { "type": "string" },

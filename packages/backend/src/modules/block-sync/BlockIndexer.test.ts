@@ -174,6 +174,7 @@ function mockLogs(blockNumber: number): Log[] {
       data: '0x',
       blockNumber,
       transactionHash: '0x456',
+      logIndex: 0,
     },
   ]
 }

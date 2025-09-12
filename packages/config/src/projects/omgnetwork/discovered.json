@@ -1,7 +1,7 @@
 {
   "name": "omgnetwork",
   "timestamp": 1670682767,
-  "configHash": "0x4b03d0601936fa73d7d0f51077432625450bcf6934e816d6c714f9d9261592b7",
+  "configHash": "0x3d87b6e085607446d543bd4870ba779c10a6cab1f541b4c2f81acce4efda9523",
   "entries": [
     {
       "name": "Erc20Vault",

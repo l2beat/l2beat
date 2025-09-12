@@ -1,4 +1,27 @@
-Generated with discovered.json: 0x2cd3fb46f8ea8349dc9b7ef59bca9f807e2ab1be
+Generated with discovered.json: 0x07770e810a531ce09ea538078a1bbcefca9b58a0
+
+# Diff at Mon, 08 Sep 2025 14:38:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48f0161c75908020b4454ff29490575d534b39f4 block: 1756731927
+- current timestamp: 1757342233
+
+## Description
+
+New whitelisted sender: EOA (https://etherscan.io/address/0x5555555590930f501c88B73Ea43B3EEb5A71643c#tokentxns)
+
+## Watched changes
+
+```diff
+    contract GatewayTransactionFilterer (eth:0x5540DE94485dB078025318428F813C5d88215823) {
+    +++ description: A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3).
++++ description: Addresses that are whitelisted as senders for requestL2Transaction() calls.
+      values.whitelistedSenders.3:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+Generated with discovered.json: 0x6b624b17da9f9f2cea345be2a09e07da8ab9beae
 
 # Diff at Wed, 03 Sep 2025 15:52:19 GMT:
 

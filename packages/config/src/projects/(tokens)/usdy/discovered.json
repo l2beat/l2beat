@@ -1,10 +1,10 @@
 {
   "name": "usdy",
   "timestamp": 1752830574,
-  "configHash": "0x2e6ec8ae1a0de77ed29a1b8815a9b015440d0729e86cb75291f8f75281529a49",
+  "configHash": "0x990934e0fee768fc27c2830d29d7124d40c78ba4c6004a95d874344e517b9d8c",
   "entries": [
     {
-      "name": "USDY",
+      "name": "Ondo U.S. Dollar Yield Token",
       "address": "arb1:0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
       "type": "Contract",
       "sourceHashes": [
@@ -137,5 +137,5 @@
   },
   "usedTemplates": {},
   "usedBlockNumbers": { "arbitrum": 358948576 },
-  "permissionsConfigHash": "0xd067c445cd74713df85f8897c7294426a2df8417b4c512c45817474ba22fff9a"
+  "permissionsConfigHash": "0x8041ee8ab273c50e25b7b89ccdc735d7520f41ab2dc1c6425989ef72dc7043e1"
 }

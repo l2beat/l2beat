@@ -1,9 +1,9 @@
 import type {
+  AggregatedLivenessRecord,
   AnomalyRecord,
   IndexerConfigurationRecord,
   RealTimeAnomalyRecord,
 } from '@l2beat/database'
-import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
 import type { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
@@ -38,7 +38,7 @@ async function getLivenessData(projectId?: ProjectId) {
   const [configurations, livenessProjects] = await Promise.all([
     db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
     ps.getProjects({
-      select: ['trackedTxsConfig', 'livenessInfo'],
+      select: ['trackedTxsConfig'],
       optional: ['livenessConfig'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -302,6 +302,8 @@ function getMockLivenessData(): LivenessResponse {
     'myria',
     'scroll',
     'polygonzkevm',
+    'blobstream',
+    'vector',
   ] as const
 
   const projects = projectIds.reduce(
@@ -351,6 +353,27 @@ function getMockLivenessData(): LivenessResponse {
           UnixTime.now() - 4 * UnixTime.HOUR,
           'hour',
         ),
+      },
+    },
+    blobstream: {
+      ...projects.blobstream,
+      proofSubmissions: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.toStartOf(
+          UnixTime.now() - 4 * UnixTime.HOUR,
+          'hour',
+        ),
+      },
+    },
+    vector: {
+      ...projects.vector,
+      proofSubmissions: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.toStartOf(UnixTime.now(), 'hour'),
       },
     },
   }
