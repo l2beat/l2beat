@@ -1,4 +1,4 @@
-import { hotCacheFns } from './hotCacheList'
+import { hotCacheFns } from './hotCacheFns'
 
 async function main() {
   await Promise.all(
