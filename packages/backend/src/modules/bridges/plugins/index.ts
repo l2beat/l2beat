@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { AxelarPlugin } from './axelar'
 import { AcrossPlugin } from './across'
+import { AxelarPlugin } from './axelar'
 import { CCTPPlugin } from './cctp'
 import { LayerZeroV2Plugin } from './layerzero-v2'
 import { MayanMctpPlugin } from './mayanmctp'

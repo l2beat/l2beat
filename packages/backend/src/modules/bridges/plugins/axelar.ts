@@ -71,7 +71,9 @@ export class AxelarPlugin implements BridgePlugin {
         destinationContractAddress: parsed.destinationContractAddress,
         payloadHash: parsed.payloadHash,
         txHash: input.ctx.txHash,
-        $dstChain: NETWORKS.find((x) => x.axelarChainName === parsed.destinationChain)?.chain ?? `AXL_${parsed.destinationChain}`
+        $dstChain:
+          NETWORKS.find((x) => x.axelarChainName === parsed.destinationChain)
+            ?.chain ?? `AXL_${parsed.destinationChain}`,
       })
     }
 
@@ -83,7 +85,9 @@ export class AxelarPlugin implements BridgePlugin {
         sourceAddress: parsedApproved.sourceAddress,
         contractAddress: EthereumAddress(parsedApproved.contractAddress),
         srcTxHash: parsedApproved.sourceTxHash,
-        $srcChain: NETWORKS.find((x) => x.axelarChainName === parsedApproved.sourceChain)?.chain ?? `AXL_${parsedApproved.sourceChain}`
+        $srcChain:
+          NETWORKS.find((x) => x.axelarChainName === parsedApproved.sourceChain)
+            ?.chain ?? `AXL_${parsedApproved.sourceChain}`,
       })
     }
 
