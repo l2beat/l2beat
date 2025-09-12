@@ -36,7 +36,7 @@ export const mantapacific: ScalingProject = opStackL2({
         'https://t.me/mantanetworkofficial',
       ],
     },
-    architectureImage: 'mantapacific'
+    architectureImage: 'mantapacific',
   },
   activityConfig: {
     type: 'block',
