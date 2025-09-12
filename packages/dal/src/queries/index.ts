@@ -19,7 +19,9 @@ export type Query = {
   [K in keyof Queries]: QueryOf<K>
 }[keyof Queries]
 
-export type QueryResult<N extends keyof Queries> = ReturnType<Queries[N]>
+export type QueryResult<N extends keyof Queries> = Awaited<
+  ReturnType<Queries[N]>
+>
 
 export async function execute<N extends keyof Queries>(
   db: Database,

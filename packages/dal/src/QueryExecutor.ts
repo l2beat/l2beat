@@ -3,6 +3,7 @@ import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Cache } from './cache/Cache'
 import { execute, type Query, type QueryResult } from './queries'
+import type { Simplify } from './queries/types'
 
 const DEFAULT_EXPIRATION = 60 // 1 minute
 
@@ -21,7 +22,7 @@ export class QueryExecutor {
   async execute<Q extends Query>(
     query: Q,
     expires?: number,
-  ): Promise<QueryResultWithTimestamp<Q['name']>> {
+  ): Promise<Simplify<QueryResultWithTimestamp<Q['name']>>> {
     const key = this.cache.generateKey('getTvsChartQuery', query.args)
 
     this.logger.info(`Checking cache (key: ${key})`)
