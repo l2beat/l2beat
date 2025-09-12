@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { WhatsNewWidget } from '~/components/whats-new/WhatsNewWidget'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -88,6 +89,7 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
+        <WhatsNewWidget />
         <div className="flex gap-2 lg:justify-between">
           <SocialLinks variant="gray" />
         </div>

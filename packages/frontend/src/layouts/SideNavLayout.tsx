@@ -5,6 +5,7 @@ import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
 import { NavSidebar } from '~/components/nav/sidebar/NavSidebar'
 import type { NavGroup } from '~/components/nav/types'
+import { TopBanner } from '~/components/TopBanner'
 import { externalLinks } from '~/consts/externalLinks'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
@@ -18,15 +19,15 @@ import { createOrderedSort } from '~/utils/sort'
 
 const LOGO_LINK = '/scaling/summary'
 
-import { TopBanner } from '~/components/TopBanner'
+export interface SideNavLayoutProps {
+  children: React.ReactNode
+  childrenWrapperClassName?: string
+}
 
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
-}: {
-  children: React.ReactNode
-  childrenWrapperClassName?: string
-}) {
+}: SideNavLayoutProps) {
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
