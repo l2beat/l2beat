@@ -47,6 +47,7 @@ export function createBridgeModule({
     financialsService,
     db,
     plugins,
+    chains,
     logger,
   )
 

@@ -21,10 +21,12 @@ const parsePacketDelivered = createEventParser(
 )
 
 export const PacketSent = createBridgeEventType<{
+  $dstChain: string
   guid: string
 }>('layerzero-v2.PacketSent')
 
 export const PacketDelivered = createBridgeEventType<{
+  $srcChain: string
   guid: string
 }>('layerzero-v2.PacketDelivered')
 
@@ -56,7 +58,7 @@ export class LayerZeroV2Plugin implements BridgePlugin {
   constructor(private logger: Logger) {}
 
   capture(input: LogToCapture) {
-    const network = NETWORKS.find((b) => b.chain === input.ctx.chain)
+    const network = NETWORKS.find((x) => x.chain === input.ctx.chain)
     if (!network) {
       this.logger.warn('Network not configured', {
         plugin: this.name,
@@ -76,8 +78,10 @@ export class LayerZeroV2Plugin implements BridgePlugin {
           packet.header.dstEid,
           packet.header.receiver,
         )
-
-        return PacketSent.create(input.ctx, { guid })
+        const $dstChain =
+          NETWORKS.find((x) => x.eid === packet.header.dstEid)?.chain ??
+          'unknown'
+        return PacketSent.create(input.ctx, { $dstChain, guid })
       }
     }
 
@@ -90,8 +94,10 @@ export class LayerZeroV2Plugin implements BridgePlugin {
         network.eid,
         packetDelivered.receiver,
       )
-
-      return PacketDelivered.create(input.ctx, { guid })
+      const $srcChain =
+        NETWORKS.find((x) => x.eid === packetDelivered.origin.srcEid)?.chain ??
+        'unknown'
+      return PacketDelivered.create(input.ctx, { $srcChain, guid })
     }
   }
 

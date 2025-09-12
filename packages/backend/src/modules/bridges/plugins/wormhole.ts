@@ -62,7 +62,7 @@ export const NETWORKS = [
 export const LogMessagePublished = createBridgeEventType<{
   payload: `0x${string}`
   sequence: string
-  wormholeChainId: string
+  wormholeChainId: number
   sender: EthereumAddress
   txHash: string
 }>('wormhole.LogMessagePublished')
@@ -88,10 +88,7 @@ export class WormholePlugin implements BridgePlugin {
     return LogMessagePublished.create(input.ctx, {
       payload: parsed.payload,
       sequence: parsed.sequence.toString(),
-      wormholeChainId:
-        NETWORKS.find(
-          (n) => n.wormholeChainId === Number(network.wormholeChainId),
-        )?.chain || '???',
+      wormholeChainId: network.wormholeChainId,
       sender: EthereumAddress(parsed.sender),
       txHash: input.ctx.txHash,
     })

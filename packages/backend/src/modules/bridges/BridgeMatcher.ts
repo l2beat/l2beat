@@ -25,6 +25,7 @@ export class BridgeMatcher {
     private financialsService: FinancialsService,
     private db: Database,
     private plugins: BridgePlugin[],
+    private supportedChains: string[],
     private logger: Logger,
     private intervalMs = 10_000,
   ) {
@@ -54,6 +55,7 @@ export class BridgeMatcher {
       this.bridgeStore,
       this.bridgeStore.getUnmatched(),
       this.plugins,
+      this.supportedChains,
       this.logger,
     )
 
@@ -64,6 +66,11 @@ export class BridgeMatcher {
         transfers: result.transfers.length,
       })
       this.bridgeStore.markMatched([...result.matchedIds])
+    }
+    if (result.unsupportedIds.size > 0) {
+      this.bridgeStore.markUnsupported([...result.unsupportedIds])
+    }
+    if (result.matchedIds.size > 0 || result.unsupportedIds.size > 0) {
       await this.bridgeStore.save()
     }
     if (result.messages.length > 0) {
@@ -88,9 +95,11 @@ export async function match(
   db: BridgeEventDb,
   events: BridgeEvent[],
   plugins: BridgePlugin[],
+  supportedChains: string[],
   logger: Logger,
 ) {
   const matchedIds = new Set<string>()
+  const unsupportedIds = new Set<string>()
   const messages: BridgeMessage[] = []
   const transfers: BridgeTransfer[] = []
 
@@ -123,8 +132,23 @@ export async function match(
     }
   }
 
+  for (const event of events) {
+    if (matchedIds.has(event.eventId)) {
+      continue
+    }
+    const $srcChain = (event.args as Record<string, unknown>).$srcChain
+    if (typeof $srcChain === 'string' && !supportedChains.includes($srcChain)) {
+      unsupportedIds.add(event.eventId)
+    }
+    const $dstChain = (event.args as Record<string, unknown>).$dstChain
+    if (typeof $dstChain === 'string' && !supportedChains.includes($dstChain)) {
+      unsupportedIds.add(event.eventId)
+    }
+  }
+
   return {
     matchedIds,
+    unsupportedIds,
     messages,
     transfers,
   }

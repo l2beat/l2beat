@@ -108,7 +108,13 @@ const cmd = command({
 
     const eventDb = new InMemoryEventDb(events)
 
-    const result = await match(eventDb, events, plugins, logger)
+    const result = await match(
+      eventDb,
+      events,
+      plugins,
+      chains.map((x) => x.name),
+      logger,
+    )
     const transfers: BridgeTransferWithFinancials[] = await Promise.all(
       result.transfers.map(
         async (b) => await financialsService.addFinancials(b),
