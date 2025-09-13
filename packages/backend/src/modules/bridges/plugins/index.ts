@@ -6,6 +6,7 @@ import { LayerZeroV2Plugin } from './layerzero-v2'
 import { MayanMctpPlugin } from './mayanmctp'
 import { MayanMctpFastPlugin } from './mayanmctp-fast'
 import { MayanSwiftPlugin } from './mayanswift'
+import { OpStackPlugin } from './opstack'
 import { StargatePlugin } from './stargate'
 import { StargateV2BusPlugin } from './stargate-v2-bus'
 import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
@@ -32,5 +33,6 @@ export function createBridgePlugins(logger: Logger): BridgePlugin[] {
     new StargatePlugin(logger),
     new AxelarPlugin(),
     new AcrossPlugin(),
+    new OpStackPlugin(),
   ]
 }
