@@ -7,6 +7,7 @@ import { MayanMctpPlugin } from './mayanmctp'
 import { MayanMctpFastPlugin } from './mayanmctp-fast'
 import { MayanSwiftPlugin } from './mayanswift'
 import { OrbitStackPlugin } from './orbitstack'
+import { OpStackPlugin } from './opstack'
 import { StargatePlugin } from './stargate'
 import { StargateV2BusPlugin } from './stargate-v2-bus'
 import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
@@ -34,5 +35,6 @@ export function createBridgePlugins(logger: Logger): BridgePlugin[] {
     new AxelarPlugin(),
     new AcrossPlugin(),
     new OrbitStackPlugin(),
+    new OpStackPlugin(),
   ]
 }
