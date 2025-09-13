@@ -1,5 +1,6 @@
+import type { EntryParameters } from '@l2beat/discovery'
 import {
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -16,25 +17,23 @@ const upgradeDelay = discovery.getContractValue<number>(
 )
 const upgradeDelayString = formatSeconds(upgradeDelay)
 
-const existingOnRamps = Object.values(
-  discovery.getContractValue<Record<string, string>>('Router', 'onRamps'),
+const registeredPoolsAddresses = discovery.getContractValue<
+  ChainSpecificAddress[]
+>('TokenAdminRegistry', 'pools')
+
+const registeredPools = registeredPoolsAddresses.map((address) =>
+  discovery.getContractByAddress(address),
 )
 
-const onRamps = existingOnRamps.filter(
-  (onRamp) => onRamp !== 'eth:0x0000000000000000000000000000000000000000',
+const interestingPools: EntryParameters[] = registeredPools.filter(
+  (pool): pool is EntryParameters =>
+    pool !== undefined &&
+    pool.address !==
+      ChainSpecificAddress('eth:0x0000000000000000000000000000000000000000') &&
+    !!pool.name &&
+    !/mint/i.test(pool.name) &&
+    !/xerc20/i.test(pool.name),
 )
-
-const allTokenPools = onRamps.flatMap((onRamp) => {
-  try {
-    return discovery.getContractValue<ChainSpecificAddress[]>(
-      onRamp,
-      'tokenPools',
-    )
-  } catch {
-    return []
-  }
-})
-const tokenPools = [...new Set(allTokenPools)]
 
 export const transporter: Bridge = {
   type: 'bridge',
@@ -114,9 +113,9 @@ export const transporter: Bridge = {
     },
   },
   config: {
-    escrows: tokenPools.map((tokenPool) =>
+    escrows: interestingPools.map((tokenPool) =>
       discovery.getEscrowDetails({
-        address: tokenPool,
+        address: tokenPool.address,
         tokens: '*',
       }),
     ),
