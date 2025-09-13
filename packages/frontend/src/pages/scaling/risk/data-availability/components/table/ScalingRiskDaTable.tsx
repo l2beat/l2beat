@@ -2,19 +2,19 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
-import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
-import { getScalingDataAvailabilityColumns } from './columns'
+import type { ScalingRiskDaEntry } from '~/server/features/scaling/risks/data-availability/getScalingRiskDaEntries'
+import { getScalingRiskDataAvailabilityColumns } from './columns'
 
 interface Props {
-  entries: ScalingDaEntry[]
+  entries: ScalingRiskDaEntry[]
   hideType?: boolean
 }
 
-export function ScalingDaTable({ entries, hideType }: Props) {
+export function ScalingRiskDaTable({ entries, hideType }: Props) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,
-    columns: getScalingDataAvailabilityColumns(hideType),
+    columns: getScalingRiskDataAvailabilityColumns(hideType),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

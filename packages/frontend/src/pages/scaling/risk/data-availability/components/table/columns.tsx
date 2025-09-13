@@ -10,11 +10,13 @@ import {
 } from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
-import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
+import type { ScalingRiskDaEntry } from '~/server/features/scaling/risks/data-availability/getScalingRiskDaEntries'
 
-const columnHelper = createColumnHelper<ScalingDaEntry>()
+const columnHelper = createColumnHelper<ScalingRiskDaEntry>()
 
-export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
+export function getScalingRiskDataAvailabilityColumns(
+  hideProofSystem?: boolean,
+) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,

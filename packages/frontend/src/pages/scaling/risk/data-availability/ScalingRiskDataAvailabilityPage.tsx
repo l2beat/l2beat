@@ -4,20 +4,20 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
-import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
-import { ScalingDaTables } from './components/ScalingDaTables'
+import type { ScalingRiskDaEntry } from '~/server/features/scaling/risks/data-availability/getScalingRiskDaEntries'
+import { ScalingRiskDaTables } from './components/ScalingRiskDaTables'
 
 interface Props extends AppLayoutProps {
-  entries: TabbedScalingEntries<ScalingDaEntry>
+  entries: TabbedScalingEntries<ScalingRiskDaEntry>
 }
 
-export function ScalingDataAvailabilityPage({ entries, ...props }: Props) {
+export function ScalingRiskDataAvailabilityPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader>Data Availability</MainPageHeader>
         <TableFilterContextProvider>
-          <ScalingDaTables {...entries} />
+          <ScalingRiskDaTables {...entries} />
         </TableFilterContextProvider>
       </SideNavLayout>
     </AppLayout>

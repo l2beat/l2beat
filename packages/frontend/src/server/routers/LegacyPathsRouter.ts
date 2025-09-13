@@ -35,5 +35,9 @@ export function createLegacyPathsRouter() {
     res.redirect(301, `/publications/${req.params.id}`)
   })
 
+  router.get('/scaling/data-availability', (_, res) => {
+    res.redirect(301, '/scaling/risk/data-availability')
+  })
+
   return router
 }

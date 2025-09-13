@@ -20,16 +20,47 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
 
   // Do not display the tabs if the current group is not found,
   // or the current group does not have a link that matches the current path.
-  const display = currentGroup.links.some(({ href }) => href === pathname)
-  if (!display) return null
+  const isAnyLinkMatching =
+    currentGroup.links.some(({ href }) => href === pathname) ||
+    currentGroup.links.some((link) =>
+      link.subLinks?.some((subLink) => subLink.href === pathname),
+    )
+  if (!isAnyLinkMatching) return null
 
   return (
     <OverflowWrapper className="bg-surface-primary">
       <div className="flex">
         {currentGroup.links
           .filter((link) => !link.disabled)
-          .map((link) => {
+          .flatMap((link) => {
             const isSelected = link.href === pathname
+
+            if (link.subLinks) {
+              return link.subLinks.map((subLink) => {
+                const isSelected = subLink.href === pathname
+                return (
+                  <a
+                    ref={(node) => {
+                      if (node && isSelected) {
+                        node.scrollIntoView({
+                          block: 'nearest',
+                          inline: 'center',
+                        })
+                      }
+                    }}
+                    href={subLink.href}
+                    key={subLink.href}
+                    data-state={isSelected ? 'selected' : undefined}
+                    className={cn(
+                      'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b bg-header-primary px-4 font-medium text-xs leading-none',
+                      'data-[state=selected]:border-brand data-[state=selected]:text-brand',
+                    )}
+                  >
+                    {subLink.shortTitle ?? subLink.title}
+                  </a>
+                )
+              })
+            }
             return (
               <a
                 ref={(node) => {

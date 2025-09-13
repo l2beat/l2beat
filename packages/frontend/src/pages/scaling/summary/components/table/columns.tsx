@@ -144,7 +144,7 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
                 ? 'No bridge'
                 : latestValue.bridge.value,
           }}
-          href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+          href={`/scaling/risk/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
         />
       )
     },

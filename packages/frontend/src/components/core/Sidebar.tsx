@@ -158,7 +158,10 @@ function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
-function SidebarGroup({ className, ...props }: React.ComponentProps<'div'>) {
+function SidebarGroupWrapper({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
   return (
     <div
       className={cn(
@@ -225,7 +228,7 @@ function SidebarGroupSmallLink({
   )
 }
 
-function SidebarGroupSub({ className, ...props }: React.ComponentProps<'ul'>) {
+function SidebarGroup({ className, ...props }: React.ComponentProps<'ul'>) {
   return (
     <ul
       className={cn(
@@ -241,7 +244,7 @@ function SidebarGroupSubItem(props: React.ComponentProps<'li'>) {
   return <li {...props} />
 }
 
-function SidebarGroupSubButton({
+function SidebarGroupLinkLevel1({
   asChild = false,
   isActive,
   className,
@@ -265,18 +268,39 @@ function SidebarGroupSubButton({
   )
 }
 
+function SidebarGroupLinkLevel2({
+  isActive,
+  className,
+  ...props
+}: React.ComponentProps<'a'> & {
+  isActive?: boolean
+}) {
+  return (
+    <a
+      data-active={isActive}
+      className={cn(
+        'font-medium text-label-value-14',
+        'data-[active=true]:text-brand',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
 export {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
   SidebarHeader,
+  SidebarGroup,
+  SidebarGroupWrapper,
+  SidebarGroupItem,
   SidebarGroupLink,
   SidebarGroupSmallLink,
-  SidebarGroupItem,
-  SidebarGroupSub,
-  SidebarGroupSubButton,
   SidebarGroupSubItem,
+  SidebarGroupLinkLevel1,
+  SidebarGroupLinkLevel2,
   SidebarProvider,
   SidebarSeparator,
   useSidebar,
