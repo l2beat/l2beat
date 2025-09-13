@@ -36,6 +36,12 @@ export const NETWORKS = [
   { axelarChainName: 'arbitrum', chain: 'arbitrum' },
   { axelarChainName: 'Avalanche', chain: 'avalanche' },
   { axelarChainName: 'base', chain: 'base' },
+  { axelarChainName: 'mantle', chain: 'mantle' },
+  { axelarChainName: 'immutable', chain: 'immutable' },
+  { axelarChainName: 'Fantom', chain: 'fantom' },
+  { axelarChainName: 'binance', chain: 'bsc' },
+  { axelarChainName: 'centrifuge', chain: 'centrifuge' },
+  { axelarChainName: 'linea', chain: 'linea' },
 ]
 
 export const ContractCall = createBridgeEventType<{

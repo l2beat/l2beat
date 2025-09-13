@@ -19,7 +19,7 @@
       "tx": "0xad842eb3b6a603a78cccc24ea9b3d418f2b38bc13da0f542aedb237ed4740c61"
     }
   ],
-  "mayan-mctp-bridge-fee-on-dst": [
+  "mayan-mctp-bridge": [
     {
       "chain": "base",
       "tx": "0xf31d79e452692369a486f9ea470a17e123651e02dd50060a710f28e5a268bf5a"
@@ -27,6 +27,26 @@
     {
       "chain": "optimism",
       "tx": "0x8fee2c8243140764b8ba74ae2c11f22495e7c5eae15f384f37fa3c826eebe465"
+    }
+  ],
+  "mayan-mctp-bridge-fee-on-dst": [
+    {
+      "chain": "base",
+      "tx": "0xcb533450fe53baf53d82e61be8c3a7dc8967a8d9ade6c745301f3e16326cbf49"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0x62f7808a27b877880526c6ae606598e368e9af36f4137ad3236de49af1a5b6b1"
+    }
+  ],
+  "mayan-mctp-swap": [
+    {
+      "chain": "arbitrum",
+      "tx": "0x87d69e29fa08dcccaa82f312f1fab55b3b0deaa637b5165ecebd1d3a15bbf51c"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xf5e01a33e94a921708f6d64dc4a0dfb6a2f388f87d57765e05c40d6199779292"
     }
   ],
   "mayan-mctp-fast-swap": [
