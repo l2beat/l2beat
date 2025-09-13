@@ -54,6 +54,5 @@
     "eth:0x5b000954F70B0410685193B0afd3074B744B5C97": {
       "ignoreRelatives": ["uniswap", "weth"]
     }
-  },
-  "sharedModules": ["shared-sharp-verifier"]
+  }
 }

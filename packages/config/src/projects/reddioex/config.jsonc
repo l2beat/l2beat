@@ -49,6 +49,5 @@
         "constructorArgs": { "handler": { "type": "constructorArgs" } }
       }
     }
-  },
-  "sharedModules": ["shared-sharp-verifier"]
+  }
 }

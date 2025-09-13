@@ -69,10 +69,13 @@ export const _StructureContract = {
 }
 export const StructureContract = v.object(_StructureContract)
 
+export type EntryType = v.infer<typeof EntryType>
+export const EntryType = v.enum(['Contract', 'EOA'])
+
 export type Entrypoint = v.infer<typeof Entrypoint>
 export const Entrypoint = v.object({
   name: v.string().optional(),
-  type: v.string(),
+  type: EntryType,
   project: v.string(),
   isLegacy: v.boolean().optional(),
 })

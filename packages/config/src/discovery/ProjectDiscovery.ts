@@ -66,7 +66,17 @@ export class ProjectDiscovery {
 
     const alreadyAdded = new Set<string>(this.discoveries.map((x) => x.name))
     for (const discovery of this.discoveries) {
-      for (const sharedModule of discovery.sharedModules ?? []) {
+      const referencedProjects = discovery.entries
+        .map((e) => e.targetProject)
+        .filter(notUndefined)
+
+      // TODO: necessary until we remove .sharedModules completely
+      const allReferencedProjects = [
+        ...referencedProjects,
+        ...(discovery.sharedModules ?? []),
+      ]
+
+      for (const sharedModule of allReferencedProjects) {
         const key = sharedModule
         if (alreadyAdded.has(key)) continue
 
