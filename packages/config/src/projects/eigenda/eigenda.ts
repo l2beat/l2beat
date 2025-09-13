@@ -309,7 +309,7 @@ export const eigenda: BaseProject = {
     ],
   },
   daBridge: {
-    name: 'DACert Verifier',
+    name: 'DACert Verifier (EigenDA V1)',
     daLayer: ProjectId('eigenda'),
     relayerType: {
       value: 'Permissioned',
