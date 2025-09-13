@@ -1,6 +1,6 @@
 {
   "name": "fraxferry",
-  "timestamp": 1753200647,
+  "timestamp": 1757660751,
   "configHash": "0xda73eb73ef4293a11463044ca22a410cf508d88f2d1a86a17680e5a7333430c7",
   "entries": [
     {
@@ -811,16 +811,16 @@
         "$immutable": true,
         "captain": "eth:0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
-        "executeIndex": 165,
+        "executeIndex": 167,
         "FEE_MAX": 400000000000000,
         "FEE_MIN": 400000000000000,
         "FEE_RATE": 0,
         "firstOfficer": "eth:0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 39600,
-        "noBatches": 165,
+        "noBatches": 167,
         "nominatedOwner": "eth:0x0000000000000000000000000000000000000000",
-        "noTransactions": 27,
+        "noTransactions": 28,
         "owner": "eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
         "paused": false,
         "REDUCED_DECIMALS": 10000000000,
@@ -1001,7 +1001,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 521,
+        "nonce": 522,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1256,14 +1256,14 @@
         "$immutable": true,
         "captain": "eth:0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
-        "executeIndex": 35,
+        "executeIndex": 41,
         "FEE_MAX": "1000000000000000000",
         "FEE_MIN": "1000000000000000000",
         "FEE_RATE": 0,
         "firstOfficer": "eth:0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 39600,
-        "noBatches": 35,
+        "noBatches": 41,
         "nominatedOwner": "eth:0x0000000000000000000000000000000000000000",
         "noTransactions": 15,
         "owner": "eth:0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502",
@@ -1570,7 +1570,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6701,
+        "nonce": 6908,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -6388,6 +6388,6 @@
     "fraxferry/Fraxferry": "0x9ebfaba04ae0d6b918fb5fe7bbc0a365c4f600308e283b921f955d7acafb8bd6",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22975821 },
+  "usedBlockNumbers": { "ethereum": 23345374 },
   "permissionsConfigHash": "0xeef27d52f02cd1c0b03f6ce178a24da4a618f2509c0b8ea1e8e4206949bcdf8c"
 }

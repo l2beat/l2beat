@@ -1,3 +1,83 @@
+Generated with discovered.json: 0x7993b8a3ba77e6aa11b73897afbddcd8326397a7
+
+# Diff at Fri, 12 Sep 2025 08:17:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2848a07919ddccf9d9ca1c6779dbcc184bdeb3b3 block: 1756995439
+- current timestamp: 1756995439
+
+## Description
+
+Config: add polygonpos predicate access control permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756995439 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+    }
+```
+
+```diff
+    contract ERC20Predicate (eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+    }
+```
+
+```diff
+    contract EtherPredicate (eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+    }
+```
+
+```diff
+    contract RootChainManager (eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","description":"move any tokens to or from the escrow.","role":".managersAC"}]
+    }
+```
+
+```diff
+    contract PolygonMultisig (eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+    }
+```
+
 Generated with discovered.json: 0x64ed115d330b7770ecb5e0b48e454e8407721ead
 
 # Diff at Thu, 04 Sep 2025 14:18:29 GMT:

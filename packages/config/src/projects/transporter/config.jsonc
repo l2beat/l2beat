@@ -2,23 +2,24 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "transporter",
   "import": ["../globalConfig.jsonc"],
-  "maxAddresses": 450,
+  "maxAddresses": 900,
   "maxDepth": 8,
   "initialAddresses": [
-    "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-    "eth:0xE561d5E02207fb5eB32cca20a699E0d8919a1476",
-    "eth:0x66598216D8E4d9AFE0F06d525B335b762229842f"
+    "eth:0x66598216D8E4d9AFE0F06d525B335b762229842f",
+    "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+    "eth:0x86B47d8411006874eEf8E4584BdFD7be8e5549d1",
+    "eth:0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5",
+    "eth:0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB"
   ],
   "names": {
-    "eth:0x66598216D8E4d9AFE0F06d525B335b762229842f": "EtherSenderReceiver",
-    "eth:0xB9281d9d494EE5b8b06f5ECb43bE37684804b818": "ChainlinkCcipGateway",
-    "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": "RBACTimelock",
-    "eth:0xE561d5E02207fb5eB32cca20a699E0d8919a1476": "RouterOld",
-    "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": "LinkToken",
+    // "eth:0x66598216D8E4d9AFE0F06d525B335b762229842f": "EtherSenderReceiver",
+    // "eth:0xB9281d9d494EE5b8b06f5ECb43bE37684804b818": "ChainlinkCcipGateway",
+    // "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": "RBACTimelock",
+    // "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": "LinkToken",
     "eth:0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5": "OffRamp1",
     "eth:0x86B47d8411006874eEf8E4584BdFD7be8e5549d1": "OnRamp1",
-    "eth:0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB": "CommitStore1",
-    "eth:0x8B63b3DE93431C0f756A493644d128134291fA1b": "ARM"
+    "eth:0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB": "CommitStore1"
+    // "eth:0x8B63b3DE93431C0f756A493644d128134291fA1b": "ARM"
   },
   "overrides": {
     "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": {
@@ -37,6 +38,32 @@
       "ignoreDiscovery": true
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreDiscovery": true
+    },
+    // spammy
+    "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x55042569836d203456d013dEFA8c670AD865d451": {
+      "ignoreDiscovery": true
+    },
+    // unverified pools
+    "eth:0x0577EcCC8FBE54B321d3BC8d4F1d09Deb94d5A55": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x348540aa7b129b0F3c931FEDE811d009E0e18E60": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x5Acf8cdF7740DaBfF6D115058f2A386D6F2380eB": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x817404e98d28b8065c6e1C76E6bCD9088aEFb31A": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xF3BD0793FAD8b24B7ba58956dE9DE305D34B9098": {
       "ignoreDiscovery": true
     }
   },

@@ -1,3 +1,123 @@
+Generated with discovered.json: 0xabe77b505efd6106cf24a8a40a783d5c4e02526f
+
+# Diff at Fri, 12 Sep 2025 08:16:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2848a07919ddccf9d9ca1c6779dbcc184bdeb3b3 block: 1745483963
+- current timestamp: 1757661357
+
+## Description
+
+Add a new unverified contract as manager for the ERC20 escrow (can steal).
+
+## Watched changes
+
+```diff
+    contract ERC20Predicate (eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa) {
+    +++ description: None
+      values.accessControl.MANAGER_ROLE.members.2:
++        "eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB"
+      values.managersAC.2:
++        "eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract managerContract (eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB)
+    +++ description: None
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745483963 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+      values.managersAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004","eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"]
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+      values.managersAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004","eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"]
+    }
+```
+
+```diff
+    contract RootChainManager (eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82) {
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x98C831cFB18852f7deB3E3a970e907475b49730f","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0xc3897302aB4B42931cB4857050Fa60f53B775870","description":"move any tokens to or from the escrow.","role":".managersAC"}]
+    }
+```
+
+```diff
+    contract ERC20Predicate (eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+      values.managersAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004","eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"]
+    }
+```
+
+```diff
+    EOA  (eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x98C831cFB18852f7deB3E3a970e907475b49730f","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x98C831cFB18852f7deB3E3a970e907475b49730f","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      receivedPermissions.13:
++        {"permission":"interact","from":"eth:0xc3897302aB4B42931cB4857050Fa60f53B775870","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.14:
++        {"permission":"interact","from":"eth:0xc3897302aB4B42931cB4857050Fa60f53B775870","description":"move any tokens to or from the escrow.","role":".managersAC"}
+    }
+```
+
+```diff
+    contract ERC721Predicate (eth:0x98C831cFB18852f7deB3E3a970e907475b49730f) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+      values.managersAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004","eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"]
+    }
+```
+
+```diff
+    contract EtherPredicate (eth:0xc3897302aB4B42931cB4857050Fa60f53B775870) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+      values.managersAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004","eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"]
+    }
+```
+
 Generated with discovered.json: 0xa871f72d29a4a64bb4699f3d0a82396d451455e2
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

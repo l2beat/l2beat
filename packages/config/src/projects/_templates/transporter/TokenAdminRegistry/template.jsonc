@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "poolsMap": {
+      "handler": {
+        "type": "event",
+        "select": "newPool",
+        "set": { "event": "PoolSet" },
+        "groupBy": "token",
+        "ignoreRelative": true
+      }
+    },
+    "pools": {
+      "handler": {
+        "type": "event",
+        "select": "newPool",
+        "set": { "event": "PoolSet" },
+        "groupBy": "token"
+      },
+      "edit": ["pipe", ["to_entries"], ["map", ["get", 1]]]
+    }
+  }
+}
