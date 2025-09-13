@@ -1427,5 +1427,7 @@
   "static/meta-images/publications/Ethereum-Connect.png": "fbb9bbf26c16d46bfeb936efecf20c1c",
   "static/meta-images/publications/governance-review-background.png": "c8b861741fb614584d4194092d4e24be",
   "static/meta-images/publications/monthly-update-background.png": "2ebdfdf9d9bf848d9437d819a19ff0ed",
-  "static/meta-images/publications/governance-review-68.png": "538c3b87223a0622041ed63d885dcf02"
+  "static/meta-images/publications/governance-review-68.png": "538c3b87223a0622041ed63d885dcf02",
+  "static/icons/ronin-network.png": "a816f7488a9abbccce79dacb86350816",
+  "static/meta-images/scaling/projects/ronin-network/opengraph-image.png": "939393c4d3197b6c0249cbc0c73e5cca"
 }
