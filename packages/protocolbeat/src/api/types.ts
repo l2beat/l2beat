@@ -52,6 +52,10 @@ export interface ApiTemplateFileResponse {
   criteria?: string
 }
 
+export interface ApiConfigFileResponse {
+  config: string
+}
+
 export type ApiCreateShapeResponse =
   | {
       success: true

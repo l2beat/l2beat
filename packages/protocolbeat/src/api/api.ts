@@ -2,6 +2,7 @@ import { withoutUndefinedKeys } from '../common/withoutUndefinedKeys'
 import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
+  ApiConfigFileResponse,
   ApiCreateShapeResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
@@ -124,6 +125,37 @@ export async function readTemplateFile(
   const data = await res.json()
 
   return data as ApiTemplateFileResponse
+}
+
+export async function readConfigFile(
+  project?: string,
+): Promise<ApiConfigFileResponse> {
+  if (!project) {
+    return { config: '' }
+  }
+
+  const res = await fetch(`/api/config-files/${project}`)
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+
+  return data as ApiConfigFileResponse
+}
+
+export async function writeConfigFile(project: string, content: string) {
+  const res = await fetch(`/api/config-files/${project}`, {
+    method: 'POST',
+    body: JSON.stringify({ content }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
 }
 
 export async function writeTemplateFile(templateId: string, content: string) {

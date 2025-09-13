@@ -9,6 +9,7 @@ export const PANEL_IDS = [
   'preview',
   'terminal',
   'template',
+  'config',
 ] as const
 
 export type PanelId = (typeof PANEL_IDS)[number]
