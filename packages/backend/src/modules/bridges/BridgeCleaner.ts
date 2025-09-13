@@ -35,5 +35,6 @@ export class BridgeCleaner {
     const now = UnixTime.now()
     await this.bridgeStore.deleteExpired(now)
     await this.db.bridgeMessage.deleteBefore(now - 7 * UnixTime.DAY)
+    await this.db.bridgeTransfer.deleteBefore(now - 7 * UnixTime.DAY)
   }
 }
