@@ -11,7 +11,8 @@
     "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064": "StakeManager",
     "eth:0x9df56e63CD340F0f3D811dd2aAAEEa42ec27D5a3": "ERC721Predicate",
     "eth:0xdaF14950155DF895E9D0fd2521D05477d26F462c": "ERC20Predicate",
-    "eth:0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6": "ValidatorShare"
+    "eth:0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6": "ValidatorShare",
+    "eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB": "managerContract"
   },
   "overrides": {
     "eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0": {
