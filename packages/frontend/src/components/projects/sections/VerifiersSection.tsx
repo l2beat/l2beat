@@ -1,4 +1,5 @@
-import type { ZkCatalogTag } from '@l2beat/config'
+import type { ProjectZkCatalogInfo, ZkCatalogTag } from '@l2beat/config'
+import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAttesters'
 import {
   Collapsible,
   CollapsibleContent,
@@ -13,6 +14,7 @@ import {
 } from '~/components/ProjectsUsedIn'
 import { ChevronIcon } from '~/icons/Chevron'
 import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
+import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import { formatAddress } from '~/utils/formatAddress'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
@@ -25,6 +27,12 @@ export interface VerifiersSectionProps extends ProjectSectionProps {
       knownDeployments: string[]
       projectsUsedIn: UsedInProjectWithIcon[]
       verificationSteps?: string
+      verificationStatus: ProjectZkCatalogInfo['verifierHashes'][number]['verificationStatus']
+      attesters:
+        | (ZkCatalogAttester & {
+            icon: string
+          })[]
+        | undefined
     }[]
   }[]
 }
@@ -79,6 +87,16 @@ function VerifierCollapsibleWithDetails({
           <span className="text-left">{formatAddress(verifierHash.hash)}</span>
           <div className="flex items-center gap-1.5 text-center max-md:hidden">
             <p className="font-medium text-label-value-12 text-secondary">
+              Verification
+            </p>
+            <CountWithAttesters
+              count={undefined}
+              attesters={verifierHash.attesters}
+              type={verifierHash.verificationStatus}
+            />
+          </div>
+          <div className="flex items-center gap-1.5 text-center max-md:hidden">
+            <p className="font-medium text-label-value-12 text-secondary">
               Used in
             </p>
             <ProjectsUsedIn
@@ -86,7 +104,6 @@ function VerifierCollapsibleWithDetails({
               usedIn={verifierHash.projectsUsedIn}
             />
           </div>
-          <div className="max-md:hidden">Verifiers</div>
           <div className="flex items-center gap-1.5 max-md:hidden">
             <div className="font-medium text-label-value-12 text-secondary">
               Known deployments

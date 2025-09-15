@@ -51,7 +51,7 @@ export function VerifiedCountWithDetails({ data, horizontal }: Props) {
       {elements.map((config, index) => (
         <div key={config.type} className="flex items-center">
           <CountWithAttesters
-            count={config.count}
+            count={config.count ?? 0}
             attesters={config.attesters}
             type={config.type}
           />
@@ -64,7 +64,7 @@ export function VerifiedCountWithDetails({ data, horizontal }: Props) {
   )
 }
 
-function CountWithAttesters({
+export function CountWithAttesters({
   count,
   attesters,
   type,
@@ -77,7 +77,7 @@ function CountWithAttesters({
     | undefined
   type: 'successful' | 'notVerified' | 'unsuccessful'
 }) {
-  if (!count || count === 0) return null
+  if (count === 0) return null
 
   const Icon = typeToIcon(type)
 
@@ -87,7 +87,7 @@ function CountWithAttesters({
         {count}
       </span>
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <Icon className="size-4" />
         </TooltipTrigger>
         <TooltipContent>{`${typeToLabel(type)} verified`}</TooltipContent>
@@ -99,7 +99,7 @@ function CountWithAttesters({
       )}
       {attesters?.map((attester) => (
         <Tooltip key={attester.id}>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <a href={attester.link} target="_blank" rel="noreferrer">
               <img
                 src={attester.icon}
