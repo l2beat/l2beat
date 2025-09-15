@@ -70,15 +70,16 @@ function generateEntrypointsForProject(
 ) {
   const discovery = configReader.readDiscovery(project)
   const entrypoints: Record<ChainSpecificAddress, Entrypoint> = {}
-  discovery.entries
-    .filter((e) => e.type !== 'Reference')
-    .forEach((e) => {
-      entrypoints[e.address] = {
-        ...(e.name && { name: e.name }),
-        type: e.type.toString(),
-        project,
-      }
-    })
+  discovery.entries.forEach((e) => {
+    if (e.type === 'Reference') {
+      return
+    }
+    entrypoints[e.address] = {
+      ...(e.name && { name: e.name }),
+      type: e.type,
+      project,
+    }
+  })
 
   return { entrypoints }
 }

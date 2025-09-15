@@ -71,6 +71,11 @@ export class ConfigReader {
     return rawConfig
   }
 
+  readRawConfigAsText(name: string): string {
+    const basePath = this.resolveProjectPath(name)
+    return readFileSync(path.join(basePath, 'config.jsonc'), 'utf-8')
+  }
+
   readDiscovery(name: string): DiscoveryOutput {
     const projectPath = this.resolveProjectPath(name)
     assert(

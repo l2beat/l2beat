@@ -32,7 +32,7 @@ export function getEcosystemProjectsChartData(
 
   const timestamps = generateTimestamps(
     [
-      Math.max(minTimestamp, startedAt ?? -Number.NEGATIVE_INFINITY),
+      Math.max(minTimestamp, startedAt ?? Number.NEGATIVE_INFINITY),
       UnixTime.toStartOf(UnixTime.now(), 'day'),
     ],
     'daily',

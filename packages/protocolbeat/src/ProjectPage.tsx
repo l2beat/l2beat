@@ -7,6 +7,7 @@ import { isReadOnly } from './config'
 import { MultiView } from './multi-view/MultiView'
 import type { PanelId } from './multi-view/store'
 import { CodePanel } from './panel-code/CodePanel'
+import { ConfigPanel } from './panel-config/ConfigPanel'
 import { ListPanel } from './panel-list/ListPanel'
 import { NodesPanel } from './panel-nodes/NodesPanel'
 import { PreviewPanel } from './panel-preview/PreviewPanel'
@@ -48,6 +49,7 @@ const PANELS: Record<PanelId, () => JSX.Element> = {
   preview: PreviewPanel,
   terminal: TerminalPanel,
   template: TemplatePanel,
+  config: ConfigPanel,
 }
 
 const READONLY_PANELS: Record<
@@ -60,6 +62,7 @@ const READONLY_PANELS: Record<
   preview: PreviewPanel,
   code: CodePanel,
   template: TemplatePanel,
+  config: ConfigPanel,
 }
 
 function Panel(props: { kind: PanelId }) {

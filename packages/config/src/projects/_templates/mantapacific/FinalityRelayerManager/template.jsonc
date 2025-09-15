@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract managing challenge period reductions based on whitelisted signer and staked amounts. No threshold is currently enforced and no validation is done on the staked amounts. The current challenge period is set to {{ TOTAL_CHALLENGE_PERIOD }}, the manta quorum can reduce it by a maximum of {{ MANTA_REDUCE_PERIOD }}, the bitcoin quorum can reduce it by a maximum of {{ BITCOIN_REDUCE_PERIOD }}, and the minimum challenge period allowed is set to {{ MIN_CHALLENGE_PERIOD }}.",
+  "fields": {
+    "operatorWhitelistManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can add or remove operators, set the target for manta and bitcoin votes, and provide data for signature validation, including addresses to be excluded from validation."
+        }
+      ]
+    },
+    "operators": {
+      "handler": {
+        "type": "event",
+        "select": ["operator"],
+        "add": { "event": ["OperatorRegistered"] },
+        "remove": { "event": ["OperatorDeRegistered"] }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can vote for challenge period reductions."
+        }
+      ]
+    },
+    "TOTAL_CHALLENGE_PERIOD": {
+      "handler": { "type": "hardcoded", "value": 259200 },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "MANTA_REDUCE_PERIOD": {
+      "handler": { "type": "hardcoded", "value": 86400 },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "BITCOIN_REDUCE_PERIOD": {
+      "handler": { "type": "hardcoded", "value": 86400 },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "MIN_CHALLENGE_PERIOD": {
+      "handler": { "type": "hardcoded", "value": 43200 },
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}

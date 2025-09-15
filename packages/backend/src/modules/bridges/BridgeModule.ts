@@ -21,7 +21,7 @@ export function createBridgeModule({
   }
   logger = logger.tag({ feature: 'bridges', module: 'bridges' })
 
-  const plugins = createBridgePlugins(logger)
+  const plugins = createBridgePlugins()
   const chains = plugins
     .flatMap((x) => x.chains)
     .filter((x, i, a) => a.indexOf(x) === i)
@@ -47,6 +47,7 @@ export function createBridgeModule({
     financialsService,
     db,
     plugins,
+    chains,
     logger,
   )
 

@@ -42,7 +42,7 @@ const sequencerInbox = ChainSpecificAddress(
   discovery.getContractValue('SystemConfig', 'sequencerInbox'),
 )
 
-const portal = discovery.getContract('OptimismPortal')
+const portal = discovery.getContract('OptimismPortal2')
 const l2OutputOracle = discovery.getContract('OPSuccinctL2OutputOracle')
 const upgradeDelay = 0
 const forcedWithdrawalDelay = 0

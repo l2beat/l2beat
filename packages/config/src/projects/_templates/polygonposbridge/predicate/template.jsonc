@@ -1,10 +1,26 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "fields": {
-    "accessControl": {
-      "handler": {
-        "type": "accessControl"
-      }
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "managersAC": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "move any tokens to or from the escrow."
+        }
+      ]
+    },
+    "defaultAdminAC": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "assign any access control roles that can access the escrow."
+        }
+      ]
     }
   }
 }
