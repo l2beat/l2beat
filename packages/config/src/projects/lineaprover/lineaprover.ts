@@ -94,7 +94,10 @@ export const lineaprover: BaseProject = {
         hash: '0x7a181b5c0d9f93a5935cd1249aaa8e60a0e8f729d78325303e3a7dd769413b5b',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
-          'https://etherscan.io/address/0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873',
+          {
+            address: '0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('linea')],

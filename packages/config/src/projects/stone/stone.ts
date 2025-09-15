@@ -70,7 +70,10 @@ export const stone: BaseProject = {
         hash: '0x5ed8957171b466464570ba10b3d5c5adfc54546ba56278129af5ae63a0d4ad22',
         proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
         knownDeployments: [
-          'https://etherscan.io/address/0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
+          {
+            address: '0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
         usedBy: [

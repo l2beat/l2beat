@@ -79,8 +79,14 @@ export const boojum: BaseProject = {
         hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
-          'https://etherscan.io/address/0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911',
-          'https://gateway.explorer.zksync.io/address/0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5',
+          {
+            address: '0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911',
+            chain: 'ethereum',
+          },
+          {
+            address: '0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5',
+            chain: 'zksync',
+          },
         ],
         verificationStatus: 'notVerified',
         usedBy: [
@@ -96,7 +102,10 @@ export const boojum: BaseProject = {
         hash: '0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
-          'https://etherscan.io/address/0xD5dBE903F5382B052317D326FA1a7B63710C6a5b',
+          {
+            address: '0xD5dBE903F5382B052317D326FA1a7B63710C6a5b',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('grvt'), ProjectId('wonder')],
@@ -105,7 +114,10 @@ export const boojum: BaseProject = {
         hash: '0x941fd36f78a5ba753dbbe65b9123a43ae833405fafd03b5149b959eee766e03c',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
-          'https://etherscan.io/address/0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF',
+          {
+            address: '0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
         usedBy: [
@@ -118,8 +130,14 @@ export const boojum: BaseProject = {
         hash: '0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
-          'https://etherscan.io/address/0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6',
-          'https://gateway.explorer.zksync.io/address/0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717',
+          {
+            address: '0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6',
+            chain: 'ethereum',
+          },
+          {
+            address: '0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717',
+            chain: 'zksync',
+          },
         ],
         verificationStatus: 'notVerified',
         usedBy: [
@@ -135,7 +153,10 @@ export const boojum: BaseProject = {
         hash: '0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
-          'https://etherscan.io/address/0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1',
+          {
+            address: '0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('grvt'), ProjectId('wonder')],
@@ -144,7 +165,10 @@ export const boojum: BaseProject = {
         hash: '0xf688611ad4e0ef20184a89e7b593493dffcefe92071f85c1a0b94d4852c4f82f',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
-          'https://etherscan.io/address/0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e',
+          {
+            address: '0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
         usedBy: [
@@ -166,7 +190,10 @@ export const boojum: BaseProject = {
         hash: '0x8574e152c41dc39a2ecab984545e1cf21cb3ec250b919018a8053f2fa270784f',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
-          'https://lineascan.build/address/0x902C3806A84f4e855a8746e92d7F1C9a51400458',
+          {
+            address: '0x902C3806A84f4e855a8746e92d7F1C9a51400458',
+            chain: 'linea',
+          },
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('zklinknova')],

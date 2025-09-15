@@ -99,8 +99,14 @@ export const risc0: BaseProject = {
         hash: '0x1dcf73cbd51c9eba43c437c5a5ebc5328ca2d7a590c701a9a9bc1136eceeeea7',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
-          'https://etherscan.io/address/0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
-          'https://etherscan.io/address/0x34Eda8BfFb539AeC33078819847B36D221c6641c',
+          {
+            address: '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
+            chain: 'ethereum',
+          },
+          {
+            address: '0x34Eda8BfFb539AeC33078819847B36D221c6641c',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('taiko'), ProjectId('bob')],
@@ -111,7 +117,10 @@ export const risc0: BaseProject = {
         hash: '0xc6fcb1951eb5b45a669431346a01577df99f30d72baa9d5c7eea40ec6cccfab9',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
-          'https://etherscan.io/address/0x2a098988600d87650Fb061FfAff08B97149Fa84D',
+          {
+            address: '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('bob')],
