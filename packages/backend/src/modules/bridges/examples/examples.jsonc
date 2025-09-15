@@ -153,9 +153,13 @@
         "tx": "0x1e771a8c9acf904a731a5a9c19ba70845cf84f60cb80196ebc3257cc3d311b27"
       }
     ],
-    "events": [],
-    "messages": [],
-    "transfers": []
+    "events": [
+      "axelar.ContractCallWithToken",
+      "axelar.ContractCallApprovedWithMint",
+      "axelar.ContractCallExecuted"
+    ],
+    "messages": ["Axelar.ContractCallWithTokenMessage"],
+    "transfers": ["axelarGateway.App"]
   },
   "centrifuge-wormhole-axelar": {
     "txs": [
