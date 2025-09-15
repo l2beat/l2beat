@@ -1,8 +1,7 @@
 {
   "name": "starknet",
   "timestamp": 1756816147,
-  "configHash": "0x612d29c2985eab82172f5f1f19a1769f9dd7041a8cc84bd9f9924cfae3be8988",
-  "sharedModules": ["shared-sharp-verifier"],
+  "configHash": "0x8013c96687d3a68bf6e108d6ccbb51b15eeef554671be5e5223411e5bc18633d",
   "entries": [
     {
       "name": "Starkware Multisig 2",

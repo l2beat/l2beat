@@ -1,9 +1,11 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../BinaryReader'
 import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp'
 import {
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
+  type BridgeTransfer,
   createBridgeEventType,
   createEventParser,
   type LogToCapture,
@@ -67,14 +69,28 @@ export class MayanMctpFastPlugin implements BridgePlugin {
     if (!orderPayload) {
       return
     }
-    const transfer = {
-      amountIn: messageSent.args.amount,
-      tokenIn: 'USDC',
-      amountOut: orderFulfilled.args.amount,
-      tokenOut: orderPayload.tokenOut,
+
+    let transfer: BridgeTransfer | undefined
+    if (messageSent.args.tokenAddress && orderPayload.tokenOut) {
+      transfer = {
+        type: 'cctp-v2.TRANSFER',
+        events: [messageSent, messageReceived],
+        outbound: {
+          event: messageSent,
+          token: {
+            address: messageSent.args.tokenAddress,
+            amount: messageSent.args.amount.toString(),
+          },
+        },
+        inbound: {
+          event: messageReceived,
+          token: {
+            address: EthereumAddress(`0x${orderPayload.tokenOut.slice(-40)}`),
+            amount: orderFulfilled.args.amount.toString(),
+          },
+        },
+      }
     }
-    // TODO: use this to save the transfer
-    void transfer
 
     return {
       messages: [
@@ -86,16 +102,12 @@ export class MayanMctpFastPlugin implements BridgePlugin {
           inbound: messageReceived,
         },
         {
-          type: 'cctp-v2.BRIDGE',
-          outbound: messageSent,
-          inbound: messageReceived,
-        },
-        {
           type: 'mayanmctp-fast.SWAP',
           outbound: messageSent,
           inbound: orderFulfilled,
         },
       ],
+      transfers: transfer ? [transfer] : undefined,
     }
   }
 }
