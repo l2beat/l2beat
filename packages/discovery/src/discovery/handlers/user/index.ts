@@ -102,6 +102,10 @@ import {
   ZKsyncEraValidatorsHandler,
   ZKsyncEraValidatorsHandlerDefinition,
 } from './ZKsyncEraValidatorsHandler'
+import {
+  FunctionPermissionHandler,
+  FunctionPermissionDefinition,
+} from './FunctionPermissionHandler'
 
 export type UserHandlerDefinition = v.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = v.union([
@@ -134,6 +138,7 @@ export const UserHandlerDefinition = v.union([
   ERC20DataDefinition,
   TradableDefinition,
   YieldFiMintersDefinition,
+  FunctionPermissionDefinition,
 ])
 
 export function getUserHandler(
@@ -200,5 +205,7 @@ export function getUserHandler(
       return new TradableHandler(field)
     case 'YieldFiMinters':
       return new YieldFiMintersHandler(field, definition, abi)
+    case 'functionPermission':
+      return new FunctionPermissionHandler(field, definition)
   }
 }

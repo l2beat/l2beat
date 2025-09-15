@@ -1,3 +1,97 @@
+Generated with discovered.json: 0xec1ea09985ca15c0805609211a2e51ea300e22c7
+
+# Diff at Mon, 15 Sep 2025 23:06:27 GMT:
+
+- author: emduc (<emilien@defiscan.info>)
+- comparing to: main@1bd0b192fca7ed96c47d0936b3e6d500e8f5cdba block: 1757963686
+- current timestamp: 1757977446
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract CompoundGovernor (eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0) {
+    +++ description: None
+      values.clock:
+-        23370495
++        23371636
+    }
+```
+
+```diff
+    contract cUSDTv3 (eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94) {
+    +++ description: Compound v3 USDT market - lending pool for USDT
+      values.getReserves:
+-        "872493543548497944455"
++        "872526111210753473767"
+      values.getUtilization:
+-        "839030305768989979"
++        "810669589048657414"
+      values.totalBorrow:
+-        "60203436681637574138412"
++        "58455015570777876910673"
+      values.totalSupply:
+-        "71753522968133608510372"
++        "72107064060892115393399"
+    }
+```
+
+```diff
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      values.totalSupply:
+-        "2402015453354402779696981"
++        "2407277308337512964437645"
+    }
+```
+
+```diff
+    contract cUSDCv3 (eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3) {
+    +++ description: Compound v3 USDC market - main lending pool for USDC with enhanced capital efficiency
+      values.getReserves:
+-        15917465808252
++        15918347969921
+      values.getUtilization:
+-        "901617279594948882"
++        "902047324418176623"
+      values.totalBorrow:
+-        481778021137199
++        481924382623519
+      values.totalSupply:
+-        534348676381201
++        534256178479821
+    }
+```
+
+```diff
+    contract ConstantPriceFeed (eth:0xD72ac1bCE9177CFe7aEb5d0516a38c88a64cE0AB) {
+    +++ description: None
+      values.latestRoundData.startedAt:
+-        1757963675
++        1757977439
+      values.latestRoundData.updatedAt:
+-        1757963675
++        1757977439
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757963686 (main branch discovery), not current.
+
+```diff
+    contract cUSDCv3 (eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3) {
+    +++ description: Compound v3 USDC market - main lending pool for USDC with enhanced capital efficiency
+      values.functionPermissions:
++        [{"function":"_beforeFallback","signature":"function _beforeFallback()","file":"contracts/vendor/proxy/transparent/TransparentUpgradeableProxy.sol","permissionType":"msgSender","requireStatements":["msg.sender != _getAdmin("]}]
+    }
+```
+
 Generated with discovered.json: 0x45735f2fb3895ba1bfdd5335780a0893ec3fc515
 
 # Diff at Mon, 15 Sep 2025 19:16:51 GMT:

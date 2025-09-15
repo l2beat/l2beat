@@ -595,6 +595,14 @@
                   "mintingWithPermit": { "type": "boolean" }
                 },
                 "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "functionPermission" },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "required": ["type"]
               }
             ]
           },
