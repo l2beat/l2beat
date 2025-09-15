@@ -56,7 +56,7 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x6e95812c432f293b8045811f4b1758285ebdb206',
+            address: '0x6e95812C432F293b8045811F4B1758285EBDB206',
             chain: 'ethereum',
           },
         ],
@@ -70,7 +70,7 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x6e95812c432f293b8045811f4b1758285ebdb206',
+            address: '0x6e95812C432F293b8045811F4B1758285EBDB206',
             chain: 'ethereum',
           },
         ],
@@ -84,7 +84,7 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x6e95812c432f293b8045811f4b1758285ebdb206',
+            address: '0x6e95812C432F293b8045811F4B1758285EBDB206',
             chain: 'ethereum',
           },
         ],
@@ -98,7 +98,7 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x44deda2c824458a5dfe1e363c679dea33f1ffa39',
+            address: '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
             chain: 'ethereum',
           },
         ],
@@ -112,7 +112,7 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x44deda2c824458a5dfe1e363c679dea33f1ffa39',
+            address: '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
             chain: 'ethereum',
           },
         ],
@@ -126,7 +126,7 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x44deda2c824458a5dfe1e363c679dea33f1ffa39',
+            address: '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
             chain: 'ethereum',
           },
         ],
@@ -140,7 +140,7 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x44deda2c824458a5dfe1e363c679dea33f1ffa39',
+            address: '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
             chain: 'ethereum',
           },
         ],
