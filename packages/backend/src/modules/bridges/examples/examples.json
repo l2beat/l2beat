@@ -278,5 +278,25 @@
       "chain": "base",
       "tx": "0xb02e7ee0dc9353b283c3fb9b38a03f729492312b40c7745d38645b7441a9b25e"
     }
+  ],
+  "opstack": [
+    {
+      "chain": "base",
+      "tx": "0x1c6f06a6ce9e511d9a94eae6a8b047e143803ee7bace3a20bf31d2908dfc30b1"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xb8297be109a3c221a80169dd4f05de59213b2074e4f1e8b97a84cc961392a844"
+    }
+  ],
+  "orbitstack": [
+    {
+      "chain": "arbitrum",
+      "tx": "0x3b8f7205e18ab5418b213020e0def446cf845dc7516bc276099869415e55566b"
+    },
+    {
+      "chain": "ethereum",
+      "tx": "0xf031b41688650d9cc8c2e02408376c60f43443e3bdc5d1219872da18fafcb9a2"
+    }
   ]
 }

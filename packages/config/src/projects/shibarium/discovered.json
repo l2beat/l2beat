@@ -1,6 +1,6 @@
 {
   "name": "shibarium",
-  "timestamp": 1745483963,
+  "timestamp": 1757661357,
   "configHash": "0x08363aa153e2e2206330e23b751a180ae75917ee3f8cf6102e4f7aa2e20b5318",
   "entries": [
     {
@@ -40,8 +40,13 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"],
         "implementation": "eth:0xCbb0D2eCBEDBF2D0F0D5616dFE25bC286D8F8610",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
+        "managersAC": [
+          "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+          "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+        ],
         "proxyOwner": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "proxyType": 2,
         "TOKEN_TYPE": "0x973bb64086f173ec8099b7ed3d43da984f4a332e4417a08bc6a286e6402b0586",
@@ -91,8 +96,13 @@
         },
         "BATCH_LIMIT": 20,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"],
         "implementation": "eth:0x37A9b4e7c327c449858dba9F5e39CE6771cBc31b",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
+        "managersAC": [
+          "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+          "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+        ],
         "proxyOwner": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "proxyType": 2,
         "TOKEN_TYPE": "0xd4392723c111fcb98b073fe55873efb447bcd23cd3e49ec9ea2581930cd01ddc",
@@ -116,6 +126,38 @@
       ],
       "proxyType": "Polygon proxy",
       "description": "Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        }
+      ],
       "sinceTimestamp": 1691475083,
       "sinceBlock": 17868330,
       "values": {
@@ -271,7 +313,7 @@
       "sinceBlock": 17849217,
       "values": {
         "$immutable": true,
-        "counter": 39893,
+        "counter": 41718,
         "isOwner": false,
         "owner": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "REGISTRATIONS": [
@@ -451,18 +493,18 @@
         "CHECKPOINT_REWARD": "100000000000000000000",
         "checkPointBlockInterval": 1024,
         "checkpointRewardDelta": 0,
-        "currentEpoch": 24653,
+        "currentEpoch": 29316,
         "currentValidatorSetSize": 12,
-        "currentValidatorSetTotalStake": "19129853420889152873015528",
+        "currentValidatorSetTotalStake": "15322094395453227072066797",
         "delegationEnabled": true,
         "delegatorsReward": [
-          "325341007234289128853",
-          "6501646530511494472",
-          "245029039561654077767",
-          "2183291536449315348"
+          "448962577036220116075",
+          "905064603011301532711",
+          "769656702176225682880",
+          "34674235049821834299"
         ],
         "dynasty": 1,
-        "epoch": 24653,
+        "epoch": 29316,
         "eventsHub": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
         "extensionCode": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
         "getRegistry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
@@ -489,17 +531,17 @@
         "registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
         "replacementCoolDown": 13608,
         "rewardDecreasePerCheckpoint": 0,
-        "rewardPerStake": "1582538833747945943164700",
+        "rewardPerStake": "1714117204996728708375838",
         "rootChain": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
         "signerUpdateLimit": 100,
         "token": "eth:0x9813037ee2218799597d83D4a5B6F3b6778218d9",
         "totalHeimdallFee": "4502000000000000000000",
         "totalRewards": 0,
-        "totalRewardsLiquidated": "18590437583460107248060",
+        "totalRewardsLiquidated": "22873381702964528824673",
         "totalStaked": "119999000000000000000000",
         "validatorShareFactory": "eth:0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD",
         "validatorState": {
-          "amount": "19129853420889152873015528",
+          "amount": "15322094395453227072066797",
           "stakerCount": 12
         },
         "validatorThreshold": 15,
@@ -544,13 +586,20 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
               "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-              "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+              "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82",
+              "eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB"
             ]
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"],
         "implementation": "eth:0xfffC2D781999F09A8b127f8Ef419a3EeD2EDa1dd",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
+        "managersAC": [
+          "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+          "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82",
+          "eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB"
+        ],
         "proxyOwner": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "proxyType": 2,
         "TOKEN_TYPE": "0x8ae85d849167ff996c04040c44924fd364217285e4cad818292c7ac37c0a345b",
@@ -586,6 +635,30 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
           "description": "can update the validator registry address used to check whitelist inclusion.",
           "role": ".owner"
@@ -604,6 +677,18 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x885fcE983b6a01633f764325B8c3c5D31032C995",
           "description": "can update the root chain it references.",
           "role": ".owner"
@@ -613,6 +698,30 @@
           "from": "eth:0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
           "description": "can update how much of the slashed funds go to the proposer and reporter.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
         },
         {
           "permission": "interact",
@@ -766,8 +875,13 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"],
         "implementation": "eth:0xe0f4555Fcffb181B1D7566d89200105226F29580",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
+        "managersAC": [
+          "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+          "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+        ],
         "proxyOwner": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "proxyType": 2,
         "TOKEN_TYPE": "0x73ad2146b3d3a286642c794379d750360a2d53a3459a11b3e5d6cc900f55f44a",
@@ -851,8 +965,13 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"],
         "implementation": "eth:0x3f3bF9Ce73CE5a152561f4BF0306de3E3526f8FA",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
+        "managersAC": [
+          "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+          "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+        ],
         "proxyOwner": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "proxyType": 2,
         "TOKEN_TYPE": "0xa234e09165f88967a714e2a476288e4c6d88b4b69fe7c300a03190b858990bfc",
@@ -909,7 +1028,7 @@
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 246530000,
+        "_nextHeaderBlock": 293160000,
         "$immutable": false,
         "$implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -918,8 +1037,8 @@
           "_registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 246520000,
-        "getLastChildBlock": 10632220,
+        "currentHeaderBlock": 293150000,
+        "getLastChildBlock": 13031452,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -933,6 +1052,27 @@
         "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA": "RootChain"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "managerContract",
+      "address": "eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        }
+      ],
+      "sinceTimestamp": 1757445095,
+      "sinceBlock": 23327547,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB": ""
+      }
     },
     {
       "name": "ERC20Predicate",
@@ -1832,7 +1972,7 @@
     "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
     "polygonposbridge/Governance": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/Merkle": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "polygonposbridge/predicate": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
+    "polygonposbridge/predicate": "0x15319e6e8947d37c32a6ecf4e3356cfe7300b2e28d7a48036dabb989f6d98ca7",
     "polygonposbridge/Registry": "0x740dd1c9a6f29e9a794b82248a0b4db07a11d3016347bb97a121b714a5018529",
     "polygonposbridge/RLPReader": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
@@ -1846,6 +1986,6 @@
     "polygonposbridge/ValidatorRegistry": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22337733 },
-  "permissionsConfigHash": "0x38d0a9e7bf0e3be632426a9bf4aec63fe835a96298d3104ef7ffa52b0eb6dd9f"
+  "usedBlockNumbers": { "ethereum": 23345424 },
+  "permissionsConfigHash": "0xfe2001323cfe32e6c0999fe3b139f229932619e6506052d19f24aa9a38af9537"
 }

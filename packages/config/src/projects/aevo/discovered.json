@@ -1,6 +1,6 @@
 {
   "name": "aevo",
-  "timestamp": 1756214657,
+  "timestamp": 1757661344,
   "configHash": "0x533a4b53fa90cfdbfa68857db586379ab48bad9652558107e3b1ed675122dd6e",
   "entries": [
     {
@@ -75,7 +75,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 789,
+        "gameCount": 1189,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x7326889874BBFE3fE6364BE73f0FFcDBD3dC827C",
@@ -85,7 +85,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 789,
+        "permissionedGamesTotal": 1189,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -182,7 +182,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644081",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644160",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -584,7 +584,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 159,
+        "nonce": 166,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -933,7 +933,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 821744,
-          "prevBlockNum": 23225058
+          "prevBlockNum": 23345383
         },
         "paused": false,
         "proofMaturityDelaySeconds": 3600,
@@ -1166,7 +1166,7 @@
           ]
         ],
         "$upgradeCount": 10,
-        "basefeeScalar": 410400,
+        "basefeeScalar": 1641600,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d",
         "batchInbox": "eth:0x253887577420Cb7e7418cD4d50147743c8041b28",
@@ -1213,7 +1213,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279131187530911073056",
+        "scalar": "452312848583266388373324160190187140051835877600158453279131187530912304256",
         "sequencerInbox": "eth:0x253887577420Cb7e7418cD4d50147743c8041b28",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 16858818,
@@ -1929,6 +1929,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23225564 },
+  "usedBlockNumbers": { "ethereum": 23345423 },
   "permissionsConfigHash": "0xca1e21580e0776b9648359440aedb7f9e0ed6bfa4f86b45e701ef43e23b65536"
 }
