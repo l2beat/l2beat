@@ -6,6 +6,7 @@ import {
   createEventParser,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 import { LogMessagePublished, NETWORKS } from './wormhole'
 
@@ -22,7 +23,7 @@ export const TransferRedeemed = createBridgeEventType<{
 }>('wormhole.LogTransferRedeemed')
 
 export class WormholeTokenBridgePlugin implements BridgePlugin {
-  name = 'wormholetokenbridge'
+  name = 'wormhole-token-bridge'
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
@@ -53,15 +54,12 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
         return
       }
 
-      return {
-        messages: [
-          {
-            type: 'WormholeTokenBridge.BRIDGE',
-            outbound: logMessagePublished,
-            inbound: transferRedeemed,
-          },
-        ],
-      }
+      return [
+        Result.Message('wormhole.Message.wormhole-token-bridge', [
+          logMessagePublished,
+          transferRedeemed,
+        ]),
+      ]
     }
   }
 }

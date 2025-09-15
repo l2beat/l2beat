@@ -1,10 +1,11 @@
 import { PacketDelivered, PacketSent } from './layerzero-v2'
 import { StargateV2OFTReceived, StargateV2OFTSentTaxi } from './stargate'
-import type {
-  BridgeEvent,
-  BridgeEventDb,
-  BridgePlugin,
-  MatchResult,
+import {
+  Result,
+  type BridgeEvent,
+  type BridgeEventDb,
+  type BridgePlugin,
+  type MatchResult,
 } from './types'
 
 export class StargateV2TaxiPlugin implements BridgePlugin {
@@ -12,55 +13,29 @@ export class StargateV2TaxiPlugin implements BridgePlugin {
   chains = ['ethereum', 'arbitrum', 'base']
 
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!StargateV2OFTSentTaxi.checkType(event)) {
-      return
-    }
+    if (!StargateV2OFTSentTaxi.checkType(event)) return
 
     const oftReceived = db.find(StargateV2OFTReceived, {
       guid: event.args.guid,
     })
-    if (!oftReceived) {
-      return
-    }
+    if (!oftReceived) return
 
     const packetSent = db.find(PacketSent, { guid: event.args.guid })
-    if (!packetSent) {
-      return
-    }
+    if (!packetSent) return
 
     const packetDelivered = db.find(PacketDelivered, { guid: event.args.guid })
-    if (!packetDelivered) {
-      return
-    }
+    if (!packetDelivered) return
 
-    return {
-      messages: [
-        {
-          type: 'layerzero-v2.Message',
-          outbound: packetSent,
-          inbound: packetDelivered,
-        },
-      ],
-      transfers: [
-        {
-          type: 'stargate-v2-taxi.App',
-          events: [event, oftReceived],
-          outbound: {
-            event: event,
-            token: {
-              address: event.args.tokenAddress,
-              amount: event.args.amountSentLD.toString(),
-            },
-          },
-          inbound: {
-            event: oftReceived,
-            token: {
-              address: oftReceived.args.tokenAddress,
-              amount: oftReceived.args.amountReceivedLD.toString(),
-            },
-          },
-        },
-      ],
-    }
+    return [
+      Result.Message('layerzero-v2.Message', [packetSent, packetDelivered]),
+      Result.Transfer('stargate-v2-taxi.Transfer', {
+        srcEvent: event,
+        srcTokenAddress: event.args.tokenAddress,
+        srcAmount: event.args.amountSentLD.toString(),
+        dstEvent: oftReceived,
+        dstTokenAddress: oftReceived.args.tokenAddress,
+        dstAmount: oftReceived.args.amountReceivedLD.toString(),
+      }),
+    ]
   }
 }

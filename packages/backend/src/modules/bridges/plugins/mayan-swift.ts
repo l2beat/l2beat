@@ -10,6 +10,7 @@ import {
   createEventParser,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 
 const parseOrderCreated = createEventParser('event OrderCreated(bytes32 key)')
@@ -21,15 +22,15 @@ const parseOrderFulfilled = createEventParser(
 export const OrderCreated = createBridgeEventType<{
   txHash: string
   key: string
-}>('mayanswift.OrderCreated')
+}>('mayan-swift.OrderCreated')
 
 export const OrderFulfilled = createBridgeEventType<{
   txHash: string
   key: string
-}>('mayanswift.OrderFullfilled')
+}>('mayan-swift.OrderFullfilled')
 
 export class MayanSwiftPlugin implements BridgePlugin {
-  name = 'mayanswift'
+  name = 'mayan-swift'
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
@@ -54,35 +55,17 @@ export class MayanSwiftPlugin implements BridgePlugin {
     orderFulfilled: BridgeEvent,
     db: BridgeEventDb,
   ): MatchResult | undefined {
-    if (!OrderFulfilled.checkType(orderFulfilled)) {
-      return
-    }
-
+    if (!OrderFulfilled.checkType(orderFulfilled)) return
     const orderCreated = db.find(OrderCreated, {
       key: orderFulfilled.args.key,
     })
-    if (!orderCreated) {
-      return
-    }
-
-    return {
-      messages: [
-        {
-          // TODO: Remove once transfers work
-          type: 'mayanswift.Swap',
-          outbound: orderCreated,
-          inbound: orderFulfilled,
-        },
-      ],
-      transfers: [
-        {
-          // TODO: Implement transfer properly
-          type: 'mayanswift.Swap',
-          events: [orderCreated, orderFulfilled],
-          outbound: { event: orderCreated },
-          inbound: { event: orderFulfilled },
-        },
-      ],
-    }
+    if (!orderCreated) return
+    return [
+      // TODO: implement properly. Handle optional wormhole core settlement event
+      Result.Transfer('mayan-swift.Swap', {
+        srcEvent: orderCreated,
+        dstEvent: orderFulfilled,
+      }),
+    ]
   }
 }

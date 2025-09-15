@@ -8,6 +8,7 @@ import {
   createEventParser,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 
 export const CCTP_NETWORKS = [
@@ -78,9 +79,7 @@ export class CCTPPlugin implements BridgePlugin {
       const version = decodeMessageVersion(messageSent.message)
       if (version === 0) {
         const message = decodeV1Message(messageSent.message)
-        if (!message) {
-          return
-        }
+        if (!message) return
         return CCTPv1MessageSent.create(input.ctx, {
           messageBody: message.rawBody,
           txHash: input.ctx.txHash,
@@ -93,11 +92,8 @@ export class CCTPPlugin implements BridgePlugin {
 
       if (version === 1) {
         const message = decodeV2Message(messageSent.message)
-        if (!message) {
-          return
-        }
+        if (!message) return
         const burnMessage = decodeBurnMessage(message.messageBody)
-
         return CCTPv2MessageSent.create(input.ctx, {
           // https://developers.circle.com/cctp/technical-guide#messages-and-finality
           fast: message.minFinalityThreshold <= 1000,
@@ -134,7 +130,6 @@ export class CCTPPlugin implements BridgePlugin {
     if (v2MessageReceived) {
       // TODO: also recipient is TokenBurnMessenger
       const burnMessage = decodeBurnMessage(v2MessageReceived.messageBody)
-
       return CCTPv2MessageReceived.create(input.ctx, {
         app: burnMessage ? 'TokenMessengerV2' : undefined,
         hookData: burnMessage?.hookData,
@@ -162,39 +157,21 @@ export class CCTPPlugin implements BridgePlugin {
       const messageSent = db.find(CCTPv1MessageSent, {
         messageBody: messageReceived.args.messageBody,
       })
-      if (!messageSent) {
-        return
-      }
-      return {
-        messages: [
-          {
-            type: 'cctp-v1.Message',
-            inbound: messageReceived,
-            outbound: messageSent,
-          },
-        ],
-      }
+      if (!messageSent) return
+      return [Result.Message('cctp-v1.Message', [messageReceived, messageSent])]
     }
 
     if (CCTPv2MessageReceived.checkType(messageReceived)) {
       const messageSent = db.find(CCTPv2MessageSent, {
         messageBody: messageReceived.args.messageBody,
       })
-      if (!messageSent) {
-        return
-      }
-
-      return {
-        messages: [
-          {
-            type: messageSent.args.fast
-              ? 'cctp-v2.FastMessage'
-              : 'cctp-v2.SlowMessage',
-            inbound: messageReceived,
-            outbound: messageSent,
-          },
-        ],
-      }
+      if (!messageSent) return
+      return [
+        Result.Message(
+          messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
+          [messageSent, messageReceived],
+        ),
+      ]
     }
   }
 }

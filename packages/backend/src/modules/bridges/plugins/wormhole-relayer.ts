@@ -13,6 +13,7 @@ import {
   createEventParser,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 import { LogMessagePublished, NETWORKS } from './wormhole'
 
@@ -25,10 +26,10 @@ export const Delivery = createBridgeEventType<{
   sourceChain: number
   sequence: string
   $srcChain: string
-}>('wormholeRelayer.Delivery')
+}>('wormhole-relayer.Delivery')
 
 export class WormholeRelayerPlugin implements BridgePlugin {
-  name = 'wormholerelayer'
+  name = 'wormhole-relayer'
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
@@ -55,15 +56,12 @@ export class WormholeRelayerPlugin implements BridgePlugin {
         return
       }
 
-      return {
-        messages: [
-          {
-            type: 'WormholeCore.Message',
-            outbound: logMessagePublished,
-            inbound: delivery,
-          },
-        ],
-      }
+      return [
+        Result.Message('wormhole.Message.wormhole-relayer', [
+          logMessagePublished,
+          delivery,
+        ]),
+      ]
     }
   }
 }

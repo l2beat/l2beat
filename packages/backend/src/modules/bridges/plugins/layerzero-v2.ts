@@ -9,6 +9,7 @@ import {
   createEventParser,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 
 const parsePacketSent = createEventParser(
@@ -56,26 +57,22 @@ export class LayerZeroV2Plugin implements BridgePlugin {
 
   capture(input: LogToCapture) {
     const network = NETWORKS.find((x) => x.chain === input.ctx.chain)
-    if (!network) {
-      return
-    }
+    if (!network) return
 
     const packetSent = parsePacketSent(input.log, [network.address])
     if (packetSent) {
       const packet = decodePacket(packetSent.encodedPayload)
-      if (packet) {
-        const guid = createLayerZeroGuid(
-          packet.header.nonce,
-          packet.header.srcEid,
-          packet.header.sender,
-          packet.header.dstEid,
-          packet.header.receiver,
-        )
-        const $dstChain =
-          NETWORKS.find((x) => x.eid === packet.header.dstEid)?.chain ??
-          'unknown'
-        return PacketSent.create(input.ctx, { $dstChain, guid })
-      }
+      if (!packet) return
+      const guid = createLayerZeroGuid(
+        packet.header.nonce,
+        packet.header.srcEid,
+        packet.header.sender,
+        packet.header.dstEid,
+        packet.header.receiver,
+      )
+      const $dstChain =
+        NETWORKS.find((x) => x.eid === packet.header.dstEid)?.chain ?? 'unknown'
+      return PacketSent.create(input.ctx, { $dstChain, guid })
     }
 
     const packetDelivered = parsePacketDelivered(input.log, [network.address])
@@ -94,23 +91,16 @@ export class LayerZeroV2Plugin implements BridgePlugin {
     }
   }
 
-  match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!PacketDelivered.checkType(event)) {
-      return
-    }
-
-    const packetSent = db.find(PacketSent, { guid: event.args.guid })
+  match(
+    packetDelivered: BridgeEvent,
+    db: BridgeEventDb,
+  ): MatchResult | undefined {
+    if (!PacketDelivered.checkType(packetDelivered)) return
+    const packetSent = db.find(PacketSent, { guid: packetDelivered.args.guid })
     if (!packetSent) return
-
-    return {
-      messages: [
-        {
-          type: 'layerzero-v2.Message',
-          outbound: packetSent,
-          inbound: event,
-        },
-      ],
-    }
+    return [
+      Result.Message('layerzero-v2.Message', [packetSent, packetDelivered]),
+    ]
   }
 }
 

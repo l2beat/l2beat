@@ -158,8 +158,8 @@
       "axelar.ContractCallApprovedWithMint",
       "axelar.ContractCallExecuted"
     ],
-    "messages": ["Axelar.ContractCallWithTokenMessage"],
-    "transfers": ["axelarGateway.App"]
+    "messages": ["axelar.ContractCallWithTokenMessage"],
+    "transfers": ["axelar-gateway.Transfer"]
   },
   "centrifuge-wormhole-axelar": {
     "txs": [
