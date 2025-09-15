@@ -158,7 +158,7 @@ export class CCTPPlugin implements BridgePlugin {
         messageBody: messageReceived.args.messageBody,
       })
       if (!messageSent) return
-      return [Result.Message('cctp-v1.Message', [messageReceived, messageSent])]
+      return [Result.Message('cctp-v1.Message', [messageSent, messageReceived])]
     }
 
     if (CCTPv2MessageReceived.checkType(messageReceived)) {
