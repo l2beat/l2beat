@@ -9,7 +9,18 @@ import {
   type LogToCapture,
   type MatchResult,
 } from './types'
-import { NETWORKS } from './wormhole'
+
+export const CCTP_NETWORKS = [
+  { cctpdomain: 0, chain: 'ethereum' },
+  { cctpdomain: 1, chain: 'avalanche' },
+  { cctpdomain: 2, chain: 'op' },
+  { cctpdomain: 3, chain: 'arbitrum' },
+  { cctpdomain: 5, chain: 'solana' },
+  { cctpdomain: 6, chain: 'base' },
+  { cctpdomain: 7, chain: 'polygon' },
+  { cctpdomain: 10, chain: 'unichain' },
+  { cctpdomain: 11, chain: 'linea' },
+]
 
 const parseMessageSent = createEventParser('event MessageSent(bytes message)')
 
@@ -24,11 +35,12 @@ const parseV2MessageReceived = createEventParser(
 export const CCTPv1MessageSent = createBridgeEventType<{
   messageBody: string
   txHash: string
+  $dstChain: string
 }>('cctp-v1.MessageSent')
 
 export const CCTPv1MessageReceived = createBridgeEventType<{
   caller: EthereumAddress
-  sourceDomain: string
+  $srcChain: string
   nonce: number
   messageBody: string
 }>('cctp-v1.MessageReceived')
@@ -38,15 +50,17 @@ export const CCTPv2MessageSent = createBridgeEventType<{
   app?: string
   hookData?: string
   amount?: string
+  tokenAddress?: EthereumAddress
   messageBody: string
   txHash: string
+  $dstChain: string
 }>('cctp-v2.MessageSent')
 
 export const CCTPv2MessageReceived = createBridgeEventType<{
   app?: string
   hookData?: string
   caller: EthereumAddress
-  sourceDomain: string
+  $srcChain: string
   nonce: number
   sender: EthereumAddress
   finalityThresholdExecuted: number
@@ -70,6 +84,10 @@ export class CCTPPlugin implements BridgePlugin {
         return CCTPv1MessageSent.create(input.ctx, {
           messageBody: message.rawBody,
           txHash: input.ctx.txHash,
+          $dstChain:
+            CCTP_NETWORKS.find(
+              (n) => n.cctpdomain === Number(message.destinationDomain),
+            )?.chain || '???',
         })
       }
 
@@ -83,9 +101,16 @@ export class CCTPPlugin implements BridgePlugin {
         return CCTPv2MessageSent.create(input.ctx, {
           // https://developers.circle.com/cctp/technical-guide#messages-and-finality
           fast: message.minFinalityThreshold <= 1000,
+          $dstChain:
+            CCTP_NETWORKS.find(
+              (n) => n.cctpdomain === Number(message.destinationDomain),
+            )?.chain || '???',
           app: burnMessage ? 'TokenMessengerV2' : undefined,
           hookData: burnMessage?.hookData,
           amount: burnMessage?.amount.toString(),
+          tokenAddress: EthereumAddress(
+            '0x' + burnMessage?.burnToken?.slice(-40),
+          ),
           messageBody: message.messageBody,
           txHash: input.ctx.txHash,
         })
@@ -96,9 +121,9 @@ export class CCTPPlugin implements BridgePlugin {
     if (v1MessageReceived) {
       return CCTPv1MessageReceived.create(input.ctx, {
         caller: EthereumAddress(v1MessageReceived.caller),
-        sourceDomain:
-          NETWORKS.find(
-            (n) => n.wormholeChainId === Number(v1MessageReceived.sourceDomain),
+        $srcChain:
+          CCTP_NETWORKS.find(
+            (n) => n.cctpdomain === Number(v1MessageReceived.sourceDomain),
           )?.chain || '???',
         nonce: Number(v1MessageReceived.nonce),
         messageBody: v1MessageReceived.messageBody,
@@ -114,9 +139,9 @@ export class CCTPPlugin implements BridgePlugin {
         app: burnMessage ? 'TokenMessengerV2' : undefined,
         hookData: burnMessage?.hookData,
         caller: EthereumAddress(v2MessageReceived.caller),
-        sourceDomain:
-          NETWORKS.find(
-            (n) => n.wormholeChainId === Number(v2MessageReceived.sourceDomain),
+        $srcChain:
+          CCTP_NETWORKS.find(
+            (n) => n.cctpdomain === Number(v2MessageReceived.sourceDomain),
           )?.chain || '???',
         nonce: Number(v2MessageReceived.nonce),
         sender: EthereumAddress(`0x${v2MessageReceived.sender.slice(-40)}`),
@@ -140,7 +165,6 @@ export class CCTPPlugin implements BridgePlugin {
       if (!messageSent) {
         return
       }
-
       return {
         messages: [
           {
@@ -190,7 +214,7 @@ export function decodeV1Message(encodedHex: string) {
     const version = reader.readUint32()
     const sourceDomain = reader.readUint32()
     const destinationDomain = reader.readUint32()
-    const nonce = reader.readUint256()
+    const nonce = reader.readUint64()
     const sender = reader.readBytes(32)
     const recipient = reader.readBytes(32)
     const destinationCaller = reader.readBytes(32)
