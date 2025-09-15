@@ -277,9 +277,7 @@
       "id": "ethereum-0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
       "symbol": "ARB",
       "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -287,9 +285,7 @@
       "id": "arbitrum-0x912CE59144191C1204E64559FE8253a0e49E6548",
       "symbol": "ARB",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -361,9 +357,7 @@
       "id": "katana-0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
       "symbol": "AUSD",
       "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -475,9 +469,7 @@
       "id": "zksync2-0x57fD71a86522Dc06D6255537521886057c1772A3",
       "symbol": "BCAP",
       "address": "0x57fD71a86522Dc06D6255537521886057c1772A3",
-      "categories": [
-        "Institutional Alternative Funds"
-      ],
+      "categories": ["Institutional Alternative Funds"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -677,10 +669,7 @@
       "id": "optimism-0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
       "symbol": "BUIDL",
       "address": "0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-      "categories": [
-        "US Treasury Debt",
-        "U.S. Qualified Purchaser"
-      ],
+      "categories": ["US Treasury Debt", "U.S. Qualified Purchaser"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -688,10 +677,7 @@
       "id": "arbitrum-0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
       "symbol": "BUIDL",
       "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-      "categories": [
-        "US Treasury Debt",
-        "U.S. Qualified Purchaser"
-      ],
+      "categories": ["US Treasury Debt", "U.S. Qualified Purchaser"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -699,9 +685,7 @@
       "id": "ethereum-0x4Fabb145d64652a948d72533023f6E7A623C7C53",
       "symbol": "BUSD",
       "address": "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -813,9 +797,7 @@
       "id": "ethereum-0x057898f3C43F129a17517B9056D23851F124b19f",
       "symbol": "CELO",
       "address": "0x057898f3C43F129a17517B9056D23851F124b19f",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -823,9 +805,7 @@
       "id": "celo-0x471EcE3750Da237f93B8E339c536989b8978a438",
       "symbol": "CELO",
       "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -921,9 +901,7 @@
       "id": "celo-0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
       "symbol": "cKES",
       "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -1043,9 +1021,7 @@
       "id": "corn-0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
       "symbol": "CORN",
       "address": "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
-      "categories": [
-        "Commodities"
-      ],
+      "categories": ["Commodities"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -1181,9 +1157,7 @@
       "id": "ethereum-0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B",
       "symbol": "CVX",
       "address": "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B",
-      "categories": [
-        "Public Equity"
-      ],
+      "categories": ["Public Equity"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -1295,9 +1269,7 @@
       "id": "ethereum-0x15700B564Ca08D9439C58cA5053166E8317aa138",
       "symbol": "deUSD",
       "address": "0x15700B564Ca08D9439C58cA5053166E8317aa138",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -1305,9 +1277,7 @@
       "id": "reya-0x809B99df4DDd6fA90F2CF305E2cDC310C6AD3C2c",
       "symbol": "deUSD",
       "address": "0x809B99df4DDd6fA90F2CF305E2cDC310C6AD3C2c",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -1602,90 +1572,70 @@
     {
       "id": "ethereum-native",
       "symbol": "ETH",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
     {
       "id": "optimism-native",
       "symbol": "ETH",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
     {
       "id": "mantapacific-native",
       "symbol": "ETH",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
     {
       "id": "zksync2-native",
       "symbol": "ETH",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
     {
       "id": "base-native",
       "symbol": "ETH",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
     {
       "id": "arbitrum-native",
       "symbol": "ETH",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
     {
       "id": "nova-native",
       "symbol": "ETH",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
     {
       "id": "linea-native",
       "symbol": "ETH",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
     {
       "id": "blast-native",
       "symbol": "ETH",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
     {
       "id": "scroll-native",
       "symbol": "ETH",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -1749,9 +1699,7 @@
       "id": "ethereum-0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
       "symbol": "EURC",
       "address": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -1759,9 +1707,7 @@
       "id": "base-0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
       "symbol": "EURC",
       "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -1769,9 +1715,7 @@
       "id": "ethereum-0xdB25f211AB05b1c97D595516F45794528a807ad8",
       "symbol": "EURS",
       "address": "0xdB25f211AB05b1c97D595516F45794528a807ad8",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -1779,9 +1723,7 @@
       "id": "ethereum-0xC581b735A1688071A1746c968e0798D642EDE491",
       "symbol": "EURT",
       "address": "0xC581b735A1688071A1746c968e0798D642EDE491",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -1797,9 +1739,7 @@
       "id": "arbitrum-0xCBeb19549054CC0a6257A77736FC78C367216cE7",
       "symbol": "EUTBL",
       "address": "0xCBeb19549054CC0a6257A77736FC78C367216cE7",
-      "categories": [
-        "non-US Government Debt"
-      ],
+      "categories": ["non-US Government Debt"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -1951,9 +1891,7 @@
       "id": "ethereum-0xC96dE26018A54D51c097160568752c4E3BD6C364",
       "symbol": "FBTC",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -1961,9 +1899,7 @@
       "id": "mantle-0xC96dE26018A54D51c097160568752c4E3BD6C364",
       "symbol": "FBTC",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -1971,9 +1907,7 @@
       "id": "bob-0xC96dE26018A54D51c097160568752c4E3BD6C364",
       "symbol": "FBTC",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -2021,9 +1955,7 @@
       "id": "zksync2-0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",
       "symbol": "FIUSD",
       "address": "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",
-      "categories": [
-        "US Treasury Debt"
-      ],
+      "categories": ["US Treasury Debt"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -2183,9 +2115,7 @@
       "id": "ethereum-0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
       "symbol": "FRAX",
       "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -2193,9 +2123,7 @@
       "id": "optimism-0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
       "symbol": "FRAX",
       "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -2203,9 +2131,7 @@
       "id": "bobanetwork-0x7562F525106F5d54E891e005867Bf489B5988CD9",
       "symbol": "FRAX",
       "address": "0x7562F525106F5d54E891e005867Bf489B5988CD9",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -2213,9 +2139,7 @@
       "id": "zksync2-0xb4C1544cb4163f4C2ECa1aE9Ce999F63892d912A",
       "symbol": "FRAX",
       "address": "0xb4C1544cb4163f4C2ECa1aE9Ce999F63892d912A",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -2223,9 +2147,7 @@
       "id": "polygonzkevm-0xFf8544feD5379D9ffa8D47a74cE6b91e632AC44D",
       "symbol": "FRAX",
       "address": "0xFf8544feD5379D9ffa8D47a74cE6b91e632AC44D",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -2233,9 +2155,7 @@
       "id": "arbitrum-0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
       "symbol": "FRAX",
       "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -2467,9 +2387,7 @@
       "id": "ethereum-0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
       "symbol": "GHO",
       "address": "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -2477,9 +2395,7 @@
       "id": "arbitrum-0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33",
       "symbol": "GHO",
       "address": "0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -2519,9 +2435,7 @@
       "id": "ethereum-0x6810e776880C02933D47DB1b9fc05908e5386b96",
       "symbol": "GNO",
       "address": "0x6810e776880C02933D47DB1b9fc05908e5386b96",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -2633,9 +2547,7 @@
       "id": "ethereum-0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd",
       "symbol": "GUSD",
       "address": "0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -2795,9 +2707,7 @@
       "id": "ethereum-0xe28b3B32B6c345A34Ff64674606124Dd5Aceca30",
       "symbol": "INJ",
       "address": "0xe28b3B32B6c345A34Ff64674606124Dd5Aceca30",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -3237,9 +3147,7 @@
       "id": "ethereum-0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
       "symbol": "LUSD",
       "address": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -3335,9 +3243,7 @@
       "id": "mantapacific-0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
       "symbol": "MANTA",
       "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -3544,18 +3450,14 @@
       "id": "ethereum-0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
       "symbol": "MNT",
       "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
     {
       "id": "mantle-native",
       "symbol": "MNT",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -3755,9 +3657,7 @@
       "id": "ethereum-0x1C88d38D04ACd3Edd9051ec587c67AbFF04bf30D",
       "symbol": "NEAR",
       "address": "0x1C88d38D04ACd3Edd9051ec587c67AbFF04bf30D",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -3933,9 +3833,7 @@
       "id": "ethereum-0x3593D125a4f7849a1B059E64F4517A86Dd60c95d",
       "symbol": "OM",
       "address": "0x3593D125a4f7849a1B059E64F4517A86Dd60c95d",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -3967,9 +3865,7 @@
       "id": "optimism-0x4200000000000000000000000000000000000042",
       "symbol": "OP",
       "address": "0x4200000000000000000000000000000000000042",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -4113,10 +4009,7 @@
       "id": "ethereum-0x45804880De22913dAFE09f4980848ECE6EcbAf78",
       "symbol": "PAXG",
       "address": "0x45804880De22913dAFE09f4980848ECE6EcbAf78",
-      "categories": [
-        "Commodities",
-        "U.S. and Global Retail"
-      ],
+      "categories": ["Commodities", "U.S. and Global Retail"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -4140,10 +4033,7 @@
       "id": "zksync2-0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
       "symbol": "PC0000031",
       "address": "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
-      "categories": [
-        "Private Credit",
-        "Yield Bearing"
-      ],
+      "categories": ["Private Credit", "Yield Bearing"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -4487,9 +4377,7 @@
       "id": "ethereum-0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
       "symbol": "pUSD",
       "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -4497,9 +4385,7 @@
       "id": "plumenetwork-0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
       "symbol": "pUSD",
       "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -5155,9 +5041,7 @@
       "id": "ethereum-0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
       "symbol": "SOL",
       "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -5165,9 +5049,7 @@
       "id": "arbitrum-0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
       "symbol": "SOL",
       "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -5607,9 +5489,7 @@
       "id": "ethereum-0x84074EA631dEc7a4edcD5303d164D5dEa4c653D6",
       "symbol": "SUI",
       "address": "0x84074EA631dEc7a4edcD5303d164D5dEa4c653D6",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -6113,9 +5993,7 @@
       "id": "ethereum-0x249e38Ea4102D0cf8264d3701f1a0E39C4f2DC3B",
       "symbol": "UFO",
       "address": "0x249e38Ea4102D0cf8264d3701f1a0E39C4f2DC3B",
-      "categories": [
-        "Public Equity"
-      ],
+      "categories": ["Public Equity"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -6263,9 +6141,7 @@
       "id": "ethereum-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       "symbol": "USDC",
       "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6273,9 +6149,7 @@
       "id": "optimism-0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
       "symbol": "USDC",
       "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6283,9 +6157,7 @@
       "id": "unichain-0x078D782b760474a361dDA0AF3839290b0EF57AD6",
       "symbol": "USDC",
       "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6293,9 +6165,7 @@
       "id": "mantapacific-0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
       "symbol": "USDC",
       "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6303,9 +6173,7 @@
       "id": "zksync2-0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
       "symbol": "USDC",
       "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6313,9 +6181,7 @@
       "id": "form-0xFBf489bb4783D4B1B2e7D07ba39873Fb8068507D",
       "symbol": "USDC",
       "address": "0xFBf489bb4783D4B1B2e7D07ba39873Fb8068507D",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6323,9 +6189,7 @@
       "id": "worldchain-0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
       "symbol": "USDC",
       "address": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6333,9 +6197,7 @@
       "id": "reya-0x3B860c0b53f2e8bd5264AA7c3451d41263C933F2",
       "symbol": "USDC",
       "address": "0x3B860c0b53f2e8bd5264AA7c3451d41263C933F2",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6343,9 +6205,7 @@
       "id": "aevo-0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
       "symbol": "USDC",
       "address": "0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6353,9 +6213,7 @@
       "id": "mantle-0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
       "symbol": "USDC",
       "address": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6363,9 +6221,7 @@
       "id": "superseed-0xC316C8252B5F2176d0135Ebb0999E99296998F2e",
       "symbol": "USDC",
       "address": "0xC316C8252B5F2176d0135Ebb0999E99296998F2e",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6373,9 +6229,7 @@
       "id": "base-0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
       "symbol": "USDC",
       "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6383,9 +6237,7 @@
       "id": "arbitrum-0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
       "symbol": "USDC",
       "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6393,9 +6245,7 @@
       "id": "celo-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
       "symbol": "USDC",
       "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6403,9 +6253,7 @@
       "id": "linea-0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
       "symbol": "USDC",
       "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6413,9 +6261,7 @@
       "id": "bob-0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
       "symbol": "USDC",
       "address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6423,9 +6269,7 @@
       "id": "real-0xc518A88c67CECA8B3f24c4562CB71deeB2AF86B7",
       "symbol": "USDC",
       "address": "0xc518A88c67CECA8B3f24c4562CB71deeB2AF86B7",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6433,9 +6277,7 @@
       "id": "scroll-0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
       "symbol": "USDC",
       "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6443,9 +6285,7 @@
       "id": "degen-0xF1815bd50389c46847f0Bda824eC8da914045D14",
       "symbol": "USDC",
       "address": "0xF1815bd50389c46847f0Bda824eC8da914045D14",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6453,9 +6293,7 @@
       "id": "optimism-0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
       "symbol": "USDC.e",
       "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6463,9 +6301,7 @@
       "id": "zksync2-0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
       "symbol": "USDC.e",
       "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6473,9 +6309,7 @@
       "id": "galxegravity-0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
       "symbol": "USDC.e",
       "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6483,9 +6317,7 @@
       "id": "abstract-0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
       "symbol": "USDC.e",
       "address": "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6493,9 +6325,7 @@
       "id": "arbitrum-0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
       "symbol": "USDC.e",
       "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6503,9 +6333,7 @@
       "id": "superposition-0x6c030c5CC283F791B26816f325b9C632d964F8A1",
       "symbol": "USDC.e",
       "address": "0x6c030c5CC283F791B26816f325b9C632d964F8A1",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6513,9 +6341,7 @@
       "id": "xchain-0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
       "symbol": "USDC.e",
       "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6523,9 +6349,7 @@
       "id": "plumenetwork-0x78adD880A697070c1e765Ac44D65323a0DcCE913",
       "symbol": "USDC.e",
       "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6533,9 +6357,7 @@
       "id": "taiko-0x19e26B0638bf63aa9fa4d14c6baF8D52eBE86C5C",
       "symbol": "USDC.e",
       "address": "0x19e26B0638bf63aa9fa4d14c6baF8D52eBE86C5C",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6543,9 +6365,7 @@
       "id": "corn-0xDF0B24095e15044538866576754F3C964e902Ee6",
       "symbol": "USDC.e",
       "address": "0xDF0B24095e15044538866576754F3C964e902Ee6",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6553,9 +6373,7 @@
       "id": "rari-0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
       "symbol": "USDC.e",
       "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6563,9 +6381,7 @@
       "id": "ethereum-0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
       "symbol": "USDD",
       "address": "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6573,9 +6389,7 @@
       "id": "ethereum-0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
       "symbol": "USDe",
       "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6583,9 +6397,7 @@
       "id": "optimism-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6593,9 +6405,7 @@
       "id": "mantapacific-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6603,9 +6413,7 @@
       "id": "fraxtal-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6613,9 +6421,7 @@
       "id": "swell-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6623,9 +6429,7 @@
       "id": "morph-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6633,9 +6437,7 @@
       "id": "mantle-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6643,9 +6445,7 @@
       "id": "base-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6653,9 +6453,7 @@
       "id": "mode-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6663,9 +6461,7 @@
       "id": "arbitrum-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6673,9 +6469,7 @@
       "id": "zircuit-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6683,9 +6477,7 @@
       "id": "linea-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6693,9 +6485,7 @@
       "id": "blast-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6703,9 +6493,7 @@
       "id": "scroll-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "symbol": "USDe",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6713,9 +6501,7 @@
       "id": "celo-0x4F604735c1cF31399C6E711D5962b2B3E0225AD3",
       "symbol": "USDGLO",
       "address": "0x4F604735c1cF31399C6E711D5962b2B3E0225AD3",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6723,9 +6509,7 @@
       "id": "ethereum-0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
       "symbol": "USDM",
       "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6733,9 +6517,7 @@
       "id": "zksync2-0x7715c206A14Ac93Cb1A6c0316A6E5f8aD7c9Dc31",
       "symbol": "USDM",
       "address": "0x7715c206A14Ac93Cb1A6c0316A6E5f8aD7c9Dc31",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6743,9 +6525,7 @@
       "id": "arbitrum-0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
       "symbol": "USDM",
       "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6769,9 +6549,7 @@
       "id": "ethereum-0x8E870D67F660D95d5be530380D0eC0bd388289E1",
       "symbol": "USDP",
       "address": "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6779,9 +6557,7 @@
       "id": "ethereum-0xdC035D45d973E3EC169d2276DDab16f1e407384F",
       "symbol": "USDS",
       "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6789,9 +6565,7 @@
       "id": "ethereum-0xdAC17F958D2ee523a2206206994597C13D831ec7",
       "symbol": "USDT",
       "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6799,9 +6573,7 @@
       "id": "optimism-0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
       "symbol": "USDT",
       "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6809,9 +6581,7 @@
       "id": "mantapacific-0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f",
       "symbol": "USDT",
       "address": "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6819,9 +6589,7 @@
       "id": "zksync2-0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
       "symbol": "USDT",
       "address": "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6829,9 +6597,7 @@
       "id": "form-0xFA3198ecF05303a6d96E57a45E6c815055D255b1",
       "symbol": "USDT",
       "address": "0xFA3198ecF05303a6d96E57a45E6c815055D255b1",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6839,9 +6605,7 @@
       "id": "metis-0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
       "symbol": "USDT",
       "address": "0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6849,9 +6613,7 @@
       "id": "galxegravity-0x816E810f9F787d669FB71932DeabF6c83781Cd48",
       "symbol": "USDT",
       "address": "0x816E810f9F787d669FB71932DeabF6c83781Cd48",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6859,9 +6621,7 @@
       "id": "swell-0xb89c6ED617f5F46175E41551350725A09110bbCE",
       "symbol": "USDT",
       "address": "0xb89c6ED617f5F46175E41551350725A09110bbCE",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6869,9 +6629,7 @@
       "id": "abstract-0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD",
       "symbol": "USDT",
       "address": "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6879,9 +6637,7 @@
       "id": "mantle-0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
       "symbol": "USDT",
       "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6889,9 +6645,7 @@
       "id": "arbitrum-0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
       "symbol": "USDT",
       "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6899,9 +6653,7 @@
       "id": "celo-0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
       "symbol": "USDT",
       "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6909,9 +6661,7 @@
       "id": "linea-0xA219439258ca9da29E9Cc4cE5596924745e12B93",
       "symbol": "USDT",
       "address": "0xA219439258ca9da29E9Cc4cE5596924745e12B93",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6919,9 +6669,7 @@
       "id": "taiko-0x9c2dc7377717603eB92b2655c5f2E7997a4945BD",
       "symbol": "USDT",
       "address": "0x9c2dc7377717603eB92b2655c5f2E7997a4945BD",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6929,9 +6677,7 @@
       "id": "scroll-0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df",
       "symbol": "USDT",
       "address": "0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6939,9 +6685,7 @@
       "id": "rari-0x362FAE9A75B27BBc550aAc28a7c1F96C8D483120",
       "symbol": "USDT",
       "address": "0x362FAE9A75B27BBc550aAc28a7c1F96C8D483120",
-      "categories": [
-        "Stablecoins"
-      ],
+      "categories": ["Stablecoins"],
       "isStablecoin": true,
       "isOnRWA": true
     },
@@ -6965,11 +6709,7 @@
       "id": "arbitrum-0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
       "symbol": "USDY",
       "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
-      "categories": [
-        "US Treasury Debt",
-        "Yield Bearing",
-        "Non-U.S. Investor"
-      ],
+      "categories": ["US Treasury Debt", "Yield Bearing", "Non-U.S. Investor"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7009,10 +6749,7 @@
       "id": "arbitrum-0x021289588cd81dC1AC87ea91e91607eEF68303F5",
       "symbol": "USTBL",
       "address": "0x021289588cd81dC1AC87ea91e91607eEF68303F5",
-      "categories": [
-        "US Treasury Debt",
-        "U.S. and Global Retail"
-      ],
+      "categories": ["US Treasury Debt", "U.S. and Global Retail"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7484,9 +7221,7 @@
       "id": "ethereum-0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "symbol": "WETH",
       "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7494,9 +7229,7 @@
       "id": "optimism-0x4200000000000000000000000000000000000006",
       "symbol": "WETH",
       "address": "0x4200000000000000000000000000000000000006",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7504,9 +7237,7 @@
       "id": "metis-0x420000000000000000000000000000000000000A",
       "symbol": "WETH",
       "address": "0x420000000000000000000000000000000000000A",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7514,9 +7245,7 @@
       "id": "galxegravity-0xf6f832466Cd6C21967E0D954109403f36Bc8ceaA",
       "symbol": "WETH",
       "address": "0xf6f832466Cd6C21967E0D954109403f36Bc8ceaA",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7524,9 +7253,7 @@
       "id": "aevo-0xEB5eAb7315f6721d90ED8DD007F802ecbFb99cE8",
       "symbol": "WETH",
       "address": "0xEB5eAb7315f6721d90ED8DD007F802ecbFb99cE8",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7534,9 +7261,7 @@
       "id": "mantle-0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
       "symbol": "WETH",
       "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7544,9 +7269,7 @@
       "id": "base-0x4200000000000000000000000000000000000006",
       "symbol": "WETH",
       "address": "0x4200000000000000000000000000000000000006",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7554,9 +7277,7 @@
       "id": "arbitrum-0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
       "symbol": "WETH",
       "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7564,9 +7285,7 @@
       "id": "celo-0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207",
       "symbol": "WETH",
       "address": "0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7574,9 +7293,7 @@
       "id": "corn-0x485BBC4F98c071C9BD74Ac255262E61F866f071a",
       "symbol": "WETH",
       "address": "0x485BBC4F98c071C9BD74Ac255262E61F866f071a",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7584,9 +7301,7 @@
       "id": "degen-0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
       "symbol": "WETH",
       "address": "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7626,9 +7341,7 @@
       "id": "base-0x3e31966d4f81C72D2a55310A6365A56A4393E98D",
       "symbol": "WMTX",
       "address": "0x3e31966d4f81C72D2a55310A6365A56A4393E98D",
-      "categories": [
-        "Public Equity"
-      ],
+      "categories": ["Public Equity"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7748,9 +7461,7 @@
       "id": "ethereum-0x68749665FF8D2d112Fa859AA293F07A622782F38",
       "symbol": "XAUt",
       "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
-      "categories": [
-        "Commodities"
-      ],
+      "categories": ["Commodities"],
       "isStablecoin": false,
       "isOnRWA": true
     },
@@ -7910,9 +7621,7 @@
       "id": "zksync2-0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
       "symbol": "ZK",
       "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-      "categories": [
-        "Cryptocurrencies"
-      ],
+      "categories": ["Cryptocurrencies"],
       "isStablecoin": false,
       "isOnRWA": true
     },
