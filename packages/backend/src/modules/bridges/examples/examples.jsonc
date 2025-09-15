@@ -161,6 +161,21 @@
     "messages": ["axelar.ContractCallWithTokenMessage"],
     "transfers": ["axelar-gateway.Transfer"]
   },
+  "squid-coral": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x8b0231756750c340219ad738d4c4073f41503b3ae5a37ef175c27f7759e75fae"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xeaa266992432ee2f8981194320b1b1e4a034282e25c90c4711f8d239c3bbda0b"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
   "centrifuge-wormhole-axelar": {
     "txs": [
       {

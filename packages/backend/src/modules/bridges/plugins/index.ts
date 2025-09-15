@@ -8,6 +8,7 @@ import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
 import { OpStackPlugin } from './opstack'
 import { OrbitStackPlugin } from './orbitstack'
+import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
 import { StargateV2BusPlugin } from './stargate-v2-bus'
 import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
@@ -19,6 +20,7 @@ import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
 
 export function createBridgePlugins(): BridgePlugin[] {
   return [
+    new SquidCoralPlugin(),
     new MayanForwarderPlugin(),
     new MayanSwiftPlugin(), // should be run before CCTP
     new MayanMctpPlugin(), // should be run before CCTP
