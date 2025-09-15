@@ -5,8 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const billions: ScalingProject = upcomingL2({
   id: 'billions',
   capability: 'universal',
-  addedAt: UnixTime(1756724480), // 2025-09-01T12:01:20Z
-  hasTestnet: true,
+  addedAt: UnixTime(1757948433), // 2025-09-15T15:00:20Z
   display: {
     name: 'Billions',
     slug: 'billions',
