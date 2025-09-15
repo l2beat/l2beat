@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xaebfc48d7828b3f64ed7895c501747b6fb86b96d
+Generated with discovered.json: 0x0df4853f4f265f12ac5db5a7a58c529fb8c37c95
 
-# Diff at Wed, 10 Sep 2025 17:01:01 GMT:
+# Diff at Mon, 15 Sep 2025 08:38:13 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@f31cf61ca2c8f9287987b955aaaa847262302c79 block: 1756453341
-- current timestamp: 1757520210
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1756453341
+- current timestamp: 1757924713
 
 ## Description
 
@@ -353,7 +353,7 @@ OptimismPortal2 requres a dispute game factory to manage games, however OPSuccin
 ```diff
 +   Status: CREATED
     contract OPSuccinctDisputeGame (eth:0xb476cC5ECF2472A040DC381552B7a9bd7951A470)
-    +++ description: A dispute game wrapper around OPSuccinctL2OutputOracle. It is needed to comply with OptimismPortal2 requirement to have a DisputeGameFactory. Whenever a new game is created, an SP1 proof is immediately verified, so in fact there is no optimistic dispute game.
+    +++ description: A dispute game wrapper around OPSuccinctL2OutputOracle. It is needed to comply with OptimismPortal2 requirement to have a DisputeGameFactory. Whenever a new game is created, an SP1 proof is immediately verified, so in fact there is no optimistic dispute game happening.
 ```
 
 ```diff
