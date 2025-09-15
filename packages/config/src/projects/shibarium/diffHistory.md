@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa79585ad694302ba544fa6ce31e48d916c99aff4
+Generated with discovered.json: 0x39091287b079e101e36e1e36c984b610497bbeb1
 
-# Diff at Mon, 15 Sep 2025 04:53:05 GMT:
+# Diff at Mon, 15 Sep 2025 05:28:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a8055e63da0543f8a2c7bcefe9e53af85ce41d95 block: 1757661357
@@ -145,7 +145,7 @@ still EOA governed of course.
 
 ```diff
     contract StakeManager (eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064) {
-    +++ description: None
+    +++ description: Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. This version of the contract has most critical validator management functions blocked (`transferFunds`, `unstakeClaim`, `withdrawDelegatorsReward`, `_transferToken`, `_transferTokenFrom`) and 'rescue' functions added after the shibarium hack.
       template:
 -        "polygonposbridge/StakeManager_shibarium"
 +        "polygonposbridge/StakeManager_shibarium_revert"
@@ -173,10 +173,14 @@ still EOA governed of course.
       values.owner:
 -        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
 +        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.rescuer:
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
       implementationNames.eth:0x1be79AED4088A55f5ED249a14f777758d9F888c6:
 -        "StakeManager"
       implementationNames.eth:0x94e5C17983cf1631e7135C33CF0e6206FF995207:
 +        "StakeManager"
+      description:
++        "Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. This version of the contract has most critical validator management functions blocked (`transferFunds`, `unstakeClaim`, `withdrawDelegatorsReward`, `_transferToken`, `_transferTokenFrom`) and 'rescue' functions added after the shibarium hack."
     }
 ```
 

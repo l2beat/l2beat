@@ -453,6 +453,7 @@
         "0x9394ab61559718a01471ac508777c2be71a11c31bd14a7c7b5dc14ee61efbd3b"
       ],
       "proxyType": "Polygon proxy",
+      "description": "Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. This version of the contract has most critical validator management functions blocked (`transferFunds`, `unstakeClaim`, `withdrawDelegatorsReward`, `_transferToken`, `_transferTokenFrom`) and 'rescue' functions added after the shibarium hack.",
       "ignoreInWatchMode": [
         "currentEpoch",
         "currentValidatorSetTotalStake",
@@ -539,6 +540,7 @@
         "proxyType": 2,
         "registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
         "replacementCoolDown": 13608,
+        "rescuer": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
         "rewardDecreasePerCheckpoint": 0,
         "rewardPerStake": "1714658261846162209914304",
         "rootChain": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
@@ -835,6 +837,12 @@
           "from": "eth:0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6",
           "description": "can update the whitelist of validators",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+          "description": "can move any ERC20 tokens out of the contract.",
+          "role": ".rescuer"
         },
         {
           "permission": "interact",
@@ -1966,7 +1974,7 @@
     "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
     "polygonposbridge/SlashingManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "polygonposbridge/StakeManager_shibarium_revert": "0xcc48512951882c2d208c04947dcd277aeffd72f2d518baa13df242e7eb9e5502",
+    "polygonposbridge/StakeManager_shibarium_revert": "0x2a3aded4b271519895bde41bef2e6bf91ef922d0f8f1e26ae571facd92ec8ef7",
     "polygonposbridge/StakeManagerExtension_shibarium": "0xe60d3951cea911d74c13738cf122394571cb6bcd98f0a5549372b1b99a397a27",
     "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
     "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
@@ -1975,5 +1983,5 @@
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23366154 },
-  "permissionsConfigHash": "0x16c7a54da5ab5ec28d020a12ec418ba489f330743de04d6a48e299f297e084d7"
+  "permissionsConfigHash": "0xf1e77065a3d57075f538638970d8ec1dd6a1c150db0de4f853966e63b53059b9"
 }
