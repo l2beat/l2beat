@@ -17,6 +17,7 @@ import {
   createEventParser,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 
 const parseContractCall = createEventParser(
@@ -100,74 +101,79 @@ export class AxelarPlugin implements BridgePlugin {
   chains = ['ethereum', 'arbitrum', 'base', 'optimism']
 
   capture(input: LogToCapture) {
-    const parsed = parseContractCall(input.log, null)
-    if (parsed) {
+    const contractCall = parseContractCall(input.log, null)
+    if (contractCall) {
       return ContractCall.create(input.ctx, {
-        sender: EthereumAddress(parsed.sender),
-        destinationContractAddress: parsed.destinationContractAddress,
-        payloadHash: parsed.payloadHash,
+        sender: EthereumAddress(contractCall.sender),
+        destinationContractAddress: contractCall.destinationContractAddress,
+        payloadHash: contractCall.payloadHash,
         txHash: input.ctx.txHash,
         $dstChain:
-          NETWORKS.find((x) => x.axelarChainName === parsed.destinationChain)
-            ?.chain ?? `AXL_${parsed.destinationChain}`,
+          NETWORKS.find(
+            (x) => x.axelarChainName === contractCall.destinationChain,
+          )?.chain ?? `AXL_${contractCall.destinationChain}`,
       })
     }
 
-    const parsed2 = parseContractCallWithToken(input.log, null)
-    if (parsed2) {
+    const contractCallWithToken = parseContractCallWithToken(input.log, null)
+    if (contractCallWithToken) {
       return ContractCallWithToken.create(input.ctx, {
-        sender: EthereumAddress(parsed2.sender),
-        destinationContractAddress: parsed2.destinationContractAddress,
-        payloadHash: parsed2.payloadHash,
-        symbol: parsed2.symbol,
-        amount: Number(parsed2.amount),
+        sender: EthereumAddress(contractCallWithToken.sender),
+        destinationContractAddress:
+          contractCallWithToken.destinationContractAddress,
+        payloadHash: contractCallWithToken.payloadHash,
+        symbol: contractCallWithToken.symbol,
+        amount: Number(contractCallWithToken.amount),
         txHash: input.ctx.txHash,
         $dstChain:
-          NETWORKS.find((x) => x.axelarChainName === parsed2.destinationChain)
-            ?.chain ?? `AXL_${parsed2.destinationChain}`,
+          NETWORKS.find(
+            (x) => x.axelarChainName === contractCallWithToken.destinationChain,
+          )?.chain ?? `AXL_${contractCallWithToken.destinationChain}`,
       })
     }
 
-    const parsedApproved = parseContractCallApproved(input.log, null)
-    if (parsedApproved) {
+    const contractCallApproved = parseContractCallApproved(input.log, null)
+    if (contractCallApproved) {
       return ContractCallApproved.create(input.ctx, {
-        commandId: parsedApproved.commandId,
-        payloadHash: parsedApproved.payloadHash,
-        sourceAddress: parsedApproved.sourceAddress,
-        contractAddress: EthereumAddress(parsedApproved.contractAddress),
-        srcTxHash: parsedApproved.sourceTxHash,
+        commandId: contractCallApproved.commandId,
+        payloadHash: contractCallApproved.payloadHash,
+        sourceAddress: contractCallApproved.sourceAddress,
+        contractAddress: EthereumAddress(contractCallApproved.contractAddress),
+        srcTxHash: contractCallApproved.sourceTxHash,
         $srcChain:
-          NETWORKS.find((x) => x.axelarChainName === parsedApproved.sourceChain)
-            ?.chain ?? `AXL_${parsedApproved.sourceChain}`,
+          NETWORKS.find(
+            (x) => x.axelarChainName === contractCallApproved.sourceChain,
+          )?.chain ?? `AXL_${contractCallApproved.sourceChain}`,
       })
     }
 
-    const parsedApprovedWithMint = parseContractCallApprovedWithMint(
+    const contractCallApprovedWithMint = parseContractCallApprovedWithMint(
       input.log,
       null,
     )
-    if (parsedApprovedWithMint) {
+    if (contractCallApprovedWithMint) {
       return ContractCallApprovedWithMint.create(input.ctx, {
-        commandId: parsedApprovedWithMint.commandId,
-        payloadHash: parsedApprovedWithMint.payloadHash,
-        sourceAddress: parsedApprovedWithMint.sourceAddress,
+        commandId: contractCallApprovedWithMint.commandId,
+        payloadHash: contractCallApprovedWithMint.payloadHash,
+        sourceAddress: contractCallApprovedWithMint.sourceAddress,
         contractAddress: EthereumAddress(
-          parsedApprovedWithMint.contractAddress,
+          contractCallApprovedWithMint.contractAddress,
         ),
-        symbol: parsedApprovedWithMint.symbol,
-        amount: Number(parsedApprovedWithMint.amount),
-        srcTxHash: parsedApprovedWithMint.sourceTxHash,
+        symbol: contractCallApprovedWithMint.symbol,
+        amount: Number(contractCallApprovedWithMint.amount),
+        srcTxHash: contractCallApprovedWithMint.sourceTxHash,
         $srcChain:
           NETWORKS.find(
-            (x) => x.axelarChainName === parsedApprovedWithMint.sourceChain,
-          )?.chain ?? `AXL_${parsedApprovedWithMint.sourceChain}`,
+            (x) =>
+              x.axelarChainName === contractCallApprovedWithMint.sourceChain,
+          )?.chain ?? `AXL_${contractCallApprovedWithMint.sourceChain}`,
       })
     }
 
-    const parsedExecuted = parseContractCallExecuted(input.log, null)
-    if (parsedExecuted) {
+    const contractCallExecuted = parseContractCallExecuted(input.log, null)
+    if (contractCallExecuted) {
       return ContractCallExecuted.create(input.ctx, {
-        commandId: parsedExecuted.commandId,
+        commandId: contractCallExecuted.commandId,
       })
     }
   }
@@ -180,62 +186,36 @@ export class AxelarPlugin implements BridgePlugin {
       const contractCall = db.find(ContractCall, {
         txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
       })
-      if (contractCall) {
-        return {
-          messages: [
-            {
-              type: 'Axelar.ContractCallMessage',
-              outbound: contractCall,
-              inbound: contractCallApproved,
-            },
-          ],
-        }
-      }
+      if (!contractCall) return
+      return [
+        Result.Message('axelar.ContractCallMessage', [
+          contractCall,
+          contractCallApproved,
+        ]),
+      ]
     }
+
     if (ContractCallApprovedWithMint.checkType(contractCallApproved)) {
       const contractCallWithToken = db.find(ContractCallWithToken, {
         txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
       })
-      if (contractCallWithToken) {
-        const contractCallExecuted = db.find(ContractCallExecuted, {
-          commandId: contractCallApproved.args.commandId,
-        })
-        if (contractCallExecuted) {
-          return {
-            messages: [
-              {
-                type: 'Axelar.ContractCallWithTokenMessage',
-                outbound: contractCallWithToken,
-                inbound: contractCallApproved,
-              },
-            ],
-            transfers: [
-              {
-                type: 'axelarGateway.App',
-                events: [
-                  contractCallWithToken,
-                  contractCallApproved,
-                  contractCallExecuted,
-                ],
-                outbound: {
-                  event: contractCallWithToken,
-                  token: {
-                    address: 'native', // TODO: we have only symbol, not address
-                    amount: contractCallWithToken.args.amount.toString(),
-                  },
-                },
-                inbound: {
-                  event: contractCallExecuted,
-                  token: {
-                    address: 'native', // TODO: we have only symbol, not address
-                    amount: contractCallWithToken.args.amount.toString(),
-                  },
-                },
-              },
-            ],
-          }
-        }
-      }
+      if (!contractCallWithToken) return
+      const contractCallExecuted = db.find(ContractCallExecuted, {
+        commandId: contractCallApproved.args.commandId,
+      })
+      if (!contractCallExecuted) return
+      return [
+        Result.Message('axelar.ContractCallWithTokenMessage', [
+          contractCallWithToken,
+          contractCallApproved,
+        ]),
+        Result.Transfer('axelar-gateway.Transfer', {
+          srcEvent: contractCallWithToken,
+          srcTokenSymbol: contractCallWithToken.args.symbol,
+          srcAmount: contractCallWithToken.args.amount.toString(),
+          dstEvent: contractCallExecuted,
+        }),
+      ]
     }
   }
 }

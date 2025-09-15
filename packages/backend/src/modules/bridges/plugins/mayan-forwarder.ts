@@ -31,28 +31,28 @@ export const ForwadedEth = createBridgeEventType<{
   mayanProtocol: string
   protocolData: `0x${string}`
   txHash: string
-}>('mayanForwarder.ForwadedEth')
+}>('mayan-forwarder.ForwadedEth')
 
 export const ForwadedERC20 = createBridgeEventType<{
   mayanProtocol: string
   protocolData: `0x${string}`
   txHash: string
-}>('mayanForwarder.ForwadedERC20')
+}>('mayan-forwarder.ForwadedERC20')
 
 export const SwapAndForwardedEth = createBridgeEventType<{
   mayanProtocol: string
   protocolData: `0x${string}`
   txHash: string
-}>('mayanForwarder.SwapAndForwardedEth')
+}>('mayan-forwarder.SwapAndForwardedEth')
 
 export const SwapAndForwardedERC20 = createBridgeEventType<{
   mayanProtocol: string
   protocolData: `0x${string}`
   txHash: string
-}>('mayanForwarder.SwapAndForwardedERC20')
+}>('mayan-forwarder.SwapAndForwardedERC20')
 
 export class MayanForwarderPlugin implements BridgePlugin {
-  name = 'mayanforwarder'
+  name = 'mayan-forwarder'
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(event: LogToCapture) {

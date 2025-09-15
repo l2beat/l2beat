@@ -30,24 +30,25 @@ export interface BridgeEvent<T = unknown> {
 }
 
 export interface BridgeMessage {
+  kind: 'BridgeMessage'
   type: string
-  outbound: BridgeEvent
-  inbound: BridgeEvent
+  src: BridgeEvent
+  dst: BridgeEvent
 }
 
 export interface TransferSide {
   event: BridgeEvent
-  token?: {
-    address: EthereumAddress | 'native'
-    amount: string
-  }
+  tokenAddress?: EthereumAddress | 'native'
+  tokenSymbol?: string
+  tokenAmount?: string
 }
 
 export interface BridgeTransfer {
+  kind: 'BridgeTransfer'
   type: string
   events: BridgeEvent[]
-  outbound: TransferSide
-  inbound: TransferSide
+  src: TransferSide
+  dst: TransferSide
 }
 
 export type TransferSideWithFinancials = TransferSide & {
@@ -60,8 +61,8 @@ export type TransferSideWithFinancials = TransferSide & {
 }
 
 export type BridgeTransferWithFinancials = BridgeTransfer & {
-  outbound: TransferSideWithFinancials
-  inbound: TransferSideWithFinancials
+  src: TransferSideWithFinancials
+  dst: TransferSideWithFinancials
 }
 
 export function generateId(type: string) {
@@ -79,7 +80,9 @@ export function createBridgeEventType<T>(
   options?: { ttl?: number },
 ): BridgeEventType<T> {
   if (!/\w+\.\w+/.test(type)) {
-    throw new Error('BridgeEventType must have the format: "protocol.event"')
+    throw new Error(
+      'BridgeEventType must have the format: "protocol-name.EventName"',
+    )
   }
   if (type.length > 64) {
     throw new Error('BridgeEventType cannot be longer than 64')
@@ -111,10 +114,7 @@ export interface LogToCapture {
   ctx: BridgeEventContext
 }
 
-export interface MatchResult {
-  messages?: BridgeMessage[]
-  transfers?: BridgeTransfer[]
-}
+export type MatchResult = (BridgeMessage | BridgeTransfer)[]
 
 export interface BridgeEventDb {
   find<T>(
@@ -178,5 +178,70 @@ export function createEventParser<T extends `event ${string}(${string}`>(
     } catch {
       return undefined
     }
+  }
+}
+
+export const Result = { Message, Transfer }
+
+function Message(
+  type: string,
+  events: [src: BridgeEvent, dst: BridgeEvent],
+): BridgeMessage {
+  if (!/\w+\.\w+(\.\w+)?/.test(type)) {
+    throw new Error(
+      'BridgeMessage type must have the format: "protocol-name.MessageName" or "protocol-name.MessageName.app-name"',
+    )
+  }
+  return {
+    kind: 'BridgeMessage',
+    type,
+    src: events[0],
+    dst: events[0],
+  }
+}
+
+export interface BridgeTransferOptions {
+  srcEvent: BridgeEvent
+  srcTokenAddress?: EthereumAddress | 'native'
+  srcTokenSymbol?: string
+  srcAmount?: string
+
+  dstEvent: BridgeEvent
+  dstTokenAddress?: EthereumAddress | 'native'
+  dstTokenSymbol?: string
+  dstAmount?: string
+
+  extraEvents?: BridgeEvent[]
+}
+
+function Transfer(
+  type: string,
+  options: BridgeTransferOptions,
+): BridgeTransfer {
+  if (!/\w+\.\w+(\.\w+)?/.test(type)) {
+    throw new Error(
+      'BridgeTransfer type must have the format: "app-name.Transfer" or "app-name.Swap" or "app-name.Transfer.app-name"',
+    )
+  }
+  return {
+    kind: 'BridgeTransfer',
+    type,
+    events: [
+      options.srcEvent,
+      options.dstEvent,
+      ...(options.extraEvents ?? []),
+    ],
+    src: {
+      event: options.srcEvent,
+      tokenAddress: options.srcTokenAddress,
+      tokenSymbol: options.srcTokenSymbol,
+      tokenAmount: options.srcAmount,
+    },
+    dst: {
+      event: options.dstEvent,
+      tokenAddress: options.dstTokenAddress,
+      tokenSymbol: options.dstTokenSymbol,
+      tokenAmount: options.dstAmount,
+    },
   }
 }

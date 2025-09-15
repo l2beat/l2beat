@@ -11,22 +11,22 @@ import {
   ForwadedEth,
   SwapAndForwardedERC20,
   SwapAndForwardedEth,
-} from './mayanforwarder'
-import type {
-  BridgeEvent,
-  BridgeEventDb,
-  BridgePlugin,
-  MatchResult,
+} from './mayan-forwarder'
+import {
+  type BridgeEvent,
+  type BridgeEventDb,
+  type BridgePlugin,
+  type MatchResult,
+  Result,
 } from './types'
 import { LogMessagePublished } from './wormhole'
 
 export class MayanMctpPlugin implements BridgePlugin {
-  name = 'mayanmctp'
+  name = 'mayan-mctp'
   chains = ['ethereum', 'arbitrum', 'base']
 
   //TODO: This plugin starts from the SRC (ForwardedERC20) but CCTP plugin starts from DST and clears events. This needs to be solved somehow...
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    //console.log('mayanmctp.match called')
     if (
       !ForwadedERC20.checkType(event) &&
       !ForwadedEth.checkType(event) &&
@@ -39,23 +39,16 @@ export class MayanMctpPlugin implements BridgePlugin {
     const messageSent = db.find(CCTPv1MessageSent, {
       txHash: event.args.txHash,
     })
-    if (!messageSent) {
-      console.log('mayanmctp.match: no CCTP MessageSent found')
-      return
-    }
+    if (!messageSent) return
     // find CCTP MessageReceived
     const messageReceived = db.find(CCTPv1MessageReceived, {
       messageBody: messageSent.args.messageBody,
     })
-    if (!messageReceived) {
-      console.log('mayanmctp.match: no CCTP MessageReceived found')
-      return
-    }
-    //console.log('mayanmctp.match: found CCTP Message Received')
+    if (!messageReceived) return
     // find Wormhole LogMessagePublished from Src --> Dst if bridgedWithFee() or createdOrder() is used
     const method = event.args.protocolData.slice(0, 10)
-    //console.log('mayanmctp.match: method', method)
     if (
+      // TODO: say what those are :)
       method === '0x9445a5d' ||
       method === '0xafd9b706' ||
       method === '0x2072197f' ||
@@ -64,34 +57,19 @@ export class MayanMctpPlugin implements BridgePlugin {
       const logMessagePublished = db.find(LogMessagePublished, {
         txHash: messageSent.ctx.txHash,
       })
-      if (!logMessagePublished) {
-        return
-      }
-      //console.log('mayanmctp.match: found Wormhole event on SRC')
-      return {
-        messages: [
-          {
-            type: 'cctp-v1.Message',
-            outbound: messageSent,
-            inbound: messageReceived,
-          },
-          {
-            type: 'wormholeCore.MessageFromMayan',
-            outbound: logMessagePublished,
-            inbound: messageReceived,
-          },
-        ],
-      }
+      if (!logMessagePublished) return
+      return [
+        Result.Message('cctp-v1.Message', [messageSent, messageReceived]),
+        Result.Message('wormhole.Message.mayan-mctp', [
+          logMessagePublished,
+          messageReceived,
+        ]),
+        // TODO: transfer, use event
+      ]
     }
-    //console.log('mayanmctp.match: method is bridgedWithoutFee(), no Wormhole event on SRC')
-    return {
-      messages: [
-        {
-          type: 'cctp-v1.Message',
-          outbound: messageSent,
-          inbound: messageReceived,
-        },
-      ],
-    }
+    return [
+      Result.Message('cctp-v1.Message', [messageSent, messageReceived]),
+      // TODO: transfer, use event
+    ]
   }
 }
