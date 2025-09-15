@@ -3,13 +3,11 @@ import type { TrustedSetup } from '../types'
 export const TRUSTED_SETUPS = {
   AztecIgnition: {
     id: 'AztecIgnition',
+    name: 'Aztec Ignition',
     risk: 'green',
     shortDescription:
       'Aztec Ignition is a trusted setup ceremony that was run by Aztec for KZG commitment over BN254 curve in 2019. It included 176 participants and was publicly open for participation.',
-    longDescription: `
-              
-    ## Aztec Ignition 
-
+    longDescription: `              
     Aztec Ignition is a trusted setup ceremony for KZG commitments over BN254 curve that was run by Aztec for KZG commitment over BN254 curve in 2019. 
     It included 176 participants and was publicly open for participation.
     
@@ -20,27 +18,21 @@ export const TRUSTED_SETUPS = {
   },
   TransparentSetup: {
     id: 'TransparentSetup',
+    name: 'Transparent setup',
     risk: 'N/A',
     shortDescription:
       'No trusted setup and no additional setup-related trust assumptions.',
-    longDescription: `
-        
-        ## Transparent setup
-
-        Transparent proving systems require no trusted setups and have no additional setup-related trust assumptions.
-        `,
+    longDescription:
+      'Transparent proving systems require no trusted setups and have no additional setup-related trust assumptions.',
   },
   SP1Groth16: {
     id: 'SP1Groth16',
+    name: 'SP1 Groth16 circuit-specific setup',
     risk: 'red',
     shortDescription:
       "Succinct's internally run trusted setup for SP1 Groth16 final wrap circuits. Ceremony was run among 7 contributors to the SP1 project without public calls to participate.",
     longDescription: `
-    
-    ## SP1 Groth16 circuit-specific setup
-
-    Ceremony was run among 7 contributors to the SP1 project without public calls to participate. 
-    It generated setup parameters for Groth16 wrapper of SP1 zkVM.
+    Ceremony was run among 7 contributors to the SP1 project without public calls to participate. It generated setup parameters for Groth16 wrapper of SP1 zkVM.
 
     - Ceremony info on Succinct docs page: https://docs.succinct.xyz/docs/sp1/security/security-model#options.
     - Ceremony instructions and verification instructions: https://github.com/succinctlabs/semaphore-gnark-11/tree/main.
@@ -49,13 +41,11 @@ export const TRUSTED_SETUPS = {
   },
   CeloPlumo: {
     id: 'CeloPlumo',
+    name: 'Celo Plumo',
     risk: 'yellow',
     shortDescription:
       'Trusted setup for KZG commitments over BW6-761 curve, initially run for Celo Plumo. Ceremony has 55 participants and was publicly open for participation.',
     longDescription: `
-    
-    ## Celo Plumo trusted setup 
-
     Ceremony generated trusted setup for KZG commitments over BW6-761 curve, it was originally run for Celo
     Plumo and later reused for Linea prover. Ceremony has 55 participants.
 
@@ -68,12 +58,10 @@ export const TRUSTED_SETUPS = {
   Aleo: {
     id: 'Aleo',
     risk: 'yellow',
+    name: 'Aleo stage I trusted setup',
     shortDescription:
       "Trusted setup for KZG commitments over BLS12-377 curve, initially run as Aleo's Stage I setup. Ceremony has 106 participants and was publicly open for participation.",
     longDescription: `
-    
-    ## Aleo stage I trusted setup
-
     Ceremony generated trusted setup for KZG commitments over BLS12-377 curve, it was originally run as stage I setup
     for Aleo blockchain and later reused for Linea prover. Ceremony has 106 participants.
 
@@ -83,13 +71,11 @@ export const TRUSTED_SETUPS = {
   },
   PolygonZkEVM: {
     id: 'PolygonZkEVM',
+    name: 'Polygon zkEVM',
     risk: 'yellow',
     shortDescription:
       'Trusted setup for KZG commitments over BN254 curve used by Polygon zkEVM, includes 55 participants. Is a subset of Perpetual Powers of Tau ceremony.',
     longDescription: `
-    
-    ## Polygon zkEVM
-
     Ceremony uses 54 first contributions from the [Perpetual Powers of Tau ceremony](https://github.com/privacy-scaling-explorations/perpetualpowersoftau)
     and adds one more contribution to the total of 55 participants.
 
@@ -100,13 +86,11 @@ export const TRUSTED_SETUPS = {
   },
   Risc0: {
     id: 'Risc0',
+    name: 'Risc0 Groth16',
     risk: 'green',
     shortDescription:
       'Circuit-specific trusted setup for Risc0 final wrap Groth16 onchain verifier. It was publicly announced and run with 238 participants.',
     longDescription: `
-    
-    ## Risc0 Groth16
-
     Ceremony for a circuit-specific trusted setup run by Risc0 for Groth16 circuits verifying Risc0 STARK proof. 
     It was publicly announced and run with 238 participants. Ceremony transcript, as well as instructions for participation and verification 
     are publicly available.
@@ -118,13 +102,11 @@ export const TRUSTED_SETUPS = {
   },
   Halo2KZG: {
     id: 'Halo2KZG',
+    name: 'Halo2 KZG over BN254',
     risk: 'yellow',
     shortDescription:
       'Trusted setup for KZG commitments managed by Halo2 team on the base of the first 71 contributions to the Perpetual Powers of Tau contributions.',
     longDescription: `
-    
-    ## Halo2 KZG over BN254
-
     A trusted setup used for KZG commitments over BN254 curve for Halo2 SNARK proving system 
     (when it is set up not in a transparent way). De-facto it is the first 71 entries in the Perpetual Powers of Tau
     ceremony that were converted to a particular format.
@@ -135,13 +117,11 @@ export const TRUSTED_SETUPS = {
   },
   Zircuit: {
     id: 'Zircuit',
+    name: 'Zircuit',
     risk: 'yellow',
     shortDescription:
       'Trusted setup for KZG commitments over BN254 curve run by Zircuit team for their proving system. Zircuit ceremony took 85th contribution to pptau ceremony and added another 44 contributions, totalling to 129 participants.',
     longDescription: `
-    
-    ## Zircuit
-
     General trusted setup for KZG commitments over BN254 curve built on top of the [Perpetual Powers of Tau ceremony](https://github.com/privacy-scaling-explorations/perpetualpowersoftau).
     Zircuit ceremony took 85th contribution to pptau ceremony and added another 44 contributions, totalling to 129 participants.
     Ceremony artifacts are available on GitHub.
@@ -152,13 +132,11 @@ export const TRUSTED_SETUPS = {
   },
   Loopring: {
     id: 'Loopring',
+    name: 'Loopring Stack',
     risk: 'red',
     shortDescription:
       'Two circuit-specific trusted setups for Groth16 verifiers of two L2s built with Loopring zk rollup stack. One contains 5 contributions, another 16 contributions.',
     longDescription: `
-    
-    ## Loopring Stack
-
     This entry incorporates two different trusted setups with very similar properties. Namely, these are 
     circuit-specific trusted setups for Groth16 circuits over BN254 curve of DeGate and Loopring app chains 
     that are built with Loopring zk tech stack. DeGate trusted setup includes 5 phase 2 (i.e. circuit-specific) 

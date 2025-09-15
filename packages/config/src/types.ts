@@ -800,6 +800,7 @@ export interface ZkCatalogTag {
 
 export interface TrustedSetup {
   id: string
+  name: string
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string

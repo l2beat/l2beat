@@ -14,7 +14,7 @@ export function getTrustedSetupsSection(
     const trustedSetup = byTrustedSetupId[ts.id]
     if (!trustedSetup) {
       byTrustedSetupId[ts.id] = {
-        trustedSetupId: ts.id,
+        name: ts.name,
         risk: ts.risk,
         description: ts.longDescription,
         proofSystems: [ts.proofSystem],

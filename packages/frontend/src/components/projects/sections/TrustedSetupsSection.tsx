@@ -9,7 +9,7 @@ import type { ProjectSectionProps } from './types'
 
 export interface TrustedSetupSectionProps extends ProjectSectionProps {
   trustedSetups: {
-    trustedSetupId: TrustedSetup['id']
+    name: TrustedSetup['name']
     risk: TrustedSetup['risk']
     description: TrustedSetup['longDescription']
     proofSystems: ZkCatalogTag[]
@@ -26,10 +26,10 @@ export function TrustedSetupSection({
       <div className="flex flex-col">
         {trustedSetups.map((trustedSetup, index) => {
           return (
-            <React.Fragment key={trustedSetup.trustedSetupId}>
+            <React.Fragment key={trustedSetup.name}>
               <div className="space-y-3">
                 <h3 className="font-bold text-heading-16">
-                  {trustedSetup.trustedSetupId}
+                  {trustedSetup.name}
                 </h3>
                 <div className="flex items-center gap-2">
                   {trustedSetup.risk === 'N/A' ? (
