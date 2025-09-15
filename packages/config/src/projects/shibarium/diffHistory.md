@@ -1,9 +1,9 @@
 Generated with discovered.json: 0x39091287b079e101e36e1e36c984b610497bbeb1
 
-# Diff at Mon, 15 Sep 2025 05:28:20 GMT:
+# Diff at Mon, 15 Sep 2025 11:00:30 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@a8055e63da0543f8a2c7bcefe9e53af85ce41d95 block: 1757661357
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6c1c52a7c5bf7afb46c533c8458204a4d9ae2a5f block: 1757661357
 - current timestamp: 1757911207
 
 ## Description
@@ -332,13 +332,6 @@ still EOA governed of course.
 -   Status: DELETED
     contract managerContract (eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB)
     +++ description: None
-```
-
-## Source code changes
-
-```diff
-.../StakeManager/StakeManager.sol                  | 214 ++++++++++++++++-----
- 1 file changed, 169 insertions(+), 45 deletions(-)
 ```
 
 Generated with discovered.json: 0xabe77b505efd6106cf24a8a40a783d5c4e02526f

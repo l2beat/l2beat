@@ -145,4 +145,14 @@ export const shibarium: ScalingProject = {
   },
   permissions: discovery.getDiscoveredPermissions(),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  milestones: [
+    {
+      title: 'Shibarium bridge exploited',
+      description:
+        'Keys of 10/12 Shibarium validators compromised - malicious chain root state used to steal funds.',
+      date: '2025-09-12T00:00:00.00Z',
+      url: 'https://x.com/Shibtoken/status/1966845298774278444',
+      type: 'incident',
+    },
+  ],
 }
