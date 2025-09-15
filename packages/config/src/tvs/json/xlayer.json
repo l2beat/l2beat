@@ -189,7 +189,7 @@
       "priceId": "polygon-ecosystem-token",
       "symbol": "POL",
       "name": "Polygon Ecosystem Token",
-      "iconUrl": "https://assets.coingecko.com/coins/images/32440/large/polygon.png?1698233684",
+      "iconUrl": "/images/custom-tokens/pol.png",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,

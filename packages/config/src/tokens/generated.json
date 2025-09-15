@@ -4393,7 +4393,7 @@
       "deploymentTimestamp": 1698224783,
       "coingeckoListingTimestamp": 1698192000,
       "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/32440/large/polygon.png?1698233684",
+      "iconUrl": "/images/custom-tokens/pol.png",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
