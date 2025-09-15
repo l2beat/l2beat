@@ -13,11 +13,11 @@ import {
   SwapAndForwardedEth,
 } from './mayan-forwarder'
 import {
-  Result,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
   type MatchResult,
+  Result,
 } from './types'
 import { LogMessagePublished } from './wormhole'
 

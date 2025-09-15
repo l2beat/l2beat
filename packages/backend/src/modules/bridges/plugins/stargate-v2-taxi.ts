@@ -1,11 +1,11 @@
 import { PacketDelivered, PacketSent } from './layerzero-v2'
 import { StargateV2OFTReceived, StargateV2OFTSentTaxi } from './stargate'
 import {
-  Result,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
   type MatchResult,
+  Result,
 } from './types'
 
 export class StargateV2TaxiPlugin implements BridgePlugin {

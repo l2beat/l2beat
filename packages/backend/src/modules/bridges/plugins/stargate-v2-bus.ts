@@ -5,11 +5,11 @@ import {
   StargateV2OFTSentBusRode,
 } from './stargate'
 import {
-  Result,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
   type MatchResult,
+  Result,
 } from './types'
 
 export class StargateV2BusPlugin implements BridgePlugin {
