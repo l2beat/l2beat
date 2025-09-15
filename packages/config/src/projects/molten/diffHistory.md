@@ -8,7 +8,7 @@ Generated with discovered.json: 0x395b0b2ea48cf6f25011506d11153d86d21f1421
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Updated mr_enclave value of TEE (hash of code, data, config).
 
 ## Watched changes
 
