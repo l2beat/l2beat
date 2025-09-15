@@ -775,7 +775,7 @@ Generated with discovered.json: 0xb59b2ef6eee3de7fd6b0df7f032bd08e3c5cbecc
 # Diff at Wed, 09 Jul 2025 15:09:45 GMT:
 
 - chain: optimism
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current block number: 138237502
 
 ## Description
@@ -807,7 +807,7 @@ Generated with discovered.json: 0x2e479474899967d49527a59e6d7377a328fbd831
 # Diff at Wed, 09 Jul 2025 15:09:45 GMT:
 
 - chain: scroll
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current block number: 17075744
 
 ## Description
@@ -839,7 +839,7 @@ Generated with discovered.json: 0xf1dce07804a55aad970287fc3171c5bd520dfd7d
 # Diff at Wed, 09 Jul 2025 15:09:45 GMT:
 
 - chain: ethereum
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current block number: 22882427
 
 ## Description
@@ -871,7 +871,7 @@ Generated with discovered.json: 0x63d398eb8a2ea6b5174fa6f966573a5d5e68e1a7
 # Diff at Wed, 09 Jul 2025 15:09:44 GMT:
 
 - chain: arbitrum
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current block number: 355918538
 
 ## Description
@@ -903,7 +903,7 @@ Generated with discovered.json: 0x7f3c2df6d36e193f00ca6ea9429550704a2cd0eb
 # Diff at Wed, 09 Jul 2025 15:09:44 GMT:
 
 - chain: base
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current block number: 32642215
 
 ## Description

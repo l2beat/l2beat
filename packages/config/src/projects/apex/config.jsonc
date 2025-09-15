@@ -20,6 +20,5 @@
     "eth:0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD": {
       "description": "Special verifier for the escape() function."
     }
-  },
-  "sharedModules": ["shared-sharp-verifier"]
+  }
 }

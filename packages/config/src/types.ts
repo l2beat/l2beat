@@ -964,6 +964,7 @@ export interface ProjectEcosystemInfo {
 }
 
 export interface ProjectEcosystemConfig {
+  startedAt?: UnixTime
   token: {
     tokenId: string
     projectId: ProjectId

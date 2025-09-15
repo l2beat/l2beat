@@ -88,5 +88,10 @@
     "hash": "0xb9ed3314327cfa4bdab9614d4772040c01df636f632f7317611422dec046197f",
     "address": "eth:0xd30B971922D42AA46C8A6432C332547432C89E14",
     "blockNumber": 23175245
+  },
+  "OptimismPortal_fastFinalizer": {
+    "hash": "0xec062613f3e0e9ba555b2c11164c199a0137d5b4e9021710092037355d8ed513",
+    "address": "eth:0x4fEee20712abF5724C2BC0476BD87CBf1F1eE388",
+    "blockNumber": 23345543
   }
 }

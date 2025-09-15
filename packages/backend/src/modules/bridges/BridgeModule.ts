@@ -4,6 +4,8 @@ import { BridgeCleaner } from './BridgeCleaner'
 import { BridgeMatcher } from './BridgeMatcher'
 import { createBridgeRouter } from './BridgeRouter'
 import { BridgeStore } from './BridgeStore'
+import { FinancialsService } from './financials/FinancialsService'
+import { INTEROP_TOKENS } from './financials/tokens'
 import { createBridgePlugins } from './plugins'
 
 export function createBridgeModule({
@@ -11,6 +13,7 @@ export function createBridgeModule({
   db,
   logger,
   blockProcessors,
+  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.bridgesEnabled) {
     logger.info('Bridges module disabled')
@@ -18,7 +21,7 @@ export function createBridgeModule({
   }
   logger = logger.tag({ feature: 'bridges', module: 'bridges' })
 
-  const plugins = createBridgePlugins(logger)
+  const plugins = createBridgePlugins()
   const chains = plugins
     .flatMap((x) => x.chains)
     .filter((x, i, a) => a.indexOf(x) === i)
@@ -34,7 +37,19 @@ export function createBridgeModule({
     blockProcessors.push(processor)
   }
 
-  const bridgeMatcher = new BridgeMatcher(bridgeStore, db, plugins, logger)
+  const financialsService = new FinancialsService(
+    INTEROP_TOKENS,
+    providers.price,
+  )
+
+  const bridgeMatcher = new BridgeMatcher(
+    bridgeStore,
+    financialsService,
+    db,
+    plugins,
+    chains,
+    logger,
+  )
 
   const bridgeRouter = createBridgeRouter(db)
 

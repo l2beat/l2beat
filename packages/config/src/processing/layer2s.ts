@@ -18,6 +18,7 @@ import { aztec } from '../projects/aztec/aztec'
 import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
 import { aztecconnect } from '../projects/aztecconnect/aztecconnect'
 import { base } from '../projects/base/base'
+import { billions } from '../projects/billions/billions'
 import { blast } from '../projects/blast/blast'
 import { bob } from '../projects/bob/bob'
 import { bobanetwork } from '../projects/bobanetwork/bobanetwork'
@@ -246,6 +247,7 @@ export const layer2s: ScalingProject[] = [
   blast,
   bob,
   bobanetwork,
+  billions,
   canvasconnect,
   capx,
   cartesiprthoneypot,

@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { getChainConfig, type IProvider } from '@l2beat/discovery'
+import { codeIsEOA, getChainConfig, type IProvider } from '@l2beat/discovery'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { command, positional } from 'cmd-ts'
 import { getProvider } from '../implementations/common/GetProvider'
@@ -13,6 +13,8 @@ import { ChainSpecificAddressValue } from './types'
 interface MinterData {
   address: ChainSpecificAddress
   mintTxs: string[]
+  isEoa: boolean
+  sourceName: string
 }
 
 export const Minters = command({
@@ -62,6 +64,9 @@ export const Minters = command({
       logger.info(`• ${minter.address}`)
       logger.info(`  - ${minter.mintTxs.length} mint transactions`)
       logger.info(`  - e.g. ${minter.mintTxs[0] ?? 'error'}`)
+      logger.info(
+        `  - ${minter.isEoa ? 'EOA' : `Contract (${minter.sourceName})`}`,
+      )
     }
   },
 })
@@ -79,11 +84,23 @@ async function analyzeAll(
 
     for (const minter of mintersDetected) {
       if (!minters[minter]) {
-        logger.info(`New minter detected: ${minter}`)
+        const [byteCode, source] = await Promise.all([
+          provider.getBytecode(minter),
+          provider.getSource(minter),
+        ])
+        const isEoa = codeIsEOA(byteCode)
+        const sourceName = source.isVerified ? source.name.trim() : 'Unverified'
+
+        logger.info(
+          `New minter detected: ${minter} - ${isEoa ? 'EOA' : `Contract (${sourceName})`}`,
+        )
         logger.info(` tx: ${txHash}`)
+
         minters[minter] = {
           address: minter,
           mintTxs: [txHash],
+          isEoa,
+          sourceName,
         }
       } else {
         minters[minter].mintTxs.push(txHash)

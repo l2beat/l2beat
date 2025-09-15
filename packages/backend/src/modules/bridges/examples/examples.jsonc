@@ -1,0 +1,406 @@
+{
+  "stargate": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xca89268e8e787bc9ffd0d0f2d47369161634acea27c6a2374c8c9a9b8ed6189f"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9fdc94bf02e1efd47970137e4f4642810c733c834a23d48fd0de946d32deb6e3"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "cctpv1": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xe757960a024b26b7f01042acac11c941a9d88df296f150a3424a3ca20516df5a"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xad842eb3b6a603a78cccc24ea9b3d418f2b38bc13da0f542aedb237ed4740c61"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "mayan-mctp-bridge": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xf31d79e452692369a486f9ea470a17e123651e02dd50060a710f28e5a268bf5a"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x8fee2c8243140764b8ba74ae2c11f22495e7c5eae15f384f37fa3c826eebe465"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "mayan-mctp-bridge-fee-on-dst": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xcb533450fe53baf53d82e61be8c3a7dc8967a8d9ade6c745301f3e16326cbf49"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x62f7808a27b877880526c6ae606598e368e9af36f4137ad3236de49af1a5b6b1"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "mayan-mctp-swap": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x87d69e29fa08dcccaa82f312f1fab55b3b0deaa637b5165ecebd1d3a15bbf51c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf5e01a33e94a921708f6d64dc4a0dfb6a2f388f87d57765e05c40d6199779292"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "mayan-mctp-fast-swap": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x6a3439c2875764b29b8be902265985397c5fd2782e7f2be0821a5bda713a48ff"
+      },
+      {
+        "chain": "base",
+        "tx": "0x9f2d722cfc23e8a248d8380860f6f2212cf9d0cb93cf4f76804da31dae26b090"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "mayan-swift": {
+    "txs": [
+      {
+        "chain": "optimism",
+        "tx": "0xd8715e004dcf338ca7c85d227b0c505fa54d806491e537b26fdfa0ca82d2afed"
+      },
+      {
+        "chain": "base",
+        "tx": "0x71be50f2e73096510601186b1b69f2fc5da7ce1bb636e176297262b08c833ebf"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "layerzerov2": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x2612a784a94aeed2eba6ea170b368f86e6aff4a00af1b2d104646fba4180dca0"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x0eb86d1c6690d314971c0f1b038c06f278a7217a414e0b6ea28bcecb3f005743"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "axelar-contractCall": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x12fd354579e5296ba53b3c38597cee42b03febc0b7818e6d71ea471f421022d6"
+      },
+      {
+        "chain": "base",
+        "tx": "0xf71b63d06b0d10f5493bd421cfb15b654bbe05ac32ba705ac8410bf11f5ea165"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb49a09079ac6398fd53673ef5d3a57237daa4b895d21724e4ce4eb7dc91d0c2e"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "axelar-contractCallWithMint": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x99edfa94b5779c2c0cf50c561cf8b2b30cb8ec878c886889c2ce6c71019e6801"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x7385ff7389a6338bbfabf8cfbd6e29cf3f50be2e3f949f3d8e216d9e4f7197d2"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x1e771a8c9acf904a731a5a9c19ba70845cf84f60cb80196ebc3257cc3d311b27"
+      }
+    ],
+    "events": [
+      "axelar.ContractCallWithToken",
+      "axelar.ContractCallApprovedWithMint",
+      "axelar.ContractCallExecuted"
+    ],
+    "messages": ["axelar.ContractCallWithTokenMessage"],
+    "transfers": ["axelar-gateway.Transfer"]
+  },
+  "centrifuge-wormhole-axelar": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x3715321d945b3369cd3734e2c23b580cb7753565370b228368fb96b61f89470e"
+      },
+      {
+        "chain": "base",
+        "tx": "0x34307bed725f60e416bedde7ed40423ffce8ece055d7f511bbc68df0c2396a5a"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x3bada383dca4d0f77dc49c063ecf96bc948d6cd0b9587458b65391b9b87cc3bf"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xcd7426344029fa89bec98c372bde5818f7a6267e66d99d185332e887fe5073e6"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xcf659529e4e3159662bd4686d1e30cc85af9786cd9ab2e2a2b003c924391d35f"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "wormhole-token-bridge": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x3cfa65ab201ecf59f94f7d7ebbf82cfb8ca80154bb0cc62df25cca25c3362d3b"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe81f7b139c8077f1ce52f3661289c176459d556878961b70ad9f1625654dd89c"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "stargatev2taxi": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x9b8bc656e135bcace1b4befe727b9b708199ba1c4640df5d3392d7b51286bc01"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xc3f745e5d599c9edf440ebb8cdc81328a6e6ab0454df1c5c8f007f29c013ea72"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "tBTC": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xa5de6423baeb4ef4deef1fb8e70f888b84f6de39aff608dea6fe4cccc67e8e57"
+      },
+      {
+        "chain": "base",
+        "tx": "0xf5ce8f7044fcc96036a6c3e1ac61342161cde59de4b5ad43175a5c2f4c326ea1"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "stargatev2bus": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xc59b27455553b8a20f691327acf7cf0e14515d60c0b5dbea9ae7e06c5f3d47e5"
+      },
+      {
+        "chain": "base",
+        "tx": "0xdac6499f4b968b4330e297264fc0bf0eee4dd42f74a0604514132ade26d89b82"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe29f0e3966732713f85eb140a0522223babb6616a245326dc9c53342d9be5acc"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x275c210329f04b7a6b413e725938d58cd5c4f36597d42d2fb1b27d6a1ad9d8bb"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xbdc64d28438d6be5252c997b9761eb08b2223db099959d4a2e5f3f6438e76242"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9c4e3027ae29b5704a91b6f0e442416e1e56bd04f3c26638e95d2eb856d40ec8"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xb61d23e02b537e2bed19cf10e8d14c9d6a386649cd3ee103419e641b2a4202f6"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "layerzeromix": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xc59b27455553b8a20f691327acf7cf0e14515d60c0b5dbea9ae7e06c5f3d47e5"
+      },
+      {
+        "chain": "base",
+        "tx": "0xdac6499f4b968b4330e297264fc0bf0eee4dd42f74a0604514132ade26d89b82"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe29f0e3966732713f85eb140a0522223babb6616a245326dc9c53342d9be5acc"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x275c210329f04b7a6b413e725938d58cd5c4f36597d42d2fb1b27d6a1ad9d8bb"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xbdc64d28438d6be5252c997b9761eb08b2223db099959d4a2e5f3f6438e76242"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9c4e3027ae29b5704a91b6f0e442416e1e56bd04f3c26638e95d2eb856d40ec8"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xb61d23e02b537e2bed19cf10e8d14c9d6a386649cd3ee103419e641b2a4202f6"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9b8bc656e135bcace1b4befe727b9b708199ba1c4640df5d3392d7b51286bc01"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xc3f745e5d599c9edf440ebb8cdc81328a6e6ab0454df1c5c8f007f29c013ea72"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xbc456cfa0f1e2d6e410f6317d026c23eba0bb2ac2f556ce3c7936b4aa6e7afbe"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x3cabb123406c909e712c68493a7c1f74452d21a28e9a5aee9443f4f497e1ca58"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9bec261577671eb4293dd57bb7c137e4d28479550f70e97e89a8250344b20007"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "usdt0": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xbc456cfa0f1e2d6e410f6317d026c23eba0bb2ac2f556ce3c7936b4aa6e7afbe"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x3cabb123406c909e712c68493a7c1f74452d21a28e9a5aee9443f4f497e1ca58"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9bec261577671eb4293dd57bb7c137e4d28479550f70e97e89a8250344b20007"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "across": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x51e7eb66f9be23a409f85c94310fa2c80a71e4be02c5c3db767433063fc13b5b"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xb68c00270bce23603b8620e8491e96facdecdf48c062e8554bf6f7ba4ef2df5d"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xba0253bf53087c24c15dce870df0c3615020efd33a1ae2be1781d15edf751c95"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb02e7ee0dc9353b283c3fb9b38a03f729492312b40c7745d38645b7441a9b25e"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "opstack": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x1c6f06a6ce9e511d9a94eae6a8b047e143803ee7bace3a20bf31d2908dfc30b1"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xb8297be109a3c221a80169dd4f05de59213b2074e4f1e8b97a84cc961392a844"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "orbitstack": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x3b8f7205e18ab5418b213020e0def446cf845dc7516bc276099869415e55566b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf031b41688650d9cc8c2e02408376c60f43443e3bdc5d1219872da18fafcb9a2"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  }
+}

@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x789cc478d9e9012a0f50a43922f863c8429d61ad
+
+# Diff at Fri, 12 Sep 2025 07:15:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2848a07919ddccf9d9ca1c6779dbcc184bdeb3b3 block: 1755516515
+- current timestamp: 1757661281
+
+## Description
+
+ms signer added.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x721e0A5e09A6e0Bf9641193a4D82901607837Df9"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x56341b93fc071e40f0a9fdad063be221cfe8c022
 
 # Diff at Wed, 03 Sep 2025 15:52:09 GMT:

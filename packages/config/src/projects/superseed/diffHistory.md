@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xda141869a89543647395d92528e076a89133f538
+
+# Diff at Mon, 15 Sep 2025 09:50:55 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1756214657
+- current timestamp: 1756214657
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756214657 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x657c1b0e31FFc69A02B207Be20699bDFF938c7E7) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x35791b06c3f5dab43cef4619d58e8ab95a2cd75b
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

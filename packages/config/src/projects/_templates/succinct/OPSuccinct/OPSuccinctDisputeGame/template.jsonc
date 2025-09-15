@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A dispute game wrapper around OPSuccinctL2OutputOracle. It is needed to comply with OptimismPortal2 requirement to have a DisputeGameFactory. Whenever a new game is created, an SP1 proof is immediately verified, so in fact there is no optimistic dispute game happening.",
+  "ignoreMethods": ["proof", "gameData", "extraData"]
+}

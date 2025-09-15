@@ -39,6 +39,7 @@ export const arbitrumOrbit: BaseProject = {
     },
   ],
   ecosystemConfig: {
+    startedAt: UnixTime.fromDate(new Date('2023-03-16')),
     links: {
       buildOn:
         'https://docs.arbitrum.io/launch-orbit-chain/a-gentle-introduction',

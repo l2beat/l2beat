@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x2d9dc1cdd7f53f82489fb694ad3335c270bce54d
+
+# Diff at Fri, 12 Sep 2025 07:19:12 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b19dd572d1bb478c9bacfee5598e38f6eee363a0 block: 1747235251
+- current timestamp: 1757661476
+
+## Description
+
+multisig change.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 2 (base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      values.$members.0:
++        "base:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675"
+      values.$members.1:
++        "base:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b"
+      values.$members.0:
+-        "base:0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9"
++        "base:0xc4548687682246e5B6ee8f914635c9f47836eDFe"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x5ef0e4a80856c5a10ce842c43ba357d7996ccb2e
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
