@@ -3,9 +3,18 @@ import {
   type EthereumAddress,
   type ProjectId,
 } from '@l2beat/shared-pure'
-import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
+
+export interface UsedInProject {
+  id: ProjectId
+  name: string
+  slug: string
+  url: string
+  icon: string
+  targetName: string
+  type: 'implementation' | 'proxy' | 'permission'
+}
 
 export interface ContractUtils {
   getChainName(chain: string): string

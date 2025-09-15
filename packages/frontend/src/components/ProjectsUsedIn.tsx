@@ -1,18 +1,13 @@
-import type { UsedInProject } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { cn } from '~/utils/cn'
-
-export interface UsedInProjectWithIcon extends UsedInProject {
-  icon: string
-  href: string
-}
+import type { UsedInProject } from '~/utils/project/contracts-and-permissions/getContractUtils'
 
 interface Props {
-  usedIn: UsedInProjectWithIcon[]
+  usedIn: UsedInProject[]
   className?: string
   noL2ClassName?: string
   maxProjects?: number
@@ -80,7 +75,7 @@ export function ProjectsUsedIn({
                 />
               </TooltipTrigger>
             ) : (
-              <a href={project.href} className="size-5">
+              <a href={project.url} className="size-5">
                 <TooltipTrigger>
                   <img
                     width={20}
