@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient, RetryHandler } from '@l2beat/shared'
-import type { EthereumAddress, LegacyToken } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import * as cheerio from 'cheerio'
 import { writeFileSync } from 'fs'
 import groupBy from 'lodash/groupBy'
@@ -18,7 +18,7 @@ type RwaTokenInfo = {
   symbol: string
   address: EthereumAddress | undefined
   categories: string[]
-  isStablecoin: boolean
+  isStablecoin: boolean | null
   isOnRWA: boolean
 }
 
@@ -43,19 +43,23 @@ async function main() {
     )
 
     if (!html) {
+      // We've got no response - asset not listed
+      // we fill the output with null values
       for (const token of tokensInGroup) {
         output.push({
           id: token.id,
           symbol: token.symbol,
           address: token.address,
           categories: [],
-          isStablecoin: false,
+          isStablecoin: null,
           isOnRWA: false,
         } satisfies RwaTokenInfo)
       }
       return
     }
 
+    // We've got redirected to the main page - asset not listed
+    // we fill the output with null values
     if (isMainPage(html)) {
       for (const token of tokensInGroup) {
         output.push({
@@ -63,16 +67,24 @@ async function main() {
           symbol: token.symbol,
           address: token.address,
           categories: [],
-          isStablecoin: false,
+          isStablecoin: null,
           isOnRWA: false,
         } satisfies RwaTokenInfo)
       }
       return
     }
 
+    const categories = extractCategories(html)
+
     for (const token of tokensInGroup) {
-      const info = parseAssetPageHtml(token, html)
-      output.push(info)
+      output.push({
+        id: token.id,
+        symbol: token.symbol,
+        address: token.address,
+        categories,
+        isStablecoin: categories.includes('Stablecoins'),
+        isOnRWA: true,
+      } satisfies RwaTokenInfo)
     }
   })
 
@@ -119,26 +131,17 @@ function isMainPage(html: string) {
   return title === 'RWA.xyz | Analytics on Tokenized Real-World Assets'
 }
 
-function parseAssetPageHtml(token: LegacyToken, html: string): RwaTokenInfo {
+function extractCategories(html: string): string[] {
   const $ = cheerio.load(html)
 
   const categoriesDiv = $(
     '#__next > div.flex.flex-1.flex-col.md\\:pl-\\[250px\\] > main > div > div > div.flex.flex-col.gap-4.mb-4 > div > div.flex.flex-col > div.flex.flex-wrap.items-center.gap-3',
   )
 
-  const categories = categoriesDiv
+  return categoriesDiv
     .children('span')
     .map((_, el) => $(el).text())
     .get()
-
-  return {
-    id: token.id,
-    symbol: token.symbol,
-    address: token.address,
-    categories,
-    isStablecoin: categories.includes('Stablecoins'),
-    isOnRWA: true,
-  }
 }
 
 const remaps: Record<string, string> = {

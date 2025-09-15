@@ -29,6 +29,7 @@ export interface LegacyToken {
   excludeFromTotal?: true
   bridgedUsing?: LegacyTokenBridgedUsing
   premint?: string
+  rwaMetadata?: RwaTokenMetadata
 }
 
 export interface LegacyTokenBridge {
@@ -39,4 +40,10 @@ export interface LegacyTokenBridge {
 export interface LegacyTokenBridgedUsing {
   bridges: LegacyTokenBridge[]
   warning?: string
+}
+
+export interface RwaTokenMetadata {
+  isStablecoin: boolean | null
+  isOnRWA: boolean
+  categories: string[]
 }
