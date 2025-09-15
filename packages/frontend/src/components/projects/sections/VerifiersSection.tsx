@@ -6,7 +6,7 @@ import {
   CollapsibleTrigger,
 } from '~/components/core/Collapsible'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { EtherscanLink } from '~/components/EtherscanLink'
+import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
 import {
   ProjectsUsedIn,
@@ -127,7 +127,17 @@ function VerifierCollapsibleWithDetails({
                 {verifierHash.knownDeployments.map((deployment, index) => (
                   <div key={deployment} className="space-y-2">
                     <h3 className="font-bold text-label-value-14">{`Deployment #${index + 1}`}</h3>
-                    <EtherscanLink href={deployment} address={deployment} />
+                    <div className="flex items-center gap-1">
+                      <span className="font-medium text-label-value-14 text-secondary">
+                        Address:
+                      </span>
+                      <CustomLink
+                        href={deployment}
+                        className="text-label-value-14"
+                      >
+                        {`0x${deployment.split('0x')[1] ?? ''}`}
+                      </CustomLink>
+                    </div>
                   </div>
                 ))}
               </div>
