@@ -13,6 +13,7 @@ import { DonatePage } from './donate/DonatePage'
 import { EcosystemProjectPage } from './ecosystems/project/EcosystemProjectPage'
 import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
+import { EthereumConnectPage } from './governance/ethereum-connect/EthereumConnectPage'
 import { GovernancePage } from './governance/GovernancePage'
 import { MultisigReportPage } from './multisig-report/MultisigReportPage'
 import { GovernancePublicationPage } from './publications/governance/GovernancePublicationPage'
@@ -80,6 +81,7 @@ const pages = {
   EcosystemProjectPage,
   // Governance
   GovernancePage,
+  EthereumConnectPage,
   GovernancePublicationPage,
   // Side pages
   FaqPage,
