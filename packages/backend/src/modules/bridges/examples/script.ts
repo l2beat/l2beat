@@ -1,11 +1,22 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
-import { HttpClient, RpcClient } from '@l2beat/shared'
+import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient,
+  PriceProvider,
+  RpcClient,
+} from '@l2beat/shared'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { command, positional, run, string } from 'cmd-ts'
 import { logToViemLog } from '../BridgeBlockProcessor'
 import { match } from '../BridgeMatcher'
+import { FinancialsService } from '../financials/FinancialsService'
+import { INTEROP_TOKENS } from '../financials/tokens'
 import { createBridgePlugins } from '../plugins'
-import type { BridgeEvent } from '../plugins/types'
+import type {
+  BridgeEvent,
+  BridgeTransferWithFinancials,
+} from '../plugins/types'
 import * as examples from './examples.json'
 import { InMemoryEventDb } from './InMemoryEventDb'
 
@@ -25,6 +36,21 @@ const cmd = command({
 
     const http = new HttpClient()
     const env = getEnv()
+    const coingeckoClient = new CoingeckoClient({
+      http,
+      logger,
+      sourceName: 'coingecko',
+      callsPerMinute: 600,
+      retryStrategy: 'SCRIPT',
+      apiKey: env.optionalString('COINGECKO_API_KEY'),
+    })
+    const priceProvider = new PriceProvider(
+      new CoingeckoQueryService(coingeckoClient),
+    )
+    const financialsService = new FinancialsService(
+      INTEROP_TOKENS,
+      priceProvider,
+    )
 
     const chains = example.map(({ chain, tx }) => {
       return {
@@ -82,9 +108,24 @@ const cmd = command({
 
     const eventDb = new InMemoryEventDb(events)
 
-    const result = await match(eventDb, events, plugins, logger)
-    for (const message of result.messages) {
-      logger.info('Message', message)
+    const result = await match(
+      eventDb,
+      events,
+      plugins,
+      chains.map((x) => x.name),
+      logger,
+    )
+    const transfers: BridgeTransferWithFinancials[] = await Promise.all(
+      result.transfers.map(
+        async (b) => await financialsService.addFinancials(b),
+      ),
+    )
+
+    for (const [index, message] of result.messages.entries()) {
+      logger.info(`Message #${index + 1}`, message)
+    }
+    for (const [index, transfer] of transfers.entries()) {
+      logger.info(`Transfer #${index + 1}`, transfer)
     }
   },
 })

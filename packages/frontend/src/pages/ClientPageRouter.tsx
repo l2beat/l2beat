@@ -4,6 +4,7 @@ import { BridgesProjectPage } from './bridges/project/BridgesProjectPage'
 import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
 import { DaRiskFrameworkPage } from './da-risk-framework/DaRiskFrameworkPage'
 import { DataAvailabilityArchivedPage } from './data-availability/archived/DataAvailabilityArchivedPage'
+import { DataAvailabilityLivenessPage } from './data-availability/liveness/DataAvailabilityLivenessPage'
 import { DataAvailabilityProjectPage } from './data-availability/project/DataAvailabilityProjectPage'
 import { DataAvailabilityRiskPage } from './data-availability/risk/DataAvailabilityRiskPage'
 import { DataAvailabilitySummaryPage } from './data-availability/summary/DataAvailabilitySummaryPage'
@@ -12,6 +13,7 @@ import { DonatePage } from './donate/DonatePage'
 import { EcosystemProjectPage } from './ecosystems/project/EcosystemProjectPage'
 import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
+import { EthereumConnectPage } from './governance/ethereum-connect/EthereumConnectPage'
 import { GovernancePage } from './governance/GovernancePage'
 import { MultisigReportPage } from './multisig-report/MultisigReportPage'
 import { GovernancePublicationPage } from './publications/governance/GovernancePublicationPage'
@@ -68,6 +70,7 @@ const pages = {
   DataAvailabilitySummaryPage,
   DataAvailabilityRiskPage,
   DataAvailabilityThroughputPage,
+  DataAvailabilityLivenessPage,
   DataAvailabilityProjectPage,
   DataAvailabilityArchivedPage,
   // ZK Catalog
@@ -78,6 +81,7 @@ const pages = {
   EcosystemProjectPage,
   // Governance
   GovernancePage,
+  EthereumConnectPage,
   GovernancePublicationPage,
   // Side pages
   FaqPage,

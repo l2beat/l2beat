@@ -5,19 +5,19 @@ import { DevAutoReloader } from '~/components/DevAutoReloader'
 import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
 import { SearchBarContextProvider } from '~/components/search-bar/SearchBarContext'
-import type { SearchBarProject } from '~/components/search-bar/SearchBarEntry'
 import { env } from '~/env'
+import type { SearchBarProject } from '~/server/features/projects/search-bar/types'
 import { TRPCReactProvider } from '~/trpc/React'
 
 export interface AppLayoutProps {
   terms: GlossaryTerm[]
-  searchBarProjects: SearchBarProject[]
+  recentlyAddedProjects: SearchBarProject[]
 }
 
 export function AppLayout({
   children,
   terms,
-  searchBarProjects,
+  recentlyAddedProjects,
 }: AppLayoutProps & {
   children: React.ReactNode
 }) {
@@ -31,7 +31,9 @@ export function AppLayout({
       >
         <TooltipProvider delayDuration={300} disableHoverableContent>
           <GlossaryContextProvider terms={terms}>
-            <SearchBarContextProvider projects={searchBarProjects}>
+            <SearchBarContextProvider
+              recentlyAddedProjects={recentlyAddedProjects}
+            >
               <ChartLegendOnboardingProvider>
                 {children}
               </ChartLegendOnboardingProvider>
