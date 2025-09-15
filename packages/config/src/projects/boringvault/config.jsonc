@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "boringvault",
+  "initialAddresses": [
+    "eth:0xf0bb20865277abd641a307ece5ee04e79073416c",
+    "eth:0x0d05D94a5F1E76C18fbeB7A13d17C8a314088198",
+    "eth:0x9AA79C84b79816ab920bBcE20f8f74557B514734"
+  ],
+  "names": {
+    "eth:0xf0bb20865277abd641a307ece5ee04e79073416c": "BoringVault",
+    "eth:0x0d05D94a5F1E76C18fbeB7A13d17C8a314088198": "AccountantWithRateProviders", 
+    "eth:0x9AA79C84b79816ab920bBcE20f8f74557B514734": "LayerZeroTellerWithRateLimiting"
+  }
+}

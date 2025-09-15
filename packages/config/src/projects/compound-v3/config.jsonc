@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "compound-v3",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+    "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
+    "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94"
+  ],
+  "names": {
+    "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3": "cUSDCv3",
+    "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3": "cWETHv3",
+    "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94": "cUSDTv3"
+  },
+  "overrides": {
+    "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3": {
+      "description": "Compound v3 USDC market - main lending pool for USDC with enhanced capital efficiency"
+    },
+    "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3": {
+      "description": "Compound v3 WETH market - lending pool for WETH"
+    },
+    "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94": {
+      "description": "Compound v3 USDT market - lending pool for USDT"
+    }
+  }
+}
