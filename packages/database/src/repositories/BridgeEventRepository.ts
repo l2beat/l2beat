@@ -15,6 +15,7 @@ export interface BridgeEventRecord {
   txTo: EthereumAddress | undefined
   logIndex: number
   matched: boolean
+  unsupported: boolean
   args: unknown
 }
 
@@ -31,6 +32,7 @@ export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
     txTo: row.txTo as EthereumAddress | undefined,
     logIndex: row.logIndex,
     matched: row.matched,
+    unsupported: row.unsupported,
     args: row.args,
   }
 }
@@ -48,7 +50,7 @@ export function toRow(record: BridgeEventRecord): Insertable<BridgeEvent> {
     txTo: record.txTo ?? null,
     logIndex: record.logIndex,
     matched: record.matched,
-    grouped: record.matched,
+    unsupported: record.unsupported,
     args: record.args,
   }
 }
@@ -57,6 +59,7 @@ export interface BridgeEventStatsRecord {
   type: string
   count: number
   matched: number
+  unsupported: number
 }
 
 export class BridgeEventRepository extends BaseRepository {
@@ -95,6 +98,10 @@ export class BridgeEventRepository extends BaseRepository {
         'type',
         eb.fn.countAll().as('count'),
         eb.fn.count('matched').filterWhere('matched', '=', true).as('matched'),
+        eb.fn
+          .count('unsupported')
+          .filterWhere('unsupported', '=', true)
+          .as('unsupported'),
       ])
       .groupBy('type')
       .execute()
@@ -102,6 +109,7 @@ export class BridgeEventRepository extends BaseRepository {
       type: x.type,
       count: Number(x.count),
       matched: Number(x.matched),
+      unsupported: Number(x.unsupported),
     }))
   }
 
@@ -121,6 +129,16 @@ export class BridgeEventRepository extends BaseRepository {
     await this.db
       .updateTable('BridgeEvent')
       .set({ matched: true })
+      .where('eventId', 'in', eventIds)
+      .execute()
+  }
+
+  async updateUnsupported(eventIds: string[]): Promise<void> {
+    if (eventIds.length === 0) return
+
+    await this.db
+      .updateTable('BridgeEvent')
+      .set({ unsupported: true })
       .where('eventId', 'in', eventIds)
       .execute()
   }
