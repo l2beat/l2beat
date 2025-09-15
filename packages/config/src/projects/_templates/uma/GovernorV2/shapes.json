@@ -1,8 +1,7 @@
 {
   "GovernorV2": {
     "hash": "0xdf7f17e5c8ba1f0103fcfaf495da624089f8bfb3d5052217537bb064ca8c60b9",
-    "address": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-    "chain": "ethereum",
+    "address": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
     "blockNumber": 22780541
   }
 }

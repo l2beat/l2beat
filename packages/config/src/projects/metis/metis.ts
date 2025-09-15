@@ -14,7 +14,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -56,7 +55,6 @@ export const metis: ScalingProject = {
   capability: 'universal',
   addedAt: UnixTime(1637945259), // 2021-11-26T16:47:39Z
   badges: [BADGES.VM.EVM, BADGES.Fork.OVM, BADGES.DA.EthereumBlobs],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Metis Andromeda',
     shortName: 'Metis',
@@ -84,7 +82,11 @@ export const metis: ScalingProject = {
       ],
     },
   },
-  proofSystem: undefined,
+  proofSystem: {
+    type: 'Optimistic',
+    name: 'OPFP',
+    challengeProtocol: 'Interactive',
+  },
   stage: getStage(
     {
       stage0: {
@@ -92,14 +94,14 @@ export const metis: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: 'UnderReview',
-        stateVerificationOnL1: false,
+        stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: false,
+        securityCouncilProperlySetUp: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -135,8 +137,8 @@ export const metis: ScalingProject = {
         callsPerMinute: 1500,
       },
       {
-        type: 'routescan',
-        url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
+        type: 'blockscout',
+        url: 'https://andromeda-explorer.metis.io/api',
       },
     ],
   },
@@ -220,8 +222,8 @@ export const metis: ScalingProject = {
       ...RISK_VIEW.STATE_FP_INT(CHALLENGE_PERIOD_SECONDS),
       description:
         RISK_VIEW.STATE_FP_INT().description +
-        ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
-      sentiment: 'bad',
+        ' Anyone can submit challenges, however, only the Metis Security Council minority can delete disputed batches.',
+      sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
@@ -237,7 +239,7 @@ export const metis: ScalingProject = {
         references: [
           {
             title: 'StateCommitmentChain - Etherscan source code',
-            url: 'https://etherscan.io/address/0x49A4D7ae835eA21c919B363fa88614b61d7985E7#code',
+            url: 'https://etherscan.io/address/0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1#code',
           },
         ],
       },
@@ -245,12 +247,11 @@ export const metis: ScalingProject = {
         title: 'Challenges',
         description: `Games are created on demand by the permissioned GameCreator should a dispute arise. Users can signal the need for a dispute through the dispute() function of the \`DisputeGameFactory\`. If a game is not created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
           DISPUTE_TIMEOUT_PERIOD,
-        )}, anyone can call \`disputeTimeout()\`. This function calls \`saveDisputedBatchTimeout()\` on the \`StateCommitmentChain\`, which marks the batch as disputed. This blocks L2->L1 messaging and withdrawals for the disputed batch and any subsequent batches until the dispute is deleted. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Verifier contract address, which currently corresponds to the \`Metis Multisig\`.`,
+        )}, anyone can call \`disputeTimeout()\`. This function calls \`saveDisputedBatchTimeout()\` on the \`StateCommitmentChain\`, which marks the batch as disputed. This blocks L2->L1 messaging and withdrawals for the disputed batch and any subsequent batches until the dispute is deleted. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Fraud_Verifier contract address, which currently corresponds to the \`Metis Security Council\` minority.`,
         risks: [
           {
             category: 'Funds can be frozen if',
-            text: 'an invalid state root is successfully disputed but it is not deleted by the permissioned MVM_Verifier.',
-            isCritical: true,
+            text: 'an invalid state root is successfully disputed but it is not deleted by the permissioned MVM_Fraud_Verifier (Metis Security Council minority).',
           },
         ],
         references: [

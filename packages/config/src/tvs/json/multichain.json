@@ -1399,7 +1399,7 @@
         "decimals": 18,
         "sinceTimestamp": 1625097600
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },

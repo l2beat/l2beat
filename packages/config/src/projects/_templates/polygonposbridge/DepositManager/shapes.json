@@ -1,16 +1,12 @@
-[
-  {
+{
+  "DepositManager_polygonpos": {
     "hash": "0xc5b5f88996b07c7bbc95a43cde9d9dd36d460beb6780e633858131ed36e1cbc9",
-    "description": "DepositManager_polygonpos",
-    "address": "0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc",
-    "chain": "ethereum",
+    "address": "eth:0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc",
     "blockNumber": 22231805
   },
-  {
+  "DepositManager_shibarium": {
     "hash": "0x6abce1ddeb9ae9c18a0e3da61c77df366e4fc7b1837de5dbc51cdbd50fb6004c",
-    "description": "DepositManager_shibarium",
-    "address": "0x79a674D373551e6CfD22b2ed65cc1Ac09250F430",
-    "chain": "ethereum",
+    "address": "eth:0x79a674D373551e6CfD22b2ed65cc1Ac09250F430",
     "blockNumber": 22231805
   }
-]
+}

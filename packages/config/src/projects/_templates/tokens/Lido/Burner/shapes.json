@@ -1,8 +1,7 @@
 {
   "Burner": {
     "hash": "0x10157e5d64980dbfd1f7d94307306bb86c3e3a9bb481af9253f4df368a6542f2",
-    "address": "0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
-    "chain": "ethereum",
+    "address": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
     "blockNumber": 22188285
   }
 }

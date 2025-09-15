@@ -132,7 +132,9 @@ describe(BlockTimestampProvider.name, () => {
 
         await expect(
           provider.getBlockNumberAtOrBefore(TIMESTAMP, CHAIN),
-        ).toBeRejectedWith('Missing BlockTimestamp data sources')
+        ).toBeRejectedWith(
+          `Missing BlockTimestamp data sources for chain ${CHAIN}`,
+        )
       })
     },
   )

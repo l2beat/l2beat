@@ -10,7 +10,6 @@ export function AboutUsPage(props: AppLayoutProps) {
       <SideNavLayout>
         <MainPageHeader>About Us</MainPageHeader>
         <PrimaryCard>
-          <h1 className="mb-4 font-bold text-3xl md:hidden">About Us</h1>
           <p className="mb-6 font-bold text-xl">
             Learn about L2BEAT and its mission
           </p>

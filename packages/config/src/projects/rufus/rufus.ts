@@ -23,6 +23,7 @@ export const rufus: ScalingProject = underReviewL2({
     links: {
       websites: ['https://dogelonmars.com/'],
       bridges: ['https://rufus.bridge.caldera.xyz/'],
+      documentation: ['https://docs.dogelonmars.com'],
       explorers: ['https://rufus.calderaexplorer.xyz/'],
       socialMedia: [
         'https://x.com/dogelonmars',

@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2OutputOracle",
+  "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. The challenge period can be reduced by the FinalityRelayerManager contract.",
+  "ignoreMethods": [
+    "getL2OutputAfter",
+    "getL2OutputIndexAfter",
+    "getL2Output",
+    "computeL2Timestamp"
+  ],
+  "ignoreInWatchMode": [
+    "nextBlockNumber",
+    "nextOutputIndex",
+    "latestBlockNumber",
+    "latestOutputIndex"
+  ],
+  "fields": {
+    "FINALIZATION_PERIOD_SECONDS": {
+      "description": "Challenge period (Number of seconds until a state root is finalized)."
+    },
+    "proposer": { "severity": "HIGH", "permissions": [{ "type": "propose" }] },
+    "PROPOSER": { "permissions": [{ "type": "propose" }] },
+    "challenger": {
+      "severity": "HIGH",
+      "permissions": [{ "type": "challenge" }]
+    },
+    "CHALLENGER": { "permissions": [{ "type": "challenge" }] },
+    "deletedOutputs": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["prevNextOutputIndex", "newNextOutputIndex"],
+        "add": { "event": "OutputsDeleted" }
+      }
+    },
+    "finalityProvider": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can reduce the challenge period for selected state roots."
+        }
+      ]
+    }
+  },
+  "category": "core"
+}

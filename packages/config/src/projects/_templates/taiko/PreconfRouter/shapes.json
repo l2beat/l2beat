@@ -1,8 +1,12 @@
 {
   "PreconfRouter": {
     "hash": "0x7029286f91090d6d474c9bc0329436fed073038c547c5cd3db6c70045a7dccf8",
-    "address": "0xf571E2626E2CE68127852123A2cC6AA522C586A0",
-    "chain": "ethereum",
+    "address": "eth:0xf571E2626E2CE68127852123A2cC6AA522C586A0",
     "blockNumber": 23132480
+  },
+  "PreconfRouter_2908": {
+    "hash": "0x34a58f3c77d5666ec8a39b17ab327273604248af9004c771429a4413b09e20dd",
+    "address": "eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913",
+    "blockNumber": 23259716
   }
 }

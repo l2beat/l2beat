@@ -1,68 +1,177 @@
 {
   "BurnMintTokenPoolAndProxy": {
     "hash": "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79",
-    "address": "0x485858BA818aab8744f2932A4982bfB0E7Db0005",
-    "chain": "ethereum",
+    "address": "eth:0x485858BA818aab8744f2932A4982bfB0E7Db0005",
     "blockNumber": 22188285
   },
   "BurnMintTokenPoolV1": {
     "hash": "0x6a270bc5c82591f8a8adb6765201cc65b04ed37a9509b2703970f74d1ee9534f",
-    "address": "0x1175E4CFd6a73A4c1F1f2c1400a08D88554FA62e",
-    "chain": "ethereum",
+    "address": "eth:0x1175E4CFd6a73A4c1F1f2c1400a08D88554FA62e",
     "blockNumber": 22188285
   },
   "BurnMintTokenPoolV2": {
     "hash": "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e",
-    "address": "0x06f9817a91595E1B595F789Fb91529e8651da9B8",
-    "chain": "ethereum",
+    "address": "eth:0x06f9817a91595E1B595F789Fb91529e8651da9B8",
     "blockNumber": 22188285
   },
   "BurnMintTokenPoolV3": {
     "hash": "0x6b4c769c7b59108373c42add32bce68be08c2c8095dcb0919d25cd9b4542102c",
-    "address": "0x057152DB365B47851B0A0bd431644b8eE21fE1b4",
-    "chain": "ethereum",
+    "address": "eth:0x057152DB365B47851B0A0bd431644b8eE21fE1b4",
     "blockNumber": 22188285
   },
   "BurnWithFromMintTokenPool": {
     "hash": "0x0a632a2beeac9d8c3a57905d419850c6bb531ccc97efca28cfe666847026992a",
-    "address": "0x45A103142585bdFc49cdb137f2a45D1AE7F84b6b",
-    "chain": "ethereum",
+    "address": "eth:0x45A103142585bdFc49cdb137f2a45D1AE7F84b6b",
     "blockNumber": 22188285
   },
   "LockReleaseTokenPoolAndProxy": {
     "hash": "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b",
-    "address": "0x0D736853812A12F085DE867aDF4eA4ABA9521Fc0",
-    "chain": "ethereum",
+    "address": "eth:0x0D736853812A12F085DE867aDF4eA4ABA9521Fc0",
     "blockNumber": 22188285
   },
   "LockReleaseTokenPoolV1": {
     "hash": "0x8f8568ffa012634ccf826a95dde2d995cc8c0fb07ea6662639e4e41983a00643",
-    "address": "0x50f6631B377be52E132DF35a2F05eA54fda882ac",
-    "chain": "ethereum",
+    "address": "eth:0x50f6631B377be52E132DF35a2F05eA54fda882ac",
     "blockNumber": 22188285
   },
   "LockReleaseTokenPoolV2": {
     "hash": "0xa9fa40d9d26de86fa9869be555593dd3b95cc40442206b8c0725a24d1809cc7f",
-    "address": "0x21377fe476Fb8587CbAFd47155093597Fa4df45E",
-    "chain": "ethereum",
+    "address": "eth:0x21377fe476Fb8587CbAFd47155093597Fa4df45E",
     "blockNumber": 22188285
   },
   "LockReleaseTokenPoolV3": {
     "hash": "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2",
-    "address": "0x0238d2C272f17CF11AEDB08CDE515d56ED25E2E4",
-    "chain": "ethereum",
+    "address": "eth:0x0238d2C272f17CF11AEDB08CDE515d56ED25E2E4",
     "blockNumber": 22188285
   },
   "USDCTokenPool": {
     "hash": "0x847be59cd2db802e5662b649bac8ff82c5d602b59f0d57a38d33d066aac1ba5f",
-    "address": "0xA81f4AB595dE5C14759245DE5ce9899D380FeFda",
-    "chain": "ethereum",
+    "address": "eth:0xA81f4AB595dE5C14759245DE5ce9899D380FeFda",
     "blockNumber": 22188285
   },
   "UpgradeableLockReleaseTokenPool": {
     "hash": "0xb4f2982da610e459869524c6366a4b364337b95f231f4109941deb2cc5afa258",
-    "address": "0x72427dA7EFBa1585E94F30C72221d8d394aE3Bb7",
-    "chain": "ethereum",
+    "address": "eth:0x72427dA7EFBa1585E94F30C72221d8d394aE3Bb7",
     "blockNumber": 22188285
+  },
+  "BurnMintTokenPoolV4": {
+    "hash": "0x79b9cf230176def2af971dc33c78f8b070cb0a6e49af9044a0e1f1ec5db4c52b",
+    "address": "eth:0x55042569836d203456d013dEFA8c670AD865d451",
+    "blockNumber": 23345741
+  },
+  "LockReleaseTokenPoolV4": {
+    "hash": "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f",
+    "address": "eth:0x1B7492C3bD23A4aDB448710e4275FF14A5288932",
+    "blockNumber": 23345741
+  },
+  "BurnMintTokenPoolV5": {
+    "hash": "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b",
+    "address": "eth:0x5F5d43508f34e0cAEaa558F9C964125538fFe9Cf",
+    "blockNumber": 23345741
+  },
+  "BurnMintTokenPoolV6": {
+    "hash": "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4",
+    "address": "eth:0x4488d79B3996364dBa219d98e82a6B0A3D937E62",
+    "blockNumber": 23345741
+  },
+  "LockReleaseTokenPoolV5": {
+    "hash": "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d",
+    "address": "eth:0xC8c2Fe3Df1d300F366cE831a34276d7E4dd1F9B5",
+    "blockNumber": 23345741
+  },
+  "LockReleaseTokenPoolV6": {
+    "hash": "0x217b592480064095001aece6e4a4a382b21d5c53174fe664f383125fd80c16a2",
+    "address": "eth:0x6948FEF23284906B5650895F9f6fbD4a0A939F20",
+    "blockNumber": 23345741
+  },
+  "SiloedLockReleaseTokenPool": {
+    "hash": "0x9028114a8dae289d45ca7a9ec2b46c04b63f9ed32d956c08dc09d650f2a7af19",
+    "address": "eth:0xF6698064776D521b0AFE469F30C40B39B4875b93",
+    "blockNumber": 23345741
+  },
+  "HybridWithExternalMinterTokenPool": {
+    "hash": "0x9bbec6b344dd243eb349c44aa334d60cc96c8ce7479238e775d9796b137dba83",
+    "address": "eth:0x36a72eD0096B414521C45E3ddC9ed657d1D9c141",
+    "blockNumber": 23345741
+  },
+  "SourceTokenPool": {
+    "hash": "0xf23d0b54f97d1fab5614da945340dce86452b2ee46b6df7d6b1ca22560732219",
+    "address": "eth:0x44e77d8C6Bb9999B036a6F084005E48928d18C74",
+    "blockNumber": 23345741
+  },
+  "SiloedWithUnsiloedXERC20GroupTokenPool": {
+    "hash": "0x33f09e7682272c1f95424ab3f37d1315f3aec5b97fca7ff982b59bc8677ecefc",
+    "address": "eth:0xa3532633401AbFfbd15e6be825a45FB7F141469B",
+    "blockNumber": 23345741
+  },
+  "XERC20LockboxTokenPool": {
+    "hash": "0x25f54b635dfa382b7751677a7a8743d4c6abe92cf1e784f8a4d651efe2ec9cfd",
+    "address": "eth:0x04db9b1D7f52cB288b95B4934a1fA688F6d0cBc3",
+    "blockNumber": 23345741
+  },
+  "BurnWithFromMintRebasingTokenPool": {
+    "hash": "0x3caa2a07b6c330a420b4eba48d5a846dbe47025c923211584cf067b237212552",
+    "address": "eth:0x4109f7E577596432458F8D4DC2E78637428D5614",
+    "blockNumber": 23345741
+  },
+  "BurnWithFromMintTokenPoolV2": {
+    "hash": "0x23277443ff5993c70a623842dec882790bd6856420dd107327d19b3d5b609229",
+    "address": "eth:0x4C4BD271b55f2114B9e2423409aaB1CC4D28C6B8",
+    "blockNumber": 23345741
+  },
+  "CCIPFlauntPool": {
+    "hash": "0x0a35dd432b77fce55b815e772bab627ec6b4ecc71e7a30d1a5576092d034682c",
+    "address": "eth:0xC8C866440806826EC0A43cD63129Be44DE2cE6bb",
+    "blockNumber": 23345741
+  },
+  "BurnMintTokenPoolV7": {
+    "hash": "0x5102a591873a3fc0d5e6ad74bf5810128330f615d7af4299c706e5abbeeebc39",
+    "address": "eth:0xe3f4B78cdd20f6B8AE8644064656d3E2bF08c4B8",
+    "blockNumber": 23345741
+  },
+  "BurnFromMintTokenPool": {
+    "hash": "0x2dfa2799ef923ad77675bd0e2d6b42de0c29967bca1f226419f990061eac8b76",
+    "address": "eth:0x1016225Ba7f32e3a6f2842A380D5846D8756648c",
+    "blockNumber": 23345741
+  },
+  "UpgradeableLockReleaseTokenPoolV2": {
+    "hash": "0x7612d95cd6518326945cfb5387b8a37c83d797ad268bd7d9d5695c45b59a579e",
+    "address": "eth:0x2Ce400703dAcc37b7edFA99D228b8E70a4d3831B",
+    "blockNumber": 23345741
+  },
+  "BurnMintTokenPoolV8": {
+    "hash": "0x4398d0c50712015c3b1951f5621659a9941d9e71e2860147ce6f40ae59231433",
+    "address": "eth:0x934635de453A1161D02Ce395F2F59E775597fE13",
+    "blockNumber": 23345741
+  },
+  "LombardTokenPool": {
+    "hash": "0xa19876326ec4b72b07f79dce7f7ebb4c003e0b28267638308320ef0e9cad43eb",
+    "address": "eth:0xac82d09D3BaE049C2119f5940ad517E6f1e9E453",
+    "blockNumber": 23345741
+  },
+  "BurnWithFromMintTokenPoolAndProxy": {
+    "hash": "0xff593d825b9ed83bf9557cfbebe2718ddf0b6b1cfb0023c7741933ad4c1c46cd",
+    "address": "eth:0x476EefeF46e0d65e1E371Fe093696259B1240B93",
+    "blockNumber": 23345741
+  },
+  "USDOBurnMintTokenPool": {
+    "hash": "0x787779b9003c3cbece777f7ca4e01cd32bcaf3ad04b071e28170f4435111ee4c",
+    "address": "eth:0x500d4882938020E939a5666c1B4200873da7EfD3",
+    "blockNumber": 23345741
+  },
+  "LockReleaseTokenPoolV7": {
+    "hash": "0x9e138ff38f9078d0b77e175aac09ba11f4a69ffa599143d3e50d72b9458f164b",
+    "address": "eth:0x553636e52059B0339592f545D25a4C0A86E3a1Bc",
+    "blockNumber": 23345741
+  },
+  "BurnToAddressMintTokenPool": {
+    "hash": "0x0550059a3da4f1397194a89699e465c3a43ee052c79d53b18e332d45957a94ef",
+    "address": "eth:0x5d1F00E79Fd5Caa2C4a6e361671Eed445F5b2C46",
+    "blockNumber": 23345741
+  },
+  "BurnMintWithExternalMinterTokenPool": {
+    "hash": "0xebe5dc88c67a2ad8ca0bba44f8e994962d09843551362086f5c93c10597b2447",
+    "address": "eth:0xF9e47d3720d5142930444ae6773C7F6d05696228",
+    "blockNumber": 23345741
   }
 }

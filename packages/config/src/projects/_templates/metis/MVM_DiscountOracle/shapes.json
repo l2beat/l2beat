@@ -1,8 +1,7 @@
 {
   "MVM_DiscountOracle.sol": {
     "hash": "0x8406419ac446023c37b27d0154da77b664a20b7da231802e32193c8883d32d06",
-    "address": "0x7f6B0b7589febc40419a8646EFf9801b87397063",
-    "chain": "ethereum",
+    "address": "eth:0x7f6B0b7589febc40419a8646EFf9801b87397063",
     "blockNumber": 22517630
   }
 }

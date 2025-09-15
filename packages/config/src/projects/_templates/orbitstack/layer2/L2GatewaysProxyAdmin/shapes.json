@@ -1,8 +1,7 @@
 {
   "L2GatewaysProxyAdmin": {
     "hash": "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444",
-    "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
-    "chain": "ethereum",
+    "address": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
     "blockNumber": 22188285
   }
 }

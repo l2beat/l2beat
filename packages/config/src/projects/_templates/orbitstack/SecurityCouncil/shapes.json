@@ -1,38 +1,32 @@
 {
   "GnosisSafe": {
     "hash": "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940",
-    "address": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-    "chain": "ethereum",
+    "address": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
     "blockNumber": 22188285
   },
   "GnosisSafe2": {
     "hash": "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367",
-    "address": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-    "chain": "ethereum",
+    "address": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
     "blockNumber": 22188285
   },
   "GnosisSafeL2": {
     "hash": "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825",
-    "address": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-    "chain": "ethereum",
+    "address": "eth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
     "blockNumber": 22188285
   },
   "GnosisSafe_blast_0xD659": {
     "hash": "0xd5e39124d6a5dcf27e7b56bfbb24569e89837dea5e334ef533c239e1497f1fee",
-    "address": "0x2ED1A552C03f843a2Db7DE10AD390d24bb66CEE0",
-    "chain": "ethereum",
+    "address": "eth:0x2ED1A552C03f843a2Db7DE10AD390d24bb66CEE0",
     "blockNumber": 22188285
   },
   "Safe": {
     "hash": "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a",
-    "address": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
-    "chain": "ethereum",
+    "address": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
     "blockNumber": 22188285
   },
   "SafeL2": {
     "hash": "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527",
-    "address": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
-    "chain": "ethereum",
+    "address": "eth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
     "blockNumber": 22188285
   }
 }

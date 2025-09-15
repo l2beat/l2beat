@@ -36,17 +36,20 @@ describe(SlotTxsCountService.name, () => {
       })
 
       const result = await service.getTxsCount(1, 4)
-      expect(result).toEqual([
-        activityRecord('a', UnixTime.toStartOf(START, 'day'), 5, 5, 1, 2),
-        activityRecord(
-          'a',
-          UnixTime.toStartOf(START + 2 * UnixTime.DAY, 'day'),
-          2,
-          2,
-          3,
-          3,
-        ),
-      ])
+      expect(result).toEqual({
+        records: [
+          activityRecord('a', UnixTime.toStartOf(START, 'day'), 5, 5, 1, 2),
+          activityRecord(
+            'a',
+            UnixTime.toStartOf(START + 2 * UnixTime.DAY, 'day'),
+            2,
+            2,
+            3,
+            3,
+          ),
+        ],
+        latestTimestamp: UnixTime.toStartOf(START + 2 * UnixTime.DAY, 'day'),
+      })
 
       expect(mockProvider.getBlockWithTransactions).toHaveBeenCalledTimes(4)
     })

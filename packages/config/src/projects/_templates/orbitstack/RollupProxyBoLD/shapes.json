@@ -2,10 +2,9 @@
   "RollupProxyBoLD": {
     "hash": "0x7b0429a0a98808dee6774a44d8d1ed15305ecc4b6fee4670db2d49f9caf65e51",
     "address": [
-      "0x7FC126FF51183a78C5E0437467f325f661D8Df17",
-      "0x6490bA0a60Cc7d3a59C9eeE135D9eeD24553a60d"
+      "eth:0x7FC126FF51183a78C5E0437467f325f661D8Df17",
+      "eth:0x6490bA0a60Cc7d3a59C9eeE135D9eeD24553a60d"
     ],
-    "chain": "ethereum",
     "blockNumber": 22188285
   }
 }

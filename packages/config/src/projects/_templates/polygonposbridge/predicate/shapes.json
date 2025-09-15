@@ -1,72 +1,57 @@
-[
-  {
+{
+  "EtherPredicate_shibarium": {
     "hash": "0xa949b42c0c7697496d06fe3d513ba1663e62f99796bacd265ab50e6453e4dcbb",
-    "description": "EtherPredicate_shibarium",
-    "address": "0x3f3bF9Ce73CE5a152561f4BF0306de3E3526f8FA",
-    "chain": "ethereum",
+    "address": "eth:0x3f3bF9Ce73CE5a152561f4BF0306de3E3526f8FA",
     "blockNumber": 22231805
   },
-  {
+  "ERC20Predicate_shibarium": {
     "hash": "0x093a1d884a048e1f39d3bb4ebd1bab3f52d07ed9cfd823099f6ddb87098f2de2",
-    "description": "ERC20Predicate_shibarium",
-    "address": "0xfffC2D781999F09A8b127f8Ef419a3EeD2EDa1dd",
-    "chain": "ethereum",
+    "address": "eth:0xfffC2D781999F09A8b127f8Ef419a3EeD2EDa1dd",
     "blockNumber": 22231805
   },
-  {
+  "ERC20Predicate_polygonpos": {
     "hash": "0x366c91202d3a2d7866e03ca63c5642da8ae32252a79ec9f171a4ddb75437df71",
-    "description": "ERC20Predicate_polygonpos",
-    "address": "0xeB185ED8f664D105903EF434E5becd214a8AC874",
-    "chain": "ethereum",
+    "address": "eth:0xeB185ED8f664D105903EF434E5becd214a8AC874",
     "blockNumber": 22231805
   },
-  {
+  "EtherPredicate_polygonpos": {
     "hash": "0xdb2c7a7688883aa90817563334c9613daee6ccad8d086ff273d6b484340444ab",
-    "description": "EtherPredicate_polygonpos",
-    "address": "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB",
-    "chain": "ethereum",
+    "address": "eth:0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB",
     "blockNumber": 22231805
   },
-  {
+  "ERC721Predicate_polygonpos": {
     "hash": "0x1d84e4aa2ca9808f7866a5d3c6c804956136d56a985525328da76b85a63238f3",
-    "description": "ERC721Predicate_polygonpos",
-    "address": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
-    "chain": "ethereum",
+    "address": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
     "blockNumber": 22231805
   },
-  {
+  "ERC721Predicate_shibarium": {
     "hash": "0x4731842b5a3a9367e3a748bcccb6280c89c1e5428139b7cca48ed566ed74709a",
-    "description": "ERC721Predicate_shibarium",
-    "address": "0xe0f4555Fcffb181B1D7566d89200105226F29580",
-    "chain": "ethereum",
+    "address": "eth:0xe0f4555Fcffb181B1D7566d89200105226F29580",
     "blockNumber": 22231805
   },
-  {
+  "ERC1155Predicate_poygonpos": {
     "hash": "0xda2db56264809ae744116955fe8ee8083707b093633a4d3aa1713a6d5fc0ee1c",
-    "description": "ERC1155Predicate_poygonpos",
-    "address": "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d",
-    "chain": "ethereum",
+    "address": "eth:0xCFA65db73cB45D458d0a98006d3d558b5e1F021d",
     "blockNumber": 22231805
   },
-  {
+  "ERC1155Predicate_shibarium": {
     "hash": "0xd4be21971e93432f8a4269386f5c2dfa288dff859600b0a3c8d8f17fdfd895e6",
-    "description": "ERC1155Predicate_shibarium",
-    "address": "0xCbb0D2eCBEDBF2D0F0D5616dFE25bC286D8F8610",
-    "chain": "ethereum",
+    "address": "eth:0xCbb0D2eCBEDBF2D0F0D5616dFE25bC286D8F8610",
     "blockNumber": 22231805
   },
-  {
+  "MintableERC721Predicate_poygonpos": {
     "hash": "0x4dcf96c463738c373c6726e2304e718115843041080f89a520d8d6fb2f357820",
-    "description": "MintableERC721Predicate_poygonpos",
-    "address": "0xba31389292f7EdfC7b60B937b97014b4C354689b",
-    "chain": "ethereum",
+    "address": "eth:0xba31389292f7EdfC7b60B937b97014b4C354689b",
     "blockNumber": 22231805
   },
-  {
+  "MintableERC721Predicate_shibarium": {
     "hash": "0x6e1b7753cf25b1dc926ed1048285f85b9cc596dbcebdadc1fdabd6830ac08f1e",
-    "description": "MintableERC721Predicate_shibarium",
-    "address": "0x37A9b4e7c327c449858dba9F5e39CE6771cBc31b",
-    "chain": "ethereum",
+    "address": "eth:0x37A9b4e7c327c449858dba9F5e39CE6771cBc31b",
     "blockNumber": 22231805
+  },
+  "ERC20Predicate_migrator": {
+    "hash": "0xf159b16a5d3a5070602bdcce59b317b67354f3e0daade4bd67d39fc4b7e11476",
+    "address": "eth:0x1F4c1E0afBeb5b5B86d7722549274434b29884F6",
+    "blockNumber": 23290158
   }
-]
+}

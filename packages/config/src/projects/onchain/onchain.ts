@@ -24,7 +24,7 @@ export const onchain: ScalingProject = underReviewL3({
     purposes: ['Gaming', 'Social'],
     links: {
       websites: ['https://onchaincoin.io/', 'https://portal.onchaincoin.io/'],
-      bridges: ['https://onchaingate.io/', 'https://t.me/onchaincoin_bot'],
+      bridges: ['https://t.me/onchaincoin_bot'],
       explorers: ['https://explorer.onchainpoints.xyz/'],
       socialMedia: [
         'https://x.com/onchaincoin',

@@ -550,6 +550,25 @@
     },
     {
       "mode": "auto",
+      "id": "omni-cvxCRV",
+      "priceId": "convex-crv",
+      "symbol": "cvxCRV",
+      "name": "Convex CRV",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15586/large/convex-crv.png?1696515222",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7",
+        "chain": "ethereum",
+        "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+        "decimals": 18,
+        "sinceTimestamp": 1621814400
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "omni-DAI",
       "priceId": "dai",
       "symbol": "DAI",
@@ -691,7 +710,7 @@
         "decimals": 6,
         "sinceTimestamp": 1656547200
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },

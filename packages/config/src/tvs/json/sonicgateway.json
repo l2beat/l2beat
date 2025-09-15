@@ -36,7 +36,7 @@
         "decimals": 18,
         "sinceTimestamp": 1734690647
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -55,7 +55,7 @@
         "decimals": 6,
         "sinceTimestamp": 1734690647
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },

@@ -1,14 +1,12 @@
 {
   "L1WETHGateway.sol": {
     "hash": "0xb90cab5924c6894e3047536242125cdface40857b9c70a6551210bc6de166b42",
-    "address": "0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49",
-    "chain": "ethereum",
+    "address": "eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49",
     "blockNumber": 22338265
   },
   "L1WETHGateway_Feynman": {
     "hash": "0x85541d2f37f32a3d9fe2cd14f01e794d21a323e3f67041c89a7293f790f85668",
-    "address": "0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24",
-    "chain": "ethereum",
+    "address": "eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24",
     "blockNumber": 23168179
   }
 }

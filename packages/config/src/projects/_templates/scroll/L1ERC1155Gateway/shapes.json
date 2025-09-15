@@ -1,14 +1,12 @@
 {
   "L1ERC1155Gateway.sol": {
     "hash": "0x35e9a9e7a691f357e642a73662c88a202224b73a44fc022f833ccc8aff9a4a64",
-    "address": "0x244BF7aEf29F03916569470a51fA0794B62F8cd7",
-    "chain": "ethereum",
+    "address": "eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7",
     "blockNumber": 22338265
   },
   "L1ERC1155Gateway_Feynman": {
     "hash": "0x3e82df6b3c4997362507d8f73c6fff945dedcee0aeaf99f8369b433dc82c0bca",
-    "address": "0xcA46358D5F01E4F865885514DAe6275087Ffe38E",
-    "chain": "ethereum",
+    "address": "eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E",
     "blockNumber": 23168179
   }
 }

@@ -12,9 +12,14 @@ interface Project {
 interface Props {
   project: Project
   ongoingAnomaly?: 'single' | 'multiple'
+  livenessSectionHref?: string
 }
 
-export function ProjectHeader({ project, ongoingAnomaly }: Props) {
+export function ProjectHeader({
+  project,
+  ongoingAnomaly,
+  livenessSectionHref = '#liveness',
+}: Props) {
   return (
     <div className="mb-6 flex items-start justify-between gap-4">
       <div
@@ -36,7 +41,7 @@ export function ProjectHeader({ project, ongoingAnomaly }: Props) {
         </h1>
         {!!ongoingAnomaly && (
           <a
-            href="#liveness"
+            href={livenessSectionHref}
             className="flex h-8 items-center justify-center gap-2 rounded border border-negative p-2"
           >
             <LiveIndicator />

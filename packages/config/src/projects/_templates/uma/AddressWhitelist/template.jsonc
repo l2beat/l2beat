@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Implements a simple address whitelist for tokens that can be used as bonds and fees.",
+  "description": "A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the UMA ecosystem.",
   "ignoreMethods": ["whitelistIndices"],
   "ignoreRelatives": ["getWhitelist"],
   "fields": {

@@ -213,7 +213,7 @@ This method allows ZK rollups to prove that the data used in their validity proo
     apis: [
       { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://eth.blockscout.com/api/v2' },
-      { type: 'rpc', url: 'https://eth-mainnet.alchemyapi.io/v2/demo' },
+      { type: 'rpc', url: 'https://ethereum-rpc.publicnode.com' },
     ],
   },
   milestones: [

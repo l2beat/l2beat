@@ -136,9 +136,8 @@ model UpdateMonitor {
   timestamp         DateTime? @db.Timestamp(6)
   discoveryJsonBlob Json
   configHash        String    @default("") @db.VarChar(255)
-  chainId           Int       @default(1)
 
-  @@id([projectId, chainId])
+  @@id([projectId])
 }
 
 model UpdateNotifier {
@@ -148,7 +147,6 @@ model UpdateNotifier {
   projectId    String   @db.VarChar(255)
   timestamp    DateTime @default(now()) @db.Timestamp(6)
   diffJsonBlob Json
-  chainId      Int      @default(1)
 
   @@index([timestamp])
   @@index([projectId])
@@ -156,11 +154,10 @@ model UpdateNotifier {
 
 model UpdateMessage {
   projectId String   @db.VarChar(255)
-  chain     String   @db.VarChar(255)
   timestamp DateTime @db.Timestamp(6)
   message   String   @db.Text
 
-  @@id([projectId, chain, timestamp])
+  @@id([projectId, timestamp])
 }
 
 model VerifierStatus {
@@ -217,12 +214,11 @@ model AnomalyStats {
 
 model FlatSources {
   projectId   String   @db.VarChar(255)
-  chainId     Int
   timestamp   DateTime @default(now()) @db.Timestamp(6)
   contentHash String   @db.VarChar(255)
   flat        Json
 
-  @@id([projectId, chainId])
+  @@id([projectId])
 }
 
 model TvsAmount {
@@ -262,6 +258,7 @@ model TokenValue {
   value           Float    @db.Real
   valueForProject Float    @db.Real
   valueForSummary Float    @db.Real
+  priceUsd        Float    @default(0) @db.Real
 
   @@id([timestamp, configurationId])
   @@index([projectId])
@@ -302,14 +299,13 @@ model ProjectValue {
 
 model UpdateDiff {
   projectId         String   @db.VarChar(255)
-  chain             String   @db.VarChar(255)
   address           String   @db.VarChar(255)
   type              String   @db.VarChar(255)
   timestamp         DateTime @db.Timestamp(6)
   diffBaseTimestamp DateTime @default(now()) @db.Timestamp(6)
   diffHeadTimestamp DateTime @default(now()) @db.Timestamp(6)
 
-  @@unique([projectId, address, type, chain])
+  @@unique([projectId, address, type])
 }
 
 model Notification {
@@ -333,4 +329,90 @@ model Blob {
   size        BigInt?
 
   @@index([blockNumber])
+}
+
+model SyncMetadata {
+  feature          String    @db.VarChar(255)
+  id               String    @db.VarChar(255)
+  target           DateTime  @db.Timestamp(6)
+  syncedUntil      DateTime? @db.Timestamp(6)
+  blockTarget      Int?
+  blockSyncedUntil Int?
+
+  @@id([feature, id])
+  @@index([feature, id])
+}
+
+model BridgeEvent {
+  eventId     String   @db.VarChar(40)
+  type        String   @db.VarChar(64)
+  expiresAt   DateTime @db.Timestamp(6)
+  timestamp   DateTime @db.Timestamp(6)
+  chain       String   @db.VarChar(32)
+  blockNumber Int
+  blockHash   String   @db.VarChar(66)
+  txHash      String   @db.VarChar(66)
+  txTo        String?  @db.VarChar(42)
+  matched     Boolean
+  unsupported Boolean  @default(false)
+  logIndex    Int
+  args        Json
+
+  @@id([eventId])
+  @@index([type])
+}
+
+model BridgeMessage {
+  messageId   String    @db.VarChar(40)
+  type        String    @db.VarChar(64)
+  duration    Int?
+  timestamp   DateTime  @db.Timestamp(6)
+  srcTime     DateTime? @db.Timestamp(6)
+  srcChain    String?   @db.VarChar(32)
+  srcTxHash   String?   @db.VarChar(66)
+  srcLogIndex Int?
+  srcEventId  String?   @db.VarChar(40)
+  dstTime     DateTime? @db.Timestamp(6)
+  dstChain    String?   @db.VarChar(32)
+  dstTxHash   String?   @db.VarChar(66)
+  dstLogIndex Int?
+  dstEventId  String?   @db.VarChar(40)
+
+  @@id([messageId])
+  @@index([type])
+}
+
+model BridgeTransfer {
+  messageId   String    @db.VarChar(40)
+  type        String    @db.VarChar(64)
+  duration    Int?
+  timestamp   DateTime  @db.Timestamp(6)
+  srcTime     DateTime? @db.Timestamp(6)
+  srcChain    String?   @db.VarChar(32)
+  srcTxHash   String?   @db.VarChar(66)
+  srcLogIndex Int?
+  srcEventId  String?   @db.VarChar(40)
+
+  srcTokenAddress String?  @db.VarChar(42)
+  srcRawAmount    Decimal? @db.Decimal(80, 0)
+  srcSymbol       String?  @db.VarChar(10)
+  srcAmount       Float?   @db.Real
+  srcPrice        Float?   @db.Real
+  srcValueUsd     Float?   @db.Real
+
+  dstTime     DateTime? @db.Timestamp(6)
+  dstChain    String?   @db.VarChar(32)
+  dstTxHash   String?   @db.VarChar(66)
+  dstLogIndex Int?
+  dstEventId  String?   @db.VarChar(40)
+
+  dstTokenAddress String?  @db.VarChar(42)
+  dstRawAmount    Decimal? @db.Decimal(80, 0)
+  dstSymbol       String?  @db.VarChar(10)
+  dstAmount       Float?   @db.Real
+  dstPrice        Float?   @db.Real
+  dstValueUsd     Float?   @db.Real
+
+  @@id([messageId])
+  @@index([type])
 }

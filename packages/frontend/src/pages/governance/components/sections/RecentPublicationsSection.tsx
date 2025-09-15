@@ -1,6 +1,7 @@
 import { Button } from '~/components/core/Button'
 import { LinkWithThumbnail } from '~/components/LinkWithThumbnail'
-import type { GovernancePublicationEntry } from '../../utils/getGovernancePublicationEntry'
+import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
+import type { GovernancePublicationEntry } from '../../../publications/governance/utils/getGovernancePublicationEntry'
 import { GovernanceCard } from '../GovernanceCard'
 
 interface Props {
@@ -28,9 +29,14 @@ export function RecentPublicationsSection({ publications }: Props) {
 }
 
 function ExploreAllButton({ className }: { className?: string }) {
+  const filters = getFilterSearchParams({
+    contentCategory: {
+      values: ['Governance'],
+    },
+  })
   return (
     <Button className={className} variant="outline" size="sm" asChild>
-      <a href="/governance/publications">Explore all publications</a>
+      <a href={`/publications?filters=${filters}`}>Explore all publications</a>
     </Button>
   )
 }
@@ -43,7 +49,7 @@ function Publication({ publication }: PublicationProps) {
   return (
     <LinkWithThumbnail
       {...publication.thumbnail}
-      href={`/governance/publications/${publication.id}`}
+      href={`/publications/${publication.id}`}
       topAccessory={
         <p className="text-brand text-subtitle-11">{publication.publishedOn}</p>
       }

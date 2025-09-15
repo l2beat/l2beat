@@ -1,26 +1,27 @@
 {
   "RiscZeroGroth16Verifier_v2_0_0": {
     "hash": "0x22a4c48ce03a19c9b31c30608fd0808cfe2c85b5c722e1173aafd22872fd1881",
-    "address": "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98",
-    "chain": "ethereum",
+    "address": "eth:0x48E32eFbe22e180A3FFe617f4955cD83B983dd98",
     "blockNumber": 22468063
   },
   "RiscZeroGroth16Verifier_v2_1_0": {
     "hash": "0xe1597b3a05a2f083910b7e1c6e81e56d4eff97191b25307544c7f2164d824d51",
-    "address": "0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a",
-    "chain": "ethereum",
+    "address": "eth:0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a",
     "blockNumber": 22694475
   },
   "RiscZeroGroth16Verifier_v2_2_0": {
     "hash": "0x0ec6714f2eae54d69f7eb8da9f402541927894bca21763405f3a4083e9c1c93a",
-    "address": "0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9",
-    "chain": "ethereum",
+    "address": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9",
     "blockNumber": 22975539
   },
   "RiscZeroGroth16Verifier_Taiko_v2_2_0": {
     "hash": "0x02a47f0ba956127adc6a8d871b4444f762209c2d6f916b87162fcea4f9b9482b",
-    "address": "0x34Eda8BfFb539AeC33078819847B36D221c6641c",
-    "chain": "ethereum",
+    "address": "eth:0x34Eda8BfFb539AeC33078819847B36D221c6641c",
     "blockNumber": 23023802
+  },
+  "RiscZeroGroth16Verifier_v3": {
+    "hash": "0xb44ee6b08f1771b57cb0eaac00eb8ac68c0b86d1f4cbd25e8b80debe791ad2eb",
+    "address": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D",
+    "blockNumber": 23282448
   }
 }

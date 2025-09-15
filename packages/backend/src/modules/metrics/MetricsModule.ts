@@ -1,10 +1,10 @@
 import { collectDefaultMetrics } from 'prom-client'
-
-import type { Config } from '../../config'
-import type { ApplicationModule } from '../ApplicationModule'
+import type { ApplicationModule, ModuleDependencies } from '../types'
 import { createMetricsRouter } from './MetricsRouter'
 
-export function createMetricsModule(config: Config): ApplicationModule {
+export function createMetricsModule({
+  config,
+}: ModuleDependencies): ApplicationModule {
   const router = createMetricsRouter(config)
   return {
     routers: [router],

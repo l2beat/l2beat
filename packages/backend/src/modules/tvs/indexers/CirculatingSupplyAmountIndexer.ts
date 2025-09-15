@@ -1,5 +1,5 @@
 import type { CirculatingSupplyAmountFormula } from '@l2beat/config'
-import type { TvsAmountRecord } from '@l2beat/database/dist/tvs/amount/entity'
+import type { TvsAmountRecord } from '@l2beat/database'
 import type { CirculatingSupplyProvider } from '@l2beat/shared'
 import {
   CoingeckoId,

@@ -1,8 +1,7 @@
 {
   "TurboVerifier": {
     "hash": "0x72846aa5544e4499c54463014cbacb03ad291385be297b56c638ccfb15717b8b",
-    "address": "0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8",
-    "chain": "ethereum",
+    "address": "eth:0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8",
     "blockNumber": 22188285
   }
 }

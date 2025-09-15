@@ -39,11 +39,7 @@ export function ValuesPanel() {
     <div className="h-full w-full overflow-x-auto">
       {!selected && <ActionNeededState message="Select a contract" />}
       {selected && (
-        <Display
-          selected={selected}
-          chain={selected.chain}
-          blockNumber={selected.blockNumber}
-        />
+        <Display selected={selected} blockNumber={selected.blockNumber} />
       )}
     </div>
   )
@@ -51,13 +47,13 @@ export function ValuesPanel() {
 
 function Display({
   selected,
-  chain,
   blockNumber,
 }: {
   selected: ApiProjectContract | ApiAddressEntry
-  chain: string
   blockNumber: number
 }) {
+  const chain = selected.chain
+
   const { project } = useParams()
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
@@ -65,7 +61,11 @@ function Display({
   const addresses = getAddressesToCopy(selected)
 
   const dialog = addresses && canAddShape(selected) && !isReadOnly && (
-    <TemplateDialog.Root>
+    <TemplateDialog.Root
+      key={`${project}-${selected.address}`}
+      project={project}
+      selectedName={selected.name}
+    >
       <TemplateDialog.Trigger>Add shape</TemplateDialog.Trigger>
       <TemplateDialog.Body
         addresses={addresses}

@@ -1,14 +1,12 @@
 {
   "RewardsCoordinator": {
     "hash": "0xe548a802866b09c90c208e0f77018c9cdafa34ab07c071eac1e68c0a46d384b9",
-    "address": "0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2",
-    "chain": "ethereum",
+    "address": "eth:0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2",
     "blockNumber": 22188285
   },
   "RewardsCoordinator.sol": {
     "hash": "0x834e9e144a27f28147a1d93de8045120205831ebea6457dc3748a624877591df",
-    "address": "0xa505c0116aD65071F0130061F94745b7853220aB",
-    "chain": "ethereum",
+    "address": "eth:0xa505c0116aD65071F0130061F94745b7853220aB",
     "blockNumber": 22424645
   }
 }

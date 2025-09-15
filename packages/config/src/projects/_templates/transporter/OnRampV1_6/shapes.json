@@ -1,8 +1,7 @@
 {
   "OnRampV1_6": {
     "hash": "0xee4e39c0bca429970c249781fe0b978225152bf5c19426e38b8b38605a9f6341",
-    "address": "0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-    "chain": "ethereum",
+    "address": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
     "blockNumber": 23166891
   }
 }

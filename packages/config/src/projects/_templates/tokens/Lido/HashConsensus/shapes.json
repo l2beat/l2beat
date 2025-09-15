@@ -1,14 +1,12 @@
 {
   "HashConsensus": {
     "hash": "0xdcb2da84a44fbac1b8d7ea814fd34325ac06bb8169fad7507a00835a3ffb25de",
-    "address": "0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
-    "chain": "ethereum",
+    "address": "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
     "blockNumber": 22188285
   },
   "HashConsensus_v2": {
     "hash": "0xd7c073e5462dc74227ab219c6db299253e6a83e1a470f27a9d5dcff04fd6b46f",
-    "address": "0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
-    "chain": "ethereum",
+    "address": "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
     "blockNumber": 22587696
   }
 }

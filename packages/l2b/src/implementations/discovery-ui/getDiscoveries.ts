@@ -3,17 +3,11 @@ import type { ConfigReader, DiscoveryOutput } from '@l2beat/discovery'
 export function getProjectDiscoveries(
   configReader: ConfigReader,
   project: string,
-  chain: string,
 ): DiscoveryOutput[] {
-  const baseDiscovery = configReader.readDiscovery(project, chain)
+  const baseDiscovery = configReader.readDiscovery(project)
   const discoveries = [baseDiscovery]
   for (const sharedModule of baseDiscovery.sharedModules ?? []) {
-    const sharedModuleChains =
-      configReader.readAllDiscoveredChainsForProject(sharedModule)
-
-    if (sharedModuleChains.includes(chain)) {
-      discoveries.push(configReader.readDiscovery(sharedModule, chain))
-    }
+    discoveries.push(configReader.readDiscovery(sharedModule))
   }
 
   return discoveries
@@ -23,6 +17,5 @@ export function getAllProjectDiscoveries(
   configReader: ConfigReader,
   project: string,
 ): DiscoveryOutput[] {
-  const chains = configReader.readAllDiscoveredChainsForProject(project)
-  return chains.flatMap((c) => getProjectDiscoveries(configReader, project, c))
+  return getProjectDiscoveries(configReader, project)
 }

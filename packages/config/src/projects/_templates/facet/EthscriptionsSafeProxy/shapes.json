@@ -1,8 +1,7 @@
 {
   "EthscriptionsSafeProxy": {
     "hash": "0x09dadea0389245a8882bad041f0349cda9669a53f590677017514fdbe7ec0c8a",
-    "address": "0xeEd444Fc821b866b002f30f502C53e88E15d5095",
-    "chain": "ethereum",
+    "address": "eth:0xeEd444Fc821b866b002f30f502C53e88E15d5095",
     "blockNumber": 22188285
   }
 }

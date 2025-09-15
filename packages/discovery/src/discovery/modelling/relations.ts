@@ -1,4 +1,4 @@
-import type { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   ContractPermission,
   RawPermissionConfiguration,
@@ -30,14 +30,14 @@ const addressTypeContractTemplate: InlineTemplate = {
 addressType(
   @self,
   contract).`,
-  when: (c) => c.type === 'Contract',
+  when: (c) => c.type === 'Contract' || c.targetType === 'Contract',
 }
 const addressTypeEOATemplate: InlineTemplate = {
   content: `
 addressType(
   @self,
   eoa).`,
-  when: (c) => c.type === 'EOA',
+  when: (c) => c.type === 'EOA' || c.targetType === 'EOA',
 }
 const canActIndependentlyTemplate: InlineTemplate = {
   content: `
@@ -76,13 +76,12 @@ permissionCondition(
 }
 
 export function contractValuesForInterpolation(
-  chain: string,
   structureEntry: StructureEntry,
   contractPermission: ContractPermission | undefined,
 ): Record<string, ContractValue | undefined> {
   const values = structureEntry.values
   return {
-    '$.chain': chain,
+    '$.chain': ChainSpecificAddress.chain(structureEntry.address),
     '$.address': structureEntry.address.toLowerCase(),
     '$.canActIndependently': contractPermission?.canActIndependently,
     ...values,
@@ -90,15 +89,17 @@ export function contractValuesForInterpolation(
 }
 
 export function buildPermissionsModel(
-  chain: string,
   contractPermission: ContractPermission,
   structureEntry: StructureEntry,
   addressToNameMap: Record<string, string>,
-): string {
+): string | undefined {
+  if (structureEntry.type === 'Reference') {
+    return
+  }
+
   const relationsModel: string[] = []
 
   const contractValues = contractValuesForInterpolation(
-    chain,
     structureEntry,
     contractPermission,
   )

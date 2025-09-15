@@ -1,20 +1,17 @@
 {
   "CommitStoreV1-1": {
     "hash": "0xd025e395362545e27f2685927e4952ec45f7414e89a22f0db36aa587b3741d69",
-    "address": "0x118a9389960F86390A4F14ce4C95D6ff076C6bFC",
-    "chain": "ethereum",
+    "address": "eth:0x118a9389960F86390A4F14ce4C95D6ff076C6bFC",
     "blockNumber": 22188285
   },
   "CommitStoreV1-2": {
     "hash": "0x47106a5b62610ed3e17aeaa5e041a4fcea8b1f14fea096ed2697d3e382077da7",
-    "address": "0x20718EfbC25Dba60FD51c2c81362b83f7C411A6D",
-    "chain": "ethereum",
+    "address": "eth:0x20718EfbC25Dba60FD51c2c81362b83f7C411A6D",
     "blockNumber": 22188285
   },
   "CommitStoreV1-3": {
     "hash": "0x1187294715ed2abab47b9649c53548ef616fede9edb55b7fc7e25915524623a5",
-    "address": "0x01346721418045A6c07b71052e452eF8615e9084",
-    "chain": "ethereum",
+    "address": "eth:0x01346721418045A6c07b71052e452eF8615e9084",
     "blockNumber": 22188285
   }
 }

@@ -1,14 +1,12 @@
 {
   "AllocationManager.sol": {
     "hash": "0x82974ffe4d2eaf842109ba34b64dc6aaacd4ab2040d3c53815e2cdf43946630b",
-    "address": "0x740058839A1668Af5700e5d7B062007275e77D25",
-    "chain": "ethereum",
+    "address": "eth:0x740058839A1668Af5700e5d7B062007275e77D25",
     "blockNumber": 22425028
   },
   "AllocationManager_redistribution": {
     "hash": "0xa704abda563be08e6ca83769e716b07daf54f505f36b9a0278f751eb355c802e",
-    "address": "0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345",
-    "chain": "ethereum",
+    "address": "eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345",
     "blockNumber": 23083543
   }
 }

@@ -24,11 +24,7 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import {
-  formatChallengeAndExecutionDelay,
-  formatChallengePeriod,
-  formatDelay,
-} from '../common/formatDelays'
+import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -36,6 +32,7 @@ import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
+  ProjectScalingRiskView,
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
@@ -54,7 +51,6 @@ import type {
   ProjectScalingDa,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
-  ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectScalingStateDerivation,
@@ -86,6 +82,14 @@ export const EIGENDA_DA_PROVIDER: DAProvider = {
   technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
   bridge: DA_BRIDGES.NONE,
   badge: BADGES.DA.EigenDA,
+}
+
+export const PRIVATE_DA_PROVIDER: DAProvider = {
+  layer: DA_LAYERS.NONE,
+  riskView: RISK_VIEW.DATA_EXTERNAL,
+  technology: TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
+  bridge: DA_BRIDGES.NONE,
+  badge: BADGES.DA.CustomDA,
 }
 
 export function DACHALLENGES_DA_PROVIDER(
@@ -308,7 +312,13 @@ function opStackCommon(
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Optimistic', name: 'OPFP' }),
+      (hasNoProofs
+        ? undefined
+        : {
+            type: 'Optimistic',
+            name: 'OPFP',
+            challengeProtocol: 'Interactive',
+          }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
@@ -877,13 +887,13 @@ function getRiskView(
 
 function getRiskViewStateValidation(
   templateVars: OpStackConfigCommon,
-): TableReadyValue {
+): ProjectScalingRiskView['stateValidation'] {
   const fraudProofType = getFraudProofType(templateVars)
   switch (fraudProofType) {
     case 'None': {
       return {
         ...RISK_VIEW.STATE_NONE,
-        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
+        challengeDelay: getChallengePeriod(templateVars),
       }
     }
     case 'Permissioned': {
@@ -896,6 +906,12 @@ function getRiskViewStateValidation(
           RISK_VIEW.STATE_FP_INT().description +
           ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number[]>(
+            'DisputeGameFactory',
+            'initBonds',
+          )[1], // 1 is for permissioned games!
+        ),
       }
     }
     case 'Permissionless': {
@@ -904,14 +920,24 @@ function getRiskViewStateValidation(
           getChallengePeriod(templateVars),
           getExecutionDelay(templateVars),
         ),
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number[]>(
+            'DisputeGameFactory',
+            'initBonds',
+          )[0], // 0 is for permissionless games!
+        ),
       }
     }
     case 'Kailua': {
       return {
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
-        secondLine: formatChallengeAndExecutionDelay(
-          getChallengePeriod(templateVars) +
-            Number(getExecutionDelay(templateVars)),
+        executionDelay: getExecutionDelay(templateVars),
+        challengeDelay: getChallengePeriod(templateVars),
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number>(
+            'KailuaTreasury',
+            'participationBond',
+          ),
         ),
       }
     }

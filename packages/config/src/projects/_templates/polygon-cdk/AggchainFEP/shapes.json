@@ -1,8 +1,7 @@
 {
   "AggchainFEP": {
     "hash": "0xe893ad152fe92e36431300818c1be2ef9c1d514a53c4ea4beba3dc0f4f9b8e4f",
-    "address": "0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682",
-    "chain": "ethereum",
+    "address": "eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682",
     "blockNumber": 22824327
   }
 }
