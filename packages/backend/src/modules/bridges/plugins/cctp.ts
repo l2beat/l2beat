@@ -50,8 +50,10 @@ export const CCTPv2MessageSent = createBridgeEventType<{
   app?: string
   hookData?: string
   amount?: string
+  tokenAddress?: EthereumAddress
   messageBody: string
   txHash: string
+  $dstChain: string
 }>('cctp-v2.MessageSent')
 
 export const CCTPv2MessageReceived = createBridgeEventType<{
@@ -95,13 +97,21 @@ export class CCTPPlugin implements BridgePlugin {
           return
         }
         const burnMessage = decodeBurnMessage(message.messageBody)
+        console.log('cctp.capture: burnMessage', burnMessage)
 
         return CCTPv2MessageSent.create(input.ctx, {
           // https://developers.circle.com/cctp/technical-guide#messages-and-finality
           fast: message.minFinalityThreshold <= 1000,
+          $dstChain:
+            CCTP_NETWORKS.find(
+              (n) => n.cctpdomain === Number(message.destinationDomain),
+            )?.chain || '???',
           app: burnMessage ? 'TokenMessengerV2' : undefined,
           hookData: burnMessage?.hookData,
           amount: burnMessage?.amount.toString(),
+          tokenAddress: EthereumAddress(
+            '0x' + burnMessage?.burnToken?.slice(-40),
+          ),
           messageBody: message.messageBody,
           txHash: input.ctx.txHash,
         })

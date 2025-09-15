@@ -125,7 +125,7 @@ export class StargatePlugin implements BridgePlugin {
   name = 'stargate'
   chains = ['ethereum', 'arbitrum', 'base']
 
-  constructor(private logger: Logger) { }
+  constructor(private logger: Logger) {}
 
   capture(input: LogToCapture) {
     const network = NETWORKS.find((b) => b.chain === input.ctx.chain)

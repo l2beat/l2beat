@@ -86,14 +86,29 @@ export class MayanMctpFastPlugin implements BridgePlugin {
           inbound: messageReceived,
         },
         {
-          type: 'cctp-v2.BRIDGE',
-          outbound: messageSent,
-          inbound: messageReceived,
-        },
-        {
           type: 'mayanmctp-fast.SWAP',
           outbound: messageSent,
           inbound: orderFulfilled,
+        },
+      ],
+      transfers: [
+        {
+          type: 'cctp-v2.TRANSFER',
+          events: [messageSent, messageReceived],
+          outbound: {
+            event: messageSent,
+            token: {
+              address: messageSent.args.tokenAddress!,
+              amount: messageSent.args.amount.toString(),
+            },
+          },
+          inbound: {
+            event: messageReceived,
+            token: {
+              address: messageSent.args.tokenAddress!,
+              amount: messageSent.args.amount.toString(),
+            },
+          },
         },
       ],
     }
