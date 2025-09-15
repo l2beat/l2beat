@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x668f3d5b9c61145597ed1102a9bb92ac3e8a6825
+
+# Diff at Mon, 15 Sep 2025 13:51:40 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@caf8c178d671e7934a3e015dc337d3a3f541905e block: 1756886128
+- current timestamp: 1757944236
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756886128 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d)
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+```
+
+```diff
++   Status: CREATED
+    reference SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb3ed1ad7bc6d739f77aa1b5b0911664a1ef4ac1a
 
 # Diff at Wed, 03 Sep 2025 15:52:03 GMT:

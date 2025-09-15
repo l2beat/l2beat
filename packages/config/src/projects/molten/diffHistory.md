@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xdc0a9c5daabfb4fd679282ac3fbb44b87e35b769
+
+# Diff at Mon, 15 Sep 2025 13:46:04 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@caf8c178d671e7934a3e015dc337d3a3f541905e block: 1757683093
+- current timestamp: 1757683093
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757683093 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference SP1VerifierGateway (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Blobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794)
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+```
+
 Generated with discovered.json: 0x395b0b2ea48cf6f25011506d11153d86d21f1421
 
 # Diff at Fri, 12 Sep 2025 13:19:30 GMT:
