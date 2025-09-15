@@ -77,7 +77,7 @@ function VerifierCollapsibleWithDetails({
       <CollapsibleTrigger className="flex w-full items-center justify-between px-6 py-3 font-bold">
         <div className="grid w-full grid-cols-[120px_1fr_1fr_140px] gap-4">
           <span className="text-left">{formatAddress(verifierHash.hash)}</span>
-          <div className="flex items-center gap-1.5 text-center">
+          <div className="flex items-center gap-1.5 text-center max-md:hidden">
             <p className="font-medium text-label-value-12 text-secondary">
               Used in
             </p>
@@ -86,8 +86,8 @@ function VerifierCollapsibleWithDetails({
               usedIn={verifierHash.projectsUsedIn}
             />
           </div>
-          <div>Verifiers</div>
-          <div className="flex items-center gap-1.5">
+          <div className="max-md:hidden">Verifiers</div>
+          <div className="flex items-center gap-1.5 max-md:hidden">
             <div className="font-medium text-label-value-12 text-secondary">
               Known deployments
             </div>
