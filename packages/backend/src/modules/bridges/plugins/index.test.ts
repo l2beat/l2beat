@@ -1,10 +1,9 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { createBridgePlugins } from '.'
+import { createBridgePlugins } from './index'
 
 describe('Plugins', async () => {
-  const plugins = createBridgePlugins(Logger.SILENT)
+  const plugins = createBridgePlugins()
   const chainsWithRpc = new Set<string>()
 
   before(async () => {

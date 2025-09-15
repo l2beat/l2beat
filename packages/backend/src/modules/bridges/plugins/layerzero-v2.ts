@@ -1,4 +1,3 @@
-import type { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../BinaryReader'
@@ -55,15 +54,9 @@ export class LayerZeroV2Plugin implements BridgePlugin {
   name = 'layerzero-v2'
   chains = ['ethereum', 'arbitrum', 'base']
 
-  constructor(private logger: Logger) {}
-
   capture(input: LogToCapture) {
     const network = NETWORKS.find((x) => x.chain === input.ctx.chain)
     if (!network) {
-      this.logger.warn('Network not configured', {
-        plugin: this.name,
-        ctx: input.ctx,
-      })
       return
     }
 

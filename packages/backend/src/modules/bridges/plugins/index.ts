@@ -1,4 +1,3 @@
-import type { Logger } from '@l2beat/backend-tools'
 import { AcrossPlugin } from './across'
 import { AxelarPlugin } from './axelar'
 import { CCTPPlugin } from './cctp'
@@ -18,22 +17,22 @@ import { WormholePlugin } from './wormhole'
 import { WormholeRelayerPlugin } from './wormholerelayer'
 import { WormholeTokenBridgePlugin } from './wormholetokenbridge'
 
-export function createBridgePlugins(logger: Logger): BridgePlugin[] {
+export function createBridgePlugins(): BridgePlugin[] {
   return [
     new MayanForwarderPlugin(),
     new MayanSwiftPlugin(), // should be run before CCTP
     new MayanMctpPlugin(), // should be run before CCTP
     new MayanMctpFastPlugin(), // should be run before CCTP
     new CCTPPlugin(),
-    new StargatePlugin(logger),
+    new StargatePlugin(),
     new StargateV2BusPlugin(), // should be run before LayerZeroV2
     new StargateV2TaxiPlugin(), // should be run before LayerZeroV2
     new Usdt0Plugin(), // should be run before LayerZeroV2
-    new LayerZeroV2Plugin(logger),
+    new LayerZeroV2Plugin(),
     new WormholeTokenBridgePlugin(), // should be run before Wormhole
     new WormholeRelayerPlugin(), // should be run before Wormhole
-    new WormholePlugin(logger),
-    new StargatePlugin(logger),
+    new WormholePlugin(),
+    new StargatePlugin(),
     new AxelarPlugin(),
     new AcrossPlugin(),
     new OrbitStackPlugin(),
