@@ -5,7 +5,6 @@ import { BridgeMatcher } from './BridgeMatcher'
 import { createBridgeRouter } from './BridgeRouter'
 import { BridgeStore } from './BridgeStore'
 import { FinancialsService } from './financials/FinancialsService'
-import { INTEROP_TOKENS } from './financials/tokens'
 import { createBridgePlugins } from './plugins'
 
 export function createBridgeModule({
@@ -15,7 +14,7 @@ export function createBridgeModule({
   blockProcessors,
   providers,
 }: ModuleDependencies): ApplicationModule | undefined {
-  if (!config.bridgesEnabled) {
+  if (!config.bridges) {
     logger.info('Bridges module disabled')
     return
   }
@@ -38,7 +37,7 @@ export function createBridgeModule({
   }
 
   const financialsService = new FinancialsService(
-    INTEROP_TOKENS,
+    config.bridges.interopTokens,
     providers.price,
   )
 

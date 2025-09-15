@@ -12,6 +12,7 @@ import type {
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { InteropToken } from '../modules/bridges/financials/generateInteropTokens'
 import type {
   AmountConfig,
   BlockTimestampConfig,
@@ -51,7 +52,7 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
-  readonly bridgesEnabled: boolean
+  readonly bridges: { interopTokens: InteropToken[] } | false
 
   readonly flags: ResolvedFeatureFlag[]
 }

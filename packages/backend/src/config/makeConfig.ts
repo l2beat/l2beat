@@ -1,6 +1,7 @@
 import type { Env } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
+import { getInteropTokens } from '../modules/bridges/financials/interopTokens'
 import type { Config } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
 import { FeatureFlags } from './FeatureFlags'
@@ -143,7 +144,9 @@ export async function makeConfig(
         60 * 60, // 1 hour
       ),
     },
-    bridgesEnabled: flags.isEnabled('bridges'),
+    bridges: flags.isEnabled('bridges') && {
+      interopTokens: getInteropTokens(),
+    },
     // Must be last
     flags: flags.getResolved(),
   }

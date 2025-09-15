@@ -11,7 +11,7 @@ import { command, positional, run, string } from 'cmd-ts'
 import { logToViemLog } from '../BridgeBlockProcessor'
 import { match } from '../BridgeMatcher'
 import { FinancialsService } from '../financials/FinancialsService'
-import { INTEROP_TOKENS } from '../financials/tokens'
+import { getInteropTokens } from '../financials/interopTokens'
 import { createBridgePlugins } from '../plugins'
 import type {
   BridgeEvent,
@@ -47,8 +47,10 @@ const cmd = command({
     const priceProvider = new PriceProvider(
       new CoingeckoQueryService(coingeckoClient),
     )
+    const interopTokens = getInteropTokens()
+
     const financialsService = new FinancialsService(
-      INTEROP_TOKENS,
+      interopTokens,
       priceProvider,
     )
 
