@@ -13,6 +13,7 @@ const L1OrbitERC20Gateway = discovery.getContract('ERC20Gateway')
 export const game7: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1738899615),
   hostChain: 'arbitrum',
+  archivedAt: UnixTime(1757934746),
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
@@ -23,6 +24,8 @@ export const game7: ScalingProject = orbitStackL3({
   display: {
     name: 'Game7',
     slug: 'g7',
+    headerWarning:
+      'The project has been sunset. Read more [here](https://dydx.exchange/blog/v3-product-sunset).',
     description:
       'Game7 is a DAO initiated by BitDAO and Forte to accelerate the adoption of sustainable, web3-native gaming.',
     links: {
