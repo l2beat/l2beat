@@ -41,7 +41,7 @@ const HEADERS = [
   'addressUrl',
   'addressName',
   'RWA-isStablecoin',
-  'RWA-isOnRWA',
+  'RWA-isListed',
   'RWA-categories',
 ]
 
@@ -122,7 +122,7 @@ export async function getInternalTokenBreakdown() {
         address === 'multiple' ? address : address?.url,
         address === 'multiple' ? address : address?.name,
         tokenMetadata?.isStablecoin,
-        tokenMetadata?.isOnRWA,
+        tokenMetadata?.isListed,
         tokenMetadata?.categories?.join(', '),
       ])
     }

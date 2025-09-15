@@ -44,6 +44,6 @@ export interface LegacyTokenBridgedUsing {
 
 export interface RwaTokenMetadata {
   isStablecoin: boolean | null
-  isOnRWA: boolean
+  isListed: boolean
   categories: string[]
 }

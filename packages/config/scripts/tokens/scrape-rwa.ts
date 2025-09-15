@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient, RetryHandler } from '@l2beat/shared'
-import type { EthereumAddress } from '@l2beat/shared-pure'
 import * as cheerio from 'cheerio'
 import { writeFileSync } from 'fs'
 import groupBy from 'lodash/groupBy'
@@ -14,12 +13,10 @@ main().catch((e: unknown) => {
 })
 
 type RwaTokenInfo = {
-  id: string
   symbol: string
-  address: EthereumAddress | undefined
   categories: string[]
   isStablecoin: boolean | null
-  isOnRWA: boolean
+  isListed: boolean
 }
 
 async function main() {
@@ -45,47 +42,35 @@ async function main() {
     if (!html) {
       // We've got no response - asset not listed
       // we fill the output with null values
-      for (const token of tokensInGroup) {
-        output.push({
-          id: token.id,
-          symbol: token.symbol,
-          address: token.address,
-          categories: [],
-          isStablecoin: null,
-          isOnRWA: false,
-        } satisfies RwaTokenInfo)
-      }
+      output.push({
+        symbol,
+        categories: [],
+        isStablecoin: null,
+        isListed: false,
+      } satisfies RwaTokenInfo)
       return
     }
 
     // We've got redirected to the main page - asset not listed
     // we fill the output with null values
     if (isMainPage(html)) {
-      for (const token of tokensInGroup) {
-        output.push({
-          id: token.id,
-          symbol: token.symbol,
-          address: token.address,
-          categories: [],
-          isStablecoin: null,
-          isOnRWA: false,
-        } satisfies RwaTokenInfo)
-      }
+      output.push({
+        symbol,
+        categories: [],
+        isStablecoin: null,
+        isListed: false,
+      } satisfies RwaTokenInfo)
       return
     }
 
     const categories = extractCategories(html)
 
-    for (const token of tokensInGroup) {
-      output.push({
-        id: token.id,
-        symbol: token.symbol,
-        address: token.address,
-        categories,
-        isStablecoin: categories.includes('Stablecoins'),
-        isOnRWA: true,
-      } satisfies RwaTokenInfo)
-    }
+    output.push({
+      symbol,
+      categories,
+      isStablecoin: categories.includes('Stablecoins'),
+      isListed: true,
+    } satisfies RwaTokenInfo)
   })
 
   for (const task of tasks) {

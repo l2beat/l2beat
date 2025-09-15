@@ -36,7 +36,7 @@ export function getTokenList(chains: ChainConfig[]): LegacyToken[] {
 }
 
 function attachTemporaryRwaMetadata(token: LegacyToken): LegacyToken {
-  const matchingRwaToken = rwa.tokens.find((r) => r.id === token.id)
+  const matchingRwaToken = rwa.tokens.find((r) => r.symbol === token.symbol)
 
   if (!matchingRwaToken) {
     return token
@@ -46,7 +46,7 @@ function attachTemporaryRwaMetadata(token: LegacyToken): LegacyToken {
     ...token,
     rwaMetadata: {
       isStablecoin: matchingRwaToken.isStablecoin,
-      isOnRWA: matchingRwaToken.isOnRWA,
+      isListed: matchingRwaToken.isListed,
       categories: matchingRwaToken.categories,
     },
   }
