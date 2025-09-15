@@ -46,7 +46,7 @@ export class DaService {
 
     return {
       records: updatedRecords,
-      latestTimestamp: UnixTime.toStartOf(lastBlob.blockTimestamp, 'hour'),
+      latestTimestamp: lastBlob.blockTimestamp,
     }
   }
 

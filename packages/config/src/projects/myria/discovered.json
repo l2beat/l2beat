@@ -1,8 +1,7 @@
 {
   "name": "myria",
   "timestamp": 1741185779,
-  "configHash": "0xc795e9882ffecc94bc70afb920fd7ab1d0bc810075ca25a06c01a4f7a636b5ac",
-  "sharedModules": ["shared-sharp-verifier"],
+  "configHash": "0xbde9eba75b5a3f76b1e0eebc484d88313a8289f48de0f14bf70252847dce5eab",
   "entries": [
     {
       "name": "DACommittee",

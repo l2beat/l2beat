@@ -4,12 +4,12 @@ import {
   StargateV2OFTReceived,
   StargateV2OFTSentBusRode,
 } from './stargate'
-import type {
-  BridgeEvent,
-  BridgeEventDb,
-  BridgePlugin,
-  BridgeTransfer,
-  MatchResult,
+import {
+  type BridgeEvent,
+  type BridgeEventDb,
+  type BridgePlugin,
+  type MatchResult,
+  Result,
 } from './types'
 
 export class StargateV2BusPlugin implements BridgePlugin {
@@ -17,21 +17,15 @@ export class StargateV2BusPlugin implements BridgePlugin {
   chains = ['ethereum', 'arbitrum', 'base']
 
   match(busDriven: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!StargateV2BusDriven.checkType(busDriven)) {
-      return
-    }
+    if (!StargateV2BusDriven.checkType(busDriven)) return
 
     const packetSent = db.find(PacketSent, { guid: busDriven.args.guid })
-    if (!packetSent) {
-      return
-    }
+    if (!packetSent) return
 
     const packetDelivered = db.find(PacketDelivered, {
       guid: busDriven.args.guid,
     })
-    if (!packetDelivered) {
-      return
-    }
+    if (!packetDelivered) return
 
     const oftReceivedBatch = db.findAll(StargateV2OFTReceived, {
       guid: busDriven.args.guid,
@@ -53,14 +47,13 @@ export class StargateV2BusPlugin implements BridgePlugin {
         destinationEid: destinationEid,
         token: token,
       })
-      if (!oftSentBusRode) {
-        return
-      }
-
+      if (!oftSentBusRode) return
       oftSentBusRodeBatch.push(oftSentBusRode)
     }
 
-    const transfers: BridgeTransfer[] = []
+    const result: MatchResult = [
+      Result.Message('layerzero-v2.Message', [packetSent, packetDelivered]),
+    ]
     for (const oftSentBusRode of oftSentBusRodeBatch) {
       const matchedOftReceived = oftReceivedBatch.find(
         (o) =>
@@ -69,35 +62,18 @@ export class StargateV2BusPlugin implements BridgePlugin {
           o.args.receiver.toLowerCase() ===
           oftSentBusRode.args.receiver.toLowerCase(),
       )
-      if (!matchedOftReceived) {
-        return
-      }
-
-      transfers.push({
-        type: 'stargate-v2-bus.App',
-        events: [oftSentBusRode, matchedOftReceived],
-        outbound: {
-          tx: oftSentBusRode.ctx,
-          tokenAddress: oftSentBusRode.args.tokenAddress,
-          amount: oftSentBusRode.args.amountSentLD.toString(),
-        },
-        inbound: {
-          tx: matchedOftReceived.ctx,
-          tokenAddress: matchedOftReceived.args.tokenAddress,
-          amount: matchedOftReceived.args.amountReceivedLD.toString(),
-        },
-      })
+      if (!matchedOftReceived) return
+      result.push(
+        Result.Transfer('stargate-v2-bus.Transfer', {
+          srcEvent: oftSentBusRode,
+          srcTokenAddress: oftSentBusRode.args.tokenAddress,
+          srcAmount: oftSentBusRode.args.amountSentLD.toString(),
+          dstEvent: matchedOftReceived,
+          dstTokenAddress: matchedOftReceived.args.tokenAddress,
+          dstAmount: matchedOftReceived.args.amountReceivedLD.toString(),
+        }),
+      )
     }
-
-    return {
-      messages: [
-        {
-          type: 'layerzero-v2.Message',
-          outbound: packetSent,
-          inbound: packetDelivered,
-        },
-      ],
-      transfers,
-    }
+    return result
   }
 }

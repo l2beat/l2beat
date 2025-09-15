@@ -1,8 +1,7 @@
 {
   "name": "immutablex",
   "timestamp": 1741355279,
-  "configHash": "0xa1a2e4fe3951eaf4c5e1dafccd4c7afdaf4cde63dc345c678f473c35395ac45a",
-  "sharedModules": ["shared-sharp-verifier"],
+  "configHash": "0xb20e97b5b0bcbdebd550fe275851e7c164c370ad144c6daba9ffbf270da38640",
   "entries": [
     {
       "name": "DACommittee",

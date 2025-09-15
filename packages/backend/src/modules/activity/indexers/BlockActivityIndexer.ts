@@ -61,7 +61,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
       await this.$.db.syncMetadata.updateSyncedUntil(
         'activity',
         [this.$.projectId],
-        UnixTime.toStartOf(latestTimestamp, 'hour'),
+        UnixTime.toEndOf(latestTimestamp, 'hour'),
         adjustedTo,
       )
     })
