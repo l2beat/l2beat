@@ -97,7 +97,6 @@ export class CCTPPlugin implements BridgePlugin {
           return
         }
         const burnMessage = decodeBurnMessage(message.messageBody)
-        console.log('cctp.capture: burnMessage', burnMessage)
 
         return CCTPv2MessageSent.create(input.ctx, {
           // https://developers.circle.com/cctp/technical-guide#messages-and-finality
@@ -166,7 +165,6 @@ export class CCTPPlugin implements BridgePlugin {
       if (!messageSent) {
         return
       }
-      console.log('cctp.match: found and matched all events')
       return {
         messages: [
           {
