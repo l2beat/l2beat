@@ -3,6 +3,7 @@ import { AcrossPlugin } from './across'
 import { AxelarPlugin } from './axelar'
 import { CCTPPlugin } from './cctp'
 import { LayerZeroV2Plugin } from './layerzero-v2'
+import { MayanForwarderPlugin } from './mayanforwarder'
 import { MayanMctpPlugin } from './mayanmctp'
 import { MayanMctpFastPlugin } from './mayanmctp-fast'
 import { MayanSwiftPlugin } from './mayanswift'
@@ -19,6 +20,7 @@ import { WormholeTokenBridgePlugin } from './wormholetokenbridge'
 
 export function createBridgePlugins(logger: Logger): BridgePlugin[] {
   return [
+    new MayanForwarderPlugin(),
     new MayanSwiftPlugin(), // should be run before CCTP
     new MayanMctpPlugin(), // should be run before CCTP
     new MayanMctpFastPlugin(), // should be run before CCTP
