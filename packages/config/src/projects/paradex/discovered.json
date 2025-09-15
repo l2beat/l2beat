@@ -1,8 +1,7 @@
 {
   "name": "paradex",
   "timestamp": 1757661281,
-  "configHash": "0x8c208b7a2d1fb7bbc6221d55e7e73d17cb0c0f10f7a894c01bc1a656505c5637",
-  "sharedModules": ["shared-sharp-verifier"],
+  "configHash": "0xa64fab3878c0bb1696cfc62bfe7fbd81f0f969c5a4b3760f52da012225be3c0e",
   "entries": [
     {
       "name": "Paradex Multisig",
