@@ -1,13 +1,17 @@
+import type { UsedInProject } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { cn } from '~/utils/cn'
-import type { UsedInProject } from '~/utils/project/contracts-and-permissions/getContractUtils'
 
+export interface UsedInProjectWithIcon extends UsedInProject {
+  icon: string
+  url: string
+}
 interface Props {
-  usedIn: UsedInProject[]
+  usedIn: UsedInProjectWithIcon[]
   className?: string
   noL2ClassName?: string
   maxProjects?: number

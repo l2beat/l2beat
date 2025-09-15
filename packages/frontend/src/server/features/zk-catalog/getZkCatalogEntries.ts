@@ -9,6 +9,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import {
   get7dTvsBreakdown,
@@ -21,7 +22,6 @@ import { getLogger } from '~/server/utils/logger'
 import {
   type ContractUtils,
   getContractUtils,
-  type UsedInProject,
 } from '~/utils/project/contracts-and-permissions/getContractUtils'
 
 export type TrustedSetupVerifierData = {
@@ -46,7 +46,7 @@ export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
         unsuccessful?: TrustedSetupVerifierData
         notVerified?: TrustedSetupVerifierData
       }
-      projectsUsedIn: UsedInProject[]
+      projectsUsedIn: UsedInProjectWithIcon[]
     }
   >
 }

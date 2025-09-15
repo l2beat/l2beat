@@ -1,9 +1,19 @@
+import type { ProjectId } from '@l2beat/shared-pure'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import type { UsedInProject } from '~/utils/project/contracts-and-permissions/getContractUtils'
+
+export interface UsedInProject {
+  id: ProjectId
+  name: string
+  slug: string
+  url: string
+  icon: string
+  targetName: string
+  type: 'implementation' | 'proxy' | 'permission'
+}
 
 export function UsedInProjectEntry({
   label,
