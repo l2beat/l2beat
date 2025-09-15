@@ -1,4 +1,3 @@
-import type { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../BinaryReader'
 import {
@@ -125,15 +124,9 @@ export class StargatePlugin implements BridgePlugin {
   name = 'stargate'
   chains = ['ethereum', 'arbitrum', 'base']
 
-  constructor(private logger: Logger) {}
-
   capture(input: LogToCapture) {
     const network = NETWORKS.find((b) => b.chain === input.ctx.chain)
     if (!network) {
-      this.logger.warn('Network not configured', {
-        plugin: this.name,
-        ctx: input.ctx,
-      })
       return
     }
 

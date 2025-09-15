@@ -7,7 +7,11 @@ import {
   RpcClient,
 } from '@l2beat/shared'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { command, positional, run, string } from 'cmd-ts'
+import { readFileSync } from 'fs'
+import { type ParseError, parse } from 'jsonc-parser'
+import { join } from 'path'
 import { logToViemLog } from '../BridgeBlockProcessor'
 import { match } from '../BridgeMatcher'
 import { FinancialsService } from '../financials/FinancialsService'
@@ -18,10 +22,6 @@ import type {
   BridgeTransferWithFinancials,
 } from '../plugins/types'
 import { InMemoryEventDb } from './InMemoryEventDb'
-import { readFileSync } from 'fs'
-import { join } from 'path'
-import { type ParseError, parse } from 'jsonc-parser'
-import { v } from '@l2beat/validate'
 
 export function readJsonc(path: string): JSON {
   const contents = readFileSync(path, 'utf-8')
@@ -106,7 +106,7 @@ async function runExample(example: Example) {
     }
   })
 
-  const plugins = createBridgePlugins(logger)
+  const plugins = createBridgePlugins()
 
   const events: BridgeEvent[] = []
   for (const chain of chains) {
