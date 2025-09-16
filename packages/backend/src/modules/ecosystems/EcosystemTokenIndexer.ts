@@ -41,25 +41,22 @@ export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenCon
         ])
 
         const price7dChange =
-          ((data.market_data.current_price.usd -
+          (data.market_data.current_price.usd -
             historicalData.market_data.current_price.usd) /
-            historicalData.market_data.current_price.usd) *
-          100
+          historicalData.market_data.current_price.usd
 
         const marketCap7dChange =
-          ((data.market_data.market_cap.usd -
+          (data.market_data.market_cap.usd -
             historicalData.market_data.market_cap.usd) /
-            historicalData.market_data.market_cap.usd) *
-          100
+          historicalData.market_data.market_cap.usd
 
         // Coingecko doesnt return circulating supply, so we need to calculate it
         const historicalCirculatingSupply =
           historicalData.market_data.market_cap.usd /
           historicalData.market_data.current_price.usd
         const circulatingSupply7dChange =
-          ((data.market_data.circulating_supply - historicalCirculatingSupply) /
-            historicalCirculatingSupply) *
-          100
+          (data.market_data.circulating_supply - historicalCirculatingSupply) /
+          historicalCirculatingSupply
         return {
           projectId: configuration.properties.projectId,
           coingeckoId: configuration.properties.coingeckoId,
