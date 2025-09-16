@@ -1,7 +1,7 @@
 {
   "name": "compound-v3",
-  "timestamp": 1757977446,
-  "configHash": "0x4a9594925621d3e2d065e1528d872fd15ff772449adab6a3085018cc038e9207",
+  "timestamp": 1758034799,
+  "configHash": "0x07bb8b632db69ff0ca2c929a0329c7fa93506dced23b376222924528620485a1",
   "entries": [
     {
       "address": "eth:0x01430Aa44F14007c8d5Ddc011FA63dCcE7878dC8",
@@ -51,7 +51,10 @@
           "lastAccrualTime": 0,
           "pauseFlags": 0
         },
-        "version": "0"
+        "version": "0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 7 }
+        ]
       },
       "implementationNames": {
         "eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3": "CometExtAssetList"
@@ -91,7 +94,10 @@
       "sinceBlock": 15331582,
       "values": {
         "$immutable": true,
-        "owner": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925"
+        "owner": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 12 }
+        ]
       },
       "implementationNames": {
         "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779": "CometProxyAdmin"
@@ -133,7 +139,10 @@
         "multisigThreshold": "4 of 9 (44%)",
         "NAME": "Gnosis Safe",
         "nonce": 1907,
-        "VERSION": "1.1.1"
+        "VERSION": "1.1.1",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 16 }
+        ]
       },
       "implementationNames": {
         "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": "Proxy",
@@ -178,7 +187,10 @@
         "paused": false,
         "pauser": "eth:0x6fa314D4Dce1d49233c329a60fDBd96a6BCbe6Fb",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 16 }
+        ]
       },
       "fieldMeta": {
         "attestationSigners": {
@@ -234,7 +246,10 @@
         "messageBodyVersion": 1,
         "owner": "eth:0x2329BAF15f86023e5B0f5592e230D02a51116CD5",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "rescuer": "eth:0x070B2a0c255C148ae7b98B4BB9560Ff147C36f2A"
+        "rescuer": "eth:0x070B2a0c255C148ae7b98B4BB9560Ff147C36f2A",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 20 }
+        ]
       },
       "implementationNames": {
         "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d": "AdminUpgradableProxy",
@@ -284,7 +299,62 @@
         "$immutable": true,
         "manager": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "NAME": "Confirmed Transaction Module",
-        "VERSION": "0.1.0"
+        "VERSION": "0.1.0",
+        "writeFunctionPermissions": [
+          {
+            "function": "changeMasterCopy",
+            "signature": "function changeMasterCopy(address _masterCopy)",
+            "file": "ConfirmedTransactionModule.sol",
+            "permissionType": "none",
+            "category": "administrative",
+            "requireStatementCount": 1
+          },
+          {
+            "function": "confirmTransaction",
+            "signature": "function confirmTransaction(bytes32 transactionHash)",
+            "file": "ConfirmedTransactionModule.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 4
+          },
+          {
+            "function": "executeTransaction",
+            "signature": "function executeTransaction(\r\n        address to,\r\n        uint256 value,\r\n        bytes memory data,\r\n        Enum.Operation operation,\r\n        bytes32 witness\r\n    )",
+            "file": "ConfirmedTransactionModule.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "revokeTransaction",
+            "signature": "function revokeTransaction(bytes32 transactionHash)",
+            "file": "ConfirmedTransactionModule.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 3
+          },
+          {
+            "function": "setExecutor",
+            "signature": "function setExecutor(address executor, bool allowed)",
+            "file": "ConfirmedTransactionModule.sol",
+            "permissionType": "msgSender",
+            "category": "administrative",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 3
+          },
+          {
+            "function": "setup",
+            "signature": "function setup()",
+            "file": "ConfirmedTransactionModule.sol",
+            "permissionType": "msgSender",
+            "category": "administrative",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          }
+        ]
       },
       "implementationNames": {
         "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": "ConfirmedTransactionModule"
@@ -318,7 +388,7 @@
         ],
         "$upgradeCount": 1,
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
-        "clock": 23371636,
+        "clock": 23376384,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo,fractional&quorum=for&params=fractional",
         "eip712Domain": {
@@ -366,7 +436,10 @@
         "version": "1",
         "votingDelay": 13140,
         "votingPeriod": 19710,
-        "whitelistGuardian": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c"
+        "whitelistGuardian": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 29 }
+        ]
       },
       "errors": {
         "proposalDeadline": "Processing error occurred.",
@@ -411,7 +484,10 @@
         ],
         "$upgradeCount": 1,
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
-        "version": 1
+        "version": 1,
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 35 }
+        ]
       },
       "implementationNames": {
         "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3": "ConfiguratorProxy",
@@ -436,7 +512,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x1e349fd9A1Cd5402043F3aa90D5A396844769eE8",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x35a06994a99B335b700bB3c875408489a9F8BbeF": "AuthorizedForwarder"
@@ -472,7 +551,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x424d82696c35F35a3E88Cb39E3a2A512A2060AC8",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x3Dc0D7C8f6925422AF7CFEafaF1588c185C05624": "AuthorizedForwarder"
@@ -493,7 +575,12 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1738089347,
       "sinceBlock": 21724850,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 9 }
+        ]
+      },
       "implementationNames": {
         "eth:0x3fF744cF6078714bB9d3c4fE5Ab37fA6d05dEC4E": "AssetListFactory"
       }
@@ -518,7 +605,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x416017F5D40E8d7c63c2B058c0fc245fC55b51b3",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93": "AuthorizedForwarder"
@@ -570,7 +660,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0xa9022d873b30b6c9D47ad291551189bddD60FaB3",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x4b4df3c44FA13f9D12277458e2069EcBbeE1b085": "AuthorizedForwarder"
@@ -596,7 +689,41 @@
         "decimals": 18,
         "name": "ChainLink Token",
         "symbol": "LINK",
-        "totalSupply": "1000000000000000000000000000"
+        "totalSupply": "1000000000000000000000000000",
+        "writeFunctionPermissions": [
+          {
+            "function": "approve",
+            "signature": "function approve(address spender, uint256 value)",
+            "file": "LinkToken.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "transfer",
+            "signature": "function transfer(address to, uint256 value)",
+            "file": "LinkToken.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "transferAndCall",
+            "signature": "function transferAndCall(address to, uint value, bytes data)",
+            "file": "LinkToken.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "transferFrom",
+            "signature": "function transferFrom(address from, address to, uint256 value)",
+            "file": "LinkToken.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true
+          }
+        ]
       },
       "implementationNames": {
         "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": "LinkToken"
@@ -630,7 +757,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0xa27fF069B7A530c43e001a638D306057b8b7463F",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x585B3e95EEdd03AF221F724557D03384864Da3ca": "AuthorizedForwarder"
@@ -659,7 +789,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0xDf3E505a317282ea416407A47588A82593254b07",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d": "AuthorizedForwarder"
@@ -683,7 +816,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x2f52f6bdaC885801A720a53E126C4ADA780C74d5",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77": "AuthorizedForwarder"
@@ -707,7 +843,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0xA19bEB99AA920dC9A8f9971FbB6c6f40860ed5Fc",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988": "AuthorizedForwarder"
@@ -726,7 +865,69 @@
       "values": {
         "$immutable": true,
         "checkEnabled": true,
-        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "writeFunctionPermissions": [
+          {
+            "function": "acceptOwnership",
+            "signature": "function acceptOwnership()",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "addAccess",
+            "signature": "function addAccess(address _user)",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 1
+          },
+          {
+            "function": "disableAccessCheck",
+            "signature": "function disableAccessCheck()",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 1
+          },
+          {
+            "function": "enableAccessCheck",
+            "signature": "function enableAccessCheck()",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 1
+          },
+          {
+            "function": "removeAccess",
+            "signature": "function removeAccess(address _user)",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 1
+          },
+          {
+            "function": "transferOwnership",
+            "signature": "function transferOwnership(address _to)",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "financial",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          }
+        ]
       },
       "implementationNames": {
         "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6": "SimpleWriteAccessController"
@@ -750,7 +951,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x536e21c8193c09492599Bb95a4B01b269C4bA06e",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A": "AuthorizedForwarder"
@@ -774,7 +978,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0xD58dd13774d6150Bc51027e3A2B46Ad5059b0EA7",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5": "AuthorizedForwarder"
@@ -814,7 +1021,63 @@
         "GRACE_PERIOD": 1209600,
         "MAXIMUM_DELAY": 2592000,
         "MINIMUM_DELAY": 172800,
-        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000"
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000",
+        "writeFunctionPermissions": [
+          {
+            "function": "acceptAdmin",
+            "signature": "function acceptAdmin()",
+            "file": "Timelock.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 8
+          },
+          {
+            "function": "cancelTransaction",
+            "signature": "function cancelTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
+            "file": "Timelock.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 6
+          },
+          {
+            "function": "executeTransaction",
+            "signature": "function executeTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
+            "file": "Timelock.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 5
+          },
+          {
+            "function": "queueTransaction",
+            "signature": "function queueTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
+            "file": "Timelock.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 7
+          },
+          {
+            "function": "setDelay",
+            "signature": "function setDelay(uint delay_)",
+            "file": "Timelock.sol",
+            "permissionType": "msgSender",
+            "category": "administrative",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 8
+          },
+          {
+            "function": "setPendingAdmin",
+            "signature": "function setPendingAdmin(address pendingAdmin_)",
+            "file": "Timelock.sol",
+            "permissionType": "msgSender",
+            "category": "administrative",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 8
+          }
+        ]
       },
       "implementationNames": {
         "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": "Timelock"
@@ -851,7 +1114,10 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 12 }
+        ]
       },
       "implementationNames": {
         "eth:0x725ED7F44F0888aeC1b7630AB1ACdced91E0591A": "ProxyAdmin"
@@ -918,7 +1184,10 @@
         "pauser": "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
-        "withdrawalDelay": 50400
+        "withdrawalDelay": 50400,
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 27 }
+        ]
       },
       "fieldMeta": {
         "attestationSigners": {
@@ -948,7 +1217,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x3e8F6B0aAA3f46d6BeBeD76f35C810498E13B169",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x7A13cD97D442856FF5387d55a7b3F09bf680102B": "AuthorizedForwarder"
@@ -972,7 +1244,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0xBfC401F8abEb0dE1bC6bcFb753851808473905E4",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8": "AuthorizedForwarder"
@@ -1048,7 +1323,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x7872d2FdA921447887b816262Cee5208AFE353C7",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E": "AuthorizedForwarder"
@@ -1072,20 +1350,68 @@
         "description": "USDC / USD",
         "getAnswer": [0, 0, 0, 0, 0],
         "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": 99983469,
-        "latestRound": "55340232221128655336",
+        "latestAnswer": 99974998,
+        "latestRound": "55340232221128655338",
         "latestRoundData": {
-          "roundId": "55340232221128655336",
-          "answer": 99983469,
-          "startedAt": 1757923215,
-          "updatedAt": 1757923235,
-          "answeredInRound": "55340232221128655336"
+          "roundId": "55340232221128655338",
+          "answer": 99974998,
+          "startedAt": 1758009621,
+          "updatedAt": 1758009635,
+          "answeredInRound": "55340232221128655338"
         },
-        "latestTimestamp": 1757923235,
+        "latestTimestamp": 1758009635,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 3,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
-        "version": 6
+        "version": 6,
+        "writeFunctionPermissions": [
+          {
+            "function": "acceptOwnership",
+            "signature": "function acceptOwnership()",
+            "file": "EACAggregatorProxy.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "confirmAggregator",
+            "signature": "function confirmAggregator(address _aggregator)",
+            "file": "EACAggregatorProxy.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 2
+          },
+          {
+            "function": "proposeAggregator",
+            "signature": "function proposeAggregator(address _aggregator)",
+            "file": "EACAggregatorProxy.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 2
+          },
+          {
+            "function": "setController",
+            "signature": "function setController(address _accessController)",
+            "file": "EACAggregatorProxy.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyOwner"]
+          },
+          {
+            "function": "transferOwnership",
+            "signature": "function transferOwnership(address _to)",
+            "file": "EACAggregatorProxy.sol",
+            "permissionType": "modifier",
+            "category": "financial",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          }
+        ]
       },
       "errors": {
         "getAnswer": "Processing error occurred.",
@@ -1129,7 +1455,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0xFCeFBa8fA91958955303d9c5dE163Fb93929cE54",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D": "AuthorizedForwarder"
@@ -1153,7 +1482,69 @@
       "values": {
         "$immutable": true,
         "checkEnabled": true,
-        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "writeFunctionPermissions": [
+          {
+            "function": "acceptOwnership",
+            "signature": "function acceptOwnership()",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "addAccess",
+            "signature": "function addAccess(address _user)",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 1
+          },
+          {
+            "function": "disableAccessCheck",
+            "signature": "function disableAccessCheck()",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 1
+          },
+          {
+            "function": "enableAccessCheck",
+            "signature": "function enableAccessCheck()",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 1
+          },
+          {
+            "function": "removeAccess",
+            "signature": "function removeAccess(address _user)",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 1
+          },
+          {
+            "function": "transferOwnership",
+            "signature": "function transferOwnership(address _to)",
+            "file": "SimpleWriteAccessController.sol",
+            "permissionType": "modifier",
+            "category": "financial",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          }
+        ]
       },
       "implementationNames": {
         "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9": "SimpleWriteAccessController"
@@ -1225,9 +1616,12 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "48108292252161434",
+        "totalSupply": "48168493818361754",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
-        "version": "2"
+        "version": "2",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 34 }
+        ]
       },
       "errors": {
         "admin": "Processing error occurred.",
@@ -1498,9 +1892,9 @@
         "getBorrowRate": [
           317097919, 317097919, 317097919, 317097919, 317097919
         ],
-        "getReserves": "872526111210753473767",
+        "getReserves": "872639268228300096330",
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "810669589048657414",
+        "getUtilization": "817448870736661865",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
         "isBuyPaused": false,
@@ -1515,9 +1909,12 @@
         "supplyPerSecondInterestRateSlopeHigh": 35673515981,
         "supplyPerSecondInterestRateSlopeLow": 684931506,
         "targetReserves": "5000000000000000000000",
-        "totalBorrow": "58455015570777876910673",
-        "totalSupply": "72107064060892115393399",
-        "trackingIndexScale": 1000000000000000
+        "totalBorrow": "58408774961507803390216",
+        "totalSupply": "71452429319487457358848",
+        "trackingIndexScale": 1000000000000000,
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 22 }
+        ]
       },
       "errors": {
         "getBorrowRate": "Processing error occurred.",
@@ -1563,7 +1960,10 @@
           "lastAccrualTime": 0,
           "pauseFlags": 0
         },
-        "version": "0"
+        "version": "0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 7 }
+        ]
       },
       "implementationNames": {
         "eth:0xA70a0227028aD005F4Fc9376a82cd1462e3AAedC": "CometExtAssetList"
@@ -1639,7 +2039,10 @@
         "multisigThreshold": "5 of 10 (50%)",
         "NAME": "Gnosis Safe",
         "nonce": 67,
-        "VERSION": "1.1.1"
+        "VERSION": "1.1.1",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 16 }
+        ]
       },
       "implementationNames": {
         "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c": "Proxy",
@@ -1665,7 +2068,10 @@
         "messageBodyVersion": 0,
         "owner": "eth:0x6b0b72E63764101Fc4d5BD914B107987041578C4",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "rescuer": "eth:0x65cBcdbE95567A8F9519242f9C52F65E8067021B"
+        "rescuer": "eth:0x65cBcdbE95567A8F9519242f9C52F65E8067021B",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 12 }
+        ]
       },
       "implementationNames": {
         "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155": "TokenMessenger"
@@ -1693,7 +2099,51 @@
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
         "name": "Compound",
         "symbol": "COMP",
-        "totalSupply": "10000000000000000000000000"
+        "totalSupply": "10000000000000000000000000",
+        "writeFunctionPermissions": [
+          {
+            "function": "approve",
+            "signature": "function approve(address spender, uint rawAmount)",
+            "file": "Comp.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "delegate",
+            "signature": "function delegate(address delegatee)",
+            "file": "Comp.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 3
+          },
+          {
+            "function": "delegateBySig",
+            "signature": "function delegateBySig(address delegatee, uint nonce, uint expiry, uint8 v, bytes32 r, bytes32 s)",
+            "file": "Comp.sol",
+            "permissionType": "none",
+            "category": "other",
+            "requireStatementCount": 4
+          },
+          {
+            "function": "transfer",
+            "signature": "function transfer(address dst, uint rawAmount)",
+            "file": "Comp.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "transferFrom",
+            "signature": "function transferFrom(address src, address dst, uint rawAmount)",
+            "file": "Comp.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 3
+          }
+        ]
       },
       "implementationNames": {
         "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888": "Comp"
@@ -1714,7 +2164,54 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2407277308337512964437645"
+        "totalSupply": "2424800640101308417747633",
+        "writeFunctionPermissions": [
+          {
+            "function": "approve",
+            "signature": "function approve(address guy, uint wad)",
+            "file": "WETH9.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "deposit",
+            "signature": "function deposit()",
+            "file": "WETH9.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 3
+          },
+          {
+            "function": "transfer",
+            "signature": "function transfer(address dst, uint wad)",
+            "file": "WETH9.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "transferFrom",
+            "signature": "function transferFrom(address src, address dst, uint wad)",
+            "file": "WETH9.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "withdraw",
+            "signature": "function withdraw(uint wad)",
+            "file": "WETH9.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 3
+          }
+        ]
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -2007,21 +2504,12 @@
         "borrowPerSecondInterestRateSlopeLow": 880834601,
         "decimals": 6,
         "extensionDelegate": "eth:0xA70a0227028aD005F4Fc9376a82cd1462e3AAedC",
-        "functionPermissions": [
-          {
-            "function": "_beforeFallback",
-            "signature": "function _beforeFallback()",
-            "file": "contracts/vendor/proxy/transparent/TransparentUpgradeableProxy.sol",
-            "permissionType": "msgSender",
-            "requireStatements": ["msg.sender != _getAdmin("]
-          }
-        ],
         "getBorrowRate": [
           475646879, 475646879, 475646879, 475646879, 475646879
         ],
-        "getReserves": 15918347969921,
+        "getReserves": 15922176926246,
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "902047324418176623",
+        "getUtilization": "906501826373232731",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
         "isBuyPaused": false,
@@ -2036,9 +2524,12 @@
         "supplyPerSecondInterestRateSlopeHigh": 101344495180,
         "supplyPerSecondInterestRateSlopeLow": 1141552511,
         "targetReserves": 20000000000000,
-        "totalBorrow": 481924382623519,
-        "totalSupply": 534256178479821,
-        "trackingIndexScale": 1000000000000000
+        "totalBorrow": 484708170130205,
+        "totalSupply": 534701734018329,
+        "trackingIndexScale": 1000000000000000,
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 22 }
+        ]
       },
       "errors": {
         "getBorrowRate": "Processing error occurred.",
@@ -2069,7 +2560,10 @@
         "pauser": "eth:0x817ae4109dC0f21E437b94c899962690514Ba09f",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rescuer": "eth:0x96D16c491aDA31f609eC72Ae33018b8B7e80EB41",
-        "tokenController": "eth:0x8a9A13A106cB89E15410B2AB4488135155032169"
+        "tokenController": "eth:0x8a9A13A106cB89E15410B2AB4488135155032169",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 15 }
+        ]
       },
       "implementationNames": {
         "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907": "TokenMinter"
@@ -2092,9 +2586,9 @@
         "getAnswer": [],
         "getBilling": {
           "maximumGasPriceGwei": 3000,
-          "reasonableGasPriceGwei": 75,
-          "observationPaymentGjuels": 11412073,
-          "transmissionPaymentGjuels": 68472074,
+          "reasonableGasPriceGwei": 60,
+          "observationPaymentGjuels": 15976902,
+          "transmissionPaymentGjuels": 95860904,
           "accountingGas": 6035
         },
         "getBillingAccessController": "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9",
@@ -2131,14 +2625,17 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x0001443752cf7d628a5102894fe0b426dbcc109c226e4b37bdf93ab33506cca4",
-          "epoch": 18424
+          "epoch": 18904
         },
-        "linkAvailableForPayment": "38101228315926340441",
+        "linkAvailableForPayment": "35988452326685929145",
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
         "minAnswer": 1,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "typeAndVersion": "AccessControlledOCR2Aggregator 1.0.0",
-        "version": 6
+        "version": 6,
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 19 }
+        ]
       },
       "errors": {
         "description": "Processing error occurred.",
@@ -2178,7 +2675,10 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
         "nonce": 6,
-        "VERSION": "1.4.1"
+        "VERSION": "1.4.1",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 14 }
+        ]
       },
       "implementationNames": {
         "eth:0xd17B14ff80d3bF8e95D719e177d247Be02d553d2": "SafeProxy",
@@ -2208,8 +2708,8 @@
         "latestRoundData": {
           "roundId": 1,
           "answer": 100000000,
-          "startedAt": 1757977439,
-          "updatedAt": 1757977439,
+          "startedAt": 1758034799,
+          "updatedAt": 1758034799,
           "answeredInRound": 1
         },
         "version": 1
@@ -2259,7 +2759,80 @@
       "values": {
         "$immutable": true,
         "getMinterManager": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "owner": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704"
+        "owner": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
+        "writeFunctionPermissions": [
+          {
+            "function": "configureController",
+            "signature": "function configureController(\r\n        address _controller,\r\n        address _worker\r\n    )",
+            "file": "MasterMinter.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 4
+          },
+          {
+            "function": "configureMinter",
+            "signature": "function configureMinter(\r\n        address _minter,\r\n        uint256 _minterAllowedAmount\r\n    )",
+            "file": "MasterMinter.sol",
+            "permissionType": "none",
+            "category": "administrative"
+          },
+          {
+            "function": "decrementMinterAllowance",
+            "signature": "function decrementMinterAllowance(\r\n        uint256 _allowanceDecrement\r\n    )",
+            "file": "MasterMinter.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyController"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "incrementMinterAllowance",
+            "signature": "function incrementMinterAllowance(\r\n        uint256 _allowanceIncrement\r\n    )",
+            "file": "MasterMinter.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyController"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 4
+          },
+          {
+            "function": "removeController",
+            "signature": "function removeController(\r\n        address _controller\r\n    )",
+            "file": "MasterMinter.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 2
+          },
+          {
+            "function": "removeMinter",
+            "signature": "function removeMinter(address _minter)",
+            "file": "MasterMinter.sol",
+            "permissionType": "none",
+            "category": "other"
+          },
+          {
+            "function": "setMinterManager",
+            "signature": "function setMinterManager(\r\n        address _newMinterManager\r\n    )",
+            "file": "MasterMinter.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyOwner", "onlyController"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "transferOwnership",
+            "signature": "function transferOwnership(address newOwner)",
+            "file": "MasterMinter.sol",
+            "permissionType": "modifier",
+            "category": "financial",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 1
+          }
+        ]
       },
       "implementationNames": {
         "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17": "MasterMinter"
@@ -2283,7 +2856,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x79f92d0B553b917aAfcCBE433677C483AA2D7892",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1": "AuthorizedForwarder"
@@ -2299,7 +2875,12 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1738909343,
       "sinceBlock": 21792814,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 9 }
+        ]
+      },
       "implementationNames": {
         "eth:0xEA2a6E7B41505d62d404F927F991Edc9E45883c2": "AssetListFactory"
       }
@@ -2337,7 +2918,10 @@
         ],
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x31509607cb6556eDfdc536F899F176b5d557A9cf",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0"
+        "typeAndVersion": "AuthorizedForwarder 1.1.0",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
+        ]
       },
       "implementationNames": {
         "eth:0xF38326579519377178725A741C35999E8051e907": "AuthorizedForwarder"
@@ -2381,7 +2965,10 @@
         "pauser": "eth:0x4E898CEe7c5809A63de0eF745177A9BB82FeAC69",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rescuer": "eth:0xE206be2331d6aAa4495887755BaBE892aecE704A",
-        "tokenController": "eth:0x740F494cD63f87547FEc1591646720e5cC285846"
+        "tokenController": "eth:0x740F494cD63f87547FEc1591646720e5cC285846",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 16 }
+        ]
       },
       "implementationNames": {
         "eth:0xfd78EE919681417d192449715b2594ab58f5D002": "TokenMinterV2"
@@ -4153,6 +4740,6 @@
     "tokens/circle/TokenMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97"
   },
-  "usedBlockNumbers": { "ethereum": 23371636 },
+  "usedBlockNumbers": { "ethereum": 23376384 },
   "permissionsConfigHash": "0xdd757b546290e85e19ac6f715dc8ecb7aab7eeae9c5d46386500172cb48a5d31"
 }
