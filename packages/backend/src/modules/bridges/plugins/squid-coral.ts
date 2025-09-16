@@ -5,6 +5,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -57,11 +58,11 @@ const parseOrderFilled = createEventParser(
   'event OrderFilled(bytes32 indexed orderHash, (address fromAddress, address toAddress, address filler, address fromToken, address toToken, uint256 expiry, uint256 fromAmount, uint256 fillAmount, uint256 feeRate, uint256 fromChain, uint256 toChain, bytes32 postHookHash) order)',
 )
 
-export const CHAIN_IDS = [
+export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
   { chainId: '1', chain: 'ethereum' },
   { chainId: '42161', chain: 'arbitrum' },
   { chainId: '8453', chain: 'base' },
-]
+])
 
 export const LogOrderCreated = createBridgeEventType<{
   orderHash: `0x${string}`
@@ -95,7 +96,7 @@ export class SquidCoralPlugin implements BridgePlugin {
         fromAmount: logOrderCreated.order.fromAmount.toString(),
         fillAmount: logOrderCreated.order.fillAmount.toString(),
         $dstChain:
-          CHAIN_IDS.find(
+          SQUIDCORAL_NETWORKS.find(
             (c) => c.chainId === logOrderCreated.order.toChain.toString(),
           )?.chain ?? 'unknown',
       })
@@ -110,7 +111,7 @@ export class SquidCoralPlugin implements BridgePlugin {
         fromAmount: logOrderFilled.order.fromAmount.toString(),
         fillAmount: logOrderFilled.order.fillAmount.toString(),
         $srcChain:
-          CHAIN_IDS.find(
+          SQUIDCORAL_NETWORKS.find(
             (c) => c.chainId === logOrderFilled.order.fromChain.toString(),
           )?.chain ?? 'unknown',
       })
