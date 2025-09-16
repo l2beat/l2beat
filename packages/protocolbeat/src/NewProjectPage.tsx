@@ -1,12 +1,38 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { createConfigFile } from './api/api'
 import { Title } from './common/Title'
+import { useTerminalStore } from './panel-terminal/store'
 
 export function NewProjectPage() {
   const [title, setTitle] = useState('')
   const [type, setType] = useState<'project' | 'token'>('project')
   const [initialAddresses, setInitialAddresses] = useState<string[]>([])
+  const queryClient = useQueryClient()
+  const { discover, setDevMode } = useTerminalStore()
+  const navigate = useNavigate()
+  const [creationState, setCreationState] = useState<
+    'config-creation' | 'discovering' | 'success' | 'error'
+  >('config-creation')
+
+  const createConfigFileMutation = useMutation({
+    mutationFn: async () => {
+      setCreationState('config-creation')
+      await createConfigFile(title, type, initialAddresses)
+      setCreationState('discovering')
+      await queryClient.invalidateQueries({ queryKey: ['projects'] })
+      setDevMode(true)
+      await discover(title)
+      await queryClient.invalidateQueries({ queryKey: ['projects'] })
+      setCreationState('success')
+    },
+    onSuccess: () => {
+      navigate(`/ui/p/${title}`)
+    },
+  })
   return (
     <>
       <Title title={`DiscoUI - ${!title ? 'New project' : title}`} />
@@ -56,11 +82,41 @@ export function NewProjectPage() {
         <InputDescription>
           Unique, lowercase, no spaces, words can be '-'-separated
         </InputDescription>
-
         <InitialAddressesInput
           value={initialAddresses}
           onChange={setInitialAddresses}
         />
+        {createConfigFileMutation.isPending && (
+          <div>
+            <div className="flex justify-end">
+              <div className="h-8 w-8 animate-spin rounded-full border-coffee-600 border-t-2 border-b-2" />
+            </div>
+            {creationState === 'discovering' && (
+              <div className="text-coffee-400 text-sm">Discovering...</div>
+            )}
+            {creationState === 'config-creation' && (
+              <div className="text-coffee-400 text-sm">
+                Creating config file...
+              </div>
+            )}
+            {creationState === 'success' && (
+              <div className="text-coffee-400 text-sm">
+                Project created successfully
+              </div>
+            )}
+            {creationState === 'error' && (
+              <div className="text-coffee-400 text-sm">
+                Error creating project
+              </div>
+            )}
+          </div>
+        )}
+        <button
+          className="mt-1 border border-coffee-600 px-3 py-1 text-sm hover:bg-coffee-700"
+          onClick={() => createConfigFileMutation.mutate()}
+        >
+          Create project
+        </button>
       </div>
     </>
   )

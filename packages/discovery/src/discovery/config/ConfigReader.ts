@@ -284,10 +284,10 @@ export class ConfigReader {
    * Throws if the project cannot be found or if there are multiple matches.
    */
   resolveProjectPath(project: string): string {
-    const cached = this.projectPathCache.get(project)
-    if (cached !== undefined) {
-      return cached
-    }
+    // const cached = this.projectPathCache.get(project)
+    // if (cached !== undefined) {
+    //   return cached
+    // }
 
     // 1. Fast path – direct child of root (must contain config.jsonc)
     const direct = path.join(this.rootPath, project)

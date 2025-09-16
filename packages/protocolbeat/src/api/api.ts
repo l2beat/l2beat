@@ -144,7 +144,25 @@ export async function readConfigFile(
   return data as ApiConfigFileResponse
 }
 
-export async function writeConfigFile(project: string, content: string) {
+export async function createConfigFile(
+  project: string,
+  type: 'project' | 'token',
+  initialAddresses: string[],
+) {
+  const res = await fetch('/api/config-files', {
+    method: 'POST',
+    body: JSON.stringify({ project, type, initialAddresses }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+}
+
+export async function updateConfigFile(project: string, content: string) {
   const res = await fetch(`/api/config-files/${project}`, {
     method: 'PUT',
     body: JSON.stringify({ content }),

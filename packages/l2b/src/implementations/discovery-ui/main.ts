@@ -170,7 +170,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)
-    attachConfigRouter(app, configWriter)
+    attachConfigRouter(app, configReader, configWriter, paths)
 
     app.get('/api/projects/:project/codeSearch', (req, res) => {
       const paramsValidation = projectSearchTermParamsSchema.safeParse({

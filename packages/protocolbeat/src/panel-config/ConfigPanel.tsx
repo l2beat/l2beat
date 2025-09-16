@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { readConfigFile, writeConfigFile } from '../api/api'
+import { readConfigFile, updateConfigFile } from '../api/api'
 import type { ApiConfigFileResponse } from '../api/types'
 import { formatJson } from '../common/formatJson'
 import { removeJSONTrailingCommas } from '../common/removeJSONTrailingCommas'
@@ -24,7 +24,7 @@ export function ConfigPanel() {
 
   const saveConfig = useMutation({
     mutationFn: async (content: string) => {
-      await writeConfigFile(project, content)
+      await updateConfigFile(project, content)
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({

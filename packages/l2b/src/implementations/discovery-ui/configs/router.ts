@@ -1,17 +1,21 @@
-import type { ConfigWriter, DiscoveryPaths } from '@l2beat/discovery'
+import type {
+  ConfigReader,
+  ConfigWriter,
+  DiscoveryPaths,
+} from '@l2beat/discovery'
 import { ChainSpecificAddress, formatJson } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
 import path from 'path'
 import { projectParamsSchema } from '../main'
 
-const writeConfigFileSchema = z.object({
+const updateConfigFileSchema = z.object({
   content: z.string(),
 })
 
 const createConfigFileSchema = z.object({
   type: z.enum(['project', 'token']),
-  title: z.string().check((v) => v.length > 0),
+  project: z.string().check((v) => v.length > 0),
   initialAddresses: z
     .array(z.string())
     .check((v) => v.length > 0)
@@ -20,12 +24,13 @@ const createConfigFileSchema = z.object({
 
 export function attachConfigRouter(
   app: Express,
+  configReader: ConfigReader,
   configWriter: ConfigWriter,
   paths: DiscoveryPaths,
 ) {
   app.put('/api/config-files/:project', (req, res) => {
     const query = projectParamsSchema.safeParse(req.params)
-    const data = writeConfigFileSchema.safeParse(req.body)
+    const data = updateConfigFileSchema.safeParse(req.body)
 
     if (!query.success) {
       res.status(400).json({ errors: query.message })
@@ -42,33 +47,27 @@ export function attachConfigRouter(
     res.json({ success: true })
   })
 
-  app.post('/api/config-files/:project', (req, res) => {
-    const query = projectParamsSchema.safeParse(req.params)
-    const data = createConfigFileSchema.safeParse(req.body)
+  app.post('/api/config-files', (req, res) => {
+    const body = createConfigFileSchema.safeParse(req.body)
 
-    if (!query.success) {
-      res.status(400).json({ errors: query.message })
+    if (!body.success) {
+      res.status(400).json({ errors: body.message })
       return
     }
 
-    if (!data.success) {
-      res.status(400).json({ errors: data.message })
-      return
-    }
-
-    if (configExists(configWriter, query.data.project)) {
+    if (configExists(configReader, body.data.project)) {
       res.status(400).json({ errors: 'Config file already exists' })
       return
     }
 
     const { getProjectPath, createEmptyConfig } =
-      data.data.type === 'project' ? ProjectBundle : TokenBundle
+      body.data.type === 'project' ? ProjectBundle : TokenBundle
 
-    const projectPath = getProjectPath(paths, query.data.project)
+    const projectPath = getProjectPath(paths, body.data.project)
 
     const contents = createEmptyConfig(
-      query.data.project,
-      data.data.initialAddresses.map(ChainSpecificAddress),
+      body.data.project,
+      body.data.initialAddresses.map(ChainSpecificAddress),
     )
 
     configWriter.createConfigFile(projectPath, contents)
@@ -77,9 +76,9 @@ export function attachConfigRouter(
   })
 }
 
-function configExists(configWriter: ConfigWriter, project: string) {
+function configExists(configReader: ConfigReader, project: string) {
   try {
-    configWriter.configReader.getProjectPath(project)
+    configReader.getProjectPath(project)
     return true
   } catch {
     return false
