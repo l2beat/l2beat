@@ -1,5 +1,5 @@
 export interface MainPage {
-  type?: 'scaling' | 'scaling/risk' | 'bridges' | 'data-availability'
+  type?: 'scaling' | 'scaling/risk-analysis' | 'bridges' | 'data-availability'
   title: string
 }
 
@@ -131,7 +131,7 @@ function typeToLabel(type: NonNullable<MainPage['type']>): string {
   switch (type) {
     case 'scaling':
       return 'SCALING'
-    case 'scaling/risk':
+    case 'scaling/risk-analysis':
       return 'SCALING RISKS'
     case 'bridges':
       return 'BRIDGES'
@@ -143,7 +143,7 @@ function typeToLabel(type: NonNullable<MainPage['type']>): string {
 function typeToIcon(type: NonNullable<MainPage['type']>): React.ReactNode {
   switch (type) {
     case 'scaling':
-    case 'scaling/risk':
+    case 'scaling/risk-analysis':
       return (
         <svg
           width="39"
