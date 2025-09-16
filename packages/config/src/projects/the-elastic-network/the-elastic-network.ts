@@ -19,6 +19,10 @@ export const theElasticNetwork: BaseProject = {
   colors: {
     primary: '#513BE5',
     secondary: '#4276FF',
+    dark: {
+      primary: '#7468FF',
+      secondary: '#8A94FF',
+    },
   },
   ecosystemConfig: {
     links: {

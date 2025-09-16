@@ -23,6 +23,10 @@ export const superchain: BaseProject = {
   colors: {
     primary: '#F00000',
     secondary: '#F93E3F',
+    dark: {
+      primary: '#FF1F1F',
+      secondary: '#FF7474',
+    },
   },
   ecosystemConfig: {
     links: {

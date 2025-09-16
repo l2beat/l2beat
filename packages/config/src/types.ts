@@ -134,6 +134,10 @@ export interface BaseProject {
 export interface ProjectCustomColors {
   primary: string
   secondary: string
+  dark?: {
+    primary: string
+    secondary: string
+  }
 }
 
 export interface ProjectStatuses {
