@@ -4,7 +4,6 @@ import { readConfigFile, updateConfigFile } from '../api/api'
 import type { ApiConfigFileResponse } from '../api/types'
 import { formatJson } from '../common/formatJson'
 import { removeJSONTrailingCommas } from '../common/removeJSONTrailingCommas'
-import { ActionNeededState } from '../components/ActionNeededState'
 import { ErrorState } from '../components/ErrorState'
 import { EditorView } from '../components/editor/EditorView'
 import type { EditorFile } from '../components/editor/store'
@@ -13,7 +12,7 @@ import { isReadOnly } from '../config'
 import { useProjectData } from '../hooks/useProjectData'
 
 export function ConfigPanel() {
-  const { project, selectedAddress, projectResponse } = useProjectData()
+  const { project, projectResponse } = useProjectData()
   const queryClient = useQueryClient()
   const templateResponse = useQuery({
     queryKey: ['projects', project, 'config'],
@@ -28,7 +27,7 @@ export function ConfigPanel() {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['projects', project, 'template', selectedAddress],
+        queryKey: ['projects', project, 'config'],
       })
     },
   })
@@ -54,10 +53,6 @@ export function ConfigPanel() {
 
   if (projectResponse.isPending) {
     return <LoadingState />
-  }
-
-  if (selectedAddress === undefined) {
-    return <ActionNeededState message="Select a contract" />
   }
 
   return (
