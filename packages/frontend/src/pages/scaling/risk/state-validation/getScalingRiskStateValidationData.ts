@@ -32,7 +32,8 @@ export async function getScalingRiskStateValidationData(
           'Understand the risks of Ethereum scaling solutions using L2BEAT’s assessments.',
         openGraph: {
           url: req.originalUrl,
-          image: '/meta-images/scaling/risk-analysis/opengraph-image.png',
+          image:
+            '/meta-images/scaling/risk-analysis/state-validation/opengraph-image.png',
         },
       }),
     },

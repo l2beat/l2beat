@@ -34,7 +34,7 @@ export async function getScalingRiskDataAvailabilityData(
         openGraph: {
           url: req.originalUrl,
           image:
-            '/meta-images/scaling/risk/data-availability/opengraph-image.png',
+            '/meta-images/scaling/risk-analysis/data-availability/opengraph-image.png',
         },
       }),
     },
