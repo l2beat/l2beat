@@ -6,6 +6,7 @@
     "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
     "arb1:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
   ],
+  "sharedModules": ["shared-sp1", "blobstream"],
   "overrides": {
     "arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7": {
       "displayName": "QuoteVerifier"

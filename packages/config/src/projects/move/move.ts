@@ -16,6 +16,7 @@ export const move: ScalingProject = upcomingL2({
       websites: ['https://movementlabs.xyz'],
       documentation: ['https://docs.movementlabs.xyz/'],
       explorers: ['https://explorer.movementlabs.xyz/#/?network=local'],
+      repositories: ['https://github.com/movementlabsxyz'],
       socialMedia: [
         'https://x.com/movementlabsxyz',
         'https://t.me/movementlabsxyz',

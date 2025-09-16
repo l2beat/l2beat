@@ -13,7 +13,7 @@ export interface BridgeTransferRecord {
   srcTxHash: string | undefined
   srcLogIndex: number | undefined
   srcEventId: string | undefined
-  srcTokenAddress: EthereumAddress | 'native' | undefined
+  srcTokenAddress: string | undefined
   srcRawAmount: string | undefined
   srcSymbol: string | undefined
   srcAmount: number | undefined
@@ -24,7 +24,7 @@ export interface BridgeTransferRecord {
   dstTxHash: string | undefined
   dstLogIndex: number | undefined
   dstEventId: string | undefined
-  dstTokenAddress: EthereumAddress | 'native' | undefined
+  dstTokenAddress: string | undefined
   dstRawAmount: string | undefined
   dstSymbol: string | undefined
   dstAmount: number | undefined

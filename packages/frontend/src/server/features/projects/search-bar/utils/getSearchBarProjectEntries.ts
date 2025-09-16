@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { env } from '~/env'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { SearchBarProject } from '../types'
 import { getSearchBarProjectKind } from './getSearchBarProjectKind'
@@ -12,6 +13,7 @@ export function getSearchBarProjectEntries<
     | 'isScaling'
     | 'isDaLayer'
     | 'isBridge'
+    | 'ecosystemConfig'
   >,
 >(project: T, allProjects: T[]) {
   const results: SearchBarProject[] = []
@@ -19,7 +21,8 @@ export function getSearchBarProjectEntries<
     !project.isScaling &&
     !project.isBridge &&
     !project.daLayer &&
-    !project.daBridge
+    !project.daBridge &&
+    !project.ecosystemConfig
   ) {
     return []
   }
@@ -76,6 +79,14 @@ export function getSearchBarProjectEntries<
         tags: [layer.slug, project.slug],
       })
     }
+  }
+
+  if (project.ecosystemConfig && env.CLIENT_SIDE_PARTNERS) {
+    results.push({
+      ...common,
+      href: `/ecosystems/${project.slug}`,
+      category: 'ecosystems',
+    })
   }
 
   return results
