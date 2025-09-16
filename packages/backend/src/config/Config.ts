@@ -42,6 +42,7 @@ export interface Config {
   readonly chains: { name: string; chainId: number | undefined }[]
   readonly verifiers: VerifiersConfig | false
   readonly daBeat: DaBeatConfig | false
+  readonly ecosystems: EcosystemsConfig | false
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
     readonly url: string | undefined
@@ -212,6 +213,14 @@ export interface DaBeatConfig {
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
   readonly availWsUrl: string
+}
+
+export interface EcosystemTokenConfig {
+  readonly projectId: ProjectId
+  readonly coingeckoId: string
+}
+export interface EcosystemsConfig {
+  readonly tokens: EcosystemTokenConfig[]
 }
 
 type BlockLayerAsProjectDaTrackingConfig = {
