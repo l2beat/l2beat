@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { CoingeckoId, ProjectId } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { BaseProject } from '../../types'
 
@@ -135,8 +135,7 @@ export const agglayer: BaseProject = {
       mainText: 'Build an Agglayer chain',
     },
     token: {
-      tokenId: 'polygonzkevm-POL',
-      projectId: ProjectId('polygonzkevm'),
+      coingeckoId: CoingeckoId('polygon-ecosystem-token'),
       description:
         'The POL token is used for governance across the Polygon ecosystem, including Polygon PoS and Agglayer chains. It also secures the Polygon PoS network and functions as a gas token on the chain.',
     },

@@ -2,6 +2,7 @@ import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainId,
   type ChainSpecificAddress,
+  type CoingeckoId,
   EthereumAddress,
   type ProjectId,
   type StringWithAutocomplete,
@@ -980,8 +981,7 @@ export interface ProjectEcosystemInfo {
 export interface ProjectEcosystemConfig {
   startedAt?: UnixTime
   token: {
-    tokenId: string
-    projectId: ProjectId
+    coingeckoId: CoingeckoId
     description: string
   }
   links: {

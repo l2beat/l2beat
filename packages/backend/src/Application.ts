@@ -9,6 +9,7 @@ import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
 import { createBridgeModule } from './modules/bridges/BridgeModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
+import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
@@ -64,6 +65,7 @@ export class Application {
       initTvsModule(deps),
       createVerifiersModule(deps),
       createDaBeatModule(deps),
+      createEcosystemsModule(deps),
       createAnomaliesModule(deps),
       createBridgeModule(deps),
       createBlockSyncModule(deps),
