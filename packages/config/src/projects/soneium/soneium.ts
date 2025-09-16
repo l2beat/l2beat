@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
@@ -11,6 +12,10 @@ const discovery = new ProjectDiscovery('soneium')
 const genesisTimestamp = UnixTime(1733498411)
 
 export const soneium = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1736812800), // 14.01.2025
   discovery,
   genesisTimestamp,

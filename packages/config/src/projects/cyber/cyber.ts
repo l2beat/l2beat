@@ -2,6 +2,7 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
@@ -49,6 +50,10 @@ const daResolveWindow = formatSeconds(
 )
 
 export const cyber: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   addedAt: UnixTime(1713364684), // 2024-04-17T14:38:04Z
   associatedTokens: ['CYBER'],
   discovery,
