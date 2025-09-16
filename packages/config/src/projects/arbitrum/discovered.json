@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "timestamp": 1756891026,
+  "timestamp": 1758028704,
   "configHash": "0xb0e20fce2209a0eaf71a2737c08e916653378a8089eb212523e7b7814a917775",
   "entries": [
     {
@@ -62,7 +62,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 36558,
+        "exitNum": 36885,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -865,8 +865,8 @@
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=for&params=account&counting=threshold",
-        "currentCohort": 1,
-        "electionCount": 4,
+        "currentCohort": 0,
+        "electionCount": 5,
         "EXCLUDE_ADDRESS": "arb1:0x00000000000000000000000000000000000A4B86",
         "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
         "firstNominationStartDate": {
@@ -878,7 +878,7 @@
         "name": "SecurityCouncilNomineeElectionGovernor",
         "nomineeVetter": "arb1:0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C",
         "nomineeVettingDuration": 100800,
-        "otherCohort": 0,
+        "otherCohort": 1,
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
         "proposalThreshold": 0,
         "quorumDenominator": 10000,
@@ -1642,7 +1642,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2192,
+        "exitNum": 2199,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -2904,7 +2904,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 992219,
+        "batchCount": 1003885,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -2917,9 +2917,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 23281527,
+          "prevBlockNumber": 23375715,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 23281591
+          "prevSequencedBlockNumber": 23375781
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -2943,12 +2943,12 @@
         "postsBlobs": true,
         "reader4844": "eth:0x15b25E3fb8419dA4848a6f193bb9b43519D0d4ca",
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
-        "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2105243,
+        "totalDelayedMessagesRead": 2119502,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
+      "errors": { "sequencerVersion": "Processing error occurred." },
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -3282,7 +3282,7 @@
         "getValidators": [],
         "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0xd7f4efe72b25959db48482c489f5c28e1819b652cd35b5fad9f48e9db81edb92",
+        "latestConfirmed": "0xe35e4563858ed259493a0aa96144190a2187cc10f023e988280a18688c927479",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -3749,7 +3749,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2105250,
+        "delayedMessageCount": 2119511,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -3763,8 +3763,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 992219,
-        "sequencerReportedSubMessageCount": 353001566
+        "sequencerMessageCount": 1003885,
+        "sequencerReportedSubMessageCount": 357554114
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -4167,7 +4167,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -8706,6 +8706,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 375209818, "ethereum": 23281632 },
+  "usedBlockNumbers": { "ethereum": 23375876, "arbitrum": 379762300 },
   "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7"
 }

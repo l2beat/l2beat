@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x685c7188b72a8a4c1229e0624cdb643b2fa1903b
+
+# Diff at Tue, 16 Sep 2025 13:19:40 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@59807a15d2a39badebbe1a7dc5e52c0bc667b78c block: 1756891026
+- current timestamp: 1758028704
+
+## Description
+
+Security council elections have started.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0) {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      values.currentCohort:
+-        1
++        0
+      values.electionCount:
+-        4
++        5
+      values.otherCohort:
+-        0
++        1
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756891026 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x00"
+      errors:
++        {"sequencerVersion":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0xf5fda58e399b1a1d3330f0dba8615b1bbd9afabd
 
 # Diff at Wed, 03 Sep 2025 09:19:43 GMT:
