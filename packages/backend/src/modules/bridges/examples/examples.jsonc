@@ -161,6 +161,36 @@
     "messages": ["axelar.ContractCallWithTokenMessage"],
     "transfers": ["axelar-gateway.Transfer"]
   },
+  "squid-coral": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x8b0231756750c340219ad738d4c4073f41503b3ae5a37ef175c27f7759e75fae"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xeaa266992432ee2f8981194320b1b1e4a034282e25c90c4711f8d239c3bbda0b"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "debridge-dln": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xc55fbe60a15226b1c8ef38bfd0f847d254e30a2cc319bd84637a4b2642973ee5"
+      },
+      {
+        "chain": "base",
+        "tx": "0x60e502eaae1d5e525b699e4ecfe5007ef6917a7bb920141b1ae77aefd7a61fc8"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
   "centrifuge-wormhole-axelar": {
     "txs": [
       {
