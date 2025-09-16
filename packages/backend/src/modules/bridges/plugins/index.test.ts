@@ -37,9 +37,7 @@ describe('Plugins', async () => {
     describe(protocol, () => {
       for (const chain of chains) {
         it(chain, () => {
-          if (!chainNames.has(chain)) {
-            assert(`Unknown chain name: ${chain}`)
-          }
+          assert(chainNames.has(chain), `Unknown chain name: ${chain}`)
         })
       }
     })
