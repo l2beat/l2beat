@@ -20,6 +20,7 @@ const createConfigFileSchema = z.object({
     .array(z.string())
     .check((v) => v.length > 0)
     .check((v) => v.every(ChainSpecificAddress)),
+  overwrite: z.boolean().optional(),
 })
 
 export function attachConfigRouter(
@@ -51,12 +52,14 @@ export function attachConfigRouter(
     const body = createConfigFileSchema.safeParse(req.body)
 
     if (!body.success) {
-      res.status(400).json({ errors: body.message })
+      res.status(400).json({ success: false, error: body.message })
       return
     }
 
-    if (configExists(configReader, body.data.project)) {
-      res.status(400).json({ errors: 'Config file already exists' })
+    if (configExists(configReader, body.data.project) && !body.data.overwrite) {
+      res
+        .status(400)
+        .json({ success: false, error: 'Config file already exists' })
       return
     }
 

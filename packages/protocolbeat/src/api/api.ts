@@ -3,6 +3,7 @@ import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
+  ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
@@ -148,17 +149,20 @@ export async function createConfigFile(
   project: string,
   type: 'project' | 'token',
   initialAddresses: string[],
+  overwrite: boolean,
 ) {
   const res = await fetch('/api/config-files', {
     method: 'POST',
-    body: JSON.stringify({ project, type, initialAddresses }),
+    body: JSON.stringify({ project, type, initialAddresses, overwrite }),
     headers: {
       'Content-Type': 'application/json',
     },
   })
 
-  if (!res.ok) {
-    throw new Error(res.statusText)
+  const data: ApiCreateConfigFileResponse = await res.json()
+
+  if (!data.success) {
+    throw new Error(data.error)
   }
 }
 

@@ -10,6 +10,7 @@ type CheckboxProps = {
 export function Checkbox({ checked, onClick, className, id }: CheckboxProps) {
   return (
     <div
+      role="checkbox"
       className={clsx(
         'flex size-4 cursor-pointer items-center justify-center border-coffee-400 bg-coffee-700 hover:bg-coffee-700/50',
         className,

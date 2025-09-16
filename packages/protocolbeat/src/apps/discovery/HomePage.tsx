@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { createRef, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { getProjects } from './api/api'
-import type { ApiProjectEntry } from './api/types'
-import { Title } from './common/Title'
-import { ErrorState } from './components/ErrorState'
-import { isReadOnly } from './config'
-import { IconStarEmpty } from './icons/IconStarEmpty'
-import { IconStarFull } from './icons/IconStarFull'
+import { getProjects } from '../../api/api'
+import type { ApiProjectEntry } from '../../api/types'
+import { Title } from '../../common/Title'
+import { ErrorState } from '../../components/ErrorState'
+import { isReadOnly } from '../../config'
+import { IconStarEmpty } from '../../icons/IconStarEmpty'
+import { IconStarFull } from '../../icons/IconStarFull'
 
 export function HomePage() {
   const [search, setSearch] = useState('')
