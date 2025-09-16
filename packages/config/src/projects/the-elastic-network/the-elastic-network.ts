@@ -17,11 +17,13 @@ export const theElasticNetwork: BaseProject = {
     badges: [BADGES.Stack.ZKStack, BADGES.Infra.ElasticChain],
   },
   colors: {
-    primary: '#513BE5',
-    secondary: '#4276FF',
-    dark: {
-      primary: '#7468FF',
-      secondary: '#4F48E5',
+    primary: {
+      light: '#513BE5',
+      dark: '#7468FF',
+    },
+    secondary: {
+      light: '#4276FF',
+      dark: '#4F48E5',
     },
   },
   ecosystemConfig: {

@@ -17,11 +17,13 @@ export const arbitrumOrbit: BaseProject = {
     badges: [BADGES.Stack.Orbit],
   },
   colors: {
-    primary: '#12AAFF',
-    secondary: '#12AAFF',
-    dark: {
-      primary: '#33BFFF',
-      secondary: '#0A6EA3',
+    primary: {
+      light: '#12AAFF',
+      dark: '#33BFFF',
+    },
+    secondary: {
+      light: '#12AAFF',
+      dark: '#0A6EA3',
     },
   },
   milestones: [
