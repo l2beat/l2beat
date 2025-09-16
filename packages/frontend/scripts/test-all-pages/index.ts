@@ -38,7 +38,7 @@ async function main() {
     '/scaling/risk',
     '/scaling/tvs',
     '/scaling/activity',
-    '/scaling/data-availability',
+    '/scaling/risk/data-availability',
     '/scaling/liveness',
     '/scaling/costs',
     '/scaling/archived',

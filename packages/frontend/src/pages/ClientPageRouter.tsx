@@ -22,10 +22,10 @@ import { PublicationsPage } from './publications/PublicationsPage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
 import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
-import { ScalingDataAvailabilityPage } from './scaling/data-availability/ScalingDataAvailabilityPage'
 import { ScalingLivenessPage } from './scaling/liveness/ScalingLivenessPage'
 import { ScalingProjectPage } from './scaling/project/ScalingProjectPage'
 import { ScalingProjectTvsBreakdownPage } from './scaling/project/tvs-breakdown/ScalingProjectTvsBreakdownPage'
+import { ScalingRiskDataAvailabilityPage } from './scaling/risk/data-availability/ScalingRiskDataAvailabilityPage'
 import { ScalingRiskPage } from './scaling/risk/ScalingRiskPage'
 import { ScalingRiskStateValidationPage } from './scaling/risk/state-validation/ScalingRiskStateValidationPage'
 import { ScalingSummaryPage } from './scaling/summary/ScalingSummaryPage'
@@ -54,7 +54,7 @@ const pages = {
   ScalingTvsPage,
   ScalingTvsBreakdownPage,
   ScalingActivityPage,
-  ScalingDataAvailabilityPage,
+  ScalingRiskDataAvailabilityPage,
   ScalingLivenessPage,
   ScalingCostsPage,
   ScalingArchivedPage,

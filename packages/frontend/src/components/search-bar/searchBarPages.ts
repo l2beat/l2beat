@@ -29,8 +29,9 @@ export const searchBarPages = withIndex([
     category: 'scaling',
     name: 'Data Availability',
     tags: ['pages', 'scaling'],
-    href: '/scaling/data-availability',
+    href: '/scaling/risk/data-availability',
   },
+  // TODO: Add State validaiton page later
   {
     category: 'scaling',
     name: 'Liveness',

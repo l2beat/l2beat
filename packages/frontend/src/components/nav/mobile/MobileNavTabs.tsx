@@ -20,8 +20,12 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
 
   // Do not display the tabs if the current group is not found,
   // or the current group does not have a link that matches the current path.
-  const display = currentGroup.links.some(({ href }) => href === pathname)
-  if (!display) return null
+  const isAnyLinkMatching =
+    currentGroup.links.some(({ href }) => href === pathname) ||
+    currentGroup.links.some((link) =>
+      link.subLinks?.some((subLink) => subLink.href === pathname),
+    )
+  if (!isAnyLinkMatching) return null
 
   return (
     <OverflowWrapper className="bg-surface-primary">
@@ -30,6 +34,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
           .filter((link) => !link.disabled)
           .map((link) => {
             const isSelected = link.href === pathname
+
             return (
               <a
                 ref={(node) => {
