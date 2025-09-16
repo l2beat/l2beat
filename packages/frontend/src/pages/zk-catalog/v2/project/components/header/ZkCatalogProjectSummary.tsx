@@ -75,22 +75,24 @@ function TrustedSetupsByProofSystemSection({
                   trustedSetups={trustedSetups}
                   dotSize="lg"
                 />
-                {projectsUsedIn && (
-                  <div className="flex flex-col gap-2">
+                <div className="grid grid-cols-[200px_1fr] gap-1">
+                  {projectsUsedIn && (
+                    <div className="flex flex-col gap-2">
+                      <p className="font-medium text-label-value-12 text-secondary">
+                        Used in
+                      </p>
+                      <ProjectsUsedIn
+                        noL2ClassName="text-label-value-12 font-medium text-secondary"
+                        usedIn={projectsUsedIn}
+                      />
+                    </div>
+                  )}
+                  <div className="flex flex-col gap-1.5">
                     <p className="font-medium text-label-value-12 text-secondary">
-                      Used in
+                      Verifiers
                     </p>
-                    <ProjectsUsedIn
-                      noL2ClassName="text-label-value-12 font-medium text-secondary"
-                      usedIn={projectsUsedIn}
-                    />
+                    <VerifiedCountWithDetails data={verifiers} horizontal />
                   </div>
-                )}
-                <div className="flex flex-col gap-1.5">
-                  <p className="font-medium text-label-value-12 text-secondary">
-                    Verifiers
-                  </p>
-                  <VerifiedCountWithDetails data={verifiers} horizontal />
                 </div>
               </div>
             )
