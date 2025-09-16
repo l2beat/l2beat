@@ -132,8 +132,14 @@ export interface BaseProject {
 
 // #region common data
 export interface ProjectCustomColors {
-  primary: string
-  secondary: string
+  primary: {
+    light: string
+    dark?: string
+  }
+  secondary: {
+    light: string
+    dark?: string
+  }
 }
 
 export interface ProjectStatuses {

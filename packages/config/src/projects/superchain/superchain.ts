@@ -21,8 +21,14 @@ export const superchain: BaseProject = {
     badges: [BADGES.Infra.Superchain, BADGES.Stack.OPStack],
   },
   colors: {
-    primary: '#F00000',
-    secondary: '#F93E3F',
+    primary: {
+      light: '#F00000',
+      dark: '#FF1F1F',
+    },
+    secondary: {
+      light: '#F93E3F',
+      dark: '#C32525',
+    },
   },
   ecosystemConfig: {
     links: {

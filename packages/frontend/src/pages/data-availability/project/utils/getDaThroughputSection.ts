@@ -42,7 +42,7 @@ export async function getDaThroughputSection(
     },
     customColors: env.CLIENT_SIDE_PARTNERS
       ? Object.fromEntries(
-          projectsWithColors.map((p) => [p.name, p.colors.primary]),
+          projectsWithColors.map((p) => [p.name, p.colors.primary.light]),
         )
       : undefined,
     milestones: project.milestones ?? [],

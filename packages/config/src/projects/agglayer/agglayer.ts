@@ -24,8 +24,14 @@ export const agglayer: BaseProject = {
     badges: [BADGES.Stack.CDKErigon, BADGES.Infra.Agglayer],
   },
   colors: {
-    primary: '#6C00F6',
-    secondary: '#6C51F4',
+    primary: {
+      light: '#6C00F6',
+      dark: '#9655FF',
+    },
+    secondary: {
+      light: '#6C51F4',
+      dark: '#7046EB',
+    },
   },
   milestones: [
     {

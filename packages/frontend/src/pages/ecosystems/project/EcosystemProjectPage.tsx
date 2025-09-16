@@ -43,8 +43,18 @@ export function EcosystemProjectPage({
             <CssVariables
               variables={{
                 'ecosystem-primary': ecosystem.colors.primary,
-                'ecosystem-primary-50': `${ecosystem.colors.primary}80`,
-                'ecosystem-primary-25': `${ecosystem.colors.primary}40`,
+                'ecosystem-primary-50': {
+                  light: `${ecosystem.colors.primary.light}80`,
+                  dark: ecosystem.colors.primary.dark
+                    ? `${ecosystem.colors.primary.dark}80`
+                    : undefined,
+                },
+                'ecosystem-primary-25': {
+                  light: `${ecosystem.colors.primary.light}40`,
+                  dark: ecosystem.colors.primary.dark
+                    ? `${ecosystem.colors.primary.dark}40`
+                    : undefined,
+                },
                 'ecosystem-secondary': ecosystem.colors.secondary,
                 'ecosystem-spacing': '0.75rem',
               }}
