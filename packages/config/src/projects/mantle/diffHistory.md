@@ -1,3 +1,144 @@
+Generated with discovered.json: 0x3f737e75bf255116c97149474e4c3914ed0415e0
+
+# Diff at Tue, 16 Sep 2025 14:52:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a7fdca41b265510bf79f0063c1d4f3b2736c71f7 block: 1756300390
+- current timestamp: 1758033959
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481","role":".CHALLENGER"}
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: None
+      name:
+-        "L2OutputOracle"
++        "OPSuccinctL2OutputOracle"
+      template:
+-        "opstack/L2OutputOracle"
+      sourceHashes.1:
+-        "0x45368d302fba850124115aa8ee67238f47d47d89c2b1b8c5dfd39818369e6cea"
++        "0xdd58c04f5920f546ba5a9bc5b046cdae6bf42acb819e90e2f66e10cc81afbc9f"
+      description:
+-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      values.$implementation:
+-        "eth:0xD1230865641561653406906Fb08873F011c19080"
++        "eth:0x4059509fFb703B048D1e9Ce3118F90E759076f50"
+      values.$pastUpgrades.1:
++        ["2025-09-16T06:46:47.000Z","0xf9fc68effd8cbd421d25e87a357757fe6710c6c9c0d9c5270d2af5a37f675259",["eth:0x4059509fFb703B048D1e9Ce3118F90E759076f50"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.deletedOutputs:
+-        []
+      values.latestBlockNumber:
+-        84082346
++        84948146
+      values.latestOutputIndex:
+-        12727
++        13208
+      values.nextBlockNumber:
+-        84084146
++        84949946
+      values.nextOutputIndex:
+-        12728
++        13209
+      values.PROPOSER:
+-        "eth:0x6667961f5e9C98A76a48767522150889703Ed77D"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.version:
+-        "1.3.0"
++        "2.0.1"
+      values.aggregationVkey:
++        "0x00bca7947ba758bd6f539f480c6d983cca4bd4387a411a41a71fb953d5df3de7"
+      values.challenger:
++        "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+      values.computeL2Timestamp:
++        []
+      values.finalizationPeriodSeconds:
++        604800
+      values.getL2Output:
++        [["0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",1710505415,61173746],["0x8f1fe2fd85abe795ee38534eb1843ae787ffe1d8c042c7825627d013f4421dc5",1710505463,61175546],["0xa4248b6baa4dc3a9831ef58add83882a031046735043e9c0aeb9f0b9fe76137a",1710505511,61177346],["0xbb9c56f7ea651e863c52bbb36df45f44283036144a5eae804fd1bca66678177b",1710505559,61179146],["0xea964d3d2d40d05645732757063f206c968a4c975fd31a00eae0df8d8ccb46c8",1710505595,61180946]]
+      values.getL2OutputAfter:
++        [["0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",1710505415,61173746],["0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",1710505415,61173746],["0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",1710505415,61173746],["0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",1710505415,61173746],["0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",1710505415,61173746]]
+      values.getL2OutputIndexAfter:
++        [0,0,0,0,0]
+      values.historicBlockHashes:
++        ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
+      values.initializerVersion:
++        3
+      values.l2BlockTime:
++        2
+      values.optimisticMode:
++        false
+      values.owner:
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      values.proposer:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rangeVkeyCommitment:
++        "0x2d0dcc4f4a5e59b80239c28a3fb68ab63b8eaf6f132239e95f927da9046f4256"
+      values.rollupConfigHash:
++        "0x46fed49cbaf7272fb44cbd470ac7ee460d5e3b22eed239059bbbf4b356351792"
+      values.submissionInterval:
++        1800
+      values.verifier:
++        "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B"
+      fieldMeta:
+-        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."},"proposer":{"severity":"HIGH"},"challenger":{"severity":"HIGH"},"deletedOutputs":{"severity":"HIGH"}}
+      implementationNames.eth:0xD1230865641561653406906Fb08873F011c19080:
+-        "L2OutputOracle"
+      implementationNames.eth:0x4059509fFb703B048D1e9Ce3118F90E759076f50:
++        "OPSuccinctL2OutputOracle"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"getL2Output":"Processing error occurred.","getL2OutputAfter":"Processing error occurred.","getL2OutputIndexAfter":"Processing error occurred.","historicBlockHashes":"Processing error occurred."}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../L2OutputOracle/L2OutputOracle.sol => /dev/null |  839 ---------------
+ .../OPSuccinctL2OutputOracle.sol                   | 1093 ++++++++++++++++++++
+ .../OPSuccinctL2OutputOracle}/Proxy.p.sol          |    0
+ .../src/projects/mantle/.flat/SP1Verifier.sol      |  602 +++++++++++
+ .../projects/mantle/.flat/SP1VerifierGateway.sol   |  231 +++++
+ .../SP1VerifierGatewayMultisig/GnosisSafe.sol      |  953 +++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 7 files changed, 2914 insertions(+), 839 deletions(-)
+```
+
 Generated with discovered.json: 0x1cb35d4a4ca414aac5c59acf0e3f4527397ab466
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
