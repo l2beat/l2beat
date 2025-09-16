@@ -23,8 +23,12 @@ const mainPages: MainPage[] = [
     title: 'Activity',
   },
   {
-    type: 'scaling',
+    type: 'scaling/risk',
     title: 'Data Availability',
+  },
+  {
+    type: 'scaling/risk',
+    title: 'State Validation',
   },
   {
     type: 'scaling',
