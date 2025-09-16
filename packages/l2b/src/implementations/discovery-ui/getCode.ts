@@ -5,9 +5,8 @@ import {
   flatteningHash,
   get$Implementations,
 } from '@l2beat/discovery'
-import { type ChainSpecificAddress, notUndefined } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readdirSync, readFileSync } from 'fs'
-import uniq from 'lodash/uniq'
 import { join } from 'path'
 import { isDeepStrictEqual } from 'util'
 import {
@@ -15,6 +14,7 @@ import {
   getProjectDiscoveries,
 } from './getDiscoveries'
 import type { ApiCodeResponse } from './types'
+import { getReferencedProjects } from './utils'
 
 export function addFlattenerNote(code: string): string {
   const note = [
@@ -47,15 +47,9 @@ function isFlatCodeCurrent(
   codePaths: CodePathResult['codePaths'],
 ): boolean {
   const discovery = configReader.readDiscovery(project)
-
   const discoveries = [discovery]
+  const referencedProjects = getReferencedProjects(discovery)
 
-  const referencedProjects = uniq(
-    discovery.entries
-      .map((e) => e.targetProject)
-      .filter(notUndefined)
-      .sort(),
-  )
   for (const refProj of referencedProjects) {
     const refDiscovery = configReader.readDiscovery(refProj)
     discoveries.push(refDiscovery)

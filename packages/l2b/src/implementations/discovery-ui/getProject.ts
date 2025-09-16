@@ -11,13 +11,8 @@ import {
   type TemplateService,
 } from '@l2beat/discovery'
 import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  notUndefined,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import uniq from 'lodash/uniq'
 import { getContractName } from './getContractName'
 import { getContractType } from './getContractType'
 import { getMeta } from './getMeta'
@@ -33,6 +28,7 @@ import type {
   Field,
   FieldValue,
 } from './types'
+import { getReferencedProjects } from './utils'
 
 interface ProjectData {
   config: ConfigRegistry
@@ -54,12 +50,7 @@ function readProject(
 
   try {
     const discovery = configReader.readDiscovery(project)
-    const referencedProjects = uniq(
-      discovery.entries
-        .map((e) => e.targetProject)
-        .filter(notUndefined)
-        .sort(),
-    )
+    const referencedProjects = getReferencedProjects(discovery)
 
     return [
       { config: configReader.readConfig(project), discovery },
