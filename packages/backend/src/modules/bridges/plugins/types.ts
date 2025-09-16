@@ -254,3 +254,15 @@ function Transfer(
     },
   }
 }
+
+export const definedNetworks: { protocol: string; chains: string[] }[] = []
+export function defineNetworks<T extends { chain: string }>(
+  protocol: string,
+  networks: T[],
+): T[] {
+  definedNetworks.push({
+    protocol,
+    chains: networks.map((x) => x.chain),
+  })
+  return networks
+}

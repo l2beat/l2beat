@@ -6,6 +6,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -36,7 +37,7 @@ export const AcrossFilledRelay = createBridgeEventType<{
   amount: string
 }>('across.FilledRelay')
 
-const NETWORKS = [
+const ACROSS_NETWORKS = defineNetworks('across', [
   {
     chain: 'ethereum',
     chainId: 1,
@@ -77,14 +78,14 @@ const NETWORKS = [
     chainId: 534352,
     address: EthereumAddress('0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96'),
   },
-]
+])
 
 export class AcrossPlugin implements BridgePlugin {
   name = 'across'
-  chains = NETWORKS.map((n) => n.chain)
+  chains = ACROSS_NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
-    const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
+    const network = ACROSS_NETWORKS.find((n) => n.chain === input.ctx.chain)
     if (!network) return
 
     const fundsDeposited = parseFundsDeposited(input.log, [network.address])

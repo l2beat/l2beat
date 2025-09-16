@@ -3,6 +3,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
 } from './types'
 
@@ -10,7 +11,7 @@ const parseLogMessagePublished = createEventParser(
   'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)',
 )
 
-export const NETWORKS = [
+export const WORMHOLE_NETWORKS = defineNetworks('wormhole', [
   { wormholeChainId: 2, chain: 'ethereum' },
   { wormholeChainId: 1, chain: 'solana' },
   { wormholeChainId: 8, chain: 'algorand' },
@@ -56,7 +57,7 @@ export const NETWORKS = [
   { wormholeChainId: 45, chain: 'worldchain' },
   { wormholeChainId: 37, chain: 'xlayer' },
   { wormholeChainId: 57, chain: 'xrpl-evm' },
-]
+])
 
 export const LogMessagePublished = createBridgeEventType<{
   payload: `0x${string}`
@@ -73,7 +74,7 @@ export class WormholePlugin implements BridgePlugin {
     const parsed = parseLogMessagePublished(input.log, null)
     if (!parsed) return
 
-    const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
+    const network = WORMHOLE_NETWORKS.find((n) => n.chain === input.ctx.chain)
     if (!network) {
       return
     }

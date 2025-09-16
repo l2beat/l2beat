@@ -6,12 +6,13 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-export const CCTP_NETWORKS = [
+export const CCTP_NETWORKS = defineNetworks('cctp', [
   { cctpdomain: 0, chain: 'ethereum' },
   { cctpdomain: 1, chain: 'avalanche' },
   { cctpdomain: 2, chain: 'op' },
@@ -21,7 +22,7 @@ export const CCTP_NETWORKS = [
   { cctpdomain: 7, chain: 'polygon' },
   { cctpdomain: 10, chain: 'unichain' },
   { cctpdomain: 11, chain: 'linea' },
-]
+])
 
 const parseMessageSent = createEventParser('event MessageSent(bytes message)')
 
