@@ -769,6 +769,14 @@ export interface RequiredTool {
 // #region zk catalog v2 data
 export interface ProjectZkCatalogInfo {
   creator?: string
+  formalVerificationLinks?: {
+    name: string
+    url: string
+  }[]
+  audits?: {
+    company: string
+    url: string
+  }[]
   techStack: {
     zkVM?: ZkCatalogTag[]
     finalWrap?: ZkCatalogTag[]
