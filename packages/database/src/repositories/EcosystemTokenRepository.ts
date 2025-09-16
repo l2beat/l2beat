@@ -64,13 +64,10 @@ export class EcosystemTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async upsertMany(records: EcosystemTokenRecord[]): Promise<number> {
-    if (records.length === 0) return 0
-
-    const rows = records.map(toRow)
+  async upsert(record: EcosystemTokenRecord): Promise<void> {
     await this.db
       .insertInto('EcosystemToken')
-      .values(rows)
+      .values(toRow(record))
       .onConflict((oc) =>
         oc.columns(['projectId', 'coingeckoId']).doUpdateSet((eb) => ({
           priceUsd: eb.ref('excluded.priceUsd'),
@@ -79,8 +76,7 @@ export class EcosystemTokenRepository extends BaseRepository {
           timestamp: eb.ref('excluded.timestamp'),
         })),
       )
-      .executeTakeFirst()
-    return records.length
+      .execute()
   }
 
   async deleteAll(): Promise<number> {

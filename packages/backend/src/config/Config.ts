@@ -11,7 +11,7 @@ import type {
   DiscoveryPaths,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type {
   AmountConfig,
   BlockTimestampConfig,
@@ -217,7 +217,7 @@ export interface DaBeatConfig {
 
 export interface EcosystemTokenConfig {
   readonly projectId: ProjectId
-  readonly coingeckoId: string
+  readonly coingeckoId: CoingeckoId
 }
 export interface EcosystemsConfig {
   readonly tokens: EcosystemTokenConfig[]

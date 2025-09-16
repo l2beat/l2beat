@@ -19,6 +19,7 @@ import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
 import { Providers } from './providers/Providers'
 import { Clock } from './tools/Clock'
+import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 
 export class Application {
   start: () => Promise<void>
@@ -64,6 +65,7 @@ export class Application {
       initTvsModule(deps),
       createVerifiersModule(deps),
       createDaBeatModule(deps),
+      createEcosystemsModule(deps),
       createAnomaliesModule(deps),
       createBridgeModule(deps),
       createBlockSyncModule(deps),

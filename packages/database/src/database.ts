@@ -36,6 +36,7 @@ import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { VerifierStatusRepository } from './repositories/VerifierStatusRepository'
 import { getDatabaseStats } from './utils/getDatabaseStats'
+import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
@@ -69,6 +70,10 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     updateNotifier: new UpdateNotifierRepository(db),
     updateMessage: new UpdateMessageRepository(db),
     flatSources: new FlatSourcesRepository(db),
+    // #endregion
+
+    // #region Ecosystems
+    ecosystemToken: new EcosystemTokenRepository(db),
     // #endregion
 
     // #region UIF
