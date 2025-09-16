@@ -1,7 +1,8 @@
 {
   "name": "molten",
-  "timestamp": 1757683093,
-  "configHash": "0xa6b5cacd0cf7370c0b70f0212375a0e47bdf6e62b05d2c56226a2d0bcee67e12",
+  "timestamp": 1758032604,
+  "configHash": "0xf8bbf9a0ceb49ddf0892f5566ffe7e3ae614287529dec94ad10c8ad026723447",
+  "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {
       "address": "arb1:0x0cc6aB203689bd8004511cC60f5b25DfB3A91431",
@@ -62,13 +63,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1784,
+        "firstUnresolvedNode": 1800,
         "inbox": "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 1783,
-        "latestNodeCreated": 1809,
+        "latestConfirmed": 1799,
+        "latestNodeCreated": 1825,
         "loserStakeEscrow": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
@@ -198,7 +199,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 98403,
+        "batchCount": 98504,
         "batchPosterManager": "arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738",
         "batchPosters": ["arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"],
         "BLOBSTREAM": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -231,7 +232,7 @@
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerVersion": "0x63",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 66754,
+        "totalDelayedMessagesRead": 67004,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1206,7 +1207,7 @@
         "allowedOutboxList": [
           "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
         ],
-        "delayedMessageCount": 66754,
+        "delayedMessageCount": 67004,
         "inboxHistory": [
           "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
           "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
@@ -1216,8 +1217,8 @@
         "outboxHistory": ["arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 98403,
-        "sequencerReportedSubMessageCount": 86367820
+        "sequencerMessageCount": 98504,
+        "sequencerReportedSubMessageCount": 86668306
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -2225,6 +2226,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 378380565 },
+  "usedBlockNumbers": { "arbitrum": 379777916 },
   "permissionsConfigHash": "0xdff202590dbe5893c3b1f17983a260801ceeecb6c6352c8c0059aae85fc4d209"
 }
