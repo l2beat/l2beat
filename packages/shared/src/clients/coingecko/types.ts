@@ -59,3 +59,17 @@ export type CoingeckoError = v.infer<typeof CoingeckoError>
 export const CoingeckoError = v.object({
   error: v.string(),
 })
+
+export type CoinData = v.infer<typeof CoinData>
+export const CoinData = v.object({
+  id: v.string(),
+  market_data: v.object({
+    current_price: v.object({
+      usd: v.number(),
+    }),
+    market_cap: v.object({
+      usd: v.number(),
+    }),
+    circulating_supply: v.number(),
+  }),
+})
