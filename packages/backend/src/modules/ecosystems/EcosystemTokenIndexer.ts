@@ -3,7 +3,14 @@ import type { EcosystemTokenIndexerDeps } from './types'
 
 export class EcosystemTokenIndexer extends ManagedChildIndexer {
   constructor(private readonly $: EcosystemTokenIndexerDeps) {
-    super({ ...$, name: 'ecosystem_token' })
+    super({
+      ...$,
+      name: 'ecosystem_token_indexer',
+      tags: {
+        tag: $.tokenConfig.projectId,
+        project: $.tokenConfig.projectId,
+      },
+    })
   }
 
   override async update(_: number, to: number): Promise<number> {

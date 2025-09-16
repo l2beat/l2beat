@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { CoingeckoId, ProjectId } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { BaseProject } from '../../types'
 
@@ -29,8 +29,7 @@ export const theElasticNetwork: BaseProject = {
       governanceProposals: 'https://www.tally.xyz/gov/zksync/proposals',
     },
     token: {
-      tokenId: 'zksync2-ZK',
-      projectId: ProjectId('zksync2'),
+      coingeckoId: CoingeckoId('zksync'),
       description:
         'The ZK token is a governance token that allows token holders to introduce and vote on protocol upgrades within the Elastic Network.',
     },

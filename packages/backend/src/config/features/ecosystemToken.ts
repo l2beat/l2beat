@@ -11,11 +11,11 @@ export async function getEcosystemsConfig(
   })
 
   const tokens = projects
-    .map((x) => {
-      if (!x.ecosystemConfig?.token) return undefined
+    .map((p) => {
+      if (!p.ecosystemConfig?.token) return undefined
       return {
-        projectId: x.id,
-        coingeckoId: x.ecosystemConfig.token.tokenId,
+        projectId: p.id,
+        coingeckoId: p.ecosystemConfig.token.coingeckoId,
       }
     })
     .filter((x) => x !== undefined)
