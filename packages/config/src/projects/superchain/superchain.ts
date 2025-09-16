@@ -25,7 +25,7 @@ export const superchain: BaseProject = {
     secondary: '#F93E3F',
     dark: {
       primary: '#FF1F1F',
-      secondary: '#FF7474',
+      secondary: '#C32525',
     },
   },
   ecosystemConfig: {

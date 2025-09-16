@@ -28,7 +28,7 @@ export const agglayer: BaseProject = {
     secondary: '#6C51F4',
     dark: {
       primary: '#9655FF',
-      secondary: '#C09CFF',
+      secondary: '#7046EB',
     },
   },
   milestones: [

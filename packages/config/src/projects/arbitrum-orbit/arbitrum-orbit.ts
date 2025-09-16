@@ -21,7 +21,7 @@ export const arbitrumOrbit: BaseProject = {
     secondary: '#12AAFF',
     dark: {
       primary: '#33BFFF',
-      secondary: '#57D1FF',
+      secondary: '#0A6EA3',
     },
   },
   milestones: [
