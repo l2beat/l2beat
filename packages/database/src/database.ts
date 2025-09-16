@@ -13,6 +13,7 @@ import { BridgeTransferRepository } from './repositories/BridgeTransferRepositor
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
+import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
@@ -36,7 +37,6 @@ import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { VerifierStatusRepository } from './repositories/VerifierStatusRepository'
 import { getDatabaseStats } from './utils/getDatabaseStats'
-import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
