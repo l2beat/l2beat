@@ -5,6 +5,8 @@ import type {
   ApiConfigFileResponse,
   ApiCreateShapeResponse,
   ApiListTemplatesResponse,
+  ApiPermissionOverridesResponse,
+  ApiPermissionOverridesUpdateRequest,
   ApiPreviewResponse,
   ApiProjectResponse,
   ApiProjectsResponse,
@@ -212,4 +214,30 @@ export function executeFindMinters(address: string): EventSource {
     address,
   })
   return new EventSource(`/api/terminal/find-minters?${params}`)
+}
+
+export async function getPermissionOverrides(project: string): Promise<ApiPermissionOverridesResponse> {
+  const res = await fetch(`/api/projects/${project}/permission-overrides`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiPermissionOverridesResponse
+}
+
+export async function updatePermissionOverride(
+  project: string,
+  request: ApiPermissionOverridesUpdateRequest
+): Promise<void> {
+  const res = await fetch(`/api/projects/${project}/permission-overrides`, {
+    method: 'PUT',
+    body: JSON.stringify(request),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
 }

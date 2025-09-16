@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "lastModified": "2025-09-16T19:10:30.000Z",
+  "overrides": [
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "admin",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-16T18:01:51.862Z"
+    },
+    {
+      "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+      "functionName": "acceptAdmin",
+      "userClassification": "permissioned",
+      "reason": "Test permission toggle",
+      "timestamp": "2025-09-16T18:01:56.876Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "buyCollateral",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-16T18:05:02.122Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "absorb",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-16T19:02:58.600Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "pause",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-16T19:03:11.444Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "implementation",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-16T19:03:31.811Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "upgradeTo",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-16T19:03:32.547Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "upgradeToAndCall",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-16T19:03:33.985Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "accrueAccount",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-16T19:03:38.421Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "changeAdmin",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-16T19:09:24.903Z"
+    }
+  ]
+}

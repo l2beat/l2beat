@@ -186,3 +186,25 @@ export interface UpgradeabilityActor {
   name: string
   delay: string
 }
+
+// Permission overrides types
+export interface ApiPermissionOverridesResponse {
+  version: string
+  lastModified: string
+  overrides: PermissionOverride[]
+}
+
+export interface PermissionOverride {
+  contractAddress: string
+  functionName: string
+  userClassification: 'permissioned' | 'non-permissioned'
+  reason?: string
+  timestamp: string
+}
+
+export interface ApiPermissionOverridesUpdateRequest {
+  contractAddress: string
+  functionName: string
+  userClassification: 'permissioned' | 'non-permissioned'
+  reason?: string
+}

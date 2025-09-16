@@ -19,6 +19,10 @@ import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { searchCode } from './searchCode'
 import {
+  getPermissionOverrides,
+  updatePermissionOverride,
+} from './permissionOverrides'
+import {
   attachTemplateRouter,
   listTemplateFilesSchema,
 } from './templates/router'
@@ -162,6 +166,45 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json({
       config,
     })
+  })
+
+  app.get('/api/projects/:project/permission-overrides', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const response = getPermissionOverrides(paths, project)
+      res.json(response)
+    } catch (error) {
+      console.error('Error loading permission overrides:', error)
+      res.status(500).json({ error: 'Failed to load permission overrides' })
+    }
+  })
+
+  app.put('/api/projects/:project/permission-overrides', (req, res) => {
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      updatePermissionOverride(paths, project, req.body)
+      res.json({ success: true })
+    } catch (error) {
+      console.error('Error updating permission overrides:', error)
+      res.status(500).json({ error: 'Failed to update permission overrides' })
+    }
   })
 
   app.use(express.static(STATIC_ROOT))
