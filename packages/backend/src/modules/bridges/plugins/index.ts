@@ -1,6 +1,7 @@
 import { AcrossPlugin } from './across'
 import { AxelarPlugin } from './axelar'
 import { CCTPPlugin } from './cctp'
+import { DeBridgeDlnPlugin } from './debridge-dln'
 import { LayerZeroV2Plugin } from './layerzero-v2'
 import { MayanForwarderPlugin } from './mayan-forwarder'
 import { MayanMctpPlugin } from './mayan-mctp'
@@ -21,6 +22,7 @@ import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
 export function createBridgePlugins(): BridgePlugin[] {
   return [
     new SquidCoralPlugin(),
+    new DeBridgeDlnPlugin(),
     new MayanForwarderPlugin(),
     new MayanSwiftPlugin(), // should be run before CCTP
     new MayanMctpPlugin(), // should be run before CCTP
