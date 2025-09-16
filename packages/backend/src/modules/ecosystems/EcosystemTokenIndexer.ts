@@ -14,8 +14,6 @@ export class EcosystemTokenIndexer extends ManagedChildIndexer {
   }
 
   override async update(_: number, to: number): Promise<number> {
-    await Promise.resolve()
-
     const data = await this.$.coingeckoClient.getCoinDataById(
       this.$.tokenConfig.coingeckoId,
     )
@@ -32,9 +30,7 @@ export class EcosystemTokenIndexer extends ManagedChildIndexer {
     return to
   }
 
-  override async invalidate(targetHeight: number): Promise<number> {
-    await Promise.resolve()
-
-    return targetHeight
+  override invalidate(targetHeight: number): Promise<number> {
+    return Promise.resolve(targetHeight)
   }
 }
