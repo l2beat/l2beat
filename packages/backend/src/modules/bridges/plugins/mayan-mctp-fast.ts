@@ -18,7 +18,6 @@ const parseOrderFulfilled = createEventParser(
 )
 
 export const OrderFulfilled = createBridgeEventType<{
-  txHash: string
   amount: string
   sourceDomain: string
 }>('mayan-mctp-fast.OrderFullfilled')
@@ -31,7 +30,6 @@ export class MayanMctpFastPlugin implements BridgePlugin {
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
       return OrderFulfilled.create(input.ctx, {
-        txHash: input.ctx.txHash,
         amount: orderFulfilled.amount.toString(),
         sourceDomain:
           NETWORKS.find(
@@ -49,7 +47,7 @@ export class MayanMctpFastPlugin implements BridgePlugin {
     // find MessageReceived with the same txHash as OrderFulfilled
     const messageReceived = db.find(CCTPv2MessageReceived, {
       app: 'TokenMessengerV2',
-      txHash: orderFulfilled.args.txHash,
+      sameTxBefore: orderFulfilled,
     })
     if (!messageReceived || !messageReceived.args.hookData) return
     // find MessageSent with the same body as MessageReceived

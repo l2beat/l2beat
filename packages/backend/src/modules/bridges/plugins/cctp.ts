@@ -35,7 +35,6 @@ const parseV2MessageReceived = createEventParser(
 
 export const CCTPv1MessageSent = createBridgeEventType<{
   messageBody: string
-  txHash: string
   $dstChain: string
 }>('cctp-v1.MessageSent')
 
@@ -53,7 +52,6 @@ export const CCTPv2MessageSent = createBridgeEventType<{
   amount?: string
   tokenAddress?: EthereumAddress
   messageBody: string
-  txHash: string
   $dstChain: string
 }>('cctp-v2.MessageSent')
 
@@ -66,7 +64,6 @@ export const CCTPv2MessageReceived = createBridgeEventType<{
   sender: EthereumAddress
   finalityThresholdExecuted: number
   messageBody: string
-  txHash: string
 }>('cctp-v2.MessageReceived')
 
 export class CCTPPlugin implements BridgePlugin {
@@ -82,7 +79,6 @@ export class CCTPPlugin implements BridgePlugin {
         if (!message) return
         return CCTPv1MessageSent.create(input.ctx, {
           messageBody: message.rawBody,
-          txHash: input.ctx.txHash,
           $dstChain:
             CCTP_NETWORKS.find(
               (n) => n.cctpdomain === Number(message.destinationDomain),
@@ -108,7 +104,6 @@ export class CCTPPlugin implements BridgePlugin {
             '0x' + burnMessage?.burnToken?.slice(-40),
           ),
           messageBody: message.messageBody,
-          txHash: input.ctx.txHash,
         })
       }
     }
@@ -144,7 +139,6 @@ export class CCTPPlugin implements BridgePlugin {
           v2MessageReceived.finalityThresholdExecuted,
         ),
         messageBody: v2MessageReceived.messageBody,
-        txHash: input.ctx.txHash,
       })
     }
   }

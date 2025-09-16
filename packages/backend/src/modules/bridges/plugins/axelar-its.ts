@@ -54,7 +54,6 @@ export const InterchainTransfer = createBridgeEventType<{
   tokenId: `0x${string}`
   amount: number
   tokenAddress: EthereumAddress
-  txHash: string
   $dstChain: string
 }>('axelar-its.InterchainTransfer')
 
@@ -63,7 +62,6 @@ export const InterchainTransferReceived = createBridgeEventType<{
   tokenId: `0x${string}`
   amount: number
   tokenAddress: EthereumAddress
-  txHash: string
   $srcChain: string
 }>('axelar-its.InterchainTransferReceived')
 
@@ -80,7 +78,6 @@ export class AxelarITSPlugin implements BridgePlugin {
         tokenAddress:
           ITS_TOKENS.find((t) => t.tokenId === interchainTransfer.tokenId)
             ?.tokenAddresses[input.ctx.chain] ?? EthereumAddress.ZERO,
-        txHash: input.ctx.txHash,
         $dstChain:
           NETWORKS.find(
             (x) => x.axelarChainName === interchainTransfer.destinationChain,
@@ -101,7 +98,6 @@ export class AxelarITSPlugin implements BridgePlugin {
           ITS_TOKENS.find(
             (t) => t.tokenId === interchainTransferReceived.tokenId,
           )?.tokenAddresses[input.ctx.chain] ?? EthereumAddress.ZERO,
-        txHash: input.ctx.txHash,
         $srcChain:
           NETWORKS.find(
             (x) => x.axelarChainName === interchainTransferReceived.sourceChain,
@@ -132,12 +128,14 @@ export class AxelarITSPlugin implements BridgePlugin {
       if (!contractCallApproved) return
 
       const contractCall = db.find(ContractCall, {
-        txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+        ctx: {
+          txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+        },
       })
       if (!contractCall) return
 
       const interchainTransfer = db.find(InterchainTransfer, {
-        txHash: contractCall.args.txHash, // TODO: this may not be enough but event index is also available
+        sameTxBefore: contractCall,
       })
       if (!interchainTransfer) return
       return [

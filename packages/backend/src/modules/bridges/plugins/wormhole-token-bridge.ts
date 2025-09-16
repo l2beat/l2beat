@@ -19,7 +19,6 @@ export const TransferRedeemed = createBridgeEventType<{
   $srcChain: string
   srcWormholeChainId: number
   sender: string
-  txHash: string
 }>('wormhole.LogTransferRedeemed')
 
 export class WormholeTokenBridgePlugin implements BridgePlugin {
@@ -37,7 +36,6 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
           ?.chain ?? 'unknown',
       srcWormholeChainId: parsed.emitterChainId,
       sender: parsed.emitterAddress,
-      txHash: input.ctx.txHash,
     })
   }
 

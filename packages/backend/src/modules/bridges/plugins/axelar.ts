@@ -58,7 +58,6 @@ export const ContractCall = createBridgeEventType<{
   sender: EthereumAddress
   destinationContractAddress: string
   payloadHash: `0x${string}`
-  txHash: string
   $dstChain: string
 }>('axelar.ContractCall')
 
@@ -66,7 +65,6 @@ export const ContractCallWithToken = createBridgeEventType<{
   sender: EthereumAddress
   destinationContractAddress: string
   payloadHash: `0x${string}`
-  txHash: string
   symbol: string
   amount: number
   $dstChain: string
@@ -107,7 +105,6 @@ export class AxelarPlugin implements BridgePlugin {
         sender: EthereumAddress(contractCall.sender),
         destinationContractAddress: contractCall.destinationContractAddress,
         payloadHash: contractCall.payloadHash,
-        txHash: input.ctx.txHash,
         $dstChain:
           NETWORKS.find(
             (x) => x.axelarChainName === contractCall.destinationChain,
@@ -124,7 +121,6 @@ export class AxelarPlugin implements BridgePlugin {
         payloadHash: contractCallWithToken.payloadHash,
         symbol: contractCallWithToken.symbol,
         amount: Number(contractCallWithToken.amount),
-        txHash: input.ctx.txHash,
         $dstChain:
           NETWORKS.find(
             (x) => x.axelarChainName === contractCallWithToken.destinationChain,
@@ -184,7 +180,9 @@ export class AxelarPlugin implements BridgePlugin {
   ): MatchResult | undefined {
     if (ContractCallApproved.checkType(contractCallApproved)) {
       const contractCall = db.find(ContractCall, {
-        txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+        ctx: {
+          txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+        },
       })
       if (!contractCall) return
       return [
@@ -197,7 +195,9 @@ export class AxelarPlugin implements BridgePlugin {
 
     if (ContractCallApprovedWithMint.checkType(contractCallApproved)) {
       const contractCallWithToken = db.find(ContractCallWithToken, {
-        txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+        ctx: {
+          txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+        },
       })
       if (!contractCallWithToken) return
       const contractCallExecuted = db.find(ContractCallExecuted, {
