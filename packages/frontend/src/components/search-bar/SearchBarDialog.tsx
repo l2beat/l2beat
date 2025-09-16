@@ -278,6 +278,8 @@ function entryToLabel(entry: AnySearchBarEntry) {
       return 'DA Layer'
     case 'zkCatalog':
       return undefined
+    case 'ecosystem':
+      return 'Ecosystem'
     default:
       assertUnreachable(entry.kind)
   }
