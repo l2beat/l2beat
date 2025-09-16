@@ -129,7 +129,8 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
       sortUndefined: 'last',
       meta: {
         align: 'right',
-        tooltip: 'User operations per second averaged over the past day, shown together with a percentage changed compared to 7D ago.',
+        tooltip:
+          'User operations per second averaged over the past day, shown together with a percentage changed compared to 7D ago.',
       },
     }),
   ])
