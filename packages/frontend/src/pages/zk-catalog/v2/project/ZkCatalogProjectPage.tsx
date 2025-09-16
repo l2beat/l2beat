@@ -36,7 +36,7 @@ export function ZkCatalogProjectPage({
       <HydrationBoundary state={queryState}>
         <SideNavLayout childrenWrapperClassName="md:pt-0">
           <div
-            className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
+            className="smooth-scroll group/section-wrapper z-0 max-md:bg-surface-primary"
             data-project-page
           >
             {!isNavigationEmpty && (
@@ -44,7 +44,7 @@ export function ZkCatalogProjectPage({
                 <MobileProjectNavigation sections={navigationSections} />
               </div>
             )}
-            <div className="relative z-0 max-md:bg-surface-primary">
+            <div className="z-0 max-md:bg-surface-primary">
               <div className="pt-6 max-md:px-4 lg:w-[calc(100%-196px)] lg:pt-4">
                 <ProjectHeader
                   project={projectEntry}
