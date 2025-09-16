@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x685c7188b72a8a4c1229e0624cdb643b2fa1903b
+Generated with discovered.json: 0x503da09ee16b6d0634958f5e4eb7bb798e30ce0d
 
-# Diff at Tue, 16 Sep 2025 13:19:40 GMT:
+# Diff at Tue, 16 Sep 2025 13:32:57 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@59807a15d2a39badebbe1a7dc5e52c0bc667b78c block: 1756891026
-- current timestamp: 1758028704
+- current timestamp: 1758029480
 
 ## Description
 
@@ -24,22 +24,6 @@ Security council elections have started.
       values.otherCohort:
 -        0
 +        1
-    }
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1756891026 (main branch discovery), not current.
-
-```diff
-    contract SequencerInbox (eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
-    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
-      values.sequencerVersion:
--        "0x00"
-      errors:
-+        {"sequencerVersion":"Processing error occurred."}
     }
 ```
 

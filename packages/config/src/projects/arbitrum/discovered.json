@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "timestamp": 1758028704,
+  "timestamp": 1758029480,
   "configHash": "0xb0e20fce2209a0eaf71a2737c08e916653378a8089eb212523e7b7814a917775",
   "entries": [
     {
@@ -2904,7 +2904,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1003885,
+        "batchCount": 1003893,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -2917,9 +2917,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 23375715,
+          "prevBlockNumber": 23375812,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 23375781
+          "prevSequencedBlockNumber": 23375878
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -2943,12 +2943,12 @@
         "postsBlobs": true,
         "reader4844": "eth:0x15b25E3fb8419dA4848a6f193bb9b43519D0d4ca",
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
+        "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2119502,
+        "totalDelayedMessagesRead": 2119510,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
-      "errors": { "sequencerVersion": "Processing error occurred." },
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -3749,7 +3749,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2119511,
+        "delayedMessageCount": 2119519,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -3763,8 +3763,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1003885,
-        "sequencerReportedSubMessageCount": 357554114
+        "sequencerMessageCount": 1003893,
+        "sequencerReportedSubMessageCount": 357557315
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -8706,6 +8706,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 23375876, "arbitrum": 379762300 },
+  "usedBlockNumbers": { "arbitrum": 379765404, "ethereum": 23375940 },
   "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7"
 }
