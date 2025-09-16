@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -7,6 +7,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('race')
 
 export const race: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   additionalPurposes: ['RWA'],
   discovery,
   addedAt: UnixTime(1726563843), // 2024-09-17T09:04:03Z

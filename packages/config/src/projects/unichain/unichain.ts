@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, SOA } from '../../common'
@@ -13,6 +14,10 @@ const genesisTimestamp = UnixTime(1730748359)
 const chainId = 130
 
 export const unichain: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1739318400), // 2025-02-11T00:00:00Z
   discovery,
   additionalPurposes: ['Exchange'],
