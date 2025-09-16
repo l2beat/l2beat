@@ -5,6 +5,9 @@ import { defineConfig } from 'vite'
 // biome-ignore lint/style/noDefaultExport: Vite requires default export
 export default defineConfig({
   plugins: [react()],
+  optimizeDeps: {
+    include: ['@l2beat/shared-pure'],
+  },
   build: {
     outDir: 'build',
     rollupOptions: {

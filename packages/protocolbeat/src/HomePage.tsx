@@ -5,6 +5,7 @@ import { getProjects } from './api/api'
 import type { ApiProjectEntry } from './api/types'
 import { Title } from './common/Title'
 import { ErrorState } from './components/ErrorState'
+import { isReadOnly } from './config'
 import { IconStarEmpty } from './icons/IconStarEmpty'
 import { IconStarFull } from './icons/IconStarFull'
 
@@ -28,13 +29,22 @@ export function HomePage() {
             alt="DSCVRY"
           />
         </h1>
-        <input
-          ref={inputRef}
-          className="mx-auto mb-8 block w-full max-w-[464px] border border-coffee-600 bg-coffee-800 px-4 py-2 placeholder:text-coffee-400"
-          placeholder="Filter projects"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className="mb-8 flex items-center justify-center space-x-2">
+          <input
+            ref={inputRef}
+            className="w-full max-w-[464px] border border-coffee-600 bg-coffee-800 px-4 py-2 placeholder:text-coffee-400"
+            placeholder="Filter projects"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          {!isReadOnly && (
+            <Link to="/ui/new">
+              <button className="items-center justify-center border border-coffee-600 px-4 py-2 text-coffee-400 transition-colors duration-100 hover:cursor-pointer hover:bg-coffee-600">
+                +
+              </button>
+            </Link>
+          )}
+        </div>
         <AllProjects search={search} />
       </div>
     </>
@@ -308,7 +318,7 @@ function ProjectList(props: {
               )}
             </button>
             <Link to={`/ui/p/${entry.name}`}>
-              <span className="-mb-0.5 block">{entry.name}</span>
+              <span className="block">{entry.name}</span>
             </Link>
           </li>
         )

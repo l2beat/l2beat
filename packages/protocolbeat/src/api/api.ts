@@ -146,7 +146,7 @@ export async function readConfigFile(
 
 export async function writeConfigFile(project: string, content: string) {
   const res = await fetch(`/api/config-files/${project}`, {
-    method: 'POST',
+    method: 'PUT',
     body: JSON.stringify({ content }),
     headers: {
       'Content-Type': 'application/json',
