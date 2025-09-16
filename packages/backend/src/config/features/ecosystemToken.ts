@@ -1,5 +1,6 @@
 import type { ProjectService } from '@l2beat/config'
-import type { EcosystemsConfig } from '../Config'
+import { createHash } from 'crypto'
+import type { EcosystemsConfig, EcosystemTokenConfig } from '../Config'
 
 export async function getEcosystemsConfig(
   ps: ProjectService,
@@ -12,6 +13,10 @@ export async function getEcosystemsConfig(
     .map((p) => {
       if (!p.ecosystemConfig?.token) return undefined
       return {
+        configurationId: createEcosystemTokenConfigId({
+          projectId: p.id,
+          coingeckoId: p.ecosystemConfig.token.coingeckoId,
+        }),
         projectId: p.id,
         coingeckoId: p.ecosystemConfig.token.coingeckoId,
       }
@@ -21,4 +26,15 @@ export async function getEcosystemsConfig(
   return {
     tokens,
   }
+}
+
+function createEcosystemTokenConfigId(
+  tokenConfig: Omit<EcosystemTokenConfig, 'configurationId'>,
+): string {
+  const input = []
+  input.push(tokenConfig.projectId)
+  input.push(tokenConfig.coingeckoId)
+
+  const hash = createHash('sha1').update(input.join('')).digest('hex')
+  return hash.slice(0, 12)
 }

@@ -126,7 +126,7 @@ export async function makeConfig(
     chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
     ecosystems:
-      flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps, )),
+      flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
     chainConfig: await getChainConfig(ps, env),
     beaconApi: {
       url: env.optionalString(['ETHEREUM_BEACON_API_URL']),

@@ -216,6 +216,7 @@ export interface DaBeatConfig {
 }
 
 export interface EcosystemTokenConfig {
+  readonly configurationId: string
   readonly projectId: ProjectId
   readonly coingeckoId: CoingeckoId
 }

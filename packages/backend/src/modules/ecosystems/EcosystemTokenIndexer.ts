@@ -1,6 +1,7 @@
 import type { Database } from '@l2beat/database'
 import type { CoingeckoClient } from '@l2beat/shared'
 import type { EcosystemTokenConfig } from '../../config/Config'
+import { INDEXER_NAMES } from '../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
@@ -17,7 +18,7 @@ export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenCon
   constructor(private readonly $: EcosystemTokenIndexerDeps) {
     super({
       ...$,
-      name: 'ecosystem_token_indexer',
+      name: INDEXER_NAMES.ECOSYSTEM_TOKEN,
     })
   }
 
@@ -33,6 +34,7 @@ export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenCon
         )
         return {
           projectId: configuration.properties.projectId,
+          configurationId: configuration.id,
           ...data,
         }
       }),
@@ -43,6 +45,7 @@ export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenCon
         return {
           projectId: d.projectId,
           coingeckoId: d.id,
+          configurationId: d.configurationId,
           priceUsd: d.market_data.current_price.usd,
           marketCapUsd: d.market_data.market_cap.usd,
           circulatingSupply: d.market_data.circulating_supply,
@@ -51,9 +54,24 @@ export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenCon
       }),
     )
 
+    this.logger.info('Saved ecosystem token records', {
+      configurations: configurations.length,
+      to,
+    })
+
     return () => Promise.resolve(to)
   }
-  override removeData(_: RemovalConfiguration[]): Promise<void> {
-    return Promise.resolve()
+  override async removeData(
+    configurations: RemovalConfiguration[],
+  ): Promise<void> {
+    for (const c of configurations) {
+      const deletedRecords =
+        await this.$.db.ecosystemToken.deleteByConfigurationId(c.id)
+
+      this.logger.info('Wiped ecosystem token records for configuration', {
+        id: c.id,
+        deletedRecords,
+      })
+    }
   }
 }

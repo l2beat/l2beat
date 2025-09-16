@@ -67,6 +67,7 @@ export const CoinData = v.object({
     current_price: v.object({
       usd: v.number(),
     }),
+    price_change_percentage_30d: v.number(),
     market_cap: v.object({
       usd: v.number(),
     }),

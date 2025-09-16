@@ -29,7 +29,7 @@ export function createEcosystemsModule({
     indexerService: new IndexerService(peripherals.database),
     parents: [hourlyIndexer],
     configurations: ecosystemsConfig.tokens.map((token) => ({
-      id: `${token.projectId}-${token.coingeckoId}`,
+      id: token.configurationId,
       minHeight: 0,
       maxHeight: null,
       properties: token,

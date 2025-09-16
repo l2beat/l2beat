@@ -6,6 +6,7 @@ import type { EcosystemToken } from '../kysely/generated/types'
 export interface EcosystemTokenRecord {
   projectId: string
   coingeckoId: string
+  configurationId: string
   priceUsd: number
   marketCapUsd: number
   circulatingSupply: number
@@ -72,17 +73,26 @@ export class EcosystemTokenRepository extends BaseRepository {
       .insertInto('EcosystemToken')
       .values(rows)
       .onConflict((oc) =>
-        oc.columns(['projectId', 'coingeckoId']).doUpdateSet((eb) => ({
-          priceUsd: eb.ref('excluded.priceUsd'),
-          marketCapUsd: eb.ref('excluded.marketCapUsd'),
-          circulatingSupply: eb.ref('excluded.circulatingSupply'),
-          timestamp: eb.ref('excluded.timestamp'),
-        })),
+        oc
+          .columns(['projectId', 'coingeckoId', 'configurationId'])
+          .doUpdateSet((eb) => ({
+            priceUsd: eb.ref('excluded.priceUsd'),
+            marketCapUsd: eb.ref('excluded.marketCapUsd'),
+            circulatingSupply: eb.ref('excluded.circulatingSupply'),
+            timestamp: eb.ref('excluded.timestamp'),
+          })),
       )
       .executeTakeFirst()
     return records.length
   }
 
+  async deleteByConfigurationId(configurationId: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('EcosystemToken')
+      .where('configurationId', '=', configurationId)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('EcosystemToken').executeTakeFirst()
     return Number(result.numDeletedRows)
