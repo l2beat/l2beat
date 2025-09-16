@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe852eafe0540c4383de30fd29f1b5c6520bcc37e
+Generated with discovered.json: 0x289ddd490780f2b058e41e1302f876cb22578101
 
-# Diff at Mon, 15 Sep 2025 14:12:28 GMT:
+# Diff at Tue, 16 Sep 2025 14:35:10 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@caf8c178d671e7934a3e015dc337d3a3f541905e block: 1752073781
+- comparing to: main@788220608af88f1041aa4ba3b574ca2667bb6047 block: 1752073781
 - current timestamp: 1752073781
 
 ## Description
@@ -15,42 +15,6 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1752073781 (main branch discovery), not current.
-
-```diff
--   Status: DELETED
-    contract SP1Verifier (arb1:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
-    +++ description: Verifier contract for SP1 proofs (v5.0.0).
-```
-
-```diff
--   Status: DELETED
-    contract SP1VerifierGateway (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
-    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
-```
-
-```diff
--   Status: DELETED
-    contract SP1VerifierGatewayMultisig (arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract SP1Verifier (base:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
-    +++ description: Verifier contract for SP1 proofs (v5.0.0).
-```
-
-```diff
--   Status: DELETED
-    contract SP1VerifierGateway (base:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
-    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
-```
-
-```diff
--   Status: DELETED
-    contract SP1VerifierGatewayMultisig (base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
-    +++ description: None
-```
 
 ```diff
 -   Status: DELETED

@@ -1,8 +1,8 @@
 {
   "name": "rari",
   "timestamp": 1753201031,
-  "configHash": "0xbf30d18937d1293e59afc02c80228be6f3b72607c761b7647446bc440849b8f9",
-  "sharedModules": ["shared-sp1"],
+  "configHash": "0x478d36d49ef7d93a7c9ba65440c0b2251b984b585e11a864350d22a1c81a9ff1",
+  "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {
       "name": "ProxyAdmin",
@@ -76,22 +76,12 @@
       }
     },
     {
-      "address": "arb1:0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "arb1:0x0CA4c24079a191e08F659699292e5C75274EF253",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "arb1:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -483,19 +473,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
-          "role": ".relayers"
-        }
-      ]
-    },
-    {
       "name": "Caldera",
       "address": "arb1:0x356000Cec4fC967f8FC372381D983426760A0391",
       "type": "EOA",
@@ -570,13 +547,6 @@
       }
     },
     {
-      "name": "SP1VerifierGateway",
-      "address": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-      "type": "Reference",
-      "targetType": "Contract",
-      "targetProject": "shared-sp1"
-    },
-    {
       "name": "RollupEventInbox",
       "address": "arb1:0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6",
       "type": "Contract",
@@ -607,11 +577,6 @@
         "arb1:0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6": "TransparentUpgradeableProxy",
         "arb1:0x73D3a5E535cBF98B9b5Ff7fEb8EC26e61FCEC4b7": "RollupEventInbox"
       }
-    },
-    {
-      "address": "arb1:0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "QuoteVerifier",
@@ -671,11 +636,6 @@
         "arb1:0xcc6DcB3FaA2436270E696994f326426B76A9f731": "L1ERC20Gateway"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "arb1:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Caldera Multisig 1",
@@ -832,61 +792,6 @@
       }
     },
     {
-      "name": "GnosisSafeL2",
-      "address": "arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "description": "can freeze the bridge contract and update the list of authorized relayers.",
-          "role": ".guardians"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "role": "admin"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1710506484,
-      "sinceBlock": 190629615,
-      "values": {
-        "$immutable": false,
-        "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "$members": [
-          "arb1:0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
-          "arb1:0x91D456f83f4a117B07866fdEdC29306f7E974e15",
-          "arb1:0x793979789Ec179183E396e76c1e241bE0c9eE899",
-          "arb1:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
-          "arb1:0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
-          "arb1:0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf"
-        ],
-        "$threshold": 4,
-        "domainSeparator": "0x135047a4f7370f1dbbb2d75c227cb284db5615784b95b7cf4ac4c9201a7d9a12",
-        "getChainId": 42161,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 17,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997": "GnosisSafeProxy",
-        "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
-      }
-    },
-    {
-      "address": "arb1:0x793979789Ec179183E396e76c1e241bE0c9eE899",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "CustomGateway",
       "address": "arb1:0x8bE956aB42274056ef4471BEb211b33e258b7324",
       "type": "Contract",
@@ -968,11 +873,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "arb1:0x91D456f83f4a117B07866fdEdC29306f7E974e15",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "arb1:0x93616128705070474e0D8EdD11349c45668ac9DC",
       "type": "EOA",
       "proxyType": "EOA"
@@ -981,19 +881,6 @@
       "address": "arb1:0x9a2859B2a83148b8DE25d26643B5407555D219E1",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
-          "role": ".relayers"
-        }
-      ]
     },
     {
       "name": "ValidatorUtils",
@@ -1118,87 +1005,6 @@
         "arb1:0xF39c8d67B55Fef4851f9267304aA1A030E0DecAC": "SequencerInbox"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "name": "SP1Blobstream",
-      "address": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-      "type": "Contract",
-      "template": "succinct/SP1Blobstream",
-      "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
-      "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
-      "sinceTimestamp": 1710651080,
-      "sinceBlock": 191198934,
-      "values": {
-        "$admin": ["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],
-        "$implementation": "arb1:0x46EbfC399d3913BB9b99E73675722417F9c5d416",
-        "$pastUpgrades": [
-          [
-            "2024-03-17T04:51:20.000Z",
-            "0x58059198a17ae1d8dd73b4d0f0ce7169f4e55d901a8fea59b4ef12d005a41f0a",
-            ["arb1:0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"]
-          ],
-          [
-            "2024-03-18T01:19:36.000Z",
-            "0xf45e346ddbedef1ea3f828954c979adcb205b4b1c0ca72e49e7e2ef5b1c43192",
-            ["arb1:0xfb19439fBa9f16aA720be6bE0e53465a9733C964"]
-          ],
-          [
-            "2024-08-26T18:53:22.000Z",
-            "0x746e21628ccec4d5b4da96595f852a6398defcc360cb9f13aa2d84ebe4e7403f",
-            ["arb1:0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]
-          ],
-          [
-            "2024-12-02T19:09:05.000Z",
-            "0x07dbff15e24a8c124a927a2881cb4d471ace180488a56a56b43b47d1da68a130",
-            ["arb1:0x46EbfC399d3913BB9b99E73675722417F9c5d416"]
-          ]
-        ],
-        "$upgradeCount": 4,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
-          },
-          "TIMELOCK_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
-          },
-          "GUARDIAN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
-          }
-        },
-        "blobstreamProgramVkey": "0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef",
-        "checkRelayer": true,
-        "DATA_COMMITMENT_MAX": 10000,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "frozen": false,
-        "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
-        "guardians": ["arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],
-        "headerRangeFunctionId_deprecated": "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0",
-        "isRelayer1Approved": false,
-        "isRelayer2Approved": true,
-        "isRelayer3Approved": true,
-        "latestBlock": 6580800,
-        "nextHeaderFunctionId_depcrecated": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef",
-        "relayers": [
-          "arb1:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
-          "arb1:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
-        ],
-        "state_proofNonce": 12768,
-        "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
-        "verifier": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-        "VERSION": "1.1.0"
-      },
-      "implementationNames": {
-        "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": "ERC1967Proxy",
-        "arb1:0x46EbfC399d3913BB9b99E73675722417F9c5d416": "SP1Blobstream"
-      }
     },
     {
       "address": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -1750,60 +1556,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "arb1:0x46EbfC399d3913BB9b99E73675722417F9c5d416": [
-      "error ContractFrozen()",
-      "error OnlyGuardian(address sender)",
-      "error OnlyTimelock(address sender)",
-      "error RelayerNotApproved()",
-      "error TargetBlockNotInRange()",
-      "error TrustedHeaderMismatch()",
-      "error TrustedHeaderNotFound()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event DataCommitmentStored(uint256 proofNonce, uint64 indexed startBlock, uint64 indexed endBlock, bytes32 indexed dataCommitment)",
-      "event HeadUpdate(uint64 blockNumber, bytes32 headerHash)",
-      "event Initialized(uint8 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Upgraded(address indexed implementation)",
-      "event ValidatorBitmapEquivocation(uint64 trustedBlock, uint64 targetBlock, uint256 validatorBitmap)",
-      "function DATA_COMMITMENT_MAX() view returns (uint64)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function GUARDIAN_ROLE() view returns (bytes32)",
-      "function TIMELOCK_ROLE() view returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function approvedRelayers(address) view returns (bool)",
-      "function blobstreamProgramVkey() view returns (bytes32)",
-      "function blockHeightToHeaderHash(uint64) view returns (bytes32)",
-      "function checkRelayer() view returns (bool)",
-      "function commitHeaderRange(bytes proof, bytes publicValues)",
-      "function frozen() view returns (bool)",
-      "function gateway_deprecated() view returns (address)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function headerRangeFunctionId_deprecated() view returns (bytes32)",
-      "function initialize(tuple(address guardian, uint64 height, bytes32 header, bytes32 blobstreamProgramVkey, address verifier) _params)",
-      "function latestBlock() view returns (uint64)",
-      "function nextHeaderFunctionId_depcrecated() view returns (bytes32)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setCheckRelayer(bool _checkRelayer)",
-      "function setRelayerApproval(address _relayer, bool _approved)",
-      "function state_dataCommitments(uint256) view returns (bytes32)",
-      "function state_proofNonce() view returns (uint256)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function updateFreeze(bool _freeze)",
-      "function updateGenesisState(uint32 _height, bytes32 _header)",
-      "function updateProgramVkey(bytes32 _programVkey)",
-      "function updateVerifier(address _verifier)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function verifier() view returns (address)",
-      "function verifyAttestation(uint256 _proofNonce, tuple(uint256 height, bytes32 dataRoot) _tuple, tuple(bytes32[] sideNodes, uint256 key, uint256 numLeaves) _proof) view returns (bool)"
-    ],
     "arb1:0x4cA89361F5F79092822F95F34334227528ed63A8": [
       "constructor(uint256 _maxDataSize)",
       "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
@@ -1883,9 +1635,6 @@
       "function whitelist() view returns (address)"
     ],
     "arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": [
-      "constructor(address _singleton)"
-    ],
-    "arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997": [
       "constructor(address _singleton)"
     ],
     "arb1:0x73D3a5E535cBF98B9b5Ff7fEb8EC26e61FCEC4b7": [
@@ -2046,12 +1795,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": [
-      "constructor(address _logic, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "arb1:0xa9064FebD91E9Ab4c49C8989926Cada18bc9C8FF": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2211,7 +1954,7 @@
     "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/OneStepProverHostIo_Celestia": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/OneStepProverHostIo_Celestia": "0xdfb89dfaf2aa0cc0cb0a1be0072f20b1716aa3be62152610175c896630a839de",
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
@@ -2219,9 +1962,8 @@
     "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
     "orbitstack/SequencerInbox_Celestia_Espresso": "0x7652f5e8fb9924eee81c6f067f2c2447575233e52bff6752146c910af2b070e2",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
-    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1Blobstream": "0x3660212a9fcb00242154458e4a67cfeada6645ad8cefe00e557c1f624ac8ec71"
+    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 360432415 },
-  "permissionsConfigHash": "0xcca0aec74ec5bb9d5421d597b9ec83307a27ac8728f6aad5970ee37676c5918d"
+  "permissionsConfigHash": "0xa9cf86041856ed2694ac6eaca7c10e391af0aad62e1085531707486996733e07"
 }
