@@ -1,5 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import ansiHTML from 'ansi-html'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -15,14 +16,25 @@ export function NewProjectPage() {
   const [title, setTitle] = useState('')
   const [type, setType] = useState<'project' | 'token'>('project')
   const [overwrite, setOverwrite] = useState(false)
+  const [useCustomDepth, setUseCustomDepth] = useState(false)
+  const [useCustomAddresses, setUseCustomAddresses] = useState(false)
+  const [maxDepth, setMaxDepth] = useState(7)
+  const [maxAddresses, setMaxAddresses] = useState(100)
   const [initialAddresses, setInitialAddresses] = useState<string[]>([])
   const queryClient = useQueryClient()
-  const { discover, setDevMode } = useTerminalStore()
+  const { discover, setDevMode, killCommand } = useTerminalStore()
   const navigate = useNavigate()
 
   const createConfigFileMutation = useMutation({
     mutationFn: async () => {
-      await createConfigFile(title, type, initialAddresses, overwrite)
+      await createConfigFile(
+        title,
+        type,
+        initialAddresses,
+        overwrite,
+        useCustomDepth ? maxDepth : undefined,
+        useCustomAddresses ? maxAddresses : undefined,
+      )
       setDevMode(false)
       await discover(title)
       await queryClient.invalidateQueries({ queryKey: ['projects'] })
@@ -84,7 +96,60 @@ export function NewProjectPage() {
           onChange={setInitialAddresses}
           disabled={createConfigFileMutation.isPending}
         />
-        <div className="mt-4 flex justify-between">
+        <div className="space-y-4">
+          <div className="flex flex-col gap-2">
+            <div
+              className="flex cursor-pointer select-none items-center gap-2 text-sm"
+              onClick={() => setUseCustomDepth(!useCustomDepth)}
+            >
+              <Checkbox checked={useCustomDepth} />
+              Specify max depth
+            </div>
+            {useCustomDepth && (
+              <Input
+                type="number"
+                className="w-full bg-transparent px-4 py-2"
+                value={maxDepth.toString()}
+                min="0"
+                placeholder="7"
+                disabled={createConfigFileMutation.isPending}
+                onChange={(e) => {
+                  const value = Number.parseInt(e.target.value)
+                  if (!isNaN(value) && value >= 1 && value <= 20) {
+                    setMaxDepth(value)
+                  }
+                }}
+              />
+            )}
+          </div>
+          <div className="flex flex-col gap-2">
+            <div
+              className="flex cursor-pointer select-none items-center gap-2 text-sm"
+              onClick={() => setUseCustomAddresses(!useCustomAddresses)}
+            >
+              <Checkbox checked={useCustomAddresses} />
+              Specify max addresses
+            </div>
+            {useCustomAddresses && (
+              <Input
+                type="number"
+                className="w-full bg-transparent px-4 py-2"
+                value={maxAddresses.toString()}
+                min="1"
+                max="1000"
+                placeholder="100"
+                disabled={createConfigFileMutation.isPending}
+                onChange={(e) => {
+                  const value = Number.parseInt(e.target.value)
+                  if (!isNaN(value) && value >= 1 && value <= 1000) {
+                    setMaxAddresses(value)
+                  }
+                }}
+              />
+            )}
+          </div>
+        </div>
+        <div className="mt-4 flex justify-between border-coffee-400 border-t pt-4">
           <div
             className="flex cursor-pointer select-none items-center gap-2 text-sm"
             onClick={() => setOverwrite(!overwrite)}
@@ -93,12 +158,24 @@ export function NewProjectPage() {
             Overwrite existing config
           </div>
           <div className="flex items-center gap-2">
-            {createConfigFileMutation.isPending && <Loader />}
+            {createConfigFileMutation.isPending && (
+              <>
+                <Loader />
+                <Button
+                  onClick={() => {
+                    killCommand()
+                    createConfigFileMutation.reset()
+                  }}
+                >
+                  Cancel
+                </Button>
+              </>
+            )}
             <Button
               onClick={() => createConfigFileMutation.mutate()}
               disabled={createConfigFileMutation.isPending || !isFormValid}
             >
-              Create
+              Create project
             </Button>
           </div>
         </div>
@@ -109,8 +186,34 @@ export function NewProjectPage() {
             <pre>{createConfigFileMutation.error.message}</pre>
           </div>
         )}
+        <DiscoveryLookup lines={10} />
       </div>
     </>
+  )
+}
+
+type DiscoveryLookupProps = {
+  lines: number
+}
+
+function DiscoveryLookup({ lines }: DiscoveryLookupProps) {
+  const { output, command } = useTerminalStore()
+
+  if (!command.inFlight) {
+    return
+  }
+
+  return (
+    <div className="text-xs">
+      <div className="border-coffee-400 border-b font-mono opacity-50">
+        Outputs
+      </div>
+      <pre
+        dangerouslySetInnerHTML={{
+          __html: ansiHTML(output).split('\n').slice(-lines).join('\n'),
+        }}
+      />
+    </div>
   )
 }
 

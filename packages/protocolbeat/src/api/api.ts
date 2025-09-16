@@ -150,10 +150,19 @@ export async function createConfigFile(
   type: 'project' | 'token',
   initialAddresses: string[],
   overwrite: boolean,
+  maxDepth?: number,
+  maxAddresses?: number,
 ) {
   const res = await fetch('/api/config-files', {
     method: 'POST',
-    body: JSON.stringify({ project, type, initialAddresses, overwrite }),
+    body: JSON.stringify({
+      project,
+      type,
+      initialAddresses,
+      overwrite,
+      maxDepth,
+      maxAddresses,
+    }),
     headers: {
       'Content-Type': 'application/json',
     },

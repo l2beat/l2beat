@@ -20,6 +20,8 @@ const createConfigFileSchema = z.object({
     .array(z.string())
     .check((v) => v.length > 0)
     .check((v) => v.every(ChainSpecificAddress)),
+  maxDepth: z.number().optional(),
+  maxAddresses: z.number().optional(),
   overwrite: z.boolean().optional(),
 })
 
@@ -64,16 +66,18 @@ export function attachConfigRouter(
     }
 
     const { getProjectPath, createEmptyConfig } =
-      body.data.type === 'project' ? ProjectBundle : TokenBundle
+      body.data.type === 'project' ? ProjectConfigTemplate : TokenConfigTemplate
 
     const projectPath = getProjectPath(paths, body.data.project)
 
-    const contents = createEmptyConfig(
-      body.data.project,
-      body.data.initialAddresses.map(ChainSpecificAddress),
-    )
+    const contents = createEmptyConfig({
+      name: body.data.project,
+      initialAddresses: body.data.initialAddresses.map(ChainSpecificAddress),
+      maxDepth: body.data.maxDepth,
+      maxAddresses: body.data.maxAddresses,
+    })
 
-    configWriter.createConfigFile(projectPath, contents)
+    configWriter.createConfigFile(projectPath, formatJson(contents))
 
     res.json({ success: true })
   })
@@ -88,17 +92,43 @@ function configExists(configReader: ConfigReader, project: string) {
   }
 }
 
-type Bundle = {
-  getProjectPath(paths: DiscoveryPaths, name: string): string
-  createEmptyConfig(
-    name: string,
-    initialAddresses: ChainSpecificAddress[],
-  ): string
+type IncomingConfigSkeleton = {
+  name: string
+  initialAddresses: ChainSpecificAddress[]
+  maxDepth?: number
+  maxAddresses?: number
 }
 
-const TokenBundle: Bundle = {
+type ConfigTemplate = {
+  getProjectPath(paths: DiscoveryPaths, name: string): string
+  createEmptyConfig(
+    incomingValues: IncomingConfigSkeleton,
+  ): Record<string, unknown>
+}
+
+const ProjectConfigTemplate: ConfigTemplate = {
+  getProjectPath: (paths, name) => path.join(paths.discovery, name),
+  createEmptyConfig: (incomingValues) => {
+    const { name, initialAddresses, maxAddresses, maxDepth } = incomingValues
+
+    const config = {
+      $schema: '../../../../discovery/schemas/config.v2.schema.json',
+      name,
+      import: ['../globalConfig.jsonc'],
+      ...(maxDepth ? { maxDepth } : {}),
+      ...(maxAddresses ? { maxAddresses } : {}),
+      initialAddresses,
+    }
+
+    return config
+  },
+}
+
+const TokenConfigTemplate: ConfigTemplate = {
   getProjectPath: (paths, name) => path.join(paths.discovery, '(tokens)', name),
-  createEmptyConfig: (name, initialAddresses) => {
+  createEmptyConfig: (incomingValues) => {
+    const { name, initialAddresses, maxDepth, maxAddresses } = incomingValues
+
     const overrides: Record<string, unknown> = {}
 
     for (const address of initialAddresses) {
@@ -113,28 +143,17 @@ const TokenBundle: Bundle = {
       }
     }
 
-    const config = {
-      $schema: '../../../../../discovery/schemas/config.v2.schema.json',
+    const projectConfig = ProjectConfigTemplate.createEmptyConfig({
       name,
-      import: ['../../globalConfig.jsonc'],
       initialAddresses,
+      maxDepth,
+      maxAddresses,
+    })
+
+    return {
+      ...projectConfig,
+      import: ['../../globalConfig.jsonc'],
       overrides,
     }
-
-    return formatJson(config)
-  },
-}
-
-const ProjectBundle: Bundle = {
-  getProjectPath: (paths, name) => path.join(paths.discovery, name),
-  createEmptyConfig: (name, initialAddresses) => {
-    const config = {
-      $schema: '../../../../discovery/schemas/config.v2.schema.json',
-      name,
-      import: ['../globalConfig.jsonc'],
-      initialAddresses,
-    }
-
-    return formatJson(config)
   },
 }
