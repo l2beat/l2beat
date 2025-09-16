@@ -32,35 +32,9 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
       <div className="flex">
         {currentGroup.links
           .filter((link) => !link.disabled)
-          .flatMap((link) => {
+          .map((link) => {
             const isSelected = link.href === pathname
 
-            if (link.subLinks) {
-              return link.subLinks.map((subLink) => {
-                const isSelected = subLink.href === pathname
-                return (
-                  <a
-                    ref={(node) => {
-                      if (node && isSelected) {
-                        node.scrollIntoView({
-                          block: 'nearest',
-                          inline: 'center',
-                        })
-                      }
-                    }}
-                    href={subLink.href}
-                    key={subLink.href}
-                    data-state={isSelected ? 'selected' : undefined}
-                    className={cn(
-                      'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b bg-header-primary px-4 font-medium text-xs leading-none',
-                      'data-[state=selected]:border-brand data-[state=selected]:text-brand',
-                    )}
-                  >
-                    {subLink.shortTitle ?? subLink.title}
-                  </a>
-                )
-              })
-            }
             return (
               <a
                 ref={(node) => {
