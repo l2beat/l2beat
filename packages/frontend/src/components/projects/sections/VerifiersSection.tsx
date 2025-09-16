@@ -82,10 +82,10 @@ function VerifierCollapsibleWithDetails({
       key={verifierHash.hash}
       className="group rounded-lg border border-divider"
     >
-      <CollapsibleTrigger className="flex w-full items-center justify-between px-6 py-3 font-bold">
-        <div className="grid w-full grid-cols-[120px_1fr_1fr_140px] gap-4">
+      <CollapsibleTrigger className="flex w-full items-center justify-between gap-1 px-6 py-3 font-bold">
+        <div className="grid w-full grid-cols-[1fr_1fr_230px_1fr] gap-4 max-md:grid-cols-2 lg:[@media(max-width:1380px)]:grid-cols-[1fr_1fr_230px] md:[@media(max-width:850px)]:grid-cols-[1fr_1fr_230px]">
           <span className="text-left">{formatAddress(verifierHash.hash)}</span>
-          <div className="flex items-center gap-1.5 text-center max-md:hidden">
+          <div className="flex items-center gap-1.5 text-center">
             <p className="font-medium text-label-value-12 text-secondary">
               Verification
             </p>
@@ -104,7 +104,7 @@ function VerifierCollapsibleWithDetails({
               usedIn={verifierHash.projectsUsedIn}
             />
           </div>
-          <div className="flex items-center gap-1.5 max-md:hidden">
+          <div className="flex items-center gap-1.5 lg:[@media(max-width:1380px)]:hidden [@media(max-width:850px)]:hidden">
             <div className="font-medium text-label-value-12 text-secondary">
               Known deployments
             </div>
