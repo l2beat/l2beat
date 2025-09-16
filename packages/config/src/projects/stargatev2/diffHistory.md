@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xa11cabe39848c61363a09297f162a8ef305dd7cd
+
+# Diff at Fri, 12 Sep 2025 08:19:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2848a07919ddccf9d9ca1c6779dbcc184bdeb3b3 block: 1757343231
+- current timestamp: 1757665061
+
+## Description
+
+EURC pool moved to multisig owner.
+
+## Watched changes
+
+```diff
+    contract StargatePoolEURC (base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2) {
+    +++ description: None
+      values.owner:
+-        "base:0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109"
++        "base:0x7c20d58Cb9f3F3CF73b79a3fBDA3fFf412D7D82D"
+    }
+```
+
+```diff
+    contract StargatePoolEURC (eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c) {
+    +++ description: None
+      values.owner:
+-        "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705"
++        "eth:0xBE634B030FEAaB661300667EaF82510a3a025413"
+    }
+```
+
+```diff
+    contract Stargate Multisig 2 (eth:0xBE634B030FEAaB661300667EaF82510a3a025413) {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c","description":"set critical configurations of the pool, potentially stealing funds.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x9912e323c7692df251e5fa2afd86546bc525d7e8
 
 # Diff at Mon, 08 Sep 2025 15:12:01 GMT:

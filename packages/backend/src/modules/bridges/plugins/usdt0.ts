@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { PacketDelivered, PacketSent } from './layerzerov2'
+import { PacketDelivered, PacketSent } from './layerzero-v2'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -8,6 +8,7 @@ import {
   createEventParser,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 
 const parseOFTSent = createEventParser(
@@ -96,42 +97,30 @@ export class Usdt0Plugin implements BridgePlugin {
     }
   }
 
-  match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!Usdt0OFTReceived.checkType(event)) return
+  match(oftReceived: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+    if (!Usdt0OFTReceived.checkType(oftReceived)) return
 
-    const oftSent = db.find(Usdt0OFTSent, { guid: event.args.guid })
+    const oftSent = db.find(Usdt0OFTSent, { guid: oftReceived.args.guid })
     if (!oftSent) return
 
-    const packetSent = db.find(PacketSent, { guid: event.args.guid })
+    const packetSent = db.find(PacketSent, { guid: oftReceived.args.guid })
     if (!packetSent) return
 
-    const packetDelivered = db.find(PacketDelivered, { guid: event.args.guid })
+    const packetDelivered = db.find(PacketDelivered, {
+      guid: oftReceived.args.guid,
+    })
     if (!packetDelivered) return
 
-    return {
-      messages: [
-        {
-          type: 'layerzerov2.Message',
-          outbound: packetSent,
-          inbound: packetDelivered,
-        },
-      ],
-      transfers: [
-        {
-          type: 'usdt0.App',
-          events: [oftSent, event],
-          outbound: {
-            tx: oftSent.ctx,
-            tokenAddress: oftSent.args.tokenAddress,
-            amount: oftSent.args.amountSentLD.toString(),
-          },
-          inbound: {
-            tx: event.ctx,
-            tokenAddress: event.args.tokenAddress,
-            amount: event.args.amountReceivedLD.toString(),
-          },
-        },
-      ],
-    }
+    return [
+      Result.Message('layerzero-v2.Message', [packetSent, packetDelivered]),
+      Result.Transfer('usdt0.Transfer', {
+        srcEvent: oftSent,
+        srcTokenAddress: oftSent.args.tokenAddress,
+        srcAmount: oftSent.args.amountSentLD.toString(),
+        dstEvent: oftReceived,
+        dstTokenAddress: oftReceived.args.tokenAddress,
+        dstAmount: oftReceived.args.amountReceivedLD.toString(),
+      }),
+    ]
   }
 }

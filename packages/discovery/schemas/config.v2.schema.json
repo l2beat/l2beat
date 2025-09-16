@@ -766,7 +766,7 @@
               "type": "object",
               "properties": {
                 "name": { "type": "string" },
-                "type": { "type": "string" },
+                "type": { "enum": ["Contract", "EOA"] },
                 "project": { "type": "string" },
                 "isLegacy": { "type": "boolean" }
               },

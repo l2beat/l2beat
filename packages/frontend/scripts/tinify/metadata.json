@@ -413,7 +413,7 @@
   "static/images/architecture/orbit-optimium.png": "7a6115ce8d06c8fda72d29e04d93f206",
   "static/images/architecture/orbit-rollup.png": "c2da09ffe4c00ec5284ec00fe96e43cd",
   "static/images/architecture/paradex.png": "ce0c65cf5e56dfaba6fb9ed2e2123808",
-  "static/images/architecture/phala.png": "3d891f32959db47fe6a8a83dc96ce100",
+  "static/images/architecture/phala.png": "869113ff85398d781c2f4aef700ecbf0",
   "static/images/architecture/polygon-cdk-rollup.png": "c0a8605e374b77e71a98f6571a1e84fa",
   "static/images/architecture/polygon-cdk-validium.png": "8f10d75517333e7e01d60768b7894283",
   "static/images/architecture/polygon-pos.png": "b9db9ed941ac4bcb01f14623eebb4b53",
@@ -1426,5 +1426,10 @@
   "static/meta-images/publications/Ethereum-Connect.png": "fbb9bbf26c16d46bfeb936efecf20c1c",
   "static/meta-images/publications/governance-review-background.png": "c8b861741fb614584d4194092d4e24be",
   "static/meta-images/publications/monthly-update-background.png": "2ebdfdf9d9bf848d9437d819a19ff0ed",
-  "static/meta-images/publications/governance-review-68.png": "538c3b87223a0622041ed63d885dcf02"
+  "static/meta-images/publications/governance-review-68.png": "538c3b87223a0622041ed63d885dcf02",
+  "static/meta-images/governance/ethereum-connect/opengraph-image.png": "fbb9bbf26c16d46bfeb936efecf20c1c",
+  "static/images/architecture/mantapacific.png": "30766341e0002db548117aebffd24b72",
+  "static/icons/billions.png": "7cb726a6b483d220d2cdcdae066aee98",
+  "static/meta-images/scaling/projects/billions/opengraph-image.png": "dc5f956a81a1fd4f7b916f18a59621fc",
+  "static/meta-images/publications/governance-review-69.png": "40e28acf0f101bc516332bc4df2eb592"
 }

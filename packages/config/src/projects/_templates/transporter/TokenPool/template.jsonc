@@ -5,7 +5,16 @@
     "getAllowList",
     "owner",
     "i_messageTransmitter",
-    "i_tokenMessenger"
+    "i_tokenMessenger",
+    "getXERC20",
+    "getMinter",
+    "minter",
+    "getBridgeLimitAdmin",
+    "getRateLimitAdmin",
+    "getLockbox",
+    "getOnRamps",
+    "getOffRamps",
+    "adapter"
   ],
   "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"]
 }

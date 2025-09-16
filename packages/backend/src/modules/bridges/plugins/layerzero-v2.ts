@@ -1,6 +1,6 @@
-import type { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
+import { BinaryReader } from '../BinaryReader'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -9,6 +9,7 @@ import {
   createEventParser,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 
 const parsePacketSent = createEventParser(
@@ -20,12 +21,14 @@ const parsePacketDelivered = createEventParser(
 )
 
 export const PacketSent = createBridgeEventType<{
+  $dstChain: string
   guid: string
-}>('layerzerov2.PacketSent')
+}>('layerzero-v2.PacketSent')
 
 export const PacketDelivered = createBridgeEventType<{
+  $srcChain: string
   guid: string
-}>('layerzerov2.PacketDelivered')
+}>('layerzero-v2.PacketDelivered')
 
 const NETWORKS = [
   {
@@ -49,35 +52,27 @@ const NETWORKS = [
 ]
 
 export class LayerZeroV2Plugin implements BridgePlugin {
-  name = 'layerzerov2'
+  name = 'layerzero-v2'
   chains = ['ethereum', 'arbitrum', 'base']
 
-  constructor(private logger: Logger) {}
-
   capture(input: LogToCapture) {
-    const network = NETWORKS.find((b) => b.chain === input.ctx.chain)
-    if (!network) {
-      this.logger.warn('Network not configured', {
-        plugin: this.name,
-        ctx: input.ctx,
-      })
-      return
-    }
+    const network = NETWORKS.find((x) => x.chain === input.ctx.chain)
+    if (!network) return
 
     const packetSent = parsePacketSent(input.log, [network.address])
     if (packetSent) {
       const packet = decodePacket(packetSent.encodedPayload)
-      if (packet) {
-        const guid = createLayerZeroGuid(
-          packet.header.nonce,
-          packet.header.srcEid,
-          packet.header.sender,
-          packet.header.dstEid,
-          packet.header.receiver,
-        )
-
-        return PacketSent.create(input.ctx, { guid })
-      }
+      if (!packet) return
+      const guid = createLayerZeroGuid(
+        packet.header.nonce,
+        packet.header.srcEid,
+        packet.header.sender,
+        packet.header.dstEid,
+        packet.header.receiver,
+      )
+      const $dstChain =
+        NETWORKS.find((x) => x.eid === packet.header.dstEid)?.chain ?? 'unknown'
+      return PacketSent.create(input.ctx, { $dstChain, guid })
     }
 
     const packetDelivered = parsePacketDelivered(input.log, [network.address])
@@ -89,28 +84,23 @@ export class LayerZeroV2Plugin implements BridgePlugin {
         network.eid,
         packetDelivered.receiver,
       )
-
-      return PacketDelivered.create(input.ctx, { guid })
+      const $srcChain =
+        NETWORKS.find((x) => x.eid === packetDelivered.origin.srcEid)?.chain ??
+        'unknown'
+      return PacketDelivered.create(input.ctx, { $srcChain, guid })
     }
   }
 
-  match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!PacketDelivered.checkType(event)) {
-      return
-    }
-
-    const packetSent = db.find(PacketSent, { guid: event.args.guid })
+  match(
+    packetDelivered: BridgeEvent,
+    db: BridgeEventDb,
+  ): MatchResult | undefined {
+    if (!PacketDelivered.checkType(packetDelivered)) return
+    const packetSent = db.find(PacketSent, { guid: packetDelivered.args.guid })
     if (!packetSent) return
-
-    return {
-      messages: [
-        {
-          type: 'layerzerov2.Message',
-          outbound: packetSent,
-          inbound: event,
-        },
-      ],
-    }
+    return [
+      Result.Message('layerzero-v2.Message', [packetSent, packetDelivered]),
+    ]
   }
 }
 
@@ -122,15 +112,10 @@ export function createLayerZeroGuid(
   receiver: string,
 ): string {
   const nonceBytes = '0x' + nonce.toString(16).padStart(16, '0')
-
   const srcEidBytes = '0x' + srcEid.toString(16).padStart(8, '0')
-
   const senderBytes32 = '0x' + normalizeAddress(sender).slice(2)
-
   const dstEidBytes = '0x' + dstEid.toString(16).padStart(8, '0')
-
   const receiverBytes32 = '0x' + normalizeAddress(receiver).slice(2)
-
   return solidityKeccak256(
     ['bytes', 'bytes', 'bytes', 'bytes', 'bytes'],
     [nonceBytes, srcEidBytes, senderBytes32, dstEidBytes, receiverBytes32],
@@ -144,89 +129,39 @@ export function normalizeAddress(address: string): string {
 
 export const LAYERZERO_CONSTANTS = {
   PACKET_VERSION: 1,
-  PACKET_HEADER_LENGTH: 81, // 1 + 8 + 4 + 32 + 4 + 32 = 81 bytes
   EID_LENGTH: 4,
   NONCE_LENGTH: 8,
   SENDER_LENGTH: 32,
   RECEIVER_LENGTH: 32,
 } as const
 
-export interface DecodedPacketHeader {
-  version: number
-  nonce: bigint
-  srcEid: number
-  sender: string
-  dstEid: number
-  receiver: string
-}
+// https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F14#L41
+// https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F8#L8
+// https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F30#L53
 
-export function decodePacket(encodedPayload: string) {
+export function decodePacket(encodedHex: string) {
   try {
-    const header = decodePacketHeader(encodedPayload)
-
-    if (!header) return null
-
-    const hex = encodedPayload.startsWith('0x')
-      ? encodedPayload.slice(2)
-      : encodedPayload
-
-    const headerLength = LAYERZERO_CONSTANTS.PACKET_HEADER_LENGTH * 2
-
-    const payload =
-      hex.length > headerLength ? '0x' + hex.slice(headerLength) : '0x'
-
+    const reader = new BinaryReader(encodedHex)
+    const version = reader.readUint8()
+    const nonce = reader.readUint64()
+    const srcEid = reader.readUint32()
+    const sender = reader.readBytes(32)
+    const dstEid = reader.readUint32()
+    const receiver = reader.readBytes(32)
+    const payload = reader.readRemainingBytes()
     return {
-      header,
+      header: {
+        version,
+        nonce,
+        srcEid,
+        sender,
+        dstEid,
+        receiver,
+      },
       payload,
     }
   } catch (error) {
     console.error('Failed to decode packet:', error)
-    return null
-  }
-}
-
-export function decodePacketHeader(
-  encodedPayload: string,
-): DecodedPacketHeader | null {
-  try {
-    const hex = encodedPayload.startsWith('0x')
-      ? encodedPayload.slice(2)
-      : encodedPayload
-
-    if (hex.length < LAYERZERO_CONSTANTS.PACKET_HEADER_LENGTH * 2) {
-      return null
-    }
-
-    let offset = 0
-    const version = Number.parseInt(hex.slice(offset, offset + 2), 16)
-    offset += 2
-
-    const nonce = BigInt('0x' + hex.slice(offset, offset + 16))
-    offset += 16
-
-    const srcEid = Number.parseInt(hex.slice(offset, offset + 8), 16)
-    offset += 8
-
-    const sender = '0x' + hex.slice(offset, offset + 64)
-    offset += 64
-
-    const dstEid = Number.parseInt(hex.slice(offset, offset + 8), 16)
-    offset += 8
-
-    const receiver = '0x' + hex.slice(offset, offset + 64)
-
-    offset += 64
-
-    return {
-      version,
-      nonce,
-      srcEid,
-      sender,
-      dstEid,
-      receiver,
-    }
-  } catch (error) {
-    console.error('Failed to decode packet header:', error)
     return null
   }
 }
