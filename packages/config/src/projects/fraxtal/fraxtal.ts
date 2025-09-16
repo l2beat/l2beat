@@ -71,7 +71,7 @@ export const fraxtal: ScalingProject = opStackL2({
       explorers: ['https://fraxscan.com/'],
       repositories: ['https://github.com/FraxFinance'],
       socialMedia: [
-        'https://discord.com/invite/UJVtDTFRaA',
+        'https://discord.com/invite/fraxfinance',
         'https://twitter.com/fraxfinance',
         'https://t.me/fraxfinance',
       ],
