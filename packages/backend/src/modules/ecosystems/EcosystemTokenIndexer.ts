@@ -1,36 +1,59 @@
-import { ManagedChildIndexer } from '../../tools/uif/ManagedChildIndexer'
-import type { EcosystemTokenIndexerDeps } from './types'
+import type { Database } from '@l2beat/database'
+import type { CoingeckoClient } from '@l2beat/shared'
+import type { EcosystemTokenConfig } from '../../config/Config'
+import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
+import type {
+  Configuration,
+  ManagedMultiIndexerOptions,
+  RemovalConfiguration,
+} from '../../tools/uif/multi/types'
 
-export class EcosystemTokenIndexer extends ManagedChildIndexer {
+export interface EcosystemTokenIndexerDeps
+  extends Omit<ManagedMultiIndexerOptions<EcosystemTokenConfig>, 'name'> {
+  db: Database
+  coingeckoClient: CoingeckoClient
+}
+export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenConfig> {
   constructor(private readonly $: EcosystemTokenIndexerDeps) {
     super({
       ...$,
       name: 'ecosystem_token_indexer',
-      tags: {
-        tag: $.tokenConfig.projectId,
-        project: $.tokenConfig.projectId,
-      },
     })
   }
 
-  override async update(_: number, to: number): Promise<number> {
-    const data = await this.$.coingeckoClient.getCoinDataById(
-      this.$.tokenConfig.coingeckoId,
+  override async multiUpdate(
+    _: number,
+    to: number,
+    configurations: Configuration<EcosystemTokenConfig>[],
+  ): Promise<() => Promise<number>> {
+    const data = await Promise.all(
+      configurations.map(async (configuration) => {
+        const data = await this.$.coingeckoClient.getCoinDataById(
+          configuration.properties.coingeckoId,
+        )
+        return {
+          projectId: configuration.properties.projectId,
+          ...data,
+        }
+      }),
     )
 
-    await this.$.db.ecosystemToken.upsert({
-      projectId: this.$.tokenConfig.projectId,
-      coingeckoId: this.$.tokenConfig.coingeckoId,
-      priceUsd: data.market_data.current_price.usd,
-      marketCapUsd: data.market_data.market_cap.usd,
-      circulatingSupply: data.market_data.circulating_supply,
-      timestamp: data.last_updated,
-    })
+    await this.$.db.ecosystemToken.upsertMany(
+      data.map((d) => {
+        return {
+          projectId: d.projectId,
+          coingeckoId: d.id,
+          priceUsd: d.market_data.current_price.usd,
+          marketCapUsd: d.market_data.market_cap.usd,
+          circulatingSupply: d.market_data.circulating_supply,
+          timestamp: d.last_updated,
+        }
+      }),
+    )
 
-    return to
+    return () => Promise.resolve(to)
   }
-
-  override invalidate(targetHeight: number): Promise<number> {
-    return Promise.resolve(targetHeight)
+  override removeData(_: RemovalConfiguration[]): Promise<void> {
+    return Promise.resolve()
   }
 }
