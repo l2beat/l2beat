@@ -1,4 +1,6 @@
 import type { ConfigReader, DiscoveryOutput } from '@l2beat/discovery'
+import { notUndefined } from '@l2beat/shared-pure'
+import uniq from 'lodash/uniq'
 
 export function getProjectDiscoveries(
   configReader: ConfigReader,
@@ -6,8 +8,14 @@ export function getProjectDiscoveries(
 ): DiscoveryOutput[] {
   const baseDiscovery = configReader.readDiscovery(project)
   const discoveries = [baseDiscovery]
-  for (const sharedModule of baseDiscovery.sharedModules ?? []) {
-    discoveries.push(configReader.readDiscovery(sharedModule))
+  const referencedProjects = uniq(
+    baseDiscovery.entries
+      .map((e) => e.targetProject)
+      .filter(notUndefined)
+      .sort(),
+  )
+  for (const refProject of referencedProjects) {
+    discoveries.push(configReader.readDiscovery(refProject))
   }
 
   return discoveries

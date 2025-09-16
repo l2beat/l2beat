@@ -5,8 +5,9 @@ import {
   flatteningHash,
   get$Implementations,
 } from '@l2beat/discovery'
-import type { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { type ChainSpecificAddress, notUndefined } from '@l2beat/shared-pure'
 import { existsSync, readdirSync, readFileSync } from 'fs'
+import uniq from 'lodash/uniq'
 import { join } from 'path'
 import { isDeepStrictEqual } from 'util'
 import {
@@ -49,9 +50,15 @@ function isFlatCodeCurrent(
 
   const discoveries = [discovery]
 
-  for (const sharedModule of discovery.sharedModules ?? []) {
-    const sharedModuleDiscovery = configReader.readDiscovery(sharedModule)
-    discoveries.push(sharedModuleDiscovery)
+  const referencedProjects = uniq(
+    discovery.entries
+      .map((e) => e.targetProject)
+      .filter(notUndefined)
+      .sort(),
+  )
+  for (const refProj of referencedProjects) {
+    const refDiscovery = configReader.readDiscovery(refProj)
+    discoveries.push(refDiscovery)
   }
 
   const discoHashes =
