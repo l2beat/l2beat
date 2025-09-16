@@ -599,7 +599,7 @@
               {
                 "type": "object",
                 "properties": {
-                  "type": { "const": "functionPermission" },
+                  "type": { "const": "writeFunctionPermission" },
                   "ignoreRelative": { "type": "boolean" }
                 },
                 "required": ["type"]
