@@ -1,8 +1,7 @@
 import type { Project } from '@l2beat/config'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { getStaticAsset } from '../utils/getProjectIcon'
 
 export interface EcosystemToken {
@@ -19,7 +18,7 @@ export interface EcosystemToken {
       value: number
       change: number
     }
-    amount: {
+    circulatingSupply: {
       value: number
       change: number
     }
@@ -37,52 +36,20 @@ export async function getEcosystemToken(
 
 const getCachedEcosystemToken = async (
   ecosystem: Project<'ecosystemConfig'>,
-  ecosystemProjects: Project<never, 'tvsConfig'>[],
+  projects: Project<never, 'tvsConfig'>[],
 ): Promise<EcosystemToken> => {
   const db = getDb()
-  const now = UnixTime.toStartOf(UnixTime.now(), 'hour')
 
-  const tokenProject = ecosystemProjects.find(
-    (p) => p.id === ecosystem.ecosystemConfig.token.projectId,
-  )
-  assert(tokenProject, 'Token project not found')
-  assert(tokenProject.tvsConfig, 'Token project has no TVL config')
-  const token = tokenProject.tvsConfig.find(
-    (t) => t.id === ecosystem.ecosystemConfig.token.tokenId,
-  )
+  const token = projects
+    .flatMap((e) => e.tvsConfig)
+    .find((t) => t?.priceId === ecosystem.ecosystemConfig.token.coingeckoId)
   assert(token, 'Token not found')
 
-  const [prices, tokenValues] = await Promise.all([
-    db.tvsPrice.getPricesInRangeByPriceId(
-      token.priceId,
-      now - 30 * UnixTime.DAY,
-      now,
-    ),
-    db.tvsTokenValue.getByTokenIdInTimeRange(
-      ecosystem.ecosystemConfig.token.tokenId,
-      now - 30 * UnixTime.DAY,
-      now,
-    ),
-  ])
-  const latestTokenValue = tokenValues.at(-1)
-  const firstTokenValue = tokenValues.at(0)
-  assert(latestTokenValue && firstTokenValue, 'No token values found')
-  const latestPrice = prices.at(-1)
-  const firstPrice = prices.at(0)
-  assert(latestPrice && firstPrice, 'No prices found')
+  const ecosystemToken = await db.ecosystemToken.findByCoingeckoId(
+    ecosystem.ecosystemConfig.token.coingeckoId,
+  )
 
-  const priceChange = calculatePercentageChange(
-    latestPrice.priceUsd,
-    firstPrice.priceUsd,
-  )
-  const amountChange = calculatePercentageChange(
-    latestTokenValue.amount,
-    firstTokenValue.amount,
-  )
-  const marketCapChange = calculatePercentageChange(
-    latestTokenValue.value,
-    firstTokenValue.value,
-  )
+  assert(ecosystemToken, 'No ecosystem token found')
 
   return {
     logo: token.iconUrl ?? getStaticAsset('/images/token-placeholder.png'),
@@ -91,16 +58,16 @@ const getCachedEcosystemToken = async (
     description: ecosystem.ecosystemConfig.token.description,
     data: {
       price: {
-        value: latestPrice.priceUsd,
-        change: priceChange,
+        value: ecosystemToken.priceUsd,
+        change: ecosystemToken.price7dChange,
       },
       marketCap: {
-        value: latestTokenValue.value,
-        change: marketCapChange,
+        value: ecosystemToken.marketCapUsd,
+        change: ecosystemToken.marketCap7dChange,
       },
-      amount: {
-        value: latestTokenValue.amount,
-        change: amountChange,
+      circulatingSupply: {
+        value: ecosystemToken.circulatingSupply,
+        change: ecosystemToken.circulatingSupply7dChange,
       },
     },
   }
@@ -123,7 +90,7 @@ function getMockEcosystemToken(
         value: 1000000,
         change: 8.9,
       },
-      amount: {
+      circulatingSupply: {
         value: 813245.67,
         change: -2.34,
       },
