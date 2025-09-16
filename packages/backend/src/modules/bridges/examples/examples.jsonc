@@ -138,6 +138,31 @@
     "messages": [],
     "transfers": []
   },
+  "axelar-its-contractCall": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x7bcb513078fb6117ba20c044d103485798b20d30733bcf580ccbe7bf73105dbe"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xb9edfe6694e7f7799e5a2aaf3d0e167c1d89f02e54597c7ffe96bfafd1ecf6d8"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x1bfa6579754e487098cbf7b835aa364042fc5c8599a73a3ee2e65bea1a8224af"
+      }
+    ],
+    "events": [
+      "axelar-its.InterchainTransfer",
+      "axelar-its.InterchainTransferReceived",
+      "axelar.ContractCallExecuted",
+      "axelar.ContractCall",
+      "axelar.ContractCallApproved"
+    ],
+    "messages": ["axelar.ContractCallMessage.its"],
+    "transfers": ["axelar-its.Transfer"]
+  },
   "axelar-contractCallWithMint": {
     "txs": [
       {

@@ -1,5 +1,6 @@
 import { AcrossPlugin } from './across'
 import { AxelarPlugin } from './axelar'
+import { AxelarITSPlugin } from './axelar-its'
 import { CCTPPlugin } from './cctp'
 import { DeBridgeDlnPlugin } from './debridge-dln'
 import { LayerZeroV2Plugin } from './layerzero-v2'
@@ -37,6 +38,7 @@ export function createBridgePlugins(): BridgePlugin[] {
     new WormholeRelayerPlugin(), // should be run before Wormhole
     new WormholePlugin(),
     new StargatePlugin(),
+    new AxelarITSPlugin(), // should be run before Axelar
     new AxelarPlugin(),
     new AcrossPlugin(),
     new OrbitStackPlugin(),

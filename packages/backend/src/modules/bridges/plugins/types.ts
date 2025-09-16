@@ -196,7 +196,7 @@ function Message(
     kind: 'BridgeMessage',
     type,
     src: events[0],
-    dst: events[0],
+    dst: events[1],
   }
 }
 
