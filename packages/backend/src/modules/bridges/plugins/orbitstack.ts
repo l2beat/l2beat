@@ -5,6 +5,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -28,21 +29,21 @@ export const OutBoxTransactionExecuted = createBridgeEventType<{
   position: number
 }>('orbitstack.OutBoxTransactionExecuted')
 
-const NETWORKS = [
+const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
   {
     chain: 'arbitrum',
     arbsys: EthereumAddress('0x0000000000000000000000000000000000000064'),
     outbox: EthereumAddress('0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840'),
   },
-]
+])
 
 export class OrbitStackPlugin implements BridgePlugin {
   name = 'orbitstack'
-  chains = NETWORKS.map((n) => n.chain)
+  chains = ORBITSTACK_NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
     if (input.ctx.chain === 'ethereum') {
-      const network = NETWORKS.find(
+      const network = ORBITSTACK_NETWORKS.find(
         (n) => n.outbox === EthereumAddress(input.log.address),
       )
       if (!network) return
@@ -55,7 +56,9 @@ export class OrbitStackPlugin implements BridgePlugin {
         })
       }
     } else {
-      const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
+      const network = ORBITSTACK_NETWORKS.find(
+        (n) => n.chain === input.ctx.chain,
+      )
       if (!network) return
 
       const l2ToL1Tx = parseL2ToL1Tx(input.log, [network.arbsys])

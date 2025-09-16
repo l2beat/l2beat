@@ -21,22 +21,22 @@ import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateThroughputChart({
-  daLayer,
+  id,
   from,
   to,
   pastDayPosted,
   dataPosted,
 }: {
-  daLayer: string
+  id: string
   from: UnixTime
   to: UnixTime
   pastDayPosted: number
   dataPosted: number
 }) {
-  const id = useId()
+  const fillId = useId()
   const { data, isLoading } = api.da.projectChart.useQuery({
     range: { type: 'custom', from, to: to + UnixTime.DAY },
-    projectId: daLayer,
+    projectId: id,
     includeScalingOnly: false,
   })
 
@@ -44,13 +44,13 @@ export function MonthlyUpdateThroughputChart({
     return {
       projects: {
         label: 'Data Posted',
-        color: 'var(--project-primary, var(--ecosystem-primary))',
+        color: `var(--${id}-primary)`,
         indicatorType: {
           shape: 'line',
         },
       },
     } satisfies ChartMeta
-  }, [])
+  }, [id])
 
   const max = useMemo(() => {
     return data
@@ -90,7 +90,7 @@ export function MonthlyUpdateThroughputChart({
           <ChartLegend content={<ChartLegendContent />} />
           <Area
             dataKey="projects"
-            fill={`url(#${id})`}
+            fill={`url(#${fillId})`}
             fillOpacity={1}
             stroke={chartMeta.projects?.color}
             strokeWidth={2}
@@ -116,11 +116,10 @@ export function MonthlyUpdateThroughputChart({
           />
           <defs>
             <CustomFillGradientDef
-              id={id}
+              id={fillId}
               colors={{
-                primary: 'var(--project-primary, var(--ecosystem-primary))',
-                secondary:
-                  'var(--project-secondary, var(--ecosystem-secondary))',
+                primary: `var(--${id}-primary)`,
+                secondary: `var(--${id}-secondary)`,
               }}
             />
           </defs>

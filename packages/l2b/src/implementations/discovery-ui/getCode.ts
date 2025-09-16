@@ -14,6 +14,7 @@ import {
   getProjectDiscoveries,
 } from './getDiscoveries'
 import type { ApiCodeResponse } from './types'
+import { getReferencedProjects } from './utils'
 
 export function addFlattenerNote(code: string): string {
   const note = [
@@ -46,12 +47,12 @@ function isFlatCodeCurrent(
   codePaths: CodePathResult['codePaths'],
 ): boolean {
   const discovery = configReader.readDiscovery(project)
-
   const discoveries = [discovery]
+  const referencedProjects = getReferencedProjects(discovery)
 
-  for (const sharedModule of discovery.sharedModules ?? []) {
-    const sharedModuleDiscovery = configReader.readDiscovery(sharedModule)
-    discoveries.push(sharedModuleDiscovery)
+  for (const refProj of referencedProjects) {
+    const refDiscovery = configReader.readDiscovery(refProj)
+    discoveries.push(refDiscovery)
   }
 
   const discoHashes =

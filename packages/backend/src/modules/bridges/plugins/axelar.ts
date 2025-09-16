@@ -15,6 +15,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -40,19 +41,19 @@ const parseContractCallExecuted = createEventParser(
   'event ContractCallExecuted(bytes32 indexed commandId)',
 )
 
-export const NETWORKS = [
+export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'Ethereum', chain: 'ethereum' },
   { axelarChainName: 'arbitrum', chain: 'arbitrum' },
   { axelarChainName: 'Avalanche', chain: 'avalanche' },
   { axelarChainName: 'base', chain: 'base' },
   { axelarChainName: 'mantle', chain: 'mantle' },
-  { axelarChainName: 'immutable', chain: 'immutable' },
-  { axelarChainName: 'Fantom', chain: 'fantom' },
+  // { axelarChainName: 'immutable', chain: 'immutable' },
+  // { axelarChainName: 'Fantom', chain: 'fantom' },
   { axelarChainName: 'binance', chain: 'bsc' },
-  { axelarChainName: 'centrifuge', chain: 'centrifuge' },
+  // { axelarChainName: 'centrifuge', chain: 'centrifuge' },
   { axelarChainName: 'linea', chain: 'linea' },
   { axelarChainName: 'optimism', chain: 'optimism' },
-]
+])
 
 export const ContractCall = createBridgeEventType<{
   sender: EthereumAddress
@@ -106,7 +107,7 @@ export class AxelarPlugin implements BridgePlugin {
         destinationContractAddress: contractCall.destinationContractAddress,
         payloadHash: contractCall.payloadHash,
         $dstChain:
-          NETWORKS.find(
+          AXELAR_NETWORKS.find(
             (x) => x.axelarChainName === contractCall.destinationChain,
           )?.chain ?? `AXL_${contractCall.destinationChain}`,
       })
@@ -122,7 +123,7 @@ export class AxelarPlugin implements BridgePlugin {
         symbol: contractCallWithToken.symbol,
         amount: Number(contractCallWithToken.amount),
         $dstChain:
-          NETWORKS.find(
+          AXELAR_NETWORKS.find(
             (x) => x.axelarChainName === contractCallWithToken.destinationChain,
           )?.chain ?? `AXL_${contractCallWithToken.destinationChain}`,
       })
@@ -137,7 +138,7 @@ export class AxelarPlugin implements BridgePlugin {
         contractAddress: EthereumAddress(contractCallApproved.contractAddress),
         srcTxHash: contractCallApproved.sourceTxHash,
         $srcChain:
-          NETWORKS.find(
+          AXELAR_NETWORKS.find(
             (x) => x.axelarChainName === contractCallApproved.sourceChain,
           )?.chain ?? `AXL_${contractCallApproved.sourceChain}`,
       })
@@ -159,7 +160,7 @@ export class AxelarPlugin implements BridgePlugin {
         amount: Number(contractCallApprovedWithMint.amount),
         srcTxHash: contractCallApprovedWithMint.sourceTxHash,
         $srcChain:
-          NETWORKS.find(
+          AXELAR_NETWORKS.find(
             (x) =>
               x.axelarChainName === contractCallApprovedWithMint.sourceChain,
           )?.chain ?? `AXL_${contractCallApprovedWithMint.sourceChain}`,

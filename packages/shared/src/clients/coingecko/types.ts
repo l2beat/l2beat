@@ -1,4 +1,4 @@
-import { CoingeckoId } from '@l2beat/shared-pure'
+import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 export type CoinListEntry = v.infer<typeof CoinListEntry>
@@ -58,4 +58,34 @@ export type CoinsMarketResultData = v.infer<typeof CoinsMarketResultData>
 export type CoingeckoError = v.infer<typeof CoingeckoError>
 export const CoingeckoError = v.object({
   error: v.string(),
+})
+
+export type CoinData = v.infer<typeof CoinData>
+export const CoinData = v.object({
+  id: v.string(),
+  market_data: v.object({
+    current_price: v.object({
+      usd: v.number(),
+    }),
+    market_cap: v.object({
+      usd: v.number(),
+    }),
+    circulating_supply: v.number(),
+  }),
+  last_updated: v
+    .string()
+    .transform((date) => UnixTime.fromDate(new Date(date))),
+})
+
+export type CoinHistoricalData = v.infer<typeof CoinHistoricalData>
+export const CoinHistoricalData = v.object({
+  id: v.string(),
+  market_data: v.object({
+    current_price: v.object({
+      usd: v.number(),
+    }),
+    market_cap: v.object({
+      usd: v.number(),
+    }),
+  }),
 })

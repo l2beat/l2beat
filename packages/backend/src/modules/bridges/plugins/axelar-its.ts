@@ -5,7 +5,7 @@ This plugin handles all ITS tokens
 */
 
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { ContractCall, ContractCallApproved, NETWORKS } from './axelar'
+import { AXELAR_NETWORKS, ContractCall, ContractCallApproved } from './axelar'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -79,7 +79,7 @@ export class AxelarITSPlugin implements BridgePlugin {
           ITS_TOKENS.find((t) => t.tokenId === interchainTransfer.tokenId)
             ?.tokenAddresses[input.ctx.chain] ?? EthereumAddress.ZERO,
         $dstChain:
-          NETWORKS.find(
+          AXELAR_NETWORKS.find(
             (x) => x.axelarChainName === interchainTransfer.destinationChain,
           )?.chain ?? `AXL_${interchainTransfer.destinationChain}`,
       })
@@ -99,7 +99,7 @@ export class AxelarITSPlugin implements BridgePlugin {
             (t) => t.tokenId === interchainTransferReceived.tokenId,
           )?.tokenAddresses[input.ctx.chain] ?? EthereumAddress.ZERO,
         $srcChain:
-          NETWORKS.find(
+          AXELAR_NETWORKS.find(
             (x) => x.axelarChainName === interchainTransferReceived.sourceChain,
           )?.chain ?? `AXL_${interchainTransferReceived.sourceChain}`,
       })
