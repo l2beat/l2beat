@@ -102,7 +102,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
         meta: {
           align: 'right',
           tooltip:
-            'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
+            'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
         },
       },
     ),
@@ -129,7 +129,8 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
       sortUndefined: 'last',
       meta: {
         align: 'right',
-        tooltip: 'User operations per second averaged over the past day.',
+        tooltip:
+          'User operations per second averaged over the past day, shown together with a percentage changed compared to 7D ago.',
       },
     }),
   ])
