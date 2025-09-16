@@ -1,4 +1,3 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import ansiHTML from 'ansi-html'
 import clsx from 'clsx'
@@ -230,13 +229,7 @@ type InitialAddressesInputProps = {
 function InitialAddressesInput(props: InitialAddressesInputProps) {
   const [draft, setDraft] = useState('')
 
-  const normalizedDraft = (() => {
-    try {
-      return ChainSpecificAddress(draft)
-    } catch {
-      return undefined
-    }
-  })()
+  const normalizedDraft = isChainSpecificLike(draft) ? draft : undefined
 
   const isDuplicate = normalizedDraft
     ? props.value.some((a) => a.toLowerCase() === normalizedDraft.toLowerCase())
@@ -350,3 +343,13 @@ function TypeTile(props: TypeTileProps) {
 }
 
 const projectNameRegex = new RegExp('^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$')
+
+function isChainSpecificLike(address: string): boolean {
+  const [chainPart, addressPart] = address.split(':')
+
+  const ethereumAddressRegex = /^0x[a-fA-F0-9]{40}$/
+
+  return (
+    (chainPart?.length ?? 0) > 0 && ethereumAddressRegex.test(addressPart ?? '')
+  )
+}
