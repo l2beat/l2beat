@@ -42,10 +42,26 @@ export function EcosystemProjectPage({
           <div className="relative z-0 max-md:px-4" data-hide-overflow-x>
             <CssVariables
               variables={{
-                'ecosystem-primary': ecosystem.colors.primary,
-                'ecosystem-primary-50': `${ecosystem.colors.primary}80`,
-                'ecosystem-primary-25': `${ecosystem.colors.primary}40`,
-                'ecosystem-secondary': ecosystem.colors.secondary,
+                'ecosystem-primary': {
+                  light: ecosystem.colors.primary,
+                  dark: ecosystem.colors.dark?.primary,
+                },
+                'ecosystem-primary-50': {
+                  light: `${ecosystem.colors.primary}80`,
+                  dark: ecosystem.colors.dark?.primary
+                    ? `${ecosystem.colors.dark?.primary}80`
+                    : undefined,
+                },
+                'ecosystem-primary-25': {
+                  light: `${ecosystem.colors.primary}40`,
+                  dark: ecosystem.colors.dark?.primary
+                    ? `${ecosystem.colors.dark?.primary}40`
+                    : undefined,
+                },
+                'ecosystem-secondary': {
+                  light: ecosystem.colors.secondary,
+                  dark: ecosystem.colors.dark?.secondary,
+                },
                 'ecosystem-spacing': '0.75rem',
               }}
             />
