@@ -125,7 +125,7 @@ async function getImageUrl(
   logger.fetching('image url')
 
   if (coingeckoId === 'polygon-ecosystem-token') {
-    return '/images/custom-tokens/pol.png'
+    return `/images/custom-tokens/${coingeckoId}.png`
   }
   const imageUrl = await coingeckoClient.getImageUrl(coingeckoId)
   return imageUrl

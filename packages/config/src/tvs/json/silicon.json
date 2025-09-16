@@ -219,7 +219,7 @@
       "priceId": "polygon-ecosystem-token",
       "symbol": "POL",
       "name": "Polygon Ecosystem Token",
-      "iconUrl": "/images/custom-tokens/pol.png",
+      "iconUrl": "/images/custom-tokens/polygon-ecosystem-token.png",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
