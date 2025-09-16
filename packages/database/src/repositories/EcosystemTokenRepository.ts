@@ -8,8 +8,11 @@ export interface EcosystemTokenRecord {
   coingeckoId: string
   configurationId: string
   priceUsd: number
+  price7dChange: number
   marketCapUsd: number
+  marketCap7dChange: number
   circulatingSupply: number
+  circulatingSupply7dChange: number
   timestamp: UnixTime
 }
 
@@ -77,8 +80,13 @@ export class EcosystemTokenRepository extends BaseRepository {
           .columns(['projectId', 'coingeckoId', 'configurationId'])
           .doUpdateSet((eb) => ({
             priceUsd: eb.ref('excluded.priceUsd'),
+            price7dChange: eb.ref('excluded.price7dChange'),
             marketCapUsd: eb.ref('excluded.marketCapUsd'),
+            marketCap7dChange: eb.ref('excluded.marketCap7dChange'),
             circulatingSupply: eb.ref('excluded.circulatingSupply'),
+            circulatingSupply7dChange: eb.ref(
+              'excluded.circulatingSupply7dChange',
+            ),
             timestamp: eb.ref('excluded.timestamp'),
           })),
       )
