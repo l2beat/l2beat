@@ -26,7 +26,7 @@ export class EcosystemTokenIndexer extends ManagedChildIndexer {
       priceUsd: data.market_data.current_price.usd,
       marketCapUsd: data.market_data.market_cap.usd,
       circulatingSupply: data.market_data.circulating_supply,
-      timestamp: to,
+      timestamp: data.last_updated,
     })
 
     return to

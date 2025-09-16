@@ -1,4 +1,4 @@
-import { CoingeckoId } from '@l2beat/shared-pure'
+import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 export type CoinListEntry = v.infer<typeof CoinListEntry>
@@ -72,4 +72,7 @@ export const CoinData = v.object({
     }),
     circulating_supply: v.number(),
   }),
+  last_updated: v
+    .string()
+    .transform((date) => UnixTime.fromDate(new Date(date))),
 })
