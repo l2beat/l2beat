@@ -416,3 +416,16 @@ model BridgeTransfer {
   @@id([messageId])
   @@index([type])
 }
+
+model EcosystemToken {
+  projectId         String   @db.VarChar(255)
+  coingeckoId       String   @db.VarChar(255)
+  priceUsd          Float    @db.Real
+  marketCapUsd      Float    @db.Real
+  circulatingSupply Float    @db.Real
+  timestamp         DateTime @db.Timestamp(6)
+
+  @@id([projectId, coingeckoId])
+  @@index([projectId])
+  @@index([coingeckoId])
+}
