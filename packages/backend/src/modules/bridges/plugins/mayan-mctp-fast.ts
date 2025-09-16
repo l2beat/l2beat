@@ -11,7 +11,7 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { NETWORKS } from './wormhole'
+import { WORMHOLE_NETWORKS } from './wormhole'
 
 const parseOrderFulfilled = createEventParser(
   'event OrderFulfilled(uint32 sourceDomain, bytes32 sourceNonce, uint256 amount)',
@@ -32,7 +32,7 @@ export class MayanMctpFastPlugin implements BridgePlugin {
       return OrderFulfilled.create(input.ctx, {
         amount: orderFulfilled.amount.toString(),
         sourceDomain:
-          NETWORKS.find(
+          WORMHOLE_NETWORKS.find(
             (n) => n.wormholeChainId === Number(orderFulfilled.sourceDomain),
           )?.chain || '???',
       })

@@ -5,6 +5,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -72,11 +73,11 @@ const parseFulfilledOrder = createEventParser(
   'event FulfilledOrder((uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, address sender, address unlockAuthority)',
 )
 
-export const CHAIN_IDS = [
+export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '1', chain: 'ethereum' },
   { chainId: '42161', chain: 'arbitrum' },
   { chainId: '8453', chain: 'base' },
-]
+])
 
 export const LogCreatedOrder = createBridgeEventType<{
   orderId: `0x${string}`
@@ -110,7 +111,7 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
         fromAmount: logOrderCreated.order.giveAmount.toString(),
         fillAmount: logOrderCreated.order.takeAmount.toString(),
         $dstChain:
-          CHAIN_IDS.find(
+          DEBRIDGE_NETWORKS.find(
             (c) => c.chainId === logOrderCreated.order.takeChainId.toString(),
           )?.chain ?? 'unknown',
       })
@@ -125,7 +126,7 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
         fromAmount: logOrderFilled.order.giveAmount.toString(),
         fillAmount: logOrderFilled.order.takeAmount.toString(),
         $srcChain:
-          CHAIN_IDS.find(
+          DEBRIDGE_NETWORKS.find(
             (c) => c.chainId === logOrderFilled.order.takeChainId.toString(),
           )?.chain ?? 'unknown',
       })

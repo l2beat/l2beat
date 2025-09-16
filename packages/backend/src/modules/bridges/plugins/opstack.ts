@@ -5,6 +5,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -28,7 +29,7 @@ export const WithdrawalFinalized = createBridgeEventType<{
   withdrawalHash: string
 }>('opstack.WithdrawalFinalized')
 
-const NETWORKS = [
+const OPSTACK_NETWORKS = defineNetworks('opstack', [
   {
     chain: 'base',
     l2ToL1MessagePasser: EthereumAddress(
@@ -38,14 +39,14 @@ const NETWORKS = [
       '0x49048044d57e1c92a77f79988d21fa8faf74e97e',
     ),
   },
-]
+])
 
 export class OpStackPlugin implements BridgePlugin {
   name = 'opstack'
-  chains = NETWORKS.map((n) => n.chain)
+  chains = OPSTACK_NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
-    const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
+    const network = OPSTACK_NETWORKS.find((n) => n.chain === input.ctx.chain)
     if (!network) return
 
     if (input.ctx.chain === 'ethereum') {
