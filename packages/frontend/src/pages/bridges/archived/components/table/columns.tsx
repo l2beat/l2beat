@@ -65,7 +65,7 @@ export function getBridgesArchivedColumns(isOthers?: boolean) {
       meta: {
         align: 'right',
         tooltip:
-          'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
+          'Total value secured in contracts on Ethereum, shown together with a percentage change compared to 7D ago.',
       },
     }),
   ])
