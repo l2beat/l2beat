@@ -20,12 +20,10 @@ const parseOrderFulfilled = createEventParser(
 )
 
 export const OrderCreated = createBridgeEventType<{
-  txHash: string
   key: string
 }>('mayan-swift.OrderCreated')
 
 export const OrderFulfilled = createBridgeEventType<{
-  txHash: string
   key: string
 }>('mayan-swift.OrderFullfilled')
 
@@ -37,7 +35,6 @@ export class MayanSwiftPlugin implements BridgePlugin {
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
       return OrderFulfilled.create(input.ctx, {
-        txHash: input.ctx.txHash,
         key: orderFulfilled.key.toString(),
       })
     }
@@ -45,7 +42,6 @@ export class MayanSwiftPlugin implements BridgePlugin {
     const orderCreated = parseOrderCreated(input.log, null)
     if (orderCreated) {
       return OrderCreated.create(input.ctx, {
-        txHash: input.ctx.txHash,
         key: orderCreated.key.toString(),
       })
     }

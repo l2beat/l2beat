@@ -63,7 +63,6 @@ export const LogMessagePublished = createBridgeEventType<{
   sequence: string
   wormholeChainId: number
   sender: EthereumAddress
-  txHash: string
 }>('wormhole.LogMessagePublished')
 
 export class WormholePlugin implements BridgePlugin {
@@ -84,7 +83,6 @@ export class WormholePlugin implements BridgePlugin {
       sequence: parsed.sequence.toString(),
       wormholeChainId: network.wormholeChainId,
       sender: EthereumAddress(parsed.sender),
-      txHash: input.ctx.txHash,
     })
   }
 }

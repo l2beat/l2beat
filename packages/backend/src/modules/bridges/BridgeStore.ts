@@ -3,6 +3,7 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import type {
   BridgeEvent,
   BridgeEventDb,
+  BridgeEventQuery,
   BridgeEventType,
 } from './plugins/types'
 
@@ -120,29 +121,47 @@ export class BridgeStore implements BridgeEventDb {
 
   find<T>(
     type: BridgeEventType<T>,
-    query?: Partial<T>,
+    query?: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined {
-    return this.events.get(type.type)?.find((a): a is BridgeEvent<T> => {
+    return this.events.get(type.type)?.find((e): e is BridgeEvent<T> => {
       if (!query) return true
-      return matchesQuery(a.args, query)
+      return matchesQuery(e, query)
     })
   }
 
-  findAll<T>(type: BridgeEventType<T>, query?: Partial<T>): BridgeEvent<T>[] {
+  findAll<T>(
+    type: BridgeEventType<T>,
+    query?: BridgeEventQuery<T>,
+  ): BridgeEvent<T>[] {
     return (
-      this.events.get(type.type)?.filter((a): a is BridgeEvent<T> => {
+      this.events.get(type.type)?.filter((e): e is BridgeEvent<T> => {
         if (!query) return true
-        return matchesQuery(a.args, query)
+        return matchesQuery(e, query)
       }) ?? []
     )
   }
 }
 
-function matchesQuery<T>(payload: T, query: Partial<T>): boolean {
-  return Object.entries(query).every(([key, value]) => {
-    // biome-ignore lint/suspicious/noExplicitAny: We want to do it old school
-    return (payload as any)[key] === value
-  })
+export function matchesQuery<T>(
+  event: BridgeEvent<T>,
+  query: BridgeEventQuery<T>,
+): boolean {
+  for (const key in query) {
+    if (key === 'ctx') {
+      for (const ctxKey in query[key]) {
+        // @ts-ignore
+        if (event.ctx[ctxKey] !== query.ctx[ctxKey]) {
+          return false
+        }
+      }
+    } else {
+      // @ts-ignore
+      if (event.args[key] !== query[key]) {
+        return false
+      }
+    }
+  }
+  return true
 }
 
 function fromDbRecord(record: BridgeEventRecord): BridgeEvent {

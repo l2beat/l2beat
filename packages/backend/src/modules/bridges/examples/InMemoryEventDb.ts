@@ -1,6 +1,8 @@
+import { matchesQuery } from '../BridgeStore'
 import type {
   BridgeEvent,
   BridgeEventDb,
+  BridgeEventQuery,
   BridgeEventType,
 } from '../plugins/types'
 
@@ -9,27 +11,23 @@ export class InMemoryEventDb implements BridgeEventDb {
 
   find<T>(
     type: BridgeEventType<T>,
-    query?: Partial<T>,
+    query?: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined {
-    return this.actions.find((a): a is BridgeEvent<T> => {
-      if (!type.checkType(a)) return false
+    return this.actions.find((e): e is BridgeEvent<T> => {
+      if (!type.checkType(e)) return false
       if (!query) return true
-      return matchesQuery(a.args, query)
+      return matchesQuery(e, query)
     })
   }
 
-  findAll<T>(type: BridgeEventType<T>, query?: Partial<T>): BridgeEvent<T>[] {
-    return this.actions.filter((a): a is BridgeEvent<T> => {
-      if (!type.checkType(a)) return false
+  findAll<T>(
+    type: BridgeEventType<T>,
+    query?: BridgeEventQuery<T>,
+  ): BridgeEvent<T>[] {
+    return this.actions.filter((e): e is BridgeEvent<T> => {
+      if (!type.checkType(e)) return false
       if (!query) return true
-      return matchesQuery(a.args, query)
+      return matchesQuery(e, query)
     })
   }
-}
-
-function matchesQuery<T>(payload: T, query: Partial<T>): boolean {
-  return Object.entries(query).every(([key, value]) => {
-    // biome-ignore lint/suspicious/noExplicitAny: We want to do it old school
-    return (payload as any)[key] === value
-  })
 }
