@@ -1,6 +1,6 @@
 {
   "name": "transporter",
-  "timestamp": 1757665169,
+  "timestamp": 1757940540,
   "configHash": "0x77086b69164db28043aa01b04f7a9211cc180dbbcbdb859b619ccebb53aa9111",
   "entries": [
     {
@@ -22,7 +22,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1737115091,
       "sinceBlock": 21644063,
       "values": {
@@ -66,7 +71,12 @@
         "0x9028114a8dae289d45ca7a9ec2b46c04b63f9ed32d956c08dc09d650f2a7af19"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739912039,
       "sinceBlock": 21875772,
       "values": {
@@ -87,7 +97,7 @@
         ],
         "getToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "getTokenDecimals": 18,
-        "getUnsiloedLiquidity": "2741718795267885410882",
+        "getUnsiloedLiquidity": "2743371071219755133286",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "SiloedLockReleaseTokenPool 1.6.0"
       },
@@ -188,7 +198,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1718911127,
       "sinceBlock": 20134975,
       "values": {
@@ -219,7 +234,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1747764215,
       "sinceBlock": 22525788,
       "values": {
@@ -297,7 +317,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745296295,
       "sinceBlock": 22322169,
       "values": {
@@ -395,7 +420,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1711406459,
       "sinceBlock": 19514511,
       "values": {
@@ -426,7 +456,12 @@
         "0x25f54b635dfa382b7751677a7a8743d4c6abe92cf1e784f8a4d651efe2ec9cfd"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1752600575,
       "sinceBlock": 22926080,
       "values": {
@@ -457,7 +492,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1750690739,
       "sinceBlock": 22767877,
       "values": {
@@ -494,7 +534,12 @@
         "0x7612d95cd6518326945cfb5387b8a37c83d797ad268bd7d9d5695c45b59a579e"
       ],
       "proxyType": "EIP1967 proxy",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1736358971,
       "sinceBlock": 21581390,
       "values": {
@@ -513,7 +558,7 @@
         "getAllowListEnabled": false,
         "getBridgeLimit": "40000000000000000000000000",
         "getBridgeLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
-        "getCurrentBridgedAmount": "30974839529926865936626734",
+        "getCurrentBridgedAmount": "34732936359172563861440090",
         "getRateLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
         "getRebalancer": "eth:0x0000000000000000000000000000000000000000",
         "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
@@ -553,7 +598,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1715364563,
       "sinceBlock": 19841333,
       "values": {
@@ -580,7 +630,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745592419,
       "sinceBlock": 22346726,
       "values": {
@@ -644,7 +699,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729734167,
       "sinceBlock": 21032243,
       "values": {
@@ -677,7 +737,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1738836011,
       "sinceBlock": 21786724,
       "values": {
@@ -708,7 +773,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739964635,
       "sinceBlock": 21880124,
       "values": {
@@ -757,7 +827,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 329743,
+        "nextAvailableNonce": 331880,
         "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -779,7 +849,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1741454915,
       "sinceBlock": 22003648,
       "values": {
@@ -814,7 +889,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1724954207,
       "sinceBlock": 20635872,
       "values": {
@@ -850,7 +930,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1712691755,
       "sinceBlock": 19620237,
       "values": {
@@ -885,7 +970,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1743497303,
       "sinceBlock": 22172960,
       "values": {
@@ -994,7 +1084,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1716484655,
       "sinceBlock": 19934018,
       "values": {
@@ -1025,7 +1120,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1752004703,
       "sinceBlock": 22876707,
       "values": {
@@ -1141,7 +1241,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 712,
+        "getExpectedNextSequenceNumber": 718,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -1268,7 +1368,12 @@
         "0x2dfa2799ef923ad77675bd0e2d6b42de0c29967bca1f226419f990061eac8b76"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745346035,
       "sinceBlock": 22326302,
       "values": {
@@ -1307,7 +1412,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742326787,
       "sinceBlock": 22075905,
       "values": {
@@ -1407,7 +1517,12 @@
         "0x6a270bc5c82591f8a8adb6765201cc65b04ed37a9509b2703970f74d1ee9534f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1709671307,
       "sinceBlock": 19371421,
       "values": {
@@ -1862,7 +1977,12 @@
         "0x6b4c769c7b59108373c42add32bce68be08c2c8095dcb0919d25cd9b4542102c"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1697125163,
       "sinceBlock": 18335287,
       "values": {
@@ -1915,7 +2035,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1741337855,
       "sinceBlock": 21993953,
       "values": {
@@ -1981,7 +2106,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1715364503,
       "sinceBlock": 19841328,
       "values": {
@@ -2017,7 +2147,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1749315815,
       "sinceBlock": 22654076,
       "values": {
@@ -2061,7 +2196,12 @@
         "0x5102a591873a3fc0d5e6ad74bf5810128330f615d7af4299c706e5abbeeebc39"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1752534599,
       "sinceBlock": 22920608,
       "values": {
@@ -2168,7 +2308,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1740571199,
       "sinceBlock": 21930364,
       "values": {
@@ -2191,6 +2336,42 @@
       }
     },
     {
+      "name": "LockReleaseTokenPool",
+      "address": "eth:0x18d3ebcEF1074f30aba5Da3951FF1a87B30B6Ec1",
+      "type": "Contract",
+      "template": "transporter/TokenPool",
+      "sourceHashes": [
+        "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
+      "sinceTimestamp": 1757681027,
+      "sinceBlock": 23347062,
+      "values": {
+        "$immutable": true,
+        "canAcceptLiquidity": true,
+        "getAllowList": [],
+        "getAllowListEnabled": false,
+        "getRateLimitAdmin": "eth:0x0000000000000000000000000000000000000000",
+        "getRebalancer": "eth:0x0000000000000000000000000000000000000000",
+        "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+        "getRouter": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+        "getSupportedChains": ["6433500567565415381"],
+        "getToken": "eth:0x2E8b7190eE84E7AC757Ddff42Ba14d4EAe24B865",
+        "getTokenDecimals": 18,
+        "owner": "eth:0xd4d23209aaE8630bf386b7393763a5b7865e57cb",
+        "typeAndVersion": "LockReleaseTokenPool 1.5.1"
+      },
+      "implementationNames": {
+        "eth:0x18d3ebcEF1074f30aba5Da3951FF1a87B30B6Ec1": "LockReleaseTokenPool"
+      }
+    },
+    {
       "address": "eth:0x190bcE84CF2d500B878966F4Cf98a50d78f2675E",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2204,7 +2385,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1746496091,
       "sinceBlock": 22421497,
       "values": {
@@ -2304,7 +2490,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1741796039,
       "sinceBlock": 22031911,
       "values": {
@@ -2339,7 +2530,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1752387023,
       "sinceBlock": 22908380,
       "values": {
@@ -2368,7 +2564,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1736170031,
       "sinceBlock": 21565713,
       "values": {
@@ -2397,7 +2598,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1747164383,
       "sinceBlock": 22476363,
       "values": {
@@ -2522,7 +2728,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1751681195,
       "sinceBlock": 22849925,
       "values": {
@@ -2556,7 +2767,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1734970007,
       "sinceBlock": 21466269,
       "values": {
@@ -2590,7 +2806,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1747346651,
       "sinceBlock": 22491363,
       "values": {
@@ -2631,7 +2852,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1750786055,
       "sinceBlock": 22775774,
       "values": {
@@ -2675,7 +2901,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739964659,
       "sinceBlock": 21880126,
       "values": {
@@ -2759,7 +2990,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1715364491,
       "sinceBlock": 19841327,
       "values": {
@@ -2860,7 +3096,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739964707,
       "sinceBlock": 21880130,
       "values": {
@@ -2895,7 +3136,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739964731,
       "sinceBlock": 21880132,
       "values": {
@@ -2962,7 +3208,7 @@
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 3591,
-        "getLatestPriceEpochAndRound": 32019201,
+        "getLatestPriceEpochAndRound": 32282883,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "avalanche",
@@ -3030,7 +3276,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1751803667,
       "sinceBlock": 22860059,
       "values": {
@@ -3066,7 +3317,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1728056903,
       "sinceBlock": 20893157,
       "values": {
@@ -3107,7 +3363,12 @@
         "0x6b4c769c7b59108373c42add32bce68be08c2c8095dcb0919d25cd9b4542102c"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1697125139,
       "sinceBlock": 18335285,
       "values": {
@@ -3145,7 +3406,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729738271,
       "sinceBlock": 21032584,
       "values": {
@@ -3273,7 +3539,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729729403,
       "sinceBlock": 21031850,
       "values": {
@@ -3382,7 +3653,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1746813887,
       "sinceBlock": 22447555,
       "values": {
@@ -3428,7 +3704,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1747869935,
       "sinceBlock": 22534526,
       "values": {
@@ -3457,7 +3738,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739875655,
       "sinceBlock": 21872756,
       "values": {
@@ -3501,7 +3787,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1749707015,
       "sinceBlock": 22686471,
       "values": {
@@ -3535,7 +3826,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1740980615,
       "sinceBlock": 21964345,
       "values": {
@@ -3564,14 +3860,19 @@
         "0x9bbec6b344dd243eb349c44aa334d60cc96c8ce7479238e775d9796b137dba83"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1756296383,
       "sinceBlock": 23232348,
       "values": {
         "$immutable": true,
         "getAllowList": [],
         "getAllowListEnabled": false,
-        "getLockedTokens": "20004534322173482675333732",
+        "getLockedTokens": "20003320065104775816296223",
         "getMinter": "eth:0xEE9B1A09AEDAceD9dCDA74964EA447feb93861C2",
         "getRateLimitAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getRebalancer": "eth:0x0000000000000000000000000000000000000000",
@@ -3612,7 +3913,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 87,
+        "getExpectedNextSequenceNumber": 92,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -3670,7 +3971,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1740538739,
       "sinceBlock": 21927671,
       "values": {
@@ -3699,7 +4005,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729733927,
       "sinceBlock": 21032223,
       "values": {
@@ -3799,7 +4110,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1747065083,
       "sinceBlock": 22468203,
       "values": {
@@ -3925,7 +4241,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1743410507,
       "sinceBlock": 22165771,
       "values": {
@@ -4029,7 +4350,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1752570311,
       "sinceBlock": 22923571,
       "values": {
@@ -4058,7 +4384,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1734107279,
       "sinceBlock": 21394783,
       "values": {
@@ -4179,7 +4510,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1740596039,
       "sinceBlock": 21932426,
       "values": {
@@ -4210,7 +4546,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1751750855,
       "sinceBlock": 22855689,
       "values": {
@@ -4239,7 +4580,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1751015123,
       "sinceBlock": 22794769,
       "values": {
@@ -4270,7 +4616,12 @@
         "0x3caa2a07b6c330a420b4eba48d5a846dbe47025c923211584cf067b237212552"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1730398235,
       "sinceBlock": 21087327,
       "values": {
@@ -4335,7 +4686,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1748610683,
       "sinceBlock": 22595762,
       "values": {
@@ -4371,7 +4727,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1757266271,
       "sinceBlock": 23312723,
       "values": {
@@ -4402,7 +4763,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1715364551,
       "sinceBlock": 19841332,
       "values": {
@@ -4492,7 +4858,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1748626991,
       "sinceBlock": 22597116,
       "values": {
@@ -4526,7 +4897,12 @@
         "0xf23d0b54f97d1fab5614da945340dce86452b2ee46b6df7d6b1ca22560732219"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1743005279,
       "sinceBlock": 22132177,
       "values": {
@@ -4626,7 +5002,12 @@
         "0x0a632a2beeac9d8c3a57905d419850c6bb531ccc97efca28cfe666847026992a"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1728073703,
       "sinceBlock": 20894553,
       "values": {
@@ -4658,7 +5039,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729737323,
       "sinceBlock": 21032506,
       "values": {
@@ -4693,7 +5079,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1749479555,
       "sinceBlock": 22667636,
       "values": {
@@ -4726,7 +5117,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1733817251,
       "sinceBlock": 21370742,
       "values": {
@@ -4757,7 +5153,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1734913223,
       "sinceBlock": 21461572,
       "values": {
@@ -4788,7 +5189,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729697099,
       "sinceBlock": 21029169,
       "values": {
@@ -4817,7 +5223,12 @@
         "0xff593d825b9ed83bf9557cfbebe2718ddf0b6b1cfb0023c7741933ad4c1c46cd"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729693355,
       "sinceBlock": 21028857,
       "values": {
@@ -4871,7 +5282,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729696955,
       "sinceBlock": 21029157,
       "values": {
@@ -5046,7 +5462,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1715888579,
       "sinceBlock": 19884697,
       "values": {
@@ -5073,7 +5494,12 @@
         "0x23277443ff5993c70a623842dec882790bd6856420dd107327d19b3d5b609229"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1756380503,
       "sinceBlock": 23239321,
       "values": {
@@ -5102,7 +5528,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1719424067,
       "sinceBlock": 20177450,
       "values": {
@@ -5143,7 +5574,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729729475,
       "sinceBlock": 21031856,
       "values": {
@@ -5174,7 +5610,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745863847,
       "sinceBlock": 22369258,
       "values": {
@@ -5203,7 +5644,12 @@
         "0x787779b9003c3cbece777f7ca4e01cd32bcaf3ad04b071e28170f4435111ee4c"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1743494639,
       "sinceBlock": 22172739,
       "values": {
@@ -5232,7 +5678,12 @@
         "0x8f8568ffa012634ccf826a95dde2d995cc8c0fb07ea6662639e4e41983a00643"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1698777515,
       "sinceBlock": 18471947,
       "values": {
@@ -5271,7 +5722,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1740631979,
       "sinceBlock": 21935406,
       "values": {
@@ -5311,7 +5767,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729738091,
       "sinceBlock": 21032569,
       "values": {
@@ -5340,7 +5801,12 @@
         "0x23277443ff5993c70a623842dec882790bd6856420dd107327d19b3d5b609229"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1744184543,
       "sinceBlock": 22229924,
       "values": {
@@ -5374,7 +5840,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1741247675,
       "sinceBlock": 21986488,
       "values": {
@@ -5479,7 +5950,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1738825799,
       "sinceBlock": 21785876,
       "values": {
@@ -5508,7 +5984,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1736822483,
       "sinceBlock": 21619802,
       "values": {
@@ -5549,7 +6030,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729698647,
       "sinceBlock": 21029297,
       "values": {
@@ -5585,7 +6071,12 @@
         "0x9e138ff38f9078d0b77e175aac09ba11f4a69ffa599143d3e50d72b9458f164b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1757100515,
       "sinceBlock": 23298997,
       "values": {
@@ -5615,7 +6106,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1741021031,
       "sinceBlock": 21967695,
       "values": {
@@ -5687,7 +6183,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1734533711,
       "sinceBlock": 21430146,
       "values": {
@@ -5718,7 +6219,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1747409747,
       "sinceBlock": 22496558,
       "values": {
@@ -5753,7 +6259,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742500007,
       "sinceBlock": 22090259,
       "values": {
@@ -5810,7 +6321,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1005,
+        "getExpectedNextSequenceNumber": 1028,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -5868,7 +6379,12 @@
         "0x6b4c769c7b59108373c42add32bce68be08c2c8095dcb0919d25cd9b4542102c"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1697125187,
       "sinceBlock": 18335289,
       "values": {
@@ -5975,7 +6491,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1736366387,
       "sinceBlock": 21582006,
       "values": {
@@ -6004,7 +6525,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729692971,
       "sinceBlock": 21028826,
       "values": {
@@ -6038,7 +6564,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742497775,
       "sinceBlock": 22090074,
       "values": {
@@ -6114,7 +6645,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729733759,
       "sinceBlock": 21032209,
       "values": {
@@ -6148,7 +6684,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729733807,
       "sinceBlock": 21032213,
       "values": {
@@ -6188,7 +6729,12 @@
         "0x0550059a3da4f1397194a89699e465c3a43ee052c79d53b18e332d45957a94ef"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739995859,
       "sinceBlock": 21882716,
       "values": {
@@ -6229,7 +6775,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739964647,
       "sinceBlock": 21880125,
       "values": {
@@ -6333,7 +6884,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1741542395,
       "sinceBlock": 22010890,
       "values": {
@@ -6364,7 +6920,12 @@
         "0x217b592480064095001aece6e4a4a382b21d5c53174fe664f383125fd80c16a2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1734425831,
       "sinceBlock": 21421205,
       "values": {
@@ -6405,7 +6966,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 130,
+        "getExpectedNextSequenceNumber": 134,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -6473,7 +7034,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729697159,
       "sinceBlock": 21029174,
       "values": {
@@ -6509,7 +7075,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745332559,
       "sinceBlock": 22325181,
       "values": {
@@ -6544,7 +7115,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1718219663,
       "sinceBlock": 20077767,
       "values": {
@@ -6579,7 +7155,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1741032491,
       "sinceBlock": 21968645,
       "values": {
@@ -6711,7 +7292,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729733603,
       "sinceBlock": 21032198,
       "values": {
@@ -6819,7 +7405,12 @@
         "0x217b592480064095001aece6e4a4a382b21d5c53174fe664f383125fd80c16a2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1732766627,
       "sinceBlock": 21283735,
       "values": {
@@ -6854,7 +7445,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1752355283,
       "sinceBlock": 22905743,
       "values": {
@@ -6888,7 +7484,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729734095,
       "sinceBlock": 21032237,
       "values": {
@@ -6978,7 +7579,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 879,
+        "getExpectedNextSequenceNumber": 890,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -7036,7 +7637,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1713201839,
       "sinceBlock": 19662376,
       "values": {
@@ -7072,7 +7678,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739964695,
       "sinceBlock": 21880129,
       "values": {
@@ -7181,7 +7792,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1737147179,
       "sinceBlock": 21646724,
       "values": {
@@ -7239,7 +7855,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 321,
+        "getExpectedNextSequenceNumber": 323,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -7297,7 +7913,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1711027655,
       "sinceBlock": 19483330,
       "values": {
@@ -7402,7 +8023,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1737625907,
       "sinceBlock": 21686412,
       "values": {
@@ -7512,7 +8138,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739532623,
       "sinceBlock": 21844416,
       "values": {
@@ -7543,7 +8174,12 @@
         "0xa9fa40d9d26de86fa9869be555593dd3b95cc40442206b8c0725a24d1809cc7f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1706129963,
       "sinceBlock": 19079032,
       "values": {
@@ -7600,7 +8236,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1719424031,
       "sinceBlock": 20177447,
       "values": {
@@ -7631,7 +8272,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729733639,
       "sinceBlock": 21032201,
       "values": {
@@ -7662,7 +8308,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1738949099,
       "sinceBlock": 21796105,
       "values": {
@@ -7772,7 +8423,12 @@
         "0x6a270bc5c82591f8a8adb6765201cc65b04ed37a9509b2703970f74d1ee9534f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1709671463,
       "sinceBlock": 19371434,
       "values": {
@@ -7805,7 +8461,12 @@
         "0x5102a591873a3fc0d5e6ad74bf5810128330f615d7af4299c706e5abbeeebc39"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1756118243,
       "sinceBlock": 23217570,
       "values": {
@@ -7834,7 +8495,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739974331,
       "sinceBlock": 21880929,
       "values": {
@@ -7867,7 +8533,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742500427,
       "sinceBlock": 22090294,
       "values": {
@@ -7903,7 +8574,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729733843,
       "sinceBlock": 21032216,
       "values": {
@@ -7944,7 +8620,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1743680831,
       "sinceBlock": 22188178,
       "values": {
@@ -8320,6 +9001,10 @@
           {
             "sourceChainSelector": "4741433654826277614",
             "offRamp": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"
+          },
+          {
+            "sourceChainSelector": "13624601974233774587",
+            "offRamp": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"
           }
         ],
         "onRamps": {
@@ -8384,7 +9069,7 @@
           "4560701533377838164": "eth:0x86768e4e4B2E3C1CF812D5C8A7c7becFA4c8D486",
           "7222032299962346917": "eth:0x4109D281EB5C768556dFF78ba400cE2E3564d5B0",
           "2459028469735686113": "eth:0xc5Dbe2055Fa233ece44c99432526F3Fc46cA3FC2",
-          "13624601974233774587": "eth:0x0000000000000000000000000000000000000000",
+          "13624601974233774587": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "9813823125703490621": "eth:0x8469b5AbD81987F9347c0bAbd47b9eB11dA7d0dF",
           "18164309074156128038": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "4741433654826277614": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
@@ -8505,7 +9190,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1720026155,
       "sinceBlock": 20227345,
       "values": {
@@ -8532,7 +9222,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1735554587,
       "sinceBlock": 21514700,
       "values": {
@@ -8563,7 +9258,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739964683,
       "sinceBlock": 21880128,
       "values": {
@@ -8598,7 +9298,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745589131,
       "sinceBlock": 22346454,
       "values": {
@@ -8629,7 +9334,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1713201383,
       "sinceBlock": 19662339,
       "values": {
@@ -8660,7 +9370,12 @@
         "0xa9fa40d9d26de86fa9869be555593dd3b95cc40442206b8c0725a24d1809cc7f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1708552763,
       "sinceBlock": 19278858,
       "values": {
@@ -8712,7 +9427,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1722536915,
       "sinceBlock": 20435489,
       "values": {
@@ -8743,7 +9463,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1715888555,
       "sinceBlock": 19884695,
       "values": {
@@ -8840,7 +9565,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729692791,
       "sinceBlock": 21028811,
       "values": {
@@ -8877,7 +9607,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1754506799,
       "sinceBlock": 23083974,
       "values": {
@@ -8923,7 +9658,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 904,
+        "getExpectedNextSequenceNumber": 908,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -8991,7 +9726,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1753024571,
       "sinceBlock": 22961239,
       "values": {
@@ -9266,7 +10006,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729692563,
       "sinceBlock": 21028792,
       "values": {
@@ -9297,7 +10042,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1737344771,
       "sinceBlock": 21663103,
       "values": {
@@ -9401,7 +10151,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729692863,
       "sinceBlock": 21028817,
       "values": {
@@ -9434,7 +10189,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1712691803,
       "sinceBlock": 19620241,
       "values": {
@@ -9469,7 +10229,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1722536699,
       "sinceBlock": 20435471,
       "values": {
@@ -9500,7 +10265,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729698767,
       "sinceBlock": 21029307,
       "values": {
@@ -9710,7 +10480,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739651879,
       "sinceBlock": 21854253,
       "values": {
@@ -9816,7 +10591,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729733975,
       "sinceBlock": 21032227,
       "values": {
@@ -9847,7 +10627,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729693079,
       "sinceBlock": 21028835,
       "values": {
@@ -9949,7 +10734,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745006327,
       "sinceBlock": 22298124,
       "values": {
@@ -9980,7 +10770,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739281235,
       "sinceBlock": 21823641,
       "values": {
@@ -10031,7 +10826,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 68,
+        "getExpectedNextSequenceNumber": 73,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -10089,7 +10884,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729739627,
       "sinceBlock": 21032697,
       "values": {
@@ -10123,7 +10923,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1751693939,
       "sinceBlock": 22850982,
       "values": {
@@ -10152,7 +10957,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1736785679,
       "sinceBlock": 21616755,
       "values": {
@@ -10199,7 +11009,12 @@
         "0x4398d0c50712015c3b1951f5621659a9941d9e71e2860147ce6f40ae59231433"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1754429471,
       "sinceBlock": 23077566,
       "values": {
@@ -10235,7 +11050,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1748940743,
       "sinceBlock": 22623055,
       "values": {
@@ -10277,7 +11097,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1746459815,
       "sinceBlock": 22418505,
       "values": {
@@ -10381,7 +11206,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1748714555,
       "sinceBlock": 22604363,
       "values": {
@@ -10481,7 +11311,12 @@
         "0x79b9cf230176def2af971dc33c78f8b070cb0a6e49af9044a0e1f1ec5db4c52b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1741372091,
       "sinceBlock": 21996788,
       "values": {
@@ -10509,7 +11344,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742238707,
       "sinceBlock": 22068614,
       "values": {
@@ -10540,7 +11380,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1747154087,
       "sinceBlock": 22475516,
       "values": {
@@ -10586,7 +11431,12 @@
         "0x79b9cf230176def2af971dc33c78f8b070cb0a6e49af9044a0e1f1ec5db4c52b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1751531099,
       "sinceBlock": 22837491,
       "values": {
@@ -10689,7 +11539,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729698731,
       "sinceBlock": 21029304,
       "values": {
@@ -10731,7 +11586,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 5295,
+        "getExpectedNextSequenceNumber": 5351,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -10789,7 +11644,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729729427,
       "sinceBlock": 21031852,
       "values": {
@@ -10835,7 +11695,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 122,
+        "getExpectedNextSequenceNumber": 125,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -10898,7 +11758,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1748337743,
       "sinceBlock": 22573199,
       "values": {
@@ -10927,7 +11792,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742242727,
       "sinceBlock": 22068944,
       "values": {
@@ -10961,7 +11831,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1727960207,
       "sinceBlock": 20885131,
       "values": {
@@ -11001,7 +11876,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 85,
+        "getExpectedNextSequenceNumber": 92,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -11059,7 +11934,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1753021895,
       "sinceBlock": 22961017,
       "values": {
@@ -11088,7 +11968,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1715888531,
       "sinceBlock": 19884693,
       "values": {
@@ -11120,7 +12005,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729738067,
       "sinceBlock": 21032567,
       "values": {
@@ -11156,7 +12046,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1727815127,
       "sinceBlock": 20873084,
       "values": {
@@ -11191,7 +12086,12 @@
         "0x33f09e7682272c1f95424ab3f37d1315f3aec5b97fca7ff982b59bc8677ecefc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1749658835,
       "sinceBlock": 22682475,
       "values": {
@@ -11215,7 +12115,7 @@
         ],
         "getToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "getTokenDecimals": 6,
-        "getUnsiloedLiquidity": 4091067918349,
+        "getUnsiloedLiquidity": 4079751946555,
         "getXERC20": "eth:0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "SiloedWithUnsiloedXERC20GroupTokenPool 1.6.0"
@@ -11238,7 +12138,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1711406315,
       "sinceBlock": 19514499,
       "values": {
@@ -11285,7 +12190,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 822,
+        "getExpectedNextSequenceNumber": 851,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -11487,7 +12392,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1749831023,
       "sinceBlock": 22696743,
       "values": {
@@ -11518,7 +12428,12 @@
         "0x9028114a8dae289d45ca7a9ec2b46c04b63f9ed32d956c08dc09d650f2a7af19"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1744059971,
       "sinceBlock": 22219593,
       "values": {
@@ -11560,7 +12475,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 566,
+        "getExpectedNextSequenceNumber": 569,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -11618,7 +12533,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745129939,
       "sinceBlock": 22308374,
       "values": {
@@ -11651,7 +12571,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729692719,
       "sinceBlock": 21028805,
       "values": {
@@ -11693,7 +12618,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 95,
+        "getExpectedNextSequenceNumber": 96,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -11756,7 +12681,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1712692055,
       "sinceBlock": 19620262,
       "values": {
@@ -11879,7 +12809,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1722536579,
       "sinceBlock": 20435461,
       "values": {
@@ -11910,7 +12845,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1720821911,
       "sinceBlock": 20293296,
       "values": {
@@ -11956,8 +12896,8 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2258,
-        "getLatestPriceEpochAndRound": 26519553,
+        "getExpectedNextSequenceNumber": 2329,
+        "getLatestPriceEpochAndRound": 26781442,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "avalanche",
@@ -12014,7 +12954,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739964623,
       "sinceBlock": 21880123,
       "values": {
@@ -12049,7 +12994,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1737503183,
       "sinceBlock": 21676237,
       "values": {
@@ -12082,7 +13032,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729738223,
       "sinceBlock": 21032580,
       "values": {
@@ -12113,7 +13068,12 @@
         "0xa19876326ec4b72b07f79dce7f7ebb4c003e0b28267638308320ef0e9cad43eb"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1736441987,
       "sinceBlock": 21588267,
       "values": {
@@ -12147,7 +13107,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739964743,
       "sinceBlock": 21880133,
       "values": {
@@ -12379,7 +13344,12 @@
         "0x5102a591873a3fc0d5e6ad74bf5810128330f615d7af4299c706e5abbeeebc39"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1748523059,
       "sinceBlock": 22588521,
       "values": {
@@ -12408,7 +13378,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729697051,
       "sinceBlock": 21029165,
       "values": {
@@ -12439,7 +13414,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739964671,
       "sinceBlock": 21880127,
       "values": {
@@ -12474,7 +13454,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1746193535,
       "sinceBlock": 22396502,
       "values": {
@@ -12515,7 +13500,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1736901131,
       "sinceBlock": 21626321,
       "values": {
@@ -12544,7 +13534,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742499371,
       "sinceBlock": 22090207,
       "values": {
@@ -12810,7 +13805,8 @@
           "eth:0x43f47a434DADd5A122C42E49378365CcA949fA54",
           "eth:0xe4a9fa29E3d88660577E4ACD9bf88Ef2DF4F8D7C",
           "eth:0xf76A0c47900ca2dD1874AB4Dc4049810E919684d",
-          "eth:0xba5F6Cf1121c572602e638bC8A0d87Db61072e35"
+          "eth:0xba5F6Cf1121c572602e638bC8A0d87Db61072e35",
+          "eth:0x18d3ebcEF1074f30aba5Da3951FF1a87B30B6Ec1"
         ],
         "poolsMap": {
           "eth:0xB006A31a279fd90be4CdfFFab5fD45Dd605D33CC": "eth:0x55042569836d203456d013dEFA8c670AD865d451",
@@ -13037,7 +14033,8 @@
           "eth:0xDA06eE2dACF9245Aa80072a4407deBDea0D7e341": "eth:0x43f47a434DADd5A122C42E49378365CcA949fA54",
           "eth:0xBD4CaeE14EFDE2888F167130AF84D613D64618Da": "eth:0xe4a9fa29E3d88660577E4ACD9bf88Ef2DF4F8D7C",
           "eth:0x319053B625e598994Dd1179948771a4C2f66b873": "eth:0xf76A0c47900ca2dD1874AB4Dc4049810E919684d",
-          "eth:0x9b13b86eeb48Ec9cA1A72FaE969d7daA60870100": "eth:0xba5F6Cf1121c572602e638bC8A0d87Db61072e35"
+          "eth:0x9b13b86eeb48Ec9cA1A72FaE969d7daA60870100": "eth:0xba5F6Cf1121c572602e638bC8A0d87Db61072e35",
+          "eth:0x2E8b7190eE84E7AC757Ddff42Ba14d4EAe24B865": "eth:0x18d3ebcEF1074f30aba5Da3951FF1a87B30B6Ec1"
         },
         "typeAndVersion": "TokenAdminRegistry 1.5.0"
       },
@@ -13135,7 +14132,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745298299,
       "sinceBlock": 22322335,
       "values": {
@@ -13202,7 +14204,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739962247,
       "sinceBlock": 21879927,
       "values": {
@@ -13316,7 +14323,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1757621831,
       "sinceBlock": 23342152,
       "values": {
@@ -13429,7 +14441,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739365451,
       "sinceBlock": 21830582,
       "values": {
@@ -13469,7 +14486,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742290235,
       "sinceBlock": 22072879,
       "values": {
@@ -13498,7 +14520,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1757367803,
       "sinceBlock": 23321131,
       "values": {
@@ -13554,7 +14581,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729734023,
       "sinceBlock": 21032231,
       "values": {
@@ -13585,7 +14617,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739735555,
       "sinceBlock": 21861163,
       "values": {
@@ -13614,7 +14651,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1715888603,
       "sinceBlock": 19884699,
       "values": {
@@ -13641,7 +14683,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729737107,
       "sinceBlock": 21032488,
       "values": {
@@ -13710,7 +14757,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729729331,
       "sinceBlock": 21031844,
       "values": {
@@ -13739,7 +14791,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1749480635,
       "sinceBlock": 22667726,
       "values": {
@@ -13772,7 +14829,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1751654111,
       "sinceBlock": 22847679,
       "values": {
@@ -13803,7 +14865,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1736365187,
       "sinceBlock": 21581908,
       "values": {
@@ -13875,7 +14942,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729734047,
       "sinceBlock": 21032233,
       "values": {
@@ -13916,7 +14988,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1741853219,
       "sinceBlock": 22036647,
       "values": {
@@ -13952,7 +15029,12 @@
         "0xa9fa40d9d26de86fa9869be555593dd3b95cc40442206b8c0725a24d1809cc7f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1707769439,
       "sinceBlock": 19214305,
       "values": {
@@ -13989,7 +15071,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1722536651,
       "sinceBlock": 20435467,
       "values": {
@@ -14089,7 +15176,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729697003,
       "sinceBlock": 21029161,
       "values": {
@@ -14129,7 +15221,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2318,
+        "getExpectedNextSequenceNumber": 2342,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -14223,7 +15315,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729693031,
       "sinceBlock": 21028831,
       "values": {
@@ -14252,7 +15349,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745351795,
       "sinceBlock": 22326779,
       "values": {
@@ -14286,7 +15388,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1734108035,
       "sinceBlock": 21394845,
       "values": {
@@ -14337,7 +15444,12 @@
         "0x79b9cf230176def2af971dc33c78f8b070cb0a6e49af9044a0e1f1ec5db4c52b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1743650171,
       "sinceBlock": 22185646,
       "values": {
@@ -14365,7 +15477,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1756246247,
       "sinceBlock": 23228186,
       "values": {
@@ -14401,7 +15518,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1750865363,
       "sinceBlock": 22782351,
       "values": {
@@ -14432,7 +15554,12 @@
         "0x0a35dd432b77fce55b815e772bab627ec6b4ecc71e7a30d1a5576092d034682c"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1753209167,
       "sinceBlock": 22976525,
       "values": {
@@ -14462,7 +15589,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1740979463,
       "sinceBlock": 21964249,
       "values": {
@@ -14511,7 +15643,12 @@
         "0x6b4c769c7b59108373c42add32bce68be08c2c8095dcb0919d25cd9b4542102c"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1697125199,
       "sinceBlock": 18335290,
       "values": {
@@ -14554,7 +15691,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1718911091,
       "sinceBlock": 20134972,
       "values": {
@@ -14590,7 +15732,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729696883,
       "sinceBlock": 21029151,
       "values": {
@@ -14619,7 +15766,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1727705819,
       "sinceBlock": 20864010,
       "values": {
@@ -14648,7 +15800,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742754731,
       "sinceBlock": 22111403,
       "values": {
@@ -14772,7 +15929,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 469,
+        "getExpectedNextSequenceNumber": 477,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -14830,7 +15987,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742499767,
       "sinceBlock": 22090240,
       "values": {
@@ -14866,7 +16028,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745433203,
       "sinceBlock": 22333521,
       "values": {
@@ -14980,7 +16147,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1749055463,
       "sinceBlock": 22632544,
       "values": {
@@ -15013,7 +16185,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1736523635,
       "sinceBlock": 21595032,
       "values": {
@@ -15090,7 +16267,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1722536615,
       "sinceBlock": 20435464,
       "values": {
@@ -15145,7 +16327,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1076,
+        "getExpectedNextSequenceNumber": 1082,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -15385,16 +16567,16 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0
           ]
         },
-        "getOpCount": 208,
+        "getOpCount": 215,
         "getRoot": {
-          "root": "0x954226b5e474addb8983b75536150c1d7de6d03e90cd39852b16ec7310efeac3",
-          "validUntil": 1757867044
+          "root": "0x15b5cf31c60371a4162eae9dc6e0d3578b135aa0bb4a893a9dc0e7ad9cb9d01e",
+          "validUntil": 1757890643
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e",
-          "preOpCount": 206,
-          "postOpCount": 208,
+          "preOpCount": 210,
+          "postOpCount": 215,
           "overridePreviousRoot": true
         },
         "MAX_NUM_SIGNERS": 200,
@@ -15500,7 +16682,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 6481,
+        "getExpectedNextSequenceNumber": 6518,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -15632,7 +16814,12 @@
         "0xa9fa40d9d26de86fa9869be555593dd3b95cc40442206b8c0725a24d1809cc7f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1708552811,
       "sinceBlock": 19278862,
       "values": {
@@ -15680,7 +16867,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 144,
+        "getExpectedNextSequenceNumber": 151,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -15758,7 +16945,12 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739964719,
       "sinceBlock": 21880131,
       "values": {
@@ -15793,7 +16985,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1738688987,
       "sinceBlock": 21774536,
       "values": {
@@ -15822,7 +17019,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742500259,
       "sinceBlock": 22090280,
       "values": {
@@ -15853,7 +17055,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1711406435,
       "sinceBlock": 19514509,
       "values": {
@@ -15889,7 +17096,12 @@
         "0x5102a591873a3fc0d5e6ad74bf5810128330f615d7af4299c706e5abbeeebc39"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1747339439,
       "sinceBlock": 22490771,
       "values": {
@@ -15938,7 +17150,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 8016,
+        "getExpectedNextSequenceNumber": 8168,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -16001,7 +17213,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729733687,
       "sinceBlock": 21032204,
       "values": {
@@ -16036,7 +17253,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1747945427,
       "sinceBlock": 22540779,
       "values": {
@@ -16067,7 +17289,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1757442611,
       "sinceBlock": 23327341,
       "values": {
@@ -16317,7 +17544,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729738139,
       "sinceBlock": 21032573,
       "values": {
@@ -16346,7 +17578,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1752023495,
       "sinceBlock": 22878267,
       "values": {
@@ -16380,7 +17617,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729692911,
       "sinceBlock": 21028821,
       "values": {
@@ -16455,7 +17697,12 @@
         "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729693139,
       "sinceBlock": 21028840,
       "values": {
@@ -16496,7 +17743,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1734107951,
       "sinceBlock": 21394838,
       "values": {
@@ -16547,7 +17799,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729698695,
       "sinceBlock": 21029301,
       "values": {
@@ -16578,7 +17835,12 @@
         "0x6a270bc5c82591f8a8adb6765201cc65b04ed37a9509b2703970f74d1ee9534f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1707769475,
       "sinceBlock": 19214308,
       "values": {
@@ -16613,7 +17875,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1749538403,
       "sinceBlock": 22672496,
       "values": {
@@ -16644,7 +17911,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1736842523,
       "sinceBlock": 21621463,
       "values": {
@@ -16673,7 +17945,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739651495,
       "sinceBlock": 21854221,
       "values": {
@@ -16704,7 +17981,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1736366063,
       "sinceBlock": 21581980,
       "values": {
@@ -16733,7 +18015,12 @@
         "0x5102a591873a3fc0d5e6ad74bf5810128330f615d7af4299c706e5abbeeebc39"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745850599,
       "sinceBlock": 22368163,
       "values": {
@@ -16772,7 +18059,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1747408355,
       "sinceBlock": 22496443,
       "values": {
@@ -16921,7 +18213,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742914331,
       "sinceBlock": 22124632,
       "values": {
@@ -16950,7 +18247,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742498723,
       "sinceBlock": 22090153,
       "values": {
@@ -16981,7 +18283,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745257619,
       "sinceBlock": 22318964,
       "values": {
@@ -17014,7 +18321,12 @@
         "0xe451e1871ad50ebee72cae713092826419b4b4727eda7ad7d04c7ceab66ec42d"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1742149703,
       "sinceBlock": 22061234,
       "values": {
@@ -17050,7 +18362,12 @@
         "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1717695479,
       "sinceBlock": 20034323,
       "values": {
@@ -17081,7 +18398,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1745302799,
       "sinceBlock": 22322709,
       "values": {
@@ -17110,7 +18432,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729733879,
       "sinceBlock": 21032219,
       "values": {
@@ -17145,7 +18472,12 @@
         "0x50806d752abf8398d94214551cb0e69207aa09e509de07ebba38612a12dc004f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1754494955,
       "sinceBlock": 23082995,
       "values": {
@@ -17176,7 +18508,12 @@
         "0x9028114a8dae289d45ca7a9ec2b46c04b63f9ed32d956c08dc09d650f2a7af19"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739932499,
       "sinceBlock": 21877467,
       "values": {
@@ -17207,7 +18544,12 @@
         "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1729700099,
       "sinceBlock": 21029418,
       "values": {
@@ -17238,7 +18580,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1757610575,
       "sinceBlock": 23341220,
       "values": {
@@ -17278,7 +18625,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 7195,
+        "getExpectedNextSequenceNumber": 7273,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -17405,7 +18752,12 @@
         "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1720823027,
       "sinceBlock": 20293389,
       "values": {
@@ -17451,7 +18803,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 277,
+        "getExpectedNextSequenceNumber": 284,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -17588,7 +18940,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1739209427,
       "sinceBlock": 21817688,
       "values": {
@@ -17696,7 +19053,12 @@
         "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1751682743,
       "sinceBlock": 22850053,
       "values": {
@@ -20561,6 +21923,94 @@
       "function removeRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress)",
       "function setChainRateLimiterConfig(uint64 remoteChainSelector, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundConfig)",
       "function setChainRateLimiterConfigs(uint64[] remoteChainSelectors, tuple(bool isEnabled, uint128 capacity, uint128 rate)[] outboundConfigs, tuple(bool isEnabled, uint128 capacity, uint128 rate)[] inboundConfigs)",
+      "function setRateLimitAdmin(address rateLimitAdmin)",
+      "function setRebalancer(address rebalancer)",
+      "function setRouter(address newRouter)",
+      "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
+      "function transferLiquidity(address from, uint256 amount)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)",
+      "function withdrawLiquidity(uint256 amount)"
+    ],
+    "eth:0x18d3ebcEF1074f30aba5Da3951FF1a87B30B6Ec1": [
+      "constructor(address token, uint8 localTokenDecimals, address[] allowlist, address rmnProxy, bool acceptLiquidity, address router)",
+      "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
+      "error AggregateValueRateLimitReached(uint256 minWaitInSeconds, uint256 available)",
+      "error AllowListNotEnabled()",
+      "error BucketOverfilled()",
+      "error CallerIsNotARampOnRouter(address caller)",
+      "error CannotTransferToSelf()",
+      "error ChainAlreadyExists(uint64 chainSelector)",
+      "error ChainNotAllowed(uint64 remoteChainSelector)",
+      "error CursedByRMN()",
+      "error DisabledNonZeroRateLimit(tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
+      "error InsufficientLiquidity()",
+      "error InvalidDecimalArgs(uint8 expected, uint8 actual)",
+      "error InvalidRateLimitRate(tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig)",
+      "error InvalidRemoteChainDecimals(bytes sourcePoolData)",
+      "error InvalidRemotePoolForChain(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "error InvalidSourcePoolAddress(bytes sourcePoolAddress)",
+      "error InvalidToken(address token)",
+      "error LiquidityNotAccepted()",
+      "error MustBeProposedOwner()",
+      "error NonExistentChain(uint64 remoteChainSelector)",
+      "error OnlyCallableByOwner()",
+      "error OverflowDetected(uint8 remoteDecimals, uint8 localDecimals, uint256 remoteAmount)",
+      "error OwnerCannotBeZero()",
+      "error PoolAlreadyAdded(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "error RateLimitMustBeDisabled()",
+      "error SenderNotAllowed(address sender)",
+      "error TokenMaxCapacityExceeded(uint256 capacity, uint256 requested, address tokenAddress)",
+      "error TokenRateLimitReached(uint256 minWaitInSeconds, uint256 available, address tokenAddress)",
+      "error Unauthorized(address caller)",
+      "error ZeroAddressNotAllowed()",
+      "event AllowListAdd(address sender)",
+      "event AllowListRemove(address sender)",
+      "event Burned(address indexed sender, uint256 amount)",
+      "event ChainAdded(uint64 remoteChainSelector, bytes remoteToken, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)",
+      "event ChainConfigured(uint64 remoteChainSelector, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)",
+      "event ChainRemoved(uint64 remoteChainSelector)",
+      "event ConfigChanged(tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
+      "event LiquidityAdded(address indexed provider, uint256 indexed amount)",
+      "event LiquidityRemoved(address indexed provider, uint256 indexed amount)",
+      "event LiquidityTransferred(address indexed from, uint256 amount)",
+      "event Locked(address indexed sender, uint256 amount)",
+      "event Minted(address indexed sender, address indexed recipient, uint256 amount)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event RateLimitAdminSet(address rateLimitAdmin)",
+      "event Released(address indexed sender, address indexed recipient, uint256 amount)",
+      "event RemotePoolAdded(uint64 indexed remoteChainSelector, bytes remotePoolAddress)",
+      "event RemotePoolRemoved(uint64 indexed remoteChainSelector, bytes remotePoolAddress)",
+      "event RouterUpdated(address oldRouter, address newRouter)",
+      "event TokensConsumed(uint256 tokens)",
+      "function acceptOwnership()",
+      "function addRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "function applyAllowListUpdates(address[] removes, address[] adds)",
+      "function applyChainUpdates(uint64[] remoteChainSelectorsToRemove, tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)[] chainsToAdd)",
+      "function canAcceptLiquidity() view returns (bool)",
+      "function getAllowList() view returns (address[])",
+      "function getAllowListEnabled() view returns (bool)",
+      "function getCurrentInboundRateLimiterState(uint64 remoteChainSelector) view returns (tuple(uint128 tokens, uint32 lastUpdated, bool isEnabled, uint128 capacity, uint128 rate))",
+      "function getCurrentOutboundRateLimiterState(uint64 remoteChainSelector) view returns (tuple(uint128 tokens, uint32 lastUpdated, bool isEnabled, uint128 capacity, uint128 rate))",
+      "function getRateLimitAdmin() view returns (address)",
+      "function getRebalancer() view returns (address)",
+      "function getRemotePools(uint64 remoteChainSelector) view returns (bytes[])",
+      "function getRemoteToken(uint64 remoteChainSelector) view returns (bytes)",
+      "function getRmnProxy() view returns (address rmnProxy)",
+      "function getRouter() view returns (address router)",
+      "function getSupportedChains() view returns (uint64[])",
+      "function getToken() view returns (address token)",
+      "function getTokenDecimals() view returns (uint8 decimals)",
+      "function isRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress) view returns (bool)",
+      "function isSupportedChain(uint64 remoteChainSelector) view returns (bool)",
+      "function isSupportedToken(address token) view returns (bool)",
+      "function lockOrBurn(tuple(bytes receiver, uint64 remoteChainSelector, address originalSender, uint256 amount, address localToken) lockOrBurnIn) returns (tuple(bytes destTokenAddress, bytes destPoolData))",
+      "function owner() view returns (address)",
+      "function provideLiquidity(uint256 amount)",
+      "function releaseOrMint(tuple(bytes originalSender, uint64 remoteChainSelector, address receiver, uint256 amount, address localToken, bytes sourcePoolAddress, bytes sourcePoolData, bytes offchainTokenData) releaseOrMintIn) returns (tuple(uint256 destinationAmount))",
+      "function removeRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "function setChainRateLimiterConfig(uint64 remoteChainSelector, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundConfig)",
       "function setRateLimitAdmin(address rateLimitAdmin)",
       "function setRebalancer(address rebalancer)",
       "function setRouter(address newRouter)",
@@ -43181,8 +44631,8 @@
     "transporter/PriceRegistry": "0x1446d2e81e0804c808246c6c31122a8823aa7c974e2487647d7502d530d9b46f",
     "transporter/RouterV1_2_0": "0xabd52866e5c895c524c21b209ff836630841998d9c58164c4d5bb9cce698fb19",
     "transporter/TokenAdminRegistry": "0x28d68380ec883c6a6b267b97c91ab0904a762c604e68b51e4ec12ffed9c32d05",
-    "transporter/TokenPool": "0x4b64f41d41bb38ace24969ae9a091a6d13b7640336eb2744203244044117e586"
+    "transporter/TokenPool": "0x59c72ebd7fccb0c082baa2045709200cefcb0c32301f4f9f545b571a1e1d7d45"
   },
-  "usedBlockNumbers": { "ethereum": 23345741 },
-  "permissionsConfigHash": "0x5bf266df16e568b1854c7b6aa91b329f4b18c142fc0fffb7efc78fa8d36031e8"
+  "usedBlockNumbers": { "ethereum": 23368581 },
+  "permissionsConfigHash": "0x45f9ffd20d81cb72769b3377b3f4f3de4e70f53f3452b63fc6f978a60d55964f"
 }

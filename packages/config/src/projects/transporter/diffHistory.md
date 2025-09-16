@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x3f5fae20336c93de920d186365bd4dcc18179ec8
+
+# Diff at Mon, 15 Sep 2025 12:50:55 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@823103e23195ea5382f353da97a0232ffda42a10 block: 1757665169
+- current timestamp: 1757940540
+
+## Description
+
+New pool, ignore spammy values.
+
+## Watched changes
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.82:
++        {"sourceChainSelector":"13624601974233774587","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.13624601974233774587:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.225:
++        "eth:0x18d3ebcEF1074f30aba5Da3951FF1a87B30B6Ec1"
+      values.poolsMap.eth:0x2E8b7190eE84E7AC757Ddff42Ba14d4EAe24B865:
++        "eth:0x18d3ebcEF1074f30aba5Da3951FF1a87B30B6Ec1"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x18d3ebcEF1074f30aba5Da3951FF1a87B30B6Ec1)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x18d3ebcEF1074f30aba5Da3951FF1a87B30B6Ec1.sol | 2132 ++++++++++++++++++++
+ 1 file changed, 2132 insertions(+)
+```
+
 Generated with discovered.json: 0x0474117c77daaedbe20ba860d3110cd0ca45f6d2
 
 # Diff at Sat, 13 Sep 2025 06:52:08 GMT:
