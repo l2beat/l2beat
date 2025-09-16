@@ -3,8 +3,6 @@ import { join } from 'path'
 import type { ConfigReader } from './ConfigReader'
 
 export class ConfigWriter {
-  static readonly validate = (_path: string) => {}
-
   constructor(public configReader: ConfigReader) {}
 
   writeConfigFile(project: string, contents: string) {
