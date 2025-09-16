@@ -47,9 +47,7 @@ export class MayanMctpFastPlugin implements BridgePlugin {
     // find MessageReceived with the same txHash as OrderFulfilled
     const messageReceived = db.find(CCTPv2MessageReceived, {
       app: 'TokenMessengerV2',
-      ctx: {
-        txHash: orderFulfilled.ctx.txHash,
-      },
+      sameTxBefore: orderFulfilled,
     })
     if (!messageReceived || !messageReceived.args.hookData) return
     // find MessageSent with the same body as MessageReceived

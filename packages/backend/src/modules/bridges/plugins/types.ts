@@ -118,6 +118,8 @@ export type MatchResult = (BridgeMessage | BridgeTransfer)[]
 
 export type BridgeEventQuery<T> = Partial<T> & {
   ctx?: Partial<BridgeEventContext>
+  sameTxBefore?: BridgeEvent
+  sameTxAfter?: BridgeEvent
 }
 
 export interface BridgeEventDb {

@@ -37,9 +37,7 @@ export class MayanMctpPlugin implements BridgePlugin {
     }
     // find CCTP MessageSent in the same transaction as Mayan Forwarder event
     const messageSent = db.find(CCTPv1MessageSent, {
-      ctx: {
-        txHash: event.ctx.txHash,
-      },
+      sameTxBefore: event,
     })
     if (!messageSent) return
     // find CCTP MessageReceived
@@ -57,9 +55,7 @@ export class MayanMctpPlugin implements BridgePlugin {
       method === '0x1c59b7fc'
     ) {
       const logMessagePublished = db.find(LogMessagePublished, {
-        ctx: {
-          txHash: messageSent.ctx.txHash,
-        },
+        sameTxAfter: messageSent,
       })
       if (!logMessagePublished) return
       return [
