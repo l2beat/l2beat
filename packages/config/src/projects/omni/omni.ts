@@ -171,6 +171,6 @@ export const omni: Bridge = {
     addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: discovery.getDiscoveredPermissions(['gnosis']),
+  permissions: discovery.getDiscoveredPermissions(),
   discoveryInfo: getDiscoveryInfo([discovery]),
 }
