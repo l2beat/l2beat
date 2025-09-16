@@ -77,3 +77,17 @@ export const CoinData = v.object({
     .string()
     .transform((date) => UnixTime.fromDate(new Date(date))),
 })
+
+export type CoinHistoricalData = v.infer<typeof CoinHistoricalData>
+export const CoinHistoricalData = v.object({
+  id: v.string(),
+  market_data: v.object({
+    current_price: v.object({
+      usd: v.number(),
+    }),
+    market_cap: v.object({
+      usd: v.number(),
+    }),
+    circulating_supply: v.number(),
+  }),
+})

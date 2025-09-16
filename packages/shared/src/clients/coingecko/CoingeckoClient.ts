@@ -6,6 +6,7 @@ import {
 import {
   CoinData,
   CoingeckoError,
+  CoinHistoricalData,
   type CoinListEntry,
   type CoinListPlatformEntry,
   CoinListPlatformResult,
@@ -86,6 +87,17 @@ export class CoingeckoClient extends ClientCore {
       sparkline: 'false',
     })
     return CoinData.parse(data)
+  }
+
+  async getCoinHistoricalDataById(
+    id: CoingeckoId,
+    timestamp: UnixTime,
+  ): Promise<CoinHistoricalData> {
+    const data = await this.query(`/coins/${id.toString()}/history`, {
+      date: UnixTime.toYYYYMMDD(timestamp),
+      localization: 'false',
+    })
+    return CoinHistoricalData.parse(data)
   }
 
   async getImageUrl(id: CoingeckoId): Promise<string> {
