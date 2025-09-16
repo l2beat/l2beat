@@ -1,4 +1,3 @@
-import type { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   type BridgePlugin,
@@ -71,17 +70,12 @@ export class WormholePlugin implements BridgePlugin {
   name = 'wormhole'
   chains = ['ethereum', 'arbitrum', 'base']
 
-  constructor(private logger: Logger) {
-    this.logger = logger.for(this)
-  }
-
   capture(input: LogToCapture) {
     const parsed = parseLogMessagePublished(input.log, null)
     if (!parsed) return
 
     const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
     if (!network) {
-      this.logger.warn('Network not configured', { chain: input.ctx.chain })
       return
     }
 

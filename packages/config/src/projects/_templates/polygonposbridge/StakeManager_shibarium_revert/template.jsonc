@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. This version of the contract has most critical validator management functions blocked (`transferFunds`, `unstakeClaim`, `withdrawDelegatorsReward`, `_transferToken`, `_transferTokenFrom`) and 'rescue' functions added after the shibarium hack.",
+  "ignoreRelatives": [
+    "token",
+    "tokenMatic",
+    "migration",
+    "validatorShareFactory"
+  ],
+  "ignoreMethods": [
+    "getValidatorContract",
+    "delegatedAmount",
+    "isValidator",
+    "latestSignerUpdateEpoch",
+    "signers",
+    "validatorAuction",
+    "validators",
+    "validatorStake",
+    "validatorStateChanges",
+    "accountStateRoot",
+    "validatorReward"
+  ],
+  "ignoreInWatchMode": [
+    "currentEpoch",
+    "currentValidatorSetTotalStake",
+    "epoch",
+    "rewardPerStake",
+    "totalRewardsLiquidated",
+    "totalStaked",
+    "validatorState",
+    "totalHeimdallFee",
+    "NFTCounter",
+    "delegatorsReward"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        { "type": "interact", "description": "can replace all validators." }
+      ]
+    },
+    "rescuer": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can move any ERC20 tokens out of the contract."
+        }
+      ]
+    }
+  },
+  "category": "core"
+}

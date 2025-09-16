@@ -7,6 +7,7 @@ import {
   createEventParser,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 
 const parseMessagePassed = createEventParser(
@@ -44,50 +45,45 @@ export class OpStackPlugin implements BridgePlugin {
   chains = NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
-    if (input.ctx.chain === 'ethereum') {
-      const network = NETWORKS.find(
-        (n) => n.optimismPortal === EthereumAddress(input.log.address),
-      )
-      if (!network) return
+    const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
+    if (!network) return
 
-      const wf = parseWithdrawalFinalized(input.log, [network.optimismPortal])
-      if (wf) {
+    if (input.ctx.chain === 'ethereum') {
+      if (!network) return
+      const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
+        network.optimismPortal,
+      ])
+      if (withdrawalFinalized) {
         return WithdrawalFinalized.create(input.ctx, {
           chain: network.chain,
-          withdrawalHash: wf.withdrawalHash,
+          withdrawalHash: withdrawalFinalized.withdrawalHash,
         })
       }
     } else {
-      const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
-      if (!network) return
-
-      const mp = parseMessagePassed(input.log, [network.l2ToL1MessagePasser])
-      if (mp) {
+      const messagePassed = parseMessagePassed(input.log, [
+        network.l2ToL1MessagePasser,
+      ])
+      if (messagePassed) {
         return MessagePassed.create(input.ctx, {
           chain: network.chain,
-          withdrawalHash: mp.withdrawalHash,
+          withdrawalHash: messagePassed.withdrawalHash,
         })
       }
     }
   }
 
-  match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!WithdrawalFinalized.checkType(event)) return
-
+  match(
+    withdrawalFinalized: BridgeEvent,
+    db: BridgeEventDb,
+  ): MatchResult | undefined {
+    if (!WithdrawalFinalized.checkType(withdrawalFinalized)) return
     const messagePassed = db.find(MessagePassed, {
-      withdrawalHash: event.args.withdrawalHash,
-      chain: event.args.chain,
+      withdrawalHash: withdrawalFinalized.args.withdrawalHash,
+      chain: withdrawalFinalized.args.chain,
     })
     if (!messagePassed) return
-
-    return {
-      messages: [
-        {
-          type: 'opstack.Message',
-          outbound: messagePassed,
-          inbound: event,
-        },
-      ],
-    }
+    return [
+      Result.Message('opstack.Message', [messagePassed, withdrawalFinalized]),
+    ]
   }
 }

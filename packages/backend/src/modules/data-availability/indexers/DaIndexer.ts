@@ -97,7 +97,7 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
           // There might be multiple configurations for the same project
           // so we need to uniq them
           uniq(this.$.configurations.map((c) => c.properties.projectId)),
-          latestTimestamp,
+          UnixTime.toEndOf(latestTimestamp, 'hour'),
           adjustedTo,
         )
       })

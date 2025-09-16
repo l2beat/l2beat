@@ -5,6 +5,5 @@
   "initialAddresses": ["eth:0xF5C9F957705bea56a7e806943f98F7777B995826"],
   "names": {
     "eth:0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B": "SorareAdminMultisig"
-  },
-  "sharedModules": ["shared-sharp-verifier"]
+  }
 }

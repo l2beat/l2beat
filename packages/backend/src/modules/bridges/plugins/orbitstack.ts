@@ -7,6 +7,7 @@ import {
   createEventParser,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 
 const parseL2ToL1Tx = createEventParser(
@@ -67,23 +68,23 @@ export class OrbitStackPlugin implements BridgePlugin {
     }
   }
 
-  match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!OutBoxTransactionExecuted.checkType(event)) return
+  match(
+    outBoxTransactionExecuted: BridgeEvent,
+    db: BridgeEventDb,
+  ): MatchResult | undefined {
+    if (!OutBoxTransactionExecuted.checkType(outBoxTransactionExecuted)) return
 
     const l2ToL1Tx = db.find(L2ToL1Tx, {
-      chain: event.args.chain,
-      position: event.args.position,
+      chain: outBoxTransactionExecuted.args.chain,
+      position: outBoxTransactionExecuted.args.position,
     })
     if (!l2ToL1Tx) return
 
-    return {
-      messages: [
-        {
-          type: 'orbistack.Message',
-          outbound: l2ToL1Tx,
-          inbound: event,
-        },
-      ],
-    }
+    return [
+      Result.Message('orbistack.Message', [
+        l2ToL1Tx,
+        outBoxTransactionExecuted,
+      ]),
+    ]
   }
 }

@@ -131,4 +131,7 @@ export const xlayer: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ecosystemInfo: {
+    id: ProjectId('agglayer'),
+  },
 }
