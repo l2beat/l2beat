@@ -222,6 +222,7 @@ export const optimism: ScalingProject = opStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
   },
   hasProperSecurityCouncil: true,
   nodeSourceLink:
