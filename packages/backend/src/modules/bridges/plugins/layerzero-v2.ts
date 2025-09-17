@@ -54,7 +54,6 @@ const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
 
 export class LayerZeroV2Plugin implements BridgePlugin {
   name = 'layerzero-v2'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const network = LAYERZERO_NETWORKS.find((x) => x.chain === input.ctx.chain)

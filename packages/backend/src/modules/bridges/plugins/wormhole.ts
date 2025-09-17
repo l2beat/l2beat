@@ -68,7 +68,6 @@ export const LogMessagePublished = createBridgeEventType<{
 
 export class WormholePlugin implements BridgePlugin {
   name = 'wormhole'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const parsed = parseLogMessagePublished(input.log, null)
