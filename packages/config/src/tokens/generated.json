@@ -15098,7 +15098,7 @@
     },
     {
       "name": "AUSD",
-      "coingeckoId": "agora-ausd-katana",
+      "coingeckoId": "agora-dollar",
       "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
       "symbol": "AUSD",
       "decimals": 6,
