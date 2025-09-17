@@ -23,3 +23,7 @@ export function Input({
     />
   )
 }
+
+export function InputDescription({ children }: { children: React.ReactNode }) {
+  return <p className="w-full text-right text-coffee-400 text-xs">{children}</p>
+}

@@ -1,15 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import ansiHTML from 'ansi-html'
-import clsx from 'clsx'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createConfigFile } from '../../api/api'
 import { Title } from '../../common/Title'
 import { Button } from '../../components/Button'
 import { Checkbox } from '../../components/Checkbox'
-import { Input } from '../../components/Input'
+import { Input, InputDescription } from '../../components/Input'
 import { Loader } from '../../components/Loader'
 import { useTerminalStore } from '../../panel-terminal/store'
+import { DiscoveryLookup } from './components/DiscoveryLookup'
+import { InitialAddressesInput } from './components/InitialAddressesInput'
+import { TypeTile } from './components/ProjectTypeTile'
 
 export function NewProjectPage() {
   const [title, setTitle] = useState('')
@@ -185,171 +186,12 @@ export function NewProjectPage() {
             <pre>{createConfigFileMutation.error.message}</pre>
           </div>
         )}
-        <DiscoveryLookup lines={10} />
+        <div className="mb-4">
+          <DiscoveryLookup lines={10} />
+        </div>
       </div>
     </>
   )
 }
 
-type DiscoveryLookupProps = {
-  lines: number
-}
-
-function DiscoveryLookup({ lines }: DiscoveryLookupProps) {
-  const { output, command } = useTerminalStore()
-
-  if (!command.inFlight) {
-    return
-  }
-
-  return (
-    <div className="text-xs">
-      <div className="border-coffee-400 border-b font-mono opacity-50">
-        Outputs
-      </div>
-      <pre
-        dangerouslySetInnerHTML={{
-          __html: ansiHTML(output).split('\n').slice(-lines).join('\n'),
-        }}
-      />
-    </div>
-  )
-}
-
-function InputDescription({ children }: { children: React.ReactNode }) {
-  return <p className="w-full text-right text-coffee-400 text-xs">{children}</p>
-}
-
-type InitialAddressesInputProps = {
-  value: string[]
-  onChange: (value: string[]) => void
-  disabled: boolean
-}
-
-function InitialAddressesInput(props: InitialAddressesInputProps) {
-  const [draft, setDraft] = useState('')
-
-  const normalizedDraft = isChainSpecificLike(draft) ? draft : undefined
-
-  const isDuplicate = normalizedDraft
-    ? props.value.some((a) => a.toLowerCase() === normalizedDraft.toLowerCase())
-    : false
-
-  const isValid = Boolean(normalizedDraft) && !isDuplicate
-
-  function addDraftIfValid() {
-    if (!isValid || !normalizedDraft) return
-    props.onChange([...props.value, normalizedDraft])
-    setDraft('')
-  }
-
-  function removeAt(index: number) {
-    const next = props.value.slice()
-    next.splice(index, 1)
-    props.onChange(next)
-  }
-
-  return (
-    <div className="flex flex-col">
-      <div className="mb-1 flex items-stretch text-sm">
-        <div className="whitespace-nowrap">Initial addresses</div>
-        <InputDescription>
-          More inputs will appear as you enter valid addresses
-        </InputDescription>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        {props.value.map((address, i) => (
-          <div key={`${address}-${i}`} className="flex flex-row gap-2">
-            <Input
-              readOnly
-              disabled={props.disabled}
-              value={address}
-              className="w-full px-4 py-2 font-mono"
-            />
-            <Button
-              onClick={() => removeAt(i)}
-              aria-label="Remove address"
-              disabled={props.disabled}
-            >
-              x
-            </Button>
-          </div>
-        ))}
-
-        <div className="flex flex-col">
-          <Input
-            disabled={props.disabled}
-            className={clsx('w-full bg-coffee-800 px-4 py-2 font-mono')}
-            placeholder="eth:0x0000000000000000000000000000000000000000"
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault()
-                addDraftIfValid()
-              }
-            }}
-            aria-invalid={draft.length > 0 && !isValid}
-          />
-          {draft.length > 0 && !isValid && (
-            <p className="text-red-400 text-xs">
-              {isDuplicate
-                ? 'Duplicate address'
-                : 'Invalid address. Use format shortName:checksumHex'}
-            </p>
-          )}
-          {isValid && (
-            <div className="mt-2 flex justify-end">
-              <Button
-                className="mt-1 border border-coffee-600 px-3 py-1 text-sm hover:bg-coffee-700"
-                onClick={addDraftIfValid}
-              >
-                Add address
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-type TypeTileProps = {
-  type: string
-  onClick: () => void
-  children: React.ReactNode
-  active: boolean
-  disabled: boolean
-}
-
-function TypeTile(props: TypeTileProps) {
-  return (
-    <button
-      disabled={props.disabled}
-      onClick={props.onClick}
-      className={clsx(
-        'flex flex-1 flex-col items-center justify-center gap-1 border border-coffee-200 p-4',
-        'cursor-pointer',
-        props.disabled && 'cursor-not-allowed opacity-50',
-        !props.active && !props.disabled && 'hover:bg-coffee-600/50',
-        props.active && 'bg-coffee-600',
-      )}
-    >
-      <div className="font-bold text-2xl">{props.type}</div>
-      <div className="text-center font-thin text-sm">{props.children}</div>
-    </button>
-  )
-}
-
 const projectNameRegex = new RegExp('^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$')
-
-function isChainSpecificLike(address: string): boolean {
-  const [chainPart, addressPart] = address.split(':')
-
-  const ethereumAddressRegex = /^0x[a-fA-F0-9]{40}$/
-
-  return (
-    (chainPart?.length ?? 0) > 0 && ethereumAddressRegex.test(addressPart ?? '')
-  )
-}
