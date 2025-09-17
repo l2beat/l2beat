@@ -24,6 +24,7 @@ export interface VerifiersSectionProps extends ProjectSectionProps {
     proofSystem: ZkCatalogTag
     verifierHashes: {
       hash: string
+      description?: string
       knownDeployments: {
         url?: string
         address: string
@@ -48,7 +49,9 @@ export function VerifiersSection({
   return (
     <ProjectSection {...sectionProps} as={as} className="space-y-6">
       <p className="text-paragraph-15 md:text-paragraph-16">
-        List of different onchain verifiers for this proving system. Unique ID distinguishes differents deployments of the same verifier from different verifiers (e.g. different versions).
+        List of different onchain verifiers for this proving system. Unique ID
+        distinguishes differents deployments of the same verifier from different
+        verifiers (e.g. different versions).
       </p>
       {proofSystemVerifiers.map(({ proofSystem, verifierHashes }) => (
         <div key={proofSystem.id + proofSystem.type} className="space-y-3">
@@ -58,9 +61,6 @@ export function VerifiersSection({
               verifier hashes
             </span>
           </div>
-          <p className="font-medium text-label-value-16 text-secondary">
-            Verifier ID as recorded by the verifier smart contract.
-          </p>
           <div className="space-y-2">
             {verifierHashes.map((verifierHash) => (
               <VerifierCollapsibleWithDetails
@@ -127,6 +127,10 @@ function VerifierCollapsibleWithDetails({
         {verifierHash.knownDeployments.length > 0 && (
           <>
             <div className="space-y-3">
+              <p className="text-paragraph-14 text-secondary">
+                {verifierHash.description ??
+                  'Verifier ID as recorded by the verifier smart contract.'}
+              </p>
               <div className="font-bold text-label-value-16">
                 Known deployments
               </div>

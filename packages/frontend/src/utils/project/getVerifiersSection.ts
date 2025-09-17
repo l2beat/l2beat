@@ -49,6 +49,7 @@ export async function getVerifiersSection(
             projectsUsedIn,
             attesters,
             knownDeployments,
+            description: verifier.description,
           },
         ],
       }
@@ -58,6 +59,7 @@ export async function getVerifiersSection(
         projectsUsedIn,
         attesters,
         knownDeployments,
+        description: verifier.description,
       })
     }
   }
