@@ -14,6 +14,7 @@ export function getSearchBarProjectEntries<
     | 'isDaLayer'
     | 'isBridge'
     | 'ecosystemConfig'
+    | 'zkCatalogInfo'
   >,
 >(project: T, allProjects: T[]) {
   const results: SearchBarProject[] = []
@@ -22,7 +23,8 @@ export function getSearchBarProjectEntries<
     !project.isBridge &&
     !project.daLayer &&
     !project.daBridge &&
-    !project.ecosystemConfig
+    !project.ecosystemConfig &&
+    !project.zkCatalogInfo
   ) {
     return []
   }
@@ -86,6 +88,14 @@ export function getSearchBarProjectEntries<
       ...common,
       href: `/ecosystems/${project.slug}`,
       category: 'ecosystems',
+    })
+  }
+
+  if (project.zkCatalogInfo) {
+    results.push({
+      ...common,
+      href: `/zk-catalog/${project.slug}`,
+      category: 'zkCatalog',
     })
   }
 

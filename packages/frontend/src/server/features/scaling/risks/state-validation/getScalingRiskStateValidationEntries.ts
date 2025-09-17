@@ -12,10 +12,8 @@ import {
   getProjectsChangeReport,
   type ProjectChanges,
 } from '~/server/features/projects-change-report/getProjectsChangeReport'
-import {
-  getVerifiersWithAttesters,
-  type TrustedSetupVerifierData,
-} from '~/server/features/zk-catalog/getZkCatalogEntries'
+import type { TrustedSetupVerifierData } from '~/server/features/zk-catalog/getZkCatalogEntries'
+import { getVerifiersWithAttesters } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { ps } from '~/server/projects'
 import {
   type ContractUtils,

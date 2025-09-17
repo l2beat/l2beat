@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { TableLink } from '~/components/table/TableLink'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
@@ -9,21 +10,23 @@ import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails
 const columnHelper = createColumnHelper<ZkCatalogEntry>()
 
 export const zkCatalogColumns = [
-  ...getCommonProjectColumns(columnHelper, () => undefined),
+  ...getCommonProjectColumns(columnHelper, (p) => `/zk-catalog/${p.slug}`),
   columnHelper.accessor((row) => row.name, {
     id: 'name',
     cell: (ctx) => {
       return (
-        <div className="w-max space-y-px">
-          <div className="max-w-[146px] whitespace-pre-wrap font-bold text-base leading-none">
-            {ctx.row.original.name}
-          </div>
-          {ctx.row.original.creator && (
-            <div className="font-medium text-[13px] text-secondary leading-normal">
-              {ctx.row.original.creator}
+        <TableLink href={`/zk-catalog/${ctx.row.original.slug}`}>
+          <div className="w-max space-y-px">
+            <div className="max-w-[146px] whitespace-pre-wrap font-bold text-base leading-none">
+              {ctx.row.original.name}
             </div>
-          )}
-        </div>
+            {ctx.row.original.creator && (
+              <div className="font-medium text-[13px] text-secondary leading-normal">
+                {ctx.row.original.creator}
+              </div>
+            )}
+          </div>
+        </TableLink>
       )
     },
   }),

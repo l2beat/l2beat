@@ -82,7 +82,6 @@ const ACROSS_NETWORKS = defineNetworks('across', [
 
 export class AcrossPlugin implements BridgePlugin {
   name = 'across'
-  chains = ACROSS_NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
     const network = ACROSS_NETWORKS.find((n) => n.chain === input.ctx.chain)

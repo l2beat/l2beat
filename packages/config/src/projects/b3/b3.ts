@@ -33,7 +33,7 @@ export const b3: ScalingProject = opStackL3({
       bridges: ['https://bridge.b3.fun/'],
       documentation: ['https://docs.b3.fun/'],
       explorers: ['https://explorer.b3.fun/'],
-      repositories: [],
+      repositories: ['https://github.com/b3-fun/'],
       socialMedia: [
         'https://x.com/b3dotfun',
         'https://discord.com/invite/b3dotfun',

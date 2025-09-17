@@ -1,7 +1,7 @@
 /*
 Wormhole Relayer:
 - on SRC sends Wormhole Core msg and publishes SendEvent (ignored for now)
-- on DST validates Wormhole Core msg and publishes Delivery event. Calls App contract. 
+- on DST validates Wormhole Core msg and publishes Delivery event. Calls App contract.
 The mental model is: App using Wormhole Core messaging via Relayer to deliver messages across chains.
 */
 
@@ -30,7 +30,6 @@ export const Delivery = createBridgeEventType<{
 
 export class WormholeRelayerPlugin implements BridgePlugin {
   name = 'wormhole-relayer'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const parsed = parseDelivery(input.log, null)

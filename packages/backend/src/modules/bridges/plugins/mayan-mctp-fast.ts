@@ -20,11 +20,10 @@ const parseOrderFulfilled = createEventParser(
 export const OrderFulfilled = createBridgeEventType<{
   amount: string
   sourceDomain: string
-}>('mayan-mctp-fast.OrderFullfilled')
+}>('mayan-mctp-fast.OrderFulfilled')
 
 export class MayanMctpFastPlugin implements BridgePlugin {
   name = 'mayan-mctp-fast'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const orderFulfilled = parseOrderFulfilled(input.log, null)

@@ -47,7 +47,7 @@ export const stone: BaseProject = {
 
     ## Proof system
 
-    Stone is a Cairo-based zkVM with AIR arithmetization over [felt252 field](https://docs.starknet.io/archive/cairo-101/felt/) and FRI-based commitment. The protocol makes use of recursive proof aggregation among many projects utilizing the CairoVM (i.e. Starknet forks and StarkEx systems) using SHARP. Some documentation on the aggregation scheme can be found [here](https://docs.starknet.io/architecture/sharp/) and the Cairo [verifier](https://l2beat.com/glossary#verifier) implemented in Cairo can be found [here](https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/cairo/cairo_verifier/layouts/all_cairo).
+    Stone is a Cairo-based zkVM with AIR arithmetization over [felt252 field](https://docs.starknet.io/archive/cairo-101/felt/) and FRI-based commitment. The protocol makes use of recursive proof aggregation among many projects utilizing the CairoVM (i.e. Starknet forks and StarkEx systems) using SHARP. Some documentation on the aggregation scheme can be found [here](https://docs.starknet.io/architecture/sharp/) and the Cairo verifier implemented in Cairo can be found [here](https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/cairo/cairo_verifier/layouts/all_cairo).
 
     ### StarkNet Operating System (SNOS)
 

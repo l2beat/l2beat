@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x42f636e3dfaf48d1a9640e215b6c9c04e4943780
+
+# Diff at Wed, 17 Sep 2025 12:00:17 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@597af358c0b75d4111ec7b5f25233424c734e04d block: 1757403234
+- current timestamp: 1758110316
+
+## Description
+
+Removed and then added back a preconf operator. As the result the list is reordered.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+      values.registeredOperators.3:
++        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+    }
+```
+
 Generated with discovered.json: 0xcf9453f3f3efc755bf71b0d92039c78b84a29b5c
 
 # Diff at Tue, 09 Sep 2025 07:35:21 GMT:

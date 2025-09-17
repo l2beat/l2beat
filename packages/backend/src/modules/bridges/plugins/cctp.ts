@@ -69,7 +69,6 @@ export const CCTPv2MessageReceived = createBridgeEventType<{
 
 export class CCTPPlugin implements BridgePlugin {
   name = 'cctp'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const messageSent = parseMessageSent(input.log, null)
