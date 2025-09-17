@@ -25,11 +25,10 @@ export const OrderCreated = createBridgeEventType<{
 
 export const OrderFulfilled = createBridgeEventType<{
   key: string
-}>('mayan-swift.OrderFullfilled')
+}>('mayan-swift.OrderFulfilled')
 
 export class MayanSwiftPlugin implements BridgePlugin {
   name = 'mayan-swift'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const orderFulfilled = parseOrderFulfilled(input.log, null)

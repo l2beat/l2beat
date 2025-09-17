@@ -97,7 +97,6 @@ export const ContractCallExecuted = createBridgeEventType<{
 
 export class AxelarPlugin implements BridgePlugin {
   name = 'axelar'
-  chains = ['ethereum', 'arbitrum', 'base', 'optimism']
 
   capture(input: LogToCapture) {
     const contractCall = parseContractCall(input.log, null)

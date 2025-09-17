@@ -123,7 +123,6 @@ const GUID_ZERO =
 
 export class StargatePlugin implements BridgePlugin {
   name = 'stargate'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const network = STARGATE_NETWORKS.find((b) => b.chain === input.ctx.chain)

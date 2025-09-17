@@ -147,7 +147,9 @@ export async function makeConfig(
         60 * 60, // 1 hour
       ),
     },
-    bridgesEnabled: flags.isEnabled('bridges'),
+    bridges: flags.isEnabled('bridges') && {
+      chains: ['ethereum', 'arbitrum', 'base', 'optimism'],
+    },
     // Must be last
     flags: flags.getResolved(),
   }

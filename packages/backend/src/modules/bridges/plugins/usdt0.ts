@@ -72,7 +72,6 @@ const USDT0_NETWORKS = defineNetworks('usdt0', [
 
 export class Usdt0Plugin implements BridgePlugin {
   name = 'usdt0'
-  chains = USDT0_NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
     const network = USDT0_NETWORKS.find((n) => n.chain === input.ctx.chain)

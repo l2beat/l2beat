@@ -43,7 +43,6 @@ const OPSTACK_NETWORKS = defineNetworks('opstack', [
 
 export class OpStackPlugin implements BridgePlugin {
   name = 'opstack'
-  chains = OPSTACK_NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
     const network = OPSTACK_NETWORKS.find((n) => n.chain === input.ctx.chain)
