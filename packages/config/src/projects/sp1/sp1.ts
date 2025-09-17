@@ -62,27 +62,26 @@ export const sp1: BaseProject = {
       ],
     },
     proofSystemInfo: `
+      ## Description
 
-        ## Description
+      SP1 is a RISC-V zkVM using the [Plonky3](https://github.com/Plonky3/Plonky3) stack. The zkVM execution is proven recursively and is wrapped into a SNARK for final verification. It provides tools to generate onchain Groth16 or Plonk verifiers. SP1 targets [100 bits of security](https://docs.succinct.xyz/docs/sp1/security/security-model#conjectures-for-fris-security).
 
-        SP1 is a RISC-V zkVM using the [Plonky3](https://github.com/Plonky3/Plonky3) stack. The zkVM execution is proven recursively and is wrapped into a SNARK for final verification. It provides tools to generate onchain Groth16 or Plonk verifiers. SP1 targets [100 bits of security](https://docs.succinct.xyz/docs/sp1/security/security-model#conjectures-for-fris-security).
+      ## Proof system
 
-        ## Proof system
+      SP1 proves execution of a RISC-V VM using several ZK circuits connected by lookup arguments, as implemented in Plonky3. VM execution trace is split into several chunks that could be proven in parallel with a STARK proving system. The parallelized proofs are recursively checked by the next layer of STARK circuits. The correctness of the final STARK proof is verified with the final wrap SNARK program, the wrap SNARK proof is verified onchain.
 
-        SP1 proves execution of a RISC-V VM using several ZK circuits connected by lookup arguments, as implemented in Plonky3. VM execution trace is split into several chunks that could be proven in parallel with a STARK proving system. The parallelized proofs are recursively checked by the next layer of STARK circuits. The correctness of the final STARK proof is verified with the final wrap SNARK program, the wrap SNARK proof is verified onchain.
+      ### zkVM component
 
-        ### zkVM component
+      Verifies execution of a RISC-V program in a zkVM. Uses [Plonky3](https://github.com/Plonky3/Plonky3) STARK toolkit with AIR arithmetization and FRI-based polynomial commitment scheme within the [BabyBear field](https://docs.succinct.xyz/docs/sp1/security/security-model#hash-functions-and-the-random-oracle-model).
 
-        Verifies execution of a RISC-V program in a zkVM. Uses [Plonky3](https://github.com/Plonky3/Plonky3) STARK toolkit with AIR arithmetization and FRI-based polynomial commitment scheme within the [BabyBear field](https://docs.succinct.xyz/docs/sp1/security/security-model#hash-functions-and-the-random-oracle-model).
+      ### Recursion circuits
 
-        ### Recursion circuits
+      SP1 provides tools for recursive proof generation by [verifying proofs in a zkVM](https://docs.succinct.xyz/docs/sp1/writing-programs/proof-aggregation#verifying-proofs-inside-the-zkvm). This uses the same toolkit as top-level proof system, but proves the correct verification of all proofs generated on the previous step.
 
-        SP1 provides tools for recursive proof generation by [verifying proofs in a zkVM](https://docs.succinct.xyz/docs/sp1/writing-programs/proof-aggregation#verifying-proofs-inside-the-zkvm). This uses the same toolkit as top-level proof system, but proves the correct verification of all proofs generated on the previous step.
+      ### Final wrap
 
-        ### Final wrap
-
-        SP1 supports Plonk (with KZG polynomial commitments) or Groth16 final SNARK wrap of the STARK proof for performant onchain proof verification ([link](https://docs.succinct.xyz/docs/sp1/generating-proofs/proof-types#compressed)). The https://github.com/Consensys/gnark implementation of these proof systems over BN254 curve is used. For Plonk, Aztec Ignition trusted setup ceremony is used, for Groth16 Succinct run internal circuit-dependent phase 2 trusted setup, see [below](#trusted-setup) for more details.
-        `,
+      SP1 supports Plonk (with KZG polynomial commitments) or Groth16 final SNARK wrap of the STARK proof for performant onchain proof verification ([link](https://docs.succinct.xyz/docs/sp1/generating-proofs/proof-types#compressed)). The [gnark](https://github.com/Consensys/gnark) implementation of these proof systems over BN254 curve is used. For Plonk, Aztec Ignition trusted setup ceremony is used, for Groth16 Succinct run internal circuit-dependent phase 2 trusted setup, see [below](#trusted-setups) for more details.
+      `,
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
@@ -120,11 +119,11 @@ export const sp1: BaseProject = {
         ],
         verificationStatus: 'successful',
         verificationSteps: `
-                  - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
-                  - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
-                  - Make sure that you have [go lang installed](https://go.dev/doc/install).
-                  - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
-                  `,
+      - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
+      - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
+      - Make sure that you have [go lang installed](https://go.dev/doc/install).
+      - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
+      `,
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
       },
       {
