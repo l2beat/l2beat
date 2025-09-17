@@ -1,6 +1,6 @@
 {
   "name": "mantle",
-  "timestamp": 1758033959,
+  "timestamp": 1758123938,
   "configHash": "0xae86a4c92ccc9beb8ef4c32fda7bc042313ef23d4c3b7783b0643d8e6c992567",
   "entries": [
     {
@@ -110,11 +110,20 @@
       "name": "OPSuccinctL2OutputOracle",
       "address": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
       "type": "Contract",
+      "template": "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
         "0xdd58c04f5920f546ba5a9bc5b046cdae6bf42acb819e90e2f66e10cc81afbc9f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.",
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex",
+        "lastProposalTimestamp"
+      ],
       "sinceTimestamp": 1710439931,
       "sinceBlock": 19434935,
       "values": {
@@ -133,81 +142,20 @@
           ]
         ],
         "$upgradeCount": 2,
+        "additionalProposers": [],
         "aggregationVkey": "0x00bca7947ba758bd6f539f480c6d983cca4bd4387a411a41a71fb953d5df3de7",
         "challenger": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "CHALLENGER": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "computeL2Timestamp": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "finalizationPeriodSeconds": 604800,
-        "getL2Output": [
-          [
-            "0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",
-            1710505415,
-            61173746
-          ],
-          [
-            "0x8f1fe2fd85abe795ee38534eb1843ae787ffe1d8c042c7825627d013f4421dc5",
-            1710505463,
-            61175546
-          ],
-          [
-            "0xa4248b6baa4dc3a9831ef58add83882a031046735043e9c0aeb9f0b9fe76137a",
-            1710505511,
-            61177346
-          ],
-          [
-            "0xbb9c56f7ea651e863c52bbb36df45f44283036144a5eae804fd1bca66678177b",
-            1710505559,
-            61179146
-          ],
-          [
-            "0xea964d3d2d40d05645732757063f206c968a4c975fd31a00eae0df8d8ccb46c8",
-            1710505595,
-            61180946
-          ]
-        ],
-        "getL2OutputAfter": [
-          [
-            "0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",
-            1710505415,
-            61173746
-          ],
-          [
-            "0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",
-            1710505415,
-            61173746
-          ],
-          [
-            "0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",
-            1710505415,
-            61173746
-          ],
-          [
-            "0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",
-            1710505415,
-            61173746
-          ],
-          [
-            "0xac1b74b6afaac46c4ed9209e49d08f2b36fd3c07619107ec0d82672fbc9b562a",
-            1710505415,
-            61173746
-          ]
-        ],
-        "getL2OutputIndexAfter": [0, 0, 0, 0, 0],
-        "historicBlockHashes": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
         "initializerVersion": 3,
+        "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 84948146,
-        "latestOutputIndex": 13208,
-        "nextBlockNumber": 84949946,
-        "nextOutputIndex": 13209,
+        "latestBlockNumber": 84993146,
+        "latestOutputIndex": 13233,
+        "nextBlockNumber": 84994946,
+        "nextOutputIndex": 13234,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
@@ -220,12 +168,6 @@
         "submissionInterval": 1800,
         "verifier": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
         "version": "2.0.1"
-      },
-      "errors": {
-        "getL2Output": "Processing error occurred.",
-        "getL2OutputAfter": "Processing error occurred.",
-        "getL2OutputIndexAfter": "Processing error occurred.",
-        "historicBlockHashes": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481": "Proxy",
@@ -413,6 +355,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+          "description": "can toggle between the optimistic mode and not optimistic (ZK) mode.",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -668,6 +616,18 @@
       }
     },
     {
+      "address": "eth:0x6667961f5e9C98A76a48767522150889703Ed77D",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+          "role": ".initialProposer"
+        }
+      ]
+    },
+    {
       "name": "L1CrossDomainMessenger",
       "address": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
       "type": "Contract",
@@ -707,7 +667,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292700755",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292700772",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -855,8 +815,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 593078,
-          "prevBlockNum": 23374944
+          "prevBoughtGas": 591926,
+          "prevBlockNum": 23383260
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -1465,9 +1425,10 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
+    "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0xa79616124fab7c30287f805f0a8e9e56f748448020c9eebcebe266d1172d19e8",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23376314 },
-  "permissionsConfigHash": "0x9912704567644196e41272d07729589d2858a7b7162e44b07d567c5858c0dc11"
+  "usedBlockNumbers": { "ethereum": 23383781 },
+  "permissionsConfigHash": "0xe1f68eec93ab008a032a0f22cb3bdc9234e0cf10c55cbe4fcc72b06c3c5d2887"
 }

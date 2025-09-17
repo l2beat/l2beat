@@ -66,6 +66,14 @@ export const mantle: ScalingProject = opStackL2({
   },
   milestones: [
     {
+      title: 'Upgrade to OP Succinct',
+      url: 'https://x.com/Mantle_Official/status/1967936628678430965',
+      date: '2025-09-16T00:00:00.00Z',
+      description:
+        'Mantle upgrades to OP Succinct, integrating ZK proofs for state validation.',
+      type: 'general',
+    },
+    {
       title: 'Move to EigenDA',
       url: 'https://github.com/mantlenetworkio/mantle-v2/releases/tag/v1.1.1',
       date: '2025-03-19T00:00:00.00Z',
