@@ -5,6 +5,7 @@ import { CCTPPlugin } from './cctp'
 import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
 import { HyperlanePlugIn } from './hyperlane'
+import { LayerZeroV1Plugin } from './layerzero-v1'
 import { LayerZeroV2Plugin } from './layerzero-v2'
 import { MayanForwarderPlugin } from './mayan-forwarder'
 import { MayanMctpPlugin } from './mayan-mctp'
@@ -36,6 +37,7 @@ export function createBridgePlugins(): BridgePlugin[] {
     new StargateV2BusPlugin(), // should be run before LayerZeroV2
     new StargateV2TaxiPlugin(), // should be run before LayerZeroV2
     new Usdt0Plugin(), // should be run before LayerZeroV2
+    new LayerZeroV1Plugin(),
     new LayerZeroV2Plugin(),
     new WormholeTokenBridgePlugin(), // should be run before Wormhole
     new WormholeRelayerPlugin(), // should be run before Wormhole
