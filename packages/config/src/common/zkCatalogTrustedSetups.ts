@@ -11,9 +11,9 @@ export const TRUSTED_SETUPS = {
     Aztec Ignition is a trusted setup ceremony for KZG commitments over BN254 curve that was run by Aztec for KZG commitment over BN254 curve in 2019. 
     It included 176 participants and was publicly open for participation.
     
-    - Github repo to download and verify the ceremony artifacts: https://github.com/AztecProtocol/ignition-verification.
-    - Github repo with instructions for ceremony participants: https://github.com/AztecProtocol/Setup.
-    - Ceremony announcement with a call to participate: https://aztec.network/blog/announcing-ignition.
+    - Github repo to download and verify the ceremony artifacts: [https://github.com/AztecProtocol/ignition-verification](https://github.com/AztecProtocol/ignition-verification).
+    - Github repo with instructions for ceremony participants: [https://github.com/AztecProtocol/Setup](https://github.com/AztecProtocol/Setup).
+    - Ceremony announcement with a call to participate: [https://aztec.network/blog/announcing-ignition](https://aztec.network/blog/announcing-ignition).
     `,
   },
   TransparentSetup: {
@@ -34,9 +34,9 @@ export const TRUSTED_SETUPS = {
     longDescription: `
     Ceremony was run among 7 contributors to the SP1 project without public calls to participate. It generated setup parameters for Groth16 wrapper of SP1 zkVM.
 
-    - Ceremony info on Succinct docs page: https://docs.succinct.xyz/docs/sp1/security/security-model#options.
-    - Ceremony instructions and verification instructions: https://github.com/succinctlabs/semaphore-gnark-11/tree/main.
-    - Link to transcript and other artifacts (Note: will immediately start downloading .tar.gz file): https://sp1-circuits.s3.us-east-2.amazonaws.com/v4.0.0-rc.3-trusted-setup.tar.gz.
+    - Ceremony info on Succinct docs page: [https://docs.succinct.xyz/docs/sp1/security/security-model#options](https://docs.succinct.xyz/docs/sp1/security/security-model#options).
+    - Ceremony instructions and verification instructions: [https://github.com/succinctlabs/semaphore-gnark-11/tree/main](https://github.com/succinctlabs/semaphore-gnark-11/tree/main).
+    - Link to transcript and other artifacts (Note: will immediately start downloading .tar.gz file): [https://sp1-circuits.s3.us-east-2.amazonaws.com/v4.0.0-rc.3-trusted-setup.tar.gz](https://sp1-circuits.s3.us-east-2.amazonaws.com/v4.0.0-rc.3-trusted-setup.tar.gz).
     `,
   },
   CeloPlumo: {
@@ -49,10 +49,10 @@ export const TRUSTED_SETUPS = {
     Ceremony generated trusted setup for KZG commitments over BW6-761 curve, it was originally run for Celo
     Plumo and later reused for Linea prover. Ceremony has 55 participants.
 
-  - Repo with ceremony instructions: https://github.com/celo-org/snark-setup?tab=readme-ov-file
-  - Link to the ceremony details: https://celo.org/plumo (it is broken. Archived version here: https://web.archive.org/web/20221201203227/https://celo.org/plumo)
-  - Links to ceremony transcript: https://console.cloud.google.com/storage/browser/plumoceremonyphase1/chunks
-  - Link to ceremony verification code: https://github.com/Consensys/gnark-ignition-verifier/blob/feat/celo_parser/celo/main.go
+  - Repo with ceremony instructions: [https://github.com/celo-org/snark-setup?tab=readme-ov-file](https://github.com/celo-org/snark-setup?tab=readme-ov-file)
+  - Link to the ceremony details: [https://celo.org/plumo](https://celo.org/plumo) (it is broken. Archived version here: [https://web.archive.org/web/20221201203227/https://celo.org/plumo](https://web.archive.org/web/20221201203227/https://celo.org/plumo))
+  - Links to ceremony transcript: [https://console.cloud.google.com/storage/browser/plumoceremonyphase1/chunks](https://console.cloud.google.com/storage/browser/plumoceremonyphase1/chunks)
+  - Link to ceremony verification code: [https://github.com/Consensys/gnark-ignition-verifier/blob/feat/celo_parser/celo/main.go](https://github.com/Consensys/gnark-ignition-verifier/blob/feat/celo_parser/celo/main.go)
     `,
   },
   Aleo: {
@@ -65,8 +65,8 @@ export const TRUSTED_SETUPS = {
     Ceremony generated trusted setup for KZG commitments over BLS12-377 curve, it was originally run as stage I setup
     for Aleo blockchain and later reused for Linea prover. Ceremony has 106 participants.
 
-    - Repo with ceremony instructions https://github.com/AleoNet/aleo-setup
-    - Link to the ceremony details: [https://setup.aleo.org](https://setup.aleo.org/) (it is broken. Archived version here: https://web.archive.org/web/20240815052920/https://setup.aleo.org/)
+    - Repo with ceremony instructions [https://github.com/AleoNet/aleo-setup](https://github.com/AleoNet/aleo-setup)
+    - Link to the ceremony details: [https://setup.aleo.org](https://setup.aleo.org/)
     `,
   },
   PolygonZkEVM: {
@@ -79,9 +79,9 @@ export const TRUSTED_SETUPS = {
     Ceremony uses 54 first contributions from the [Perpetual Powers of Tau ceremony](https://github.com/privacy-scaling-explorations/perpetualpowersoftau)
     and adds one more contribution to the total of 55 participants.
 
-    - Ceremony used: https://github.com/privacy-scaling-explorations/perpetualpowersoftau?tab=readme-ov-file
-    - Public announcement: https://medium.com/coinmonks/announcing-the-perpetual-powers-of-tau-ceremony-to-benefit-all-zk-snark-projects-c3da86af8377
-    - Final data and verification steps in this repo: https://github.com/iden3/snarkjs/tree/master?tab=readme-ov-file
+    - Ceremony used: [https://github.com/privacy-scaling-explorations/perpetualpowersoftau?tab=readme-ov-file](https://github.com/privacy-scaling-explorations/perpetualpowersoftau?tab=readme-ov-file)
+    - Public announcement: [https://medium.com/coinmonks/announcing-the-perpetual-powers-of-tau-ceremony-to-benefit-all-zk-snark-projects-c3da86af8377]([https://medium.com/coinmonks/announcing-the-perpetual-powers-of-tau-ceremony-to-benefit-all-zk-snark-projects-c3da86af8377)
+    - Final data and verification steps in this repo: [https://github.com/iden3/snarkjs/tree/master?tab=readme-ov-file](https://github.com/iden3/snarkjs/tree/master?tab=readme-ov-file)
     `,
   },
   Risc0: {
@@ -95,9 +95,9 @@ export const TRUSTED_SETUPS = {
     It was publicly announced and run with 238 participants. Ceremony transcript, as well as instructions for participation and verification 
     are publicly available.
 
-    - Ceremony instructions: https://risczero.com/blog/ceremony-contribution-public-instructions
-    - Link to the verification: https://dev.risczero.com/api/trusted-setup-ceremony#the-transcript-matches-the-circuit
-    - Post with a call to community to participate: https://x.com/RiscZero/status/1781110200923275769
+    - Ceremony instructions: [https://risczero.com/blog/ceremony-contribution-public-instructions](https://risczero.com/blog/ceremony-contribution-public-instructions)
+    - Link to the verification: [https://dev.risczero.com/api/trusted-setup-ceremony#the-transcript-matches-the-circuit](https://dev.risczero.com/api/trusted-setup-ceremony#the-transcript-matches-the-circuit)
+    - Post with a call to community to participate: [https://x.com/RiscZero/status/1781110200923275769](https://x.com/RiscZero/status/1781110200923275769)
     `,
   },
   Halo2KZG: {
@@ -111,8 +111,8 @@ export const TRUSTED_SETUPS = {
     (when it is set up not in a transparent way). De-facto it is the first 71 entries in the Perpetual Powers of Tau
     ceremony that were converted to a particular format.
 
-    - The main coordination point is this Halo2 KZG repo to convert pptau format into Halo2-suitable format: https://github.com/han0110/halo2-kzg-srs?tab=readme-ov-file#perpetual-powers-of-tau
-    - Ceremony is [Perpetual Powers of Tau](https://github.com/weijiekoh/perpetualpowersoftau): https://github.com/scroll-tech/scroll-prover/blob/main/circuit-assets.md
+    - The main coordination point is this Halo2 KZG repo to convert pptau format into Halo2-suitable format: [https://github.com/han0110/halo2-kzg-srs?tab=readme-ov-file#perpetual-powers-of-tau](https://github.com/han0110/halo2-kzg-srs?tab=readme-ov-file#perpetual-powers-of-tau)
+    - Ceremony is [Perpetual Powers of Tau](https://github.com/weijiekoh/perpetualpowersoftau): [https://github.com/scroll-tech/scroll-prover/blob/main/circuit-assets.md](https://github.com/scroll-tech/scroll-prover/blob/main/circuit-assets.md)
     `,
   },
   Zircuit: {
@@ -126,8 +126,8 @@ export const TRUSTED_SETUPS = {
     Zircuit ceremony took 85th contribution to pptau ceremony and added another 44 contributions, totalling to 129 participants.
     Ceremony artifacts are available on GitHub.
 
-    - Main repo with all artifacts, as well as instructions for participation: https://github.com/zircuit-labs/ceremony?tab=readme-ov-file
-    - Blog post: https://www.zircuit.com/blog/zircuit-kzg-ceremony
+    - Main repo with all artifacts, as well as instructions for participation: [https://github.com/zircuit-labs/ceremony?tab=readme-ov-file](https://github.com/zircuit-labs/ceremony?tab=readme-ov-file)
+    - Blog post: [https://www.zircuit.com/blog/zircuit-kzg-ceremony](https://www.zircuit.com/blog/zircuit-kzg-ceremony)
     `,
   },
   Loopring: {
@@ -143,8 +143,8 @@ export const TRUSTED_SETUPS = {
     contributions, Loopring trusted setup includes 16 phase 2 contributions. Circuit-specific phase builds on top 
     of the [Perpetual Powers of Tau ceremony](https://github.com/privacy-scaling-explorations/perpetualpowersoftau).
 
-    - Repo for Loopring trusted setup: https://github.com/Loopring/trusted_setup/tree/master, repo for DeGate trusted setup: https://github.com/degatedev/trusted_setup/tree/master
-    - Post for DeGate ceremony: https://medium.com/degate/degate-completes-zk-trusted-setup-ceremony-4752301e379f
+    - Repo for Loopring trusted setup: [https://github.com/Loopring/trusted_setup/tree/master](https://github.com/Loopring/trusted_setup/tree/master), repo for DeGate trusted setup: [https://github.com/degatedev/trusted_setup/tree/master](https://github.com/degatedev/trusted_setup/tree/master)
+    - Post for DeGate ceremony: [https://medium.com/degate/degate-completes-zk-trusted-setup-ceremony-4752301e379f](https://medium.com/degate/degate-completes-zk-trusted-setup-ceremony-4752301e379f)
     `,
   },
 } as const satisfies Record<string, TrustedSetup>

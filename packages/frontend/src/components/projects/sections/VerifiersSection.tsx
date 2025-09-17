@@ -48,7 +48,7 @@ export function VerifiersSection({
   return (
     <ProjectSection {...sectionProps} as={as} className="space-y-6">
       <p className="text-paragraph-15 md:text-paragraph-16">
-        A short description what to expect in this section.
+        List of different onchain verifiers for this proving system. Unique ID distinguishes differents deployments of the same verifier from different verifiers (e.g. different versions).
       </p>
       {proofSystemVerifiers.map(({ proofSystem, verifierHashes }) => (
         <div key={proofSystem.id + proofSystem.type} className="space-y-3">

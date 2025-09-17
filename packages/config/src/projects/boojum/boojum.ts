@@ -58,11 +58,11 @@ export const boojum: BaseProject = {
 
       ### Recursion circuits
 
-      The protocol makes use of several layers of recursive proof aggregation for 15 types of [**circuits](https://github.com/matter-labs/era-zkevm_test_harness/blob/3cd647aa57fc2e1180bab53f7a3b61ec47502a46/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L29).** In particular, node and scheduler circuits aggregate zk proofs and compressor and wrapper circuits reduce the final proof size. Further information about the aggregation architecture can be found [**here**](https://github.com/matter-labs/zksync-era/blob/1b61d0797062ab8b0aa2c1e92b23a3a0d8fd2c61/docs/guides/advanced/15_prover_keys.md#circuits).
+      The protocol makes use of several layers of recursive proof aggregation for 15 types of [circuits](https://github.com/matter-labs/era-zkevm_test_harness/blob/3cd647aa57fc2e1180bab53f7a3b61ec47502a46/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L29). In particular, node and scheduler circuits aggregate zk proofs and compressor and wrapper circuits reduce the final proof size. Further information about the aggregation architecture can be found [**here**](https://github.com/matter-labs/zksync-era/blob/1b61d0797062ab8b0aa2c1e92b23a3a0d8fd2c61/docs/guides/advanced/15_prover_keys.md#circuits).
 
       ### Final wrap
 
-      The final proof could either be wrapped into a [Plonk](https://github.com/matter-labs/era-zkevm_test_harness/blob/3cd647aa57fc2e1180bab53f7a3b61ec47502a46/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs)+KZG proof, or into [Fflonk](https://github.com/matter-labs/zksync-crypto/tree/main/crates/fflonk)+KZG for cheap verification. The KZG commitment is done over BN254 curve and it uses Aztec Ignition trusted setup ceremony, see [below](#trusted-setup) for more details.
+      The final proof could either be wrapped into a [Plonk](https://github.com/matter-labs/era-zkevm_test_harness/blob/3cd647aa57fc2e1180bab53f7a3b61ec47502a46/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs)+KZG proof, or into [Fflonk](https://github.com/matter-labs/zksync-crypto/tree/main/crates/fflonk)+KZG for cheap verification. The KZG commitment is done over BN254 curve and it uses Aztec Ignition trusted setup ceremony, see [below](#trusted-setups) for more details.
       `,
     trustedSetups: [
       {
