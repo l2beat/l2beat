@@ -1,4 +1,4 @@
-import type { TrackedTxConfigEntry } from '@l2beat/shared'
+import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainId,
   type ChainSpecificAddress,
@@ -267,7 +267,7 @@ export interface ChainBasicApi<T extends string> {
   type: T
   url: string
   callsPerMinute?: number
-  retryStrategy?: 'UNRELIABLE' | 'RELIABLE'
+  retryStrategy?: RetryHandlerVariant
 }
 
 export interface ChainExplorerApi<T extends string> {
