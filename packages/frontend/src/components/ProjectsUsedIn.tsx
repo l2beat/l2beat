@@ -30,9 +30,7 @@ export function ProjectsUsedIn({
   if (usedIn.length === 0) {
     return (
       <Tooltip>
-        <TooltipTrigger className={noL2ClassName}>
-          <div>No L2 😔</div>
-        </TooltipTrigger>
+        <TooltipTrigger className={noL2ClassName}>No L2 😔</TooltipTrigger>
         <TooltipContent>
           There are no scaling projects listed on L2BEAT that use this solution.
         </TooltipContent>
