@@ -1,5 +1,5 @@
 /* 
-Minimalistic plugin matching Hyperlane messsages w/out detecting anything more specific. To detetc sender/receivers
+Minimalistic plugin matching Hyperlane messages w/out detecting anything more specific. To detetc sender/receivers
 additional event parsers would be needed.
 */
 
