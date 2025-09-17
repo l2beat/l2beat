@@ -81,10 +81,7 @@ function VerifierCollapsibleWithDetails({
   verifierHash: VerifiersSectionProps['proofSystemVerifiers'][number]['verifierHashes'][number]
 }) {
   return (
-    <Collapsible
-      key={verifierHash.hash}
-      className="group rounded-lg border border-divider"
-    >
+    <Collapsible className="group rounded-lg border border-divider">
       <CollapsibleTrigger asChild>
         <div className="flex w-full items-center justify-between gap-1 px-6 py-3 font-bold hover:cursor-pointer">
           <div className="grid w-full grid-cols-[1fr_1fr_230px_1fr] gap-4 max-md:grid-cols-2 lg:[@media(max-width:1380px)]:grid-cols-[1fr_1fr_230px] md:[@media(max-width:850px)]:grid-cols-[1fr_1fr_230px]">
