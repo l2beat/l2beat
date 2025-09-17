@@ -290,7 +290,7 @@ export class RpcClient extends ClientCore implements BlockClient {
         jsonrpc: '2.0',
       }),
       redirect: 'follow',
-      timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
+      timeout: 10_000,
     })
   }
 
@@ -308,7 +308,7 @@ export class RpcClient extends ClientCore implements BlockClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(queries),
       redirect: 'follow',
-      timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
+      timeout: 10_000, // Most RPCs respond in ~2s during regular conditions
     })
 
     const results = new Map(

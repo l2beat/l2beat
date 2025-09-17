@@ -39,7 +39,6 @@ const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
 
 export class OrbitStackPlugin implements BridgePlugin {
   name = 'orbitstack'
-  chains = ORBITSTACK_NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
     if (input.ctx.chain === 'ethereum') {

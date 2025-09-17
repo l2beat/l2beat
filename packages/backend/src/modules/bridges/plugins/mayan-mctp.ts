@@ -1,4 +1,4 @@
-/* 
+/*
 Mayan MCTP Protocol
 - bridge with locked fee on source: bridges USDC using CCTP v1, fee stays on source, Wormhole msg from dst-->src is generated (0x32ad465f, 0x9be95bb4)
 - bridge with fee on destination: bridges USDC using CCTP v1, fee is transferred to dst, on dst FeeDeposited event is generated, Wormhole msg from src-->dst is generated (0x9445a5d, 0x2072197f)
@@ -7,8 +7,8 @@ Mayan MCTP Protocol
 
 import { CCTPv1MessageReceived, CCTPv1MessageSent } from './cctp'
 import {
-  ForwadedERC20,
-  ForwadedEth,
+  ForwardedERC20,
+  ForwardedEth,
   SwapAndForwardedERC20,
   SwapAndForwardedEth,
 } from './mayan-forwarder'
@@ -23,13 +23,12 @@ import { LogMessagePublished } from './wormhole'
 
 export class MayanMctpPlugin implements BridgePlugin {
   name = 'mayan-mctp'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   //TODO: This plugin starts from the SRC (ForwardedERC20) but CCTP plugin starts from DST and clears events. This needs to be solved somehow...
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (
-      !ForwadedERC20.checkType(event) &&
-      !ForwadedEth.checkType(event) &&
+      !ForwardedERC20.checkType(event) &&
+      !ForwardedEth.checkType(event) &&
       !SwapAndForwardedERC20.checkType(event) &&
       !SwapAndForwardedEth.checkType(event)
     ) {

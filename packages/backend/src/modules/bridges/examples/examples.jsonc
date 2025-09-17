@@ -89,6 +89,21 @@
     "messages": [],
     "transfers": []
   },
+  "hyperlane": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x5b6825406a1e8613b22203a049df46476384e1c716f35961b709e1371d518462"
+      },
+      {
+        "chain": "base",
+        "tx": "0xbed80fd46620bf9e83c5b993851200e1c0ac6e6f04c66963151ded1a7ac36bc3"
+      }
+    ],
+    "events": ["hyperlane.DispatchId", "hyperlane.ProcessId"],
+    "messages": ["hyperlane.Message"],
+    "transfers": []
+  },
   "mayan-swift": {
     "txs": [
       {
@@ -195,6 +210,21 @@
       {
         "chain": "arbitrum",
         "tx": "0xeaa266992432ee2f8981194320b1b1e4a034282e25c90c4711f8d239c3bbda0b"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "debridge": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x0d7b69436a35c8e0de7420c06e5ed7fd27530bf72b050b10f886f1d5a757cfc4"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x7092e179d4dadcb97ef2bf5ee3eb0c641f8d4549273c2cdcd66ed8707c99a641"
       }
     ],
     "events": [],

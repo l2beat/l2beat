@@ -36,7 +36,7 @@ import {
         // Amount of toToken to be provided by the filler.
         uint256 fillAmount;
         // Protocol fees are taken out of the fromAmount and are calculated within the Spoke.sol
-        // contract for single chain orders or on the Hub for cross chain orders. 
+        // contract for single chain orders or on the Hub for cross chain orders.
         // The following formula determines the amount of fromToken reserved as fees:
         // fee = (fromAmount * feeRate) / 1000000
         uint256 feeRate;
@@ -84,7 +84,6 @@ export const LogOrderFilled = createBridgeEventType<{
 
 export class SquidCoralPlugin implements BridgePlugin {
   name = 'squid-coral'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const logOrderCreated = parseOrderCreated(input.log, null)
@@ -118,7 +117,7 @@ export class SquidCoralPlugin implements BridgePlugin {
     }
   }
 
-  /* Matching alogrithm:
+  /* Matching algorithm:
 1. For Each LogOrderFilled on DST
 2. Find LogOrderCreated on SRC with the same orderHash
 */

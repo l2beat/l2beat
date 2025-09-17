@@ -23,7 +23,6 @@ import uniqBy from 'lodash/uniqBy'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ChainConfig } from '../types'
 import generated from './generated.json'
-import rwa from './rwa.json'
 import { GeneratedToken } from './types'
 
 export function getTokenList(chains: ChainConfig[]): LegacyToken[] {
@@ -32,24 +31,7 @@ export function getTokenList(chains: ChainConfig[]): LegacyToken[] {
   tokens.push(...getGeneratedTokenList(chains))
   tokens.push(...getDiscoveryTokenList(chains))
 
-  return tokens.map(attachTemporaryRwaMetadata)
-}
-
-function attachTemporaryRwaMetadata(token: LegacyToken): LegacyToken {
-  const matchingRwaToken = rwa.tokens.find((r) => r.symbol === token.symbol)
-
-  if (!matchingRwaToken) {
-    return token
-  }
-
-  return {
-    ...token,
-    rwaMetadata: {
-      isStablecoin: matchingRwaToken.isStablecoin,
-      isListed: matchingRwaToken.isListed,
-      categories: matchingRwaToken.categories,
-    },
-  }
+  return tokens
 }
 
 export function getGeneratedTokenList(chains: ChainConfig[]): LegacyToken[] {
