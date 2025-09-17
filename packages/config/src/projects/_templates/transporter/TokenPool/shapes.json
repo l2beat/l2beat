@@ -173,5 +173,11 @@
     "hash": "0xebe5dc88c67a2ad8ca0bba44f8e994962d09843551362086f5c93c10597b2447",
     "address": "eth:0xF9e47d3720d5142930444ae6773C7F6d05696228",
     "blockNumber": 23345741
+  },
+  "EDENBurnMintTokenPool_v1.5.1": {
+    "hash": "0xd4231237360ee144dbc119eb099532e4967735875473e236358a39b7c6061f7f",
+    "address": "eth:0xC8ADf2f51a35b0a9d8f74675b64c954Ca2Dcbc14",
+    "chain": "ethereum",
+    "blockNumber": 23383001
   }
 }
