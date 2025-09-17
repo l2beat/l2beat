@@ -118,20 +118,6 @@ export const zkprover: BaseProject = {
         description:
           'Custom verifier ID: SHA256 hash of the following values from the verifier smart contract, abi packed in the same order they are defined: verification key data, omegas, verifier preprocessed inputs (all values from k1 to X2y2).',
       },
-      {
-        hash: '0xd7331eca890a6201708336d89e099d242f8b5b57ead785225220f7ef36b6aaf6',
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Snarkjs,
-        knownDeployments: [
-          {
-            address: '0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB',
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
-        usedBy: [ProjectId('xlayer')],
-        description:
-          'Custom verifier ID: SHA256 hash of the following values from the verifier smart contract, abi packed in the same order they are defined: verification key data, omegas, verifier preprocessed inputs (all values from k1 to X2y2).',
-      },
     ],
   },
 }
