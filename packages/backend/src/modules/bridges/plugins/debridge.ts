@@ -1,4 +1,4 @@
-/* in deBridge messaing protocol allows for token transfers. The only difference between message and token transfer is that
+/* in deBridge messaging protocol allows for token transfers. The only difference between message and token transfer is that
 the latter requires a token address and amount to be specified. In case of token transfer, the tokens are locked in the deBridgeGate contract on the source chain
 and minted (or released if the native token is bridged) on the destination chain. */
 
@@ -128,7 +128,7 @@ export class DeBridgePlugin implements BridgePlugin {
     }
   }
 
-  /* Matching alogrithm:
+  /* Matching algorithm:
 1. For Each Claimed on DST
 2. Find Sent on SRC with the same submissionId
 3. Create Message
