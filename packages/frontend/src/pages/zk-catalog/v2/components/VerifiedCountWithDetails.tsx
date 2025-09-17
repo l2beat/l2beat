@@ -87,7 +87,7 @@ export function CountWithAttesters({
         {count}
       </span>
       <Tooltip>
-        <TooltipTrigger asChild>
+        <TooltipTrigger>
           <Icon className="size-4" />
         </TooltipTrigger>
         <TooltipContent>{`${typeToLabel(type)} verified`}</TooltipContent>
@@ -99,7 +99,7 @@ export function CountWithAttesters({
       )}
       {attesters?.map((attester) => (
         <Tooltip key={attester.id}>
-          <TooltipTrigger asChild>
+          <TooltipTrigger>
             <a href={attester.link} target="_blank" rel="noreferrer">
               <img
                 src={attester.icon}

@@ -85,38 +85,42 @@ function VerifierCollapsibleWithDetails({
       key={verifierHash.hash}
       className="group rounded-lg border border-divider"
     >
-      <CollapsibleTrigger className="flex w-full items-center justify-between gap-1 px-6 py-3 font-bold">
-        <div className="grid w-full grid-cols-[1fr_1fr_230px_1fr] gap-4 max-md:grid-cols-2 lg:[@media(max-width:1380px)]:grid-cols-[1fr_1fr_230px] md:[@media(max-width:850px)]:grid-cols-[1fr_1fr_230px]">
-          <span className="text-left">{formatAddress(verifierHash.hash)}</span>
-          <div className="flex items-center gap-1.5 text-center">
-            <p className="font-medium text-label-value-12 text-secondary">
-              Verification
-            </p>
-            <CountWithAttesters
-              count={undefined}
-              attesters={verifierHash.attesters}
-              type={verifierHash.verificationStatus}
-            />
-          </div>
-          <div className="flex items-center gap-1.5 text-center max-md:hidden">
-            <p className="font-medium text-label-value-12 text-secondary">
-              Used in
-            </p>
-            <ProjectsUsedIn
-              noL2ClassName="text-label-value-12 font-medium text-secondary"
-              usedIn={verifierHash.projectsUsedIn}
-            />
-          </div>
-          <div className="flex items-center gap-1.5 lg:[@media(max-width:1380px)]:hidden [@media(max-width:850px)]:hidden">
-            <div className="font-medium text-label-value-12 text-secondary">
-              Known deployments
+      <CollapsibleTrigger asChild>
+        <div className="flex w-full items-center justify-between gap-1 px-6 py-3 font-bold hover:cursor-pointer">
+          <div className="grid w-full grid-cols-[1fr_1fr_230px_1fr] gap-4 max-md:grid-cols-2 lg:[@media(max-width:1380px)]:grid-cols-[1fr_1fr_230px] md:[@media(max-width:850px)]:grid-cols-[1fr_1fr_230px]">
+            <span className="text-left">
+              {formatAddress(verifierHash.hash)}
+            </span>
+            <div className="flex items-center gap-1.5 text-center">
+              <p className="font-medium text-label-value-12 text-secondary">
+                Verification
+              </p>
+              <CountWithAttesters
+                count={undefined}
+                attesters={verifierHash.attesters}
+                type={verifierHash.verificationStatus}
+              />
             </div>
-            <div className="font-bold text-label-value-16">
-              {verifierHash.knownDeployments.length}
+            <div className="flex items-center gap-1.5 text-center max-md:hidden">
+              <p className="font-medium text-label-value-12 text-secondary">
+                Used in
+              </p>
+              <ProjectsUsedIn
+                noL2ClassName="text-label-value-12 font-medium text-secondary"
+                usedIn={verifierHash.projectsUsedIn}
+              />
+            </div>
+            <div className="flex items-center gap-1.5 lg:[@media(max-width:1380px)]:hidden [@media(max-width:850px)]:hidden">
+              <div className="font-medium text-label-value-12 text-secondary">
+                Known deployments
+              </div>
+              <div className="font-bold text-label-value-16">
+                {verifierHash.knownDeployments.length}
+              </div>
             </div>
           </div>
+          <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 transition-transform duration-300" />
         </div>
-        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 transition-transform duration-300" />
       </CollapsibleTrigger>
       <CollapsibleContent className="px-6 pb-6">
         <HorizontalSeparator className="mb-4" />

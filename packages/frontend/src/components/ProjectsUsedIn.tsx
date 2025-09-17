@@ -30,7 +30,7 @@ export function ProjectsUsedIn({
   if (usedIn.length === 0) {
     return (
       <Tooltip>
-        <TooltipTrigger className={noL2ClassName} asChild>
+        <TooltipTrigger className={noL2ClassName}>
           <div>No L2 😔</div>
         </TooltipTrigger>
         <TooltipContent>
@@ -72,7 +72,7 @@ export function ProjectsUsedIn({
         return (
           <Tooltip key={project.slug}>
             {noLink ? (
-              <TooltipTrigger asChild>
+              <TooltipTrigger>
                 <img
                   width={20}
                   height={20}
@@ -82,7 +82,7 @@ export function ProjectsUsedIn({
               </TooltipTrigger>
             ) : (
               <a href={project.url} className="size-5">
-                <TooltipTrigger asChild>
+                <TooltipTrigger>
                   <img
                     width={20}
                     height={20}
