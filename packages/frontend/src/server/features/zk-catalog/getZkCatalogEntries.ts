@@ -90,29 +90,8 @@ function getZkCatalogEntry(
       .map((u) => u.id),
   )
 
-  const projectsForTvs = uniq(
-    usedInVerifiers.flatMap((vp) => {
-      const project = allProjects.find((p) => p.id === vp)
-      if (!project) {
-        const logger = getLogger().for('getZkCatalogEntry')
-        logger.warn(`Project ${vp} not found`)
-        return []
-      }
-
-      // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
-      if (project.daBridge) {
-        return project.daBridge.usedIn.flatMap((p) => p.id)
-      }
-      return vp
-    }),
-  )
-
-  const tvsForProject = projectsForTvs.reduce((acc, p) => {
-    const projectTvs = tvs.projects[p]?.breakdown.total
-    if (!projectTvs) {
-      return acc
-    }
-    return acc + projectTvs
+  const tvsForProject = usedInVerifiers.reduce((acc, projectId) => {
+    return acc + calculateProjectTvs(projectId, allProjects, tvs)
   }, 0)
 
   const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
@@ -177,30 +156,10 @@ function getTrustedSetupsWithVerifiersAndAttesters(
         ),
         (u) => u.id,
       )
-        .map((u) => {
-          const project = allProjects.find((p) => p.id === u.id)
-          if (!project) {
-            return { ...u, tvs: 0 }
-          }
-          if (project.daBridge) {
-            const tvsForProject = project.daBridge.usedIn
-              .map((p) => p.id)
-              .reduce((acc, p) => {
-                const projectTvs = tvs.projects[p]?.breakdown.total
-                if (!projectTvs) {
-                  return acc
-                }
-                return acc + projectTvs
-              }, 0)
-
-            return { ...u, tvs: tvsForProject }
-          }
-          const projectTvs = tvs.projects[project.id]?.breakdown.total ?? 0
-          return {
-            ...u,
-            tvs: projectTvs,
-          }
-        })
+        .map((u) => ({
+          ...u,
+          tvs: calculateProjectTvs(u.id, allProjects, tvs),
+        }))
         .sort((a, b) => b.tvs - a.tvs)
 
       return [
@@ -245,4 +204,32 @@ export function getVerifiersWithAttesters(
         icon: getProjectIcon(a.id),
       })),
   }
+}
+
+function calculateProjectTvs(
+  projectId: string,
+  allProjects: Project<
+    never,
+    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
+  >[],
+  tvs: SevenDayTvsBreakdown,
+): number {
+  const project = allProjects.find((p) => p.id === projectId)
+  if (!project) {
+    const logger = getLogger().for('getZkCatalogEntry')
+    logger.warn(`Project ${projectId} not found`)
+    return 0
+  }
+
+  // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
+  if (project.daBridge) {
+    return project.daBridge.usedIn
+      .map((p) => p.id)
+      .reduce((acc, p) => {
+        const projectTvs = tvs.projects[p]?.breakdown.total
+        return projectTvs ? acc + projectTvs : acc
+      }, 0)
+  }
+
+  return tvs.projects[project.id]?.breakdown.total ?? 0
 }
