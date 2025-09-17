@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xef05d605cbcf9085bba30292fb3fe363af06e583
+
+# Diff at Wed, 17 Sep 2025 13:46:33 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@826dd36404e9c33731dc0255e96251d8d8999c20 block: 1757660887
+- current timestamp: 1758116721
+
+## Description
+
+Multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract HyperlaneMultisig (eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x47Bbac4147c330c8FAD542d1A52f1bB97716826b"
+      values.$members.1:
+-        "eth:0x5dd9a0814022A61777938263308EBB336174f13D"
+    }
+```
+
 Generated with discovered.json: 0xb289314fd297155555bbe71557ad5277540e26c9
 
 # Diff at Fri, 12 Sep 2025 07:14:37 GMT:
