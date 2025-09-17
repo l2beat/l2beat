@@ -89,6 +89,21 @@
     "messages": [],
     "transfers": []
   },
+  "hyperlane": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x5b6825406a1e8613b22203a049df46476384e1c716f35961b709e1371d518462"
+      },
+      {
+        "chain": "base",
+        "tx": "0xbed80fd46620bf9e83c5b993851200e1c0ac6e6f04c66963151ded1a7ac36bc3"
+      }
+    ],
+    "events": ["hyperlane.DispatchId", "hyperlane.ProcessId"],
+    "messages": ["hyperlane.Message"],
+    "transfers": []
+  },
   "mayan-swift": {
     "txs": [
       {
