@@ -38,24 +38,24 @@ export const PacketDelivered = createBridgeEventType<{
 const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
   {
     chainId: 1,
-    eid: 30101,
+    eid: 101,
     chain: 'ethereum',
     sendLib: EthereumAddress('0xD231084BfB234C107D3eE2b22F97F3346fDAF705'),
-    receiveLib: EthereumAddress('0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC')
+    receiveLib: EthereumAddress('0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC'),
   },
   {
     chainId: 42161,
-    eid: 30110,
+    eid: 110,
     chain: 'arbitrum',
     sendLib: EthereumAddress('0x5cDc927876031B4Ef910735225c425A7Fc8efed9'),
-    receiveLib: EthereumAddress('0xe4DD168822767C4342e54e6241f0b91DE0d3c241')
+    receiveLib: EthereumAddress('0xe4DD168822767C4342e54e6241f0b91DE0d3c241'),
   },
   {
     chainId: 8453,
-    eid: 30184,
+    eid: 184,
     chain: 'base',
     sendLib: EthereumAddress('0x9DB3714048B5499Ec65F807787897D3b3Aa70072'),
-    receiveLib: EthereumAddress('0x58D53a2d6a08B72a15137F3381d21b90638bd753')
+    receiveLib: EthereumAddress('0x58D53a2d6a08B72a15137F3381d21b90638bd753'),
   },
 ])
 
@@ -83,7 +83,9 @@ export class LayerZeroV1Plugin implements BridgePlugin {
       return PacketSent.create(input.ctx, { $dstChain, guid })
     }
 
-    const packetDelivered = parsePacketDelivered(input.log, [network.receiveLib])
+    const packetDelivered = parsePacketDelivered(input.log, [
+      network.receiveLib,
+    ])
     if (packetDelivered) {
       const guid = createLayerZeroGuid(
         packetDelivered.origin.nonce,
