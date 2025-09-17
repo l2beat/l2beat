@@ -8,17 +8,16 @@ allbridge is a simple swap service that performs three steps:
   as VUSD is not used outside of Allbridge
  */
 
-import { networkInterfaces } from 'os'
 import {
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
-  defineNetworks
 } from './types'
 
 /* 
@@ -72,8 +71,6 @@ export const TokensReceived = createBridgeEventType<{
   message: `0x${string}`
 }>('allbridge.TokensReceived')
 
-
-
 export class AllbridgePlugIn implements BridgePlugin {
   name = 'allbridge'
   chains = ['ethereum', 'arbitrum', 'base']
@@ -83,7 +80,10 @@ export class AllbridgePlugIn implements BridgePlugin {
     if (messageSent) {
       /* dstChain is the second byte of the message */
       const secondByte = messageSent.message.slice(4, 6)
-      const dstChain = ALLBRDIGE_NETWORKS.find((x) => x.allBridgeChainId === parseInt(secondByte, 16))?.chain ?? `AB_${secondByte}`
+      const dstChain =
+        ALLBRDIGE_NETWORKS.find(
+          (x) => x.allBridgeChainId === Number.parseInt(secondByte, 16),
+        )?.chain ?? `AB_${secondByte}`
       return MessageSent.create(input.ctx, {
         message: messageSent.message,
         $dstChain: dstChain,
@@ -94,7 +94,10 @@ export class AllbridgePlugIn implements BridgePlugin {
     if (messageReceived) {
       /* srcChain is the second byte of the message */
       const firstByte = messageReceived.message.slice(2, 4)
-      const srcChain = ALLBRDIGE_NETWORKS.find((x) => x.allBridgeChainId === parseInt(firstByte, 16))?.chain ?? `AB_${firstByte}`
+      const srcChain =
+        ALLBRDIGE_NETWORKS.find(
+          (x) => x.allBridgeChainId === Number.parseInt(firstByte, 16),
+        )?.chain ?? `AB_${firstByte}`
       return MessageReceived.create(input.ctx, {
         message: messageReceived.message,
         $srcChain: srcChain,
@@ -159,7 +162,6 @@ export class AllbridgePlugIn implements BridgePlugin {
           dstAmount: delivery.args.amount.toString(),
         }),
       ]
-
     }
   }
 }
