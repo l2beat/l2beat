@@ -3,6 +3,7 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getTrustedSetupsSection } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
@@ -48,21 +49,25 @@ export async function getZkCatalogProjectEntry(
     'archivedAt' | 'milestones'
   >,
 ): Promise<ProjectZkCatalogEntry> {
-  const [allProjects, tvs] = await Promise.all([
+  const [allProjects, tvs, contractUtils] = await Promise.all([
     ps.getProjects({
       optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
     }),
     get7dTvsBreakdown({ type: 'layer2' }),
+    getContractUtils(),
   ])
 
   const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
     project,
+    contractUtils,
+    tvs,
     allProjects,
   )
   const { tvs: tvsForProject, change } = getZkCatalogProjectTvs(
     project,
     allProjects,
     tvs,
+    contractUtils,
   )
 
   const sortedMilestones =
@@ -132,7 +137,7 @@ export async function getZkCatalogProjectEntry(
     },
   })
 
-  const verifiersSection = getVerifiersSection(project, allProjects)
+  const verifiersSection = await getVerifiersSection(project, contractUtils)
   sections.push({
     type: 'VerifiersSection',
     props: {

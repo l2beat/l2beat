@@ -24,7 +24,10 @@ export interface VerifiersSectionProps extends ProjectSectionProps {
     proofSystem: ZkCatalogTag
     verifierHashes: {
       hash: string
-      knownDeployments: string[]
+      knownDeployments: {
+        url: string
+        address: string
+      }[]
       projectsUsedIn: UsedInProjectWithIcon[]
       verificationSteps?: string
       verificationStatus: ProjectZkCatalogInfo['verifierHashes'][number]['verificationStatus']
@@ -125,15 +128,15 @@ function VerifierCollapsibleWithDetails({
               </div>
               <div className="space-y-2">
                 {verifierHash.knownDeployments.map((deployment, index) => (
-                  <div key={deployment} className="space-y-2">
+                  <div key={deployment.url} className="space-y-2">
                     <h3 className="font-bold text-label-value-14">{`Deployment #${index + 1}`}</h3>
                     <div className="flex items-center gap-1">
                       <span className="font-medium text-label-value-14 text-secondary">
                         Address:
                       </span>
                       <EtherscanLink
-                        address={`0x${deployment.split('0x')[1] ?? ''}`}
-                        href={deployment}
+                        address={deployment.address}
+                        href={deployment.url}
                         className="text-label-value-14"
                       />
                     </div>

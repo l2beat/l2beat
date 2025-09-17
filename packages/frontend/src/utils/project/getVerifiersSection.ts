@@ -1,16 +1,17 @@
 import type { Project } from '@l2beat/config'
 import type { VerifiersSectionProps } from '~/components/projects/sections/VerifiersSection'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
-import { getProjectsUsedIn } from '~/server/features/zk-catalog/utils/getProjectsUsedIn'
+import { ps } from '~/server/projects'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
+import type { ContractUtils } from './contracts-and-permissions/getContractUtils'
 
-export function getVerifiersSection(
+export async function getVerifiersSection(
   project: Project<'zkCatalogInfo'>,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
-): Omit<VerifiersSectionProps, keyof ProjectSectionProps> {
+  contractUtils: ContractUtils,
+): Promise<Omit<VerifiersSectionProps, keyof ProjectSectionProps>> {
+  const projects = await ps.getProjects({
+    select: ['chainConfig'],
+  })
   const byProofSystem: Record<
     string,
     VerifiersSectionProps['proofSystemVerifiers'][number]
@@ -19,11 +20,20 @@ export function getVerifiersSection(
   for (const verifier of project.zkCatalogInfo.verifierHashes) {
     const key = `${verifier.proofSystem.type}-${verifier.proofSystem.id}`
     const proofSystemVerifiers = byProofSystem[key]
-    const projectsUsedIn = getProjectsUsedIn(verifier.usedBy, allProjects)
+    const projectsUsedIn = verifier.knownDeployments.flatMap((d) =>
+      contractUtils.getUsedIn(project.id, d.chain, d.address),
+    )
 
     const attesters = verifier.attesters?.map((attester) => ({
       ...attester,
       icon: getProjectIcon(attester.id),
+    }))
+
+    const knownDeployments = verifier.knownDeployments.map((d) => ({
+      url:
+        projects.find((p) => p.id === d.chain)?.chainConfig.explorerUrl +
+        `/address/${d.address}#code`,
+      address: d.address,
     }))
 
     if (!proofSystemVerifiers) {
@@ -34,6 +44,7 @@ export function getVerifiersSection(
             ...verifier,
             projectsUsedIn,
             attesters,
+            knownDeployments,
           },
         ],
       }
@@ -42,6 +53,7 @@ export function getVerifiersSection(
         ...verifier,
         projectsUsedIn,
         attesters,
+        knownDeployments,
       })
     }
   }
