@@ -26,17 +26,19 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateActivityChart({
+  id,
   entries,
   allScalingProjectsUops,
   from,
   to,
 }: {
+  id: string
   entries: ProjectId[]
   allScalingProjectsUops: number
   from: UnixTime
   to: UnixTime
 }) {
-  const id = useId()
+  const fillId = useId()
   const { data, isLoading } = api.activity.chart.useQuery({
     range: { type: 'custom', from, to },
     filter: {
@@ -49,13 +51,13 @@ export function MonthlyUpdateActivityChart({
     return {
       projects: {
         label: 'UOPS',
-        color: 'var(--project-primary, var(--ecosystem-primary))',
+        color: `var(--${id}-primary)`,
         indicatorType: {
           shape: 'line',
         },
       },
     } satisfies ChartMeta
-  }, [])
+  }, [id])
 
   const chartData = useMemo(
     () =>
@@ -86,8 +88,8 @@ export function MonthlyUpdateActivityChart({
             data: compact([
               {
                 dataKey: 'projects',
-                stroke: 'var(--project-primary, var(--ecosystem-primary))',
-                fill: `url(#${id})`,
+                stroke: `var(--${id}-primary)`,
+                fill: `url(#${fillId})`,
               },
             ]),
           })}
@@ -103,11 +105,10 @@ export function MonthlyUpdateActivityChart({
           <ChartTooltip filterNull={false} content={<CustomTooltip />} />
           <defs>
             <CustomFillGradientDef
-              id={id}
+              id={fillId}
               colors={{
-                primary: 'var(--project-primary, var(--ecosystem-primary))',
-                secondary:
-                  'var(--project-secondary, var(--ecosystem-secondary))',
+                primary: `var(--${id}-primary)`,
+                secondary: `var(--${id}-secondary)`,
               }}
             />
           </defs>

@@ -70,22 +70,12 @@ export const stone: BaseProject = {
         hash: '0x5ed8957171b466464570ba10b3d5c5adfc54546ba56278129af5ae63a0d4ad22',
         proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
         knownDeployments: [
-          'https://etherscan.io/address/0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
+          {
+            address: '0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('starknet'),
-          // ProjectId('apex'),
-          // ProjectId('canvasconnect'),
-          ProjectId('immutablex'),
-          // ProjectId('layer2financezk'),
-          ProjectId('myria'),
-          ProjectId('paradex'),
-          // ProjectId('reddioex'),
-          // ProjectId('deversifi'),
-          ProjectId('sorare'),
-          ProjectId('brine'),
-        ],
         description:
           "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
       },

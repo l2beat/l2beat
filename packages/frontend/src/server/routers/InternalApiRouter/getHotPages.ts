@@ -9,7 +9,7 @@ import { ps } from '~/server/projects'
 export async function getHotPages() {
   const db = getDb()
 
-  const [scaling, bridges, daLayers, daBridges, latestValues] =
+  const [scaling, bridges, daLayers, daBridges, ecosystems, latestValues] =
     await Promise.all([
       ps.getProjects({
         select: ['scalingInfo', 'statuses'],
@@ -24,6 +24,9 @@ export async function getHotPages() {
       }),
       ps.getProjects({
         select: ['daBridge'],
+      }),
+      ps.getProjects({
+        select: ['ecosystemConfig'],
       }),
       db.tvsProjectValue.getLatestValues('PROJECT'),
     ])
@@ -60,6 +63,8 @@ export async function getHotPages() {
     return `/data-availability/projects/${d.slug}/${bridge?.slug ?? 'no-bridge'}`
   })
 
+  const ecosystemPaths = ecosystems.map((e) => `/ecosystems/${e.slug}`)
+
   return [
     '/scaling/summary',
     '/scaling/risk',
@@ -78,6 +83,7 @@ export async function getHotPages() {
     ...scalingPaths,
     ...bridgePaths,
     ...daPaths,
+    ...ecosystemPaths,
   ]
 }
 function sortByTvs(latestValues: ProjectValueRecord[]) {

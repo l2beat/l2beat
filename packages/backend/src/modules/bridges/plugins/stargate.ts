@@ -4,6 +4,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
 } from './types'
 
@@ -21,14 +22,14 @@ export const StargateV2OFTSentBusRode = createBridgeEventType<{
   amountSentLD: string
   amountReceivedLD: string
   amountSD: string
-}>('stargatev2.OFTSentBus')
+}>('stargate-v2.OFTSentBus')
 
 export const StargateV2OFTSentTaxi = createBridgeEventType<{
   guid: string
   amountSentLD: string
   amountReceivedLD: string
   tokenAddress: EthereumAddress | 'native'
-}>('stargatev2.OFTSentTaxi')
+}>('stargate-v2.OFTSentTaxi')
 
 const parseOFTReceived = createEventParser(
   'event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)',
@@ -41,7 +42,7 @@ export const StargateV2OFTReceived = createBridgeEventType<{
   tokenAddress: EthereumAddress | 'native'
   destinationEid: number
   amountReceivedLD: string
-}>('stargatev2.OFTReceived')
+}>('stargate-v2.OFTReceived')
 
 const parseBusDriven = createEventParser(
   'event BusDriven(uint32 dstEid, uint72 startTicketId, uint8 numPassengers, bytes32 guid)',
@@ -51,13 +52,13 @@ export const StargateV2BusDriven = createBridgeEventType<{
   numPassengers: number
   guid: string
   destinationEid: number
-}>('stargatev2.BusDriven')
+}>('stargate-v2.BusDriven')
 
 const parseBusRode = createEventParser(
   'event BusRode(uint32 dstEid, uint72 ticketId, uint80 fare, bytes passenger)',
 )
 
-const NETWORKS = [
+const STARGATE_NETWORKS = defineNetworks('stargate', [
   {
     chain: 'ethereum',
     eid: 30101,
@@ -115,7 +116,7 @@ const NETWORKS = [
       '0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47',
     ),
   },
-]
+])
 
 const GUID_ZERO =
   '0x0000000000000000000000000000000000000000000000000000000000000000'
@@ -125,7 +126,7 @@ export class StargatePlugin implements BridgePlugin {
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
-    const network = NETWORKS.find((b) => b.chain === input.ctx.chain)
+    const network = STARGATE_NETWORKS.find((b) => b.chain === input.ctx.chain)
     if (!network) {
       return
     }
@@ -182,7 +183,7 @@ export class StargatePlugin implements BridgePlugin {
       if (!pool) {
         return
       }
-      const destinationEid = NETWORKS.find(
+      const destinationEid = STARGATE_NETWORKS.find(
         (n) => n.chain === input.ctx.chain,
       )?.eid
       if (!destinationEid) {

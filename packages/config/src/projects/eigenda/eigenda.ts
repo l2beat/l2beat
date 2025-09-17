@@ -135,8 +135,12 @@ export const eigenda: BaseProject = {
     },
   ],
   colors: {
-    primary: '#6258FF',
-    secondary: '#6258FF',
+    primary: {
+      light: '#6258FF',
+    },
+    secondary: {
+      light: '#6258FF',
+    },
   },
   daLayer: {
     type: 'DA Service',
@@ -309,7 +313,7 @@ export const eigenda: BaseProject = {
     ],
   },
   daBridge: {
-    name: 'DACert Verifier',
+    name: 'DACert Verifier (EigenDA V1)',
     daLayer: ProjectId('eigenda'),
     relayerType: {
       value: 'Permissioned',

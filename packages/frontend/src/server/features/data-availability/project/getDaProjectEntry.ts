@@ -199,7 +199,7 @@ export async function getDaProjectEntry(
         .map((x) => ({
           ...x,
           icon: getProjectIcon(x.slug),
-          href: `/scaling/projects/${x.slug}`,
+          url: `/scaling/projects/${x.slug}`,
         })),
     })),
     header: {
@@ -222,7 +222,7 @@ export async function getDaProjectEntry(
         .map((x) => ({
           ...x,
           icon: getProjectIcon(x.slug),
-          href: `/scaling/projects/${x.slug}`,
+          url: `/scaling/projects/${x.slug}`,
         })),
       ongoingAnomaly: ongoingAnomalies
         ? ongoingAnomalies.length === 0
@@ -253,7 +253,7 @@ export async function getDaProjectEntry(
       usedIn: layer.daLayer.usedWithoutBridgeIn.map((x) => ({
         ...x,
         icon: getProjectIcon(x.slug),
-        href: `/scaling/projects/${x.slug}`,
+        url: `/scaling/projects/${x.slug}`,
       })),
     })
     result.projectVariants?.unshift({
@@ -302,7 +302,7 @@ export async function getEthereumDaProjectEntry(
     .map((x) => ({
       ...x,
       icon: getProjectIcon(x.slug),
-      href: `/scaling/projects/${x.slug}`,
+      url: `/scaling/projects/${x.slug}`,
     }))
 
   const latestThroughput = layer.daLayer.throughput

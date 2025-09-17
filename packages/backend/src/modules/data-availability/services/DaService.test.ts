@@ -102,7 +102,7 @@ describe(DaService.name, () => {
             totalSize: 300n,
           },
         ],
-        latestTimestamp: UnixTime.toStartOf(TIME, 'hour'),
+        latestTimestamp: TIME,
       })
     })
 
@@ -154,7 +154,7 @@ describe(DaService.name, () => {
             totalSize: 100n,
           },
         ],
-        latestTimestamp: UnixTime.toStartOf(TIME, 'hour'),
+        latestTimestamp: TIME,
       })
     })
 
@@ -212,7 +212,7 @@ describe(DaService.name, () => {
             totalSize: 250n,
           },
         ],
-        latestTimestamp: UnixTime.toStartOf(TIME, 'hour'),
+        latestTimestamp: TIME,
       })
     })
 
@@ -352,7 +352,7 @@ describe(DaService.name, () => {
             totalSize: 400n,
           },
         ],
-        latestTimestamp: UnixTime.toStartOf(TIME + 1 * UnixTime.HOUR, 'hour'),
+        latestTimestamp: TIME + 1 * UnixTime.HOUR,
       })
     })
   })

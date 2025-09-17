@@ -5,36 +5,34 @@ import {
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
-  type BridgeTransfer,
   createBridgeEventType,
   createEventParser,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
-import { NETWORKS } from './wormhole'
+import { WORMHOLE_NETWORKS } from './wormhole'
 
 const parseOrderFulfilled = createEventParser(
   'event OrderFulfilled(uint32 sourceDomain, bytes32 sourceNonce, uint256 amount)',
 )
 
 export const OrderFulfilled = createBridgeEventType<{
-  txHash: string
   amount: string
   sourceDomain: string
-}>('mayanmctp-fast.OrderFullfilled')
+}>('mayan-mctp-fast.OrderFullfilled')
 
 export class MayanMctpFastPlugin implements BridgePlugin {
-  name = 'mayanmctp-fast'
+  name = 'mayan-mctp-fast'
   chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
       return OrderFulfilled.create(input.ctx, {
-        txHash: input.ctx.txHash,
         amount: orderFulfilled.amount.toString(),
         sourceDomain:
-          NETWORKS.find(
+          WORMHOLE_NETWORKS.find(
             (n) => n.wormholeChainId === Number(orderFulfilled.sourceDomain),
           )?.chain || '???',
       })
@@ -45,70 +43,43 @@ export class MayanMctpFastPlugin implements BridgePlugin {
     orderFulfilled: BridgeEvent,
     db: BridgeEventDb,
   ): MatchResult | undefined {
-    if (!OrderFulfilled.checkType(orderFulfilled)) {
-      return
-    }
+    if (!OrderFulfilled.checkType(orderFulfilled)) return
     // find MessageReceived with the same txHash as OrderFulfilled
     const messageReceived = db.find(CCTPv2MessageReceived, {
       app: 'TokenMessengerV2',
-      txHash: orderFulfilled.args.txHash,
+      sameTxBefore: orderFulfilled,
     })
-    if (!messageReceived || !messageReceived.args.hookData) {
-      return
-    }
+    if (!messageReceived || !messageReceived.args.hookData) return
     // find MessageSent with the same body as MessageReceived
     const messageSent = db.find(CCTPv2MessageSent, {
       app: 'TokenMessengerV2',
       hookData: messageReceived.args.hookData,
     })
-    if (!messageSent || !messageSent.args.amount) {
-      return
-    }
-
+    if (!messageSent || !messageSent.args.amount) return
     const orderPayload = decodeOrderPayload(messageReceived.args.hookData)
-    if (!orderPayload) {
-      return
-    }
-
-    let transfer: BridgeTransfer | undefined
-    if (messageSent.args.tokenAddress && orderPayload.tokenOut) {
-      transfer = {
-        type: 'cctp-v2.TRANSFER',
-        events: [messageSent, messageReceived],
-        outbound: {
-          event: messageSent,
-          token: {
-            address: messageSent.args.tokenAddress,
-            amount: messageSent.args.amount.toString(),
-          },
-        },
-        inbound: {
-          event: messageReceived,
-          token: {
-            address: EthereumAddress(`0x${orderPayload.tokenOut.slice(-40)}`),
-            amount: orderFulfilled.args.amount.toString(),
-          },
-        },
-      }
-    }
-
-    return {
-      messages: [
-        {
-          type: messageSent.args.fast
-            ? 'cctp-v2.FastMessage'
-            : 'cctp-v2.SlowMessage',
-          outbound: messageSent,
-          inbound: messageReceived,
-        },
-        {
-          type: 'mayanmctp-fast.SWAP',
-          outbound: messageSent,
-          inbound: orderFulfilled,
-        },
-      ],
-      transfers: transfer ? [transfer] : undefined,
-    }
+    if (!orderPayload) return
+    return [
+      Result.Message(
+        messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
+        [messageSent, messageReceived],
+      ),
+      Result.Transfer('cctp-v2.Transfer.mayan-mctp-fast', {
+        srcEvent: messageSent,
+        srcTokenAddress: messageSent.args.tokenAddress,
+        srcAmount: messageSent.args.amount.toString(),
+        dstEvent: messageReceived,
+      }),
+      Result.Transfer('mayan-mctp-fast.Swap', {
+        srcEvent: messageSent,
+        srcTokenAddress: messageSent.args.tokenAddress,
+        srcAmount: messageSent.args.amount.toString(),
+        dstEvent: orderFulfilled,
+        dstTokenAddress: EthereumAddress(
+          `0x${orderPayload.tokenOut.slice(-40)}`,
+        ),
+        dstAmount: orderFulfilled.args.amount.toString(),
+      }),
+    ]
   }
 }
 

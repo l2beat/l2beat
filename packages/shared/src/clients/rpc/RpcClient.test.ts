@@ -368,7 +368,7 @@ describe(RpcClient.name, () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         redirect: 'follow',
-        timeout: 5000,
+        timeout: 10_000,
       })
     })
 
@@ -402,7 +402,7 @@ describe(RpcClient.name, () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         redirect: 'follow',
-        timeout: 5000,
+        timeout: 10_000,
       })
     })
 
@@ -436,7 +436,7 @@ describe(RpcClient.name, () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         redirect: 'follow',
-        timeout: 5000,
+        timeout: 10_000,
       })
     })
 
@@ -735,7 +735,7 @@ describe(RpcClient.name, () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         redirect: 'follow',
-        timeout: 5000,
+        timeout: 10_000,
       })
     })
   })
@@ -761,7 +761,7 @@ describe(RpcClient.name, () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         redirect: 'follow',
-        timeout: 5000,
+        timeout: 10_000,
       })
     })
   })
@@ -814,7 +814,7 @@ describe(RpcClient.name, () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         redirect: 'follow',
-        timeout: 5000,
+        timeout: 10_000,
       })
     })
   })
