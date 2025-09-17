@@ -796,9 +796,11 @@ export interface ProjectZkCatalogInfo {
   verifierHashes: {
     hash: string
     proofSystem: ZkCatalogTag
-    knownDeployments: string[]
+    knownDeployments: {
+      address: string
+      chain: string
+    }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
-    usedBy: ProjectId[]
     verificationSteps?: string
     attesters?: ZkCatalogAttester[]
     description?: string

@@ -5,9 +5,10 @@ import type {
   ZkCatalogTag,
 } from '@l2beat/config'
 import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAttesters'
-import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
+import { notUndefined } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
+import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import {
@@ -18,6 +19,10 @@ import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjec
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
+import {
+  type ContractUtils,
+  getContractUtils,
+} from '~/utils/project/contracts-and-permissions/getContractUtils'
 
 export type TrustedSetupVerifierData = {
   count: number
@@ -47,18 +52,22 @@ export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
 }
 
 export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
-  const [zkCatalogProjects, allProjects, tvs] = await Promise.all([
-    ps.getProjects({
-      select: ['zkCatalogInfo', 'display', 'statuses'],
-    }),
-    ps.getProjects({
-      optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
-    }),
-    get7dTvsBreakdown({ type: 'layer2' }),
-  ])
+  const [zkCatalogProjects, allProjects, tvs, contractUtils] =
+    await Promise.all([
+      ps.getProjects({
+        select: ['zkCatalogInfo', 'display', 'statuses'],
+      }),
+      ps.getProjects({
+        optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
+      }),
+      get7dTvsBreakdown({ type: 'layer2' }),
+      getContractUtils(),
+    ])
 
   return zkCatalogProjects
-    .map((project) => getZkCatalogEntry(project, allProjects, tvs))
+    .map((project) =>
+      getZkCatalogEntry(project, allProjects, tvs, contractUtils),
+    )
     .sort((a, b) => b.tvs - a.tvs)
 }
 
@@ -69,37 +78,26 @@ function getZkCatalogEntry(
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
   >[],
   tvs: SevenDayTvsBreakdown,
+  contractUtils: ContractUtils,
 ): ZkCatalogEntry {
   const usedInVerifiers = uniq(
-    project.zkCatalogInfo.verifierHashes.flatMap((v) => v.usedBy),
-  )
-  const projectsForTvs = uniq(
-    usedInVerifiers.flatMap((vp) => {
-      const project = allProjects.find((p) => p.id === vp)
-      if (!project) {
-        const logger = getLogger().for('getZkCatalogEntry')
-        logger.warn(`Project ${vp} not found`)
-        return []
-      }
-
-      // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
-      if (project.daBridge) {
-        return project.daBridge.usedIn.flatMap((p) => p.id)
-      }
-      return vp
-    }),
+    project.zkCatalogInfo.verifierHashes
+      .flatMap((v) =>
+        v.knownDeployments.flatMap((d) =>
+          contractUtils.getUsedIn(project.id, d.chain, d.address),
+        ),
+      )
+      .map((u) => u.id),
   )
 
-  const tvsForProject = projectsForTvs.reduce((acc, p) => {
-    const projectTvs = tvs.projects[p]?.breakdown.total
-    if (!projectTvs) {
-      return acc
-    }
-    return acc + projectTvs
+  const tvsForProject = usedInVerifiers.reduce((acc, projectId) => {
+    return acc + calculateProjectTvs(projectId, allProjects, tvs)
   }, 0)
 
   const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
     project,
+    contractUtils,
+    tvs,
     allProjects,
   )
 
@@ -128,6 +126,8 @@ function getZkCatalogEntry(
 
 function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
+  contractUtils: ContractUtils,
+  tvs: SevenDayTvsBreakdown,
   allProjects: Project<
     never,
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
@@ -148,6 +148,20 @@ function getTrustedSetupsWithVerifiersAndAttesters(
         (v) => v.verificationStatus,
       )
 
+      const projectsUsedIn = uniqBy(
+        trustedSetupVerifiers.flatMap((v) =>
+          v.knownDeployments.flatMap((d) =>
+            contractUtils.getUsedIn(project.id, d.chain, d.address),
+          ),
+        ),
+        (u) => u.id,
+      )
+        .map((u) => ({
+          ...u,
+          tvs: calculateProjectTvs(u.id, allProjects, tvs),
+        }))
+        .sort((a, b) => b.tvs - a.tvs)
+
       return [
         key,
         {
@@ -166,10 +180,7 @@ function getTrustedSetupsWithVerifiersAndAttesters(
               'notVerified',
             ),
           },
-          projectsUsedIn: getProjectsUsedIn(
-            uniq(trustedSetupVerifiers.flatMap((v) => v.usedBy)),
-            allProjects,
-          ),
+          projectsUsedIn,
         },
       ]
     }),
@@ -195,56 +206,30 @@ export function getVerifiersWithAttesters(
   }
 }
 
-function getProjectsUsedIn(
-  usedInVerifiers: ProjectId[],
+function calculateProjectTvs(
+  projectId: string,
   allProjects: Project<
     never,
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
   >[],
-): UsedInProjectWithIcon[] {
-  return usedInVerifiers
-    .map((id) => {
-      const project = allProjects.find((p) => p.id === id)
-      if (!project) {
-        const logger = getLogger().for('getProjectsUsedIn')
-        logger.warn(`Project ${id} not found`)
-        return undefined
-      }
-
-      const href = getProjectHref(project, allProjects)
-
-      return {
-        id: id,
-        name: project.name,
-        slug: project.slug,
-        icon: getProjectIcon(project.slug),
-        href,
-      }
-    })
-    .filter((e) => e !== undefined)
-}
-
-function getProjectHref(
-  project: Project<never, 'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'>,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
-) {
-  if (project.isBridge) return `/bridges/projects/${project.slug}`
-  if (project.isScaling) return `/scaling/projects/${project.slug}`
-  if (project.isDaLayer) {
-    const daBridge = allProjects.find((p) => p.id === project.daBridge?.daLayer)
-    assert(daBridge, `DA bridge ${project.id} not found`)
-
-    return `/data-availability/projects/${project.slug}/${daBridge.slug}`
+  tvs: SevenDayTvsBreakdown,
+): number {
+  const project = allProjects.find((p) => p.id === projectId)
+  if (!project) {
+    const logger = getLogger().for('getZkCatalogEntry')
+    logger.warn(`Project ${projectId} not found`)
+    return 0
   }
+
+  // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
   if (project.daBridge) {
-    const daLayer = allProjects.find((p) => p.id === project.daBridge?.daLayer)
-    assert(daLayer, `DA layer ${project.daBridge.daLayer} not found`)
-
-    return `/data-availability/projects/${daLayer.slug}/${project.slug}`
+    return project.daBridge.usedIn
+      .map((p) => p.id)
+      .reduce((acc, p) => {
+        const projectTvs = tvs.projects[p]?.breakdown.total
+        return projectTvs ? acc + projectTvs : acc
+      }, 0)
   }
 
-  throw new Error(`Unknown project type: ${project.id}`)
+  return tvs.projects[project.id]?.breakdown.total ?? 0
 }
