@@ -8,7 +8,13 @@ Generated with discovered.json: 0x3f737e75bf255116c97149474e4c3914ed0415e0
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+OPSuccinctL2OutputOracle - completely different contract
+(https://disco.l2beat.com/diff/eth:0xD1230865641561653406906Fb08873F011c19080/eth:0x4059509fFb703B048D1e9Ce3118F90E759076f50)
+better compared with Phala which is standard OPSuccinct
+(https://disco.l2beat.com/diff/eth:0x9d843e5b627759e8aB2Db5B95cCA1e5BB91F1174/eth:0x4059509fFb703B048D1e9Ce3118F90E759076f50)
+
+
+
 
 ## Watched changes
 
