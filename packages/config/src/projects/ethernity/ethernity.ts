@@ -31,6 +31,7 @@ export const ethernity: ScalingProject = opStackL2({
       ],
       explorers: ['https://ernscan.io/'],
       documentation: [],
+      repositories: ['https://github.com/epiconchain'],
       socialMedia: [
         'https://x.com/EpicOnChain',
         'https://t.me/epiconchain',
