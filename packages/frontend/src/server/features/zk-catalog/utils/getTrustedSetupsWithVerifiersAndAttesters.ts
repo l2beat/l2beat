@@ -6,11 +6,13 @@ import type {
 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
-import uniq from 'lodash/uniq'
+import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
+import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
-import { getProjectsUsedIn } from './getProjectsUsedIn'
+import { calculateProjectTvs } from './getZkCatalogProjectTvs'
 
 export type TrustedSetupsByProofSystem = Record<
   string,
@@ -29,6 +31,8 @@ export type TrustedSetupsByProofSystem = Record<
 
 export function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
+  contractUtils: ContractUtils,
+  tvs: SevenDayTvsBreakdown,
   allProjects: Project<
     never,
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
@@ -49,6 +53,20 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
         (v) => v.verificationStatus,
       )
 
+      const projectsUsedIn = uniqBy(
+        trustedSetupVerifiers.flatMap((v) =>
+          v.knownDeployments.flatMap((d) =>
+            contractUtils.getUsedIn(project.id, d.chain, d.address),
+          ),
+        ),
+        (u) => u.id,
+      )
+        .map((u) => ({
+          ...u,
+          tvs: calculateProjectTvs(u.id, allProjects, tvs),
+        }))
+        .sort((a, b) => b.tvs - a.tvs)
+
       return [
         key,
         {
@@ -67,10 +85,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
               'notVerified',
             ),
           },
-          projectsUsedIn: getProjectsUsedIn(
-            uniq(trustedSetupVerifiers.flatMap((v) => v.usedBy)),
-            allProjects,
-          ),
+          projectsUsedIn,
         },
       ]
     }),

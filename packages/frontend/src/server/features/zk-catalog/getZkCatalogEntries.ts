@@ -72,6 +72,7 @@ function getZkCatalogEntry(
     project,
     allProjects,
     tvs,
+    contractUtils,
   )
 
   return {
