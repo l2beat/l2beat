@@ -1,11 +1,16 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { REASON_FOR_BEING_OTHER, RISK_VIEW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('mantle')
+
+const finalizationPeriod = discovery.getContractValue<number>(
+  'OPSuccinctL2OutputOracle',
+  'finalizationPeriodSeconds',
+)
 
 export const mantle: ScalingProject = opStackL2({
   addedAt: UnixTime(1680782525), // 2023-04-06T12:02:05Z
@@ -15,7 +20,6 @@ export const mantle: ScalingProject = opStackL2({
   discovery,
   additionalBadges: [BADGES.DA.EigenDA],
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
@@ -104,6 +108,12 @@ export const mantle: ScalingProject = opStackL2({
     },
   ],
   nonTemplateOptimismPortalEscrowTokens: ['MNT'],
+  nonTemplateRiskView: {
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+      executionDelay: finalizationPeriod,
+    },
+  },
   nonTemplateDaTracking: [
     {
       type: 'eigen-da',
