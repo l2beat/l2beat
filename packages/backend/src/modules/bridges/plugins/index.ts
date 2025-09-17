@@ -3,6 +3,7 @@ import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { CCTPPlugin } from './cctp'
 import { DeBridgeDlnPlugin } from './debridge-dln'
+import { HyperlanePlugIn } from './hyperlane'
 import { LayerZeroV2Plugin } from './layerzero-v2'
 import { MayanForwarderPlugin } from './mayan-forwarder'
 import { MayanMctpPlugin } from './mayan-mctp'
@@ -43,5 +44,6 @@ export function createBridgePlugins(): BridgePlugin[] {
     new AcrossPlugin(),
     new OrbitStackPlugin(),
     new OpStackPlugin(),
+    new HyperlanePlugIn(),
   ]
 }
