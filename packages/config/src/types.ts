@@ -1,4 +1,4 @@
-import type { TrackedTxConfigEntry } from '@l2beat/shared'
+import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainId,
   type ChainSpecificAddress,
@@ -274,7 +274,7 @@ export interface ChainBasicApi<T extends string> {
   type: T
   url: string
   callsPerMinute?: number
-  retryStrategy?: 'UNRELIABLE' | 'RELIABLE'
+  retryStrategy?: RetryHandlerVariant
 }
 
 export interface ChainExplorerApi<T extends string> {
@@ -796,9 +796,11 @@ export interface ProjectZkCatalogInfo {
   verifierHashes: {
     hash: string
     proofSystem: ZkCatalogTag
-    knownDeployments: string[]
+    knownDeployments: {
+      address: string
+      chain: string
+    }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
-    usedBy: ProjectId[]
     verificationSteps?: string
     attesters?: ZkCatalogAttester[]
     description?: string

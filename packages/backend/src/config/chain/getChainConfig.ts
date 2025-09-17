@@ -1,5 +1,6 @@
 import { Env } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
+import type { RetryHandlerVariant } from '@l2beat/shared'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { BlockApi } from './BlockApi'
 import type { ChainApi } from './ChainApi'
@@ -64,7 +65,12 @@ export async function getChainConfig(
                   sinceBlock: multicallV3.sinceBlock,
                 }
               : undefined,
-            retryStrategy: api.retryStrategy ?? 'RELIABLE',
+            retryStrategy:
+              (env.optionalString(Env.key(chain, 'RETRY_STRATEGY')) as
+                | RetryHandlerVariant
+                | undefined) ??
+              api.retryStrategy ??
+              'RELIABLE',
           })
           break
         case 'fuel':

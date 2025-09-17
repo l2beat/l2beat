@@ -55,10 +55,12 @@ export const aztecv1prover: BaseProject = {
         hash: '0x7c8a64f644c60e33445be862185b65bf2096c00c9691f49bd03df5f3ce6b6abf',
         proofSystem: ZK_CATALOG_TAGS.Plonk.AztecV1,
         knownDeployments: [
-          'https://etherscan.io/address/0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8',
+          {
+            address: '0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('aztec')],
         description:
           'Custom verifier ID: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by get_verification_key() of Rollup1x2Vk library.',
       },
