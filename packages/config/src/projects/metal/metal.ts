@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -9,6 +9,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('metal')
 
 export const metal: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1711670400), // 2024-03-29T00:00:00Z
   discovery,
   associatedTokens: ['MTL'],

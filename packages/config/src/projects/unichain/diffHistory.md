@@ -1,3 +1,84 @@
+Generated with discovered.json: 0x79d49d831ef757cce89247d366284d2baac540c0
+
+# Diff at Mon, 15 Sep 2025 09:50:56 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1755525939
+- current timestamp: 1755525939
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755525939 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x2F12d621a16e2d3285929C9996f478508951dFe4) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract GasPriceOracle (unichain:0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      values.$pastUpgrades.0.0:
+-        "2025-05-09T16:00:01.000Z"
++        "2025-06-01T18:12:11.000Z"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (unichain:0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
++        ["2024-12-05T19:19:37.000Z","0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",["unichain:0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
+```diff
+    contract L1Block (unichain:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.$pastUpgrades.0.0:
+-        "2025-05-09T16:00:01.000Z"
++        "2025-06-01T18:12:11.000Z"
+    }
+```
+
+```diff
+    contract BaseFeeVault (unichain:0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
++        ["2024-12-05T19:19:37.000Z","0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",["unichain:0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
+```diff
+    contract L1FeeVault (unichain:0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
++        ["2024-12-05T19:19:37.000Z","0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",["unichain:0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
 Generated with discovered.json: 0x45de3ec5c4fcdd758d73514647014570e6d4e4ad
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

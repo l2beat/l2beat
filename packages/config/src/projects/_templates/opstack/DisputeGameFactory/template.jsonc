@@ -9,7 +9,7 @@
       "severity": "HIGH",
       "handler": {
         "type": "array",
-        "length": 5
+        "length": 7
       }
     },
     "game1337": {

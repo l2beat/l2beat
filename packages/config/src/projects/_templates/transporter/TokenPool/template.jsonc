@@ -16,5 +16,10 @@
     "getOffRamps",
     "adapter"
   ],
-  "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"]
+  "ignoreInWatchMode": [
+    "getOnRamps",
+    "getCurrentBridgedAmount",
+    "getUnsiloedLiquidity",
+    "getLockedTokens"
+  ]
 }

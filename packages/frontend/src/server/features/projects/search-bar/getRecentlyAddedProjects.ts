@@ -11,6 +11,7 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
       'isScaling',
       'isDaLayer',
       'isBridge',
+      'ecosystemConfig',
     ],
     whereNot: ['isUpcoming'],
   })

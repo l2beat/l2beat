@@ -2,6 +2,7 @@ import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainId,
   type ChainSpecificAddress,
+  type CoingeckoId,
   EthereumAddress,
   type ProjectId,
   type StringWithAutocomplete,
@@ -132,8 +133,14 @@ export interface BaseProject {
 
 // #region common data
 export interface ProjectCustomColors {
-  primary: string
-  secondary: string
+  primary: {
+    light: string
+    dark?: string
+  }
+  secondary: {
+    light: string
+    dark?: string
+  }
 }
 
 export interface ProjectStatuses {
@@ -769,6 +776,14 @@ export interface RequiredTool {
 // #region zk catalog v2 data
 export interface ProjectZkCatalogInfo {
   creator?: string
+  formalVerificationLinks?: {
+    name: string
+    url: string
+  }[]
+  audits?: {
+    company: string
+    url: string
+  }[]
   techStack: {
     zkVM?: ZkCatalogTag[]
     finalWrap?: ZkCatalogTag[]
@@ -969,8 +984,7 @@ export interface ProjectEcosystemInfo {
 export interface ProjectEcosystemConfig {
   startedAt?: UnixTime
   token: {
-    tokenId: string
-    projectId: ProjectId
+    coingeckoId: CoingeckoId
     description: string
   }
   links: {

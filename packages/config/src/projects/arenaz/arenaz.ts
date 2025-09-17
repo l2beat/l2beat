@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -8,6 +8,10 @@ const discovery = new ProjectDiscovery('arenaz')
 const genesisTimestamp = UnixTime(1731366083)
 
 export const arenaz = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1737720994), // 2025-01-24T12:16:34+00:00
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],

@@ -75,6 +75,9 @@
     },
     "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": {
       "ignoreDiscovery": true
+    },
+    "eth:0x420000000000000000000000000000000000000F": {
+      "ignoreInWatchMode": ["gasPrice"]
     }
   }
 }
