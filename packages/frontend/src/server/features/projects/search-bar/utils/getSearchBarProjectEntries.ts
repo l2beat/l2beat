@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { env } from '~/env'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { SearchBarProject } from '../types'
 import { getSearchBarProjectKind } from './getSearchBarProjectKind'
@@ -81,7 +80,7 @@ export function getSearchBarProjectEntries<
     }
   }
 
-  if (project.ecosystemConfig && env.CLIENT_SIDE_PARTNERS) {
+  if (project.ecosystemConfig) {
     results.push({
       ...common,
       href: `/ecosystems/${project.slug}`,
