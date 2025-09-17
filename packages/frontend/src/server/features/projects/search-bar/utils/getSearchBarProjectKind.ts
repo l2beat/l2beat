@@ -4,7 +4,11 @@ import type { SearchBarProject } from '../types'
 export function getSearchBarProjectKind(
   p: Project<
     never,
-    'scalingInfo' | 'isBridge' | 'isDaLayer' | 'ecosystemConfig'
+    | 'scalingInfo'
+    | 'isBridge'
+    | 'isDaLayer'
+    | 'ecosystemConfig'
+    | 'zkCatalogInfo'
   >,
 ): SearchBarProject['kind'] {
   if (p.scalingInfo?.layer === 'layer2') return 'layer2'
@@ -12,6 +16,7 @@ export function getSearchBarProjectKind(
   if (p.isBridge) return 'bridge'
   if (p.isDaLayer) return 'da'
   if (p.ecosystemConfig) return 'ecosystem'
+  if (p.zkCatalogInfo) return 'zkCatalog'
   // Should never happen
   return 'da'
 }
