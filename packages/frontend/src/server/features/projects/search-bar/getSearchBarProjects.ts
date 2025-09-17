@@ -19,6 +19,7 @@ export async function getSearchBarProjects(
       'isBridge',
       'isUpcoming',
       'ecosystemConfig',
+      'zkCatalogInfo',
     ],
   })
 
