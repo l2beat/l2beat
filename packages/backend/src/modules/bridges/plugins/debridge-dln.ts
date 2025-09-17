@@ -132,7 +132,7 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
     }
   }
 
-  /* Matching alogrithm:
+  /* Matching algorithm:
 1. For Each LogOrderFilled on DST
 2. Find LogOrderCreated on SRC with the same orderHash
 */
