@@ -81,8 +81,15 @@ function getZkCatalogEntry(
   contractUtils: ContractUtils,
 ): ZkCatalogEntry {
   const usedInVerifiers = uniq(
-    project.zkCatalogInfo.verifierHashes.flatMap((v) => v.usedBy),
+    project.zkCatalogInfo.verifierHashes
+      .flatMap((v) =>
+        v.knownDeployments.flatMap((d) =>
+          contractUtils.getUsedIn(project.id, d.chain, d.address),
+        ),
+      )
+      .map((u) => u.id),
   )
+
   const projectsForTvs = uniq(
     usedInVerifiers.flatMap((vp) => {
       const project = allProjects.find((p) => p.id === vp)
@@ -110,8 +117,9 @@ function getZkCatalogEntry(
 
   const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
     project,
-    allProjects,
     contractUtils,
+    tvs,
+    allProjects,
   )
 
   return {
@@ -139,11 +147,12 @@ function getZkCatalogEntry(
 
 function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
+  contractUtils: ContractUtils,
+  tvs: SevenDayTvsBreakdown,
   allProjects: Project<
     never,
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
   >[],
-  contractUtils: ContractUtils,
 ): ZkCatalogEntry['trustedSetupsByProofSystem'] {
   const grouped = groupBy(
     project.zkCatalogInfo.trustedSetups,
@@ -168,6 +177,31 @@ function getTrustedSetupsWithVerifiersAndAttesters(
         ),
         (u) => u.id,
       )
+        .map((u) => {
+          const project = allProjects.find((p) => p.id === u.id)
+          if (!project) {
+            return { ...u, tvs: 0 }
+          }
+          if (project.daBridge) {
+            const tvsForProject = project.daBridge.usedIn
+              .map((p) => p.id)
+              .reduce((acc, p) => {
+                const projectTvs = tvs.projects[p]?.breakdown.total
+                if (!projectTvs) {
+                  return acc
+                }
+                return acc + projectTvs
+              }, 0)
+
+            return { ...u, tvs: tvsForProject }
+          }
+          const projectTvs = tvs.projects[project.id]?.breakdown.total ?? 0
+          return {
+            ...u,
+            tvs: projectTvs,
+          }
+        })
+        .sort((a, b) => b.tvs - a.tvs)
 
       return [
         key,
