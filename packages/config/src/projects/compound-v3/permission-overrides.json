@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-16T19:10:30.000Z",
+  "lastModified": "2025-09-17T15:25:07.880Z",
   "overrides": [
     {
       "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
@@ -14,24 +14,6 @@
       "userClassification": "permissioned",
       "reason": "Test permission toggle",
       "timestamp": "2025-09-16T18:01:56.876Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "buyCollateral",
-      "userClassification": "non-permissioned",
-      "timestamp": "2025-09-16T18:05:02.122Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "absorb",
-      "userClassification": "non-permissioned",
-      "timestamp": "2025-09-16T19:02:58.600Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "pause",
-      "userClassification": "permissioned",
-      "timestamp": "2025-09-16T19:03:11.444Z"
     },
     {
       "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
@@ -52,16 +34,112 @@
       "timestamp": "2025-09-16T19:03:33.985Z"
     },
     {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "accrueAccount",
-      "userClassification": "non-permissioned",
-      "timestamp": "2025-09-16T19:03:38.421Z"
-    },
-    {
       "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
       "functionName": "changeAdmin",
       "userClassification": "permissioned",
       "timestamp": "2025-09-16T19:09:24.903Z"
+    },
+    {
+      "contractAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "functionName": "withdraw",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T12:04:02.694Z"
+    },
+    {
+      "contractAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "functionName": "deposit",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T12:04:09.116Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "testFunction",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:22:04.978Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "supplyFrom",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T15:22:14.673Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "supply",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T15:22:16.830Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "initializeStorage",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:24:39.372Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "buyCollateral",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:24:40.406Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "accrueAccount",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:24:44.648Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "absorb",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:24:46.704Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "approveThis",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T15:24:48.206Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "supplyTo",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:24:50.493Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "transferAssetFrom",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T15:24:52.505Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "transferAsset",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:24:53.388Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "withdraw",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T15:24:57.051Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "withdrawReserves",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:25:01.958Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "transfer",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T15:25:04.967Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "pause",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:25:07.880Z"
     }
   ]
 }

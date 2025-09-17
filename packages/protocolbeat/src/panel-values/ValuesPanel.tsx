@@ -13,6 +13,7 @@ import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
 import { FieldDisplay } from './Field'
 import { Folder } from './Folder'
+import { PermissionsDisplay } from './PermissionsDisplay'
 import { TemplateDialog } from './template-dialog/TemplateDialog'
 
 export function ValuesPanel() {
@@ -194,6 +195,11 @@ function Display({
       {'abis' in selected && selected.abis.length > 0 && (
         <Folder title="ABI" collapsed>
           <AbiDisplay abis={selected.abis} />
+        </Folder>
+      )}
+      {'abis' in selected && selected.abis.length > 0 && (
+        <Folder title="Permissions" collapsed>
+          <PermissionsDisplay abis={selected.abis} />
         </Folder>
       )}
     </>
