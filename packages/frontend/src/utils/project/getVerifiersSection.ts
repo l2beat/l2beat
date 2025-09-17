@@ -29,12 +29,16 @@ export async function getVerifiersSection(
       icon: getProjectIcon(attester.id),
     }))
 
-    const knownDeployments = verifier.knownDeployments.map((d) => ({
-      url:
-        projects.find((p) => p.id === d.chain)?.chainConfig.explorerUrl +
-        `/address/${d.address}#code`,
-      address: d.address,
-    }))
+    const knownDeployments = verifier.knownDeployments.map((d) => {
+      const explorerUrl = projects.find((p) => p.id === d.chain)?.chainConfig
+        .explorerUrl
+      return {
+        url: explorerUrl
+          ? `${explorerUrl}/address/${d.address}#code`
+          : undefined,
+        address: d.address,
+      }
+    })
 
     if (!proofSystemVerifiers) {
       byProofSystem[key] = {

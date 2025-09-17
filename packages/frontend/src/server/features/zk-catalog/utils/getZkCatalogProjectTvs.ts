@@ -40,7 +40,7 @@ export function getZkCatalogProjectTvs(
     }),
   )
 
-  const projectTvs = usedInVerifiers.reduce((acc, projectId) => {
+  const projectTvs = projectsForTvs.reduce((acc, projectId) => {
     return acc + calculateProjectTvs(projectId, allProjects, tvs)
   }, 0)
 

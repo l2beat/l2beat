@@ -25,7 +25,7 @@ export interface VerifiersSectionProps extends ProjectSectionProps {
     verifierHashes: {
       hash: string
       knownDeployments: {
-        url: string
+        url?: string
         address: string
       }[]
       projectsUsedIn: UsedInProjectWithIcon[]
