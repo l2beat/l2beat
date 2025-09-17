@@ -21,7 +21,10 @@ export function InitialAddressesInput(props: Props) {
   const isValid = Boolean(normalizedDraft) && !isDuplicate
 
   function addDraftIfValid() {
-    if (!isValid || !normalizedDraft) return
+    if (!isValid || !normalizedDraft) {
+      return
+    }
+
     props.onChange([...props.value, normalizedDraft])
     setDraft('')
   }
@@ -50,11 +53,7 @@ export function InitialAddressesInput(props: Props) {
               value={address}
               className="w-full px-4 py-2 font-mono"
             />
-            <Button
-              onClick={() => removeAt(i)}
-              aria-label="Remove address"
-              disabled={props.disabled}
-            >
+            <Button onClick={() => removeAt(i)} disabled={props.disabled}>
               x
             </Button>
           </div>
@@ -73,7 +72,6 @@ export function InitialAddressesInput(props: Props) {
                 addDraftIfValid()
               }
             }}
-            aria-invalid={draft.length > 0 && !isValid}
           />
           {draft.length > 0 && !isValid && (
             <p className="text-red-400 text-xs">
@@ -99,11 +97,5 @@ export function InitialAddressesInput(props: Props) {
 }
 
 function isChainSpecificLike(address: string): boolean {
-  const [chainPart, addressPart] = address.split(':')
-
-  const ethereumAddressRegex = /^0x[a-fA-F0-9]{40}$/
-
-  return (
-    (chainPart?.length ?? 0) > 0 && ethereumAddressRegex.test(addressPart ?? '')
-  )
+  return /^[a-zA-Z0-9_-]+:0x[a-fA-F0-9]{40}$/.test(address)
 }

@@ -13,17 +13,21 @@ import { InitialAddressesInput } from './components/InitialAddressesInput'
 import { TypeTile } from './components/ProjectTypeTile'
 
 export function NewProjectPage() {
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+
+  const { discover, setDevMode, killCommand } = useTerminalStore()
+
   const [title, setTitle] = useState('')
   const [type, setType] = useState<'project' | 'token'>('project')
+  const [initialAddresses, setInitialAddresses] = useState<string[]>([])
+
   const [overwrite, setOverwrite] = useState(false)
+
   const [useCustomDepth, setUseCustomDepth] = useState(false)
   const [useCustomAddresses, setUseCustomAddresses] = useState(false)
   const [maxDepth, setMaxDepth] = useState(7)
   const [maxAddresses, setMaxAddresses] = useState(100)
-  const [initialAddresses, setInitialAddresses] = useState<string[]>([])
-  const queryClient = useQueryClient()
-  const { discover, setDevMode, killCommand } = useTerminalStore()
-  const navigate = useNavigate()
 
   const createConfigFileMutation = useMutation({
     mutationFn: async () => {
@@ -115,7 +119,7 @@ export function NewProjectPage() {
                 disabled={createConfigFileMutation.isPending}
                 onChange={(e) => {
                   const value = Number.parseInt(e.target.value)
-                  if (!isNaN(value) && value >= 1 && value <= 20) {
+                  if (!isNaN(value) && value >= 0) {
                     setMaxDepth(value)
                   }
                 }}
@@ -136,12 +140,11 @@ export function NewProjectPage() {
                 className="w-full bg-transparent px-4 py-2"
                 value={maxAddresses.toString()}
                 min="1"
-                max="1000"
                 placeholder="100"
                 disabled={createConfigFileMutation.isPending}
                 onChange={(e) => {
                   const value = Number.parseInt(e.target.value)
-                  if (!isNaN(value) && value >= 1 && value <= 1000) {
+                  if (!isNaN(value) && value >= 1) {
                     setMaxAddresses(value)
                   }
                 }}
@@ -186,9 +189,7 @@ export function NewProjectPage() {
             <pre>{createConfigFileMutation.error.message}</pre>
           </div>
         )}
-        <div className="mb-4">
-          <DiscoveryLookup lines={10} />
-        </div>
+        <DiscoveryLookup lines={10} />
       </div>
     </>
   )
