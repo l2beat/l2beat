@@ -100,7 +100,6 @@ export const lineaprover: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('linea')],
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

@@ -61,7 +61,6 @@ export const aztecv1prover: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('aztec')],
         description:
           'Custom verifier ID: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by get_verification_key() of Rollup1x2Vk library.',
       },

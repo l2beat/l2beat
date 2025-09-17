@@ -66,7 +66,6 @@ export const loopringprover: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('loopring')],
         description:
           'Custom verifier ID: SHA256 hash of the abi packed vk array obtained by calling getVerificationKey(blockType = 0, blockSize = 16, blockVersion = 17) on the verifier smart contract.',
       },
@@ -80,7 +79,6 @@ export const loopringprover: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('loopring')],
         description:
           'Custom verifier ID: SHA256 hash of the abi packed vk array obtained by calling getVerificationKey(blockType = 0, blockSize = 32, blockVersion = 17) on the verifier smart contract.',
       },
@@ -94,7 +92,6 @@ export const loopringprover: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('loopring')],
         description:
           'Custom verifier ID: SHA256 hash of the abi packed vk array obtained by calling getVerificationKey(blockType = 0, blockSize = 64, blockVersion = 17) on the verifier smart contract.',
       },
@@ -108,7 +105,6 @@ export const loopringprover: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('loopring')],
         description:
           'Custom verifier ID: SHA256 hash of the abi packed vk array obtained by calling getVerificationKey(blockType = 0, blockSize = 128, blockVersion = 17) on the verifier smart contract.',
       },
@@ -122,7 +118,6 @@ export const loopringprover: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('loopring')],
         description:
           'Custom verifier ID: SHA256 hash of the abi packed vk array obtained by calling getVerificationKey(blockType = 0, blockSize = 256, blockVersion = 17) on the verifier smart contract.',
       },

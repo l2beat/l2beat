@@ -109,7 +109,6 @@ export const risc0: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('taiko'), ProjectId('bob')],
         description:
           'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_1, bytes16 value of CONTROL_ROOT_2.',
       },
@@ -123,7 +122,6 @@ export const risc0: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('bob')],
         description:
           'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_1, bytes16 value of CONTROL_ROOT_2.',
       },

@@ -89,12 +89,6 @@ export const zkprover: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          // ProjectId('astarzkevm'),
-          // ProjectId('gpt'),
-          ProjectId('wirex'),
-          // ProjectId('witness'),
-        ],
         description:
           'Custom verifier ID: SHA256 hash of the following values from the verifier smart contract, abi packed in the same order they are defined: verification key data, omegas, verifier preprocessed inputs (all values from k1 to X2y2).',
       },
@@ -108,13 +102,6 @@ export const zkprover: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('polygonzkevm'),
-          ProjectId('lumia'),
-          ProjectId('silicon'),
-          ProjectId('ternoa'),
-          ProjectId('penchain'),
-        ],
         description:
           'Custom verifier ID: SHA256 hash of the following values from the verifier smart contract, abi packed in the same order they are defined: verification key data, omegas, verifier preprocessed inputs (all values from k1 to X2y2).',
       },

@@ -78,7 +78,6 @@ export const intmaxprover: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('intmax')],
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

@@ -101,7 +101,6 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('scroll')],
         description:
           "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
       },

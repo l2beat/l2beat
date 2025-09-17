@@ -108,30 +108,6 @@ export const sp1: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('vector'),
-          ProjectId('blobstream'),
-          // ProjectId('astarzkevm'),
-          // ProjectId('gpt'),
-          ProjectId('katana'),
-          // ProjectId('kroma'),
-          ProjectId('lumia'),
-          ProjectId('polygonzkevm'),
-          ProjectId('silicon'),
-          ProjectId('ternoa'),
-          ProjectId('wirex'),
-          // ProjectId('witness'),
-          ProjectId('xlayer'),
-          ProjectId('taiko'),
-          ProjectId('facet'),
-          ProjectId('plumenetwork'), // blobstream project
-          ProjectId('galxegravity'), // blobstream project
-          ProjectId('rari'), // blobstream project
-          ProjectId('winr'), // blobstream project
-          ProjectId('molten'), // blobstream project
-          ProjectId('sophon'), // vector project
-          ProjectId('lens'), // vector project
-        ],
       },
       {
         hash: '0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d',
@@ -143,7 +119,6 @@ export const sp1: BaseProject = {
           },
         ],
         verificationStatus: 'successful',
-        usedBy: [],
         verificationSteps: `
                   - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
                   - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
@@ -170,7 +145,6 @@ export const sp1: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('omni'), ProjectId('facet'), ProjectId('zircuit')],
       },
     ],
   },

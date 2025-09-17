@@ -89,14 +89,6 @@ export const boojum: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('zksync2'),
-          ProjectId('abstract'),
-          ProjectId('sophon'),
-          ProjectId('lens'),
-          ProjectId('cronoszkevm'),
-          ProjectId('zkcandy'),
-        ],
       },
       {
         hash: '0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7',
@@ -108,7 +100,6 @@ export const boojum: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('grvt'), ProjectId('wonder')],
       },
       {
         hash: '0x941fd36f78a5ba753dbbe65b9123a43ae833405fafd03b5149b959eee766e03c',
@@ -120,11 +111,6 @@ export const boojum: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('zeronetwork'),
-          ProjectId('lachain'),
-          ProjectId('sxt'),
-        ],
       },
       {
         hash: '0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1',
@@ -140,14 +126,6 @@ export const boojum: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('zksync2'),
-          ProjectId('abstract'),
-          ProjectId('sophon'),
-          ProjectId('lens'),
-          ProjectId('cronoszkevm'),
-          ProjectId('zkcandy'),
-        ],
       },
       {
         hash: '0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78',
@@ -159,7 +137,6 @@ export const boojum: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('grvt'), ProjectId('wonder')],
       },
       {
         hash: '0xf688611ad4e0ef20184a89e7b593493dffcefe92071f85c1a0b94d4852c4f82f',
@@ -171,11 +148,6 @@ export const boojum: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('zeronetwork'),
-          ProjectId('lachain'),
-          ProjectId('sxt'),
-        ],
       },
       // {
       //   hash: '0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2',
@@ -196,7 +168,6 @@ export const boojum: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('zklinknova')],
       },
     ],
   },

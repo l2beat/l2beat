@@ -801,7 +801,6 @@ export interface ProjectZkCatalogInfo {
       chain: string
     }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
-    usedBy: ProjectId[]
     verificationSteps?: string
     attesters?: ZkCatalogAttester[]
     description?: string
