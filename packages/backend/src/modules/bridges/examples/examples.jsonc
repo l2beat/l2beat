@@ -14,6 +14,30 @@
     "messages": [],
     "transfers": []
   },
+  "allbridge": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xf47433544bf5505d8c615d5184c1dae7e3a4bd26221af4146a721b794aff007d"
+      },
+      {
+        "chain": "base",
+        "tx": "0x68cde6faf73ff83be2267a8f136b2f79820e62ae59976bac5e3b9252cb8ff057"
+      },
+      {
+        "chain": "base",
+        "tx": "0x158ead7fb516fb23fd2da016d4e704c9623af497b6a8303d68388020f07ef3bd"
+      }
+    ],
+    "events": [
+      "allbridge.MessageSent",
+      "allbridge.MessageReceived",
+      "allbridge.TokensSent",
+      "allbridge.TokensReceived"
+    ],
+    "messages": ["allbridge.Message.allbridgeswap"],
+    "transfers": ["allbridge.Swap"]
+  },
   "ccip": {
     "txs": [
       {
