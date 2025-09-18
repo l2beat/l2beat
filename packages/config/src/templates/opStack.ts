@@ -67,7 +67,12 @@ import {
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import {
+  asArray,
+  explorerReferences,
+  mergeBadges,
+  safeGetImplementation,
+} from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
@@ -1649,14 +1654,18 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     hostChain.technology?.dataAvailability !== undefined,
     'Host chain must have technology data availability',
   )
+
+  const hostChainDAs = asArray(hostChain.dataAvailability)
   assert(
-    hostChain.dataAvailability !== undefined,
-    'Host chain must have data availability',
+    hostChainDAs.length === 1,
+    'Only exactly one DA on the host chain is currently supported',
   )
+  const hostDA = hostChainDAs[0]
+  assert(hostDA !== undefined, 'Host chain must have data availability')
 
   return {
-    layer: hostChain.dataAvailability.layer,
-    bridge: hostChain.dataAvailability.bridge,
+    layer: hostDA.layer,
+    bridge: hostDA.bridge,
     riskView: hostChain.riskView.dataAvailability,
     technology: hostChain.technology.dataAvailability,
     badge: DABadge,

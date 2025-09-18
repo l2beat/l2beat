@@ -2,6 +2,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../internalTypes'
 import { layer2s } from '../processing/layer2s'
 import { layer3s } from '../processing/layer3s'
+import { asArray } from '../templates/utils'
 import type { UsedInProject } from '../types'
 
 /**
@@ -14,11 +15,15 @@ export function linkByDA(where: {
 }): UsedInProject[] {
   return [...layer2s, ...layer3s]
     .filter((project: ScalingProject) => {
+      const das = asArray(project.dataAvailability)
       return (
         !project.archivedAt &&
         !project.isUpcoming &&
-        where.layer === project.dataAvailability?.layer.projectId &&
-        where.bridge === project.dataAvailability.bridge.projectId
+        das.some(
+          (da) =>
+            where.layer === da.layer.projectId &&
+            where.bridge === da.bridge.projectId,
+        )
       )
     })
     .sort((a, b) => a.display.name.localeCompare(b.display.name))
