@@ -124,11 +124,13 @@ async function getImageUrl(
 ): Promise<string> {
   logger.fetching('image url')
 
-  if (coingeckoId === 'polygon-ecosystem-token') {
-    return `/images/custom-tokens/${coingeckoId}.png`
+  switch (coingeckoId) {
+    case 'polygon-ecosystem-token':
+    case 'optimism':
+      return `/images/custom-tokens/${coingeckoId}.png`
+    default:
+      return await coingeckoClient.getImageUrl(coingeckoId)
   }
-  const imageUrl = await coingeckoClient.getImageUrl(coingeckoId)
-  return imageUrl
 }
 
 async function getDeploymentTimestamp(
