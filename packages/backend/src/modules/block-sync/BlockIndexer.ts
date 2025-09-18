@@ -70,21 +70,10 @@ export class BlockIndexer extends ManagedChildIndexer {
     const start = Date.now()
     const blockData = await Promise.all(
       blockNumbers.map(async (blockNumber) => {
-        const blockStart = Date.now()
-
         const [block, logs] = await Promise.all([
           this.$.blockProvider.getBlockWithTransactions(blockNumber),
           this.$.logsProvider.getLogs(blockNumber, blockNumber),
         ])
-
-        const duration = Date.now() - blockStart
-        this.logger.info('Fetched', {
-          blockNumber,
-          duration,
-          transactionsCount: block.transactions.length,
-          logsCount: logs.length,
-        })
-
         return { blockNumber, block, logs }
       }),
     )
