@@ -32,7 +32,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 
 export const wirex: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Zeeve],
   additionalPurposes: ['Payments'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {

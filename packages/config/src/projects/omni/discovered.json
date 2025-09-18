@@ -1,6 +1,6 @@
 {
   "name": "omni",
-  "timestamp": 1756805190,
+  "timestamp": 1757940700,
   "configHash": "0xd72649cea86ce3b29a45e8475a21e077cc60faddb3b046bd81cc1b9e8807e168",
   "entries": [
     {
@@ -249,10 +249,10 @@
         "hashiManager": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299",
         "isInitialized": true,
-        "maxAvailablePerTx": "9957959163735697208748131",
+        "maxAvailablePerTx": "9168265062173658475806309",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 1975,
+        "nonce": 2141,
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -1888,7 +1888,7 @@
         "gasLimitManager": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20333,
+        "getCurrentDay": 20346,
         "implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "gno:0x88ad09518695c6c3712AC10a214bE5109a655671",
@@ -3040,6 +3040,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "gnosis": 41916093, "ethereum": 23274516 },
+  "usedBlockNumbers": { "ethereum": 23368594, "gnosis": 42135396 },
   "permissionsConfigHash": "0xdd14a223281ad3007f536bad13ce1c6e2547595fe29cce02186ba8e2b58df53b"
 }

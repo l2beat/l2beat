@@ -15,22 +15,19 @@ export function createBridgeModule({
   blockProcessors,
   providers,
 }: ModuleDependencies): ApplicationModule | undefined {
-  if (!config.bridgesEnabled) {
+  if (!config.bridges) {
     logger.info('Bridges module disabled')
     return
   }
   logger = logger.tag({ feature: 'bridges', module: 'bridges' })
 
-  const plugins = createBridgePlugins(logger)
-  const chains = plugins
-    .flatMap((x) => x.chains)
-    .filter((x, i, a) => a.indexOf(x) === i)
+  const plugins = createBridgePlugins()
   const bridgeStore = new BridgeStore(db)
 
-  for (const chain of chains) {
+  for (const chain of config.bridges.chains) {
     const processor = new BridgeBlockProcessor(
       chain,
-      plugins.filter((x) => x.chains.includes(chain)),
+      plugins,
       bridgeStore,
       logger,
     )
@@ -47,7 +44,7 @@ export function createBridgeModule({
     financialsService,
     db,
     plugins,
-    chains,
+    config.bridges.chains,
     logger,
   )
 
@@ -62,7 +59,6 @@ export function createBridgeModule({
     bridgeMatcher.start()
     bridgeCleaner.start()
     logger.info('Started', {
-      chains: chains.length,
       plugins: plugins.length,
     })
   }

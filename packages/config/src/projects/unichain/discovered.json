@@ -408,6 +408,8 @@
           "eth:0xC56EF9c3F3e9fD6713055b4577AC4AF8303E63e1",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
         "initBonds": ["80000000000000000", "80000000000000000", 0, 0, 0],
@@ -2222,7 +2224,7 @@
         "$implementation": "unichain:0x93e57A196454CB919193fa9946f14943cf733845",
         "$pastUpgrades": [
           [
-            "2025-05-09T16:00:01.000Z",
+            "2025-06-01T18:12:11.000Z",
             "0xb6560306ccb0e772b132a8a6dd78244c0d7ac270c80baba40f95006184926c30",
             ["unichain:0x93e57A196454CB919193fa9946f14943cf733845"]
           ]
@@ -2293,8 +2295,14 @@
       "values": {
         "$admin": "unichain:0x4200000000000000000000000000000000000018",
         "$implementation": "unichain:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2024-12-05T19:19:37.000Z",
+            "0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",
+            ["unichain:0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "l1FeeWallet": "unichain:0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
@@ -2419,7 +2427,7 @@
         "$implementation": "unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
         "$pastUpgrades": [
           [
-            "2025-05-09T16:00:01.000Z",
+            "2025-06-01T18:12:11.000Z",
             "0xe992e00998b34075506d2726a274db07a62af6cdd9d527bfda9128114603cfbd",
             ["unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]
           ]
@@ -2631,8 +2639,14 @@
       "values": {
         "$admin": "unichain:0x4200000000000000000000000000000000000018",
         "$implementation": "unichain:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2024-12-05T19:19:37.000Z",
+            "0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",
+            ["unichain:0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "unichain:0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
@@ -2662,8 +2676,14 @@
       "values": {
         "$admin": "unichain:0x4200000000000000000000000000000000000018",
         "$implementation": "unichain:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2024-12-05T19:19:37.000Z",
+            "0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",
+            ["unichain:0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "unichain:0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
@@ -4831,7 +4851,7 @@
     "opstack/AnchorStateRegistry_post13": "0xb417258e0bed7d0b309a24f12000afea0e9d5952fb11707db35357da315500fd",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0xdec1700fd03bf991ef19b9aa3b5f992abf853de33e6ebae19b785a8d72b37356",
+    "opstack/DisputeGameFactory": "0xe9d9d84be84533dfde77d87e1af95889eb95f6bf254630733231f6789d4e48fe",
     "opstack/ETHLockbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",

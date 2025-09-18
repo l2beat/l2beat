@@ -28,6 +28,7 @@ import type {
   Field,
   FieldValue,
 } from './types'
+import { getReferencedProjects } from './utils'
 
 interface ProjectData {
   config: ConfigRegistry
@@ -49,13 +50,11 @@ function readProject(
 
   try {
     const discovery = configReader.readDiscovery(project)
-    const sharedModules = discovery.sharedModules ?? []
+    const referencedProjects = getReferencedProjects(discovery)
 
     return [
       { config: configReader.readConfig(project), discovery },
-      ...sharedModules.flatMap((sharedModule) =>
-        readProject(sharedModule, configReader, seen),
-      ),
+      ...referencedProjects.flatMap((p) => readProject(p, configReader, seen)),
     ]
   } catch {
     return []

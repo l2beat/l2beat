@@ -13,6 +13,7 @@ export function getEcosystemTvsLeaderboard(
   )
 
   const gainers = ecosystemLeaderboardData
+    .filter((p) => p[1].change > 0)
     .sort((a, b) => b[1].change - a[1].change)
     .slice(0, 3)
   const leaders = ecosystemLeaderboardData
@@ -52,6 +53,7 @@ export function getEcosystemActivityLeaderboard(
   )
 
   const gainers = ecosystemLeaderboardData
+    .filter((p) => p[1].change > 0)
     .sort((a, b) => b[1].change - a[1].change)
     .slice(0, 3)
   const leaders = ecosystemLeaderboardData

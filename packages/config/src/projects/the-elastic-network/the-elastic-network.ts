@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { CoingeckoId, ProjectId } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { BaseProject } from '../../types'
 
@@ -17,8 +17,14 @@ export const theElasticNetwork: BaseProject = {
     badges: [BADGES.Stack.ZKStack, BADGES.Infra.ElasticChain],
   },
   colors: {
-    primary: '#513BE5',
-    secondary: '#4276FF',
+    primary: {
+      light: '#513BE5',
+      dark: '#7468FF',
+    },
+    secondary: {
+      light: '#4276FF',
+      dark: '#4F48E5',
+    },
   },
   ecosystemConfig: {
     links: {
@@ -29,8 +35,7 @@ export const theElasticNetwork: BaseProject = {
       governanceProposals: 'https://www.tally.xyz/gov/zksync/proposals',
     },
     token: {
-      tokenId: 'zksync2-ZK',
-      projectId: ProjectId('zksync2'),
+      coingeckoId: CoingeckoId('zksync'),
       description:
         'The ZK token is a governance token that allows token holders to introduce and vote on protocol upgrades within the Elastic Network.',
     },

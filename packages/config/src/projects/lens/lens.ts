@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -142,6 +142,9 @@ export const lens: ScalingProject = zkStackL2({
       },
     },
   ],
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+  },
   milestones: [
     {
       title: 'Upgrade to Vector DA Bridge',

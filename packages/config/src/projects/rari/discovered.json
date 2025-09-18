@@ -1,7 +1,8 @@
 {
   "name": "rari",
   "timestamp": 1753201031,
-  "configHash": "0xf62f9361ae5513491e1814119b2253063db9d4d8dd205bcbb4611690c0d62c8d",
+  "configHash": "0x478d36d49ef7d93a7c9ba65440c0b2251b984b585e11a864350d22a1c81a9ff1",
+  "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {
       "name": "ProxyAdmin",

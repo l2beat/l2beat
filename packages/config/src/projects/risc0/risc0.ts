@@ -84,7 +84,7 @@ export const risc0: BaseProject = {
 
     ### Final wrap
 
-    RISC Zero [implements a SNARK wrapping](https://github.com/risc0/risc0/tree/main/risc0/groth16) of a recursive succinct receipt into a Groth16 proof over BN254 curve for onchain verification. This Groth16 R1CS circuit uses a circuit-specific trusted setup, the ceremony was run by RISC Zero, see [below](#trusted-setup) for more details. 
+    RISC Zero [implements a SNARK wrapping](https://github.com/risc0/risc0/tree/main/risc0/groth16) of a recursive succinct receipt into a Groth16 proof over BN254 curve for onchain verification. This Groth16 R1CS circuit uses a circuit-specific trusted setup, the ceremony was run by RISC Zero, see [below](#trusted-setups) for more details. 
 
     The final wrap circuit has a [control root](https://dev.risczero.com/terminology#control-root) public input that depends on the RISC-V and recursion circuit versions. This design allows upgrading RISC Zero proving system without changing the final wrapper and thus without running a new trusted setup ceremony.
     `,
@@ -99,11 +99,16 @@ export const risc0: BaseProject = {
         hash: '0x1dcf73cbd51c9eba43c437c5a5ebc5328ca2d7a590c701a9a9bc1136eceeeea7',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
-          'https://etherscan.io/address/0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
-          'https://etherscan.io/address/0x34Eda8BfFb539AeC33078819847B36D221c6641c',
+          {
+            address: '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
+            chain: 'ethereum',
+          },
+          {
+            address: '0x34Eda8BfFb539AeC33078819847B36D221c6641c',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('taiko'), ProjectId('bob')],
         description:
           'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_1, bytes16 value of CONTROL_ROOT_2.',
       },
@@ -111,10 +116,12 @@ export const risc0: BaseProject = {
         hash: '0xc6fcb1951eb5b45a669431346a01577df99f30d72baa9d5c7eea40ec6cccfab9',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
-          'https://etherscan.io/address/0x2a098988600d87650Fb061FfAff08B97149Fa84D',
+          {
+            address: '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('bob')],
         description:
           'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_1, bytes16 value of CONTROL_ROOT_2.',
       },

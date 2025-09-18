@@ -6,8 +6,10 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 
 const parseOFTSent = createEventParser(
@@ -30,7 +32,7 @@ export const Usdt0OFTReceived = createBridgeEventType<{
   tokenAddress: EthereumAddress
 }>('usdt0.OFTReceived')
 
-const NETWORKS = [
+const USDT0_NETWORKS = defineNetworks('usdt0', [
   {
     chain: 'ethereum',
     adapter: EthereumAddress('0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee'), // special case: locking adapter (not relevant for the current decoder)
@@ -66,14 +68,13 @@ const NETWORKS = [
     adapter: EthereumAddress('0x1cB6De532588fCA4a21B7209DE7C456AF8434A65'),
     tokenAddress: EthereumAddress('0x0200C29006150606B650577BBE7B6248F58470c1'),
   },
-]
+])
 
 export class Usdt0Plugin implements BridgePlugin {
   name = 'usdt0'
-  chains = NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
-    const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
+    const network = USDT0_NETWORKS.find((n) => n.chain === input.ctx.chain)
     if (!network) return
 
     const oftSent = parseOFTSent(input.log, [network.adapter])
@@ -96,46 +97,30 @@ export class Usdt0Plugin implements BridgePlugin {
     }
   }
 
-  match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!Usdt0OFTReceived.checkType(event)) return
+  match(oftReceived: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+    if (!Usdt0OFTReceived.checkType(oftReceived)) return
 
-    const oftSent = db.find(Usdt0OFTSent, { guid: event.args.guid })
+    const oftSent = db.find(Usdt0OFTSent, { guid: oftReceived.args.guid })
     if (!oftSent) return
 
-    const packetSent = db.find(PacketSent, { guid: event.args.guid })
+    const packetSent = db.find(PacketSent, { guid: oftReceived.args.guid })
     if (!packetSent) return
 
-    const packetDelivered = db.find(PacketDelivered, { guid: event.args.guid })
+    const packetDelivered = db.find(PacketDelivered, {
+      guid: oftReceived.args.guid,
+    })
     if (!packetDelivered) return
 
-    return {
-      messages: [
-        {
-          type: 'layerzerov2.Message',
-          outbound: packetSent,
-          inbound: packetDelivered,
-        },
-      ],
-      transfers: [
-        {
-          type: 'usdt0.App',
-          events: [oftSent, event],
-          outbound: {
-            event: oftSent,
-            token: {
-              address: oftSent.args.tokenAddress,
-              amount: oftSent.args.amountSentLD.toString(),
-            },
-          },
-          inbound: {
-            event: event,
-            token: {
-              address: event.args.tokenAddress,
-              amount: event.args.amountReceivedLD.toString(),
-            },
-          },
-        },
-      ],
-    }
+    return [
+      Result.Message('layerzero-v2.Message', [packetSent, packetDelivered]),
+      Result.Transfer('usdt0.Transfer', {
+        srcEvent: oftSent,
+        srcTokenAddress: oftSent.args.tokenAddress,
+        srcAmount: oftSent.args.amountSentLD.toString(),
+        dstEvent: oftReceived,
+        dstTokenAddress: oftReceived.args.tokenAddress,
+        dstAmount: oftReceived.args.amountReceivedLD.toString(),
+      }),
+    ]
   }
 }

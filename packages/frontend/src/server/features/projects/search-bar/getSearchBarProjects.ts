@@ -18,6 +18,8 @@ export async function getSearchBarProjects(
       'isDaLayer',
       'isBridge',
       'isUpcoming',
+      'ecosystemConfig',
+      'zkCatalogInfo',
     ],
   })
 

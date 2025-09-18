@@ -1954,8 +1954,9 @@
     },
     {
       "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "address": "eth:0x5bcc4b324bFD0F5D7F0e9167beBe0456BE342686",
@@ -2585,8 +2586,9 @@
     },
     {
       "address": "eth:0x955B978F3ee7818dA71fA25c676062E6BC462Fec",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sharp-verifier"
     },
     {
       "name": "ACL",
@@ -7231,5 +7233,5 @@
     "base": 34451161,
     "arbitrum": 370405709
   },
-  "permissionsConfigHash": "0xa785713915a3d09c913ed115c0a3a9eb6d680bd4f00ec6f13ac0e170700418aa"
+  "permissionsConfigHash": "0xf00869a2988dec1aa20711bc2beacfab72c16f720a48081c58dd043523b4d630"
 }

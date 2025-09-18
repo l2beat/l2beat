@@ -5,7 +5,7 @@
 
 ## How to use
 
-1. Change directory to `database\scripts\tvl-restore`
+1. Change directory to `database\scripts\db-restore` (This exact path is need for Prisma to work)
 2. Create .env & set variables
 > ⚠️ **Use readonly credential for remote**: Be very careful here!
 ```

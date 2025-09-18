@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -8,6 +8,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('ethernity')
 
 export const ethernity: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1718182472), // 2024-06-12T08:54:32Z
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['AI'],
@@ -27,6 +31,7 @@ export const ethernity: ScalingProject = opStackL2({
       ],
       explorers: ['https://ernscan.io/'],
       documentation: [],
+      repositories: ['https://github.com/epiconchain'],
       socialMedia: [
         'https://x.com/EpicOnChain',
         'https://t.me/epiconchain',

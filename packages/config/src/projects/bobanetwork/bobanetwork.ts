@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -7,6 +7,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('bobanetwork')
 
 export const bobanetwork: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   addedAt: UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
@@ -18,6 +22,7 @@ export const bobanetwork: ScalingProject = opStackL2({
       'Boba is an OP stack Optimistic Rollup built by the Enya team as core contributors to the Boba Foundation.',
     links: {
       websites: ['https://boba.network'],
+      bridges: ['https://hub.boba.network/bridge'],
       documentation: ['https://docs.boba.network/'],
       explorers: ['https://bobascan.com/'],
       repositories: ['https://github.com/bobanetwork/boba'],
