@@ -9,7 +9,7 @@ export class BlockNumberIndexer extends RootIndexer {
     private readonly blockProvider: BlockProvider,
     chain: string,
     logger: Logger,
-    private checkIntervalMs = 10_000,
+    private checkIntervalSeconds: number,
   ) {
     super(logger.tag({ chain }), {
       tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
@@ -17,7 +17,7 @@ export class BlockNumberIndexer extends RootIndexer {
   }
 
   override initialize() {
-    setInterval(() => this.requestTick(), this.checkIntervalMs)
+    setInterval(() => this.requestTick(), this.checkIntervalSeconds * 1000)
     this.requestTick()
     return Promise.resolve(undefined)
   }
