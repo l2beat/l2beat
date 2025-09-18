@@ -1,3 +1,4 @@
+import { getEnv } from '@l2beat/backend-tools'
 import type { Indexer } from '@l2beat/uif'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -29,6 +30,14 @@ export function createBlockSyncModule({
 
   const indexers: Indexer[] = []
   for (const chain of chains) {
+    const interval =
+      getEnv().optionalInteger(`${chain.toUpperCase()}_BLOCK_SYNC_INTERVAL`) ??
+      10
+
+    if (interval !== 10) {
+      logger.info(`Custom interval set for ${chain}`, { interval })
+    }
+
     const blockNumberIndexer =
       chain === 'ethereum' && config.blockSync.ethereumWsUrl
         ? new WsBlockNumberIndexer(
@@ -40,6 +49,7 @@ export function createBlockSyncModule({
             providers.block.getBlockProvider(chain),
             chain,
             logger,
+            interval,
           )
 
     const blockIndexer = new BlockIndexer({
