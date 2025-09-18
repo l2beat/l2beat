@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x40db531f00c9191379cfbcc3d8d2d9a0d63d75de
+
+# Diff at Thu, 18 Sep 2025 15:47:28 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@0bdfa87489b47d7662c688d0c187b81dffc81e27 block: 1757939365
+- current timestamp: 1758210381
+
+## Description
+
+Update to ArbOS v40.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x9f3dC4D1f6c6D9F2273d8b497E460E6E727210e8) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v32 wasmModuleRoot"
++        "ArbOS v40 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
++        "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a"
+    }
+```
+
 Generated with discovered.json: 0x9dc3f705f9b834771df564fffb39be83bf2979da
 
 # Diff at Mon, 15 Sep 2025 12:31:29 GMT:
