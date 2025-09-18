@@ -45,7 +45,7 @@ export const katana: ScalingProject = {
     BADGES.DA.EthereumBlobs,
     BADGES.RaaS.Conduit,
     BADGES.Infra.Agglayer,
-    BADGES.Stack.OPStack,
+    BADGES.Stack.OPSuccinct,
   ],
   ecosystemInfo: {
     id: ProjectId('agglayer'),
