@@ -211,7 +211,7 @@ export const mantle: ScalingProject = {
     bridge: DA_BRIDGES.NONE,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   },
-  badges: [BADGES.VM.EVM, BADGES.DA.EigenDA, BADGES.RaaS.Conduit],
+  badges: [BADGES.VM.EVM, BADGES.DA.EigenDA, BADGES.RaaS.Conduit, BADGES.Stack.OPSuccinct],
   type: 'layer2',
   riskView: {
     stateValidation: {
