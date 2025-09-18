@@ -134,6 +134,21 @@
     "messages": [],
     "transfers": []
   },
+  "layerzerov1": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x3b2b8b9fe6bfbc1ddb52cb08758527eb78e5fff2041f25badd574b09ba7cf4b4"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9644fa9892c2cad338fea622f3700598c38b34d3a89989a05c2df1cbceb60a10"
+      }
+    ],
+    "events": ["layerzero-v1.PacketSent", "layerzero-v1.PacketDelivered"],
+    "messages": ["layerzero-v1.Message"],
+    "transfers": []
+  },
   "layerzerov2": {
     "txs": [
       {
