@@ -58,7 +58,7 @@ export const mantle: ScalingProject = {
     name: 'Mantle',
     slug: 'mantle',
     description:
-      'Mantle is a modular general-purpose Optimium with a protocol design philosophy that aims to offer users a less costly and more user-friendly experience, provide developers with a simpler and more flexible development environment, and deliver a comprehensive set of infrastructure for the next wave of mass-adopted dApps.',
+      'Mantle is a modular general-purpose validium with a protocol design philosophy that aims to offer users a less costly and more user-friendly experience, provide developers with a simpler and more flexible development environment, and deliver a comprehensive set of infrastructure for the next wave of mass-adopted dApps.',
     purposes: ['Universal'],
     links: {
       websites: ['https://mantle.xyz/'],
@@ -214,7 +214,6 @@ export const mantle: ScalingProject = {
   badges: [
     BADGES.VM.EVM,
     BADGES.DA.EigenDA,
-    BADGES.RaaS.Conduit,
     BADGES.Stack.OPSuccinct,
   ],
   type: 'layer2',
@@ -297,12 +296,19 @@ export const mantle: ScalingProject = {
   technology: {
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
+      description:
+        TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false).description +
+        ' Mantle uses Hokulea, a Rust implementation that provides EigenDA blob derivation for OP stack chains.',
       references: [
         {
           url:
             'https://etherscan.io/address/' +
             ChainSpecificAddress.address(sequencerInbox),
           title: 'BatchInbox - Etherscan address',
+        },
+        {
+          url: 'https://github.com/Layr-Labs/hokulea',
+          title: 'Hokulea - EigenDA blob derivation library',
         },
       ],
     },
