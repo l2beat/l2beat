@@ -54,8 +54,13 @@ export function createServer() {
   }
 
   const server = app.listen(port, () => {
+    const url = isProduction
+      ? `Server running on port ${port}`
+      : `http://localhost:${port}`
+
     logger.info('Started', {
       port,
+      url,
     })
   })
 
