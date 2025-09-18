@@ -152,9 +152,6 @@ export const chains: ChainConfig[] = [
     explorer: {
       type: 'etherscan',
       url: 'https://api.gnosisscan.io/api',
-      unsupported: {
-        getContractCreation: true,
-      },
     },
   },
   {
