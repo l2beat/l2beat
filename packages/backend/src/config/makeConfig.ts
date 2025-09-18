@@ -149,6 +149,7 @@ export async function makeConfig(
     },
     bridges: flags.isEnabled('bridges') && {
       chains: ['ethereum', 'arbitrum', 'base', 'optimism'],
+      matchingEnabled: env.boolean('BRIDGES_MATCHING_ENABLED', true),
     },
     // Must be last
     flags: flags.getResolved(),
