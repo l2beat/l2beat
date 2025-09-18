@@ -1,4 +1,5 @@
 import { AcrossPlugin } from './across'
+import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { CCIPPlugIn } from './ccip'
@@ -47,6 +48,7 @@ export function createBridgePlugins(): BridgePlugin[] {
     new WormholeRelayerPlugin(), // should be run before Wormhole
     new WormholePlugin(),
     new StargatePlugin(),
+    new AllbridgePlugIn(),
     new AxelarITSPlugin(), // should be run before Axelar
     new AxelarPlugin(),
     new AcrossPlugin(),
