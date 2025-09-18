@@ -151,7 +151,7 @@
     ],
     "messages": ["circle-gateway.Message"],
     "transfers": ["circle-gateway.Transfer"]
-  }
+  },
   "layerzerov1": {
     "txs": [
       {
