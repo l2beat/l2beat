@@ -332,7 +332,7 @@ export const chains: ChainConfig[] = [
     multicall: undefined,
     explorer: {
       type: 'blockscout',
-      url: 'https://explorer.katanarpc.com/api',
+      url: 'https://katanascan.com/api',
     },
     coingeckoPlatform: 'katana',
   },
