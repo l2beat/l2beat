@@ -7,6 +7,7 @@ import { CompareOpStacks } from './CompareOpStacks'
 import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
 import { DecodeEigenDACommitment } from './DecodeEigenDACommitment'
+import { ParseEigenDACommitment } from './ParseEigenDACommitment'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
 import { DownloadAllShapes, DownloadShapes } from './DownloadShapes'
@@ -53,6 +54,7 @@ export function getSubcommands() {
     DeploymentTimestamp,
     DetectProxy,
     DecodeEigenDACommitment,
+    ParseEigenDACommitment,
     Discover,
     DownloadAllShapes,
     DownloadShapes,
