@@ -52,7 +52,7 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
-  readonly bridges: { chains: string[] } | false
+  readonly bridges: { chains: string[]; matchingEnabled: boolean } | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
