@@ -215,6 +215,40 @@ export class BridgeTransferRepository extends BaseRepository {
     }))
   }
 
+  async getExistingItems(
+    items: {
+      srcChain: string
+      srcTxHash: string
+      dstChain: string
+      dstTxHash: string
+    }[],
+    types: string[],
+  ): Promise<BridgeTransferRecord[]> {
+    if (items.length === 0) return []
+
+    let query = this.db.selectFrom('BridgeTransfer').selectAll()
+
+    if (types.length > 0) {
+      query = query.where('type', 'in', types)
+    }
+
+    query = query.where((eb) => {
+      const conditions = items.map((item) => {
+        return eb.and([
+          eb('srcChain', '=', item.srcChain),
+          eb('srcTxHash', '=', item.dstTxHash),
+          eb('dstChain', '=', item.dstChain),
+          eb('dstTxHash', '=', item.dstTxHash),
+        ])
+      })
+
+      return eb.or(conditions)
+    })
+
+    const rows = await query.execute()
+    return rows.map(toRecord)
+  }
+
   async deleteBefore(timestamp: UnixTime): Promise<number> {
     const result = await this.db
       .deleteFrom('BridgeTransfer')
