@@ -8,6 +8,7 @@ import { IconChevronRight } from '../icons/IconChevronRight'
 import { IconLockClosed } from '../icons/IconLockClosed'
 import { IconLockOpen } from '../icons/IconLockOpen'
 import { IconVoltage } from '../icons/IconVoltage'
+import { IconOpen } from '../icons/IconOpen'
 
 interface FunctionFolderProps {
   entry: ApiAbiEntry
@@ -18,6 +19,7 @@ interface FunctionFolderProps {
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
+  onOpenInCode: (contractAddress: string, functionName: string) => void
 }
 
 export function FunctionFolder({
@@ -28,7 +30,8 @@ export function FunctionFolder({
   onPermissionToggle,
   onCheckedToggle,
   onScoreToggle,
-  onDescriptionUpdate
+  onDescriptionUpdate,
+  onOpenInCode
 }: FunctionFolderProps) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -154,6 +157,24 @@ export function FunctionFolder({
             }}
           >
             <IconVoltage />
+          </button>
+
+          {/* Open in Code Icon */}
+          <button
+            onClick={() => onOpenInCode(contractAddress, functionName)}
+            className="inline-block cursor-pointer transition-colors"
+            style={{
+              color: '#9ca3af', // gray-400
+            }}
+            title={`Open function in Code panel`}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = '#d1d5db' // gray-300
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = '#9ca3af' // gray-400
+            }}
+          >
+            <IconOpen />
           </button>
         </div>
 

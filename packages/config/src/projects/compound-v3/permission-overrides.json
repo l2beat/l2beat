@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-18T15:50:49.186Z",
+  "lastModified": "2025-09-18T21:34:51.373Z",
   "overrides": [
     {
       "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
@@ -50,12 +50,6 @@
       "functionName": "withdrawReserves",
       "userClassification": "permissioned",
       "timestamp": "2025-09-17T15:25:01.958Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "absorb",
-      "userClassification": "non-permissioned",
-      "timestamp": "2025-09-17T15:57:05.757Z"
     },
     {
       "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
@@ -170,6 +164,13 @@
       "checked": false,
       "score": "high-risk",
       "timestamp": "2025-09-18T15:50:49.186Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "absorb",
+      "userClassification": "non-permissioned",
+      "score": "medium-risk",
+      "timestamp": "2025-09-18T21:34:51.373Z"
     }
   ]
 }

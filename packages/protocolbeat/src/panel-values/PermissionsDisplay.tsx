@@ -1,17 +1,63 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Fragment, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getPermissionOverrides, updatePermissionOverride } from '../api/api'
+import { getPermissionOverrides, updatePermissionOverride, getCode } from '../api/api'
+import { useMultiViewStore } from '../multi-view/store'
+import { useCodeStore } from '../components/editor/store'
+import { usePanelStore } from '../store/store'
 import type { ApiAbi, ApiAbiEntry, PermissionOverride } from '../api/types'
 import { partition } from '../common/partition'
 import { AddressDisplay } from './AddressDisplay'
 import { Folder } from './Folder'
 import { FunctionFolder } from './FunctionFolder'
 
+// Helper function to find all function occurrences in source code
+function findAllFunctionOccurrences(sources: Array<{ name: string; code: string }>, functionName: string): Array<{ startOffset: number; length: number; sourceIndex: number }> {
+  const occurrences: Array<{ startOffset: number; length: number; sourceIndex: number }> = []
+
+  for (let sourceIndex = 0; sourceIndex < sources.length; sourceIndex++) {
+    const source = sources[sourceIndex]
+    if (!source) continue
+
+    // Look for function definition with various patterns
+    const patterns = [
+      new RegExp(`function\\s+${functionName}\\s*\\(`, 'gi'),
+      new RegExp(`\\b${functionName}\\s*\\(.*?\\)\\s*(?:public|external|internal|private)?(?:\\s+\\w+)*\\s*(?:returns\\s*\\([^)]*\\))?\\s*{`, 'gi')
+    ]
+
+    for (const pattern of patterns) {
+      let match
+      while ((match = pattern.exec(source.code)) !== null) {
+        const startOffset = match.index
+        // Try to find the end of the function signature (up to opening brace or semicolon)
+        const remainingCode = source.code.slice(startOffset)
+        const endMatch = remainingCode.match(/[{;]/)
+        const length = endMatch ? endMatch.index! + 1 : functionName.length + 10
+
+        occurrences.push({ startOffset, length, sourceIndex })
+      }
+    }
+  }
+
+  return occurrences
+}
+
+
 export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   const { project } = useParams()
   const queryClient = useQueryClient()
   const [localOverrides, setLocalOverrides] = useState<PermissionOverride[]>([])
+
+  // Track current occurrence index for each function (key: "contractAddress:functionName")
+  const [functionOccurrenceCounters, setFunctionOccurrenceCounters] = useState<Record<string, number>>({})
+
+  // Multi-view store for panel management
+  const ensurePanel = useMultiViewStore((state) => state.ensurePanel)
+  const setActivePanel = useMultiViewStore((state) => state.setActivePanel)
+
+  // Code store for editor operations
+  const { showRange, setSourceIndex } = useCodeStore()
+
 
   // Load permission overrides for this project
   const { data: overridesData } = useQuery({
@@ -51,6 +97,65 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     if (!project) return
 
     await updateOverride(contractAddress, functionName, { description })
+  }
+
+  const handleOpenInCode = async (contractAddress: string, functionName: string) => {
+    if (!project) return
+
+    try {
+      // Ensure Code panel is open and active
+      ensurePanel('code')
+      setActivePanel('code')
+
+      // Get the currently selected contract (this is what the CodePanel is displaying)
+      const selectedAddress = usePanelStore.getState().selected
+
+      if (!selectedAddress) {
+        console.warn('No contract selected')
+        return
+      }
+
+      // Get the source code for the selected contract (proxy), which includes both proxy and implementation
+      const codeResponse = await getCode(project, selectedAddress)
+
+      // Get all occurrences first
+      const allOccurrences = findAllFunctionOccurrences(codeResponse.sources, functionName)
+
+      if (allOccurrences.length === 0) {
+        console.warn(`Function "${functionName}" not found in any source file`)
+        return
+      }
+
+      // Create a key for this function
+      const functionKey = `${selectedAddress}:${functionName}`
+
+      // Get current counter for this function (defaults to 0)
+      const currentCounter = functionOccurrenceCounters[functionKey] || 0
+
+      // Calculate next occurrence index (cycle through all occurrences)
+      const nextOccurrenceIndex = currentCounter % allOccurrences.length
+      const functionLocation = allOccurrences[nextOccurrenceIndex]
+
+
+      if (functionLocation) {
+        // Update the counter for next time
+        setFunctionOccurrenceCounters(prev => ({
+          ...prev,
+          [functionKey]: currentCounter + 1
+        }))
+
+        // Navigate to the selected occurrence
+        setSourceIndex(selectedAddress, functionLocation.sourceIndex)
+        showRange(selectedAddress, {
+          startOffset: functionLocation.startOffset,
+          length: functionLocation.length
+        })
+
+      }
+
+    } catch (error) {
+      console.error('Failed to navigate to function:', error)
+    }
   }
 
   const updateOverride = async (
@@ -104,9 +209,9 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   // Filter to only show ABIs that have write functions
   const abisWithWriteFunctions = abis.filter(abi => {
     const readMarkers = [' view ', ' pure ']
-    const [errors, nonErrors] = partition(abi.entries, (e) => e.value.startsWith('error'))
-    const [events, nonEvents] = partition(nonErrors, (e) => e.value.startsWith('event'))
-    const [read, write] = partition(nonEvents, (e) => readMarkers.some((marker) => e.value.includes(marker)))
+    const [, nonErrors] = partition(abi.entries, (e) => e.value.startsWith('error'))
+    const [, nonEvents] = partition(nonErrors, (e) => e.value.startsWith('event'))
+    const [, write] = partition(nonEvents, (e) => readMarkers.some((marker) => e.value.includes(marker)))
     return write.length > 0
   })
 
@@ -136,6 +241,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
             onCheckedToggle={handleCheckedToggle}
             onScoreToggle={handleScoreToggle}
             onDescriptionUpdate={handleDescriptionUpdate}
+            onOpenInCode={handleOpenInCode}
           />
         </li>
       ))}
@@ -150,7 +256,8 @@ function PermissionsCode({
   onPermissionToggle,
   onCheckedToggle,
   onScoreToggle,
-  onDescriptionUpdate
+  onDescriptionUpdate,
+  onOpenInCode
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
@@ -159,16 +266,17 @@ function PermissionsCode({
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
+  onOpenInCode: (contractAddress: string, functionName: string) => void
 }) {
   const readMarkers = [' view ', ' pure ']
 
-  const [errors, nonErrors] = partition(entries, (e) =>
+  const [, nonErrors] = partition(entries, (e) =>
     e.value.startsWith('error'),
   )
-  const [events, nonEvents] = partition(nonErrors, (e) =>
+  const [, nonEvents] = partition(nonErrors, (e) =>
     e.value.startsWith('event'),
   )
-  const [read, write] = partition(nonEvents, (e) =>
+  const [, write] = partition(nonEvents, (e) =>
     readMarkers.some((marker) => e.value.includes(marker)),
   )
 
@@ -186,6 +294,7 @@ function PermissionsCode({
           onCheckedToggle={onCheckedToggle}
           onScoreToggle={onScoreToggle}
           onDescriptionUpdate={onDescriptionUpdate}
+          onOpenInCode={onOpenInCode}
         />
       </Folder>
     </div>
@@ -199,7 +308,8 @@ function WritePermissionsCodeEntries({
   onPermissionToggle,
   onCheckedToggle,
   onScoreToggle,
-  onDescriptionUpdate
+  onDescriptionUpdate,
+  onOpenInCode
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
@@ -208,6 +318,7 @@ function WritePermissionsCodeEntries({
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
+  onOpenInCode: (contractAddress: string, functionName: string) => void
 }) {
   const extractFunctionName = (abiEntry: string): string | null => {
     const match = abiEntry.match(/function\s+(\w+)\s*\(/)
@@ -242,6 +353,7 @@ function WritePermissionsCodeEntries({
             onCheckedToggle={onCheckedToggle}
             onScoreToggle={onScoreToggle}
             onDescriptionUpdate={onDescriptionUpdate}
+            onOpenInCode={onOpenInCode}
           />
         )
       })}
