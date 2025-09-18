@@ -7,6 +7,12 @@ import type {
   PermissionOverride,
 } from './types'
 
+// Cache for discovered permissions to avoid repeated file parsing
+const discoveredPermissionsCache = new Map<string, {
+  permissions: PermissionOverride[]
+  mtime: number
+}>()
+
 export function getPermissionOverrides(
   paths: DiscoveryPaths,
   project: string,
@@ -58,12 +64,21 @@ export function updatePermissionOverride(
     }
   }
 
-  // Create new override entry
+  // Find existing override for the same contract/function
+  const existingOverride = userOverrides.find(
+    (override) =>
+      override.contractAddress === updateRequest.contractAddress &&
+      override.functionName === updateRequest.functionName
+  )
+
+  // Create new override entry, merging with existing data
   const newOverride: PermissionOverride = {
     contractAddress: updateRequest.contractAddress,
     functionName: updateRequest.functionName,
-    userClassification: updateRequest.userClassification,
-    reason: updateRequest.reason,
+    userClassification: updateRequest.userClassification ?? existingOverride?.userClassification ?? 'non-permissioned',
+    checked: updateRequest.checked ?? existingOverride?.checked,
+    score: updateRequest.score ?? existingOverride?.score,
+    reason: updateRequest.reason ?? existingOverride?.reason,
     timestamp: new Date().toISOString(),
   }
 
@@ -122,6 +137,18 @@ function loadDiscoveredPermissions(discoveredPath: string): PermissionOverride[]
   }
 
   try {
+    // Check cache first
+    const stats = fs.statSync(discoveredPath)
+    const currentMtime = stats.mtimeMs
+    const cached = discoveredPermissionsCache.get(discoveredPath)
+
+    if (cached && cached.mtime === currentMtime) {
+      // Return cached result if file hasn't changed
+      return cached.permissions
+    }
+
+    // File has changed or not cached, parse it
+    console.log(`Parsing discovered.json for permissions (${Math.round(stats.size / 1024)}KB)...`)
     const fileContent = fs.readFileSync(discoveredPath, 'utf8')
     const discovered = JSON.parse(fileContent)
     const overrides: PermissionOverride[] = []
@@ -155,6 +182,13 @@ function loadDiscoveredPermissions(discoveredPath: string): PermissionOverride[]
       }
     }
 
+    // Cache the result
+    discoveredPermissionsCache.set(discoveredPath, {
+      permissions: overrides,
+      mtime: currentMtime
+    })
+
+    console.log(`Cached ${overrides.length} discovered permissions`)
     return overrides
   } catch (error) {
     console.error('Error parsing discovered.json:', error)

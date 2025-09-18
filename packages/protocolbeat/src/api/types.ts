@@ -217,6 +217,8 @@ export interface PermissionOverride {
   contractAddress: string
   functionName: string
   userClassification: 'permissioned' | 'non-permissioned'
+  checked?: boolean
+  score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk'
   reason?: string
   timestamp: string
 }
@@ -224,6 +226,8 @@ export interface PermissionOverride {
 export interface ApiPermissionOverridesUpdateRequest {
   contractAddress: string
   functionName: string
-  userClassification: 'permissioned' | 'non-permissioned'
+  userClassification?: 'permissioned' | 'non-permissioned'
+  checked?: boolean
+  score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk'
   reason?: string
 }

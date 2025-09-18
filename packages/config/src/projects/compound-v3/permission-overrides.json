@@ -1,49 +1,13 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-17T15:25:07.880Z",
+  "lastModified": "2025-09-17T18:00:26.818Z",
   "overrides": [
-    {
-      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "functionName": "admin",
-      "userClassification": "permissioned",
-      "timestamp": "2025-09-16T18:01:51.862Z"
-    },
     {
       "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
       "functionName": "acceptAdmin",
       "userClassification": "permissioned",
       "reason": "Test permission toggle",
       "timestamp": "2025-09-16T18:01:56.876Z"
-    },
-    {
-      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "functionName": "implementation",
-      "userClassification": "permissioned",
-      "timestamp": "2025-09-16T19:03:31.811Z"
-    },
-    {
-      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "functionName": "upgradeTo",
-      "userClassification": "permissioned",
-      "timestamp": "2025-09-16T19:03:32.547Z"
-    },
-    {
-      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "functionName": "upgradeToAndCall",
-      "userClassification": "permissioned",
-      "timestamp": "2025-09-16T19:03:33.985Z"
-    },
-    {
-      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "functionName": "changeAdmin",
-      "userClassification": "permissioned",
-      "timestamp": "2025-09-16T19:09:24.903Z"
-    },
-    {
-      "contractAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "functionName": "withdraw",
-      "userClassification": "non-permissioned",
-      "timestamp": "2025-09-17T12:04:02.694Z"
     },
     {
       "contractAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -59,57 +23,15 @@
     },
     {
       "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "supplyFrom",
-      "userClassification": "non-permissioned",
-      "timestamp": "2025-09-17T15:22:14.673Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "supply",
-      "userClassification": "non-permissioned",
-      "timestamp": "2025-09-17T15:22:16.830Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "initializeStorage",
-      "userClassification": "permissioned",
-      "timestamp": "2025-09-17T15:24:39.372Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
       "functionName": "buyCollateral",
       "userClassification": "permissioned",
       "timestamp": "2025-09-17T15:24:40.406Z"
     },
     {
       "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "accrueAccount",
-      "userClassification": "permissioned",
-      "timestamp": "2025-09-17T15:24:44.648Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "absorb",
-      "userClassification": "permissioned",
-      "timestamp": "2025-09-17T15:24:46.704Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
       "functionName": "approveThis",
       "userClassification": "non-permissioned",
       "timestamp": "2025-09-17T15:24:48.206Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "supplyTo",
-      "userClassification": "permissioned",
-      "timestamp": "2025-09-17T15:24:50.493Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "transferAssetFrom",
-      "userClassification": "non-permissioned",
-      "timestamp": "2025-09-17T15:24:52.505Z"
     },
     {
       "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
@@ -131,15 +53,122 @@
     },
     {
       "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "transfer",
+      "functionName": "absorb",
       "userClassification": "non-permissioned",
-      "timestamp": "2025-09-17T15:25:04.967Z"
+      "timestamp": "2025-09-17T15:57:05.757Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "accrueAccount",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T15:57:07.657Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "initializeStorage",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T15:57:09.278Z"
     },
     {
       "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
       "functionName": "pause",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T15:57:10.533Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "supply",
       "userClassification": "permissioned",
-      "timestamp": "2025-09-17T15:25:07.880Z"
+      "timestamp": "2025-09-17T15:57:11.754Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "supplyFrom",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:57:12.696Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "supplyTo",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T15:57:14.314Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "transfer",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:57:15.021Z"
+    },
+    {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "transferAssetFrom",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:57:15.713Z"
+    },
+    {
+      "contractAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "functionName": "transferFrom",
+      "userClassification": "non-permissioned",
+      "timestamp": "2025-09-17T15:57:41.594Z"
+    },
+    {
+      "contractAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "functionName": "withdraw",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-17T15:57:42.803Z"
+    },
+    {
+      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "functionName": "admin",
+      "userClassification": "permissioned",
+      "checked": false,
+      "score": "unscored",
+      "timestamp": "2025-09-17T15:59:13.120Z"
+    },
+    {
+      "contractAddress": "eth:0xtest",
+      "functionName": "testFunc",
+      "userClassification": "non-permissioned",
+      "checked": true,
+      "timestamp": "2025-09-17T16:08:22.600Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "upgradeToAndCall",
+      "userClassification": "permissioned",
+      "checked": true,
+      "timestamp": "2025-09-17T16:09:02.745Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "changeAdmin",
+      "userClassification": "permissioned",
+      "checked": true,
+      "score": "low-risk",
+      "timestamp": "2025-09-17T16:42:41.944Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "upgradeTo",
+      "userClassification": "permissioned",
+      "checked": true,
+      "timestamp": "2025-09-17T16:43:00.897Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "implementation",
+      "userClassification": "permissioned",
+      "checked": true,
+      "score": "unscored",
+      "timestamp": "2025-09-17T16:46:36.131Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "admin",
+      "userClassification": "permissioned",
+      "checked": false,
+      "score": "unscored",
+      "timestamp": "2025-09-17T18:00:26.818Z"
     }
   ]
 }
