@@ -7808,7 +7808,8 @@
       "category": "stablecoin",
       "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
       "source": "native",
-      "supply": "totalSupply" // minted like an RWA (backed by RWA)
+      "supply": "totalSupply", // minted like an RWA (backed by RWA)
+      "coingeckoId": "agora-dollar"
     }
   ],
   "ternoa": [

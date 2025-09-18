@@ -17,13 +17,13 @@ import {
   Result,
 } from './types'
 
-/* 
-ITS tokens - for each token there is a unique tokenId (bytes32). We keep track of tokenAddresses for each chain 
-Example: 
+/*
+ITS tokens - for each token there is a unique tokenId (bytes32). We keep track of tokenAddresses for each chain
+Example:
 tokenId: 0x88f7d4d3c179fc145b10300e6e4ee078f32ec3cd3bcb80ca98f2fa7a719f330b
 symbol: ATH:
 arbitrum: 0xc87B37a581ec3257B734886d9d3a581F5A9d056c
-ethereum: 0xbe0Ed4138121EcFC5c0E56B40517da27E6c5226B 
+ethereum: 0xbe0Ed4138121EcFC5c0E56B40517da27E6c5226B
 */
 
 export const ITS_TOKENS: {
@@ -67,7 +67,6 @@ export const InterchainTransferReceived = createBridgeEventType<{
 
 export class AxelarITSPlugin implements BridgePlugin {
   name = 'axelar-its'
-  chains = ['ethereum', 'arbitrum', 'base', 'optimism']
 
   capture(input: LogToCapture) {
     const interchainTransfer = parseInterchainTransfer(input.log, null)

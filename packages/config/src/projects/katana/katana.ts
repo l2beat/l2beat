@@ -45,7 +45,7 @@ export const katana: ScalingProject = {
     BADGES.DA.EthereumBlobs,
     BADGES.RaaS.Conduit,
     BADGES.Infra.Agglayer,
-    BADGES.Stack.OPStack,
+    BADGES.Stack.OPSuccinct,
   ],
   ecosystemInfo: {
     id: ProjectId('agglayer'),
@@ -64,7 +64,7 @@ export const katana: ScalingProject = {
         'https://app.katana.network/',
         'https://bridge.katana.network/',
       ],
-      explorers: ['https://explorer.katanarpc.com'],
+      explorers: ['https://katanascan.com'],
       repositories: ['https://github.com/agglayer'],
       documentation: [
         'https://docs.katana.network/',
@@ -155,11 +155,11 @@ export const katana: ScalingProject = {
     name: 'katana',
     chainId: 747474,
     coingeckoPlatform: 'katana',
-    explorerUrl: 'https://explorer.katanarpc.com',
+    explorerUrl: 'https://katanascan.com',
     sinceTimestamp: UnixTime(1746742811),
     apis: [
       { type: 'rpc', url: 'https://rpc.katana.network', callsPerMinute: 1500 },
-      { type: 'blockscout', url: 'https://explorer.katanarpc.com/api' },
+      { type: 'blockscout', url: 'https://katanascan.com/api' },
     ],
   },
   riskView: {

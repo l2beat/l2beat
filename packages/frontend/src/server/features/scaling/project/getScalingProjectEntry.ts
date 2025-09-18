@@ -252,12 +252,10 @@ export async function getScalingProjectEntry(
     archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
-    colors: env.CLIENT_SIDE_PARTNERS
-      ? {
-          project: project.colors,
-          ecosystem: project.ecosystemColors,
-        }
-      : undefined,
+    colors: {
+      project: project.colors,
+      ecosystem: project.ecosystemColors,
+    },
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     rosette: getScalingRosette(project),

@@ -135,7 +135,6 @@ export interface BridgeEventDb {
 
 export interface BridgePlugin {
   name: string
-  chains: string[]
   capture?: (
     input: LogToCapture,
   ) => BridgeEvent | undefined | Promise<BridgeEvent | undefined>

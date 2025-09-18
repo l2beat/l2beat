@@ -99,7 +99,6 @@ export const LogFulfilledOrder = createBridgeEventType<{
 
 export class DeBridgeDlnPlugin implements BridgePlugin {
   name = 'debridge-dln'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const logOrderCreated = parseCreatedOrder(input.log, null)
@@ -133,7 +132,7 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
     }
   }
 
-  /* Matching alogrithm:
+  /* Matching algorithm:
 1. For Each LogOrderFilled on DST
 2. Find LogOrderCreated on SRC with the same orderHash
 */

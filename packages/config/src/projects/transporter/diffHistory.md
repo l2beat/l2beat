@@ -1,3 +1,100 @@
+Generated with discovered.json: 0x2f2fc62128e05bcc2cc2458a8655e3a3b54cb349
+
+# Diff at Wed, 17 Sep 2025 13:32:14 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@826dd36404e9c33731dc0255e96251d8d8999c20 block: 1757940540
+- current timestamp: 1758115819
+
+## Description
+
+Added EDEN token pool, pool (wstLINK) owner change.
+
+## Watched changes
+
+```diff
+    contract LockReleaseTokenPool (eth:0x0549475Ff447CBC0CfF51CB0719E0AA2dAF4eDC8) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "15971525489660198786"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x8113f001eA456759264317007220cBc939cA8435) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "6433500567565415381"
+      values.getSupportedChains.2:
++        "15971525489660198786"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.226:
++        "eth:0x94A43cC8C4d755271436cfE42793A66a6C9ae25b"
+      values.pools.227:
++        "eth:0xC8ADf2f51a35b0a9d8f74675b64c954Ca2Dcbc14"
+      values.pools.228:
++        "eth:0x34731AfB2A45fFD616401f27dBF2Da8B8F369807"
+      values.pools.229:
++        "eth:0xDE76A096C5eadDdf97Af3fE15ee49d32AEDa9822"
+      values.poolsMap.eth:0xf0DB65D17e30a966C2ae6A21f6BBA71cea6e9754:
++        "eth:0x94A43cC8C4d755271436cfE42793A66a6C9ae25b"
+      values.poolsMap.eth:0x24A3D725C37A8D1a66Eb87f0E5D07fE67c120035:
++        "eth:0xC8ADf2f51a35b0a9d8f74675b64c954Ca2Dcbc14"
+      values.poolsMap.eth:0x3cD649D1B1D59bB841Fd60fC62382174AD9DcFF8:
++        "eth:0x34731AfB2A45fFD616401f27dBF2Da8B8F369807"
+      values.poolsMap.eth:0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D:
++        "eth:0xDE76A096C5eadDdf97Af3fE15ee49d32AEDa9822"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0xF6403CF6E954a43699097322e0867C63d653C2D0) {
+    +++ description: None
+      values.owner:
+-        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
++        "eth:0xB351EC0FEaF4B99FdFD36b484d9EC90D0422493D"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x34731AfB2A45fFD616401f27dBF2Da8B8F369807)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x94A43cC8C4d755271436cfE42793A66a6C9ae25b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EDENBurnMintTokenPool (eth:0xC8ADf2f51a35b0a9d8f74675b64c954Ca2Dcbc14)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0xDE76A096C5eadDdf97Af3fE15ee49d32AEDa9822)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x34731AfB2A45fFD616401f27dBF2Da8B8F369807.sol | 1615 +++++++++++++++
+ .../transporter/.flat/EDENBurnMintTokenPool.sol    | 1392 +++++++++++++
+ ...:0x94A43cC8C4d755271436cfE42793A66a6C9ae25b.sol | 2132 ++++++++++++++++++++
+ ...:0xDE76A096C5eadDdf97Af3fE15ee49d32AEDa9822.sol | 1766 ++++++++++++++++
+ 4 files changed, 6905 insertions(+)
+```
+
 Generated with discovered.json: 0x3f5fae20336c93de920d186365bd4dcc18179ec8
 
 # Diff at Mon, 15 Sep 2025 12:50:55 GMT:
