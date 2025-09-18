@@ -148,7 +148,9 @@ export async function makeConfig(
       ),
     },
     bridges: flags.isEnabled('bridges') && {
-      chains: ['ethereum', 'arbitrum', 'base', 'optimism'],
+      chains: ['ethereum', 'arbitrum', 'base', 'optimism'].filter((c) =>
+        flags.isEnabled('bridges', c),
+      ),
     },
     // Must be last
     flags: flags.getResolved(),
