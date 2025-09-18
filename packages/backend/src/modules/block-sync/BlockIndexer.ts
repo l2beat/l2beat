@@ -15,6 +15,8 @@ export interface BlockIndexerDeps
   blockProvider: BlockProvider
   logsProvider: LogsProvider
   blockProcessors: BlockProcessor[]
+  /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
+  batchSize: number
 }
 
 export class BlockIndexer extends ManagedChildIndexer {
@@ -31,47 +33,87 @@ export class BlockIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    let blockNumber = from
+    let adjustedFrom = from
     if (
-      blockNumber !== to &&
+      adjustedFrom !== to &&
       (from === this.$.minHeight || this.$.mode === 'LATEST_ONLY')
     ) {
-      blockNumber = to
+      adjustedFrom = to
     }
 
-    const delay = to - blockNumber
+    const delay = to - adjustedFrom
     this.logger.info(`Delay from the tip: ${delay} blocks`, { delay })
 
-    this.logger.info('Fetching block and logs', { blockNumber })
-    const start = Date.now()
-    const block =
-      await this.$.blockProvider.getBlockWithTransactions(blockNumber)
-    const logs = await this.$.logsProvider.getLogs(blockNumber, blockNumber)
-    const duration = Date.now() - start
-    this.logger.info('Fetched', {
-      duration,
-      transactionsCount: block.transactions.length,
-      logsCount: logs.length,
+    const adjustedTo = Math.min(to, adjustedFrom + this.$.batchSize - 1)
+
+    this.logger.info('Range adjusted', {
+      from: adjustedFrom,
+      to: adjustedTo,
+      mode: this.$.mode,
     })
 
-    for (const processor of this.$.blockProcessors) {
-      try {
-        const start = Date.now()
-        await processor.processBlock(block, logs)
-        const duration = Date.now() - start
-        this.logger.info(
-          `${processor.constructor.name} finished in ${duration.toFixed(2)}ms`,
-          { processor: processor.constructor.name, duration },
-        )
-      } catch (error) {
-        this.logger.error(
-          `Processor ${processor.constructor.name} failed to process block`,
-          { blockNumber, error },
-        )
+    const blockNumbers = []
+    for (
+      let blockNumber = adjustedFrom;
+      blockNumber <= adjustedTo;
+      blockNumber++
+    ) {
+      blockNumbers.push(blockNumber)
+    }
+
+    this.logger.info('Fetching all blocks and logs', {
+      from: adjustedFrom,
+      to: adjustedTo,
+      blocks: adjustedTo - adjustedFrom + 1,
+    })
+
+    const start = Date.now()
+    const blockData = await Promise.all(
+      blockNumbers.map(async (blockNumber) => {
+        const blockStart = Date.now()
+
+        const [block, logs] = await Promise.all([
+          this.$.blockProvider.getBlockWithTransactions(blockNumber),
+          this.$.logsProvider.getLogs(blockNumber, blockNumber),
+        ])
+
+        const duration = Date.now() - blockStart
+        this.logger.info('Fetched', {
+          blockNumber,
+          duration,
+          transactionsCount: block.transactions.length,
+          logsCount: logs.length,
+        })
+
+        return { blockNumber, block, logs }
+      }),
+    )
+    const totalDuration = Date.now() - start
+    this.logger.info('Finished fetching all blocks and logs', {
+      totalDuration,
+      blocks: blockData.length,
+    })
+
+    for (const { blockNumber, block, logs } of blockData) {
+      for (const processor of this.$.blockProcessors) {
+        try {
+          const start = Date.now()
+          await processor.processBlock(block, logs)
+          const duration = Date.now() - start
+          this.logger.info(
+            `${processor.constructor.name} finished in ${duration.toFixed(2)}ms`,
+            { processor: processor.constructor.name, duration },
+          )
+        } catch (error) {
+          this.logger.error(
+            `Processor ${processor.constructor.name} failed to process block`,
+            { blockNumber, error },
+          )
+        }
       }
     }
 
-    return blockNumber
+    return adjustedTo
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
