@@ -2,14 +2,14 @@ export interface BridgeExplorerItem {
   outbound: {
     chain: string
     hash: string
-    symbol: string
-    amount: number
+    symbol?: string
+    amount?: number
   }
   inbound: {
     chain: string
     hash: string
-    symbol: string
-    amount: number
+    symbol?: string
+    amount?: number
   }
 }
 
@@ -24,15 +24,15 @@ export async function getAcrossExplorerItems(): Promise<BridgeExplorerItem[]> {
 
   const matches = Array.from(htmlContent.matchAll(detailedPairRegex))
 
-  const bridgeItems: BridgeExplorerItem[] = matches
+  return matches
     .map((match) => {
       const senderNetwork = match[1]
       const senderHash = match[2]
-      const senderAmount = Number.parseFloat(match[3]) || 0
+      const senderAmount = Number.parseFloat(match[3]) ?? 0
       const senderSymbol = match[4]
       const receiverNetwork = match[5]
       const receiverHash = match[6]
-      const receiverAmount = Number.parseFloat(match[7]) || 0
+      const receiverAmount = Number.parseFloat(match[7]) ?? 0
       const receiverSymbol = match[8]
 
       if (
@@ -59,7 +59,5 @@ export async function getAcrossExplorerItems(): Promise<BridgeExplorerItem[]> {
         },
       }
     })
-    .filter((item): item is BridgeExplorerItem => item !== null)
-
-  return bridgeItems
+    .filter((v) => v != null)
 }
