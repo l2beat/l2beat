@@ -79,6 +79,7 @@ export function updatePermissionOverride(
     checked: updateRequest.checked ?? existingOverride?.checked,
     score: updateRequest.score ?? existingOverride?.score,
     reason: updateRequest.reason ?? existingOverride?.reason,
+    description: updateRequest.description ?? existingOverride?.description,
     timestamp: new Date().toISOString(),
   }
 

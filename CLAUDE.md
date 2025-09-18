@@ -1181,3 +1181,46 @@ packages/
 - **Data Export**: JSON format suitable for further analysis
 
 This enhancement establishes DefidDisco as a comprehensive DeFi analysis platform with sophisticated permission management capabilities, clean UI architecture, and enterprise-grade performance optimizations.
+
+---
+
+# EXPANDABLE FUNCTION DROPDOWNS WITH DESCRIPTION FIELD ✅ COMPLETED
+
+## Key Changes
+- **UI**: Write functions now expandable dropdowns instead of flat list
+- **New Field**: Added `description?: string` to `PermissionOverride` interface
+- **Auto-Creation**: Adding description to any function creates full override entry with defaults
+
+## Implementation Details
+
+### New Components
+- **`FunctionFolder.tsx`**: Individual expandable function with description textarea
+- **Updated `PermissionsDisplay.tsx`**: Uses FunctionFolder components instead of flat list
+
+### Debounced Input (Critical Fix)
+**Problem**: Original implementation called API on every keystroke
+**Solution**: 500ms debounced saves with local state for immediate UI feedback
+```typescript
+// Local state updates instantly, API calls only after 500ms pause
+const [localDescription, setLocalDescription] = useState(description)
+```
+
+### Backend Changes
+- **`permissionOverrides.ts`**: Added description field support
+- **Both type files**: Added `description?: string` to interfaces
+
+### Data Structure
+```json
+{
+  "contractAddress": "eth:0x...",
+  "functionName": "admin",
+  "description": "Function documentation here",
+  // ... other fields
+}
+```
+
+## Future Development Notes
+- **Expanding functions**: Click function header to reveal description textarea
+- **Icon interactions**: ✓🔒⚡ icons work in collapsed state, don't trigger expand
+- **Performance**: Uses debouncing pattern - replicate for other text inputs
+- **Auto-creation**: Any new description automatically creates override entry

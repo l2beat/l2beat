@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-17T18:00:26.818Z",
+  "lastModified": "2025-09-18T15:50:49.186Z",
   "overrides": [
     {
       "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
@@ -71,12 +71,6 @@
     },
     {
       "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "functionName": "pause",
-      "userClassification": "non-permissioned",
-      "timestamp": "2025-09-17T15:57:10.533Z"
-    },
-    {
-      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
       "functionName": "supply",
       "userClassification": "permissioned",
       "timestamp": "2025-09-17T15:57:11.754Z"
@@ -141,14 +135,6 @@
     },
     {
       "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "functionName": "changeAdmin",
-      "userClassification": "permissioned",
-      "checked": true,
-      "score": "low-risk",
-      "timestamp": "2025-09-17T16:42:41.944Z"
-    },
-    {
-      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
       "functionName": "upgradeTo",
       "userClassification": "permissioned",
       "checked": true,
@@ -163,12 +149,27 @@
       "timestamp": "2025-09-17T16:46:36.131Z"
     },
     {
+      "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+      "functionName": "pause",
+      "userClassification": "permissioned",
+      "timestamp": "2025-09-18T15:45:55.926Z"
+    },
+    {
       "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
       "functionName": "admin",
       "userClassification": "permissioned",
+      "checked": true,
+      "score": "low-risk",
+      "description": "This function is a simple getter on the current admin address.",
+      "timestamp": "2025-09-18T15:50:02.218Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "changeAdmin",
+      "userClassification": "permissioned",
       "checked": false,
-      "score": "unscored",
-      "timestamp": "2025-09-17T18:00:26.818Z"
+      "score": "high-risk",
+      "timestamp": "2025-09-18T15:50:49.186Z"
     }
   ]
 }

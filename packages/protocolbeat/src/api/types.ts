@@ -220,6 +220,7 @@ export interface PermissionOverride {
   checked?: boolean
   score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk'
   reason?: string
+  description?: string
   timestamp: string
 }
 
@@ -230,4 +231,5 @@ export interface ApiPermissionOverridesUpdateRequest {
   checked?: boolean
   score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk'
   reason?: string
+  description?: string
 }
