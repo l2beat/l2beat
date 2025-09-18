@@ -56,7 +56,9 @@ export function createBridgeModule({
     logger = logger.for('BridgeModule')
     logger.info('Starting')
     await bridgeStore.start()
-    bridgeMatcher.start()
+    if (config.bridges && config.bridges.matchingEnabled) {
+      bridgeMatcher.start()
+    }
     bridgeCleaner.start()
     logger.info('Started', {
       plugins: plugins.length,
