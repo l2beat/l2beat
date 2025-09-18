@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.",
+  "fields": {
+    "initialProposer": {
+      "handler": {
+        "type": "hardcoded", // constructor param
+        "value": "eth:0x6667961f5e9c98a76a48767522150889703ed77d"
+      },
+      "permissions": [
+        {
+          "type": "propose"
+        }
+      ]
+    },
+    "additionalProposers": {
+      "handler": {
+        "type": "event",
+        "select": "proposer",
+        "add": {
+          "event": "ProposerUpdated",
+          "where": ["=", "#added", true]
+        },
+        "remove": {
+          "event": "ProposerUpdated",
+          "where": ["!=", "#added", true]
+        }
+      }
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can toggle between the optimistic mode and not optimistic (ZK) mode."
+        }
+      ]
+    }
+  },
+  "ignoreMethods": [
+    "computeL2Timestamp",
+    "getL2Output",
+    "getL2OutputAfter",
+    "getL2OutputIndexAfter",
+    "historicBlockHashes"
+  ],
+  "ignoreInWatchMode": [
+    "nextBlockNumber",
+    "nextOutputIndex",
+    "latestBlockNumber",
+    "latestOutputIndex",
+    "lastProposalTimestamp"
+  ]
+}

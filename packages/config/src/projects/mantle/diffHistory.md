@@ -1,3 +1,146 @@
+Generated with discovered.json: 0xd8173f86001f02e42df9db8016876e69033a10a6
+
+# Diff at Wed, 17 Sep 2025 15:47:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@7dc97cff69f1ac401ab0db199fdc0a960c0b7fe1 block: 1756300390
+- current timestamp: 1758123938
+
+## Description
+
+OPSuccinctL2OutputOracle - completely different contract
+(https://disco.l2beat.com/diff/eth:0xD1230865641561653406906Fb08873F011c19080/eth:0x4059509fFb703B048D1e9Ce3118F90E759076f50)
+better compared with Phala which is standard OPSuccinct
+(https://disco.l2beat.com/diff/eth:0x9d843e5b627759e8aB2Db5B95cCA1e5BB91F1174/eth:0x4059509fFb703B048D1e9Ce3118F90E759076f50)
+
+## Watched changes
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481","role":".CHALLENGER"}
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      name:
+-        "L2OutputOracle"
++        "OPSuccinctL2OutputOracle"
+      template:
+-        "opstack/L2OutputOracle"
++        "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle"
+      sourceHashes.1:
+-        "0x45368d302fba850124115aa8ee67238f47d47d89c2b1b8c5dfd39818369e6cea"
++        "0xdd58c04f5920f546ba5a9bc5b046cdae6bf42acb819e90e2f66e10cc81afbc9f"
+      description:
+-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
++        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function."
+      values.$implementation:
+-        "eth:0xD1230865641561653406906Fb08873F011c19080"
++        "eth:0x4059509fFb703B048D1e9Ce3118F90E759076f50"
+      values.$pastUpgrades.1:
++        ["2025-09-16T06:46:47.000Z","0xf9fc68effd8cbd421d25e87a357757fe6710c6c9c0d9c5270d2af5a37f675259",["eth:0x4059509fFb703B048D1e9Ce3118F90E759076f50"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.deletedOutputs:
+-        []
+      values.PROPOSER:
+-        "eth:0x6667961f5e9C98A76a48767522150889703Ed77D"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.version:
+-        "1.3.0"
++        "2.0.1"
+      values.additionalProposers:
++        []
+      values.aggregationVkey:
++        "0x00bca7947ba758bd6f539f480c6d983cca4bd4387a411a41a71fb953d5df3de7"
+      values.challenger:
++        "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+      values.finalizationPeriodSeconds:
++        604800
+      values.initializerVersion:
++        3
+      values.initialProposer:
++        "eth:0x6667961f5e9c98a76a48767522150889703ed77d"
+      values.l2BlockTime:
++        2
+      values.optimisticMode:
++        false
+      values.owner:
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      values.proposer:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rangeVkeyCommitment:
++        "0x2d0dcc4f4a5e59b80239c28a3fb68ab63b8eaf6f132239e95f927da9046f4256"
+      values.rollupConfigHash:
++        "0x46fed49cbaf7272fb44cbd470ac7ee460d5e3b22eed239059bbbf4b356351792"
+      values.submissionInterval:
++        1800
+      values.verifier:
++        "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B"
+      fieldMeta:
+-        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."},"proposer":{"severity":"HIGH"},"challenger":{"severity":"HIGH"},"deletedOutputs":{"severity":"HIGH"}}
+      implementationNames.eth:0xD1230865641561653406906Fb08873F011c19080:
+-        "L2OutputOracle"
+      implementationNames.eth:0x4059509fFb703B048D1e9Ce3118F90E759076f50:
++        "OPSuccinctL2OutputOracle"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481","description":"can toggle between the optimistic mode and not optimistic (ZK) mode.","role":".owner"}
+    }
+```
+
+```diff
+    EOA  (eth:0x6667961f5e9C98A76a48767522150889703Ed77D) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".PROPOSER"
++        ".initialProposer"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../L2OutputOracle/L2OutputOracle.sol => /dev/null |  839 ---------------
+ .../OPSuccinctL2OutputOracle.sol                   | 1093 ++++++++++++++++++++
+ .../OPSuccinctL2OutputOracle}/Proxy.p.sol          |    0
+ .../src/projects/mantle/.flat/SP1Verifier.sol      |  602 +++++++++++
+ .../projects/mantle/.flat/SP1VerifierGateway.sol   |  231 +++++
+ .../SP1VerifierGatewayMultisig/GnosisSafe.sol      |  953 +++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 7 files changed, 2914 insertions(+), 839 deletions(-)
+```
+
 Generated with discovered.json: 0x1cb35d4a4ca414aac5c59acf0e3f4527397ab466
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
