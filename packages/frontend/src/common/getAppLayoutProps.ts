@@ -11,6 +11,11 @@ export async function getAppLayoutProps(): Promise<AppLayoutProps> {
       description: term.data.definition,
     })),
     recentlyAddedProjects,
-    whatsNew: undefined,
+    whatsNew: {
+      id: 'ecosystems-release',
+      alt: 'Ecosystems release announcement',
+      href: '/ecosystems/arbitrum-orbit',
+      image: '/images/whats-new/ecosystems.png',
+    },
   }
 }
