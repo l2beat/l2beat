@@ -14,6 +14,21 @@
     "messages": [],
     "transfers": []
   },
+  "ccip": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x89f4d3325105dadaddd73e67843739547337688ad75969a31145f80127681429"
+      },
+      {
+        "chain": "base",
+        "tx": "0x05e94651d51f379b1b5c56756b1908431b19d72e9dc05fef801d96c434866109"
+      }
+    ],
+    "events": ["ccip.ExecutionStateChanged", "ccip.CCIPSendRequested"],
+    "messages": ["ccip.Message"],
+    "transfers": []
+  },
   "cctpv1": {
     "txs": [
       {
