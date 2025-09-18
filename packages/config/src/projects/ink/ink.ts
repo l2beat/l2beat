@@ -30,6 +30,7 @@ export const ink: ScalingProject = opStackL2({
         'https://explorer.inkonchain.com',
         'https://okx.com/en-au/web3/explorer/inkchain',
       ],
+      bridges: ['https://inkonchain.com/bridge'],
       repositories: ['https://github.com/inkonchain'],
       socialMedia: [
         'https://x.com/inkonchain',
