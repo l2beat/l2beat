@@ -11,11 +11,6 @@ export async function getAppLayoutProps(): Promise<AppLayoutProps> {
       description: term.data.definition,
     })),
     recentlyAddedProjects,
-    whatsNew: {
-      id: 'zk-catalog-release',
-      alt: 'ZK Catalog release announcement',
-      href: '/zk-catalog',
-      image: '/images/whats-new/zk-catalog.png',
-    },
+    whatsNew: undefined,
   }
 }
