@@ -25,6 +25,7 @@ export const apechain: ScalingProject = orbitStackL3({
       bridges: ['https://apechain.com/portal'],
       documentation: ['https://docs.apechain.com/'],
       explorers: ['https://apescan.io/'],
+      repositories: ['https://github.com/ape-foundation'],
       socialMedia: [
         'https://twitter.com/apecoin',
         'https://discord.gg/apecoindao',
