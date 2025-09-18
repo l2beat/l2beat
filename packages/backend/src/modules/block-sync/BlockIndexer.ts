@@ -52,27 +52,47 @@ export class BlockIndexer extends ManagedChildIndexer {
       mode: this.$.mode,
     })
 
-    // fetch all data first to make sure we won't run processors twice on the same block
-    const blockData = []
+    const blockNumbers = []
     for (
       let blockNumber = adjustedFrom;
       blockNumber <= adjustedTo;
       blockNumber++
     ) {
-      this.logger.info('Fetching block and logs', { blockNumber })
-      const start = Date.now()
-      const block =
-        await this.$.blockProvider.getBlockWithTransactions(blockNumber)
-      const logs = await this.$.logsProvider.getLogs(blockNumber, blockNumber)
-      const duration = Date.now() - start
-      this.logger.info('Fetched', {
-        duration,
-        transactionsCount: block.transactions.length,
-        logsCount: logs.length,
-      })
-
-      blockData.push({ blockNumber, block, logs })
+      blockNumbers.push(blockNumber)
     }
+
+    this.logger.info('Fetching all blocks and logs', {
+      from: adjustedFrom,
+      to: adjustedTo,
+      blocks: adjustedTo - adjustedFrom + 1,
+    })
+
+    const start = Date.now()
+    const blockData = await Promise.all(
+      blockNumbers.map(async (blockNumber) => {
+        const blockStart = Date.now()
+
+        const [block, logs] = await Promise.all([
+          this.$.blockProvider.getBlockWithTransactions(blockNumber),
+          this.$.logsProvider.getLogs(blockNumber, blockNumber),
+        ])
+
+        const duration = Date.now() - blockStart
+        this.logger.info('Fetched', {
+          blockNumber,
+          duration,
+          transactionsCount: block.transactions.length,
+          logsCount: logs.length,
+        })
+
+        return { blockNumber, block, logs }
+      }),
+    )
+    const totalDuration = Date.now() - start
+    this.logger.info('Finished fetching all blocks and logs', {
+      totalDuration,
+      blocks: blockData.length,
+    })
 
     for (const { blockNumber, block, logs } of blockData) {
       for (const processor of this.$.blockProcessors) {
