@@ -50,8 +50,8 @@ function EcosystemTierCard({
       key={partner.slug}
       style={
         {
-          '--ecosystem-primary': partner.project.colors.primary,
-          '--ecosystem-secondary': partner.project.colors.secondary,
+          '--ecosystem-primary': partner.project.colors.primary.light,
+          '--ecosystem-secondary': partner.project.colors.secondary.light,
         } as React.CSSProperties
       }
       className="group hover:-translate-y-1 transition-[translate,scale] duration-300 ease-out hover:scale-[1.02] active:scale-[0.98]"
