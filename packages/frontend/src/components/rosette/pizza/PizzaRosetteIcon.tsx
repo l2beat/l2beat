@@ -6,6 +6,7 @@ import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
 import { useRosetteTooltipContext } from '../RosetteTooltipContext'
 import type { RosetteValue } from '../types'
+import { PizzaElementLink } from './PizzaElementLink'
 
 interface Props {
   values: RosetteValue[]
@@ -78,7 +79,7 @@ export function PizzaRosetteIcon({
           />
         )}
         <g clipPath="url(#inner-clip)">
-          <RosetteElementLink
+          <PizzaElementLink
             elementValue={first}
             disableSectionLinking={disableSectionLinking}
           >
@@ -95,9 +96,9 @@ export function PizzaRosetteIcon({
               onMouseEnter={() => selectRisk(first)}
               onTouchStart={() => selectRisk(first)}
             />
-          </RosetteElementLink>
+          </PizzaElementLink>
 
-          <RosetteElementLink
+          <PizzaElementLink
             elementValue={second}
             disableSectionLinking={disableSectionLinking}
           >
@@ -114,9 +115,9 @@ export function PizzaRosetteIcon({
               onMouseEnter={() => selectRisk(second)}
               onTouchStart={() => selectRisk(second)}
             />
-          </RosetteElementLink>
+          </PizzaElementLink>
 
-          <RosetteElementLink
+          <PizzaElementLink
             elementValue={third}
             disableSectionLinking={disableSectionLinking}
           >
@@ -133,9 +134,9 @@ export function PizzaRosetteIcon({
               onMouseEnter={() => selectRisk(third)}
               onTouchStart={() => selectRisk(third)}
             />
-          </RosetteElementLink>
+          </PizzaElementLink>
 
-          <RosetteElementLink
+          <PizzaElementLink
             elementValue={fourth}
             disableSectionLinking={disableSectionLinking}
           >
@@ -152,9 +153,9 @@ export function PizzaRosetteIcon({
               onMouseEnter={() => selectRisk(fourth)}
               onTouchStart={() => selectRisk(fourth)}
             />
-          </RosetteElementLink>
+          </PizzaElementLink>
 
-          <RosetteElementLink
+          <PizzaElementLink
             elementValue={fifth}
             disableSectionLinking={disableSectionLinking}
           >
@@ -171,7 +172,7 @@ export function PizzaRosetteIcon({
               onMouseEnter={() => selectRisk(fifth)}
               onTouchStart={() => selectRisk(fifth)}
             />
-          </RosetteElementLink>
+          </PizzaElementLink>
 
           {isUnderReview ? (
             <>
@@ -189,18 +190,4 @@ export function PizzaRosetteIcon({
       </g>
     </svg>
   )
-}
-
-function RosetteElementLink({
-  elementValue,
-  children,
-  disableSectionLinking,
-}: {
-  elementValue: RosetteValue
-  children: React.ReactNode
-  disableSectionLinking?: boolean
-}) {
-  if (disableSectionLinking || !elementValue.href) return children
-
-  return <a href={elementValue.href}>{children}</a>
 }
