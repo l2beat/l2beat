@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('alephzero')
 
 export const alephzero: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1723420800), // 2024-08-12T00:00:00Z
+  archivedAt: UnixTime(1758278706),
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
