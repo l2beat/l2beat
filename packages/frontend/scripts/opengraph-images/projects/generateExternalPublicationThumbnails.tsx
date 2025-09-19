@@ -74,7 +74,7 @@ export async function generateExternalPublicationThumbnails() {
 async function getImageFromUrl(
   publicationId: string,
   url: string,
-): Promise<Buffer<ArrayBufferLike> | undefined> {
+): Promise<Buffer | undefined> {
   try {
     const imgResponse = await fetch(url)
     const buffer = await imgResponse.arrayBuffer()
