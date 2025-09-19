@@ -1,6 +1,7 @@
 import { authorsCollection } from './authors'
 import { delegatedProjectsCollection } from './delegated-projects'
 import { eventsCollection } from './events'
+import { externalPublicationsCollection } from './external-publications'
 import { glossaryCollection } from './glossary'
 import { governancePublicationsCollection } from './governance-publications'
 import { monthlyUpdatesCollection } from './monthly-updates'
@@ -18,4 +19,5 @@ export const collections = {
   pages: pagesCollection,
   partners: partnersCollection,
   'monthly-updates': monthlyUpdatesCollection,
+  'external-publications': externalPublicationsCollection,
 }

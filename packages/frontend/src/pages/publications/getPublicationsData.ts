@@ -4,6 +4,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import {
+  getPublicationEntryFromExternalPublication,
   getPublicationEntryFromGovernance,
   getPublicationEntryFromMonthlyUpdate,
 } from './utils/getPublicationEntry'
@@ -15,10 +16,14 @@ export async function getPublicationsData(
   const appLayoutProps = await getAppLayoutProps()
   const governancePublications = getCollection('governance-publications')
   const monthlyUpdates = getCollection('monthly-updates')
+  const externalPublications = getCollection('external-publications')
 
   const publications = governancePublications
     .map(getPublicationEntryFromGovernance)
     .concat(monthlyUpdates.map(getPublicationEntryFromMonthlyUpdate))
+    .concat(
+      externalPublications.map(getPublicationEntryFromExternalPublication),
+    )
     .sort((a, b) => b.publishedOn - a.publishedOn)
 
   return {
