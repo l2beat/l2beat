@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -26,9 +26,6 @@ export const umi: ScalingProject = upcomingL2({
         'https://uminetwork.com/blog',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   proofSystem: {
     type: 'Optimistic',
