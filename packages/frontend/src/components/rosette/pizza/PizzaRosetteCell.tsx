@@ -31,6 +31,7 @@ export function PizzaRosetteCell(props: Props) {
             className="size-6 md:size-8"
             isUnderReview={isUnderReview}
             background={false}
+            disableSectionLinking
           />
         </TableLink>
       </TooltipTrigger>

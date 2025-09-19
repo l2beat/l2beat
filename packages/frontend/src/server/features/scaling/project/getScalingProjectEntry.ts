@@ -159,6 +159,7 @@ export async function getScalingProjectEntry(
     activitySection,
     costsSection,
     dataPostedSection,
+    stateValidationSection,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -172,6 +173,7 @@ export async function getScalingProjectEntry(
     project.scalingInfo.layer === 'layer2'
       ? await getDataPostedSection(helpers, project, daSolution)
       : undefined,
+    getStateValidationSection(project),
   ])
 
   const projectLiveness = liveness[project.id]
@@ -258,7 +260,13 @@ export async function getScalingProjectEntry(
     },
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
-    rosette: getScalingRosette(project),
+    rosette: getScalingRosette(project, {
+      hasStateValidationSection: !!stateValidationSection,
+      hasDataAvailabilitySection: !!getDataAvailabilitySection(project),
+      hasWithdrawalsSection: !!getWithdrawalsSection(project),
+      hasSequencingSection: !!getSequencingSection(project),
+      hasOperatorsSection: !!getOperatorSection(project),
+    }),
     hostChainName: project.scalingInfo.hostChain.name,
     stageConfig:
       project.scalingInfo.type === 'Other'
@@ -528,7 +536,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const stateValidationSection = await getStateValidationSection(project)
   if (stateValidationSection) {
     sections.push({
       type: 'StateValidationSection',

@@ -51,6 +51,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
             parameters.rosetteClassName,
           )}
           background={props.background}
+          disableSectionLinking
         />
         {props.isUpcoming && (
           <UpcomingBadge className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2" />
