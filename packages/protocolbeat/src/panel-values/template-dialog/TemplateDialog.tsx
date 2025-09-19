@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { useMemo, useState } from 'react'
 import { createShape, listTemplates } from '../../api/api'
 import { Dialog } from '../../components/Dialog'
+import { Input } from '../../components/Input'
 import {
   DialogContext,
   type DialogStep,
@@ -199,7 +200,7 @@ function SpecifyTemplate({
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-1">
         <label className="font-medium text-xs">Template ID</label>
-        <Dialog.Input
+        <Input
           value={formData.templateId}
           onChange={(e) => onFormChange('templateId', e.target.value)}
           type="text"
@@ -208,7 +209,7 @@ function SpecifyTemplate({
 
       <div className="flex flex-col gap-1">
         <label className="font-medium text-xs">Filename</label>
-        <Dialog.Input
+        <Input
           type="text"
           value={formData.fileName}
           onChange={(e) => onFormChange('fileName', e.target.value)}
@@ -217,7 +218,7 @@ function SpecifyTemplate({
 
       <div className="flex flex-col gap-1">
         <h3 className="font-medium text-sm">Available templates</h3>
-        <Dialog.Input
+        <Input
           type="text"
           placeholder="Search templates..."
           value={searchQuery}

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Dialog } from './components/Dialog'
+import { Button } from '../components/Button'
 
 export function NotFoundPage() {
   return (
@@ -9,11 +9,11 @@ export function NotFoundPage() {
         <h1 className="font-bold text-2xl">Page Not Found</h1>
       </div>
 
-      <Dialog.Button>
+      <Button>
         <Link to="/ui" className="text-blue-500">
           Go back to the home page
         </Link>
-      </Dialog.Button>
+      </Button>
     </div>
   )
 }
