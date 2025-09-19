@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x2fa73466d32cff274d9726c8d9ac42cc706f3567
+
+# Diff at Fri, 19 Sep 2025 13:06:41 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a930e518d214c15603feeda62e2a483dbd2454e0 block: 1758110316
+- current timestamp: 1758287100
+
+## Description
+
+One preconfirmer deregistered.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered.
+      description:
+-        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
++        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
+      values.registeredOperators.3:
+-        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+      values.registeredOperatorsCount:
+-        4
++        3
+    }
+```
+
 Generated with discovered.json: 0x42f636e3dfaf48d1a9640e215b6c9c04e4943780
 
 # Diff at Wed, 17 Sep 2025 12:00:17 GMT:
