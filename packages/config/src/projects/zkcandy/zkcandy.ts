@@ -47,7 +47,7 @@ export const zkcandy: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.zkcandy.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

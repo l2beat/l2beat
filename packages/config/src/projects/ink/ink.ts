@@ -74,7 +74,7 @@ export const ink: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc-gel.inkonchain.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'blockscout',

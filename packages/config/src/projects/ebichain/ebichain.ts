@@ -44,7 +44,7 @@ export const ebichain: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.ebi.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

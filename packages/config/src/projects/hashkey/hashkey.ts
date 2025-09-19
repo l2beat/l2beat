@@ -62,7 +62,7 @@ export const hashkey = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.hsk.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['HSK'],

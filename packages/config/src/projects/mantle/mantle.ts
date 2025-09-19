@@ -108,7 +108,7 @@ export const mantle: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://rpc.mantle.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'blockscout',

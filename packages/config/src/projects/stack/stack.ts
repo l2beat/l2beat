@@ -48,7 +48,7 @@ export const stack: ScalingProject = opStackL3({
       {
         type: 'rpc',
         url: 'https://rpc.stack.so',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

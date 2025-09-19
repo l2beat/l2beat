@@ -101,7 +101,7 @@ export const ternoa: ScalingProject = polygonCDKStack({
         type: 'rpc',
         // successfully tested at 5k/min
         url: 'https://rpc-mainnet.zkevm.ternoa.network',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

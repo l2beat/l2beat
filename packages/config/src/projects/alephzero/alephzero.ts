@@ -39,7 +39,7 @@ export const alephzero: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.alephzero.raas.gelato.cloud',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['AZERO'],

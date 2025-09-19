@@ -66,7 +66,7 @@ export const swell = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.ankr.com/swell',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

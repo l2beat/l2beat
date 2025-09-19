@@ -48,7 +48,7 @@ export const donatuz: ScalingProject = opStackL3({
       {
         type: 'rpc',
         url: 'https://rpc.donatuz.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

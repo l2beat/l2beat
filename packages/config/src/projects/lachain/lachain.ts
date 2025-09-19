@@ -37,7 +37,7 @@ export const lachain: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://rpc1.zk.lachain.network',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

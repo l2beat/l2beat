@@ -211,7 +211,7 @@ export const bobanetwork: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.boba.network/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'routescan',

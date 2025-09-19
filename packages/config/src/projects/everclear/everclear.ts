@@ -42,7 +42,7 @@ export const everclear: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.everclear.raas.gelato.cloud',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'blockscout',
