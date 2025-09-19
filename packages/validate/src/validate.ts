@@ -238,11 +238,11 @@ function whatType(value: unknown) {
   if (type === 'object') {
     if (value === null) {
       type = 'null'
-    } else if (Array.isArray(type)) {
+    } else if (Array.isArray(value)) {
       type = 'array'
     } else {
       try {
-        type = Object.getPrototypeOf(type).constructor.name
+        type = Object.getPrototypeOf(value as object).constructor.name
       } catch {}
     }
   }
@@ -338,11 +338,11 @@ function impObject<T extends object>(
   strict: boolean,
 ) {
   return function impObject(value: unknown): Result<Object<T>> {
-    if (typeof value !== 'object' || value === null || Array.isArray(object)) {
+    if (typeof value !== 'object' || value === null || Array.isArray(value)) {
       return failType('object', value)
     }
     if (strict) {
-      for (const key in object) {
+      for (const key in value as Record<string, unknown>) {
         if (!(key in schema)) {
           return {
             success: false,
@@ -520,7 +520,7 @@ function impRecord<K extends string | number, V>(
   }
 
   return function impRecord(value: unknown): Result<Record<K, V>> {
-    if (typeof value !== 'object' || value === null || Array.isArray(object)) {
+    if (typeof value !== 'object' || value === null || Array.isArray(value)) {
       return failType('object', value)
     }
     const result = {} as Record<K, V>
