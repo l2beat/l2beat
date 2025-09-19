@@ -23,9 +23,6 @@ export const roninNetwork: ScalingProject = upcomingL2({
       ],
     },
   },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   proofSystem: {
     type: 'Optimistic',
   },
