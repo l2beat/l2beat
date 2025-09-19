@@ -1,16 +1,12 @@
 export interface BridgeExplorerItem {
-  outbound: {
-    chain: string
-    hash: string
-    symbol?: string
-    amount?: number
-  }
-  inbound: {
-    chain: string
-    hash: string
-    symbol?: string
-    amount?: number
-  }
+  srcChain: string
+  srcTxHash: string
+  srcSymbol?: string
+  srcAmount?: number
+  dstChain: string
+  dstTxHash: string
+  dstSymbol?: string
+  dstAmount?: number
 }
 
 export async function getAcrossExplorerItems(): Promise<BridgeExplorerItem[]> {
@@ -45,18 +41,14 @@ export async function getAcrossExplorerItems(): Promise<BridgeExplorerItem[]> {
       }
 
       return {
-        outbound: {
-          chain: senderNetwork,
-          hash: senderHash,
-          symbol: senderSymbol,
-          amount: senderAmount,
-        },
-        inbound: {
-          chain: receiverNetwork,
-          hash: receiverHash,
-          symbol: receiverSymbol,
-          amount: receiverAmount,
-        },
+        srcChain: senderNetwork,
+        srcTxHash: senderHash,
+        srcSymbol: senderSymbol,
+        srcAmount: senderAmount,
+        dstChain: receiverNetwork,
+        dstTxHash: receiverHash,
+        dstSymbol: receiverSymbol,
+        dstAmount: receiverAmount,
       }
     })
     .filter((v) => v != null)
