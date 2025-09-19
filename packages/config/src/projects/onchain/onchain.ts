@@ -7,6 +7,7 @@ export const onchain: ScalingProject = underReviewL3({
   id: 'onchain',
   capability: 'universal',
   addedAt: UnixTime(1737469446), // 2025-01-21T14:24:03+00:00
+  archivedAt: UnixTime(1758284309),
   hostChain: ProjectId('base'),
   badges: [
     BADGES.RaaS.Conduit,
