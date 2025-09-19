@@ -62,7 +62,7 @@ export const openvmprover: BaseProject = {
     
     ## Description
 
-    [OpenVM](https://github.com/openvm-org/openvm?tab=readme-ov-file) is a STARK proving system based on [Plonky3 proving library](https://github.com/Plonky3/Plonky3), that has “no-CPU” design paradigm and allows adding new custom instructions to its instruction set architecture (ISA). It supports [recursive STARK aggregation](https://book.openvm.dev/guest-libs/verify-stark.html) and provides an [SDK](https://github.com/openvm-org/openvm-solidity-sdk) for creating Solidity verifier smart contracts. 
+    [OpenVM](https://github.com/openvm-org/openvm?tab=readme-ov-file) is a STARK proving system based on [Plonky3 proving library](https://github.com/Plonky3/Plonky3), that has “no-CPU” design paradigm and allows adding new custom instructions to its instruction set architecture (ISA). It supports [recursive STARK aggregation](https://docs.openvm.dev/book/guest-libraries/verify-stark) and provides an [SDK](https://github.com/openvm-org/openvm-solidity-sdk) for creating Solidity verifier smart contracts. 
 
     ## Proof system
 
