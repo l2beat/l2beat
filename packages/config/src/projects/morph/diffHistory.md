@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xdf7f5d9659cc3b737f86d2e4c41221b19ffdc9ec
+
+# Diff at Fri, 19 Sep 2025 08:20:56 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@db1760252dd9dd68603e4c71d0f4e284d5d0d15f block: 1758186428
+- current timestamp: 1758269993
+
+## Description
+
+Removed a member of morph multisig 1, this address stays a member of morph multisig 2.
+
+## Watched changes
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x0659dF9D53A987e3aDaa9019407431413A101eF3"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x8bde2188efe9de48fa02c980bb73248170245dab
 
 # Diff at Thu, 18 Sep 2025 09:08:11 GMT:
