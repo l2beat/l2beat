@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-19T18:38:52.063Z",
+  "lastModified": "2025-09-19T21:06:31.942Z",
   "overrides": [
     {
       "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
@@ -150,24 +150,6 @@
     },
     {
       "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "functionName": "admin",
-      "userClassification": "permissioned",
-      "checked": true,
-      "score": "low-risk",
-      "description": "This function is a simple getter on the current admin address.",
-      "ownerDefinitions": [
-        {
-          "type": "field",
-          "field": {
-            "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-            "method": "admin"
-          }
-        }
-      ],
-      "timestamp": "2025-09-18T15:50:02.218Z"
-    },
-    {
-      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
       "functionName": "changeAdmin",
       "userClassification": "permissioned",
       "checked": false,
@@ -234,6 +216,24 @@
       "checked": true,
       "score": "unscored",
       "timestamp": "2025-09-19T18:38:52.063Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "admin",
+      "userClassification": "permissioned",
+      "checked": true,
+      "score": "low-risk",
+      "description": "This function is a simple getter on the current admin address.",
+      "ownerDefinitions": [
+        {
+          "type": "field",
+          "field": {
+            "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+            "method": "$admin"
+          }
+        }
+      ],
+      "timestamp": "2025-09-19T21:06:31.942Z"
     }
   ]
 }

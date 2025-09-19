@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useRef } from 'react'
+import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import type { ApiAbiEntry, PermissionOverride } from '../api/types'
 import * as solidity from '../components/editor/languages/solidity'
@@ -10,9 +10,11 @@ import { IconLockClosed } from '../icons/IconLockClosed'
 import { IconLockOpen } from '../icons/IconLockOpen'
 import { IconVoltage } from '../icons/IconVoltage'
 import { IconOpen } from '../icons/IconOpen'
-import { useOwnerResolution, formatOwnerDefinition, getResolvedAddresses } from './OwnerResolution'
+import { useOwnerResolution } from './OwnerResolution'
 import { AddressDisplay } from './AddressDisplay'
 import type { OwnerDefinition } from '../api/types'
+import { useQuery } from '@tanstack/react-query'
+import { getProject } from '../api/api'
 
 interface FunctionFolderProps {
   entry: ApiAbiEntry
@@ -52,6 +54,102 @@ export function FunctionFolder({
     currentOverride?.ownerDefinitions,
     project || ''
   )
+
+  // Fetch project data to get available contracts and fields
+  const { data: projectData } = useQuery({
+    queryKey: ['project', project],
+    queryFn: () => project ? getProject(project) : null,
+    enabled: !!project,
+  })
+
+  // Extract available contracts and their fields
+  const availableContracts = React.useMemo(() => {
+    if (!projectData?.entries) return []
+
+    const contracts: Array<{ address: string; name: string; source: string }> = []
+
+    projectData.entries.forEach(entry => {
+      // Add initial contracts
+      entry.initialContracts
+        .filter(contract => contract.type === 'Contract')
+        .forEach(contract => {
+          contracts.push({
+            address: contract.address,
+            name: contract.name || 'Unknown Contract',
+            source: 'initial'
+          })
+        })
+
+      // Add discovered contracts
+      entry.discoveredContracts
+        .filter(contract => contract.type === 'Contract')
+        .forEach(contract => {
+          // Avoid duplicates - check if already added as initial contract
+          if (!contracts.some(c => c.address === contract.address)) {
+            contracts.push({
+              address: contract.address,
+              name: contract.name || 'Unknown Contract',
+              source: 'discovered'
+            })
+          }
+        })
+    })
+
+    return contracts
+  }, [projectData])
+
+  // Get available fields for selected contract
+  const getAvailableFields = (contractAddr: string) => {
+    if (!projectData?.entries) return []
+
+    for (const entry of projectData.entries) {
+      // Check both initial and discovered contracts
+      const allContracts = [...entry.initialContracts, ...entry.discoveredContracts]
+      const contract = allContracts.find(c => c.address === contractAddr)
+
+      if (contract?.fields) {
+        return contract.fields
+          .filter(field => field.value?.type === 'address' || field.name?.toLowerCase().includes('admin') || field.name?.toLowerCase().includes('owner') || field.name?.toLowerCase().includes('governor'))
+          .map(field => ({
+            name: field.name,
+            description: field.description || ''
+          }))
+      }
+    }
+    return []
+  }
+
+  // Get available roles for AccessControl contracts
+  const getAvailableRoles = (contractAddr: string) => {
+    if (!projectData?.entries) return []
+
+    for (const entry of projectData.entries) {
+      // Check both initial and discovered contracts
+      const allContracts = [...entry.initialContracts, ...entry.discoveredContracts]
+      const contract = allContracts.find(c => c.address === contractAddr)
+
+      if (contract?.fields) {
+        const accessControlField = contract.fields.find(field =>
+          field.handler?.type === 'accessControl' ||
+          field.name?.toLowerCase().includes('accesscontrol') ||
+          field.name?.toLowerCase().includes('roles')
+        )
+
+        if (accessControlField?.value?.type === 'object' && accessControlField.value.values) {
+          return accessControlField.value.values.map(([roleNameValue]: [any, any]) => {
+            // Handle different value types for role names
+            if (typeof roleNameValue === 'string') {
+              return roleNameValue
+            } else if (roleNameValue?.type === 'string') {
+              return roleNameValue.value
+            }
+            return String(roleNameValue)
+          })
+        }
+      }
+    }
+    return []
+  }
 
   const permissionStatus = currentOverride?.userClassification || 'non-permissioned'
   const checkedStatus = currentOverride?.checked || false
@@ -167,6 +265,47 @@ export function FunctionFolder({
     }
   }
 
+  // Get contract info (name and address) for display
+  const getContractInfo = (definition: OwnerDefinition) => {
+    const contractAddress = definition.type === 'field'
+      ? definition.field?.contractAddress
+      : definition.role?.accessControlContract
+
+    if (!contractAddress) return null
+
+    const contract = availableContracts.find(c => c.address === contractAddress)
+    return contract ? {
+      name: contract.name,
+      address: contractAddress,
+      source: contract.source
+    } : {
+      name: 'Unknown Contract',
+      address: contractAddress,
+      source: 'unknown'
+    }
+  }
+
+  // Format owner definition with contract name and address
+  const formatOwnerDefinitionWithContract = (definition: OwnerDefinition, contractInfo: any) => {
+    if (definition.type === 'field') {
+      const method = definition.field?.method || 'unknown'
+      if (contractInfo) {
+        return `${method}() on ${contractInfo.name} (${contractInfo.address.slice(0, 10)}...)`
+      }
+      return `${method}() on ${definition.field?.contractAddress?.slice(0, 10)}...`
+    }
+
+    if (definition.type === 'role') {
+      const roleName = definition.role?.roleName || 'unknown'
+      if (contractInfo) {
+        return `${roleName} role on ${contractInfo.name} (${contractInfo.address.slice(0, 10)}...)`
+      }
+      return `${roleName} role on ${definition.role?.accessControlContract?.slice(0, 10)}...`
+    }
+
+    return 'Unknown definition'
+  }
+
   return (
     <div className="overflow-x-auto border-coffee-600 border-t">
       {/* Function header with icons and signature */}
@@ -268,71 +407,11 @@ export function FunctionFolder({
       {/* Expanded content - description textarea and owners */}
       {isOpen && (
         <div className="bg-coffee-900 border-t border-coffee-700">
-          {/* Owner Resolution Section */}
-          {currentOverride?.ownerDefinitions && currentOverride.ownerDefinitions.length > 0 && (
-            <div className="p-3 border-b border-coffee-700">
-              <label className="block text-xs text-coffee-300 mb-2">
-                Function Owners ({currentOverride.ownerDefinitions.length} definition{currentOverride.ownerDefinitions.length !== 1 ? 's' : ''})
-              </label>
-
-              {ownersLoading && (
-                <div className="text-xs text-coffee-400">Resolving owners...</div>
-              )}
-
-              {ownersError && (
-                <div className="text-xs text-red-400">Error: {ownersError}</div>
-              )}
-
-              {!ownersLoading && !ownersError && (
-                <div className="space-y-2">
-                  {/* Show resolved addresses */}
-                  {getResolvedAddresses(resolvedOwners).length > 0 && (
-                    <div>
-                      <div className="text-xs text-coffee-400 mb-1">Resolved Addresses:</div>
-                      <div className="space-y-1">
-                        {getResolvedAddresses(resolvedOwners).map((address, index) => (
-                          <div key={index} className="font-mono text-xs">
-                            <AddressDisplay
-                              simplified
-                              value={{
-                                type: 'address',
-                                address: address,
-                                addressType: 'Unknown',
-                              }}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Show owner definitions details */}
-                  <div>
-                    <div className="text-xs text-coffee-400 mb-1">Owner Definitions:</div>
-                    <div className="space-y-1">
-                      {currentOverride.ownerDefinitions.map((definition, index) => {
-                        const correspondingResolved = resolvedOwners.find(r => r.source === definition)
-                        return (
-                          <div key={index} className="text-xs font-mono text-coffee-300">
-                            <span className="text-coffee-400">•</span> {formatOwnerDefinition(definition)}
-                            {correspondingResolved && !correspondingResolved.isResolved && (
-                              <span className="text-red-400 ml-2">({correspondingResolved.error})</span>
-                            )}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Owner Management Section */}
+          {/* Manage Function Owners Section */}
           <div className="p-3 border-b border-coffee-700">
             <div className="flex items-center justify-between mb-2">
               <label className="block text-xs text-coffee-300">
-                Owner Definitions Management
+                Manage Function Owners
               </label>
               <button
                 onClick={() => setIsAddingOwner(!isAddingOwner)}
@@ -342,23 +421,62 @@ export function FunctionFolder({
               </button>
             </div>
 
-            {/* Current owner definitions with delete buttons */}
+            {/* Current owner definitions with resolved addresses and delete buttons */}
             {currentOverride?.ownerDefinitions && currentOverride.ownerDefinitions.length > 0 && (
               <div className="mb-3">
-                <div className="text-xs text-coffee-400 mb-1">Current Definitions:</div>
-                <div className="space-y-1">
-                  {currentOverride.ownerDefinitions.map((definition, index) => (
-                    <div key={index} className="flex items-center justify-between text-xs font-mono text-coffee-300 bg-coffee-800 p-2 rounded">
-                      <span>{formatOwnerDefinition(definition)}</span>
-                      <button
-                        onClick={() => handleRemoveOwnerDefinition(index)}
-                        className="text-red-400 hover:text-red-300 ml-2"
-                        title="Remove this owner definition"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ))}
+                <div className="text-xs text-coffee-400 mb-1">
+                  Current Definitions ({currentOverride.ownerDefinitions.length}):
+                </div>
+
+                {ownersLoading && (
+                  <div className="text-xs text-coffee-400 mb-2">Resolving owners...</div>
+                )}
+
+                {ownersError && (
+                  <div className="text-xs text-red-400 mb-2">Error: {ownersError}</div>
+                )}
+
+                <div className="space-y-2">
+                  {currentOverride.ownerDefinitions.map((definition, index) => {
+                    const contractInfo = getContractInfo(definition)
+                    const correspondingResolved = resolvedOwners.find(r => r.source === definition)
+
+                    return (
+                      <div key={index} className="bg-coffee-800 p-2 rounded">
+                        <div className="flex items-center justify-between text-xs font-mono text-coffee-300 mb-1">
+                          <span>{formatOwnerDefinitionWithContract(definition, contractInfo)}</span>
+                          <button
+                            onClick={() => handleRemoveOwnerDefinition(index)}
+                            className="text-red-400 hover:text-red-300 ml-2"
+                            title="Remove this owner definition"
+                          >
+                            ✕
+                          </button>
+                        </div>
+
+                        {/* Show resolved address */}
+                        {!ownersLoading && correspondingResolved && correspondingResolved.isResolved && (
+                          <div className="ml-2 mt-1">
+                            <AddressDisplay
+                              simplified
+                              value={{
+                                type: 'address',
+                                address: correspondingResolved.address,
+                                addressType: 'Unknown',
+                              }}
+                            />
+                          </div>
+                        )}
+
+                        {/* Show resolution error */}
+                        {!ownersLoading && correspondingResolved && !correspondingResolved.isResolved && (
+                          <div className="text-red-400 text-xs ml-2 mt-1">
+                            Error: {correspondingResolved.error}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )}
@@ -381,24 +499,40 @@ export function FunctionFolder({
                 {newOwnerType === 'field' && (
                   <>
                     <div className="mb-2">
-                      <label className="block text-xs text-coffee-300 mb-1">Contract Address:</label>
-                      <input
-                        type="text"
+                      <label className="block text-xs text-coffee-300 mb-1">Contract:</label>
+                      <select
                         value={newOwnerData.contractAddress}
-                        onChange={(e) => setNewOwnerData(prev => ({ ...prev, contractAddress: e.target.value }))}
-                        placeholder="eth:0x..."
-                        className="w-full px-2 py-1 text-xs font-mono bg-coffee-700 text-coffee-100 border border-coffee-600 rounded"
-                      />
+                        onChange={(e) => setNewOwnerData(prev => ({ ...prev, contractAddress: e.target.value, method: '' }))}
+                        className="w-full px-2 py-1 text-xs bg-coffee-700 text-coffee-100 border border-coffee-600 rounded"
+                      >
+                        <option value="">Select a contract...</option>
+                        {availableContracts.map((contract) => (
+                          <option key={contract.address} value={contract.address}>
+                            {contract.name} ({contract.address.slice(0, 10)}...) [{contract.source}]
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="mb-3">
-                      <label className="block text-xs text-coffee-300 mb-1">Method Name:</label>
-                      <input
-                        type="text"
+                      <label className="block text-xs text-coffee-300 mb-1">Field:</label>
+                      <select
                         value={newOwnerData.method}
                         onChange={(e) => setNewOwnerData(prev => ({ ...prev, method: e.target.value }))}
-                        placeholder="owner, admin, governor..."
-                        className="w-full px-2 py-1 text-xs font-mono bg-coffee-700 text-coffee-100 border border-coffee-600 rounded"
-                      />
+                        disabled={!newOwnerData.contractAddress}
+                        className="w-full px-2 py-1 text-xs bg-coffee-700 text-coffee-100 border border-coffee-600 rounded disabled:opacity-50"
+                      >
+                        <option value="">Select a field...</option>
+                        {newOwnerData.contractAddress && getAvailableFields(newOwnerData.contractAddress).map((field) => (
+                          <option key={field.name} value={field.name}>
+                            {field.name} {field.description && `- ${field.description}`}
+                          </option>
+                        ))}
+                      </select>
+                      {newOwnerData.contractAddress && getAvailableFields(newOwnerData.contractAddress).length === 0 && (
+                        <div className="text-xs text-coffee-400 mt-1">
+                          No address fields found in this contract
+                        </div>
+                      )}
                     </div>
                   </>
                 )}
@@ -407,33 +541,53 @@ export function FunctionFolder({
                   <>
                     <div className="mb-2">
                       <label className="block text-xs text-coffee-300 mb-1">Access Control Contract:</label>
-                      <input
-                        type="text"
+                      <select
                         value={newOwnerData.accessControlContract}
-                        onChange={(e) => setNewOwnerData(prev => ({ ...prev, accessControlContract: e.target.value }))}
-                        placeholder="eth:0x..."
-                        className="w-full px-2 py-1 text-xs font-mono bg-coffee-700 text-coffee-100 border border-coffee-600 rounded"
-                      />
+                        onChange={(e) => setNewOwnerData(prev => ({ ...prev, accessControlContract: e.target.value, roleName: '', roleHash: '' }))}
+                        className="w-full px-2 py-1 text-xs bg-coffee-700 text-coffee-100 border border-coffee-600 rounded"
+                      >
+                        <option value="">Select a contract...</option>
+                        {availableContracts.map((contract) => (
+                          <option key={contract.address} value={contract.address}>
+                            {contract.name} ({contract.address.slice(0, 10)}...) [{contract.source}]
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="mb-2">
-                      <label className="block text-xs text-coffee-300 mb-1">Role Name:</label>
-                      <input
-                        type="text"
+                      <label className="block text-xs text-coffee-300 mb-1">Role:</label>
+                      <select
                         value={newOwnerData.roleName}
                         onChange={(e) => setNewOwnerData(prev => ({ ...prev, roleName: e.target.value }))}
-                        placeholder="DEFAULT_ADMIN_ROLE, PAUSER_ROLE..."
-                        className="w-full px-2 py-1 text-xs font-mono bg-coffee-700 text-coffee-100 border border-coffee-600 rounded"
-                      />
+                        disabled={!newOwnerData.accessControlContract}
+                        className="w-full px-2 py-1 text-xs bg-coffee-700 text-coffee-100 border border-coffee-600 rounded disabled:opacity-50"
+                      >
+                        <option value="">Select a role...</option>
+                        {newOwnerData.accessControlContract && getAvailableRoles(newOwnerData.accessControlContract).map((role) => (
+                          <option key={role} value={role}>
+                            {role}
+                          </option>
+                        ))}
+                      </select>
+                      {newOwnerData.accessControlContract && getAvailableRoles(newOwnerData.accessControlContract).length === 0 && (
+                        <div className="text-xs text-coffee-400 mt-1">
+                          No AccessControl roles found in this contract
+                        </div>
+                      )}
                     </div>
                     <div className="mb-3">
-                      <label className="block text-xs text-coffee-300 mb-1">Role Hash (optional):</label>
+                      <label className="block text-xs text-coffee-300 mb-1">Role Hash (auto-filled):</label>
                       <input
                         type="text"
                         value={newOwnerData.roleHash}
                         onChange={(e) => setNewOwnerData(prev => ({ ...prev, roleHash: e.target.value }))}
-                        placeholder="0x..."
+                        placeholder="Will be auto-filled from role name"
                         className="w-full px-2 py-1 text-xs font-mono bg-coffee-700 text-coffee-100 border border-coffee-600 rounded"
+                        readOnly
                       />
+                      <div className="text-xs text-coffee-400 mt-1">
+                        Role hash is automatically determined from the discovered role data
+                      </div>
                     </div>
                   </>
                 )}
