@@ -97,6 +97,7 @@ git fetch upstream && git merge upstream/main
   "checked": true,
   "score": "medium-risk",
   "description": "Function documentation",
+  "ownerDefinitions": [...]
   "timestamp": "2025-09-17T16:46:36.131Z"
 }
 ```
@@ -109,6 +110,33 @@ git fetch upstream && git merge upstream/main
 - **Code Navigation**: 📁 icon opens function in Code panel
 - **Multi-occurrence**: Counter-based cycling through function definitions
 - **Scroll Reset**: Horizontal scroll to 0 for readability
+
+### Enhancement 5: Function Owner Tracking ✅
+
+**Multiple Owner Definition Types:**
+- **Field Type**: Points to contract fields (admin(), owner(), governor())
+- **Role Type**: Points to AccessControl roles (DEFAULT_ADMIN_ROLE, PAUSER_ROLE)
+- **Smart Dropdowns**: Populated from discovered contracts and fields
+- **Real-time Resolution**: Resolves addresses from discovered data
+
+**Owner Definition Schema:**
+```json
+{
+  "type": "field",
+  "field": {
+    "contractAddress": "eth:0x...",
+    "method": "admin"
+  }
+}
+```
+
+**UI Features:**
+- Contract names with addresses for clarity
+- Resolved addresses displayed under definitions
+- Manage Function Owners interface for CRUD operations
+- Supports both initial and discovered contracts
+
+**Future Integration**: Will integrate with FunctionPermissionHandler for auto-detection
 
 ---
 
