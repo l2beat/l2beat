@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x2f49a3d533c1ef747bdb9a228b8eca9ffe4422e4
+
+# Diff at Fri, 19 Sep 2025 13:11:35 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a930e518d214c15603feeda62e2a483dbd2454e0 block: 1758115819
+- current timestamp: 1758287245
+
+## Description
+
+New token pool (clBTC).
+
+## Watched changes
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.83:
++        {"sourceChainSelector":"4426351306075016396","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.4426351306075016396:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.230:
++        "eth:0xBb8b739C28898F7d143584380e7b689ecCaB2c9F"
+      values.poolsMap.eth:0x7a4c2C39e25ca0D6A1Ac4af14dD601c2A7eDA8Ae:
++        "eth:0xBb8b739C28898F7d143584380e7b689ecCaB2c9F"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0xba5F6Cf1121c572602e638bC8A0d87Db61072e35) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "11344663589394136015"
+      values.getSupportedChains.3:
++        "3229138320728879060"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xBb8b739C28898F7d143584380e7b689ecCaB2c9F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xBb8b739C28898F7d143584380e7b689ecCaB2c9F.sol | 1615 ++++++++++++++++++++
+ 1 file changed, 1615 insertions(+)
+```
+
 Generated with discovered.json: 0x2f2fc62128e05bcc2cc2458a8655e3a3b54cb349
 
 # Diff at Wed, 17 Sep 2025 13:32:14 GMT:
