@@ -315,6 +315,10 @@ function resolveFieldFromDiscovered(discovered: any, definition: OwnerDefinition
     throw new Error('No entries found in discovered data')
   }
 
+  // Debug: log what we're looking for
+  console.log('Resolving field:', { contractAddress, method })
+  console.log('Available contracts:', discovered.entries.map((e: any) => ({ type: e.type, address: e.address, name: e.name })))
+
   const contractEntry = discovered.entries.find((entry: any) =>
     entry.type === 'Contract' && entry.address === contractAddress
   )
@@ -322,6 +326,9 @@ function resolveFieldFromDiscovered(discovered: any, definition: OwnerDefinition
   if (!contractEntry) {
     throw new Error(`Contract ${contractAddress} not found in discovered data`)
   }
+
+  // Debug: log contract info
+  console.log('Found contract:', { address: contractEntry.address, fieldsCount: contractEntry.fields?.length || 0 })
 
   // Look for the field in the contract's fields
   if (!contractEntry.fields || !Array.isArray(contractEntry.fields)) {

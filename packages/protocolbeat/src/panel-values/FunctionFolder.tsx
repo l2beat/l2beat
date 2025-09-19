@@ -10,7 +10,6 @@ import { IconLockClosed } from '../icons/IconLockClosed'
 import { IconLockOpen } from '../icons/IconLockOpen'
 import { IconVoltage } from '../icons/IconVoltage'
 import { IconOpen } from '../icons/IconOpen'
-import { useOwnerResolution } from './OwnerResolution'
 import { AddressDisplay } from './AddressDisplay'
 import type { OwnerDefinition } from '../api/types'
 import { useQuery } from '@tanstack/react-query'
@@ -49,18 +48,62 @@ export function FunctionFolder({
     o.contractAddress === contractAddress && o.functionName === functionName
   )
 
-  // Owner resolution using the discovered data
-  const { resolved: resolvedOwners, loading: ownersLoading, error: ownersError } = useOwnerResolution(
-    currentOverride?.ownerDefinitions,
-    project || ''
-  )
-
   // Fetch project data to get available contracts and fields
   const { data: projectData } = useQuery({
     queryKey: ['project', project],
     queryFn: () => project ? getProject(project) : null,
     enabled: !!project,
   })
+
+  // Owner resolution using the same projectData as Fields tab
+  const resolvedOwners = React.useMemo(() => {
+    if (!currentOverride?.ownerDefinitions || !projectData?.entries) {
+      return []
+    }
+
+    return currentOverride.ownerDefinitions.map(definition => {
+      try {
+        if (definition.type === 'field') {
+          const { contractAddress, method } = definition.field || {}
+          if (!contractAddress || !method) return null
+
+          // Find contract in projectData (same as Fields tab)
+          for (const entry of projectData.entries) {
+            const allContracts = [...entry.initialContracts, ...entry.discoveredContracts]
+            const contract = allContracts.find(c => c.address === contractAddress)
+
+            if (contract?.fields) {
+              const field = contract.fields.find(f => f.name === method)
+              if (field?.value?.type === 'address') {
+                return {
+                  address: field.value.address,
+                  source: definition,
+                  isResolved: true
+                }
+              }
+            }
+          }
+        }
+
+        return {
+          address: 'RESOLUTION_FAILED',
+          source: definition,
+          isResolved: false,
+          error: `Could not resolve ${definition.type}`
+        }
+      } catch (error) {
+        return {
+          address: 'RESOLUTION_FAILED',
+          source: definition,
+          isResolved: false,
+          error: error instanceof Error ? error.message : 'Unknown error'
+        }
+      }
+    }).filter((r): r is NonNullable<typeof r> => r !== null)
+  }, [currentOverride?.ownerDefinitions, projectData])
+
+  const ownersLoading = false
+  const ownersError = null
 
   // Extract available contracts and their fields
   const availableContracts = React.useMemo(() => {
@@ -285,25 +328,38 @@ export function FunctionFolder({
     }
   }
 
-  // Format owner definition with contract name and address
-  const formatOwnerDefinitionWithContract = (definition: OwnerDefinition, contractInfo: any) => {
+  // Format owner definition with contract name and address, including resolved value
+  const formatOwnerDefinitionWithContract = (definition: OwnerDefinition, contractInfo: any, resolvedOwner?: { address: string; isResolved: boolean }) => {
+    console.log('formatOwnerDefinitionWithContract called!', { definition, contractInfo, resolvedOwner })
+    let baseDescription = ''
+
     if (definition.type === 'field') {
       const method = definition.field?.method || 'unknown'
       if (contractInfo) {
-        return `${method}() on ${contractInfo.name} (${contractInfo.address.slice(0, 10)}...)`
+        baseDescription = `${method}() on ${contractInfo.name} (${contractInfo.address.slice(0, 10)}...)`
+      } else {
+        baseDescription = `${method}() on ${definition.field?.contractAddress?.slice(0, 10)}...`
       }
-      return `${method}() on ${definition.field?.contractAddress?.slice(0, 10)}...`
-    }
-
-    if (definition.type === 'role') {
+    } else if (definition.type === 'role') {
       const roleName = definition.role?.roleName || 'unknown'
       if (contractInfo) {
-        return `${roleName} role on ${contractInfo.name} (${contractInfo.address.slice(0, 10)}...)`
+        baseDescription = `${roleName} role on ${contractInfo.name} (${contractInfo.address.slice(0, 10)}...)`
+      } else {
+        baseDescription = `${roleName} role on ${definition.role?.accessControlContract?.slice(0, 10)}...`
       }
-      return `${roleName} role on ${definition.role?.accessControlContract?.slice(0, 10)}...`
+    } else {
+      baseDescription = 'Unknown definition'
     }
 
-    return 'Unknown definition'
+    // Append resolved value if available
+    if (resolvedOwner?.isResolved && resolvedOwner.address && resolvedOwner.address !== 'RESOLUTION_FAILED') {
+      baseDescription += ` → ${resolvedOwner.address.slice(0, 10)}...`
+    } else if (resolvedOwner) {
+      // Debug: show what we have
+      console.log('Debug resolvedOwner:', resolvedOwner)
+    }
+
+    return baseDescription
   }
 
   return (
@@ -411,7 +467,7 @@ export function FunctionFolder({
           <div className="p-3 border-b border-coffee-700">
             <div className="flex items-center justify-between mb-2">
               <label className="block text-xs text-coffee-300">
-                Manage Function Owners
+                Manage Function Owners 
               </label>
               <button
                 onClick={() => setIsAddingOwner(!isAddingOwner)}
@@ -439,12 +495,26 @@ export function FunctionFolder({
                 <div className="space-y-2">
                   {currentOverride.ownerDefinitions.map((definition, index) => {
                     const contractInfo = getContractInfo(definition)
-                    const correspondingResolved = resolvedOwners.find(r => r.source === definition)
+                    const correspondingResolved = resolvedOwners.find(r => {
+                      // Compare by content instead of object reference
+                      if (r.source.type !== definition.type) return false
+
+                      if (definition.type === 'field') {
+                        return r.source.field?.contractAddress === definition.field?.contractAddress &&
+                               r.source.field?.method === definition.field?.method
+                      } else if (definition.type === 'role') {
+                        return r.source.role?.accessControlContract === definition.role?.accessControlContract &&
+                               r.source.role?.roleName === definition.role?.roleName
+                      }
+
+                      return false
+                    })
+                    console.log('Finding resolved owner for definition:', { definition, correspondingResolved, allResolvedOwners: resolvedOwners })
 
                     return (
                       <div key={index} className="bg-coffee-800 p-2 rounded">
                         <div className="flex items-center justify-between text-xs font-mono text-coffee-300 mb-1">
-                          <span>{formatOwnerDefinitionWithContract(definition, contractInfo)}</span>
+                          <span>{formatOwnerDefinitionWithContract(definition, contractInfo, correspondingResolved)}</span>
                           <button
                             onClick={() => handleRemoveOwnerDefinition(index)}
                             className="text-red-400 hover:text-red-300 ml-2"
@@ -454,9 +524,10 @@ export function FunctionFolder({
                           </button>
                         </div>
 
-                        {/* Show resolved address */}
+                        {/* Show full resolved address with AddressDisplay for additional context */}
                         {!ownersLoading && correspondingResolved && correspondingResolved.isResolved && (
                           <div className="ml-2 mt-1">
+                            <div className="text-xs text-coffee-400 mb-1">Resolves to:</div>
                             <AddressDisplay
                               simplified
                               value={{

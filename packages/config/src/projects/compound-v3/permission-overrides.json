@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-19T21:06:31.942Z",
+  "lastModified": "2025-09-19T21:24:58.011Z",
   "overrides": [
     {
       "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
@@ -231,9 +231,16 @@
             "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
             "method": "$admin"
           }
+        },
+        {
+          "type": "field",
+          "field": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "method": "admin"
+          }
         }
       ],
-      "timestamp": "2025-09-19T21:06:31.942Z"
+      "timestamp": "2025-09-19T21:24:58.011Z"
     }
   ]
 }
