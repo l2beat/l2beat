@@ -200,7 +200,7 @@ function RosetteElementLink({
   children: React.ReactNode
   disableSectionLinking?: boolean
 }) {
-  if (disableSectionLinking) return children
+  if (disableSectionLinking || !elementValue.href) return children
 
   return <a href={elementValue.href}>{children}</a>
 }
