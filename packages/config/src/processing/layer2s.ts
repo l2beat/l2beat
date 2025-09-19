@@ -62,6 +62,7 @@ import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
 import { gasp } from '../projects/gasp/gasp'
 import { genlayer } from '../projects/genlayer/genlayer'
+import { giwa } from '../projects/giwa/giwa'
 import { gluon } from '../projects/gluon/gluon'
 import { gmnetwork } from '../projects/gmnetwork/gmnetwork'
 import { gpt } from '../projects/gpt/gpt'
@@ -285,6 +286,7 @@ export const layer2s: ScalingProject[] = [
   gameswift,
   gasp,
   genlayer,
+  giwa,
   gluon,
   gmnetwork,
   gpt,
