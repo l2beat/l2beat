@@ -100,8 +100,8 @@ export async function match(
 ) {
   const matchedIds = new Set<string>()
   const unsupportedIds = new Set<string>()
-  const messages: BridgeMessage[] = []
-  const transfers: BridgeTransfer[] = []
+  const allMessages: BridgeMessage[] = []
+  const allTransfers: BridgeTransfer[] = []
 
   for (const plugin of plugins) {
     for (const event of events) {
@@ -115,15 +115,18 @@ export async function match(
         logger.error(e)
       }
 
+      const messages = result?.filter((x) => x.kind === 'BridgeMessage') ?? []
+      const transfers = result?.filter((x) => x.kind === 'BridgeTransfer') ?? []
+
       if (result) {
         matchedIds.add(event.eventId)
-        for (const message of result.messages ?? []) {
-          messages.push(message)
-          matchedIds.add(message.inbound.eventId)
-          matchedIds.add(message.outbound.eventId)
+        for (const message of messages) {
+          allMessages.push(message)
+          matchedIds.add(message.dst.eventId)
+          matchedIds.add(message.src.eventId)
         }
-        for (const transfer of result.transfers ?? []) {
-          transfers.push(transfer)
+        for (const transfer of transfers) {
+          allTransfers.push(transfer)
           for (const transferEvent of transfer.events) {
             matchedIds.add(transferEvent.eventId)
           }
@@ -149,8 +152,8 @@ export async function match(
   return {
     matchedIds,
     unsupportedIds,
-    messages,
-    transfers,
+    messages: allMessages,
+    transfers: allTransfers,
   }
 }
 
@@ -158,25 +161,20 @@ function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
   return {
     messageId: generateId('M'),
     type: message.type,
-    duration: Math.abs(
-      message.inbound.ctx.timestamp - message.outbound.ctx.timestamp,
-    ),
-    timestamp: Math.max(
-      message.outbound.ctx.timestamp,
-      message.inbound.ctx.timestamp,
-    ),
+    duration: Math.abs(message.dst.ctx.timestamp - message.src.ctx.timestamp),
+    timestamp: Math.max(message.src.ctx.timestamp, message.dst.ctx.timestamp),
 
-    srcChain: message.outbound.ctx.chain,
-    srcTime: message.outbound.ctx.timestamp,
-    srcEventId: message.outbound.eventId,
-    srcLogIndex: message.outbound.ctx.logIndex,
-    srcTxHash: message.outbound.ctx.txHash,
+    srcChain: message.src.ctx.chain,
+    srcTime: message.src.ctx.timestamp,
+    srcEventId: message.src.eventId,
+    srcLogIndex: message.src.ctx.logIndex,
+    srcTxHash: message.src.ctx.txHash,
 
-    dstChain: message.inbound.ctx.chain,
-    dstTime: message.inbound.ctx.timestamp,
-    dstEventId: message.inbound.eventId,
-    dstLogIndex: message.inbound.ctx.logIndex,
-    dstTxHash: message.inbound.ctx.txHash,
+    dstChain: message.dst.ctx.chain,
+    dstTime: message.dst.ctx.timestamp,
+    dstEventId: message.dst.eventId,
+    dstLogIndex: message.dst.ctx.logIndex,
+    dstTxHash: message.dst.ctx.txHash,
   }
 }
 
@@ -187,38 +185,37 @@ function toTransferRecord(
     messageId: generateId('T'),
     type: transfer.type,
     duration: Math.abs(
-      transfer.inbound.event.ctx.timestamp -
-        transfer.outbound.event.ctx.timestamp,
+      transfer.dst.event.ctx.timestamp - transfer.src.event.ctx.timestamp,
     ),
     timestamp: Math.max(
-      transfer.outbound.event.ctx.timestamp,
-      transfer.inbound.event.ctx.timestamp,
+      transfer.src.event.ctx.timestamp,
+      transfer.dst.event.ctx.timestamp,
     ),
 
-    srcChain: transfer.outbound.event.ctx.chain,
-    srcTime: transfer.outbound.event.ctx.timestamp,
-    srcEventId: transfer.outbound.event.eventId,
-    srcLogIndex: transfer.outbound.event.ctx.logIndex,
-    srcTxHash: transfer.outbound.event.ctx.txHash,
+    srcChain: transfer.src.event.ctx.chain,
+    srcTime: transfer.src.event.ctx.timestamp,
+    srcEventId: transfer.src.event.eventId,
+    srcLogIndex: transfer.src.event.ctx.logIndex,
+    srcTxHash: transfer.src.event.ctx.txHash,
 
-    srcTokenAddress: transfer.outbound.token?.address,
-    srcRawAmount: transfer.outbound.token?.amount,
-    srcSymbol: transfer.outbound.financials?.symbol,
-    srcAmount: transfer.outbound.financials?.amount,
-    srcPrice: transfer.outbound.financials?.price,
-    srcValueUsd: transfer.outbound.financials?.valueUsd,
+    srcTokenAddress: transfer.src.tokenAddress,
+    srcRawAmount: transfer.src.tokenAmount,
+    srcSymbol: transfer.src.financials?.symbol,
+    srcAmount: transfer.src.financials?.amount,
+    srcPrice: transfer.src.financials?.price,
+    srcValueUsd: transfer.src.financials?.valueUsd,
 
-    dstChain: transfer.inbound.event.ctx.chain,
-    dstTime: transfer.inbound.event.ctx.timestamp,
-    dstEventId: transfer.inbound.event.eventId,
-    dstLogIndex: transfer.inbound.event.ctx.logIndex,
-    dstTxHash: transfer.inbound.event.ctx.txHash,
+    dstChain: transfer.dst.event.ctx.chain,
+    dstTime: transfer.dst.event.ctx.timestamp,
+    dstEventId: transfer.dst.event.eventId,
+    dstLogIndex: transfer.dst.event.ctx.logIndex,
+    dstTxHash: transfer.dst.event.ctx.txHash,
 
-    dstTokenAddress: transfer.inbound.token?.address,
-    dstRawAmount: transfer.inbound.token?.amount,
-    dstSymbol: transfer.inbound.financials?.symbol,
-    dstAmount: transfer.inbound.financials?.amount,
-    dstPrice: transfer.inbound.financials?.price,
-    dstValueUsd: transfer.inbound.financials?.valueUsd,
+    dstTokenAddress: transfer.dst.tokenAddress,
+    dstRawAmount: transfer.dst.tokenAmount,
+    dstSymbol: transfer.dst.financials?.symbol,
+    dstAmount: transfer.dst.financials?.amount,
+    dstPrice: transfer.dst.financials?.price,
+    dstValueUsd: transfer.dst.financials?.valueUsd,
   }
 }

@@ -48,7 +48,7 @@ export const onyx: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://rpc.onyx.org',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

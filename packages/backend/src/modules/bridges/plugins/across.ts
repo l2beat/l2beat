@@ -6,8 +6,10 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
+  Result,
 } from './types'
 
 const parseFundsDeposited = createEventParser(
@@ -35,7 +37,7 @@ export const AcrossFilledRelay = createBridgeEventType<{
   amount: string
 }>('across.FilledRelay')
 
-const NETWORKS = [
+const ACROSS_NETWORKS = defineNetworks('across', [
   {
     chain: 'ethereum',
     chainId: 1,
@@ -76,89 +78,72 @@ const NETWORKS = [
     chainId: 534352,
     address: EthereumAddress('0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96'),
   },
-]
+])
 
 export class AcrossPlugin implements BridgePlugin {
   name = 'across'
-  chains = NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
-    const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
+    const network = ACROSS_NETWORKS.find((n) => n.chain === input.ctx.chain)
     if (!network) return
 
-    const fd = parseFundsDeposited(input.log, [network.address])
-    if (fd) {
+    const fundsDeposited = parseFundsDeposited(input.log, [network.address])
+    if (fundsDeposited) {
       return AcrossFundsDeposited.create(input.ctx, {
         originChainId: network.chainId,
-        destinationChainId: Number(fd.destinationChainId),
-        depositId: Number(fd.depositId),
+        destinationChainId: Number(fundsDeposited.destinationChainId),
+        depositId: Number(fundsDeposited.depositId),
         tokenAddress: EthereumAddress(
-          new BinaryReader(fd.inputToken).readAddress(),
+          new BinaryReader(fundsDeposited.inputToken).readAddress(),
         ),
-        amount: fd.inputAmount.toString(),
+        amount: fundsDeposited.inputAmount.toString(),
       })
     }
 
-    const fr = parseFilledRelay(input.log, [network.address])
-    if (fr) {
+    const filledRelay = parseFilledRelay(input.log, [network.address])
+    if (filledRelay) {
       return AcrossFilledRelay.create(input.ctx, {
-        originChainId: Number(fr.originChainId),
-        depositId: Number(fr.depositId),
+        originChainId: Number(filledRelay.originChainId),
+        depositId: Number(filledRelay.depositId),
         tokenAddress: EthereumAddress(
-          new BinaryReader(fr.outputToken).readAddress(),
+          new BinaryReader(filledRelay.outputToken).readAddress(),
         ),
-        amount: fr.outputAmount.toString(),
+        amount: filledRelay.outputAmount.toString(),
       })
     }
 
-    const fr3 = parseFilledV3Relay(input.log, [network.address])
-    if (fr3) {
+    const filledV3Relay = parseFilledV3Relay(input.log, [network.address])
+    if (filledV3Relay) {
       return AcrossFilledRelay.create(input.ctx, {
-        originChainId: Number(fr3.originChainId),
-        depositId: Number(fr3.depositId),
-        tokenAddress: EthereumAddress(fr3.outputToken),
-        amount: fr3.outputAmount.toString(),
+        originChainId: Number(filledV3Relay.originChainId),
+        depositId: Number(filledV3Relay.depositId),
+        tokenAddress: EthereumAddress(filledV3Relay.outputToken),
+        amount: filledV3Relay.outputAmount.toString(),
       })
     }
   }
 
-  match(inbound: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (!AcrossFilledRelay.checkType(inbound)) return
+  match(filledRelay: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+    if (!AcrossFilledRelay.checkType(filledRelay)) return
 
-    const outbound = db.find(AcrossFundsDeposited, {
-      originChainId: inbound.args.originChainId,
-      depositId: inbound.args.depositId,
+    const fundsDeposited = db.find(AcrossFundsDeposited, {
+      originChainId: filledRelay.args.originChainId,
+      depositId: filledRelay.args.depositId,
     })
-    if (!outbound) return
+    if (!fundsDeposited) return
 
-    return {
-      messages: [
-        {
-          type: 'across.Message',
-          outbound: outbound,
-          inbound: inbound,
-        },
-      ],
-      transfers: [
-        {
-          type: 'across.App',
-          events: [outbound, inbound],
-          outbound: {
-            event: outbound,
-            token: {
-              address: outbound.args.tokenAddress,
-              amount: outbound.args.amount,
-            },
-          },
-          inbound: {
-            event: inbound,
-            token: {
-              address: inbound.args.tokenAddress,
-              amount: inbound.args.amount,
-            },
-          },
-        },
-      ],
-    }
+    return [
+      // TODO: Should there be a message at all?
+      Result.Message('across.Message', [fundsDeposited, filledRelay]),
+      // TODO: What about the final settlement?
+      Result.Transfer('across.Swap', {
+        srcEvent: fundsDeposited,
+        srcTokenAddress: fundsDeposited.args.tokenAddress,
+        srcAmount: fundsDeposited.args.amount,
+        dstEvent: filledRelay,
+        dstTokenAddress: filledRelay.args.tokenAddress,
+        dstAmount: filledRelay.args.amount,
+      }),
+    ]
   }
 }

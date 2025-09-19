@@ -21,6 +21,11 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
 
+      # FIXME: This is temporary workaround for ongoing surge.sh DNS issue (18.09.2025)
+      - name: Add surge.sh host to /etc/hosts
+        run: |
+          echo "188.166.132.94 surge.sh" | sudo tee -a /etc/hosts
+
       - name: Fetch branches
         run: git fetch origin main:main
 

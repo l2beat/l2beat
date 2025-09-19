@@ -6,7 +6,7 @@
     "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef",
     "eth:0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
   ],
-  "sharedModules": ["shared-zk-stack"],
+  "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
   "names": {
     "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef": "LensZkEvm",
     "eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433": "LensZkEvmAdmin",

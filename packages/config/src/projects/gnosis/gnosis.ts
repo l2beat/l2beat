@@ -34,12 +34,6 @@ export const gnosis: BaseProject = {
         version: '3',
       },
     ],
-    apis: [
-      {
-        type: 'etherscan',
-        chainId,
-        contractCreationUnsupported: true,
-      },
-    ],
+    apis: [{ type: 'etherscan', chainId }],
   },
 }

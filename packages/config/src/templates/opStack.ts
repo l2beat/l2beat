@@ -43,6 +43,7 @@ import type {
   ProjectActivityConfig,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
+  ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectLivenessInfo,
   ProjectReviewStatus,
@@ -144,6 +145,7 @@ interface OpStackConfigCommon {
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   milestones?: Milestone[]
+  ecosystemInfo?: ProjectEcosystemInfo
   nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
@@ -366,11 +368,7 @@ function opStackCommon(
       ],
       daTracking: getDaTracking(templateVars),
     },
-    ecosystemInfo: {
-      id: ProjectId('superchain'),
-      isPartOfSuperchain:
-        templateVars.isPartOfSuperchain ?? partOfSuperchainOnchain,
-    },
+    ecosystemInfo: templateVars.ecosystemInfo,
     technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
     contracts: {

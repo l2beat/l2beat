@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -9,6 +9,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('zora')
 
 export const zora: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],

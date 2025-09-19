@@ -1,6 +1,5 @@
 import type { Project } from '@l2beat/config'
 import { getChartProject } from '~/components/core/chart/utils/getChartProject'
-import { env } from '~/env'
 import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '~/server/features/data-availability/throughput/utils/consts'
 import { ps } from '~/server/projects'
@@ -40,11 +39,9 @@ export async function getDaThroughputSection(
       warning: syncWarning,
       isSynced: !syncWarning,
     },
-    customColors: env.CLIENT_SIDE_PARTNERS
-      ? Object.fromEntries(
-          projectsWithColors.map((p) => [p.name, p.colors.primary]),
-        )
-      : undefined,
+    customColors: Object.fromEntries(
+      projectsWithColors.map((p) => [p.name, p.colors.primary.light]),
+    ),
     milestones: project.milestones ?? [],
   }
 }

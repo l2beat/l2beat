@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -8,6 +8,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('thebinaryholdings')
 
 export const thebinaryholdings: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   addedAt: UnixTime(1726668186), // 2024-09-18T14:03:06Z
   archivedAt: UnixTime(1737676800), // 2025-01-24T00:00:00.000Z,
   discovery,
@@ -40,7 +44,7 @@ export const thebinaryholdings: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.zero.thebinaryholdings.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

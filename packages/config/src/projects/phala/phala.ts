@@ -42,7 +42,7 @@ const sequencerInbox = ChainSpecificAddress(
   discovery.getContractValue('SystemConfig', 'sequencerInbox'),
 )
 
-const portal = discovery.getContract('OptimismPortal')
+const portal = discovery.getContract('OptimismPortal2')
 const l2OutputOracle = discovery.getContract('OPSuccinctL2OutputOracle')
 const upgradeDelay = 0
 const forcedWithdrawalDelay = 0
@@ -100,7 +100,7 @@ export const phala: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://rpc.phala.network/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },
@@ -190,7 +190,12 @@ export const phala: ScalingProject = {
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
   },
-  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.RaaS.Conduit],
+  badges: [
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.RaaS.Conduit,
+    BADGES.Stack.OPSuccinct,
+  ],
   type: 'layer2',
   riskView: {
     stateValidation: {

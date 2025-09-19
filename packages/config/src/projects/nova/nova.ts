@@ -169,7 +169,7 @@ export const nova: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://nova.arbitrum.io/rpc',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },
     ],

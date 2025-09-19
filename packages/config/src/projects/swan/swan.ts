@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -7,6 +7,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('swan')
 
 export const swan: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   addedAt: UnixTime(1722275591), // 2024-07-29T17:53:11Z
   discovery,
   additionalPurposes: ['AI', 'Storage'],
@@ -43,7 +47,7 @@ export const swan: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet-rpc-01.swanchain.org',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

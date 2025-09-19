@@ -87,7 +87,7 @@ export const xlayer: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://rpc.xlayer.tech',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },
@@ -131,4 +131,7 @@ export const xlayer: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ecosystemInfo: {
+    id: ProjectId('agglayer'),
+  },
 }

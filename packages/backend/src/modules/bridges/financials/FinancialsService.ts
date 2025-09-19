@@ -49,29 +49,30 @@ export class FinancialsService {
     transfer: BridgeTransfer,
   ): Promise<BridgeTransferWithFinancials> {
     return {
+      kind: transfer.kind,
       type: transfer.type,
       events: transfer.events,
-      outbound: {
-        ...transfer.outbound,
-        financials: await this.getFinancials(transfer.outbound),
+      src: {
+        ...transfer.src,
+        financials: await this.getFinancials(transfer.src),
       },
-      inbound: {
-        ...transfer.inbound,
-        financials: await this.getFinancials(transfer.inbound),
+      dst: {
+        ...transfer.dst,
+        financials: await this.getFinancials(transfer.dst),
       },
     }
   }
 
   private async getFinancials(side: TransferSideWithFinancials) {
-    if (!side.token) {
+    if (!side.tokenAddress) {
       return undefined
     }
     const token = this.tokensMap.get(
-      `${side.event.ctx.chain}:${side.token.address}`,
+      `${side.event.ctx.chain}:${side.tokenAddress}`,
     )
-    if (token) {
+    if (token && side.tokenAmount) {
       const amount = BigIntWithDecimals(
-        BigInt(side.token.amount),
+        BigInt(side.tokenAmount),
         token.decimals,
       )
       const timestamp = UnixTime.toStartOf(side.event.ctx.timestamp, 'hour')

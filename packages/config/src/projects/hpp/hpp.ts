@@ -38,7 +38,7 @@ export const hpp: ScalingProject = underReviewL2({
       {
         type: 'rpc',
         url: 'https://mainnet.hpp.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

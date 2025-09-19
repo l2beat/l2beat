@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xab702e87dac0d30c6e70433c4cecf5ff9889c986
+
+# Diff at Mon, 15 Sep 2025 12:26:22 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@823103e23195ea5382f353da97a0232ffda42a10 block: 1757680168
+- current timestamp: 1757939071
+
+## Description
+
+Ignore gas price value.
+
+## Watched changes
+
+```diff
+    contract OVM_GasPriceOracle (metis-andromeda:0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      values.gasPrice:
+-        3239968571
++        3102269267
+    }
+```
+
 Generated with discovered.json: 0xa2715bae71823eb812feb92dc66e76433eb0aa36
 
 # Diff at Fri, 12 Sep 2025 12:30:41 GMT:

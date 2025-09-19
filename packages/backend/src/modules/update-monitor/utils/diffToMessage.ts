@@ -39,7 +39,7 @@ function getDependentsMessage(dependents: string[]) {
   }
   return (
     '\n' +
-    wrapItalic('This is a shared module, used by the following projects:') +
+    wrapItalic('This module is referenced by the following projects:') +
     ' ' +
     wrapBoldAndItalic(dependents.join(', ') + '.')
   )

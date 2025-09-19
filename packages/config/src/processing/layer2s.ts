@@ -18,6 +18,7 @@ import { aztec } from '../projects/aztec/aztec'
 import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
 import { aztecconnect } from '../projects/aztecconnect/aztecconnect'
 import { base } from '../projects/base/base'
+import { billions } from '../projects/billions/billions'
 import { blast } from '../projects/blast/blast'
 import { bob } from '../projects/bob/bob'
 import { bobanetwork } from '../projects/bobanetwork/bobanetwork'
@@ -61,6 +62,7 @@ import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
 import { gasp } from '../projects/gasp/gasp'
 import { genlayer } from '../projects/genlayer/genlayer'
+import { giwa } from '../projects/giwa/giwa'
 import { gluon } from '../projects/gluon/gluon'
 import { gmnetwork } from '../projects/gmnetwork/gmnetwork'
 import { gpt } from '../projects/gpt/gpt'
@@ -200,6 +202,7 @@ import { thanos } from '../projects/thanos/thanos'
 import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdings'
 import { treasure } from '../projects/treasure/treasure'
 import { tusima } from '../projects/tusima/tusima'
+import { umi } from '../projects/umi/umi'
 import { unichain } from '../projects/unichain/unichain'
 import { wilderworld } from '../projects/wilderworld/wilderworld'
 import { wirex } from '../projects/wirex/wirex'
@@ -245,6 +248,7 @@ export const layer2s: ScalingProject[] = [
   blast,
   bob,
   bobanetwork,
+  billions,
   canvasconnect,
   capx,
   cartesiprthoneypot,
@@ -283,6 +287,7 @@ export const layer2s: ScalingProject[] = [
   gameswift,
   gasp,
   genlayer,
+  giwa,
   gluon,
   gmnetwork,
   gpt,
@@ -424,6 +429,7 @@ export const layer2s: ScalingProject[] = [
   thebinaryholdings,
   treasure,
   tusima,
+  umi,
   unichain,
   wirex,
   witness,
