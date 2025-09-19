@@ -22,9 +22,6 @@ export const giwa: ScalingProject = upcomingL2({
       socialMedia: [],
     },
   },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   proofSystem: {
     type: 'Optimistic',
   },
