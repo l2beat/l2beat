@@ -1,7 +1,7 @@
 /*
 Wormhole Relayer:
 - on SRC sends Wormhole Core msg and publishes SendEvent (ignored for now)
-- on DST validates Wormhole Core msg and publishes Delivery event. Calls App contract. 
+- on DST validates Wormhole Core msg and publishes Delivery event. Calls App contract.
 The mental model is: App using Wormhole Core messaging via Relayer to deliver messages across chains.
 */
 
@@ -15,7 +15,7 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { LogMessagePublished, NETWORKS } from './wormhole'
+import { LogMessagePublished, WORMHOLE_NETWORKS } from './wormhole'
 
 const parseDelivery = createEventParser(
   'event Delivery(address indexed recipientContract, uint16 indexed sourceChain, uint64 indexed sequence, bytes32 deliveryVaaHash,uint8 status,uint256 gasUsed,uint8 refundStatus,bytes additionalStatusInfo,bytes overridesInfo)',
@@ -30,7 +30,6 @@ export const Delivery = createBridgeEventType<{
 
 export class WormholeRelayerPlugin implements BridgePlugin {
   name = 'wormhole-relayer'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const parsed = parseDelivery(input.log, null)
@@ -40,8 +39,9 @@ export class WormholeRelayerPlugin implements BridgePlugin {
       recipientContract: parsed.recipientContract,
       sourceChain: parsed.sourceChain,
       $srcChain:
-        NETWORKS.find((n) => n.wormholeChainId === Number(parsed.sourceChain))
-          ?.chain || '???',
+        WORMHOLE_NETWORKS.find(
+          (n) => n.wormholeChainId === Number(parsed.sourceChain),
+        )?.chain || '???',
       sequence: parsed.sequence.toString(),
     })
   }

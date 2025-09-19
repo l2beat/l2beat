@@ -43,7 +43,7 @@ export const oevnetwork: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://oev.rpc.api3.org/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

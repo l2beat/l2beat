@@ -8,7 +8,7 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { LogMessagePublished, NETWORKS } from './wormhole'
+import { LogMessagePublished, WORMHOLE_NETWORKS } from './wormhole'
 
 const parseLogTransferRedeemed = createEventParser(
   'event TransferRedeemed(uint16 indexed emitterChainId, bytes32 indexed emitterAddress,uint64 indexed sequence)',
@@ -19,12 +19,10 @@ export const TransferRedeemed = createBridgeEventType<{
   $srcChain: string
   srcWormholeChainId: number
   sender: string
-  txHash: string
 }>('wormhole.LogTransferRedeemed')
 
 export class WormholeTokenBridgePlugin implements BridgePlugin {
   name = 'wormhole-token-bridge'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const parsed = parseLogTransferRedeemed(input.log, null)
@@ -33,11 +31,11 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
     return TransferRedeemed.create(input.ctx, {
       sequence: parsed.sequence.toString(),
       $srcChain:
-        NETWORKS.find((x) => x.wormholeChainId === parsed.emitterChainId)
-          ?.chain ?? 'unknown',
+        WORMHOLE_NETWORKS.find(
+          (x) => x.wormholeChainId === parsed.emitterChainId,
+        )?.chain ?? 'unknown',
       srcWormholeChainId: parsed.emitterChainId,
       sender: parsed.emitterAddress,
-      txHash: input.ctx.txHash,
     })
   }
 

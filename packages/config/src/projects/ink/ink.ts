@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -9,6 +9,10 @@ const discovery = new ProjectDiscovery('ink')
 const genesisTimestamp = UnixTime(1733498411)
 
 export const ink: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1734480000), // 2024-10-18T00:00:00Z
   additionalBadges: [BADGES.RaaS.Gelato],
   discovery,
@@ -70,7 +74,7 @@ export const ink: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc-gel.inkonchain.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'blockscout',

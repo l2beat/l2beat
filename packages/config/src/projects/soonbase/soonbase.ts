@@ -36,7 +36,7 @@ export const soonbase: ScalingProject = underReviewL2({
       {
         type: 'svm-rpc',
         url: 'https://rpc.soonbase.soo.network/rpc',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

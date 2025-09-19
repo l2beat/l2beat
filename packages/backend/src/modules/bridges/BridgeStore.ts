@@ -3,6 +3,7 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import type {
   BridgeEvent,
   BridgeEventDb,
+  BridgeEventQuery,
   BridgeEventType,
 } from './plugins/types'
 
@@ -120,29 +121,72 @@ export class BridgeStore implements BridgeEventDb {
 
   find<T>(
     type: BridgeEventType<T>,
-    query?: Partial<T>,
+    query?: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined {
-    return this.events.get(type.type)?.find((a): a is BridgeEvent<T> => {
-      if (!query) return true
-      return matchesQuery(a.args, query)
-    })
+    const typed = (this.events.get(type.type) ?? []) as BridgeEvent<T>[]
+    return getMatching(typed, query ?? {})[0]
   }
 
-  findAll<T>(type: BridgeEventType<T>, query?: Partial<T>): BridgeEvent<T>[] {
-    return (
-      this.events.get(type.type)?.filter((a): a is BridgeEvent<T> => {
-        if (!query) return true
-        return matchesQuery(a.args, query)
-      }) ?? []
-    )
+  findAll<T>(
+    type: BridgeEventType<T>,
+    query?: BridgeEventQuery<T>,
+  ): BridgeEvent<T>[] {
+    const typed = (this.events.get(type.type) ?? []) as BridgeEvent<T>[]
+    return getMatching(typed, query ?? {})
   }
 }
 
-function matchesQuery<T>(payload: T, query: Partial<T>): boolean {
-  return Object.entries(query).every(([key, value]) => {
-    // biome-ignore lint/suspicious/noExplicitAny: We want to do it old school
-    return (payload as any)[key] === value
-  })
+export function getMatching<T>(
+  events: BridgeEvent<T>[],
+  query: BridgeEventQuery<T>,
+): BridgeEvent<T>[] {
+  const filtered = events.filter((e) => matchesQuery(e, query))
+  if (query.sameTxAfter) {
+    events.sort((a, b) => a.ctx.logIndex - b.ctx.logIndex)
+  } else if (query.sameTxBefore) {
+    events.sort((a, b) => b.ctx.logIndex - a.ctx.logIndex)
+  }
+  return filtered
+}
+
+function matchesQuery<T>(
+  event: BridgeEvent<T>,
+  query: BridgeEventQuery<T>,
+): boolean {
+  for (const key in query) {
+    if (key === 'ctx') {
+      for (const ctxKey in query[key]) {
+        // @ts-ignore
+        if (event.ctx[ctxKey] !== query.ctx[ctxKey]) {
+          return false
+        }
+      }
+    } else if (key !== 'sameTxBefore' && key !== 'sameTxAfter') {
+      // @ts-ignore
+      if (event.args[key] !== query[key]) {
+        return false
+      }
+    }
+  }
+  if (query.sameTxAfter) {
+    if (
+      event.ctx.chain !== query.sameTxAfter.ctx.chain ||
+      event.ctx.txHash !== query.sameTxAfter.ctx.txHash ||
+      event.ctx.logIndex <= query.sameTxAfter.ctx.logIndex
+    ) {
+      return false
+    }
+  }
+  if (query.sameTxBefore) {
+    if (
+      event.ctx.chain !== query.sameTxBefore.ctx.chain ||
+      event.ctx.txHash !== query.sameTxBefore.ctx.txHash ||
+      event.ctx.logIndex >= query.sameTxBefore.ctx.logIndex
+    ) {
+      return false
+    }
+  }
+  return true
 }
 
 function fromDbRecord(record: BridgeEventRecord): BridgeEvent {

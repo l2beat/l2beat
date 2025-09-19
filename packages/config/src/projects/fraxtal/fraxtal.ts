@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -14,6 +14,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('fraxtal')
 
 export const fraxtal: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   addedAt: UnixTime(1708511622), // 2024-02-21T10:33:42Z
   daProvider: {
     layer: DA_LAYERS.FRAXTAL_DA,
@@ -91,7 +95,7 @@ export const fraxtal: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.frax.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'etherscan',

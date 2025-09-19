@@ -51,7 +51,7 @@ export const alienx: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.alienxchain.io/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

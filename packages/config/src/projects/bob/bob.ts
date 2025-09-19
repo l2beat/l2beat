@@ -8,6 +8,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('bob')
 
 export const bob: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1714521600), // 2024-05-01T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPKailua],

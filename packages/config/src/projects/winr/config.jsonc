@@ -4,6 +4,7 @@
   "import": ["../globalConfig.jsonc"],
   "maxDepth": 33,
   "initialAddresses": ["arb1:0xF3f01622Ac969156760c32190995F9dC5b3eb7FA"],
+  "sharedModules": ["shared-sp1", "blobstream"],
   "names": {
     "arb1:0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4": "WinrFastconfirmerMultisig"
   }

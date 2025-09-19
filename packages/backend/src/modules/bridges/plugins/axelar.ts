@@ -15,6 +15,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -40,25 +41,24 @@ const parseContractCallExecuted = createEventParser(
   'event ContractCallExecuted(bytes32 indexed commandId)',
 )
 
-export const NETWORKS = [
+export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'Ethereum', chain: 'ethereum' },
   { axelarChainName: 'arbitrum', chain: 'arbitrum' },
   { axelarChainName: 'Avalanche', chain: 'avalanche' },
   { axelarChainName: 'base', chain: 'base' },
   { axelarChainName: 'mantle', chain: 'mantle' },
-  { axelarChainName: 'immutable', chain: 'immutable' },
-  { axelarChainName: 'Fantom', chain: 'fantom' },
+  // { axelarChainName: 'immutable', chain: 'immutable' },
+  // { axelarChainName: 'Fantom', chain: 'fantom' },
   { axelarChainName: 'binance', chain: 'bsc' },
-  { axelarChainName: 'centrifuge', chain: 'centrifuge' },
+  // { axelarChainName: 'centrifuge', chain: 'centrifuge' },
   { axelarChainName: 'linea', chain: 'linea' },
   { axelarChainName: 'optimism', chain: 'optimism' },
-]
+])
 
 export const ContractCall = createBridgeEventType<{
   sender: EthereumAddress
   destinationContractAddress: string
   payloadHash: `0x${string}`
-  txHash: string
   $dstChain: string
 }>('axelar.ContractCall')
 
@@ -66,7 +66,6 @@ export const ContractCallWithToken = createBridgeEventType<{
   sender: EthereumAddress
   destinationContractAddress: string
   payloadHash: `0x${string}`
-  txHash: string
   symbol: string
   amount: number
   $dstChain: string
@@ -98,7 +97,6 @@ export const ContractCallExecuted = createBridgeEventType<{
 
 export class AxelarPlugin implements BridgePlugin {
   name = 'axelar'
-  chains = ['ethereum', 'arbitrum', 'base', 'optimism']
 
   capture(input: LogToCapture) {
     const contractCall = parseContractCall(input.log, null)
@@ -107,9 +105,8 @@ export class AxelarPlugin implements BridgePlugin {
         sender: EthereumAddress(contractCall.sender),
         destinationContractAddress: contractCall.destinationContractAddress,
         payloadHash: contractCall.payloadHash,
-        txHash: input.ctx.txHash,
         $dstChain:
-          NETWORKS.find(
+          AXELAR_NETWORKS.find(
             (x) => x.axelarChainName === contractCall.destinationChain,
           )?.chain ?? `AXL_${contractCall.destinationChain}`,
       })
@@ -124,9 +121,8 @@ export class AxelarPlugin implements BridgePlugin {
         payloadHash: contractCallWithToken.payloadHash,
         symbol: contractCallWithToken.symbol,
         amount: Number(contractCallWithToken.amount),
-        txHash: input.ctx.txHash,
         $dstChain:
-          NETWORKS.find(
+          AXELAR_NETWORKS.find(
             (x) => x.axelarChainName === contractCallWithToken.destinationChain,
           )?.chain ?? `AXL_${contractCallWithToken.destinationChain}`,
       })
@@ -141,7 +137,7 @@ export class AxelarPlugin implements BridgePlugin {
         contractAddress: EthereumAddress(contractCallApproved.contractAddress),
         srcTxHash: contractCallApproved.sourceTxHash,
         $srcChain:
-          NETWORKS.find(
+          AXELAR_NETWORKS.find(
             (x) => x.axelarChainName === contractCallApproved.sourceChain,
           )?.chain ?? `AXL_${contractCallApproved.sourceChain}`,
       })
@@ -163,7 +159,7 @@ export class AxelarPlugin implements BridgePlugin {
         amount: Number(contractCallApprovedWithMint.amount),
         srcTxHash: contractCallApprovedWithMint.sourceTxHash,
         $srcChain:
-          NETWORKS.find(
+          AXELAR_NETWORKS.find(
             (x) =>
               x.axelarChainName === contractCallApprovedWithMint.sourceChain,
           )?.chain ?? `AXL_${contractCallApprovedWithMint.sourceChain}`,
@@ -184,7 +180,9 @@ export class AxelarPlugin implements BridgePlugin {
   ): MatchResult | undefined {
     if (ContractCallApproved.checkType(contractCallApproved)) {
       const contractCall = db.find(ContractCall, {
-        txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+        ctx: {
+          txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+        },
       })
       if (!contractCall) return
       return [
@@ -197,7 +195,9 @@ export class AxelarPlugin implements BridgePlugin {
 
     if (ContractCallApprovedWithMint.checkType(contractCallApproved)) {
       const contractCallWithToken = db.find(ContractCallWithToken, {
-        txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+        ctx: {
+          txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+        },
       })
       if (!contractCallWithToken) return
       const contractCallExecuted = db.find(ContractCallExecuted, {

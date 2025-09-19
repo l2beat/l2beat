@@ -14,7 +14,6 @@ import {
 
 export class StargateV2BusPlugin implements BridgePlugin {
   name = 'stargate-v2-bus'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   match(busDriven: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (!StargateV2BusDriven.checkType(busDriven)) return

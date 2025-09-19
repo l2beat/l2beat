@@ -359,7 +359,7 @@ export const facet: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://mainnet.facet.org/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'blockscout',

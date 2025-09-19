@@ -61,7 +61,7 @@ export const blessnet: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://blessnet.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['BLESS'],

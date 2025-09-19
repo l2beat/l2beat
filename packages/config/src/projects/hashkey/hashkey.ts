@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
@@ -25,6 +26,10 @@ const sequencerAddress = ChainSpecificAddress.address(
 )
 
 export const hashkey = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   addedAt: UnixTime(1736518370), // 2025-01-10T17:09:00Z
   discovery,
   additionalPurposes: ['Exchange'],
@@ -57,7 +62,7 @@ export const hashkey = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.hsk.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['HSK'],

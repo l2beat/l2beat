@@ -45,7 +45,7 @@ export const onchain: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://rpc.onchainpoints.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

@@ -12,6 +12,8 @@ export function getSearchBarProjectEntries<
     | 'isScaling'
     | 'isDaLayer'
     | 'isBridge'
+    | 'ecosystemConfig'
+    | 'zkCatalogInfo'
   >,
 >(project: T, allProjects: T[]) {
   const results: SearchBarProject[] = []
@@ -19,7 +21,9 @@ export function getSearchBarProjectEntries<
     !project.isScaling &&
     !project.isBridge &&
     !project.daLayer &&
-    !project.daBridge
+    !project.daBridge &&
+    !project.ecosystemConfig &&
+    !project.zkCatalogInfo
   ) {
     return []
   }
@@ -76,6 +80,22 @@ export function getSearchBarProjectEntries<
         tags: [layer.slug, project.slug],
       })
     }
+  }
+
+  if (project.ecosystemConfig) {
+    results.push({
+      ...common,
+      href: `/ecosystems/${project.slug}`,
+      category: 'ecosystems',
+    })
+  }
+
+  if (project.zkCatalogInfo) {
+    results.push({
+      ...common,
+      href: `/zk-catalog/${project.slug}`,
+      category: 'zkCatalog',
+    })
   }
 
   return results

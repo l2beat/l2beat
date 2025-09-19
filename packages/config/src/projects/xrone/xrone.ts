@@ -49,7 +49,7 @@ export const xrone: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://xr1.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },
