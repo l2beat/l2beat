@@ -1,11 +1,10 @@
+import { Worker } from 'worker_threads'
+import type { DatabaseConfig } from '../../config/Config'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BridgeBlockProcessor } from './BridgeBlockProcessor'
 import { BridgeCleaner } from './BridgeCleaner'
-import { BridgeMatcher } from './BridgeMatcher'
 import { createBridgeRouter } from './BridgeRouter'
 import { BridgeStore } from './BridgeStore'
-import { FinancialsService } from './financials/FinancialsService'
-import { INTEROP_TOKENS } from './financials/tokens'
 import { createBridgePlugins } from './plugins'
 
 export function createBridgeModule({
@@ -13,7 +12,6 @@ export function createBridgeModule({
   db,
   logger,
   blockProcessors,
-  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.bridges) {
     logger.info('Bridges module disabled')
@@ -34,20 +32,6 @@ export function createBridgeModule({
     blockProcessors.push(processor)
   }
 
-  const financialsService = new FinancialsService(
-    INTEROP_TOKENS,
-    providers.price,
-  )
-
-  const bridgeMatcher = new BridgeMatcher(
-    bridgeStore,
-    financialsService,
-    db,
-    plugins,
-    config.bridges.chains,
-    logger,
-  )
-
   const bridgeRouter = createBridgeRouter(db)
 
   const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
@@ -55,9 +39,13 @@ export function createBridgeModule({
   const start = async () => {
     logger = logger.for('BridgeModule')
     logger.info('Starting')
+
     await bridgeStore.start()
     if (config.bridges && config.bridges.matchingEnabled) {
-      bridgeMatcher.start()
+      await runWorker({
+        dbConfig: config.database,
+        supportedChains: config.bridges.chains,
+      })
     }
     bridgeCleaner.start()
     logger.info('Started', {
@@ -66,4 +54,24 @@ export function createBridgeModule({
   }
 
   return { routers: [bridgeRouter], start }
+}
+
+function runWorker(workerData: {
+  dbConfig: DatabaseConfig
+  supportedChains: string[]
+}) {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker(
+      '/Users/antooni/repos/l2beat/packages/backend/build/src/modules/bridges/worker.js',
+      {
+        workerData,
+      },
+    )
+
+    worker.on('message', resolve)
+    worker.on('error', reject)
+    worker.on('exit', (code) => {
+      if (code !== 0) reject(new Error(`Worker stopped with exit code ${code}`))
+    })
+  })
 }

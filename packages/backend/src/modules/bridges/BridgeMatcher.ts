@@ -4,7 +4,7 @@ import type {
   BridgeTransferRecord,
   Database,
 } from '@l2beat/database'
-import type { BridgeStore } from './BridgeStore'
+import { BridgeStore } from './BridgeStore'
 import type { FinancialsService } from './financials/FinancialsService'
 import {
   type BridgeEvent,
@@ -21,13 +21,12 @@ export class BridgeMatcher {
   private running = false
 
   constructor(
-    private bridgeStore: BridgeStore,
     private financialsService: FinancialsService,
     private db: Database,
     private plugins: BridgePlugin[],
     private supportedChains: string[],
     private logger: Logger,
-    private intervalMs = 10_000,
+    private intervalMs = 60_000,
   ) {
     this.logger = logger.for(this)
   }
@@ -51,9 +50,11 @@ export class BridgeMatcher {
   }
 
   async doMatching() {
+    const bridgeStore = new BridgeStore(this.db)
+    await bridgeStore.start()
     const result = await match(
-      this.bridgeStore,
-      this.bridgeStore.getUnmatched(),
+      bridgeStore,
+      bridgeStore.getUnmatched(),
       this.plugins,
       this.supportedChains,
       this.logger,
@@ -65,13 +66,13 @@ export class BridgeMatcher {
         messages: result.messages.length,
         transfers: result.transfers.length,
       })
-      this.bridgeStore.markMatched([...result.matchedIds])
+      bridgeStore.markMatched([...result.matchedIds])
     }
     if (result.unsupportedIds.size > 0) {
-      this.bridgeStore.markUnsupported([...result.unsupportedIds])
+      bridgeStore.markUnsupported([...result.unsupportedIds])
     }
     if (result.matchedIds.size > 0 || result.unsupportedIds.size > 0) {
-      await this.bridgeStore.save()
+      await bridgeStore.save()
     }
     if (result.messages.length > 0) {
       await this.db.bridgeMessage.insertMany(
@@ -104,6 +105,8 @@ export async function match(
   const allTransfers: BridgeTransfer[] = []
 
   for (const plugin of plugins) {
+    console.log('matcher plugin', plugin.name)
+    console.time(plugin.name)
     for (const event of events) {
       if (matchedIds.has(event.eventId)) {
         continue
@@ -133,6 +136,7 @@ export async function match(
         }
       }
     }
+    console.timeEnd(plugin.name)
   }
 
   for (const event of events) {
