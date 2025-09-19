@@ -21,6 +21,7 @@ import { searchCode } from './searchCode'
 import {
   getPermissionOverrides,
   updatePermissionOverride,
+  resolveOwnersFromDiscovered,
 } from './permissionOverrides'
 import {
   attachTemplateRouter,
@@ -204,6 +205,35 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (error) {
       console.error('Error updating permission overrides:', error)
       res.status(500).json({ error: 'Failed to update permission overrides' })
+    }
+  })
+
+  // Owner resolution endpoints - using already discovered data
+  app.post('/api/projects/:project/resolve-owners', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const { ownerDefinitions } = req.body
+
+      if (!ownerDefinitions || !Array.isArray(ownerDefinitions)) {
+        res.status(400).json({ error: 'ownerDefinitions array is required' })
+        return
+      }
+
+      // Resolve owner definitions using discovered data
+      const resolved = resolveOwnersFromDiscovered(paths, project, ownerDefinitions)
+      res.json({ resolved })
+    } catch (error) {
+      console.error('Error resolving owners:', error)
+      res.status(500).json({
+        error: 'Failed to resolve owners',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      })
     }
   })
 

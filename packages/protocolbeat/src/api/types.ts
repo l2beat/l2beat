@@ -222,6 +222,27 @@ export interface PermissionOverride {
   reason?: string
   description?: string
   timestamp: string
+  // NEW: Multiple owner definitions using L2BEAT's existing handlers
+  ownerDefinitions?: OwnerDefinition[]
+}
+
+// Owner definition types leveraging L2BEAT's CallHandler and AccessControlHandler
+export interface OwnerDefinition {
+  type: 'field' | 'role'
+
+  // For 'field' type - uses L2BEAT's CallHandler pattern
+  field?: {
+    contractAddress: string
+    method: string           // e.g., "owner", "admin", "governance"
+    args?: any[]            // Optional arguments for function call
+  }
+
+  // For 'role' type - uses L2BEAT's AccessControlHandler pattern
+  role?: {
+    accessControlContract: string
+    roleName: string        // e.g., "DEFAULT_ADMIN_ROLE", "PAUSER_ROLE"
+    roleHash?: string       // Optional: explicit role hash
+  }
 }
 
 export interface ApiPermissionOverridesUpdateRequest {
@@ -232,4 +253,5 @@ export interface ApiPermissionOverridesUpdateRequest {
   score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk'
   reason?: string
   description?: string
+  ownerDefinitions?: OwnerDefinition[]
 }

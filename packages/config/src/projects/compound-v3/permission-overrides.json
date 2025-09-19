@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-18T21:34:51.373Z",
+  "lastModified": "2025-09-19T18:38:52.063Z",
   "overrides": [
     {
       "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
@@ -106,14 +106,6 @@
       "timestamp": "2025-09-17T15:57:42.803Z"
     },
     {
-      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "functionName": "admin",
-      "userClassification": "permissioned",
-      "checked": false,
-      "score": "unscored",
-      "timestamp": "2025-09-17T15:59:13.120Z"
-    },
-    {
       "contractAddress": "eth:0xtest",
       "functionName": "testFunc",
       "userClassification": "non-permissioned",
@@ -135,17 +127,25 @@
       "timestamp": "2025-09-17T16:43:00.897Z"
     },
     {
-      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "functionName": "implementation",
-      "userClassification": "permissioned",
-      "checked": true,
-      "score": "unscored",
-      "timestamp": "2025-09-17T16:46:36.131Z"
-    },
-    {
       "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
       "functionName": "pause",
       "userClassification": "permissioned",
+      "ownerDefinitions": [
+        {
+          "type": "field",
+          "field": {
+            "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+            "method": "governor"
+          }
+        },
+        {
+          "type": "role",
+          "role": {
+            "accessControlContract": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+            "roleName": "PAUSER_ROLE"
+          }
+        }
+      ],
       "timestamp": "2025-09-18T15:45:55.926Z"
     },
     {
@@ -155,6 +155,15 @@
       "checked": true,
       "score": "low-risk",
       "description": "This function is a simple getter on the current admin address.",
+      "ownerDefinitions": [
+        {
+          "type": "field",
+          "field": {
+            "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+            "method": "admin"
+          }
+        }
+      ],
       "timestamp": "2025-09-18T15:50:02.218Z"
     },
     {
@@ -163,6 +172,15 @@
       "userClassification": "permissioned",
       "checked": false,
       "score": "high-risk",
+      "ownerDefinitions": [
+        {
+          "type": "field",
+          "field": {
+            "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+            "method": "admin"
+          }
+        }
+      ],
       "timestamp": "2025-09-18T15:50:49.186Z"
     },
     {
@@ -171,6 +189,51 @@
       "userClassification": "non-permissioned",
       "score": "medium-risk",
       "timestamp": "2025-09-18T21:34:51.373Z"
+    },
+    {
+      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "functionName": "admin",
+      "userClassification": "permissioned",
+      "checked": true,
+      "score": "low-risk",
+      "timestamp": "2025-09-18T22:07:55.636Z"
+    },
+    {
+      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "functionName": "implementation",
+      "userClassification": "permissioned",
+      "score": "low-risk",
+      "timestamp": "2025-09-18T22:08:31.344Z"
+    },
+    {
+      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "functionName": "upgradeTo",
+      "userClassification": "permissioned",
+      "score": "high-risk",
+      "timestamp": "2025-09-18T22:08:37.444Z"
+    },
+    {
+      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "functionName": "upgradeToAndCall",
+      "userClassification": "permissioned",
+      "score": "high-risk",
+      "timestamp": "2025-09-18T22:08:38.899Z"
+    },
+    {
+      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "functionName": "changeAdmin",
+      "userClassification": "permissioned",
+      "checked": false,
+      "score": "high-risk",
+      "timestamp": "2025-09-18T22:08:41.201Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "implementation",
+      "userClassification": "non-permissioned",
+      "checked": true,
+      "score": "unscored",
+      "timestamp": "2025-09-19T18:38:52.063Z"
     }
   ]
 }

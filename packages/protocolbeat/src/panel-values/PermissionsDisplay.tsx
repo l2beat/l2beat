@@ -5,7 +5,7 @@ import { getPermissionOverrides, updatePermissionOverride, getCode } from '../ap
 import { useMultiViewStore } from '../multi-view/store'
 import { useCodeStore } from '../components/editor/store'
 import { usePanelStore } from '../store/store'
-import type { ApiAbi, ApiAbiEntry, PermissionOverride } from '../api/types'
+import type { ApiAbi, ApiAbiEntry, PermissionOverride, OwnerDefinition } from '../api/types'
 import { partition } from '../common/partition'
 import { AddressDisplay } from './AddressDisplay'
 import { Folder } from './Folder'
@@ -99,6 +99,12 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     await updateOverride(contractAddress, functionName, { description })
   }
 
+  const handleOwnerDefinitionsUpdate = async (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => {
+    if (!project) return
+
+    await updateOverride(contractAddress, functionName, { ownerDefinitions })
+  }
+
   const handleOpenInCode = async (contractAddress: string, functionName: string) => {
     if (!project) return
 
@@ -161,7 +167,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   const updateOverride = async (
     contractAddress: string,
     functionName: string,
-    updates: Partial<Pick<PermissionOverride, 'userClassification' | 'checked' | 'score' | 'description'>>
+    updates: Partial<Pick<PermissionOverride, 'userClassification' | 'checked' | 'score' | 'description' | 'ownerDefinitions'>>
   ) => {
     // Get current override data
     const currentOverride = allOverrides.find(o =>
@@ -176,6 +182,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
       checked: updates.checked ?? currentOverride?.checked,
       score: updates.score ?? currentOverride?.score,
       description: updates.description ?? currentOverride?.description,
+      ownerDefinitions: updates.ownerDefinitions ?? currentOverride?.ownerDefinitions,
       timestamp: new Date().toISOString(),
     }
 
@@ -242,6 +249,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
             onScoreToggle={handleScoreToggle}
             onDescriptionUpdate={handleDescriptionUpdate}
             onOpenInCode={handleOpenInCode}
+            onOwnerDefinitionsUpdate={handleOwnerDefinitionsUpdate}
           />
         </li>
       ))}
@@ -257,7 +265,8 @@ function PermissionsCode({
   onCheckedToggle,
   onScoreToggle,
   onDescriptionUpdate,
-  onOpenInCode
+  onOpenInCode,
+  onOwnerDefinitionsUpdate
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
@@ -267,6 +276,7 @@ function PermissionsCode({
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
+  onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
 }) {
   const readMarkers = [' view ', ' pure ']
 
@@ -295,6 +305,7 @@ function PermissionsCode({
           onScoreToggle={onScoreToggle}
           onDescriptionUpdate={onDescriptionUpdate}
           onOpenInCode={onOpenInCode}
+          onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
         />
       </Folder>
     </div>
@@ -309,7 +320,8 @@ function WritePermissionsCodeEntries({
   onCheckedToggle,
   onScoreToggle,
   onDescriptionUpdate,
-  onOpenInCode
+  onOpenInCode,
+  onOwnerDefinitionsUpdate
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
@@ -319,6 +331,7 @@ function WritePermissionsCodeEntries({
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
+  onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
 }) {
   const extractFunctionName = (abiEntry: string): string | null => {
     const match = abiEntry.match(/function\s+(\w+)\s*\(/)
@@ -354,6 +367,7 @@ function WritePermissionsCodeEntries({
             onScoreToggle={onScoreToggle}
             onDescriptionUpdate={onDescriptionUpdate}
             onOpenInCode={onOpenInCode}
+            onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
           />
         )
       })}
