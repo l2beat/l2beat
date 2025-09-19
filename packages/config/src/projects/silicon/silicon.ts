@@ -45,6 +45,7 @@ export const silicon: ScalingProject = polygonCDKStack({
       bridges: ['https://bridge.silicon.network/'],
       documentation: ['https://docs.silicon.network/'],
       explorers: ['https://scope.silicon.network'],
+      repositories: ['https://github.com/0xSilicon'],
       socialMedia: ['https://x.com/0xSilicon'],
     },
   },
