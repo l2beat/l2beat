@@ -39,7 +39,11 @@ export const espressoprover: BaseProject = {
         ZK_CATALOG_TAGS.Other.CustomCircuits,
       ],
     },
-    proofSystemInfo: '',
+    proofSystemInfo: `
+    ## Description
+
+    Espresso proof system implements a light client of HotShot consensus of Espresso network, i.e. it verifies that a sufficient number of Espresso nodes have correctly signed consensus message. It is implemented by a [Jellyfish Plonk](https://github.com/EspressoSystems/jellyfish) proof system on a [custom circuit](https://github.com/EspressoSystems/espresso-network/blob/2c166fe13a730733d18198d3989d3be2b4c42da8/hotshot-state-prover/src/v3/circuit.rs) that checks all necessary conditions. Jellyfish is a Rust implementation of [Plonk system](https://eprint.iacr.org/2019/953.pdf) without significant modifications. [This code](https://github.com/EspressoSystems/espresso-network/blob/2c166fe13a730733d18198d3989d3be2b4c42da8/contracts/rust/gen-vk-contract/src/main.rs) generates a Solidity verifier to check zk proofs within EVM.
+    `,
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Jellyfish,
@@ -52,7 +56,7 @@ export const espressoprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Jellyfish,
         knownDeployments: [
           {
-            address: '0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B',
+            address: '0xa239397d05516d3e44bed853e7ba1e672ddd958f',
             chain: 'ethereum',
           },
         ],
