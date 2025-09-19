@@ -12,6 +12,7 @@ interface Props {
   isUnderReview?: boolean
   className?: string
   background?: 'header' | 'surface' | false
+  disableSectionLinking?: boolean
 }
 
 export function PizzaRosetteIcon({
@@ -19,6 +20,7 @@ export function PizzaRosetteIcon({
   className,
   isUnderReview,
   background = 'header',
+  disableSectionLinking = false,
 }: Props) {
   const context = useRosetteTooltipContext()
   const svgRef = useRef(null)
@@ -36,7 +38,7 @@ export function PizzaRosetteIcon({
     setSelectedRisk?.(risk)
   }
 
-  return (
+  const rosetteIcon = (
     <svg
       width="180"
       height="180"
@@ -152,4 +154,8 @@ export function PizzaRosetteIcon({
       </g>
     </svg>
   )
+
+  if (disableSectionLinking) return rosetteIcon
+
+  return <a href={selectedRisk?.href}>{rosetteIcon}</a>
 }
