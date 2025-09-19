@@ -31,7 +31,7 @@ export const codex: ScalingProject = underReviewL2({
       {
         type: 'rpc',
         url: 'https://rpc.codex.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

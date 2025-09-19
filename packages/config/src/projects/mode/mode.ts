@@ -94,7 +94,7 @@ export const mode: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.mode.network/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'routescan',

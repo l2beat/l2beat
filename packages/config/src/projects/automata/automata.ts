@@ -89,7 +89,7 @@ export const automata: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.ata.network/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

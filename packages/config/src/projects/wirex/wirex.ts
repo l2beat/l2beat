@@ -66,7 +66,7 @@ export const wirex: ScalingProject = polygonCDKStack({
       {
         type: 'rpc',
         url: 'https://rpc.wirexpaychain.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

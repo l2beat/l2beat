@@ -88,7 +88,7 @@ export const shibarium: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://www.shibrpc.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

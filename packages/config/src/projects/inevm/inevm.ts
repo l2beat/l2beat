@@ -67,7 +67,7 @@ export const inevm: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://inevm.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['INJ'],

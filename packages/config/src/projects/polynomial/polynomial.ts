@@ -41,7 +41,7 @@ export const polynomial: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.polynomial.fi',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

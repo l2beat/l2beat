@@ -64,7 +64,7 @@ export const lisk: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.api.lisk.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

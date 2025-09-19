@@ -46,7 +46,7 @@ export const apechain: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://rpc.apechain.com/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['APE'],

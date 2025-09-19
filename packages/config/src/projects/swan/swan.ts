@@ -47,7 +47,7 @@ export const swan: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet-rpc-01.swanchain.org',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

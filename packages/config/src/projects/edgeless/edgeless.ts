@@ -41,7 +41,7 @@ export const edgeless: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.edgeless.network/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },
