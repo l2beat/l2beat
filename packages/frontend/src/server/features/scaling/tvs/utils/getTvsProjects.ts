@@ -1,4 +1,4 @@
-import type { Project } from '@l2beat/config'
+import type { Project, TvsToken } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
@@ -6,6 +6,7 @@ import { ps } from '~/server/projects'
 interface TvsProject {
   projectId: ProjectId
   category?: 'rollups' | 'validiumsAndOptimiums' | 'others'
+  tvsConfig: TvsToken[]
 }
 
 export async function getTvsProjects(
@@ -29,6 +30,7 @@ export async function getTvsProjects(
   return filteredProjects.map((project) => ({
     projectId: project.id,
     category: getCategory(project),
+    tvsConfig: project.tvsConfig,
   }))
 }
 
