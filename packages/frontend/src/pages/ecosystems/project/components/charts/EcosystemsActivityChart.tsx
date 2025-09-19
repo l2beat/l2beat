@@ -77,7 +77,7 @@ export function EcosystemsActivityChart({
     range: { type: timeRange },
     filter: {
       type: 'projects',
-      projectIds: entries.map((project) => project.id),
+      projectIds: entries.map((project) => project.id).toSorted(),
     },
   })
 
