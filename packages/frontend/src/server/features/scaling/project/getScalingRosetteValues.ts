@@ -70,7 +70,7 @@ function getScalingRosetteValues(
       name: 'Data availability',
       ...risks.dataAvailability,
       href: sectionsInfo.hasDataAvailabilitySection
-        ? `${baseUrl}#data-availability`
+        ? `${baseUrl}#da-layer`
         : fallbackHref,
     },
     {
