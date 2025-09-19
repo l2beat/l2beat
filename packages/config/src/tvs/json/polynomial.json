@@ -68,7 +68,7 @@
       "priceId": "optimism",
       "symbol": "OP",
       "name": "Optimism",
-      "iconUrl": "https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1696524385",
+      "iconUrl": "/images/custom-tokens/optimism.png",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x4200000000000000000000000000000000000042",

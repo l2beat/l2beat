@@ -1,5 +1,5 @@
-import { ProjectService } from '@l2beat/config'
-import { assert, notUndefined, ProjectId } from '@l2beat/shared-pure'
+import type { ProjectService } from '@l2beat/config'
+import { assert, notUndefined } from '@l2beat/shared-pure'
 import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import {
   extractPricesAndAmounts,
@@ -73,23 +73,22 @@ export async function getTvsConfig(
     ),
   )
 
-  const blockTimestamps = await Promise.all(
-    Array.from(new Set(chains).values()).map(async (c) => {
-      const project = await new ProjectService().getProject({
-        id: ProjectId(c),
-        select: ['chainConfig'],
-      })
-      assert(project, `${c}: chainConfig not configured`)
-      assert(project.chainConfig.sinceTimestamp)
+  const allProjects = await ps.getProjects({
+    select: ['chainConfig'],
+  })
 
-      return {
-        chainName: c,
-        configurationId: generateConfigurationId([`chain_${c}`]),
-        sinceTimestamp: sinceTimestamp ?? project.chainConfig.sinceTimestamp,
-        untilTimestamp: project.chainConfig.untilTimestamp,
-      }
-    }),
-  )
+  const blockTimestamps = Array.from(new Set(chains).values()).map((c) => {
+    const project = allProjects.find((p) => p.chainConfig.name === c)
+    assert(project, `${c}: chainConfig not configured`)
+    assert(project.chainConfig.sinceTimestamp)
+
+    return {
+      chainName: c,
+      configurationId: generateConfigurationId([`chain_${c}`]),
+      sinceTimestamp: sinceTimestamp ?? project.chainConfig.sinceTimestamp,
+      untilTimestamp: project.chainConfig.untilTimestamp,
+    }
+  })
 
   return {
     projects: projectsWithSources,

@@ -1,3 +1,4 @@
+import { env } from '~/env'
 import type { Manifest } from '~/utils/Manifest'
 import { stripQueryParams } from '~/utils/stripQueryParams'
 
@@ -44,10 +45,17 @@ function getOpenGraph(
   manifest: Manifest,
   { url, image, type }: PartialMetadata['openGraph'],
 ): OpenGraph {
-  const baseUrl = 'https://l2beat.com'
+  const baseUrl = getBaseUrl()
   return {
     url: baseUrl + stripQueryParams(url),
     image: image ? baseUrl + manifest.getUrl(image) : undefined,
     type: type ?? 'website',
   }
+}
+
+function getBaseUrl() {
+  if (env.DEPLOYMENT_ENV === 'production') return 'https://l2beat.com'
+  if (env.DEPLOYMENT_ENV === 'staging') return 'https://fe-staging.l2beat.com/'
+  if (env.HEROKU_APP_NAME) return `https://${env.HEROKU_APP_NAME}.herokuapp.com`
+  return 'http://localhost:3000'
 }

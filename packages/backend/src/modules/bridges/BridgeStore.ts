@@ -3,6 +3,7 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import type {
   BridgeEvent,
   BridgeEventDb,
+  BridgeEventQuery,
   BridgeEventType,
 } from './plugins/types'
 
@@ -10,9 +11,11 @@ export class BridgeStore implements BridgeEventDb {
   private events = new Map<string, BridgeEvent[]>()
   private unmatched: BridgeEvent[] = []
   private matchedIds = new Set<string>()
+  private unsupportedIds = new Set<string>()
 
   private newEvents: BridgeEvent[] = []
   private newMatched = new Set<string>()
+  private newUnsupported = new Set<string>()
 
   constructor(private db: Database) {}
 
@@ -26,6 +29,10 @@ export class BridgeStore implements BridgeEventDb {
         this.unmatched.push(event)
       } else {
         this.matchedIds.add(event.eventId)
+      }
+
+      if (record.unsupported) {
+        this.unsupportedIds.add(event.eventId)
       }
     }
   }
@@ -50,22 +57,36 @@ export class BridgeStore implements BridgeEventDb {
     this.unmatched = this.unmatched.filter((x) => !eventIds.includes(x.eventId))
   }
 
+  markUnsupported(eventIds: string[]) {
+    for (const eventId of eventIds) {
+      this.unsupportedIds.add(eventId)
+      this.newUnsupported.add(eventId)
+    }
+    this.unmatched = this.unmatched.filter((x) => !eventIds.includes(x.eventId))
+  }
+
   getUnmatched(): BridgeEvent[] {
     return [...this.unmatched]
   }
 
   async save(): Promise<void> {
     const records = this.newEvents.map((e) =>
-      toDbRecord(e, this.matchedIds.has(e.eventId)),
+      toDbRecord(e, {
+        matched: this.matchedIds.has(e.eventId),
+        unsupported: this.unsupportedIds.has(e.eventId),
+      }),
     )
     const matchedIds = Array.from(this.newMatched)
+    const unsupportedIds = Array.from(this.newUnsupported)
 
     this.newEvents.length = 0
     this.newMatched.clear()
+    this.newUnsupported.clear()
 
     await this.db.transaction(async () => {
       await this.db.bridgeEvent.insertMany(records)
       await this.db.bridgeEvent.updateMatched(matchedIds)
+      await this.db.bridgeEvent.updateUnsupported(unsupportedIds)
     })
   }
 
@@ -100,29 +121,72 @@ export class BridgeStore implements BridgeEventDb {
 
   find<T>(
     type: BridgeEventType<T>,
-    query?: Partial<T>,
+    query?: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined {
-    return this.events.get(type.type)?.find((a): a is BridgeEvent<T> => {
-      if (!query) return true
-      return matchesQuery(a.args, query)
-    })
+    const typed = (this.events.get(type.type) ?? []) as BridgeEvent<T>[]
+    return getMatching(typed, query ?? {})[0]
   }
 
-  findAll<T>(type: BridgeEventType<T>, query?: Partial<T>): BridgeEvent<T>[] {
-    return (
-      this.events.get(type.type)?.filter((a): a is BridgeEvent<T> => {
-        if (!query) return true
-        return matchesQuery(a.args, query)
-      }) ?? []
-    )
+  findAll<T>(
+    type: BridgeEventType<T>,
+    query?: BridgeEventQuery<T>,
+  ): BridgeEvent<T>[] {
+    const typed = (this.events.get(type.type) ?? []) as BridgeEvent<T>[]
+    return getMatching(typed, query ?? {})
   }
 }
 
-function matchesQuery<T>(payload: T, query: Partial<T>): boolean {
-  return Object.entries(query).every(([key, value]) => {
-    // biome-ignore lint/suspicious/noExplicitAny: We want to do it old school
-    return (payload as any)[key] === value
-  })
+export function getMatching<T>(
+  events: BridgeEvent<T>[],
+  query: BridgeEventQuery<T>,
+): BridgeEvent<T>[] {
+  const filtered = events.filter((e) => matchesQuery(e, query))
+  if (query.sameTxAfter) {
+    events.sort((a, b) => a.ctx.logIndex - b.ctx.logIndex)
+  } else if (query.sameTxBefore) {
+    events.sort((a, b) => b.ctx.logIndex - a.ctx.logIndex)
+  }
+  return filtered
+}
+
+function matchesQuery<T>(
+  event: BridgeEvent<T>,
+  query: BridgeEventQuery<T>,
+): boolean {
+  for (const key in query) {
+    if (key === 'ctx') {
+      for (const ctxKey in query[key]) {
+        // @ts-ignore
+        if (event.ctx[ctxKey] !== query.ctx[ctxKey]) {
+          return false
+        }
+      }
+    } else if (key !== 'sameTxBefore' && key !== 'sameTxAfter') {
+      // @ts-ignore
+      if (event.args[key] !== query[key]) {
+        return false
+      }
+    }
+  }
+  if (query.sameTxAfter) {
+    if (
+      event.ctx.chain !== query.sameTxAfter.ctx.chain ||
+      event.ctx.txHash !== query.sameTxAfter.ctx.txHash ||
+      event.ctx.logIndex <= query.sameTxAfter.ctx.logIndex
+    ) {
+      return false
+    }
+  }
+  if (query.sameTxBefore) {
+    if (
+      event.ctx.chain !== query.sameTxBefore.ctx.chain ||
+      event.ctx.txHash !== query.sameTxBefore.ctx.txHash ||
+      event.ctx.logIndex >= query.sameTxBefore.ctx.logIndex
+    ) {
+      return false
+    }
+  }
+  return true
 }
 
 function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
@@ -143,7 +207,10 @@ function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
   }
 }
 
-function toDbRecord(event: BridgeEvent, matched: boolean): BridgeEventRecord {
+function toDbRecord(
+  event: BridgeEvent,
+  flags: { matched: boolean; unsupported: boolean },
+): BridgeEventRecord {
   return {
     eventId: event.eventId,
     type: event.type,
@@ -156,6 +223,7 @@ function toDbRecord(event: BridgeEvent, matched: boolean): BridgeEventRecord {
     timestamp: event.ctx.timestamp,
     txHash: event.ctx.txHash,
     txTo: event.ctx.txTo,
-    matched: matched,
+    matched: flags.matched,
+    unsupported: flags.unsupported,
   }
 }

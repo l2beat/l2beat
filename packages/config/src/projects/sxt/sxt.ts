@@ -89,7 +89,7 @@ export const sxt: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://spaceandtime.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

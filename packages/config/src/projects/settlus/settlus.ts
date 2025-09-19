@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -9,6 +9,10 @@ const discovery = new ProjectDiscovery('settlus')
 const genesisTimestamp = UnixTime(1736459256)
 
 export const settlus: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   capability: 'universal',
   addedAt: UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
   additionalBadges: [BADGES.RaaS.Alchemy],

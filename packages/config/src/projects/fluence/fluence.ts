@@ -29,7 +29,7 @@ export const fluence: ScalingProject = orbitStackL2({
       repositories: ['https://github.com/fluencelabs'],
       socialMedia: [
         'https://x.com/fluence_project',
-        'https://discord.com/invite/5qSnPZKh7u',
+        'https://discord.com/invite/EFHYR6nZrD',
         'https://t.me/fluence_project',
         'https://youtube.com/channel/UC3b5eFyKRFlEMwSJ1BTjpbw',
       ],
@@ -52,7 +52,7 @@ export const fluence: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.mainnet.fluence.dev',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['FLT'],

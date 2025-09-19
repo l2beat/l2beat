@@ -40,7 +40,7 @@ export function EcosystemBuildOnLink({
             {headlineText ?? `Ready to join ${name}?`}
           </div>
           <div className="group-hover:-translate-y-2 origin-left text-balance font-bold text-lg leading-tight! transition-[translate,scale] ease-in-out group-hover:translate-x-4 group-hover:scale-125 sm:text-xl">
-            {mainText ?? `Build own chain on ${name}`}
+            {mainText ?? `Build your own chain on ${name}`}
           </div>
         </div>
       </CustomLink>

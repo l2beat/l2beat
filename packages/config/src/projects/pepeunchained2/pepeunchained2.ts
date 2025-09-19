@@ -41,7 +41,7 @@ export const pepeunchained2: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc-pepu-v2-mainnet-0.t.conduit.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

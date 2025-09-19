@@ -21,6 +21,7 @@ export function DaLivenessTable({ items }: { items: DaLivenessEntry[] }) {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     initialState: {
+      sorting: [{ id: '#', desc: false }],
       columnPinning: {
         left: ['#', 'logo'],
       },

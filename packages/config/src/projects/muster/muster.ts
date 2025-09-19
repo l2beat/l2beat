@@ -46,7 +46,7 @@ export const muster: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://muster.alt.technology',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

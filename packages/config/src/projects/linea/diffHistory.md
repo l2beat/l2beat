@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x25faf88efb8cede7069dfca91df9e8df6a5df564
+
+# Diff at Fri, 19 Sep 2025 08:23:31 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@db1760252dd9dd68603e4c71d0f4e284d5d0d15f block: 1756720779
+- current timestamp: 1758270123
+
+## Description
+
+Added new member to Linea Multisig 1, rotated another member and incremented threshold.
+
+## Watched changes
+
+```diff
+    contract Linea Multisig 1 (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f"
+      values.$members.1:
+-        "eth:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE"
++        "eth:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "5 of 9 (56%)"
+    }
+```
+
 Generated with discovered.json: 0x5678846ddf45997be0cbeb9c6f7948a673698320
 
 # Diff at Mon, 01 Sep 2025 12:53:18 GMT:

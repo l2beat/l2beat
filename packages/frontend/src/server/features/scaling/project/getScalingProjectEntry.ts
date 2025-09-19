@@ -252,12 +252,10 @@ export async function getScalingProjectEntry(
     archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
-    colors: env.CLIENT_SIDE_PARTNERS
-      ? {
-          project: project.colors,
-          ecosystem: project.ecosystemColors,
-        }
-      : undefined,
+    colors: {
+      project: project.colors,
+      ecosystem: project.ecosystemColors,
+    },
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     rosette: getScalingRosette(project),
@@ -542,6 +540,22 @@ export async function getScalingProjectEntry(
     })
   }
 
+  if (project.scalingTechnology.upgradesAndGovernance) {
+    sections.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'upgrades-and-governance',
+        title: 'Upgrades & Governance',
+        content: project.scalingTechnology.upgradesAndGovernance,
+        diagram: getDiagramParams(
+          'upgrades-and-governance',
+          project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
+        ),
+        isUnderReview: !!project.statuses.reviewStatus,
+      },
+    })
+  }
+
   const operatorSection = getOperatorSection(project)
   if (operatorSection) {
     sections.push({
@@ -588,21 +602,6 @@ export async function getScalingProjectEntry(
         id: 'other-considerations',
         title: 'Other considerations',
         ...otherConsiderationsSection,
-      },
-    })
-  }
-  if (project.scalingTechnology.upgradesAndGovernance) {
-    sections.push({
-      type: 'MarkdownSection',
-      props: {
-        id: 'upgrades-and-governance',
-        title: 'Upgrades & Governance',
-        content: project.scalingTechnology.upgradesAndGovernance,
-        diagram: getDiagramParams(
-          'upgrades-and-governance',
-          project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
-        ),
-        isUnderReview: !!project.statuses.reviewStatus,
       },
     })
   }

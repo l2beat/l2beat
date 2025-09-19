@@ -17,7 +17,7 @@ export async function getMonthlyUpdateData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['monthly-updates', 'data'],
+        key: ['monthly-updates', 'data', monthlyUpdate.id],
         ttl: UnixTime.HOUR,
         staleWhileRevalidate: UnixTime.HOUR,
       },

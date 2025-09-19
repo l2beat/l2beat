@@ -43,7 +43,7 @@ export const pepeunchained: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc-pepe-unchained-gupg0lo9wf.t.conduit.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

@@ -1,9 +1,5 @@
-import { getDiscoveryPaths } from '@l2beat/discovery'
-import { type ChainConverter, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { readFileSync, writeFileSync } from 'fs'
 import { type ParseError, parse } from 'jsonc-parser'
-import groupBy from 'lodash/groupBy'
-import path from 'path'
 import { type GeneratedToken, Output, Source } from '../../../src/tokens/types'
 import type { ScriptLogger } from './ScriptLogger'
 
@@ -45,53 +41,4 @@ export function saveResults(outputFilePath: string, result: GeneratedToken[]) {
     2,
   )
   writeFileSync(outputFilePath, outputJson + '\n')
-}
-
-export function saveTokenNames(
-  tokens: GeneratedToken[],
-  chainConverter: ChainConverter,
-) {
-  const names: Record<string, string> = {}
-  const byChain = groupBy(tokens, (token) =>
-    chainConverter.toName(token.chainId),
-  )
-
-  for (const chainName in byChain) {
-    const chainTokens = byChain[chainName].filter(
-      (token) => token.address !== undefined,
-    )
-
-    const occurrences: Record<string, number> = {}
-    for (const { name } of chainTokens) {
-      occurrences[name] = (occurrences[name] ?? 0) + 1
-    }
-
-    const counters: Record<string, number> = {}
-    for (const token of chainTokens) {
-      // biome-ignore lint/style/noNonNullAssertion: We know it's there
-      const total = occurrences[token.name]!
-      let finalName = token.name
-
-      if (total > 1) {
-        counters[token.name] = (counters[token.name] ?? 0) + 1
-        finalName = `${token.name} ${counters[token.name]}`
-      }
-
-      if (!finalName.toLowerCase().includes('token')) {
-        finalName += ' Token'
-      }
-
-      try {
-        // biome-ignore lint/style/noNonNullAssertion: address checked above
-        const address = ChainSpecificAddress.fromLong(chainName, token.address!)
-        names[address.toString()] = finalName
-      } catch {}
-    }
-  }
-
-  const paths = getDiscoveryPaths()
-  writeFileSync(
-    path.join(paths.discovery, 'globalTokens.jsonc'),
-    JSON.stringify({ names }, null, 2),
-  )
 }

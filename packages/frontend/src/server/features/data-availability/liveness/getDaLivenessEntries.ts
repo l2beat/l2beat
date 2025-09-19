@@ -17,11 +17,13 @@ import { getHasTrackedContractChanged } from '../../scaling/liveness/utils/getHa
 import { getLivenessSyncWarning } from '../../scaling/liveness/utils/isLivenessSynced'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { type CommonDaEntry, getCommonDaEntry } from '../getCommonDaEntry'
+import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
+import { getDaUsers } from '../utils/getDaUsers'
 
 export async function getDaLivenessEntries(): Promise<
   TabbedDaEntries<DaLivenessEntry>
 > {
-  const [layers, bridges, projectsChangeReport, liveness] = await Promise.all([
+  const [layers, bridges] = await Promise.all([
     ps.getProjects({
       select: ['daLayer', 'statuses'],
       whereNot: ['archivedAt'],
@@ -30,9 +32,17 @@ export async function getDaLivenessEntries(): Promise<
       select: ['daBridge', 'statuses', 'trackedTxsConfig'],
       optional: ['livenessInfo'],
     }),
+  ])
+
+  const uniqueProjectsInUse = getDaUsers(layers, bridges, [])
+
+  const [projectsChangeReport, liveness, tvsPerProject] = await Promise.all([
     getProjectsChangeReport(),
     getLiveness(),
+    getDaProjectsTvs(uniqueProjectsInUse),
   ])
+
+  const getTvs = pickTvsForProjects(tvsPerProject)
 
   const layerEntries = layers
     .filter((project) => project.id !== ProjectId.ETHEREUM)
@@ -40,16 +50,18 @@ export async function getDaLivenessEntries(): Promise<
       getDaLivenessEntry(
         project,
         bridges.filter((x) => x.daBridge.daLayer === project.id),
+        getTvs,
         projectsChangeReport,
         liveness,
       ),
     )
     .filter((x) => x !== undefined)
 
-  return groupByDaTabs(layerEntries)
+  return groupByDaTabs(layerEntries.sort((a, b) => b.tvs - a.tvs))
 }
 
 export interface DaLivenessEntry extends CommonDaEntry {
+  tvs: number
   bridges: DaBridgeLivenessEntry[]
 }
 
@@ -64,6 +76,7 @@ export interface DaBridgeLivenessEntry
   anomalies: LivenessAnomaly[]
   explanation: string | undefined
   hasTrackedContractsChanged: boolean
+  tvs: number
 }
 
 function getDaLivenessEntry(
@@ -72,6 +85,7 @@ function getDaLivenessEntry(
     'daBridge' | 'statuses' | 'trackedTxsConfig',
     'livenessInfo'
   >[],
+  getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   projectsChangeReport: ProjectsChangeReport,
   liveness: LivenessResponse,
 ): DaLivenessEntry | undefined {
@@ -105,6 +119,9 @@ function getDaLivenessEntry(
                 ? 'impactful-change'
                 : undefined,
           syncWarning,
+          ongoingAnomaly: bridgeLiveness.anomalies.some(
+            (a) => a.end === undefined,
+          ),
         },
         relayerType: b.daBridge.relayerType,
         validationType: b.daBridge.validationType,
@@ -116,6 +133,7 @@ function getDaLivenessEntry(
         anomalies: bridgeLiveness.anomalies,
         explanation: b.livenessInfo?.explanation,
         hasTrackedContractsChanged,
+        tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)).latest,
       }
     })
     .filter((x) => x !== undefined)
@@ -124,8 +142,15 @@ function getDaLivenessEntry(
     return undefined
   }
 
+  const tvs = getTvs(
+    layer.daLayer.usedWithoutBridgeIn
+      .concat(bridges.flatMap((p) => p.daBridge.usedIn))
+      .map((x) => x.id),
+  ).latest
+
   return {
     ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
     bridges: daBridges,
+    tvs,
   }
 }

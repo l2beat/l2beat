@@ -33,7 +33,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 export const penchain: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1740706975),
   additionalPurposes: ['Gaming'],
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Zeeve],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'Pentagon Chain',

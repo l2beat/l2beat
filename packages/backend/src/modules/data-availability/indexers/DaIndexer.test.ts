@@ -120,7 +120,10 @@ describe(DaIndexer.name, () => {
       expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenOnlyCalledWith(
         'dataAvailability',
         configurations.map((c) => c.projectId),
-        generatedRecords[generatedRecords.length - 1].timestamp,
+        UnixTime.toEndOf(
+          generatedRecords[generatedRecords.length - 1].timestamp,
+          'hour',
+        ),
         150,
       )
 

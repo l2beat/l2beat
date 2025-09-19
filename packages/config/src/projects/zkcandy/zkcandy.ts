@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -47,7 +47,7 @@ export const zkcandy: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.zkcandy.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },
@@ -180,6 +180,9 @@ export const zkcandy: ScalingProject = zkStackL2({
       },
     },
   ],
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+  },
   milestones: [
     {
       title: 'Mainnet Launch',

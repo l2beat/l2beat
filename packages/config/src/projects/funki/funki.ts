@@ -2,6 +2,7 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
@@ -43,6 +44,10 @@ const daResolveWindow = formatSeconds(
 )
 
 export const funki: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   capability: 'universal',
   addedAt: UnixTime(1728289959), // 2024-10-07T08:32:39Z
   additionalBadges: [BADGES.RaaS.AltLayer],
@@ -88,7 +93,7 @@ export const funki: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc-mainnet.funkichain.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

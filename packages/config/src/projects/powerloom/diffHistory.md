@@ -1,3 +1,116 @@
+Generated with discovered.json: 0x40db531f00c9191379cfbcc3d8d2d9a0d63d75de
+
+# Diff at Thu, 18 Sep 2025 15:47:28 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@0bdfa87489b47d7662c688d0c187b81dffc81e27 block: 1757939365
+- current timestamp: 1758210381
+
+## Description
+
+Update to ArbOS v40.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x9f3dC4D1f6c6D9F2273d8b497E460E6E727210e8) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v32 wasmModuleRoot"
++        "ArbOS v40 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
++        "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a"
+    }
+```
+
+Generated with discovered.json: 0x9dc3f705f9b834771df564fffb39be83bf2979da
+
+# Diff at Mon, 15 Sep 2025 12:31:29 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@823103e23195ea5382f353da97a0232ffda42a10 block: 1757506676
+- current timestamp: 1757939365
+
+## Description
+
+Verified L1OrbitUSDCGateway contract.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757506676 (main branch discovery), not current.
+
+```diff
+    contract L1OrbitUSDCGateway (eth:0x23593421341152D5322F8869c0638DAAc4aED57C) {
+    +++ description: Orbit stack specific escrow (gateway) for Circle USDC that uses the canonical bridge for messaging but is governed externally.
+      unverified:
+-        true
+      values.burnAmount:
++        0
+      values.burner:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.counterpartGateway:
++        "eth:0xfC55Ec44Ff8032E82c7EcFF34cBEACb14152DC48"
+      values.depositsPaused:
++        false
+      values.inbox:
++        "eth:0x7d4509336b154C17Df80D03A19C051ddAcdA2e7f"
+      values.l1USDC:
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.l2USDC:
++        "eth:0x0F3B6CC558A714ecf4Cc9ec8caFF0b57ECf65890"
+      values.owner:
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.router:
++        "eth:0x8b4b4328455615fCb7aaE14460cfa90767B1df55"
+      implementationNames.eth:0xca8b6572477f5b5c5a2b1C7fEad58cF3DA5CD211:
+-        ""
++        "L1OrbitUSDCGateway"
+      template:
++        "circle/L1OrbitUSDCGateway"
+      sourceHashes:
++        ["0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1","0x5c7b5d634bb6392d1662b17adb247ff923a285a471ad50aca1f9d34d82ddf671"]
+      description:
++        "Orbit stack specific escrow (gateway) for Circle USDC that uses the canonical bridge for messaging but is governed externally."
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x256bBeDabDBa636a9Cd17890841C941a28e9437e) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x46D9ff7ED3049798B406be811FE68b75B208f81A","role":"admin"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x8b4b4328455615fCb7aaE14460cfa90767B1df55","role":"admin"}
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x46D9ff7ED3049798B406be811FE68b75B208f81A","role":"admin","via":[{"address":"eth:0x256bBeDabDBa636a9Cd17890841C941a28e9437e"},{"address":"eth:0x6a23390d8a086c1091188f8Db702E91DCA38805F"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"eth:0x8b4b4328455615fCb7aaE14460cfa90767B1df55","role":"admin","via":[{"address":"eth:0x256bBeDabDBa636a9Cd17890841C941a28e9437e"},{"address":"eth:0x6a23390d8a086c1091188f8Db702E91DCA38805F"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Gateway (eth:0x46D9ff7ED3049798B406be811FE68b75B208f81A)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+```diff
++   Status: CREATED
+    contract GatewayRouter (eth:0x8b4b4328455615fCb7aaE14460cfa90767B1df55)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
 Generated with discovered.json: 0x1a6c3ea30b47595f4f3bb14009908947e1857645
 
 # Diff at Wed, 10 Sep 2025 12:26:42 GMT:

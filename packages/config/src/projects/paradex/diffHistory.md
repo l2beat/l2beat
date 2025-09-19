@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x83f2c3de5b6d3ee90b025c410ef11494e992e095
+
+# Diff at Wed, 17 Sep 2025 12:09:21 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@597af358c0b75d4111ec7b5f25233424c734e04d block: 1757661281
+- current timestamp: 1758110896
+
+## Description
+
+Increase max USDC total balance.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
++++ description: The maximum total balance that can be locked in the bridge.
+      values.maxTotalBalance:
+-        100000000000000
++        175000000000000
+    }
+```
+
+Generated with discovered.json: 0x789cc478d9e9012a0f50a43922f863c8429d61ad
+
+# Diff at Fri, 12 Sep 2025 07:15:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2848a07919ddccf9d9ca1c6779dbcc184bdeb3b3 block: 1755516515
+- current timestamp: 1757661281
+
+## Description
+
+ms signer added.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x721e0A5e09A6e0Bf9641193a4D82901607837Df9"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x56341b93fc071e40f0a9fdad063be221cfe8c022
 
 # Diff at Wed, 03 Sep 2025 15:52:09 GMT:

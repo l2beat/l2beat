@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract used to register BLS keys and verify aggregated signatures. No specific threshold is enforced here, as all addresses to exclude from the signature check are provided as an input.",
+  "fields": {
+    "relayerManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "it can add or remove whitelisted addresses that can register BLS keys."
+        }
+      ]
+    }
+  }
+}

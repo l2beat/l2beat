@@ -5,7 +5,7 @@ import {
   getChainShortName,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
 import type { Bridge, ScalingProject } from '../internalTypes'
@@ -60,15 +60,22 @@ function getDiscoveries(
   }
 
   const result = [discovery]
-  const sharedModules = discovery.sharedModules ?? []
-  if (sharedModules.length > 0) {
-    for (const sharedModule of sharedModules) {
+  const referencedProjects = discovery.entries
+    .map((e) => e.targetProject)
+    .filter(notUndefined)
+  const allReferencedProjects = uniq([
+    ...referencedProjects,
+    ...(discovery.sharedModules ?? []), // TODO remove once entrypoints are used instead of sharedModules
+  ])
+  if (allReferencedProjects) {
+    for (const sharedModule of allReferencedProjects) {
       try {
         result.push(configReader.readDiscovery(sharedModule))
       } catch {}
     }
   }
 
+  // TODO: this should be removed and covered by entrypoints and references
   const dependentDiscoveries = discovery.dependentDiscoveries ?? {}
   for (const projectName of Object.keys(dependentDiscoveries)) {
     result.push(configReader.readDiscovery(projectName))

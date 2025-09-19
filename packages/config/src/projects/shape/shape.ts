@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -8,6 +8,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('shape')
 
 export const shape: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1727654400), // 2024-09-30
   additionalBadges: [BADGES.RaaS.Alchemy],
   discovery,
@@ -42,7 +46,7 @@ export const shape: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.shape.network',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

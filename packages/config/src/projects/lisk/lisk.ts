@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -8,6 +8,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('lisk')
 
 export const lisk: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1731369600), // 2024-11-12T00:00:00Z
   discovery,
   genesisTimestamp: UnixTime(1714728793),
@@ -60,7 +64,7 @@ export const lisk: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.api.lisk.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

@@ -36,6 +36,7 @@ export const mantapacific: ScalingProject = opStackL2({
         'https://t.me/mantanetworkofficial',
       ],
     },
+    architectureImage: 'mantapacific',
   },
   activityConfig: {
     type: 'block',
@@ -73,7 +74,7 @@ export const mantapacific: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://pacific-rpc.manta.network/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'blockscout', url: 'https://pacific-explorer.manta.network/api' },
     ],

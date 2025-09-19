@@ -152,9 +152,6 @@ export const chains: ChainConfig[] = [
     explorer: {
       type: 'etherscan',
       url: 'https://api.gnosisscan.io/api',
-      unsupported: {
-        getContractCreation: true,
-      },
     },
   },
   {
@@ -209,8 +206,8 @@ export const chains: ChainConfig[] = [
     shortName: 'metis-andromeda',
     multicall: getMulticall3Config(2338552),
     explorer: {
-      type: 'routescan',
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
+      type: 'blockscout',
+      url: 'https://andromeda-explorer.metis.io/api',
     },
     coingeckoPlatform: 'metis',
   },
@@ -335,7 +332,7 @@ export const chains: ChainConfig[] = [
     multicall: undefined,
     explorer: {
       type: 'blockscout',
-      url: 'https://explorer.katanarpc.com/api',
+      url: 'https://katanascan.com/api',
     },
     coingeckoPlatform: 'katana',
   },

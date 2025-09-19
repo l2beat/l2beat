@@ -1,4 +1,4 @@
-import type { SearchBarPage } from './SearchBarEntry'
+import type { SearchBarEntry } from './types'
 
 export const searchBarPages = withIndex([
   {
@@ -86,6 +86,18 @@ export const searchBarPages = withIndex([
     href: '/data-availability/throughput',
   },
   {
+    category: 'da',
+    name: 'Liveness',
+    tags: ['pages', 'da', 'data', 'availability', 'liveness'],
+    href: '/data-availability/liveness',
+  },
+  {
+    category: 'da',
+    name: 'Archived',
+    tags: ['pages', 'da', 'data', 'availability', 'archived'],
+    href: '/data-availability/archived',
+  },
+  {
     category: 'zkCatalog',
     name: 'ZK Catalog',
     href: '/zk-catalog',
@@ -121,4 +133,7 @@ function withIndex(arr: Omit<SearchBarPage, 'type'>[]): (SearchBarPage & {
   index: number
 })[] {
   return arr.map((e, i) => ({ ...e, index: i, type: 'page' }))
+}
+export type SearchBarPage = SearchBarEntry & {
+  type: 'page'
 }

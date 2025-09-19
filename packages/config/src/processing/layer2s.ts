@@ -18,6 +18,7 @@ import { aztec } from '../projects/aztec/aztec'
 import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
 import { aztecconnect } from '../projects/aztecconnect/aztecconnect'
 import { base } from '../projects/base/base'
+import { billions } from '../projects/billions/billions'
 import { blast } from '../projects/blast/blast'
 import { bob } from '../projects/bob/bob'
 import { bobanetwork } from '../projects/bobanetwork/bobanetwork'
@@ -140,7 +141,6 @@ import { phala } from '../projects/phala/phala'
 import { plumenetwork } from '../projects/plumenetwork/plumenetwork'
 import { polygonpos } from '../projects/polygon-pos/polygon-pos'
 import { polygonmiden } from '../projects/polygonmiden/polygonmiden'
-import { polygonpos2 } from '../projects/polygonpos2/polygonpos2'
 import { polygonzkevm } from '../projects/polygonzkevm/polygonzkevm'
 import { polynomial } from '../projects/polynomial/polynomial'
 import { powerloom } from '../projects/powerloom/powerloom'
@@ -247,6 +247,7 @@ export const layer2s: ScalingProject[] = [
   blast,
   bob,
   bobanetwork,
+  billions,
   canvasconnect,
   capx,
   cartesiprthoneypot,
@@ -364,7 +365,6 @@ export const layer2s: ScalingProject[] = [
   plumenetwork,
   polygonmiden,
   polygonpos,
-  polygonpos2,
   polygonzkevm,
   polynomial,
   powerloom,

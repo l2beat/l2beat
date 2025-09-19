@@ -8,7 +8,12 @@ interface Deps {
   logger: Logger
 }
 
-export type RetryHandlerVariant = 'RELIABLE' | 'UNRELIABLE' | 'SCRIPT' | 'TEST'
+export type RetryHandlerVariant =
+  | 'RELIABLE'
+  | 'UNRELIABLE'
+  | 'SCRIPT'
+  | 'TEST'
+  | 'RELIABLE_BIGGER_DELAY'
 
 export class RetryHandler {
   constructor(private readonly $: Deps) {
@@ -55,6 +60,8 @@ export class RetryHandler {
         return this.SCRIPT(logger)
       case 'TEST':
         return this.TEST(logger)
+      case 'RELIABLE_BIGGER_DELAY':
+        return this.RELIABLE_API_BIGGER_DELAY(logger)
     }
   }
 
@@ -63,6 +70,14 @@ export class RetryHandler {
       logger,
       initialRetryDelayMs: 1000,
       maxRetries: 3, // 1 2 4
+      maxRetryDelayMs: Number.POSITIVE_INFINITY,
+    })
+
+  static RELIABLE_API_BIGGER_DELAY = (logger: Logger) =>
+    new RetryHandler({
+      logger,
+      initialRetryDelayMs: 5000,
+      maxRetries: 2, // 5 10
       maxRetryDelayMs: Number.POSITIVE_INFINITY,
     })
 

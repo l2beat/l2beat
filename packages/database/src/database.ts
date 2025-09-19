@@ -9,9 +9,11 @@ import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
 import { BridgeEventRepository } from './repositories/BridgeEventRepository'
 import { BridgeMessageRepository } from './repositories/BridgeMessageRepository'
+import { BridgeTransferRepository } from './repositories/BridgeTransferRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
+import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
@@ -51,6 +53,7 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     // #region Bridges
     bridgeEvent: new BridgeEventRepository(db),
     bridgeMessage: new BridgeMessageRepository(db),
+    bridgeTransfer: new BridgeTransferRepository(db),
     // #endregion
 
     // #region DA BEAT
@@ -67,6 +70,10 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     updateNotifier: new UpdateNotifierRepository(db),
     updateMessage: new UpdateMessageRepository(db),
     flatSources: new FlatSourcesRepository(db),
+    // #endregion
+
+    // #region Ecosystems
+    ecosystemToken: new EcosystemTokenRepository(db),
     // #endregion
 
     // #region UIF
