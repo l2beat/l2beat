@@ -6,10 +6,17 @@
     "node": "^22.0.0"
   },
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
+  "pnpm": {
+    "overrides": {
+      "form-data@^2": "2.5.4",
+      "form-data@^4": "4.0.4"
+    }
+  },
   "scripts": {
     "build": "turbo run build",
     "build:backend": "turbo run build --filter=@l2beat/backend",
     "build:frontend": "turbo run build --filter=@l2beat/frontend",
+    "build:frontend-ci": "turbo run build --cache local:rw,remote:r --summarize --filter=@l2beat/frontend",
     "build:tools-api": "turbo run build --filter=@l2beat/tools-api",
     "build:public": "turbo run build --filter=@l2beat/backend-tools --filter=@l2beat/discovery --filter=@l2beat/uif",
     "build:protocolbeat": "turbo run build --filter=@l2beat/protocolbeat",
@@ -53,7 +60,7 @@
     "esbuild-register": "^3.6.0",
     "mocha": "^10.2.0",
     "ts-node": "^10.9.1",
-    "turbo": "^2.0.12",
+    "turbo": "^2.5.6",
     "typescript": "^5.5.3",
     "wait-for-expect": "^3.0.2"
   }

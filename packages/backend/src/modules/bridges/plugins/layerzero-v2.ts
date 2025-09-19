@@ -7,6 +7,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -30,7 +31,7 @@ export const PacketDelivered = createBridgeEventType<{
   guid: string
 }>('layerzero-v2.PacketDelivered')
 
-const NETWORKS = [
+const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
   {
     chainId: 1,
     eid: 30101,
@@ -49,14 +50,13 @@ const NETWORKS = [
     chain: 'base',
     address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
   },
-]
+])
 
 export class LayerZeroV2Plugin implements BridgePlugin {
   name = 'layerzero-v2'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
-    const network = NETWORKS.find((x) => x.chain === input.ctx.chain)
+    const network = LAYERZERO_NETWORKS.find((x) => x.chain === input.ctx.chain)
     if (!network) return
 
     const packetSent = parsePacketSent(input.log, [network.address])
@@ -71,7 +71,8 @@ export class LayerZeroV2Plugin implements BridgePlugin {
         packet.header.receiver,
       )
       const $dstChain =
-        NETWORKS.find((x) => x.eid === packet.header.dstEid)?.chain ?? 'unknown'
+        LAYERZERO_NETWORKS.find((x) => x.eid === packet.header.dstEid)?.chain ??
+        'unknown'
       return PacketSent.create(input.ctx, { $dstChain, guid })
     }
 
@@ -85,8 +86,8 @@ export class LayerZeroV2Plugin implements BridgePlugin {
         packetDelivered.receiver,
       )
       const $srcChain =
-        NETWORKS.find((x) => x.eid === packetDelivered.origin.srcEid)?.chain ??
-        'unknown'
+        LAYERZERO_NETWORKS.find((x) => x.eid === packetDelivered.origin.srcEid)
+          ?.chain ?? 'unknown'
       return PacketDelivered.create(input.ctx, { $srcChain, guid })
     }
   }

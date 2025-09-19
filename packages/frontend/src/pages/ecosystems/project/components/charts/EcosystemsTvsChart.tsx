@@ -54,7 +54,7 @@ export function EcosystemsTvsChart({
     excludeAssociatedTokens: false,
     filter: {
       type: 'projects',
-      projectIds: entries.map((project) => project.id),
+      projectIds: entries.map((project) => project.id).toSorted(),
     },
   })
 

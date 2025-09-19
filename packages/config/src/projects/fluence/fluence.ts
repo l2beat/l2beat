@@ -52,7 +52,7 @@ export const fluence: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.mainnet.fluence.dev',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['FLT'],

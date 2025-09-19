@@ -98,7 +98,7 @@ export const gpt: ScalingProject = polygonCDKStack({
         type: 'rpc',
         // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
         url: 'https://rpc.gptprotocol.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

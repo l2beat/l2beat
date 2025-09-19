@@ -11,7 +11,6 @@ import compact from 'lodash/compact'
 import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { env } from '~/env'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { isTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
 import type { SsrHelpers } from '~/trpc/server'
@@ -118,7 +117,7 @@ export async function getBridgesProjectEntry(
       isUnderReview: !!project.statuses.reviewStatus,
       ...changes,
     }),
-    colors: env.CLIENT_SIDE_PARTNERS ? project.colors : undefined,
+    colors: project.colors,
     archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     header: {

@@ -116,17 +116,25 @@ export interface LogToCapture {
 
 export type MatchResult = (BridgeMessage | BridgeTransfer)[]
 
+export type BridgeEventQuery<T> = Partial<T> & {
+  ctx?: Partial<BridgeEventContext>
+  sameTxBefore?: BridgeEvent
+  sameTxAfter?: BridgeEvent
+}
+
 export interface BridgeEventDb {
   find<T>(
     type: BridgeEventType<T>,
-    query?: Partial<T>,
+    query?: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined
-  findAll<T>(type: BridgeEventType<T>, query?: Partial<T>): BridgeEvent<T>[]
+  findAll<T>(
+    type: BridgeEventType<T>,
+    query?: BridgeEventQuery<T>,
+  ): BridgeEvent<T>[]
 }
 
 export interface BridgePlugin {
   name: string
-  chains: string[]
   capture?: (
     input: LogToCapture,
   ) => BridgeEvent | undefined | Promise<BridgeEvent | undefined>
@@ -196,7 +204,7 @@ function Message(
     kind: 'BridgeMessage',
     type,
     src: events[0],
-    dst: events[0],
+    dst: events[1],
   }
 }
 
@@ -244,4 +252,16 @@ function Transfer(
       tokenAmount: options.dstAmount,
     },
   }
+}
+
+export const definedNetworks: { protocol: string; chains: string[] }[] = []
+export function defineNetworks<T extends { chain: string }>(
+  protocol: string,
+  networks: T[],
+): T[] {
+  definedNetworks.push({
+    protocol,
+    chains: networks.map((x) => x.chain),
+  })
+  return networks
 }

@@ -49,7 +49,7 @@ export const reddiozkvm: ScalingProject = underReviewL2({
       {
         type: 'rpc',
         url: 'https://mainnet.reddio.com/rpc',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

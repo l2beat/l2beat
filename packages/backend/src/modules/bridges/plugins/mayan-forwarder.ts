@@ -1,4 +1,4 @@
-/* 
+/*
 Mayan Forwarder
 - chooses one of the Mayan protocol
 - emits Event that will allow further matching
@@ -11,7 +11,7 @@ import {
   type LogToCapture,
 } from './types'
 
-const parseForwadedEth = createEventParser(
+const parseForwardedEth = createEventParser(
   'event ForwardedEth(address mayanProtocol, bytes protocolData)',
 )
 
@@ -27,50 +27,43 @@ const swapAndForwardedERC20 = createEventParser(
   'event SwapAndForwardedERC20(address tokenIn, uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)',
 )
 
-export const ForwadedEth = createBridgeEventType<{
+export const ForwardedEth = createBridgeEventType<{
   mayanProtocol: string
   protocolData: `0x${string}`
-  txHash: string
-}>('mayan-forwarder.ForwadedEth')
+}>('mayan-forwarder.ForwardedEth')
 
-export const ForwadedERC20 = createBridgeEventType<{
+export const ForwardedERC20 = createBridgeEventType<{
   mayanProtocol: string
   protocolData: `0x${string}`
-  txHash: string
-}>('mayan-forwarder.ForwadedERC20')
+}>('mayan-forwarder.ForwardedERC20')
 
 export const SwapAndForwardedEth = createBridgeEventType<{
   mayanProtocol: string
   protocolData: `0x${string}`
-  txHash: string
 }>('mayan-forwarder.SwapAndForwardedEth')
 
 export const SwapAndForwardedERC20 = createBridgeEventType<{
   mayanProtocol: string
   protocolData: `0x${string}`
-  txHash: string
 }>('mayan-forwarder.SwapAndForwardedERC20')
 
 export class MayanForwarderPlugin implements BridgePlugin {
   name = 'mayan-forwarder'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(event: LogToCapture) {
-    const forwardedEth = parseForwadedEth(event.log, null)
+    const forwardedEth = parseForwardedEth(event.log, null)
     if (forwardedEth) {
-      return ForwadedEth.create(event.ctx, {
+      return ForwardedEth.create(event.ctx, {
         mayanProtocol: forwardedEth.mayanProtocol,
         protocolData: forwardedEth.protocolData,
-        txHash: event.ctx.txHash,
       })
     }
 
     const forwardedERC20 = parseForwardedERC20(event.log, null)
     if (forwardedERC20) {
-      return ForwadedERC20.create(event.ctx, {
+      return ForwardedERC20.create(event.ctx, {
         mayanProtocol: forwardedERC20.mayanProtocol,
         protocolData: forwardedERC20.protocolData,
-        txHash: event.ctx.txHash,
       })
     }
 
@@ -79,7 +72,6 @@ export class MayanForwarderPlugin implements BridgePlugin {
       return SwapAndForwardedEth.create(event.ctx, {
         mayanProtocol: swapAndForwardedEthEvent.mayanProtocol,
         protocolData: swapAndForwardedEthEvent.mayanData,
-        txHash: event.ctx.txHash,
       })
     }
 
@@ -88,7 +80,6 @@ export class MayanForwarderPlugin implements BridgePlugin {
       return SwapAndForwardedERC20.create(event.ctx, {
         mayanProtocol: swapAndForwardedERC20Event.mayanProtocol,
         protocolData: swapAndForwardedERC20Event.mayanData,
-        txHash: event.ctx.txHash,
       })
     }
   }

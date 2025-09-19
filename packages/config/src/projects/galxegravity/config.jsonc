@@ -4,6 +4,7 @@
   "import": ["../globalConfig.jsonc"],
   "maxDepth": 34,
   "initialAddresses": ["eth:0x7983403dDA368AA7d67145a9b81c5c517F364c42"],
+  "sharedModules": ["shared-sp1", "blobstream"],
   "names": {
     "eth:0x7983403dDA368AA7d67145a9b81c5c517F364c42": "Bridge",
     "eth:0xf993AF239770932A0EDaB88B6A5ba3708Bd58239": "RollupProxy",

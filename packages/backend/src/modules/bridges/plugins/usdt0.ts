@@ -6,6 +6,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -31,7 +32,7 @@ export const Usdt0OFTReceived = createBridgeEventType<{
   tokenAddress: EthereumAddress
 }>('usdt0.OFTReceived')
 
-const NETWORKS = [
+const USDT0_NETWORKS = defineNetworks('usdt0', [
   {
     chain: 'ethereum',
     adapter: EthereumAddress('0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee'), // special case: locking adapter (not relevant for the current decoder)
@@ -67,14 +68,13 @@ const NETWORKS = [
     adapter: EthereumAddress('0x1cB6De532588fCA4a21B7209DE7C456AF8434A65'),
     tokenAddress: EthereumAddress('0x0200C29006150606B650577BBE7B6248F58470c1'),
   },
-]
+])
 
 export class Usdt0Plugin implements BridgePlugin {
   name = 'usdt0'
-  chains = NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
-    const network = NETWORKS.find((n) => n.chain === input.ctx.chain)
+    const network = USDT0_NETWORKS.find((n) => n.chain === input.ctx.chain)
     if (!network) return
 
     const oftSent = parseOFTSent(input.log, [network.adapter])

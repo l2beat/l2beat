@@ -140,6 +140,7 @@ export const base: ScalingProject = opStackL2({
       },
     },
   ],
+
   isNodeAvailable: true,
   chainConfig: {
     name: 'base',
@@ -162,7 +163,7 @@ export const base: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://developer-access-mainnet.base.org',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://base.blockscout.com/api/v2' },
@@ -195,6 +196,10 @@ export const base: ScalingProject = opStackL2({
       rollupNodeLink: 'https://github.com/base-org/node',
     },
   ),
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   milestones: [
     {
       title: 'Base halts block production for 33mins',

@@ -41,7 +41,7 @@ export const t3rn: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://rpc.t3rn.io/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

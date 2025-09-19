@@ -9,12 +9,14 @@ import { CircleQuestionMarkIcon } from '~/icons/CircleQuestionMark'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { VerifiedIcon } from '~/icons/Verified'
 import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
+import { cn } from '~/utils/cn'
 
 interface Props {
   data: ZkCatalogEntry['trustedSetupsByProofSystem'][string]['verifiers']
+  horizontal?: boolean
 }
 
-export function VerifiedCountWithDetails({ data }: Props) {
+export function VerifiedCountWithDetails({ data, horizontal }: Props) {
   const totalCount =
     (data.successful?.count ?? 0) +
     (data.unsuccessful?.count ?? 0) +
@@ -24,28 +26,45 @@ export function VerifiedCountWithDetails({ data }: Props) {
     return <NotApplicableBadge />
   }
 
+  const elements = [
+    {
+      count: data.successful?.count,
+      attesters: data.successful?.attesters,
+      type: 'successful' as const,
+    },
+    {
+      count: data.notVerified?.count,
+      attesters: data.notVerified?.attesters,
+      type: 'notVerified' as const,
+    },
+    {
+      count: data.unsuccessful?.count,
+      attesters: data.unsuccessful?.attesters,
+      type: 'unsuccessful' as const,
+    },
+  ].filter((config) => config.count && config.count > 0)
+
   return (
-    <div className="flex flex-col gap-1.5">
-      <CountWithAttesters
-        count={data.successful?.count}
-        attesters={data.successful?.attesters}
-        type="successful"
-      />
-      <CountWithAttesters
-        count={data.notVerified?.count}
-        attesters={data.notVerified?.attesters}
-        type="notVerified"
-      />
-      <CountWithAttesters
-        count={data.unsuccessful?.count}
-        attesters={data.unsuccessful?.attesters}
-        type="unsuccessful"
-      />
+    <div
+      className={cn('flex flex-col gap-1.5', horizontal && 'flex-row gap-0')}
+    >
+      {elements.map((config, index) => (
+        <div key={config.type} className="flex items-center">
+          <CountWithAttesters
+            count={config.count ?? 0}
+            attesters={config.attesters}
+            type={config.type}
+          />
+          {horizontal && index < elements.length - 1 && (
+            <span className="mx-2 text-secondary">•</span>
+          )}
+        </div>
+      ))}
     </div>
   )
 }
 
-function CountWithAttesters({
+export function CountWithAttesters({
   count,
   attesters,
   type,
@@ -58,7 +77,7 @@ function CountWithAttesters({
     | undefined
   type: 'successful' | 'notVerified' | 'unsuccessful'
 }) {
-  if (!count || count === 0) return null
+  if (count === 0) return null
 
   const Icon = typeToIcon(type)
 

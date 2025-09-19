@@ -14,6 +14,45 @@
     "messages": [],
     "transfers": []
   },
+  "allbridge": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xf47433544bf5505d8c615d5184c1dae7e3a4bd26221af4146a721b794aff007d"
+      },
+      {
+        "chain": "base",
+        "tx": "0x68cde6faf73ff83be2267a8f136b2f79820e62ae59976bac5e3b9252cb8ff057"
+      },
+      {
+        "chain": "base",
+        "tx": "0x158ead7fb516fb23fd2da016d4e704c9623af497b6a8303d68388020f07ef3bd"
+      }
+    ],
+    "events": [
+      "allbridge.MessageSent",
+      "allbridge.MessageReceived",
+      "allbridge.TokensSent",
+      "allbridge.TokensReceived"
+    ],
+    "messages": ["allbridge.Message.allbridgeswap"],
+    "transfers": ["allbridge.Swap"]
+  },
+  "ccip": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x89f4d3325105dadaddd73e67843739547337688ad75969a31145f80127681429"
+      },
+      {
+        "chain": "base",
+        "tx": "0x05e94651d51f379b1b5c56756b1908431b19d72e9dc05fef801d96c434866109"
+      }
+    ],
+    "events": ["ccip.ExecutionStateChanged", "ccip.CCIPSendRequested"],
+    "messages": ["ccip.Message"],
+    "transfers": []
+  },
   "cctpv1": {
     "txs": [
       {
@@ -89,6 +128,21 @@
     "messages": [],
     "transfers": []
   },
+  "hyperlane": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x5b6825406a1e8613b22203a049df46476384e1c716f35961b709e1371d518462"
+      },
+      {
+        "chain": "base",
+        "tx": "0xbed80fd46620bf9e83c5b993851200e1c0ac6e6f04c66963151ded1a7ac36bc3"
+      }
+    ],
+    "events": ["hyperlane.DispatchId", "hyperlane.ProcessId"],
+    "messages": ["hyperlane.Message"],
+    "transfers": []
+  },
   "mayan-swift": {
     "txs": [
       {
@@ -102,6 +156,21 @@
     ],
     "events": [],
     "messages": [],
+    "transfers": []
+  },
+  "layerzerov1": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x3b2b8b9fe6bfbc1ddb52cb08758527eb78e5fff2041f25badd574b09ba7cf4b4"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9644fa9892c2cad338fea622f3700598c38b34d3a89989a05c2df1cbceb60a10"
+      }
+    ],
+    "events": ["layerzero-v1.PacketSent", "layerzero-v1.PacketDelivered"],
+    "messages": ["layerzero-v1.Message"],
     "transfers": []
   },
   "layerzerov2": {
@@ -138,6 +207,31 @@
     "messages": [],
     "transfers": []
   },
+  "axelar-its-contractCall": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x7bcb513078fb6117ba20c044d103485798b20d30733bcf580ccbe7bf73105dbe"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xb9edfe6694e7f7799e5a2aaf3d0e167c1d89f02e54597c7ffe96bfafd1ecf6d8"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x1bfa6579754e487098cbf7b835aa364042fc5c8599a73a3ee2e65bea1a8224af"
+      }
+    ],
+    "events": [
+      "axelar-its.InterchainTransfer",
+      "axelar-its.InterchainTransferReceived",
+      "axelar.ContractCallExecuted",
+      "axelar.ContractCall",
+      "axelar.ContractCallApproved"
+    ],
+    "messages": ["axelar.ContractCallMessage.its"],
+    "transfers": ["axelar-its.Transfer"]
+  },
   "axelar-contractCallWithMint": {
     "txs": [
       {
@@ -160,6 +254,51 @@
     ],
     "messages": ["axelar.ContractCallWithTokenMessage"],
     "transfers": ["axelar-gateway.Transfer"]
+  },
+  "squid-coral": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x8b0231756750c340219ad738d4c4073f41503b3ae5a37ef175c27f7759e75fae"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xeaa266992432ee2f8981194320b1b1e4a034282e25c90c4711f8d239c3bbda0b"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "debridge": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x0d7b69436a35c8e0de7420c06e5ed7fd27530bf72b050b10f886f1d5a757cfc4"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x7092e179d4dadcb97ef2bf5ee3eb0c641f8d4549273c2cdcd66ed8707c99a641"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "debridge-dln": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xc55fbe60a15226b1c8ef38bfd0f847d254e30a2cc319bd84637a4b2642973ee5"
+      },
+      {
+        "chain": "base",
+        "tx": "0x60e502eaae1d5e525b699e4ecfe5007ef6917a7bb920141b1ae77aefd7a61fc8"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
   },
   "centrifuge-wormhole-axelar": {
     "txs": [

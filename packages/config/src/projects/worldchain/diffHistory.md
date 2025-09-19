@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x4ae2554db299b389789802aeab90436ee8f13f7e
+
+# Diff at Fri, 19 Sep 2025 13:07:59 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a930e518d214c15603feeda62e2a483dbd2454e0 block: 1757939471
+- current timestamp: 1758287214
+
+## Description
+
+Multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xCA730AFfb87935E70E5889418C731eb196237476"
++        "eth:0xa3353Ae4458F663f1F888705b044269bd30cd110"
+    }
+```
+
+Generated with discovered.json: 0x31ad5e167e7816cc47887137eb1d5bd429f41fe0
+
+# Diff at Mon, 15 Sep 2025 12:32:21 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@823103e23195ea5382f353da97a0232ffda42a10 block: 1757342364
+- current timestamp: 1757939471
+
+## Description
+
+Gas limit increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        50000000
++        70000000
+    }
+```
+
 Generated with discovered.json: 0xc8c16e8502d847a7e6a9f40338b7d6ed4ddcec75
 
 # Diff at Mon, 15 Sep 2025 09:50:59 GMT:

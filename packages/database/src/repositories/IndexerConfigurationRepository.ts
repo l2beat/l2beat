@@ -61,7 +61,6 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
   async insertMany(records: IndexerConfigurationRecord[]): Promise<number> {
     if (records.length === 0) return 0
-
     const rows = records.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
       await this.db.insertInto('IndexerConfiguration').values(batch).execute()

@@ -45,7 +45,7 @@ export const bitlazer: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://bitlazer.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },
