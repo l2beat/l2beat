@@ -16,7 +16,7 @@ export function BlockCountInput({
   }
 
   const handleSet = (input: string) => {
-    const newCount = Number.parseInt(input.replace(/\D/g, ''))
+    const newCount = Number.parseInt(input.replace(/\D/g, ''), 10)
     handleSetBlockCount('edit', newCount)
   }
 
