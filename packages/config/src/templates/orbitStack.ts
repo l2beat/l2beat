@@ -68,7 +68,12 @@ import {
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import {
+  asArray,
+  explorerReferences,
+  mergeBadges,
+  safeGetImplementation,
+} from './utils'
 
 type DAProvider = ProjectScalingDa & {
   riskViewDA: TableReadyValue
@@ -1312,15 +1317,19 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     hostChain.technology?.dataAvailability !== undefined,
     'Host chain must have technology data availability',
   )
+
+  const hostChainDAs = asArray(hostChain.dataAvailability)
   assert(
-    hostChain.dataAvailability !== undefined,
-    'Host chain must have data availability',
+    hostChainDAs.length === 1,
+    'Only exactly one DA on the host chain is currently supported',
   )
+  const hostDA = hostChainDAs[0]
+  assert(hostDA !== undefined, 'Host chain must have data availability')
 
   return {
-    layer: hostChain.dataAvailability.layer,
-    bridge: hostChain.dataAvailability.bridge,
-    mode: hostChain.dataAvailability.mode,
+    layer: hostDA.layer,
+    bridge: hostDA.bridge,
+    mode: hostDA.mode,
     riskViewDA: hostChain.riskView.dataAvailability,
     riskViewExitWindow: hostChain.riskView.exitWindow,
     technology: hostChain.technology.dataAvailability,
