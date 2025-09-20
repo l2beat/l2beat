@@ -1,7 +1,7 @@
 import type { Env } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
-import type { Config } from './Config'
+import type { Config, DatabaseConfig } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
 import { FeatureFlags } from './FeatureFlags'
 import { getActivityConfig } from './features/activity'
@@ -33,15 +33,10 @@ export async function makeConfig(
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )
-  const isReadonly = env.boolean(
-    'READONLY',
-    // if we connect locally to production db, we want to be readonly!
-    isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
-  )
 
   return {
     name,
-    isReadonly,
+    isLocal,
     clock: {
       minBlockTimestamp:
         minTimestampOverride ?? getEthereumMinTimestamp(chains),
@@ -49,37 +44,7 @@ export async function makeConfig(
       hourlyCutoffDays: 7,
       sixHourlyCutoffDays: 90,
     },
-    database: isLocal
-      ? {
-          connection: {
-            connectionString: env.string('LOCAL_DB_URL'),
-            application_name: 'BE-LOCAL',
-            ssl: !env.string('LOCAL_DB_URL').includes('localhost')
-              ? { rejectUnauthorized: false }
-              : undefined,
-          },
-          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
-          connectionPoolSize: {
-            // defaults used by knex
-            min: 2,
-            max: 10,
-          },
-          isReadonly,
-        }
-      : {
-          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
-          connection: {
-            connectionString: env.string('DATABASE_URL'),
-            application_name: env.string('DATABASE_APP_NAME', 'BE-PROD'),
-            ssl: { rejectUnauthorized: false },
-          },
-          connectionPoolSize: {
-            // our heroku plan allows us for up to 400 open connections
-            min: 20,
-            max: env.integer('DATABASE_MAX_POOL_SIZE', 200),
-          },
-          isReadonly,
-        },
+    database: makeDatabaseConfig(env, isLocal),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
@@ -156,6 +121,49 @@ export async function makeConfig(
     // Must be last
     flags: flags.getResolved(),
   }
+}
+
+export function makeDatabaseConfig(
+  env: Env,
+  isLocal: boolean | undefined,
+): DatabaseConfig {
+  const isReadonly = env.boolean(
+    'READONLY',
+    // if we connect locally to production db, we want to be readonly!
+    isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
+  )
+
+  return isLocal
+    ? {
+        connection: {
+          connectionString: env.string('LOCAL_DB_URL'),
+          application_name: 'BE-LOCAL',
+          ssl: !env.string('LOCAL_DB_URL').includes('localhost')
+            ? { rejectUnauthorized: false }
+            : undefined,
+        },
+        enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
+        connectionPoolSize: {
+          // defaults used by knex
+          min: 2,
+          max: 10,
+        },
+        isReadonly,
+      }
+    : {
+        enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
+        connection: {
+          connectionString: env.string('DATABASE_URL'),
+          application_name: env.string('DATABASE_APP_NAME', 'BE-PROD'),
+          ssl: { rejectUnauthorized: false },
+        },
+        connectionPoolSize: {
+          // our heroku plan allows us for up to 400 open connections
+          min: 20,
+          max: env.integer('DATABASE_MAX_POOL_SIZE', 200),
+        },
+        isReadonly,
+      }
 }
 
 function getEthereumMinTimestamp(chains: ChainConfig[]) {

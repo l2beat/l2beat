@@ -15,8 +15,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { Config } from '../../config'
-import type { TrackedTxsConfig } from '../../config/Config'
+import type { Config, TrackedTxsConfig } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
 import type { AnomalyNotifier } from './AnomalyNotifier'
 import { RealTimeLivenessProcessor } from './RealTimeLivenessProcessor'

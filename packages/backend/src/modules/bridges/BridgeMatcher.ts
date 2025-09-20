@@ -52,6 +52,8 @@ export class BridgeMatcher {
   async doMatching() {
     const bridgeStore = new BridgeStore(this.db)
     await bridgeStore.start()
+
+    const start = Date.now()
     const result = await match(
       bridgeStore,
       bridgeStore.getUnmatched(),
@@ -59,13 +61,16 @@ export class BridgeMatcher {
       this.supportedChains,
       this.logger,
     )
+    const duration = Date.now() - start
+    this.logger.info('All plugins executed', {
+      plugins: this.plugins.length,
+      duration,
+      messages: result.messages.length,
+      transfers: result.transfers.length,
+      matchedEvents: result.matchedIds.size,
+    })
 
     if (result.matchedIds.size > 0) {
-      this.logger.info('Matched', {
-        count: result.matchedIds.size,
-        messages: result.messages.length,
-        transfers: result.transfers.length,
-      })
       bridgeStore.markMatched([...result.matchedIds])
     }
     if (result.unsupportedIds.size > 0) {
@@ -105,8 +110,9 @@ export async function match(
   const allTransfers: BridgeTransfer[] = []
 
   for (const plugin of plugins) {
-    console.log('matcher plugin', plugin.name)
-    console.time(plugin.name)
+    const start = Date.now()
+    let messagesCount = 0
+    let transfersCount = 0
     for (const event of events) {
       if (matchedIds.has(event.eventId)) {
         continue
@@ -127,16 +133,25 @@ export async function match(
           allMessages.push(message)
           matchedIds.add(message.dst.eventId)
           matchedIds.add(message.src.eventId)
+          messagesCount++
         }
         for (const transfer of transfers) {
           allTransfers.push(transfer)
           for (const transferEvent of transfer.events) {
             matchedIds.add(transferEvent.eventId)
+            transfersCount++
           }
         }
       }
     }
-    console.timeEnd(plugin.name)
+    const duration = Date.now() - start
+    logger.info('Plugin executed', {
+      name: plugin.name,
+      duration,
+      messages: messagesCount,
+      transfers: transfersCount,
+      processedEvents: events.length,
+    })
   }
 
   for (const event of events) {

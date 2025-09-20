@@ -4,8 +4,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { Config } from './Config'
 import { makeConfig } from './makeConfig'
 
-export type { Config }
-
 export function getConfig(): Promise<Config> {
   const env = getEnv()
   const deploymentEnv = env.optionalString('DEPLOYMENT_ENV') ?? 'local'

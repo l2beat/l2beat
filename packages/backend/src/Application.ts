@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import { createDatabase } from '@l2beat/database'
 import { HttpClient } from '@l2beat/shared'
 import { ApiServer } from './api/ApiServer'
-import type { Config } from './config'
+import type { Config } from './config/Config'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
 import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
@@ -76,14 +76,6 @@ export class Application {
       logger,
       modules.flatMap((x) => x?.routers ?? []),
     )
-
-    if (config.isReadonly) {
-      this.start = async () => {
-        appLogger.info('Starting in readonly mode')
-        await apiServer.start()
-      }
-      return
-    }
 
     this.start = async () => {
       appLogger.info('Starting', { features: config.flags })

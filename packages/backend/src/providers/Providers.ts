@@ -17,7 +17,7 @@ import {
   TotalSupplyProvider,
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import type { Config } from '../config'
+import type { Config } from '../config/Config'
 import { BlockProviders } from './BlockProviders'
 import { type Clients, initClients } from './Clients'
 import { DayProviders } from './DayProviders'

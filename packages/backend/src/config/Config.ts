@@ -24,7 +24,7 @@ import type { ResolvedFeatureFlag } from './FeatureFlags'
 
 export interface Config {
   readonly name: string
-  readonly isReadonly: boolean
+  readonly isLocal: boolean | undefined
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
   readonly database: DatabaseConfig

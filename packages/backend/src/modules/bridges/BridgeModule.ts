@@ -1,7 +1,5 @@
 import { Worker } from 'worker_threads'
-import type { DatabaseConfig } from '../../config/Config'
 import type { ApplicationModule, ModuleDependencies } from '../types'
-import { BridgeBlockProcessor } from './BridgeBlockProcessor'
 import { BridgeCleaner } from './BridgeCleaner'
 import { createBridgeRouter } from './BridgeRouter'
 import { BridgeStore } from './BridgeStore'
@@ -22,15 +20,15 @@ export function createBridgeModule({
   const plugins = createBridgePlugins()
   const bridgeStore = new BridgeStore(db)
 
-  for (const chain of config.bridges.chains) {
-    const processor = new BridgeBlockProcessor(
-      chain,
-      plugins,
-      bridgeStore,
-      logger,
-    )
-    blockProcessors.push(processor)
-  }
+  // for (const chain of config.bridges.chains) {
+  //   const processor = new BridgeBlockProcessor(
+  //     chain,
+  //     plugins,
+  //     bridgeStore,
+  //     logger,
+  //   )
+  //   blockProcessors.push(processor)
+  // }
 
   const bridgeRouter = createBridgeRouter(db)
 
@@ -42,10 +40,16 @@ export function createBridgeModule({
 
     await bridgeStore.start()
     if (config.bridges && config.bridges.matchingEnabled) {
-      await runWorker({
-        dbConfig: config.database,
-        supportedChains: config.bridges.chains,
-      })
+      try {
+        runWorker({
+          isLocal: config.isLocal,
+          supportedChains: config.bridges.chains,
+        })
+          .then((result) => logger.info('Worker completed', result))
+          .catch((error) => logger.error('Worker failed', error))
+      } catch (error) {
+        logger.error('Worker startup failed', error)
+      }
     }
     bridgeCleaner.start()
     logger.info('Started', {
@@ -57,21 +61,37 @@ export function createBridgeModule({
 }
 
 function runWorker(workerData: {
-  dbConfig: DatabaseConfig
+  isLocal: boolean | undefined
   supportedChains: string[]
 }) {
   return new Promise((resolve, reject) => {
     const worker = new Worker(
-      '/Users/antooni/repos/l2beat/packages/backend/build/src/modules/bridges/worker.js',
+      './build/src/modules/bridges/runMatchingWorker.js',
       {
         workerData,
       },
     )
 
-    worker.on('message', resolve)
-    worker.on('error', reject)
+    worker.on('message', (result) => {
+      if (result && typeof result === 'object' && 'success' in result) {
+        if (result.success) {
+          resolve(result)
+        } else {
+          reject(new Error(`Worker error: ${result.error}`))
+        }
+      } else {
+        resolve(result)
+      }
+    })
+
+    worker.on('error', (error) => {
+      reject(error)
+    })
+
     worker.on('exit', (code) => {
-      if (code !== 0) reject(new Error(`Worker stopped with exit code ${code}`))
+      if (code !== 0) {
+        reject(new Error(`Worker stopped with exit code ${code}`))
+      }
     })
   })
 }
