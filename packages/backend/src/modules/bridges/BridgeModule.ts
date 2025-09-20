@@ -1,5 +1,6 @@
 import { Worker } from 'worker_threads'
 import type { ApplicationModule, ModuleDependencies } from '../types'
+import { BridgeBlockProcessor } from './BridgeBlockProcessor'
 import { BridgeCleaner } from './BridgeCleaner'
 import { createBridgeRouter } from './BridgeRouter'
 import { BridgeStore } from './BridgeStore'
@@ -20,15 +21,15 @@ export function createBridgeModule({
   const plugins = createBridgePlugins()
   const bridgeStore = new BridgeStore(db)
 
-  // for (const chain of config.bridges.chains) {
-  //   const processor = new BridgeBlockProcessor(
-  //     chain,
-  //     plugins,
-  //     bridgeStore,
-  //     logger,
-  //   )
-  //   blockProcessors.push(processor)
-  // }
+  for (const chain of config.bridges.chains) {
+    const processor = new BridgeBlockProcessor(
+      chain,
+      plugins,
+      bridgeStore,
+      logger,
+    )
+    blockProcessors.push(processor)
+  }
 
   const bridgeRouter = createBridgeRouter(db)
 
