@@ -1,8 +1,8 @@
 import { RouterProvider } from 'react-router-dom'
+import { CodeAppModule } from './apps/code/CodeApp'
+import { type AppModule, createRouter } from './apps/createRouter'
 import { DiscoveryAppModule } from './DiscoveryApp'
-import { CodeAppModule } from './panel-code/CodeApp'
 import { DiffoveryAppModule } from './panel-diff/DiffoveryApp'
-import { type AppModule, createRouter } from './routing/utils'
 
 const modules: AppModule[] = [
   DiscoveryAppModule,

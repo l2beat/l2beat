@@ -1,6 +1,6 @@
 import type { AddressFieldValue } from '../api/types'
-import { AddressIcon } from '../common/AddressIcon'
 import { toShortenedAddress } from '../common/toShortenedAddress'
+import { AddressIcon } from '../components/AddressIcon'
 import { useCopy } from '../hooks/useCopy'
 import { IconCopy } from '../icons/IconCopy'
 import { IconLink } from '../icons/IconLink'

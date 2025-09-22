@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { AddressIcon } from '../../common/AddressIcon'
+import { AddressIcon } from '../../components/AddressIcon'
 import { IconInitial } from '../../icons/IconInitial'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'

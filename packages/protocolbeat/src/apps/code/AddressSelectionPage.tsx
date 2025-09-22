@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AVAILABLE_CHAINS } from '../common/chains'
-import { Title } from '../common/Title'
+import { AVAILABLE_CHAINS } from '../../common/chains'
+import { Title } from '../../common/Title'
 
 // biome-ignore lint/style/noNonNullAssertion: We know it's there
 const DEFAULT_CHAIN_SHORT_NAME = AVAILABLE_CHAINS[0]!.shortName
