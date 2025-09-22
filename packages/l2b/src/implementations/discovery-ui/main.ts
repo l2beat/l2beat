@@ -23,6 +23,7 @@ import {
   updatePermissionOverride,
   resolveOwnersFromDiscovered,
 } from './permissionOverrides'
+import { generatePermissionsReport } from './generatePermissionsReport'
 import {
   attachTemplateRouter,
   listTemplateFilesSchema,
@@ -323,6 +324,34 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
         `cd ${path.dirname(paths.discovery)}/../../backend && l2b minters ${address}`,
         res,
       )
+    })
+
+    app.get('/api/terminal/generate-permissions-report', (req, res) => {
+      const queryValidation = projectParamsSchema.safeParse(req.query)
+      if (!queryValidation.success) {
+        res.status(400).json({ errors: queryValidation.message })
+        return
+      }
+      const { project } = queryValidation.data
+
+      // Set up Server-Sent Events headers
+      res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Cache-Control'
+      })
+
+      try {
+        const result = generatePermissionsReport(paths, project)
+        res.write(`data: ${result.replace(/\n/g, '\\n')}\n\n`)
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        res.write(`data: Error generating permissions report: ${errorMessage}\\n\n\n`)
+      }
+
+      res.end()
     })
   }
 

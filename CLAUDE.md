@@ -136,7 +136,13 @@ git fetch upstream && git merge upstream/main
 - Manage Function Owners interface for CRUD operations
 - Supports both initial and discovered contracts
 
-**Future Integration**: Will integrate with FunctionPermissionHandler for auto-detection
+### Enhancement 6: Permissions Report Generation ✅
+
+**Terminal Panel Button:** "Generate Permissions Report" creates markdown table
+- **Input**: `permission-overrides.json` (filters permissioned functions only)
+- **Output**: `permissions.md` with Contract, Function, Impact, Owner columns
+- **Features**: Maps addresses to contract names, resolves owner definitions
+- **API**: `/api/terminal/generate-permissions-report` (Server-Sent Events)
 
 ---
 

@@ -33,6 +33,7 @@ export function TerminalPanel() {
     clear,
     setDevMode,
     findMinters,
+    generatePermissionsReport,
     killCommand,
   } = useTerminalStore()
   const selectedAddress = usePanelStore((state) => state.selected)
@@ -126,6 +127,15 @@ export function TerminalPanel() {
             className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
           >
             Find minters
+          </button>
+          <button
+            onClick={() => {
+              generatePermissionsReport(project)
+            }}
+            disabled={command.inFlight}
+            className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
+          >
+            Generate Permissions Report
           </button>
         </div>
       </div>

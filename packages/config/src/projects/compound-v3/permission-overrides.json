@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-19T21:24:58.011Z",
+  "lastModified": "2025-09-22T12:23:34.569Z",
   "overrides": [
     {
       "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
@@ -222,7 +222,7 @@
       "functionName": "admin",
       "userClassification": "permissioned",
       "checked": true,
-      "score": "low-risk",
+      "score": "high-risk",
       "description": "This function is a simple getter on the current admin address.",
       "ownerDefinitions": [
         {
@@ -240,7 +240,7 @@
           }
         }
       ],
-      "timestamp": "2025-09-19T21:24:58.011Z"
+      "timestamp": "2025-09-22T12:23:34.569Z"
     }
   ]
 }
