@@ -1,0 +1,176 @@
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { getProject, getPermissionOverrides } from '../../../api/api'
+import { useContractTags } from '../../../hooks/useContractTags'
+import { Checkbox } from '../../../components/Checkbox'
+
+export function DeFiScanPanel() {
+  const { project } = useParams()
+  const [showOnlySelected, setShowOnlySelected] = useState(false)
+
+  if (!project) {
+    throw new Error('Cannot use component outside of project page!')
+  }
+
+  const response = useQuery({
+    queryKey: ['projects', project],
+    queryFn: () => getProject(project),
+  })
+
+  const { data: contractTags } = useContractTags(project)
+  const { data: permissionOverrides } = useQuery({
+    queryKey: ['permission-overrides', project],
+    queryFn: () => project ? getPermissionOverrides(project) : null,
+    enabled: !!project,
+  })
+
+  if (!response.data || !contractTags || !permissionOverrides) {
+    return <div className="flex h-full w-full items-center justify-center">Loading...</div>
+  }
+
+  return (
+    <div className="flex h-full w-full flex-col text-sm">
+      <div className="sticky top-0 z-10">
+        <div className="flex items-center justify-end gap-1 bg-coffee-600 p-0 px-2 text-right">
+          <div
+            className="flex cursor-pointer select-none items-center justify-center gap-1"
+            onClick={() => setShowOnlySelected(!showOnlySelected)}
+          >
+            <Checkbox checked={showOnlySelected} />
+            Show only selected address
+          </div>
+        </div>
+      </div>
+      <div className="overflow-auto">
+        <StatusOfReviewSection
+          projectData={response.data}
+          contractTags={contractTags}
+          permissionOverrides={permissionOverrides}
+        />
+      </div>
+    </div>
+  )
+}
+
+function StatusOfReviewSection({ projectData, contractTags, permissionOverrides }: { projectData: any, contractTags: any, permissionOverrides: any }) {
+  // Get all contracts from all entries
+  const allContracts: any[] = []
+  const initialContracts: any[] = []
+
+  projectData.entries.forEach((entry: any) => {
+    // Add initial contracts
+    entry.initialContracts.forEach((contract: any) => {
+      initialContracts.push(contract)
+      allContracts.push({ ...contract, source: 'initial' })
+    })
+
+    // Add discovered contracts
+    entry.discoveredContracts.forEach((contract: any) => {
+      allContracts.push({ ...contract, source: 'discovered' })
+    })
+  })
+
+  // Count EOAs separately from the eoas array
+  let totalEoas = 0
+  projectData.entries.forEach((entry: any) => {
+    totalEoas += entry.eoas.length
+  })
+
+  // Count permissions from permission-overrides
+  const permissionedFunctions = permissionOverrides.overrides.filter(
+    (override: any) => override.userClassification === 'permissioned'
+  ).length
+  const checkedFunctions = permissionOverrides.overrides.filter(
+    (override: any) => override.userClassification === 'permissioned' && override.checked === true
+  ).length
+
+  // Count by address type (excluding external)
+  const contractCounts = {
+    contracts: 0,
+    eoas: 0,
+    multisigs: 0,
+    external: 0
+  }
+
+  allContracts.forEach((contract, index) => {
+    // Check if contract is explicitly marked as external in contract tags
+    // Need to handle address format differences: contracts have 'eth:0x...' but tags have '0x...'
+    const contractAddr = contract.address.replace('eth:', '').toLowerCase()
+    const tag = contractTags.tags.find((tag: any) =>
+      tag.contractAddress.toLowerCase() === contractAddr
+    )
+    const isExternal = tag?.isExternal === true
+
+    if (isExternal) {
+      contractCounts.external++
+    } else {
+      // Count by type field for non-external contracts
+      switch (contract.type) {
+        case 'Contract':
+        case 'Diamond':
+        case 'Timelock':
+        case 'Token':
+        case 'Unverified':
+          contractCounts.contracts++
+          break
+        case 'EOA':
+        case 'EOAPermissioned':
+          contractCounts.eoas++
+          break
+        case 'Multisig':
+          contractCounts.multisigs++
+          break
+        default:
+          // Handle any unknown address types as contracts
+          contractCounts.contracts++
+          break
+      }
+    }
+  })
+
+  const totalInitial = initialContracts.length
+  const totalDiscovered = allContracts.length - totalInitial
+  // Use totalEoas instead of contractCounts.eoas for the final count
+  contractCounts.eoas = totalEoas
+  const totalNonExternal = contractCounts.contracts + contractCounts.eoas + contractCounts.multisigs
+
+
+  return (
+    <div className="border-b border-b-coffee-600 pb-2">
+      <h2 className="p-2 font-bold text-2xl text-blue-600">Status of the Review:</h2>
+      <div className="mb-1 flex flex-col gap-2 border-l-4 border-transparent p-2 pl-1">
+
+        <div className="ml-2 flex flex-col gap-2 text-sm">
+          <div className="flex gap-8">
+            <span className="font-semibold">Initial: <span className="text-blue-400">{totalInitial} contracts</span></span>
+            <span className="font-semibold">Discovered: <span className="text-green-400">{totalDiscovered} addresses</span></span>
+          </div>
+
+          <div className="mt-2">
+            <div className="font-semibold mb-1">Project Addresses:</div>
+            <div className="ml-4 flex flex-col gap-1 text-xs">
+              <span>Contracts: <span className="text-orange-400">{contractCounts.contracts}</span></span>
+              <span>EOAs: <span className="text-cyan-400">{contractCounts.eoas}</span></span>
+              <span>Multisigs: <span className="text-yellow-400">{contractCounts.multisigs}</span></span>
+              <span className="font-semibold">Total: <span className="text-white">{totalNonExternal}</span></span>
+            </div>
+          </div>
+
+          <div className="mt-2">
+            <span className="font-semibold">External Addresses: <span className="text-red-400">{contractCounts.external}</span></span>
+          </div>
+
+          <div className="mt-2">
+            <div className="font-semibold mb-1">Permissions:</div>
+            <div className="ml-4 flex flex-col gap-1 text-xs">
+              <span>Permissioned functions: <span className="text-red-400">{permissionedFunctions}</span></span>
+              <span>Progress: <span className="text-orange-400">{checkedFunctions}/{permissionedFunctions} reviewed</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+

@@ -82,6 +82,14 @@ git fetch upstream && git merge upstream/main
 - Maps addresses to contract names, resolves owner definitions
 - Server-Sent Events API for real-time output
 
+### DeFiScan Panel ✅
+**Overview Panel**: Contract analysis dashboard in `/defidisco/DeFiScanPanel.tsx`
+- **Status Section**: Initial vs discovered contract counts, address type breakdown
+- **Contract Types**: Contracts, EOAs, Multisigs, External addresses
+- **Permissions Dashboard**: Shows permissioned functions count and review progress
+- **Data Sources**: Uses `getProject`, `useContractTags`, and `getPermissionOverrides` APIs
+- **Integration**: Registered in `ProjectPage.tsx` and `store.ts` following panel patterns
+
 ---
 
 ## Development Guidelines
@@ -112,6 +120,8 @@ git fetch upstream && git merge upstream/main
 - ❌ Writing DefidDisco code in original L2BEAT files
 - ❌ Not regenerating schemas after handler changes
 - ❌ Mixing discovered data with user data
+- ❌ Using non-existent hooks (check existing patterns in `/defidisco/` files)
+- ❌ Address format mismatches (contracts use `eth:0x...`, tags use `0x...`)
 
 ### File Structure
 ```
@@ -121,6 +131,10 @@ packages/
 ├── protocolbeat/src/defidisco/
 │   ├── ValuesPanelExtensions.tsx
 │   ├── TerminalExtensions.tsx
+│   ├── DeFiScanPanel.tsx
+│   ├── PermissionsDisplay.tsx
+│   ├── FunctionFolder.tsx
+│   ├── ExternalButton.tsx
 │   └── icons/
 ├── l2b/src/implementations/discovery-ui/defidisco/
 │   ├── permissionOverrides.ts
@@ -129,5 +143,19 @@ packages/
 └── config/src/projects/compound-v3/
     └── permission-overrides.json
 ```
+
+### Data Access Patterns
+**API Access**: For new components, follow existing patterns:
+- **Project Data**: Use `useQuery` with `getProject(project)` from `api.ts`
+- **Contract Tags**: Use `useContractTags(project)` hook for external address marking
+- **Permission Overrides**: Use `useQuery` with `getPermissionOverrides(project)` directly (no hook exists)
+- **Address Format**: Always normalize `contract.address.replace('eth:', '').toLowerCase()` when matching with tags
+- **EOA Counting**: EOAs stored separately in `entry.eoas[]` array, not mixed with contracts
+
+**Panel Development**: To add new panels:
+1. Add panel ID to `PANEL_IDS` in `store.ts`
+2. Register component in `PANELS` and `READONLY_PANELS` in `ProjectPage.tsx`
+3. Create panel component in `/defidisco/` folder following existing patterns
+4. Import and register in `ProjectPage.tsx` with single line addition
 
 **Future Development:** Follow the minimal integration principle to ensure easy upstream merges and maintainable code separation.

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-22T20:23:07.219Z",
+  "lastModified": "2025-09-22T23:05:28.567Z",
   "overrides": [
     {
       "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
@@ -175,13 +175,6 @@
     },
     {
       "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "functionName": "implementation",
-      "userClassification": "permissioned",
-      "score": "low-risk",
-      "timestamp": "2025-09-18T22:08:31.344Z"
-    },
-    {
-      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
       "functionName": "upgradeTo",
       "userClassification": "permissioned",
       "score": "high-risk",
@@ -193,14 +186,6 @@
       "userClassification": "permissioned",
       "score": "high-risk",
       "timestamp": "2025-09-18T22:08:38.899Z"
-    },
-    {
-      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "functionName": "changeAdmin",
-      "userClassification": "permissioned",
-      "checked": false,
-      "score": "high-risk",
-      "timestamp": "2025-09-18T22:08:41.201Z"
     },
     {
       "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
@@ -235,6 +220,22 @@
         }
       ],
       "timestamp": "2025-09-22T20:23:07.219Z"
+    },
+    {
+      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "functionName": "implementation",
+      "userClassification": "permissioned",
+      "checked": false,
+      "score": "low-risk",
+      "timestamp": "2025-09-22T23:05:27.892Z"
+    },
+    {
+      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "functionName": "changeAdmin",
+      "userClassification": "permissioned",
+      "checked": false,
+      "score": "high-risk",
+      "timestamp": "2025-09-22T23:05:28.567Z"
     }
   ]
 }
