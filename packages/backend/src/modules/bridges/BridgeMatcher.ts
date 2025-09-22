@@ -65,8 +65,9 @@ export class BridgeMatcher {
         messages: result.messages.length,
         transfers: result.transfers.length,
       })
-      this.bridgeStore.markMatched([...result.matchedIds])
+      // this.bridgeStore.markMatched([...result.matchedIds])
     }
+    return
     if (result.unsupportedIds.size > 0) {
       this.bridgeStore.markUnsupported([...result.unsupportedIds])
     }
@@ -98,12 +99,18 @@ export async function match(
   supportedChains: string[],
   logger: Logger,
 ) {
+  const start = Date.now()
+  logger.info('MATCHING STARTED')
+  console.time('Matching')
+  console.log('Event count', events.length)
+
   const matchedIds = new Set<string>()
   const unsupportedIds = new Set<string>()
   const allMessages: BridgeMessage[] = []
   const allTransfers: BridgeTransfer[] = []
 
   for (const plugin of plugins) {
+    console.timeLog('Matching', plugin.name)
     for (const event of events) {
       if (matchedIds.has(event.eventId)) {
         continue
@@ -148,6 +155,9 @@ export async function match(
       unsupportedIds.add(event.eventId)
     }
   }
+
+  console.timeEnd('Matching')
+  logger.info('MATCHING COMPLETE', { duration: Date.now() - start })
 
   return {
     matchedIds,

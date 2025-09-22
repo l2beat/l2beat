@@ -125,11 +125,11 @@ export type BridgeEventQuery<T> = Partial<T> & {
 export interface BridgeEventDb {
   find<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined
   findAll<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T>[]
 }
 

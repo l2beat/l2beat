@@ -11,17 +11,17 @@ export class InMemoryEventDb implements BridgeEventDb {
 
   find<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined {
     const typed = this.events.filter(type.checkType)
-    return getMatching(typed, query ?? {})[0]
+    return getMatching(typed, query)[0]
   }
 
   findAll<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T>[] {
     const typed = this.events.filter(type.checkType)
-    return getMatching(typed, query ?? {})
+    return getMatching(typed, query)
   }
 }

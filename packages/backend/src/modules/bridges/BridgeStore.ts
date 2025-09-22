@@ -6,9 +6,10 @@ import type {
   BridgeEventQuery,
   BridgeEventType,
 } from './plugins/types'
+import { InMemoryEventDb } from './InMemoryEventDb'
 
 export class BridgeStore implements BridgeEventDb {
-  private events = new Map<string, BridgeEvent[]>()
+  private events = new InMemoryEventDb()
   private unmatched: BridgeEvent[] = []
   private matchedIds = new Set<string>()
   private unsupportedIds = new Set<string>()
@@ -23,7 +24,7 @@ export class BridgeStore implements BridgeEventDb {
     const records = await this.db.bridgeEvent.getAll()
     for (const record of records) {
       const event = fromDbRecord(record)
-      this.categorizeEvent(event)
+      this.events.addEvent(event)
 
       if (!record.matched) {
         this.unmatched.push(event)
@@ -38,15 +39,9 @@ export class BridgeStore implements BridgeEventDb {
   }
 
   addEvent(event: BridgeEvent) {
-    this.categorizeEvent(event)
+    this.events.addEvent(event)
     this.unmatched.push(event)
     this.newEvents.push(event)
-  }
-
-  private categorizeEvent(event: BridgeEvent) {
-    const array = this.events.get(event.type) ?? []
-    array.push(event)
-    this.events.set(event.type, array)
   }
 
   markMatched(eventIds: string[]) {
@@ -66,6 +61,7 @@ export class BridgeStore implements BridgeEventDb {
   }
 
   getUnmatched(): BridgeEvent[] {
+    // TODO: maybe we don't need to copy?
     return [...this.unmatched]
   }
 
@@ -92,21 +88,22 @@ export class BridgeStore implements BridgeEventDb {
 
   async deleteExpired(now: UnixTime) {
     const expired = new Set<string>()
-    for (const [type, events] of this.events.entries()) {
-      let some = false
-      for (const event of events) {
-        if (event.expiresAt <= now) {
-          some = true
-          expired.add(event.eventId)
-        }
-      }
-      if (some) {
-        this.events.set(
-          type,
-          events.filter((x) => x.expiresAt > now),
-        )
-      }
-    }
+    // TODO: delete expired
+    // for (const [type, events] of this.events.entries()) {
+    //   let some = false
+    //   for (const event of events) {
+    //     if (event.expiresAt <= now) {
+    //       some = true
+    //       expired.add(event.eventId)
+    //     }
+    //   }
+    //   if (some) {
+    //     this.events.set(
+    //       type,
+    //       events.filter((x) => x.expiresAt > now),
+    //     )
+    //   }
+    // }
 
     this.unmatched = this.unmatched.filter((x) => x.expiresAt > now)
     this.newEvents = this.newEvents.filter((x) => x.expiresAt > now)
@@ -121,18 +118,16 @@ export class BridgeStore implements BridgeEventDb {
 
   find<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined {
-    const typed = (this.events.get(type.type) ?? []) as BridgeEvent<T>[]
-    return getMatching(typed, query ?? {})[0]
+    return this.events.find(type, query)
   }
 
   findAll<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T>[] {
-    const typed = (this.events.get(type.type) ?? []) as BridgeEvent<T>[]
-    return getMatching(typed, query ?? {})
+    return this.events.findAll(type, query)
   }
 }
 
