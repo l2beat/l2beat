@@ -159,6 +159,7 @@ export async function getScalingProjectEntry(
     activitySection,
     costsSection,
     dataPostedSection,
+    stateValidationSection,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -172,6 +173,7 @@ export async function getScalingProjectEntry(
     project.scalingInfo.layer === 'layer2'
       ? await getDataPostedSection(helpers, project, daSolution)
       : undefined,
+    getStateValidationSection(project),
   ])
 
   const projectLiveness = liveness[project.id]
@@ -239,6 +241,14 @@ export async function getScalingProjectEntry(
 
   const changes = projectsChangeReport.getChanges(project.id)
 
+  const dataAvailabilitySection = getDataAvailabilitySection(
+    project,
+    daSolution,
+  )
+  const withdrawalsSection = getWithdrawalsSection(project)
+  const sequencingSection = getSequencingSection(project)
+  const operatorSection = getOperatorSection(project)
+
   const common = {
     type: project.scalingInfo.layer,
     name: project.name,
@@ -252,15 +262,19 @@ export async function getScalingProjectEntry(
     archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
-    colors: env.CLIENT_SIDE_PARTNERS
-      ? {
-          project: project.colors,
-          ecosystem: project.ecosystemColors,
-        }
-      : undefined,
+    colors: {
+      project: project.colors,
+      ecosystem: project.ecosystemColors,
+    },
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
-    rosette: getScalingRosette(project),
+    rosette: getScalingRosette(project, {
+      hasStateValidationSection: !!stateValidationSection,
+      hasDataAvailabilitySection: !!dataAvailabilitySection,
+      hasWithdrawalsSection: !!withdrawalsSection,
+      hasSequencingSection: !!sequencingSection,
+      hasOperatorsSection: !!operatorSection,
+    }),
     hostChainName: project.scalingInfo.hostChain.name,
     stageConfig:
       project.scalingInfo.type === 'Other'
@@ -501,10 +515,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const dataAvailabilitySection = getDataAvailabilitySection(
-    project,
-    daSolution,
-  )
   if (dataAvailabilitySection) {
     sections.push({
       type: dataAvailabilitySection.type,
@@ -530,7 +540,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const stateValidationSection = await getStateValidationSection(project)
   if (stateValidationSection) {
     sections.push({
       type: 'StateValidationSection',
@@ -558,7 +567,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const operatorSection = getOperatorSection(project)
   if (operatorSection) {
     sections.push({
       type: 'TechnologyChoicesSection',
@@ -571,7 +579,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const sequencingSection = getSequencingSection(project)
   if (sequencingSection) {
     sections.push({
       type: 'SequencingSection',
@@ -583,7 +590,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const withdrawalsSection = getWithdrawalsSection(project)
   if (withdrawalsSection) {
     sections.push({
       type: 'TechnologyChoicesSection',

@@ -123,17 +123,17 @@ export const zircuit: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://zircuit1-mainnet.p2pify.com/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'rpc',
         url: 'https://zircuit1-mainnet.liquify.com/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'rpc',
         url: 'https://zircuit-mainnet.drpc.org/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'sourcify',

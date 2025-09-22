@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Outlet } from 'react-router-dom'
-import type { AppModule } from '../utils'
+import type { AppModule } from '../createRouter'
 import { AddressSelectionPage } from './AddressSelectionPage'
 import { DiffPage } from './DiffPage'
 

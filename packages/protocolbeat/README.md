@@ -1,3 +1,7 @@
-# @protocol-beat/frontend
+# @l2beat/protocolbeat
 
-Run `pnpm dev` to start the development server.
+Protocol discovery and visualization tool.
+
+## Development
+
+Run `pnpm start` to start the development server.

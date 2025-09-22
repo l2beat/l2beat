@@ -14,6 +14,7 @@ interface LinkWithThumbnailProps {
   topAccessory?: React.ReactNode
   orientation?: 'vertical' | 'horizontal'
   className?: string
+  customCtaText?: string
 }
 
 export function LinkWithThumbnail({
@@ -89,7 +90,7 @@ export function LinkWithThumbnail({
             orientation === 'vertical' && 'mt-3',
           )}
         >
-          Read now
+          {props.customCtaText ?? 'Read now'}
           <ArrowRightIcon className="fill-current" />
         </p>
       </div>

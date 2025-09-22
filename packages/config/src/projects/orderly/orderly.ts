@@ -127,7 +127,7 @@ export const orderly: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.orderly.network',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

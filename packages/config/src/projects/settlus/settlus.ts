@@ -29,6 +29,7 @@ export const settlus: ScalingProject = opStackL2({
       bridges: ['https://settlus-mainnet.bridge.alchemy.com/'],
       explorers: ['https://mainnet.settlus.network/'],
       documentation: ['https://docs.settlus.org/'],
+      repositories: ['https://github.com/settlus'],
       socialMedia: [
         'https://x.com/Settlusofficial',
         'https://github.com/settlus',

@@ -2,19 +2,19 @@ import { useQuery } from '@tanstack/react-query'
 import { type JSX, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../../api/api'
-import { Title } from '../../common/Title'
-import { isReadOnly } from '../../config'
-import { MultiView } from '../../multi-view/MultiView'
-import type { PanelId } from '../../multi-view/store'
-import { CodePanel } from '../../panel-code/CodePanel'
-import { ConfigPanel } from '../../panel-config/ConfigPanel'
-import { ListPanel } from '../../panel-list/ListPanel'
-import { NodesPanel } from '../../panel-nodes/NodesPanel'
-import { PreviewPanel } from '../../panel-preview/PreviewPanel'
-import { TemplatePanel } from '../../panel-template/TemplatePanel'
-import { TerminalPanel } from '../../panel-terminal/TerminalPanel'
-import { ValuesPanel } from '../../panel-values/ValuesPanel'
-import { usePanelStore } from '../../store/store'
+import { Title } from '../../components/Title'
+import { IS_READONLY } from '../../config/readonly'
+import { MultiView } from './multi-view/MultiView'
+import type { PanelId } from './multi-view/store'
+import { CodePanel } from './panel-code/CodePanel'
+import { ConfigPanel } from './panel-config/ConfigPanel'
+import { ListPanel } from './panel-list/ListPanel'
+import { NodesPanel } from './panel-nodes/NodesPanel'
+import { PreviewPanel } from './panel-preview/PreviewPanel'
+import { TemplatePanel } from './panel-template/TemplatePanel'
+import { TerminalPanel } from './panel-terminal/TerminalPanel'
+import { ValuesPanel } from './panel-values/ValuesPanel'
+import { usePanelStore } from './store/panel-store'
 
 export function ProjectPage() {
   const { project } = useParams()
@@ -66,7 +66,7 @@ const READONLY_PANELS: Record<
 }
 
 function Panel(props: { kind: PanelId }) {
-  const Component = isReadOnly
+  const Component = IS_READONLY
     ? props.kind in READONLY_PANELS
       ? READONLY_PANELS[props.kind as Exclude<PanelId, 'terminal'>]
       : ListPanel

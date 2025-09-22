@@ -3,9 +3,9 @@ import { createRef, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getProjects } from '../../api/api'
 import type { ApiProjectEntry } from '../../api/types'
-import { Title } from '../../common/Title'
 import { ErrorState } from '../../components/ErrorState'
-import { isReadOnly } from '../../config'
+import { Title } from '../../components/Title'
+import { IS_READONLY } from '../../config/readonly'
 import { IconStarEmpty } from '../../icons/IconStarEmpty'
 import { IconStarFull } from '../../icons/IconStarFull'
 
@@ -37,7 +37,7 @@ export function HomePage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          {!isReadOnly && (
+          {!IS_READONLY && (
             <Link to="/ui/new">
               <button className="items-center justify-center border border-coffee-600 px-4 py-2 text-coffee-400 transition-colors duration-100 hover:cursor-pointer hover:bg-coffee-600">
                 +

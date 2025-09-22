@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { useMultiViewStore } from '../../multi-view/store'
 import { Editor } from './editor'
 import { useCodeStore } from './store'
 
@@ -9,41 +8,38 @@ export function CodeView({
   editorKey?: string
   readOnly?: boolean
 }) {
-  const monacoEl = useRef(null)
+  const monacoEl = useRef<HTMLDivElement>(null)
+  const resizeObserverRef = useRef<ResizeObserver | null>(null)
   const { setEditor, getEditor, removeEditor } = useCodeStore()
-  const editor = getEditor(editorKey)
-  const panels = useMultiViewStore((state) => state.panels)
-  const pickedUp = useMultiViewStore((state) => state.pickedUp)
-  const fullScreen = useMultiViewStore((state) => state.fullScreen)
 
   useEffect(() => {
-    if (!monacoEl.current) {
+    const element = monacoEl.current
+
+    if (!element) {
       return
     }
 
     const existingEditor = getEditor(editorKey)
+
     if (existingEditor) {
       return
     }
 
-    const editor = new Editor(monacoEl.current)
+    const editor = new Editor(element)
     setEditor(editorKey, editor)
 
-    function onResize() {
+    const resizeObserver = new ResizeObserver(() => {
       editor.resize()
-    }
-    window.addEventListener('resize', onResize)
+    })
+    resizeObserver.observe(element)
+    resizeObserverRef.current = resizeObserver
+
     return () => {
-      window.removeEventListener('resize', onResize)
-      // Remove editor from store and dispose it when component unmounts
+      resizeObserver.disconnect()
       editor.dispose()
       removeEditor(editorKey)
     }
-  }, [setEditor, editorKey, removeEditor, getEditor])
-
-  useEffect(() => {
-    editor?.resize()
-  }, [editor, panels, pickedUp, fullScreen])
+  }, [editorKey, setEditor, getEditor, removeEditor])
 
   return <div className="h-full w-full" ref={monacoEl} />
 }
