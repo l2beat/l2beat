@@ -1,4 +1,4 @@
-import { Icon } from '../icons/Icon'
+import { Icon } from '../../../icons/Icon'
 
 export function IconCheckTrue(props: { className?: string }) {
   return (

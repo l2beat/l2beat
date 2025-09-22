@@ -1,6 +1,6 @@
 import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
-import { ExternalButton } from './ExternalButton'
+import { ExternalButton } from '../../defidisco/ExternalButton'
 import { HideButton } from './HideButton'
 import { HideUnknownsButton } from './HideUnknowns'
 import { Settings } from './Settings'

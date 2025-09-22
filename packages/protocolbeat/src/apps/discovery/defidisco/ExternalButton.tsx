@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
-import { useUpdateContractTag, useContractTags } from '../../hooks/useContractTags'
-import { useStore } from '../store/store'
-import { ControlButton } from './ControlButton'
+import { useUpdateContractTag, useContractTags } from '../../../hooks/useContractTags'
+import { useStore } from '../panel-nodes/store/store'
+import { ControlButton } from '../panel-nodes/controls/ControlButton'
 
 export function ExternalButton() {
   const { project } = useParams()

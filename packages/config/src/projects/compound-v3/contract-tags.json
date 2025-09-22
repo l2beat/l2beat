@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-22T20:03:49.569Z",
+  "lastModified": "2025-09-22T20:23:19.956Z",
   "tags": [
     {
       "contractAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -15,7 +15,7 @@
     {
       "contractAddress": "0xc3d688B66703497DAA19211EEdff47f25384cdc3",
       "isExternal": false,
-      "timestamp": "2025-09-22T20:03:49.569Z"
+      "timestamp": "2025-09-22T20:23:19.956Z"
     }
   ]
 }

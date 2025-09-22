@@ -1,5 +1,5 @@
 import React from 'react'
-import type { OwnerDefinition } from '../api/types'
+import type { OwnerDefinition } from '../../../api/types'
 
 // Interface for resolved owner information
 export interface ResolvedOwner {
