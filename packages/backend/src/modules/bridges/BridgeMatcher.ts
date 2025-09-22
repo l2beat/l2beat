@@ -114,26 +114,25 @@ export async function match(
       } catch (e) {
         logger.error(e)
       }
+      if (!result) {
+        continue
+      }
 
-      const messages = result?.filter((x) => x.kind === 'BridgeMessage') ?? []
-      const transfers = result?.filter((x) => x.kind === 'BridgeTransfer') ?? []
-
-      if (result) {
-        matchedIds.add(event.eventId)
-        for (const message of messages) {
-          allMessages.push(message)
-          matchedIds.add(message.dst.eventId)
-          matchedIds.add(message.src.eventId)
-        }
-        for (const transfer of transfers) {
-          allTransfers.push(transfer)
-          for (const transferEvent of transfer.events) {
+      matchedIds.add(event.eventId)
+      for (const item of result) {
+        if (item.kind === 'BridgeMessage') {
+          allMessages.push(item)
+          matchedIds.add(item.dst.eventId)
+          matchedIds.add(item.src.eventId)
+        } else if (item.kind === 'BridgeTransfer') {
+          allTransfers.push(item)
+          for (const transferEvent of item.events) {
             matchedIds.add(transferEvent.eventId)
           }
         }
       }
     }
-    logger.info('Plugin executed', {
+    logger.debug('Plugin executed', {
       name: plugin.name,
       duration: Date.now() - start,
     })
