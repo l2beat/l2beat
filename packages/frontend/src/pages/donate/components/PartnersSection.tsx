@@ -90,7 +90,7 @@ function EcosystemTierCard({
             <div className="-translate-x-full pointer-events-none absolute inset-0 transform bg-linear-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
           </div>
 
-          <div className="ease absolute inset-x-6 bottom-4 flex translate-y-full items-center justify-center rounded border border-link-stroke bg-surface-primary p-3 font-medium text-primary text-xs leading-none transition-[opacity,transform] duration-200 ease-in-out max-md:translate-y-0 md:bottom-6 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+          <div className="ease absolute inset-x-6 bottom-4 flex translate-y-full items-center justify-center rounded border border-link-stroke bg-surface-primary p-3 font-medium text-primary text-xs leading-none transition-[opacity,translate] duration-200 ease-in-out max-md:translate-y-0 md:bottom-6 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
             Go to ecosystem page
           </div>
 
