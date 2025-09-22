@@ -1,7 +1,10 @@
 import { useCallback, useState } from 'react'
+import {
+  useFlagFromQueryParam,
+  useQueryParam,
+} from '../../../../hooks/useFlagFromQueryParam'
 import type { LineSelection } from '../extensions/lineSelector'
 import { LineSelector } from '../extensions/lineSelector'
-import { useFlagFromQueryParam, useQueryParam } from './useFlagFromQueryParam'
 
 const SEARCH_PARAMS = {
   lines: 'lines',

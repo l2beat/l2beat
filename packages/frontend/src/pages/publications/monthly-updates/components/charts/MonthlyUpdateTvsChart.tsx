@@ -21,21 +21,19 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateTvsChart({
-  id,
   type,
   entries,
   allScalingProjectsTvs,
   from,
   to,
 }: {
-  id: string
   type: 'ecosystem' | 'daLayer'
   entries: ProjectId[]
   allScalingProjectsTvs: number
   from: UnixTime
   to: UnixTime
 }) {
-  const fillId = useId()
+  const id = useId()
   const { data, isLoading } = api.tvs.chart.useQuery({
     range: {
       type: 'custom',
@@ -65,7 +63,7 @@ export function MonthlyUpdateTvsChart({
   const chartMeta = useMemo(() => {
     return {
       value: {
-        color: `var(--${id}-primary)`,
+        color: 'var(--project-primary)',
         indicatorType: { shape: 'line' },
         label:
           type === 'ecosystem'
@@ -75,7 +73,7 @@ export function MonthlyUpdateTvsChart({
               : 'TVS',
       },
     } satisfies ChartMeta
-  }, [type, id])
+  }, [type])
 
   const stats = getStats(chartData, allScalingProjectsTvs)
   const range = getChartRange(chartData)
@@ -92,18 +90,18 @@ export function MonthlyUpdateTvsChart({
         <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
           <defs>
             <CustomFillGradientDef
-              id={fillId}
+              id={id}
               colors={{
-                primary: `var(--${id}-primary)`,
-                secondary: `var(--${id}-secondary)`,
+                primary: 'var(--project-primary)',
+                secondary: 'var(--project-secondary)',
               }}
             />
           </defs>
           <Area
             dataKey="value"
-            fill={`url(#${fillId})`}
+            fill={`url(#${id})`}
             fillOpacity={1}
-            stroke={`var(--${id}-primary)`}
+            stroke="var(--project-primary)"
             strokeWidth={2}
             isAnimationActive={false}
           />

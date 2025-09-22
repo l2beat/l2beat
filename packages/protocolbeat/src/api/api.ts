@@ -1,4 +1,4 @@
-import { withoutUndefinedKeys } from '../common/withoutUndefinedKeys'
+import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
 import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
