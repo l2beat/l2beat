@@ -1,18 +1,16 @@
 import type { BridgeEventRecord, Database } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
+import { InMemoryEventDb } from './InMemoryEventDb'
 import type {
   BridgeEvent,
   BridgeEventDb,
   BridgeEventQuery,
   BridgeEventType,
 } from './plugins/types'
-import { InMemoryEventDb } from './InMemoryEventDb'
 
 export class BridgeStore implements BridgeEventDb {
-  private events = new InMemoryEventDb()
+  private eventDb = new InMemoryEventDb()
   private unmatched: BridgeEvent[] = []
-  private matchedIds = new Set<string>()
-  private unsupportedIds = new Set<string>()
 
   private newEvents: BridgeEvent[] = []
   private newMatched = new Set<string>()
@@ -24,52 +22,46 @@ export class BridgeStore implements BridgeEventDb {
     const records = await this.db.bridgeEvent.getAll()
     for (const record of records) {
       const event = fromDbRecord(record)
-      this.events.addEvent(event)
-
-      if (!record.matched) {
+      if (!record.matched && !record.unsupported) {
+        this.eventDb.addEvent(event)
         this.unmatched.push(event)
-      } else {
-        this.matchedIds.add(event.eventId)
-      }
-
-      if (record.unsupported) {
-        this.unsupportedIds.add(event.eventId)
       }
     }
   }
 
   addEvent(event: BridgeEvent) {
-    this.events.addEvent(event)
+    this.eventDb.addEvent(event)
     this.unmatched.push(event)
     this.newEvents.push(event)
   }
 
   markMatched(eventIds: string[]) {
     for (const eventId of eventIds) {
-      this.matchedIds.add(eventId)
       this.newMatched.add(eventId)
     }
-    this.unmatched = this.unmatched.filter((x) => !eventIds.includes(x.eventId))
+    this.unmatched = this.unmatched.filter(
+      (x) => !this.newMatched.has(x.eventId),
+    )
   }
 
   markUnsupported(eventIds: string[]) {
     for (const eventId of eventIds) {
-      this.unsupportedIds.add(eventId)
       this.newUnsupported.add(eventId)
     }
-    this.unmatched = this.unmatched.filter((x) => !eventIds.includes(x.eventId))
+    this.unmatched = this.unmatched.filter(
+      (x) => !this.newUnsupported.has(x.eventId),
+    )
   }
 
   getUnmatched(): BridgeEvent[] {
-    // TODO: maybe we don't need to copy?
-    return [...this.unmatched]
+    return this.unmatched
   }
 
   async save(): Promise<void> {
     const records = this.newEvents.map((e) =>
       toDbRecord(e, {
-        matched: this.matchedIds.has(e.eventId),
-        unsupported: this.unsupportedIds.has(e.eventId),
+        matched: this.newMatched.has(e.eventId),
+        unsupported: this.newUnsupported.has(e.eventId),
       }),
     )
     const matchedIds = Array.from(this.newMatched)
@@ -109,7 +101,6 @@ export class BridgeStore implements BridgeEventDb {
     this.newEvents = this.newEvents.filter((x) => x.expiresAt > now)
 
     for (const id of expired) {
-      this.matchedIds.delete(id)
       this.newMatched.delete(id)
     }
 
@@ -120,14 +111,14 @@ export class BridgeStore implements BridgeEventDb {
     type: BridgeEventType<T>,
     query: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined {
-    return this.events.find(type, query)
+    return this.eventDb.find(type, query)
   }
 
   findAll<T>(
     type: BridgeEventType<T>,
     query: BridgeEventQuery<T>,
   ): BridgeEvent<T>[] {
-    return this.events.findAll(type, query)
+    return this.eventDb.findAll(type, query)
   }
 }
 

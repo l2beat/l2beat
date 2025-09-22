@@ -7,23 +7,21 @@ import type {
 
 export class InMemoryEventDb implements BridgeEventDb {
   private indices = new Map<string, EventIndex>()
-  private allEvents: BridgeEvent[] = []
+  private allEvents = new Map<string, BridgeEvent>()
 
   addEvent(event: BridgeEvent) {
-    this.allEvents.push(event)
+    this.allEvents.set(event.eventId, event)
     for (const index of this.indices.values()) {
       index.addEvent(event)
     }
   }
 
   removeEvent(eventId: string) {
-    const index = this.allEvents.findIndex((x) => x.eventId === eventId)
-    if (index === -1) {
-      return
-    }
-    this.allEvents.splice(index, 1)
-    for (const index of this.indices.values()) {
-      index.removeEvent(eventId)
+    const removed = this.allEvents.delete(eventId)
+    if (removed) {
+      for (const index of this.indices.values()) {
+        index.removeEvent(eventId)
+      }
     }
   }
 
@@ -40,41 +38,69 @@ export class InMemoryEventDb implements BridgeEventDb {
   ): BridgeEvent<T>[] {
     const index = this.getIndex(type, query)
     const events = index.findEvents(query) as BridgeEvent<T>[]
-    if (query.sameTxAfter) {
-      events.sort((a, b) => a.ctx.logIndex - b.ctx.logIndex)
-    } else if (query.sameTxBefore) {
-      events.sort((a, b) => b.ctx.logIndex - a.ctx.logIndex)
+    if (events.length > 1) {
+      if (query.sameTxAfter) {
+        events.sort((a, b) => a.ctx.logIndex - b.ctx.logIndex)
+      } else if (query.sameTxBefore) {
+        events.sort((a, b) => b.ctx.logIndex - a.ctx.logIndex)
+      }
     }
     return events
   }
 
   private getIndex<T>(type: BridgeEventType<T>, query: BridgeEventQuery<T>) {
-    const fields: string[] = []
-    if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
-      fields.push('ctx.txHash')
-    } else {
-      for (const key in query) {
-        if (key === 'ctx') {
-          for (const ctxKey in query[key]) {
-            fields.push(`ctx.${ctxKey}`)
-          }
-        } else {
-          fields.push(key)
-        }
-      }
-    }
-    const indexKey = JSON.stringify([type, fields])
+    const indexKey = getIndexKey(type, query)
     let index = this.indices.get(indexKey)
     if (!index) {
-      console.log('NEW INDEX CREATED', type.type, fields)
-      index = new EventIndex(type.type, fields)
+      const fields: string[] = []
+      const ctxFields: string[] = []
+      if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
+        ctxFields.push('txHash')
+      } else {
+        for (const key in query) {
+          if (key === 'ctx') {
+            for (const ctxKey in query[key]) {
+              ctxFields.push(ctxKey)
+            }
+          } else {
+            fields.push(key)
+          }
+        }
+      }
+      console.log('NEW INDEX CREATED', type.type, fields, ctxFields)
+      console.log('NEW INDEX CREATED', indexKey)
+      index = new EventIndex(type.type, fields, ctxFields)
       this.indices.set(indexKey, index)
-      for (const event of this.allEvents) {
+      for (const event of this.allEvents.values()) {
         index.addEvent(event)
       }
     }
     return index
   }
+}
+
+function getIndexKey(
+  type: BridgeEventType<unknown>,
+  query: BridgeEventQuery<unknown>,
+) {
+  let indexKey = type.type + '#'
+  if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
+    return indexKey + '#txHash#'
+  }
+  for (const key in query) {
+    if (key !== 'ctx') {
+      indexKey += key + '#'
+    }
+  }
+  indexKey += '#'
+  if (query.ctx) {
+    for (const key in query.ctx) {
+      if (key !== 'ctx') {
+        indexKey += key + '#'
+      }
+    }
+  }
+  return indexKey
 }
 
 class EventIndex {
@@ -84,20 +110,29 @@ class EventIndex {
   constructor(
     private eventType: string,
     private fields: string[],
+    private ctxFields: string[],
   ) {}
 
-  findEvents(query: Record<string, unknown>): BridgeEvent[] {
-    const keyParts: unknown[] = []
-    for (const field of this.fields) {
-      if (field.startsWith('ctx.')) {
-        const ctx = (query.ctx ?? {}) as Record<string, unknown>
-        keyParts.push(ctx[field.slice(4)])
-      } else {
-        keyParts.push(query[field])
+  findEvents(query: BridgeEventQuery<unknown>): BridgeEvent[] {
+    let eventKey = ''
+    // biome-ignore lint/style/useForOf: speed
+    for (let i = 0; i < this.fields.length; i++) {
+      eventKey += (query as Record<string, unknown>)[this.fields[i]] + ','
+    }
+    if (this.ctxFields.length > 0) {
+      const ctx = (query.ctx ?? {}) as Record<string, unknown>
+      // biome-ignore lint/style/useForOf: speed
+      for (let i = 0; i < this.ctxFields.length; i++) {
+        const key = this.ctxFields[i]
+        let value = ctx[key]
+        if (key === 'txHash' && value === undefined) {
+          value =
+            query.sameTxBefore?.ctx.txHash ?? query.sameTxAfter?.ctx.txHash
+        }
+        eventKey += value + ','
       }
     }
-    const key = JSON.stringify(keyParts)
-    const array = this.buckets.get(key) ?? []
+    const array = this.buckets.get(eventKey) ?? []
     return array.filter((e) => matchesQuery(e, query))
   }
 
@@ -106,21 +141,17 @@ class EventIndex {
       return
     }
 
-    const keyParts: unknown[] = []
+    let eventKey = ''
     for (const field of this.fields) {
-      if (field.startsWith('ctx.')) {
-        keyParts.push(
-          (event.ctx as unknown as Record<string, unknown>)[field.slice(4)],
-        )
-      } else {
-        keyParts.push((event.args as Record<string, unknown>)[field])
-      }
+      eventKey += (event.args as Record<string, unknown>)[field] + ','
     }
-    const key = JSON.stringify(keyParts)
-    this.eventKeys.set(event.eventId, key)
-    const array = this.buckets.get(key) ?? []
+    for (const field of this.ctxFields) {
+      eventKey += (event.ctx as unknown as Record<string, unknown>)[field] + ','
+    }
+    this.eventKeys.set(event.eventId, eventKey)
+    const array = this.buckets.get(eventKey) ?? []
     array.push(event)
-    this.buckets.set(key, array)
+    this.buckets.set(eventKey, array)
   }
 
   removeEvent(eventId: string) {

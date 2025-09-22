@@ -65,10 +65,12 @@ export class BridgeMatcher {
         messages: result.messages.length,
         transfers: result.transfers.length,
       })
-      // this.bridgeStore.markMatched([...result.matchedIds])
+      this.bridgeStore.markMatched([...result.matchedIds])
     }
-    return
     if (result.unsupportedIds.size > 0) {
+      this.logger.info('Marked unsupported', {
+        count: result.unsupportedIds.size,
+      })
       this.bridgeStore.markUnsupported([...result.unsupportedIds])
     }
     if (result.matchedIds.size > 0 || result.unsupportedIds.size > 0) {
@@ -110,6 +112,8 @@ export async function match(
   const allTransfers: BridgeTransfer[] = []
 
   for (const plugin of plugins) {
+    // Unblock event loop
+    await new Promise((r) => setTimeout(r))
     console.timeLog('Matching', plugin.name)
     for (const event of events) {
       if (matchedIds.has(event.eventId)) {
