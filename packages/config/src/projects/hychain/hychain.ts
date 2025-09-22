@@ -46,7 +46,7 @@ export const hychain: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.hychain.com/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['TOPIA'],

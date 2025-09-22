@@ -100,7 +100,7 @@ export const phala: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://rpc.phala.network/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

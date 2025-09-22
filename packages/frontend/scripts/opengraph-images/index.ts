@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import express from 'express'
+import { generateExternalPublicationThumbnails } from './projects/generateExternalPublicationThumbnails'
 import { generateGovernanceReviewOgImages } from './projects/generateGovernanceReviewOgImages'
 import { generateMainPageOgImages } from './projects/generateMainPageOgImages'
 import { generateMonthlyUpdateOgImages } from './projects/generateMonthlyUpdateOgImages'
@@ -46,6 +47,7 @@ async function main() {
   await generateGovernanceReviewOgImages(ogImageSize, {
     ptSerifBold,
   })
+  await generateExternalPublicationThumbnails()
 
   server.close()
 }

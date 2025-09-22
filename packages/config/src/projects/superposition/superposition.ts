@@ -47,7 +47,7 @@ export const superposition: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://rpc.superposition.so',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'blockscout', url: 'https://explorer.superposition.so/api' },
     ],

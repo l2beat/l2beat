@@ -49,7 +49,7 @@ export const molten: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://molten.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['MOLTEN'],

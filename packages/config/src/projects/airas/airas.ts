@@ -44,7 +44,7 @@ export const airas: ScalingProject = underReviewL2({
       {
         type: 'rpc',
         url: 'https://rpc.airas.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

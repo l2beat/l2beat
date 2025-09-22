@@ -63,7 +63,7 @@ export const zksync2: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.era.zksync.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },
     ],

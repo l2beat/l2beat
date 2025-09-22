@@ -226,6 +226,23 @@ export const taiko: ScalingProject = {
       },
       {
         uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: ChainSpecificAddress.address(taikoL1ContractAddress),
+          selector: '0xc939ac47',
+          functionSignature:
+            'function proposeBatchWithExpectedLastBlockId(bytes _params, bytes _txList, uint96 _expectedLastBlockId) returns (tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt) meta_, uint64 lastBlockId_)',
+          topics: [
+            '0x9eb7fc80523943f28950bbb71ed6d584effe3e1e02ca4ddc8c86e5ee1558c096', //BatchProposed
+          ],
+          sinceTimestamp: UnixTime(1756244927),
+        },
+      },
+      {
+        uses: [
           { type: 'liveness', subtype: 'stateUpdates' },
           { type: 'l2costs', subtype: 'stateUpdates' },
         ],

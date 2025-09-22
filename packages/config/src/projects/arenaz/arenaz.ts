@@ -37,7 +37,7 @@ export const arenaz = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.arena-z.gg/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

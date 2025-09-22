@@ -87,7 +87,7 @@ export const xlayer: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://rpc.xlayer.tech',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

@@ -37,7 +37,7 @@ export const sischain: ScalingProject = underReviewL2({
       {
         type: 'rpc',
         url: 'https://symbiosis.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

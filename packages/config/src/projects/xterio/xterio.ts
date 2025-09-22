@@ -95,7 +95,7 @@ export const xterio: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://xterio-eth.alt.technology/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

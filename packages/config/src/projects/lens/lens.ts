@@ -57,7 +57,7 @@ export const lens: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.lens.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['LGHO'],

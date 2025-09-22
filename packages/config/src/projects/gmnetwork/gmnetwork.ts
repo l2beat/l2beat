@@ -84,7 +84,7 @@ export const gmnetwork: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.gmnetwork.ai/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

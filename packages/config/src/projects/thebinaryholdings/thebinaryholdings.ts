@@ -44,7 +44,7 @@ export const thebinaryholdings: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.zero.thebinaryholdings.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },
