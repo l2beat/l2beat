@@ -241,6 +241,14 @@ export async function getScalingProjectEntry(
 
   const changes = projectsChangeReport.getChanges(project.id)
 
+  const dataAvailabilitySection = getDataAvailabilitySection(
+    project,
+    daSolution,
+  )
+  const withdrawalsSection = getWithdrawalsSection(project)
+  const sequencingSection = getSequencingSection(project)
+  const operatorSection = getOperatorSection(project)
+
   const common = {
     type: project.scalingInfo.layer,
     name: project.name,
@@ -262,10 +270,10 @@ export async function getScalingProjectEntry(
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     rosette: getScalingRosette(project, {
       hasStateValidationSection: !!stateValidationSection,
-      hasDataAvailabilitySection: !!getDataAvailabilitySection(project),
-      hasWithdrawalsSection: !!getWithdrawalsSection(project),
-      hasSequencingSection: !!getSequencingSection(project),
-      hasOperatorsSection: !!getOperatorSection(project),
+      hasDataAvailabilitySection: !!dataAvailabilitySection,
+      hasWithdrawalsSection: !!withdrawalsSection,
+      hasSequencingSection: !!sequencingSection,
+      hasOperatorsSection: !!operatorSection,
     }),
     hostChainName: project.scalingInfo.hostChain.name,
     stageConfig:
@@ -507,10 +515,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const dataAvailabilitySection = getDataAvailabilitySection(
-    project,
-    daSolution,
-  )
   if (dataAvailabilitySection) {
     sections.push({
       type: dataAvailabilitySection.type,
@@ -563,7 +567,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const operatorSection = getOperatorSection(project)
   if (operatorSection) {
     sections.push({
       type: 'TechnologyChoicesSection',
@@ -576,7 +579,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const sequencingSection = getSequencingSection(project)
   if (sequencingSection) {
     sections.push({
       type: 'SequencingSection',
@@ -588,7 +590,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const withdrawalsSection = getWithdrawalsSection(project)
   if (withdrawalsSection) {
     sections.push({
       type: 'TechnologyChoicesSection',

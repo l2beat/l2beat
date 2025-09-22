@@ -21,7 +21,7 @@ export function PizzaRosetteIcon({
   className,
   isUnderReview,
   background = 'header',
-  disableSectionLinking = false,
+  disableSectionLinking,
 }: Props) {
   const context = useRosetteTooltipContext()
   const svgRef = useRef(null)
