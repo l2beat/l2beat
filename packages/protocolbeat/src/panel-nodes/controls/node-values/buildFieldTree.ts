@@ -1,3 +1,4 @@
+import { partition } from '../../../common/partition'
 import type { Field } from '../../store/State'
 
 export function groupByPath(fields: Field[]) {
@@ -51,15 +52,6 @@ export function buildFieldTree(
   )
 
   return [...simple, ...complex]
-}
-
-function partition<T>(array: T[], predicate: (item: T) => boolean): [T[], T[]] {
-  const a: T[] = []
-  const b: T[] = []
-  for (const item of array) {
-    predicate(item) ? a.push(item) : b.push(item)
-  }
-  return [a, b]
 }
 
 function groupByFirstKey(fields: Field[]): Record<string, Field[]> {

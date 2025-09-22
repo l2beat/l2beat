@@ -81,8 +81,6 @@ export function ClusterLayoutButton() {
         { minY: Number.POSITIVE_INFINITY, minX: Number.POSITIVE_INFINITY },
       )
 
-      console.log(minX, minY, minX * SIM_SCALE, minY * SIM_SCALE, top, left)
-
       simNodes.forEach((simNode) => {
         nodeLocations[simNode.id] = {
           x: (simNode.x - minY) * SIM_SCALE + left,
