@@ -8,7 +8,7 @@ Generated with discovered.json: 0x7dce63c550bfc2787983d2448da4200188244ff1
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added proposer permission.
 
 ## Config/verification related changes
 
