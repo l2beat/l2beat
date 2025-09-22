@@ -44,13 +44,13 @@ export function MonthlyUpdateThroughputChart({
     return {
       projects: {
         label: 'Data Posted',
-        color: `var(--${id}-primary)`,
+        color: 'var(--project-primary)',
         indicatorType: {
           shape: 'line',
         },
       },
     } satisfies ChartMeta
-  }, [id])
+  }, [])
 
   const max = useMemo(() => {
     return data
@@ -118,8 +118,8 @@ export function MonthlyUpdateThroughputChart({
             <CustomFillGradientDef
               id={fillId}
               colors={{
-                primary: `var(--${id}-primary)`,
-                secondary: `var(--${id}-secondary)`,
+                primary: 'var(--project-primary)',
+                secondary: 'var(--project-secondary)',
               }}
             />
           </defs>
