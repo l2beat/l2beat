@@ -7,6 +7,7 @@ import {
 import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
+import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
 import type { BaseProject } from '../types'
@@ -147,11 +148,17 @@ describe('getProjects', () => {
           !project.archivedAt &&
           // It makes no sense to list them on the DA-BEAT
           project.dataAvailability &&
-          project.dataAvailability.layer.value !== 'None' &&
-          project.dataAvailability.bridge.projectId &&
-          daBridges
-            .map((x) => x.id)
-            .includes(project.dataAvailability.bridge.projectId) &&
+          asArray(project.dataAvailability).some(
+            (da) => da.layer.value !== 'None',
+          ) &&
+          asArray(project.dataAvailability).some(
+            (da) => da.bridge.projectId !== undefined,
+          ) &&
+          asArray(project.dataAvailability).every((da) => {
+            const bridgeProjId = da.bridge.projectId
+            if (bridgeProjId === undefined) return true
+            daBridges.map((x) => x.id).includes(bridgeProjId)
+          }) &&
           // Will be listed on the DA-BEAT automatically
           !project.customDa,
       )
