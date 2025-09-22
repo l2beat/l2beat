@@ -863,9 +863,6 @@ export function compareRisk(a: TableReadyValue, b: TableReadyValue): -1 | 1 {
 export const pickWorseRisk = (a: TableReadyValue, b: TableReadyValue) =>
   compareRisk(a, b) === -1 ? a : b
 
-export const pickLesserRisk = (a: TableReadyValue, b: TableReadyValue) =>
-  compareRisk(a, b) === -1 ? b : a
-
 export function sumRisk(
   a: TableReadyValue,
   b: TableReadyValue,
