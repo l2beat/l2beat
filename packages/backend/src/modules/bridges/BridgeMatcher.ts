@@ -5,7 +5,6 @@ import type {
   Database,
 } from '@l2beat/database'
 import type { BridgeStore } from './BridgeStore'
-import type { FinancialsService } from './financials/FinancialsService'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -22,7 +21,6 @@ export class BridgeMatcher {
 
   constructor(
     private bridgeStore: BridgeStore,
-    private financialsService: FinancialsService,
     private db: Database,
     private plugins: BridgePlugin[],
     private supportedChains: string[],
@@ -83,13 +81,9 @@ export class BridgeMatcher {
     }
 
     if (result.transfers.length > 0) {
-      const transfers: BridgeTransferWithFinancials[] = await Promise.all(
-        result.transfers.map(
-          async (b) => await this.financialsService.addFinancials(b),
-        ),
+      await this.db.bridgeTransfer.insertMany(
+        result.transfers.map(toTransferRecord),
       )
-
-      await this.db.bridgeTransfer.insertMany(transfers.map(toTransferRecord))
     }
   }
 }
