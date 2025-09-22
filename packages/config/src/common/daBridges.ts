@@ -64,7 +64,6 @@ const HOTSHOT_LIGHT_CLIENT: DaProjectTableValue = {
   projectId: ProjectId('espresso'),
 }
 
-
 function DAC_MEMBERS({
   requiredSignatures,
   membersCount,
@@ -120,5 +119,5 @@ export const DA_BRIDGES = {
   STAKED_OPERATORS,
   SELF_ATTESTED_INTMAX,
   PLASMA,
-  HOTSHOT_LIGHT_CLIENT
+  HOTSHOT_LIGHT_CLIENT,
 }

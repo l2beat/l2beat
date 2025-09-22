@@ -168,7 +168,6 @@ function getType(p: ScalingProject): ProjectScalingCategory | undefined {
   if (p.reasonsForBeingOther && p.reasonsForBeingOther.length > 0)
     return 'Other'
 
-
   // If there's a bridge in DA
   if (p.dataAvailability?.bridge.value === 'Plasma') return 'Plasma'
 
@@ -178,7 +177,6 @@ function getType(p: ScalingProject): ProjectScalingCategory | undefined {
     p.dataAvailability?.bridge.value === 'Enshrined' ||
     p.dataAvailability.bridge.value === 'Self-attested' // Intmax case
   const proofType = p.proofSystem?.type
-
 
   // If there's
   if (proofType === 'Optimistic') {

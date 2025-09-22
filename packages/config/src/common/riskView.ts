@@ -841,35 +841,30 @@ const SENTIMENT_VALUE: Record<Sentiment, number> = {
   UnderReview: 4,
 }
 
-export function pickRisk(
-  a: TableReadyValue,
-  b: TableReadyValue,
-  mode: 'leastRisky' | 'mostRisky',
-): TableReadyValue {
-  let aVal = SENTIMENT_VALUE[a.sentiment ?? 'neutral']
-  let bVal = SENTIMENT_VALUE[b.sentiment ?? 'neutral']
-  if (mode === 'leastRisky') {
-    ;[aVal, bVal] = [bVal, aVal]
-  }
+// This is a comparison function to be used in "sort"
+// -1 means `a` is *more* risky
+// 1 means `b` is *more* risky`
+export function compareRisk(a: TableReadyValue, b: TableReadyValue): -1 | 1 {
+  const aVal = SENTIMENT_VALUE[a.sentiment ?? 'neutral']
+  const bVal = SENTIMENT_VALUE[b.sentiment ?? 'neutral']
+  const RESULT_A = -1
+  const RESULT_B = 1
+
   if (aVal === bVal) {
     assert(
       a.orderHint !== undefined && b.orderHint !== undefined,
       'Unable to pick worse risk without a defining metric',
     )
-    return a.orderHint < b.orderHint ? a : b
+    return a.orderHint < b.orderHint ? RESULT_A : RESULT_B
   }
-  if (aVal > bVal) {
-    return a
-  }
-
-  return b
+  return aVal > bVal ? RESULT_A : RESULT_B
 }
 
 export const pickWorseRisk = (a: TableReadyValue, b: TableReadyValue) =>
-  pickRisk(a, b, 'mostRisky')
+  compareRisk(a, b) === -1 ? a : b
 
 export const pickLesserRisk = (a: TableReadyValue, b: TableReadyValue) =>
-  pickRisk(a, b, 'leastRisky')
+  compareRisk(a, b) === -1 ? b : a
 
 export function sumRisk(
   a: TableReadyValue,

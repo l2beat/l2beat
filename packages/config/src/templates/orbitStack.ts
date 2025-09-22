@@ -13,17 +13,18 @@ import isEmpty from 'lodash/isEmpty'
 import unionBy from 'lodash/unionBy'
 import {
   CONTRACTS,
+  compareRisk,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  pickLesserRisk, pickWorseRisk,
+  pickWorseRisk,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   sumRisk,
-  TECHNOLOGY_DATA_AVAILABILITY
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
@@ -937,8 +938,9 @@ function getRiskView(
     )
 
   const theLeastRiskyDaProvider = daProviders.sort((dap1, dap2) =>
-    pickLesserRisk(dap1.riskViewDA, dap2.riskViewDA),
-  )
+    compareRisk(dap2.riskViewDA, dap1.riskViewDA),
+  )[0]
+  assert(theLeastRiskyDaProvider)
 
   return {
     stateValidation:
