@@ -79,7 +79,7 @@ describe(ProjectValueIndexer.name, () => {
 
       expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenOnlyCalledWith(
         'tvs',
-        ['id'],
+        ['project'],
         timestamps[timestamps.length - 1],
       )
       expect(to).toEqual(timestamps[timestamps.length - 1])

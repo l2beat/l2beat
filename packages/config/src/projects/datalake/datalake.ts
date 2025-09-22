@@ -17,6 +17,7 @@ export const datalake: ScalingProject = upcomingL3({
     links: {
       websites: ['https://data-lake.co'],
       documentation: ['https://docs.data-lake.co/'],
+      explorers: ['https://explorer.data-lake.co'],
       socialMedia: [
         'https://x.com/DataLakeToken',
         'https://t.me/DataLakeCommunity',

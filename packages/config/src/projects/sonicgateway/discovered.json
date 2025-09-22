@@ -1,7 +1,7 @@
 {
   "name": "sonicgateway",
   "timestamp": 1746618299,
-  "configHash": "0x82556ba2caae2404d22d044c48bb0b77cab1c0151453bf6c8c27bee7ee92b66e",
+  "configHash": "0xe41ffe745d7e122e92bf112a18c56775fbf377ec6381a03f7770d5ead7d90234",
   "entries": [
     {
       "address": "eth:0x11b0E7Bef4046dD43b09489926F30514584B1161",

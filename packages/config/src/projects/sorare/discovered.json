@@ -1,8 +1,7 @@
 {
   "name": "sorare",
   "timestamp": 1756816898,
-  "configHash": "0xde42db0d14ac6cdbff380fba8f6353ca8c33037a65e2cc7af3ea32588f7430ee",
-  "sharedModules": ["shared-sharp-verifier"],
+  "configHash": "0xb70f6ac921c77dbf199c2090359bc7306f9acf64918f8b2b88077d7a25569e38",
   "entries": [
     {
       "address": "eth:0x0405107a60391Eb51821be373ff978115Ee58488",

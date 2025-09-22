@@ -36,6 +36,7 @@
     "nextBlockNumber",
     "nextOutputIndex",
     "latestBlockNumber",
-    "latestOutputIndex"
+    "latestOutputIndex",
+    "lastProposalTimestamp"
   ]
 }

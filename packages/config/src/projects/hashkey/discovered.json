@@ -1,7 +1,7 @@
 {
   "name": "hashkey",
   "timestamp": 1756721254,
-  "configHash": "0xb1e70c7ecf44af6983db22fef030e2306d0de1618303a00a9548261a1ad1f3a4",
+  "configHash": "0x253324981ad024853459fe68eae557958bef606bc7a885de793e8e4aa49641ef",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -81,6 +81,8 @@
         "gameImpls": [
           "eth:0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA",
           "eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
@@ -2001,7 +2003,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0xdec1700fd03bf991ef19b9aa3b5f992abf853de33e6ebae19b785a8d72b37356",
+    "opstack/DisputeGameFactory": "0xe9d9d84be84533dfde77d87e1af95889eb95f6bf254630733231f6789d4e48fe",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",

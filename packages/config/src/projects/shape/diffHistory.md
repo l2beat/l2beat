@@ -1,4 +1,57 @@
-Generated with discovered.json: 0x400b6b572c0d7fa311815c184540561f613014b6
+Generated with discovered.json: 0x483ae39efc3c429c5762b0ab605b3ef7ad9cd320
+
+# Diff at Fri, 19 Sep 2025 13:03:40 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a930e518d214c15603feeda62e2a483dbd2454e0 block: 1755507657
+- current timestamp: 1758286953
+
+## Description
+
+Multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xCA730AFfb87935E70E5889418C731eb196237476"
++        "eth:0xa3353Ae4458F663f1F888705b044269bd30cd110"
+    }
+```
+
+Generated with discovered.json: 0xcf70acff7dd6128df26aa7960a32cbbd8dfb1f12
+
+# Diff at Mon, 15 Sep 2025 09:50:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1755507657
+- current timestamp: 1755507657
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755507657 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xf3be2748cf61e4c5f680ec7df3baf72cd44bdfa6
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

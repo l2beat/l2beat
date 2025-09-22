@@ -62,49 +62,26 @@ export const sp1: BaseProject = {
       ],
     },
     proofSystemInfo: `
+      ## Description
 
-        ## Description
+      SP1 is a RISC-V zkVM using the [Plonky3](https://github.com/Plonky3/Plonky3) stack. The zkVM execution is proven recursively and is wrapped into a SNARK for final verification. It provides tools to generate onchain Groth16 or Plonk verifiers. SP1 targets [100 bits of security](https://docs.succinct.xyz/docs/sp1/security/security-model#conjectures-for-fris-security).
 
-        SP1 is a RISC-V ZKVM using the Plonky3 stack. ZKVM execution is proven recursively and is wrapped into a SNARK for final verification.
-        It provides tools to generate onchain Groth16 or Plonk verifiers.
+      ## Proof system
 
-        ## Proof system
+      SP1 proves execution of a RISC-V VM using several ZK circuits connected by lookup arguments, as implemented in Plonky3. VM execution trace is split into several chunks that could be proven in parallel with a STARK proving system. The parallelized proofs are recursively checked by the next layer of STARK circuits. The correctness of the final STARK proof is verified with the final wrap SNARK program, the wrap SNARK proof is verified onchain.
 
-        SP1 proves execution of a RISC-V VM using several ZK circuits connected by lookup arguments, as implemented in Plonky3.
-        VM execution trace is split into several chunks that could be proven in parallel with a STARK proving system.
-        The parallelized proofs are recursively checked by the next layer of STARK circuits. The correctness of the final STARK proof
-        is verified with the final wrap SNARK program, the wrap SNARK proof is verified onchain.
+      ### zkVM component
 
-        ### Top-level proof system
+      Verifies execution of a RISC-V program in a zkVM. Uses [Plonky3](https://github.com/Plonky3/Plonky3) STARK toolkit with AIR arithmetization and FRI-based polynomial commitment scheme within the [BabyBear field](https://docs.succinct.xyz/docs/sp1/security/security-model#hash-functions-and-the-random-oracle-model).
 
-        Verifies execution of a RISC-V program in a ZKVM. Uses [Plonky3](https://github.com/Plonky3/Plonky3) STARK toolkit with
-        AIR arithmetization and FRI-based polynomial commitment scheme. ([link](https://github.com/succinctlabs/sp1/tree/dev?tab=readme-ov-file#acknowledgements))
+      ### Recursion circuits
 
-        ### Recursion circuits
+      SP1 provides tools for recursive proof generation by [verifying proofs in a zkVM](https://docs.succinct.xyz/docs/sp1/writing-programs/proof-aggregation#verifying-proofs-inside-the-zkvm). This uses the same toolkit as top-level proof system, but proves the correct verification of all proofs generated on the previous step.
 
-        Verifies execution of a RISC-V program in a ZKVM. Uses the same toolkit as top-level proof system, but proves the correct
-        verification of all proofs generated on the previous step. ([link](https://docs.succinct.xyz/docs/sp1/writing-programs/proof-aggregation))
+      ### Final wrap
 
-        ### Final wrap
-
-        SP1 supports Plonk (with KZG polynomial commitments) or Groth16 final SNARK wrap of the STARK proof for performant onchain proof
-        verification ([link](https://docs.succinct.xyz/docs/sp1/generating-proofs/proof-types#compressed)). The [gnark](https://github.com/Consensys/gnark)
-        implementation of these proof systems is used.
-
-        ## Trusted setup
-
-        SP1 allows to generate final verifiers either using the Groth16 or the Plonk proof system for the final wrap, with different setup trust assumptions.
-
-        ### Groth16
-
-        See Groth16 circuit-specific trusted setup [here](https://docs.succinct.xyz/docs/sp1/security/security-model)).
-
-        ### Plonk
-
-        Plonk proving system used by Succinct utilizes Aztec Ignition universal Plonk setup files.
-        The setup data is downloaded from URL [https://aztec-ignition.s3.amazonaws.com/](https://aztec-ignition.s3.amazonaws.com/) in the
-        [DownloadAndSaveAztecIgnitionSrs](https://github.com/succinctlabs/sp1/blob/ad212dd52bdf8f630ea47f2b58aa94d5b6e79904/crates/recursion/gnark-ffi/go/sp1/trusted_setup/trusted_setup.go#L69) function.
-        `,
+      SP1 supports Plonk (with KZG polynomial commitments) or Groth16 final SNARK wrap of the STARK proof for performant onchain proof verification ([link](https://docs.succinct.xyz/docs/sp1/generating-proofs/proof-types#compressed)). The [gnark](https://github.com/Consensys/gnark) implementation of these proof systems over BN254 curve is used. For Plonk, Aztec Ignition trusted setup ceremony is used, for Groth16 Succinct run internal circuit-dependent phase 2 trusted setup, see [below](#trusted-setups) for more details.
+      `,
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
@@ -120,61 +97,53 @@ export const sp1: BaseProject = {
         hash: '0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
-          'https://etherscan.io/address/0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
-          'https://etherscan.io/address/0xFF5Adab685362DC4C33536a65aF5873738D1216B',
+          {
+            address: '0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
+            chain: 'ethereum',
+          },
+          {
+            address: '0xFF5Adab685362DC4C33536a65aF5873738D1216B',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [
-          ProjectId('vector'),
-          ProjectId('blobstream'),
-          // ProjectId('astarzkevm'),
-          // ProjectId('gpt'),
-          ProjectId('katana'),
-          // ProjectId('kroma'),
-          ProjectId('lumia'),
-          ProjectId('polygonzkevm'),
-          ProjectId('silicon'),
-          ProjectId('ternoa'),
-          ProjectId('wirex'),
-          // ProjectId('witness'),
-          ProjectId('xlayer'),
-          ProjectId('taiko'),
-          ProjectId('facet'),
-          ProjectId('plumenetwork'), // blobstream project
-          ProjectId('galxegravity'), // blobstream project
-          ProjectId('rari'), // blobstream project
-          ProjectId('winr'), // blobstream project
-          ProjectId('molten'), // blobstream project
-          ProjectId('sophon'), // vector project
-          ProjectId('lens'), // vector project
-        ],
       },
       {
         hash: '0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
-          'https://etherscan.io/address/0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63',
+          {
+            address: '0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63',
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'successful',
-        usedBy: [],
         verificationSteps: `
-                  - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
-                  - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
-                  - Make sure that you have [go lang installed](https://go.dev/doc/install).
-                  - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
-                  `,
+      - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
+      - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
+      - Make sure that you have [go lang installed](https://go.dev/doc/install).
+      - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
+      `,
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
       },
       {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
-          'https://etherscan.io/address/0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
-          'https://arbiscan.io/address/0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
-          'https://gnosisscan.io/address/0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
+          {
+            address: '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
+            chain: 'ethereum',
+          },
+          {
+            address: '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
+            chain: 'arbitrum',
+          },
+          {
+            address: '0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
+            chain: 'gnosis',
+          },
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('omni'), ProjectId('facet'), ProjectId('zircuit')],
       },
     ],
   },

@@ -17,6 +17,7 @@ export const forknet: ScalingProject = upcomingL2({
     links: {
       websites: ['https://forknet.io/'],
       bridges: ['https://bridge.forknet.io/'],
+      explorers: ['https://testnet.forkscan.org'],
       socialMedia: ['https://x.com/forknet_io'],
     },
   },

@@ -12,19 +12,21 @@ import {
   getProjectsChangeReport,
   type ProjectChanges,
 } from '~/server/features/projects-change-report/getProjectsChangeReport'
-import {
-  getVerifiersWithAttesters,
-  type TrustedSetupVerifierData,
-} from '~/server/features/zk-catalog/getZkCatalogEntries'
+import type { TrustedSetupVerifierData } from '~/server/features/zk-catalog/getZkCatalogEntries'
+import { getVerifiersWithAttesters } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { ps } from '~/server/projects'
+import {
+  type ContractUtils,
+  getContractUtils,
+} from '~/utils/project/contracts-and-permissions/getContractUtils'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,
 } from '../../getCommonScalingEntry'
 
 export async function getScalingRiskStateValidationEntries() {
-  const [projectsChangeReport, projects, zkCatalogProjects] = await Promise.all(
-    [
+  const [projectsChangeReport, projects, zkCatalogProjects, contractUtils] =
+    await Promise.all([
       getProjectsChangeReport(),
       ps.getProjects({
         select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
@@ -34,10 +36,10 @@ export async function getScalingRiskStateValidationEntries() {
       ps.getProjects({
         select: ['zkCatalogInfo'],
       }),
-    ],
-  )
+      getContractUtils(),
+    ])
 
-  const [zkProjects, optimisticProjects] = partition(
+  const [validityProjects, optimisticProjects] = partition(
     projects.filter(
       (p) =>
         p.scalingInfo.proofSystem &&
@@ -46,11 +48,12 @@ export async function getScalingRiskStateValidationEntries() {
     (p) => p.scalingInfo.proofSystem?.type === 'Validity',
   )
 
-  const zkEntries = zkProjects.map((project) =>
-    getScalingRiskStateValidationZkEntry(
+  const validityEntries = validityProjects.map((project) =>
+    getScalingRiskStateValidationValidityEntry(
       project,
       projectsChangeReport.getChanges(project.id),
       zkCatalogProjects,
+      contractUtils,
     ),
   )
   const optimisticEntries = optimisticProjects.map((project) =>
@@ -62,12 +65,13 @@ export async function getScalingRiskStateValidationEntries() {
   )
 
   return {
-    zk: groupByScalingTabs(zkEntries),
+    validity: groupByScalingTabs(validityEntries),
     optimistic: groupByScalingTabs(optimisticEntries),
   }
 }
 
-export interface ScalingRiskStateValidationZkEntry extends CommonScalingEntry {
+export interface ScalingRiskStateValidationValidityEntry
+  extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem
   isa: string | undefined
   trustedSetupsByProofSystem?: Record<
@@ -86,11 +90,12 @@ export interface ScalingRiskStateValidationZkEntry extends CommonScalingEntry {
   executionDelay: number | undefined
 }
 
-function getScalingRiskStateValidationZkEntry(
+function getScalingRiskStateValidationValidityEntry(
   project: Project<'scalingInfo' | 'statuses' | 'display' | 'scalingRisks'>,
   changes: ProjectChanges,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
-): ScalingRiskStateValidationZkEntry {
+  contractUtils: ContractUtils,
+): ScalingRiskStateValidationValidityEntry {
   const proofSystem = project.scalingInfo?.proofSystem
   assert(proofSystem, 'Proof system is required')
 
@@ -106,6 +111,7 @@ function getScalingRiskStateValidationZkEntry(
   const trustedSetupsByProofSystem = getTrustedSetupsByProofSystem(
     zkCatalogProject,
     project.id,
+    contractUtils,
   )
 
   return {
@@ -158,9 +164,14 @@ function getScalingRiskStateValidationOptimisticEntry(
 function getTrustedSetupsByProofSystem(
   project: Project<'zkCatalogInfo'>,
   projectId: ProjectId,
-): ScalingRiskStateValidationZkEntry['trustedSetupsByProofSystem'] {
+  contractUtils: ContractUtils,
+): ScalingRiskStateValidationValidityEntry['trustedSetupsByProofSystem'] {
   const relevantVerifiers = project.zkCatalogInfo.verifierHashes.filter((v) =>
-    v.usedBy.includes(projectId),
+    v.knownDeployments.some((d) =>
+      contractUtils
+        .getUsedIn(projectId, d.chain, d.address)
+        .some((u) => u.id === projectId),
+    ),
   )
 
   const relevantProofSystemIds = new Set(

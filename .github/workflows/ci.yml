@@ -33,7 +33,6 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_REMOTE_CACHE_UPLOAD_TIMEOUT: 10
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -53,9 +52,18 @@ jobs:
         run: pnpm install
 
       - name: Build mocked frontend
-        run: pnpm build:frontend
+        run: pnpm build:frontend-ci
         env:
           MOCK: true
+
+      # We can get rid of it later, now it's used
+      # so we can more easily inspect occasional
+      # longer frontend build times
+      - name: Preserve frontend build summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build-summary
+          path: .turbo/runs
 
   build-protocolbeat:
     name: Build protocolbeat

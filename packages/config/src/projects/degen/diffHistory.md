@@ -1,4 +1,50 @@
-Generated with discovered.json: 0xf692d3d873d8ed5bea731c557a9b704e5e4a5633
+Generated with discovered.json: 0xcc6e8d777dabd8a675e13677caad63a30cdc1405
+
+# Diff at Fri, 19 Sep 2025 12:56:40 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a930e518d214c15603feeda62e2a483dbd2454e0 block: 1757887920
+- current timestamp: 1758286534
+
+## Description
+
+Multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract AlchemyMultisig2 (base:0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      values.$members.1:
+-        "base:0xCA730AFfb87935E70E5889418C731eb196237476"
++        "base:0xa3353Ae4458F663f1F888705b044269bd30cd110"
+    }
+```
+
+Generated with discovered.json: 0x4e680b1f1c3e152a388073b99562f39d6d932fb1
+
+# Diff at Sun, 14 Sep 2025 22:13:07 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cf33a7bb38a6cf939eaca36418ac718201c99e46 block: 1750247897
+- current timestamp: 1757887920
+
+## Description
+
+Added LayerZero OFT adapter to the canonical bridge.
+
+## Watched changes
+
+```diff
+    contract OrbitERC20OFTAdapter (base:0xDb8E759859058952c34953c8469f464109826e52) {
+    +++ description: As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
+      values.owner:
+-        "base:0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2"
++        "base:0xa79c47C35017d2CD657eb000CC0D0a0c2E385615"
+    }
+```
+
+Generated with discovered.json: 0x40387a403b85d44ed40c79244a8befea585cde7f
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

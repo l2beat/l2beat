@@ -46,7 +46,7 @@ export const henez: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://henez.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

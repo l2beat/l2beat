@@ -67,6 +67,10 @@ const mainPages: MainPage[] = [
     title: 'Throughput',
   },
   {
+    type: 'data-availability',
+    title: 'Liveness',
+  },
+  {
     title: 'ZK Catalog',
   },
   {

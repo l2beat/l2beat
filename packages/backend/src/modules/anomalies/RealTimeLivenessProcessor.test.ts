@@ -3,8 +3,8 @@ import type {
   AnomalyStatsRecord,
   Database,
   RealTimeAnomalyRecord,
+  RealTimeLivenessRecord,
 } from '@l2beat/database'
-import type { RealTimeLivenessRecord } from '@l2beat/database/dist/other/real-time-liveness/entity'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type Block,
@@ -140,6 +140,7 @@ describe(RealTimeLivenessProcessor.name, () => {
             data: '0xdata',
             transactionHash: txHash1,
             blockNumber: block.number,
+            logIndex: 0,
           },
           {
             address: to,
@@ -147,6 +148,7 @@ describe(RealTimeLivenessProcessor.name, () => {
             data: '0xdata',
             transactionHash: txHash2,
             blockNumber: block.number,
+            logIndex: 1,
           },
         ]
 

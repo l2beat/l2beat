@@ -1,4 +1,244 @@
-Generated with discovered.json: 0x7f1361054bd308142d91f8c7ac03a8e79dddf62f
+Generated with discovered.json: 0x861032acf9a863cfafc16846fd61140e889b893b
+
+# Diff at Wed, 17 Sep 2025 13:50:43 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@826dd36404e9c33731dc0255e96251d8d8999c20 block: 1757341282
+- current timestamp: 1758116976
+
+## Description
+
+New adapter, code is already templatized since it is identical to Universal adapter that is already present. However, this new version passes the cctpTokenMessenger in the constructor, allowing cctpV2 support.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      values.Adapters.999:
++        "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B"
+      values.CrossChainContracts.999:
++        "eth:0x35E63eA3eb0fb7A3bc543C71FB66412e1F6B0E04"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Universal_Adapter (eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B)
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
+```
+
+## Source code changes
+
+```diff
+...0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B.sol} |   0
+ ...:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b.sol | 792 +++++++++++++++++++++
+ 2 files changed, 792 insertions(+)
+```
+
+Generated with discovered.json: 0xa925bf14b75ca36ae78ba51c2b96882409fa408a
+
+# Diff at Mon, 08 Sep 2025 14:36:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48f0161c75908020b4454ff29490575d534b39f4 block: 1756804910
+- current timestamp: 1757341282
+
+## Description
+
+Upgrade [Universal_Adapter](https://disco.l2beat.com/diff/eth:0x22001f37B586792F25Ef9d19d99537C6446e0833/eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b): add native support for OFTs (before this only USDC via CCTP was supported)
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitter (eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81)
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract Universal_Adapter (eth:0x22001f37B586792F25Ef9d19d99537C6446e0833)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayMinter (eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205)
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessengerV2 (eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d)
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayWallet (eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE)
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitterV2 (eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64)
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessenger (eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155)
+    +++ description: Part of CCTP
+```
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      values.Adapters.56:
+-        "eth:0x22001f37B586792F25Ef9d19d99537C6446e0833"
++        "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinter (eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinterV2 (eth:0xfd78EE919681417d192449715b2594ab58f5D002)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
++   Status: CREATED
+    contract AdapterStore (eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b)
+    +++ description: A helper contract for chain adapters on the hub chain that support OFT messaging. Handles token -> messenger mapping.
+```
+
+```diff
++   Status: CREATED
+    contract Universal_Adapter (eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b)
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/across-v3/.flat/AdapterStore.sol  |  185 +
+ .../GatewayMinter/ERC1967Proxy.p.sol => /dev/null  |  522 --
+ .../GatewayMinter/GatewayMinter.sol => /dev/null   | 6189 ----------------
+ .../GatewayWallet/ERC1967Proxy.p.sol => /dev/null  |  522 --
+ .../GatewayWallet/GatewayWallet.sol => /dev/null   | 7521 --------------------
+ .../.flat@1756804910/MasterMinter.sol => /dev/null |  372 -
+ .../MessageTransmitter.sol => /dev/null            | 3081 --------
+ .../AdminUpgradableProxy.p.sol => /dev/null        |  431 --
+ .../MessageTransmitterV2.sol => /dev/null          | 2914 --------
+ .../TokenMessenger.sol => /dev/null                | 2592 -------
+ .../AdminUpgradableProxy.p.sol => /dev/null        |  431 --
+ .../TokenMessengerV2.sol => /dev/null              | 2785 --------
+ .../.flat@1756804910/TokenMinter.sol => /dev/null  | 1271 ----
+ .../TokenMinterV2.sol => /dev/null                 | 1207 ----
+ .../FiatTokenProxy.p.sol => /dev/null              |  268 -
+ .../USD Coin Token/FiatTokenV2_2.sol => /dev/null  | 2357 ------
+ .../Universal_Adapter.sol                          |  205 +-
+ 17 files changed, 385 insertions(+), 32468 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756804910 (main branch discovery), not current.
+
+```diff
+    contract Universal_Adapter (eth:0x22001f37B586792F25Ef9d19d99537C6446e0833) {
+    +++ description: None
+      template:
+-        "acrossv3/universalAdapter"
+      description:
+-        "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain."
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MessageTransmitter (eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract GatewayMinter (eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205)
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessengerV2 (eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract GatewayWallet (eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE)
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+```
+
+```diff
++   Status: CREATED
+    contract MessageTransmitterV2 (eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessenger (eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract TokenMinter (eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
++   Status: CREATED
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMinterV2 (eth:0xfd78EE919681417d192449715b2594ab58f5D002)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+Generated with discovered.json: 0xf1c18f8fd80e075e7f6c4f85e030df2cef90ea06
 
 # Diff at Tue, 02 Sep 2025 09:23:06 GMT:
 

@@ -82,7 +82,11 @@ export const metis: ScalingProject = {
       ],
     },
   },
-  proofSystem: { type: 'Optimistic', name: 'OPFP' },
+  proofSystem: {
+    type: 'Optimistic',
+    name: 'OPFP',
+    challengeProtocol: 'Interactive',
+  },
   stage: getStage(
     {
       stage0: {
@@ -97,7 +101,7 @@ export const metis: ScalingProject = {
         principle: false,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: false,
+        securityCouncilProperlySetUp: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -130,11 +134,11 @@ export const metis: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://andromeda.metis.io/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
-        type: 'routescan',
-        url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
+        type: 'blockscout',
+        url: 'https://andromeda-explorer.metis.io/api',
       },
     ],
   },
@@ -218,7 +222,7 @@ export const metis: ScalingProject = {
       ...RISK_VIEW.STATE_FP_INT(CHALLENGE_PERIOD_SECONDS),
       description:
         RISK_VIEW.STATE_FP_INT().description +
-        ' Anyone can submit challenges, however, only the Metis Security Council can delete disputed batches.',
+        ' Anyone can submit challenges, however, only the Metis Security Council minority can delete disputed batches.',
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -235,7 +239,7 @@ export const metis: ScalingProject = {
         references: [
           {
             title: 'StateCommitmentChain - Etherscan source code',
-            url: 'https://etherscan.io/address/0x49A4D7ae835eA21c919B363fa88614b61d7985E7#code',
+            url: 'https://etherscan.io/address/0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1#code',
           },
         ],
       },
@@ -243,11 +247,11 @@ export const metis: ScalingProject = {
         title: 'Challenges',
         description: `Games are created on demand by the permissioned GameCreator should a dispute arise. Users can signal the need for a dispute through the dispute() function of the \`DisputeGameFactory\`. If a game is not created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
           DISPUTE_TIMEOUT_PERIOD,
-        )}, anyone can call \`disputeTimeout()\`. This function calls \`saveDisputedBatchTimeout()\` on the \`StateCommitmentChain\`, which marks the batch as disputed. This blocks L2->L1 messaging and withdrawals for the disputed batch and any subsequent batches until the dispute is deleted. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Fraud_Verifier contract address, which currently corresponds to the \`Metis Security Council\`.`,
+        )}, anyone can call \`disputeTimeout()\`. This function calls \`saveDisputedBatchTimeout()\` on the \`StateCommitmentChain\`, which marks the batch as disputed. This blocks L2->L1 messaging and withdrawals for the disputed batch and any subsequent batches until the dispute is deleted. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Fraud_Verifier contract address, which currently corresponds to the \`Metis Security Council\` minority.`,
         risks: [
           {
             category: 'Funds can be frozen if',
-            text: 'an invalid state root is successfully disputed but it is not deleted by the permissioned MVM_Fraud_Verifier (Metis Security Council).',
+            text: 'an invalid state root is successfully disputed but it is not deleted by the permissioned MVM_Fraud_Verifier (Metis Security Council minority).',
           },
         ],
         references: [

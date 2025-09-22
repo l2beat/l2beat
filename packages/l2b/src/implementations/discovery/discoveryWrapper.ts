@@ -8,12 +8,13 @@ import {
   modelPermissionsCommand,
   type TemplateService,
 } from '@l2beat/discovery'
+import { generateEntrypointsCommand } from '@l2beat/discovery/dist/discovery/shared-modules/generateEntrypoints'
 import { updateDiffHistory } from './updateDiffHistory'
 
 export interface Options {
   logger: Logger
+  configReader: ConfigReader
   description?: string
-  configReader?: ConfigReader
   templateService?: TemplateService
   paths?: DiscoveryPaths
   debug?: boolean
@@ -37,5 +38,14 @@ export async function discoverAndUpdateDiffHistory(
     options.description,
     config.overwriteCache,
     options.logger,
+  )
+  await generateEntrypointsCommand(
+    options.configReader,
+    config.project,
+    options.logger,
+    {
+      updateOnly: true,
+      keepLegacy: true,
+    },
   )
 }

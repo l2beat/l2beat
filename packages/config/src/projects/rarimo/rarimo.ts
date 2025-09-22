@@ -34,7 +34,7 @@ export const rarimo: ScalingProject = underReviewL2({
       {
         type: 'rpc',
         url: 'https://l2.rarimo.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

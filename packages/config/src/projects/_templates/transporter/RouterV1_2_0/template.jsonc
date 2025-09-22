@@ -10,11 +10,7 @@
       }
     },
     "offRamps": {
-      "handler": {
-        "type": "call",
-        "args": [],
-        "method": "getOffRamps"
-      },
+      "handler": { "type": "call", "args": [], "method": "getOffRamps" },
       "edit": [
         "map",
         ["shape", ["sourceChainSelector", ["format", "ChainIdMap"]], "offRamp"]
@@ -22,5 +18,5 @@
     }
   },
   "ignoreMethods": ["getOffRamps"],
-  "ignoreRelatives": ["getWrappedNative", "owner"]
+  "ignoreRelatives": ["getWrappedNative", "owner", "onRamps", "offRamps"]
 }

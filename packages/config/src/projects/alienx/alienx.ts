@@ -28,7 +28,7 @@ export const alienx: ScalingProject = orbitStackL2({
       explorers: ['https://explorer.alienxchain.io'],
       socialMedia: [
         'https://x.com/ALIENXchain',
-        'https://discord.gg/alienxchain',
+        'https://discord.com/invite/645GqaWfKZ',
         'https://medium.com/@ALIENXchain',
         'https://t.me/alienx_ainode',
       ],
@@ -51,7 +51,7 @@ export const alienx: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.alienxchain.io/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

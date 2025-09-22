@@ -50,7 +50,7 @@ export const ancient: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.ancient8.gg/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

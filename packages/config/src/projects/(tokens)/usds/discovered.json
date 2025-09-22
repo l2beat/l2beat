@@ -1,10 +1,10 @@
 {
   "name": "usds",
   "timestamp": 1752830555,
-  "configHash": "0x4f8cde2001a7623e13057af035e15c5fef0e6c256bd0e0badd91615dc1dc9a87",
+  "configHash": "0xa6fd737064dcf9a893421bff0eefda236775566b53c38b108acdd522200963ef",
   "entries": [
     {
-      "name": "Usds",
+      "name": "USDS Stablecoin Token",
       "address": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
       "type": "Contract",
       "sourceHashes": [
@@ -110,5 +110,5 @@
   },
   "usedTemplates": {},
   "usedBlockNumbers": { "ethereum": 22945160 },
-  "permissionsConfigHash": "0x5205dc96e8dbf0f049f36c160f3166e9a47683bc14df7b0432a6f4db8676ff2d"
+  "permissionsConfigHash": "0x4f93842d6e39c725d5c69d178a0a6ffa728cb594fe3d4d6afdd8caf52bce2796"
 }

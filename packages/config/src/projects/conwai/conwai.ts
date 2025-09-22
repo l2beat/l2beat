@@ -48,7 +48,7 @@ export const conwai: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://conwai.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

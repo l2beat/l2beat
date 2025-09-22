@@ -7,6 +7,7 @@ import { FeatureFlags } from './FeatureFlags'
 import { getActivityConfig } from './features/activity'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
+import { getEcosystemsConfig } from './features/ecosystemToken'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
@@ -57,7 +58,6 @@ export async function makeConfig(
               ? { rejectUnauthorized: false }
               : undefined,
           },
-          freshStart: env.boolean('FRESH_START', false),
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connectionPoolSize: {
             // defaults used by knex
@@ -67,7 +67,6 @@ export async function makeConfig(
           isReadonly,
         }
       : {
-          freshStart: false,
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connection: {
             connectionString: env.string('DATABASE_URL'),
@@ -111,6 +110,7 @@ export async function makeConfig(
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&
       (await getTrackedTxsConfig(ps, env, flags)),
+
     activity:
       flags.isEnabled('activity') && (await getActivityConfig(ps, env, flags)),
     verifiers: flags.isEnabled('verifiers') && (await getVerifiersConfig(ps)),
@@ -125,6 +125,8 @@ export async function makeConfig(
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
+    ecosystems:
+      flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
     chainConfig: await getChainConfig(ps, env),
     beaconApi: {
       url: env.optionalString(['ETHEREUM_BEACON_API_URL']),
@@ -144,6 +146,12 @@ export async function makeConfig(
         'ANOMALIES_MIN_DURATION',
         60 * 60, // 1 hour
       ),
+    },
+    bridges: flags.isEnabled('bridges') && {
+      chains: ['ethereum', 'arbitrum', 'base', 'optimism'].filter((c) =>
+        flags.isEnabled('bridges', c),
+      ),
+      matchingEnabled: env.boolean('BRIDGES_MATCHING_ENABLED', true),
     },
     // Must be last
     flags: flags.getResolved(),

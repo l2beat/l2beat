@@ -1,8 +1,7 @@
 {
   "name": "deversifi",
   "timestamp": 1741185503,
-  "configHash": "0x243562b725083bf3bcb9aea82295d70af05edd0119dcec891cabbb213755e473",
-  "sharedModules": ["shared-sharp-verifier"],
+  "configHash": "0x048ed834f722e3b2ee7d8efedcc2a1356b5006feceae04c240d3cb88295d80d3",
   "entries": [
     {
       "address": "eth:0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59",

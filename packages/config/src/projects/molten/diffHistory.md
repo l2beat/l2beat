@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x6fb68b16e74330fb6c0a8fb0d02c2945d45264d3
+Generated with discovered.json: 0x97be92e2c95c8e1b2869dcb8a587d003dab64881
+
+# Diff at Fri, 12 Sep 2025 13:19:30 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cf33a7bb38a6cf939eaca36418ac718201c99e46 block: 1753200985
+- current timestamp: 1757683093
+
+## Description
+
+Updated mr_enclave value of TEE (hash of code, data, config).
+
+## Watched changes
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
++++ severity: HIGH
+      values.validEnclaveHashes.0:
++        "0x1c3ae8f1497acbbf16ed7a4ef443e1b07661a61ddb0eba88fa0bc99d11a2087d"
++++ severity: HIGH
+      values.validEnclaveHashes.1:
++        "0x9eb3d53ae19ac862d456ee169c8de9f310a97e29079c38daf4c676ba4608cbd0"
+    }
+```
+
+Generated with discovered.json: 0x63890f1546b824e31c96bdc7696a17d40d828a7f
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

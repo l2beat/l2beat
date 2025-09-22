@@ -52,15 +52,21 @@ describe(BlockIndexer.name, () => {
     })
 
     it('fetches block and calls processors in CONTINUOUS mode', async () => {
-      const blocks = [mockBlock(8)]
-      const logs = [mockLogs(8)]
+      const blocks = [mockBlock(8), mockBlock(9), mockBlock(10), mockBlock(11)]
+      const logs = [mockLogs(8), mockLogs(9), mockLogs(10), mockLogs(11)]
 
       const mockBlockProvider = mockObject<BlockProvider>({
-        getBlockWithTransactions: mockFn().resolvesToOnce(blocks[0]),
+        getBlockWithTransactions: mockFn()
+          .resolvesToOnce(blocks[0])
+          .resolvesToOnce(blocks[1])
+          .resolvesToOnce(blocks[2]),
       })
 
       const mockLogsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().resolvesToOnce(logs[0]),
+        getLogs: mockFn()
+          .resolvesToOnce(logs[0])
+          .resolvesToOnce(logs[1])
+          .resolvesToOnce(logs[2]),
       })
 
       const mockProcessor = mockObject<BlockProcessor>({
@@ -72,13 +78,28 @@ describe(BlockIndexer.name, () => {
         blockProvider: mockBlockProvider,
         logsProvider: mockLogsProvider,
         blockProcessors: [mockProcessor],
+        batchSize: 3,
       })
 
-      const newSafeHeight = await indexer.update(8, 10)
+      const newSafeHeight = await indexer.update(8, 11)
+
+      expect(mockBlockProvider.getBlockWithTransactions).toHaveBeenCalledTimes(
+        3,
+      )
 
       expect(
         mockBlockProvider.getBlockWithTransactions,
       ).toHaveBeenNthCalledWith(1, blocks[0].number)
+
+      expect(
+        mockBlockProvider.getBlockWithTransactions,
+      ).toHaveBeenNthCalledWith(2, blocks[1].number)
+
+      expect(
+        mockBlockProvider.getBlockWithTransactions,
+      ).toHaveBeenNthCalledWith(3, blocks[2].number)
+
+      expect(mockProcessor.processBlock).toHaveBeenCalledTimes(3)
 
       expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
         1,
@@ -86,7 +107,19 @@ describe(BlockIndexer.name, () => {
         logs[0],
       )
 
-      expect(newSafeHeight).toEqual(8)
+      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
+        2,
+        blocks[1],
+        logs[1],
+      )
+
+      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
+        3,
+        blocks[2],
+        logs[2],
+      )
+
+      expect(newSafeHeight).toEqual(10)
     })
 
     it('handles processor errors', async () => {
@@ -153,6 +186,7 @@ function createIndexer(deps?: Partial<BlockIndexerDeps>): BlockIndexer {
     blockProvider: mockObject<BlockProvider>({}),
     logsProvider: mockObject<LogsProvider>({}),
     blockProcessors: [],
+    batchSize: 5,
     ...deps,
   })
 }
@@ -174,6 +208,7 @@ function mockLogs(blockNumber: number): Log[] {
       data: '0x',
       blockNumber,
       transactionHash: '0x456',
+      logIndex: 0,
     },
   ]
 }

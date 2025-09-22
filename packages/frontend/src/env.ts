@@ -16,12 +16,11 @@ const CLIENT_CONFIG = {
   NODE_ENV: z
     .enum(['development', 'test', 'production'])
     .default('development'),
-  DEPLOYMENT_ENV: z.enum(['preview', 'production']).optional(),
+  DEPLOYMENT_ENV: z.enum(['preview', 'staging', 'production']).optional(),
   CLIENT_SIDE_GITCOIN_ROUND_LIVE: featureFlag.default(false),
   CLIENT_SIDE_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
   CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
-  CLIENT_SIDE_PARTNERS: coerceBoolean.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -117,6 +116,5 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
     CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
-    CLIENT_SIDE_PARTNERS: process.env.CLIENT_SIDE_PARTNERS,
   }
 }

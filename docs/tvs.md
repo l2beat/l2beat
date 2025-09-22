@@ -261,7 +261,7 @@ Detailed breakdown along with values for all configured tokens can be found in `
 
 ### Script setup
 
-Both scripts `tvs:generate` and `tvs: execute` use share the same data and there are two things that can make execution much faster:
+Both scripts `tvs:generate` and `tvs:execute` use share the same data and there are two things that can make execution much faster:
 
 - local cache - it is enabled by default and persisted in JSON file: `/packages/backend/scripts/tvs/local-data.json`. It can grow in size pretty quickly so make sure you clean (delete) it once in a while
 - DB connection - some of the data required to execute TVS may have already been fetched by our BE. If you provide connection string to via `TVS_DB_URL` env var the script will check it first. Make sure that you use READONLY credentials.

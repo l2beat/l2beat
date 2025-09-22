@@ -1,10 +1,10 @@
 {
   "name": "rs-eth",
   "timestamp": 1752830527,
-  "configHash": "0x74129db0d663d93d7d192ac03c6f39dd3a5eecd67b7feecc47246c110350043f",
+  "configHash": "0x1ed6775455620f538ac76eedf31a22309ca7ceb172adbdbaedfe8fff285eb102",
   "entries": [
     {
-      "name": "RSETH_OFT",
+      "name": "KelpDao Restaked ETH Token",
       "address": "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993",
       "type": "Contract",
       "sourceHashes": [
@@ -140,5 +140,5 @@
   },
   "usedTemplates": {},
   "usedBlockNumbers": { "base": 33020590 },
-  "permissionsConfigHash": "0x92da27ecd6708d675fe4d33353e209fd03e381f8a4cfe1bb7fb4c1e0c2a4369d"
+  "permissionsConfigHash": "0xd44c8244adaea5e3c089edfac41e7e136dcda1095c4103ca51bc3eadb73be8c6"
 }

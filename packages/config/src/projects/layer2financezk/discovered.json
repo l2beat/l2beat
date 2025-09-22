@@ -1,8 +1,7 @@
 {
   "name": "layer2financezk",
   "timestamp": 1715171711,
-  "configHash": "0xe1907acbab6800d3178308627d0bfe428154826937ce521a86cc3a836dd5f8a1",
-  "sharedModules": ["shared-sharp-verifier"],
+  "configHash": "0xa1a7415a810ec7b758e691e0731265af7ec40034bc8d086b2123e71855829549",
   "entries": [
     {
       "address": "eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",

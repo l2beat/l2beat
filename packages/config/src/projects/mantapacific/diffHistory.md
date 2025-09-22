@@ -1,4 +1,107 @@
-Generated with discovered.json: 0xbb5d73f03f58a60bc4437868739c9b0cc49a5e29
+Generated with discovered.json: 0xb737ad48fc89f4c597e2ec587516b0958d056af5
+
+# Diff at Fri, 12 Sep 2025 10:10:08 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b19dd572d1bb478c9bacfee5598e38f6eee363a0 block: 1728472175
+- current timestamp: 1757662779
+
+## Description
+
+- [L2OutputOracle](https://disco.l2beat.com/diff/eth:0x1E5e634981564fc645dcbC6546aE618d7870B30a/eth:0x0e874B9acD8d284B9bF6f6c6CC95BCE6F66E5441): added a "finalityProvider" field that can arbitrarily set the challenge period for each L2 output.
+- [OptimismPortal](https://disco.l2beat.com/diff/eth:0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1/eth:0x4fEee20712abF5724C2BC0476BD87CBf1F1eE388): updated to support finalizing outputs with different challenge periods.
+- FinalityRelayerManager: allows to reduce the challenge period based on some BLS signers and staked amounts. No threshold is enforced, and "staked amounts" is just an input with no validation. The current challenge period is set to 3d, the manta quorum can reduce it by a maximum of 1d, the bitcoin quorum can reduce it by a maximum of 1d, and the minimum challenge period allowed is set to 12h. To me it looks like this is a partial deployment and the feature is not used yet.
+- BLSApkRegistry: used to register BLS keys and verify aggregated signatures.
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. The challenge period can be reduced by the FinalityRelayerManager contract.
+      template:
+-        "opstack/L2OutputOracle"
++        "mantapacific/L2OutputOracle_FinalityProvider"
+      sourceHashes.1:
+-        "0xcca8986d0789aa489ba57cd234e886bd92cb5a0d477e1f5ae5e6e030e15fb183"
++        "0xdd40fbb2ff24f7f8cd28e462753c0953064c62d6fe0615fdae6724cc4d3ab04d"
+      description:
+-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
++        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. The challenge period can be reduced by the FinalityRelayerManager contract."
+      values.$implementation:
+-        "eth:0x1E5e634981564fc645dcbC6546aE618d7870B30a"
++        "eth:0x0e874B9acD8d284B9bF6f6c6CC95BCE6F66E5441"
+      values.$pastUpgrades.1:
++        ["2025-09-12T04:47:23.000Z","0x5c9d3e19dd335e1defb86ab47187fdb2b4416756d4a1226479cb3582b169771a",["eth:0x0e874B9acD8d284B9bF6f6c6CC95BCE6F66E5441"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.finalityProvider:
++        "eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E"
+      implementationNames.eth:0x1E5e634981564fc645dcbC6546aE618d7870B30a:
+-        "L2OutputOracle"
+      implementationNames.eth:0x0e874B9acD8d284B9bF6f6c6CC95BCE6F66E5441:
++        "L2OutputOracle"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0xd7fe53899c31d6d8e73b6724694736dc3c3c4ebc8f4ddbe989fe9d3dba26692d"
++        "0xec062613f3e0e9ba555b2c11164c199a0137d5b4e9021710092037355d8ed513"
+      values.$implementation:
+-        "eth:0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1"
++        "eth:0x4fEee20712abF5724C2BC0476BD87CBf1F1eE388"
+      values.$pastUpgrades.1:
++        ["2025-09-12T04:47:23.000Z","0x5c9d3e19dd335e1defb86ab47187fdb2b4416756d4a1226479cb3582b169771a",["eth:0x4fEee20712abF5724C2BC0476BD87CBf1F1eE388"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.eth:0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1:
+-        "OptimismPortal"
+      implementationNames.eth:0x4fEee20712abF5724C2BC0476BD87CBf1F1eE388:
++        "OptimismPortal"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FinalityRelayerManager (eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E)
+    +++ description: Contract managing challenge period reductions based on whitelisted signer and staked amounts. No threshold is currently enforced and no validation is done on the staked amounts. The current challenge period is set to 3d, the manta quorum can reduce it by a maximum of 1d, the bitcoin quorum can reduce it by a maximum of 1d, and the minimum challenge period allowed is set to 12h.
+```
+
+```diff
++   Status: CREATED
+    contract BLSApkRegistry (eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60)
+    +++ description: Contract used to register BLS keys and verify aggregated signatures. No specific threshold is enforced here, as all addresses to exclude from the signature check are provided as an input.
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/BLSApkRegistry/BLSApkRegistry.sol        | 3670 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  580 ++++
+ .../FinalityRelayerManager.sol                     |  907 +++++
+ .../TransparentUpgradeableProxy.p.sol              |  580 ++++
+ .../L2OutputOracle/L2OutputOracle.sol              |  338 +-
+ .../OptimismPortal/OptimismPortal.sol              |   14 +-
+ 6 files changed, 5894 insertions(+), 195 deletions(-)
+```
+
+Generated with discovered.json: 0x421488b9d6db75584e35dc80d6bfdfc988c73630
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

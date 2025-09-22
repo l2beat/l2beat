@@ -67,6 +67,9 @@ function getChainColor(chain: string): {
   if (chain === 'scr' || chain === 'scroll') {
     return { color: colors.coffee['200'], isDark: false }
   }
+  if (chain === 'taiko') {
+    return { color: colors.aux.cyan, isDark: false }
+  }
 
   return {
     color: {

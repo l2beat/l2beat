@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
@@ -25,6 +26,10 @@ const sequencerAddress = ChainSpecificAddress.address(
 )
 
 export const swell = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1734566400), // 2024-12-19T00:00:00Z
   discovery,
   genesisTimestamp,
@@ -61,7 +66,7 @@ export const swell = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.ankr.com/swell',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

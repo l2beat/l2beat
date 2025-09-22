@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xde85e701bc2bf424e7d3a2b805bf0e587b00b172
+Generated with discovered.json: 0xedc6091eebcd05fcc0c041e83e2affaee7453597
 
 # Diff at Wed, 03 Sep 2025 15:52:25 GMT:
 
@@ -458,7 +458,7 @@ Generated with discovered.json: 0xf66dae769acb818d1676f99aaceffd4713363fa1
 # Diff at Wed, 09 Jul 2025 15:10:16 GMT:
 
 - chain: ethereum
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 22780010
 - current block number: 22882091
 

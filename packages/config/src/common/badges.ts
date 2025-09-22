@@ -503,6 +503,13 @@ export const badges = [
     action: undefined,
   },
   {
+    id: 'OPSuccinct',
+    type: BadgeType.Stack,
+    name: 'Built on the OP Succinct stack',
+    description: 'The project is built on the OP Succinct stack',
+    action: undefined,
+  },
+  {
     id: 'SNStack',
     type: BadgeType.Stack,
     name: 'Built on the SN Stack',

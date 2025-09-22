@@ -11,7 +11,7 @@ import type {
   DiscoveryPaths,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type {
   AmountConfig,
   BlockTimestampConfig,
@@ -42,6 +42,7 @@ export interface Config {
   readonly chains: { name: string; chainId: number | undefined }[]
   readonly verifiers: VerifiersConfig | false
   readonly daBeat: DaBeatConfig | false
+  readonly ecosystems: EcosystemsConfig | false
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
     readonly url: string | undefined
@@ -51,6 +52,7 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
+  readonly bridges: { chains: string[]; matchingEnabled: boolean } | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -72,7 +74,6 @@ export interface DatabaseConfig {
       rejectUnauthorized?: boolean
     }
   }
-  readonly freshStart: boolean
   readonly enableQueryLogging: boolean
   readonly requiredMajorVersion?: number
   readonly connectionPoolSize: {
@@ -212,6 +213,15 @@ export interface DaBeatConfig {
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
   readonly availWsUrl: string
+}
+
+export interface EcosystemTokenConfig {
+  readonly configurationId: string
+  readonly projectId: ProjectId
+  readonly coingeckoId: CoingeckoId
+}
+export interface EcosystemsConfig {
+  readonly tokens: EcosystemTokenConfig[]
 }
 
 type BlockLayerAsProjectDaTrackingConfig = {

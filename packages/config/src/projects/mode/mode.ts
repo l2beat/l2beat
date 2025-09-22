@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -9,6 +9,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('mode')
 
 export const mode: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1706659200), // 2024-01-31T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
@@ -24,6 +28,7 @@ export const mode: ScalingProject = opStackL2({
       bridges: ['https://app.mode.network/'],
       documentation: ['https://docs.mode.network/'],
       explorers: ['https://modescan.io'],
+      repositories: ['https://github.com/mode-network'],
       socialMedia: [
         'https://twitter.com/modenetwork',
         'https://discord.gg/modenetworkofficial',
@@ -89,7 +94,7 @@ export const mode: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.mode.network/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'routescan',

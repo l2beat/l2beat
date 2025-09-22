@@ -1,7 +1,8 @@
 {
   "name": "molten",
-  "timestamp": 1753200985,
-  "configHash": "0xa3fac14ee40a556ebae8e71e1ff55f1892dd51f77cb5d1c6bd07d1ac8fa4750a",
+  "timestamp": 1758032604,
+  "configHash": "0xf8bbf9a0ceb49ddf0892f5566ffe7e3ae614287529dec94ad10c8ad026723447",
+  "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {
       "address": "arb1:0x0cc6aB203689bd8004511cC60f5b25DfB3A91431",
@@ -62,13 +63,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1762,
+        "firstUnresolvedNode": 1800,
         "inbox": "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 1761,
-        "latestNodeCreated": 1762,
+        "latestConfirmed": 1799,
+        "latestNodeCreated": 1825,
         "loserStakeEscrow": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
@@ -198,7 +199,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 94270,
+        "batchCount": 98504,
         "batchPosterManager": "arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738",
         "batchPosters": ["arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"],
         "BLOBSTREAM": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -231,7 +232,7 @@
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerVersion": "0x63",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 43426,
+        "totalDelayedMessagesRead": 67004,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -484,6 +485,11 @@
         "arb1:0x652F65f950b71d7aD04AffB1725F43786ed5f6Cc": "L1OrbitERC20Gateway"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "arb1:0x5F96902EFD1338353B4469304DfF58958c9a220c",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0x6329186d6e5a4A90c6c983871d1Fa49D9C673ce3",
@@ -1115,6 +1121,16 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "arb1:0xB43890A342D9aaeED15a99fCdF5F36040e392aFe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xB63F79a679A13888447B433A6B1ED19B642F9804",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0xbf853295743511e8DC5F03809d209C33fC136d24",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1191,7 +1207,7 @@
         "allowedOutboxList": [
           "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
         ],
-        "delayedMessageCount": 43529,
+        "delayedMessageCount": 67004,
         "inboxHistory": [
           "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
           "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
@@ -1201,8 +1217,8 @@
         "outboxHistory": ["arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 94270,
-        "sequencerReportedSubMessageCount": 62790397
+        "sequencerMessageCount": 98504,
+        "sequencerReportedSubMessageCount": 86668306
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1227,6 +1243,11 @@
         "arb1:0x7DD439Ec22c91b0703EE7d80175fd8d5319906A1": "ERC20Bridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "arb1:0xe24FF762272787935B25b223978d51b0bfF8A39c",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProver0",
@@ -1291,7 +1312,11 @@
           "arb1:0x4c0Eb9D5C004fCeAc3a48f5A2f18CFB906aF030C",
           "arb1:0x8d04b4957e36e613DB79BD219daB20E6E95201e7",
           "arb1:0x1D684CEFaba6dA5a90A5bcC2d974C63Af12d1974",
-          "arb1:0xeC3B6b96642D5f2b8851409353def2e78f2B2227"
+          "arb1:0xeC3B6b96642D5f2b8851409353def2e78f2B2227",
+          "arb1:0xB63F79a679A13888447B433A6B1ED19B642F9804",
+          "arb1:0xB43890A342D9aaeED15a99fCdF5F36040e392aFe",
+          "arb1:0xe24FF762272787935B25b223978d51b0bfF8A39c",
+          "arb1:0x5F96902EFD1338353B4469304DfF58958c9a220c"
         ],
         "validEnclaveHashes": [
           "0x1b8a2dea9244fbc6465f287be7a0888fdee26dc7ed87d76a461da1696f9004c9",
@@ -1352,7 +1377,10 @@
         "registeredSigners": [],
         "TIMESTAMP_KEY": "0x4ebf727c48eac2c66272456b06a885c5cc03e54d140f63b63b6fd10c1227958e",
         "USER_DATA_KEY": "0x5e4ea5393e4327b3014bc32f2264336b0d1ee84a4cfd197c8ad7e1e16829a16a",
-        "validEnclaveHashes": []
+        "validEnclaveHashes": [
+          "0x1c3ae8f1497acbbf16ed7a4ef443e1b07661a61ddb0eba88fa0bc99d11a2087d",
+          "0x9eb3d53ae19ac862d456ee169c8de9f310a97e29079c38daf4c676ba4608cbd0"
+        ]
       },
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
@@ -2198,6 +2226,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 360432232 },
-  "permissionsConfigHash": "0xd0363ac2cf1b1b0b640d8681ee00c9498654ee340b620f19cc33e518fda7ee63"
+  "usedBlockNumbers": { "arbitrum": 379777916 },
+  "permissionsConfigHash": "0xdff202590dbe5893c3b1f17983a260801ceeecb6c6352c8c0059aae85fc4d209"
 }

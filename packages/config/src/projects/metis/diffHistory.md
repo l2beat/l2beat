@@ -1,4 +1,147 @@
-Generated with discovered.json: 0x1b88b15b82d53c9ff187a36acd41c53241549e5b
+Generated with discovered.json: 0xab702e87dac0d30c6e70433c4cecf5ff9889c986
+
+# Diff at Mon, 15 Sep 2025 12:26:22 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@823103e23195ea5382f353da97a0232ffda42a10 block: 1757680168
+- current timestamp: 1757939071
+
+## Description
+
+Ignore gas price value.
+
+## Watched changes
+
+```diff
+    contract OVM_GasPriceOracle (metis-andromeda:0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      values.gasPrice:
+-        3239968571
++        3102269267
+    }
+```
+
+Generated with discovered.json: 0xa2715bae71823eb812feb92dc66e76433eb0aa36
+
+# Diff at Fri, 12 Sep 2025 12:30:41 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@665b233e3787b7a0fd24453d6e587ffdc2c1541d block: 1756462910
+- current timestamp: 1757680168
+
+## Description
+
+-  StateCommitmentChain implementation change:
+https://disco.l2beat.com/diff/eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7/eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1
+explicit require makes deletion only possible for batches that are already marked disputed
+
+-
+
+## Watched changes
+
+```diff
+    contract Lib_AddressManager (eth:0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values._1088_MVM_FraudVerifier:
+-        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
++        "eth:0xAd07701EE9348d2B9e7De061883C10574c543279"
+      values.1088_MVM_FraudVerifier:
+-        "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
++        "eth:0xAd07701EE9348d2B9e7De061883C10574c543279"
+    }
+```
+
+```diff
+    contract StateCommitmentChain (eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+      sourceHashes.1:
+-        "0xc9988c7d5840913f9a08b776cd81c6474c41bcb476822f537b3763d33f8e30e3"
++        "0x0e8553402b55057406811a803b14c4778f42fcf02523b10e695ec073a98202a9"
+      values.$implementation:
+-        "eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7"
++        "eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1"
+      implementationNames.eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7:
+-        "MVM_StateCommitmentChain"
+      implementationNames.eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1:
++        "MVM_StateCommitmentChain"
+    }
+```
+
+```diff
+    contract Metis Security Council (eth:0xbf1752DE62d825aF0634F514226F881a449874b6) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"stateDeleterMetis","from":"eth:0x918778e825747a892b17C66fe7D24C618262867d","description":"Can delete batches from the StateCommitmentChain.","role":".1088_MVM_FraudVerifier"}
+    }
+```
+
+```diff
+    contract OVM_GasPriceOracle (metis-andromeda:0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      values.gasPrice:
+-        3148134044
++        3239968571
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Metis Security Council Minority (eth:0xAd07701EE9348d2B9e7De061883C10574c543279)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/Metis Security Council Minority/Safe.sol | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../MVM_StateCommitmentChain.sol                   |    5 +
+ 3 files changed, 1130 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756462910 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract OVM_DeployerWhitelist (metis-andromeda:0x4200000000000000000000000000000000000002)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2CrossDomainMessenger (metis-andromeda:0x4200000000000000000000000000000000000007)
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+```
+
+```diff
++   Status: CREATED
+    contract OVM_GasPriceOracle (metis-andromeda:0x420000000000000000000000000000000000000F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2StandardBridge (metis-andromeda:0x4200000000000000000000000000000000000010)
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
++   Status: CREATED
+    contract OVM_SequencerFeeVault (metis-andromeda:0x4200000000000000000000000000000000000011)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2StandardTokenFactory (metis-andromeda:0x4200000000000000000000000000000000000012)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x462559aeffb7505251dbc4b88d42769c3cd5037e
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

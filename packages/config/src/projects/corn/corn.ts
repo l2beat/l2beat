@@ -103,7 +103,7 @@ export const corn: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.corn-rpc.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'blockscout', url: 'https://maizenet-explorer.usecorn.com/api' },
     ],

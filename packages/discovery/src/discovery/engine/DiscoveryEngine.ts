@@ -101,6 +101,19 @@ export class DiscoveryEngine {
             }
             return
           }
+          if (config.entrypoints?.[address] !== undefined) {
+            const entrypoint = config.entrypoints[address]
+            if (entrypoint.project !== config.name) {
+              resolved[address] = {
+                name: entrypoint.name,
+                type: 'Reference',
+                address: address,
+                targetType: entrypoint.type,
+                targetProject: entrypoint.project,
+              }
+              return
+            }
+          }
           const skipReason = shouldSkip(
             address,
             config,
@@ -126,6 +139,7 @@ export class DiscoveryEngine {
             provider,
             address,
             makeEntryStructureConfig(config, address),
+            config.entrypoints,
             templates,
           )
           resolved[address.toString()] = analysis

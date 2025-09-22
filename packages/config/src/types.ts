@@ -1,7 +1,8 @@
-import type { TrackedTxConfigEntry } from '@l2beat/shared'
+import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainId,
   type ChainSpecificAddress,
+  type CoingeckoId,
   EthereumAddress,
   type ProjectId,
   type StringWithAutocomplete,
@@ -20,8 +21,8 @@ export interface WarningWithSentiment {
   sentiment: 'bad' | 'warning' | 'neutral'
 }
 
-export interface TableReadyValue {
-  value: string
+export interface TableReadyValue<T extends string = string> {
+  value: T
   secondLine?: string
   description?: string
   sentiment?: Sentiment
@@ -132,8 +133,14 @@ export interface BaseProject {
 
 // #region common data
 export interface ProjectCustomColors {
-  primary: string
-  secondary: string
+  primary: {
+    light: string
+    dark?: string
+  }
+  secondary: {
+    light: string
+    dark?: string
+  }
 }
 
 export interface ProjectStatuses {
@@ -267,7 +274,7 @@ export interface ChainBasicApi<T extends string> {
   type: T
   url: string
   callsPerMinute?: number
-  retryStrategy?: 'UNRELIABLE' | 'RELIABLE'
+  retryStrategy?: RetryHandlerVariant
 }
 
 export interface ChainExplorerApi<T extends string> {
@@ -368,6 +375,8 @@ export interface ProjectScalingProofSystem {
   name?: string
   /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
   zkCatalogId?: string
+  /** Challenge protocol of the proof system. Configured only for optimistic proof systems. */
+  challengeProtocol?: 'Interactive' | 'Single-step'
 }
 
 export type ProjectScalingCapability = 'universal' | 'appchain'
@@ -672,6 +681,14 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
+  relayerType?: TableReadyValue<'Permissioned'>
+  validationType?: DaBridgeValidationType
+}
+
+type DaBridgeValidationType = TableReadyValue<
+  'Validity Proof' | 'BLS Signature'
+> & {
+  zkCatalogId?: ProjectId
 }
 
 export interface DaBridgeRisks {
@@ -759,6 +776,14 @@ export interface RequiredTool {
 // #region zk catalog v2 data
 export interface ProjectZkCatalogInfo {
   creator?: string
+  formalVerificationLinks?: {
+    name: string
+    url: string
+  }[]
+  audits?: {
+    company: string
+    url: string
+  }[]
   techStack: {
     zkVM?: ZkCatalogTag[]
     finalWrap?: ZkCatalogTag[]
@@ -771,9 +796,11 @@ export interface ProjectZkCatalogInfo {
   verifierHashes: {
     hash: string
     proofSystem: ZkCatalogTag
-    knownDeployments: string[]
+    knownDeployments: {
+      address: string
+      chain: string
+    }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
-    usedBy: ProjectId[]
     verificationSteps?: string
     attesters?: ZkCatalogAttester[]
     description?: string
@@ -790,6 +817,7 @@ export interface ZkCatalogTag {
 
 export interface TrustedSetup {
   id: string
+  name: string
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
@@ -954,9 +982,9 @@ export interface ProjectEcosystemInfo {
 }
 
 export interface ProjectEcosystemConfig {
+  startedAt?: UnixTime
   token: {
-    tokenId: string
-    projectId: ProjectId
+    coingeckoId: CoingeckoId
     description: string
   }
   links: {

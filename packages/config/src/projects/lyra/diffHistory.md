@@ -1,4 +1,59 @@
-Generated with discovered.json: 0xdf13c032d62ad9ea2368ed55452f06f1b724a775
+Generated with discovered.json: 0x89d265ead7339b84fb4f7ec0913487c4adc86018
+
+# Diff at Mon, 15 Sep 2025 09:50:29 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1757342217
+- current timestamp: 1757342217
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757342217 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xe5ebd7478519867680c623942d10a15ddba67604
+
+# Diff at Mon, 08 Sep 2025 14:38:04 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6e5af02c5100c2570f6cffd305339a1ef7226578 block: 1756214657
+- current timestamp: 1757342217
+
+## Description
+
+gas limit increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        120000000
++        200000000
+    }
+```
+
+Generated with discovered.json: 0xf85059a6c9ef502635cc295de16b8b8e6073251a
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

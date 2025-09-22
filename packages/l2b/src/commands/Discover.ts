@@ -49,6 +49,7 @@ export const Discover = command({
 
       await discoverAndUpdateDiffHistory(config, {
         logger,
+        configReader,
         description: args.message,
       })
     }

@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -25,7 +25,6 @@ export const lens: ScalingProject = zkStackL2({
     slug: 'lens',
     description:
       "Lens Network is the main social networking hub for the user base of Lens Protocol, built on a Validium using ZKsync's ZK Stack technology.",
-    stacks: ['ZK Stack'],
     architectureImage: 'zkstack-validium-vector',
     links: {
       websites: ['https://lens.xyz'],
@@ -58,7 +57,7 @@ export const lens: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.lens.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['LGHO'],
@@ -143,6 +142,9 @@ export const lens: ScalingProject = zkStackL2({
       },
     },
   ],
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+  },
   milestones: [
     {
       title: 'Upgrade to Vector DA Bridge',

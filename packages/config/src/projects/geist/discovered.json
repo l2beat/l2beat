@@ -1,7 +1,7 @@
 {
   "name": "geist",
-  "timestamp": 1750247929,
-  "configHash": "0xbd88a9b97c18c0deb5271cfab7491582f1970c01c3acb7f35de75ab8abf5fe7b",
+  "timestamp": 1758286565,
+  "configHash": "0xca2231f0c04095aec69b1455a404f988ee6b9ec0ddb4aa5615f8576e21df0da3",
   "entries": [
     {
       "address": "base:0x001271c57AeC639952B5201D052767c316755512",
@@ -582,7 +582,7 @@
         "$implementation": "base:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
         "$members": [
           "base:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
-          "base:0xCA730AFfb87935E70E5889418C731eb196237476",
+          "base:0xa3353Ae4458F663f1F888705b044269bd30cd110",
           "base:0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca",
           "base:0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7",
           "base:0x001271c57AeC639952B5201D052767c316755512",
@@ -595,7 +595,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -799,6 +799,11 @@
       }
     },
     {
+      "address": "base:0xa3353Ae4458F663f1F888705b044269bd30cd110",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "base:0xA351A874b48dCEdf1883dD4F4049bE3d9923700a",
       "type": "EOA",
       "proxyType": "EOA"
@@ -892,11 +897,6 @@
       "implementationNames": {
         "base:0xbB13eB1C56cf1408f657c6f3d56eFf188665B896": "OneStepProverMath"
       }
-    },
-    {
-      "address": "base:0xCA730AFfb87935E70E5889418C731eb196237476",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "base:0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670",
@@ -1627,6 +1627,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "base": 31729291 },
-  "permissionsConfigHash": "0x930e0650c2e3a34a69a6574f8d79fae825d69883b59a2aba1417452ab7c6077f"
+  "usedBlockNumbers": { "base": 35748609 },
+  "permissionsConfigHash": "0x04d3344506b4b947d101dfe67ad257ddc3237f2666ceef0b1495c9f218c40ed5"
 }

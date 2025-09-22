@@ -1,4 +1,80 @@
-Generated with discovered.json: 0x55c51c5e463d729284b78f42172922a9964a34a8
+Generated with discovered.json: 0x774d291086875bc27dd1c9dfb8c94934db64eaa1
+
+# Diff at Fri, 05 Sep 2025 11:19:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6cd15987e9ebf76a374fdd067e5e25baf948c56c block: 1752074063
+- current timestamp: 1752074063
+
+## Description
+
+config: stargate discodrive.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752074063 (main branch discovery), not current.
+
+```diff
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Part of the LayerZero messaging protocol. OApp owners can configure custom verification (MessageLib) and execution settings here.
+      template:
++        "layerzero/EndpointV2"
+      description:
++        "Part of the LayerZero messaging protocol. OApp owners can configure custom verification (MessageLib) and execution settings here."
+    }
+```
+
+```diff
+    contract BlockedMessageLib (eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: Simple LayerZero library that blocks all messages if configured.
+      template:
++        "layerzero/BlockedMessageLib"
+      description:
++        "Simple LayerZero library that blocks all messages if configured."
+    }
+```
+
+```diff
+    contract ReadLib1002 (eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) {
+    +++ description: LayerZero library used to read state from remote blockchains.
+      template:
++        "layerzero/ReadLib1002"
+      description:
++        "LayerZero library used to read state from remote blockchains."
+    }
+```
+
+```diff
+    contract SendUln302 (eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: Send Library used by LayerZero, defining the protocol/execution of sent messages.
+      template:
++        "layerzero/SendUln302"
+      description:
++        "Send Library used by LayerZero, defining the protocol/execution of sent messages."
+    }
+```
+
+```diff
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478) {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x1a44076050125825900e736c501f859c50fE728c","description":"configure the default send/receive libraries used for verification, affecting all OApps that have not set up a custom security config.","role":".owner"},{"permission":"interact","from":"eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D","description":"configure the settings of this library, affecting all OApps that have not set up a custom security config.","role":".owner"},{"permission":"interact","from":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","description":"configure the settings of this library, affecting all OApps that have not set up a custom security config.","role":".owner"},{"permission":"interact","from":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","description":"configure the settings of this library, affecting all OApps that have not set up a custom security config.","role":".owner"}]
+    }
+```
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: Receive Library used by LayerZero, defining the validation of received messages.
+      template:
++        "layerzero/ReceiveUln302"
+      description:
++        "Receive Library used by LayerZero, defining the validation of received messages."
+    }
+```
+
+Generated with discovered.json: 0x7da333fed1efa67d26de45dd9d852bf011f68a31
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -8,6 +8,10 @@ const discovery = new ProjectDiscovery('worldchain')
 const genesisTimestamp = UnixTime(1719335639)
 
 export const worldchain = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1729123200), // 2024-10-17T00:00:00Z
   genesisTimestamp,
   discovery,
@@ -51,7 +55,7 @@ export const worldchain = opStackL2({
       {
         type: 'rpc',
         url: 'https://worldchain-mainnet.g.alchemy.com/public',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

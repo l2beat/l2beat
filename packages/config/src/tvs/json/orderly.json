@@ -43,90 +43,22 @@
       "name": "USD Coin",
       "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-            "chain": "arbitrum",
-            "escrowAddress": "0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9",
-            "decimals": 6,
-            "sinceTimestamp": 1697682598
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
-            "chain": "optimism",
-            "escrowAddress": "0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9",
-            "decimals": 6,
-            "sinceTimestamp": 1701153879
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-            "chain": "base",
-            "escrowAddress": "0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9",
-            "decimals": 6,
-            "sinceTimestamp": 1712584295
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-            "chain": "ethereum",
-            "escrowAddress": "0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9",
-            "decimals": 6,
-            "sinceTimestamp": 1705702751
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "chain": "arbitrum",
+        "escrowAddress": "0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9",
+        "decimals": 6,
+        "sinceTimestamp": 1697682598
       },
       "valueForSummary": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "value",
-            "amount": {
-              "type": "const",
-              "value": "0",
-              "decimals": 0,
-              "sinceTimestamp": 1697682598
-            },
-            "priceId": "usd-coin"
-          },
-          {
-            "type": "value",
-            "amount": {
-              "type": "const",
-              "value": "0",
-              "decimals": 0,
-              "sinceTimestamp": 1701153879
-            },
-            "priceId": "usd-coin"
-          },
-          {
-            "type": "value",
-            "amount": {
-              "type": "const",
-              "value": "0",
-              "decimals": 0,
-              "sinceTimestamp": 1712584295
-            },
-            "priceId": "usd-coin"
-          },
-          {
-            "type": "value",
-            "priceId": "usd-coin",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "chain": "ethereum",
-              "escrowAddress": "0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9",
-              "decimals": 6,
-              "sinceTimestamp": 1705702751
-            }
-          }
-        ]
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1697682598
+        },
+        "priceId": "usd-coin"
       },
       "category": "stablecoin",
       "source": "external",
@@ -142,6 +74,104 @@
     {
       "mode": "auto",
       "id": "orderly-USDC-3",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+        "chain": "optimism",
+        "escrowAddress": "0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9",
+        "decimals": 6,
+        "sinceTimestamp": 1701153879
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1701153879
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Optimism escrow -> LayerZero AMB"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "orderly-USDC-4",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "chain": "base",
+        "escrowAddress": "0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9",
+        "decimals": 6,
+        "sinceTimestamp": 1712584295
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1712584295
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Base escrow -> LayerZero AMB"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "orderly-USDC-5",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9",
+        "decimals": 6,
+        "sinceTimestamp": 1705702751
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Ethereum escrow -> LayerZero AMB"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "orderly-USDC-6",
       "priceId": "mantle-bridged-usdc-mantle",
       "symbol": "USDC",
       "name": "USD Coin",

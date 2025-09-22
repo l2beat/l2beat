@@ -1,4 +1,57 @@
-Generated with discovered.json: 0x35d0ef151d6a8b771340b06a6ebd6f0e4769b551
+Generated with discovered.json: 0xbf038ceea83b1c9f01301ab8834737c2b0e9f7ab
+
+# Diff at Mon, 15 Sep 2025 09:50:19 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1757661377
+- current timestamp: 1757661377
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757661377 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x3CEa4B383D855208f5d06e5b1A602E4006a1d0E1) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x1bcd7ffa405adf3bbf8f2629270ea405f0248631
+
+# Diff at Fri, 12 Sep 2025 07:17:22 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b19dd572d1bb478c9bacfee5598e38f6eee363a0 block: 1756214657
+- current timestamp: 1757661377
+
+## Description
+
+gas fees increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        615600
++        3078000
+    }
+```
+
+Generated with discovered.json: 0x184ba6854a485d0416f12992d6c7077ab067518d
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

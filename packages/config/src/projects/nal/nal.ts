@@ -36,7 +36,7 @@ export const nal: ScalingProject = underReviewL2({
       {
         type: 'rpc',
         url: 'https://rpc.nal.network/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

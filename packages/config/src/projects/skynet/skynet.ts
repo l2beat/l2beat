@@ -42,7 +42,7 @@ export const skynet: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://rpc.skynet.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

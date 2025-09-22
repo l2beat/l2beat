@@ -153,9 +153,9 @@ export async function getEcosystemEntry(
 
   const upcomingProjects = ecosystemProjects.filter((p) => p.isUpcoming)
   const archivedProjects = ecosystemProjects.filter((p) => !!p.archivedAt)
-  const liveProjects = ecosystemProjects.filter(
-    (p) => !p.isUpcoming && !p.archivedAt,
-  )
+  const liveProjects = ecosystemProjects
+    .filter((p) => !p.isUpcoming && !p.archivedAt)
+    .toSorted((a, b) => a.id.localeCompare(b.id))
 
   const [
     projectsChangeReport,
@@ -223,6 +223,7 @@ export async function getEcosystemEntry(
       allScalingProjects.length,
       tvs.projects,
       projectsActivity,
+      ecosystem.ecosystemConfig.startedAt,
     ),
     banners: {
       firstBanner: ecosystem.ecosystemConfig.firstBanner,

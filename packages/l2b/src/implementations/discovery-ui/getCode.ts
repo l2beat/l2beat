@@ -14,6 +14,7 @@ import {
   getProjectDiscoveries,
 } from './getDiscoveries'
 import type { ApiCodeResponse } from './types'
+import { getReferencedProjects } from './utils'
 
 export function addFlattenerNote(code: string): string {
   const note = [
@@ -46,17 +47,19 @@ function isFlatCodeCurrent(
   codePaths: CodePathResult['codePaths'],
 ): boolean {
   const discovery = configReader.readDiscovery(project)
-
   const discoveries = [discovery]
+  const referencedProjects = getReferencedProjects(discovery)
 
-  for (const sharedModule of discovery.sharedModules ?? []) {
-    const sharedModuleDiscovery = configReader.readDiscovery(sharedModule)
-    discoveries.push(sharedModuleDiscovery)
+  for (const refProj of referencedProjects) {
+    const refDiscovery = configReader.readDiscovery(refProj)
+    discoveries.push(refDiscovery)
   }
 
   const discoHashes =
-    discoveries.flatMap((d) => d.entries).find((e) => e.address === address)
-      ?.sourceHashes ?? []
+    discoveries
+      .flatMap((d) => d.entries)
+      .filter((e) => e.type !== 'Reference')
+      .find((e) => e.address === address)?.sourceHashes ?? []
 
   const flatHashes = codePaths.map(({ path }) =>
     flatteningHash(readFileSync(path, 'utf-8')),
@@ -158,7 +161,8 @@ export function getCodePaths(
 
   for (const discovery of discoveries) {
     const entry = discovery.entries.find((x) => x.address === address)
-    if (!entry) {
+
+    if (!entry || entry.type === 'Reference') {
       continue
     }
 

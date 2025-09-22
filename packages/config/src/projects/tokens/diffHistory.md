@@ -1,4 +1,52 @@
-Generated with discovered.json: 0x6720a42e3f46f89ab97f80a9743a9d90aa28840f
+Generated with discovered.json: 0xa89a357e0618d26a34840d542d8fcd13e06c0341
+
+# Diff at Mon, 15 Sep 2025 10:45:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@42f2c01145ca4aa65fcdb5fd60aca707e3b4fd2c block: 1755691670
+- current timestamp: 1755691670
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755691670 (main branch discovery), not current.
+
+```diff
+    reference  (eth:0x59232aC80E6d403b6381393e52f4665ECA328558) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-sharp-verifier"
+    }
+```
+
+```diff
+    reference  (eth:0x955B978F3ee7818dA71fA25c676062E6BC462Fec) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-sharp-verifier"
+    }
+```
+
+Generated with discovered.json: 0xce61b0d19b16d86f9a3f366456284766713fb26d
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 
