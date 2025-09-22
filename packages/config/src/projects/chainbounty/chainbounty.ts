@@ -43,7 +43,7 @@ export const chainbounty: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://rpc.chainbounty.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

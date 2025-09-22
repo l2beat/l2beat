@@ -6922,7 +6922,7 @@
       "deploymentTimestamp": 1650979836,
       "coingeckoListingTimestamp": 1653955200,
       "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1696524385",
+      "iconUrl": "/images/custom-tokens/optimism.png",
       "chainId": 10,
       "source": "native",
       "supply": "circulatingSupply"

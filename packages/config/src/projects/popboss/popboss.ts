@@ -29,6 +29,7 @@ export const popboss: ScalingProject = orbitStackL3({
       'Proof of Play Boss is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA. It is the second L3 built by Proof of Play.',
     links: {
       websites: ['https://proofofplay.com/'],
+      documentation: ['https://docs.proofofplay.com/introduction'],
       bridges: [
         'https://bridge.arbitrum.io/?destinationChain=pop-boss&sourceChain=arbitrum-one',
         'https://piratenation.game/',

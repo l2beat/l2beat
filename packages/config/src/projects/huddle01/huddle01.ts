@@ -52,7 +52,7 @@ export const huddle01: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://huddle01.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

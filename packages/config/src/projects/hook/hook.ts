@@ -45,7 +45,7 @@ export const hook: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://hook.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

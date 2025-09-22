@@ -52,7 +52,7 @@ export const superseed: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.superseed.xyz/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

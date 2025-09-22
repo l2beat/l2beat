@@ -45,7 +45,7 @@ export const dodochain: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://rpc.birdlayer.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

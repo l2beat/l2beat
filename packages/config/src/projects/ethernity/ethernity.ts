@@ -49,7 +49,7 @@ export const ethernity: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.ethernitychain.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

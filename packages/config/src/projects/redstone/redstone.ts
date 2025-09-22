@@ -73,7 +73,7 @@ export const redstone: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.redstonechain.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

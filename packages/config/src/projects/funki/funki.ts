@@ -93,7 +93,7 @@ export const funki: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc-mainnet.funkichain.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

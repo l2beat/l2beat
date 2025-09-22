@@ -69,7 +69,7 @@ export const sophon: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.sophon.xyz/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

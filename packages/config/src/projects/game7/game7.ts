@@ -48,7 +48,7 @@ export const game7: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://mainnet-rpc.game7.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['G7'],

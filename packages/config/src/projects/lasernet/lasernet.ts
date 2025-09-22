@@ -45,7 +45,7 @@ export const lasernet: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.diadata.org/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

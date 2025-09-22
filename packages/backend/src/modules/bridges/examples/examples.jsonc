@@ -14,6 +14,45 @@
     "messages": [],
     "transfers": []
   },
+  "allbridge": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xf47433544bf5505d8c615d5184c1dae7e3a4bd26221af4146a721b794aff007d"
+      },
+      {
+        "chain": "base",
+        "tx": "0x68cde6faf73ff83be2267a8f136b2f79820e62ae59976bac5e3b9252cb8ff057"
+      },
+      {
+        "chain": "base",
+        "tx": "0x158ead7fb516fb23fd2da016d4e704c9623af497b6a8303d68388020f07ef3bd"
+      }
+    ],
+    "events": [
+      "allbridge.MessageSent",
+      "allbridge.MessageReceived",
+      "allbridge.TokensSent",
+      "allbridge.TokensReceived"
+    ],
+    "messages": ["allbridge.Message.allbridgeswap"],
+    "transfers": ["allbridge.Swap"]
+  },
+  "ccip": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x89f4d3325105dadaddd73e67843739547337688ad75969a31145f80127681429"
+      },
+      {
+        "chain": "base",
+        "tx": "0x05e94651d51f379b1b5c56756b1908431b19d72e9dc05fef801d96c434866109"
+      }
+    ],
+    "events": ["ccip.ExecutionStateChanged", "ccip.CCIPSendRequested"],
+    "messages": ["ccip.Message"],
+    "transfers": []
+  },
   "cctpv1": {
     "txs": [
       {
@@ -117,6 +156,21 @@
     ],
     "events": [],
     "messages": [],
+    "transfers": []
+  },
+  "layerzerov1": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x3b2b8b9fe6bfbc1ddb52cb08758527eb78e5fff2041f25badd574b09ba7cf4b4"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9644fa9892c2cad338fea622f3700598c38b34d3a89989a05c2df1cbceb60a10"
+      }
+    ],
+    "events": ["layerzero-v1.PacketSent", "layerzero-v1.PacketDelivered"],
+    "messages": ["layerzero-v1.Message"],
     "transfers": []
   },
   "layerzerov2": {

@@ -190,7 +190,7 @@ const groups = compact<NavGroup>([
       <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
-  env.CLIENT_SIDE_PARTNERS && {
+  {
     type: 'multiple',
     title: 'Ecosystems',
     match: 'ecosystems',
@@ -226,7 +226,7 @@ const groups = compact<NavGroup>([
 ])
 
 const sideLinks = compact([
-  env.CLIENT_SIDE_PARTNERS && {
+  {
     title: 'Publications',
     href: '/publications',
   },
