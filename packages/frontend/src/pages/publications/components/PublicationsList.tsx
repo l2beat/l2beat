@@ -66,6 +66,7 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
         </div>
       }
       description={publication.description}
+      customCtaText={publication.customCtaText}
       orientation="vertical"
       className="justify-self-center"
     />
