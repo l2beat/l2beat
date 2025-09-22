@@ -58,6 +58,7 @@ export function BigIndividualRosette(props: Props) {
             parameters.rosetteClassName,
           )}
           background={props.background}
+          disableSectionLinking
         />
         {props.isUpcoming && (
           <UpcomingBadge className="absolute top-[130px] left-[90px]" />
