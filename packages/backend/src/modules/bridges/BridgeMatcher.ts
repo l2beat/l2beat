@@ -59,17 +59,9 @@ export class BridgeMatcher {
 
     await this.db.transaction(async () => {
       if (result.matchedIds.size > 0) {
-        this.logger.info('Matched', {
-          count: result.matchedIds.size,
-          messages: result.messages.length,
-          transfers: result.transfers.length,
-        })
         this.bridgeStore.markMatched([...result.matchedIds])
       }
       if (result.unsupportedIds.size > 0) {
-        this.logger.info('Marked unsupported', {
-          count: result.unsupportedIds.size,
-        })
         this.bridgeStore.markUnsupported([...result.unsupportedIds])
       }
       if (result.matchedIds.size > 0 || result.unsupportedIds.size > 0) {
@@ -98,9 +90,11 @@ export async function match(
   logger: Logger,
 ) {
   const start = Date.now()
-  logger.info('MATCHING STARTED')
-  console.time('Matching')
-  console.log('Event count', events.length)
+  logger.info('Matching started', {
+    plugins: plugins.length,
+    events: events.length,
+    chains: supportedChains.length,
+  })
 
   const matchedIds = new Set<string>()
   const unsupportedIds = new Set<string>()
@@ -108,9 +102,8 @@ export async function match(
   const allTransfers: BridgeTransfer[] = []
 
   for (const plugin of plugins) {
-    // Unblock event loop
-    await new Promise((r) => setTimeout(r))
-    console.timeLog('Matching', plugin.name)
+    await new Promise((r) => setTimeout(r)) // Unblock event loop
+    const start = Date.now()
     for (const event of events) {
       if (matchedIds.has(event.eventId)) {
         continue
@@ -140,6 +133,10 @@ export async function match(
         }
       }
     }
+    logger.info('Plugin executed', {
+      name: plugin.name,
+      duration: Date.now() - start,
+    })
   }
 
   for (const event of events) {
@@ -156,8 +153,16 @@ export async function match(
     }
   }
 
-  console.timeEnd('Matching')
-  logger.info('MATCHING COMPLETE', { duration: Date.now() - start })
+  logger.info('Matching finished', {
+    duration: Date.now() - start,
+    plugins: plugins.length,
+    events: events.length,
+    chains: supportedChains.length,
+    matchedEvents: matchedIds.size,
+    unsupportedEvents: unsupportedIds.size,
+    messages: allMessages.length,
+    transfers: allTransfers.length,
+  })
 
   return {
     matchedIds,
