@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useId } from 'react'
 
 const THEMES = { light: '', dark: '.dark' } as const
 
@@ -9,10 +9,7 @@ export function CssVariables({
   variables: Record<string, string | { light: string; dark?: string }>
   children?: React.ReactNode
 }) {
-  const uniqueId = useMemo(
-    () => `css-vars-${Math.random().toString(36).substr(2, 9)}`,
-    [],
-  )
+  const uniqueId = useId()
   const isLocalScope = !!children
 
   const styleElement = (
@@ -21,7 +18,7 @@ export function CssVariables({
         __html: Object.entries(THEMES)
           .map(([theme, prefix]) => {
             const selector = isLocalScope
-              ? `.${uniqueId}${prefix}`
+              ? `[data-css-vars="${uniqueId}"]${prefix}`
               : `html${prefix}`
 
             return `
@@ -48,7 +45,7 @@ export function CssVariables({
   }
 
   return (
-    <div className={uniqueId}>
+    <div data-css-vars={uniqueId}>
       {styleElement}
       {children}
     </div>
