@@ -127,6 +127,7 @@ export class AllbridgePlugIn implements BridgePlugin {
   5. Generate Message and Transfer results
   */
 
+  matchTypes = [TokensReceived]
   match(delivery: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (TokensReceived.checkType(delivery)) {
       const messageReceived = db.find(MessageReceived, {

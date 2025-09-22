@@ -133,9 +133,10 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
   }
 
   /* Matching algorithm:
-1. For Each LogOrderFilled on DST
-2. Find LogOrderCreated on SRC with the same orderHash
-*/
+    1. For Each LogOrderFilled on DST
+    2. Find LogOrderCreated on SRC with the same orderHash
+  */
+  matchtypes = [LogFulfilledOrder]
   match(orderFilled: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (!LogFulfilledOrder.checkType(orderFilled)) return
 

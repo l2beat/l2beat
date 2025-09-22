@@ -93,37 +93,65 @@ export async function match(
   const allMessages: BridgeMessage[] = []
   const allTransfers: BridgeTransfer[] = []
 
+  const ranges = new Map<string, { start: number; end: number }>()
+  let currentType = ''
+  const currentRange = { start: 0, end: 0 }
+  // assumes events are sorted
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i]
+    if (event.type !== currentType) {
+      ranges.set(currentType, { ...currentRange })
+      currentType = event.type
+      currentRange.start = i
+    }
+    currentRange.end = i
+  }
+  ranges.set(currentType, { ...currentRange })
+
   for (const plugin of plugins) {
+    if (!plugin.matchTypes || !plugin.match) {
+      continue
+    }
+
     await new Promise((r) => setTimeout(r)) // Unblock event loop
     const start = Date.now()
-    for (const event of events) {
-      if (matchedIds.has(event.eventId)) {
-        continue
-      }
-      let result: MatchResult | undefined
-      try {
-        result = await plugin.match?.(event, db)
-      } catch (e) {
-        logger.error(e)
-      }
-      if (!result) {
-        continue
-      }
 
-      matchedIds.add(event.eventId)
-      for (const item of result) {
-        if (item.kind === 'BridgeMessage') {
-          allMessages.push(item)
-          matchedIds.add(item.dst.eventId)
-          matchedIds.add(item.src.eventId)
-        } else if (item.kind === 'BridgeTransfer') {
-          allTransfers.push(item)
-          for (const transferEvent of item.events) {
-            matchedIds.add(transferEvent.eventId)
+    for (const type of plugin.matchTypes) {
+      const range = ranges.get(type.type)
+      if (!range) continue
+      console.log('RANGE', plugin.name, type.type, range.start, range.end)
+
+      for (let i = range.start; i <= range.end; i++) {
+        const event = events[i]
+        if (matchedIds.has(event.eventId)) {
+          continue
+        }
+        let result: MatchResult | undefined
+        try {
+          result = await plugin.match?.(event, db)
+        } catch (e) {
+          logger.error(e)
+        }
+        if (!result) {
+          continue
+        }
+
+        matchedIds.add(event.eventId)
+        for (const item of result) {
+          if (item.kind === 'BridgeMessage') {
+            allMessages.push(item)
+            matchedIds.add(item.dst.eventId)
+            matchedIds.add(item.src.eventId)
+          } else if (item.kind === 'BridgeTransfer') {
+            allTransfers.push(item)
+            for (const transferEvent of item.events) {
+              matchedIds.add(transferEvent.eventId)
+            }
           }
         }
       }
     }
+
     logger.info('Plugin executed', {
       name: plugin.name,
       duration: Date.now() - start,

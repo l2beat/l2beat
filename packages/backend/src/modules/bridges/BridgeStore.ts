@@ -41,7 +41,7 @@ export class BridgeStore implements BridgeEventDb {
     unsupported: Set<string>
   }): Promise<void> {
     this.unmatched = this.unmatched.filter(
-      (x) => !matched.has(x.eventId) || !unsupported.has(x.eventId),
+      (x) => !matched.has(x.eventId) && !unsupported.has(x.eventId),
     )
 
     await this.db.transaction(async () => {
@@ -51,7 +51,7 @@ export class BridgeStore implements BridgeEventDb {
   }
 
   getUnmatched(): BridgeEvent[] {
-    return this.unmatched
+    return this.unmatched.sort((a, b) => a.type.localeCompare(b.type))
   }
 
   find<T>(

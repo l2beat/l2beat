@@ -138,6 +138,7 @@ export interface BridgePlugin {
   capture?: (
     input: LogToCapture,
   ) => BridgeEvent | undefined | Promise<BridgeEvent | undefined>
+  matchTypes?: BridgeEventType<unknown>[]
   match?: (
     event: BridgeEvent,
     db: BridgeEventDb,

@@ -90,6 +90,7 @@ export class CCIPPlugIn implements BridgePlugin {
 
   // TODO: match transfer
 
+  matchtypes = [ExecutionStateChanged]
   match(delivery: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (ExecutionStateChanged.checkType(delivery)) {
       const ccipSendRequested = db.find(CCIPSendRequested, {

@@ -24,6 +24,12 @@ import { LogMessagePublished } from './wormhole'
 export class MayanMctpPlugin implements BridgePlugin {
   name = 'mayan-mctp'
 
+  matchtypes = [
+    ForwardedERC20,
+    ForwardedEth,
+    SwapAndForwardedERC20,
+    SwapAndForwardedEth,
+  ]
   //TODO: This plugin starts from the SRC (ForwardedERC20) but CCTP plugin starts from DST and clears events. This needs to be solved somehow...
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (
