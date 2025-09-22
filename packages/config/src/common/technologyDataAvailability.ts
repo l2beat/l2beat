@@ -262,6 +262,38 @@ function DACHALLENGES_OFF_CHAIN(
   }
 }
 
+function ESPRESSO_OFF_CHAIN(
+  isUsingLightClient: boolean,
+): ProjectTechnologyChoice {
+  // TODO: @vincfurc to update descriptions for Espresso
+  const additionalDescription = isUsingLightClient
+    ? ' The blobstream bridge is used to verify attestations from the Celestia validator set that the data is indeed available.'
+    : ' Since the Blobstream bridge is not used, availability of the data is not verified against Celestia validators, meaning that the Sequencer can single-handedly publish unavailable roots.'
+  return {
+    name: 'Data is posted to Celestia',
+    description:
+      'Transactions roots are posted onchain and the full data is posted on Celestia. ' +
+      additionalDescription,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the sequencer posts an unavailable transaction root.',
+        isCritical: true,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the data is not available on the external provider.',
+        isCritical: true,
+      },
+    ],
+    references: [
+      {
+        title: 'Introducing Blobstream: streaming modular DA to Ethereum',
+        url: 'https://blog.celestia.org/introducing-blobstream/',
+      },
+    ],
+  }
+}
 export const TECHNOLOGY_DATA_AVAILABILITY = {
   ON_CHAIN_CALLDATA,
   ON_CHAIN_BLOB_OR_CALLDATA,
@@ -276,4 +308,5 @@ export const TECHNOLOGY_DATA_AVAILABILITY = {
   AVAIL_OFF_CHAIN,
   EIGENDA_OFF_CHAIN,
   DACHALLENGES_OFF_CHAIN,
+  ESPRESSO_OFF_CHAIN
 }

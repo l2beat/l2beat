@@ -294,6 +294,20 @@ export const DATA_POS: TableReadyValue = {
   sentiment: 'warning',
 }
 
+export function DATA_ESPRESSO(isUsingLightClient: boolean): TableReadyValue {
+  // TODO: @vincfurc to update descriptions
+  const additional = isUsingLightClient
+    ? ' Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators.'
+    : ' Sequencer tx roots are not checked against the Blobstream bridge data roots onchain, but L2 nodes can verify data availability by running a Celestia light client.'
+  return {
+    value: 'External',
+    description:
+      'Proof construction and state derivation fully rely on data that is posted on Celestia.' +
+      additional,
+    sentiment: isUsingLightClient ? 'warning' : 'bad',
+  }
+}
+
 // bridges
 
 export const VALIDATED_BY_ETHEREUM: TableReadyValue = {
@@ -770,6 +784,7 @@ export const RISK_VIEW = {
   DATA_AVAIL,
   DATA_EIGENDA,
   DATA_POS,
+  DATA_ESPRESSO,
 
   // validatedBy
   VALIDATED_BY_ETHEREUM,
@@ -818,20 +833,24 @@ export const RISK_VIEW = {
   UNDER_REVIEW_RISK,
 }
 
-export function pickWorseRisk(
+const SENTIMENT_VALUE: Record<Sentiment, number> = {
+  good: 0,
+  neutral: 1,
+  warning: 2,
+  bad: 3,
+  UnderReview: 4,
+}
+
+export function pickRisk(
   a: TableReadyValue,
   b: TableReadyValue,
+  mode: 'leastRisky' | 'mostRisky',
 ): TableReadyValue {
-  const sentimentValue: Record<Sentiment, number> = {
-    good: 0,
-    neutral: 1,
-    warning: 2,
-    bad: 3,
-    UnderReview: 4,
+  let aVal = SENTIMENT_VALUE[a.sentiment ?? 'neutral']
+  let bVal = SENTIMENT_VALUE[b.sentiment ?? 'neutral']
+  if (mode === 'leastRisky') {
+    ;[aVal, bVal] = [bVal, aVal]
   }
-
-  const aVal = sentimentValue[a.sentiment ?? 'neutral']
-  const bVal = sentimentValue[b.sentiment ?? 'neutral']
   if (aVal === bVal) {
     assert(
       a.orderHint !== undefined && b.orderHint !== undefined,
@@ -845,6 +864,12 @@ export function pickWorseRisk(
 
   return b
 }
+
+export const pickWorseRisk = (a: TableReadyValue, b: TableReadyValue) =>
+  pickRisk(a, b, 'mostRisky')
+
+export const pickLesserRisk = (a: TableReadyValue, b: TableReadyValue) =>
+  pickRisk(a, b, 'leastRisky')
 
 export function sumRisk(
   a: TableReadyValue,

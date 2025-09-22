@@ -167,6 +167,9 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
 function getType(p: ScalingProject): ProjectScalingCategory | undefined {
   if (p.reasonsForBeingOther && p.reasonsForBeingOther.length > 0)
     return 'Other'
+
+
+  // If there's a bridge in DA
   if (p.dataAvailability?.bridge.value === 'Plasma') return 'Plasma'
 
   if (p.isUpcoming || !p.proofSystem || !p.dataAvailability) return undefined
@@ -176,6 +179,8 @@ function getType(p: ScalingProject): ProjectScalingCategory | undefined {
     p.dataAvailability.bridge.value === 'Self-attested' // Intmax case
   const proofType = p.proofSystem?.type
 
+
+  // If there's
   if (proofType === 'Optimistic') {
     return isEthereumBridge ? 'Optimistic Rollup' : 'Optimium'
   }

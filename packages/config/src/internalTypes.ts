@@ -163,7 +163,7 @@ export interface ProjectScalingDisplay {
 
 export interface ProjectScalingTechnology {
   /** What is the data availability choice for the project */
-  dataAvailability?: ProjectTechnologyChoice
+  dataAvailability?: ProjectTechnologyChoice | ProjectTechnologyChoice[]
   /** What are the details about project operator(s) */
   operator?: ProjectTechnologyChoice
   /** What are the details about project sequencing */
