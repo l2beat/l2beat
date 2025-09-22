@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x6bc624287f2c9c85a0fe80b0375a61c0d3c798d1
+
+# Diff at Mon, 22 Sep 2025 09:46:11 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@f21267d0fa3bbe8f9dd819d299858d783142ccc5 block: 1757939071
+- current timestamp: 1758534304
+
+## Description
+
+Introduced MVM_ProposerRegistry.
+https://disco.l2beat.com/diff/eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1/eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7
+
+## Watched changes
+
+```diff
+    contract Lib_AddressManager (eth:0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.MVM_ProposerRegistry:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18"
+    }
+```
+
+```diff
+    contract StateCommitmentChain (eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+      sourceHashes.1:
+-        "0x0e8553402b55057406811a803b14c4778f42fcf02523b10e695ec073a98202a9"
++        "0xa42c85a235f67f88b193b516224025a8c54c8fc5a0204c0f7b4fc0202b70eed0"
+      values.$implementation:
+-        "eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1"
++        "eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7"
+      values.MVM_PROPOSER_REGISTRY_NAME:
++        "MVM_ProposerRegistry"
+      implementationNames.eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1:
+-        "MVM_StateCommitmentChain"
+      implementationNames.eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7:
++        "MVM_StateCommitmentChain"
+    }
+```
+
+```diff
+    EOA  (eth:0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"propose","from":"eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18","role":".proposer"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MVM_ProposerRegistry (eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18)
+    +++ description: The Proposer Registry contains the addresses of the current active proposers for the chain.
+```
+
+## Source code changes
+
+```diff
+.../projects/metis/.flat/MVM_ProposerRegistry.sol  | 105 ++++++++++++
+ .../MVM_StateCommitmentChain.sol                   | 187 +++++++++++----------
+ 2 files changed, 206 insertions(+), 86 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757939071 (main branch discovery), not current.
+
+```diff
+    contract Lib_AddressManager (eth:0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.MVM_ProposerRegistry:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xab702e87dac0d30c6e70433c4cecf5ff9889c986
 
 # Diff at Mon, 15 Sep 2025 12:26:22 GMT:

@@ -146,6 +146,13 @@
         }
       ]
     },
+    "MVM_ProposerRegistry": {
+      "handler": {
+        "type": "call",
+        "method": "getAddress",
+        "args": ["MVM_ProposerRegistry"]
+      }
+    },
     "FaultProofLockingPool": {
       "handler": {
         "type": "call",
