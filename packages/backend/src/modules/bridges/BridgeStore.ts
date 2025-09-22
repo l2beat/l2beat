@@ -12,83 +12,46 @@ export class BridgeStore implements BridgeEventDb {
   private eventDb = new InMemoryEventDb()
   private unmatched: BridgeEvent[] = []
 
-  private newEvents: BridgeEvent[] = []
-  private newMatched = new Set<string>()
-  private newUnsupported = new Set<string>()
-
   constructor(private db: Database) {}
 
   async start() {
-    const records = await this.db.bridgeEvent.getAll()
+    const records = await this.db.bridgeEvent.getUnmatched()
     for (const record of records) {
       const event = fromDbRecord(record)
-      if (!record.matched && !record.unsupported) {
-        this.eventDb.addEvent(event)
-        this.unmatched.push(event)
-      }
+      this.eventDb.addEvent(event)
+      this.unmatched.push(event)
     }
   }
 
-  addEvent(event: BridgeEvent) {
-    this.eventDb.addEvent(event)
-    this.unmatched.push(event)
-    this.newEvents.push(event)
+  async saveNewEvents(events: BridgeEvent[]): Promise<void> {
+    for (const event of events) {
+      this.eventDb.addEvent(event)
+      this.unmatched.push(event)
+    }
+
+    const records = events.map((e) => toDbRecord(e))
+    await this.db.bridgeEvent.insertMany(records)
   }
 
-  markMatched(eventIds: string[]) {
-    for (const eventId of eventIds) {
-      this.newMatched.add(eventId)
-    }
+  async updateMatchedAndUnsupported({
+    matched,
+    unsupported,
+  }: {
+    matched: Set<string>
+    unsupported: Set<string>
+  }): Promise<void> {
     this.unmatched = this.unmatched.filter(
-      (x) => !this.newMatched.has(x.eventId),
+      (x) => !matched.has(x.eventId) || !unsupported.has(x.eventId),
     )
-  }
 
-  markUnsupported(eventIds: string[]) {
-    for (const eventId of eventIds) {
-      this.newUnsupported.add(eventId)
-    }
-    this.unmatched = this.unmatched.filter(
-      (x) => !this.newUnsupported.has(x.eventId),
-    )
+    await this.db.transaction(async () => {
+      await this.db.bridgeEvent.updateMatched(Array.from(matched))
+      await this.db.bridgeEvent.updateUnsupported(Array.from(unsupported))
+    })
   }
 
   getUnmatched(): BridgeEvent[] {
     return this.unmatched
-  }
-
-  async save(): Promise<void> {
-    const records = this.newEvents.map((e) =>
-      toDbRecord(e, {
-        matched: this.newMatched.has(e.eventId),
-        unsupported: this.newUnsupported.has(e.eventId),
-      }),
-    )
-    const matchedIds = Array.from(this.newMatched)
-    const unsupportedIds = Array.from(this.newUnsupported)
-
-    this.newEvents.length = 0
-    this.newMatched.clear()
-    this.newUnsupported.clear()
-
-    await this.db.transaction(async () => {
-      await this.db.bridgeEvent.insertMany(records)
-      await this.db.bridgeEvent.updateMatched(matchedIds)
-      await this.db.bridgeEvent.updateUnsupported(unsupportedIds)
-    })
-  }
-
-  async deleteExpired(now: UnixTime) {
-    for (const event of this.unmatched) {
-      if (event.expiresAt <= now) {
-        this.newMatched.delete(event.eventId)
-        this.newUnsupported.delete(event.eventId)
-        this.eventDb.removeEvent(event.eventId)
-      }
-    }
-    this.unmatched = this.unmatched.filter((x) => x.expiresAt > now)
-    this.newEvents = this.newEvents.filter((x) => x.expiresAt > now)
-    await this.db.bridgeEvent.deleteExpired(now)
   }
 
   find<T>(
@@ -103,6 +66,16 @@ export class BridgeStore implements BridgeEventDb {
     query: BridgeEventQuery<T>,
   ): BridgeEvent<T>[] {
     return this.eventDb.findAll(type, query)
+  }
+
+  async deleteExpired(now: UnixTime) {
+    for (const event of this.unmatched) {
+      if (event.expiresAt <= now) {
+        this.eventDb.removeEvent(event.eventId)
+      }
+    }
+    this.unmatched = this.unmatched.filter((x) => x.expiresAt > now)
+    await this.db.bridgeEvent.deleteExpired(now)
   }
 }
 
@@ -124,10 +97,7 @@ function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
   }
 }
 
-function toDbRecord(
-  event: BridgeEvent,
-  flags: { matched: boolean; unsupported: boolean },
-): BridgeEventRecord {
+function toDbRecord(event: BridgeEvent): BridgeEventRecord {
   return {
     eventId: event.eventId,
     type: event.type,
@@ -140,7 +110,7 @@ function toDbRecord(
     timestamp: event.ctx.timestamp,
     txHash: event.ctx.txHash,
     txTo: event.ctx.txTo,
-    matched: flags.matched,
-    unsupported: flags.unsupported,
+    matched: false,
+    unsupported: false,
   }
 }

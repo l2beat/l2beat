@@ -58,26 +58,18 @@ export class BridgeMatcher {
     )
 
     await this.db.transaction(async () => {
-      if (result.matchedIds.size > 0) {
-        this.bridgeStore.markMatched([...result.matchedIds])
-      }
-      if (result.unsupportedIds.size > 0) {
-        this.bridgeStore.markUnsupported([...result.unsupportedIds])
-      }
       if (result.matchedIds.size > 0 || result.unsupportedIds.size > 0) {
-        await this.bridgeStore.save()
+        await this.bridgeStore.updateMatchedAndUnsupported({
+          matched: result.matchedIds,
+          unsupported: result.unsupportedIds,
+        })
       }
-      if (result.messages.length > 0) {
-        await this.db.bridgeMessage.insertMany(
-          result.messages.map(toMessageRecord),
-        )
-      }
-
-      if (result.transfers.length > 0) {
-        await this.db.bridgeTransfer.insertMany(
-          result.transfers.map(toTransferRecord),
-        )
-      }
+      await this.db.bridgeMessage.insertMany(
+        result.messages.map(toMessageRecord),
+      )
+      await this.db.bridgeTransfer.insertMany(
+        result.transfers.map(toTransferRecord),
+      )
     })
   }
 }

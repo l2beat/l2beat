@@ -73,6 +73,17 @@ export class BridgeEventRepository extends BaseRepository {
     return rows.length
   }
 
+  async getUnmatched(): Promise<BridgeEventRecord[]> {
+    const rows = await this.db
+      .selectFrom('BridgeEvent')
+      .where('matched', '=', false)
+      .where('unsupported', '=', false)
+      .selectAll()
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getAll(): Promise<BridgeEventRecord[]> {
     const rows = await this.db.selectFrom('BridgeEvent').selectAll().execute()
 
