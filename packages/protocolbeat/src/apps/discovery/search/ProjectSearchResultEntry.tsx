@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useNavigate } from 'react-router-dom'
-import { HighlightedText } from '../../../common/HighlightedText'
+import { HighlightedText } from './HighlightedText'
 import { useSearchStore } from './store'
 
 export function ProjectSearchResultEntry({ entries }: { entries: string[] }) {

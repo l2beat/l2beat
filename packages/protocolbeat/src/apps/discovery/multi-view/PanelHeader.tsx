@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../../../api/api'
 import type { ApiAbi, Field } from '../../../api/types'
 import { findSelected } from '../../../common/findSelected'
-import { isReadOnly } from '../../../config'
+import { IS_READONLY } from '../../../config/readonly'
 import { IconChatbot } from '../../../icons/IconChatbot'
 import { IconClose } from '../../../icons/IconClose'
 import { IconFullscreen } from '../../../icons/IconFullscreen'
 import { IconFullscreenExit } from '../../../icons/IconFullscreenExit'
-import { usePanelStore } from '../../../store/store'
+import { usePanelStore } from '../store/panel-store'
 import { PANEL_IDS, type PanelId, useMultiViewStore } from './store'
 
 export function PanelHeader(props: { id: PanelId }) {
@@ -24,7 +24,7 @@ export function PanelHeader(props: { id: PanelId }) {
   const selectedAddress = usePanelStore((state) => state.selected)
   const highlighted = usePanelStore((state) => state.highlighted)
 
-  const availablePanels = isReadOnly
+  const availablePanels = IS_READONLY
     ? PANEL_IDS.filter((id) => id !== 'terminal')
     : PANEL_IDS
 

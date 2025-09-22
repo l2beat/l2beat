@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { usePanelStore } from '../../../store/store'
+import { usePanelStore } from '../store/panel-store'
 import { ClosedSearch } from './ClosedSearch'
 import { OpenSearch } from './OpenSearch'
 import { useSearchStore } from './store'

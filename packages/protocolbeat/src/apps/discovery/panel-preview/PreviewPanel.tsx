@@ -11,8 +11,8 @@ import type {
 } from '../../../api/types'
 import { Checkbox } from '../../../components/Checkbox'
 import { LoadingState } from '../../../components/LoadingState'
-import { usePanelStore } from '../../../store/store'
 import { AddressDisplay } from '../panel-values/AddressDisplay'
+import { usePanelStore } from '../store/panel-store'
 
 export function PreviewPanel() {
   const { project } = useParams()

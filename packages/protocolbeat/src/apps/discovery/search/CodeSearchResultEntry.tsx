@@ -1,10 +1,10 @@
 import clsx from 'clsx'
 import type { ApiCodeSearchResponse } from '../../../api/types'
-import { HighlightedText } from '../../../common/HighlightedText'
 import { toShortenedAddress } from '../../../common/toShortenedAddress'
 import { useCodeStore } from '../../../components/editor/store'
-import { isReadOnly } from '../../../config'
+import { IS_READONLY } from '../../../config/readonly'
 import { useMultiViewStore } from '../multi-view/store'
+import { HighlightedText } from './HighlightedText'
 import { useSearchStore } from './store'
 
 interface CodeSearchEntryProps {
@@ -80,7 +80,7 @@ export interface CodeSearchTerm {
 }
 
 export function isCodeSearchTerm(searchTerm: string): boolean {
-  if (isReadOnly) {
+  if (IS_READONLY) {
     return false
   }
 

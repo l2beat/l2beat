@@ -8,8 +8,8 @@ import { ErrorState } from '../../../components/ErrorState'
 import { EditorView } from '../../../components/editor/EditorView'
 import { type EditorFile, useCodeStore } from '../../../components/editor/store'
 import { LoadingState } from '../../../components/LoadingState'
-import { isReadOnly } from '../../../config'
-import { useProjectData } from '../../../hooks/useProjectData'
+import { IS_READONLY } from '../../../config/readonly'
+import { useProjectData } from '../hooks/useProjectData'
 import { RediscoverPrompt } from './RediscoverPrompt'
 
 export function CodePanel() {
@@ -53,7 +53,7 @@ export function CodePanel() {
     [codeResponse, selectedAddress, hasCode],
   )
 
-  const showRediscoverInfo = codeResponse.isError && !isReadOnly
+  const showRediscoverInfo = codeResponse.isError && !IS_READONLY
 
   const range = selectedAddress ? getRange(selectedAddress) : undefined
 

@@ -7,8 +7,8 @@ import { ActionNeededState } from '../../../components/ActionNeededState'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
-import { isReadOnly } from '../../../config'
-import { usePanelStore } from '../../../store/store'
+import { IS_READONLY } from '../../../config/readonly'
+import { usePanelStore } from '../store/panel-store'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
 import { FieldDisplay } from './Field'
@@ -60,7 +60,7 @@ function Display({
   }
   const addresses = getAddressesToCopy(selected)
 
-  const dialog = addresses && canAddShape(selected) && !isReadOnly && (
+  const dialog = addresses && canAddShape(selected) && !IS_READONLY && (
     <TemplateDialog.Root
       key={`${project}-${selected.address}`}
       project={project}

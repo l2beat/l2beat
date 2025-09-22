@@ -3,7 +3,7 @@ import ansiHTML from 'ansi-html'
 import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { Checkbox } from '../../../components/Checkbox'
-import { usePanelStore } from '../../../store/store'
+import { usePanelStore } from '../store/panel-store'
 import { useTerminalStore } from './store'
 
 ansiHTML.setColors({

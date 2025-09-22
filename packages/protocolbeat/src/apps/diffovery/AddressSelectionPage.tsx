@@ -3,8 +3,8 @@ const DEFAULT_CHAIN_SHORT_NAME = AVAILABLE_CHAINS[0]!.shortName
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AVAILABLE_CHAINS } from '../../common/chains'
 import { Title } from '../../common/Title'
+import { AVAILABLE_CHAINS } from '../../config/chains'
 import { IconSwap } from '../../icons/IconSwap'
 
 function isValidEthereumAddress(address: string) {

@@ -12,7 +12,7 @@ import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { IconFolder } from '../../../icons/IconFolder'
 import { IconFolderOpened } from '../../../icons/IconFolderOpened'
-import { usePanelStore } from '../../../store/store'
+import { usePanelStore } from '../store/panel-store'
 
 export function ListPanel() {
   const { project } = useParams()

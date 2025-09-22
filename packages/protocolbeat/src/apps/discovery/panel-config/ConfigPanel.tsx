@@ -9,8 +9,8 @@ import { ErrorState } from '../../../components/ErrorState'
 import { EditorView } from '../../../components/editor/EditorView'
 import type { EditorFile } from '../../../components/editor/store'
 import { LoadingState } from '../../../components/LoadingState'
-import { isReadOnly } from '../../../config'
-import { useProjectData } from '../../../hooks/useProjectData'
+import { IS_READONLY } from '../../../config/readonly'
+import { useProjectData } from '../hooks/useProjectData'
 
 export function ConfigPanel() {
   const { project, selectedAddress, projectResponse } = useProjectData()
@@ -95,7 +95,7 @@ function getConfigFiles(
       name: 'config.jsonc',
       content: data.config,
       language: 'json',
-      readOnly: isReadOnly,
+      readOnly: IS_READONLY,
     })
   }
 

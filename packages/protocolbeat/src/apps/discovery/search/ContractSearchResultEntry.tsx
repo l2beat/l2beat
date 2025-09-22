@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import type { ApiAddressEntry } from '../../../api/types'
-import { HighlightedText } from '../../../common/HighlightedText'
 import { toShortenedAddress } from '../../../common/toShortenedAddress'
+import { HighlightedText } from './HighlightedText'
 import { useSearchStore } from './store'
 
 interface ContractSearchEntryProps {

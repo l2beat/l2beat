@@ -5,7 +5,7 @@ import { useCopy } from '../../../hooks/useCopy'
 import { IconCopy } from '../../../icons/IconCopy'
 import { IconLink } from '../../../icons/IconLink'
 import { IconTick } from '../../../icons/IconTick'
-import { usePanelStore } from '../../../store/store'
+import { usePanelStore } from '../store/panel-store'
 import { EXPLORER_URLS } from './explorers'
 
 export interface AddressDisplayProps {

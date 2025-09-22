@@ -9,7 +9,7 @@ import type {
 } from '../../../api/types'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
-import { usePanelStore } from '../../../store/store'
+import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
