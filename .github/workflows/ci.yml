@@ -15,6 +15,7 @@ jobs:
   build-backend:
     name: Build backend container image
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -30,6 +31,7 @@ jobs:
   build-frontend:
     name: Build frontend
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -68,6 +70,7 @@ jobs:
   build-protocolbeat:
     name: Build protocolbeat
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -95,6 +98,7 @@ jobs:
   build-tools:
     name: Build tools
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -122,6 +126,7 @@ jobs:
   build-uops-dashboard:
     name: Build uops-dashboard
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -149,6 +154,7 @@ jobs:
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -176,6 +182,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -218,6 +225,7 @@ jobs:
   biome:
     name: Lint & Format
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -233,6 +241,7 @@ jobs:
   test-all-pages:
     name: Test All Pages
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -276,3 +285,35 @@ jobs:
           # Kill the server
           echo "Stopping server..."
           kill $SERVER_PID
+
+  test-gha-timeouts:
+    name: Test if all GH Action jobs have timeout defined
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup yq
+        uses: dcarbone/install-yq-action@v1
+      - name: Test all workflow manifests
+        run: |
+          declare -a failed_files
+
+          echo "Scanning files for timeout definitions"
+          for file in .github/workflows/*.y*ml; do
+            out=$(yq -r '
+              (.jobs // {})
+              | to_entries[]
+              | select(.value | has("timeout-minutes") | not)
+              | .key
+            ' "$file")
+            echo "$file: ${out:-"OK"}"
+            if [[ -n "$out" ]]; then
+              failed_files+=($file)
+            fi
+          done
+          if [[ ${#failed_files[@]} -gt 0 ]]; then
+            echo
+            echo "Some workflows are missing timeout definition. Files failing validation:"
+            echo "${failed_files[@]}"
+            exit 1
+          fi

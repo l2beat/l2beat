@@ -14,6 +14,7 @@ jobs:
   deploy-disco-ui:
     name: Deploy disco-ui
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Check out code
         uses: actions/checkout@v4
