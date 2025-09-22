@@ -57,34 +57,36 @@ export class BridgeMatcher {
       this.logger,
     )
 
-    if (result.matchedIds.size > 0) {
-      this.logger.info('Matched', {
-        count: result.matchedIds.size,
-        messages: result.messages.length,
-        transfers: result.transfers.length,
-      })
-      this.bridgeStore.markMatched([...result.matchedIds])
-    }
-    if (result.unsupportedIds.size > 0) {
-      this.logger.info('Marked unsupported', {
-        count: result.unsupportedIds.size,
-      })
-      this.bridgeStore.markUnsupported([...result.unsupportedIds])
-    }
-    if (result.matchedIds.size > 0 || result.unsupportedIds.size > 0) {
-      await this.bridgeStore.save()
-    }
-    if (result.messages.length > 0) {
-      await this.db.bridgeMessage.insertMany(
-        result.messages.map(toMessageRecord),
-      )
-    }
+    await this.db.transaction(async () => {
+      if (result.matchedIds.size > 0) {
+        this.logger.info('Matched', {
+          count: result.matchedIds.size,
+          messages: result.messages.length,
+          transfers: result.transfers.length,
+        })
+        this.bridgeStore.markMatched([...result.matchedIds])
+      }
+      if (result.unsupportedIds.size > 0) {
+        this.logger.info('Marked unsupported', {
+          count: result.unsupportedIds.size,
+        })
+        this.bridgeStore.markUnsupported([...result.unsupportedIds])
+      }
+      if (result.matchedIds.size > 0 || result.unsupportedIds.size > 0) {
+        await this.bridgeStore.save()
+      }
+      if (result.messages.length > 0) {
+        await this.db.bridgeMessage.insertMany(
+          result.messages.map(toMessageRecord),
+        )
+      }
 
-    if (result.transfers.length > 0) {
-      await this.db.bridgeTransfer.insertMany(
-        result.transfers.map(toTransferRecord),
-      )
-    }
+      if (result.transfers.length > 0) {
+        await this.db.bridgeTransfer.insertMany(
+          result.transfers.map(toTransferRecord),
+        )
+      }
+    })
   }
 }
 
