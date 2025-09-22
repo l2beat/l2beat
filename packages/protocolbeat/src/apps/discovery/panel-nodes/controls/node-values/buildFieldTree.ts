@@ -1,4 +1,4 @@
-import { partition } from '../../../../../common/partition'
+import { partition } from '../../../../../utils/partition'
 import type { Field } from '../../store/State'
 
 export function groupByPath(fields: Field[]) {

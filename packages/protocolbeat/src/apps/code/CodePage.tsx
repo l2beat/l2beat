@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getFlatSource } from '../../api/api'
-import { Title } from '../../common/Title'
 import { ErrorState } from '../../components/ErrorState'
 import { EditorView } from '../../components/editor/EditorView'
 import { LoadingState } from '../../components/LoadingState'
+import { Title } from '../../components/Title'
 
 export function CodePage() {
   const { address } = useParams()

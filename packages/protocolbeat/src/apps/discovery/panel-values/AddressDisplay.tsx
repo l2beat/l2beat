@@ -1,12 +1,12 @@
 import type { AddressFieldValue } from '../../../api/types'
-import { toShortenedAddress } from '../../../common/toShortenedAddress'
 import { AddressIcon } from '../../../components/AddressIcon'
+import { EXPLORER_URLS } from '../../../config/explorers'
 import { useCopy } from '../../../hooks/useCopy'
 import { IconCopy } from '../../../icons/IconCopy'
 import { IconLink } from '../../../icons/IconLink'
 import { IconTick } from '../../../icons/IconTick'
+import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { usePanelStore } from '../store/panel-store'
-import { EXPLORER_URLS } from './explorers'
 
 export interface AddressDisplayProps {
   value: AddressFieldValue

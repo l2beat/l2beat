@@ -1,16 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Title } from '../../common/Title'
+import { Title } from '../../components/Title'
 import { AVAILABLE_CHAINS } from '../../config/chains'
+import { isValidEthereumAddress } from '../../utils/isValidEthereumAddress'
 
 // biome-ignore lint/style/noNonNullAssertion: We know it's there
 const DEFAULT_CHAIN_SHORT_NAME = AVAILABLE_CHAINS[0]!.shortName
-
-function isValidEthereumAddress(address: string) {
-  const trimmed = address.trim()
-  const regex = /^0x[a-fA-F0-9]{40}$/
-  return regex.test(trimmed)
-}
 
 export function AddressSelectionPage() {
   const navigate = useNavigate()
@@ -64,7 +59,7 @@ export function AddressSelectionPage() {
                 }}
                 className={`w-full rounded-lg border ${
                   errors.addressA ? 'border-aux-red' : 'border-coffee-600'
-                } bg-coffee-700 px-4 py-2 transition selection:bg-autumn-300 selection:text-coffee-900 placeholder:text-coffee-200 placeholder:text-coffee-400 focus:ring-2 focus:ring-autumn-300`}
+                } bg-coffee-700 px-4 py-2 transition selection:bg-autumn-300 selection:text-coffee-900 placeholder:text-coffee-400 focus:ring-2 focus:ring-autumn-300`}
               />
               {errors.addressA && (
                 <p className="mt-1 text-aux-red text-sm">{errors.addressA}</p>

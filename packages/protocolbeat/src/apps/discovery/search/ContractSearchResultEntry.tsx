@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import type { ApiAddressEntry } from '../../../api/types'
-import { toShortenedAddress } from '../../../common/toShortenedAddress'
+import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { HighlightedText } from './HighlightedText'
 import { useSearchStore } from './store'
 

@@ -5,14 +5,14 @@ import type {
   ApiProjectChain,
   ApiTemplateFileResponse,
 } from '../../../api/types'
-import { formatJson } from '../../../common/formatJson'
-import { removeJSONTrailingCommas } from '../../../common/removeJSONTrailingCommas'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { ErrorState } from '../../../components/ErrorState'
 import { EditorView } from '../../../components/editor/EditorView'
 import type { EditorFile } from '../../../components/editor/store'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
+import { formatJson } from '../../../utils/formatJson'
+import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingCommas'
 import { useProjectData } from '../hooks/useProjectData'
 
 export function TemplatePanel() {

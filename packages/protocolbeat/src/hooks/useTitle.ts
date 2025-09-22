@@ -5,8 +5,3 @@ export function useTitle(title: string) {
     document.title = title
   }, [title])
 }
-
-export function Title({ title }: { title: string }) {
-  useTitle(title)
-  return null
-}

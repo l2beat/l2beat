@@ -1,7 +1,7 @@
 import { Fragment } from 'react/jsx-runtime'
 import type { ApiAbi, ApiAbiEntry } from '../../../api/types'
-import { partition } from '../../../common/partition'
 import * as solidity from '../../../components/editor/languages/solidity'
+import { partition } from '../../../utils/partition'
 import { AddressDisplay } from './AddressDisplay'
 import { Folder } from './Folder'
 
