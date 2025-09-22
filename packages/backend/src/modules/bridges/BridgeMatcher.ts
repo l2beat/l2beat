@@ -124,7 +124,7 @@ export async function match(
         }
       }
     }
-    logger.debug('Plugin executed', {
+    logger.info('Plugin executed', {
       name: plugin.name,
       duration: Date.now() - start,
     })
