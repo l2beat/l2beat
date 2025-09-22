@@ -129,7 +129,7 @@ export const lightlink: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://replicator.phoenix.lightlink.io/rpc/v1',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'blockscout', url: 'https://phoenix.lightlink.io/api' },
     ],

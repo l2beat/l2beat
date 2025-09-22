@@ -40,6 +40,24 @@
     },
     {
       "mode": "auto",
+      "id": "katana-cbBTC",
+      "priceId": "coinbase-wrapped-btc",
+      "symbol": "cbBTC",
+      "name": "Coinbase Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4f4E170C129758A71572EBB3Aa69A8E75ca8b79C",
+        "chain": "katana",
+        "decimals": 8,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
       "id": "katana-CRV",
       "priceId": "curve-dao-token",
       "symbol": "CRV",

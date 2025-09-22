@@ -3,7 +3,6 @@ import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
-import { env } from '~/env'
 import {
   getEthereumDaProjectSections,
   getRegularDaProjectSections,
@@ -175,7 +174,7 @@ export async function getDaProjectEntry(
     isUnderReview: !!layer.statuses.reviewStatus,
     isUpcoming: layer.isUpcoming ?? false,
     archivedAt: layer.archivedAt,
-    colors: env.CLIENT_SIDE_PARTNERS ? layer.colors : undefined,
+    colors: layer.colors,
     selectedBridge: {
       name: selected?.daBridge.name ?? 'No DA Bridge',
       slug: selected?.slug ?? 'no-bridge',

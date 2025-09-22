@@ -39,7 +39,7 @@ export const optopia: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc-mainnet-2.optopia.ai',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   }, // chainId: 62050

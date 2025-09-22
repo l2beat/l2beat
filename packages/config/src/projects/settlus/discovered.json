@@ -1,6 +1,6 @@
 {
   "name": "settlus",
-  "timestamp": 1755507657,
+  "timestamp": 1758286666,
   "configHash": "0x315a99bb82be1bb5d8c3921055ed1e1cf735e278e81110a51aae923638a4583b",
   "entries": [
     {
@@ -775,6 +775,11 @@
       }
     },
     {
+      "address": "eth:0xa3353Ae4458F663f1F888705b044269bd30cd110",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xA351A874b48dCEdf1883dD4F4049bE3d9923700a",
       "type": "EOA",
       "proxyType": "EOA"
@@ -898,7 +903,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xCA730AFfb87935E70E5889418C731eb196237476",
+          "eth:0xa3353Ae4458F663f1F888705b044269bd30cd110",
           "eth:0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca",
           "eth:0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7",
           "eth:0x001271c57AeC639952B5201D052767c316755512",
@@ -912,7 +917,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 30,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1089,11 +1094,6 @@
         "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0xCA730AFfb87935E70E5889418C731eb196237476",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L1ERC721Bridge",
@@ -1277,7 +1277,7 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 2839,
+        "gameCount": 3352,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294",
@@ -1289,7 +1289,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 2839,
+        "permissionedGamesTotal": 3352,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -2269,6 +2269,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23166914 },
-  "permissionsConfigHash": "0xea873eb3b972c5febc83f594760b7c3039c0adf813d0b82af7481b4454bf1202"
+  "usedBlockNumbers": { "ethereum": 23397272 },
+  "permissionsConfigHash": "0xa69a8d8b57de0fa8c883f1015065dab6c223f4dfe0c1f2eadfd7cbb7fd979383"
 }

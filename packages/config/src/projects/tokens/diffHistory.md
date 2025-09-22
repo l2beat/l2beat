@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd8ca3f0fd6307fe942b7b37c0210bb0636f9da59
+
+# Diff at Mon, 22 Sep 2025 07:51:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3aa102df1ae0b60ff981cfe12b1d0c919b4c2704 block: 1755691670
+- current timestamp: 1758527427
+
+## Description
+
+blacklister for USDC swapped.
+
+## Watched changes
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
+      values.blacklister:
+-        "base:0x4d15e70518A20Fc8828b5C3853f32e35238d0b77"
++        "base:0x1f2e3A640175d20ac31ed523B6733B977173E277"
+    }
+```
+
 Generated with discovered.json: 0xa89a357e0618d26a34840d542d8fcd13e06c0341
 
 # Diff at Mon, 15 Sep 2025 10:45:07 GMT:

@@ -163,7 +163,7 @@ export const base: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://developer-access-mainnet.base.org',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://base.blockscout.com/api/v2' },

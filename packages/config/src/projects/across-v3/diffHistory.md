@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x861032acf9a863cfafc16846fd61140e889b893b
+
+# Diff at Wed, 17 Sep 2025 13:50:43 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@826dd36404e9c33731dc0255e96251d8d8999c20 block: 1757341282
+- current timestamp: 1758116976
+
+## Description
+
+New adapter, code is already templatized since it is identical to Universal adapter that is already present. However, this new version passes the cctpTokenMessenger in the constructor, allowing cctpV2 support.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      values.Adapters.999:
++        "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B"
+      values.CrossChainContracts.999:
++        "eth:0x35E63eA3eb0fb7A3bc543C71FB66412e1F6B0E04"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Universal_Adapter (eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B)
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
+```
+
+## Source code changes
+
+```diff
+...0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B.sol} |   0
+ ...:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b.sol | 792 +++++++++++++++++++++
+ 2 files changed, 792 insertions(+)
+```
+
 Generated with discovered.json: 0xa925bf14b75ca36ae78ba51c2b96882409fa408a
 
 # Diff at Mon, 08 Sep 2025 14:36:46 GMT:

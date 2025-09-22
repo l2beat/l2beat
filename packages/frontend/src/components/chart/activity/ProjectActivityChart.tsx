@@ -2,12 +2,17 @@ import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
+import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
 import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
+import { formatTimestamp } from '~/utils/dates'
+import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import { formatInteger } from '~/utils/number-format/formatInteger'
+import { formatUopsRatio } from '~/utils/number-format/formatUopsRatio'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
@@ -119,6 +124,55 @@ export function ProjectActivityChart({
           <RadioGroupItem value="lin">LIN</RadioGroupItem>
         </RadioGroup>
       </div>
+      <ChartStats className="mt-4 md:grid-cols-2 lg:grid-cols-4">
+        <ChartStatsItem
+          label={`Past Day ${metric === 'tps' ? 'TPS' : 'UOPS'}`}
+          className="max-md:h-7"
+          tooltip={`${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day.`}
+          isLoading={isLoading}
+        >
+          {chart?.stats?.[metric].pastDayCount
+            ? formatActivityCount(chart?.stats?.[metric].pastDayCount)
+            : 'No data'}
+        </ChartStatsItem>
+        <ChartStatsItem
+          label={`Past Day ${metric === 'tps' ? 'Txs' : 'Ops'} count`}
+          className="max-md:h-7"
+          isLoading={isLoading}
+        >
+          {chart?.stats?.[metric].pastDaySum
+            ? formatInteger(chart?.stats?.[metric].pastDaySum)
+            : 'No data'}
+        </ChartStatsItem>
+        <ChartStatsItem
+          label={`Max. ${metric === 'tps' ? 'TPS' : 'UOPS'}`}
+          className="max-md:h-7"
+          isLoading={isLoading}
+        >
+          {chart?.stats?.[metric].maxCount ? (
+            <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
+              <div>
+                {formatActivityCount(chart?.stats?.[metric].maxCount.value)}
+              </div>
+              <div className="font-medium text-label-value-14 text-secondary">
+                {formatTimestamp(chart?.stats?.[metric].maxCount.timestamp)}
+              </div>
+            </div>
+          ) : (
+            'No data'
+          )}
+        </ChartStatsItem>
+        <ChartStatsItem
+          label="Past day UOPS/TPS Ratio"
+          className="max-md:h-7"
+          tooltip="The ratio of user operations to transactions over the past day. A high ratio indicates that for some transactions multiple individual user operations are bundled in a single transaction."
+          isLoading={isLoading}
+        >
+          {ratioData?.at(-1)?.ratio
+            ? formatUopsRatio(ratioData?.at(-1)?.ratio ?? 1)
+            : 'No data'}
+        </ChartStatsItem>
+      </ChartStats>
     </div>
   )
 }

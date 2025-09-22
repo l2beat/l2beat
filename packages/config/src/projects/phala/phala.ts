@@ -100,7 +100,7 @@ export const phala: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://rpc.phala.network/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },
@@ -190,7 +190,12 @@ export const phala: ScalingProject = {
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
   },
-  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.RaaS.Conduit],
+  badges: [
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.RaaS.Conduit,
+    BADGES.Stack.OPSuccinct,
+  ],
   type: 'layer2',
   riskView: {
     stateValidation: {

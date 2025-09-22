@@ -44,7 +44,7 @@ export const wonder: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.mainnet.wonderchain.org',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

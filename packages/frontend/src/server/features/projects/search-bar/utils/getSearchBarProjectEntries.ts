@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { env } from '~/env'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { SearchBarProject } from '../types'
 import { getSearchBarProjectKind } from './getSearchBarProjectKind'
@@ -14,6 +13,7 @@ export function getSearchBarProjectEntries<
     | 'isDaLayer'
     | 'isBridge'
     | 'ecosystemConfig'
+    | 'zkCatalogInfo'
   >,
 >(project: T, allProjects: T[]) {
   const results: SearchBarProject[] = []
@@ -22,7 +22,8 @@ export function getSearchBarProjectEntries<
     !project.isBridge &&
     !project.daLayer &&
     !project.daBridge &&
-    !project.ecosystemConfig
+    !project.ecosystemConfig &&
+    !project.zkCatalogInfo
   ) {
     return []
   }
@@ -81,11 +82,19 @@ export function getSearchBarProjectEntries<
     }
   }
 
-  if (project.ecosystemConfig && env.CLIENT_SIDE_PARTNERS) {
+  if (project.ecosystemConfig) {
     results.push({
       ...common,
       href: `/ecosystems/${project.slug}`,
       category: 'ecosystems',
+    })
+  }
+
+  if (project.zkCatalogInfo) {
+    results.push({
+      ...common,
+      href: `/zk-catalog/${project.slug}`,
+      category: 'zkCatalog',
     })
   }
 

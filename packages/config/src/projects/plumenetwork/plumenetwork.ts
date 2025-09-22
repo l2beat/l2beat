@@ -72,7 +72,7 @@ export const plumenetwork: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.plume.org',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     multicallContracts: [
