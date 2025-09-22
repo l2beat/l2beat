@@ -5,6 +5,7 @@ import type { ICache } from '~/server/cache/ICache'
 import { getMonthlyUpdateEntry } from '~/server/features/monthly-reports/getMonthlyUpdateEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getMonthlyUpdateData(
@@ -13,6 +14,7 @@ export async function getMonthlyUpdateData(
   url: string,
   cache: ICache,
 ): Promise<RenderData> {
+  const helpers = getSsrHelpers()
   const [appLayoutProps, monthlyUpdateEntry] = await Promise.all([
     getAppLayoutProps(),
     cache.get(
@@ -21,7 +23,7 @@ export async function getMonthlyUpdateData(
         ttl: UnixTime.HOUR,
         staleWhileRevalidate: UnixTime.HOUR,
       },
-      () => getMonthlyUpdateEntry(monthlyUpdate),
+      () => getMonthlyUpdateEntry(monthlyUpdate, helpers),
     ),
   ])
 
@@ -43,6 +45,7 @@ export async function getMonthlyUpdateData(
       props: {
         ...appLayoutProps,
         entry: monthlyUpdateEntry,
+        queryState: helpers.dehydrate(),
       },
     },
   }
