@@ -23,7 +23,7 @@ export class QueryExecutor {
     query: Q,
     expires?: number,
   ): Promise<Simplify<QueryResultWithTimestamp<Q['name']>>> {
-    const key = this.cache.generateKey('getTvsChartQuery', query.args)
+    const key = this.cache.generateKey(query.name, query.args)
 
     this.logger.info(`Checking cache (key: ${key})`)
 
