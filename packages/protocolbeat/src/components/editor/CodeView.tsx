@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useMultiViewStore } from '../../multi-view/store'
+import { useMultiViewStore } from '../../apps/discovery/multi-view/store'
 import { Editor } from './editor'
 import { useCodeStore } from './store'
 
