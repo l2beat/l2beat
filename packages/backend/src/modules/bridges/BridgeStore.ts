@@ -106,59 +106,6 @@ export class BridgeStore implements BridgeEventDb {
   }
 }
 
-export function getMatching<T>(
-  events: BridgeEvent<T>[],
-  query: BridgeEventQuery<T>,
-): BridgeEvent<T>[] {
-  const filtered = events.filter((e) => matchesQuery(e, query))
-  if (query.sameTxAfter) {
-    events.sort((a, b) => a.ctx.logIndex - b.ctx.logIndex)
-  } else if (query.sameTxBefore) {
-    events.sort((a, b) => b.ctx.logIndex - a.ctx.logIndex)
-  }
-  return filtered
-}
-
-function matchesQuery<T>(
-  event: BridgeEvent<T>,
-  query: BridgeEventQuery<T>,
-): boolean {
-  for (const key in query) {
-    if (key === 'ctx') {
-      for (const ctxKey in query[key]) {
-        // @ts-ignore
-        if (event.ctx[ctxKey] !== query.ctx[ctxKey]) {
-          return false
-        }
-      }
-    } else if (key !== 'sameTxBefore' && key !== 'sameTxAfter') {
-      // @ts-ignore
-      if (event.args[key] !== query[key]) {
-        return false
-      }
-    }
-  }
-  if (query.sameTxAfter) {
-    if (
-      event.ctx.chain !== query.sameTxAfter.ctx.chain ||
-      event.ctx.txHash !== query.sameTxAfter.ctx.txHash ||
-      event.ctx.logIndex <= query.sameTxAfter.ctx.logIndex
-    ) {
-      return false
-    }
-  }
-  if (query.sameTxBefore) {
-    if (
-      event.ctx.chain !== query.sameTxBefore.ctx.chain ||
-      event.ctx.txHash !== query.sameTxBefore.ctx.txHash ||
-      event.ctx.logIndex >= query.sameTxBefore.ctx.logIndex
-    ) {
-      return false
-    }
-  }
-  return true
-}
-
 function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
   return {
     eventId: record.eventId,

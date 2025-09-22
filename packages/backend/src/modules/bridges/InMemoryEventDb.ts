@@ -67,8 +67,6 @@ export class InMemoryEventDb implements BridgeEventDb {
           }
         }
       }
-      console.log('NEW INDEX CREATED', type.type, fields, ctxFields)
-      console.log('NEW INDEX CREATED', indexKey)
       index = new EventIndex(type.type, fields, ctxFields)
       this.indices.set(indexKey, index)
       for (const event of this.allEvents.values()) {

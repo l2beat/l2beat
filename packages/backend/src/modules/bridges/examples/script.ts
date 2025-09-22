@@ -23,7 +23,7 @@ import type {
   BridgeTransfer,
   BridgeTransferWithFinancials,
 } from '../plugins/types'
-import { InMemoryEventDb } from './InMemoryEventDb'
+import { InMemoryEventDb } from '../InMemoryEventDb'
 
 export function readJsonc(path: string): JSON {
   const contents = readFileSync(path, 'utf-8')
@@ -176,7 +176,10 @@ async function runExample(example: Example): Promise<RunResult> {
     }
   }
 
-  const eventDb = new InMemoryEventDb(events)
+  const eventDb = new InMemoryEventDb()
+  for (const event of events) {
+    eventDb.addEvent(event)
+  }
 
   const result = await match(
     eventDb,
