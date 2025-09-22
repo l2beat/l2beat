@@ -321,6 +321,9 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
       '@l2beat/validate':
         specifier: workspace:*
         version: link:../validate
@@ -330,10 +333,6 @@ importers:
       redis:
         specifier: ^4.7.0
         version: 4.7.0
-    devDependencies:
-      '@l2beat/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
 
   packages/database:
     dependencies:
