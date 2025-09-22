@@ -2,6 +2,7 @@ import clsx from 'clsx'
 
 import { AddressIcon } from '../../common/AddressIcon'
 import { IconInitial } from '../../icons/IconInitial'
+import { useIsContractExternal } from '../../hooks/useContractTags'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
 import {
@@ -18,7 +19,9 @@ export interface NodeViewProps {
 }
 
 export function NodeView(props: NodeViewProps) {
-  const { isDark } = getColor(props.node)
+  const projectId = useStore((state) => state.projectId)
+  const isExternal = useIsContractExternal(projectId, props.node.address)
+  const { isDark } = getColor({ ...props.node, isExternal })
 
   const fullHeight =
     props.node.addressType === 'EOA' && props.node.fields.length === 0
@@ -46,12 +49,12 @@ export function NodeView(props: NodeViewProps) {
         )}
         style={{
           height: fullHeight ? HEADER_HEIGHT : HEADER_HEIGHT - 4,
-          background: getTitleBackground(props.node),
+          background: getTitleBackground(props.node, isExternal),
         }}
       >
         <AddressIcon type={props.node.addressType} />
         <div className="truncate">{props.node.name}</div>
-        <div className="flex items-center">
+        <div className="flex items-center gap-1">
           {props.node.isInitial && <IconInitial className="text-aux-green" />}
           {props.node.hasTemplate && (
             <IconInitial className="text-aux-orange" />
@@ -81,8 +84,8 @@ export function NodeView(props: NodeViewProps) {
   )
 }
 
-function getTitleBackground(node: Node): string {
-  const { color, isDark } = getColor(node)
+function getTitleBackground(node: Node, isExternal: boolean): string {
+  const { color, isDark } = getColor({ ...node, isExternal })
   if (!node.isInitial) {
     return color
   }

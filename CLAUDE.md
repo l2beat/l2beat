@@ -15,7 +15,7 @@
 ```bash
 # Setup and run
 pnpm install && pnpm build:dependencies
-cd packages/config && l2b ui  # http://localhost:2021/ui
+cd ~/defidisco/packages/config && l2b ui  # http://localhost:2021/ui
 
 # Sync upstream
 git fetch upstream && git merge upstream/main

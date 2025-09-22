@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "lastModified": "2025-09-22T15:37:16.254Z",
+  "tags": [
+    {
+      "contractAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "isExternal": true,
+      "timestamp": "2025-09-22T15:37:16.254Z"
+    },
+    {
+      "contractAddress": "0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
+      "isExternal": false,
+      "timestamp": "2025-09-22T15:26:26.067Z"
+    }
+  ]
+}

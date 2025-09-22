@@ -7,6 +7,8 @@ import type {
   ApiListTemplatesResponse,
   ApiPermissionOverridesResponse,
   ApiPermissionOverridesUpdateRequest,
+  ApiContractTagsResponse,
+  ApiContractTagsUpdateRequest,
   ApiPreviewResponse,
   ApiProjectResponse,
   ApiProjectsResponse,
@@ -237,6 +239,32 @@ export async function updatePermissionOverride(
   request: ApiPermissionOverridesUpdateRequest
 ): Promise<void> {
   const res = await fetch(`/api/projects/${project}/permission-overrides`, {
+    method: 'PUT',
+    body: JSON.stringify(request),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+}
+
+export async function getContractTags(project: string): Promise<ApiContractTagsResponse> {
+  const res = await fetch(`/api/projects/${project}/contract-tags`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiContractTagsResponse
+}
+
+export async function updateContractTag(
+  project: string,
+  request: ApiContractTagsUpdateRequest
+): Promise<void> {
+  const res = await fetch(`/api/projects/${project}/contract-tags`, {
     method: 'PUT',
     body: JSON.stringify(request),
     headers: {

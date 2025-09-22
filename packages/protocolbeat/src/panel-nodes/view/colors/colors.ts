@@ -22,17 +22,21 @@ export function getColor({
   color,
   hueShift,
   addressType,
+  isExternal,
 }: {
   id: string
   color: number
   hueShift: number
   addressType: ApiAddressType
+  isExternal?: boolean
 }): { color: string; isDark: boolean } {
   const result =
     color === 0
       ? addressType === 'Unknown'
         ? { color: colors.aux.red, isDark: false }
-        : getChainColor(id.split(':')[0] ?? '')
+        : isExternal
+          ? { color: colors.aux.orange, isDark: false }
+          : getChainColor(id.split(':')[0] ?? '')
       : (SELECTABLE_COLORS[color - 1] ?? { color: colors.white, isDark: false })
 
   const colorCopy = {

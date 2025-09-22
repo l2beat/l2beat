@@ -255,3 +255,21 @@ export interface ApiPermissionOverridesUpdateRequest {
   description?: string
   ownerDefinitions?: OwnerDefinition[]
 }
+
+// Contract tags types
+export interface ApiContractTagsResponse {
+  version: string
+  lastModified: string
+  tags: ContractTag[]
+}
+
+export interface ContractTag {
+  contractAddress: string
+  isExternal: boolean
+  timestamp: string
+}
+
+export interface ApiContractTagsUpdateRequest {
+  contractAddress: string
+  isExternal?: boolean
+}

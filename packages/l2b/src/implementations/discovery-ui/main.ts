@@ -23,6 +23,10 @@ import {
   updatePermissionOverride,
   resolveOwnersFromDiscovered,
 } from './permissionOverrides'
+import {
+  getContractTags,
+  updateContractTag,
+} from './contractTags'
 import { generatePermissionsReport } from './generatePermissionsReport'
 import {
   attachTemplateRouter,
@@ -235,6 +239,46 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
         error: 'Failed to resolve owners',
         details: error instanceof Error ? error.message : 'Unknown error'
       })
+    }
+  })
+
+  // Contract tags endpoints
+  app.get('/api/projects/:project/contract-tags', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const response = getContractTags(paths, project)
+      res.json(response)
+    } catch (error) {
+      console.error('Error loading contract tags:', error)
+      res.status(500).json({ error: 'Failed to load contract tags' })
+    }
+  })
+
+  app.put('/api/projects/:project/contract-tags', (req, res) => {
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      updateContractTag(paths, project, req.body)
+      res.json({ success: true })
+    } catch (error) {
+      console.error('Error updating contract tags:', error)
+      res.status(500).json({ error: 'Failed to update contract tags' })
     }
   })
 
