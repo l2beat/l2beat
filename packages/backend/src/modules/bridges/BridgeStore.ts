@@ -79,31 +79,15 @@ export class BridgeStore implements BridgeEventDb {
   }
 
   async deleteExpired(now: UnixTime) {
-    const expired = new Set<string>()
-    // TODO: delete expired
-    // for (const [type, events] of this.events.entries()) {
-    //   let some = false
-    //   for (const event of events) {
-    //     if (event.expiresAt <= now) {
-    //       some = true
-    //       expired.add(event.eventId)
-    //     }
-    //   }
-    //   if (some) {
-    //     this.events.set(
-    //       type,
-    //       events.filter((x) => x.expiresAt > now),
-    //     )
-    //   }
-    // }
-
+    for (const event of this.unmatched) {
+      if (event.expiresAt <= now) {
+        this.newMatched.delete(event.eventId)
+        this.newUnsupported.delete(event.eventId)
+        this.eventDb.removeEvent(event.eventId)
+      }
+    }
     this.unmatched = this.unmatched.filter((x) => x.expiresAt > now)
     this.newEvents = this.newEvents.filter((x) => x.expiresAt > now)
-
-    for (const id of expired) {
-      this.newMatched.delete(id)
-    }
-
     await this.db.bridgeEvent.deleteExpired(now)
   }
 
