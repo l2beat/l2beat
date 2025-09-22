@@ -2,15 +2,15 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createConfigFile } from '../../api/api'
-import { Title } from '../../common/Title'
 import { Button } from '../../components/Button'
 import { Checkbox } from '../../components/Checkbox'
 import { Input, InputDescription } from '../../components/Input'
 import { Loader } from '../../components/Loader'
-import { useTerminalStore } from '../../panel-terminal/store'
+import { Title } from '../../components/Title'
 import { DiscoveryLookup } from './components/DiscoveryLookup'
 import { InitialAddressesInput } from './components/InitialAddressesInput'
 import { TypeTile } from './components/ProjectTypeTile'
+import { useTerminalStore } from './panel-terminal/store'
 
 export function NewProjectPage() {
   const navigate = useNavigate()

@@ -1,5 +1,5 @@
 import ansiHTML from 'ansi-html'
-import { useTerminalStore } from '../../../panel-terminal/store'
+import { useTerminalStore } from '../panel-terminal/store'
 
 type Props = {
   lines: number
