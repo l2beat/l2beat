@@ -39,164 +39,95 @@ git fetch upstream && git merge upstream/main
 
 ---
 
-## DefidDisco Enhancements
+## DefidDisco Architecture
+
+### Minimal Integration Principle ⭐
+**Core Philosophy**: Minimize modifications to original L2BEAT files to ensure easy upstream merges
+
+### Code Organization
+**DefidDisco folders** (keep all our code here):
+- `packages/protocolbeat/src/defidisco/` - All UI components, extensions, icons
+- `packages/l2b/src/implementations/discovery-ui/defidisco/` - All backend modules
+- `packages/discovery/src/discovery/handlers/defidisco/` - Discovery handlers
+
+**Integration points** (minimal modifications only):
+- `ValuesPanel.tsx` - Single `<ValuesPanelExtensions>` line
+- `TerminalPanel.tsx` - Single `<TerminalExtensions>` line
+- `main.ts` - API endpoint registrations (unavoidable)
+- `api.ts` - DefidDisco API functions (unavoidable)
 
 ### Repository Setup
 - **Fork**: `~/defidisco/` (complete L2BEAT fork)
 - **Why Fork**: Avoids dependency issues with unpublished internal packages
 - **Benefits**: Full toolchain access, easy upstream sync
 
-### Enhancement 1: Function Permission Analysis ✅
+## DefidDisco Features
 
-**Added:** `FunctionPermissionHandler` analyzes write function permissions in source code
+### Function Permission Analysis ✅
+**Discovery Handler**: `WriteFunctionPermissionHandler` in `/defidisco/` folder
+- Analyzes write function permissions in source code
+- Handler config: `"handler": { "type": "functionPermission" }`
+- **Critical**: Run `pnpm run generate-schemas && pnpm build` after handler changes
 
-**Critical Pattern - Handler Config:**
-```json
-{
-  "fields": {
-    "functionPermissions": {
-      "handler": { "type": "functionPermission" }  // Must wrap in "handler" object
-    }
-  }
-}
-```
+### Interactive Permission Management ✅
+**UI System**: Complete permission management in `/defidisco/ValuesPanelExtensions.tsx`
+- **Data Separation**: Discovered permissions vs user overrides (persistent)
+- **Three Attributes**: Checked (✓), Permission (🔒), Risk Score (⚡)
+- **Features**: Expandable functions, code navigation, owner tracking
+- **Performance**: File caching, optimistic updates, debounced inputs
 
-**Essential Steps:**
-1. Create handler in `packages/discovery/src/discovery/handlers/user/`
-2. Register in `index.ts`
-3. **Always run:** `cd packages/discovery && pnpm run generate-schemas && pnpm build`
-
-### Enhancement 2: Interactive Permission UI ✅
-
-**Added:** Complete UI system for managing function permissions
-
-**Architecture:**
-- **Data Separation**: Discovered permissions (ephemeral) vs user overrides (persistent)
-- **File Storage**: `permission-overrides.json` for user data only
-- **User Priority**: Manual classifications override auto-detection
-- **Performance**: File caching (3ms response), optimistic UI updates
-
-**Components:**
-- Icons: Lock (🔒), Check (✓), Score (⚡), Open (📁)
-- `PermissionsDisplay.tsx`: Main permission management UI
-- Backend API: GET/PUT endpoints for override management
-
-### Enhancement 3: Enhanced Attributes ✅
-
-**Three Interactive Attributes per Function:**
-- **✓ Checked**: Task completion (gray → green)
-- **🔒 Permission**: Access control (gray → red)
-- **⚡ Score**: Risk assessment (gray → green → orange → red)
-
-**Data Model:**
-```json
-{
-  "contractAddress": "eth:0x...",
-  "functionName": "admin",
-  "userClassification": "permissioned",
-  "checked": true,
-  "score": "medium-risk",
-  "description": "Function documentation",
-  "ownerDefinitions": [...]
-  "timestamp": "2025-09-17T16:46:36.131Z"
-}
-```
-
-### Enhancement 4: Expandable Functions + Navigation ✅
-
-**UI Improvements:**
-- **Dropdowns**: Functions expand to show description textarea
-- **Debounced Input**: 500ms delay for description saves
-- **Code Navigation**: 📁 icon opens function in Code panel
-- **Multi-occurrence**: Counter-based cycling through function definitions
-- **Scroll Reset**: Horizontal scroll to 0 for readability
-
-### Enhancement 5: Function Owner Tracking ✅
-
-**Multiple Owner Definition Types:**
-- **Field Type**: Points to contract fields (admin(), owner(), governor())
-- **Role Type**: Points to AccessControl roles (DEFAULT_ADMIN_ROLE, PAUSER_ROLE)
-- **Smart Dropdowns**: Populated from discovered contracts and fields
-- **Real-time Resolution**: Resolves addresses from discovered data
-
-**Owner Definition Schema:**
-```json
-{
-  "type": "field",
-  "field": {
-    "contractAddress": "eth:0x...",
-    "method": "admin"
-  }
-}
-```
-
-**UI Features:**
-- Contract names with addresses for clarity
-- Resolved addresses displayed under definitions
-- Manage Function Owners interface for CRUD operations
-- Supports both initial and discovered contracts
-
-### Enhancement 6: Permissions Report Generation ✅
-
-**Terminal Panel Button:** "Generate Permissions Report" creates markdown table
-- **Input**: `permission-overrides.json` (filters permissioned functions only)
-- **Output**: `permissions.md` with Contract, Function, Impact, Owner columns
-- **Features**: Maps addresses to contract names, resolves owner definitions
-- **API**: `/api/terminal/generate-permissions-report` (Server-Sent Events)
+### Permissions Report Generation ✅
+**Terminal Integration**: Button in `/defidisco/TerminalExtensions.tsx`
+- Generates markdown table from `permission-overrides.json`
+- Maps addresses to contract names, resolves owner definitions
+- Server-Sent Events API for real-time output
 
 ---
 
-## Development Patterns
+## Development Guidelines
 
-### Handler Development
-1. Create in `packages/discovery/src/discovery/handlers/user/`
-2. Register in `index.ts` with imports
-3. **Critical**: Run `pnpm run generate-schemas` from discovery package
-4. Test on single contract first
+### 🎯 Minimal Integration Principle
+**ALWAYS write new code in `/defidisco/` folders**
+- UI components → `packages/protocolbeat/src/defidisco/`
+- Backend modules → `packages/l2b/src/implementations/discovery-ui/defidisco/`
+- Discovery handlers → `packages/discovery/src/discovery/handlers/defidisco/`
 
-### UI Development
-1. **Separate concerns**: Keep original components unchanged, add new sections
-2. **React Query**: Proper cache invalidation for immediate updates
-3. **Optimistic updates**: Immediate feedback with error rollback
-4. **Performance**: Cache file parsing, debounce inputs
+**Integration points should be minimal:**
+- Single import + single component usage in UI files
+- API functions in `api.ts` (unavoidable for frontend consumption)
+- Endpoint registration in `main.ts` (unavoidable for routing)
 
-### Common Mistakes
-- ❌ **Handler config**: Forgetting to wrap in `"handler"` object
-- ❌ **Schema updates**: Not regenerating after handler changes
-- ❌ **Data mixing**: Polluting discovered data with user data
-- ❌ **Cache stale**: Not invalidating React Query after mutations
+### Development Patterns
+**Handler Development:**
+1. Create in `/defidisco/` folder, register in main `index.ts`
+2. **Critical**: Run `pnpm run generate-schemas && pnpm build`
+3. Handler config must wrap in `"handler"` object
+
+**UI Development:**
+1. Create extension components in `/defidisco/`
+2. Use React Query with proper cache invalidation
+3. Implement optimistic updates with error rollback
+
+**Common Mistakes:**
+- ❌ Writing DefidDisco code in original L2BEAT files
+- ❌ Not regenerating schemas after handler changes
+- ❌ Mixing discovered data with user data
 
 ### File Structure
 ```
 packages/
-├── discovery/src/discovery/handlers/user/
-│   ├── FunctionPermissionHandler.ts
-│   └── index.ts (registration)
-├── protocolbeat/src/
-│   ├── icons/ (UI icons)
-│   ├── panel-values/PermissionsDisplay.tsx
-│   └── components/editor/editor.ts (navigation)
-├── l2b/src/implementations/discovery-ui/
-│   ├── permissionOverrides.ts (backend)
-│   └── main.ts (API endpoints)
+├── discovery/src/discovery/handlers/defidisco/
+│   └── WriteFunctionPermissionHandler.ts
+├── protocolbeat/src/defidisco/
+│   ├── ValuesPanelExtensions.tsx
+│   ├── TerminalExtensions.tsx
+│   └── icons/
+├── l2b/src/implementations/discovery-ui/defidisco/
+│   ├── permissionOverrides.ts
+│   ├── contractTags.ts
+│   └── generatePermissionsReport.ts
 └── config/src/projects/compound-v3/
-    └── permission-overrides.json (user data)
+    └── permission-overrides.json
 ```
 
-## Future Development
-
-### Next Features
-- Add tag to specific contracts to mark them as external
-- Assign permission owners of each functions
-- DeFi-specific templates (Compound, Aave, Uniswap)
-- Advanced risk scoring algorithms
-- Export/import capabilities
-
-### Best Practices
-- Study existing L2BEAT patterns before extending
-- Test: single contract → full project → multiple projects
-- Cache heavy operations, optimize UI responsiveness
-- Keep discovered vs user data strictly separated
-- Update this guide with new patterns
-
-This guide captures essential knowledge for extending DefidDisco while avoiding common development pitfalls.
+**Future Development:** Follow the minimal integration principle to ensure easy upstream merges and maintainable code separation.

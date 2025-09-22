@@ -105,7 +105,7 @@ import {
 import {
   WriteFunctionPermissionHandler,
   WriteFunctionPermissionDefinition,
-} from './WriteFunctionPermissionHandler'
+} from '../defidisco/WriteFunctionPermissionHandler'
 
 export type UserHandlerDefinition = v.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = v.union([

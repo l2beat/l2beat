@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-22T12:23:34.569Z",
+  "lastModified": "2025-09-22T17:09:38.867Z",
   "overrides": [
     {
       "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
@@ -120,13 +120,6 @@
       "timestamp": "2025-09-17T16:09:02.745Z"
     },
     {
-      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "functionName": "upgradeTo",
-      "userClassification": "permissioned",
-      "checked": true,
-      "timestamp": "2025-09-17T16:43:00.897Z"
-    },
-    {
       "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
       "functionName": "pause",
       "userClassification": "permissioned",
@@ -222,7 +215,7 @@
       "functionName": "admin",
       "userClassification": "permissioned",
       "checked": true,
-      "score": "high-risk",
+      "score": "low-risk",
       "description": "This function is a simple getter on the current admin address.",
       "ownerDefinitions": [
         {
@@ -240,7 +233,15 @@
           }
         }
       ],
-      "timestamp": "2025-09-22T12:23:34.569Z"
+      "timestamp": "2025-09-22T16:36:29.724Z"
+    },
+    {
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "functionName": "upgradeTo",
+      "userClassification": "permissioned",
+      "checked": true,
+      "score": "low-risk",
+      "timestamp": "2025-09-22T17:09:38.866Z"
     }
   ]
 }

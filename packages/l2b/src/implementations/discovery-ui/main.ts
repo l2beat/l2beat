@@ -22,16 +22,17 @@ import {
   getPermissionOverrides,
   updatePermissionOverride,
   resolveOwnersFromDiscovered,
-} from './permissionOverrides'
+} from './defidisco/permissionOverrides'
 import {
   getContractTags,
   updateContractTag,
-} from './contractTags'
-import { generatePermissionsReport } from './generatePermissionsReport'
+} from './defidisco/contractTags'
+import { generatePermissionsReport } from './defidisco/generatePermissionsReport'
 import {
   attachTemplateRouter,
   listTemplateFilesSchema,
 } from './templates/router'
+
 
 const safeStringSchema = z
   .string()

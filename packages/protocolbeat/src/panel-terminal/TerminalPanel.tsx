@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom'
 import { Checkbox } from '../components/Checkbox'
 import { usePanelStore } from '../store/store'
 import { useTerminalStore } from './store'
+import { TerminalExtensions } from '../defidisco/TerminalExtensions'
+
 
 ansiHTML.setColors({
   reset: ['F0D8BD', '1D1816'], // [fg, bg]
@@ -33,7 +35,7 @@ export function TerminalPanel() {
     clear,
     setDevMode,
     findMinters,
-    generatePermissionsReport,
+    // generatePermissionsReport, // moved to DefidDisco extension
     killCommand,
   } = useTerminalStore()
   const selectedAddress = usePanelStore((state) => state.selected)
@@ -128,15 +130,7 @@ export function TerminalPanel() {
           >
             Find minters
           </button>
-          <button
-            onClick={() => {
-              generatePermissionsReport(project)
-            }}
-            disabled={command.inFlight}
-            className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
-          >
-            Generate Permissions Report
-          </button>
+          <TerminalExtensions project={project} />
         </div>
       </div>
       <div

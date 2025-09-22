@@ -13,8 +13,9 @@ import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
 import { FieldDisplay } from './Field'
 import { Folder } from './Folder'
-import { PermissionsDisplay } from './PermissionsDisplay'
+import { ValuesPanelExtensions } from '../defidisco/ValuesPanelExtensions'
 import { TemplateDialog } from './template-dialog/TemplateDialog'
+
 
 export function ValuesPanel() {
   const { project } = useParams()
@@ -197,11 +198,7 @@ function Display({
           <AbiDisplay abis={selected.abis} />
         </Folder>
       )}
-      {'abis' in selected && selected.abis.length > 0 && (
-        <Folder title="Permissions" collapsed>
-          <PermissionsDisplay abis={selected.abis} />
-        </Folder>
-      )}
+      <ValuesPanelExtensions selected={selected} abis={'abis' in selected ? selected.abis : []} />
     </>
   )
 }

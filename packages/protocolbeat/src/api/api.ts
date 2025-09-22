@@ -276,3 +276,4 @@ export async function updateContractTag(
     throw new Error(res.statusText)
   }
 }
+
