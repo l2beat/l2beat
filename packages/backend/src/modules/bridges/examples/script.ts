@@ -16,6 +16,7 @@ import { logToViemLog } from '../BridgeBlockProcessor'
 import { match } from '../BridgeMatcher'
 import { FinancialsService } from '../financials/FinancialsService'
 import { INTEROP_TOKENS } from '../financials/tokens'
+import { InMemoryEventDb } from '../InMemoryEventDb'
 import { createBridgePlugins } from '../plugins'
 import type {
   BridgeEvent,
@@ -23,7 +24,6 @@ import type {
   BridgeTransfer,
   BridgeTransferWithFinancials,
 } from '../plugins/types'
-import { InMemoryEventDb } from '../InMemoryEventDb'
 
 export function readJsonc(path: string): JSON {
   const contents = readFileSync(path, 'utf-8')
