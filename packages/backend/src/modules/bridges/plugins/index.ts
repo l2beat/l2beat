@@ -4,6 +4,7 @@ import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { CCIPPlugIn } from './ccip'
 import { CCTPPlugin } from './cctp'
+import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
 import { HyperlanePlugIn } from './hyperlane'
@@ -31,6 +32,7 @@ export function createBridgePlugins(): BridgePlugin[] {
     new DeBridgePlugin(),
     new DeBridgeDlnPlugin(),
     new MayanForwarderPlugin(),
+    new CircleGatewayPlugIn(),
     new CCIPPlugIn(),
     new MayanSwiftPlugin(), // should be run before CCTP
     new MayanMctpPlugin(), // should be run before CCTP

@@ -158,6 +158,24 @@
     "messages": [],
     "transfers": []
   },
+  "circle-gateway": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x483b20a057700c6f26d710ebd15be1c079642895746dd00863805dc7adb44803"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe462862a70902e9739bff6152a5dc1e5fc74482f14825638a9e17e254751433a"
+      }
+    ],
+    "events": [
+      "circle-gateway.AttestationUsed",
+      "circle-gateway.GatewayBurned"
+    ],
+    "messages": ["circle-gateway.Message"],
+    "transfers": ["circle-gateway.Transfer"]
+  },
   "layerzerov1": {
     "txs": [
       {
