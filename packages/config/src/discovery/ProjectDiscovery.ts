@@ -964,10 +964,6 @@ export class ProjectDiscovery {
     // - it's an EOA with permissions to interact with parts of the system
     // - it's an EOA that's shared between projects[1]
     //
-    // We can remove EOAs that have only role permissions since their
-    // involvement in the system has already been taken into account when
-    // listing accounts with a given role.
-    //
     // [1] that's currently not possible to achieve. With the config refactor
     // moving forward when we reach a point where the config will be able to
     // introspect itself (reach into the configs of other projects) this point
@@ -983,12 +979,10 @@ export class ProjectDiscovery {
       const eoa = permissionedEoas.find(
         (eoa) => eoa.address === account.address,
       )
-      assert(eoa?.receivedPermissions !== undefined)
-      const hasOnlyRole = eoa.receivedPermissions.every((p) =>
-        RolePermissionEntries.map((x) => x.toString()).includes(p.permission),
-      )
 
-      return !hasOnlyRole
+      const permissionCount = eoa?.receivedPermissions?.length ?? 0
+
+      return permissionCount > 0
     })
 
     actors.forEach((permission) => {
