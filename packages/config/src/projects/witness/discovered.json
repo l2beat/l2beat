@@ -1,8 +1,7 @@
 {
   "name": "witness",
   "timestamp": 1738234259,
-  "configHash": "0x849c985a32f63759045f1fddea3ca805e0671008f633c85bdf6e59767044391b",
-  "sharedModules": ["shared-polygon-cdk"],
+  "configHash": "0x7bcaa25d0ab2426c1747f8329457a4e282a742cd14b5b1c9bb02bc8cecd29f3a",
   "entries": [
     {
       "name": "Verifier",

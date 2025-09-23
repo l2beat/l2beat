@@ -1,8 +1,7 @@
 {
   "name": "penchain",
   "timestamp": 1752752123,
-  "configHash": "0xe0d04d870094d8f8c0ebef9430d78e3361135ec04cc192007af6f0da206d4991",
-  "sharedModules": ["shared-polygon-cdk"],
+  "configHash": "0xbe52d96d282091d000624e18fc4cc66de8dfed0f981fe7f6b99dc5160a67dfd6",
   "entries": [
     {
       "address": "eth:0x02c7D29a0eA1dce127F75daa254F7aDab1EE9bb2",
