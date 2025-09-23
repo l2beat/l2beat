@@ -1,8 +1,7 @@
 {
   "name": "blobstream",
   "timestamp": 1752069683,
-  "configHash": "0xc8ef46cbbf6e0b7340780c5d21ebd280396fa760d148257a73171bfadf9858d6",
-  "sharedModules": ["shared-sp1"],
+  "configHash": "0x4aa5dd5425b028fdb108f79dc2c5ee2def5f0017d54f7dab00666a50be5437ce",
   "entries": [
     {
       "address": "arb1:0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
@@ -32,7 +31,7 @@
       "address": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Reference",
       "targetType": "Contract",
-      "targetProject": "shared-sp1"
+      "targetProject": "shared-sp1-gateway"
     },
     {
       "address": "arb1:0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
@@ -226,7 +225,7 @@
       "address": "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Reference",
       "targetType": "Contract",
-      "targetProject": "shared-sp1"
+      "targetProject": "shared-sp1-gateway"
     },
     {
       "address": "base:0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
@@ -420,7 +419,7 @@
       "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Reference",
       "targetType": "Contract",
-      "targetProject": "shared-sp1"
+      "targetProject": "shared-sp1-gateway"
     },
     {
       "address": "eth:0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",

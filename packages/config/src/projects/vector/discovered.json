@@ -1,8 +1,7 @@
 {
   "name": "vector",
   "timestamp": 1755605082,
-  "configHash": "0x704a4901eb1f39dd076867d376299e2b1c213e2fb09dad7082aed709835700ac",
-  "sharedModules": ["shared-sp1"],
+  "configHash": "0xfcef7802d2c4c0b4e4c10418d077cd93dd6ff7211741a69a97d4730cba5474cd",
   "entries": [
     {
       "name": "Vector",
@@ -222,7 +221,7 @@
       "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Reference",
       "targetType": "Contract",
-      "targetProject": "shared-sp1"
+      "targetProject": "shared-sp1-gateway"
     },
     {
       "name": "TimelockController",
@@ -305,7 +304,7 @@
       "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
       "type": "Reference",
       "targetType": "EOA",
-      "targetProject": "shared-sp1"
+      "targetProject": "shared-sp1-gateway"
     },
     {
       "name": "Avail Multisig 1",
