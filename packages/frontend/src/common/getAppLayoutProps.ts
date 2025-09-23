@@ -15,6 +15,7 @@ export async function getAppLayoutProps(): Promise<AppLayoutProps> {
       id: 'ecosystems-release',
       alt: 'Ecosystems release announcement',
       href: '/ecosystems/arbitrum-orbit',
+      mobileDisabledOnMatches: ['/ecosystems'],
       image: '/images/whats-new/ecosystems.png',
     },
   }

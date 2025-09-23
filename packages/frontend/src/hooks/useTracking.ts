@@ -9,6 +9,10 @@ export const PlausibleEvents = v.object({
   searchBarProjectSelected: v.object({ name: v.string() }),
   uopsExplorerSelected: v.undefined().optional(),
   trustedSetupFrameworkSelected: v.undefined().optional(),
+  whatsNewClicked: v.object({
+    device: v.enum(['desktop', 'mobile']),
+    action: v.enum(['open', 'close']),
+  }),
 
   // Filters
   filtersOpened: v.undefined().optional(),
