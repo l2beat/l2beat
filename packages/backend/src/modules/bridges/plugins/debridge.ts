@@ -134,7 +134,7 @@ export class DeBridgePlugin implements BridgePlugin {
     3. Create Message
     4. If amount > 0 create Transfer
   */
-  matchtypes = [Claimed]
+  matchTypes = [Claimed]
   match(claimed: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (!Claimed.checkType(claimed)) return
     const sent = db.find(Sent, {

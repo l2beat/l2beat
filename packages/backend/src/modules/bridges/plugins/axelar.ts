@@ -174,7 +174,7 @@ export class AxelarPlugin implements BridgePlugin {
     }
   }
 
-  matchtypes = [ContractCallApproved, ContractCallApprovedWithMint]
+  matchTypes = [ContractCallApproved, ContractCallApprovedWithMint]
   match(
     contractCallApproved: BridgeEvent,
     db: BridgeEventDb,

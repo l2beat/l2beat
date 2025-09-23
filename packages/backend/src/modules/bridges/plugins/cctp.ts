@@ -143,7 +143,7 @@ export class CCTPPlugin implements BridgePlugin {
     }
   }
 
-  matchtypes = [CCTPv1MessageReceived, CCTPv2MessageReceived]
+  matchTypes = [CCTPv1MessageReceived, CCTPv2MessageReceived]
   match(
     messageReceived: BridgeEvent,
     db: BridgeEventDb,
