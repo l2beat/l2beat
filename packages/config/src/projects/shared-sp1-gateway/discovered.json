@@ -1,7 +1,7 @@
 {
-  "name": "shared-sp1",
-  "timestamp": 1752073781,
-  "configHash": "0xe1fd211d8b9909bd15bc9e2566dfaff5bdae301c6d968c3d9cf1e2075a468be5",
+  "name": "shared-sp1-gateway",
+  "timestamp": 1758630631,
+  "configHash": "0x888d93c459086d0848459f028c089824fd1c71065c9740b318011467c0cce5ea",
   "entries": [
     {
       "name": "SP1Verifier",
@@ -714,9 +714,9 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": {
-    "base": 32642217,
-    "ethereum": 22882427,
-    "arbitrum": 355918557
+    "ethereum": 23425740,
+    "arbitrum": 382171350,
+    "base": 35920642
   },
   "permissionsConfigHash": "0x5678fb65a2cb6af3f59f17e28bc44010d83688acbd7074a596cc2b211030dcbf"
 }
