@@ -1,4 +1,4 @@
-/* 
+/*
 Circle Gateway plugin
 Note - here the transfer of USDC is via burn/mint, but mint on DST happens before burn on SRC.
 */
@@ -16,7 +16,7 @@ import {
   Result,
 } from './types'
 
-/* 
+/*
 event AttestationUsed(address indexed token, address indexed recipient, bytes32 indexed transferSpecHash, uint32 sourceDomain, bytes32 sourceDepositor, bytes32 sourceSigner, uint256 value)
 event GatewayBurned (address indexed token, address indexed depositor, bytes32 indexed transferSpecHash, uint32 destinationDomain, bytes32 destinationRecipient, address signer, uint256 value, uint256 fee, uint256 fromAvailable, uint256 fromWithdrawing)
 */
@@ -73,6 +73,7 @@ export class CircleGatewayPlugIn implements BridgePlugin {
       })
   }
 
+  matchTypes = [GatewayBurned]
   match(
     gatewayBurned: BridgeEvent,
     db: BridgeEventDb,
