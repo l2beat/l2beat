@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { createClient, type RedisClientType } from 'redis'
-import { getPackageHash } from '../repo-hash/getPackageHash'
+import { getPackageHash } from '../utils/getPackageHash'
 
 export interface CacheItem<T = unknown> {
   data: T
