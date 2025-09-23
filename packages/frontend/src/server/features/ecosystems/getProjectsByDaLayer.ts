@@ -8,8 +8,9 @@ export function getProjectsByDaLayer(
 ): ProjectsByDaLayer {
   const projectsByDaLayer = ecosystemProjects.reduce((acc, curr) => {
     const daLayer = curr.scalingInfo.daLayer
-    if (!daLayer) return acc
     const da = tmpHackGetFirst(daLayer)
+    // TODO: this is a hack - support daLayer being a list!
+    if (da === undefined) return acc
     if (!acc[da]) {
       acc[da] = 0
     }

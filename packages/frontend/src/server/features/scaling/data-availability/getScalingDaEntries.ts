@@ -4,7 +4,7 @@ import type {
   ProjectScalingProofSystem,
   ProjectScalingStack,
 } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import type { RosetteValue } from '~/components/rosette/types'
 import {
   mapBridgeRisksToRosetteValues,
@@ -114,9 +114,11 @@ function getScalingDaEntry(
   tvs: number | undefined,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingDaEntry {
+  const dataAvailability = tmpHackGetFirst(project.scalingDa)
+  assert(dataAvailability)
   return {
     ...getCommonScalingEntry({ project, changes }),
-    dataAvailability: tmpHackGetFirst(project.scalingDa),
+    dataAvailability,
     proofSystem: getProofSystemWithName(
       project.scalingInfo.proofSystem,
       zkCatalogProjects,
@@ -152,14 +154,17 @@ function getRisks(
     }
   }
 
-  const daLayerProject = daLayers.find(
-    (daLayer) =>
-      daLayer.id === tmpHackGetFirst(project.scalingDa).layer.projectId,
-  )
-  const daBridgeProject = daBridges.find(
-    (daBridge) =>
-      daBridge.id === tmpHackGetFirst(project.scalingDa).bridge.projectId,
-  )
+  const scalingDa = tmpHackGetFirst(project.scalingDa)
+  const daLayerProject =
+    scalingDa === undefined
+      ? undefined
+      : daLayers.find((daLayer) => daLayer.id === scalingDa.layer.projectId)
+
+  const daBridgeProject =
+    scalingDa === undefined
+      ? undefined
+      : daBridges.find((daBridge) => daBridge.id === scalingDa.bridge.projectId)
+
   if (!daLayerProject) {
     return undefined
   }
@@ -193,9 +198,11 @@ function getDaHref(
     }
   }
 
-  const daLayer = daLayers.find(
-    (l) => l.id === tmpHackGetFirst(project.scalingDa).layer.projectId,
-  )
+  const scalingDa = tmpHackGetFirst(project.scalingDa)
+  const daLayer =
+    scalingDa === undefined
+      ? undefined
+      : daLayers.find((l) => l.id === scalingDa.layer.projectId)
 
   if (!daLayer) {
     return undefined

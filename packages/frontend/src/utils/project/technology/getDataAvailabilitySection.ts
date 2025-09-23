@@ -108,28 +108,24 @@ function getPublicDaSection(
   project: Project<'statuses' | 'scalingTechnology', 'scalingDa'>,
   daSolution?: DaSolution,
 ): Extract<DataAvailabilitySection, { type: 'TechnologyChoicesSection' }> {
-  assert(
+  const dataAvailability = tmpHackGetFirst(
     project.scalingTechnology?.dataAvailability,
-    'dataAvailability is required',
   )
+  assert(dataAvailability, 'dataAvailability is required')
 
   const props = getTechnologyChoicesSectionProps(project, [
-    makeTechnologyChoice(
-      'data-availability',
-      tmpHackGetFirst(project.scalingTechnology.dataAvailability),
-      {
-        relatedProjectBanner: daSolution
-          ? {
-              text: 'Learn more about the DA layer here:',
-              project: {
-                name: daSolution.layerName,
-                icon: getProjectIcon(daSolution.layerSlug),
-              },
-              href: `/data-availability/projects/${daSolution.layerSlug}/${daSolution.bridgeSlug}`,
-            }
-          : undefined,
-      },
-    ),
+    makeTechnologyChoice('data-availability', dataAvailability, {
+      relatedProjectBanner: daSolution
+        ? {
+            text: 'Learn more about the DA layer here:',
+            project: {
+              name: daSolution.layerName,
+              icon: getProjectIcon(daSolution.layerSlug),
+            },
+            href: `/data-availability/projects/${daSolution.layerSlug}/${daSolution.bridgeSlug}`,
+          }
+        : undefined,
+    }),
   ])
   return {
     type: 'TechnologyChoicesSection',
