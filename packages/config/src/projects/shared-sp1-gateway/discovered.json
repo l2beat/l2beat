@@ -1,6 +1,6 @@
 {
   "name": "shared-sp1-gateway",
-  "timestamp": 1758630631,
+  "timestamp": 1758630794,
   "configHash": "0x888d93c459086d0848459f028c089824fd1c71065c9740b318011467c0cce5ea",
   "entries": [
     {
@@ -125,14 +125,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724204782,
       "sinceBlock": 245028307,
@@ -279,14 +271,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724206353,
       "sinceBlock": 18708503,
@@ -433,14 +417,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724204135,
       "sinceBlock": 20573748,
@@ -714,9 +690,8 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": {
-    "ethereum": 23425740,
-    "arbitrum": 382171350,
-    "base": 35920642
-  },
-  "permissionsConfigHash": "0x5678fb65a2cb6af3f59f17e28bc44010d83688acbd7074a596cc2b211030dcbf"
+    "ethereum": 23425754,
+    "arbitrum": 382172009,
+    "base": 35920723
+  }
 }

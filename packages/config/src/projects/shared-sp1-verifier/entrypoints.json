@@ -1,0 +1,19 @@
+{
+  "entrypoints": {
+    "arb1:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": {
+      "name": "SP1Verifier",
+      "type": "Contract",
+      "project": "shared-sp1-verifier"
+    },
+    "base:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": {
+      "name": "SP1Verifier",
+      "type": "Contract",
+      "project": "shared-sp1-verifier"
+    },
+    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": {
+      "name": "SP1Verifier",
+      "type": "Contract",
+      "project": "shared-sp1-verifier"
+    }
+  }
+}
