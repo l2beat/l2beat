@@ -4,15 +4,13 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import { getSyncState, type SyncState } from '../../utils/isSynced'
 import { countPerSecond } from './utils/countPerSecond'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
-import { getLastDayTps, getLastDayUops } from './utils/getLastDay'
 import { getLastDayRatio } from './utils/getLastDayRatio'
-import {
-  getTpsWeeklyChange,
-  getUopsWeeklyChange,
-} from './utils/getWeeklyChange'
 import { sumTpsCount, sumUopsCount } from './utils/sumActivityCount'
+import { getActivityAdjustedTimestamp } from './utils/syncStatus'
 
 export type ActivityProjectTableData = {
   tps: {
@@ -34,7 +32,7 @@ export type ActivityProjectTableData = {
     }
   }
   ratio: number
-  syncedUntil: number
+  syncState: SyncState
 }
 type ActivityTableData = Record<string, ActivityProjectTableData | undefined>
 
@@ -46,13 +44,17 @@ export async function getActivityTable(
   }
 
   const db = getDb()
-  const range = getFullySyncedActivityRange({ type: '30d' })
-  const [records, maxCounts] = await Promise.all([
+  const range = await getFullySyncedActivityRange({ type: '30d' })
+  const [records, maxCounts, syncMetadataRecords] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(
       [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
       range,
     ),
     db.activity.getMaxCountsForProjects(),
+    db.syncMetadata.getByFeatureAndIds('activity', [
+      ProjectId.ETHEREUM,
+      ...projects.map((p) => p.id),
+    ]),
   ])
 
   const grouped = groupBy(records, (r) => r.projectId)
@@ -71,12 +73,30 @@ export async function getActivityTable(
         `Max count for project ${projectId} not found`,
       )
 
+      const syncMetadata = syncMetadataRecords.find((r) => r.id === projectId)
+      if (projectId === 'ethereum') {
+        console.log(projectId, !!syncMetadata)
+      }
+      if (!syncMetadata) {
+        return [projectId, undefined]
+      }
+
+      const syncState = getSyncState(syncMetadata, range[1])
+      const syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
+      const pastDayData = records.find((r) => r.timestamp === syncedUntil)
+      const sevenDaysAgoData = records.find(
+        (r) => r.timestamp === syncedUntil - 7 * UnixTime.DAY,
+      )
+
       return [
         projectId,
         {
           tps: {
-            change: getTpsWeeklyChange(records),
-            pastDayCount: getLastDayTps(records),
+            pastDayCount: countPerSecond(pastDayData?.count ?? 0),
+            change: calculatePercentageChange(
+              pastDayData?.count ?? 0,
+              sevenDaysAgoData?.count ?? 0,
+            ),
             summedCount: sumTpsCount(records),
             maxCount: {
               value: countPerSecond(maxCount.count),
@@ -84,16 +104,22 @@ export async function getActivityTable(
             },
           },
           uops: {
-            change: getUopsWeeklyChange(records),
-            pastDayCount: getLastDayUops(records),
+            pastDayCount: countPerSecond(pastDayData?.uopsCount ?? 0),
             summedCount: sumUopsCount(records),
+            change: calculatePercentageChange(
+              pastDayData?.uopsCount ?? 0,
+              sevenDaysAgoData?.uopsCount ?? 0,
+            ),
             maxCount: {
               value: countPerSecond(maxCount.uopsCount),
               timestamp: maxCount.uopsTimestamp,
             },
           },
-          ratio: getLastDayRatio(records),
-          syncedUntil: lastRecord.timestamp,
+          ratio: getLastDayRatio(
+            pastDayData?.uopsCount ?? 0,
+            pastDayData?.count ?? 0,
+          ),
+          syncState,
         },
       ]
     }),
@@ -131,7 +157,11 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
           },
         },
         ratio: 1.1,
-        syncedUntil: UnixTime.now(),
+        syncState: {
+          isSynced: true,
+          syncedUntil: UnixTime.now(),
+          target: UnixTime.now(),
+        },
       },
     ]),
   )

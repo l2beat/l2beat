@@ -1,22 +1,23 @@
-import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getBucketValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getSyncState } from '../../utils/isSynced'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { countPerSecond } from './utils/countPerSecond'
 import { getActivityProjects } from './utils/getActivityProjects'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 import {
-  getActivitySyncWarning,
-  isActivitySynced,
-} from './utils/isActivitySynced'
-import {
   ActivityProjectFilter,
   createActivityProjectsFilter,
 } from './utils/projectFilterUtils'
 import { ActivityTimeRange } from './utils/range'
+import {
+  getActivityAdjustedTimestamp,
+  getActivitySyncWarning,
+} from './utils/syncStatus'
 
 export type ActivityChartParams = v.infer<typeof ActivityChartParams>
 export const ActivityChartParams = v.object({
@@ -84,7 +85,8 @@ export async function getActivityChart({
     .map((p) => p.id)
     .concat(ProjectId.ETHEREUM)
   const isSingleProject = projects.length === 2 // Ethereum + 1 other project
-  const adjustedRange = getFullySyncedActivityRange(range)
+  const adjustedRange = await getFullySyncedActivityRange(range)
+
   const [entries, maxCounts] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(projects, adjustedRange),
     db.activity.getMaxCountsForProjects(),
@@ -92,18 +94,31 @@ export async function getActivityChart({
 
   // By default, we assume we're always synced...
   let syncedUntil = adjustedRange[1]
-  let syncWarning = getActivitySyncWarning(syncedUntil)
+  let syncWarning = undefined
 
   // ...but if we are looking at a single project, we check the last day we have data for,
   // and use that as the cutoff.
   if (isSingleProject) {
-    const lastProjectEntry = entries.findLast(
-      (entry) => entry.projectId !== ProjectId.ETHEREUM,
+    const projectId = projects[0]
+    assert(projectId, 'Project ID is required')
+    const syncMetadata = await db.syncMetadata.getByFeatureAndId(
+      'activity',
+      projectId,
     )
-    if (lastProjectEntry) {
-      syncedUntil = lastProjectEntry.timestamp
-      syncWarning = getActivitySyncWarning(syncedUntil)
+
+    if (!syncMetadata || syncMetadata.syncedUntil === null) {
+      return {
+        data: [],
+        syncWarning,
+        syncedUntil: adjustedRange[1],
+        stats: undefined,
+      }
     }
+
+    const syncState = getSyncState(syncMetadata, adjustedRange[1])
+
+    syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
+    syncWarning = getActivitySyncWarning(syncState)
   }
 
   const aggregatedEntries = aggregateActivityRecords(entries)
@@ -112,11 +127,11 @@ export async function getActivityChart({
   }
 
   const startTimestamp = Math.min(...Object.keys(aggregatedEntries).map(Number))
-  const endTimestamp = isActivitySynced(syncedUntil)
-    ? syncedUntil
-    : adjustedRange[1]
 
-  const timestamps = generateTimestamps([startTimestamp, endTimestamp], 'daily')
+  const timestamps = generateTimestamps(
+    [startTimestamp, adjustedRange[1]],
+    'daily',
+  )
 
   const data: ActivityChartDataPoint[] = timestamps.map((timestamp) => {
     const isSynced = syncedUntil >= timestamp
@@ -201,7 +216,7 @@ function getMockActivityChart({
 
   return {
     data: timestamps.map((timestamp) => [+timestamp, 15, 11, 16, 12]),
-    syncWarning: getActivitySyncWarning(adjustedRange[1]),
+    syncWarning: undefined,
     syncedUntil: adjustedRange[1],
     stats: undefined,
   }

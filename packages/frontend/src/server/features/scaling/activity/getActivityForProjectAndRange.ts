@@ -4,7 +4,7 @@ import { getDb } from '~/server/database'
 import type { CostsTimeRange } from '../costs/utils/range'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 
-export function getActivityForProjectAndRange(
+export async function getActivityForProjectAndRange(
   projectId: string,
   range: CostsTimeRange,
 ) {
@@ -13,7 +13,7 @@ export function getActivityForProjectAndRange(
   }
 
   const db = getDb()
-  const fullySyncedRange = getFullySyncedActivityRange({ type: range })
+  const fullySyncedRange = await getFullySyncedActivityRange({ type: range })
 
   return db.activity.getByProjectAndTimeRange(
     ProjectId(projectId),
