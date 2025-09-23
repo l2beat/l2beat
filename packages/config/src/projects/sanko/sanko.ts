@@ -59,7 +59,7 @@ export const sanko: ScalingProject = orbitStackL3({
     ],
     apis: [
       { type: 'blockscout', url: 'https://explorer.sanko.xyz/api' },
-      { type: 'rpc', url: 'https://mainnet.sanko.xyz', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://mainnet.sanko.xyz', callsPerMinute: 300 },
     ],
     gasTokens: ['DMT'],
   },

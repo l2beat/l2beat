@@ -118,7 +118,7 @@ export const zklinknova: ScalingProject = {
     sinceTimestamp: UnixTime(1709273393),
     apis: [
       { type: 'etherscan', chainId },
-      { type: 'rpc', url: 'https://rpc.zklink.io', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.zklink.io', callsPerMinute: 300 },
     ],
   },
   config: {
