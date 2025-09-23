@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import type { BeaconChainClient } from '../../clients'
+import type { BeaconChainClient, NearClient } from '../../clients'
 
 export interface DaBeatStats {
   totalStake: bigint
@@ -10,20 +10,43 @@ export interface DaBeatStats {
 export class DaBeatStatsProvider {
   constructor(
     private readonly beaconChainClient: BeaconChainClient | undefined,
+    private readonly nearClient: NearClient | undefined,
   ) {}
 
   async getStats(projectId: string): Promise<DaBeatStats | undefined> {
-    if (projectId === 'ethereum') {
-      const stats = await this.beaconChainClient?.getValidatorsStake({
-        stateId: 'head',
-        status: ['active'],
-      })
-      assert(stats, 'No stats found')
+    switch (projectId) {
+      case 'ethereum':
+        return await this.getEthereumStats()
+      case 'near-da':
+        return await this.getNearStats()
+      default:
+        throw new Error(`Stats provider not implemented for: ${projectId}`)
+    }
+  }
 
-      return {
-        ...stats,
-        numberOfValidators: null,
-      }
+  async getEthereumStats(): Promise<DaBeatStats | undefined> {
+    assert(this.beaconChainClient, 'Beacon chain client not found')
+
+    const stats = await this.beaconChainClient.getValidatorsStake({
+      stateId: 'head',
+      status: ['active'],
+    })
+
+    return {
+      ...stats,
+      numberOfValidators: null,
+    }
+  }
+
+  async getNearStats(): Promise<DaBeatStats | undefined> {
+    assert(this.nearClient, 'Near client not found')
+
+    const { totalStake } = await this.nearClient.getValidatorsInfo()
+
+    return {
+      totalStake,
+      thresholdStake: (totalStake * 200n) / 300n,
+      numberOfValidators: null,
     }
   }
 }

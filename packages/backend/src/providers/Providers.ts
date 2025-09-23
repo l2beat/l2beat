@@ -102,7 +102,10 @@ export class Providers {
       logger,
     )
     this.balance = new BalanceProvider(this.clients.rpcClients, logger)
-    this.daBeatStats = new DaBeatStatsProvider(this.clients.beacon)
+    this.daBeatStats = new DaBeatStatsProvider(
+      this.clients.beacon,
+      this.clients.near,
+    )
   }
 
   getPriceProviders() {

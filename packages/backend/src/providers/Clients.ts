@@ -11,6 +11,7 @@ import {
   type LogsClient,
   LoopringClient,
   MulticallV3Client,
+  NearClient,
   PolkadotRpcClient,
   RpcClient,
   StarkexClient,
@@ -39,6 +40,7 @@ export interface Clients {
   getStarknetClient: (chain: string) => StarknetClient
   rpcClients: RpcClient[]
   starknetClients: StarknetClient[]
+  near: NearClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -51,6 +53,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   let beaconChainClient: BeaconChainClient | undefined
   let celestia: CelestiaRpcClient | undefined
   let avail: PolkadotRpcClient | undefined
+  let near: NearClient | undefined
   let eigen: EigenApiClient | undefined
 
   const starknetClients: StarknetClient[] = []
@@ -257,6 +260,17 @@ export function initClients(config: Config, logger: Logger): Clients {
     })
   }
 
+  if (config.daBeat) {
+    near = new NearClient({
+      sourceName: 'near',
+      nearApiUrl: config.daBeat.nearRpcUrl,
+      http,
+      retryStrategy: 'RELIABLE',
+      logger,
+      callsPerMinute: 100,
+    })
+  }
+
   const getRpcClient = (chain: string) => {
     const client = rpcClients.find((r) => r.chain === chain)
     assert(client, `${chain}: Client not found`)
@@ -282,6 +296,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     celestia,
     eigen,
     avail,
+    near,
     getStarknetClient,
     getRpcClient,
     rpcClients,
