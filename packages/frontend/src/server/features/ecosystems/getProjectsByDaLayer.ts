@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { tmpHackGetFirst } from '../utils'
+import { temporarilyExtractFirstElement } from '../utils'
 
 export type ProjectsByDaLayer = Record<string, number>
 
@@ -8,7 +8,7 @@ export function getProjectsByDaLayer(
 ): ProjectsByDaLayer {
   const projectsByDaLayer = ecosystemProjects.reduce((acc, curr) => {
     const daLayer = curr.scalingInfo.daLayer
-    const da = tmpHackGetFirst(daLayer)
+    const da = temporarilyExtractFirstElement(daLayer)
     // TODO: this is a hack - support daLayer being a list!
     if (da === undefined) return acc
     if (!acc[da]) {

@@ -4,7 +4,7 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { ps } from '~/server/projects'
-import { tmpHackGetFirst } from '../../utils'
+import { temporarilyExtractFirstElement } from '../../utils'
 
 type Common = {
   layerName: string
@@ -22,8 +22,10 @@ export type DaSolution = Common & {
 export async function getScalingDaSolution(
   project: Project<'scalingInfo', 'scalingDa'>,
 ): Promise<DaSolution | undefined> {
-  const layerId = tmpHackGetFirst(project.scalingDa)?.layer.projectId
-  const bridgeId = tmpHackGetFirst(project.scalingDa)?.bridge.projectId
+  const layerId = temporarilyExtractFirstElement(project.scalingDa)?.layer
+    .projectId
+  const bridgeId = temporarilyExtractFirstElement(project.scalingDa)?.bridge
+    .projectId
 
   const [daLayer, daBridge] = await Promise.all([
     layerId && ps.getProject({ id: layerId }),

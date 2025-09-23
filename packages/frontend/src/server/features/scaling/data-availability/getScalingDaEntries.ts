@@ -23,7 +23,7 @@ import {
 import { getDaUsers } from '../../data-availability/utils/getDaUsers'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { tmpHackGetFirst } from '../../utils'
+import { temporarilyExtractFirstElement } from '../../utils'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
@@ -114,7 +114,7 @@ function getScalingDaEntry(
   tvs: number | undefined,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingDaEntry {
-  const dataAvailability = tmpHackGetFirst(project.scalingDa)
+  const dataAvailability = temporarilyExtractFirstElement(project.scalingDa)
   assert(
     dataAvailability,
     `Project ${project.id} doesnt have dataAvailability properly assigned`,
@@ -157,7 +157,7 @@ function getRisks(
     }
   }
 
-  const scalingDa = tmpHackGetFirst(project.scalingDa)
+  const scalingDa = temporarilyExtractFirstElement(project.scalingDa)
   const daLayerProject =
     scalingDa === undefined
       ? undefined
@@ -201,7 +201,7 @@ function getDaHref(
     }
   }
 
-  const scalingDa = tmpHackGetFirst(project.scalingDa)
+  const scalingDa = temporarilyExtractFirstElement(project.scalingDa)
   const daLayer =
     scalingDa === undefined
       ? undefined

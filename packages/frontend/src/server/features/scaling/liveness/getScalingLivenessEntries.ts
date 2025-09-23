@@ -11,7 +11,7 @@ import { ps } from '~/server/projects'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import type { ProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { tmpHackGetFirst } from '../../utils'
+import { temporarilyExtractFirstElement } from '../../utils'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
@@ -119,7 +119,8 @@ function getScalingLivenessEntry(
     data,
     explanation: project.livenessInfo?.explanation,
     anomalies: liveness.anomalies,
-    dataAvailabilityMode: tmpHackGetFirst(project.scalingDa)?.mode,
+    dataAvailabilityMode: temporarilyExtractFirstElement(project.scalingDa)
+      ?.mode,
     tvsOrder: tvs ?? -1,
     hasTrackedContractsChanged,
   }
