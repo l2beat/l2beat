@@ -2,7 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "penchain",
   "import": ["../globalConfig.jsonc"],
-  
+
   "initialAddresses": [
     "eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7", // validium
     "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D" // verifier
