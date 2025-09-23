@@ -119,7 +119,6 @@ export async function match(
     for (const type of plugin.matchTypes) {
       const range = ranges.get(type.type)
       if (!range) continue
-      console.log('RANGE', plugin.name, type.type, range.start, range.end)
 
       for (let i = range.start; i <= range.end; i++) {
         const event = events[i]
