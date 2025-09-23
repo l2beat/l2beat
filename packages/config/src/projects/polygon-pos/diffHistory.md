@@ -1,3 +1,171 @@
+Generated with discovered.json: 0x3bf6985724de99ba923278e708edae5879307013
+
+# Diff at Tue, 23 Sep 2025 14:48:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1758537508
+- current timestamp: 1758638830
+
+## Description
+
+TODO: fix wrong refs to shared polygon cdk caused by EOAs
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758537508 (main branch discovery), not current.
+
+```diff
+    reference  (eth:0x21618593F7147235aC8D511d68A547C935F9d417) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+```diff
+    reference  (eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+```diff
+    reference  (eth:0x54c401eD03D086fE13221E5422165f3b024265d9) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+```diff
+    reference  (eth:0xAb3506507449bF1880f3337825efd19ac89E235E) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+```diff
+    reference  (eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+```diff
+    reference  (eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+```diff
+    reference  (eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+```diff
+    reference  (eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+```diff
+    reference  (eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+```diff
+    reference  (eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
 Generated with discovered.json: 0xfb40664525cb27185abc3bad0e3b1a144ee517e0
 
 # Diff at Mon, 22 Sep 2025 10:39:57 GMT:
