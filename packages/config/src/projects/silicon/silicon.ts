@@ -88,7 +88,7 @@ export const silicon: ScalingProject = polygonCDKStack({
     explorerUrl: 'https://scope.silicon.network',
     sinceTimestamp: UnixTime(1724183531),
     apis: [
-      { type: 'rpc', url: 'https://rpc.silicon.network', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.silicon.network', callsPerMinute: 300 },
     ],
   },
   nonTemplateEscrows: [
