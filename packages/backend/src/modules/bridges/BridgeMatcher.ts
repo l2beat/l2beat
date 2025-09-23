@@ -104,9 +104,17 @@ export async function match(
 
     await new Promise((r) => setTimeout(r)) // Unblock event loop
     const start = Date.now()
+    const stats = {
+      events: 0,
+      matchedEvents: 0,
+      messages: 0,
+      transfers: 0,
+    }
 
     for (const type of plugin.matchTypes) {
-      for (const event of getEvents(type.type)) {
+      const events = getEvents(type.type)
+      stats.events += events.length
+      for (const event of events) {
         if (matchedIds.has(event.eventId)) {
           continue
         }
@@ -126,8 +134,12 @@ export async function match(
             allMessages.push(item)
             matchedIds.add(item.dst.eventId)
             matchedIds.add(item.src.eventId)
+            stats.messages++
+            stats.matchedEvents += 2
           } else if (item.kind === 'BridgeTransfer') {
             allTransfers.push(item)
+            stats.transfers++
+            stats.matchedEvents += item.events.length
             for (const transferEvent of item.events) {
               matchedIds.add(transferEvent.eventId)
             }
@@ -139,6 +151,10 @@ export async function match(
     logger.info('Plugin executed', {
       name: plugin.name,
       duration: Date.now() - start,
+      events: stats.events,
+      matchedEvents: stats.matchedEvents,
+      messages: stats.messages,
+      transfers: stats.transfers,
     })
   }
 
