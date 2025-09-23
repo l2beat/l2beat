@@ -14,7 +14,7 @@ const createConfigFileSchema = z.object({
   initialAddresses: z
     .array(z.string())
     .check((v) => v.length > 0)
-    .check((v) => v.every(ChainSpecificAddress)),
+    .transform((v) => v.map(ChainSpecificAddress)),
   maxDepth: z.number().optional(),
   maxAddresses: z.number().optional(),
   overwrite: z.boolean().optional(),
@@ -64,7 +64,7 @@ export function attachConfigRouter(
 
     const templateValues = {
       name: body.data.project,
-      initialAddresses: body.data.initialAddresses.map(ChainSpecificAddress),
+      initialAddresses: body.data.initialAddresses,
       maxDepth: body.data.maxDepth,
       maxAddresses: body.data.maxAddresses,
     }
