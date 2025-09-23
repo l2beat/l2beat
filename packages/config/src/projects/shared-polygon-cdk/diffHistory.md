@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x631e3a5ad92c2e074fe4b9f1c92aae24ea369d25
+
+# Diff at Tue, 23 Sep 2025 09:18:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9a796f3fca0d6345ed73136526bf67003edbb829 block: 1757403523
+- current timestamp: 1758619032
+
+## Description
+
+wirex upgrade to standard contracts (see also wirex diff history).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.rollupsDataV2.7.rollupTypeID:
+-        4
++        7
+      values.rollupsDataV2.7.forkID:
+-        9
++        12
+      values.rollupsDataV2.7.verifier:
+-        "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+    }
+```
+
 Generated with discovered.json: 0xc9f5b144cc506d0066234d4d87fb19c397e36e0d
 
 # Diff at Tue, 09 Sep 2025 07:40:31 GMT:
