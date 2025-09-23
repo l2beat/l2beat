@@ -21,6 +21,12 @@
     },
     "sender": {
       "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
+    },
+    "limitInWei": {
+      "description": "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
+    },
+    "periodInSeconds": {
+      "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
     }
   }
 }
