@@ -7,6 +7,7 @@ jobs:
   config-smoke-test:
     name: Config smoke test
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
       HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
