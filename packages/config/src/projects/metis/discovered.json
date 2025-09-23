@@ -1,6 +1,6 @@
 {
   "name": "metis",
-  "timestamp": 1758534304,
+  "timestamp": 1758630583,
   "configHash": "0x32fffa865b894e12dd5d9248b81aaeeca0de6e0f02eabf852822d736bdc3e77a",
   "entries": [
     {
@@ -95,7 +95,7 @@
         "owner": "eth:0xbf1752DE62d825aF0634F514226F881a449874b6",
         "proxiableUUID": "EXPECT_REVERT",
         "rewardPayer": "eth:0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "346975745234814332693092",
+        "totalLocked": "347013180501924332693092",
         "totalRewardsLiquidated": "49509111530210478876180"
       },
       "implementationNames": {
@@ -124,10 +124,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000068d108a70001448aed",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068d108a70001448aed",
-        "length": 32565,
-        "lengthByChainId": 32565,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000068d28ed7000144ae84",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068d28ed7000144ae84",
+        "length": 32591,
+        "lengthByChainId": 32591,
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -536,8 +536,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 4370,
-        "getQueueLength": 40654,
+        "getNumPendingQueueElements": 4374,
+        "getQueueLength": 40658,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -754,6 +754,7 @@
         "METIS_MANAGER": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "MVM_DiscountOracle": "eth:0x7f6B0b7589febc40419a8646EFf9801b87397063",
         "MVM_ProposerRegistry": "eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18",
+        "OVM_Sequencer": "eth:0x0000000000000000000000000000000000000000",
         "owner": "eth:0xbf1752DE62d825aF0634F514226F881a449874b6",
         "Proxy__MVM_CanonicalTransaction": "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
         "Proxy__MVM_ChainManager": "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
@@ -834,12 +835,12 @@
         "earliestDisputedBlockNumber": 0,
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1758529703,
-        "getLastSequencerTimestampByChainId": 1758529703,
-        "getTotalBatches": 32565,
-        "getTotalBatchesByChainId": 32565,
-        "getTotalElements": 21269229,
-        "getTotalElementsByChainId": 21269229,
+        "getLastSequencerTimestamp": 1758629591,
+        "getLastSequencerTimestampByChainId": 1758629591,
+        "getTotalBatches": 32591,
+        "getTotalBatchesByChainId": 32591,
+        "getTotalElements": 21278340,
+        "getTotalElementsByChainId": 21278340,
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "MVM_PROPOSER_REGISTRY_NAME": "MVM_ProposerRegistry",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
@@ -1353,7 +1354,7 @@
       "values": {
         "$immutable": true,
         "l1CrossDomainMessenger": "metis-andromeda:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
-        "messageNonce": 107968
+        "messageNonce": 107970
       },
       "implementationNames": {
         "metis-andromeda:0x4200000000000000000000000000000000000007": "L2CrossDomainMessenger"
@@ -2406,7 +2407,7 @@
     "metis/FaultProofLockingPool": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/L1CrossDomainMessenger": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "metis/L1StandardBridge": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "metis/Lib_AddressManager": "0x1deaa3e84b186cea689d46c57ae3edf36d4cad9c6782f6a250932ac3255fd254",
+    "metis/Lib_AddressManager": "0xf3c62fdc8f9be34dacfb8e2f3ca8a907e9d05e1091eb3821f2f0c2f3a14bea4a",
     "metis/LockingInfo": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/LockingPool": "0x62830e033d07ce22b140604342c80f9ee45e8e75f07f0be34e09bd2ff01454c0",
     "metis/MetisConfig": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -2419,6 +2420,6 @@
     "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
     "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060"
   },
-  "usedBlockNumbers": { "ethereum": 23417755, "metis": 21271524 },
+  "usedBlockNumbers": { "ethereum": 23425736, "metis": 21281171 },
   "permissionsConfigHash": "0x652ff62150f26f7790f139a558f6e99498acf816ce25302b057965ffa80247fa"
 }

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6bc624287f2c9c85a0fe80b0375a61c0d3c798d1
+Generated with discovered.json: 0x219d12ef29e1e98348892ef11ba537f6cb0d50ca
 
-# Diff at Mon, 22 Sep 2025 09:46:11 GMT:
+# Diff at Tue, 23 Sep 2025 12:30:48 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@f21267d0fa3bbe8f9dd819d299858d783142ccc5 block: 1757939071
-- current timestamp: 1758534304
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1757939071
+- current timestamp: 1758630583
 
 ## Description
 
@@ -72,6 +72,8 @@ discovery. Values are for block 1757939071 (main branch discovery), not current.
     contract Lib_AddressManager (eth:0x918778e825747a892b17C66fe7D24C618262867d) {
     +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       values.MVM_ProposerRegistry:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.OVM_Sequencer:
 +        "eth:0x0000000000000000000000000000000000000000"
     }
 ```
