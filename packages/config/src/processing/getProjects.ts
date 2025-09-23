@@ -67,6 +67,12 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
 
   const hostChain = layer2s.find((x) => x.id === p.hostChain)
 
+  const dataAvailability = asArray(p.dataAvailability)
+  const scalingDa =
+    dataAvailability === undefined || dataAvailability.length === 0
+      ? undefined
+      : dataAvailability
+
   return {
     id: p.id,
     name: p.display.name,
@@ -121,7 +127,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
           ? getProcessedRiskView(p.stackedRiskView)
           : undefined,
     },
-    scalingDa: asArray(p.dataAvailability),
+    scalingDa,
     scalingTechnology: {
       warning: p.display.warning,
       detailedDescription: p.display.detailedDescription,

@@ -115,7 +115,10 @@ function getScalingDaEntry(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingDaEntry {
   const dataAvailability = tmpHackGetFirst(project.scalingDa)
-  assert(dataAvailability)
+  assert(
+    dataAvailability,
+    `Project ${project.id} doesnt have dataAvailability properly assigned`,
+  )
   return {
     ...getCommonScalingEntry({ project, changes }),
     dataAvailability,
