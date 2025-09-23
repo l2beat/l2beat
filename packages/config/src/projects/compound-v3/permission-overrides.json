@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-23T16:18:18.029Z",
+  "lastModified": "2025-09-23T16:34:13.466Z",
   "contracts": {
     "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": {
       "functions": [
@@ -148,7 +148,7 @@
         {
           "functionName": "changeAdmin",
           "userClassification": "permissioned",
-          "checked": false,
+          "checked": true,
           "score": "high-risk",
           "ownerDefinitions": [
             {
@@ -159,7 +159,7 @@
               }
             }
           ],
-          "timestamp": "2025-09-18T15:50:49.186Z"
+          "timestamp": "2025-09-23T16:34:13.466Z"
         },
         {
           "functionName": "implementation",

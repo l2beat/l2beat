@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getProject, getPermissionOverrides } from '../../../api/api'
 import { useContractTags } from '../../../hooks/useContractTags'
 import { Checkbox } from '../../../components/Checkbox'
+import { usePanelStore } from '../store/panel-store'
 
 export function DeFiScanPanel() {
   const { project } = useParams()
@@ -192,9 +193,117 @@ function StatusOfReviewSection({ projectData, contractTags, permissionOverrides 
             <div className="ml-4 flex flex-col gap-1 text-xs">
               <span>Permissioned functions: <span className="text-red-400">{permissionedFunctions}</span></span>
               <span>Progress: <span className="text-orange-400">{checkedFunctions}/{permissionedFunctions} reviewed</span></span>
+              <ContractsWithPermissionsTable
+                projectData={projectData}
+                permissionOverrides={permissionOverrides}
+              />
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  )
+}
+
+// Helper functions for contract data processing
+function buildContractsList(projectData: any): Array<{ address: string; name: string; source: string }> {
+  if (!projectData?.entries) return []
+
+  const contracts: Array<{ address: string; name: string; source: string }> = []
+
+  projectData.entries.forEach((entry: any) => {
+    // Add initial contracts
+    entry.initialContracts.forEach((contract: any) => {
+      contracts.push({
+        address: contract.address,
+        name: contract.name || 'Unknown Contract',
+        source: 'initial'
+      })
+    })
+
+    // Add discovered contracts
+    entry.discoveredContracts.forEach((contract: any) => {
+      contracts.push({
+        address: contract.address,
+        name: contract.name || 'Unknown Contract',
+        source: 'discovered'
+      })
+    })
+  })
+
+  return contracts
+}
+
+function calculateContractPermissions(contractAddress: string, permissionOverrides: any): { checked: number; total: number } {
+  if (!permissionOverrides?.contracts?.[contractAddress]) {
+    return { checked: 0, total: 0 }
+  }
+
+  const contractPermissions = permissionOverrides.contracts[contractAddress]
+  let checked = 0
+  let total = 0
+
+  contractPermissions.functions.forEach((func: any) => {
+    if (func.userClassification === 'permissioned') {
+      total++
+      if (func.checked === true) {
+        checked++
+      }
+    }
+  })
+
+  return { checked, total }
+}
+
+function getContractDisplayName(contract: { address: string; name: string }): string {
+  const shortAddress = contract.address.replace('eth:', '').slice(0, 10)
+  return `${contract.name} (${shortAddress}...)`
+}
+
+function ContractsWithPermissionsTable({ projectData, permissionOverrides }: { projectData: any, permissionOverrides: any }) {
+  const selectGlobal = usePanelStore((state) => state.select)
+
+  // Get all contracts and filter to only those with permissions
+  const allContracts = buildContractsList(projectData)
+  const contractsWithPermissions = allContracts.filter(contract => {
+    const permissions = calculateContractPermissions(contract.address, permissionOverrides)
+    return permissions.total > 0
+  })
+
+  if (contractsWithPermissions.length === 0) {
+    return null
+  }
+
+  const handleContractClick = (contractAddress: string) => {
+    selectGlobal(contractAddress)
+  }
+
+  return (
+    <div className="mt-1">
+      <div className="text-xs">
+        {contractsWithPermissions.map((contract) => {
+          const permissions = calculateContractPermissions(contract.address, permissionOverrides)
+          const isIncomplete = permissions.checked < permissions.total
+
+          return (
+            <div
+              key={contract.address}
+              className="cursor-pointer py-0.5 px-1 rounded hover:bg-coffee-500 transition-colors flex justify-between"
+              onClick={() => handleContractClick(contract.address)}
+            >
+              <span
+                style={{ color: isIncomplete ? '#f87171' : 'white' }}
+              >
+                {getContractDisplayName(contract)}
+              </span>
+              <span
+                style={{ color: isIncomplete ? '#f87171' : 'white' }}
+              >
+                ({permissions.checked}/{permissions.total})
+              </span>
+            </div>
+          )
+        })}
       </div>
     </div>
   )

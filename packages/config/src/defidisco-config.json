@@ -1,0 +1,8 @@
+{
+  "version": "1.0",
+  "description": "DefidDisco configuration for DeFi project filtering",
+  "defiProjects": [
+    "compound-v3"
+  ],
+  "lastUpdated": "2025-09-23"
+}

@@ -28,6 +28,7 @@ import {
   updateContractTag,
 } from './defidisco/contractTags'
 import { generatePermissionsReport } from './defidisco/generatePermissionsReport'
+import { filterDefiProjects } from './defidisco/defiProjectFilter'
 import {
   attachTemplateRouter,
   listTemplateFilesSchema,
@@ -88,8 +89,9 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.use(express.json())
 
   app.get('/api/projects', (_req, res) => {
-    const response = getProjects(configReader, readonly)
-    res.json(response)
+    const allProjects = getProjects(configReader, readonly)
+    const defiProjects = filterDefiProjects(allProjects, 'name')
+    res.json(defiProjects)
   })
 
   app.get('/api/projects/:project', (req, res) => {
