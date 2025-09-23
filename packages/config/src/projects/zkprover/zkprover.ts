@@ -79,19 +79,20 @@ export const zkprover: BaseProject = {
       },
     ],
     verifierHashes: [
-      {
-        hash: '0x28ddf3744fb9b64bc428bee318e026bee0cf210e23ff5932f645e32aa916c28f',
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Snarkjs,
-        knownDeployments: [
-          {
-            address: '0x0775e11309d75aA6b0967917fB0213C5673eDf81',
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
-        description:
-          'Custom verifier ID: SHA256 hash of the following values from the verifier smart contract, abi packed in the same order they are defined: verification key data, omegas, verifier preprocessed inputs (all values from k1 to X2y2).',
-      },
+      // wirex was the last chain using this verifier:
+      // {
+      //   hash: '0x28ddf3744fb9b64bc428bee318e026bee0cf210e23ff5932f645e32aa916c28f',
+      //   proofSystem: ZK_CATALOG_TAGS.Fflonk.Snarkjs,
+      //   knownDeployments: [
+      //     {
+      //       address: '0x0775e11309d75aA6b0967917fB0213C5673eDf81',
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of the following values from the verifier smart contract, abi packed in the same order they are defined: verification key data, omegas, verifier preprocessed inputs (all values from k1 to X2y2).',
+      // },
       {
         hash: '0x237bc5d6efad6d844534c4a45f5f19fa86344615ac00054821915c219e9abd81',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Snarkjs,
