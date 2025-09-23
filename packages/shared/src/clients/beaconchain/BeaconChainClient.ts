@@ -53,7 +53,7 @@ export class BeaconChainClient extends ClientCore {
     stateId: 'head' | 'genesis' | 'finalized' | 'justified' | 'slot' | Hex
     status?: string[]
   }) {
-    const endpoint = `/eth/v1/beacon/states/${stateId}/validators?${new URLSearchParams(
+    const endpoint = `eth/v1/beacon/states/${stateId}/validators?${new URLSearchParams(
       {
         ...(status ? { status: status.join(',') } : {}),
       },
