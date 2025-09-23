@@ -21,7 +21,22 @@ export async function getDaBeatConfig(
     .filter((x) => x !== undefined)
     .filter((x, i, a) => a.indexOf(x) === i) // unique
 
+  const projectsForDaBeatStats: DaBeatConfig['projectsForDaBeatStats'] = {}
+  for (const project of projects) {
+    const hasStakeEnabled = !!project.daLayer.economicSecurity
+    const hasValidatorsEnabled =
+      project.daLayer.numberOfValidators?.type === 'analyzer'
+
+    if (!hasStakeEnabled && !hasValidatorsEnabled) continue
+
+    projectsForDaBeatStats[project.id] = {
+      stake: hasStakeEnabled,
+      validators: hasValidatorsEnabled,
+    }
+  }
+
   return {
+    projectsForDaBeatStats,
     coingeckoIds,
     types,
     quicknodeApiUrl: env.string([
