@@ -1,0 +1,70 @@
+{
+  "entrypoints": {
+    "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e": {
+      "name": "SP1VerifierGateway",
+      "type": "Contract",
+      "project": "shared-sp1-gateway"
+    },
+    "arb1:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54": {
+      "type": "EOA",
+      "project": "shared-sp1-gateway"
+    },
+    "arb1:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885": {
+      "type": "EOA",
+      "project": "shared-sp1-gateway"
+    },
+    "arb1:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126": {
+      "type": "EOA",
+      "project": "shared-sp1-gateway"
+    },
+    "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "name": "SP1VerifierGatewayMultisig",
+      "type": "Contract",
+      "project": "shared-sp1-gateway"
+    },
+    "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e": {
+      "name": "SP1VerifierGateway",
+      "type": "Contract",
+      "project": "shared-sp1-gateway"
+    },
+    "base:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54": {
+      "type": "EOA",
+      "project": "shared-sp1-gateway"
+    },
+    "base:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885": {
+      "type": "EOA",
+      "project": "shared-sp1-gateway"
+    },
+    "base:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126": {
+      "type": "EOA",
+      "project": "shared-sp1-gateway"
+    },
+    "base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "name": "SP1VerifierGatewayMultisig",
+      "type": "Contract",
+      "project": "shared-sp1-gateway"
+    },
+    "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": {
+      "name": "SP1VerifierGateway",
+      "type": "Contract",
+      "project": "shared-sp1-gateway"
+    },
+    "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54": {
+      "type": "EOA",
+      "project": "shared-sp1-gateway"
+    },
+    "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885": {
+      "type": "EOA",
+      "project": "shared-sp1-gateway"
+    },
+    "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126": {
+      "type": "EOA",
+      "project": "shared-sp1-gateway"
+    },
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "name": "SP1VerifierGatewayMultisig",
+      "type": "Contract",
+      "project": "shared-sp1-gateway"
+    }
+  }
+}
