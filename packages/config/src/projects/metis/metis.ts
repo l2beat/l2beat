@@ -98,9 +98,9 @@ export const metis: ScalingProject = {
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
-        principle: false,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
+        principle: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
       },
       stage2: {
@@ -227,8 +227,8 @@ export const metis: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
+    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL('METIS'),
   },
   stateValidation: {
     categories: [
@@ -239,7 +239,7 @@ export const metis: ScalingProject = {
         references: [
           {
             title: 'StateCommitmentChain - Etherscan source code',
-            url: 'https://etherscan.io/address/0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1#code',
+            url: 'https://etherscan.io/address/0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7#code',
           },
         ],
       },
