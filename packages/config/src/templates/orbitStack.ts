@@ -74,6 +74,7 @@ import {
   explorerReferences,
   mergeBadges,
   safeGetImplementation,
+  unwrapSingle,
 } from './utils'
 
 type DAProvider = ProjectScalingDa & {
@@ -373,7 +374,6 @@ function orbitStackCommon(
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
-  // TODO: here, there will be DA providers
   const daProviders = getDAProviders(
     type,
     templateVars,
@@ -577,7 +577,7 @@ function orbitStackCommon(
         })(),
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
-        daProviders.map((p) => p.technology),
+        unwrapSingle(daProviders.map((p) => p.technology)),
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
@@ -993,11 +993,9 @@ function getRiskView(
       })(),
     dataAvailability:
       templateVars.nonTemplateRiskView?.dataAvailability ??
-      // TODO: @adamiak this is wrong, theLeastRIsky should be DAProvider
       theLeastRiskyDaProvider.riskViewDA,
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
-      // TODO: @adamiak this is wrong, theLeastRIsky should be DAProvider
       theLeastRiskyDaProvider.riskViewExitWindow,
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
