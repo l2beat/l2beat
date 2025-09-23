@@ -14,7 +14,7 @@ export function parseFieldValue(
       )
       return { type: 'hex', value }
     }
-    if (/^\w*:0x[a-f\d]*$/i.test(value)) {
+    if (/^[\w-]*:0x[a-f\d]*$/i.test(value)) {
       const [prefix, rawAddress] = value.split(':')
 
       if (isChainShortName(prefix) && rawAddress.length === 42) {
