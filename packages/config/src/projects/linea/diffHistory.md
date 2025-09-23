@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x83b0c584c971cdd1c8622f6be3fc049bf2818ae9
+
+# Diff at Tue, 23 Sep 2025 10:02:45 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1758270123
+- current timestamp: 1758621680
+
+## Description
+
+Increased daily limits on moving Ether between L1 and L2. Also added a new multisig address. 
+
+## Watched changes
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      values.limitInWei:
+-        "18750000000000000000000"
++        "30000000000000000000000"
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) {
+    +++ description: None
+      values.limitInWei:
+-        "15000000000000000000000"
++        "24000000000000000000000"
+    }
+```
+
+```diff
+    contract Linea Multisig 3 (linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD) {
+    +++ description: None
+      values.$members.0:
++        "linea:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f"
+      values.$members.0:
+-        "linea:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE"
++        "linea:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "5 of 9 (56%)"
+    }
+```
+
 Generated with discovered.json: 0x25faf88efb8cede7069dfca91df9e8df6a5df564
 
 # Diff at Fri, 19 Sep 2025 08:23:31 GMT:

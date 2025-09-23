@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xed34c197a104a6366dbeac0f6ff4d78762a6f299
+
+# Diff at Tue, 23 Sep 2025 10:00:23 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1758269993
+- current timestamp: 1758621561
+
+## Description
+
+Multisig update, new signer was already a member of Multisig 2.
+
+## Watched changes
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x05e1d4694041aF987Af6F8402D902686018E2136"
+      values.$threshold:
+-        3
++        4
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0xdf7f5d9659cc3b737f86d2e4c41221b19ffdc9ec
 
 # Diff at Fri, 19 Sep 2025 08:20:56 GMT:
