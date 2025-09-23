@@ -3,5 +3,5 @@
   "name": "xlayer",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"],
-  "sharedModules": ["shared-polygon-cdk"]
+  
 }
