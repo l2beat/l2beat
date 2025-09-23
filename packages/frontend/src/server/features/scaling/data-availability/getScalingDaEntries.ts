@@ -23,6 +23,7 @@ import {
 import { getDaUsers } from '../../data-availability/utils/getDaUsers'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { tmpHackGetFirst } from '../../utils'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
@@ -115,7 +116,7 @@ function getScalingDaEntry(
 ): ScalingDaEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
-    dataAvailability: project.scalingDa,
+    dataAvailability: tmpHackGetFirst(project.scalingDa),
     proofSystem: getProofSystemWithName(
       project.scalingInfo.proofSystem,
       zkCatalogProjects,
@@ -152,10 +153,12 @@ function getRisks(
   }
 
   const daLayerProject = daLayers.find(
-    (daLayer) => daLayer.id === project.scalingDa.layer.projectId,
+    (daLayer) =>
+      daLayer.id === tmpHackGetFirst(project.scalingDa).layer.projectId,
   )
   const daBridgeProject = daBridges.find(
-    (daBridge) => daBridge.id === project.scalingDa.bridge.projectId,
+    (daBridge) =>
+      daBridge.id === tmpHackGetFirst(project.scalingDa).bridge.projectId,
   )
   if (!daLayerProject) {
     return undefined
@@ -191,7 +194,7 @@ function getDaHref(
   }
 
   const daLayer = daLayers.find(
-    (l) => l.id === project.scalingDa.layer.projectId,
+    (l) => l.id === tmpHackGetFirst(project.scalingDa).layer.projectId,
   )
 
   if (!daLayer) {

@@ -9,6 +9,7 @@ import {
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { getDaLayerRisks } from '~/server/features/data-availability/utils/getDaLayerRisks'
 import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolution'
+import { tmpHackGetFirst } from '~/server/features/utils'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { getDiagramParams } from '../getDiagramParams'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
@@ -115,7 +116,7 @@ function getPublicDaSection(
   const props = getTechnologyChoicesSectionProps(project, [
     makeTechnologyChoice(
       'data-availability',
-      project.scalingTechnology.dataAvailability,
+      tmpHackGetFirst(project.scalingTechnology.dataAvailability),
       {
         relatedProjectBanner: daSolution
           ? {

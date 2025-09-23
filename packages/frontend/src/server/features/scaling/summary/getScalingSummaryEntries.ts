@@ -18,6 +18,7 @@ import { ps } from '~/server/projects'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { tmpHackGetFirst } from '../../utils'
 import type { ActivityLatestUopsData } from '../activity/getActivityLatestTps'
 import { getActivityLatestUops } from '../activity/getActivityLatestTps'
 import { getActivitySyncWarning } from '../activity/utils/isActivitySynced'
@@ -143,7 +144,7 @@ export function getScalingSummaryEntry(
       zkCatalogProjects,
     ),
     stacks: project.scalingInfo.stacks,
-    dataAvailability: project.scalingDa,
+    dataAvailability: tmpHackGetFirst(project.scalingDa),
     purposes: project.scalingInfo.purposes,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     tvs: {

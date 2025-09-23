@@ -4,6 +4,7 @@ import { getRowBackgroundColor } from '~/components/table/utils/rowType'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
+import { tmpHackGetFirst } from '../utils'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
 import { getIsProjectVerified } from '../utils/getIsProjectVerified'
 import { getProjectIcon } from '../utils/getProjectIcon'
@@ -80,7 +81,10 @@ export function getCommonScalingEntry({
         id: 'hostChain',
         value: project.scalingInfo.hostChain.name,
       },
-      { id: 'daLayer', value: project.scalingInfo.daLayer ?? 'Unknown' },
+      {
+        id: 'daLayer',
+        value: tmpHackGetFirst(project.scalingInfo.daLayer) ?? 'Unknown',
+      },
       {
         id: 'raas',
         value: project.scalingInfo.raas ?? 'No RaaS',
