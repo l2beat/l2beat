@@ -44,10 +44,6 @@ export function getCommonScalingEntry({
   }
   const tab = getScalingTab(project)
 
-  if (project.scalingInfo.daLayer.length === 0) {
-    console.log('aa')
-    console.log(project)
-  }
   return {
     id: project.id,
     slug: project.slug,
