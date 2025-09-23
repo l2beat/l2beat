@@ -50,6 +50,7 @@ export function TemplatePanel() {
     },
   })
 
+  // TODO: move this to backend/editor or replace with gui
   const onSaveCallback = (content: string): string => {
     try {
       content = formatJson(JSON.parse(removeJSONTrailingCommas(content)))

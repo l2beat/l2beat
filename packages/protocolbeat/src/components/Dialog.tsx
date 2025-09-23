@@ -1,6 +1,6 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import clsx from 'clsx'
-import type { ButtonHTMLAttributes, InputHTMLAttributes, SVGProps } from 'react'
+import type { SVGProps } from 'react'
 
 export const Dialog = {
   Root: DialogRoot,
@@ -8,9 +8,7 @@ export const Dialog = {
   Title: DialogTitle,
   Description: DialogDescription,
   Body: DialogBody,
-  Button: DialogButton,
   Close: DialogClose,
-  Input: DialogInput,
 }
 
 function DialogRoot({ children, ...props }: RadixDialog.DialogProps) {
@@ -73,23 +71,6 @@ function DialogBody({ children, ...props }: RadixDialog.DialogContentProps) {
   )
 }
 
-export function DialogButton({
-  children,
-  ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
-  return (
-    <button
-      {...props}
-      className={clsx(
-        'border border-coffee-400 px-4 py-1 font-medium text-sm transition-colors duration-100 hover:bg-coffee-400 disabled:opacity-50 disabled:hover:bg-transparent',
-        props.className,
-      )}
-    >
-      {children}
-    </button>
-  )
-}
-
 function XIcon(props?: SVGProps<SVGSVGElement>) {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" {...props}>
@@ -111,27 +92,4 @@ function XIcon(props?: SVGProps<SVGSVGElement>) {
 
 function DialogClose({ children, ...props }: RadixDialog.DialogCloseProps) {
   return <RadixDialog.Close {...props}>{children}</RadixDialog.Close>
-}
-
-function DialogInput({
-  className,
-  ...props
-}: InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <input
-      onKeyUp={(e) => {
-        e.stopPropagation()
-        props.onKeyUp?.(e)
-      }}
-      onKeyDown={(e) => {
-        e.stopPropagation()
-        props.onKeyDown?.(e)
-      }}
-      className={clsx(
-        'border border-coffee-400 bg-coffee-400/20 px-2 py-1 text-sm placeholder:text-coffee-200/40 focus:border-coffee-300 focus:outline-none',
-        className,
-      )}
-      {...props}
-    />
-  )
 }

@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Button } from '../../../../../components/Button'
 import { Dialog } from '../../../../../components/Dialog'
+import { Input } from '../../../../../components/Input'
 import type { Node } from '../../store/State'
 import { useStore } from '../../store/store'
 import { ControlButton } from '../ControlButton'
@@ -105,16 +107,16 @@ function ValuesDialogBody({ node }: { node: Node }) {
       </Dialog.Description>
       <h3 className="font-medium text-sm">Actions</h3>
       <div className="mb-4 flex gap-2">
-        <Dialog.Button onClick={() => setHiddenFields([])}>All</Dialog.Button>
-        <Dialog.Button
+        <Button onClick={() => setHiddenFields([])}>All</Button>
+        <Button
           onClick={() => {
             const allFieldNames = node.fields.map((f) => f.name)
             setHiddenFields(allFieldNames)
           }}
         >
           None
-        </Dialog.Button>
-        <Dialog.Button
+        </Button>
+        <Button
           onClick={() => {
             const allFieldNames = node.fields.map((f) => f.name)
             setHiddenFields(
@@ -123,13 +125,13 @@ function ValuesDialogBody({ node }: { node: Node }) {
           }}
         >
           Invert
-        </Dialog.Button>
+        </Button>
       </div>
 
       <h3 className="font-medium text-sm">Fields</h3>
       <div className="flex flex-col gap-1">
         <div className="w-full">
-          <Dialog.Input
+          <Input
             type="text"
             placeholder="Search fields..."
             value={searchQuery}
@@ -151,7 +153,7 @@ function ValuesDialogBody({ node }: { node: Node }) {
 
       <Dialog.Close asChild>
         <div className="mt-4 flex justify-end">
-          <Dialog.Button onClick={modifyNode}>Save</Dialog.Button>
+          <Button onClick={modifyNode}>Save</Button>
         </div>
       </Dialog.Close>
     </Dialog.Body>
