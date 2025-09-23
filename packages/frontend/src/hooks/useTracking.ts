@@ -7,6 +7,7 @@ export const PlausibleEvents = v.object({
   directoryTabsChanged: v.object({ value: v.string() }),
   tabsChanged: v.object({ name: v.string(), value: v.string() }),
   searchBarProjectSelected: v.object({ name: v.string() }),
+  searchBarSearched: v.object({ value: v.string() }),
   uopsExplorerSelected: v.undefined().optional(),
   trustedSetupFrameworkSelected: v.undefined().optional(),
   whatsNewClicked: v.object({
