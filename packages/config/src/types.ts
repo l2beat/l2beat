@@ -91,7 +91,7 @@ export interface BaseProject {
   scalingInfo?: ProjectScalingInfo
   scalingStage?: ProjectScalingStage
   scalingRisks?: ProjectScalingRisks
-  scalingDa?: ProjectScalingDa[]
+  scalingDa?: ProjectScalingDa | ProjectScalingDa[]
   scalingTechnology?: ProjectScalingTechnology
 
   // da data

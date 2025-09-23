@@ -71,7 +71,9 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
   const scalingDa =
     dataAvailability === undefined || dataAvailability.length === 0
       ? undefined
-      : dataAvailability
+      : dataAvailability.length === 1
+        ? dataAvailability[0]
+        : dataAvailability
 
   return {
     id: p.id,
