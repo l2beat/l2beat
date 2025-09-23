@@ -1,6 +1,6 @@
 {
   "name": "shared-polygon-cdk",
-  "timestamp": 1758619032,
+  "timestamp": 1758637269,
   "configHash": "0x3f04906e4a1864096931bcea2145f657cce58db4a5e57ff164334b7b377a2637",
   "entries": [
     {
@@ -11,23 +11,9 @@
     {
       "name": "SP1Verifier",
       "address": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v5.0.0).",
-      "sinceTimestamp": 1748550023,
-      "sinceBlock": 22590744,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
-        "VERSION": "v5.0.0"
-      },
-      "implementationNames": {
-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
-      }
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sp1"
     },
     {
       "name": "AggLayerGateway",
@@ -414,7 +400,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0xf43b0dddec7f3a7fefa414e6ffb3e77a5765c17b35f3525ac0428ddea226eace",
+        "getRoot": "0xc6d3cb7a05907b7e8c0c3e7a61cb497daaa73b658ee576c09e83387382e089aa",
         "getWrappedTokenBridgeImplementation": "eth:0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -650,10 +636,10 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xbb82d7f613ebfbe3ad5fcb5652c306aff048531027e319cff507f815ffffaaff",
+        "getRollupExitRoot": "0x57163b5e666e02d334269878e9c6ae06d59e28325a44dec9553dcc437f2c75f1",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1758618647,
+        "lastAggregationTimestamp": 1758636839,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14, 17, 18, 19, 20, 3, 21, 22, 23],
         "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
@@ -967,8 +953,8 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 813437,
-        "totalVerifiedBatches": 812948,
+        "totalSequencedBatches": 813527,
+        "totalVerifiedBatches": 813039,
         "trustedAggregatorAC": [
           "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -1048,9 +1034,9 @@
         ],
         "$upgradeCount": 4,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 71381,
+        "depositCount": 71409,
         "GER_VERSION": "al-v0.3.0",
-        "getRoot": "0x2a19eceec505e7e08e0e5a28a2fd296959f208b715537de5ea228797bb8bb965",
+        "getRoot": "0xa903d064f7ffb557715f512667c958f944433aa4863d10b96bbdf623ca092abb",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {
@@ -1747,15 +1733,6 @@
     }
   ],
   "abis": {
-    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2215,9 +2192,8 @@
     "polygon-cdk/PolygonGlobalExitRootV2": "0x1cc88444958b7582ad850833989c9a1ef2474d9c0804f38e0d9cde437f73e74b",
     "polygon-cdk/PolygonRollupManager_al030": "0x3c5b4cb44f69f247050cec379ef9c049f6c8bd7fca6aabab3b5159c190daa867",
     "polygon-cdk/PolygonSharedBridge_al030": "0xa81aeeb573b6377dccef7c71fac6ad2e784a6c7be283b8020ec4ac648d780e46",
-    "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb"
   },
-  "usedBlockNumbers": { "ethereum": 23424779 },
-  "permissionsConfigHash": "0xd18e3cb59729a51f2eda4291afc54ac6559021862018826e4e39e3326a643691"
+  "usedBlockNumbers": { "ethereum": 23426290 },
+  "permissionsConfigHash": "0x90dbad5af15ed07364e5c180f2cf2ba99109519614a102729ef8396388a50340"
 }

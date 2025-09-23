@@ -20,6 +20,5 @@
     "oeth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig",
     "scr:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
     "scr:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig"
-  },
-  "overrides": {}
+  }
 }

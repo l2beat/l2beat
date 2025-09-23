@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x631e3a5ad92c2e074fe4b9f1c92aae24ea369d25
+Generated with discovered.json: 0x8d00659fe8f10f19a2e96e0a7193c6c79a966985
 
-# Diff at Tue, 23 Sep 2025 09:18:55 GMT:
+# Diff at Tue, 23 Sep 2025 14:22:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@9a796f3fca0d6345ed73136526bf67003edbb829 block: 1757403523
-- current timestamp: 1758619032
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1757403523
+- current timestamp: 1758637269
 
 ## Description
 
@@ -24,6 +24,39 @@ wirex upgrade to standard contracts (see also wirex diff history).
       values.rollupsDataV2.7.verifier:
 -        "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81"
 +        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757403523 (main branch discovery), not current.
+
+```diff
+    reference SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "succinct/SP1Verifier"
+      sourceHashes:
+-        ["0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"]
+      proxyType:
+-        "immutable"
+      description:
+-        "Verifier contract for SP1 proofs (v5.0.0)."
+      sinceTimestamp:
+-        1748550023
+      sinceBlock:
+-        22590744
+      values:
+-        {"$immutable":true,"VERIFIER_HASH":"0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7","VERSION":"v5.0.0"}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-sp1"
     }
 ```
 
