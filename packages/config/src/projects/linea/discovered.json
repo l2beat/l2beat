@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "timestamp": 1758621680,
+  "timestamp": 1758624268,
   "configHash": "0x12103cbdc67491e257fc6165103870ddffd7572f9e4582d89c9faa68685923e9",
   "entries": [
     {
@@ -984,11 +984,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0x2348e18f95b5b2989d17cc716ac25da64ee48a9d4c79bce62184ac2952f5df78",
-        "currentFinalizedState": "0x81909dc41559c2c4b829b10549a9bd05e0e0431d96e3738d598e3bcc1ddc8e38",
+        "currentFinalizedShnarf": "0xf1668d677c629c0c6d62a4a21ed08d901452f5c58888c6d6eab25f4075faddb8",
+        "currentFinalizedState": "0x3eca9b5037a519e0333cce029d5d6137512c6284598a79e5633166de52f9eda0",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "639529090000000000000",
+        "currentPeriodAmountInWei": "640930440000000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -1054,7 +1054,7 @@
       },
       "fieldMeta": {
         "verifiers": {
-          "description": "Mapping of proof type to ZK Plonk Verifier contract"
+          "description": "Mapping of proof type to ZK Plonk Verifier contract."
         },
         "isPaused_GENERAL": { "severity": "HIGH" },
         "isPaused_L1_L2": { "severity": "HIGH" },
@@ -1063,7 +1063,13 @@
         "isPaused_CALLDATA_SUBMISSION": { "severity": "HIGH" },
         "isPaused_FINALIZATION": { "severity": "HIGH" },
         "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" }
+        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" },
+        "limitInWei": {
+          "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
+        },
+        "periodInSeconds": {
+          "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
+        }
       },
       "implementationNames": {
         "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "TransparentUpgradeableProxy",
@@ -1762,7 +1768,7 @@
           }
         },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "19863436001800968895877",
+        "currentPeriodAmountInWei": "19863436501800968895877",
         "currentPeriodEnd": 1758629280,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
@@ -1772,11 +1778,11 @@
         "l1l2MessageSetter": [
           "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"
         ],
-        "lastAnchoredL1MessageNumber": 786460,
+        "lastAnchoredL1MessageNumber": 786470,
         "limitInWei": "24000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 99875,
+        "nextMessageNumber": 99879,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
@@ -1791,6 +1797,12 @@
       "fieldMeta": {
         "sender": {
           "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
+        },
+        "limitInWei": {
+          "description": "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
+        },
+        "periodInSeconds": {
+          "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
         }
       },
       "implementationNames": {
@@ -3483,15 +3495,15 @@
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/L1TokenBridge": "0xef38a739bf90c693c298d238745c360992548cf941cdee82ed7c4a5ba41df4ae",
     "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
-    "linea/L2MessageService": "0x734bf260a111807cc0b66114f86680b832667c5f1d22a8c3509f18823bdd0872",
+    "linea/L2MessageService": "0xedda44cd37e50cfac16b991bfd1291c10ed903063625cc7621f278451b5997af",
     "linea/L2Roles": "0x87df637d02e99d769d43f393133e5ea3e583758a151bdccb3bf7a6a1bd6c6187",
     "linea/L2TokenBridge": "0xde60fe36104dfc27d1da95bf2e74c70fc2b30fa7cb17e179ebcfce8c4a701e3b",
-    "linea/LineaRollup": "0x62179b632448b6fa5622bfea4240428dcd0cd7f2fd455914a05b040313014dfe",
+    "linea/LineaRollup": "0xd44592a83dca8480df2581e49f66228d752ccc4ccc6ea4b446e1054b29246933",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/Roles": "0xa53488bfd173ae836ebda33b0560f0f0dd61141e44bc38b9ce23133023bde792",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23424998, "linea": 23695571 },
+  "usedBlockNumbers": { "ethereum": 23425214, "linea": 23696863 },
   "permissionsConfigHash": "0x79d73cc93a72f72d682b38f102a7053a7fd3fdee72ca1293b5e7b5145281d5da"
 }
