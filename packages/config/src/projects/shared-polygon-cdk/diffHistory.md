@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x2e604c634d43eb3aff45d3cecf9e958af074631e
+Generated with discovered.json: 0x631e3a5ad92c2e074fe4b9f1c92aae24ea369d25
 
-# Diff at Tue, 23 Sep 2025 10:05:07 GMT:
+# Diff at Tue, 23 Sep 2025 09:18:55 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1757403523
-- current timestamp: 1758621803
+- comparing to: main@9a796f3fca0d6345ed73136526bf67003edbb829 block: 1757403523
+- current timestamp: 1758619032
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+wirex upgrade to standard contracts (see also wirex diff history).
 
 ## Watched changes
 
