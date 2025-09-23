@@ -50,9 +50,6 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 
   useEffect(() => {
     if (debouncedValue === '') return
-    console.log('searchBarSearched', {
-      props: { value: debouncedValue },
-    })
     track('searchBarSearched', {
       props: { value: debouncedValue },
     })
