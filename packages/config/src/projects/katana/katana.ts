@@ -158,7 +158,7 @@ export const katana: ScalingProject = {
     explorerUrl: 'https://katanascan.com',
     sinceTimestamp: UnixTime(1746742811),
     apis: [
-      { type: 'rpc', url: 'https://rpc.katana.network', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.katana.network', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://katanascan.com/api' },
     ],
   },
