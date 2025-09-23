@@ -1,4 +1,5 @@
 import { v } from '@l2beat/validate'
+import { useCallback } from 'react'
 
 export const PlausibleEvents = v.object({
   switchChanged: v.object({ name: v.string(), value: v.string() }),
@@ -39,9 +40,11 @@ type Plausible = {
 }
 
 export function useTracking(): { track: Plausible } {
+  const track: Plausible = useCallback((event, ...args) => {
+    window.plausible?.(event, ...args)
+  }, [])
+
   return {
-    track: (event, ...args) => {
-      window.plausible?.(event, ...args)
-    },
+    track,
   }
 }
