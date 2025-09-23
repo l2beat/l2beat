@@ -1,8 +1,8 @@
 {
   "name": "sophon",
   "timestamp": 1757944236,
-  "configHash": "0x5e60794ae76614c33c37e79064f2f665945c77f3cb0e50141987fe8c29ed7793",
-  "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
+  "configHash": "0x4d503348c329e17575b1aa62e51559cfe440269f3e393596bee254b15d8524d8",
+  "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000010003",

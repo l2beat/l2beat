@@ -1,8 +1,8 @@
 {
   "name": "lens",
   "timestamp": 1757944442,
-  "configHash": "0xdc5ab8c76ae242ebcbdc94caaf02df4f99e0616191de074c40956f6fc97f2d28",
-  "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
+  "configHash": "0x7f7aa35a835b28ecc3f39b434a53000a61090548dd5b9b2e0002a3b535a402da",
+  "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
       "name": "L1VerifierFflonk",
