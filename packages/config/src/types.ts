@@ -599,6 +599,14 @@ export interface ProjectDaLayer {
   finality?: number
   dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
+  numberOfValidators?:
+    | {
+        type: 'analyzer'
+      }
+    | {
+        type: 'manual'
+        value: number
+      }
   sovereignProjectsTrackingConfig?: SovereignProjectDaTrackingConfig[]
 }
 
