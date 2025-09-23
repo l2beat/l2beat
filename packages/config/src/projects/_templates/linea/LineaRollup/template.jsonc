@@ -28,7 +28,7 @@
       ]
     },
     "verifiers": {
-      "description": "Mapping of proof type to ZK Plonk Verifier contract",
+      "description": "Mapping of proof type to ZK Plonk Verifier contract.",
       "handler": {
         "type": "array",
         "length": 20
@@ -135,6 +135,12 @@
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
         "args": [8]
       }
+    },
+    "limitInWei": {
+      "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
+    },
+    "periodInSeconds": {
+      "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
     }
   }
 }
