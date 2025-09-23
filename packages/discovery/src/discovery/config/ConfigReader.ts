@@ -273,6 +273,19 @@ export class ConfigReader {
     return result
   }
 
+  projectConfigExists(project: string): boolean {
+    try {
+      this.resolveProjectPath(project)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  getConfigPath(project: string): string {
+    return path.join(this.resolveProjectPath(project), 'config.jsonc')
+  }
+
   /**
    * Locate the on-disk directory for a given project. The search rules are:
    * 1. Direct child of `rootPath` (legacy layout).
