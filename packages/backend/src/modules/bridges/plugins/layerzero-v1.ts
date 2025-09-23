@@ -101,7 +101,7 @@ export class LayerZeroV1Plugin implements BridgePlugin {
     }
   }
 
-  matchtypes = [PacketDelivered]
+  matchTypes = [PacketDelivered]
   match(
     packetDelivered: BridgeEvent,
     db: BridgeEventDb,

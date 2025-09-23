@@ -38,7 +38,7 @@ export class MayanMctpFastPlugin implements BridgePlugin {
     }
   }
 
-  matchtypes = [OrderFulfilled]
+  matchTypes = [OrderFulfilled]
   match(
     orderFulfilled: BridgeEvent,
     db: BridgeEventDb,

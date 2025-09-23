@@ -24,7 +24,7 @@ import { LogMessagePublished } from './wormhole'
 export class MayanMctpPlugin implements BridgePlugin {
   name = 'mayan-mctp'
 
-  matchtypes = [
+  matchTypes = [
     ForwardedERC20,
     ForwardedEth,
     SwapAndForwardedERC20,
