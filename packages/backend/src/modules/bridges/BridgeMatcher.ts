@@ -51,7 +51,9 @@ export class BridgeMatcher {
   async doMatching() {
     const result = await match(
       this.bridgeStore,
-      this.bridgeStore.getUnmatched(),
+      (type) => this.bridgeStore.getEvents(type),
+      this.bridgeStore.getEventTypes(),
+      this.bridgeStore.getEventCount(),
       this.plugins,
       this.supportedChains,
       this.logger,
@@ -76,7 +78,9 @@ export class BridgeMatcher {
 
 export async function match(
   db: BridgeEventDb,
-  events: BridgeEvent[],
+  getEvents: (type: string) => BridgeEvent[],
+  eventTypes: string[],
+  count: number,
   plugins: BridgePlugin[],
   supportedChains: string[],
   logger: Logger,
@@ -84,7 +88,7 @@ export async function match(
   const start = Date.now()
   logger.info('Matching started', {
     plugins: plugins.length,
-    events: events.length,
+    events: count,
     chains: supportedChains.length,
   })
 
@@ -92,21 +96,6 @@ export async function match(
   const unsupportedIds = new Set<string>()
   const allMessages: BridgeMessage[] = []
   const allTransfers: BridgeTransfer[] = []
-
-  const ranges = new Map<string, { start: number; end: number }>()
-  let currentType = ''
-  const currentRange = { start: 0, end: 0 }
-  // assumes events are sorted
-  for (let i = 0; i < events.length; i++) {
-    const event = events[i]
-    if (event.type !== currentType) {
-      ranges.set(currentType, { ...currentRange })
-      currentType = event.type
-      currentRange.start = i
-    }
-    currentRange.end = i
-  }
-  ranges.set(currentType, { ...currentRange })
 
   for (const plugin of plugins) {
     if (!plugin.matchTypes || !plugin.match) {
@@ -117,11 +106,7 @@ export async function match(
     const start = Date.now()
 
     for (const type of plugin.matchTypes) {
-      const range = ranges.get(type.type)
-      if (!range) continue
-
-      for (let i = range.start; i <= range.end; i++) {
-        const event = events[i]
+      for (const event of getEvents(type.type)) {
         if (matchedIds.has(event.eventId)) {
           continue
         }
@@ -157,24 +142,32 @@ export async function match(
     })
   }
 
-  for (const event of events) {
-    if (matchedIds.has(event.eventId)) {
-      continue
-    }
-    const $srcChain = (event.args as Record<string, unknown>).$srcChain
-    if (typeof $srcChain === 'string' && !supportedChains.includes($srcChain)) {
-      unsupportedIds.add(event.eventId)
-    }
-    const $dstChain = (event.args as Record<string, unknown>).$dstChain
-    if (typeof $dstChain === 'string' && !supportedChains.includes($dstChain)) {
-      unsupportedIds.add(event.eventId)
+  for (const type of eventTypes) {
+    for (const event of getEvents(type)) {
+      if (matchedIds.has(event.eventId)) {
+        continue
+      }
+      const $srcChain = (event.args as Record<string, unknown>).$srcChain
+      if (
+        typeof $srcChain === 'string' &&
+        !supportedChains.includes($srcChain)
+      ) {
+        unsupportedIds.add(event.eventId)
+      }
+      const $dstChain = (event.args as Record<string, unknown>).$dstChain
+      if (
+        typeof $dstChain === 'string' &&
+        !supportedChains.includes($dstChain)
+      ) {
+        unsupportedIds.add(event.eventId)
+      }
     }
   }
 
   logger.info('Matching finished', {
     duration: Date.now() - start,
     plugins: plugins.length,
-    events: events.length,
+    events: count,
     chains: supportedChains.length,
     matchedEvents: matchedIds.size,
     unsupportedEvents: unsupportedIds.size,

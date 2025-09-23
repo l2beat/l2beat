@@ -107,7 +107,7 @@ interface RunResult {
 }
 
 async function runExample(example: Example): Promise<RunResult> {
-  const logger = Logger.INFO
+  const logger = Logger.ERROR
   const http = new HttpClient()
   const env = getEnv()
   const coingeckoClient = new CoingeckoClient({
@@ -183,7 +183,9 @@ async function runExample(example: Example): Promise<RunResult> {
 
   const result = await match(
     eventDb,
-    events,
+    (type) => events.filter((x) => x.type === type),
+    [...new Set(events.map((x) => x.type))],
+    events.length,
     plugins,
     chains.map((x) => x.name),
     logger,

@@ -10,7 +10,6 @@ import type {
 
 export class BridgeStore implements BridgeEventDb {
   private eventDb = new InMemoryEventDb()
-  private unmatched: BridgeEvent[] = []
 
   constructor(private db: Database) {}
 
@@ -19,16 +18,13 @@ export class BridgeStore implements BridgeEventDb {
     for (const record of records) {
       const event = fromDbRecord(record)
       this.eventDb.addEvent(event)
-      this.unmatched.push(event)
     }
   }
 
   async saveNewEvents(events: BridgeEvent[]): Promise<void> {
     for (const event of events) {
       this.eventDb.addEvent(event)
-      this.unmatched.push(event)
     }
-
     const records = events.map((e) => toDbRecord(e))
     await this.db.bridgeEvent.insertMany(records)
   }
@@ -40,18 +36,24 @@ export class BridgeStore implements BridgeEventDb {
     matched: Set<string>
     unsupported: Set<string>
   }): Promise<void> {
-    this.unmatched = this.unmatched.filter(
-      (x) => !matched.has(x.eventId) && !unsupported.has(x.eventId),
-    )
-
+    const all = new Set([...matched, ...unsupported])
+    this.eventDb.removeEvents(all)
     await this.db.transaction(async () => {
       await this.db.bridgeEvent.updateMatched(Array.from(matched))
       await this.db.bridgeEvent.updateUnsupported(Array.from(unsupported))
     })
   }
 
-  getUnmatched(): BridgeEvent[] {
-    return this.unmatched.sort((a, b) => a.type.localeCompare(b.type))
+  getEvents(type: string): BridgeEvent[] {
+    return this.eventDb.getEvents(type)
+  }
+
+  getEventTypes() {
+    return this.eventDb.getEventTypes()
+  }
+
+  getEventCount() {
+    return this.eventDb.getEventCount()
   }
 
   find<T>(
@@ -69,12 +71,7 @@ export class BridgeStore implements BridgeEventDb {
   }
 
   async deleteExpired(now: UnixTime) {
-    for (const event of this.unmatched) {
-      if (event.expiresAt <= now) {
-        this.eventDb.removeEvent(event.eventId)
-      }
-    }
-    this.unmatched = this.unmatched.filter((x) => x.expiresAt > now)
+    this.eventDb.removeExpired(now)
     await this.db.bridgeEvent.deleteExpired(now)
   }
 }

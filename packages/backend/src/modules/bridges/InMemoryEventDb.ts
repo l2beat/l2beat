@@ -1,3 +1,4 @@
+import type { UnixTime } from '@l2beat/shared-pure'
 import type {
   BridgeEvent,
   BridgeEventDb,
@@ -7,19 +8,61 @@ import type {
 
 export class InMemoryEventDb implements BridgeEventDb {
   private indices = new Map<string, EventIndex>()
-  private allEvents = new Map<string, BridgeEvent>()
+  private eventsByType = new Map<string, BridgeEvent[]>()
+  private count = 0
+
+  getEvents(type: string): BridgeEvent[] {
+    let array = this.eventsByType.get(type)
+    if (!array) {
+      array = []
+      this.eventsByType.set(type, array)
+    }
+    return array
+  }
+
+  getEventTypes() {
+    return [...this.eventsByType.keys()]
+  }
+
+  getEventCount() {
+    return this.count
+  }
 
   addEvent(event: BridgeEvent) {
-    this.allEvents.set(event.eventId, event)
+    this.count += 1
+    this.getEvents(event.type).push(event)
     for (const index of this.indices.values()) {
       index.addEvent(event)
     }
   }
 
-  removeEvent(eventId: string) {
-    const removed = this.allEvents.delete(eventId)
-    if (removed) {
-      for (const index of this.indices.values()) {
+  removeExpired(now: UnixTime) {
+    this.removeWhere((e) => e.expiresAt <= now)
+  }
+
+  removeEvents(eventIds: Set<string>) {
+    this.removeWhere((e) => eventIds.has(e.eventId))
+  }
+
+  private removeWhere(predicate: (event: BridgeEvent) => boolean) {
+    const removedIds: string[] = []
+    for (const array of this.eventsByType.values()) {
+      for (let i = 0; i < array.length; i++) {
+        if (predicate(array[i])) {
+          this.count -= 1
+          removedIds.push(array[i].eventId)
+          if (i === array.length - 1) {
+            array.pop()
+          } else {
+            // biome-ignore lint/style/noNonNullAssertion: It's there
+            array[i] = array.pop()!
+            i--
+          }
+        }
+      }
+    }
+    for (const index of this.indices.values()) {
+      for (const eventId of removedIds) {
         index.removeEvent(eventId)
       }
     }
@@ -69,7 +112,7 @@ export class InMemoryEventDb implements BridgeEventDb {
       }
       index = new EventIndex(type.type, fields, ctxFields)
       this.indices.set(indexKey, index)
-      for (const event of this.allEvents.values()) {
+      for (const event of this.getEvents(type.type)) {
         index.addEvent(event)
       }
     }
