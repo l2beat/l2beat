@@ -129,12 +129,12 @@ export class DeBridgePlugin implements BridgePlugin {
   }
 
   /* Matching alogrithm:
-1. For Each Claimed on DST
-2. Find Sent on SRC with the same submissionId
-3. Create Message
-4. If amount > 0 create Transfer
-*/
-
+    1. For Each Claimed on DST
+    2. Find Sent on SRC with the same submissionId
+    3. Create Message
+    4. If amount > 0 create Transfer
+  */
+  matchtypes = [Claimed]
   match(claimed: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (!Claimed.checkType(claimed)) return
     const sent = db.find(Sent, {

@@ -125,11 +125,11 @@ export type BridgeEventQuery<T> = Partial<T> & {
 export interface BridgeEventDb {
   find<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined
   findAll<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T>[]
 }
 
@@ -138,6 +138,7 @@ export interface BridgePlugin {
   capture?: (
     input: LogToCapture,
   ) => BridgeEvent | undefined | Promise<BridgeEvent | undefined>
+  matchTypes?: BridgeEventType<unknown>[]
   match?: (
     event: BridgeEvent,
     db: BridgeEventDb,

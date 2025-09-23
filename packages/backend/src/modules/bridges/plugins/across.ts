@@ -123,6 +123,7 @@ export class AcrossPlugin implements BridgePlugin {
     }
   }
 
+  matchTypes = [AcrossFilledRelay]
   match(filledRelay: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (!AcrossFilledRelay.checkType(filledRelay)) return
 
