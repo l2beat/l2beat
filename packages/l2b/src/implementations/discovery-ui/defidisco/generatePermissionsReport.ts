@@ -3,7 +3,6 @@ import * as fs from 'fs'
 import * as path from 'path'
 import type {
   ApiPermissionOverridesResponse,
-  PermissionOverride,
 } from './types'
 import { resolveOwnersFromDiscovered } from './permissionOverrides'
 
@@ -24,14 +23,16 @@ export function generatePermissionsReport(
   const discoveredPath = getDiscoveredPath(paths, project)
   const outputPath = getPermissionsReportPath(paths, project)
 
-  // Load permission overrides
-  let permissionOverrides: PermissionOverride[] = []
+  // Load permission overrides (contract-grouped structure)
+  let permissionOverrides: Record<string, any> = {}
   if (fs.existsSync(overridesPath)) {
     try {
       const fileContent = fs.readFileSync(overridesPath, 'utf8')
       const data = JSON.parse(fileContent) as ApiPermissionOverridesResponse
-      permissionOverrides = data.overrides
-      console.log(`Loaded ${permissionOverrides.length} permission overrides`)
+      permissionOverrides = data.contracts
+      const totalFunctions = Object.values(permissionOverrides).reduce((sum: number, contract: any) =>
+        sum + contract.functions.length, 0)
+      console.log(`Loaded ${totalFunctions} permission overrides from ${Object.keys(permissionOverrides).length} contracts`)
     } catch (error) {
       console.error('Error parsing permission overrides file:', error)
       throw new Error('Failed to parse permission overrides file')
@@ -57,54 +58,57 @@ export function generatePermissionsReport(
     throw new Error('No discovered.json file found')
   }
 
-  // Filter for permissioned functions only
-  const permissionedFunctions = permissionOverrides.filter(
-    override => override.userClassification === 'permissioned'
-  )
-  console.log(`Found ${permissionedFunctions.length} permissioned functions`)
-
-  // Create report entries
+  // Create report entries from contract-grouped structure
   const reportEntries: ReportEntry[] = []
+  let permissionedFunctionCount = 0
 
-  for (const func of permissionedFunctions) {
-    const contractName = getContractName(discoveredData, func.contractAddress)
-    const impact = func.description || func.reason || 'No description provided'
+  for (const [contractAddress, contractPermissions] of Object.entries(permissionOverrides)) {
+    const contractName = getContractName(discoveredData, contractAddress)
 
-    // Resolve owners if owner definitions exist
-    let owners: string[] = []
-    if (func.ownerDefinitions && func.ownerDefinitions.length > 0) {
-      try {
-        const resolved = resolveOwnersFromDiscovered(paths, project, func.ownerDefinitions)
-        owners = resolved
-          .filter(owner => owner.isResolved)
-          .map(owner => owner.address)
+    for (const func of (contractPermissions as any).functions) {
+      if (func.userClassification === 'permissioned') {
+        permissionedFunctionCount++
+        const impact = func.description || func.reason || 'No description provided'
 
-        // If no owners could be resolved, show the definition types
-        if (owners.length === 0) {
-          owners = func.ownerDefinitions.map(def => {
-            if (def.type === 'field') {
-              return `Field: ${def.field?.method || 'unknown'}`
-            } else if (def.type === 'role') {
-              return `Role: ${def.role?.roleName || 'unknown'}`
+        // Resolve owners if owner definitions exist
+        let owners: string[] = []
+        if (func.ownerDefinitions && func.ownerDefinitions.length > 0) {
+          try {
+            const resolved = resolveOwnersFromDiscovered(paths, project, func.ownerDefinitions)
+            owners = resolved
+              .filter(owner => owner.isResolved)
+              .map(owner => owner.address)
+
+            // If no owners could be resolved, show the definition types
+            if (owners.length === 0) {
+              owners = func.ownerDefinitions.map((def: any) => {
+                if (def.type === 'field') {
+                  return `Field: ${def.field?.method || 'unknown'}`
+                } else if (def.type === 'role') {
+                  return `Role: ${def.role?.roleName || 'unknown'}`
+                }
+                return 'Unknown definition type'
+              })
             }
-            return 'Unknown definition type'
-          })
+          } catch (error) {
+            console.warn(`Failed to resolve owners for ${func.functionName}:`, error)
+            owners = ['Resolution failed']
+          }
+        } else {
+          owners = ['No owners defined']
         }
-      } catch (error) {
-        console.warn(`Failed to resolve owners for ${func.functionName}:`, error)
-        owners = ['Resolution failed']
-      }
-    } else {
-      owners = ['No owners defined']
-    }
 
-    reportEntries.push({
-      contractName,
-      functionName: func.functionName,
-      impact,
-      owners,
-    })
+        reportEntries.push({
+          contractName,
+          functionName: func.functionName,
+          impact,
+          owners,
+        })
+      }
+    }
   }
+
+  console.log(`Found ${permissionedFunctionCount} permissioned functions`)
 
   // Generate markdown table
   const markdown = generateMarkdownTable(reportEntries)

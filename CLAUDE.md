@@ -71,16 +71,18 @@ git fetch upstream && git merge upstream/main
 
 ### Interactive Permission Management ✅
 **UI System**: Complete permission management in `/defidisco/ValuesPanelExtensions.tsx`
+- **Data Structure**: Contract-grouped permissions for O(1) lookups (`contracts[address].functions[]`)
 - **Data Separation**: Discovered permissions vs user overrides (persistent)
 - **Three Attributes**: Checked (✓), Permission (🔒), Risk Score (⚡)
 - **Features**: Expandable functions, code navigation, owner tracking
-- **Performance**: File caching, optimistic updates, debounced inputs
+- **Performance**: File caching, optimistic updates, debounced inputs, efficient contract-specific queries
 
 ### Permissions Report Generation ✅
 **Terminal Integration**: Button in `/defidisco/TerminalExtensions.tsx`
-- Generates markdown table from `permission-overrides.json`
+- Generates markdown table from contract-grouped `permission-overrides.json`
 - Maps addresses to contract names, resolves owner definitions
 - Server-Sent Events API for real-time output
+- Efficiently processes contract-grouped data structure
 
 ### DeFiScan Panel ✅
 **Overview Panel**: Contract analysis dashboard in `/defidisco/DeFiScanPanel.tsx`
@@ -151,6 +153,36 @@ packages/
 - **Permission Overrides**: Use `useQuery` with `getPermissionOverrides(project)` directly (no hook exists)
 - **Address Format**: Always normalize `contract.address.replace('eth:', '').toLowerCase()` when matching with tags
 - **EOA Counting**: EOAs stored separately in `entry.eoas[]` array, not mixed with contracts
+
+### Permission Overrides Data Structure ✅
+**Contract-Grouped Format**: Optimized for O(1) contract lookups and efficient data access
+```json
+{
+  "version": "1.0",
+  "lastModified": "2025-09-23T16:18:18.029Z",
+  "contracts": {
+    "eth:0x123...": {
+      "functions": [
+        {
+          "functionName": "pause",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Emergency pause function",
+          "ownerDefinitions": [...],
+          "timestamp": "2025-09-23T16:18:18.029Z"
+        }
+      ]
+    }
+  }
+}
+```
+
+**Access Patterns**:
+- **Direct Contract Access**: `permissionOverrides.contracts[contractAddress]` - O(1) lookup
+- **Function Lookup**: `contracts[address].functions.find(f => f.functionName === name)` - O(n) only within contract
+- **Global Operations**: `Object.values(contracts).flatMap(c => c.functions)` when needed
+- **UI Components**: Use `getOverridesForContract(address)` helper for contract-specific data
 
 **Panel Development**: To add new panels:
 1. Add panel ID to `PANEL_IDS` in `store.ts`

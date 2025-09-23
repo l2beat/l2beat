@@ -191,11 +191,14 @@ export interface UpgradeabilityActor {
 export interface ApiPermissionOverridesResponse {
   version: string
   lastModified: string
-  overrides: PermissionOverride[]
+  contracts: Record<string, ContractPermissions>
+}
+
+export interface ContractPermissions {
+  functions: PermissionOverride[]
 }
 
 export interface PermissionOverride {
-  contractAddress: string
   functionName: string
   userClassification: 'permissioned' | 'non-permissioned'
   checked?: boolean

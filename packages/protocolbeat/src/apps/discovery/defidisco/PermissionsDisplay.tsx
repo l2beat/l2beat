@@ -66,7 +66,13 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     enabled: !!project,
   })
 
-  const allOverrides = [...(overridesData?.overrides || []), ...localOverrides]
+  // Get permissions for the specific contracts we're displaying (much more efficient!)
+  const getOverridesForContract = (contractAddress: string) => {
+    const contractPermissions = overridesData?.contracts?.[contractAddress]?.functions || []
+    const localPermissionsForContract = localOverrides.filter(o => o.contractAddress === contractAddress)
+
+    return [...contractPermissions.map(func => ({ contractAddress, ...func })), ...localPermissionsForContract]
+  }
 
   const handlePermissionToggle = async (contractAddress: string, functionName: string, currentClassification: 'permissioned' | 'non-permissioned') => {
     if (!project) return
@@ -169,10 +175,9 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     functionName: string,
     updates: Partial<Pick<PermissionOverride, 'userClassification' | 'checked' | 'score' | 'description' | 'ownerDefinitions'>>
   ) => {
-    // Get current override data
-    const currentOverride = allOverrides.find(o =>
-      o.contractAddress === contractAddress && o.functionName === functionName
-    )
+    // Get current override data from contract-specific overrides
+    const contractOverrides = getOverridesForContract(contractAddress)
+    const currentOverride = contractOverrides.find(o => o.functionName === functionName)
 
     // Create optimistic update
     const newOverride: PermissionOverride = {
@@ -243,7 +248,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
           <PermissionsCode
             entries={abi.entries}
             contractAddress={abi.address}
-            overrides={allOverrides}
+            overrides={getOverridesForContract(abi.address)}
             onPermissionToggle={handlePermissionToggle}
             onCheckedToggle={handleCheckedToggle}
             onScoreToggle={handleScoreToggle}

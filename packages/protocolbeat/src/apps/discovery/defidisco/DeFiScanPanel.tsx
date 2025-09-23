@@ -71,21 +71,32 @@ function StatusOfReviewSection({ projectData, contractTags, permissionOverrides 
     })
   })
 
-  // Count EOAs separately from the eoas array
-  let totalEoas = 0
+  // Collect all EOAs from the eoas array
+  const allEoas: any[] = []
   projectData.entries.forEach((entry: any) => {
-    totalEoas += entry.eoas.length
+    allEoas.push(...entry.eoas)
   })
 
-  // Count permissions from permission-overrides
-  const permissionedFunctions = permissionOverrides.overrides.filter(
-    (override: any) => override.userClassification === 'permissioned'
-  ).length
-  const checkedFunctions = permissionOverrides.overrides.filter(
-    (override: any) => override.userClassification === 'permissioned' && override.checked === true
-  ).length
+  // Count permissions from permission-overrides (contract-grouped structure)
+  let permissionedFunctions = 0
+  let checkedFunctions = 0
 
-  // Count by address type (excluding external)
+  if (permissionOverrides.contracts) {
+    Object.values(permissionOverrides.contracts).forEach((contractPermissions: any) => {
+      contractPermissions.functions.forEach((func: any) => {
+        if (func.userClassification === 'permissioned') {
+          permissionedFunctions++
+          if (func.checked === true) {
+            checkedFunctions++
+          }
+        }
+      })
+    })
+  } else {
+    console.error('permissionOverrides.contracts is undefined:', permissionOverrides)
+  }
+
+  // Count by address type (including external)
   const contractCounts = {
     contracts: 0,
     eoas: 0,
@@ -129,10 +140,25 @@ function StatusOfReviewSection({ projectData, contractTags, permissionOverrides 
     }
   })
 
+  // Check for external EOAs and adjust counts
+  let externalEoas = 0
+  allEoas.forEach((eoa) => {
+    const eoaAddress = eoa.address.replace('eth:', '').toLowerCase()
+    const tag = contractTags.tags.find((tag: any) =>
+      tag.contractAddress?.toLowerCase() === eoaAddress
+    )
+    if (tag?.isExternal === true) {
+      externalEoas++
+    }
+  })
+  console.log(externalEoas)
+
+  // Update counts to account for external EOAs
+  contractCounts.eoas = allEoas.length - externalEoas
+  contractCounts.external += externalEoas
+
   const totalInitial = initialContracts.length
   const totalDiscovered = allContracts.length - totalInitial
-  // Use totalEoas instead of contractCounts.eoas for the final count
-  contractCounts.eoas = totalEoas
   const totalNonExternal = contractCounts.contracts + contractCounts.eoas + contractCounts.multisigs
 
 
