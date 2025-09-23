@@ -54,6 +54,7 @@ export class HyperlanePlugIn implements BridgePlugin {
       })
   }
 
+  matchTypes = [ProcessId]
   match(delivery: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (ProcessId.checkType(delivery)) {
       const dispatchId = db.find(DispatchId, {

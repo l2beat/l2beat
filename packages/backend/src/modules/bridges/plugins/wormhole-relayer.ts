@@ -46,6 +46,7 @@ export class WormholeRelayerPlugin implements BridgePlugin {
     })
   }
 
+  matchTypes = [Delivery]
   match(delivery: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (Delivery.checkType(delivery)) {
       const logMessagePublished = db.find(LogMessagePublished, {

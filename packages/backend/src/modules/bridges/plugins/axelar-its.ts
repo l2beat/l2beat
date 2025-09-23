@@ -116,6 +116,7 @@ export class AxelarITSPlugin implements BridgePlugin {
   // TODO: There are two ContractCall events emitted in the same transaction in the example - how to deal with that ? This is somehow picked up by axelar plugin ????
   // TODO: There seems to be an error in Messages - src and dst events are the same...
 
+  matchTypes = [InterchainTransferReceived]
   match(
     interchainTransferReceived: BridgeEvent,
     db: BridgeEventDb,

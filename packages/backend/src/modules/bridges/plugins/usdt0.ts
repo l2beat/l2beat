@@ -97,6 +97,7 @@ export class Usdt0Plugin implements BridgePlugin {
     }
   }
 
+  matchTypes = [Usdt0OFTReceived]
   match(oftReceived: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (!Usdt0OFTReceived.checkType(oftReceived)) return
 

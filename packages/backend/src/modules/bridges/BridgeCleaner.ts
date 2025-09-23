@@ -34,7 +34,7 @@ export class BridgeCleaner {
   async clean() {
     const now = UnixTime.now()
     await this.bridgeStore.deleteExpired(now)
-    await this.db.bridgeMessage.deleteBefore(now - 7 * UnixTime.DAY)
-    await this.db.bridgeTransfer.deleteBefore(now - 7 * UnixTime.DAY)
+    await this.db.bridgeMessage.deleteBefore(now - 1 * UnixTime.DAY)
+    await this.db.bridgeTransfer.deleteBefore(now - 1 * UnixTime.DAY)
   }
 }

@@ -847,7 +847,7 @@ export const lyra: ScalingProject = opStackL2({
       },
     ],
     apis: [
-      { type: 'rpc', url: 'https://rpc.lyra.finance', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.lyra.finance', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://explorer.lyra.finance/api' },
     ],
   },

@@ -71,7 +71,7 @@ export class BridgeMessageRepository extends BaseRepository {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-    await this.batch(rows, 10_000, async (batch) => {
+    await this.batch(rows, 2_000, async (batch) => {
       await this.db.insertInto('BridgeMessage').values(batch).execute()
     })
     return rows.length

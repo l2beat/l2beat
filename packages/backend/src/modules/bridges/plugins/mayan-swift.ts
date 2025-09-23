@@ -46,6 +46,7 @@ export class MayanSwiftPlugin implements BridgePlugin {
     }
   }
 
+  matchTypes = [OrderFulfilled]
   match(
     orderFulfilled: BridgeEvent,
     db: BridgeEventDb,

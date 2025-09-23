@@ -72,6 +72,7 @@ export class OpStackPlugin implements BridgePlugin {
     }
   }
 
+  matchTypes = [WithdrawalFinalized]
   match(
     withdrawalFinalized: BridgeEvent,
     db: BridgeEventDb,

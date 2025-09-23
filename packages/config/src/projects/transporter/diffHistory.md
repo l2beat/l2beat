@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x616b6f72f12beb1579784a8f44773ac19a6592cc
+
+# Diff at Tue, 23 Sep 2025 08:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9a796f3fca0d6345ed73136526bf67003edbb829 block: 1758287245
+- current timestamp: 1758616510
+
+## Description
+
+new pools, regenerated tvs conf.
+
+## Watched changes
+
+```diff
+    contract HybridLockReleaseUSDCTokenPool (eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF) {
+    +++ description: A token pool for USDC which uses CCTP for supported chains and Lock/Release for all others
+      values.getSupportedChains.11:
++        "4426351306075016396"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x512c2Ddf5f7F48a6c44cFF73CD8d7edEC5e6b0d8) {
+    +++ description: None
+      values.getSupportedChains.5:
++        "124615329519749607"
+    }
+```
+
+```diff
+    contract SiloedLockReleaseTokenPool (eth:0xA586a732394A1AFfCF15b972cd47C936033C9FA7) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "4426351306075016396"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.231:
++        "eth:0xE3Bd48bd2dE9641E15d4900824E885E9b4d87C3D"
+      values.pools.232:
++        "eth:0xBe4fbD980712a800f5e0e7C15a70e097efaCD331"
+      values.poolsMap.eth:0x3f83e509942081979Baa6d34d16B3837d287D80F:
++        "eth:0xE3Bd48bd2dE9641E15d4900824E885E9b4d87C3D"
+      values.poolsMap.eth:0x8F18f2C97d2f5EC0e1d5B91c1D2ce245a9151972:
++        "eth:0xBe4fbD980712a800f5e0e7C15a70e097efaCD331"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xBe4fbD980712a800f5e0e7C15a70e097efaCD331)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xE3Bd48bd2dE9641E15d4900824E885E9b4d87C3D)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xBe4fbD980712a800f5e0e7C15a70e097efaCD331.sol | 1615 ++++++++++++++++++++
+ ...:0xE3Bd48bd2dE9641E15d4900824E885E9b4d87C3D.sol | 1376 +++++++++++++++++
+ 2 files changed, 2991 insertions(+)
+```
+
 Generated with discovered.json: 0x2f49a3d533c1ef747bdb9a228b8eca9ffe4422e4
 
 # Diff at Fri, 19 Sep 2025 13:11:35 GMT:
