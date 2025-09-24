@@ -1,11 +1,11 @@
-import type { BridgeMessageRecord } from '@l2beat/database'
+import type { BridgeTransferRecord } from '@l2beat/database'
 import { formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
 
-function MessagesTable(props: {
-  messages: BridgeMessageRecord[]
+function TransfersTable(props: {
+  transfers: BridgeTransferRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return (
@@ -16,12 +16,16 @@ function MessagesTable(props: {
           <th>Duration</th>
           <th>srcChain</th>
           <th>srcTx</th>
+          <th>srcToken</th>
+          <th>srcRawAmount</th>
           <th>dstChain</th>
           <th>dstTx</th>
+          <th>dstToken</th>
+          <th>dstRawAmount</th>
         </tr>
       </thead>
       <tbody>
-        {props.messages.map((e) => {
+        {props.transfers.map((e) => {
           const srcExplorerUrl = e.srcChain && props.getExplorerUrl(e.srcChain)
           const dstExplorerUrl = e.dstChain && props.getExplorerUrl(e.dstChain)
 
@@ -44,6 +48,19 @@ function MessagesTable(props: {
                   e.srcTxHash
                 )}
               </td>
+              <td>
+                {srcExplorerUrl ? (
+                  <a
+                    target="_blank"
+                    href={`${srcExplorerUrl}/address/${e.srcTokenAddress}`}
+                  >
+                    {e.srcTokenAddress}
+                  </a>
+                ) : (
+                  e.srcTokenAddress
+                )}
+              </td>
+              <td>{e.srcRawAmount}</td>
               <td>{e.dstChain}</td>
               <td>
                 {dstExplorerUrl ? (
@@ -57,6 +74,19 @@ function MessagesTable(props: {
                   e.dstTxHash
                 )}
               </td>
+              <td>
+                {srcExplorerUrl ? (
+                  <a
+                    target="_blank"
+                    href={`${srcExplorerUrl}/address/${e.dstTokenAddress}`}
+                  >
+                    {e.dstTokenAddress}
+                  </a>
+                ) : (
+                  e.dstTokenAddress
+                )}
+              </td>
+              <td>{e.dstRawAmount}</td>
             </tr>
           )
         })}
@@ -65,12 +95,12 @@ function MessagesTable(props: {
   )
 }
 
-function MessagesPageLayout(props: {
-  messages: BridgeMessageRecord[]
+function TransfersPageLayout(props: {
+  transfers: BridgeTransferRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
-  const eventsTable = <MessagesTable {...props} />
-  const title = `Bridge Events: ${props.messages[0]?.type ?? ''}`
+  const eventsTable = <TransfersTable {...props} />
+  const title = `Bridge Events: ${props.transfers[0]?.type ?? ''}`
 
   const dataTableOptions = {
     pageLength: 25,
@@ -93,11 +123,11 @@ function MessagesPageLayout(props: {
   )
 }
 
-export function renderMessagesPage(props: {
-  messages: BridgeMessageRecord[]
+export function renderTransfersPage(props: {
+  transfers: BridgeTransferRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return (
-    '<!DOCTYPE html>' + renderToStaticMarkup(<MessagesPageLayout {...props} />)
+    '<!DOCTYPE html>' + renderToStaticMarkup(<TransfersPageLayout {...props} />)
   )
 }

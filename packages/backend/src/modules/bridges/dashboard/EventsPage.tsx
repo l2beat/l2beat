@@ -29,7 +29,9 @@ function EventsTable(props: {
               <td>{e.chain}</td>
               <td>
                 {explorerUrl ? (
-                  <a href={`${explorerUrl}/tx/${e.txHash}`}>{e.txHash}</a>
+                  <a target="_blank" href={`${explorerUrl}/tx/${e.txHash}`}>
+                    {e.txHash}
+                  </a>
                 ) : (
                   e.txHash
                 )}

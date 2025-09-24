@@ -9,6 +9,7 @@ import { v } from '@l2beat/validate'
 import type { BridgesConfig } from '../../config/Config'
 import { renderEventsPage } from './dashboard/EventsPage'
 import { renderMessagesPage } from './dashboard/MessagesPage'
+import { renderTransfersPage } from './dashboard/TransfersPage'
 
 export function createBridgeRouter(db: Database, config: BridgesConfig) {
   const router = new Router()
@@ -41,7 +42,10 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
       })
     } else if (params.kind === 'transfers') {
       const transfers = await db.bridgeTransfer.getByType(params.type)
-      ctx.body = transfers
+      ctx.body = renderTransfersPage({
+        transfers,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      })
     } else {
       if (params.kind === 'unmatched') {
         const events = await db.bridgeEvent.getUnmatchedByType(params.type)
