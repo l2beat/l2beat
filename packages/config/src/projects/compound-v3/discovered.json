@@ -1,6 +1,6 @@
 {
   "name": "compound-v3",
-  "timestamp": 1758034799,
+  "timestamp": 1758729268,
   "configHash": "0x07bb8b632db69ff0ca2c929a0329c7fa93506dced23b376222924528620485a1",
   "entries": [
     {
@@ -138,7 +138,7 @@
         ],
         "multisigThreshold": "4 of 9 (44%)",
         "NAME": "Gnosis Safe",
-        "nonce": 1907,
+        "nonce": 1913,
         "VERSION": "1.1.1",
         "writeFunctionPermissions": [
           { "skipped": true, "reason": "tooManyWriteFunctions", "count": 16 }
@@ -388,7 +388,7 @@
         ],
         "$upgradeCount": 1,
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
-        "clock": 23376384,
+        "clock": 23433920,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo,fractional&quorum=for&params=fractional",
         "eip712Domain": {
@@ -401,16 +401,16 @@
           "extensions": []
         },
         "EXTENDED_BALLOT_TYPEHASH": "0x3e83946653575f9a39005e1545185629e92736b7528ab20ca3816f315424a811",
-        "getNextProposalId": 479,
+        "getNextProposalId": 482,
         "lateQuorumVoteExtension": 14400,
         "name": "Compound Governor",
-        "proposalCount": 478,
+        "proposalCount": 481,
         "proposalDeadline": [0, 0, 0, 0, 0],
         "proposalDetails": [],
         "proposalEta": [0, 0, 0, 0, 0],
         "proposalGuardian": {
           "account": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
-          "expiration": 1757566800
+          "expiration": 1789229978
         },
         "proposalNeedsQueuing": [true, true, true, true, true],
         "proposalProposer": [
@@ -1350,16 +1350,16 @@
         "description": "USDC / USD",
         "getAnswer": [0, 0, 0, 0, 0],
         "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": 99974998,
-        "latestRound": "55340232221128655338",
+        "latestAnswer": 99976329,
+        "latestRound": "55340232221128655354",
         "latestRoundData": {
-          "roundId": "55340232221128655338",
-          "answer": 99974998,
-          "startedAt": 1758009621,
-          "updatedAt": 1758009635,
-          "answeredInRound": "55340232221128655338"
+          "roundId": "55340232221128655354",
+          "answer": 99976329,
+          "startedAt": 1758700834,
+          "updatedAt": 1758700847,
+          "answeredInRound": "55340232221128655354"
         },
-        "latestTimestamp": 1758009635,
+        "latestTimestamp": 1758700847,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 3,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -1436,6 +1436,21 @@
       "address": "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "AssetList",
+      "address": "eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe31915f5f9f093183b616044a9f6bf0259fd4d26110d444d688fa07d4709d73c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1758554411,
+      "sinceBlock": 23419422,
+      "values": { "$immutable": true, "numAssets": 15 },
+      "implementationNames": {
+        "eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c": "AssetList"
+      }
     },
     {
       "name": "AuthorizedForwarder",
@@ -1616,7 +1631,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "48168493818361754",
+        "totalSupply": "49537593525166025",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2",
         "writeFunctionPermissions": [
@@ -1651,7 +1666,7 @@
       "sinceBlock": 16400710,
       "values": {
         "$admin": "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779",
-        "$implementation": "eth:0x88C3e0DFf6554b64f9b7Eb2E88b9db85E1A0B0E1",
+        "$implementation": "eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d",
         "$pastUpgrades": [
           [
             "2023-01-13T21:58:23.000Z",
@@ -1872,10 +1887,15 @@
             "2025-09-04T17:00:35.000Z",
             "0x2cff3a7cff0f3de58dafcdcd98a36539482bb87e9996d04b44ddaf78a2b5b582",
             ["eth:0x88C3e0DFf6554b64f9b7Eb2E88b9db85E1A0B0E1"]
+          ],
+          [
+            "2025-09-22T15:20:11.000Z",
+            "0xb694d5800bf1736049ad1f14e32075b086065d2afddbc162b4edb7cff009142e",
+            ["eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d"]
           ]
         ],
-        "$upgradeCount": 44,
-        "assetList": "eth:0xF2B41D0AFE27A1E6E5e30A00Cecc17d41202cfe9",
+        "$upgradeCount": 45,
+        "assetList": "eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c",
         "baseBorrowMin": "100000000000000000",
         "baseMinForRewards": "1000000000000000000000",
         "baseScale": "1000000000000000000",
@@ -1892,9 +1912,9 @@
         "getBorrowRate": [
           317097919, 317097919, 317097919, 317097919, 317097919
         ],
-        "getReserves": "872639268228300096330",
+        "getReserves": "874472523706266805109",
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "817448870736661865",
+        "getUtilization": "832987167375147356",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
         "isBuyPaused": false,
@@ -1909,8 +1929,8 @@
         "supplyPerSecondInterestRateSlopeHigh": 35673515981,
         "supplyPerSecondInterestRateSlopeLow": 684931506,
         "targetReserves": "5000000000000000000000",
-        "totalBorrow": "58408774961507803390216",
-        "totalSupply": "71452429319487457358848",
+        "totalBorrow": "63352284344799084529754",
+        "totalSupply": "76054268781347716351068",
         "trackingIndexScale": 1000000000000000,
         "writeFunctionPermissions": [
           { "skipped": true, "reason": "tooManyWriteFunctions", "count": 22 }
@@ -1922,7 +1942,7 @@
       },
       "implementationNames": {
         "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94": "TransparentUpgradeableProxy",
-        "eth:0x88C3e0DFf6554b64f9b7Eb2E88b9db85E1A0B0E1": "CometWithExtendedAssetList"
+        "eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d": "CometWithExtendedAssetList"
       }
     },
     {
@@ -2164,7 +2184,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2424800640101308417747633",
+        "totalSupply": "2448010930808430994381110",
         "writeFunctionPermissions": [
           {
             "function": "approve",
@@ -2507,9 +2527,9 @@
         "getBorrowRate": [
           475646879, 475646879, 475646879, 475646879, 475646879
         ],
-        "getReserves": 15922176926246,
+        "getReserves": 15999648549374,
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "906501826373232731",
+        "getUtilization": "902797339217473096",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
         "isBuyPaused": false,
@@ -2524,8 +2544,8 @@
         "supplyPerSecondInterestRateSlopeHigh": 101344495180,
         "supplyPerSecondInterestRateSlopeLow": 1141552511,
         "targetReserves": 20000000000000,
-        "totalBorrow": 484708170130205,
-        "totalSupply": 534701734018329,
+        "totalBorrow": 485801002419654,
+        "totalSupply": 538106298650642,
         "trackingIndexScale": 1000000000000000,
         "writeFunctionPermissions": [
           { "skipped": true, "reason": "tooManyWriteFunctions", "count": 22 }
@@ -2587,8 +2607,8 @@
         "getBilling": {
           "maximumGasPriceGwei": 3000,
           "reasonableGasPriceGwei": 60,
-          "observationPaymentGjuels": 15976902,
-          "transmissionPaymentGjuels": 95860904,
+          "observationPaymentGjuels": 17170803,
+          "transmissionPaymentGjuels": 103024272,
           "accountingGas": 6035
         },
         "getBillingAccessController": "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9",
@@ -2625,9 +2645,9 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x0001443752cf7d628a5102894fe0b426dbcc109c226e4b37bdf93ab33506cca4",
-          "epoch": 18904
+          "epoch": 22744
         },
-        "linkAvailableForPayment": "35988452326685929145",
+        "linkAvailableForPayment": "49028875702783133634",
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
         "minAnswer": 1,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
@@ -2708,8 +2728,8 @@
         "latestRoundData": {
           "roundId": 1,
           "answer": 100000000,
-          "startedAt": 1758034799,
-          "updatedAt": 1758034799,
+          "startedAt": 1758729263,
+          "updatedAt": 1758729263,
           "answeredInRound": 1
         },
         "version": 1
@@ -2886,21 +2906,6 @@
       }
     },
     {
-      "name": "AssetList",
-      "address": "eth:0xF2B41D0AFE27A1E6E5e30A00Cecc17d41202cfe9",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe31915f5f9f093183b616044a9f6bf0259fd4d26110d444d688fa07d4709d73c"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1757005235,
-      "sinceBlock": 23291101,
-      "values": { "$immutable": true, "numAssets": 15 },
-      "implementationNames": {
-        "eth:0xF2B41D0AFE27A1E6E5e30A00Cecc17d41202cfe9": "AssetList"
-      }
-    },
-    {
       "name": "AuthorizedForwarder",
       "address": "eth:0xF38326579519377178725A741C35999E8051e907",
       "type": "Contract",
@@ -3053,6 +3058,118 @@
       "function implementation() view returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d": [
+      "constructor(tuple(address governor, address pauseGuardian, address baseToken, address baseTokenPriceFeed, address extensionDelegate, uint64 supplyKink, uint64 supplyPerYearInterestRateSlopeLow, uint64 supplyPerYearInterestRateSlopeHigh, uint64 supplyPerYearInterestRateBase, uint64 borrowKink, uint64 borrowPerYearInterestRateSlopeLow, uint64 borrowPerYearInterestRateSlopeHigh, uint64 borrowPerYearInterestRateBase, uint64 storeFrontPriceFactor, uint64 trackingIndexScale, uint64 baseTrackingSupplySpeed, uint64 baseTrackingBorrowSpeed, uint104 baseMinForRewards, uint104 baseBorrowMin, uint104 targetReserves, tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs) config)",
+      "error Absurd()",
+      "error AlreadyInitialized()",
+      "error BadAsset()",
+      "error BadDecimals()",
+      "error BadDiscount()",
+      "error BadMinimum()",
+      "error BadPrice()",
+      "error BorrowCFTooLarge()",
+      "error BorrowTooSmall()",
+      "error InsufficientReserves()",
+      "error InvalidInt104()",
+      "error InvalidInt256()",
+      "error InvalidUInt104()",
+      "error InvalidUInt128()",
+      "error InvalidUInt64()",
+      "error LiquidateCFTooLarge()",
+      "error NegativeNumber()",
+      "error NoSelfTransfer()",
+      "error NotCollateralized()",
+      "error NotForSale()",
+      "error NotLiquidatable()",
+      "error Paused()",
+      "error ReentrantCallBlocked()",
+      "error SupplyCapExceeded()",
+      "error TimestampTooLarge()",
+      "error TooManyAssets()",
+      "error TooMuchSlippage()",
+      "error TransferInFailed()",
+      "error TransferOutFailed()",
+      "error Unauthorized()",
+      "event AbsorbCollateral(address indexed absorber, address indexed borrower, address indexed asset, uint256 collateralAbsorbed, uint256 usdValue)",
+      "event AbsorbDebt(address indexed absorber, address indexed borrower, uint256 basePaidOut, uint256 usdValue)",
+      "event BuyCollateral(address indexed buyer, address indexed asset, uint256 baseAmount, uint256 collateralAmount)",
+      "event PauseAction(bool supplyPaused, bool transferPaused, bool withdrawPaused, bool absorbPaused, bool buyPaused)",
+      "event Supply(address indexed from, address indexed dst, uint256 amount)",
+      "event SupplyCollateral(address indexed from, address indexed dst, address indexed asset, uint256 amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 amount)",
+      "event TransferCollateral(address indexed from, address indexed to, address indexed asset, uint256 amount)",
+      "event Withdraw(address indexed src, address indexed to, uint256 amount)",
+      "event WithdrawCollateral(address indexed src, address indexed to, address indexed asset, uint256 amount)",
+      "event WithdrawReserves(address indexed to, uint256 amount)",
+      "function absorb(address absorber, address[] accounts)",
+      "function accrueAccount(address account)",
+      "function approveThis(address manager, address asset, uint256 amount)",
+      "function assetList() view returns (address)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function baseBorrowMin() view returns (uint256)",
+      "function baseMinForRewards() view returns (uint256)",
+      "function baseScale() view returns (uint256)",
+      "function baseToken() view returns (address)",
+      "function baseTokenPriceFeed() view returns (address)",
+      "function baseTrackingBorrowSpeed() view returns (uint256)",
+      "function baseTrackingSupplySpeed() view returns (uint256)",
+      "function borrowBalanceOf(address account) view returns (uint256)",
+      "function borrowKink() view returns (uint256)",
+      "function borrowPerSecondInterestRateBase() view returns (uint256)",
+      "function borrowPerSecondInterestRateSlopeHigh() view returns (uint256)",
+      "function borrowPerSecondInterestRateSlopeLow() view returns (uint256)",
+      "function buyCollateral(address asset, uint256 minAmount, uint256 baseAmount, address recipient)",
+      "function decimals() view returns (uint8)",
+      "function extensionDelegate() view returns (address)",
+      "function getAssetInfo(uint8 i) view returns (tuple(uint8 offset, address asset, address priceFeed, uint64 scale, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap))",
+      "function getAssetInfoByAddress(address asset) view returns (tuple(uint8 offset, address asset, address priceFeed, uint64 scale, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap))",
+      "function getBorrowRate(uint256 utilization) view returns (uint64)",
+      "function getCollateralReserves(address asset) view returns (uint256)",
+      "function getPrice(address priceFeed) view returns (uint256)",
+      "function getReserves() view returns (int256)",
+      "function getSupplyRate(uint256 utilization) view returns (uint64)",
+      "function getUtilization() view returns (uint256)",
+      "function governor() view returns (address)",
+      "function hasPermission(address owner, address manager) view returns (bool)",
+      "function initializeStorage()",
+      "function isAbsorbPaused() view returns (bool)",
+      "function isAllowed(address, address) view returns (bool)",
+      "function isBorrowCollateralized(address account) view returns (bool)",
+      "function isBuyPaused() view returns (bool)",
+      "function isLiquidatable(address account) view returns (bool)",
+      "function isSupplyPaused() view returns (bool)",
+      "function isTransferPaused() view returns (bool)",
+      "function isWithdrawPaused() view returns (bool)",
+      "function liquidatorPoints(address) view returns (uint32 numAbsorbs, uint64 numAbsorbed, uint128 approxSpend, uint32 _reserved)",
+      "function numAssets() view returns (uint8)",
+      "function pause(bool supplyPaused, bool transferPaused, bool withdrawPaused, bool absorbPaused, bool buyPaused)",
+      "function pauseGuardian() view returns (address)",
+      "function quoteCollateral(address asset, uint256 baseAmount) view returns (uint256)",
+      "function storeFrontPriceFactor() view returns (uint256)",
+      "function supply(address asset, uint256 amount)",
+      "function supplyFrom(address from, address dst, address asset, uint256 amount)",
+      "function supplyKink() view returns (uint256)",
+      "function supplyPerSecondInterestRateBase() view returns (uint256)",
+      "function supplyPerSecondInterestRateSlopeHigh() view returns (uint256)",
+      "function supplyPerSecondInterestRateSlopeLow() view returns (uint256)",
+      "function supplyTo(address dst, address asset, uint256 amount)",
+      "function targetReserves() view returns (uint256)",
+      "function totalBorrow() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function totalsCollateral(address) view returns (uint128 totalSupplyAsset, uint128 _reserved)",
+      "function trackingIndexScale() view returns (uint256)",
+      "function transfer(address dst, uint256 amount) returns (bool)",
+      "function transferAsset(address dst, address asset, uint256 amount)",
+      "function transferAssetFrom(address src, address dst, address asset, uint256 amount)",
+      "function transferFrom(address src, address dst, uint256 amount) returns (bool)",
+      "function userBasic(address) view returns (int104 principal, uint64 baseTrackingIndex, uint64 baseTrackingAccrued, uint16 assetsIn, uint8 _reserved)",
+      "function userCollateral(address, address) view returns (uint128 balance, uint128 _reserved)",
+      "function userNonce(address) view returns (uint256)",
+      "function withdraw(address asset, uint256 amount)",
+      "function withdrawFrom(address src, address to, address asset, uint256 amount)",
+      "function withdrawReserves(address to, uint256 amount)",
+      "function withdrawTo(address to, address asset, uint256 amount)"
     ],
     "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": [
       "event ChangedMasterCopy(address masterCopy)",
@@ -3728,118 +3845,6 @@
       "function transferOwnershipWithMessage(address to, bytes message)",
       "function typeAndVersion() view returns (string)"
     ],
-    "eth:0x88C3e0DFf6554b64f9b7Eb2E88b9db85E1A0B0E1": [
-      "constructor(tuple(address governor, address pauseGuardian, address baseToken, address baseTokenPriceFeed, address extensionDelegate, uint64 supplyKink, uint64 supplyPerYearInterestRateSlopeLow, uint64 supplyPerYearInterestRateSlopeHigh, uint64 supplyPerYearInterestRateBase, uint64 borrowKink, uint64 borrowPerYearInterestRateSlopeLow, uint64 borrowPerYearInterestRateSlopeHigh, uint64 borrowPerYearInterestRateBase, uint64 storeFrontPriceFactor, uint64 trackingIndexScale, uint64 baseTrackingSupplySpeed, uint64 baseTrackingBorrowSpeed, uint104 baseMinForRewards, uint104 baseBorrowMin, uint104 targetReserves, tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs) config)",
-      "error Absurd()",
-      "error AlreadyInitialized()",
-      "error BadAsset()",
-      "error BadDecimals()",
-      "error BadDiscount()",
-      "error BadMinimum()",
-      "error BadPrice()",
-      "error BorrowCFTooLarge()",
-      "error BorrowTooSmall()",
-      "error InsufficientReserves()",
-      "error InvalidInt104()",
-      "error InvalidInt256()",
-      "error InvalidUInt104()",
-      "error InvalidUInt128()",
-      "error InvalidUInt64()",
-      "error LiquidateCFTooLarge()",
-      "error NegativeNumber()",
-      "error NoSelfTransfer()",
-      "error NotCollateralized()",
-      "error NotForSale()",
-      "error NotLiquidatable()",
-      "error Paused()",
-      "error ReentrantCallBlocked()",
-      "error SupplyCapExceeded()",
-      "error TimestampTooLarge()",
-      "error TooManyAssets()",
-      "error TooMuchSlippage()",
-      "error TransferInFailed()",
-      "error TransferOutFailed()",
-      "error Unauthorized()",
-      "event AbsorbCollateral(address indexed absorber, address indexed borrower, address indexed asset, uint256 collateralAbsorbed, uint256 usdValue)",
-      "event AbsorbDebt(address indexed absorber, address indexed borrower, uint256 basePaidOut, uint256 usdValue)",
-      "event BuyCollateral(address indexed buyer, address indexed asset, uint256 baseAmount, uint256 collateralAmount)",
-      "event PauseAction(bool supplyPaused, bool transferPaused, bool withdrawPaused, bool absorbPaused, bool buyPaused)",
-      "event Supply(address indexed from, address indexed dst, uint256 amount)",
-      "event SupplyCollateral(address indexed from, address indexed dst, address indexed asset, uint256 amount)",
-      "event Transfer(address indexed from, address indexed to, uint256 amount)",
-      "event TransferCollateral(address indexed from, address indexed to, address indexed asset, uint256 amount)",
-      "event Withdraw(address indexed src, address indexed to, uint256 amount)",
-      "event WithdrawCollateral(address indexed src, address indexed to, address indexed asset, uint256 amount)",
-      "event WithdrawReserves(address indexed to, uint256 amount)",
-      "function absorb(address absorber, address[] accounts)",
-      "function accrueAccount(address account)",
-      "function approveThis(address manager, address asset, uint256 amount)",
-      "function assetList() view returns (address)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function baseBorrowMin() view returns (uint256)",
-      "function baseMinForRewards() view returns (uint256)",
-      "function baseScale() view returns (uint256)",
-      "function baseToken() view returns (address)",
-      "function baseTokenPriceFeed() view returns (address)",
-      "function baseTrackingBorrowSpeed() view returns (uint256)",
-      "function baseTrackingSupplySpeed() view returns (uint256)",
-      "function borrowBalanceOf(address account) view returns (uint256)",
-      "function borrowKink() view returns (uint256)",
-      "function borrowPerSecondInterestRateBase() view returns (uint256)",
-      "function borrowPerSecondInterestRateSlopeHigh() view returns (uint256)",
-      "function borrowPerSecondInterestRateSlopeLow() view returns (uint256)",
-      "function buyCollateral(address asset, uint256 minAmount, uint256 baseAmount, address recipient)",
-      "function decimals() view returns (uint8)",
-      "function extensionDelegate() view returns (address)",
-      "function getAssetInfo(uint8 i) view returns (tuple(uint8 offset, address asset, address priceFeed, uint64 scale, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap))",
-      "function getAssetInfoByAddress(address asset) view returns (tuple(uint8 offset, address asset, address priceFeed, uint64 scale, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap))",
-      "function getBorrowRate(uint256 utilization) view returns (uint64)",
-      "function getCollateralReserves(address asset) view returns (uint256)",
-      "function getPrice(address priceFeed) view returns (uint256)",
-      "function getReserves() view returns (int256)",
-      "function getSupplyRate(uint256 utilization) view returns (uint64)",
-      "function getUtilization() view returns (uint256)",
-      "function governor() view returns (address)",
-      "function hasPermission(address owner, address manager) view returns (bool)",
-      "function initializeStorage()",
-      "function isAbsorbPaused() view returns (bool)",
-      "function isAllowed(address, address) view returns (bool)",
-      "function isBorrowCollateralized(address account) view returns (bool)",
-      "function isBuyPaused() view returns (bool)",
-      "function isLiquidatable(address account) view returns (bool)",
-      "function isSupplyPaused() view returns (bool)",
-      "function isTransferPaused() view returns (bool)",
-      "function isWithdrawPaused() view returns (bool)",
-      "function liquidatorPoints(address) view returns (uint32 numAbsorbs, uint64 numAbsorbed, uint128 approxSpend, uint32 _reserved)",
-      "function numAssets() view returns (uint8)",
-      "function pause(bool supplyPaused, bool transferPaused, bool withdrawPaused, bool absorbPaused, bool buyPaused)",
-      "function pauseGuardian() view returns (address)",
-      "function quoteCollateral(address asset, uint256 baseAmount) view returns (uint256)",
-      "function storeFrontPriceFactor() view returns (uint256)",
-      "function supply(address asset, uint256 amount)",
-      "function supplyFrom(address from, address dst, address asset, uint256 amount)",
-      "function supplyKink() view returns (uint256)",
-      "function supplyPerSecondInterestRateBase() view returns (uint256)",
-      "function supplyPerSecondInterestRateSlopeHigh() view returns (uint256)",
-      "function supplyPerSecondInterestRateSlopeLow() view returns (uint256)",
-      "function supplyTo(address dst, address asset, uint256 amount)",
-      "function targetReserves() view returns (uint256)",
-      "function totalBorrow() view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function totalsCollateral(address) view returns (uint128 totalSupplyAsset, uint128 _reserved)",
-      "function trackingIndexScale() view returns (uint256)",
-      "function transfer(address dst, uint256 amount) returns (bool)",
-      "function transferAsset(address dst, address asset, uint256 amount)",
-      "function transferAssetFrom(address src, address dst, address asset, uint256 amount)",
-      "function transferFrom(address src, address dst, uint256 amount) returns (bool)",
-      "function userBasic(address) view returns (int104 principal, uint64 baseTrackingIndex, uint64 baseTrackingAccrued, uint16 assetsIn, uint8 _reserved)",
-      "function userCollateral(address, address) view returns (uint128 balance, uint128 _reserved)",
-      "function userNonce(address) view returns (uint256)",
-      "function withdraw(address asset, uint256 amount)",
-      "function withdrawFrom(address src, address to, address asset, uint256 amount)",
-      "function withdrawReserves(address to, uint256 amount)",
-      "function withdrawTo(address to, address asset, uint256 amount)"
-    ],
     "eth:0x899a4f5f5422cC5E8183280182e7096Fb923C762": [
       "constructor()",
       "error AccountDenylisted(address addr)",
@@ -4024,6 +4029,15 @@
       "function setController(address _accessController)",
       "function transferOwnership(address _to)",
       "function version() view returns (uint256)"
+    ],
+    "eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c": [
+      "constructor(tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs)",
+      "error BadAsset()",
+      "error BadDecimals()",
+      "error BorrowCFTooLarge()",
+      "error LiquidateCFTooLarge()",
+      "function getAssetInfo(uint8 i) view returns (tuple(uint8 offset, address asset, address priceFeed, uint64 scale, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap))",
+      "function numAssets() view returns (uint8)"
     ],
     "eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D": [
       "constructor(address link, address owner, address recipient, bytes message)",
@@ -4661,15 +4675,6 @@
       "event AssetListCreated(address indexed assetList, tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs)",
       "function createAssetList(tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs) returns (address assetList)"
     ],
-    "eth:0xF2B41D0AFE27A1E6E5e30A00Cecc17d41202cfe9": [
-      "constructor(tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs)",
-      "error BadAsset()",
-      "error BadDecimals()",
-      "error BorrowCFTooLarge()",
-      "error LiquidateCFTooLarge()",
-      "function getAssetInfo(uint8 i) view returns (tuple(uint8 offset, address asset, address priceFeed, uint64 scale, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap))",
-      "function numAssets() view returns (uint8)"
-    ],
     "eth:0xF38326579519377178725A741C35999E8051e907": [
       "constructor(address link, address owner, address recipient, bytes message)",
       "event AuthorizedSendersChanged(address[] senders, address changedBy)",
@@ -4740,6 +4745,6 @@
     "tokens/circle/TokenMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97"
   },
-  "usedBlockNumbers": { "ethereum": 23376384 },
-  "permissionsConfigHash": "0xdd757b546290e85e19ac6f715dc8ecb7aab7eeae9c5d46386500172cb48a5d31"
+  "usedBlockNumbers": { "ethereum": 23433920 },
+  "permissionsConfigHash": "0xdbd4fa77d8252be91ef5d081565235a5039747717c513aa9ded6727f3c3bec2c"
 }

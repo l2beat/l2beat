@@ -31,6 +31,21 @@ export function DeFiScanPanel() {
     return <div className="flex h-full w-full items-center justify-center">Loading...</div>
   }
 
+  // Filter out external contracts from permissions data
+  const filteredPermissionOverrides = {
+    ...permissionOverrides,
+    contracts: Object.fromEntries(
+      Object.entries(permissionOverrides.contracts || {}).filter(([contractAddress, _]) => {
+        // Normalize address format - remove 'eth:' prefix and convert to lowercase
+        const normalizedAddress = contractAddress.replace('eth:', '').toLowerCase()
+        const tag = contractTags.tags.find((tag: any) =>
+          tag.contractAddress.toLowerCase() === normalizedAddress
+        )
+        return tag?.isExternal !== true
+      })
+    )
+  }
+
   return (
     <div className="flex h-full w-full flex-col text-sm">
       <div className="sticky top-0 z-10">
@@ -48,11 +63,11 @@ export function DeFiScanPanel() {
         <StatusOfReviewSection
           projectData={response.data}
           contractTags={contractTags}
-          permissionOverrides={permissionOverrides}
+          permissionOverrides={filteredPermissionOverrides}
         />
         <ResultsSection
           projectData={response.data}
-          permissionOverrides={permissionOverrides}
+          permissionOverrides={filteredPermissionOverrides}
           contractTags={contractTags}
         />
       </div>

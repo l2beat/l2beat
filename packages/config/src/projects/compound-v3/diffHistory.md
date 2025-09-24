@@ -1,3 +1,174 @@
+Generated with discovered.json: 0x3bc56a3d754c857ed1e09cd791b5c0b09df47c15
+
+# Diff at Wed, 24 Sep 2025 15:56:14 GMT:
+
+- author: emduc (<emilien@defiscan.info>)
+- comparing to: main@25c772327004a06d1c0c2dc2848ce8d766030bc4 block: 1758034799
+- current timestamp: 1758729268
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract CompoundGovernor (eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0) {
+    +++ description: None
+      values.clock:
+-        23376384
++        23433920
+      values.getNextProposalId:
+-        479
++        482
+      values.proposalCount:
+-        478
++        481
+      values.proposalGuardian.expiration:
+-        1757566800
++        1789229978
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6) {
+    +++ description: None
+      values.latestAnswer:
+-        99974998
++        99976329
+      values.latestRound:
+-        "55340232221128655338"
++        "55340232221128655354"
+      values.latestRoundData.roundId:
+-        "55340232221128655338"
++        "55340232221128655354"
+      values.latestRoundData.answer:
+-        99974998
++        99976329
+      values.latestRoundData.startedAt:
+-        1758009621
++        1758700834
+      values.latestRoundData.updatedAt:
+-        1758009635
++        1758700847
+      values.latestRoundData.answeredInRound:
+-        "55340232221128655338"
++        "55340232221128655354"
+      values.latestTimestamp:
+-        1758009635
++        1758700847
+    }
+```
+
+```diff
+    contract cUSDTv3 (eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94) {
+    +++ description: Compound v3 USDT market - lending pool for USDT
+      values.$implementation:
+-        "eth:0x88C3e0DFf6554b64f9b7Eb2E88b9db85E1A0B0E1"
++        "eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d"
+      values.$pastUpgrades.44:
++        ["2025-09-22T15:20:11.000Z","0xb694d5800bf1736049ad1f14e32075b086065d2afddbc162b4edb7cff009142e",["eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d"]]
+      values.$upgradeCount:
+-        44
++        45
+      values.assetList:
+-        "eth:0xF2B41D0AFE27A1E6E5e30A00Cecc17d41202cfe9"
++        "eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c"
+      values.getReserves:
+-        "872639268228300096330"
++        "874472523706266805109"
+      values.getUtilization:
+-        "817448870736661865"
++        "832987167375147356"
+      values.totalBorrow:
+-        "58408774961507803390216"
++        "63352284344799084529754"
+      values.totalSupply:
+-        "71452429319487457358848"
++        "76054268781347716351068"
+      implementationNames.eth:0x88C3e0DFf6554b64f9b7Eb2E88b9db85E1A0B0E1:
+-        "CometWithExtendedAssetList"
+      implementationNames.eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d:
++        "CometWithExtendedAssetList"
+    }
+```
+
+```diff
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      values.totalSupply:
+-        "2424800640101308417747633"
++        "2448010930808430994381110"
+    }
+```
+
+```diff
+    contract cUSDCv3 (eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3) {
+    +++ description: Compound v3 USDC market - main lending pool for USDC with enhanced capital efficiency
+      values.getReserves:
+-        15922176926246
++        15999648549374
+      values.getUtilization:
+-        "906501826373232731"
++        "902797339217473096"
+      values.totalBorrow:
+-        484708170130205
++        485801002419654
+      values.totalSupply:
+-        534701734018329
++        538106298650642
+    }
+```
+
+```diff
+    contract AccessControlledOCR2Aggregator (eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7) {
+    +++ description: None
+      values.getBilling.observationPaymentGjuels:
+-        15976902
++        17170803
+      values.getBilling.transmissionPaymentGjuels:
+-        95860904
++        103024272
+      values.latestConfigDigestAndEpoch.epoch:
+-        18904
++        22744
+      values.linkAvailableForPayment:
+-        "35988452326685929145"
++        "49028875702783133634"
+    }
+```
+
+```diff
+    contract ConstantPriceFeed (eth:0xD72ac1bCE9177CFe7aEb5d0516a38c88a64cE0AB) {
+    +++ description: None
+      values.latestRoundData.startedAt:
+-        1758034799
++        1758729263
+      values.latestRoundData.updatedAt:
+-        1758034799
++        1758729263
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AssetList (eth:0xF2B41D0AFE27A1E6E5e30A00Cecc17d41202cfe9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AssetList (eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AssetList-eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c.sol}         | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+```
+
 Generated with discovered.json: 0xa90c8c0cb5b903521e2c42069ac38187c9c40222
 
 # Diff at Tue, 16 Sep 2025 15:01:50 GMT:

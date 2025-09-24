@@ -224,6 +224,22 @@ export function FunctionFolder({
   const isPermissioned = permissionStatus === 'permissioned'
   const isChecked = checkedStatus
 
+  // Validation for checking functionality
+  const isCheckingAllowed = () => {
+    // Non-permissioned functions can always be checked
+    if (!isPermissioned) {
+      return true
+    }
+
+    // For permissioned functions, require all fields to be completed
+    const hasValidScore = scoreStatus !== 'unscored'
+    const hasDescription = description.trim().length > 0
+    const hasOwnerDefinitions = (currentOverride?.ownerDefinitions || []).length > 0
+    return hasValidScore && hasDescription && hasOwnerDefinitions
+  }
+
+  const canCheck = isCheckingAllowed()
+
   // Score colors
   const getScoreColor = (score: string, isHover: boolean = false) => {
     switch (score) {
@@ -376,17 +392,38 @@ export function FunctionFolder({
         <div className="flex items-center gap-1 mr-2" onClick={(e) => e.stopPropagation()}>
           {/* Checked Icon */}
           <button
-            onClick={() => onCheckedToggle(contractAddress, functionName, isChecked)}
-            className="inline-block cursor-pointer transition-colors"
-            style={{
-              color: isChecked ? '#10b981' : '#9ca3af', // green-500 : gray-400
+            onClick={() => {
+              if (canCheck || isChecked) {
+                onCheckedToggle(contractAddress, functionName, isChecked)
+              }
             }}
-            title={`Click to mark as ${isChecked ? 'unchecked' : 'checked'}`}
+            disabled={!canCheck && !isChecked}
+            className={`inline-block transition-colors ${
+              canCheck || isChecked ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+            }`}
+            style={{
+              color: isChecked
+                ? '#10b981'
+                : canCheck
+                  ? '#9ca3af'
+                  : '#6b7280', // green-500 : gray-400 : gray-500 (disabled)
+            }}
+            title={
+              canCheck || isChecked
+                ? `Click to mark as ${isChecked ? 'unchecked' : 'checked'}`
+                : 'Complete description, score, and add owners before checking'
+            }
             onMouseEnter={(e) => {
-              e.currentTarget.style.color = isChecked ? '#6ee7b7' : '#d1d5db' // green-300 : gray-300
+              if (canCheck || isChecked) {
+                e.currentTarget.style.color = isChecked ? '#6ee7b7' : '#d1d5db' // green-300 : gray-300
+              }
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.color = isChecked ? '#10b981' : '#9ca3af' // green-500 : gray-400
+              e.currentTarget.style.color = isChecked
+                ? '#10b981'
+                : canCheck
+                  ? '#9ca3af'
+                  : '#6b7280' // green-500 : gray-400 : gray-500 (disabled)
             }}
           >
             {isChecked ? <IconCheckTrue /> : <IconCheckFalse />}
