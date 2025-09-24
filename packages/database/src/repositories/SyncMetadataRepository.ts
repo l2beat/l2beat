@@ -53,10 +53,6 @@ export function toRowWithoutTarget(
 }
 
 export class SyncMetadataRepository extends BaseRepository {
-  async upsert(record: Insertable<SyncMetadataRecord>): Promise<void> {
-    await this.upsertMany([record])
-  }
-
   async upsertMany(records: Insertable<SyncMetadataRecord>[]): Promise<number> {
     if (records.length === 0) return 0
 
@@ -137,7 +133,7 @@ export class SyncMetadataRepository extends BaseRepository {
       .select(this.db.fn.max('target').as('maxTarget'))
       .where('feature', '=', feature)
       .executeTakeFirst()
-    assert(row, 'Max target for feature not found')
+    assert(row?.maxTarget, 'Max target for feature not found')
     return UnixTime.fromDate(row.maxTarget)
   }
 
