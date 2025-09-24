@@ -41,7 +41,7 @@ export function createBridgeModule({
     logger,
   )
 
-  const bridgeRouter = createBridgeRouter(db)
+  const bridgeRouter = createBridgeRouter(db, config.bridges)
 
   const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
 

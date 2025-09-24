@@ -52,16 +52,7 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
-  readonly bridges:
-    | {
-        capture: {
-          enabled: boolean
-          chains: string[]
-        }
-        matching: boolean
-        cleaner: boolean
-      }
-    | false
+  readonly bridges: BridgesConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -209,6 +200,19 @@ export interface DiscordConfig {
 export interface AnomaliesConfig {
   readonly anomaliesWebhookUrl?: string
   readonly anomaliesMinDuration: number
+}
+
+export interface BridgesConfig {
+  capture: {
+    enabled: boolean
+    chains: string[]
+  }
+  matching: boolean
+  cleaner: boolean
+  dashboard: {
+    enabled: boolean
+    getExplorerUrl: (chain: string) => string | undefined
+  }
 }
 
 export interface DaBeatConfig {

@@ -6,8 +6,10 @@ import type {
   Database,
 } from '@l2beat/database'
 import { v } from '@l2beat/validate'
+import type { BridgesConfig } from '../../config/Config'
+import { renderEventsPage } from './dashboard/EventsPage'
 
-export function createBridgeRouter(db: Database) {
+export function createBridgeRouter(db: Database, config: BridgesConfig) {
   const router = new Router()
 
   router.get('/bridges', async (ctx) => {
@@ -39,10 +41,16 @@ export function createBridgeRouter(db: Database) {
     } else {
       if (params.kind === 'unmatched') {
         const events = await db.bridgeEvent.getUnmatchedByType(params.type)
-        ctx.body = events
+        ctx.body = renderEventsPage({
+          events,
+          getExplorerUrl: config.dashboard.getExplorerUrl,
+        })
       } else if (params.kind === 'unsupported') {
         const events = await db.bridgeEvent.getUnsupportedByType(params.type)
-        ctx.body = events
+        ctx.body = renderEventsPage({
+          events,
+          getExplorerUrl: config.dashboard.getExplorerUrl,
+        })
       }
     }
   })
@@ -60,7 +68,7 @@ function statsToHtml(
   html += '<head>'
   html += '<title>Bridge Stats</title>'
   html += '</head>'
-  html += '</body>'
+  html += '<body>'
   html += '<h1>Bridge Stats</h1>'
 
   html += '<h2>Unmatched (not unsupported) events</h2>'
@@ -127,5 +135,6 @@ function statsToHtml(
   html += '</ul>'
 
   html += '</body>'
+
   return html
 }

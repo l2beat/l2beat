@@ -156,6 +156,14 @@ export async function makeConfig(
       },
       matching: flags.isEnabled('bridges', 'matching'),
       cleaner: flags.isEnabled('bridges', 'cleaner'),
+      dashboard: {
+        enabled: flags.isEnabled('bridges', 'dashboard'),
+        getExplorerUrl: (chain: string) => {
+          const c = chains.find((cc) => cc.name === chain)
+
+          return c?.explorerUrl
+        },
+      },
     },
     // Must be last
     flags: flags.getResolved(),

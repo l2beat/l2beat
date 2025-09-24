@@ -90,11 +90,10 @@ export class BridgeEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByType(type: string, limit = 1000): Promise<BridgeEventRecord[]> {
+  async getByType(type: string): Promise<BridgeEventRecord[]> {
     const rows = await this.db
       .selectFrom('BridgeEvent')
       .where('type', '=', type)
-      .limit(limit)
       .orderBy('timestamp', 'desc')
       .selectAll()
       .execute()
@@ -102,16 +101,12 @@ export class BridgeEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getUnmatchedByType(
-    type: string,
-    limit = 1000,
-  ): Promise<BridgeEventRecord[]> {
+  async getUnmatchedByType(type: string): Promise<BridgeEventRecord[]> {
     const rows = await this.db
       .selectFrom('BridgeEvent')
       .where('type', '=', type)
       .where('unsupported', '=', false)
       .where('matched', '=', false)
-      .limit(limit)
       .orderBy('timestamp', 'desc')
       .selectAll()
       .execute()
@@ -119,15 +114,11 @@ export class BridgeEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getUnsupportedByType(
-    type: string,
-    limit = 1000,
-  ): Promise<BridgeEventRecord[]> {
+  async getUnsupportedByType(type: string): Promise<BridgeEventRecord[]> {
     const rows = await this.db
       .selectFrom('BridgeEvent')
       .where('type', '=', type)
       .where('unsupported', '=', true)
-      .limit(limit)
       .orderBy('timestamp', 'desc')
       .selectAll()
       .execute()
