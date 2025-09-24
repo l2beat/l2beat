@@ -1193,6 +1193,7 @@ function getTechnologyOperator(
     case 'Permissioned':
     case 'Permissionless':
     case 'Kailua':
+    case 'OpSuccinct':
       return OPERATOR.CENTRALIZED_OPERATOR
   }
 }
