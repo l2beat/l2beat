@@ -148,12 +148,14 @@ export async function makeConfig(
       ),
     },
     bridges: flags.isEnabled('bridges') && {
-      chains: ['ethereum', 'arbitrum', 'base', 'optimism'].filter((c) =>
-        flags.isEnabled('bridges', c),
-      ),
-      captureDisabled: env.boolean('BRIDGES_CAPTURE_DISABLED', false),
-      matchingDisabled: env.boolean('BRIDGES_MATCHING_DISABLED', false),
-      cleanerDisabled: env.boolean('BRIDGES_CLEANER_DISABLED', false),
+      capture: {
+        enabled: flags.isEnabled('bridges', 'capture'),
+        chains: ['ethereum', 'arbitrum', 'base', 'optimism'].filter((c) =>
+          flags.isEnabled('bridges', 'capture', c),
+        ),
+      },
+      matching: flags.isEnabled('bridges', 'matching'),
+      cleaner: flags.isEnabled('bridges', 'cleaner'),
     },
     // Must be last
     flags: flags.getResolved(),

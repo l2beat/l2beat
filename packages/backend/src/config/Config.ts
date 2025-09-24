@@ -54,10 +54,12 @@ export interface Config {
   readonly anomalies: AnomaliesConfig | false
   readonly bridges:
     | {
-        chains: string[]
-        matchingDisabled: boolean
-        captureDisabled: boolean
-        cleanerDisabled: boolean
+        capture: {
+          enabled: boolean
+          chains: string[]
+        }
+        matching: boolean
+        cleaner: boolean
       }
     | false
 

@@ -21,8 +21,8 @@ export function createBridgeModule({
   const plugins = createBridgePlugins()
   const bridgeStore = new BridgeStore(db)
 
-  if (!config.bridges.captureDisabled) {
-    for (const chain of config.bridges.chains) {
+  if (config.bridges.capture) {
+    for (const chain of config.bridges.capture.chains) {
       const processor = new BridgeBlockProcessor(
         chain,
         plugins,
@@ -37,7 +37,7 @@ export function createBridgeModule({
     bridgeStore,
     db,
     plugins,
-    config.bridges.chains,
+    config.bridges.capture.chains,
     logger,
   )
 
@@ -48,11 +48,11 @@ export function createBridgeModule({
   const start = async () => {
     logger = logger.for('BridgeModule')
     logger.info('Starting')
-    if (config.bridges && !config.bridges.matchingDisabled) {
+    if (config.bridges && config.bridges.matching) {
       await bridgeStore.start()
       bridgeMatcher.start()
     }
-    if (config.bridges && !config.bridges.cleanerDisabled) {
+    if (config.bridges && config.bridges.cleaner) {
       bridgeCleaner.start()
     }
     logger.info('Started', {
