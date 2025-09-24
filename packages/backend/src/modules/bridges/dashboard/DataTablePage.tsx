@@ -59,6 +59,9 @@ export function DataTablePage(props: DataTablePageProps) {
         `}</style>
       </head>
       <body>
+        <a href="/bridges" className="home-button">
+          ← Back to Home
+        </a>
         <h1>{title}</h1>
 
         {table}
