@@ -16,6 +16,7 @@ import {
   createBridgeEventType,
   createEventParser,
   defineNetworks,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -105,10 +106,11 @@ export class AxelarPlugin implements BridgePlugin {
         sender: EthereumAddress(contractCall.sender),
         destinationContractAddress: contractCall.destinationContractAddress,
         payloadHash: contractCall.payloadHash,
-        $dstChain:
-          AXELAR_NETWORKS.find(
-            (x) => x.axelarChainName === contractCall.destinationChain,
-          )?.chain ?? `AXL_${contractCall.destinationChain}`,
+        $dstChain: findChain(
+          AXELAR_NETWORKS,
+          (x) => x.axelarChainName,
+          contractCall.destinationChain,
+        ),
       })
     }
 
@@ -121,10 +123,11 @@ export class AxelarPlugin implements BridgePlugin {
         payloadHash: contractCallWithToken.payloadHash,
         symbol: contractCallWithToken.symbol,
         amount: Number(contractCallWithToken.amount),
-        $dstChain:
-          AXELAR_NETWORKS.find(
-            (x) => x.axelarChainName === contractCallWithToken.destinationChain,
-          )?.chain ?? `AXL_${contractCallWithToken.destinationChain}`,
+        $dstChain: findChain(
+          AXELAR_NETWORKS,
+          (x) => x.axelarChainName,
+          contractCallWithToken.destinationChain,
+        ),
       })
     }
 
@@ -136,10 +139,11 @@ export class AxelarPlugin implements BridgePlugin {
         sourceAddress: contractCallApproved.sourceAddress,
         contractAddress: EthereumAddress(contractCallApproved.contractAddress),
         srcTxHash: contractCallApproved.sourceTxHash,
-        $srcChain:
-          AXELAR_NETWORKS.find(
-            (x) => x.axelarChainName === contractCallApproved.sourceChain,
-          )?.chain ?? `AXL_${contractCallApproved.sourceChain}`,
+        $srcChain: findChain(
+          AXELAR_NETWORKS,
+          (x) => x.axelarChainName,
+          contractCallApproved.sourceChain,
+        ),
       })
     }
 
@@ -158,11 +162,11 @@ export class AxelarPlugin implements BridgePlugin {
         symbol: contractCallApprovedWithMint.symbol,
         amount: Number(contractCallApprovedWithMint.amount),
         srcTxHash: contractCallApprovedWithMint.sourceTxHash,
-        $srcChain:
-          AXELAR_NETWORKS.find(
-            (x) =>
-              x.axelarChainName === contractCallApprovedWithMint.sourceChain,
-          )?.chain ?? `AXL_${contractCallApprovedWithMint.sourceChain}`,
+        $srcChain: findChain(
+          AXELAR_NETWORKS,
+          (x) => x.axelarChainName,
+          contractCallApprovedWithMint.sourceChain,
+        ),
       })
     }
 
