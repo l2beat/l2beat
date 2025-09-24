@@ -151,7 +151,9 @@ export async function makeConfig(
       chains: ['ethereum', 'arbitrum', 'base', 'optimism'].filter((c) =>
         flags.isEnabled('bridges', c),
       ),
-      matchingEnabled: env.boolean('BRIDGES_MATCHING_ENABLED', true),
+      captureDisabled: env.boolean('BRIDGES_CAPTURE_DISABLED', false),
+      matchingDisabled: env.boolean('BRIDGES_MATCHING_DISABLED', false),
+      cleanerDisabled: env.boolean('BRIDGES_CLEANER_DISABLED', false),
     },
     // Must be last
     flags: flags.getResolved(),
