@@ -3,7 +3,7 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
 
-export function EventsTable(props: {
+function EventsTable(props: {
   events: BridgeEventRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
