@@ -1,4 +1,4 @@
-import type { Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -10,9 +10,6 @@ describe(QueryExecutor.name, () => {
   const testKey = 'test-key'
   describe(QueryExecutor.prototype.execute.name, () => {
     const mockDb = mockObject<Database>({})
-    const mockLogger = mockObject<Logger>({
-      info: mockFn(() => {}),
-    })
 
     it('should return cached data when cache hit occurs', async () => {
       const cachedData: QueryResultWithTimestamp<'getTvsChartQuery'> = {
@@ -25,7 +22,7 @@ describe(QueryExecutor.name, () => {
         write: mockFn().resolvesTo(undefined),
       })
 
-      const queryExecutor = new QueryExecutor(mockDb, mockLogger, mockCache)
+      const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
         name: 'getTvsChartQuery',
         args: [[ProjectId.ETHEREUM]],
@@ -47,7 +44,7 @@ describe(QueryExecutor.name, () => {
         write: mockFn().resolvesTo(undefined),
       })
 
-      const queryExecutor = new QueryExecutor(mockDb, mockLogger, mockCache)
+      const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
         name: 'getTvsChartQuery',
         args: [[ProjectId.ETHEREUM]],
@@ -82,7 +79,7 @@ describe(QueryExecutor.name, () => {
         write: mockFn().resolvesTo(undefined),
       })
 
-      const queryExecutor = new QueryExecutor(mockDb, mockLogger, mockCache)
+      const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
         name: 'getTvsChartQuery',
         args: [[ProjectId.ETHEREUM]],
@@ -108,7 +105,7 @@ describe(QueryExecutor.name, () => {
         write: mockFn().resolvesTo(undefined),
       })
 
-      const queryExecutor = new QueryExecutor(mockDb, mockLogger, mockCache)
+      const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
         name: 'getTvsChartQuery',
         args: [[ProjectId.ETHEREUM]],
@@ -132,7 +129,7 @@ describe(QueryExecutor.name, () => {
         write: mockFn().rejectsWith(new Error('Cache write failed')),
       })
 
-      const queryExecutor = new QueryExecutor(mockDb, mockLogger, mockCache)
+      const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
         name: 'getTvsChartQuery',
         args: [[ProjectId.ETHEREUM]],
@@ -153,7 +150,7 @@ describe(QueryExecutor.name, () => {
         read: mockFn().rejectsWith(new Error('Cache read failed')),
       })
 
-      const queryExecutor = new QueryExecutor(mockDb, mockLogger, mockCache)
+      const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
         name: 'getTvsChartQuery',
         args: [[ProjectId.ETHEREUM]],
