@@ -215,6 +215,19 @@ function makeTechnologyContract(
     'id',
   )
 
+  const pastUpgrades: TechnologyContract['pastUpgrades'] =
+    item.pastUpgrades?.map((upgrade) => ({
+      timestamp: upgrade.timestamp,
+      transactionHash: {
+        hash: upgrade.transactionHash,
+        href: `${explorerUrl}/tx/${upgrade.transactionHash}`,
+      },
+      implementations: upgrade.implementations.map((implementation) => ({
+        address: ChainSpecificAddress.address(implementation),
+        href: `${explorerUrl}/address/${implementation.toString()}#code`,
+      })),
+    }))
+
   return {
     name: item.name,
     addresses,
@@ -226,6 +239,7 @@ function makeTechnologyContract(
     impactfulChange,
     upgradeableBy: item.upgradableBy,
     upgradeConsiderations: item.upgradeConsiderations,
+    pastUpgrades,
   }
 }
 
