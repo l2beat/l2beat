@@ -106,6 +106,7 @@ export class Providers {
       this.clients.beacon,
       this.clients.near,
       this.clients.celestia,
+      this.clients.availWs,
     )
   }
 
