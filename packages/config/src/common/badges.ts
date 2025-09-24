@@ -145,6 +145,18 @@ export const badges = [
       value: 'Zeeve',
     },
   },
+  {
+    id: 'Nodeinfra',
+    type: BadgeType.RaaS,
+    name: 'Nodeinfra',
+    description:
+      'This project was deployed via the rollup-as-a-service provider Nodeinfra',
+    action: {
+      type: 'scalingFilter',
+      id: 'raas',
+      value: 'Nodeinfra',
+    },
+  },
   // DA
   {
     id: 'Avail',
