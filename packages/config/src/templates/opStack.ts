@@ -772,6 +772,48 @@ The Kailua state validation system is primarily optimistically resolved, so no v
         ],
       }
     }
+    case 'OpSuccinct': {
+      const finalizationPeriod = getFinalizationPeriod(templateVars)
+      const l2OutputOracle = templateVars.discovery.getContract('OPSuccinctL2OutputOracle')
+      
+      return {
+        categories: [
+          {
+            title: 'Validity proofs',
+            description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
+        Through the SuccinctL2OutputOracle, the system also allows to switch to an optimistic mode, in which no proofs are required and a challenger can challenge the proposed output state root within the finalization period.`,
+            references: [
+              {
+                url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
+                title: 'Op-Succinct architecture',
+              },
+            ],
+            risks: [
+              {
+                category: 'Funds can be stolen if',
+                text: 'in non-optimistic mode, the validity proof cryptography is broken or implemented incorrectly.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'optimistic mode is enabled and no challenger checks the published state.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route id.',
+              },
+              {
+                category: 'Funds can be frozen if',
+                text: 'the permissioned proposer fails to publish state roots to the L1.',
+              },
+              {
+                category: 'Funds can be frozen if',
+                text: 'in non-optimistic mode, the SuccinctGateway is unable to route proof verification to a valid verifier.',
+              },
+            ],
+          },
+        ],
+      }
+    }
   }
 }
 
@@ -939,6 +981,12 @@ function getRiskViewStateValidation(
         ),
       }
     }
+    case 'OpSuccinct': {
+      return {
+        ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+        executionDelay: getFinalizationPeriod(templateVars),
+      }
+    }
   }
 }
 
@@ -976,6 +1024,8 @@ function getRiskViewProposerFailure(
           'vanguardAdvantage',
         ),
       )
+    case 'OpSuccinct':
+      return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
   }
 }
 
@@ -993,6 +1043,7 @@ function computedStage(
     Permissioned: false,
     Permissionless: true,
     Kailua: true,
+    OpSuccinct: null,
   }
 
   return getStage(
@@ -1479,6 +1530,81 @@ function getTrackedTxs(
         },
       ]
     }
+    case 'OpSuccinct': {
+      const l2OutputOracle = templateVars.discovery.getContract('OPSuccinctL2OutputOracle')
+
+      return [
+        {
+          uses: [
+            { type: 'liveness', subtype: 'batchSubmissions' },
+            { type: 'l2costs', subtype: 'batchSubmissions' },
+          ],
+          query: {
+            formula: 'transfer',
+            from: sequencerAddress,
+            to: sequencerInbox,
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+        // Multiple OpSuccinct function signatures based on the mode and version
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: ChainSpecificAddress.address(l2OutputOracle.address),
+            selector: '0x9ad84880',
+            functionSignature:
+              'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: ChainSpecificAddress.address(l2OutputOracle.address),
+            selector: '0x59c3e00a', // non-optimistic mode
+            functionSignature:
+              'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: ChainSpecificAddress.address(l2OutputOracle.address),
+            selector: '0x9aaab648', // optimistic mode
+            functionSignature:
+              'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)',
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: ChainSpecificAddress.address(l2OutputOracle.address),
+            selector: '0xa4ee9d7b', // non-optimistic mode
+            functionSignature:
+              'function proposeL2Output(bytes32 _configName, bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+      ]
+    }
   }
 }
 
@@ -1539,6 +1665,12 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
         'proofMaturityDelaySeconds',
       )
     }
+    case 'OpSuccinct': {
+      return templateVars.discovery.getContractValue<number>(
+        'OPSuccinctL2OutputOracle',
+        'finalizationPeriodSeconds',
+      )
+    }
   }
 }
 
@@ -1574,6 +1706,12 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
         'MAX_CLOCK_DURATION',
       )
     }
+    case 'OpSuccinct': {
+      return templateVars.discovery.getContractValue<number>(
+        'OPSuccinctL2OutputOracle',
+        'finalizationPeriodSeconds',
+      )
+    }
   }
 }
 
@@ -1596,9 +1734,14 @@ function getExecutionDelay(
   }
 }
 
-type FraudProofType = 'None' | 'Permissioned' | 'Permissionless' | 'Kailua'
+type FraudProofType = 'None' | 'Permissioned' | 'Permissionless' | 'Kailua' | 'OpSuccinct'
 
 function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
+  // Check if it's OpSuccinct by looking for OPSuccinctL2OutputOracle contract
+  if (templateVars.discovery.hasContract('OPSuccinctL2OutputOracle')) {
+    return 'OpSuccinct'
+  }
+
   const portal = getOptimismPortal(templateVars)
   if (portal.name === 'OptimismPortal') {
     return 'None'
