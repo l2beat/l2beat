@@ -18,7 +18,6 @@ import { ps } from '~/server/projects'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { temporarilyExtractFirstElement } from '../../utils'
 import type { ActivityLatestUopsData } from '../activity/getActivityLatestTps'
 import { getActivityLatestUops } from '../activity/getActivityLatestTps'
 import { getActivitySyncWarning } from '../activity/utils/isActivitySynced'
@@ -76,7 +75,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem | undefined
   purposes: ProjectScalingPurpose[]
   stacks: ProjectScalingStack[] | undefined
-  dataAvailability: ProjectScalingDa | undefined
+  dataAvailability: ProjectScalingDa[] | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvs: {
     breakdown:
@@ -144,7 +143,11 @@ export function getScalingSummaryEntry(
       zkCatalogProjects,
     ),
     stacks: project.scalingInfo.stacks,
-    dataAvailability: temporarilyExtractFirstElement(project.scalingDa),
+    dataAvailability: Array.isArray(project.scalingDa)
+      ? project.scalingDa
+      : project.scalingDa
+        ? [project.scalingDa]
+        : undefined,
     purposes: project.scalingInfo.purposes,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     tvs: {
