@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x9c909e60aae4b3a9e45364fcfd05dab12622f478
+
+# Diff at Wed, 24 Sep 2025 08:46:47 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@7cc51773c5a1ecdb206a7bb11f12baa5f90228b9 block: 1754411762
+- current timestamp: 1758703543
+
+## Description
+
+added a function that allows the admin to update the accounts root field, which is supposed to only be updated during a state update with the ZK verifiers.
+
+## Watched changes
+
+```diff
+    contract Hibachi (arb1:0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400) {
+    +++ description: Main contract handling deposits, withdrawals and state updates.
+      sourceHashes.1:
+-        "0xcf9fc16700d140e29a359a4c254a4a619c0093716fce601e5146e0a735e71f73"
++        "0x788c1099dcbbf4952a483c5c18e6c89199866587e457d7226ae0e2cb10e083f4"
+      values.$implementation:
+-        "arb1:0x66EBbea46E474e4e1C10fE2209184182a89736a4"
++        "arb1:0xCDAEfAEAE04EBe37c84c71a18518A0037F01aE7d"
+      values.$pastUpgrades.2:
++        ["2025-09-18T14:42:40.000Z","0x9c195a5fca107c916ab8e384e19b25a021980082117e563929cf1e115e3895a5",["arb1:0xCDAEfAEAE04EBe37c84c71a18518A0037F01aE7d"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.stateUpdateProgramImageId:
+-        "0xe36df63187239cb11fc29356c18dd9996c19ef4668379f72956f648fbb7c72f2"
++        "0xe67ae11c6b1408e9c51c070704d7e19eb6dd0dfe91cdc00759834d516bb4d180"
+      values.stateUpdateProgramVKey:
+-        "0x00761079b58d6d09fea47ee455238cae478986d76fc2c778e293f3c846a148b3"
++        "0x00a03342ba849be32311d27782f9979f4873f95feba8edcaf5bdbecc68fe9274"
+      implementationNames.arb1:0x66EBbea46E474e4e1C10fE2209184182a89736a4:
+-        "Hibachi"
+      implementationNames.arb1:0xCDAEfAEAE04EBe37c84c71a18518A0037F01aE7d:
++        "Hibachi"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Hibachi/Hibachi.sol                            | 46 +++++++++++++---------
+ 1 file changed, 27 insertions(+), 19 deletions(-)
+```
+
 Generated with discovered.json: 0x22e5ddc9479a2ae1ff7a4e85b2f2d7d6112664ca
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
