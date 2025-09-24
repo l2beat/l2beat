@@ -1,5 +1,6 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
+  AvailWsClient,
   BeaconChainClient,
   type BlockClient,
   BlockIndexerClient,
@@ -35,6 +36,7 @@ export interface Clients {
   beacon: BeaconChainClient | undefined
   celestia: CelestiaRpcClient | undefined
   avail: PolkadotRpcClient | undefined
+  availWs: AvailWsClient | undefined
   eigen: EigenApiClient | undefined
   getRpcClient: (chain: string) => RpcClient
   getStarknetClient: (chain: string) => StarknetClient
@@ -53,6 +55,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   let beaconChainClient: BeaconChainClient | undefined
   let celestia: CelestiaRpcClient | undefined
   let avail: PolkadotRpcClient | undefined
+  let availWs: AvailWsClient | undefined
   let near: NearClient | undefined
   let eigen: EigenApiClient | undefined
 
@@ -269,6 +272,15 @@ export function initClients(config: Config, logger: Logger): Clients {
       logger,
       callsPerMinute: 100,
     })
+    celestia = new CelestiaRpcClient({
+      callsPerMinute: config.daBeat.celestiaCallsPerMinute,
+      url: config.daBeat.celestiaApiUrl,
+      retryStrategy: 'RELIABLE',
+      sourceName: 'celestia',
+      logger,
+      http,
+    })
+    availWs = new AvailWsClient(config.daBeat.availWsUrl)
   }
 
   const getRpcClient = (chain: string) => {
@@ -296,6 +308,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     celestia,
     eigen,
     avail,
+    availWs,
     near,
     getStarknetClient,
     getRpcClient,

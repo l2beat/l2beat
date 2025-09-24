@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import type {
+  AvailWsClient,
   BeaconChainClient,
   CelestiaRpcClient,
   NearClient,
@@ -16,6 +17,7 @@ export class DaBeatStatsProvider {
     private readonly beaconChainClient: BeaconChainClient | undefined,
     private readonly nearClient: NearClient | undefined,
     private readonly celestiaClient: CelestiaRpcClient | undefined,
+    private readonly availWsClient: AvailWsClient | undefined,
   ) {}
 
   async getStats(projectId: string): Promise<DaBeatStats | undefined> {
@@ -26,6 +28,8 @@ export class DaBeatStatsProvider {
         return await this.getNearStats()
       case 'celestia':
         return await this.getCelestiaStats()
+      case 'avail':
+        return await this.getAvailStats()
       default:
         throw new Error(`Stats provider not implemented for: ${projectId}`)
     }
@@ -83,6 +87,29 @@ export class DaBeatStatsProvider {
       totalStake,
       thresholdStake: (totalStake * 200n) / 300n,
       numberOfValidators: null,
+    }
+  }
+
+  async getAvailStats(): Promise<DaBeatStats | undefined> {
+    assert(this.availWsClient, 'Avail WS client not found')
+    await this.availWsClient.connect()
+
+    try {
+      const currentEra = await this.availWsClient.getCurrentEra()
+      const validatorsOverview =
+        await this.availWsClient.getStakingEraOverview(currentEra)
+      const total = Object.values(validatorsOverview).reduce(
+        (acc, { total }) => acc + total,
+        0n,
+      )
+
+      return {
+        totalStake: total,
+        thresholdStake: (total * 200n) / 300n,
+        numberOfValidators: null,
+      }
+    } finally {
+      await this.availWsClient.disconnect()
     }
   }
 }

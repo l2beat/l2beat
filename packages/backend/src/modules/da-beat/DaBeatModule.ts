@@ -46,8 +46,6 @@ export function createDaBeatModule({
   for (const [projectId, { stake, validators }] of Object.entries(
     daBeatConfig.projectsForDaBeatStats,
   )) {
-    if (projectId === 'avail') continue
-
     const indexer = new DaBeatStatsIndexer({
       db: peripherals.database,
       projectId: projectId as ProjectId,
