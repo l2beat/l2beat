@@ -8,6 +8,7 @@ export const NearError = v.object({
   }),
 })
 
+export type ValidatorsList = v.infer<typeof ValidatorsList>
 export const ValidatorsList = v.object({
   result: v.object({
     current_validators: v.array(v.object({ stake: v.string() })),

@@ -13,7 +13,7 @@ export class NearClient extends ClientCore {
     super({ ...$ })
   }
 
-  async getValidatorsInfo(): Promise<{ totalStake: bigint }> {
+  async getValidatorsInfo(): Promise<ValidatorsList> {
     const response = await this.call('validators', [null])
     const parsed = ValidatorsList.safeParse(response)
 
@@ -25,12 +25,7 @@ export class NearClient extends ClientCore {
       throw new Error('Error during validators parsing')
     }
 
-    const totalStake = parsed.data.result.current_validators.reduce(
-      (acc, v) => acc + BigInt(v.stake),
-      0n,
-    )
-
-    return { totalStake }
+    return parsed.data
   }
 
   async call(method: string, params: unknown[]): Promise<unknown> {

@@ -34,13 +34,14 @@ export class DaBeatStatsProvider {
   async getEthereumStats(): Promise<DaBeatStats | undefined> {
     assert(this.beaconChainClient, 'Beacon chain client not found')
 
-    const stats = await this.beaconChainClient.getValidatorsInfo({
+    const { totalStake } = await this.beaconChainClient.getValidatorsInfo({
       stateId: 'head',
       status: ['active'],
     })
 
     return {
-      ...stats,
+      totalStake,
+      thresholdStake: (totalStake * 200n) / 300n,
       numberOfValidators: null,
     }
   }
@@ -48,7 +49,11 @@ export class DaBeatStatsProvider {
   async getNearStats(): Promise<DaBeatStats | undefined> {
     assert(this.nearClient, 'Near client not found')
 
-    const { totalStake } = await this.nearClient.getValidatorsInfo()
+    const { result } = await this.nearClient.getValidatorsInfo()
+    const totalStake = result.current_validators.reduce(
+      (acc, v) => acc + BigInt(v.stake),
+      0n,
+    )
 
     return {
       totalStake,

@@ -46,7 +46,7 @@ export class BeaconChainClient extends ClientCore {
     }))
   }
 
-  async getValidatorsStake({
+  async getValidatorsInfo({
     stateId,
     status,
   }: {
@@ -96,7 +96,6 @@ export class BeaconChainClient extends ClientCore {
 
     return {
       totalStake: effectiveBalance,
-      thresholdStake: (effectiveBalance * 200n) / 300n,
     }
   }
 
