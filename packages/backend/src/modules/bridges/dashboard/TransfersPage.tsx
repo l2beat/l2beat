@@ -1,5 +1,5 @@
 import type { BridgeTransferRecord } from '@l2beat/database'
-import { formatSeconds } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
@@ -49,7 +49,10 @@ function TransfersTable(props: {
                 )}
               </td>
               <td>
-                {srcExplorerUrl ? (
+                {srcExplorerUrl &&
+                e.srcTokenAddress !==
+                  '&& e.srcTokenAddress !== EthereumAddress.ZERO' &&
+                e.srcTokenAddress !== EthereumAddress.ZERO ? (
                   <a
                     target="_blank"
                     href={`${srcExplorerUrl}/address/${e.srcTokenAddress}`}
@@ -75,7 +78,9 @@ function TransfersTable(props: {
                 )}
               </td>
               <td>
-                {srcExplorerUrl ? (
+                {srcExplorerUrl &&
+                e.dstTokenAddress !== 'native' &&
+                e.dstTokenAddress !== EthereumAddress.ZERO ? (
                   <a
                     target="_blank"
                     href={`${srcExplorerUrl}/address/${e.dstTokenAddress}`}
