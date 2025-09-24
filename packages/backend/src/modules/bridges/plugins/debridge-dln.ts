@@ -121,8 +121,8 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
         fillAmount: logOrderFilled.order.takeAmount.toString(),
         $srcChain:
           DEBRIDGE_NETWORKS.find(
-            (c) => c.chainId === logOrderFilled.order.takeChainId.toString(),
-          )?.chain ?? `DEBRIDGE_${logOrderFilled.order.takeChainId.toString()}`,
+            (c) => c.chainId === logOrderFilled.order.giveChainId.toString(),
+          )?.chain ?? `DEBRIDGE_${logOrderFilled.order.giveChainId.toString()}`,
       })
     }
   }
