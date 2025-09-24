@@ -1,6 +1,6 @@
-import { assert, ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { type BigNumber, utils } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import type { ParamType } from 'ethers/lib/utils'
 import type { ContractValue } from '../../output/types'
 import type {
@@ -49,12 +49,6 @@ export class EventTraceHandler implements Handler {
     const eventAbi = getEventFragment(this.definition.event, this.abi).format(
       utils.FormatTypes.full,
     )
-
-    assert(
-      functionAbi,
-      'Function abi not found for ' + this.definition.function,
-    )
-    assert(eventAbi, 'Event abi not found for ' + this.definition.event)
 
     this.functionAbi = functionAbi
     this.eventAbi = eventAbi
@@ -123,38 +117,38 @@ export class EventTraceHandler implements Handler {
   }
 }
 
-function materializeNamed(value: unknown, param: ParamType): unknown {
-  if (param.baseType === 'tuple') {
-    const obj: Record<string, unknown> = {}
+function materializeNamed(value: unknown, param: ParamType): ContractValue {
+  if (param.baseType === 'tuple' && typeof value === 'object') {
+    const obj: Record<string, ContractValue> = {}
 
-    for (const [i, comp] of param.components.entries()) {
-      const r = value as Record<string, unknown>
-      obj[comp.name ?? i] = materializeNamed(r[i], comp)
+    for (const [idx, comp] of param.components.entries()) {
+      obj[comp.name ?? idx] = materializeNamed(
+        (value as Record<string, unknown>)[idx],
+        comp,
+      )
     }
 
     return obj
   }
 
-  if (param.baseType === 'array') {
-    const r = value as unknown[]
-    return r.map((v) => materializeNamed(v, param.arrayChildren))
+  if (param.baseType === 'array' && Array.isArray(value)) {
+    return value.map((v) => materializeNamed(v, param.arrayChildren))
   }
 
-  if (param.baseType.includes('int')) {
-    const r = value as BigNumber
-    return r.toNumber()
+  if (param.baseType.includes('int') && BigNumber.isBigNumber(value)) {
+    return value.toNumber()
   }
 
-  return value
+  return value as ContractValue
 }
 
 function decodeWithNames(abi: string[], fn: string, data: string) {
   const iface = new utils.Interface(abi)
-  const frag = iface.getFunction(fn)
-  const decoded = iface.decodeFunctionData(frag, data)
-  const named: Record<string, unknown> = {}
-  for (const [i, inp] of frag.inputs.entries()) {
-    named[inp.name ?? i] = materializeNamed(decoded[i], inp)
+  const fragment = iface.getFunction(fn)
+  const decodedData = iface.decodeFunctionData(fragment, data)
+  const named: Record<string, ContractValue> = {}
+  for (const [key, inp] of fragment.inputs.entries()) {
+    named[inp.name ?? key] = materializeNamed(decodedData[key], inp)
   }
-  return named as ContractValue
+  return named
 }
