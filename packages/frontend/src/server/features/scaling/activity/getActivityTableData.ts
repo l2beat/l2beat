@@ -74,9 +74,6 @@ export async function getActivityTable(
       )
 
       const syncMetadata = syncMetadataRecords.find((r) => r.id === projectId)
-      if (projectId === 'ethereum') {
-        console.log(projectId, !!syncMetadata)
-      }
       if (!syncMetadata) {
         return [projectId, undefined]
       }

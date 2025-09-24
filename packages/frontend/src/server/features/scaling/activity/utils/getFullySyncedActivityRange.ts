@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type { TimeRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
+import { getActivityAdjustedTimestamp } from './syncStatus'
 
 /**
  * Returns a range of days that are fully synced.
@@ -21,7 +22,7 @@ export async function getFullySyncedActivityRange(
   const db = getDb()
 
   const target = await db.syncMetadata.getMaxTargetForFeature('activity')
-  const end = UnixTime.toStartOf(target, 'day') - 1 * UnixTime.DAY
+  const end = getActivityAdjustedTimestamp(target)
   const days = rangeToDays(range)
 
   const start = days !== null ? end - days * UnixTime.DAY : null
