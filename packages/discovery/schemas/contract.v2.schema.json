@@ -595,6 +595,16 @@
                   "mintingWithPermit": { "type": "boolean" }
                 },
                 "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "eventTrace" },
+                  "event": { "type": "string" },
+                  "function": { "type": "string" },
+                  "eventSource": { "type": "string" }
+                },
+                "required": ["type", "event", "function"]
               }
             ]
           },
