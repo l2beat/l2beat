@@ -45,7 +45,6 @@ export const GatewayBurned = createBridgeEventType<{
 
 export class CircleGatewayPlugIn implements BridgePlugin {
   name = 'circle-gateway'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const gatewayBurned = parseGatewayBurned(input.log, null)

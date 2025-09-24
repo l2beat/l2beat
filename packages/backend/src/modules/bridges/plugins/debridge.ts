@@ -100,7 +100,6 @@ export const Claimed = createBridgeEventType<{
 
 export class DeBridgePlugin implements BridgePlugin {
   name = 'debridge'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const sent = parseSent(input.log, null)

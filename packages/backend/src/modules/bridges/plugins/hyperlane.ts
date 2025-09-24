@@ -38,7 +38,6 @@ export const ProcessId = createBridgeEventType<{
 
 export class HyperlanePlugIn implements BridgePlugin {
   name = 'hyperlane'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const processId = parseProcessId(input.log, null)

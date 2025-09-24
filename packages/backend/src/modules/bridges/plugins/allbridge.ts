@@ -76,7 +76,6 @@ export const TokensReceived = createBridgeEventType<{
 
 export class AllbridgePlugIn implements BridgePlugin {
   name = 'allbridge'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const messageSent = parseMessageSent(input.log, null)
