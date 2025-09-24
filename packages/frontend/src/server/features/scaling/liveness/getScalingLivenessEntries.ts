@@ -11,7 +11,6 @@ import { ps } from '~/server/projects'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import type { ProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { temporarilyExtractFirstElement } from '../../utils'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
@@ -71,7 +70,7 @@ export interface ScalingLivenessEntry extends CommonScalingEntry {
   data: LivenessData
   explanation: string | undefined
   anomalies: LivenessAnomaly[]
-  dataAvailabilityMode: TableReadyValue | undefined
+  dataAvailabilityMode: TableReadyValue[] | undefined
   hasTrackedContractsChanged: boolean
   tvsOrder: number
 }
@@ -119,8 +118,10 @@ function getScalingLivenessEntry(
     data,
     explanation: project.livenessInfo?.explanation,
     anomalies: liveness.anomalies,
-    dataAvailabilityMode: temporarilyExtractFirstElement(project.scalingDa)
-      ?.mode,
+    dataAvailabilityMode: (Array.isArray(project.scalingDa)
+      ? project.scalingDa.map((da) => da.mode)
+      : [project.scalingDa?.mode]
+    ).filter((da) => da !== undefined),
     tvsOrder: tvs ?? -1,
     hasTrackedContractsChanged,
   }
