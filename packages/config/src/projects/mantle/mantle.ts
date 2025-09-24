@@ -205,6 +205,34 @@ export const mantle: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
+  nonTemplateTechnology: {
+    dataAvailability: {
+      name: 'Data is posted to EigenDA',
+      description:
+        'Transactions roots are posted onchain and the full data is posted on EigenDA.  Since the ServiceManager bridge is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments. Mantle uses Hokulea, a Rust implementation that provides EigenDA blob derivation for OP stack chains.',
+      references: [
+        {
+          url: 'https://docs.eigenda.xyz/overview',
+          title: 'EigenDA Docs - Overview',
+        },
+        {
+          url: 'https://github.com/Layr-Labs/hokulea',
+          title: 'Hokulea - EigenDA blob derivation library',
+        },
+        {
+          title: 'Derivation: Batch submission - OP Mainnet specs',
+          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'the sequencer posts an unavailable transaction root.',
+          isCritical: true,
+        },
+      ],
+    },
+  },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/succinctlabs/op-succinct/',
 })

@@ -262,6 +262,9 @@ function opStackCommon(
   if (fraudProofType === 'Kailua') {
     architectureImage.push('kailua')
   }
+  if (fraudProofType === 'OpSuccinct') {
+    architectureImage.push('opsuccinct')
+  }
 
   const nativeContractRisks: ProjectRisk[] = [
     templateVars.nonTemplateContractRisks ??
@@ -301,7 +304,9 @@ function opStackCommon(
           ? 'opfp'
           : fraudProofType === 'Kailua'
             ? 'kailua'
-            : undefined,
+            : fraudProofType === 'OpSuccinct'
+              ? 'opsuccinct'
+              : undefined,
       stacks: ['OP Stack'],
       warning:
         templateVars.display.warning === undefined
