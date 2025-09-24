@@ -17,6 +17,7 @@ export const phala: ScalingProject = opStackL2({
       Phala rollup on Ethereum leverages the Op-Succinct stack, a combination of OP stack contracts and Zero-Knowledge Proofs (ZK) using the SP1 zkVM.`,
     links: {
       websites: ['https://phala.network/'],
+      bridges: ['https://subbridge.io'],
       documentation: ['https://docs.phala.network/'],
       bridges: ['https://subbridge.io/'],
       explorers: ['https://explorer.phala.network'],

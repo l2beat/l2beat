@@ -1261,7 +1261,7 @@
   "static/partners/world/background.png": "754fbb68f4a74766d341fe68e0af483a",
   "static/partners/world/logo.png": "41732beb81b30974d3f4f9d92e68df15",
   "static/partners/nethermind/background.png": "17e01eea8a0c77824a6aa8f5c9fec38a",
-  "static/partners/nethermind/logo.png": "0d9064e1f38777ceca673c23efb6777b",
+  "static/partners/nethermind/logo.png": "2ac4f28457e915893a9457bcd9b1260b",
   "static/images/architecture/cartesi-prt-honeypot.png": "d3cfeee940c8b40c89bc593b475cc235",
   "static/partners/the-elastic-network/alternative-logo.png": "c0eda147138cc784fca244781fb2437a",
   "static/icons/namechain.png": "c5363aadef772854308a934717c22118",
@@ -1469,5 +1469,8 @@
   "static/images/architecture/.png": "51e4ab4152e65794067da3df06023e08",
   "static/images/architecture/opstack-optimium-opfp-opsuccinct.png": "4ad1e7c85dfa17d6604ddd50eb325ad9",
   "static/images/architecture/opstack-rollup-opfp-opsuccinct.png": "51e4ab4152e65794067da3df06023e08",
-  "static/images/architecture/opstack-rollup-superchain-opfp-opsuccinct.png": "e0b69f455caeebb6d1ac72a0c17da052"
+  "static/images/architecture/opstack-rollup-superchain-opfp-opsuccinct.png": "e0b69f455caeebb6d1ac72a0c17da052",
+  "static/images/badges/Nodeinfra.png": "64d5cc0f3b6a5920bd900d65ec013df2",
+  "static/partners/cartesi/background.png": "70d22fa399de64650d7cb325706a17c9",
+  "static/partners/cartesi/logo.png": "dd299c34f84fdbce7d1290b4036e96ef"
 }
