@@ -266,3 +266,14 @@ export function defineNetworks<T extends { chain: string }>(
   })
   return networks
 }
+
+export function findChain<C extends { chain: string }, P>(
+  networks: C[],
+  getProperty: (network: C) => P,
+  propertyValue: P,
+): string {
+  return (
+    networks.find((n) => getProperty(n) === propertyValue)?.chain ??
+    `Unknown_${propertyValue}`
+  )
+}

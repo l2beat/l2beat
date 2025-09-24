@@ -5,12 +5,15 @@ The dst chain on SRC must be determined by the contract address that emitted the
 contracts are set up for every SRC-DST pair on each chain
 */
 
+import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -61,30 +64,83 @@ const parseExecutionStateChanged = createEventParser(
 
 export const CCIPSendRequested = createBridgeEventType<{
   messageId: `0x${string}`
+  $dstChain: string
 }>('ccip.CCIPSendRequested')
 
 export const ExecutionStateChanged = createBridgeEventType<{
   messageId: `0x${string}`
   state: number
+  $srcChain: string
 }>('ccip.ExecutionStateChanged')
+
+interface CcipNetwork {
+  chain: string
+  outboundLanes: Record<string, EthereumAddress>
+  inboundLanes: Record<string, EthereumAddress>
+}
+
+// Future reference: https://docs.chain.link/ccip/directory/mainnet/chain/mainnet
+const CCIP_NETWORKS = defineNetworks<CcipNetwork>('ccip', [
+  {
+    chain: 'base',
+    outboundLanes: {
+      arbitrum: EthereumAddress('0x9D0ffA76C7F82C34Be313b5bFc6d42A72dA8CA69'),
+      ethereum: EthereumAddress('0x56b30A0Dcd8dc87Ec08b80FA09502bAB801fa78e'),
+    },
+    inboundLanes: {
+      arbitrum: EthereumAddress('0x7D38c6363d5E4DFD500a691Bc34878b383F58d93'),
+      ethereum: EthereumAddress('0xCA04169671A81E4fB8768cfaD46c347ae65371F1'),
+    },
+  },
+  {
+    chain: 'arbitrum',
+    outboundLanes: {
+      base: EthereumAddress('0xc1b6287A3292d6469F2D8545877E40A2f75CA9a6'),
+      ethereum: EthereumAddress('0x67761742ac8A21Ec4D76CA18cbd701e5A6F3Bef3'),
+    },
+    inboundLanes: {
+      base: EthereumAddress('0xb62178f8198905D0Fa6d640Bdb188E4E8143Ac4b'),
+      ethereum: EthereumAddress('0x91e46cc5590A4B9182e47f40006140A7077Dec31'),
+    },
+  },
+  {
+    chain: 'ethereum',
+    outboundLanes: {
+      arbitrum: EthereumAddress('0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284'),
+      base: EthereumAddress('0xb8a882f3B88bd52D1Ff56A873bfDB84b70431937'),
+    },
+    inboundLanes: {
+      arbitrum: EthereumAddress('0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9'),
+      base: EthereumAddress('0x6B4B6359Dd5B47Cdb030E5921456D2a0625a9EbD'),
+    },
+  },
+])
 
 export class CCIPPlugIn implements BridgePlugin {
   name = 'ccip'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const ccipSendRequested = parseCCIPSendRequested(input.log, null)
     if (ccipSendRequested)
       return CCIPSendRequested.create(input.ctx, {
         messageId: ccipSendRequested.message.messageId,
+        $dstChain: findChain(
+          CCIP_NETWORKS,
+          (x) => x.outboundLanes[input.ctx.chain],
+          EthereumAddress(input.log.address),
+        ),
       })
-    // TODO: extraxt dst chain from contract address
 
     const executionStateChanged = parseExecutionStateChanged(input.log, null)
     if (executionStateChanged)
       return ExecutionStateChanged.create(input.ctx, {
         messageId: executionStateChanged.messageId,
         state: executionStateChanged.state,
+        $srcChain: findChain(
+          CCIP_NETWORKS,
+          (x) => x.inboundLanes[input.ctx.chain],
+          EthereumAddress(input.log.address),
+        ),
       })
   }
 
