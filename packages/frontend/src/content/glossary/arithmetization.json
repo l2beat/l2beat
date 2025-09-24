@@ -1,0 +1,5 @@
+{
+  "term": "Arithmetization",
+  "definition": "A part of zk proving system, a process that transforms the computation to be proven into a set of polynomials with particular properties.",
+  "isSpicy": false
+}

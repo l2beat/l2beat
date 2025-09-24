@@ -1,0 +1,5 @@
+{
+  "term": "zkVM",
+  "definition": "A special type of zk proving system that proves the correctness of state transitions of a virtual machine. Computation is represented by a program in a specific instruction language, it can have private and public inputs and public outputs. Most of zkVMs are STARKs.",
+  "isSpicy": false
+}
