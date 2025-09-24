@@ -1,11 +1,11 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { DEBRIDGE_NETWORKS } from './debridge'
 import {
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
-  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -73,12 +73,6 @@ const parseFulfilledOrder = createEventParser(
   'event FulfilledOrder((uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, address sender, address unlockAuthority)',
 )
 
-export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
-  { chainId: '1', chain: 'ethereum' },
-  { chainId: '42161', chain: 'arbitrum' },
-  { chainId: '8453', chain: 'base' },
-])
-
 export const LogCreatedOrder = createBridgeEventType<{
   orderId: `0x${string}`
   fromToken: EthereumAddress
@@ -112,7 +106,8 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
         $dstChain:
           DEBRIDGE_NETWORKS.find(
             (c) => c.chainId === logOrderCreated.order.takeChainId.toString(),
-          )?.chain ?? 'unknown',
+          )?.chain ??
+          `DEBRIDGE_${logOrderCreated.order.takeChainId.toString()}`,
       })
     }
 
@@ -127,7 +122,7 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
         $srcChain:
           DEBRIDGE_NETWORKS.find(
             (c) => c.chainId === logOrderFilled.order.takeChainId.toString(),
-          )?.chain ?? 'unknown',
+          )?.chain ?? `DEBRIDGE_${logOrderFilled.order.takeChainId.toString()}`,
       })
     }
   }
