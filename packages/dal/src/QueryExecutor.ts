@@ -17,7 +17,9 @@ export class QueryExecutor {
     private readonly db: Database,
     private readonly logger: Logger,
     private readonly cache: Cache,
-  ) {}
+  ) {
+    this.logger = logger.for(this)
+  }
 
   async execute<Q extends Query>(
     query: Q,

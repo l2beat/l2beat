@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { createClient, type RedisClientType } from 'redis'
-import { getPackageHash } from '../utils/getPackageHash'
+import { packageHash } from '../utils/packageHash'
 
 export interface CacheItem<T = unknown> {
   data: T
@@ -21,8 +21,6 @@ export class Cache {
   }
 
   generateKey(query: string, input: unknown): string {
-    const packageHash = getPackageHash().slice(0, 12)
-
     // hash the input to ensure that different inputs generate different keys
     const inputHash = createHash('md5')
       .update(JSON.stringify(input))
@@ -50,7 +48,11 @@ export class Cache {
     if (!data) {
       return undefined
     }
-    return JSON.parse(data) as CacheItem<T>
+    const parsed = JSON.parse(data) as CacheItem<string>
+    return {
+      data: JSON.parse(parsed.data),
+      timestamp: parsed.timestamp,
+    } as CacheItem<T>
   }
 
   private async connect() {
