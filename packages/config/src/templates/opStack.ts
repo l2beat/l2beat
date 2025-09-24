@@ -773,9 +773,6 @@ The Kailua state validation system is primarily optimistically resolved, so no v
       }
     }
     case 'OpSuccinct': {
-      const finalizationPeriod = getFinalizationPeriod(templateVars)
-      const l2OutputOracle = templateVars.discovery.getContract('OPSuccinctL2OutputOracle')
-      
       return {
         categories: [
           {
@@ -1423,6 +1420,33 @@ function getLiveness(
   templateVars: OpStackConfigCommon,
 ): ProjectLivenessInfo | undefined {
   const finalizationPeriod = getFinalizationPeriod(templateVars)
+  const fraudProofType = getFraudProofType(templateVars)
+  const daProvider = getDAProvider(templateVars)
+
+  // For OpSuccinct chains, provide liveness info regardless of DA provider
+  if (fraudProofType === 'OpSuccinct') {
+    const daDescription =
+      daProvider.layer === DA_LAYERS.ETH_BLOBS_OR_CALLDATA ||
+      daProvider.layer === DA_LAYERS.ETH_CALLDATA
+        ? 'to the L1'
+        : daProvider.layer === DA_LAYERS.EIGEN_DA
+          ? 'to EigenDA'
+          : 'to an external DA layer'
+
+    return {
+      warnings: {
+        stateUpdates:
+          'Please note, the state is not finalized until the finalization period passes.',
+      },
+      explanation: `${
+        templateVars.display.name
+      } is a ZK rollup that posts transaction data ${daDescription}. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets confirmed ${formatSeconds(
+        finalizationPeriod,
+      )} after it has been posted.`,
+    }
+  }
 
   return ifPostsToEthereum(templateVars, {
     warnings: {
@@ -1531,7 +1555,9 @@ function getTrackedTxs(
       ]
     }
     case 'OpSuccinct': {
-      const l2OutputOracle = templateVars.discovery.getContract('OPSuccinctL2OutputOracle')
+      const l2OutputOracle = templateVars.discovery.getContract(
+        'OPSuccinctL2OutputOracle',
+      )
 
       return [
         {
@@ -1734,7 +1760,12 @@ function getExecutionDelay(
   }
 }
 
-type FraudProofType = 'None' | 'Permissioned' | 'Permissionless' | 'Kailua' | 'OpSuccinct'
+type FraudProofType =
+  | 'None'
+  | 'Permissioned'
+  | 'Permissionless'
+  | 'Kailua'
+  | 'OpSuccinct'
 
 function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   // Check if it's OpSuccinct by looking for OPSuccinctL2OutputOracle contract

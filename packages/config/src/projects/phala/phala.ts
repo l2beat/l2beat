@@ -1,8 +1,8 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { BADGES } from '../../common/badges'
-import { opStackL2 } from '../../templates/opStack'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('phala')
 
@@ -52,12 +52,16 @@ export const phala: ScalingProject = opStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress('eth:0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521'),
+      address: ChainSpecificAddress(
+        'eth:0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521',
+      ),
       sinceTimestamp: UnixTime(1734388655),
       tokens: '*',
     }),
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress('eth:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A'),
+      address: ChainSpecificAddress(
+        'eth:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A',
+      ),
       sinceTimestamp: UnixTime(1734388655),
       tokens: ['ETH'],
     }),
@@ -70,8 +74,16 @@ export const phala: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: ChainSpecificAddress.address(ChainSpecificAddress(discovery.getContractValue('SystemConfig', 'batcherHash'))),
-        to: ChainSpecificAddress.address(ChainSpecificAddress(discovery.getContractValue('SystemConfig', 'sequencerInbox'))),
+        from: ChainSpecificAddress.address(
+          ChainSpecificAddress(
+            discovery.getContractValue('SystemConfig', 'batcherHash'),
+          ),
+        ),
+        to: ChainSpecificAddress.address(
+          ChainSpecificAddress(
+            discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+          ),
+        ),
         sinceTimestamp: UnixTime(1734388655),
       },
     },
@@ -82,7 +94,9 @@ export const phala: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(discovery.getContract('OPSuccinctL2OutputOracle').address),
+        address: ChainSpecificAddress.address(
+          discovery.getContract('OPSuccinctL2OutputOracle').address,
+        ),
         selector: '0x9ad84880',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
@@ -97,7 +111,9 @@ export const phala: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(discovery.getContract('OPSuccinctL2OutputOracle').address),
+        address: ChainSpecificAddress.address(
+          discovery.getContract('OPSuccinctL2OutputOracle').address,
+        ),
         selector: '0x59c3e00a', // non-optimistic mode
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
@@ -112,7 +128,9 @@ export const phala: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(discovery.getContract('OPSuccinctL2OutputOracle').address),
+        address: ChainSpecificAddress.address(
+          discovery.getContract('OPSuccinctL2OutputOracle').address,
+        ),
         selector: '0x9aaab648', // optimistic mode
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)',
@@ -126,7 +144,9 @@ export const phala: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(discovery.getContract('OPSuccinctL2OutputOracle').address),
+        address: ChainSpecificAddress.address(
+          discovery.getContract('OPSuccinctL2OutputOracle').address,
+        ),
         selector: '0xa4ee9d7b', // non-optimistic mode
         functionSignature:
           'function proposeL2Output(bytes32 _configName, bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',

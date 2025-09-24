@@ -4,11 +4,11 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { BADGES } from '../../common/badges'
-import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 import { REASON_FOR_BEING_OTHER } from '../../common'
+import { BADGES } from '../../common/badges'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('mantle')
 
@@ -70,13 +70,17 @@ export const mantle: ScalingProject = opStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress('eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb'),
+      address: ChainSpecificAddress(
+        'eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb',
+      ),
       sinceTimestamp: UnixTime(1688314886),
       tokens: '*',
       excludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
     }),
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress('eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012'),
+      address: ChainSpecificAddress(
+        'eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012',
+      ),
       sinceTimestamp: UnixTime(1688314886),
       tokens: ['ETH'],
     }),
@@ -89,8 +93,16 @@ export const mantle: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: ChainSpecificAddress.address(ChainSpecificAddress(discovery.getContractValue('SystemConfig', 'batcherHash'))),
-        to: ChainSpecificAddress.address(ChainSpecificAddress(discovery.getContractValue('SystemConfig', 'sequencerInbox'))),
+        from: ChainSpecificAddress.address(
+          ChainSpecificAddress(
+            discovery.getContractValue('SystemConfig', 'batcherHash'),
+          ),
+        ),
+        to: ChainSpecificAddress.address(
+          ChainSpecificAddress(
+            discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+          ),
+        ),
         sinceTimestamp: UnixTime(1688314886),
       },
     },
@@ -101,7 +113,9 @@ export const mantle: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(discovery.getContract('OPSuccinctL2OutputOracle').address),
+        address: ChainSpecificAddress.address(
+          discovery.getContract('OPSuccinctL2OutputOracle').address,
+        ),
         selector: '0x9ad84880',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
@@ -116,7 +130,9 @@ export const mantle: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(discovery.getContract('OPSuccinctL2OutputOracle').address),
+        address: ChainSpecificAddress.address(
+          discovery.getContract('OPSuccinctL2OutputOracle').address,
+        ),
         selector: '0x59c3e00a', // non-optimistic mode
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
@@ -130,7 +146,9 @@ export const mantle: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(discovery.getContract('OPSuccinctL2OutputOracle').address),
+        address: ChainSpecificAddress.address(
+          discovery.getContract('OPSuccinctL2OutputOracle').address,
+        ),
         selector: '0x9aaab648', // optimistic mode
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)',
