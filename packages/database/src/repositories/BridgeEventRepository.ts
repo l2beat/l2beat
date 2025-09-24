@@ -67,10 +67,21 @@ export class BridgeEventRepository extends BaseRepository {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-    await this.batch(rows, 10_000, async (batch) => {
+    await this.batch(rows, 2_000, async (batch) => {
       await this.db.insertInto('BridgeEvent').values(batch).execute()
     })
     return rows.length
+  }
+
+  async getUnmatched(): Promise<BridgeEventRecord[]> {
+    const rows = await this.db
+      .selectFrom('BridgeEvent')
+      .where('matched', '=', false)
+      .where('unsupported', '=', false)
+      .selectAll()
+      .execute()
+
+    return rows.map(toRecord)
   }
 
   async getAll(): Promise<BridgeEventRecord[]> {
@@ -125,22 +136,24 @@ export class BridgeEventRepository extends BaseRepository {
 
   async updateMatched(eventIds: string[]): Promise<void> {
     if (eventIds.length === 0) return
-
-    await this.db
-      .updateTable('BridgeEvent')
-      .set({ matched: true })
-      .where('eventId', 'in', eventIds)
-      .execute()
+    await this.batch(eventIds, 2_000, async (batch) => {
+      await this.db
+        .updateTable('BridgeEvent')
+        .set({ matched: true })
+        .where('eventId', 'in', batch)
+        .execute()
+    })
   }
 
   async updateUnsupported(eventIds: string[]): Promise<void> {
     if (eventIds.length === 0) return
-
-    await this.db
-      .updateTable('BridgeEvent')
-      .set({ unsupported: true })
-      .where('eventId', 'in', eventIds)
-      .execute()
+    await this.batch(eventIds, 2_000, async (batch) => {
+      await this.db
+        .updateTable('BridgeEvent')
+        .set({ unsupported: true })
+        .where('eventId', 'in', batch)
+        .execute()
+    })
   }
 
   async deleteExpired(currentTime: UnixTime): Promise<number> {

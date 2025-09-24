@@ -11,6 +11,7 @@ import { BridgeEventRepository } from './repositories/BridgeEventRepository'
 import { BridgeMessageRepository } from './repositories/BridgeMessageRepository'
 import { BridgeTransferRepository } from './repositories/BridgeTransferRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
+import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
@@ -59,6 +60,7 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     // #region DA BEAT
     currentPrice: new CurrentPriceRepository(db),
     stake: new StakeRepository(db),
+    daBeatStats: new DaBeatStatsRepository(db),
     dataAvailability: new DataAvailabilityRepository(db),
     blobs: new BlobsRepository(db),
     // #endregion

@@ -1249,8 +1249,8 @@
   "static/partners/governance-bank.png": "00574b012e66470ba239ac2e02755d5a",
   "static/partners/governance-delegates.png": "3b374dae0ff4b18c4773ad9228aad129",
   "static/partners/superchain/build-on.png": "1d31bc81d4853a99185f2524fe4f2b10",
-  "static/partners/superchain/logo.dark.png": "9cec499c11748f62cd2c5dfc09cb2636",
-  "static/partners/superchain/logo.png": "067e0083522e017486ad3fe62903b373",
+  "static/partners/superchain/logo.dark.png": "313faf5990fde2e331c5985116ecbb5e",
+  "static/partners/superchain/logo.png": "d75b59908a147091a61dd25ce1b4486a",
   "static/partners/superchain/main-partner.png": "9b4077b000db4c02ba2baa7cf61cdd91",
   "static/partners/the-elastic-network/build-on.png": "d24e338807a7c3019b7ad76028419d0b",
   "static/partners/the-elastic-network/logo.dark.png": "59f12f1da503de41bc1a5ee6dc11f7c7",
@@ -1461,5 +1461,9 @@
   "static/meta-images/ecosystems/the-elastic-network/opengraph-image.png": "afe1bea50236477bdbc7a8619bbbb195",
   "static/images/badges/OPSuccinct.png": "85c595497be6ff154b896b990509bb47",
   "static/images/custom-tokens/optimism.png": "4111ce8fc008ceb25615035f5602b2d2",
-  "static/images/whats-new/ecosystems.png": "98d1ca6b71db29a14ff01b22fb701aba"
+  "static/images/whats-new/ecosystems.png": "98d1ca6b71db29a14ff01b22fb701aba",
+  "static/icons/espressoprover.png": "b0336861f639aaf845e7c7cda35eb2dd",
+  "static/meta-images/zk-catalog/projects/espressoprover/opengraph-image.png": "f33e3eb2f1cea6565abc3259ffe0f5bb",
+  "static/meta-images/publications/governance-review-70.png": "51aaf9e645d7121b404bcbaa1c24e7f1",
+  "static/images/badges/Nodeinfra.png": "64d5cc0f3b6a5920bd900d65ec013df2"
 }

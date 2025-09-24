@@ -1,8 +1,9 @@
-import { withoutUndefinedKeys } from '../common/withoutUndefinedKeys'
+import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
 import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
+  ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
@@ -144,9 +145,39 @@ export async function readConfigFile(
   return data as ApiConfigFileResponse
 }
 
-export async function writeConfigFile(project: string, content: string) {
-  const res = await fetch(`/api/config-files/${project}`, {
+export async function createConfigFile(
+  project: string,
+  type: 'project' | 'token',
+  initialAddresses: string[],
+  overwrite: boolean,
+  maxDepth?: number,
+  maxAddresses?: number,
+) {
+  const res = await fetch('/api/config-files', {
     method: 'POST',
+    body: JSON.stringify({
+      project,
+      type,
+      initialAddresses,
+      overwrite,
+      maxDepth,
+      maxAddresses,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  const data: ApiCreateConfigFileResponse = await res.json()
+
+  if (!data.success) {
+    throw new Error(data.error)
+  }
+}
+
+export async function updateConfigFile(project: string, content: string) {
+  const res = await fetch(`/api/config-files/${project}`, {
+    method: 'PUT',
     body: JSON.stringify({ content }),
     headers: {
       'Content-Type': 'application/json',

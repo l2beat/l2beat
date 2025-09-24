@@ -11,7 +11,7 @@ export const superchain: BaseProject = {
   display: {
     description: 'The Superchain is a network of OP Stack chains.',
     links: {
-      websites: ['https://superchain.eco'],
+      websites: ['https://optimism.io'],
       documentation: [
         'https://docs.optimism.io/',
         'https://docs.optimism.io/superchain/superchain-explainer',

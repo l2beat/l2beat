@@ -33,7 +33,7 @@ export const pandasea: ScalingProject = underReviewL2({
     name: 'pandasea',
     chainId: 7776,
     apis: [
-      { type: 'rpc', url: 'https://rpc1.pandasea.io', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc1.pandasea.io', callsPerMinute: 300 },
     ],
   },
   activityConfig: {

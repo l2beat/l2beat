@@ -167,6 +167,7 @@ export const phala: ScalingProject = {
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
           sinceTimestamp: UnixTime(1746606971),
+          untilTimestamp: UnixTime(1757405447),
         },
       },
       {
@@ -181,6 +182,20 @@ export const phala: ScalingProject = {
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)',
           sinceTimestamp: UnixTime(1746606971),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: ChainSpecificAddress.address(l2OutputOracle.address),
+          selector: '0xa4ee9d7b', // non-optimistic mode
+          functionSignature:
+            'function proposeL2Output(bytes32 _configName, bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
+          sinceTimestamp: UnixTime(1757405447),
         },
       },
     ],

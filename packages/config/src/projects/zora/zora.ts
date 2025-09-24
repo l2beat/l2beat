@@ -55,7 +55,7 @@ export const zora: ScalingProject = opStackL2({
     ],
     coingeckoPlatform: 'zora',
     apis: [
-      { type: 'rpc', url: 'https://rpc.zora.energy', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.zora.energy', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://explorer.zora.energy/api' },
     ],
   },

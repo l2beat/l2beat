@@ -39,6 +39,7 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
     })
   }
 
+  matchTypes = [TransferRedeemed]
   match(
     transferRedeemed: BridgeEvent,
     db: BridgeEventDb,

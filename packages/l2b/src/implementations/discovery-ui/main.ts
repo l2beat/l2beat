@@ -70,7 +70,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
-  const configWriter = new ConfigWriter(configReader)
+  const configWriter = new ConfigWriter(configReader, paths.discovery)
   const templateService = new TemplateService(paths.discovery)
   const diffoveryController = new DiffoveryController()
 
@@ -170,7 +170,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)
-    attachConfigRouter(app, configWriter)
+    attachConfigRouter(app, configReader, configWriter)
 
     app.get('/api/projects/:project/codeSearch', (req, res) => {
       const paramsValidation = projectSearchTermParamsSchema.safeParse({
