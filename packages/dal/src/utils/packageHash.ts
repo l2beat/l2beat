@@ -15,11 +15,15 @@ const TurboOutputSchema = v.object({
   tasks: v.array(TaskSchema),
 })
 
-export function getPackageHash() {
-  const output = execSync('turbo run build --dry=json')
+function getPackageHash() {
+  const output = execSync('turbo run build --dry=json --filter=@l2beat/dal', {
+    stdio: 'pipe',
+  })
   const json = JSON.parse(output.toString())
 
   const validated = TurboOutputSchema.parse(json)
 
   return hashJson(validated)
 }
+
+export const packageHash = getPackageHash().slice(0, 12)
