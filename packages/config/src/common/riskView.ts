@@ -304,6 +304,7 @@ export function DATA_ESPRESSO(isUsingLightClient: boolean): TableReadyValue {
       'Proof construction and state derivation fully rely on data that is posted on Espresso.' +
       additional,
     sentiment: isUsingLightClient ? 'warning' : 'bad',
+    orderHint: isUsingLightClient ? 0 : Number.NEGATIVE_INFINITY,
   }
 }
 

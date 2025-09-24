@@ -891,6 +891,14 @@ function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
   return sequencerVersion === '0x00'
 }
 
+function postsToDAC(templateVars: OrbitStackConfigCommon): boolean {
+  const sequencerVersion = templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'sequencerVersion',
+  )
+  return sequencerVersion === '0x88'
+}
+
 function ifPostsToEthereum<T>(
   templateVars: OrbitStackConfigCommon,
   value: T,
@@ -1141,6 +1149,9 @@ function getDAProviders(
       'espressoTEEVerifier',
     ) !== EthereumAddress.ZERO
 
+  const isUsingEspressonAndDac =
+    isUsingEspressoSequencer && postsToDAC(templateVars)
+
   if (isUsingEspressoSequencer) {
     const isUsingLightClient = false
     result.push({
@@ -1160,7 +1171,7 @@ function getDAProviders(
     })
   }
 
-  if (result.length > 0) {
+  if (result.length > 0 && !isUsingEspressonAndDac) {
     return result
   }
 
@@ -1169,17 +1180,16 @@ function getDAProviders(
     requiredSignatures: number
   }>('SequencerInbox', 'dacKeyset')
 
-  return [
-    {
-      riskViewDA: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
-      riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-      technology: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
-      layer: DA_LAYERS.DAC,
-      bridge: DA_BRIDGES.DAC_MEMBERS(DAC),
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-      badge: BADGES.DA.DAC,
-    },
-  ]
+  result.push({
+    riskViewDA: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
+    riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+    technology: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
+    layer: DA_LAYERS.DAC,
+    bridge: DA_BRIDGES.DAC_MEMBERS(DAC),
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    badge: BADGES.DA.DAC,
+  })
+  return result
 }
 
 function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
