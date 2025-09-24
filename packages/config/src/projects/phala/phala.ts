@@ -19,7 +19,6 @@ export const phala: ScalingProject = opStackL2({
       websites: ['https://phala.network/'],
       bridges: ['https://subbridge.io'],
       documentation: ['https://docs.phala.network/'],
-      bridges: ['https://subbridge.io/'],
       explorers: ['https://explorer.phala.network'],
       repositories: ['https://github.com/Phala-Network/'],
       socialMedia: [
