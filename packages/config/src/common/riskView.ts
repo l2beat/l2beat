@@ -301,7 +301,7 @@ export function DATA_ESPRESSO(isUsingLightClient: boolean): TableReadyValue {
   return {
     value: 'External',
     description:
-      'Proof construction and state derivation fully rely on data that is posted on Celestia.' +
+      'Proof construction and state derivation fully rely on data that is posted on Espresso.' +
       additional,
     sentiment: isUsingLightClient ? 'warning' : 'bad',
   }
