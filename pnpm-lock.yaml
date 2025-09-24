@@ -849,12 +849,6 @@ importers:
       '@l2beat/validate':
         specifier: workspace:*
         version: link:../validate
-      '@types/stream-chain':
-        specifier: ^2.1.0
-        version: 2.1.0
-      '@types/stream-json':
-        specifier: ^1.7.7
-        version: 1.7.7
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
@@ -886,6 +880,12 @@ importers:
       '@types/node-fetch':
         specifier: ^2.6.2
         version: 2.6.11
+      '@types/stream-chain':
+        specifier: ^2.1.0
+        version: 2.1.0
+      '@types/stream-json':
+        specifier: ^1.7.7
+        version: 1.7.7
       nock:
         specifier: ^13.5.5
         version: 13.5.5
