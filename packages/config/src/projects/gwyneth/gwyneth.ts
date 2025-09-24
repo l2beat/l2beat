@@ -20,7 +20,7 @@ export const gwyneth: ScalingProject = upcomingL2({
       repositories: ['https://github.com/taikoxyz/taiko-reth/pulls'],
       socialMedia: [
         'https://x.com/gwyneth_taiko',
-        'https://discord.gg/7EU5aP8P',
+        'https://discord.com/invite/taikoxyz',
       ],
     },
   },
