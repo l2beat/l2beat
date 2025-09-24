@@ -4,10 +4,6 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { CombinedGrissiniCell } from '~/components/rosette/grissini/CombinedGrissiniCell'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
-import {
-  adjustTableValue,
-  sortTableValues,
-} from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
@@ -29,77 +25,111 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
             'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
         },
       }),
-    columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.layer), {
+    columnHelper.display({
       header: 'DA Layer',
       meta: {
         tooltip:
           'The data availability layer where the data (transaction data or state diffs) is published.',
+        cellClassName: 'pl-3',
+        additionalRows: (ctx) => {
+          return ctx.row.original.dataAvailability
+            .slice(1)
+            .map((da, i) => (
+              <TableValueCell
+                key={da.layer.value}
+                value={da.layer}
+                href={ctx.row.original.daHref?.[i + 1]?.summary}
+              />
+            ))
+        },
       },
-      cell: (ctx) => (
-        <TableValueCell
-          value={ctx.row.original.dataAvailability.layer}
-          href={ctx.row.original.daHref?.summary}
-        />
-      ),
+      cell: (ctx) => {
+        const firstDa = ctx.row.original.dataAvailability[0]
+        const firstDaHref = ctx.row.original.daHref?.[0]
+        return (
+          <TableValueCell value={firstDa?.layer} href={firstDaHref?.summary} />
+        )
+      },
       sortDescFirst: true,
       sortUndefined: 'last',
-      sortingFn: (a, b) =>
-        sortTableValues(
-          a.original.dataAvailability.layer,
-          b.original.dataAvailability.layer,
-        ),
     }),
-    columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.bridge), {
+    columnHelper.display({
       header: 'DA Bridge',
       meta: {
         tooltip:
           'The DA bridge used for informing Ethereum contracts if data has been made available.',
+        additionalRows: (ctx) => {
+          return ctx.row.original.dataAvailability
+            .slice(1)
+            .map((da, i) => (
+              <TableValueCell
+                key={da.layer.value}
+                value={da.bridge}
+                href={ctx.row.original.daHref?.[i + 1]?.risk}
+              />
+            ))
+        },
       },
-      cell: (ctx) => (
-        <TableValueCell
-          value={ctx.row.original.dataAvailability.bridge}
-          href={ctx.row.original.daHref?.risk}
-        />
-      ),
+      cell: (ctx) => {
+        const firstDa = ctx.row.original.dataAvailability[0]
+        const firstDaHref = ctx.row.original.daHref?.[0]
+        return (
+          <TableValueCell value={firstDa?.bridge} href={firstDaHref?.risk} />
+        )
+      },
       sortDescFirst: true,
       sortUndefined: 'last',
-      sortingFn: (a, b) =>
-        sortTableValues(
-          a.original.dataAvailability.bridge,
-          b.original.dataAvailability.bridge,
-        ),
     }),
     columnHelper.display({
       header: 'Risks',
       cell: (ctx) => {
-        if (!ctx.row.original.risks) {
+        const firstDaRisk = ctx.row.original.risks?.[0]
+        if (!firstDaRisk) {
           return <NotApplicableBadge />
         }
 
         return (
-          <TableLink href={ctx.row.original.daHref?.risk}>
+          <TableLink href={ctx.row.original.daHref?.[0]?.risk}>
             <CombinedGrissiniCell
-              daLayerRisks={ctx.row.original.risks.daLayer}
-              daBridgeRisks={ctx.row.original.risks.daBridge}
+              daLayerRisks={firstDaRisk.daLayer}
+              daBridgeRisks={firstDaRisk.daBridge}
             />
           </TableLink>
         )
       },
       meta: {
         align: 'center',
+        additionalRows: (ctx) => {
+          return (
+            ctx.row.original.risks?.slice(1).map((risk, i) => (
+              <TableLink key={i} href={ctx.row.original.daHref?.[i + 1]?.risk}>
+                <CombinedGrissiniCell
+                  daLayerRisks={risk.daLayer}
+                  daBridgeRisks={risk.daBridge}
+                />
+              </TableLink>
+            )) ?? []
+          )
+        },
       },
     }),
-    columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.mode), {
+    columnHelper.display({
       header: 'Type of data',
-      cell: (ctx) => (
-        <TableValueCell value={ctx.row.original.dataAvailability.mode} />
-      ),
+      cell: (ctx) => {
+        return (
+          <TableValueCell value={ctx.row.original.dataAvailability[0]?.mode} />
+        )
+      },
+      meta: {
+        additionalRows: (ctx) => {
+          return ctx.row.original.dataAvailability
+            .slice(1)
+            .map((da, i) => (
+              <TableValueCell key={da.layer.value} value={da.mode} />
+            ))
+        },
+      },
       sortUndefined: 'last',
-      sortingFn: (a, b) =>
-        sortTableValues(
-          a.original.dataAvailability.mode,
-          b.original.dataAvailability.mode,
-        ),
     }),
   ])
 }
