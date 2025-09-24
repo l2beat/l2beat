@@ -164,7 +164,7 @@ function Display({
       )}
 
       {selected.referencedBy.length > 0 && (
-        <Folder title="Referenced by">
+        <Folder title="Referenced by" collapsed={true}>
           <ol className="overflow-x-auto bg-coffee-900 py-0.5 pl-5">
             {selected.referencedBy.map((value) => (
               <li key={value.address}>
@@ -185,7 +185,7 @@ function Display({
         </Folder>
       )}
       {'fields' in selected && selected.fields.length > 0 && (
-        <Folder title="Fields">
+        <Folder title="Fields" collapsed={true}>
           <ol>
             {selected.fields.map((field, i) => (
               <FieldDisplay key={i} field={field} />

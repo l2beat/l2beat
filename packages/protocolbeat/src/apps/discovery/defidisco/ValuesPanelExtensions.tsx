@@ -13,7 +13,7 @@ export function ValuesPanelExtensions({ selected, abis }: Props) {
   }
 
   return (
-    <Folder title="Permissions" collapsed>
+    <Folder title="Permissions" collapsed={false}>
       <PermissionsDisplay abis={selected.abis} />
     </Folder>
   )

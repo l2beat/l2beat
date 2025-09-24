@@ -5,6 +5,7 @@ import { getProject, getPermissionOverrides } from '../../../api/api'
 import { useContractTags } from '../../../hooks/useContractTags'
 import { Checkbox } from '../../../components/Checkbox'
 import { usePanelStore } from '../store/panel-store'
+import { ResultsSection } from './ResultsSection'
 
 export function DeFiScanPanel() {
   const { project } = useParams()
@@ -48,6 +49,11 @@ export function DeFiScanPanel() {
           projectData={response.data}
           contractTags={contractTags}
           permissionOverrides={permissionOverrides}
+        />
+        <ResultsSection
+          projectData={response.data}
+          permissionOverrides={permissionOverrides}
+          contractTags={contractTags}
         />
       </div>
     </div>
@@ -105,7 +111,7 @@ function StatusOfReviewSection({ projectData, contractTags, permissionOverrides 
     external: 0
   }
 
-  allContracts.forEach((contract, index) => {
+  allContracts.forEach((contract) => {
     // Check if contract is explicitly marked as external in contract tags
     // Need to handle address format differences: contracts have 'eth:0x...' but tags have '0x...'
     const contractAddr = contract.address.replace('eth:', '').toLowerCase()
