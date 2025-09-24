@@ -11,27 +11,25 @@ export function getSyncState(
   record: SyncMetadataRecord,
   timestamp: UnixTime,
 ): SyncState {
-  const isSynced = isFeatureSynced(record)
+  const isSynced = isFeatureSynced(record, timestamp)
   const syncedUntil = isSynced
     ? record.target
     : (record.syncedUntil ?? UnixTime.now())
   return {
-    isSynced: isFeatureSyncedAtTimestamp(record, timestamp),
+    isSynced: isFeatureSynced(record, timestamp),
     syncedUntil: Math.min(syncedUntil, timestamp),
     target: record.target,
   }
 }
 
-function isFeatureSyncedAtTimestamp(
+function isFeatureSynced(
   record: SyncMetadataRecord,
   timestamp: UnixTime,
 ): boolean {
-  return isFeatureSynced(record) && timestamp <= record.target
-}
-
-function isFeatureSynced(record: SyncMetadataRecord): boolean {
   return (
-    record.syncedUntil === record.target ||
+    (record.target >= timestamp &&
+      record.syncedUntil &&
+      record.syncedUntil >= timestamp) ||
     record.blockSyncedUntil === record.blockTarget
   )
 }
