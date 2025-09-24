@@ -15,6 +15,7 @@ import {
   createBridgeEventType,
   createEventParser,
   defineNetworks,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -59,6 +60,7 @@ export const MessageSent = createBridgeEventType<{
 export const TokensSent = createBridgeEventType<{
   amount: number
   receiveToken: `0x${string}`
+  $dstChain: string
 }>('allbridge.TokensSent')
 
 export const MessageReceived = createBridgeEventType<{
@@ -69,38 +71,36 @@ export const MessageReceived = createBridgeEventType<{
 export const TokensReceived = createBridgeEventType<{
   amount: number
   message: `0x${string}`
+  $srcChain: string
 }>('allbridge.TokensReceived')
 
 export class AllbridgePlugIn implements BridgePlugin {
   name = 'allbridge'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const messageSent = parseMessageSent(input.log, null)
     if (messageSent) {
-      /* dstChain is the second byte of the message */
-      const secondByte = messageSent.message.slice(4, 6)
-      const dstChain =
-        ALLBRDIGE_NETWORKS.find(
-          (x) => x.allBridgeChainId === Number.parseInt(secondByte, 16),
-        )?.chain ?? `AB_${secondByte}`
       return MessageSent.create(input.ctx, {
         message: messageSent.message,
-        $dstChain: dstChain,
+        $dstChain: findChain(
+          ALLBRDIGE_NETWORKS,
+          (x) => x.allBridgeChainId,
+          /* dstChain is the second byte of the message */
+          Number.parseInt(messageSent.message.slice(4, 6), 16),
+        ),
       })
     }
 
     const messageReceived = parseMessageReceived(input.log, null)
     if (messageReceived) {
-      /* srcChain is the second byte of the message */
-      const firstByte = messageReceived.message.slice(2, 4)
-      const srcChain =
-        ALLBRDIGE_NETWORKS.find(
-          (x) => x.allBridgeChainId === Number.parseInt(firstByte, 16),
-        )?.chain ?? `AB_${firstByte}`
       return MessageReceived.create(input.ctx, {
         message: messageReceived.message,
-        $srcChain: srcChain,
+        $srcChain: findChain(
+          ALLBRDIGE_NETWORKS,
+          (x) => x.allBridgeChainId,
+          /* srcChain is the first byte of the message */
+          Number.parseInt(messageReceived.message.slice(2, 4), 16),
+        ),
       })
     }
     const tokensSent = parseTokensSent(input.log, null)
@@ -108,6 +108,11 @@ export class AllbridgePlugIn implements BridgePlugin {
       return TokensSent.create(input.ctx, {
         amount: Number(tokensSent.amount),
         receiveToken: tokensSent.receiveToken,
+        $dstChain: findChain(
+          ALLBRDIGE_NETWORKS,
+          (x) => x.allBridgeChainId,
+          Number(tokensSent.destinationChainId),
+        ),
       })
     }
 
@@ -116,6 +121,12 @@ export class AllbridgePlugIn implements BridgePlugin {
       return TokensReceived.create(input.ctx, {
         amount: Number(tokensReceived.amount),
         message: tokensReceived.message,
+        $srcChain: findChain(
+          ALLBRDIGE_NETWORKS,
+          (x) => x.allBridgeChainId,
+          /* srcChain is the first byte of the message */
+          Number.parseInt(tokensReceived.message.slice(2, 4), 16),
+        ),
       })
     }
   }

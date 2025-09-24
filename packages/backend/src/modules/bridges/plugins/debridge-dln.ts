@@ -6,6 +6,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -103,11 +104,11 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
         toToken: EthereumAddress(logOrderCreated.order.takeTokenAddress),
         fromAmount: logOrderCreated.order.giveAmount.toString(),
         fillAmount: logOrderCreated.order.takeAmount.toString(),
-        $dstChain:
-          DEBRIDGE_NETWORKS.find(
-            (c) => c.chainId === logOrderCreated.order.takeChainId.toString(),
-          )?.chain ??
-          `DEBRIDGE_${logOrderCreated.order.takeChainId.toString()}`,
+        $dstChain: findChain(
+          DEBRIDGE_NETWORKS,
+          (x) => x.chainId,
+          logOrderCreated.order.takeChainId.toString(),
+        ),
       })
     }
 
@@ -119,10 +120,11 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
         toToken: EthereumAddress(logOrderFilled.order.takeTokenAddress),
         fromAmount: logOrderFilled.order.giveAmount.toString(),
         fillAmount: logOrderFilled.order.takeAmount.toString(),
-        $srcChain:
-          DEBRIDGE_NETWORKS.find(
-            (c) => c.chainId === logOrderFilled.order.giveChainId.toString(),
-          )?.chain ?? `DEBRIDGE_${logOrderFilled.order.giveChainId.toString()}`,
+        $srcChain: findChain(
+          DEBRIDGE_NETWORKS,
+          (x) => x.chainId,
+          logOrderFilled.order.giveChainId.toString(),
+        ),
       })
     }
   }
