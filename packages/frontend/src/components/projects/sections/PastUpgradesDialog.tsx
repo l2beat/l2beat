@@ -5,6 +5,7 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '~/components/core/Dialog'
@@ -13,6 +14,7 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerFooter,
+  DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/core/Drawer'
@@ -53,17 +55,19 @@ export function PastUpgradesDialog({
     <>
       <Dialog>
         <DialogTrigger className="max-md:hidden">{trigger}</DialogTrigger>
-        <DialogContent className="max-h-[90dvh] w-fit overflow-y-auto bg-surface-primary md:top-1/2 md:max-w-full">
-          <div className="flex items-center justify-between">
-            <DialogTitle>Past upgrades</DialogTitle>
-            <DialogClose>
-              <CloseIcon className="size-4" />
-            </DialogClose>
-          </div>
-          <DialogDescription className="sr-only">
-            List of past upgrades
-          </DialogDescription>
-          <div className="space-y-3">
+        <DialogContent className="max-h-[90dvh] w-fit bg-surface-primary md:top-1/2 md:max-w-full">
+          <DialogHeader>
+            <div className="flex items-center justify-between">
+              <DialogTitle>Past upgrades</DialogTitle>
+              <DialogClose>
+                <CloseIcon className="size-4" />
+              </DialogClose>
+            </div>
+            <DialogDescription className="sr-only">
+              List of past upgrades
+            </DialogDescription>
+          </DialogHeader>
+          <div className="max-h-[80dvh] space-y-3 overflow-y-auto">
             {pastUpgrades?.map((upgrade) => (
               <PastUpgradeEntry
                 key={upgrade.timestamp.toString()}
@@ -76,11 +80,11 @@ export function PastUpgradesDialog({
       <Drawer>
         <DrawerTrigger className="md:hidden">{trigger}</DrawerTrigger>
         <DrawerContent className="max-h-[90dvh]">
-          <div className="flex items-center justify-between">
+          <DrawerHeader className="flex items-center justify-between">
             <DrawerTitle className="font-semibold text-label-value-18">
               Past upgrades
             </DrawerTitle>
-          </div>
+          </DrawerHeader>
           <div className="max-h-[60dvh] space-y-2 overflow-y-auto">
             {pastUpgrades?.map((upgrade) => (
               <PastUpgradeEntry
