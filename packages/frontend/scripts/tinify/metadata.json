@@ -1465,6 +1465,11 @@
   "static/icons/espressoprover.png": "b0336861f639aaf845e7c7cda35eb2dd",
   "static/meta-images/zk-catalog/projects/espressoprover/opengraph-image.png": "f33e3eb2f1cea6565abc3259ffe0f5bb",
   "static/meta-images/publications/governance-review-70.png": "51aaf9e645d7121b404bcbaa1c24e7f1",
+  "static/images/architecture/opsuccinct.png": "6038cb9f898dd2217d91f164f04b6650",
+  "static/images/architecture/.png": "51e4ab4152e65794067da3df06023e08",
+  "static/images/architecture/opstack-optimium-opfp-opsuccinct.png": "4ad1e7c85dfa17d6604ddd50eb325ad9",
+  "static/images/architecture/opstack-rollup-opfp-opsuccinct.png": "51e4ab4152e65794067da3df06023e08",
+  "static/images/architecture/opstack-rollup-superchain-opfp-opsuccinct.png": "e0b69f455caeebb6d1ac72a0c17da052",
   "static/images/badges/Nodeinfra.png": "64d5cc0f3b6a5920bd900d65ec013df2",
   "static/partners/cartesi/background.png": "70d22fa399de64650d7cb325706a17c9",
   "static/partners/cartesi/logo.png": "dd299c34f84fdbce7d1290b4036e96ef"
