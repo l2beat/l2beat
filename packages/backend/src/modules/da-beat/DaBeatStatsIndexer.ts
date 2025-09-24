@@ -28,8 +28,8 @@ export class DaBeatStatsIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    // we only need to run once a day at midnight, if we just started (from === 0) we want to run it
-    if (to !== UnixTime.toStartOf(to, 'day') && from !== 0) {
+    // we want to run it once an hour, if from and to are in the same hour it means we already ran it and want to skip
+    if (UnixTime.toStartOf(from, 'hour') === UnixTime.toStartOf(to, 'hour')) {
       this.logger.info('Skipping update', { from, to })
       return to
     }
