@@ -37,13 +37,13 @@ export function createBridgeRouter(db: Database) {
       const messages = await db.bridgeTransfer.getByType(params.type)
       ctx.body = messages
     } else {
-      let events = await db.bridgeEvent.getByType(params.type)
       if (params.kind === 'unmatched') {
-        events = events.filter((x) => !x.matched && !x.unsupported)
+        const events = await db.bridgeEvent.getUnmatchedByType(params.type)
+        ctx.body = events
       } else if (params.kind === 'unsupported') {
-        events = events.filter((x) => x.unsupported)
+        const events = await db.bridgeEvent.getUnsupportedByType(params.type)
+        ctx.body = events
       }
-      ctx.body = events
     }
   })
 

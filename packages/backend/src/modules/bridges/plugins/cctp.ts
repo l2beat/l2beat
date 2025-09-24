@@ -7,6 +7,7 @@ import {
   createBridgeEventType,
   createEventParser,
   defineNetworks,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -79,10 +80,11 @@ export class CCTPPlugin implements BridgePlugin {
         if (!message) return
         return CCTPv1MessageSent.create(input.ctx, {
           messageBody: message.rawBody,
-          $dstChain:
-            CCTP_NETWORKS.find(
-              (n) => n.cctpdomain === Number(message.destinationDomain),
-            )?.chain || '???',
+          $dstChain: findChain(
+            CCTP_NETWORKS,
+            (x) => x.cctpdomain,
+            Number(message.destinationDomain),
+          ),
         })
       }
 
@@ -93,10 +95,11 @@ export class CCTPPlugin implements BridgePlugin {
         return CCTPv2MessageSent.create(input.ctx, {
           // https://developers.circle.com/cctp/technical-guide#messages-and-finality
           fast: message.minFinalityThreshold <= 1000,
-          $dstChain:
-            CCTP_NETWORKS.find(
-              (n) => n.cctpdomain === Number(message.destinationDomain),
-            )?.chain || '???',
+          $dstChain: findChain(
+            CCTP_NETWORKS,
+            (x) => x.cctpdomain,
+            Number(message.destinationDomain),
+          ),
           app: burnMessage ? 'TokenMessengerV2' : undefined,
           hookData: burnMessage?.hookData,
           amount: burnMessage?.amount.toString(),
@@ -112,10 +115,11 @@ export class CCTPPlugin implements BridgePlugin {
     if (v1MessageReceived) {
       return CCTPv1MessageReceived.create(input.ctx, {
         caller: EthereumAddress(v1MessageReceived.caller),
-        $srcChain:
-          CCTP_NETWORKS.find(
-            (n) => n.cctpdomain === Number(v1MessageReceived.sourceDomain),
-          )?.chain || '???',
+        $srcChain: findChain(
+          CCTP_NETWORKS,
+          (x) => x.cctpdomain,
+          Number(v1MessageReceived.sourceDomain),
+        ),
         nonce: Number(v1MessageReceived.nonce),
         messageBody: v1MessageReceived.messageBody,
       })
@@ -129,10 +133,11 @@ export class CCTPPlugin implements BridgePlugin {
         app: burnMessage ? 'TokenMessengerV2' : undefined,
         hookData: burnMessage?.hookData,
         caller: EthereumAddress(v2MessageReceived.caller),
-        $srcChain:
-          CCTP_NETWORKS.find(
-            (n) => n.cctpdomain === Number(v2MessageReceived.sourceDomain),
-          )?.chain || '???',
+        $srcChain: findChain(
+          CCTP_NETWORKS,
+          (x) => x.cctpdomain,
+          Number(v2MessageReceived.sourceDomain),
+        ),
         nonce: Number(v2MessageReceived.nonce),
         sender: EthereumAddress(`0x${v2MessageReceived.sender.slice(-40)}`),
         finalityThresholdExecuted: Number(
@@ -143,6 +148,7 @@ export class CCTPPlugin implements BridgePlugin {
     }
   }
 
+  matchTypes = [CCTPv1MessageReceived, CCTPv2MessageReceived]
   match(
     messageReceived: BridgeEvent,
     db: BridgeEventDb,

@@ -139,7 +139,7 @@
         "tx": "0xbed80fd46620bf9e83c5b993851200e1c0ac6e6f04c66963151ded1a7ac36bc3"
       }
     ],
-    "events": ["hyperlane.DispatchId", "hyperlane.ProcessId"],
+    "events": ["hyperlane.Dispatch", "hyperlane.Process"],
     "messages": ["hyperlane.Message"],
     "transfers": []
   },

@@ -5,16 +5,24 @@ type CheckboxProps = {
   onClick?: () => void
   className?: string
   id?: string
+  disabled?: boolean
 }
 
-export function Checkbox({ checked, onClick, className, id }: CheckboxProps) {
+export function Checkbox({
+  checked,
+  onClick,
+  className,
+  id,
+  disabled,
+}: CheckboxProps) {
   return (
     <div
+      role="checkbox"
       className={clsx(
-        'flex size-4 cursor-pointer items-center justify-center border-coffee-400 bg-coffee-700 hover:bg-coffee-700/50',
+        'flex size-4 cursor-pointer items-center justify-center border-coffee-400 bg-coffee-700 hover:bg-coffee-700/50 disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
       id={id}
     >
       {checked === true && <CheckedTick />}

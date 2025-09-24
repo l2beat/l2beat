@@ -7,6 +7,7 @@ on:
 jobs:
   notify-migration-pr-closed:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: read
       pull-requests: read

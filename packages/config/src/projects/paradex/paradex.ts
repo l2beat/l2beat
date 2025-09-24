@@ -82,6 +82,7 @@ export const paradex: ScalingProject = {
       bridges: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
       documentation: ['https://docs.paradex.trade/'],
       repositories: ['https://github.com/tradeparadex'],
+      explorers: ['https://voyager.prod.paradex.trade'],
       socialMedia: [
         'https://twitter.com/tradeparadex',
         'https://discord.com/invite/paradex',

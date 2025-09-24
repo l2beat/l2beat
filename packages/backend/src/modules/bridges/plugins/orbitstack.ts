@@ -70,6 +70,7 @@ export class OrbitStackPlugin implements BridgePlugin {
     }
   }
 
+  matchTypes = [OutBoxTransactionExecuted]
   match(
     outBoxTransactionExecuted: BridgeEvent,
     db: BridgeEventDb,

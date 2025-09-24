@@ -112,7 +112,7 @@ export const kroma: ScalingProject = {
     multicallContracts: [],
     sinceTimestamp: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
     apis: [
-      { type: 'rpc', url: 'https://api.kroma.network', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://api.kroma.network', callsPerMinute: 300 },
       { type: 'etherscan', chainId },
     ],
   },

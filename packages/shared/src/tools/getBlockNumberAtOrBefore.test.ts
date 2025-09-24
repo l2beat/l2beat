@@ -25,6 +25,17 @@ describe(getBlockNumberAtOrBefore.name, () => {
 
     expect(result).toEqual(2137)
   })
+
+  it('includes end as a possible result', async () => {
+    const result = await getBlockNumberAtOrBefore(
+      UnixTime(110000),
+      0,
+      100000,
+      async (n: number) => ({ timestamp: Math.floor(n / 2) }),
+    )
+
+    expect(result).toEqual(100000)
+  })
 })
 
 const fakeGetBlock = async (number: number) => ({

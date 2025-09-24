@@ -5,7 +5,6 @@ import type {
   Database,
 } from '@l2beat/database'
 import type { BridgeStore } from './BridgeStore'
-import type { FinancialsService } from './financials/FinancialsService'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -22,7 +21,6 @@ export class BridgeMatcher {
 
   constructor(
     private bridgeStore: BridgeStore,
-    private financialsService: FinancialsService,
     private db: Database,
     private plugins: BridgePlugin[],
     private supportedChains: string[],
@@ -53,101 +51,145 @@ export class BridgeMatcher {
   async doMatching() {
     const result = await match(
       this.bridgeStore,
-      this.bridgeStore.getUnmatched(),
+      (type) => this.bridgeStore.getEvents(type),
+      this.bridgeStore.getEventTypes(),
+      this.bridgeStore.getEventCount(),
       this.plugins,
       this.supportedChains,
       this.logger,
     )
 
-    if (result.matchedIds.size > 0) {
-      this.logger.info('Matched', {
-        count: result.matchedIds.size,
-        messages: result.messages.length,
-        transfers: result.transfers.length,
-      })
-      this.bridgeStore.markMatched([...result.matchedIds])
-    }
-    if (result.unsupportedIds.size > 0) {
-      this.bridgeStore.markUnsupported([...result.unsupportedIds])
-    }
-    if (result.matchedIds.size > 0 || result.unsupportedIds.size > 0) {
-      await this.bridgeStore.save()
-    }
-    if (result.messages.length > 0) {
+    await this.db.transaction(async () => {
+      if (result.matchedIds.size > 0 || result.unsupportedIds.size > 0) {
+        await this.bridgeStore.updateMatchedAndUnsupported({
+          matched: result.matchedIds,
+          unsupported: result.unsupportedIds,
+        })
+      }
       await this.db.bridgeMessage.insertMany(
         result.messages.map(toMessageRecord),
       )
-    }
-
-    if (result.transfers.length > 0) {
-      const transfers: BridgeTransferWithFinancials[] = await Promise.all(
-        result.transfers.map(
-          async (b) => await this.financialsService.addFinancials(b),
-        ),
+      await this.db.bridgeTransfer.insertMany(
+        result.transfers.map(toTransferRecord),
       )
-
-      await this.db.bridgeTransfer.insertMany(transfers.map(toTransferRecord))
-    }
+    })
   }
 }
 
 export async function match(
   db: BridgeEventDb,
-  events: BridgeEvent[],
+  getEvents: (type: string) => BridgeEvent[],
+  eventTypes: string[],
+  count: number,
   plugins: BridgePlugin[],
   supportedChains: string[],
   logger: Logger,
 ) {
+  const start = Date.now()
+  logger.info('Matching started', {
+    plugins: plugins.length,
+    events: count,
+    chains: supportedChains.length,
+  })
+
   const matchedIds = new Set<string>()
   const unsupportedIds = new Set<string>()
   const allMessages: BridgeMessage[] = []
   const allTransfers: BridgeTransfer[] = []
 
   for (const plugin of plugins) {
-    for (const event of events) {
-      if (matchedIds.has(event.eventId)) {
-        continue
-      }
-      let result: MatchResult | undefined
-      try {
-        result = await plugin.match?.(event, db)
-      } catch (e) {
-        logger.error(e)
-      }
+    if (!plugin.matchTypes || !plugin.match) {
+      continue
+    }
 
-      const messages = result?.filter((x) => x.kind === 'BridgeMessage') ?? []
-      const transfers = result?.filter((x) => x.kind === 'BridgeTransfer') ?? []
+    await new Promise((r) => setTimeout(r)) // Unblock event loop
+    const start = Date.now()
+    const stats = {
+      events: 0,
+      matchedEvents: 0,
+      messages: 0,
+      transfers: 0,
+    }
 
-      if (result) {
-        matchedIds.add(event.eventId)
-        for (const message of messages) {
-          allMessages.push(message)
-          matchedIds.add(message.dst.eventId)
-          matchedIds.add(message.src.eventId)
+    for (const type of plugin.matchTypes) {
+      const events = getEvents(type.type)
+      stats.events += events.length
+      for (const event of events) {
+        if (matchedIds.has(event.eventId)) {
+          continue
         }
-        for (const transfer of transfers) {
-          allTransfers.push(transfer)
-          for (const transferEvent of transfer.events) {
-            matchedIds.add(transferEvent.eventId)
+        let result: MatchResult | undefined
+        try {
+          result = await plugin.match?.(event, db)
+        } catch (e) {
+          logger.error(e)
+        }
+        if (!result) {
+          continue
+        }
+
+        matchedIds.add(event.eventId)
+        for (const item of result) {
+          if (item.kind === 'BridgeMessage') {
+            allMessages.push(item)
+            matchedIds.add(item.dst.eventId)
+            matchedIds.add(item.src.eventId)
+            stats.messages++
+            stats.matchedEvents += 2
+          } else if (item.kind === 'BridgeTransfer') {
+            allTransfers.push(item)
+            stats.transfers++
+            stats.matchedEvents += item.events.length
+            for (const transferEvent of item.events) {
+              matchedIds.add(transferEvent.eventId)
+            }
           }
         }
       }
     }
+
+    logger.info('Plugin executed', {
+      name: plugin.name,
+      duration: Date.now() - start,
+      events: stats.events,
+      matchedEvents: stats.matchedEvents,
+      messages: stats.messages,
+      transfers: stats.transfers,
+    })
   }
 
-  for (const event of events) {
-    if (matchedIds.has(event.eventId)) {
-      continue
-    }
-    const $srcChain = (event.args as Record<string, unknown>).$srcChain
-    if (typeof $srcChain === 'string' && !supportedChains.includes($srcChain)) {
-      unsupportedIds.add(event.eventId)
-    }
-    const $dstChain = (event.args as Record<string, unknown>).$dstChain
-    if (typeof $dstChain === 'string' && !supportedChains.includes($dstChain)) {
-      unsupportedIds.add(event.eventId)
+  for (const type of eventTypes) {
+    for (const event of getEvents(type)) {
+      if (matchedIds.has(event.eventId)) {
+        continue
+      }
+      const $srcChain = (event.args as Record<string, unknown>).$srcChain
+      if (
+        typeof $srcChain === 'string' &&
+        !supportedChains.includes($srcChain)
+      ) {
+        unsupportedIds.add(event.eventId)
+      }
+      const $dstChain = (event.args as Record<string, unknown>).$dstChain
+      if (
+        typeof $dstChain === 'string' &&
+        !supportedChains.includes($dstChain)
+      ) {
+        unsupportedIds.add(event.eventId)
+      }
     }
   }
+
+  logger.info('Matching finished', {
+    duration: Date.now() - start,
+    plugins: plugins.length,
+    events: count,
+    chains: supportedChains.length,
+    matchedEvents: matchedIds.size,
+    unsupportedEvents: unsupportedIds.size,
+    messages: allMessages.length,
+    transfers: allTransfers.length,
+  })
 
   return {
     matchedIds,

@@ -7317,6 +7317,28 @@
       "supply": "zero"
     },
     {
+      "name": "HYPE",
+      "coingeckoId": "hyperliquid",
+      "address": "0x15D0e0c55a3E7eE67152aD7E89acf164253Ff68d",
+      "symbol": "HYPE",
+      "decimals": 18,
+      "deploymentTimestamp": 1754494758,
+      "coingeckoListingTimestamp": 1732838400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?1729431300",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
       "address": "0xc3eACf0612346366Db554C991D7858716db09f58",
@@ -7508,6 +7530,28 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped SOL",
+      "coingeckoId": "solana",
+      "address": "0xbdE8A5331E8Ac4831cf8ea9e42e229219EafaB97",
+      "symbol": "SOL",
+      "decimals": 9,
+      "deploymentTimestamp": 1754451932,
+      "coingeckoListingTimestamp": 1586563200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
           }
         ]
       }

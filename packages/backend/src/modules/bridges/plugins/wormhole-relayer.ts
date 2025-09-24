@@ -11,6 +11,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -38,14 +39,16 @@ export class WormholeRelayerPlugin implements BridgePlugin {
     return Delivery.create(input.ctx, {
       recipientContract: parsed.recipientContract,
       sourceChain: parsed.sourceChain,
-      $srcChain:
-        WORMHOLE_NETWORKS.find(
-          (n) => n.wormholeChainId === Number(parsed.sourceChain),
-        )?.chain || '???',
+      $srcChain: findChain(
+        WORMHOLE_NETWORKS,
+        (x) => x.wormholeChainId,
+        Number(parsed.sourceChain),
+      ),
       sequence: parsed.sequence.toString(),
     })
   }
 
+  matchTypes = [Delivery]
   match(delivery: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (Delivery.checkType(delivery)) {
       const logMessagePublished = db.find(LogMessagePublished, {

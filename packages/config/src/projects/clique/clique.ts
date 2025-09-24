@@ -43,7 +43,7 @@ export const clique: ScalingProject = underReviewL3({
     name: 'clique',
     chainId: 8853,
     apis: [
-      { type: 'rpc', url: 'https://rpc.myclique.io/', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.myclique.io/', callsPerMinute: 300 },
     ],
   },
   activityConfig: {
