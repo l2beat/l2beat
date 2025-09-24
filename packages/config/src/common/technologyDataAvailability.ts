@@ -269,9 +269,9 @@ function ESPRESSO_OFF_CHAIN(
     ? ' The Espresso HotShot Light Client contract is used to verify attestations from the Espresso validator set that the data is indeed available.'
     : ' Since the HotShot Light Client contract is not used, availability of the data is not verified against Espresso validators, meaning that the Sequencer can single-handedly publish unavailable roots.'
   return {
-    name: 'Data is posted to Celestia',
+    name: 'Data is posted to Espresso',
     description:
-      'Transactions roots are posted onchain and the full data is posted on Celestia. ' +
+      'Transactions roots are posted onchain and the full data is posted on Espresso. ' +
       additionalDescription,
     risks: [
       {
@@ -287,8 +287,8 @@ function ESPRESSO_OFF_CHAIN(
     ],
     references: [
       {
-        title: 'Introducing Blobstream: streaming modular DA to Ethereum',
-        url: 'https://blog.celestia.org/introducing-blobstream/',
+        title: 'Espresso Light Client',
+        url: 'https://docs.espressosys.com/network/learn/the-espresso-network/internal-functionality/light-client',
       },
     ],
   }
