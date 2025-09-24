@@ -1,5 +1,8 @@
 import { assert, ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { type BigNumber, utils } from 'ethers'
+import type { ParamType } from 'ethers/lib/utils'
+import type { ContractValue } from '../../output/types'
 import type {
   DebugTransactionCall,
   DebugTransactionCallResponse,
@@ -119,10 +122,6 @@ export class EventTraceHandler implements Handler {
     }
   }
 }
-
-import { type BigNumber, utils } from 'ethers'
-import type { ParamType } from 'ethers/lib/utils'
-import type { ContractValue } from '../../output/types'
 
 function materializeNamed(value: unknown, param: ParamType): unknown {
   if (param.baseType === 'tuple') {
