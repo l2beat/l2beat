@@ -265,10 +265,9 @@ function DACHALLENGES_OFF_CHAIN(
 function ESPRESSO_OFF_CHAIN(
   isUsingLightClient: boolean,
 ): ProjectTechnologyChoice {
-  // TODO: @vincfurc to update descriptions for Espresso
   const additionalDescription = isUsingLightClient
-    ? ' The blobstream bridge is used to verify attestations from the Celestia validator set that the data is indeed available.'
-    : ' Since the Blobstream bridge is not used, availability of the data is not verified against Celestia validators, meaning that the Sequencer can single-handedly publish unavailable roots.'
+    ? ' The Espresso HotShot Light Client contract is used to verify attestations from the Espresso validator set that the data is indeed available.'
+    : ' Since the HotShot Light Client contract is not used, availability of the data is not verified against Espresso validators, meaning that the Sequencer can single-handedly publish unavailable roots.'
   return {
     name: 'Data is posted to Celestia',
     description:

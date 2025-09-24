@@ -295,10 +295,9 @@ export const DATA_POS: TableReadyValue = {
 }
 
 export function DATA_ESPRESSO(isUsingLightClient: boolean): TableReadyValue {
-  // TODO: @vincfurc to update descriptions
   const additional = isUsingLightClient
-    ? ' Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators.'
-    : ' Sequencer tx roots are not checked against the Blobstream bridge data roots onchain, but L2 nodes can verify data availability by running a Celestia light client.'
+    ? ' Sequencer tx roots are checked against the HotShot light client bridge data roots, signed off by Espresso validators.'
+    : ' Sequencer tx roots are not checked against the HotShot light client bridge data roots onchain, but L2 nodes can verify data availability by running an Espresso node.'
   return {
     value: 'External',
     description:
