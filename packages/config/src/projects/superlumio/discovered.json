@@ -1,6 +1,6 @@
 {
   "name": "superlumio",
-  "timestamp": 1757661588,
+  "timestamp": 1758699366,
   "configHash": "0x5c7a0d0802e41e123319b6b5623a9c054478089c1dafaf7d78f2886b113bfa10",
   "entries": [
     {
@@ -124,6 +124,19 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x4380709Fc7fd626ad17a63A1819F39A82978E3BF",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        }
+      ]
+    },
+    {
       "name": "Conduit Multisig 1",
       "address": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
@@ -157,12 +170,6 @@
           "permission": "interact",
           "from": "eth:0xf8f9625a95b8fCbED76d1De537B71035997E44c8",
           "description": "can pull funds from the contract in case of emergency.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
         },
         {
@@ -283,7 +290,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 166,
+        "nonce": 171,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -943,7 +950,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 100,
+        "gameCount": 124,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x542102Bb35C32ADa5D72cB791295d97574A71C84",
@@ -955,7 +962,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 100,
+        "permissionedGamesTotal": 124,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -1146,7 +1153,7 @@
         "optimismMintableERC20Factory": "eth:0xccc6Fc5B866D34a7A4C40455a3cCfaa0cbFc145B",
         "optimismPortal": "eth:0x9C93982cb4861311179aE216d1B7fD61232DE1f0",
         "overhead": 188,
-        "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+        "owner": "eth:0x4380709Fc7fd626ad17a63A1819F39A82978E3BF",
         "resourceConfig": {
           "maxResourceLimit": 20000000,
           "elasticityMultiplier": 10,
@@ -1871,6 +1878,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23345444 },
-  "permissionsConfigHash": "0xd514d97b37bbc4eba011b0ebb43c44ce23eb8f264dbdf038f2a790bad041e6cc"
+  "usedBlockNumbers": { "ethereum": 23431443 },
+  "permissionsConfigHash": "0x9915355b144ad1a58667dc6459f1220152d592d52dc0661f660a6e8678e7831a"
 }

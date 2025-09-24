@@ -72,7 +72,7 @@ export class BridgeStore implements BridgeEventDb {
 
   async deleteExpired(now: UnixTime) {
     this.eventDb.removeExpired(now)
-    await this.db.bridgeEvent.deleteExpired(now)
+    return await this.db.bridgeEvent.deleteExpired(now)
   }
 }
 
