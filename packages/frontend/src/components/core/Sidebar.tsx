@@ -10,6 +10,7 @@ import {
 } from '~/components/core/Sheet'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { cn } from '~/utils/cn'
+import { ScrollWithGradient } from '../ScrollWithGradient'
 import { HorizontalSeparator } from './HorizontalSeparator'
 
 const SIDEBAR_WIDTH = '15rem'
@@ -148,7 +149,7 @@ function SidebarSeparator({
 
 function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div
+    <ScrollWithGradient
       className={cn(
         'flex min-h-0 flex-1 flex-col gap-1 overflow-auto',
         className,
