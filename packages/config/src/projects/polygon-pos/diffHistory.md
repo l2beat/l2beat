@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xfa64fc1d3b9089d7316af9b1092cda8d1de08f55
+Generated with discovered.json: 0x0498ae7fdf4ee3f418edcbb2dcebfedf452dba60
 
-# Diff at Thu, 25 Sep 2025 12:10:18 GMT:
+# Diff at Thu, 25 Sep 2025 12:25:32 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@0baa1255a33ce1a02b431265f21e07fd28f2de49 block: 1758537508
@@ -10,6 +10,8 @@ Generated with discovered.json: 0xfa64fc1d3b9089d7316af9b1092cda8d1de08f55
 
 vali removed.
 
+config: added act permission in the governance contract.
+
 ## Watched changes
 
 ```diff
@@ -18,6 +20,20 @@ vali removed.
       values.currentValidatorSetSize:
 -        105
 +        104
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758537508 (main branch discovery), not current.
+
+```diff
+    contract Timelock (eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48","role":".owner"}]
     }
 ```
 
