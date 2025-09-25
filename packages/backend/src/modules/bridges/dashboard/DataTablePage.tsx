@@ -1,19 +1,20 @@
 import React from 'react'
 
 interface TableConfig {
+  title: string
   table: React.ReactNode
   tableId: string
   dataTableOptions?: object
 }
 
 interface DataTablePageProps {
-  title: string
+  showHome?: boolean
   tables: TableConfig[]
   globalDataTableOptions?: object
 }
 
 export function DataTablePage(props: DataTablePageProps) {
-  const { title, tables, globalDataTableOptions = {} } = props
+  const { tables, globalDataTableOptions = {} } = props
 
   const getTableOptions = (tableOptions: object = {}) => {
     const defaultOptions = {
@@ -41,7 +42,6 @@ export function DataTablePage(props: DataTablePageProps) {
   return (
     <html>
       <head>
-        <title>{title}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -75,13 +75,17 @@ export function DataTablePage(props: DataTablePageProps) {
         `}</style>
       </head>
       <body>
-        <a href="/bridges" className="home-button">
-          ← Back to Home
-        </a>
-        <h1>{title}</h1>
+        {props.showHome && (
+          <a href="/bridges" className="home-button">
+            ← Back to Home
+          </a>
+        )}
 
-        {tables.map(({ table, tableId }, index) => (
-          <div key={tableId || index}>{table}</div>
+        {tables.map(({ table, tableId, title }, index) => (
+          <>
+            <h1>{title}</h1>
+            <div key={tableId || index}>{table}</div>
+          </>
         ))}
 
         <script

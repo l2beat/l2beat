@@ -59,6 +59,8 @@ export interface BridgeEventStatsRecord {
   type: string
   count: number
   matched: number
+  unmatched: number
+  oldUnmatched: number
   unsupported: number
 }
 
@@ -127,23 +129,41 @@ export class BridgeEventRepository extends BaseRepository {
   }
 
   async getStats(): Promise<BridgeEventStatsRecord[]> {
+    const now = new Date()
+    const twoHoursAgo = new Date(now.toISOString())
+    twoHoursAgo.setUTCHours(twoHoursAgo.getUTCHours() - 2)
+
     const rows = await this.db
       .selectFrom('BridgeEvent')
       .select((eb) => [
         'type',
         eb.fn.countAll().as('count'),
-        eb.fn.count('matched').filterWhere('matched', '=', true).as('matched'),
+        eb.fn.countAll().filterWhere('matched', '=', true).as('matched'),
         eb.fn
-          .count('unsupported')
+          .countAll()
+          .filterWhere('unsupported', '=', false)
+          .filterWhere('matched', '=', false)
+          .as('unmatched'),
+        eb.fn
+          .countAll()
           .filterWhere('unsupported', '=', true)
           .as('unsupported'),
+        eb.fn
+          .countAll()
+          .filterWhere('timestamp', '<', twoHoursAgo)
+          .filterWhere('unsupported', '=', false)
+          .filterWhere('matched', '=', false)
+          .as('oldUnmatched'),
       ])
       .groupBy('type')
       .execute()
+
     return rows.map((x) => ({
       type: x.type,
       count: Number(x.count),
       matched: Number(x.matched),
+      unmatched: Number(x.unmatched),
+      oldUnmatched: Number(x.oldUnmatched),
       unsupported: Number(x.unsupported),
     }))
   }

@@ -12,7 +12,7 @@ function MessagesTable(props: {
     <table id="myTable" className="display">
       <thead>
         <tr>
-          <th>Timestamp</th>
+          <th>Timestamp UTC</th>
           <th>Duration</th>
           <th>srcChain</th>
           <th>srcTx</th>
@@ -70,7 +70,6 @@ function MessagesPageLayout(props: {
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   const eventsTable = <MessagesTable {...props} />
-  const title = `Bridge Events: ${props.messages[0]?.type ?? ''}`
 
   const dataTableOptions = {
     pageLength: 25,
@@ -85,9 +84,9 @@ function MessagesPageLayout(props: {
 
   return (
     <DataTablePage
-      title={title}
       tables={[
         {
+          title: `Messages: ${props.messages[0]?.type ?? ''}`,
           table: eventsTable,
           tableId: 'myTable',
           dataTableOptions: dataTableOptions,

@@ -8,6 +8,7 @@ import type {
 import { v } from '@l2beat/validate'
 import type { BridgesConfig } from '../../config/Config'
 import { renderEventsPage } from './dashboard/EventsPage'
+import { renderMainPage } from './dashboard/MainPage'
 import { renderMessagesPage } from './dashboard/MessagesPage'
 import { renderTransfersPage } from './dashboard/TransfersPage'
 
@@ -16,9 +17,11 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
 
   router.get('/bridges', async (ctx) => {
     const events = await db.bridgeEvent.getStats()
-    const messages = await db.bridgeMessage.getStats()
-    const transfers = await db.bridgeTransfer.getStats()
-    ctx.body = statsToHtml(events, messages, transfers)
+    // const messages = await db.bridgeMessage.getStats()
+    // const transfers = await db.bridgeTransfer.getStats()
+    ctx.body = renderMainPage({
+      events,
+    })
   })
 
   router.get('/bridges.json', async (ctx) => {

@@ -8,10 +8,10 @@ function EventsTable(props: {
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return (
-    <table id="myTable" className="display">
+    <table id="events" className="display">
       <thead>
         <tr>
-          <th>Timestamp</th>
+          <th>Timestamp UTC</th>
           <th>Chain</th>
           <th>Tx Hash</th>
           <th>Args</th>
@@ -50,7 +50,6 @@ function EventsPageLayout(props: {
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   const eventsTable = <EventsTable {...props} />
-  const title = `Bridge Events: ${props.events[0]?.type ?? ''}`
 
   const dataTableOptions = {
     pageLength: 25,
@@ -65,11 +64,11 @@ function EventsPageLayout(props: {
 
   return (
     <DataTablePage
-      title={title}
       tables={[
         {
+          title: `Bridge Events: ${props.events[0]?.type ?? ''}`,
           table: eventsTable,
-          tableId: 'myTable',
+          tableId: 'events',
           dataTableOptions: dataTableOptions,
         },
       ]}
