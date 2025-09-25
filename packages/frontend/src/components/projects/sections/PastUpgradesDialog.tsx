@@ -62,7 +62,7 @@ export function PastUpgradesDialog({
             <div className="flex items-center justify-between">
               <DialogTitle>Past upgrades</DialogTitle>
               <DialogClose>
-                <CloseIcon className="size-4" />
+                <CloseIcon className="size-4 fill-primary" />
               </DialogClose>
             </div>
             <DialogDescription className="sr-only">
@@ -81,7 +81,7 @@ export function PastUpgradesDialog({
       </Dialog>
       <Drawer>
         <DrawerTrigger className="md:hidden">{trigger}</DrawerTrigger>
-        <DrawerContent className="max-h-[90dvh]">
+        <DrawerContent className="max-h-[90dvh] dark:bg-surface-primary">
           <DrawerHeader className="flex items-center justify-between">
             <DrawerTitle className="font-semibold text-label-value-18">
               Past upgrades
