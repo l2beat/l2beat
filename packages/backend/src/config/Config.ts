@@ -216,6 +216,7 @@ export interface BridgesConfig {
 }
 
 export interface DaBeatConfig {
+  readonly projectsForDaBeatStats: ProjectId[]
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
   /** Names of the economic security types */
