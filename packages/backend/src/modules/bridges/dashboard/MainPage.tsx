@@ -121,6 +121,7 @@ const NETWORKS: [
 function MessagesTable(props: {
   items: BridgeTransfersStatsRecord[] | BridgeMessageStatsRecord[]
   id: string
+  type: 'messages' | 'transfers'
 }) {
   return (
     <table id={props.id} className="display">
@@ -156,7 +157,9 @@ function MessagesTable(props: {
           return (
             <tr>
               <td>{t.type}</td>
-              <td>{t.count}</td>
+              <td>
+                <a href={`/bridges/${props.type}/${t.type}`}>{t.count}</a>
+              </td>
               <td data-order={t.medianDuration}>
                 {formatSeconds(t.medianDuration)}
               </td>
@@ -215,10 +218,18 @@ function MainPageLayout(props: {
 }) {
   const eventsTable = <EventsTable {...props} />
   const messagesTable = (
-    <MessagesTable id="messagesTable" items={props.messages} />
+    <MessagesTable
+      id="messagesTable"
+      items={props.messages}
+      type={'messages'}
+    />
   )
   const transfersTable = (
-    <MessagesTable id="transfersTable" items={props.transfers} />
+    <MessagesTable
+      id="transfersTable"
+      items={props.transfers}
+      type={'transfers'}
+    />
   )
 
   return (
