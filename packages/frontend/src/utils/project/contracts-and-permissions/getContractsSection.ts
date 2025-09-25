@@ -225,7 +225,7 @@ function makeTechnologyContract(
       },
       implementations: upgrade.implementations.map((implementation) => ({
         address: ChainSpecificAddress.address(implementation),
-        href: `${explorerUrl}/address/${implementation.toString()}#code`,
+        href: `${explorerUrl}/address/${ChainSpecificAddress.address(implementation)}#code`,
       })),
     }))
 

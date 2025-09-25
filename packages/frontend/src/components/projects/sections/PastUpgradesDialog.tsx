@@ -70,10 +70,11 @@ export function PastUpgradesDialog({
             </DialogDescription>
           </DialogHeader>
           <div className="max-h-[70dvh] space-y-3 overflow-y-auto pr-1">
-            {pastUpgrades?.map((upgrade) => (
+            {pastUpgrades?.map((upgrade, i) => (
               <PastUpgradeEntry
                 key={upgrade.timestamp.toString()}
                 upgrade={upgrade}
+                deployment={i === pastUpgrades.length - 1}
               />
             ))}
           </div>
@@ -91,10 +92,11 @@ export function PastUpgradesDialog({
             </DrawerDescription>
           </DrawerHeader>
           <div className="max-h-[60dvh] space-y-2 overflow-y-auto">
-            {pastUpgrades?.map((upgrade) => (
+            {pastUpgrades?.map((upgrade, i) => (
               <PastUpgradeEntry
                 key={upgrade.timestamp.toString()}
                 upgrade={upgrade}
+                deployment={i === pastUpgrades.length - 1}
               />
             ))}
           </div>
@@ -113,13 +115,15 @@ export function PastUpgradesDialog({
 
 function PastUpgradeEntry({
   upgrade,
+  deployment,
 }: {
   upgrade: NonNullable<TechnologyContract['pastUpgrades']>[number]
+  deployment?: boolean
 }) {
   return (
     <div className="space-y-4 rounded-sm border border-divider bg-surface-group p-3">
       <div className="md:grid md:grid-cols-2">
-        <ValueWithTitle title="Time">
+        <ValueWithTitle title={deployment ? 'Deployment time' : 'Time'}>
           <span className="font-medium text-label-value-15">
             {formatTimestamp(upgrade.timestamp, {
               mode: 'datetime',
@@ -143,7 +147,10 @@ function PastUpgradeEntry({
           </div>
         </ValueWithTitle>
       </div>
-      <ValueWithTitle title="Transaction hash" className="md:mb-0">
+      <ValueWithTitle
+        title={deployment ? 'Deployment transaction hash' : 'Transaction hash'}
+        className="md:mb-0"
+      >
         <CustomLink
           href={upgrade.transactionHash.href}
           className="word-break-word font-medium text-label-value-15"
