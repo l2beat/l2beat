@@ -170,6 +170,5 @@ function mockClient(deps: {
     retryStrategy: 'TEST',
     logger: Logger.SILENT,
     timeout: deps.timeout,
-    generateId: deps.generateId,
   })
 }

@@ -5,7 +5,6 @@ import { NearError, ValidatorsList } from './types'
 interface Dependencies extends ClientCoreDependencies {
   nearApiUrl: string
   timeout?: number
-  generateId?: () => string
 }
 
 export class NearClient extends ClientCore {

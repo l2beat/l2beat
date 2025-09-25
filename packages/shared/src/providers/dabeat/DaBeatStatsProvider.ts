@@ -20,7 +20,7 @@ export class DaBeatStatsProvider {
     private readonly availWsClient: AvailWsClient | undefined,
   ) {}
 
-  async getStats(projectId: string): Promise<DaBeatStats | undefined> {
+  async getStats(projectId: string): Promise<DaBeatStats> {
     switch (projectId) {
       case 'ethereum':
         return await this.getEthereumStats()
@@ -35,7 +35,7 @@ export class DaBeatStatsProvider {
     }
   }
 
-  async getEthereumStats(): Promise<DaBeatStats | undefined> {
+  async getEthereumStats(): Promise<DaBeatStats> {
     assert(this.beaconChainClient, 'Beacon chain client not found')
 
     const { totalStake } = await this.beaconChainClient.getValidatorsInfo({
@@ -50,7 +50,7 @@ export class DaBeatStatsProvider {
     }
   }
 
-  async getNearStats(): Promise<DaBeatStats | undefined> {
+  async getNearStats(): Promise<DaBeatStats> {
     assert(this.nearClient, 'Near client not found')
 
     const { result } = await this.nearClient.getValidatorsInfo()
@@ -66,7 +66,7 @@ export class DaBeatStatsProvider {
     }
   }
 
-  async getCelestiaStats(): Promise<DaBeatStats | undefined> {
+  async getCelestiaStats(): Promise<DaBeatStats> {
     assert(this.celestiaClient, 'Celestia client not found')
 
     const perPage = 100
@@ -79,7 +79,7 @@ export class DaBeatStatsProvider {
         // We store the stake in the smallest denomination
         // but API returns it in the full TIA
         const units = BigInt(v.voting_power) * 10n ** 6n
-        return acc + BigInt(units)
+        return acc + units
       }, 0n)
     }
 
@@ -90,7 +90,7 @@ export class DaBeatStatsProvider {
     }
   }
 
-  async getAvailStats(): Promise<DaBeatStats | undefined> {
+  async getAvailStats(): Promise<DaBeatStats> {
     assert(this.availWsClient, 'Avail WS client not found')
     await this.availWsClient.connect()
 
