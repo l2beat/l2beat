@@ -3,7 +3,7 @@ import merge from 'lodash/merge'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import { ConfigReader } from './ConfigReader'
 import { getDiscoveryPaths } from './getDiscoveryPaths'
-import { type StructureConfig, StructureContract } from './StructureConfig'
+import { type StructureConfig, StructureContract, type DefiDiscoConfig } from './StructureConfig'
 
 export interface SharedModuleIndexEntry {
   name?: string
@@ -39,10 +39,11 @@ export type StructureContractOverrides = StructureContract & {
 
 export type StructureContractConfig = StructureContractOverrides & {
   pushValues: (arg: StructureContract) => void
+  defidisco?: DefiDiscoConfig
 }
 
 export function makeEntryStructureConfig(
-  config: Pick<StructureConfig, 'overrides' | 'types'>,
+  config: Pick<StructureConfig, 'overrides' | 'types'> & { defidisco?: DefiDiscoConfig },
   address: ChainSpecificAddress,
 ): StructureContractConfig {
   const override =
@@ -53,6 +54,7 @@ export function makeEntryStructureConfig(
   const result = {
     ...overrides,
     types: merge({}, config.types ?? {}, overrides.types),
+    defidisco: config.defidisco,
     pushValues: function (values: StructureContract) {
       const newState = {
         address: this.address,

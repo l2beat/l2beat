@@ -1,0 +1,1325 @@
+{
+  "name": "morpho",
+  "timestamp": 1758827629,
+  "configHash": "0x2d4451735ab3c8e193b21f9b3987459fcc236b73db55c7187c0155ca6ed0e2ab",
+  "entries": [
+    {
+      "address": "eth:0x0000000000000000000000000000000000000001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x13cA8756E9470b71B8e998352c8741706217f963",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "MetaMorphoV1_1Factory",
+      "address": "eth:0x1897A8997241C1cD4bD0698647e4EB7213535c24",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc8b58783fb33bdea0f7f2513e0c55a51f468e9138b623504eb30a9b4d517f7eb"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1734646799,
+      "sinceBlock": 21439510,
+      "values": {
+        "$immutable": true,
+        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+        "writeFunctionPermissions": [
+          {
+            "skipped": true,
+            "reason": "sourceCodeTooLarge",
+            "sizeBytes": 260362
+          }
+        ]
+      },
+      "implementationNames": {
+        "eth:0x1897A8997241C1cD4bD0698647e4EB7213535c24": "MetaMorphoV1_1Factory"
+      }
+    },
+    {
+      "address": "eth:0x1b30044ED3a4dCEEEfEAcE47E2d0a3648A10d63f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x264c86DBbD2E4165FbBf0C35b0ddf0e00AEc6b31",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x30E7c016fC702cDe9A50720a469d418490b7b652",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x32b9800409c3A6Ace972Cbb5a33145e071DD94CE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UniversalRewardsDistributor",
+      "address": "eth:0x330eefa8a787552DC5cAd3C3cA644844B1E61Ddb",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa4d40488584e76176bd6148f7aa32b1b393bf2e9fba40afeaac60f38cd695625"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1710082823,
+      "sinceBlock": 19405449,
+      "values": {
+        "$immutable": true,
+        "ipfsHash": "0xaa95518503e8db9d0a18909ab1bb9722273f00c16c86d808b603b9fffc1aa0aa",
+        "owner": "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9",
+        "pendingRoot": {
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "ipfsHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "validAt": 0
+        },
+        "root": "0x33634061d69bab33333f3cc46065e9afdbb9dbb4bebe485b2728b3a7ab853bfc",
+        "timelock": 432000,
+        "writeFunctionPermissions": [
+          {
+            "function": "acceptRoot",
+            "signature": "function acceptRoot()",
+            "file": "src/UniversalRewardsDistributor.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 6
+          },
+          {
+            "function": "claim",
+            "signature": "function claim(address account, address reward, uint256 claimable, bytes32[] calldata proof)",
+            "file": "src/UniversalRewardsDistributor.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 6
+          },
+          {
+            "function": "revokePendingRoot",
+            "signature": "function revokePendingRoot()",
+            "file": "src/UniversalRewardsDistributor.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 6
+          },
+          {
+            "function": "setOwner",
+            "signature": "function setOwner(address newOwner)",
+            "file": "src/UniversalRewardsDistributor.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 1
+          },
+          {
+            "function": "setRoot",
+            "signature": "function setRoot(bytes32 newRoot, bytes32 newIpfsHash)",
+            "file": "src/UniversalRewardsDistributor.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyOwner"],
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 5
+          },
+          {
+            "function": "setRootUpdater",
+            "signature": "function setRootUpdater(address updater, bool active)",
+            "file": "src/UniversalRewardsDistributor.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 2
+          },
+          {
+            "function": "setTimelock",
+            "signature": "function setTimelock(uint256 newTimelock)",
+            "file": "src/UniversalRewardsDistributor.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 3
+          },
+          {
+            "function": "submitRoot",
+            "signature": "function submitRoot(bytes32 newRoot, bytes32 newIpfsHash)",
+            "file": "src/UniversalRewardsDistributor.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 6
+          }
+        ]
+      },
+      "implementationNames": {
+        "eth:0x330eefa8a787552DC5cAd3C3cA644844B1E61Ddb": "UniversalRewardsDistributor"
+      }
+    },
+    {
+      "name": "MorphoChainlinkOracleV2Factory",
+      "address": "eth:0x3A7bB36Ee3f3eE32A60e9f2b33c1e5f2E83ad766",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x7265f5d58ad71763ed708110dca806f584605ae7b65797dd0bdd9e675a32ce18"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1709715275,
+      "sinceBlock": 19375066,
+      "values": {
+        "$immutable": true,
+        "writeFunctionPermissions": [
+          {
+            "function": "createMorphoChainlinkOracleV2",
+            "signature": "function createMorphoChainlinkOracleV2(\n        IERC4626 baseVault,\n        uint256 baseVaultConversionSample,\n        AggregatorV3Interface baseFeed1,\n        AggregatorV3Interface baseFeed2,\n        uint256 baseTokenDecimals,\n        IERC4626 quoteVault,\n        uint256 quoteVaultConversionSample,\n        AggregatorV3Interface quoteFeed1,\n        AggregatorV3Interface quoteFeed2,\n        uint256 quoteTokenDecimals,\n        bytes32 salt\n    )",
+            "file": "src/morpho-chainlink/MorphoChainlinkOracleV2Factory.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true
+          }
+        ]
+      },
+      "implementationNames": {
+        "eth:0x3A7bB36Ee3f3eE32A60e9f2b33c1e5f2E83ad766": "MorphoChainlinkOracleV2Factory"
+      }
+    },
+    {
+      "name": "EthereumBundlerV2",
+      "address": "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf04c4a910326e94784e3872e8f82271f08abfb81599f32e01119e0a7856c9131"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1710149207,
+      "sinceBlock": 19410951,
+      "values": {
+        "$immutable": true,
+        "initiator": "eth:0x0000000000000000000000000000000000000001",
+        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+        "ST_ETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+        "WRAPPED_NATIVE": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "writeFunctionPermissions": [
+          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 33 }
+        ],
+        "WST_ETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      },
+      "implementationNames": {
+        "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077": "EthereumBundlerV2"
+      }
+    },
+    {
+      "address": "eth:0x4203aF750DE8F4707DACC2CA7e5dC91121DD5B59",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Morpho Token",
+      "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
+        "0x869d391dc7274529b236260167319d0e0ceb55709f2d4ab8f8611db224f64602"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1731243119,
+      "sinceBlock": 21157386,
+      "values": {
+        "$admin": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
+        "$implementation": "eth:0x4364fd2371b6318159366abFA51f190df5C24852",
+        "$pastUpgrades": [
+          [
+            "2024-11-10T12:51:59.000Z",
+            "0x1a8de6a5ba99b4dcd91ff35424e2e3adf76b1de440f97e4a48b22bfe9a8f96e9",
+            ["eth:0x4364fd2371b6318159366abFA51f190df5C24852"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0x1aa19b4fd8ba151b58818bcef01974c6fdae8184ea315153c5e26554c6afeaa3",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Morpho Token",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "getImplementation": "eth:0x4364fd2371b6318159366abFA51f190df5C24852",
+        "name": "Morpho Token",
+        "owner": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "symbol": "MORPHO",
+        "totalSupply": "1000000000000000000000000000",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "writeFunctionPermissions": [
+          {
+            "function": "upgradeToAndCall",
+            "signature": "function upgradeToAndCall(address newImplementation, bytes memory data)",
+            "file": "lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/proxy/ERC1967/ERC1967Utils.sol",
+            "permissionType": "none",
+            "category": "other"
+          }
+        ]
+      },
+      "errors": { "proxiableUUID": "Processing error occurred." },
+      "implementationNames": {
+        "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2": "ERC1967Proxy",
+        "eth:0x4364fd2371b6318159366abFA51f190df5C24852": "MorphoTokenEthereum"
+      }
+    },
+    {
+      "address": "eth:0x69FcEFDe2B48503d675181448B3D4272128bca9c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PreLiquidationFactory",
+      "address": "eth:0x6FF33615e792E35ed1026ea7cACCf42D9BF83476",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x8f11339ddd2b7802f888f474a58861f2951bf0bb2b818030fc1b9e86baed2fc0"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1734347099,
+      "sinceBlock": 21414664,
+      "values": {
+        "$immutable": true,
+        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+        "writeFunctionPermissions": [
+          {
+            "function": "createPreLiquidation",
+            "signature": "function createPreLiquidation(Id id, PreLiquidationParams calldata preLiquidationParams)",
+            "file": "src/PreLiquidationFactory.sol",
+            "permissionType": "none",
+            "category": "other"
+          }
+        ]
+      },
+      "implementationNames": {
+        "eth:0x6FF33615e792E35ed1026ea7cACCf42D9BF83476": "PreLiquidationFactory"
+      }
+    },
+    {
+      "address": "eth:0x84D3E4EE550DD5F99e76a548aC59a6BE1C8dCf79",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "AdaptiveCurveIrm",
+      "address": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x74e733b5fe1d6d77fb069e5239ba06b4e2ec9f843a5edc82c3176e23bce7f8e1"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1703754563,
+      "sinceBlock": 18883124,
+      "values": {
+        "$immutable": true,
+        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+        "writeFunctionPermissions": [
+          {
+            "function": "borrowRate",
+            "signature": "function borrowRate(MarketParams memory marketParams, Market memory market)",
+            "file": "src/AdaptiveCurveIrm.sol",
+            "permissionType": "msgSender",
+            "category": "liquidation",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 1
+          }
+        ]
+      },
+      "implementationNames": {
+        "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC": "AdaptiveCurveIrm"
+      }
+    },
+    {
+      "address": "eth:0x8836C35AE6f1Cd0Bc70D9130994356800B6A54b2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x8f02b4a44Eacd9b8eE7739aa0BA58833DD45d002",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "MorphoToken",
+      "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x5c0e97285626036fc0c240f5f76c1983be15b1f201159bc73b4ac19ff48febae"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1656076502,
+      "sinceBlock": 15018448,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0x01e6add2f006fb5541b1d8a84959622074d7059bd369fe69c7c7319969c394aa",
+        "name": "Morpho Token",
+        "owner": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
+        "symbol": "MORPHO",
+        "totalSupply": "999999993235098806276489841",
+        "writeFunctionPermissions": [
+          {
+            "function": "approve",
+            "signature": "function approve(address spender, uint256 amount)",
+            "file": "lib/semitransferable-token/lib/solmate/src/tokens/ERC20.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 1
+          },
+          {
+            "function": "burn",
+            "signature": "function burn(uint256 amount)",
+            "file": "lib/semitransferable-token/src/Token.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "mint",
+            "signature": "function mint(address to, uint256 amount)",
+            "file": "lib/semitransferable-token/src/Token.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "permit",
+            "signature": "function permit(\n        address owner,\n        address spender,\n        uint256 value,\n        uint256 deadline,\n        uint8 v,\n        bytes32 r,\n        bytes32 s\n    )",
+            "file": "lib/semitransferable-token/lib/solmate/src/tokens/ERC20.sol",
+            "permissionType": "none",
+            "category": "other",
+            "requireStatementCount": 2
+          },
+          {
+            "function": "setOwner",
+            "signature": "function setOwner(address newOwner)",
+            "file": "lib/semitransferable-token/src/Auth.sol",
+            "permissionType": "msgSender",
+            "category": "administrative",
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "setPublicCapability",
+            "signature": "function setPublicCapability(\n        bytes4 functionSig,\n        bool enabled\n    )",
+            "file": "lib/semitransferable-token/src/RolesAuthority.sol",
+            "permissionType": "none",
+            "category": "administrative"
+          },
+          {
+            "function": "setRoleCapability",
+            "signature": "function setRoleCapability(\n        uint8 role,\n        bytes4 functionSig,\n        bool enabled\n    )",
+            "file": "lib/semitransferable-token/src/RolesAuthority.sol",
+            "permissionType": "none",
+            "category": "administrative"
+          },
+          {
+            "function": "setUserRole",
+            "signature": "function setUserRole(\n        address user,\n        uint8 role,\n        bool enabled\n    )",
+            "file": "lib/semitransferable-token/src/RolesAuthority.sol",
+            "permissionType": "none",
+            "category": "administrative"
+          },
+          {
+            "function": "transfer",
+            "signature": "function transfer(address to, uint256 amount)",
+            "file": "lib/semitransferable-token/src/Token.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "transferFrom",
+            "signature": "function transferFrom(\n    address from,\n    address to,\n    uint256 amount\n  )",
+            "file": "lib/semitransferable-token/src/Token.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true
+          }
+        ]
+      },
+      "implementationNames": {
+        "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999": "MorphoToken"
+      }
+    },
+    {
+      "name": "UrdFactory",
+      "address": "eth:0x9baA51245CDD28D8D74Afe8B3959b616E9ee7c8D",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb206cbb8cbfb5186884af75f5e05674c7f40cb8b015e93b8ceddded28be3264b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1703778611,
+      "sinceBlock": 18885106,
+      "values": {
+        "$immutable": true,
+        "writeFunctionPermissions": [
+          {
+            "function": "createUrd",
+            "signature": "function createUrd(\n        address initialOwner,\n        uint256 initialTimelock,\n        bytes32 initialRoot,\n        bytes32 initialIpfsHash,\n        bytes32 salt\n    )",
+            "file": "src/UrdFactory.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true
+          }
+        ]
+      },
+      "implementationNames": {
+        "eth:0x9baA51245CDD28D8D74Afe8B3959b616E9ee7c8D": "UrdFactory"
+      }
+    },
+    {
+      "name": "Wrapper",
+      "address": "eth:0x9D03bb2092270648d7480049d0E58d2FcF0E5123",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x36aff79c6edffa4185e3f1b8b838899f129c31e27c23eb590473c3ea9ea3153b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1731243131,
+      "sinceBlock": 21157387,
+      "values": {
+        "$immutable": true,
+        "LEGACY_MORPHO": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
+        "NEW_MORPHO": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+        "underlying": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
+        "writeFunctionPermissions": [
+          {
+            "function": "depositFor",
+            "signature": "function depositFor(address account, uint256 value)",
+            "file": "src/Wrapper.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 4
+          },
+          {
+            "function": "withdrawTo",
+            "signature": "function withdrawTo(address account, uint256 value)",
+            "file": "src/Wrapper.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          }
+        ]
+      },
+      "implementationNames": {
+        "eth:0x9D03bb2092270648d7480049d0E58d2FcF0E5123": "Wrapper"
+      }
+    },
+    {
+      "address": "eth:0xB93B521e8766e57C3A806b07F483Dba2A2d98ac5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Morpho",
+      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "type": "Contract",
+      "template": "morpho/Morpho",
+      "sourceHashes": [
+        "0x1d120eccc3dc1c34b44ae7f18a2b7639cb5a5a412646ab5a53dfc894b01f60c8"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1703754563,
+      "sinceBlock": 18883124,
+      "values": {
+        "$immutable": true,
+        "DOMAIN_SEPARATOR": "0xec6ac4ec6469375712b671d38548b711c7a4a17b4db99be41e0eb9f28cafdd2d",
+        "feeRecipient": "eth:0x0000000000000000000000000000000000000000",
+        "owner": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
+        "writeFunctionPermissions": [
+          {
+            "function": "accrueInterest",
+            "signature": "function accrueInterest(MarketParams memory marketParams)",
+            "file": "src/Morpho.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 1
+          },
+          {
+            "function": "borrow",
+            "signature": "function borrow(\n        MarketParams memory marketParams,\n        uint256 assets,\n        uint256 shares,\n        address onBehalf,\n        address receiver\n    )",
+            "file": "src/Morpho.sol",
+            "permissionType": "msgSender",
+            "category": "liquidation",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 9
+          },
+          {
+            "function": "createMarket",
+            "signature": "function createMarket(MarketParams memory marketParams)",
+            "file": "src/Morpho.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 6
+          },
+          {
+            "function": "enableIrm",
+            "signature": "function enableIrm(address irm)",
+            "file": "src/Morpho.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 10
+          },
+          {
+            "function": "enableLltv",
+            "signature": "function enableLltv(uint256 lltv)",
+            "file": "src/Morpho.sol",
+            "permissionType": "modifier",
+            "category": "other",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 9
+          },
+          {
+            "function": "flashLoan",
+            "signature": "function flashLoan(address token, uint256 assets, bytes calldata data)",
+            "file": "src/Morpho.sol",
+            "permissionType": "msgSender",
+            "category": "liquidation",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 5
+          },
+          {
+            "function": "liquidate",
+            "signature": "function liquidate(\n        MarketParams memory marketParams,\n        address borrower,\n        uint256 seizedAssets,\n        uint256 repaidShares,\n        bytes calldata data\n    )",
+            "file": "src/Morpho.sol",
+            "permissionType": "none",
+            "category": "liquidation",
+            "requireStatementCount": 3
+          },
+          {
+            "function": "repay",
+            "signature": "function repay(\n        MarketParams memory marketParams,\n        uint256 assets,\n        uint256 shares,\n        address onBehalf,\n        bytes calldata data\n    )",
+            "file": "src/Morpho.sol",
+            "permissionType": "msgSender",
+            "category": "liquidation",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 6
+          },
+          {
+            "function": "setAuthorization",
+            "signature": "function setAuthorization(address authorized, bool newIsAuthorized)",
+            "file": "src/Morpho.sol",
+            "permissionType": "msgSender",
+            "category": "administrative",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 5
+          },
+          {
+            "function": "setAuthorizationWithSig",
+            "signature": "function setAuthorizationWithSig(Authorization memory authorization, Signature calldata signature)",
+            "file": "src/Morpho.sol",
+            "permissionType": "msgSender",
+            "category": "administrative",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 4
+          },
+          {
+            "function": "setFee",
+            "signature": "function setFee(MarketParams memory marketParams, uint256 newFee)",
+            "file": "src/Morpho.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 8
+          },
+          {
+            "function": "setFeeRecipient",
+            "signature": "function setFeeRecipient(address newFeeRecipient)",
+            "file": "src/Morpho.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 7
+          },
+          {
+            "function": "setOwner",
+            "signature": "function setOwner(address newOwner)",
+            "file": "src/Morpho.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyOwner"],
+            "requireStatementCount": 11
+          },
+          {
+            "function": "supply",
+            "signature": "function supply(\n        MarketParams memory marketParams,\n        uint256 assets,\n        uint256 shares,\n        address onBehalf,\n        bytes calldata data\n    )",
+            "file": "src/Morpho.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 7
+          },
+          {
+            "function": "supplyCollateral",
+            "signature": "function supplyCollateral(MarketParams memory marketParams, uint256 assets, address onBehalf, bytes calldata data)",
+            "file": "src/Morpho.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 8
+          },
+          {
+            "function": "withdraw",
+            "signature": "function withdraw(\n        MarketParams memory marketParams,\n        uint256 assets,\n        uint256 shares,\n        address onBehalf,\n        address receiver\n    )",
+            "file": "src/Morpho.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 8
+          },
+          {
+            "function": "withdrawCollateral",
+            "signature": "function withdrawCollateral(MarketParams memory marketParams, uint256 assets, address onBehalf, address receiver)",
+            "file": "src/Morpho.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 8
+          }
+        ]
+      },
+      "implementationNames": {
+        "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": "Morpho"
+      }
+    },
+    {
+      "name": "Wrapped Ether Token",
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1513077455,
+      "sinceBlock": 4719568,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+        "totalSupply": "2430015647464185564221932",
+        "writeFunctionPermissions": [
+          {
+            "function": "approve",
+            "signature": "function approve(address guy, uint wad)",
+            "file": "WETH9.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "deposit",
+            "signature": "function deposit()",
+            "file": "WETH9.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 3
+          },
+          {
+            "function": "transfer",
+            "signature": "function transfer(address dst, uint wad)",
+            "file": "WETH9.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "transferFrom",
+            "signature": "function transferFrom(address src, address dst, uint wad)",
+            "file": "WETH9.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 2
+          },
+          {
+            "function": "withdraw",
+            "signature": "function withdraw(uint wad)",
+            "file": "WETH9.sol",
+            "permissionType": "msgSender",
+            "category": "financial",
+            "hasMsgSenderCheck": true,
+            "requireStatementCount": 3
+          }
+        ]
+      },
+      "implementationNames": {
+        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
+      }
+    },
+    {
+      "address": "eth:0xC100c251bdD297A66795112f04356E6BA5f89D80",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xca6409Ca3AbE139a5B95579Af3D37864157Bb4Df",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+          "role": "admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1646586617,
+      "sinceBlock": 14334589,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xe0aeb6811d33Df42A09066857CDaFca16b506086",
+          "eth:0x84D3E4EE550DD5F99e76a548aC59a6BE1C8dCf79",
+          "eth:0xC100c251bdD297A66795112f04356E6BA5f89D80",
+          "eth:0x264c86DBbD2E4165FbBf0C35b0ddf0e00AEc6b31",
+          "eth:0x30E7c016fC702cDe9A50720a469d418490b7b652",
+          "eth:0x8f02b4a44Eacd9b8eE7739aa0BA58833DD45d002",
+          "eth:0xCF263cEe139763114fAaFC5F52865135412F50Ec",
+          "eth:0x69FcEFDe2B48503d675181448B3D4272128bca9c",
+          "eth:0x13cA8756E9470b71B8e998352c8741706217f963"
+        ],
+        "$threshold": 5,
+        "domainSeparator": "0xb5159d60f60933c0d8fbd0ca8bef1e90bdc6d80dbc43c0c749059d3793addb89",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 9 (56%)",
+        "nonce": 268,
+        "VERSION": "1.3.0",
+        "writeFunctionPermissions": []
+      },
+      "implementationNames": {
+        "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xCF263cEe139763114fAaFC5F52865135412F50Ec",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xe0aeb6811d33Df42A09066857CDaFca16b506086",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xEEb1645eDa43F591d6b69e2460d7EED4b4057Ac6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1716983975,
+      "sinceBlock": 19975380,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x32b9800409c3A6Ace972Cbb5a33145e071DD94CE",
+          "eth:0x8836C35AE6f1Cd0Bc70D9130994356800B6A54b2",
+          "eth:0x1b30044ED3a4dCEEEfEAcE47E2d0a3648A10d63f",
+          "eth:0x264c86DBbD2E4165FbBf0C35b0ddf0e00AEc6b31",
+          "eth:0x4203aF750DE8F4707DACC2CA7e5dC91121DD5B59",
+          "eth:0xEEb1645eDa43F591d6b69e2460d7EED4b4057Ac6",
+          "eth:0xB93B521e8766e57C3A806b07F483Dba2A2d98ac5",
+          "eth:0xca6409Ca3AbE139a5B95579Af3D37864157Bb4Df"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x24e8f4d15b0127ba5d3500a549e3db292195100c6468b72858f7b13877fbc34e",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 8 (38%)",
+        "nonce": 110,
+        "VERSION": "1.3.0",
+        "writeFunctionPermissions": []
+      },
+      "implementationNames": {
+        "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "PublicAllocator",
+      "address": "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x45f11230e944cc1ea0f3fa846750f3206f1be92b9da488344a8de47a2821a01d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1709715671,
+      "sinceBlock": 19375099,
+      "values": {
+        "$immutable": true,
+        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+        "writeFunctionPermissions": [
+          {
+            "function": "reallocateTo",
+            "signature": "function reallocateTo(address vault, Withdrawal[] calldata withdrawals, MarketParams calldata supplyMarketParams)",
+            "file": "src/PublicAllocator.sol",
+            "permissionType": "msgSender",
+            "category": "other",
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "setAdmin",
+            "signature": "function setAdmin(address vault, address newAdmin)",
+            "file": "src/PublicAllocator.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyAdmin"],
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "setFee",
+            "signature": "function setFee(address vault, uint256 newFee)",
+            "file": "src/PublicAllocator.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyAdmin"],
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "setFlowCaps",
+            "signature": "function setFlowCaps(address vault, FlowCapsConfig[] calldata config)",
+            "file": "src/PublicAllocator.sol",
+            "permissionType": "modifier",
+            "category": "administrative",
+            "modifiers": ["onlyAdmin"],
+            "hasMsgSenderCheck": true
+          },
+          {
+            "function": "transferFee",
+            "signature": "function transferFee(address vault, address payable feeRecipient)",
+            "file": "src/PublicAllocator.sol",
+            "permissionType": "modifier",
+            "category": "financial",
+            "modifiers": ["onlyAdmin"],
+            "hasMsgSenderCheck": true
+          }
+        ]
+      },
+      "implementationNames": {
+        "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D": "PublicAllocator"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x1897A8997241C1cD4bD0698647e4EB7213535c24": [
+      "constructor(address morpho)",
+      "error ZeroAddress()",
+      "event CreateMetaMorpho(address indexed metaMorpho, address indexed caller, address initialOwner, uint256 initialTimelock, address indexed asset, string name, string symbol, bytes32 salt)",
+      "function MORPHO() view returns (address)",
+      "function createMetaMorpho(address initialOwner, uint256 initialTimelock, address asset, string name, string symbol, bytes32 salt) returns (address metaMorpho)",
+      "function isMetaMorpho(address) view returns (bool)"
+    ],
+    "eth:0x330eefa8a787552DC5cAd3C3cA644844B1E61Ddb": [
+      "constructor(address initialOwner, uint256 initialTimelock, bytes32 initialRoot, bytes32 initialIpfsHash)",
+      "event Claimed(address indexed account, address indexed reward, uint256 amount)",
+      "event OwnerSet(address indexed newOwner)",
+      "event PendingRootRevoked(address indexed caller)",
+      "event PendingRootSet(address indexed caller, bytes32 indexed newRoot, bytes32 indexed newIpfsHash)",
+      "event RootSet(bytes32 indexed newRoot, bytes32 indexed newIpfsHash)",
+      "event RootUpdaterSet(address indexed rootUpdater, bool active)",
+      "event TimelockSet(uint256 newTimelock)",
+      "function acceptRoot()",
+      "function claim(address account, address reward, uint256 claimable, bytes32[] proof) returns (uint256 amount)",
+      "function claimed(address account, address reward) view returns (uint256 amount)",
+      "function ipfsHash() view returns (bytes32)",
+      "function isUpdater(address) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingRoot() view returns (bytes32 root, bytes32 ipfsHash, uint256 validAt)",
+      "function revokePendingRoot()",
+      "function root() view returns (bytes32)",
+      "function setOwner(address newOwner)",
+      "function setRoot(bytes32 newRoot, bytes32 newIpfsHash)",
+      "function setRootUpdater(address updater, bool active)",
+      "function setTimelock(uint256 newTimelock)",
+      "function submitRoot(bytes32 newRoot, bytes32 newIpfsHash)",
+      "function timelock() view returns (uint256)"
+    ],
+    "eth:0x3A7bB36Ee3f3eE32A60e9f2b33c1e5f2E83ad766": [
+      "event CreateMorphoChainlinkOracleV2(address caller, address oracle)",
+      "function createMorphoChainlinkOracleV2(address baseVault, uint256 baseVaultConversionSample, address baseFeed1, address baseFeed2, uint256 baseTokenDecimals, address quoteVault, uint256 quoteVaultConversionSample, address quoteFeed1, address quoteFeed2, uint256 quoteTokenDecimals, bytes32 salt) returns (address oracle)",
+      "function isMorphoChainlinkOracleV2(address) view returns (bool)"
+    ],
+    "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077": [
+      "constructor(address morpho)",
+      "error UnsafeCast()",
+      "function MORPHO() view returns (address)",
+      "function ST_ETH() view returns (address)",
+      "function WRAPPED_NATIVE() view returns (address)",
+      "function WST_ETH() view returns (address)",
+      "function approve2(tuple(tuple(address token, uint160 amount, uint48 expiration, uint48 nonce) details, address spender, uint256 sigDeadline) permitSingle, bytes signature, bool skipRevert) payable",
+      "function erc20Transfer(address asset, address recipient, uint256 amount) payable",
+      "function erc20TransferFrom(address asset, uint256 amount) payable",
+      "function erc20WrapperDepositFor(address wrapper, uint256 amount) payable",
+      "function erc20WrapperWithdrawTo(address wrapper, address account, uint256 amount) payable",
+      "function erc4626Deposit(address vault, uint256 assets, uint256 minShares, address receiver) payable",
+      "function erc4626Mint(address vault, uint256 shares, uint256 maxAssets, address receiver) payable",
+      "function erc4626Redeem(address vault, uint256 shares, uint256 minAssets, address receiver, address owner) payable",
+      "function erc4626Withdraw(address vault, uint256 assets, uint256 maxShares, address receiver, address owner) payable",
+      "function initiator() view returns (address)",
+      "function morphoBorrow(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, uint256 slippageAmount, address receiver) payable",
+      "function morphoFlashLoan(address token, uint256 assets, bytes data) payable",
+      "function morphoRepay(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, uint256 slippageAmount, address onBehalf, bytes data) payable",
+      "function morphoSetAuthorizationWithSig(tuple(address authorizer, address authorized, bool isAuthorized, uint256 nonce, uint256 deadline) authorization, tuple(uint8 v, bytes32 r, bytes32 s) signature, bool skipRevert) payable",
+      "function morphoSupply(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, uint256 slippageAmount, address onBehalf, bytes data) payable",
+      "function morphoSupplyCollateral(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, address onBehalf, bytes data) payable",
+      "function morphoWithdraw(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, uint256 slippageAmount, address receiver) payable",
+      "function morphoWithdrawCollateral(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, address receiver) payable",
+      "function multicall(bytes[] data) payable",
+      "function nativeTransfer(address recipient, uint256 amount) payable",
+      "function onMorphoFlashLoan(uint256, bytes data)",
+      "function onMorphoRepay(uint256, bytes data)",
+      "function onMorphoSupply(uint256, bytes data)",
+      "function onMorphoSupplyCollateral(uint256, bytes data)",
+      "function permit(address asset, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s, bool skipRevert) payable",
+      "function permitDai(uint256 nonce, uint256 expiry, bool allowed, uint8 v, bytes32 r, bytes32 s, bool skipRevert) payable",
+      "function reallocateTo(address publicAllocator, address vault, uint256 value, tuple(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint128 amount)[] withdrawals, tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) supplyMarketParams) payable",
+      "function stakeEth(uint256 amount, uint256 minShares, address referral) payable",
+      "function transferFrom2(address asset, uint256 amount) payable",
+      "function unwrapNative(uint256 amount) payable",
+      "function unwrapStEth(uint256 amount) payable",
+      "function urdClaim(address distributor, address account, address reward, uint256 amount, bytes32[] proof, bool skipRevert) payable",
+      "function wrapNative(uint256 amount) payable",
+      "function wrapStEth(uint256 amount) payable"
+    ],
+    "eth:0x4364fd2371b6318159366abFA51f190df5C24852": [
+      "error AddressEmptyCode(address target)",
+      "error DelegatesExpiredSignature()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC2612ExpiredSignature(uint256 deadline)",
+      "error ERC2612InvalidSigner(address signer, address owner)",
+      "error FailedCall()",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidDelegationNonce()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event DelegatedVotingPowerChanged(address indexed delegatee, uint256 oldVotes, uint256 newVotes)",
+      "event DelegateeChanged(address indexed delegator, address indexed oldDelegatee, address indexed newDelegatee)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Upgraded(address indexed implementation)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 amount)",
+      "function decimals() view returns (uint8)",
+      "function delegate(address newDelegatee)",
+      "function delegateWithSig(tuple(address delegatee, uint256 nonce, uint256 expiry) delegation, tuple(uint8 v, bytes32 r, bytes32 s) signature)",
+      "function delegatedVotingPower(address account) view returns (uint256)",
+      "function delegatee(address account) view returns (address)",
+      "function delegationNonce(address account) view returns (uint256)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getImplementation() view returns (address)",
+      "function initialize(address owner, address wrapper)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x6FF33615e792E35ed1026ea7cACCf42D9BF83476": [
+      "constructor(address morpho)",
+      "error ZeroAddress()",
+      "event CreatePreLiquidation(address indexed preLiquidation, bytes32 id, tuple(uint256 preLltv, uint256 preLCF1, uint256 preLCF2, uint256 preLIF1, uint256 preLIF2, address preLiquidationOracle) preLiquidationParams)",
+      "function MORPHO() view returns (address)",
+      "function createPreLiquidation(bytes32 id, tuple(uint256 preLltv, uint256 preLCF1, uint256 preLCF2, uint256 preLIF1, uint256 preLIF2, address preLiquidationOracle) preLiquidationParams) returns (address)",
+      "function isPreLiquidation(address) view returns (bool)"
+    ],
+    "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC": [
+      "constructor(address morpho)",
+      "event BorrowRateUpdate(bytes32 indexed id, uint256 avgBorrowRate, uint256 rateAtTarget)",
+      "function MORPHO() view returns (address)",
+      "function borrowRate(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, tuple(uint128 totalSupplyAssets, uint128 totalSupplyShares, uint128 totalBorrowAssets, uint128 totalBorrowShares, uint128 lastUpdate, uint128 fee) market) returns (uint256)",
+      "function borrowRateView(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, tuple(uint128 totalSupplyAssets, uint128 totalSupplyShares, uint128 totalBorrowAssets, uint128 totalBorrowShares, uint128 lastUpdate, uint128 fee) market) view returns (uint256)",
+      "function rateAtTarget(bytes32) view returns (int256)"
+    ],
+    "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999": [
+      "constructor(address _owner)",
+      "event Approval(address indexed owner, address indexed spender, uint256 amount)",
+      "event OwnerUpdated(address indexed user, address indexed newOwner)",
+      "event PublicCapabilityUpdated(bytes4 indexed functionSig, bool enabled)",
+      "event RoleCapabilityUpdated(uint8 indexed role, bytes4 indexed functionSig, bool enabled)",
+      "event Transfer(address indexed from, address indexed to, uint256 amount)",
+      "event UserRoleUpdated(address indexed user, uint8 indexed role, bool enabled)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address, address) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address) view returns (uint256)",
+      "function burn(uint256 amount)",
+      "function canCall(address user, bytes4 functionSig) view returns (bool)",
+      "function decimals() view returns (uint8)",
+      "function doesRoleHaveCapability(uint8 role, bytes4 functionSig) view returns (bool)",
+      "function doesUserHaveRole(address user, uint8 role) view returns (bool)",
+      "function getRolesWithCapability(bytes4) view returns (bytes32)",
+      "function getUserRoles(address) view returns (bytes32)",
+      "function isCapabilityPublic(bytes4) view returns (bool)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function nonces(address) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function setOwner(address newOwner)",
+      "function setPublicCapability(bytes4 functionSig, bool enabled)",
+      "function setRoleCapability(uint8 role, bytes4 functionSig, bool enabled)",
+      "function setUserRole(address user, uint8 role, bool enabled)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
+    ],
+    "eth:0x9baA51245CDD28D8D74Afe8B3959b616E9ee7c8D": [
+      "event UrdCreated(address indexed urd, address indexed caller, address indexed initialOwner, uint256 initialTimelock, bytes32 initialRoot, bytes32 initialIpfsHash, bytes32 salt)",
+      "function createUrd(address initialOwner, uint256 initialTimelock, bytes32 initialRoot, bytes32 initialIpfsHash, bytes32 salt) returns (address urd)",
+      "function isUrd(address) view returns (bool)"
+    ],
+    "eth:0x9D03bb2092270648d7480049d0E58d2FcF0E5123": [
+      "constructor(address morphoToken)",
+      "error SelfAddress()",
+      "error ZeroAddress()",
+      "function LEGACY_MORPHO() view returns (address)",
+      "function NEW_MORPHO() view returns (address)",
+      "function depositFor(address account, uint256 value) returns (bool)",
+      "function underlying() pure returns (address)",
+      "function withdrawTo(address account, uint256 value) returns (bool)"
+    ],
+    "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": [
+      "constructor(address newOwner)",
+      "event AccrueInterest(bytes32 indexed id, uint256 prevBorrowRate, uint256 interest, uint256 feeShares)",
+      "event Borrow(bytes32 indexed id, address caller, address indexed onBehalf, address indexed receiver, uint256 assets, uint256 shares)",
+      "event CreateMarket(bytes32 indexed id, tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams)",
+      "event EnableIrm(address indexed irm)",
+      "event EnableLltv(uint256 lltv)",
+      "event FlashLoan(address indexed caller, address indexed token, uint256 assets)",
+      "event IncrementNonce(address indexed caller, address indexed authorizer, uint256 usedNonce)",
+      "event Liquidate(bytes32 indexed id, address indexed caller, address indexed borrower, uint256 repaidAssets, uint256 repaidShares, uint256 seizedAssets, uint256 badDebtAssets, uint256 badDebtShares)",
+      "event Repay(bytes32 indexed id, address indexed caller, address indexed onBehalf, uint256 assets, uint256 shares)",
+      "event SetAuthorization(address indexed caller, address indexed authorizer, address indexed authorized, bool newIsAuthorized)",
+      "event SetFee(bytes32 indexed id, uint256 newFee)",
+      "event SetFeeRecipient(address indexed newFeeRecipient)",
+      "event SetOwner(address indexed newOwner)",
+      "event Supply(bytes32 indexed id, address indexed caller, address indexed onBehalf, uint256 assets, uint256 shares)",
+      "event SupplyCollateral(bytes32 indexed id, address indexed caller, address indexed onBehalf, uint256 assets)",
+      "event Withdraw(bytes32 indexed id, address caller, address indexed onBehalf, address indexed receiver, uint256 assets, uint256 shares)",
+      "event WithdrawCollateral(bytes32 indexed id, address caller, address indexed onBehalf, address indexed receiver, uint256 assets)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function accrueInterest(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams)",
+      "function borrow(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, address onBehalf, address receiver) returns (uint256, uint256)",
+      "function createMarket(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams)",
+      "function enableIrm(address irm)",
+      "function enableLltv(uint256 lltv)",
+      "function extSloads(bytes32[] slots) view returns (bytes32[] res)",
+      "function feeRecipient() view returns (address)",
+      "function flashLoan(address token, uint256 assets, bytes data)",
+      "function idToMarketParams(bytes32) view returns (address loanToken, address collateralToken, address oracle, address irm, uint256 lltv)",
+      "function isAuthorized(address, address) view returns (bool)",
+      "function isIrmEnabled(address) view returns (bool)",
+      "function isLltvEnabled(uint256) view returns (bool)",
+      "function liquidate(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, address borrower, uint256 seizedAssets, uint256 repaidShares, bytes data) returns (uint256, uint256)",
+      "function market(bytes32) view returns (uint128 totalSupplyAssets, uint128 totalSupplyShares, uint128 totalBorrowAssets, uint128 totalBorrowShares, uint128 lastUpdate, uint128 fee)",
+      "function nonce(address) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function position(bytes32, address) view returns (uint256 supplyShares, uint128 borrowShares, uint128 collateral)",
+      "function repay(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, address onBehalf, bytes data) returns (uint256, uint256)",
+      "function setAuthorization(address authorized, bool newIsAuthorized)",
+      "function setAuthorizationWithSig(tuple(address authorizer, address authorized, bool isAuthorized, uint256 nonce, uint256 deadline) authorization, tuple(uint8 v, bytes32 r, bytes32 s) signature)",
+      "function setFee(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 newFee)",
+      "function setFeeRecipient(address newFeeRecipient)",
+      "function setOwner(address newOwner)",
+      "function supply(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, address onBehalf, bytes data) returns (uint256, uint256)",
+      "function supplyCollateral(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, address onBehalf, bytes data)",
+      "function withdraw(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, address onBehalf, address receiver) returns (uint256, uint256)",
+      "function withdrawCollateral(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, address onBehalf, address receiver)"
+    ],
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
+      "function name() view returns (string)",
+      "function approve(address guy, uint256 wad) returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
+      "function withdraw(uint256 wad)",
+      "function decimals() view returns (uint8)",
+      "function balanceOf(address) view returns (uint256)",
+      "function symbol() view returns (string)",
+      "function transfer(address dst, uint256 wad) returns (bool)",
+      "function deposit() payable",
+      "function allowance(address, address) view returns (uint256)",
+      "event Approval(address indexed src, address indexed guy, uint256 wad)",
+      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
+      "event Deposit(address indexed dst, uint256 wad)",
+      "event Withdrawal(address indexed src, uint256 wad)"
+    ],
+    "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D": [
+      "constructor(address morpho)",
+      "error AlreadySet()",
+      "error DepositMarketInWithdrawals()",
+      "error EmptyWithdrawals()",
+      "error InconsistentWithdrawals()",
+      "error IncorrectFee()",
+      "error MarketNotEnabled(bytes32 id)",
+      "error MaxInflowExceeded(bytes32 id)",
+      "error MaxOutflowExceeded(bytes32 id)",
+      "error MaxSettableFlowCapExceeded()",
+      "error NotAdminNorVaultOwner()",
+      "error NotEnoughSupply(bytes32 id)",
+      "error WithdrawZero(bytes32 id)",
+      "event PublicReallocateTo(address indexed sender, address indexed vault, bytes32 indexed supplyMarketId, uint256 suppliedAssets)",
+      "event PublicWithdrawal(address indexed sender, address indexed vault, bytes32 indexed id, uint256 withdrawnAssets)",
+      "event SetAdmin(address indexed sender, address indexed vault, address admin)",
+      "event SetFee(address indexed sender, address indexed vault, uint256 fee)",
+      "event SetFlowCaps(address indexed sender, address indexed vault, tuple(bytes32 id, tuple(uint128 maxIn, uint128 maxOut) caps)[] config)",
+      "event TransferFee(address indexed sender, address indexed vault, uint256 amount, address indexed feeRecipient)",
+      "function MORPHO() view returns (address)",
+      "function accruedFee(address) view returns (uint256)",
+      "function admin(address) view returns (address)",
+      "function fee(address) view returns (uint256)",
+      "function flowCaps(address, bytes32) view returns (uint128 maxIn, uint128 maxOut)",
+      "function reallocateTo(address vault, tuple(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint128 amount)[] withdrawals, tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) supplyMarketParams) payable",
+      "function setAdmin(address vault, address newAdmin)",
+      "function setFee(address vault, uint256 newFee)",
+      "function setFlowCaps(address vault, tuple(bytes32 id, tuple(uint128 maxIn, uint128 maxOut) caps)[] config)",
+      "function transferFee(address vault, address feeRecipient)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "morpho/Morpho": "0xdbb54f2b25b761df9e05263570b2b0fcfef7676c541d7bdfa2974680fe1e3682"
+  },
+  "usedBlockNumbers": { "ethereum": 23442069 },
+  "permissionsConfigHash": "0x6c8d880d09271570b027b13466247947ed2b5a74e8024c1074225f344a933d97"
+}

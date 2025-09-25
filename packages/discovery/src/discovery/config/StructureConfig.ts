@@ -91,6 +91,19 @@ export const _EntrypointsFile = {
 export const EntrypointsFile = v.object(_EntrypointsFile)
 export type EntrypointsFile = v.infer<typeof EntrypointsFile>
 
+export type DefiDiscoPermissionLimits = v.infer<typeof DefiDiscoPermissionLimits>
+export const DefiDiscoPermissionLimits = v.object({
+  maxWriteFunctions: v.number().default(20),
+  maxSourceSize: v.number().default(100000),
+  maxSourceFiles: v.number().default(5),
+})
+
+export type DefiDiscoConfig = v.infer<typeof DefiDiscoConfig>
+export const DefiDiscoConfig = v.object({
+  scanPermissions: v.boolean().default(true),
+  permissionLimits: DefiDiscoPermissionLimits.optional(),
+})
+
 export type StructureConfig = v.infer<typeof StructureConfig>
 export const _StructureConfig = {
   initialAddresses: v.array(
@@ -109,6 +122,7 @@ export const _StructureConfig = {
     .optional(),
   sharedModules: v.array(v.string()).default([]),
   types: v.record(v.string(), DiscoveryCustomType).optional(),
+  defidisco: DefiDiscoConfig.optional(),
   ..._EntrypointsFile,
 }
 

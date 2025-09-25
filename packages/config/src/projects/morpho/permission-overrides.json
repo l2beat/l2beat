@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "lastModified": "2025-09-25T19:19:28.256Z",
+  "contracts": {
+    "eth:0x4364fd2371b6318159366abFA51f190df5C24852": {
+      "functions": [
+        {
+          "functionName": "upgradeToAndCall",
+          "userClassification": "permissioned",
+          "timestamp": "2025-09-25T19:19:12.972Z"
+        },
+        {
+          "functionName": "transferOwnership",
+          "userClassification": "permissioned",
+          "timestamp": "2025-09-25T19:19:13.727Z"
+        },
+        {
+          "functionName": "renounceOwnership",
+          "userClassification": "permissioned",
+          "timestamp": "2025-09-25T19:19:15.975Z"
+        },
+        {
+          "functionName": "mint",
+          "userClassification": "permissioned",
+          "timestamp": "2025-09-25T19:19:17.557Z"
+        },
+        {
+          "functionName": "burn",
+          "userClassification": "permissioned",
+          "timestamp": "2025-09-25T19:19:25.808Z"
+        },
+        {
+          "functionName": "acceptOwnership",
+          "userClassification": "permissioned",
+          "timestamp": "2025-09-25T19:19:28.256Z"
+        }
+      ]
+    }
+  }
+}

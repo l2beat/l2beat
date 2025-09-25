@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "morpho",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+    "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+    "eth:0x3A7bB36Ee3f3eE32A60e9f2b33c1e5f2E83ad766",
+    "eth:0x1897A8997241C1cD4bD0698647e4EB7213535c24",
+    "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077",
+    "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D",
+    "eth:0x6FF33615e792E35ed1026ea7cACCf42D9BF83476",
+    "eth:0x9baA51245CDD28D8D74Afe8B3959b616E9ee7c8D",
+    "eth:0x330eefa8a787552dc5cad3c3ca644844b1e61ddb",
+    "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+    "eth:0x9D03bb2092270648d7480049d0E58d2FcF0E5123"
+  ],
+  "defidisco": {
+    "scanPermissions": true,
+    "permissionLimits": {
+      "maxSourceFiles": 35
+    }
+  },
+  "overrides": {
+    "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
+      "ignoreDiscovery": true
+    }
+  }
+}

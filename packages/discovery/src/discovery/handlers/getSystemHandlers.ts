@@ -33,30 +33,39 @@ export function getSystemHandlers(
   // Add automatic write function permission analysis for contracts with write functions
   const permissionHandlers: Handler[] = []
 
-  // RE-ENABLED with optimizations and logging for testing
-  // Only create handler if there are write functions to analyze
-  const hasWriteFunctions = abiEntries.some(entry => {
-    if (!entry.startsWith('function ')) return false
-    try {
-      const iface = new utils.Interface([entry])
-      const fragment = iface.fragments[0]
-      if (fragment && fragment.type === 'function') {
-        const funcFragment = fragment as utils.FunctionFragment
-        return funcFragment.stateMutability !== 'view' && funcFragment.stateMutability !== 'pure'
-      }
-    } catch (error) {
-      // Skip malformed entries
-    }
-    return false
-  })
+  // Check if permission scanning is enabled (default: true)
+  const defidiscoConfig = config.defidisco
+  const scanPermissions = defidiscoConfig?.scanPermissions ?? true
 
-  if (hasWriteFunctions) {
-    const writeFunctionPermissionHandler = new WriteFunctionPermissionHandler(
-      'writeFunctionPermissions',
-      { type: 'writeFunctionPermission' as const },
-      abiEntries
-    )
-    permissionHandlers.push(writeFunctionPermissionHandler)
+  if (scanPermissions) {
+    // Only create handler if there are write functions to analyze
+    const hasWriteFunctions = abiEntries.some(entry => {
+      if (!entry.startsWith('function ')) return false
+      try {
+        const iface = new utils.Interface([entry])
+        const fragment = iface.fragments[0]
+        if (fragment && fragment.type === 'function') {
+          const funcFragment = fragment as utils.FunctionFragment
+          return funcFragment.stateMutability !== 'view' && funcFragment.stateMutability !== 'pure'
+        }
+      } catch (error) {
+        // Skip malformed entries
+      }
+      return false
+    })
+
+    if (hasWriteFunctions) {
+      const permissionLimits = defidiscoConfig?.permissionLimits
+      const writeFunctionPermissionHandler = new WriteFunctionPermissionHandler(
+        'writeFunctionPermissions',
+        {
+          type: 'writeFunctionPermission' as const,
+          limits: permissionLimits
+        },
+        abiEntries
+      )
+      permissionHandlers.push(writeFunctionPermissionHandler)
+    }
   }
 
   return methodHandlers.concat(arrayHandlers).concat(permissionHandlers)

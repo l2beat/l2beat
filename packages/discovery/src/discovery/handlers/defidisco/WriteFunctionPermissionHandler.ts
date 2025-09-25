@@ -9,6 +9,11 @@ export type WriteFunctionPermissionDefinition = v.infer<typeof WriteFunctionPerm
 export const WriteFunctionPermissionDefinition = v.strictObject({
   type: v.literal('writeFunctionPermission'),
   ignoreRelative: v.boolean().optional(),
+  limits: v.object({
+    maxWriteFunctions: v.number().optional(),
+    maxSourceSize: v.number().optional(),
+    maxSourceFiles: v.number().optional(),
+  }).optional(),
 })
 
 export class WriteFunctionPermissionHandler implements Handler {
@@ -70,8 +75,9 @@ export class WriteFunctionPermissionHandler implements Handler {
         }
       }
 
-      // More aggressive limits to prevent timeouts
-      if (this.writeFunctions.length > 20) {
+      // Use configurable limits to prevent timeouts
+      const maxWriteFunctions = this.definition.limits?.maxWriteFunctions ?? 20
+      if (this.writeFunctions.length > maxWriteFunctions) {
         console.log(`[WriteFunctionPermissionHandler] Skipping ${address} - too many write functions (${this.writeFunctions.length})`)
         return {
           field: this.field,
@@ -93,11 +99,12 @@ export class WriteFunctionPermissionHandler implements Handler {
         }
       }
 
-      // Much more aggressive size limits
+      // Use configurable size limits
       const totalSourceSize = Object.values(contractSource.files).reduce((sum, content) => sum + content.length, 0)
       console.log(`[WriteFunctionPermissionHandler] Source size for ${address}: ${totalSourceSize} bytes`)
 
-      if (totalSourceSize > 100000) { // 100KB limit (was 500KB)
+      const maxSourceSize = this.definition.limits?.maxSourceSize ?? 100000
+      if (totalSourceSize > maxSourceSize) {
         console.log(`[WriteFunctionPermissionHandler] Skipping ${address} - source too large (${totalSourceSize} bytes)`)
         return {
           field: this.field,
@@ -107,7 +114,8 @@ export class WriteFunctionPermissionHandler implements Handler {
       }
 
       // Skip contracts with too many source files
-      if (Object.keys(contractSource.files).length > 5) {
+      const maxSourceFiles = this.definition.limits?.maxSourceFiles ?? 5
+      if (Object.keys(contractSource.files).length > maxSourceFiles) {
         console.log(`[WriteFunctionPermissionHandler] Skipping ${address} - too many source files (${Object.keys(contractSource.files).length})`)
         return {
           field: this.field,
