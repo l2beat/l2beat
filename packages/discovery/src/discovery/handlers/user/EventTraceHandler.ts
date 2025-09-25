@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
+import { type ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { BigNumber, utils } from 'ethers'
 import type { ParamType } from 'ethers/lib/utils'
@@ -13,21 +13,14 @@ import type { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 
-export interface EventTraceHandlerDefinition {
-  type: 'eventTrace'
-  /** Event name by which we gather the transaction hashes */
-  event: string
-  /** Function call params you want to decode */
-  function: string
-  /** The address of the contract that emits the event */
-  eventSource?: string
-}
+export type EventTraceHandlerDefinition = v.infer<
+  typeof EventTraceHandlerDefinition
+>
 
 export const EventTraceHandlerDefinition = v.object({
   type: v.literal('eventTrace'),
   event: v.string(),
   function: v.string(),
-  eventSource: v.string().optional(),
 })
 
 // TODO: I guess we need better names for this handler
@@ -58,12 +51,7 @@ export class EventTraceHandler implements Handler {
     provider: IProvider,
     address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
-    const transactionHashes = await this.getTransactions(
-      provider,
-      this.definition.eventSource
-        ? ChainSpecificAddress(this.definition.eventSource)
-        : address,
-    )
+    const transactionHashes = await this.getTransactions(provider, address)
     const traces = await this.getTraces(provider, transactionHashes)
     const calldata = traces.flatMap((trace) => this.traverseTrace(trace))
 

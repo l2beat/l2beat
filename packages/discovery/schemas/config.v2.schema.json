@@ -678,8 +678,7 @@
                             "properties": {
                               "type": { "const": "eventTrace" },
                               "event": { "type": "string" },
-                              "function": { "type": "string" },
-                              "eventSource": { "type": "string" }
+                              "function": { "type": "string" }
                             },
                             "required": ["type", "event", "function"]
                           }
