@@ -1,6 +1,6 @@
 import type { Database } from '@l2beat/database'
 import type { DaBeatStatsProvider } from '@l2beat/shared'
-import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import {
   ManagedChildIndexer,
@@ -36,7 +36,14 @@ export class DaBeatStatsIndexer extends ManagedChildIndexer {
 
     const stats = await this.$.statsProvider.getStats(this.$.projectId)
 
-    assert(stats, 'No stats found')
+    if (!stats) {
+      this.logger.warn('No DABEAT stats found', {
+        from,
+        to,
+        projectId: this.$.projectId,
+      })
+      return to
+    }
 
     await this.$.db.daBeatStats.upsert({
       ...stats,

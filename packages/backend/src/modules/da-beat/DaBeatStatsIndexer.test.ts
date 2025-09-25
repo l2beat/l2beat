@@ -76,10 +76,9 @@ describe(DaBeatStatsIndexer.name, () => {
       expect(result).toEqual(to)
     })
 
-    it('throws when no stats are found', async () => {
+    it('skips update when no stats were found', async () => {
       const from = UnixTime.fromDate(new Date('2023-01-01T10:30:00Z'))
-      const to = UnixTime.fromDate(new Date('2023-01-01T11:15:00Z'))
-      const projectId = ProjectId('test-project')
+      const to = UnixTime.fromDate(new Date('2023-01-01T10:45:00Z'))
 
       const statsProvider = mockObject<DaBeatStatsProvider>({
         getStats: mockFn().returnsOnce(undefined),
@@ -90,15 +89,15 @@ describe(DaBeatStatsIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        projectId,
         statsProvider,
         db: mockDatabase({ daBeatStats: daBeatStatsRepository }),
       })
 
-      await expect(indexer.update(from, to)).toBeRejectedWith('No stats found')
+      const result = await indexer.update(from, to)
 
-      expect(statsProvider.getStats).toHaveBeenOnlyCalledWith(projectId)
+      expect(statsProvider.getStats).not.toHaveBeenCalled()
       expect(daBeatStatsRepository.upsert).not.toHaveBeenCalled()
+      expect(result).toEqual(to)
     })
   })
 
