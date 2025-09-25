@@ -131,7 +131,7 @@ export function ProjectActivityChart({
           tooltip={`${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day.`}
           isLoading={isLoading}
         >
-          {chart?.stats?.[metric].pastDayCount
+          {chart?.stats?.[metric].pastDayCount !== undefined
             ? formatActivityCount(chart?.stats?.[metric].pastDayCount)
             : 'No data'}
         </ChartStatsItem>
@@ -140,7 +140,7 @@ export function ProjectActivityChart({
           className="max-md:h-7"
           isLoading={isLoading}
         >
-          {chart?.stats?.[metric].pastDaySum
+          {chart?.stats?.[metric].pastDaySum !== undefined
             ? formatInteger(chart?.stats?.[metric].pastDaySum)
             : 'No data'}
         </ChartStatsItem>
@@ -149,7 +149,7 @@ export function ProjectActivityChart({
           className="max-md:h-7"
           isLoading={isLoading}
         >
-          {chart?.stats?.[metric].maxCount ? (
+          {chart?.stats?.[metric].maxCount !== undefined ? (
             <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
               <div>
                 {formatActivityCount(chart?.stats?.[metric].maxCount.value)}
@@ -168,7 +168,7 @@ export function ProjectActivityChart({
           tooltip="The ratio of user operations to transactions over the past day. A high ratio indicates that for some transactions multiple individual user operations are bundled in a single transaction."
           isLoading={isLoading}
         >
-          {ratioData?.at(-1)?.ratio
+          {ratioData?.at(-1)?.ratio !== undefined
             ? formatUopsRatio(ratioData?.at(-1)?.ratio ?? 1)
             : 'No data'}
         </ChartStatsItem>
