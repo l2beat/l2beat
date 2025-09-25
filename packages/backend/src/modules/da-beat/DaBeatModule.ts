@@ -43,9 +43,7 @@ export function createDaBeatModule({
   const indexerService = new IndexerService(peripherals.database)
   const statsIndexers: DaBeatStatsIndexer[] = []
 
-  for (const [projectId, { stake, validators }] of Object.entries(
-    daBeatConfig.projectsForDaBeatStats,
-  )) {
+  for (const projectId of daBeatConfig.projectsForDaBeatStats) {
     const indexer = new DaBeatStatsIndexer({
       db: peripherals.database,
       projectId: projectId as ProjectId,
@@ -62,8 +60,8 @@ export function createDaBeatModule({
     logger = logger.for('DaBeatModule')
     logger.info('Starting')
 
-    // pricesRefresher.start()
-    // stakeRefresher.start()
+    pricesRefresher.start()
+    stakeRefresher.start()
 
     await hourlyIndexer.start()
     for (const indexer of statsIndexers) {

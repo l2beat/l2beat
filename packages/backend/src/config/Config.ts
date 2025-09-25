@@ -203,13 +203,7 @@ export interface AnomaliesConfig {
 }
 
 export interface DaBeatConfig {
-  readonly projectsForDaBeatStats: Record<
-    ProjectId,
-    {
-      stake: boolean
-      validators: boolean
-    }
-  >
+  readonly projectsForDaBeatStats: ProjectId[]
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
   /** Names of the economic security types */

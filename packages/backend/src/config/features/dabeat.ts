@@ -21,19 +21,9 @@ export async function getDaBeatConfig(
     .filter((x) => x !== undefined)
     .filter((x, i, a) => a.indexOf(x) === i) // unique
 
-  const projectsForDaBeatStats: DaBeatConfig['projectsForDaBeatStats'] = {}
-  for (const project of projects) {
-    const hasStakeEnabled = !!project.daLayer.economicSecurity
-    const hasValidatorsEnabled =
-      project.daLayer.numberOfValidators?.type === 'analyzer'
-
-    if (!hasStakeEnabled && !hasValidatorsEnabled) continue
-
-    projectsForDaBeatStats[project.id] = {
-      stake: hasStakeEnabled,
-      validators: hasValidatorsEnabled,
-    }
-  }
+  const projectsForDaBeatStats = projects
+    .filter((x) => x.daLayer.economicSecurity)
+    .map((x) => x.id)
 
   return {
     projectsForDaBeatStats,
