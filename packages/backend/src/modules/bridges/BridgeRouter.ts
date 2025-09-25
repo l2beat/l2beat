@@ -5,7 +5,6 @@ import type { BridgesConfig } from '../../config/Config'
 import { renderEventsPage } from './dashboard/EventsPage'
 import { renderMainPage } from './dashboard/MainPage'
 import { renderMessagesPage } from './dashboard/MessagesPage'
-import { renderTransfersPage } from './dashboard/TransfersPage'
 
 export function createBridgeRouter(db: Database, config: BridgesConfig) {
   const router = new Router()
@@ -27,12 +26,29 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
     ctx.body = { events, messages }
   })
 
+  router.get('/bridges/messages/:type', async (ctx) => {
+    const params = v.object({ type: v.string() }).validate(ctx.params)
+    const query = v
+      .object({
+        srcChain: v.string().optional(),
+        dstChain: v.string().optional(),
+      })
+      .validate(ctx.query)
+    const messages = await db.bridgeMessage.getByType(params.type, {
+      srcChain: query.srcChain,
+      dstChain: query.dstChain,
+    })
+    ctx.body = renderMessagesPage({
+      messages,
+      getExplorerUrl: config.dashboard.getExplorerUrl,
+    })
+  })
+
   const Params = v.object({
     kind: v.enum([
       'all',
       'unmatched',
       'unsupported',
-      'messages',
       'transfers',
       'matched',
       'old-unmatched',
@@ -40,63 +56,50 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
     type: v.string(),
   })
 
-  router.get('/bridges/:kind/:type', async (ctx) => {
+  router.get('/bridges/events/:kind/:type', async (ctx) => {
     const params = Params.validate(ctx.params)
-    if (params.kind === 'messages') {
-      const messages = await db.bridgeMessage.getByType(params.type)
-      ctx.body = renderMessagesPage({
-        messages,
+
+    if (params.kind === 'unmatched') {
+      const events = await db.bridgeEvent.getByType(params.type, {
+        matched: false,
+        unsupported: false,
+      })
+      ctx.body = renderEventsPage({
+        events,
         getExplorerUrl: config.dashboard.getExplorerUrl,
       })
-    } else if (params.kind === 'transfers') {
-      const transfers = await db.bridgeTransfer.getByType(params.type)
-      ctx.body = renderTransfersPage({
-        transfers,
+    } else if (params.kind === 'unsupported') {
+      const events = await db.bridgeEvent.getByType(params.type, {
+        unsupported: true,
+      })
+      ctx.body = renderEventsPage({
+        events,
         getExplorerUrl: config.dashboard.getExplorerUrl,
       })
-    } else {
-      if (params.kind === 'unmatched') {
-        const events = await db.bridgeEvent.getByType(params.type, {
-          matched: false,
-          unsupported: false,
-        })
-        ctx.body = renderEventsPage({
-          events,
-          getExplorerUrl: config.dashboard.getExplorerUrl,
-        })
-      } else if (params.kind === 'unsupported') {
-        const events = await db.bridgeEvent.getByType(params.type, {
-          unsupported: true,
-        })
-        ctx.body = renderEventsPage({
-          events,
-          getExplorerUrl: config.dashboard.getExplorerUrl,
-        })
-      } else if (params.kind === 'matched') {
-        const events = await db.bridgeEvent.getByType(params.type, {
-          matched: true,
-        })
-        ctx.body = renderEventsPage({
-          events,
-          getExplorerUrl: config.dashboard.getExplorerUrl,
-        })
-      } else if (params.kind === 'old-unmatched') {
-        const events = await db.bridgeEvent.getByType(params.type, {
-          matched: false,
-          unsupported: false,
-          olderThanTwoHours: true,
-        })
-        ctx.body = renderEventsPage({
-          events,
-          getExplorerUrl: config.dashboard.getExplorerUrl,
-        })
-      } else if (params.kind === 'all') {
-        const events = await db.bridgeEvent.getByType(params.type)
-        ctx.body = renderEventsPage({
-          events,
-          getExplorerUrl: config.dashboard.getExplorerUrl,
-        })
-      }
+    } else if (params.kind === 'matched') {
+      const events = await db.bridgeEvent.getByType(params.type, {
+        matched: true,
+      })
+      ctx.body = renderEventsPage({
+        events,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      })
+    } else if (params.kind === 'old-unmatched') {
+      const events = await db.bridgeEvent.getByType(params.type, {
+        matched: false,
+        unsupported: false,
+        olderThanTwoHours: true,
+      })
+      ctx.body = renderEventsPage({
+        events,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      })
+    } else if (params.kind === 'all') {
+      const events = await db.bridgeEvent.getByType(params.type)
+      ctx.body = renderEventsPage({
+        events,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      })
     }
   })
 

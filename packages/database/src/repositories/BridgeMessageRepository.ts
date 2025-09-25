@@ -89,13 +89,24 @@ export class BridgeMessageRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByType(type: string): Promise<BridgeMessageRecord[]> {
-    const rows = await this.db
-      .selectFrom('BridgeMessage')
-      .where('type', '=', type)
-      .orderBy('timestamp', 'desc')
-      .selectAll()
-      .execute()
+  async getByType(
+    type: string,
+    options: {
+      srcChain?: string
+      dstChain?: string
+    } = {},
+  ): Promise<BridgeMessageRecord[]> {
+    let query = this.db.selectFrom('BridgeMessage').where('type', '=', type)
+
+    if (options.srcChain !== undefined) {
+      query = query.where('srcChain', '=', options.srcChain)
+    }
+
+    if (options.dstChain !== undefined) {
+      query = query.where('dstChain', '=', options.dstChain)
+    }
+
+    const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()
 
     return rows.map(toRecord)
   }

@@ -27,21 +27,25 @@ function EventsTable(props: { events: BridgeEventStatsRecord[] }) {
             <tr>
               <td>{e.type}</td>
               <td>
-                <a href={`/bridges/all/${e.type}`}>{e.count}</a>
+                <a href={`/bridges/events/all/${e.type}`}>{e.count}</a>
               </td>
               <td>
-                <a href={`/bridges/matched/${e.type}`}>{e.matched}</a>
+                <a href={`/bridges/events/matched/${e.type}`}>{e.matched}</a>
               </td>
               <td>
-                <a href={`/bridges/unmatched/${e.type}`}>{e.unmatched}</a>
+                <a href={`/bridges/events/unmatched/${e.type}`}>
+                  {e.unmatched}
+                </a>
               </td>
               <td>
-                <a href={`/bridges/old-unmatched/${e.type}`}>
+                <a href={`/bridges/events/old-unmatched/${e.type}`}>
                   {e.oldUnmatched}
                 </a>
               </td>
               <td>
-                <a href={`/bridges/unsupported/${e.type}`}>{e.unsupported}</a>
+                <a href={`/bridges/events/unsupported/${e.type}`}>
+                  {e.unsupported}
+                </a>
               </td>
             </tr>
           )
@@ -164,41 +168,51 @@ function MessagesTable(props: {
                 {formatSeconds(t.medianDuration)}
               </td>
               {NETWORKS.map((n) => {
-                const sourceDestinationDuration = t.chains.find(
+                const srcDstCount = t.chains.find(
+                  (tt) =>
+                    tt.sourceChain === n[0].name &&
+                    tt.destinationChain === n[1].name,
+                )?.count
+                const srcDstDuration = t.chains.find(
                   (tt) =>
                     tt.sourceChain === n[0].name &&
                     tt.destinationChain === n[1].name,
                 )?.medianDuration
-                const destinationSourceDuration = t.chains.find(
+                const dstSrcCount = t.chains.find(
                   (tt) =>
-                    tt.destinationChain === n[0].name &&
-                    tt.sourceChain === n[1].name,
+                    tt.sourceChain === n[1].name &&
+                    tt.destinationChain === n[0].name,
+                )?.count
+                const dstSrcDuration = t.chains.find(
+                  (tt) =>
+                    tt.sourceChain === n[1].name &&
+                    tt.destinationChain === n[0].name,
                 )?.medianDuration
                 return (
                   <>
                     <td>
-                      {t.chains.find(
-                        (tt) =>
-                          tt.sourceChain === n[0].name &&
-                          tt.destinationChain === n[1].name,
-                      )?.count ?? ''}
+                      {srcDstCount && (
+                        <a
+                          href={`/bridges/${props.type}/${t.type}?srcChain=${n[0].name}&dstChain=${n[1].name}`}
+                        >
+                          {srcDstCount}
+                        </a>
+                      )}
                     </td>
-                    <td data-order={sourceDestinationDuration ?? ''}>
-                      {(sourceDestinationDuration &&
-                        formatSeconds(sourceDestinationDuration)) ??
-                        ''}
+                    <td data-order={srcDstDuration ?? ''}>
+                      {srcDstDuration && formatSeconds(srcDstDuration)}
                     </td>
                     <td>
-                      {t.chains.find(
-                        (tt) =>
-                          tt.destinationChain === n[0].name &&
-                          tt.sourceChain === n[1].name,
-                      )?.count ?? ''}
+                      {dstSrcCount && (
+                        <a
+                          href={`/bridges/${props.type}/${t.type}?srcChain=${n[1].name}&dstChain=${n[0].name}`}
+                        >
+                          {dstSrcCount}
+                        </a>
+                      )}
                     </td>
-                    <td data-order={destinationSourceDuration ?? ''}>
-                      {(destinationSourceDuration &&
-                        formatSeconds(destinationSourceDuration)) ??
-                        ''}
+                    <td data-order={dstSrcDuration ?? ''}>
+                      {dstSrcDuration && formatSeconds(dstSrcDuration)}
                     </td>
                   </>
                 )
