@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x5b69f1cfaf39a3d71ce128b8ed961bb9992becee
+
+# Diff at Tue, 23 Sep 2025 14:39:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1756452095
+- current timestamp: 1758638281
+
+## Description
+
+TODO: fix. uses the shared polygon cdk disco entrypoint because of a shared EOA
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756452095 (main branch discovery), not current.
+
+```diff
+    reference  (eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
 Generated with discovered.json: 0xd31bf7c6662fb961af51e53b1756740ec3c6ae5a
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

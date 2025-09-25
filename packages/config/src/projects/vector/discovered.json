@@ -1,8 +1,7 @@
 {
   "name": "vector",
   "timestamp": 1755605082,
-  "configHash": "0x704a4901eb1f39dd076867d376299e2b1c213e2fb09dad7082aed709835700ac",
-  "sharedModules": ["shared-sp1"],
+  "configHash": "0xfcef7802d2c4c0b4e4c10418d077cd93dd6ff7211741a69a97d4730cba5474cd",
   "entries": [
     {
       "name": "Vector",
@@ -298,8 +297,9 @@
     },
     {
       "address": "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "blobstream"
     },
     {
       "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
@@ -759,5 +759,5 @@
     "succinct/SP1Vector": "0x4b4bab1769276ac2be7215b73aff7dda8735ad26ed07bdfed49c63583ddc2025"
   },
   "usedBlockNumbers": { "ethereum": 23175000 },
-  "permissionsConfigHash": "0x6e91a48efda7ca7923827204ece2136b574fc36d65f534747718f5b651f2c603"
+  "permissionsConfigHash": "0x41d90053ddbb7d376142fd99ee8567adfc0b3ccaa5f60309fc67779c6ea31e8c"
 }

@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xe2c278e93151d7e1130ec08d5b00691d976b9742
+
+# Diff at Tue, 23 Sep 2025 14:37:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1756809496
+- current timestamp: 1758638206
+
+## Description
+
+config: facet now uses the shared-sp1 entrypoint because it uses the sp1 gateway.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756809496 (main branch discovery), not current.
+
+```diff
+    reference SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "succinct/SP1Verifier"
+      sourceHashes:
+-        ["0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"]
+      proxyType:
+-        "immutable"
+      description:
+-        "Verifier contract for SP1 proofs (v5.0.0)."
+      sinceTimestamp:
+-        1748550023
+      sinceBlock:
+-        22590744
+      values:
+-        {"$immutable":true,"VERIFIER_HASH":"0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7","VERSION":"v5.0.0"}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-sp1"
+    }
+```
+
 Generated with discovered.json: 0xc949311cd7a88b93b9c82ffaf42a2cc11541d8c5
 
 # Diff at Tue, 02 Sep 2025 10:39:32 GMT:

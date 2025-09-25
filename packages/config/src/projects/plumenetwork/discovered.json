@@ -1,8 +1,7 @@
 {
   "name": "plumenetwork",
   "timestamp": 1757943756,
-  "configHash": "0x45af34bfc37fb5ea3058c878205fe3b4357ad5b12688fa6fac38136fff48019b",
-  "sharedModules": ["shared-sp1", "blobstream"],
+  "configHash": "0x9aae20c75048c7a27ab1e2b65e0cc637707136af0588e85ecaaf53fd5e6bf3b0",
   "entries": [
     {
       "address": "eth:0x006F5B7E2D58fb4E53DEdaB8802FCdf2a5441DC7",

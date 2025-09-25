@@ -1,8 +1,7 @@
 {
   "name": "astarzkevm",
   "timestamp": 1721204831,
-  "configHash": "0xa83c47e05135672c11873048270b97675df64f3aa20b9f20bf5692c3a6b85a69",
-  "sharedModules": ["shared-polygon-cdk"],
+  "configHash": "0x86adec7faf954bacbbe2810d634adb223f57e1b14c1af90aed3c1e4289ab5d31",
   "entries": [
     {
       "name": "Verifier",

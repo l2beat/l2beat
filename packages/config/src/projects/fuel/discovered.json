@@ -1,6 +1,6 @@
 {
   "name": "fuel",
-  "timestamp": 1756452095,
+  "timestamp": 1758638281,
   "configHash": "0xbba3431cef62dfc0f29cf0fc0fe2860a798bd9d8881496c009b2280498dd78a8",
   "entries": [
     {
@@ -142,8 +142,9 @@
     },
     {
       "address": "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-polygon-cdk"
     },
     {
       "name": "FuelERC20Gateway",
@@ -283,15 +284,15 @@
             "members": ["eth:0x32da601374b38154f05904B16F44A1911Aa6f314"]
           }
         },
-        "currentPeriodAmount": "1202075035000000000",
-        "currentPeriodEnd": 1756933139,
+        "currentPeriodAmount": "19348084718000000000",
+        "currentPeriodEnd": 1758792899,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositLimitGlobal": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "ETH_DECIMALS": 18,
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 249211,
+        "getNextOutgoingMessageNonce": 249312,
         "limitAmount": "7829000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
@@ -300,7 +301,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "1880224994053000000000",
+        "totalDeposited": "1781052841678000000000",
         "withdrawalsPaused": false
       },
       "implementationNames": {
@@ -720,6 +721,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23245256 },
-  "permissionsConfigHash": "0x0a92f2152313dd0271b5c7cfe6613fb7e69a9a056676a08da03864bf27ceacbc"
+  "usedBlockNumbers": { "ethereum": 23426375 },
+  "permissionsConfigHash": "0x9c7d747a5034bed498a85356c5264d4c0286ca440fca526f492d083c28f14333"
 }

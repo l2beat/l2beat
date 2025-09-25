@@ -3,7 +3,7 @@
   "name": "katana",
   "import": ["../globalConfig.jsonc"],
   "maxAddresses": 200,
-  "sharedModules": ["shared-polygon-cdk"],
+
   "initialAddresses": [
     "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E", // l1crossdomainmessenger
     "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666", // aggchainFEP

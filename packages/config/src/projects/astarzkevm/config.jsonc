@@ -9,6 +9,5 @@
   "names": {
     "eth:0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": "AstarMultisig",
     "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": "Validium"
-  },
-  "sharedModules": ["shared-polygon-cdk"]
+  }
 }

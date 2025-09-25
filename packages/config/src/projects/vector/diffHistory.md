@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xd1bdb409391af189642760e703b284ff3a8c095f
+
+# Diff at Tue, 23 Sep 2025 14:35:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1755605082
+- current timestamp: 1755605082
+
+## Description
+
+bug (TODO): vector uses blobstream entrypoint because of a shared EOA
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755605082 (main branch discovery), not current.
+
+```diff
+    reference  (eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "blobstream"
+    }
+```
+
 Generated with discovered.json: 0xedc6091eebcd05fcc0c041e83e2affaee7453597
 
 # Diff at Wed, 03 Sep 2025 15:52:25 GMT:

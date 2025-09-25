@@ -1,8 +1,7 @@
 {
   "name": "phala",
   "timestamp": 1758309851,
-  "configHash": "0x557d242ed257f8deaccd6f9c45a00f8e56848c0730cee4d11ab6ff9f4747b7d9",
-  "sharedModules": ["shared-sp1"],
+  "configHash": "0x21af1be8e2ddc7aaa607a520dea0421311e7cf7863ee3d2053d51a00bd018b2e",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

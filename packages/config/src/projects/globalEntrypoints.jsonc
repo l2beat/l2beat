@@ -1,3 +1,8 @@
 {
-  "import": ["../projects/shared-sharp-verifier/entrypoints.json"]
+  "import": [
+    "../projects/shared-sharp-verifier/entrypoints.json",
+    "../projects/shared-sp1/entrypoints.json",
+    "../projects/shared-polygon-cdk/entrypoints.json",
+    "../projects/blobstream/entrypoints.json"
+  ]
 }

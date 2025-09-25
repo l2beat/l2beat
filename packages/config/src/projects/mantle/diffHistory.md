@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x75df11f2088270af97034361f4ebba00fff4b593
+
+# Diff at Tue, 23 Sep 2025 14:45:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1758123938
+- current timestamp: 1758123938
+
+## Description
+
+config: now uses shared-sp1 entrypoint
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758123938 (main branch discovery), not current.
+
+```diff
+    reference SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "GnosisSafe"
+      sourceHashes:
+-        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+      proxyType:
+-        "gnosis safe"
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}]
+      sinceTimestamp:
+-        1724204135
+      sinceBlock:
+-        20573748
+      values:
+-        {"$immutable":false,"$implementation":"eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552","$members":["eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126","eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54","eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"],"$threshold":2,"domainSeparator":"0x9ce9716cc3ee4040796acdd48cea971343ff05b11468ce9e8d815c2ce3fc8b9e","getChainId":1,"GnosisSafe_modules":[],"multisigThreshold":"2 of 3 (67%)","nonce":12,"VERSION":"1.3.0"}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-sp1"
+    }
+```
+
 Generated with discovered.json: 0xd8173f86001f02e42df9db8016876e69033a10a6
 
 # Diff at Wed, 17 Sep 2025 15:47:02 GMT:

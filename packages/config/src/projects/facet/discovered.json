@@ -1,6 +1,6 @@
 {
   "name": "facet",
-  "timestamp": 1756809496,
+  "timestamp": 1758638206,
   "configHash": "0xbcb8a899c96b92e44b2de8d871c23826dc1cbdb4b5208adec8b032c81ae89e8e",
   "entries": [
     {
@@ -51,23 +51,9 @@
     {
       "name": "SP1Verifier",
       "address": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v5.0.0).",
-      "sinceTimestamp": 1748550023,
-      "sinceBlock": 22590744,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
-        "VERSION": "v5.0.0"
-      },
-      "implementationNames": {
-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
-      }
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sp1"
     },
     {
       "name": "FacetSafeModule",
@@ -177,15 +163,15 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
-        "anchorL2BlockNumber": 1861660,
-        "anchorProposalId": 78,
-        "anchorRoot": "0x297a39995ea6f5ec43d796869a98ea222fdaef75a0baf14c2ca5d9d88722dff5",
+        "anchorL2BlockNumber": 2014660,
+        "anchorProposalId": 169,
+        "anchorRoot": "0x4fb6e042fbae368de750c7b9c742a7d0ed1b7c6031ee2f8f3dd983dd09e216be",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 113,
+        "getProposalsLength": 198,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1754499659,
@@ -457,15 +443,6 @@
       "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
       "function setAdmin(address admin)",
       "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
-    ],
-    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": [
       "function facetProxyAddress() view returns (address)",
@@ -829,6 +806,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "facet": 1913746, "ethereum": 23274872 },
-  "permissionsConfigHash": "0x0fce2db250d4177647709f445b4f4e0d924a8700b3acd3798704c94903377789"
+  "usedBlockNumbers": { "ethereum": 23426368, "facet": 2066138 },
+  "permissionsConfigHash": "0xb5d8431b36f6a34b2e6226e77a2bae3eceab1209bed682966c7118dc12070724"
 }
