@@ -42,15 +42,9 @@ export class BlockIndexer extends ManagedChildIndexer {
     }
 
     const delay = to - adjustedFrom
-    this.logger.info(`Delay from the tip: ${delay} blocks`, { delay })
+    this.logger.info('Delay from the tip', { blocks: delay })
 
     const adjustedTo = Math.min(to, adjustedFrom + this.$.batchSize - 1)
-
-    this.logger.info('Range adjusted', {
-      from: adjustedFrom,
-      to: adjustedTo,
-      mode: this.$.mode,
-    })
 
     const blockNumbers = []
     for (
@@ -61,10 +55,11 @@ export class BlockIndexer extends ManagedChildIndexer {
       blockNumbers.push(blockNumber)
     }
 
-    this.logger.info('Fetching all blocks and logs', {
+    this.logger.info('Fetching blocks and logs', {
       from: adjustedFrom,
       to: adjustedTo,
-      blocks: adjustedTo - adjustedFrom + 1,
+      count: adjustedTo - adjustedFrom + 1,
+      mode: this.$.mode,
     })
 
     const start = Date.now()
@@ -72,15 +67,16 @@ export class BlockIndexer extends ManagedChildIndexer {
       blockNumbers.map(async (blockNumber) => {
         const [block, logs] = await Promise.all([
           this.$.blockProvider.getBlockWithTransactions(blockNumber),
+          // TODO: Fetch logs for the entire batch in a single request
           this.$.logsProvider.getLogs(blockNumber, blockNumber),
         ])
         return { blockNumber, block, logs }
       }),
     )
     const totalDuration = Date.now() - start
-    this.logger.info('Finished fetching all blocks and logs', {
+    this.logger.info('Fetched blocks and logs', {
       totalDuration,
-      blocks: blockData.length,
+      count: blockData.length,
     })
 
     for (const { blockNumber, block, logs } of blockData) {
@@ -89,17 +85,19 @@ export class BlockIndexer extends ManagedChildIndexer {
           const start = Date.now()
           await processor.processBlock(block, logs)
           const duration = Date.now() - start
-          this.logger.info(
-            `${processor.constructor.name} finished in ${duration.toFixed(2)}ms`,
-            { processor: processor.constructor.name, duration },
-          )
+          this.logger.info('Processor finished', {
+            processor: processor.constructor.name,
+            durationMs: Number.parseFloat(duration.toFixed(2)),
+          })
         } catch (error) {
-          this.logger.error(
-            `Processor ${processor.constructor.name} failed to process block`,
-            { blockNumber, error },
-          )
+          this.logger.error('Processor failed', {
+            processor: processor.constructor.name,
+            blockNumber,
+            error,
+          })
         }
       }
+      this.logger.info('Processed block', { blockNumber, logs: logs.length })
     }
 
     return adjustedTo

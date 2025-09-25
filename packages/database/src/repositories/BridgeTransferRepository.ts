@@ -152,11 +152,10 @@ export class BridgeTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByType(type: string, limit = 100): Promise<BridgeTransferRecord[]> {
+  async getByType(type: string): Promise<BridgeTransferRecord[]> {
     const rows = await this.db
       .selectFrom('BridgeTransfer')
       .where('type', '=', type)
-      .limit(limit)
       .orderBy('timestamp', 'desc')
       .selectAll()
       .execute()

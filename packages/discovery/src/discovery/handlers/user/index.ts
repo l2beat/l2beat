@@ -44,6 +44,10 @@ import {
   EventCountHandlerDefinition,
 } from './EventCountHandler'
 import { EventHandler, EventHandlerDefinition } from './EventHandler'
+import {
+  EventTraceHandler,
+  EventTraceHandlerDefinition,
+} from './EventTraceHandler'
 import { HardCodedDefinition, HardCodedHandler } from './HardcodedHandler'
 import {
   KintoAccessControlHandler,
@@ -139,6 +143,7 @@ export const UserHandlerDefinition = v.union([
   TradableDefinition,
   YieldFiMintersDefinition,
   WriteFunctionPermissionDefinition,
+  EventTraceHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -207,5 +212,7 @@ export function getUserHandler(
       return new YieldFiMintersHandler(field, definition, abi)
     case 'writeFunctionPermission':
       return new WriteFunctionPermissionHandler(field, definition, abi)
+    case 'eventTrace':
+      return new EventTraceHandler(field, definition, abi)
   }
 }
