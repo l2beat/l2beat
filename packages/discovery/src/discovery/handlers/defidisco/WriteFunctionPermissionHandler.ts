@@ -71,7 +71,7 @@ export class WriteFunctionPermissionHandler implements Handler {
       }
 
       // More aggressive limits to prevent timeouts
-      if (this.writeFunctions.length > 10) {
+      if (this.writeFunctions.length > 20) {
         console.log(`[WriteFunctionPermissionHandler] Skipping ${address} - too many write functions (${this.writeFunctions.length})`)
         return {
           field: this.field,

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "uniswap-v2",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+    "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+    "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+    "eth:0x18e433c7Bf8A2E1d0197CE5d8f9AFAda1A771360",
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+    "eth:0x53a328f4086d7c0f1fa19e594c9b842125263026"
+  ],
+  "overrides": {
+    "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A": {
+      "ignoreRelatives": ["token0", "token1", "price0CumulativeLast"]
+    },
+    "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f": {
+      "ignoreMethods": ["allPairs"]
+    }
+  }
+}

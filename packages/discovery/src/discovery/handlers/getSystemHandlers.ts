@@ -4,7 +4,7 @@ import type { StructureContractConfig } from '../config/structureUtils'
 import type { Handler } from './Handler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
-import { WriteFunctionPermissionHandler } from './user/WriteFunctionPermissionHandler'
+import { WriteFunctionPermissionHandler } from './defidisco/WriteFunctionPermissionHandler'
 
 export function getSystemHandlers(
   abiEntries: string[],
