@@ -86,9 +86,13 @@ function MessagesPageLayout(props: {
   return (
     <DataTablePage
       title={title}
-      table={eventsTable}
-      tableId="myTable"
-      dataTableOptions={dataTableOptions}
+      tables={[
+        {
+          table: eventsTable,
+          tableId: 'myTable',
+          dataTableOptions: dataTableOptions,
+        },
+      ]}
     />
   )
 }

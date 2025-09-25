@@ -1,26 +1,42 @@
 import React from 'react'
 
-interface DataTablePageProps {
-  title: string
+interface TableConfig {
   table: React.ReactNode
-  tableId?: string
+  tableId: string
   dataTableOptions?: object
 }
 
-export function DataTablePage(props: DataTablePageProps) {
-  const { title, table, tableId = 'myTable', dataTableOptions = {} } = props
+interface DataTablePageProps {
+  title: string
+  tables: TableConfig[]
+  globalDataTableOptions?: object
+}
 
-  const defaultOptions = {
-    pageLength: 25,
-    order: [[0, 'desc']], // Default sort by first column
-    dom: 'Bfrtip', // B = Buttons, f = filter, r = processing, t = table, i = info, p = pagination
-    buttons: [
-      'colvis', // Column visibility button
-      'pageLength',
-      'csv',
-    ],
-    ...dataTableOptions,
+export function DataTablePage(props: DataTablePageProps) {
+  const { title, tables, globalDataTableOptions = {} } = props
+
+  const getTableOptions = (tableOptions: object = {}) => {
+    const defaultOptions = {
+      pageLength: 25,
+      order: [[0, 'desc']], // Default sort by first column
+      dom: 'Bfrtip', // B = Buttons, f = filter, r = processing, t = table, i = info, p = pagination
+      buttons: [
+        'colvis', // Column visibility button
+        'pageLength',
+        'csv',
+      ],
+      ...globalDataTableOptions,
+      ...tableOptions,
+    }
+    return defaultOptions
   }
+
+  const initScript = tables
+    .map(({ tableId, dataTableOptions = {} }) => {
+      const options = getTableOptions(dataTableOptions)
+      return `$('#${tableId}').DataTable(${JSON.stringify(options)});`
+    })
+    .join('\n              ')
 
   return (
     <html>
@@ -64,13 +80,15 @@ export function DataTablePage(props: DataTablePageProps) {
         </a>
         <h1>{title}</h1>
 
-        {table}
+        {tables.map(({ table, tableId }, index) => (
+          <div key={tableId || index}>{table}</div>
+        ))}
 
         <script
           dangerouslySetInnerHTML={{
             __html: `
             $(document).ready(function() {
-              $('#${tableId}').DataTable(${JSON.stringify(defaultOptions)});
+              ${initScript}
             });
           `,
           }}
