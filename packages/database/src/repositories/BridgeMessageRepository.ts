@@ -1,5 +1,5 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { assert, UnixTime } from '@l2beat/shared-pure'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { BridgeMessage } from '../kysely/generated/types'
 
@@ -63,7 +63,13 @@ export function toRow(record: BridgeMessageRecord): Insertable<BridgeMessage> {
 export interface BridgeMessageStatsRecord {
   type: string
   count: number
-  averageDuration: number
+  medianDuration: number
+  chains: {
+    sourceChain: string
+    destinationChain: string
+    count: number
+    medianDuration: number
+  }[]
 }
 
 export class BridgeMessageRepository extends BaseRepository {
@@ -95,19 +101,49 @@ export class BridgeMessageRepository extends BaseRepository {
   }
 
   async getStats(): Promise<BridgeMessageStatsRecord[]> {
-    const rows = await this.db
+    const overallStats = await this.db
       .selectFrom('BridgeMessage')
       .select((eb) => [
         'type',
         eb.fn.countAll().as('count'),
-        eb.fn.avg('duration').as('averageDuration'),
+        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
+          'medianDuration',
+        ),
       ])
       .groupBy('type')
       .execute()
-    return rows.map((x) => ({
-      type: x.type,
-      count: Number(x.count),
-      averageDuration: Number(x.averageDuration),
+
+    const chainStats = await this.db
+      .selectFrom('BridgeMessage')
+      .select((eb) => [
+        'type',
+        'srcChain',
+        'dstChain',
+        eb.fn.countAll().as('count'),
+        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
+          'medianDuration',
+        ),
+      ])
+      .where('srcChain', 'is not', null)
+      .where('dstChain', 'is not', null)
+      .groupBy(['type', 'srcChain', 'dstChain'])
+      .execute()
+
+    return overallStats.map((overall) => ({
+      type: overall.type,
+      count: Number(overall.count),
+      medianDuration: Number(overall.medianDuration),
+      chains: chainStats
+        .filter((chain) => chain.type === overall.type)
+        .map((chain) => {
+          assert(chain.srcChain && chain.dstChain)
+          return {
+            sourceChain: chain.srcChain,
+            destinationChain: chain.dstChain,
+            count: Number(chain.count),
+            medianDuration: Number(chain.medianDuration),
+          }
+        }),
     }))
   }
 

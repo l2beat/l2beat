@@ -1,5 +1,5 @@
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { BridgeTransfer } from '../kysely/generated/types'
 
@@ -119,14 +119,14 @@ export function toRow(
 export interface BridgeTransfersStatsRecord {
   type: string
   count: number
-  averageDuration: number
+  medianDuration: number
   outboundValueSum: number
   inboundValueSum: number
   chains: {
     sourceChain: string
     destinationChain: string
     count: number
-    averageDuration: number
+    medianDuration: number
     outboundValueSum: number
     inboundValueSum: number
   }[]
@@ -169,7 +169,9 @@ export class BridgeTransferRepository extends BaseRepository {
       .select((eb) => [
         'type',
         eb.fn.countAll().as('count'),
-        eb.fn.avg('duration').as('averageDuration'),
+        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
+          'medianDuration',
+        ),
         eb.fn.sum('srcValueUsd').as('outboundValueSum'),
         eb.fn.sum('dstValueUsd').as('inboundValueSum'),
       ])
@@ -183,7 +185,9 @@ export class BridgeTransferRepository extends BaseRepository {
         'srcChain',
         'dstChain',
         eb.fn.countAll().as('count'),
-        eb.fn.avg('duration').as('averageDuration'),
+        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
+          'medianDuration',
+        ),
         eb.fn.sum('srcValueUsd').as('outboundValueSum'),
         eb.fn.sum('dstValueUsd').as('inboundValueSum'),
       ])
@@ -195,7 +199,7 @@ export class BridgeTransferRepository extends BaseRepository {
     return overallStats.map((overall) => ({
       type: overall.type,
       count: Number(overall.count),
-      averageDuration: Number(overall.averageDuration),
+      medianDuration: Number(overall.medianDuration),
       outboundValueSum: Number(overall.outboundValueSum),
       inboundValueSum: Number(overall.inboundValueSum),
       chains: chainStats
@@ -206,7 +210,7 @@ export class BridgeTransferRepository extends BaseRepository {
             sourceChain: chain.srcChain,
             destinationChain: chain.dstChain,
             count: Number(chain.count),
-            averageDuration: Number(chain.averageDuration),
+            medianDuration: Number(chain.medianDuration),
             outboundValueSum: Number(chain.outboundValueSum),
             inboundValueSum: Number(chain.inboundValueSum),
           }

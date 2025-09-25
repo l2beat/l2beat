@@ -1,10 +1,5 @@
 import Router from '@koa/router'
-import type {
-  BridgeEventStatsRecord,
-  BridgeMessageStatsRecord,
-  BridgeTransfersStatsRecord,
-  Database,
-} from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { v } from '@l2beat/validate'
 import type { BridgesConfig } from '../../config/Config'
 import { renderEventsPage } from './dashboard/EventsPage'
@@ -17,10 +12,12 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
 
   router.get('/bridges', async (ctx) => {
     const events = await db.bridgeEvent.getStats()
-    // const messages = await db.bridgeMessage.getStats()
-    // const transfers = await db.bridgeTransfer.getStats()
+    const messages = await db.bridgeMessage.getStats()
+    const transfers = await db.bridgeTransfer.getStats()
     ctx.body = renderMainPage({
       events,
+      messages,
+      transfers,
     })
   })
 
@@ -67,85 +64,4 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
   })
 
   return router
-}
-
-function statsToHtml(
-  events: BridgeEventStatsRecord[],
-  messages: BridgeMessageStatsRecord[],
-  transfers: BridgeTransfersStatsRecord[],
-) {
-  let html = '<!doctype html>'
-  html += '<html>'
-  html += '<head>'
-  html += '<title>Bridge Stats</title>'
-  html += '</head>'
-  html += '<body>'
-  html += '<h1>Bridge Stats</h1>'
-
-  html += '<h2>Unmatched (not unsupported) events</h2>'
-  html += '<ul>'
-  for (const { type, count, matched, unsupported } of events) {
-    const unmatched = count - matched - unsupported
-    if (unmatched !== 0) {
-      html += `<li><a href="/bridges/unmatched/${type}">${type}</a>: ${unmatched}</li>`
-    }
-  }
-  html += '</ul>'
-
-  html += '<h2>Unsupported events</h2>'
-  html += '<ul>'
-  for (const { type, unsupported } of events) {
-    if (unsupported !== 0) {
-      html += `<li><a href="/bridges/unsupported/${type}">${type}</a>: ${unsupported}</li>`
-    }
-  }
-  html += '</ul>'
-
-  html += '<h2>All events</h2>'
-  html += '<ul>'
-  for (const { type, count } of events) {
-    html += `<li><a href="/bridges/all/${type}">${type}</a>: ${count}</li>`
-  }
-  html += '</ul>'
-
-  html += '<h2>Messages</h2>'
-  html += '<ul>'
-  for (const { type, count, averageDuration } of messages) {
-    html += `<li><a href="/bridges/messages/${type}">${type}</a>: ${count}, avg = ${averageDuration} seconds</li>`
-  }
-  html += '</ul>'
-
-  html += '<h2>Transfers</h2>'
-  html += '<ul>'
-  for (const {
-    type,
-    count,
-    averageDuration,
-    outboundValueSum,
-    inboundValueSum,
-    chains,
-  } of transfers) {
-    html += `<li><a href="/bridges/transfers/${type}">${type}</a>: ${count}</li>`
-    html += '<ul>'
-    html += `<li>avg = ${averageDuration} seconds</li>`
-    html += `<li>outbound = ${outboundValueSum} $</li>`
-    html += `<li>inbound = ${inboundValueSum} $</li>`
-    html += '<li>chains</li>'
-    html += '<ul>'
-    for (const chain of chains) {
-      html += `<li>${chain.sourceChain} -> ${chain.destinationChain}: ${chain.count}</li>`
-      html += '<ul>'
-      html += `<li>avg = ${chain.averageDuration} seconds</li>`
-      html += `<li>outbound = ${chain.outboundValueSum} $</li>`
-      html += `<li>inbound = ${chain.inboundValueSum} $</li>`
-      html += '</ul>'
-    }
-    html += '</ul>'
-    html += '</ul>'
-  }
-  html += '</ul>'
-
-  html += '</body>'
-
-  return html
 }

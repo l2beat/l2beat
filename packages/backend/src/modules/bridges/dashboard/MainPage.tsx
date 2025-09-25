@@ -1,11 +1,16 @@
-import type { BridgeEventStatsRecord } from '@l2beat/database'
+import type {
+  BridgeEventStatsRecord,
+  BridgeMessageStatsRecord,
+  BridgeTransfersStatsRecord,
+} from '@l2beat/database'
+import { formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
 
 function EventsTable(props: { events: BridgeEventStatsRecord[] }) {
   return (
-    <table id="myTable" className="display">
+    <table id="eventsTable" className="display">
       <thead>
         <tr>
           <th>Type</th>
@@ -36,8 +41,175 @@ function EventsTable(props: { events: BridgeEventStatsRecord[] }) {
   )
 }
 
-function MainPageLayout(props: { events: BridgeEventStatsRecord[] }) {
+const NETWORKS: [
+  { name: string; display: string },
+  { name: string; display: string },
+][] = [
+  [
+    {
+      name: 'ethereum',
+      display: 'ETH',
+    },
+    {
+      name: 'base',
+      display: 'BASE',
+    },
+  ],
+  [
+    {
+      name: 'ethereum',
+      display: 'ETH',
+    },
+    {
+      name: 'arbitrum',
+      display: 'ARB',
+    },
+  ],
+  [
+    {
+      name: 'ethereum',
+      display: 'ETH',
+    },
+    {
+      name: 'optimism',
+      display: 'OP',
+    },
+  ],
+  [
+    {
+      name: 'base',
+      display: 'BASE',
+    },
+    {
+      name: 'arbitrum',
+      display: 'ARB',
+    },
+  ],
+  [
+    {
+      name: 'base',
+      display: 'BASE',
+    },
+    {
+      name: 'optimism',
+      display: 'OP',
+    },
+  ],
+  [
+    {
+      name: 'arbitrum',
+      display: 'ARB',
+    },
+    {
+      name: 'optimism',
+      display: 'OP',
+    },
+  ],
+]
+
+// currently this component is used also for Transfers
+function MessagesTable(props: {
+  items: BridgeTransfersStatsRecord[] | BridgeMessageStatsRecord[]
+  id: string
+}) {
+  return (
+    <table id={props.id} className="display">
+      <thead>
+        <tr>
+          <th rowSpan={2}>Type</th>
+          <th rowSpan={2}>Count</th>
+          <th rowSpan={2}>Median Duration</th>
+          {NETWORKS.map((n) => (
+            <>
+              <th colSpan={2}>
+                {n[0].display} {'>'} {n[1].display}
+              </th>
+              <th colSpan={2}>
+                {n[0].display} {'<'} {n[1].display}
+              </th>
+            </>
+          ))}
+        </tr>
+        <tr>
+          {NETWORKS.map((_) => (
+            <>
+              <th>Count</th>
+              <th>Duration</th>
+              <th>Count</th>
+              <th>Duration</th>
+            </>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {props.items.map((t) => {
+          return (
+            <tr>
+              <td>{t.type}</td>
+              <td>{t.count}</td>
+              <td data-order={t.medianDuration}>
+                {formatSeconds(t.medianDuration)}
+              </td>
+              {NETWORKS.map((n) => {
+                const sourceDestinationDuration = t.chains.find(
+                  (tt) =>
+                    tt.sourceChain === n[0].name &&
+                    tt.destinationChain === n[1].name,
+                )?.medianDuration
+                const destinationSourceDuration = t.chains.find(
+                  (tt) =>
+                    tt.destinationChain === n[0].name &&
+                    tt.sourceChain === n[1].name,
+                )?.medianDuration
+                return (
+                  <>
+                    <td>
+                      {t.chains.find(
+                        (tt) =>
+                          tt.sourceChain === n[0].name &&
+                          tt.destinationChain === n[1].name,
+                      )?.count ?? ''}
+                    </td>
+                    <td data-order={sourceDestinationDuration ?? ''}>
+                      {(sourceDestinationDuration &&
+                        formatSeconds(sourceDestinationDuration)) ??
+                        ''}
+                    </td>
+                    <td>
+                      {t.chains.find(
+                        (tt) =>
+                          tt.destinationChain === n[0].name &&
+                          tt.sourceChain === n[1].name,
+                      )?.count ?? ''}
+                    </td>
+                    <td data-order={destinationSourceDuration ?? ''}>
+                      {(destinationSourceDuration &&
+                        formatSeconds(destinationSourceDuration)) ??
+                        ''}
+                    </td>
+                  </>
+                )
+              })}
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}
+
+function MainPageLayout(props: {
+  events: BridgeEventStatsRecord[]
+  messages: BridgeMessageStatsRecord[]
+  transfers: BridgeTransfersStatsRecord[]
+}) {
   const eventsTable = <EventsTable {...props} />
+  const messagesTable = (
+    <MessagesTable id="messagesTable" items={props.messages} />
+  )
+  const transfersTable = (
+    <MessagesTable id="transfersTable" items={props.transfers} />
+  )
 
   return (
     <DataTablePage
@@ -46,7 +218,25 @@ function MainPageLayout(props: { events: BridgeEventStatsRecord[] }) {
         {
           title: 'Events',
           table: eventsTable,
-          tableId: 'myTable',
+          tableId: 'eventsTable',
+          dataTableOptions: {
+            pageLength: 10,
+            order: [[0, 'asc']],
+          },
+        },
+        {
+          title: 'Messages',
+          table: messagesTable,
+          tableId: 'messagesTable',
+          dataTableOptions: {
+            pageLength: 10,
+            order: [[0, 'asc']],
+          },
+        },
+        {
+          title: 'Transfers',
+          table: transfersTable,
+          tableId: 'transfersTable',
           dataTableOptions: {
             pageLength: 10,
             order: [[0, 'asc']],
@@ -57,6 +247,10 @@ function MainPageLayout(props: { events: BridgeEventStatsRecord[] }) {
   )
 }
 
-export function renderMainPage(props: { events: BridgeEventStatsRecord[] }) {
+export function renderMainPage(props: {
+  events: BridgeEventStatsRecord[]
+  messages: BridgeMessageStatsRecord[]
+  transfers: BridgeTransfersStatsRecord[]
+}) {
   return '<!DOCTYPE html>' + renderToStaticMarkup(<MainPageLayout {...props} />)
 }
