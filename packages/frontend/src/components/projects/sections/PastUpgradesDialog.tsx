@@ -57,7 +57,7 @@ export function PastUpgradesDialog({
     <>
       <Dialog>
         <DialogTrigger className="max-md:hidden">{trigger}</DialogTrigger>
-        <DialogContent className="max-h-[90dvh] w-full bg-surface-primary md:top-1/2 md:max-w-[720px]">
+        <DialogContent className="max-h-[90dvh] w-full overflow-y-hidden bg-surface-primary md:top-1/2 md:max-w-[720px]">
           <DialogHeader>
             <div className="flex items-center justify-between">
               <DialogTitle>Past upgrades</DialogTitle>
@@ -69,7 +69,7 @@ export function PastUpgradesDialog({
               List of past upgrades
             </DialogDescription>
           </DialogHeader>
-          <div className="max-h-[80dvh] space-y-3 overflow-y-auto pr-1">
+          <div className="max-h-[70dvh] space-y-3 overflow-y-auto pr-1">
             {pastUpgrades?.map((upgrade) => (
               <PastUpgradeEntry
                 key={upgrade.timestamp.toString()}
