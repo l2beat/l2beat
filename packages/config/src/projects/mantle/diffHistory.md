@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe9fefd2ad20a0675e98172fbf19c28b4a9f31f1b
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Execution delay changed from 7 days to 12 hours. It's the same value for optimistic or non-optimistic mode, so when optimistic mode is enabled this parameter should be updated (e.g., back to 7 days).
 
 ## Watched changes
 
