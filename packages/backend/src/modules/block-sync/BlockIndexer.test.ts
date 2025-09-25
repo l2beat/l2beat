@@ -194,7 +194,8 @@ function createIndexer(deps?: Partial<BlockIndexerDeps>): BlockIndexer {
 function mockBlock(blockNumber: number): Block {
   return {
     number: blockNumber,
-    hash: 'hash',
+    hash: `0x${'0'.repeat(64)}`,
+    logsBloom: `0x${'0'.repeat(512)}`,
     timestamp: UnixTime.now(),
     transactions: [],
   }
@@ -207,6 +208,7 @@ function mockLogs(blockNumber: number): Log[] {
       topics: ['0xabc'],
       data: '0x',
       blockNumber,
+      blockHash: `0x${'0'.repeat(64)}`,
       transactionHash: '0x456',
       logIndex: 0,
     },

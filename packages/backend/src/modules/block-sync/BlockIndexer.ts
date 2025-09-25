@@ -5,6 +5,7 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../tools/uif/ManagedChildIndexer'
 import type { BlockProcessor } from '../types'
+import { Block, Log } from '@l2beat/shared-pure'
 
 export type BlockIndexerMode = `CONTINUOUS` | `LATEST_ONLY`
 
@@ -63,23 +64,31 @@ export class BlockIndexer extends ManagedChildIndexer {
     })
 
     const start = Date.now()
-    const blockData = await Promise.all(
-      blockNumbers.map(async (blockNumber) => {
-        const [block, logs] = await Promise.all([
-          this.$.blockProvider.getBlockWithTransactions(blockNumber),
-          // TODO: Fetch logs for the entire batch in a single request
-          this.$.logsProvider.getLogs(blockNumber, blockNumber),
-        ])
-        return { blockNumber, block, logs }
-      }),
-    )
+
+    const [blocks, logs] = await Promise.all([
+      Promise.all(
+        blockNumbers.map((n) =>
+          this.$.blockProvider.getBlockWithTransactions(n),
+        ),
+      ),
+      this.$.logsProvider.getLogs(adjustedFrom, adjustedTo),
+    ])
+
+    const consistentBlocks = onlyConsistent(blocks, logs)
+    if (consistentBlocks.length === 0) {
+      throw new Error("Couldn't get consistent blocks & logs")
+    }
+    const actualTo = consistentBlocks[consistentBlocks.length - 1].blockNumber
+
     const totalDuration = Date.now() - start
     this.logger.info('Fetched blocks and logs', {
       totalDuration,
-      count: blockData.length,
+      from: adjustedFrom,
+      to: actualTo,
+      count: consistentBlocks.length,
     })
 
-    for (const { blockNumber, block, logs } of blockData) {
+    for (const { blockNumber, block, logs } of consistentBlocks) {
       for (const processor of this.$.blockProcessors) {
         try {
           const start = Date.now()
@@ -100,10 +109,18 @@ export class BlockIndexer extends ManagedChildIndexer {
       this.logger.info('Processed block', { blockNumber, logs: logs.length })
     }
 
-    return adjustedTo
+    return actualTo
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
+}
+
+function onlyConsistent(blocks: Block[], logs: Log[]) {
+  return blocks.map((b) => ({
+    blockNumber: b.number,
+    block: b,
+    logs: logs.filter((l) => l.blockNumber === b.number),
+  }))
 }
