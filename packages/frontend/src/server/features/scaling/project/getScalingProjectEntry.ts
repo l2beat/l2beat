@@ -47,7 +47,7 @@ import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
-import { getScalingDaSolution } from './getScalingDaSolution'
+import { getScalingDaSolutions } from './getScalingDaSolution'
 import type { ScalingRosette } from './getScalingRosetteValues'
 import { getScalingRosette } from './getScalingRosetteValues'
 
@@ -147,7 +147,7 @@ export async function getScalingProjectEntry(
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectScalingEntry> {
-  const daSolution = await getScalingDaSolution(project)
+  const daSolutions = await getScalingDaSolutions(project)
   const [
     projectsChangeReport,
     activityProjectStats,
@@ -171,7 +171,7 @@ export async function getScalingProjectEntry(
     getActivitySection(helpers, project),
     getCostsSection(helpers, project),
     project.scalingInfo.layer === 'layer2'
-      ? await getDataPostedSection(helpers, project, daSolution)
+      ? await getDataPostedSection(helpers, project, daSolutions[0])
       : undefined,
     getStateValidationSection(project),
   ])
@@ -243,7 +243,7 @@ export async function getScalingProjectEntry(
 
   const dataAvailabilitySection = getDataAvailabilitySection(
     project,
-    daSolution,
+    daSolutions,
   )
   const withdrawalsSection = getWithdrawalsSection(project)
   const sequencingSection = getSequencingSection(project)
