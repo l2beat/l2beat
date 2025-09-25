@@ -1,5 +1,6 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { formatSeconds, type UnixTime } from '@l2beat/shared-pure'
 import { Button } from '~/components/core/Button'
+import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import {
   Dialog,
   DialogClose,
@@ -27,22 +28,29 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import type { TechnologyContract } from './ContractEntry'
 
-export interface PastUpgrade {
-  timestamp: UnixTime
-  transactionHash: {
-    hash: string
-    href: string
-  }
-  implementations: {
-    address: string
-    href: string
+export interface PastUpgradesData {
+  upgrades: {
+    timestamp: UnixTime
+    transactionHash: {
+      hash: string
+      href: string
+    }
+    implementations: {
+      address: string
+      href: string
+    }[]
   }[]
+  stats: {
+    count: number
+    avgInterval: number
+    lastInterval: number
+  }
 }
 
 export function PastUpgradesDialog({
   pastUpgrades,
 }: {
-  pastUpgrades: PastUpgrade[]
+  pastUpgrades: PastUpgradesData
 }) {
   const trigger = (
     <div className="mt-2 flex items-center gap-1">
@@ -69,12 +77,23 @@ export function PastUpgradesDialog({
               List of past upgrades
             </DialogDescription>
           </DialogHeader>
+          <ChartStats className="md:grid-cols-3 lg:grid-cols-3">
+            <ChartStatsItem label="Count of upgrades" className="max-md:h-7">
+              {pastUpgrades.stats.count}
+            </ChartStatsItem>
+            <ChartStatsItem label="Avg update interval" className="max-md:h-7">
+              {formatSeconds(pastUpgrades.stats.avgInterval)}
+            </ChartStatsItem>
+            <ChartStatsItem label="Last upgrade" className="max-md:h-7">
+              {formatSeconds(pastUpgrades.stats.lastInterval)}
+            </ChartStatsItem>
+          </ChartStats>
           <div className="max-h-[70dvh] space-y-3 overflow-y-auto pr-1">
-            {pastUpgrades?.map((upgrade, i) => (
+            {pastUpgrades.upgrades?.map((upgrade, i) => (
               <PastUpgradeEntry
                 key={upgrade.timestamp.toString()}
                 upgrade={upgrade}
-                deployment={i === pastUpgrades.length - 1}
+                deployment={i === pastUpgrades.upgrades.length - 1}
               />
             ))}
           </div>
@@ -92,11 +111,11 @@ export function PastUpgradesDialog({
             </DrawerDescription>
           </DrawerHeader>
           <div className="max-h-[60dvh] space-y-2 overflow-y-auto">
-            {pastUpgrades?.map((upgrade, i) => (
+            {pastUpgrades.upgrades?.map((upgrade, i) => (
               <PastUpgradeEntry
                 key={upgrade.timestamp.toString()}
                 upgrade={upgrade}
-                deployment={i === pastUpgrades.length - 1}
+                deployment={i === pastUpgrades.upgrades.length - 1}
               />
             ))}
           </div>
@@ -117,7 +136,7 @@ function PastUpgradeEntry({
   upgrade,
   deployment,
 }: {
-  upgrade: NonNullable<TechnologyContract['pastUpgrades']>[number]
+  upgrade: NonNullable<TechnologyContract['pastUpgrades']>['upgrades'][number]
   deployment?: boolean
 }) {
   return (

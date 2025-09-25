@@ -5,7 +5,8 @@ import type {
   ReferenceLink,
 } from '@l2beat/config'
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
-import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import sum from 'lodash/sum'
 import uniqBy from 'lodash/uniqBy'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
@@ -215,20 +216,6 @@ function makeTechnologyContract(
     'id',
   )
 
-  const pastUpgrades: TechnologyContract['pastUpgrades'] = item.pastUpgrades
-    ?.sort((a, b) => b.timestamp - a.timestamp)
-    .map((upgrade) => ({
-      timestamp: upgrade.timestamp,
-      transactionHash: {
-        hash: upgrade.transactionHash,
-        href: `${explorerUrl}/tx/${upgrade.transactionHash}`,
-      },
-      implementations: upgrade.implementations.map((implementation) => ({
-        address: ChainSpecificAddress.address(implementation),
-        href: `${explorerUrl}/address/${ChainSpecificAddress.address(implementation)}#code`,
-      })),
-    }))
-
   return {
     name: item.name,
     addresses,
@@ -240,7 +227,47 @@ function makeTechnologyContract(
     impactfulChange,
     upgradeableBy: item.upgradableBy,
     upgradeConsiderations: item.upgradeConsiderations,
-    pastUpgrades,
+    pastUpgrades: getPastUpgrades(item.pastUpgrades, explorerUrl),
+  }
+}
+
+function getPastUpgrades(
+  contractPastUpgrades: ProjectContract['pastUpgrades'],
+  explorerUrl: string,
+): TechnologyContract['pastUpgrades'] {
+  const pastUpgrades =
+    contractPastUpgrades
+      ?.sort((a, b) => b.timestamp - a.timestamp)
+      .map((upgrade) => ({
+        timestamp: upgrade.timestamp,
+        transactionHash: {
+          hash: upgrade.transactionHash,
+          href: `${explorerUrl}/tx/${upgrade.transactionHash}`,
+        },
+        implementations: upgrade.implementations.map((implementation) => ({
+          address: ChainSpecificAddress.address(implementation),
+          href: `${explorerUrl}/address/${ChainSpecificAddress.address(implementation)}#code`,
+        })),
+      })) ?? []
+
+  const lastUpgrade = pastUpgrades[0]
+  if (!lastUpgrade) return
+
+  const intervals: number[] = []
+  for (let i = 1; i < pastUpgrades.length; i++) {
+    const prevUpgrade = pastUpgrades[i - 1]
+    const currentUpgrade = pastUpgrades[i]
+    if (!prevUpgrade || !currentUpgrade) continue
+    intervals.push(prevUpgrade.timestamp - currentUpgrade.timestamp)
+  }
+
+  return {
+    upgrades: pastUpgrades,
+    stats: {
+      count: pastUpgrades.length,
+      avgInterval: sum(intervals) / pastUpgrades.length,
+      lastInterval: UnixTime.now() - lastUpgrade.timestamp,
+    },
   }
 }
 
