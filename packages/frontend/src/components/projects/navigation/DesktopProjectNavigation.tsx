@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/Select'
+import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { useCurrentSection } from '~/hooks/useCurrentSection'
 import { usePathname } from '~/hooks/usePathname'
 import { useRouter } from '~/hooks/useRouter'
@@ -163,7 +164,7 @@ function ProjectNavigationList({
   }, [scrollToItem, currentSection])
 
   return (
-    <div
+    <ScrollWithGradient
       className={cn(
         'absolute top-0 flex w-[172px] min-w-[172px] flex-col gap-3 overflow-y-auto font-medium text-xs leading-none transition-[top] duration-300',
         isUnderReview
@@ -223,7 +224,7 @@ function ProjectNavigationList({
           </Fragment>
         )
       })}
-    </div>
+    </ScrollWithGradient>
   )
 }
 
