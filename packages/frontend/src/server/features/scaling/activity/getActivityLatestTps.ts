@@ -57,12 +57,15 @@ export async function getActivityLatestUops(
         const syncState = getActivitySyncState(syncMetadata, timeRange[1])
         const syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
 
+        const pastDayRecord = records.find((r) => r.timestamp === syncedUntil)
+        const previousDayRecord = records.find(
+          (r) => r.timestamp === syncedUntil - 1 * UnixTime.DAY,
+        )
         const pastDayUops = countPerSecond(
-          records.find((r) => r.timestamp === syncedUntil)?.uopsCount ?? 0,
+          pastDayRecord?.uopsCount ?? pastDayRecord?.count ?? 0,
         )
         const previousDayUops = countPerSecond(
-          records.find((r) => r.timestamp === syncedUntil - 1 * UnixTime.DAY)
-            ?.uopsCount ?? 0,
+          previousDayRecord?.uopsCount ?? previousDayRecord?.count ?? 0,
         )
         return [
           projectId,

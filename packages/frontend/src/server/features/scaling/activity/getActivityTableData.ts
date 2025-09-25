@@ -101,11 +101,13 @@ export async function getActivityTable(
             },
           },
           uops: {
-            pastDayCount: countPerSecond(pastDayData?.uopsCount ?? 0),
+            pastDayCount: countPerSecond(
+              pastDayData?.uopsCount ?? pastDayData?.count ?? 0,
+            ),
             summedCount: sumUopsCount(records),
             change: calculatePercentageChange(
-              pastDayData?.uopsCount ?? 0,
-              sevenDaysAgoData?.uopsCount ?? 0,
+              pastDayData?.uopsCount ?? pastDayData?.count ?? 0,
+              sevenDaysAgoData?.uopsCount ?? sevenDaysAgoData?.count ?? 0,
             ),
             maxCount: {
               value: countPerSecond(maxCount.uopsCount),
@@ -113,7 +115,7 @@ export async function getActivityTable(
             },
           },
           ratio: getLastDayRatio(
-            pastDayData?.uopsCount ?? 0,
+            pastDayData?.uopsCount ?? pastDayData?.count ?? 0,
             pastDayData?.count ?? 0,
           ),
           syncState,
