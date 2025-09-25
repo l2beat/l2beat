@@ -22,6 +22,7 @@ export const wonder: ScalingProject = zkStackL2({
   display: {
     name: 'Wonder',
     slug: 'wonder',
+    repositories: 'https://github.com/wonderfi-labs',
     description:
       "Wonder provides access to DeFi through ZKsync's Ethereum-level security, with scalability and cost-efficiency.",
     links: {
