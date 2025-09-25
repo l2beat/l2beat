@@ -43,6 +43,7 @@
   --surface-info: #ccdbff;
   --surface-warning: #ffc107;
   --surface-negative: #f3c8c8;
+  --surface-group: #eeeff4;
   --header-primary: #ffffff;
   --header-secondary: #eeeff4;
   --icon-secondary: #5f6470;
@@ -113,6 +114,7 @@
   --surface-info: #26374f;
   --surface-warning: #ffc107;
   --surface-negative: #441111;
+  --surface-group: #252832;
   --header-primary: #1a1c20;
   --header-secondary: #23262b;
   --icon-secondary: #62666c;
@@ -433,6 +435,7 @@
   --color-surface-info: var(--surface-info);
   --color-surface-warning: var(--surface-warning);
   --color-surface-negative: var(--surface-negative);
+  --color-surface-group: var(--surface-group);
   --color-header-secondary: var(--header-secondary);
   --color-header-primary: var(--header-primary);
   --color-icon-secondary: var(--icon-secondary);

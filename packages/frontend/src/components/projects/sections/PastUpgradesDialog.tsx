@@ -13,6 +13,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -22,6 +23,7 @@ import { EtherscanLink } from '~/components/EtherscanLink'
 import { CustomLink } from '~/components/link/CustomLink'
 import { CloseIcon } from '~/icons/Close'
 import { HistoryClockIcon } from '~/icons/HistoryClock'
+import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import type { TechnologyContract } from './ContractEntry'
 
@@ -55,7 +57,7 @@ export function PastUpgradesDialog({
     <>
       <Dialog>
         <DialogTrigger className="max-md:hidden">{trigger}</DialogTrigger>
-        <DialogContent className="max-h-[90dvh] w-fit bg-surface-primary md:top-1/2 md:max-w-full">
+        <DialogContent className="max-h-[90dvh] w-full bg-surface-primary md:top-1/2 md:max-w-[720px]">
           <DialogHeader>
             <div className="flex items-center justify-between">
               <DialogTitle>Past upgrades</DialogTitle>
@@ -67,7 +69,7 @@ export function PastUpgradesDialog({
               List of past upgrades
             </DialogDescription>
           </DialogHeader>
-          <div className="max-h-[80dvh] space-y-3 overflow-y-auto">
+          <div className="max-h-[80dvh] space-y-3 overflow-y-auto pr-1">
             {pastUpgrades?.map((upgrade) => (
               <PastUpgradeEntry
                 key={upgrade.timestamp.toString()}
@@ -84,6 +86,9 @@ export function PastUpgradesDialog({
             <DrawerTitle className="font-semibold text-label-value-18">
               Past upgrades
             </DrawerTitle>
+            <DrawerDescription className="sr-only">
+              List of past upgrades
+            </DrawerDescription>
           </DrawerHeader>
           <div className="max-h-[60dvh] space-y-2 overflow-y-auto">
             {pastUpgrades?.map((upgrade) => (
@@ -95,7 +100,7 @@ export function PastUpgradesDialog({
           </div>
           <DrawerFooter className="flex flex-row justify-center pt-6">
             <DrawerClose asChild>
-              <Button className="bg-transparent text-sm text-zinc-500 underline dark:bg-transparent">
+              <Button className="bg-transparent text-secondary text-sm underline dark:bg-transparent">
                 Close
               </Button>
             </DrawerClose>
@@ -112,16 +117,33 @@ function PastUpgradeEntry({
   upgrade: NonNullable<TechnologyContract['pastUpgrades']>[number]
 }) {
   return (
-    <div className="space-y-4 rounded-sm border border-divider bg-surface-secondary p-3">
-      <ValueWithTitle title="Time">
-        <span className="font-medium text-label-value-15">
-          {formatTimestamp(upgrade.timestamp, {
-            mode: 'datetime',
-            longMonthName: false,
-          })}
-        </span>
-      </ValueWithTitle>
-      <ValueWithTitle title="Transaction hash">
+    <div className="space-y-4 rounded-sm border border-divider bg-surface-group p-3">
+      <div className="md:grid md:grid-cols-2">
+        <ValueWithTitle title="Time">
+          <span className="font-medium text-label-value-15">
+            {formatTimestamp(upgrade.timestamp, {
+              mode: 'datetime',
+              longMonthName: false,
+            })}
+          </span>
+        </ValueWithTitle>
+        <ValueWithTitle
+          title="Implementation address"
+          className="max-md:hidden"
+        >
+          <div className="flex gap-1">
+            {upgrade.implementations.map((implementation) => (
+              <EtherscanLink
+                key={implementation.address}
+                address={implementation.address}
+                href={implementation.href}
+                className="text-label-value-15"
+              />
+            ))}
+          </div>
+        </ValueWithTitle>
+      </div>
+      <ValueWithTitle title="Transaction hash" className="md:mb-0">
         <CustomLink
           href={upgrade.transactionHash.href}
           className="word-break-word font-medium text-label-value-15"
@@ -129,7 +151,7 @@ function PastUpgradeEntry({
           {upgrade.transactionHash.hash}
         </CustomLink>
       </ValueWithTitle>
-      <ValueWithTitle title="Implementation address">
+      <ValueWithTitle title="Implementation address" className="md:hidden">
         <div className="flex gap-1">
           {upgrade.implementations.map((implementation) => (
             <EtherscanLink
@@ -148,12 +170,14 @@ function PastUpgradeEntry({
 function ValueWithTitle({
   title,
   children,
+  className,
 }: {
   title: string
   children: React.ReactNode
+  className?: string
 }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn('flex flex-col gap-2', className)}>
       <span className="text-label-value-14 text-secondary">{title}</span>
       {children}
     </div>
