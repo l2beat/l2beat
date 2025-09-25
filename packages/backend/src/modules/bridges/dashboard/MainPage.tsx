@@ -260,8 +260,6 @@ function MainPageLayout(props: {
           },
         },
         {
-          // TODO: colvis group
-          // TODO: route to lists
           title: 'Messages',
           table: messagesTable,
           tableId: 'messagesTable',
