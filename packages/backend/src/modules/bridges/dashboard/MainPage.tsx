@@ -26,13 +26,23 @@ function EventsTable(props: { events: BridgeEventStatsRecord[] }) {
           return (
             <tr>
               <td>{e.type}</td>
-              <td>{e.count}</td>
-              <td>{e.matched}</td>
+              <td>
+                <a href={`/bridges/all/${e.type}`}>{e.count}</a>
+              </td>
+              <td>
+                <a href={`/bridges/matched/${e.type}`}>{e.matched}</a>
+              </td>
               <td>
                 <a href={`/bridges/unmatched/${e.type}`}>{e.unmatched}</a>
               </td>
-              <td>{e.oldUnmatched}</td>
-              <td>{e.unsupported}</td>
+              <td>
+                <a href={`/bridges/old-unmatched/${e.type}`}>
+                  {e.oldUnmatched}
+                </a>
+              </td>
+              <td>
+                <a href={`/bridges/unsupported/${e.type}`}>{e.unsupported}</a>
+              </td>
             </tr>
           )
         })}
@@ -225,6 +235,8 @@ function MainPageLayout(props: {
           },
         },
         {
+          // TODO: colvis group
+          // TODO: route to lists
           title: 'Messages',
           table: messagesTable,
           tableId: 'messagesTable',

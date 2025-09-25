@@ -92,38 +92,32 @@ export class BridgeEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByType(type: string): Promise<BridgeEventRecord[]> {
-    const rows = await this.db
-      .selectFrom('BridgeEvent')
-      .where('type', '=', type)
-      .orderBy('timestamp', 'desc')
-      .selectAll()
-      .execute()
+  async getByType(
+    type: string,
+    options: {
+      matched?: boolean
+      unsupported?: boolean
+      olderThanTwoHours?: boolean
+    } = {},
+  ): Promise<BridgeEventRecord[]> {
+    let query = this.db.selectFrom('BridgeEvent').where('type', '=', type)
 
-    return rows.map(toRecord)
-  }
+    if (options.matched !== undefined) {
+      query = query.where('matched', '=', options.matched)
+    }
 
-  async getUnmatchedByType(type: string): Promise<BridgeEventRecord[]> {
-    const rows = await this.db
-      .selectFrom('BridgeEvent')
-      .where('type', '=', type)
-      .where('unsupported', '=', false)
-      .where('matched', '=', false)
-      .orderBy('timestamp', 'desc')
-      .selectAll()
-      .execute()
+    if (options.unsupported !== undefined) {
+      query = query.where('unsupported', '=', options.unsupported)
+    }
 
-    return rows.map(toRecord)
-  }
+    if (options.olderThanTwoHours !== undefined) {
+      const now = new Date()
+      const cutoffTime = new Date(now.toISOString())
+      cutoffTime.setUTCHours(cutoffTime.getUTCHours() - 2)
+      query = query.where('timestamp', '<', cutoffTime)
+    }
 
-  async getUnsupportedByType(type: string): Promise<BridgeEventRecord[]> {
-    const rows = await this.db
-      .selectFrom('BridgeEvent')
-      .where('type', '=', type)
-      .where('unsupported', '=', true)
-      .orderBy('timestamp', 'desc')
-      .selectAll()
-      .execute()
+    const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()
 
     return rows.map(toRecord)
   }

@@ -28,7 +28,15 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
   })
 
   const Params = v.object({
-    kind: v.enum(['all', 'unmatched', 'unsupported', 'messages', 'transfers']),
+    kind: v.enum([
+      'all',
+      'unmatched',
+      'unsupported',
+      'messages',
+      'transfers',
+      'matched',
+      'old-unmatched',
+    ]),
     type: v.string(),
   })
 
@@ -48,13 +56,42 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
       })
     } else {
       if (params.kind === 'unmatched') {
-        const events = await db.bridgeEvent.getUnmatchedByType(params.type)
+        const events = await db.bridgeEvent.getByType(params.type, {
+          matched: false,
+          unsupported: false,
+        })
         ctx.body = renderEventsPage({
           events,
           getExplorerUrl: config.dashboard.getExplorerUrl,
         })
       } else if (params.kind === 'unsupported') {
-        const events = await db.bridgeEvent.getUnsupportedByType(params.type)
+        const events = await db.bridgeEvent.getByType(params.type, {
+          unsupported: true,
+        })
+        ctx.body = renderEventsPage({
+          events,
+          getExplorerUrl: config.dashboard.getExplorerUrl,
+        })
+      } else if (params.kind === 'matched') {
+        const events = await db.bridgeEvent.getByType(params.type, {
+          matched: true,
+        })
+        ctx.body = renderEventsPage({
+          events,
+          getExplorerUrl: config.dashboard.getExplorerUrl,
+        })
+      } else if (params.kind === 'old-unmatched') {
+        const events = await db.bridgeEvent.getByType(params.type, {
+          matched: false,
+          unsupported: false,
+          olderThanTwoHours: true,
+        })
+        ctx.body = renderEventsPage({
+          events,
+          getExplorerUrl: config.dashboard.getExplorerUrl,
+        })
+      } else if (params.kind === 'all') {
+        const events = await db.bridgeEvent.getByType(params.type)
         ctx.body = renderEventsPage({
           events,
           getExplorerUrl: config.dashboard.getExplorerUrl,
