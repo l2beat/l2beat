@@ -77,17 +77,14 @@ export class CelestiaRpcClient extends ClientCore {
   }
 
   async getValidatorsInfo({
-    height,
     page = 1,
     perPage = 100,
   }: {
-    height?: number
     page: number
     perPage?: number
   }) {
     const response = await this.query(
       `validators?${new URLSearchParams({
-        ...(height ? { height: height.toString() } : {}),
         page: page.toString(),
         per_page: perPage.toString(),
       }).toString()}`,
