@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xd9e85cdf161309ac09e9dd692dd59d9c4474a5cf
+
+# Diff at Thu, 25 Sep 2025 10:25:13 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@08eb3e2b6dafb4d1e7d4a8e779cd4e303c71568e block: 1758621561
+- current timestamp: 1758795850
+
+## Description
+
+Removed 5 members of multisig, added 2 new members that were a part of another multisig.
+
+## Watched changes
+
+```diff
+    contract Morph Multisig 2 (eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x19C0CebaEC6EDb61c00178Cf8c6112BAD5Ef68E6"
+      values.$members.1:
+-        "eth:0xa79fEE4418338B59B8C6c93b87777A89F57c0Fd3"
+      values.$members.2:
+-        "eth:0x429087D7cb89cD816b80804bCE9c7b1A1FFE229F"
++        "eth:0xC7F81B58ec3937D11Bf4BA74C04FF69e944423F2"
+      values.$members.3:
+-        "eth:0x0659dF9D53A987e3aDaa9019407431413A101eF3"
++        "eth:0xbA430e784fe11ADbc20fa1a99193eeD87ACD68C7"
+      values.$members.6:
+-        "eth:0xAD249861A911717fE74FA329fEC3c619f55DfFDf"
+      values.$threshold:
+-        5
++        3
+      values.multisigThreshold:
+-        "5 of 8 (63%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0xed34c197a104a6366dbeac0f6ff4d78762a6f299
 
 # Diff at Tue, 23 Sep 2025 10:00:23 GMT:
