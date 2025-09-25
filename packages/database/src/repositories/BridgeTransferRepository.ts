@@ -152,13 +152,24 @@ export class BridgeTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByType(type: string): Promise<BridgeTransferRecord[]> {
-    const rows = await this.db
-      .selectFrom('BridgeTransfer')
-      .where('type', '=', type)
-      .orderBy('timestamp', 'desc')
-      .selectAll()
-      .execute()
+  async getByType(
+    type: string,
+    options: {
+      srcChain?: string
+      dstChain?: string
+    } = {},
+  ): Promise<BridgeTransferRecord[]> {
+    let query = this.db.selectFrom('BridgeTransfer').where('type', '=', type)
+
+    if (options.srcChain !== undefined) {
+      query = query.where('srcChain', '=', options.srcChain)
+    }
+
+    if (options.dstChain !== undefined) {
+      query = query.where('dstChain', '=', options.dstChain)
+    }
+
+    const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()
 
     return rows.map(toRecord)
   }

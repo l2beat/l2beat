@@ -26,24 +26,6 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
     ctx.body = { events, messages }
   })
 
-  router.get('/bridges/messages/:type', async (ctx) => {
-    const params = v.object({ type: v.string() }).validate(ctx.params)
-    const query = v
-      .object({
-        srcChain: v.string().optional(),
-        dstChain: v.string().optional(),
-      })
-      .validate(ctx.query)
-    const messages = await db.bridgeMessage.getByType(params.type, {
-      srcChain: query.srcChain,
-      dstChain: query.dstChain,
-    })
-    ctx.body = renderMessagesPage({
-      messages,
-      getExplorerUrl: config.dashboard.getExplorerUrl,
-    })
-  })
-
   const Params = v.object({
     kind: v.enum([
       'all',
@@ -101,6 +83,42 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
         getExplorerUrl: config.dashboard.getExplorerUrl,
       })
     }
+  })
+
+  router.get('/bridges/messages/:type', async (ctx) => {
+    const params = v.object({ type: v.string() }).validate(ctx.params)
+    const query = v
+      .object({
+        srcChain: v.string().optional(),
+        dstChain: v.string().optional(),
+      })
+      .validate(ctx.query)
+    const messages = await db.bridgeMessage.getByType(params.type, {
+      srcChain: query.srcChain,
+      dstChain: query.dstChain,
+    })
+    ctx.body = renderMessagesPage({
+      messages,
+      getExplorerUrl: config.dashboard.getExplorerUrl,
+    })
+  })
+
+  router.get('/bridges/transfers/:type', async (ctx) => {
+    const params = v.object({ type: v.string() }).validate(ctx.params)
+    const query = v
+      .object({
+        srcChain: v.string().optional(),
+        dstChain: v.string().optional(),
+      })
+      .validate(ctx.query)
+    const messages = await db.bridgeTransfer.getByType(params.type, {
+      srcChain: query.srcChain,
+      dstChain: query.dstChain,
+    })
+    ctx.body = renderMessagesPage({
+      messages,
+      getExplorerUrl: config.dashboard.getExplorerUrl,
+    })
   })
 
   return router
