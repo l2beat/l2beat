@@ -42,6 +42,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
     this.logger.info('Block processed', {
       chain: this.chain,
       blockNumber: block.number,
+      logs: toDecode.length,
       events: events.length,
     })
   }
