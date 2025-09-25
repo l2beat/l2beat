@@ -215,8 +215,9 @@ function makeTechnologyContract(
     'id',
   )
 
-  const pastUpgrades: TechnologyContract['pastUpgrades'] =
-    item.pastUpgrades?.map((upgrade) => ({
+  const pastUpgrades: TechnologyContract['pastUpgrades'] = item.pastUpgrades
+    ?.sort((a, b) => b.timestamp - a.timestamp)
+    .map((upgrade) => ({
       timestamp: upgrade.timestamp,
       transactionHash: {
         hash: upgrade.transactionHash,
