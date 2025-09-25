@@ -96,7 +96,7 @@ export class AcrossPlugin implements BridgePlugin {
         $dstChain: findChain(
           ACROSS_NETWORKS,
           (x) => x.chainId,
-          network.chainId,
+          Number(fundsDeposited.destinationChainId),
         ),
         originChainId: network.chainId,
         destinationChainId: Number(fundsDeposited.destinationChainId),
