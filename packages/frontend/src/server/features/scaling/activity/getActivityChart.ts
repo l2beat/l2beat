@@ -49,16 +49,16 @@ export type ActivityChartData = {
   stats:
     | {
         uops: {
-          pastDayCount: number
-          pastDaySum: number
+          pastDayCount: number | null
+          pastDaySum: number | null
           maxCount: {
             value: number
             timestamp: number
           }
         }
         tps: {
-          pastDayCount: number
-          pastDaySum: number
+          pastDayCount: number | null
+          pastDaySum: number | null
           maxCount: {
             value: number
             timestamp: number
@@ -176,7 +176,7 @@ function getActivityChartStats(
     }
   >,
 ): ActivityChartData['stats'] {
-  const pastDaySumTps = data.at(-1)?.[1] ?? 0
+  const pastDaySumTps = data.at(-1)?.[1] ?? null
   const pastDaySumUops = data.at(-1)?.[3] ?? pastDaySumTps
 
   const [projectId] = projects.filter((p) => p !== ProjectId.ETHEREUM)
@@ -187,7 +187,8 @@ function getActivityChartStats(
   return {
     uops: {
       pastDaySum: pastDaySumUops,
-      pastDayCount: countPerSecond(pastDaySumUops),
+      pastDayCount:
+        pastDaySumUops !== null ? countPerSecond(pastDaySumUops) : null,
       maxCount: {
         value: countPerSecond(maxCount.uopsCount),
         timestamp: maxCount.uopsTimestamp,
@@ -195,7 +196,8 @@ function getActivityChartStats(
     },
     tps: {
       pastDaySum: pastDaySumTps,
-      pastDayCount: countPerSecond(pastDaySumTps),
+      pastDayCount:
+        pastDaySumTps !== null ? countPerSecond(pastDaySumTps) : null,
       maxCount: {
         value: countPerSecond(maxCount.count),
         timestamp: maxCount.countTimestamp,
