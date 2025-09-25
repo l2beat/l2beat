@@ -1,3 +1,143 @@
+Generated with discovered.json: 0x2c6e02c7901b8c8a0d6e0dd6171133972a735603
+
+# Diff at Thu, 25 Sep 2025 00:04:15 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@057753e0fc174dd2853a04bcf79bde0ce8ba0aa3 block: 1757922823
+- current timestamp: 1758758549
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract L2UpgradeExecutor (arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: None
+      template:
+-        "orbitstack/UpgradeExecutor"
+      sourceHashes.1:
+-        "0x17d2fa21e1bf7dff5e335a08bb2b6b996e34c00b1175c3711875720dde509401"
++        "0x5b1abdc6dea1e28ed7625a5840c5e44c9a0e33a01b15db9b8604c9e587986e85"
+      description:
+-        "Central contract defining the access control permissions for upgrading the system contract implementations."
+      values.$implementation:
+-        "arb-nova:0x3096EAEdcb3A3B665552660F4d921E565D0073cB"
++        "arb-nova:0x3d745b8815F9be5BF053858165f8aB1F58c77932"
+      values.$pastUpgrades.1:
++        ["2025-09-23T16:32:04.000Z","0x06d23bf7c4f6d2744a60b2767eeb155cc463c64cdb7c12eb4d474e7b9b62d847",["arb-nova:0x3d745b8815F9be5BF053858165f8aB1F58c77932"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.executors:
+-        ["arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a","arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"]
+      implementationNames.arb-nova:0x3096EAEdcb3A3B665552660F4d921E565D0073cB:
+-        "UpgradeExecutor"
+      implementationNames.arb-nova:0x3d745b8815F9be5BF053858165f8aB1F58c77932:
++        "UpgradeExecutor"
+      category:
+-        {"name":"Governance","priority":3}
+      receivedPermissions:
++        [{"permission":"upgrade","from":"arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"}]},{"permission":"upgrade","from":"arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"}]},{"permission":"upgrade","from":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","role":"admin","via":[{"address":"arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}]},{"permission":"upgrade","from":"arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"}]},{"permission":"upgrade","from":"arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"}]},{"permission":"upgrade","from":"arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD","role":"admin","via":[{"address":"arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}]}]
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","role":"admin","via":[{"address":"arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD","role":"admin","via":[{"address":"arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","role":".executors"}]
+    }
+```
+
+```diff
+    EOA L1Timelock (arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","role":"admin","via":[{"address":"arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD","role":"admin","via":[{"address":"arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}]
+      controlsMajorityOfUpgradePermissions:
+-        true
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","role":".executors"}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: None
+      template:
+-        "orbitstack/UpgradeExecutor"
+      sourceHashes.1:
+-        "0x17d2fa21e1bf7dff5e335a08bb2b6b996e34c00b1175c3711875720dde509401"
++        "0x5b1abdc6dea1e28ed7625a5840c5e44c9a0e33a01b15db9b8604c9e587986e85"
+      description:
+-        "Central contract defining the access control permissions for upgrading the system contract implementations."
+      values.$implementation:
+-        "eth:0x86f0cf42Ad673B3D666d103E009EC142D1298a17"
++        "eth:0x3d745b8815F9be5BF053858165f8aB1F58c77932"
+      values.$pastUpgrades.1:
++        ["2025-09-23T16:16:47.000Z","0x81f4da8c5dd87d618e927936c941151689ef674ce2639cd4f0857fa4b75a2861",["eth:0x3d745b8815F9be5BF053858165f8aB1F58c77932"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"ADMIN_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]},"EXECUTOR_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85"]}}
+      values.executors:
+-        ["eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85"]
+      implementationNames.eth:0x86f0cf42Ad673B3D666d103E009EC142D1298a17:
+-        "UpgradeExecutor"
+      implementationNames.eth:0x3d745b8815F9be5BF053858165f8aB1F58c77932:
++        "UpgradeExecutor"
+      category:
+-        {"name":"Governance","priority":3}
+      directlyReceivedPermissions.3:
+-        {"permission":"interact","from":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"cancel queued transactions.","role":".Canceller"}
+      directlyReceivedPermissions.4:
+-        {"permission":"interact","from":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"update the minimum delay and manage all access control roles of the timelock.","role":".timelockAdminAC"}
+      directlyReceivedPermissions.5:
+-        {"permission":"interact","from":"eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner"}
+      directlyReceivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd","role":"admin"}
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner"},{"permission":"upgrade","from":"eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b","role":"admin","via":[{"address":"eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]},{"permission":"upgrade","from":"eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f","role":"admin","via":[{"address":"eth:0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"}]},{"permission":"upgrade","from":"eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2","role":"admin","via":[{"address":"eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]},{"permission":"upgrade","from":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","role":"admin","via":[{"address":"eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]},{"permission":"upgrade","from":"eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf","role":"admin","via":[{"address":"eth:0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"}]},{"permission":"upgrade","from":"eth:0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd","role":"admin","via":[{"address":"eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]},{"permission":"upgrade","from":"eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949","role":"admin","via":[{"address":"eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]},{"permission":"upgrade","from":"eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48","role":"admin","via":[{"address":"eth:0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"}]},{"permission":"upgrade","from":"eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58","role":"admin","via":[{"address":"eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]},{"permission":"upgrade","from":"eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd","role":"admin"},{"permission":"upgrade","from":"eth:0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688","role":"admin","via":[{"address":"eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin 2 (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) {
+    +++ description: None
+      directlyReceivedPermissions.1:
+-        {"permission":"upgrade","from":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49)
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncil (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../L1Timelock/L1ArbitrumTimelock.sol => /dev/null | 1544 --------------------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  631 --------
+ .../L2UpgradeExecutor/UpgradeExecutor.sol          |   34 +-
+ .../SecurityCouncil/GnosisSafe.sol => /dev/null    |  953 ------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../UpgradeExecutor/UpgradeExecutor.sol            |   34 +-
+ 6 files changed, 66 insertions(+), 3165 deletions(-)
+```
+
 Generated with discovered.json: 0x78909c556c1cc3f5b9c5b7f39d0f1e85fddaab3c
 
 # Diff at Mon, 15 Sep 2025 07:55:40 GMT:
