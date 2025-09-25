@@ -2,8 +2,7 @@ import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-
-import { getSyncState } from '../../utils/isSynced'
+import { getActivitySyncState } from '../../utils/syncState'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 import { getActivityAdjustedTimestamp } from './utils/syncStatus'
 
@@ -28,7 +27,7 @@ async function getActivityProjectStatsData(projectId: ProjectId) {
   if (counts.length === 0 || !syncMetadata) {
     return
   }
-  const syncState = getSyncState(syncMetadata, range[1])
+  const syncState = getActivitySyncState(syncMetadata, range[1])
   const syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
 
   const lastDayUops =

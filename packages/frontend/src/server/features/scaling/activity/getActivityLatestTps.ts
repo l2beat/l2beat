@@ -4,7 +4,7 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import { getSyncState, type SyncState } from '../../utils/isSynced'
+import { getActivitySyncState, type SyncState } from '../../utils/syncState'
 import { countPerSecond } from './utils/countPerSecond'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 import { getActivityAdjustedTimestamp } from './utils/syncStatus'
@@ -54,7 +54,7 @@ export async function getActivityLatestUops(
         if (!syncMetadata) {
           return undefined
         }
-        const syncState = getSyncState(syncMetadata, timeRange[1])
+        const syncState = getActivitySyncState(syncMetadata, timeRange[1])
         const syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
 
         const pastDayUops = countPerSecond(

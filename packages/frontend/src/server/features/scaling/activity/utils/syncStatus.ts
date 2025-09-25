@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { SyncState } from '~/server/features/utils/isSynced'
+import type { SyncState } from '~/server/features/utils/syncState'
 import { formatTimestamp } from '~/utils/dates'
 
 export function getActivityAdjustedTimestamp(timestmap: UnixTime): UnixTime {

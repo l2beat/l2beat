@@ -5,7 +5,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import { getSyncState, type SyncState } from '../../utils/isSynced'
+import { getActivitySyncState, type SyncState } from '../../utils/syncState'
 import { countPerSecond } from './utils/countPerSecond'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 import { getLastDayRatio } from './utils/getLastDayRatio'
@@ -78,7 +78,7 @@ export async function getActivityTable(
         return [projectId, undefined]
       }
 
-      const syncState = getSyncState(syncMetadata, range[1])
+      const syncState = getActivitySyncState(syncMetadata, range[1])
       const syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
       const pastDayData = records.find((r) => r.timestamp === syncedUntil)
       const sevenDaysAgoData = records.find(

@@ -22,6 +22,15 @@ export function getSyncState(
   }
 }
 
+export function getActivitySyncState(
+  record: SyncMetadataRecord,
+  timestamp: UnixTime,
+): SyncState {
+  // Activity target in SyncMetadata is always the end of the day
+  // Adjusted range is always the start of the day (fully synced timestamp), so we need to add 1 day to get the end of the day
+  return getSyncState(record, timestamp + 1 * UnixTime.DAY)
+}
+
 function isFeatureSynced(
   record: SyncMetadataRecord,
   timestamp: UnixTime,

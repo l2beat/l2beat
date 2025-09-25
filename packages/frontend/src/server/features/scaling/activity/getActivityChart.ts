@@ -4,7 +4,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getBucketValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { getSyncState } from '../../utils/isSynced'
+import { getActivitySyncState } from '../../utils/syncState'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { countPerSecond } from './utils/countPerSecond'
 import { getActivityProjects } from './utils/getActivityProjects'
@@ -115,7 +115,7 @@ export async function getActivityChart({
       }
     }
 
-    const syncState = getSyncState(syncMetadata, adjustedRange[1])
+    const syncState = getActivitySyncState(syncMetadata, adjustedRange[1])
 
     syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
     syncWarning = getActivitySyncWarning(syncState)
