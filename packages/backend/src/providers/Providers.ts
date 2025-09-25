@@ -105,7 +105,7 @@ export class Providers {
     this.daBeatStats = new DaBeatStatsProvider(
       this.clients.beacon,
       this.clients.near,
-      this.clients.celestia,
+      this.clients.celestiaDaBeat,
       this.clients.availWs,
     )
   }

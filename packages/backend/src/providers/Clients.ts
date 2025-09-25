@@ -35,6 +35,7 @@ export interface Clients {
   coingecko: CoingeckoClient
   beacon: BeaconChainClient | undefined
   celestia: CelestiaRpcClient | undefined
+  celestiaDaBeat: CelestiaRpcClient | undefined
   avail: PolkadotRpcClient | undefined
   availWs: AvailWsClient | undefined
   eigen: EigenApiClient | undefined
@@ -54,6 +55,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   let ethereumClient: RpcClient | undefined
   let beaconChainClient: BeaconChainClient | undefined
   let celestia: CelestiaRpcClient | undefined
+  let celestiaDaBeat: CelestiaRpcClient | undefined
   let avail: PolkadotRpcClient | undefined
   let availWs: AvailWsClient | undefined
   let near: NearClient | undefined
@@ -272,7 +274,7 @@ export function initClients(config: Config, logger: Logger): Clients {
       logger,
       callsPerMinute: 100,
     })
-    celestia = new CelestiaRpcClient({
+    celestiaDaBeat = new CelestiaRpcClient({
       callsPerMinute: config.daBeat.celestiaCallsPerMinute,
       url: config.daBeat.celestiaApiUrl,
       retryStrategy: 'RELIABLE',
@@ -306,6 +308,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     coingecko: coingeckoClient,
     beacon: beaconChainClient,
     celestia,
+    celestiaDaBeat,
     eigen,
     avail,
     availWs,
