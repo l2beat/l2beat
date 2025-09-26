@@ -117,7 +117,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
                   <a
                     key={entry.name}
                     className={linkVariants()}
-                    href={`#${entry.name}`}
+                    href={`#${entry.id ?? entry.name}`}
                   >
                     {`${entry.name} with ${entry.delay} delay`}
                   </a>

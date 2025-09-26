@@ -901,17 +901,7 @@ export class ProjectDiscovery {
     return priority
   }
 
-  getDiscoveredPermissions(
-    chainsToIgnore: string[] = [],
-  ): Record<string, ProjectPermissions> {
-    const permissionedContracts = this.permissionRegistry
-      .getPermissionedContracts()
-      .map((address) => this.getContractByAddress(address))
-      .filter(notUndefined)
-      .filter((e) => (e.category?.priority ?? 0) >= 0)
-      .sort((a, b) => {
-        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
-      })
+  getEoaActors() {
     const permissionedEoas = this.permissionRegistry
       .getPermissionedEoas()
       .map((address) => this.getEOAByAddress(address))
@@ -920,28 +910,6 @@ export class ProjectDiscovery {
       .sort((a, b) => {
         return this.getPermissionPriority(b) - this.getPermissionPriority(a)
       })
-
-    /**
-     * 1. Simulate grouping by desc so we can re-assigned href of EOAs
-     * 1. Pass all actors
-     * 2. Finally output grouped ones to
-     */
-
-    const contractActors: ProjectPermission[] = []
-    for (const contract of permissionedContracts) {
-      const descriptions = this.describeContractOrEoa(contract, false)
-      if (isMultisigLike(contract)) {
-        contractActors.push(
-          this.getMultisigPermission(
-            contract.address.toString(),
-            descriptions,
-            [],
-          ),
-        )
-      } else {
-        contractActors.push(this.contractAsPermissioned(contract, descriptions))
-      }
-    }
 
     const eoaActorsBeforeGrouping: ProjectPermission[] = []
 
@@ -985,22 +953,65 @@ export class ProjectDiscovery {
     const eoaGroupedAsActors: ProjectPermission[] = []
 
     for (const eoas of Object.values(groupedEoas)) {
-      eoaGroupedAsActors.push({
-        name: concatName(eoas.map((eoa) => eoa.name)),
-        id: createGroupedEoa(eoas),
-        accounts: eoas.map((eoa) => eoa.accounts).flat(),
-        chain: eoas[0].chain,
-        description: eoas[0].description,
-      })
+      const byChain = groupBy(eoas, (eoa) => eoa.chain)
+      for (const [chain, eoas] of Object.entries(byChain)) {
+        eoaGroupedAsActors.push({
+          name: concatName(eoas.map((eoa) => eoa.name)),
+          id: createGroupedEoa(eoas),
+          accounts: eoas.map((eoa) => eoa.accounts).flat(),
+          chain: chain,
+          description: eoas[0].description,
+        })
+      }
     }
 
-    const allActors = [...contractActors, ...eoaGroupedAsActors]
+    return {
+      raw: permissionedEoas,
+      linkable: preparedEoas,
+      grouped: eoaGroupedAsActors,
+    }
+  }
+
+  getDiscoveredPermissions(
+    chainsToIgnore: string[] = [],
+  ): Record<string, ProjectPermissions> {
+    const permissionedContracts = this.permissionRegistry
+      .getPermissionedContracts()
+      .map((address) => this.getContractByAddress(address))
+      .filter(notUndefined)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
+      .sort((a, b) => {
+        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
+      })
+    const permissionedEoas = this.getEoaActors()
+    /**
+     * 1. Simulate grouping by desc so we can re-assigned href of EOAs
+     * 1. Pass all actors
+     * 2. Finally output grouped ones to
+     */
+
+    const contractActors: ProjectPermission[] = []
+    for (const contract of permissionedContracts) {
+      const descriptions = this.describeContractOrEoa(contract, false)
+      if (isMultisigLike(contract)) {
+        contractActors.push(
+          this.getMultisigPermission(
+            contract.address.toString(),
+            descriptions,
+            [],
+          ),
+        )
+      } else {
+        contractActors.push(this.contractAsPermissioned(contract, descriptions))
+      }
+    }
+
+    const allActors = [...contractActors, ...permissionedEoas.grouped]
 
     // NOTE(radomski): Checking for assumptions made about discovery driven actors
     assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
-
     assert(
-      [...contractActors, ...eoaActorsBeforeGrouping].every(
+      [...contractActors, ...permissionedEoas.linkable].every(
         (actor) => actor.accounts.length === 1,
       ),
     )
@@ -1008,7 +1019,7 @@ export class ProjectDiscovery {
 
     const roles = this.describeRolePermissions([
       ...permissionedContracts,
-      ...permissionedEoas,
+      ...permissionedEoas.raw,
     ])
 
     allActors.forEach((permission) => {
@@ -1018,7 +1029,7 @@ export class ProjectDiscovery {
       if (permission.participants !== undefined) {
         permission.participants = this.linkupActorsIntoAccounts(
           permission.participants,
-          [...contractActors, ...preparedEoas],
+          [...contractActors, ...permissionedEoas.linkable],
         )
       }
     })
@@ -1029,7 +1040,7 @@ export class ProjectDiscovery {
       )
       permission.accounts = this.linkupActorsIntoAccounts(permission.accounts, [
         ...contractActors,
-        ...preparedEoas,
+        ...permissionedEoas.linkable,
       ])
     })
 
@@ -1096,9 +1107,26 @@ export class ProjectDiscovery {
     return result
   }
 
+  linkupUpgradableBy(
+    upgradableBy: ProjectUpgradeableActor[],
+    eoaActors: ProjectPermission[],
+  ): ProjectUpgradeableActor[] {
+    return upgradableBy.map((upgradableBy) => {
+      const eoaActor = eoaActors.find((e) => e.name === upgradableBy.name)
+      if (eoaActor) {
+        return {
+          id: eoaActor.id,
+          ...upgradableBy,
+        }
+      }
+      return upgradableBy
+    })
+  }
+
   getDiscoveredContracts(
     chainsToIgnore: string[] = [],
   ): Record<string, ProjectContract[]> {
+    const eoaActors = this.getEoaActors()
     const contracts = this.discoveries
       .flatMap((discovery) =>
         discovery.entries.filter((e) => e.type === 'Contract'),
@@ -1113,10 +1141,16 @@ export class ProjectDiscovery {
       .filter((contract) => !isMultisigLike(contract))
       .map((contract) => {
         const upgradableBy = this.permissionRegistry.getUpgradableBy(contract)
+        const linkedUpgradableBy = this.linkupUpgradableBy(
+          upgradableBy,
+          eoaActors.linkable,
+        )
 
         return this.getContractDetails(contract.address.toString(), {
           description: this.describeContractOrEoa(contract, true),
-          ...(upgradableBy.length > 0 ? { upgradableBy } : {}),
+          ...(linkedUpgradableBy.length > 0
+            ? { upgradableBy: linkedUpgradableBy }
+            : {}),
           discoveryDrivenData: true,
         })
       })
