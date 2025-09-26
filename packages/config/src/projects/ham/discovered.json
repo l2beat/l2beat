@@ -1,6 +1,6 @@
 {
   "name": "ham",
-  "timestamp": 1757661456,
+  "timestamp": 1758875696,
   "configHash": "0x0a0b4c747f768fd12ac5dd215a6404d66a0babae950c3d2cda851565e6dbbcef",
   "entries": [
     {
@@ -213,10 +213,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 1,
         "l2BlockTime": 1,
-        "latestBlockNumber": 41068800,
-        "latestOutputIndex": 11407,
-        "nextBlockNumber": 41072400,
-        "nextOutputIndex": 11408,
+        "latestBlockNumber": 42282000,
+        "latestOutputIndex": 11744,
+        "nextBlockNumber": 42285600,
+        "nextOutputIndex": 11745,
         "proposer": "base:0x78c6285Cc98Ec52De9Cf2E40b763D509489C47fB",
         "PROPOSER": "base:0x78c6285Cc98Ec52De9Cf2E40b763D509489C47fB",
         "startingBlockNumber": 0,
@@ -299,7 +299,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292635540",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292635582",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -488,6 +488,7 @@
         "$immutable": false,
         "$implementation": "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "$members": [
+          "base:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
           "base:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
           "base:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
           "base:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
@@ -498,8 +499,8 @@
         "domainSeparator": "0x4fb2fc3bf94e37270ffe59bdcf3eec7f07722bd047093c7fd05fb408668db9d4",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 18,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -539,6 +540,11 @@
         "base:0x0Da314776B267D898dEE57F6Ede357ae28b3b83c": "L1StandardBridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "base:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "base:0xa620962E8Ea00aeE66ACea179CdAb8Dc1BbD641B",
@@ -688,7 +694,7 @@
         "params": {
           "prevBaseFee": 5000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 35433650
+          "prevBlockNum": 35907515
         },
         "paused": false,
         "superchainConfig": "base:0xFC57b0947C079073A1C5Fe61887Eb3495972EE72",
@@ -1127,6 +1133,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 35436054 },
-  "permissionsConfigHash": "0x724995d3555aeff6ccc86677edf5dcb06115dd45de5ada9575d34c433343d50b"
+  "usedBlockNumbers": { "base": 36043174 },
+  "permissionsConfigHash": "0x867934a49dbc48061a6c8a6678167a51991af346be4513f2938913b82e62d9ec"
 }
