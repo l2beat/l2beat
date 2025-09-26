@@ -1,6 +1,6 @@
 {
   "name": "syndicateframe",
-  "timestamp": 1757661476,
+  "timestamp": 1758875704,
   "configHash": "0x065339c0ee6fafe0c4b3798dbef8fe3b4ca5cd8f2a115a796833eba87af1652d",
   "entries": [
     {
@@ -40,7 +40,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625152",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625227",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -110,10 +110,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 25145280,
-        "latestOutputIndex": 34923,
-        "nextBlockNumber": 25146000,
-        "nextOutputIndex": 34924,
+        "latestBlockNumber": 25752240,
+        "latestOutputIndex": 35766,
+        "nextBlockNumber": 25752960,
+        "nextOutputIndex": 35767,
         "PROPOSER": "base:0xADE1F8C181934052fD1958F06B63Ef0D875803C5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1707367873,
@@ -165,7 +165,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 35433742
+          "prevBlockNum": 36041487
         },
         "paused": false,
         "SYSTEM_CONFIG": "base:0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4",
@@ -265,6 +265,7 @@
         "$immutable": false,
         "$implementation": "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "$members": [
+          "base:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
           "base:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
           "base:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
           "base:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
@@ -275,8 +276,8 @@
         "domainSeparator": "0x4fb2fc3bf94e37270ffe59bdcf3eec7f07722bd047093c7fd05fb408668db9d4",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 18,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -309,6 +310,11 @@
         "base:0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0": "AddressManager"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "base:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "base:0xADE1F8C181934052fD1958F06B63Ef0D875803C5",
@@ -780,6 +786,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 35436064 },
-  "permissionsConfigHash": "0x656366e411fc8cc3e3ca0f18c30db7a735839d6311edbdf1e75ab4cbac13bd3a"
+  "usedBlockNumbers": { "base": 36043178 },
+  "permissionsConfigHash": "0x2f13db43f980022aede190239f15bfde446cbca675c11dd1e66565f9b77abb67"
 }
