@@ -204,18 +204,7 @@ describe('getProjects', () => {
                 )
 
                 for (const expected of expectedToContain) {
-                  const includes = actorIds.includes(expected)
-
-                  if (!includes) {
-                    console.dir(
-                      {
-                        expectedToContain,
-                        actorIds,
-                      },
-                      { depth: null },
-                    )
-                  }
-                  expect(includes).toEqual(true)
+                  expect(actorIds).toInclude(expected)
                 }
               })
             }
