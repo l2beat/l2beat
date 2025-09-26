@@ -873,6 +873,7 @@ const mockResponse = (blockNumber: number) => ({
     transactions: [mockRawTx('0'), mockRawTx(undefined)],
     timestamp: `0x${blockNumber.toString(16)}`,
     hash: '0xabcdef',
+    logsBloom: `0x${'0'.repeat(512)}`,
     number: `0x${blockNumber.toString(16)}`,
     parentBeaconBlockRoot: '0x123',
   },

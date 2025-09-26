@@ -131,6 +131,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           number: 123,
           timestamp: UnixTime.now(),
           transactions,
+          hash: '0x123456',
         })
 
         const logs: Log[] = [
