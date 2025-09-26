@@ -12,21 +12,21 @@ export function ScrollWithGradient({
     if (isScrolledToTop && isScrolledToBottom) return
 
     if (!isScrolledToTop && !isScrolledToBottom) {
-      node.classList.add('fade-out-vertical-8')
+      node.classList.add('fade-out-vertical-12')
     } else {
-      node.classList.remove('fade-out-vertical-8')
+      node.classList.remove('fade-out-vertical-12')
     }
 
     if (isScrolledToTop) {
-      node.classList.add('fade-out-to-bottom-8')
+      node.classList.add('fade-out-to-bottom-12')
     } else {
-      node.classList.remove('fade-out-to-bottom-8')
+      node.classList.remove('fade-out-to-bottom-12')
     }
 
     if (isScrolledToBottom) {
-      node.classList.add('fade-out-to-top-8')
+      node.classList.add('fade-out-to-top-12')
     } else {
-      node.classList.remove('fade-out-to-top-8')
+      node.classList.remove('fade-out-to-top-12')
     }
   }
   return (
