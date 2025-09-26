@@ -32,6 +32,7 @@ export const allbridge: Bridge = {
         'https://docs.allbridge.io/',
         'https://docs-core.allbridge.io/',
       ],
+      explorers: ['https://core.allbridge.io/explorer'],
       repositories: ['https://github.com/allbridge-io'],
       socialMedia: [
         'https://x.com/Allbridge_io',
