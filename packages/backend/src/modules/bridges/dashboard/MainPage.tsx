@@ -3,10 +3,20 @@ import type {
   BridgeMessageStatsRecord,
   BridgeTransfersStatsRecord,
 } from '@l2beat/database'
+import type { BridgeMessageDetailedStatsRecord } from '@l2beat/database/dist/repositories/BridgeMessageRepository'
+import type { BridgeTransfersDetailedStatsRecord } from '@l2beat/database/dist/repositories/BridgeTransferRepository'
 import { formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
+
+type MessageStats = BridgeMessageStatsRecord & {
+  chains: BridgeMessageDetailedStatsRecord[]
+}
+
+type TransferStats = BridgeTransfersStatsRecord & {
+  chains: BridgeTransfersDetailedStatsRecord[]
+}
 
 function EventsTable(props: { events: BridgeEventStatsRecord[] }) {
   return (
@@ -123,7 +133,7 @@ const NETWORKS: [
 
 // currently this component is used also for Transfers
 function MessagesTable(props: {
-  items: BridgeTransfersStatsRecord[] | BridgeMessageStatsRecord[]
+  items: MessageStats[] | TransferStats[]
   id: string
   type: 'messages' | 'transfers'
 }) {
@@ -227,8 +237,8 @@ function MessagesTable(props: {
 
 function MainPageLayout(props: {
   events: BridgeEventStatsRecord[]
-  messages: BridgeMessageStatsRecord[]
-  transfers: BridgeTransfersStatsRecord[]
+  messages: MessageStats[]
+  transfers: TransferStats[]
 }) {
   const eventsTable = <EventsTable {...props} />
   const messagesTable = (
@@ -284,8 +294,8 @@ function MainPageLayout(props: {
 
 export function renderMainPage(props: {
   events: BridgeEventStatsRecord[]
-  messages: BridgeMessageStatsRecord[]
-  transfers: BridgeTransfersStatsRecord[]
+  messages: MessageStats[]
+  transfers: TransferStats[]
 }) {
   return '<!DOCTYPE html>' + renderToStaticMarkup(<MainPageLayout {...props} />)
 }

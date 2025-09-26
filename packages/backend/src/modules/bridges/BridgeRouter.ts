@@ -1,5 +1,6 @@
 import Router from '@koa/router'
 import type { Database } from '@l2beat/database'
+import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { BridgesConfig } from '../../config/Config'
 import { renderEventsPage } from './dashboard/EventsPage'
@@ -11,8 +12,8 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
 
   router.get('/bridges', async (ctx) => {
     const events = await db.bridgeEvent.getStats()
-    const messages = await db.bridgeMessage.getStats()
-    const transfers = await db.bridgeTransfer.getStats()
+    const messages = await getMessagesStats(db)
+    const transfers = await getTransfersStats(db)
     ctx.body = renderMainPage({
       events,
       messages,
@@ -122,4 +123,54 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
   })
 
   return router
+}
+
+async function getMessagesStats(db: Database) {
+  const stats = await db.bridgeMessage.getStats()
+  const detailedStats = await db.bridgeMessage.getDetailedStats()
+
+  return stats.map((overall) => ({
+    type: overall.type,
+    count: Number(overall.count),
+    medianDuration: Number(overall.medianDuration),
+    chains: detailedStats
+      .filter((chain) => chain.type === overall.type)
+      .map((chain) => {
+        assert(chain.sourceChain && chain.destinationChain)
+        return {
+          type: chain.type,
+          sourceChain: chain.sourceChain,
+          destinationChain: chain.destinationChain,
+          count: Number(chain.count),
+          medianDuration: Number(chain.medianDuration),
+        }
+      }),
+  }))
+}
+
+async function getTransfersStats(db: Database) {
+  const stats = await db.bridgeTransfer.getStats()
+  const detailedStats = await db.bridgeTransfer.getDetailedStats()
+
+  return stats.map((overall) => ({
+    type: overall.type,
+    count: Number(overall.count),
+    medianDuration: Number(overall.medianDuration),
+    outboundValueSum: Number(overall.outboundValueSum),
+    inboundValueSum: Number(overall.inboundValueSum),
+    chains: detailedStats
+      .filter((chain) => chain.type === overall.type)
+      .map((chain) => {
+        assert(chain.sourceChain && chain.destinationChain)
+        return {
+          type: chain.type,
+          sourceChain: chain.sourceChain,
+          destinationChain: chain.destinationChain,
+          count: Number(chain.count),
+          medianDuration: Number(chain.medianDuration),
+          outboundValueSum: Number(chain.outboundValueSum),
+          inboundValueSum: Number(chain.inboundValueSum),
+        }
+      }),
+  }))
 }

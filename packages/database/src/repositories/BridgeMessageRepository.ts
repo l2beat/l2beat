@@ -64,12 +64,14 @@ export interface BridgeMessageStatsRecord {
   type: string
   count: number
   medianDuration: number
-  chains: {
-    sourceChain: string
-    destinationChain: string
-    count: number
-    medianDuration: number
-  }[]
+}
+
+export interface BridgeMessageDetailedStatsRecord {
+  type: string
+  sourceChain: string
+  destinationChain: string
+  count: number
+  medianDuration: number
 }
 
 export class BridgeMessageRepository extends BaseRepository {
@@ -124,6 +126,14 @@ export class BridgeMessageRepository extends BaseRepository {
       .groupBy('type')
       .execute()
 
+    return overallStats.map((overall) => ({
+      type: overall.type,
+      count: Number(overall.count),
+      medianDuration: Number(overall.medianDuration),
+    }))
+  }
+
+  async getDetailedStats(): Promise<BridgeMessageDetailedStatsRecord[]> {
     const chainStats = await this.db
       .selectFrom('BridgeMessage')
       .select((eb) => [
@@ -140,22 +150,16 @@ export class BridgeMessageRepository extends BaseRepository {
       .groupBy(['type', 'srcChain', 'dstChain'])
       .execute()
 
-    return overallStats.map((overall) => ({
-      type: overall.type,
-      count: Number(overall.count),
-      medianDuration: Number(overall.medianDuration),
-      chains: chainStats
-        .filter((chain) => chain.type === overall.type)
-        .map((chain) => {
-          assert(chain.srcChain && chain.dstChain)
-          return {
-            sourceChain: chain.srcChain,
-            destinationChain: chain.dstChain,
-            count: Number(chain.count),
-            medianDuration: Number(chain.medianDuration),
-          }
-        }),
-    }))
+    return chainStats.map((chain) => {
+      assert(chain.srcChain && chain.dstChain)
+      return {
+        type: chain.type,
+        sourceChain: chain.srcChain,
+        destinationChain: chain.dstChain,
+        count: Number(chain.count),
+        medianDuration: Number(chain.medianDuration),
+      }
+    })
   }
 
   async deleteBefore(timestamp: UnixTime): Promise<number> {

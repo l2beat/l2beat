@@ -122,14 +122,16 @@ export interface BridgeTransfersStatsRecord {
   medianDuration: number
   outboundValueSum: number
   inboundValueSum: number
-  chains: {
-    sourceChain: string
-    destinationChain: string
-    count: number
-    medianDuration: number
-    outboundValueSum: number
-    inboundValueSum: number
-  }[]
+}
+
+export interface BridgeTransfersDetailedStatsRecord {
+  type: string
+  sourceChain: string
+  destinationChain: string
+  count: number
+  medianDuration: number
+  outboundValueSum: number
+  inboundValueSum: number
 }
 
 export class BridgeTransferRepository extends BaseRepository {
@@ -189,6 +191,16 @@ export class BridgeTransferRepository extends BaseRepository {
       .groupBy('type')
       .execute()
 
+    return overallStats.map((overall) => ({
+      type: overall.type,
+      count: Number(overall.count),
+      medianDuration: Number(overall.medianDuration),
+      outboundValueSum: Number(overall.outboundValueSum),
+      inboundValueSum: Number(overall.inboundValueSum),
+    }))
+  }
+
+  async getDetailedStats(): Promise<BridgeTransfersDetailedStatsRecord[]> {
     const chainStats = await this.db
       .selectFrom('BridgeTransfer')
       .select((eb) => [
@@ -207,26 +219,18 @@ export class BridgeTransferRepository extends BaseRepository {
       .groupBy(['type', 'srcChain', 'dstChain'])
       .execute()
 
-    return overallStats.map((overall) => ({
-      type: overall.type,
-      count: Number(overall.count),
-      medianDuration: Number(overall.medianDuration),
-      outboundValueSum: Number(overall.outboundValueSum),
-      inboundValueSum: Number(overall.inboundValueSum),
-      chains: chainStats
-        .filter((chain) => chain.type === overall.type)
-        .map((chain) => {
-          assert(chain.srcChain && chain.dstChain)
-          return {
-            sourceChain: chain.srcChain,
-            destinationChain: chain.dstChain,
-            count: Number(chain.count),
-            medianDuration: Number(chain.medianDuration),
-            outboundValueSum: Number(chain.outboundValueSum),
-            inboundValueSum: Number(chain.inboundValueSum),
-          }
-        }),
-    }))
+    return chainStats.map((chain) => {
+      assert(chain.srcChain && chain.dstChain)
+      return {
+        type: chain.type,
+        sourceChain: chain.srcChain,
+        destinationChain: chain.dstChain,
+        count: Number(chain.count),
+        medianDuration: Number(chain.medianDuration),
+        outboundValueSum: Number(chain.outboundValueSum),
+        inboundValueSum: Number(chain.inboundValueSum),
+      }
+    })
   }
 
   async deleteBefore(timestamp: UnixTime): Promise<number> {
