@@ -236,6 +236,4 @@ You can find us to discuss everything related to Scroll’s governance, from cur
 
 [Weekly DAO & Governance Call](https://meet.google.com/smr-hxgd-btt) - on 4.6 at 11:30.
 
-
 [Weekly DAO & Governance Call](https://meet.google.com/mhz-ncvc-ipd) - on 4.6 at 17:00.
-
