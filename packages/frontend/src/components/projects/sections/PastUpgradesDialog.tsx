@@ -24,6 +24,7 @@ import {
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { CustomLink } from '~/components/link/CustomLink'
 import { CloseIcon } from '~/icons/Close'
+import { DiffoIcon } from '~/icons/Diffo'
 import { HistoryClockIcon } from '~/icons/HistoryClock'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
@@ -157,7 +158,7 @@ function PastUpgradeEntry({
   deployment?: boolean
 }) {
   return (
-    <div className="space-y-4 rounded-sm border border-divider bg-surface-group p-3">
+    <div className="space-y-4 rounded-sm border border-divider bg-surface-primary p-3">
       <div className="md:grid md:grid-cols-2">
         <ValueWithTitle title={deployment ? 'Deployment time' : 'Time'}>
           <span className="font-medium text-label-value-15">
@@ -195,21 +196,19 @@ function PastUpgradeEntry({
         </CustomLink>
       </ValueWithTitle>
       <ValueWithTitle title="Implementation address" className="md:mb-0">
-        <div className="flex gap-1">
+        <div className="flex flex-wrap gap-x-4 gap-y-2">
           {upgrade.implementations.map((implementation) => (
-            <div key={implementation.address} className="flex gap-0.5">
+            <div
+              key={implementation.address}
+              className="flex items-center gap-1.5"
+            >
               <EtherscanLink
                 address={implementation.address}
                 href={implementation.href}
                 className="text-label-value-15"
               />
               {implementation.diffUrl && (
-                <CustomLink
-                  href={implementation.diffUrl}
-                  className="text-label-value-15"
-                >
-                  (check diff)
-                </CustomLink>
+                <DiffoLink href={implementation.diffUrl} />
               )}
             </div>
           ))}
@@ -233,5 +232,18 @@ function ValueWithTitle({
       <span className="text-label-value-14 text-secondary">{title}</span>
       {children}
     </div>
+  )
+}
+
+function DiffoLink({ href }: { href: string }) {
+  return (
+    <a
+      href={href}
+      rel="noopener noreferrer"
+      target="_blank"
+      className="flex h-6 flex-row items-center gap-1.5 rounded-sm bg-linear-to-r from-[#854220] to-[#DE7B16] px-[9px] ring-brand ring-inset focus:ring-2"
+    >
+      <DiffoIcon className="h-[14px] w-[67px] fill-white" />
+    </a>
   )
 }
