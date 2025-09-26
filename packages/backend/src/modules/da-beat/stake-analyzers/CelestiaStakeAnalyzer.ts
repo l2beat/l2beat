@@ -11,7 +11,7 @@ export class CelestiaStakeAnalyzer extends AbstractStakeAnalyzer {
     let pageCount = 1
     let totalStake = 0n
     for (let page = 1; page <= pageCount; page++) {
-      const res = await this.client.getValidators({ page: 1, perPage })
+      const res = await this.client.getValidators({ page, perPage })
       pageCount = Math.ceil(res.total / perPage)
       totalStake += res.validators.reduce((acc, v) => {
         // We store the stake in the smallest denomination

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xe9fefd2ad20a0675e98172fbf19c28b4a9f31f1b
+
+# Diff at Wed, 24 Sep 2025 09:25:43 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@057753e0fc174dd2853a04bcf79bde0ce8ba0aa3 block: 1758123938
+- current timestamp: 1758705864
+
+## Description
+
+Execution delay changed from 7 days to 12 hours. It's the same value for optimistic or non-optimistic mode, so when optimistic mode is enabled this parameter should be updated (e.g., back to 7 days).
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.FINALIZATION_PERIOD_SECONDS:
+-        604800
++        43200
+      values.finalizationPeriodSeconds:
+-        604800
++        43200
+    }
+```
+
 Generated with discovered.json: 0xd8173f86001f02e42df9db8016876e69033a10a6
 
 # Diff at Wed, 17 Sep 2025 15:47:02 GMT:

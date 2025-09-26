@@ -13,6 +13,15 @@
     "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b": "Lisk_Adapter"
   },
   "overrides": {
+    "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B": {
+      "description": "This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
+    },
+    "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b": {
+      "description": "This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
+    },
+    "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363": {
+      "description": "This adapter can be used to send messages / root bundles to Plasma Mainnet. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
+    },
     "eth:0xA0Ae6609447e57a42c51B50EAe921D701823FFAe": {
       // unused optimistic oracle v2
       "ignoreDiscovery": true

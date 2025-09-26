@@ -1,6 +1,6 @@
 {
   "name": "mantle",
-  "timestamp": 1758123938,
+  "timestamp": 1758705864,
   "configHash": "0xae86a4c92ccc9beb8ef4c32fda7bc042313ef23d4c3b7783b0643d8e6c992567",
   "entries": [
     {
@@ -93,7 +93,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 128,
+        "nonce": 129,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -146,16 +146,16 @@
         "aggregationVkey": "0x00bca7947ba758bd6f539f480c6d983cca4bd4387a411a41a71fb953d5df3de7",
         "challenger": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "CHALLENGER": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "FINALIZATION_PERIOD_SECONDS": 604800,
-        "finalizationPeriodSeconds": 604800,
+        "FINALIZATION_PERIOD_SECONDS": 43200,
+        "finalizationPeriodSeconds": 43200,
         "initializerVersion": 3,
         "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 84993146,
-        "latestOutputIndex": 13233,
-        "nextBlockNumber": 84994946,
-        "nextOutputIndex": 13234,
+        "latestBlockNumber": 85284746,
+        "latestOutputIndex": 13395,
+        "nextBlockNumber": 85286546,
+        "nextOutputIndex": 13396,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
@@ -667,7 +667,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292700772",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292700858",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -815,8 +815,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 591926,
-          "prevBlockNum": 23383260
+          "prevBoughtGas": 593078,
+          "prevBlockNum": 23431620
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -1429,6 +1429,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23383781 },
+  "usedBlockNumbers": { "ethereum": 23431984 },
   "permissionsConfigHash": "0xe1f68eec93ab008a032a0f22cb3bdc9234e0cf10c55cbe4fcc72b06c3c5d2887"
 }
