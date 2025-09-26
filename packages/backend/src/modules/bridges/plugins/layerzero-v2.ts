@@ -51,6 +51,12 @@ const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
     chain: 'base',
     address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
   },
+  {
+    chainId: 10,
+    eid: 30111,
+    chain: 'optimism',
+    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
+  },
 ])
 
 export class LayerZeroV2Plugin implements BridgePlugin {
