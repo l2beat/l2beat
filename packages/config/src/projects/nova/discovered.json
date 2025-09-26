@@ -1,7 +1,7 @@
 {
   "name": "nova",
-  "timestamp": 1758885482,
-  "configHash": "0xdedbec42e60b6a6459396c1c3442481dbf105921e3878d479202fe3ac95b2fc4",
+  "timestamp": 1758896971,
+  "configHash": "0xfbda4ca898daf3f88f71cc20ad6cc5ea5a50052145a2427a0d1dc110d1370203",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -880,7 +880,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchCount": 273512,
+        "batchCount": 273559,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -892,9 +892,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 300,
-          "prevBlockNumber": 23446639,
+          "prevBlockNumber": 23447663,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 23446717
+          "prevSequencedBlockNumber": 23447737
         },
         "dacKeyset": {
           "requiredSignatures": 5,
@@ -927,7 +927,7 @@
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 519334,
+        "totalDelayedMessagesRead": 519381,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1566,7 +1566,7 @@
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 519337,
+        "delayedMessageCount": 519384,
         "inboxHistory": [
           "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
@@ -1574,8 +1574,8 @@
         "outboxHistory": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerInbox": "eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 273512,
-        "sequencerReportedSubMessageCount": 84108571
+        "sequencerMessageCount": 273559,
+        "sequencerReportedSubMessageCount": 84109204
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -4241,7 +4241,7 @@
         ],
         "inbox": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isPostBoLD": true,
-        "latestConfirmed": "0x8f95f6750fd77e683ed714e6d397fbe5524899f71415f1114616421257fdd40b",
+        "latestConfirmed": "0xd2fc6a87b43117d21e178dd8a2439844b179af3d42ce5828fa681d56a8840de4",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -4307,7 +4307,8 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
-            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
+            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
+            "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
           }
         }
       ],
@@ -5899,6 +5900,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 23446838, "nova": 84108580 },
+  "usedBlockNumbers": { "ethereum": 23447792, "nova": 84109217 },
   "permissionsConfigHash": "0x097aab79b9e7f7ff6f3acab1ac062708c128cc253ecbdc42d4bbe1d326108454"
 }

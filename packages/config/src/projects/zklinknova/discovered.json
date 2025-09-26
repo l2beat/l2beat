@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "timestamp": 1753687799,
-  "configHash": "0xa15590bf50576aefd873c7809be3f94750692408c277d8a37a22cc8449407ff0",
+  "configHash": "0x62cb7c5c1e19814de1368722171f653f3c84156b212f3299ff8ae00ccbe191ca",
   "entries": [
     {
       "address": "arb1:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -5708,16 +5708,16 @@
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
   "usedBlockNumbers": {
-    "optimism": 139044511,
-    "mantle": 82778743,
-    "arbitrum": 362382003,
-    "scroll": 17695863,
     "zksync2": 63447251,
+    "mantle": 82778743,
+    "mantapacific": 5946384,
+    "ethereum": 23016163,
+    "linea": 21375252,
+    "optimism": 139044511,
+    "scroll": 17695863,
     "base": 33449226,
     "blast": 22438992,
-    "linea": 21375252,
-    "mantapacific": 5946384,
-    "ethereum": 23016163
+    "arbitrum": 362382003
   },
   "permissionsConfigHash": "0xa52d924a2d1677aa8315bc14d2d2615ca2ff6a066d62370a3b3d9fd78a2dbb5e"
 }
