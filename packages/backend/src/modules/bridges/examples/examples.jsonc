@@ -569,6 +569,18 @@
       {
         "chain": "ethereum",
         "tx": "0x7c0494779f339006aa5930eab84a7c70ecd22d54c1a48c952f0af1435c8db4f9"
+      },
+      {
+        "chain": "base",
+        "tx": "0x297484366df26801ae4123266cd4f59f3de4cc26dbcc78179de54daefd42d8a3"
+      },
+      {
+        "chain": "base",
+        "tx": "0xc431a37bc0700d893e1613c84775aa5ca79277cca533d8947a8be8733cfdf719"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x64d3de3fda6a9df908cd77940c1c416f1df71f92fda9c99550529d0803055ceb"
       }
     ],
     "events": [],
