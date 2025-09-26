@@ -11,6 +11,6 @@ export async function getAppLayoutProps(): Promise<AppLayoutProps> {
       description: term.data.definition,
     })),
     recentlyAddedProjects,
-    whatsNew: undefined
+    whatsNew: undefined,
   }
 }
