@@ -119,6 +119,7 @@ function TransfersPageLayout(props: {
 
   return (
     <DataTablePage
+      showHome={true}
       tables={[
         {
           title: `Transfers: ${props.transfers[0]?.type ?? ''}`,

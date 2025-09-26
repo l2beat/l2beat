@@ -3,22 +3,34 @@ import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { BridgesConfig } from '../../config/Config'
+import type { Providers } from '../../providers/Providers'
 import { renderEventsPage } from './dashboard/EventsPage'
 import { renderMainPage } from './dashboard/MainPage'
 import { renderMessagesPage } from './dashboard/MessagesPage'
 
-export function createBridgeRouter(db: Database, config: BridgesConfig) {
+export function createBridgeRouter(
+  db: Database,
+  providers: Providers,
+  config: BridgesConfig,
+) {
   const router = new Router()
 
   router.get('/bridges', async (ctx) => {
     const events = await db.bridgeEvent.getStats()
     const messages = await getMessagesStats(db)
     const transfers = await getTransfersStats(db)
+
     ctx.body = renderMainPage({
       events,
       messages,
       transfers,
     })
+  })
+
+  router.get('/bridges/status', async (ctx) => {
+    const indexersStatus = await getIndexersStatus(config, db, providers)
+
+    ctx.body = indexersStatus
   })
 
   router.get('/bridges.json', async (ctx) => {
@@ -127,6 +139,42 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
   })
 
   return router
+}
+
+async function getIndexersStatus(
+  config: BridgesConfig,
+  db: Database,
+  providers: Providers,
+) {
+  const indexers = await db.indexerState.getByIndexerIds(
+    config.capture.chains.map((c) => `block_indexer::${c}`),
+  )
+
+  return await Promise.all(
+    indexers
+      .filter((x) => x !== undefined)
+      .map(async (c) => {
+        const chain = c.indexerId.split('::')[1]
+
+        const block = await providers.block
+          .getBlockProvider(chain)
+          .getBlockWithTransactions(c.safeHeight)
+
+        return {
+          chain: chain,
+          latestBlock: {
+            number: c.safeHeight,
+            timestamp: UnixTime(block.timestamp),
+          },
+          range: {
+            from: UnixTime.toDate(
+              UnixTime(block.timestamp) - 1 * UnixTime.DAY,
+            ).toLocaleString(),
+            to: UnixTime.toDate(block.timestamp).toLocaleString(),
+          },
+        }
+      }),
+  )
 }
 
 async function getMessagesStats(db: Database) {

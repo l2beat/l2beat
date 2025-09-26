@@ -76,10 +76,16 @@ export function DataTablePage(props: DataTablePageProps) {
       </head>
       <body>
         {props.showHome && (
-          <a href="/bridges" className="home-button">
-            ← Back to Home
-          </a>
+          <div>
+            <a href="/bridges">← Back to Home</a>
+          </div>
         )}
+
+        <div>
+          <a target="_blank" href="/bridges/status">
+            Sync Status
+          </a>
+        </div>
 
         {tables.map(({ table, tableId, title }, index) => (
           <>

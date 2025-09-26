@@ -84,6 +84,7 @@ function MessagesPageLayout(props: {
 
   return (
     <DataTablePage
+      showHome={true}
       tables={[
         {
           title: `Messages: ${props.messages[0]?.type ?? ''}`,

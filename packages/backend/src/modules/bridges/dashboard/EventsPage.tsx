@@ -64,6 +64,7 @@ function EventsPageLayout(props: {
 
   return (
     <DataTablePage
+      showHome={true}
       tables={[
         {
           title: `Bridge Events: ${props.events[0]?.type ?? ''}`,
