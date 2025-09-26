@@ -170,9 +170,7 @@ export async function getScalingProjectEntry(
     getScalingTvsSection(helpers, project),
     getActivitySection(helpers, project),
     getCostsSection(helpers, project),
-    project.scalingInfo.layer === 'layer2'
-      ? await getDataPostedSection(helpers, project, daSolutions[0])
-      : undefined,
+    getDataPostedSection(helpers, project, daSolutions),
     getStateValidationSection(project),
   ])
 

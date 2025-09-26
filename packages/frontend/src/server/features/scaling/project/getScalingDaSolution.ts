@@ -3,12 +3,13 @@ import type {
   ProjectContract,
   ProjectPermissions,
 } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
+import { notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 
 type Common = {
   layerName: string
   layerSlug: string
+  layerId: ProjectId
   bridgeName: string
   bridgeSlug: string
   hostChainName: string
@@ -58,6 +59,7 @@ export async function getScalingDaSolutions(
       return {
         layerName: daLayer.name,
         layerSlug: daLayer.slug,
+        layerId: daLayer.id,
         bridgeName: daBridge?.name ?? 'No bridge',
         bridgeSlug: daBridge?.slug ?? 'no-bridge',
         hostChainName: project.scalingInfo.hostChain.name,
