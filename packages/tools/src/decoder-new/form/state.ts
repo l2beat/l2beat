@@ -114,7 +114,7 @@ export function reducer(state: State, action: Action): State {
           address:
             !value || ADDRESS_REGEX.test(value)
               ? undefined
-              : 'Invalid transaction hash',
+              : 'Invalid address',
         },
       }
     }
