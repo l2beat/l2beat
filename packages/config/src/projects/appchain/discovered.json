@@ -1,6 +1,6 @@
 {
   "name": "appchain",
-  "timestamp": 1758875337,
+  "timestamp": 1758875899,
   "configHash": "0x85d4791986eb41d22b1d142fd5979d089dfd1e675f51bef07bae590444cafbfe",
   "entries": [
     {
@@ -1817,6 +1817,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23446002 },
+  "usedBlockNumbers": { "ethereum": 23446048 },
   "permissionsConfigHash": "0x2e639bdcc9b793398382c094f9275b8896c73ea96ea2ec942af9d7c9bb90a297"
 }

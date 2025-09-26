@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xa2ea63e0a6a3f814d402196b0e8d793caeee738b
+Generated with discovered.json: 0x6742cf06c46c635779a7019484745d33391fcb49
 
-# Diff at Fri, 26 Sep 2025 08:30:02 GMT:
+# Diff at Fri, 26 Sep 2025 08:39:24 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@331e0b266e6f6c50461cccad15ef48f094014214 block: 1755010019
-- current timestamp: 1758875337
+- current timestamp: 1758875899
 
 ## Description
 
-Caldera multisig signer added.
+Caldera multisig threshold change.
 
 ## Watched changes
 
