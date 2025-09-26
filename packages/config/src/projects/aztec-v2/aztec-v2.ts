@@ -16,10 +16,7 @@ export const aztecV2: ScalingProject = upcomingL2({
     links: {
       websites: ['https://aztec.network/', 'https://aztec.network/noir'],
       documentation: ['https://docs.aztec.network/'],
-      explorers: [
-        'https://aztecscan.xyz',
-        'https://aztecexplorer.xyz',
-      ],
+      explorers: ['https://aztecscan.xyz', 'https://aztecexplorer.xyz'],
       repositories: ['https://github.com/AztecProtocol/aztec-packages'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',
