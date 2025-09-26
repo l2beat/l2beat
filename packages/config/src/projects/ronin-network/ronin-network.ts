@@ -15,8 +15,10 @@ export const roninNetwork: ScalingProject = upcomingL2({
     stacks: ['OP Stack'],
     links: {
       websites: ['https://roninchain.com/'],
+      bridges: ['https://app.roninchain.com/bridge'],
       documentation: ['https://docs.roninchain.com/'],
       repositories: ['https://github.com/axieinfinity'],
+      explorers: ['https://app.roninchain.com/explorer'],
       socialMedia: [
         'https://twitter.com/Ronin_Network',
         'https://discord.gg/roninnetwork',

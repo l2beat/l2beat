@@ -87,7 +87,7 @@ export const funki: ScalingProject = opStackL2({
   chainConfig: {
     name: 'funki',
     chainId: 33979,
-    explorerUrl: 'https://funkiscan.io',
+    explorerUrl: 'https://explorer.funkichain.com',
     sinceTimestamp: genesisTimestamp,
     apis: [
       {

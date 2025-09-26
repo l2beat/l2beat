@@ -1,6 +1,6 @@
 {
   "name": "b3",
-  "timestamp": 1757661407,
+  "timestamp": 1758875688,
   "configHash": "0x6962e578aab412cd245d64db64d35eb6317259b25bc5dc52919b6aeed5236570",
   "entries": [
     {
@@ -257,7 +257,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292657506",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292657568",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -313,7 +313,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 35433680
+          "prevBlockNum": 35996919
         },
         "paused": false,
         "superchainConfig": "base:0xe736142a3e957660cBae61AC4bD61e5b65635140",
@@ -401,10 +401,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 1,
         "l2BlockTime": 1,
-        "latestBlockNumber": 35283600,
-        "latestOutputIndex": 9800,
-        "nextBlockNumber": 35287200,
-        "nextOutputIndex": 9801,
+        "latestBlockNumber": 36496800,
+        "latestOutputIndex": 10137,
+        "nextBlockNumber": 36500400,
+        "nextOutputIndex": 10138,
         "proposer": "base:0x9c9Db06722b3E33fa356C7347f7fBe328a26Dc7d",
         "PROPOSER": "base:0x9c9Db06722b3E33fa356C7347f7fBe328a26Dc7d",
         "startingBlockNumber": 0,
@@ -511,6 +511,7 @@
         "$immutable": false,
         "$implementation": "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "$members": [
+          "base:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
           "base:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
           "base:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
           "base:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
@@ -521,8 +522,8 @@
         "domainSeparator": "0x4fb2fc3bf94e37270ffe59bdcf3eec7f07722bd047093c7fd05fb408668db9d4",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 18,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -579,6 +580,11 @@
           "role": ".PROPOSER"
         }
       ]
+    },
+    {
+      "address": "base:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SystemConfig",
@@ -1178,6 +1184,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 35436030 },
-  "permissionsConfigHash": "0xbd5766cd8e4e2bcf97d043640a90e058df808953fb6572024ef8ad36d417c051"
+  "usedBlockNumbers": { "base": 36043170 },
+  "permissionsConfigHash": "0x0691ca36cfaf32b58028a88ea13243d0d31496fc0cde283f0980e35ccc32f9aa"
 }

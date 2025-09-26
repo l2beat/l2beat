@@ -4,6 +4,7 @@ import type { Log as ViemLog } from 'viem'
 import type { BlockProcessor } from '../types'
 import type { BridgeStore } from './BridgeStore'
 import type {
+  BridgeEvent,
   BridgeEventContext,
   BridgePlugin,
   LogToCapture,
@@ -16,30 +17,33 @@ export class BridgeBlockProcessor implements BlockProcessor {
     private bridgeStore: BridgeStore,
     private logger: Logger,
   ) {
-    this.logger = logger.for(this)
+    this.logger = logger.for(this).tag({ chain, tag: chain })
   }
 
   async processBlock(block: Block, logs: Log[]): Promise<void> {
     const toDecode = getLogsToDecode(this.chain, block, logs)
-    let count = 0
+
+    const events: BridgeEvent[] = []
     for (const logToDecode of toDecode) {
       for (const plugin of this.plugins) {
         try {
           const event = await plugin.capture?.(logToDecode)
           if (event) {
-            count++
-            this.bridgeStore.addEvent(event)
+            events.push(event)
           }
         } catch (e) {
           this.logger.error(e)
         }
       }
     }
-    await this.bridgeStore.save()
+
+    await this.bridgeStore.saveNewEvents(events)
+
     this.logger.info('Block processed', {
       chain: this.chain,
       blockNumber: block.number,
-      events: count,
+      logs: toDecode.length,
+      events: events.length,
     })
   }
 }

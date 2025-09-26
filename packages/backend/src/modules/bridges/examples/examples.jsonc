@@ -68,6 +68,21 @@
     "messages": [],
     "transfers": []
   },
+  "cctpv2": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x284aed9764a451c32bae3ade17ce61daf420f20d80f3b0849db45af54a16cf1c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x607ef6ded5162ece9b8c8d9df7ef0be69aa6005863403a963295bb362222d5a0"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
   "mayan-mctp-bridge": {
     "txs": [
       {
@@ -139,7 +154,7 @@
         "tx": "0xbed80fd46620bf9e83c5b993851200e1c0ac6e6f04c66963151ded1a7ac36bc3"
       }
     ],
-    "events": ["hyperlane.DispatchId", "hyperlane.ProcessId"],
+    "events": ["hyperlane.Dispatch", "hyperlane.Process"],
     "messages": ["hyperlane.Message"],
     "transfers": []
   },
@@ -157,6 +172,24 @@
     "events": [],
     "messages": [],
     "transfers": []
+  },
+  "circle-gateway": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x483b20a057700c6f26d710ebd15be1c079642895746dd00863805dc7adb44803"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe462862a70902e9739bff6152a5dc1e5fc74482f14825638a9e17e254751433a"
+      }
+    ],
+    "events": [
+      "circle-gateway.AttestationUsed",
+      "circle-gateway.GatewayBurned"
+    ],
+    "messages": ["circle-gateway.Message"],
+    "transfers": ["circle-gateway.Transfer"]
   },
   "layerzerov1": {
     "txs": [
@@ -483,6 +516,21 @@
       {
         "chain": "ethereum",
         "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "across1": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xe8f56a27f37c01943c61b1cf3e596e30b2b28d3cb5e2a599033e7f5e596683c5"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x161627cfe215e740faca19ae7c0c6161058471fb4266cb9e76667cdd38b92a0a"
       }
     ],
     "events": [],

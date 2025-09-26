@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x90a8e07c0ab67c1583477b4b245844fd694d6747
+
+# Diff at Fri, 26 Sep 2025 08:36:04 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@331e0b266e6f6c50461cccad15ef48f094014214 block: 1757661456
+- current timestamp: 1758875696
+
+## Description
+
+Caldera multisig threshold change.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 2 (base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      values.$members.0:
++        "base:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x06fbaba841c97c8c0c392fe95c6d7f422c18a442
 
 # Diff at Fri, 12 Sep 2025 07:18:56 GMT:

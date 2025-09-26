@@ -1,3 +1,628 @@
+Generated with discovered.json: 0xa6de4dbc1cf9180eaf1c135ef30dcdebb3055be8
+
+# Diff at Thu, 25 Sep 2025 12:28:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0baa1255a33ce1a02b431265f21e07fd28f2de49 block: 1758616510
+- current timestamp: 1758803193
+
+## Description
+
+large number of pools added. waiting with tvs regeneration to let some of them get tvs.
+
+## Watched changes
+
+```diff
+    contract XERC20LockboxTokenPool (eth:0x04db9b1D7f52cB288b95B4934a1fA688F6d0cBc3) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "15971525489660198786"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x0A34677DafCd28916aAc0b22123142EFaBf700Fa) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x23AFD2Bd797B87394D797dd0134022c42432F7fe) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x281A83ee4819068C40937A066d801aAD7C6e0400) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x2862135735469aD4Af91aF4Fbd2559606d25B27C) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x5F5d43508f34e0cAEaa558F9C964125538fFe9Cf) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x6eB57991c31f8DD2481A702090EDc0962AE50fAE) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x8113f001eA456759264317007220cBc939cA8435) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "5936861837188149645"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x8192D648ad9144aF8c2488c8142c72B3cd990728) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract SiloedWithUnsiloedXERC20GroupTokenPool (eth:0xa3532633401AbFfbd15e6be825a45FB7F141469B) {
+    +++ description: None
+      values.getSupportedChains.8:
++        "4426351306075016396"
+    }
+```
+
+```diff
+    contract SiloedLockReleaseTokenPool (eth:0xA586a732394A1AFfCF15b972cd47C936033C9FA7) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0xab235c5B80860899F67f88370ba69C2c80499f23) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0xAd06241B9cFf15b710118A52f04A4Fe73b8fcC09) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0xB05963A6beD7e9dB887eCeB2775a03414d00FAc9) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.233:
++        "eth:0x9c5ab31Cc5bc59E070934EA0a463f0d46B976849"
+      values.pools.234:
++        "eth:0x05ddaB21b57d0Dca8C3955c366526A229577558e"
+      values.pools.235:
++        "eth:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529"
+      values.pools.236:
++        "eth:0x13653E61760Ce331E3EA6B9B4641fe34cCceDe2a"
+      values.pools.237:
++        "eth:0xA7a81979C31d0db634CE3209d09412806E67980A"
+      values.pools.238:
++        "eth:0xeE8ce1250FeaF2e105D4A47225F7d61B21cfC807"
+      values.pools.239:
++        "eth:0x81C45Ae1c9700cAeebea466F76425D51f96dB0A0"
+      values.pools.240:
++        "eth:0x4AeA072bC444e3C95AE1148d9022A425f5B82fA5"
+      values.pools.241:
++        "eth:0x8F243065A3cf2F4566ec7BB5F8937A603E1A9287"
+      values.pools.242:
++        "eth:0x2886D770F16871bfAB4be71174A4F90f09Bf64F5"
+      values.pools.243:
++        "eth:0xA7F11E5875F7d0f1d162d4d3b48Bb95D79cf74cb"
+      values.pools.244:
++        "eth:0x2c2f3f0E819Db1960931926703358c7Ea6986080"
+      values.pools.245:
++        "eth:0x5C2a95fe50b4dDF578a1D09A88260E566b1d09e6"
+      values.pools.246:
++        "eth:0x621Ecc35Bba88EBc89F7F2f286Ea56f64b9f9899"
+      values.pools.247:
++        "eth:0x2140a3d580207A366967909F02b594CbD37D7638"
+      values.pools.248:
++        "eth:0xC76d479B064A284133E3e4Ac680D4D2Ffb745Adf"
+      values.pools.249:
++        "eth:0xeC848f1e132aE5fCBC84192EE442bA04bd169474"
+      values.pools.250:
++        "eth:0xC15165A9f2968D8a483a91462bEadf2c0ED594A1"
+      values.pools.251:
++        "eth:0xf1aeBA6d8d490935F00Cbd6415b5fecb02EBaF41"
+      values.pools.252:
++        "eth:0x8cE47220e1150ba73687E27cD0FfA0B8a8cdeF6b"
+      values.pools.253:
++        "eth:0xc4367bdA80C1BbBB80B093115aB64e848D99943d"
+      values.pools.254:
++        "eth:0x45fAfE2C76D10AF8EDFA6BaE3592e2Ff67D7C564"
+      values.pools.255:
++        "eth:0x90B1fa67439E49A99d9Da4bbcdcB9B8F48A438dc"
+      values.pools.256:
++        "eth:0x18b72eFe893815E837E91D265dA361081de0dea5"
+      values.pools.257:
++        "eth:0x429061466384eE8F07CCB849BFAfBf3a1a9c4116"
+      values.pools.258:
++        "eth:0x629D125CF6DeC4fbb9f1971360112B639e01dD8B"
+      values.pools.259:
++        "eth:0x22F31eC67f6eAB7fA604C4Da976376c6c1bAC2aD"
+      values.pools.260:
++        "eth:0x512F96be90D2a7f7d8eD6Df85B9883bB95267d13"
+      values.poolsMap.eth:0x95AF4aF910c28E8EcE4512BFE46F1F33687424ce:
++        "eth:0x9c5ab31Cc5bc59E070934EA0a463f0d46B976849"
+      values.poolsMap.eth:0xFA1C09fC8B491B6A4d3Ff53A10CAd29381b3F949:
++        "eth:0x05ddaB21b57d0Dca8C3955c366526A229577558e"
+      values.poolsMap.eth:0x6eb935F5b649fc98BC7a3079F0211f5255C8B3eA:
++        "eth:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529"
+      values.poolsMap.eth:0xDc0fA13fC1B43aCB789b330680Cd66184383Ff93:
++        "eth:0x13653E61760Ce331E3EA6B9B4641fe34cCceDe2a"
+      values.poolsMap.eth:0x25e31c09814Da4B860913b1e55924fed59997B03:
++        "eth:0xA7a81979C31d0db634CE3209d09412806E67980A"
+      values.poolsMap.eth:0x5A2e5a48C0e5f56f40a87A52B39ae1820EAfD3B0:
++        "eth:0xeE8ce1250FeaF2e105D4A47225F7d61B21cfC807"
+      values.poolsMap.eth:0x2BB8cf7e7C77E575A9dd5557659DDe73488941dC:
++        "eth:0x81C45Ae1c9700cAeebea466F76425D51f96dB0A0"
+      values.poolsMap.eth:0x8E2D7dFA36618D0a0225C0A2d547f28d41Dd6D75:
++        "eth:0x4AeA072bC444e3C95AE1148d9022A425f5B82fA5"
+      values.poolsMap.eth:0xB4B09667794E2984029255FB0C615E81A6Bf2A83:
++        "eth:0x8F243065A3cf2F4566ec7BB5F8937A603E1A9287"
+      values.poolsMap.eth:0x912AeE44b5A7F39d5B9ac4a9f43a4952322f4017:
++        "eth:0x2886D770F16871bfAB4be71174A4F90f09Bf64F5"
+      values.poolsMap.eth:0x63974F85B72CB8FA7dC28dDffA1f0fC2CAb44193:
++        "eth:0xA7F11E5875F7d0f1d162d4d3b48Bb95D79cf74cb"
+      values.poolsMap.eth:0xdA5B6328C6581428c435A2F84c47d7978b72965f:
++        "eth:0x2c2f3f0E819Db1960931926703358c7Ea6986080"
+      values.poolsMap.eth:0xaD805Aa19C2a2Bd397E598c07302dCD746f30F40:
++        "eth:0x5C2a95fe50b4dDF578a1D09A88260E566b1d09e6"
+      values.poolsMap.eth:0x24846A6259D1dF6EF9cb656071419cD1F3bCB1Cc:
++        "eth:0x621Ecc35Bba88EBc89F7F2f286Ea56f64b9f9899"
+      values.poolsMap.eth:0x95E422ABdd3589f2901F6Bd75b44dfFDa2afA656:
++        "eth:0x2140a3d580207A366967909F02b594CbD37D7638"
+      values.poolsMap.eth:0x7d76d6E2219d57F41987af5071575519d482093e:
++        "eth:0xC76d479B064A284133E3e4Ac680D4D2Ffb745Adf"
+      values.poolsMap.eth:0x9c46b49513Af2e513F559b7d04e3af2b24c86305:
++        "eth:0xeC848f1e132aE5fCBC84192EE442bA04bd169474"
+      values.poolsMap.eth:0x18187B6eA570877B113B11Bca1401E18083a2B13:
++        "eth:0xC15165A9f2968D8a483a91462bEadf2c0ED594A1"
+      values.poolsMap.eth:0x7cCb1D96cCFFC191B020144f829c835eBC99d969:
++        "eth:0xf1aeBA6d8d490935F00Cbd6415b5fecb02EBaF41"
+      values.poolsMap.eth:0x87c297B74dC7044222B19938b9726AAe7Cf75212:
++        "eth:0x8cE47220e1150ba73687E27cD0FfA0B8a8cdeF6b"
+      values.poolsMap.eth:0x6670Ba5DB26c3688baF6A4089a34b80Fc1b8efA4:
++        "eth:0xc4367bdA80C1BbBB80B093115aB64e848D99943d"
+      values.poolsMap.eth:0x0D47E32eE58F0a34C9c25D32F1E518ad1C0F6493:
++        "eth:0x45fAfE2C76D10AF8EDFA6BaE3592e2Ff67D7C564"
+      values.poolsMap.eth:0x1C4a6ac25bAe073d8339Be57D1013A21b7AB8032:
++        "eth:0x90B1fa67439E49A99d9Da4bbcdcB9B8F48A438dc"
+      values.poolsMap.eth:0xE49C929570fc9C87B1f4bB71916728eb04F7bf9F:
++        "eth:0x18b72eFe893815E837E91D265dA361081de0dea5"
+      values.poolsMap.eth:0x9D2c623C55dcF3e1E8dD89dc2A2ca6B6Bb109935:
++        "eth:0x429061466384eE8F07CCB849BFAfBf3a1a9c4116"
+      values.poolsMap.eth:0xcEfec48c8E79b2862154057aadbfb0a81b5Fd792:
++        "eth:0x629D125CF6DeC4fbb9f1971360112B639e01dD8B"
+      values.poolsMap.eth:0x8356F4Af7A96431Cf68cE7fF98d811590b829A85:
++        "eth:0x22F31eC67f6eAB7fA604C4Da976376c6c1bAC2aD"
+      values.poolsMap.eth:0x2a8a295adE51B3dc93E142F72ca4eBAE3E1aE0Ea:
++        "eth:0x512F96be90D2a7f7d8eD6Df85B9883bB95267d13"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0xB85E3e408D8300A002BaA9cc355D40a487e9C248) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0xba5F6Cf1121c572602e638bC8A0d87Db61072e35) {
+    +++ description: None
+      values.getSupportedChains.5:
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0xe199E1C5201CCDd3792ed902aD3f610Ce5629B59) {
+    +++ description: None
+      values.getSupportedChains.2:
+-        "2442541497099098535"
++        "11344663589394136015"
+      values.getSupportedChains.4:
++        "2442541497099098535"
+      values.getSupportedChains.4:
+-        "11344663589394136015"
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0xE3Bd48bd2dE9641E15d4900824E885E9b4d87C3D) {
+    +++ description: None
+      values.getSupportedChains.5:
++        "9335212494177455608"
+      values.owner:
+-        "eth:0xEc50F9EcFC2979fB15CcaCBCf58477a9dfF8C6ca"
++        "eth:0x1dEE90df6cDd8a7dA3510FB5b0305EFE57239641"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x05ddaB21b57d0Dca8C3955c366526A229577558e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x13653E61760Ce331E3EA6B9B4641fe34cCceDe2a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x18b72eFe893815E837E91D265dA361081de0dea5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x2140a3d580207A366967909F02b594CbD37D7638)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x22F31eC67f6eAB7fA604C4Da976376c6c1bAC2aD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x2886D770F16871bfAB4be71174A4F90f09Bf64F5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x2c2f3f0E819Db1960931926703358c7Ea6986080)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x429061466384eE8F07CCB849BFAfBf3a1a9c4116)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x45fAfE2C76D10AF8EDFA6BaE3592e2Ff67D7C564)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x4AeA072bC444e3C95AE1148d9022A425f5B82fA5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x512F96be90D2a7f7d8eD6Df85B9883bB95267d13)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x5C2a95fe50b4dDF578a1D09A88260E566b1d09e6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x621Ecc35Bba88EBc89F7F2f286Ea56f64b9f9899)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x629D125CF6DeC4fbb9f1971360112B639e01dD8B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x81C45Ae1c9700cAeebea466F76425D51f96dB0A0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x8cE47220e1150ba73687E27cD0FfA0B8a8cdeF6b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x8F243065A3cf2F4566ec7BB5F8937A603E1A9287)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x90B1fa67439E49A99d9Da4bbcdcB9B8F48A438dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x9c5ab31Cc5bc59E070934EA0a463f0d46B976849)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xA7a81979C31d0db634CE3209d09412806E67980A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xA7F11E5875F7d0f1d162d4d3b48Bb95D79cf74cb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xC15165A9f2968D8a483a91462bEadf2c0ED594A1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xc4367bdA80C1BbBB80B093115aB64e848D99943d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xC76d479B064A284133E3e4Ac680D4D2Ffb745Adf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xeC848f1e132aE5fCBC84192EE442bA04bd169474)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xeE8ce1250FeaF2e105D4A47225F7d61B21cfC807)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xf1aeBA6d8d490935F00Cbd6415b5fecb02EBaF41)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x13653E61760Ce331E3EA6B9B4641fe34cCceDe2a.sol | 1376 +++++++++++++
+ ...:0x18b72eFe893815E837E91D265dA361081de0dea5.sol | 1376 +++++++++++++
+ ...:0x2140a3d580207A366967909F02b594CbD37D7638.sol | 1376 +++++++++++++
+ ...:0x22F31eC67f6eAB7fA604C4Da976376c6c1bAC2aD.sol | 1376 +++++++++++++
+ ...:0x2886D770F16871bfAB4be71174A4F90f09Bf64F5.sol | 1376 +++++++++++++
+ ...:0x2c2f3f0E819Db1960931926703358c7Ea6986080.sol | 1376 +++++++++++++
+ ...:0x429061466384eE8F07CCB849BFAfBf3a1a9c4116.sol | 1376 +++++++++++++
+ ...:0x45fAfE2C76D10AF8EDFA6BaE3592e2Ff67D7C564.sol | 1376 +++++++++++++
+ ...:0x4AeA072bC444e3C95AE1148d9022A425f5B82fA5.sol | 1376 +++++++++++++
+ ...:0x512F96be90D2a7f7d8eD6Df85B9883bB95267d13.sol | 1376 +++++++++++++
+ ...:0x5C2a95fe50b4dDF578a1D09A88260E566b1d09e6.sol | 1376 +++++++++++++
+ ...:0x621Ecc35Bba88EBc89F7F2f286Ea56f64b9f9899.sol | 1376 +++++++++++++
+ ...:0x629D125CF6DeC4fbb9f1971360112B639e01dD8B.sol | 1376 +++++++++++++
+ ...:0x81C45Ae1c9700cAeebea466F76425D51f96dB0A0.sol | 1376 +++++++++++++
+ ...:0x8F243065A3cf2F4566ec7BB5F8937A603E1A9287.sol | 1376 +++++++++++++
+ ...:0x8cE47220e1150ba73687E27cD0FfA0B8a8cdeF6b.sol | 1376 +++++++++++++
+ ...:0x90B1fa67439E49A99d9Da4bbcdcB9B8F48A438dc.sol | 1376 +++++++++++++
+ ...:0xA7F11E5875F7d0f1d162d4d3b48Bb95D79cf74cb.sol | 1376 +++++++++++++
+ ...:0xA7a81979C31d0db634CE3209d09412806E67980A.sol | 1376 +++++++++++++
+ ...:0xC15165A9f2968D8a483a91462bEadf2c0ED594A1.sol | 1376 +++++++++++++
+ ...:0xC76d479B064A284133E3e4Ac680D4D2Ffb745Adf.sol | 1376 +++++++++++++
+ ...:0xc4367bdA80C1BbBB80B093115aB64e848D99943d.sol | 1376 +++++++++++++
+ ...:0xeC848f1e132aE5fCBC84192EE442bA04bd169474.sol | 1376 +++++++++++++
+ ...:0xeE8ce1250FeaF2e105D4A47225F7d61B21cfC807.sol | 1376 +++++++++++++
+ ...:0xf1aeBA6d8d490935F00Cbd6415b5fecb02EBaF41.sol | 1376 +++++++++++++
+ ...:0x05ddaB21b57d0Dca8C3955c366526A229577558e.sol | 1766 ++++++++++++++++
+ ...:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529.sol | 1766 ++++++++++++++++
+ ...:0x9c5ab31Cc5bc59E070934EA0a463f0d46B976849.sol | 2132 ++++++++++++++++++++
+ 28 files changed, 40064 insertions(+)
+```
+
+Generated with discovered.json: 0x616b6f72f12beb1579784a8f44773ac19a6592cc
+
+# Diff at Tue, 23 Sep 2025 08:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9a796f3fca0d6345ed73136526bf67003edbb829 block: 1758287245
+- current timestamp: 1758616510
+
+## Description
+
+new pools, regenerated tvs conf.
+
+## Watched changes
+
+```diff
+    contract HybridLockReleaseUSDCTokenPool (eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF) {
+    +++ description: A token pool for USDC which uses CCTP for supported chains and Lock/Release for all others
+      values.getSupportedChains.11:
++        "4426351306075016396"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x512c2Ddf5f7F48a6c44cFF73CD8d7edEC5e6b0d8) {
+    +++ description: None
+      values.getSupportedChains.5:
++        "124615329519749607"
+    }
+```
+
+```diff
+    contract SiloedLockReleaseTokenPool (eth:0xA586a732394A1AFfCF15b972cd47C936033C9FA7) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "4426351306075016396"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.231:
++        "eth:0xE3Bd48bd2dE9641E15d4900824E885E9b4d87C3D"
+      values.pools.232:
++        "eth:0xBe4fbD980712a800f5e0e7C15a70e097efaCD331"
+      values.poolsMap.eth:0x3f83e509942081979Baa6d34d16B3837d287D80F:
++        "eth:0xE3Bd48bd2dE9641E15d4900824E885E9b4d87C3D"
+      values.poolsMap.eth:0x8F18f2C97d2f5EC0e1d5B91c1D2ce245a9151972:
++        "eth:0xBe4fbD980712a800f5e0e7C15a70e097efaCD331"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xBe4fbD980712a800f5e0e7C15a70e097efaCD331)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xE3Bd48bd2dE9641E15d4900824E885E9b4d87C3D)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xBe4fbD980712a800f5e0e7C15a70e097efaCD331.sol | 1615 ++++++++++++++++++++
+ ...:0xE3Bd48bd2dE9641E15d4900824E885E9b4d87C3D.sol | 1376 +++++++++++++++++
+ 2 files changed, 2991 insertions(+)
+```
+
 Generated with discovered.json: 0x2f49a3d533c1ef747bdb9a228b8eca9ffe4422e4
 
 # Diff at Fri, 19 Sep 2025 13:11:35 GMT:

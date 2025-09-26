@@ -1,0 +1,5 @@
+{
+  "term": "Plonk",
+  "definition": "A zk-SNARK proving system introduced by Gabizon, Williamson and Ciobotaru in 2019 that allows proving custom circuits. Plonk is based on KZG polynomial commitments and thus requires a universal trusted setup.",
+  "isSpicy": false
+}

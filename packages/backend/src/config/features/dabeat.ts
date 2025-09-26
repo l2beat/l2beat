@@ -21,7 +21,12 @@ export async function getDaBeatConfig(
     .filter((x) => x !== undefined)
     .filter((x, i, a) => a.indexOf(x) === i) // unique
 
+  const projectsForDaBeatStats = projects
+    .filter((x) => x.daLayer.economicSecurity)
+    .map((x) => x.id)
+
   return {
+    projectsForDaBeatStats,
     coingeckoIds,
     types,
     quicknodeApiUrl: env.string([

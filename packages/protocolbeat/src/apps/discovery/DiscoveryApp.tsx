@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Navigate, Outlet } from 'react-router-dom'
 import type { AppModule } from '../createRouter'
 import { HomePage } from './HomePage'
+import { NewProjectPage } from './NewProjectPage'
 import { ProjectPage } from './ProjectPage'
 
 const queryClient = new QueryClient()
@@ -28,6 +29,10 @@ export const DiscoveryAppModule: AppModule = {
         {
           path: 'p/:project',
           element: <ProjectPage />,
+        },
+        {
+          path: 'new',
+          element: <NewProjectPage />,
         },
       ],
     },

@@ -95,7 +95,7 @@ export const rss3: ScalingProject = opStackL2({
       },
     ],
     apis: [
-      { type: 'rpc', url: 'https://rpc.rss3.io/', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.rss3.io/', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://scan.rss3.io/api' },
     ],
   },

@@ -6,15 +6,19 @@ export async function getBlockNumberAtOrBefore(
   end: number,
   getBlock: (number: number) => Promise<{ timestamp: number }>,
 ): Promise<number> {
-  while (start + 1 < end) {
-    const mid = start + Math.floor((end - start) / 2)
-    const midBlock = await getBlock(mid)
-    if (midBlock.timestamp <= timestamp) {
-      start = mid
+  let result = start
+
+  while (start <= end) {
+    const mid = Math.floor((start + end) / 2)
+    const block = await getBlock(mid)
+
+    if (block.timestamp <= timestamp) {
+      result = mid
+      start = mid + 1
     } else {
-      end = mid
+      end = mid - 1
     }
   }
 
-  return start
+  return result
 }

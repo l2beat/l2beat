@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { readConfigFile, writeConfigFile } from '../../../api/api'
+import { readConfigFile, updateConfigFile } from '../../../api/api'
 import type { ApiConfigFileResponse } from '../../../api/types'
-import { ActionNeededState } from '../../../components/ActionNeededState'
+
 import { ErrorState } from '../../../components/ErrorState'
 import { EditorView } from '../../../components/editor/EditorView'
 import type { EditorFile } from '../../../components/editor/store'
@@ -13,7 +13,7 @@ import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingComma
 import { useProjectData } from '../hooks/useProjectData'
 
 export function ConfigPanel() {
-  const { project, selectedAddress, projectResponse } = useProjectData()
+  const { project, projectResponse } = useProjectData()
   const queryClient = useQueryClient()
   const templateResponse = useQuery({
     queryKey: ['projects', project, 'config'],
@@ -24,15 +24,16 @@ export function ConfigPanel() {
 
   const saveConfig = useMutation({
     mutationFn: async (content: string) => {
-      await writeConfigFile(project, content)
+      await updateConfigFile(project, content)
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['projects', project, 'template', selectedAddress],
+        queryKey: ['projects', project, 'config'],
       })
     },
   })
 
+  // TODO: move this to backend/editor or replace with gui
   const onSaveCallback = (content: string): string => {
     try {
       content = formatJson(JSON.parse(removeJSONTrailingCommas(content)))
@@ -54,10 +55,6 @@ export function ConfigPanel() {
 
   if (projectResponse.isPending) {
     return <LoadingState />
-  }
-
-  if (selectedAddress === undefined) {
-    return <ActionNeededState message="Select a contract" />
   }
 
   return (

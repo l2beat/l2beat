@@ -6,6 +6,7 @@ import {
   createBridgeEventType,
   createEventParser,
   defineNetworks,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -94,10 +95,11 @@ export class SquidCoralPlugin implements BridgePlugin {
         toToken: EthereumAddress(logOrderCreated.order.toToken),
         fromAmount: logOrderCreated.order.fromAmount.toString(),
         fillAmount: logOrderCreated.order.fillAmount.toString(),
-        $dstChain:
-          SQUIDCORAL_NETWORKS.find(
-            (c) => c.chainId === logOrderCreated.order.toChain.toString(),
-          )?.chain ?? 'unknown',
+        $dstChain: findChain(
+          SQUIDCORAL_NETWORKS,
+          (x) => x.chainId,
+          logOrderCreated.order.toChain.toString(),
+        ),
       })
     }
 
@@ -109,18 +111,20 @@ export class SquidCoralPlugin implements BridgePlugin {
         toToken: EthereumAddress(logOrderFilled.order.toToken),
         fromAmount: logOrderFilled.order.fromAmount.toString(),
         fillAmount: logOrderFilled.order.fillAmount.toString(),
-        $srcChain:
-          SQUIDCORAL_NETWORKS.find(
-            (c) => c.chainId === logOrderFilled.order.fromChain.toString(),
-          )?.chain ?? 'unknown',
+        $srcChain: findChain(
+          SQUIDCORAL_NETWORKS,
+          (x) => x.chainId,
+          logOrderFilled.order.fromChain.toString(),
+        ),
       })
     }
   }
 
   /* Matching algorithm:
-1. For Each LogOrderFilled on DST
-2. Find LogOrderCreated on SRC with the same orderHash
-*/
+    1. For Each LogOrderFilled on DST
+    2. Find LogOrderCreated on SRC with the same orderHash
+  */
+  matchTypes = [LogOrderFilled]
   match(orderFilled: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (!LogOrderFilled.checkType(orderFilled)) return
 

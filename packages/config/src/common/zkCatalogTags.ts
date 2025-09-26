@@ -156,6 +156,13 @@ export const zkCatalogTags = [
     description:
       'First version of Aztec implementation of Plonk proving system, originally developed for zk.money (AZTEC v1).',
   },
+  {
+    id: 'Jellyfish',
+    type: ZkCatalogTagType.Plonk,
+    name: 'Jellyfish',
+    description:
+      'Open-source toolkit of various cryptographic primitives, including an implementation of Plonk SNARK, developed in Rust by Espresso Systems.',
+  },
   // Fflonk
   {
     id: 'Zksync',
