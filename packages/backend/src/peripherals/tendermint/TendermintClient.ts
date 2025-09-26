@@ -37,7 +37,7 @@ export class TendermintClient {
     perPage?: number
   }) {
     const response = await this.httpClient.fetch(
-      `${this.url}/validators?${new URLSearchParams({
+      `${this.url}validators?${new URLSearchParams({
         ...(height ? { height: height.toString() } : {}),
         page: page.toString(),
         per_page: perPage.toString(),

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x2aa76471abf860c6780b746cebea71c01c4407f6
+
+# Diff at Thu, 25 Sep 2025 12:30:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0baa1255a33ce1a02b431265f21e07fd28f2de49 block: 1751371163
+- current timestamp: 1758803380
+
+## Description
+
+single member swapped in multisig.
+
+## Watched changes
+
+```diff
+    contract RoninAdminMultisig (eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x18471CC6d2d427077CAA7896D7956cD066CAbe49"
++        "eth:0x0182147F7aC923BF8024C953acA2225C91206485"
+    }
+```
+
 Generated with discovered.json: 0x740365b8a42ea253416f22263a6891602149de3d
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

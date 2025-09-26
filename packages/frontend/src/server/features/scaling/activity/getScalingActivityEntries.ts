@@ -11,7 +11,7 @@ import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import type { ActivityProjectTableData } from './getActivityTableData'
 import { getActivityTable } from './getActivityTableData'
 import { compareActivityEntry } from './utils/compareActivityEntry'
-import { getActivitySyncWarning } from './utils/isActivitySynced'
+import { getActivitySyncWarning } from './utils/syncStatus'
 
 export async function getScalingActivityEntries() {
   const unfilteredProjects = await ps.getProjects({
@@ -75,9 +75,8 @@ function getScalingProjectActivityEntry(
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry {
-  const syncWarning = data
-    ? getActivitySyncWarning(data.syncedUntil)
-    : undefined
+  const syncWarning = getActivitySyncWarning(data?.syncState)
+
   return {
     ...getCommonScalingEntry({ project, changes, syncWarning }),
     data: data
@@ -95,9 +94,7 @@ function getEthereumEntry(
   data: ActivityProjectTableData,
   tab: CommonScalingEntry['tab'],
 ): ScalingActivityEntry {
-  const syncWarning = data
-    ? getActivitySyncWarning(data.syncedUntil)
-    : undefined
+  const syncWarning = getActivitySyncWarning(data.syncState)
   return {
     id: ProjectId.ETHEREUM,
     name: 'Ethereum',
