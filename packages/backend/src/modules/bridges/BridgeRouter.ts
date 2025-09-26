@@ -169,8 +169,8 @@ async function getIndexersStatus(
           range: {
             from: UnixTime.toDate(
               UnixTime(block.timestamp) - 1 * UnixTime.DAY,
-            ).toLocaleString(),
-            to: UnixTime.toDate(block.timestamp).toLocaleString(),
+            ).toUTCString(),
+            to: UnixTime.toDate(block.timestamp).toUTCString(),
           },
         }
       }),
