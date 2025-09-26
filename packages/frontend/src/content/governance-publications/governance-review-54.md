@@ -22,7 +22,7 @@ SEEDgov isn’t calling this hard capture—whales generally vote late and in st
 
 **Discuss with L2BEAT**
 
-You can find us to discuss everything related to Optimism’s governance, from current initiatives to high-level conversations, during our [Optimism Office Hours](https:///meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
+You can find us to discuss everything related to Scroll’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 **Upcoming Events (Times in UTC):**
 
@@ -235,5 +235,6 @@ You can find us to discuss everything related to Scroll’s governance, from cur
 **Upcoming Events (Times in UTC):**
 
 [Weekly DAO & Governance Call](https://meet.google.com/smr-hxgd-btt) - on 4.6 at 11:30.
+
 
 [Weekly DAO & Governance Call](https://meet.google.com/mhz-ncvc-ipd) - on 4.6 at 17:00.
