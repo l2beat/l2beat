@@ -77,7 +77,7 @@ export function PastUpgradesDialog({
           <NotApplicableBadge />
         )}
       </ChartStatsItem>
-      <ChartStatsItem label="Avg update interval" className="max-md:h-7">
+      <ChartStatsItem label="Avg upgrade interval" className="max-md:h-7">
         {pastUpgrades.stats.avgInterval ? (
           formatSeconds(pastUpgrades.stats.avgInterval)
         ) : (
@@ -208,7 +208,7 @@ function PastUpgradeEntry({
                   href={implementation.diffUrl}
                   className="text-label-value-15"
                 >
-                  Diff
+                  (check diff)
                 </CustomLink>
               )}
             </div>
