@@ -1,29 +1,24 @@
-Generated with discovered.json: 0xd4c9544ef9ad378660d6514f9549889ca576e5ac
+Generated with discovered.json: 0xa231e43b08b8820268f8f9185d3653994d8fe45a
 
-# Diff at Fri, 26 Sep 2025 13:11:13 GMT:
+# Diff at Fri, 26 Sep 2025 14:55:44 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@32a63cfb0adda1ffcf7cc477086868b0daf61c13 block: 1758029480
-- current timestamp: 1758892204
+- current timestamp: 1758898476
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+UpgradeExecutor can now perform arbitrary call to a contract (rather than just delegate calling)
+https://disco.l2beat.com/diff/arb1:0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115/arb1:0x3d745b8815F9be5BF053858165f8aB1F58c77932
 
 ## Watched changes
 
 ```diff
     contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
-    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
-      template:
--        "orbitstack/layer2/L2UpgradeExecutor"
-+        "orbitstack/UpgradeExecutor"
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
       sourceHashes.1:
 -        "0x17d2fa21e1bf7dff5e335a08bb2b6b996e34c00b1175c3711875720dde509401"
 +        "0x5b1abdc6dea1e28ed7625a5840c5e44c9a0e33a01b15db9b8604c9e587986e85"
-      description:
--        "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2)."
-+        "Central contract defining the access control permissions for upgrading the system contract implementations."
       values.$implementation:
 -        "arb1:0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115"
 +        "arb1:0x3d745b8815F9be5BF053858165f8aB1F58c77932"

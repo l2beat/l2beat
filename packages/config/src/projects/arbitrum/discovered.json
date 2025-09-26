@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "timestamp": 1758892204,
+  "timestamp": 1758898476,
   "configHash": "0xb0e20fce2209a0eaf71a2737c08e916653378a8089eb212523e7b7814a917775",
   "entries": [
     {
@@ -62,7 +62,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 37179,
+        "exitNum": 37182,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -1655,13 +1655,13 @@
       "name": "L2UpgradeExecutor",
       "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
       "type": "Contract",
-      "template": "orbitstack/UpgradeExecutor",
+      "template": "orbitstack/layer2/L2UpgradeExecutor",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x5b1abdc6dea1e28ed7625a5840c5e44c9a0e33a01b15db9b8604c9e587986e85"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "description": "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -2909,7 +2909,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1014968,
+        "batchCount": 1015107,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -2919,12 +2919,12 @@
         "bridge": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "buffer": {
-          "bufferBlocks": 14320,
+          "bufferBlocks": 14337,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 23447312,
+          "prevBlockNumber": 23447849,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 23447374
+          "prevSequencedBlockNumber": 23447916
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -2950,7 +2950,7 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2132565,
+        "totalDelayedMessagesRead": 2132721,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -3292,7 +3292,7 @@
         "getValidators": [],
         "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x540f852f6472093208c1d8430bab35c83ee3959b713e50a171621615c85899d3",
+        "latestConfirmed": "0x5ee04c4edf9bf9343507d357526a5e1a7b9d647197dad8631e74226fcb668962",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -3759,7 +3759,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2132580,
+        "delayedMessageCount": 2132731,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -3773,8 +3773,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1014968,
-        "sequencerReportedSubMessageCount": 361012109
+        "sequencerMessageCount": 1015107,
+        "sequencerReportedSubMessageCount": 361037804
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -8816,6 +8816,7 @@
     "orbitstack/layer2/L2SecurityCouncilPropose": "0xf509fc34576b73a2b56cea5e9555c23414ac91ec341cc8be8b08f253909a46fb",
     "orbitstack/layer2/L2SurplusFee": "0x35909e6c98ff9dc33cebb87d3a2b06a219f78e429c555102d9be6eaa65d55fa4",
     "orbitstack/layer2/L2Timelock": "0xc4536a7cf375a15d151b85dc3ad86b0863657cead6f5cd7d03c28275c562df0b",
+    "orbitstack/layer2/L2UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/layer2/L2WethGateway": "0xd84f362cbad6cd7de185b612e49e8eee1ad5e4d94eb0dd821258681d7f1448a5",
     "orbitstack/layer2/SecurityCouncilManager": "0xd8eca71610401a734ddfdcee01d1296d2e7d1896ea098237260911f564bab216",
     "orbitstack/layer2/SecurityCouncilMemberElectionGovernor": "0x26c3ea80c46518b0d0c1908608521a5636db78a3a032e052ea70d2ca75e689dc",
@@ -8839,6 +8840,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 23447396, "arbitrum": 383220606 },
+  "usedBlockNumbers": { "ethereum": 23447916, "arbitrum": 383245780 },
   "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7"
 }
