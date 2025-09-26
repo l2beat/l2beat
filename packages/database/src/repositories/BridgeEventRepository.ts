@@ -97,7 +97,7 @@ export class BridgeEventRepository extends BaseRepository {
     options: {
       matched?: boolean
       unsupported?: boolean
-      olderThanTwoHours?: boolean
+      oldCutoff?: UnixTime
     } = {},
   ): Promise<BridgeEventRecord[]> {
     let query = this.db.selectFrom('BridgeEvent').where('type', '=', type)
@@ -110,11 +110,8 @@ export class BridgeEventRepository extends BaseRepository {
       query = query.where('unsupported', '=', options.unsupported)
     }
 
-    if (options.olderThanTwoHours !== undefined) {
-      const now = new Date()
-      const cutoffTime = new Date(now.toISOString())
-      cutoffTime.setUTCHours(cutoffTime.getUTCHours() - 2)
-      query = query.where('timestamp', '<', cutoffTime)
+    if (options.oldCutoff !== undefined) {
+      query = query.where('timestamp', '<', UnixTime.toDate(options.oldCutoff))
     }
 
     const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()

@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 import type { Database } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { BridgesConfig } from '../../config/Config'
 import { renderEventsPage } from './dashboard/EventsPage'
@@ -68,10 +68,14 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
         getExplorerUrl: config.dashboard.getExplorerUrl,
       })
     } else if (params.kind === 'old-unmatched') {
+      const now = new Date()
+      const cutoffTime = new Date(now.toISOString())
+      cutoffTime.setUTCHours(cutoffTime.getUTCHours() - 2)
+
       const events = await db.bridgeEvent.getByType(params.type, {
         matched: false,
         unsupported: false,
-        olderThanTwoHours: true,
+        oldCutoff: UnixTime.fromDate(cutoffTime),
       })
       ctx.body = renderEventsPage({
         events,
