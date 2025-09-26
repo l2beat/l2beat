@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xa2ea63e0a6a3f814d402196b0e8d793caeee738b
+
+# Diff at Fri, 26 Sep 2025 08:30:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@331e0b266e6f6c50461cccad15ef48f094014214 block: 1755010019
+- current timestamp: 1758875337
+
+## Description
+
+Caldera multisig signer added.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 8 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xfa8c7d91a7b846542fc632ec7e2948adc8e10df8
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
