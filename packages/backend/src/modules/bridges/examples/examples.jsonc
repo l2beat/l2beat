@@ -68,6 +68,21 @@
     "messages": [],
     "transfers": []
   },
+  "cctpv2": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x284aed9764a451c32bae3ade17ce61daf420f20d80f3b0849db45af54a16cf1c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x607ef6ded5162ece9b8c8d9df7ef0be69aa6005863403a963295bb362222d5a0"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
   "mayan-mctp-bridge": {
     "txs": [
       {
@@ -501,6 +516,21 @@
       {
         "chain": "ethereum",
         "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "across1": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xe8f56a27f37c01943c61b1cf3e596e30b2b28d3cb5e2a599033e7f5e596683c5"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x161627cfe215e740faca19ae7c0c6161058471fb4266cb9e76667cdd38b92a0a"
       }
     ],
     "events": [],
