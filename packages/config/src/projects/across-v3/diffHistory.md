@@ -1,3 +1,64 @@
+Generated with discovered.json: 0xc239ade80efb189eb2ca4cac7a3e358b01093673
+
+# Diff at Thu, 25 Sep 2025 12:08:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0baa1255a33ce1a02b431265f21e07fd28f2de49 block: 1758116976
+- current timestamp: 1758801469
+
+## Description
+
+adapter for plasma mainnet added.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      values.Adapters.9745:
++        "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363"
+      values.CrossChainContracts.9745:
++        "eth:0x50039fAEfebef707cFD94D6d462fE6D10B39207a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Universal_Adapter (eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363)
+    +++ description: This adapter can be used to send messages / root bundles to Plasma Mainnet. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
+```
+
+## Source code changes
+
+```diff
+...:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363.sol | 792 +++++++++++++++++++++
+ 1 file changed, 792 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758116976 (main branch discovery), not current.
+
+```diff
+    contract Universal_Adapter (eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B) {
+    +++ description: This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
+      description:
+-        "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
++        "This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
+    }
+```
+
+```diff
+    contract Universal_Adapter (eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b) {
+    +++ description: This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
+      description:
+-        "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
++        "This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
+    }
+```
+
 Generated with discovered.json: 0x861032acf9a863cfafc16846fd61140e889b893b
 
 # Diff at Wed, 17 Sep 2025 13:50:43 GMT:
