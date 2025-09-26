@@ -3,6 +3,7 @@ import { cn } from '~/utils/cn'
 export function ScrollWithGradient({
   children,
   className,
+  ...props
 }: React.ComponentProps<'div'>) {
   function updateFades(node: HTMLDivElement) {
     const { scrollTop, scrollHeight, clientHeight } = node
@@ -55,6 +56,7 @@ export function ScrollWithGradient({
           }
         }
       }}
+      {...props}
     >
       {children}
     </div>
