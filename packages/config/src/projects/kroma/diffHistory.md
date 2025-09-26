@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc9469347d60302de2afbc7235bf032d5724de3c7
+
+# Diff at Tue, 23 Sep 2025 12:44:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1752575723
+- current timestamp: 1752575723
+
+## Description
+
+config: separate shared modules for sp1 gateway and -verifier. move to entrypoints logic.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752575723 (main branch discovery), not current.
+
+```diff
+    reference SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
+      targetProject:
+-        "shared-sp1"
++        "shared-sp1-gateway"
+    }
+```
+
 Generated with discovered.json: 0x68459b723889d95a61dc196b2040909c27a7df5c
 
 # Diff at Wed, 03 Sep 2025 15:52:14 GMT:

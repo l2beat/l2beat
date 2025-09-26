@@ -6,6 +6,5 @@
     "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
     "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
   ],
-  "names": { "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": "Validium" },
-  "sharedModules": ["shared-polygon-cdk"]
+  "names": { "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": "Validium" }
 }

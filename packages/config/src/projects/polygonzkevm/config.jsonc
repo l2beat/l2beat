@@ -31,6 +31,5 @@
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["totalBridgedDAI"]
     }
-  },
-  "sharedModules": ["shared-polygon-cdk"]
+  }
 }

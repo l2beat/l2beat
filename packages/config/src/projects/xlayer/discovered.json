@@ -1,8 +1,7 @@
 {
   "name": "xlayer",
   "timestamp": 1754482928,
-  "configHash": "0x05d2a3fb29d0f8b38f984090a71f27b8a8e7742f1ef141a1a00937bb2b2e789c",
-  "sharedModules": ["shared-polygon-cdk"],
+  "configHash": "0x21538818bae443d4aeab565e509acd06937fce36a37f58030e9ffd6339006f0c",
   "entries": [
     {
       "name": "PolygonSharedBridge",

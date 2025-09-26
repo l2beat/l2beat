@@ -1,8 +1,7 @@
 {
   "name": "kroma",
   "timestamp": 1752575723,
-  "configHash": "0xa65f99ca147ac0f4247bf220c7c3e871da01b5a031e1564b4869d3cce3ffc6d6",
-  "sharedModules": ["shared-sp1"],
+  "configHash": "0xee9a6e83900dc57aa8d649576f2a3b49db3526c2cc14c0d3a6f1d4f2ec02f965",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -463,7 +462,7 @@
       "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Reference",
       "targetType": "Contract",
-      "targetProject": "shared-sp1"
+      "targetProject": "shared-sp1-gateway"
     },
     {
       "name": "KromaSecurityCouncil",
