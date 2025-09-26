@@ -39,6 +39,7 @@ export interface PastUpgradesData {
     implementations: {
       address: string
       href: string
+      diffUrl?: string
     }[]
   }[]
   stats: {
@@ -167,41 +168,50 @@ function PastUpgradeEntry({
           </span>
         </ValueWithTitle>
         <ValueWithTitle
-          title="Implementation address"
+          title={
+            deployment ? 'Deployment transaction hash' : 'Transaction hash'
+          }
           className="max-md:hidden"
         >
-          <div className="flex gap-1">
-            {upgrade.implementations.map((implementation) => (
-              <EtherscanLink
-                key={implementation.address}
-                address={implementation.address}
-                href={implementation.href}
-                className="text-label-value-15"
-              />
-            ))}
-          </div>
+          <CustomLink
+            href={upgrade.transactionHash.href}
+            className="word-break-word font-medium text-label-value-15"
+          >
+            {upgrade.transactionHash.hash.slice(0, 6)}…
+            {upgrade.transactionHash.hash.slice(60, 66)}
+          </CustomLink>
         </ValueWithTitle>
       </div>
       <ValueWithTitle
         title={deployment ? 'Deployment transaction hash' : 'Transaction hash'}
-        className="md:mb-0"
+        className="md:hidden"
       >
         <CustomLink
           href={upgrade.transactionHash.href}
           className="word-break-word font-medium text-label-value-15"
         >
-          {upgrade.transactionHash.hash}
+          {upgrade.transactionHash.hash.slice(0, 6)}…
+          {upgrade.transactionHash.hash.slice(60, 66)}
         </CustomLink>
       </ValueWithTitle>
-      <ValueWithTitle title="Implementation address" className="md:hidden">
+      <ValueWithTitle title="Implementation address" className="md:mb-0">
         <div className="flex gap-1">
           {upgrade.implementations.map((implementation) => (
-            <EtherscanLink
-              key={implementation.address}
-              address={implementation.address}
-              href={implementation.href}
-              className="text-label-value-15"
-            />
+            <div key={implementation.address} className="flex gap-0.5">
+              <EtherscanLink
+                address={implementation.address}
+                href={implementation.href}
+                className="text-label-value-15"
+              />
+              {implementation.diffUrl && (
+                <CustomLink
+                  href={implementation.diffUrl}
+                  className="text-label-value-15"
+                >
+                  Diff
+                </CustomLink>
+              )}
+            </div>
           ))}
         </div>
       </ValueWithTitle>

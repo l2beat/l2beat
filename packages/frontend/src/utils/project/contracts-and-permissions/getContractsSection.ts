@@ -238,17 +238,30 @@ function getPastUpgrades(
   const pastUpgrades =
     contractPastUpgrades
       ?.sort((a, b) => b.timestamp - a.timestamp)
-      .map((upgrade) => ({
-        timestamp: upgrade.timestamp,
-        transactionHash: {
-          hash: upgrade.transactionHash,
-          href: `${explorerUrl}/tx/${upgrade.transactionHash}`,
-        },
-        implementations: upgrade.implementations.map((implementation) => ({
-          address: ChainSpecificAddress.address(implementation),
-          href: `${explorerUrl}/address/${ChainSpecificAddress.address(implementation)}#code`,
-        })),
-      })) ?? []
+      .map((upgrade, i) => {
+        const previousUpgrade = contractPastUpgrades?.[i + 1]
+        return {
+          timestamp: upgrade.timestamp,
+          transactionHash: {
+            hash: upgrade.transactionHash,
+            href: `${explorerUrl}/tx/${upgrade.transactionHash}`,
+          },
+          implementations: upgrade.implementations.map(
+            (implementation, implementationIndex) => {
+              const previousImplementation =
+                previousUpgrade?.implementations[implementationIndex]
+              const diffUrl = previousImplementation
+                ? `https://disco.l2beat.com/diff/${implementation}/${previousImplementation}`
+                : undefined
+              return {
+                address: ChainSpecificAddress.address(implementation),
+                href: `${explorerUrl}/address/${ChainSpecificAddress.address(implementation)}#code`,
+                diffUrl,
+              }
+            },
+          ),
+        }
+      }) ?? []
 
   const lastUpgrade = pastUpgrades[0]
   if (!lastUpgrade) return
