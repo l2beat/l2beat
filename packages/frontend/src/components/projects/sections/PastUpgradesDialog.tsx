@@ -1,4 +1,5 @@
 import { formatSeconds, type UnixTime } from '@l2beat/shared-pure'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { Button } from '~/components/core/Button'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import {
@@ -42,8 +43,8 @@ export interface PastUpgradesData {
   }[]
   stats: {
     count: number
-    avgInterval: number
-    lastInterval: number
+    avgInterval: number | null
+    lastInterval: number | null
   }
 }
 
@@ -59,6 +60,30 @@ export function PastUpgradesDialog({
         View past upgrades
       </span>
     </div>
+  )
+
+  const stats = (
+    <ChartStats className="md:grid-cols-3 lg:grid-cols-3">
+      <ChartStatsItem label="Count of upgrades" className="max-md:h-7">
+        {pastUpgrades.stats.count === 0
+          ? 'No upgrades'
+          : pastUpgrades.stats.count}
+      </ChartStatsItem>
+      <ChartStatsItem label="Last upgrade" className="max-md:h-7">
+        {pastUpgrades.stats.lastInterval ? (
+          `${formatSeconds(pastUpgrades.stats.lastInterval)} ago`
+        ) : (
+          <NotApplicableBadge />
+        )}
+      </ChartStatsItem>
+      <ChartStatsItem label="Avg update interval" className="max-md:h-7">
+        {pastUpgrades.stats.avgInterval ? (
+          formatSeconds(pastUpgrades.stats.avgInterval)
+        ) : (
+          <NotApplicableBadge />
+        )}
+      </ChartStatsItem>
+    </ChartStats>
   )
 
   return (
@@ -77,17 +102,7 @@ export function PastUpgradesDialog({
               List of past upgrades
             </DialogDescription>
           </DialogHeader>
-          <ChartStats className="md:grid-cols-3 lg:grid-cols-3">
-            <ChartStatsItem label="Count of upgrades" className="max-md:h-7">
-              {pastUpgrades.stats.count}
-            </ChartStatsItem>
-            <ChartStatsItem label="Avg update interval" className="max-md:h-7">
-              {formatSeconds(pastUpgrades.stats.avgInterval)}
-            </ChartStatsItem>
-            <ChartStatsItem label="Last upgrade" className="max-md:h-7">
-              {formatSeconds(pastUpgrades.stats.lastInterval)}
-            </ChartStatsItem>
-          </ChartStats>
+          {stats}
           <div className="-mr-2 flex-1 space-y-3 overflow-y-auto pr-2">
             {pastUpgrades.upgrades?.map((upgrade, i) => (
               <PastUpgradeEntry
@@ -110,7 +125,8 @@ export function PastUpgradesDialog({
               List of past upgrades
             </DrawerDescription>
           </DrawerHeader>
-          <div className="max-h-[60dvh] space-y-2 overflow-y-auto">
+          {stats}
+          <div className="mt-2 max-h-[50dvh] space-y-2 overflow-y-auto">
             {pastUpgrades.upgrades?.map((upgrade, i) => (
               <PastUpgradeEntry
                 key={upgrade.timestamp.toString()}

@@ -6,7 +6,7 @@ import type {
 } from '@l2beat/config'
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import sum from 'lodash/sum'
+import mean from 'lodash/mean'
 import uniqBy from 'lodash/uniqBy'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
@@ -264,9 +264,10 @@ function getPastUpgrades(
   return {
     upgrades: pastUpgrades,
     stats: {
-      count: pastUpgrades.length,
-      avgInterval: sum(intervals) / pastUpgrades.length,
-      lastInterval: UnixTime.now() - lastUpgrade.timestamp,
+      count: pastUpgrades.length - 1,
+      avgInterval: intervals.length > 0 ? mean(intervals) : null,
+      lastInterval:
+        pastUpgrades.length > 1 ? UnixTime.now() - lastUpgrade.timestamp : null,
     },
   }
 }
