@@ -1,7 +1,7 @@
 {
   "name": "unichain",
   "timestamp": 1755525939,
-  "configHash": "0x4dfba900ee11e5461d02aca7be9f5d13bbd9758c5a77d08a737daefab69a7132",
+  "configHash": "0x80dd6ffffaf43b4a95a5265c353ddbe74c869d0be81a8fc84bc5ce0763130ac9",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -2224,7 +2224,7 @@
         "$implementation": "unichain:0x93e57A196454CB919193fa9946f14943cf733845",
         "$pastUpgrades": [
           [
-            "2025-06-01T18:12:11.000Z",
+            "2025-05-09T16:00:01.000Z",
             "0xb6560306ccb0e772b132a8a6dd78244c0d7ac270c80baba40f95006184926c30",
             ["unichain:0x93e57A196454CB919193fa9946f14943cf733845"]
           ]
@@ -2295,14 +2295,8 @@
       "values": {
         "$admin": "unichain:0x4200000000000000000000000000000000000018",
         "$implementation": "unichain:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
-        "$pastUpgrades": [
-          [
-            "2024-12-05T19:19:37.000Z",
-            "0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",
-            ["unichain:0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]
-          ]
-        ],
-        "$upgradeCount": 1,
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
         "l1FeeWallet": "unichain:0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
@@ -2427,7 +2421,7 @@
         "$implementation": "unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
         "$pastUpgrades": [
           [
-            "2025-06-01T18:12:11.000Z",
+            "2025-05-09T16:00:01.000Z",
             "0xe992e00998b34075506d2726a274db07a62af6cdd9d527bfda9128114603cfbd",
             ["unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]
           ]
@@ -2639,14 +2633,8 @@
       "values": {
         "$admin": "unichain:0x4200000000000000000000000000000000000018",
         "$implementation": "unichain:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
-        "$pastUpgrades": [
-          [
-            "2024-12-05T19:19:37.000Z",
-            "0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",
-            ["unichain:0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]
-          ]
-        ],
-        "$upgradeCount": 1,
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "unichain:0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
@@ -2676,14 +2664,8 @@
       "values": {
         "$admin": "unichain:0x4200000000000000000000000000000000000018",
         "$implementation": "unichain:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
-        "$pastUpgrades": [
-          [
-            "2024-12-05T19:19:37.000Z",
-            "0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",
-            ["unichain:0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]
-          ]
-        ],
-        "$upgradeCount": 1,
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "unichain:0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
