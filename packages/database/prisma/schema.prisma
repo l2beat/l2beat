@@ -483,3 +483,4 @@ model TokenConnection {
   @@id([tokenFromId, tokenToId, type])
   @@index([tokenFromId])
   @@index([tokenToId])
+}
