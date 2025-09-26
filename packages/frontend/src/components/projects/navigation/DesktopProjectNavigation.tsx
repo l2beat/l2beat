@@ -166,7 +166,7 @@ function ProjectNavigationList({
   return (
     <ScrollWithGradient
       className={cn(
-        'absolute top-0 flex w-[172px] min-w-[172px] flex-col gap-3 overflow-y-auto font-medium text-xs leading-none transition-[top] duration-300',
+        'absolute top-0 flex w-[172px] min-w-[172px] flex-col gap-3 font-medium text-xs leading-none transition-[top] duration-300',
         isUnderReview
           ? 'max-h-[calc(100vh-300px)]'
           : 'max-h-[calc(100vh-220px)]',

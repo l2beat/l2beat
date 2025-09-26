@@ -31,7 +31,7 @@ export function ScrollWithGradient({
   }
   return (
     <div
-      className={cn('overflow-auto', className)}
+      className={cn('overflow-y-auto', className)}
       ref={(node) => {
         if (!node) return
         updateFades(node)
