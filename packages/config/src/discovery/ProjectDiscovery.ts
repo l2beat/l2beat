@@ -984,11 +984,6 @@ export class ProjectDiscovery {
         return this.getPermissionPriority(b) - this.getPermissionPriority(a)
       })
     const permissionedEoas = this.getEoaActors()
-    /**
-     * 1. Simulate grouping by desc so we can re-assigned href of EOAs
-     * 1. Pass all actors
-     * 2. Finally output grouped ones to
-     */
 
     const contractActors: ProjectPermission[] = []
     for (const contract of permissionedContracts) {
