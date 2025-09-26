@@ -1,5 +1,5 @@
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { BridgeTransfer } from '../kysely/generated/types'
 
@@ -119,17 +119,19 @@ export function toRow(
 export interface BridgeTransfersStatsRecord {
   type: string
   count: number
-  averageDuration: number
+  medianDuration: number
   outboundValueSum: number
   inboundValueSum: number
-  chains: {
-    sourceChain: string
-    destinationChain: string
-    count: number
-    averageDuration: number
-    outboundValueSum: number
-    inboundValueSum: number
-  }[]
+}
+
+export interface BridgeTransfersDetailedStatsRecord {
+  type: string
+  sourceChain: string
+  destinationChain: string
+  count: number
+  medianDuration: number
+  outboundValueSum: number
+  inboundValueSum: number
 }
 
 export class BridgeTransferRepository extends BaseRepository {
@@ -152,13 +154,24 @@ export class BridgeTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByType(type: string): Promise<BridgeTransferRecord[]> {
-    const rows = await this.db
-      .selectFrom('BridgeTransfer')
-      .where('type', '=', type)
-      .orderBy('timestamp', 'desc')
-      .selectAll()
-      .execute()
+  async getByType(
+    type: string,
+    options: {
+      srcChain?: string
+      dstChain?: string
+    } = {},
+  ): Promise<BridgeTransferRecord[]> {
+    let query = this.db.selectFrom('BridgeTransfer').where('type', '=', type)
+
+    if (options.srcChain !== undefined) {
+      query = query.where('srcChain', '=', options.srcChain)
+    }
+
+    if (options.dstChain !== undefined) {
+      query = query.where('dstChain', '=', options.dstChain)
+    }
+
+    const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()
 
     return rows.map(toRecord)
   }
@@ -169,13 +182,25 @@ export class BridgeTransferRepository extends BaseRepository {
       .select((eb) => [
         'type',
         eb.fn.countAll().as('count'),
-        eb.fn.avg('duration').as('averageDuration'),
+        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
+          'medianDuration',
+        ),
         eb.fn.sum('srcValueUsd').as('outboundValueSum'),
         eb.fn.sum('dstValueUsd').as('inboundValueSum'),
       ])
       .groupBy('type')
       .execute()
 
+    return overallStats.map((overall) => ({
+      type: overall.type,
+      count: Number(overall.count),
+      medianDuration: Number(overall.medianDuration),
+      outboundValueSum: Number(overall.outboundValueSum),
+      inboundValueSum: Number(overall.inboundValueSum),
+    }))
+  }
+
+  async getDetailedStats(): Promise<BridgeTransfersDetailedStatsRecord[]> {
     const chainStats = await this.db
       .selectFrom('BridgeTransfer')
       .select((eb) => [
@@ -183,7 +208,9 @@ export class BridgeTransferRepository extends BaseRepository {
         'srcChain',
         'dstChain',
         eb.fn.countAll().as('count'),
-        eb.fn.avg('duration').as('averageDuration'),
+        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
+          'medianDuration',
+        ),
         eb.fn.sum('srcValueUsd').as('outboundValueSum'),
         eb.fn.sum('dstValueUsd').as('inboundValueSum'),
       ])
@@ -192,26 +219,18 @@ export class BridgeTransferRepository extends BaseRepository {
       .groupBy(['type', 'srcChain', 'dstChain'])
       .execute()
 
-    return overallStats.map((overall) => ({
-      type: overall.type,
-      count: Number(overall.count),
-      averageDuration: Number(overall.averageDuration),
-      outboundValueSum: Number(overall.outboundValueSum),
-      inboundValueSum: Number(overall.inboundValueSum),
-      chains: chainStats
-        .filter((chain) => chain.type === overall.type)
-        .map((chain) => {
-          assert(chain.srcChain && chain.dstChain)
-          return {
-            sourceChain: chain.srcChain,
-            destinationChain: chain.dstChain,
-            count: Number(chain.count),
-            averageDuration: Number(chain.averageDuration),
-            outboundValueSum: Number(chain.outboundValueSum),
-            inboundValueSum: Number(chain.inboundValueSum),
-          }
-        }),
-    }))
+    return chainStats.map((chain) => {
+      assert(chain.srcChain && chain.dstChain)
+      return {
+        type: chain.type,
+        sourceChain: chain.srcChain,
+        destinationChain: chain.dstChain,
+        count: Number(chain.count),
+        medianDuration: Number(chain.medianDuration),
+        outboundValueSum: Number(chain.outboundValueSum),
+        inboundValueSum: Number(chain.inboundValueSum),
+      }
+    })
   }
 
   async deleteBefore(timestamp: UnixTime): Promise<number> {

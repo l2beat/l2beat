@@ -59,6 +59,8 @@ export interface BridgeEventStatsRecord {
   type: string
   count: number
   matched: number
+  unmatched: number
+  oldUnmatched: number
   unsupported: number
 }
 
@@ -90,60 +92,69 @@ export class BridgeEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByType(type: string): Promise<BridgeEventRecord[]> {
-    const rows = await this.db
-      .selectFrom('BridgeEvent')
-      .where('type', '=', type)
-      .orderBy('timestamp', 'desc')
-      .selectAll()
-      .execute()
+  async getByType(
+    type: string,
+    options: {
+      matched?: boolean
+      unsupported?: boolean
+      oldCutoff?: UnixTime
+    } = {},
+  ): Promise<BridgeEventRecord[]> {
+    let query = this.db.selectFrom('BridgeEvent').where('type', '=', type)
 
-    return rows.map(toRecord)
-  }
+    if (options.matched !== undefined) {
+      query = query.where('matched', '=', options.matched)
+    }
 
-  async getUnmatchedByType(type: string): Promise<BridgeEventRecord[]> {
-    const rows = await this.db
-      .selectFrom('BridgeEvent')
-      .where('type', '=', type)
-      .where('unsupported', '=', false)
-      .where('matched', '=', false)
-      .orderBy('timestamp', 'desc')
-      .selectAll()
-      .execute()
+    if (options.unsupported !== undefined) {
+      query = query.where('unsupported', '=', options.unsupported)
+    }
 
-    return rows.map(toRecord)
-  }
+    if (options.oldCutoff !== undefined) {
+      query = query.where('timestamp', '<', UnixTime.toDate(options.oldCutoff))
+    }
 
-  async getUnsupportedByType(type: string): Promise<BridgeEventRecord[]> {
-    const rows = await this.db
-      .selectFrom('BridgeEvent')
-      .where('type', '=', type)
-      .where('unsupported', '=', true)
-      .orderBy('timestamp', 'desc')
-      .selectAll()
-      .execute()
+    const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()
 
     return rows.map(toRecord)
   }
 
   async getStats(): Promise<BridgeEventStatsRecord[]> {
+    const now = new Date()
+    const twoHoursAgo = new Date(now.toISOString())
+    twoHoursAgo.setUTCHours(twoHoursAgo.getUTCHours() - 2)
+
     const rows = await this.db
       .selectFrom('BridgeEvent')
       .select((eb) => [
         'type',
         eb.fn.countAll().as('count'),
-        eb.fn.count('matched').filterWhere('matched', '=', true).as('matched'),
+        eb.fn.countAll().filterWhere('matched', '=', true).as('matched'),
         eb.fn
-          .count('unsupported')
+          .countAll()
+          .filterWhere('unsupported', '=', false)
+          .filterWhere('matched', '=', false)
+          .as('unmatched'),
+        eb.fn
+          .countAll()
           .filterWhere('unsupported', '=', true)
           .as('unsupported'),
+        eb.fn
+          .countAll()
+          .filterWhere('timestamp', '<', twoHoursAgo)
+          .filterWhere('unsupported', '=', false)
+          .filterWhere('matched', '=', false)
+          .as('oldUnmatched'),
       ])
       .groupBy('type')
       .execute()
+
     return rows.map((x) => ({
       type: x.type,
       count: Number(x.count),
       matched: Number(x.matched),
+      unmatched: Number(x.unmatched),
+      oldUnmatched: Number(x.oldUnmatched),
       unsupported: Number(x.unsupported),
     }))
   }
