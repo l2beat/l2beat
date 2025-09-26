@@ -292,6 +292,7 @@ export class ProjectDiscovery {
     ]
 
     return {
+      id: contract.name ?? contract.address,
       name: contract.name ?? contract.address,
       description: combinedDescriptions.join('\n'),
       accounts: this.formatPermissionedAccounts([contract.address]),
@@ -492,6 +493,7 @@ export class ProjectDiscovery {
     }
 
     return {
+      id: name,
       name,
       accounts,
       description,
@@ -529,6 +531,7 @@ export class ProjectDiscovery {
     description: string,
   ): ProjectPermission {
     return {
+      id: contract.name ?? contract.address,
       name: contract.name ?? contract.address,
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: ChainSpecificAddress.longChain(contract.address),
@@ -545,6 +548,7 @@ export class ProjectDiscovery {
     description: string,
   ): ProjectPermission {
     return {
+      id: eoa.name ?? eoa.address,
       name: eoa.name ?? eoa.address,
       accounts: this.formatPermissionedAccounts([eoa.address]),
       chain: ChainSpecificAddress.longChain(eoa.address),
@@ -827,8 +831,10 @@ export class ProjectDiscovery {
         const accounts = allAccounts.filter(
           (a) => ChainSpecificAddress.longChain(a.address) === uniqueChain,
         )
+        const r = RoleDescriptions[role]
         result.push({
-          ...RoleDescriptions[role],
+          id: r.name,
+          ...r,
           description: finalDescription.join('\n'),
           accounts,
           chain: uniqueChain,
@@ -915,11 +921,17 @@ export class ProjectDiscovery {
         return this.getPermissionPriority(b) - this.getPermissionPriority(a)
       })
 
-    const allActors: ProjectPermission[] = []
+    /**
+     * 1. Simulate grouping by desc so we can re-assigned href of EOAs
+     * 1. Pass all actors
+     * 2. Finally output grouped ones to
+     */
+
+    const contractActors: ProjectPermission[] = []
     for (const contract of permissionedContracts) {
       const descriptions = this.describeContractOrEoa(contract, false)
       if (isMultisigLike(contract)) {
-        allActors.push(
+        contractActors.push(
           this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
@@ -927,23 +939,71 @@ export class ProjectDiscovery {
           ),
         )
       } else {
-        allActors.push(this.contractAsPermissioned(contract, descriptions))
+        contractActors.push(this.contractAsPermissioned(contract, descriptions))
       }
     }
 
+    const eoaActorsBeforeGrouping: ProjectPermission[] = []
+
     for (const eoa of permissionedEoas) {
       const description = this.describeContractOrEoa(eoa, false)
-      allActors.push({
-        name: eoa.name ?? this.getEOAName(eoa.address),
+      const name = eoa.name ?? this.getEOAName(eoa.address)
+      const eoaActor = {
+        id: name,
+        name: name,
         accounts: this.formatPermissionedAccounts([eoa.address]),
         chain: ChainSpecificAddress.longChain(eoa.address),
         description,
+      }
+
+      eoaActorsBeforeGrouping.push(eoaActor)
+    }
+
+    const groupedEoas = groupBy(
+      eoaActorsBeforeGrouping,
+      (eoa) => eoa.description,
+    )
+
+    const createGroupedEoa = (eoas: ProjectPermission[]) =>
+      concatName(eoas.map((eoa) => eoa.name)).replaceAll(' ', '-')
+
+    const preparedEoas: ProjectPermission[] = []
+
+    for (const eoaToGroup of eoaActorsBeforeGrouping) {
+      const group = groupedEoas[eoaToGroup.description]
+
+      if (!group) {
+        preparedEoas.push(eoaToGroup)
+      }
+
+      preparedEoas.push({
+        ...eoaToGroup,
+        id: createGroupedEoa(group),
       })
     }
 
+    const eoaGroupedAsActors: ProjectPermission[] = []
+
+    for (const eoas of Object.values(groupedEoas)) {
+      eoaGroupedAsActors.push({
+        name: concatName(eoas.map((eoa) => eoa.name)),
+        id: createGroupedEoa(eoas),
+        accounts: eoas.map((eoa) => eoa.accounts).flat(),
+        chain: eoas[0].chain,
+        description: eoas[0].description,
+      })
+    }
+
+    const allActors = [...contractActors, ...eoaGroupedAsActors]
+
     // NOTE(radomski): Checking for assumptions made about discovery driven actors
-    assert(allActors.every((actor) => actor.accounts.length === 1))
     assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
+
+    assert(
+      [...contractActors, ...eoaActorsBeforeGrouping].every(
+        (actor) => actor.accounts.length === 1,
+      ),
+    )
     // assert(allUnique(allActors.map((actor) => actor.accounts[0].name))) // TODO(radomski): Between chains
 
     const roles = this.describeRolePermissions([
@@ -951,48 +1011,14 @@ export class ProjectDiscovery {
       ...permissionedEoas,
     ])
 
-    // NOTE(radomski): There are two groups of "permissions" we show. Roles and
-    // actors.
-    //
-    // Roles are grouping of actors that have the ability to do _something_.
-    // Actors are entities which have some power in the system.
-    //
-    // To minimize the amount of redundant information we choose to show an
-    // actor only if:
-    //
-    // - it's a contract
-    // - it's an EOA with permissions to interact with parts of the system
-    // - it's an EOA that's shared between projects[1]
-    //
-    // [1] that's currently not possible to achieve. With the config refactor
-    // moving forward when we reach a point where the config will be able to
-    // introspect itself (reach into the configs of other projects) this point
-    // will be true. As for now we don't know if such a occurrence has taken
-    // place.
-    const actors = allActors.filter((actor) => {
-      const account = actor.accounts[0]
-      const isEOA = account.type === 'EOA'
-      if (!isEOA) {
-        return true
-      }
-
-      const eoa = permissionedEoas.find(
-        (eoa) => eoa.address === account.address,
-      )
-
-      const permissionCount = eoa?.receivedPermissions?.length ?? 0
-
-      return permissionCount > 0
-    })
-
-    actors.forEach((permission) => {
+    allActors.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
       )
       if (permission.participants !== undefined) {
         permission.participants = this.linkupActorsIntoAccounts(
           permission.participants,
-          actors,
+          [...contractActors, ...preparedEoas],
         )
       }
     })
@@ -1001,10 +1027,10 @@ export class ProjectDiscovery {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
       )
-      permission.accounts = this.linkupActorsIntoAccounts(
-        permission.accounts,
-        actors,
-      )
+      permission.accounts = this.linkupActorsIntoAccounts(permission.accounts, [
+        ...contractActors,
+        ...preparedEoas,
+      ])
     })
 
     const rolesGrouped = groupBy(
@@ -1012,7 +1038,10 @@ export class ProjectDiscovery {
       (p) => p.chain,
     )
     const actorsGrouped = groupBy(
-      actors.map((p) => ({ ...p, discoveryDrivenData: true })),
+      allActors.map((p) => ({
+        ...p,
+        discoveryDrivenData: true,
+      })),
       (p) => p.chain,
     )
 
@@ -1041,10 +1070,10 @@ export class ProjectDiscovery {
     actors: ProjectPermission[],
   ): ProjectPermissionedAccount[] {
     const result: ProjectPermissionedAccount[] = []
-    const actorNameLUT: Record<string, string> = {}
+    const actorLUT: Record<string, ProjectPermission> = {}
     for (const actor of actors) {
-      assert(actor.accounts.length === 1)
-      actorNameLUT[actor.accounts[0].address] = actor.name
+      assert(actor.accounts.length === 1, 'Actor must have exactly one account')
+      actorLUT[actor.accounts[0].address] = actor
     }
 
     for (const account of accountsToLink) {
@@ -1055,10 +1084,11 @@ export class ProjectDiscovery {
         entry.name = discoveryName
       }
 
-      const actorName = actorNameLUT[account.address]
-      if (actorName !== undefined) {
-        entry.name = actorName
-        entry.url = `#${actorName}`
+      const actor = actorLUT[account.address]
+
+      if (actor !== undefined) {
+        entry.name = actor.name
+        entry.url = `#${actor.id}`
       }
 
       result.push(entry)
@@ -1138,10 +1168,22 @@ function isEntryVerified(entry: EntryParameters): boolean {
   return true
 }
 
+function removeReferences(discovery: DiscoveryOutput) {
+  discovery.entries = discovery.entries.filter((e) => e.type !== 'Reference')
+}
+
 function allUnique(arr: string[]): boolean {
   return new Set(arr).size === arr.length
 }
 
-function removeReferences(discovery: DiscoveryOutput) {
-  discovery.entries = discovery.entries.filter((e) => e.type !== 'Reference')
+function concatName(names: string[]): string {
+  if (names.length === 1) {
+    return names[0]
+  }
+
+  if (names.length === 2) {
+    return names.join(' and ')
+  }
+
+  return names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1]
 }

@@ -1015,6 +1015,7 @@ export interface ProjectPermissions {
 }
 
 export interface ProjectPermission {
+  id: string
   /** List of the accounts */
   accounts: ProjectPermissionedAccount[]
   /** Name of this group */

@@ -22,6 +22,7 @@ import { UsedInProjectEntry } from './permissions/UsedInProject'
 import { ReferenceList } from './ReferenceList'
 
 export interface TechnologyContract {
+  id: string
   name: string
   addresses: TechnologyContractAddress[]
   admins: TechnologyContractAddress[]
@@ -71,7 +72,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
         <>
           <div className="flex flex-wrap items-center gap-x-2 text-paragraph-15 md:text-paragraph-16">
             <strong
-              id={contract.name}
+              id={contract.id}
               className="word-break-word scroll-mt-14 md:scroll-mt-10"
             >
               {contract.name}
