@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x17a981e9d468803a15c3ed5b3d606158493298fc
+Generated with discovered.json: 0xe238621ae17688046a648fcfe2356cbe8bd9f753
 
-# Diff at Fri, 26 Sep 2025 12:43:09 GMT:
+# Diff at Fri, 26 Sep 2025 13:28:54 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@ec4b16fd723bf2a8625a616c4b3a1119ce79fb29 block: 1756452867
-- current timestamp: 1758890500
+- current timestamp: 1758893266
 
 ## Description
 
-add new celestia nitro wasmmoduleroot.
+add new celestia nitro wasmmoduleroot
 
 ## Watched changes
 

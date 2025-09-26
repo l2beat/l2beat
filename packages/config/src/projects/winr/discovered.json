@@ -1,6 +1,6 @@
 {
   "name": "winr",
-  "timestamp": 1758890500,
+  "timestamp": 1758893266,
   "configHash": "0x2ab2037a702061a4a9ed3f37610c21810c839e19c10ead209b6bd4ad2fe04b71",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -797,7 +797,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 24135,
+        "batchCount": 24136,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
@@ -1293,8 +1293,8 @@
         "outboxHistory": ["arb1:0xBA99217992620b76aae0D574c70bD313B30D3D1d"],
         "rollup": "arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerInbox": "arb1:0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
-        "sequencerMessageCount": 24135,
-        "sequencerReportedSubMessageCount": 65257929
+        "sequencerMessageCount": 24136,
+        "sequencerReportedSubMessageCount": 65259610
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -2048,6 +2048,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 383213776 },
+  "usedBlockNumbers": { "arbitrum": 383224867 },
   "permissionsConfigHash": "0xcf02d5ab3bb44f2a4ce02ec7e463244b5feb9be0fbfbbb569ab99a86d2804ecc"
 }
