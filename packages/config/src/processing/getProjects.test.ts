@@ -511,6 +511,21 @@ describe('getProjects', () => {
       }
     })
 
+    describe('every project has no multiple daLayers configured for tracking (not supported on FE)', () => {
+      for (const project of projects) {
+        if (project.daTrackingConfig) {
+          const usedDaLayers = new Set<ProjectId>()
+          it(project.id, () => {
+            assert(project.daTrackingConfig) // type issue
+            for (const config of project.daTrackingConfig) {
+              usedDaLayers.add(config.daLayer)
+            }
+            expect(usedDaLayers.size).toEqual(1)
+          })
+        }
+      }
+    })
+
     describe('every appId is unique for Avail projects', () => {
       const appIds = new Map<string, string>()
       for (const project of projects) {
