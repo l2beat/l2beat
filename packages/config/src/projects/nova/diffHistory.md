@@ -11,6 +11,8 @@ Generated with discovered.json: 0x12f6250daed930e658d05a4ac25d7d25a8eadbae
 UpgradeExecutor can now directly call target contracts (rather than just delegate calling)
 https://disco.l2beat.com/diff/arb-nova:0x3096EAEdcb3A3B665552660F4d921E565D0073cB/arb-nova:0x3d745b8815F9be5BF053858165f8aB1F58c77932
 
+Newly appeared scheduled transactions are old (they were probably stuck before tooling fix).
+
 ## Watched changes
 
 ```diff
