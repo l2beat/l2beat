@@ -29,15 +29,31 @@ export function ScrollWithGradient({
       node.classList.remove('fade-out-to-top-12')
     }
   }
+
   return (
     <div
       className={cn('overflow-y-auto', className)}
       ref={(node) => {
         if (!node) return
         updateFades(node)
-        node.addEventListener('scroll', () => {
-          updateFades(node)
-        })
+
+        const update = () => updateFades(node)
+
+        node.addEventListener('scroll', update)
+        const resizeObserver = new ResizeObserver(update)
+        resizeObserver.observe(node)
+
+        for (const child of node.children) {
+          child.addEventListener('transitionend', update)
+        }
+
+        return () => {
+          node.removeEventListener('scroll', update)
+          resizeObserver.disconnect()
+          for (const child of node.children) {
+            child.removeEventListener('transitionend', update)
+          }
+        }
       }}
     >
       {children}
