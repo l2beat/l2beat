@@ -439,3 +439,48 @@ model EcosystemToken {
   @@id([projectId, coingeckoId, configurationId])
   @@index([projectId])
 }
+
+model AbstractToken {
+  id                        String    @db.Char(6)
+  issuer                    String?   @db.VarChar(255)
+  symbol                    String    @db.VarChar(255) 
+  category                  String    @db.VarChar(255)
+  iconUrl                   String?   @db.VarChar(255)
+  coingeckoId               String?   @db.VarChar(255)
+  coingeckoListingTimestamp DateTime? @db.Timestamp(6)
+  comment                   String?   @db.Text
+
+  deployedTokens            DeployedToken[]
+
+  @@id([id])
+}
+
+model DeployedToken {
+  id                  String            @db.VarChar(255)
+  abstractTokenId     String?           @db.Char(6)
+  symbol              String            @db.VarChar(255) 
+  decimals            Int
+  deploymentTimestamp DateTime          @db.Timestamp(6)
+  
+  abstractToken       AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
+  connectionsFrom     TokenConnection[] @relation("TokenConnection_tokenFrom")
+  connectionsTo       TokenConnection[] @relation("TokenConnection_tokenTo")
+  
+  @@id([id])
+  @@index([abstractTokenId])
+}
+
+model TokenConnection {
+  tokenFromId String        @db.VarChar(255)
+  tokenToId   String        @db.VarChar(255)
+  type        String        @db.VarChar(32)
+  params      Json?         @db.Json
+  comment                   String?   @db.Text
+
+  tokenFrom   DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromId], references: [id], onDelete: Restrict)
+  tokenTo     DeployedToken @relation("TokenConnection_tokenTo", fields: [tokenToId], references: [id], onDelete: Restrict)
+
+  @@id([tokenFromId, tokenToId, type])
+  @@index([tokenFromId])
+  @@index([tokenToId])
+}
