@@ -30,14 +30,14 @@ export const zkswap2: ScalingProject = {
     purposes: ['Payments', 'Exchange'],
     stacks: ['ZKsync Lite'],
     links: {
-      websites: ['https://zks.org/'],
-      bridges: ['https://zks.app'],
+      websites: ['https://zkbase.org/'],
+      bridges: ['https://portal.zkbase.app/bridge'],
       documentation: ['https://en.wiki.zks.org/'],
-      explorers: ['https://zkswap.info'],
+      explorers: ['https://explorer.zkbase.app/'],
       repositories: ['https://github.com/l2labs/zkswap-contracts'],
       socialMedia: [
         'https://medium.com/@zkspaceofficial',
-        'https://twitter.com/ZKSpaceOfficial',
+        'https://x.com/ZKBaseOfficial',
         'https://discord.gg/UbjmQfUVvf',
         'https://t.me/ZKSpaceOfficial',
         'https://reddit.com/r/ZKSwap_Official/',
