@@ -34,7 +34,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
             events.push(event)
           }
         } catch (e) {
-          this.logger.error(e)
+          this.logger.tag({ project: plugin.name }).error(e)
         }
       }
     }
