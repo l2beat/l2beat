@@ -90,7 +90,7 @@ export function PastUpgradesDialog({
     <>
       <Dialog>
         <DialogTrigger className="max-md:hidden">{trigger}</DialogTrigger>
-        <DialogContent className="flex max-h-[90dvh] w-full flex-col overflow-y-hidden bg-surface-primary md:top-1/2 md:max-w-[720px]">
+        <DialogContent className="flex max-h-[90dvh] w-full flex-col overflow-y-hidden bg-surface-primary md:max-w-[720px]">
           <DialogHeader>
             <div className="flex items-center justify-between">
               <DialogTitle>Past upgrades</DialogTitle>
