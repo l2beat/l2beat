@@ -82,12 +82,6 @@ export function DataTablePage(props: DataTablePageProps) {
           </div>
         )}
 
-        <div>
-          <a target="_blank" href="/bridges/status">
-            Sync Status
-          </a>
-        </div>
-
         {tables.map(({ table, tableId, title }, index) => (
           <>
             <h1>{title}</h1>

@@ -3,6 +3,10 @@ import { formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
+import {
+  type ProcessorsStatus,
+  ProcessorsStatusTable,
+} from './ProcessorsStatusTable'
 
 function MessagesTable(props: {
   messages: BridgeMessageRecord[]
@@ -68,6 +72,7 @@ function MessagesTable(props: {
 function MessagesPageLayout(props: {
   messages: BridgeMessageRecord[]
   getExplorerUrl: (chain: string) => string | undefined
+  status: ProcessorsStatus[]
 }) {
   const eventsTable = <MessagesTable {...props} />
 
@@ -93,6 +98,7 @@ function MessagesPageLayout(props: {
           dataTableOptions: dataTableOptions,
         },
       ]}
+      footer={<ProcessorsStatusTable processors={props.status} />}
     />
   )
 }
@@ -100,6 +106,7 @@ function MessagesPageLayout(props: {
 export function renderMessagesPage(props: {
   messages: BridgeMessageRecord[]
   getExplorerUrl: (chain: string) => string | undefined
+  status: ProcessorsStatus[]
 }) {
   return (
     '<!DOCTYPE html>' + renderToStaticMarkup(<MessagesPageLayout {...props} />)
