@@ -23,6 +23,7 @@ import {
 } from '~/components/core/Drawer'
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { CustomLink } from '~/components/link/CustomLink'
+import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { CloseIcon } from '~/icons/Close'
 import { DiffoIcon } from '~/icons/Diffo'
 import { HistoryClockIcon } from '~/icons/HistoryClock'
@@ -105,7 +106,7 @@ export function PastUpgradesDialog({
             </DialogDescription>
           </DialogHeader>
           {stats}
-          <div className="-mr-2 flex-1 space-y-3 overflow-y-auto pr-2">
+          <ScrollWithGradient className="-mr-2 space-y-3 pr-2">
             {pastUpgrades.upgrades?.map((upgrade, i) => (
               <PastUpgradeEntry
                 key={upgrade.timestamp.toString()}
@@ -113,7 +114,7 @@ export function PastUpgradesDialog({
                 deployment={i === pastUpgrades.upgrades.length - 1}
               />
             ))}
-          </div>
+          </ScrollWithGradient>
         </DialogContent>
       </Dialog>
       <Drawer>
@@ -128,7 +129,7 @@ export function PastUpgradesDialog({
             </DrawerDescription>
           </DrawerHeader>
           {stats}
-          <div className="mt-2 max-h-[50dvh] space-y-2 overflow-y-auto">
+          <ScrollWithGradient className="mt-2 max-h-[50dvh] space-y-2">
             {pastUpgrades.upgrades?.map((upgrade, i) => (
               <PastUpgradeEntry
                 key={upgrade.timestamp.toString()}
@@ -136,7 +137,7 @@ export function PastUpgradesDialog({
                 deployment={i === pastUpgrades.upgrades.length - 1}
               />
             ))}
-          </div>
+          </ScrollWithGradient>
           <DrawerFooter className="flex flex-row justify-center pt-6">
             <DrawerClose asChild>
               <Button className="bg-transparent text-secondary text-sm underline dark:bg-transparent">
