@@ -11,6 +11,8 @@ import type {
 } from './plugins/types'
 
 export class BridgeBlockProcessor implements BlockProcessor {
+  lastProcessed: Block | undefined
+
   constructor(
     public chain: string,
     private plugins: BridgePlugin[],
@@ -38,6 +40,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
     }
 
     await this.bridgeStore.saveNewEvents(events)
+    this.lastProcessed = block
 
     this.logger.info('Block processed', {
       chain: this.chain,

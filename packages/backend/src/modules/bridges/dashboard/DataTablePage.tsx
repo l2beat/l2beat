@@ -11,6 +11,7 @@ interface DataTablePageProps {
   showHome?: boolean
   tables: TableConfig[]
   globalDataTableOptions?: object
+  footer?: React.ReactNode
 }
 
 export function DataTablePage(props: DataTablePageProps) {
@@ -93,6 +94,8 @@ export function DataTablePage(props: DataTablePageProps) {
             <div key={tableId || index}>{table}</div>
           </>
         ))}
+
+        {props.footer}
 
         <script
           dangerouslySetInnerHTML={{

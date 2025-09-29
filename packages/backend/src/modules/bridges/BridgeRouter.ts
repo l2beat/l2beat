@@ -3,15 +3,15 @@ import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { BridgesConfig } from '../../config/Config'
-import type { Providers } from '../../providers/Providers'
+import type { BridgeBlockProcessor } from './BridgeBlockProcessor'
 import { renderEventsPage } from './dashboard/EventsPage'
 import { renderMainPage } from './dashboard/MainPage'
 import { renderMessagesPage } from './dashboard/MessagesPage'
 
 export function createBridgeRouter(
   db: Database,
-  providers: Providers,
   config: BridgesConfig,
+  processors: BridgeBlockProcessor[],
 ) {
   const router = new Router()
 
@@ -19,18 +19,24 @@ export function createBridgeRouter(
     const events = await db.bridgeEvent.getStats()
     const messages = await getMessagesStats(db)
     const transfers = await getTransfersStats(db)
+    const status = processors.flatMap((p) =>
+      p.lastProcessed
+        ? [
+            {
+              chain: p.chain,
+              block: p.lastProcessed.number,
+              timestamp: p.lastProcessed.timestamp,
+            },
+          ]
+        : [],
+    )
 
     ctx.body = renderMainPage({
       events,
       messages,
       transfers,
+      status,
     })
-  })
-
-  router.get('/bridges/status', async (ctx) => {
-    const indexersStatus = await getIndexersStatus(config, db, providers)
-
-    ctx.body = indexersStatus
   })
 
   router.get('/bridges.json', async (ctx) => {
@@ -139,42 +145,6 @@ export function createBridgeRouter(
   })
 
   return router
-}
-
-async function getIndexersStatus(
-  config: BridgesConfig,
-  db: Database,
-  providers: Providers,
-) {
-  const indexers = await db.indexerState.getByIndexerIds(
-    config.capture.chains.map((c) => `block_indexer::${c}`),
-  )
-
-  return await Promise.all(
-    indexers
-      .filter((x) => x !== undefined)
-      .map(async (c) => {
-        const chain = c.indexerId.split('::')[1]
-
-        const block = await providers.block
-          .getBlockProvider(chain)
-          .getBlockWithTransactions(c.safeHeight)
-
-        return {
-          chain: chain,
-          latestBlock: {
-            number: c.safeHeight,
-            timestamp: UnixTime(block.timestamp),
-          },
-          range: {
-            from: UnixTime.toDate(
-              UnixTime(block.timestamp) - 1 * UnixTime.DAY,
-            ).toUTCString(),
-            to: UnixTime.toDate(block.timestamp).toUTCString(),
-          },
-        }
-      }),
-  )
 }
 
 async function getMessagesStats(db: Database) {
