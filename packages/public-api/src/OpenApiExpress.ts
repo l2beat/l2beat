@@ -20,21 +20,39 @@ const BadRequestResponse = v.object({
   error: v.string(),
 })
 
+type JsonSchema = ReturnType<typeof _toJsonSchema>
+
 type OpenApiPath = {
   description?: string
   tags?: Tags[]
-  // biome-ignore lint/suspicious/noExplicitAny: will add
-  parameters: any[]
-  // biome-ignore lint/suspicious/noExplicitAny: will add
-  responses: Record<number, any>
+  parameters: OpenApiParameter[]
+  responses: Record<number, OpenApiResponse>
+}
+
+type OpenApiParameter = {
+  name: string
+  in: 'query' | 'path'
+  required: boolean
+  schema: ReturnType<typeof _toJsonSchema>
+}
+
+type OpenApiResponse = {
+  content: {
+    'application/json': {
+      description?: string
+      schema: JsonSchema
+    }
+  }
+}
+
+interface Route {
+  path: string
+  method: 'get'
+  options: OpenApiRouteOptions
 }
 
 export class OpenApiExpress {
-  private routes: {
-    path: string
-    method: 'get'
-    options: OpenApiRouteOptions
-  }[] = []
+  private routes: Route[] = []
 
   constructor(private readonly app: Application) {}
 
@@ -110,34 +128,16 @@ export class OpenApiExpress {
   private getPaths() {
     return this.routes.reduce(
       (acc, route) => {
-        const { result, params, query, ...rest } = route.options
+        const { result: _, params, query, ...rest } = route.options
+
         acc[this.parsePath(route.path)] = {
           [route.method]: {
             ...rest,
             parameters: [
-              ...(params ? this.schemaToParams('params', params) : []),
-              ...(query ? this.schemaToParams('query', query) : []),
+              ...(params ? this.schemaToParameters('params', params) : []),
+              ...(query ? this.schemaToParameters('query', query) : []),
             ],
-            responses: {
-              200: {
-                content: {
-                  'application/json': {
-                    schema: this.toJsonSchema(result),
-                  },
-                },
-              },
-              ...(params || query
-                ? {
-                    400: {
-                      content: {
-                        'application/json': {
-                          schema: this.toJsonSchema(BadRequestResponse),
-                        },
-                      },
-                    },
-                  }
-                : {}),
-            },
+            responses: this.getResponses(route),
           },
         }
         return acc
@@ -146,10 +146,34 @@ export class OpenApiExpress {
     )
   }
 
-  private schemaToParams<T>(
+  private getResponses(route: Route): Record<number, OpenApiResponse> {
+    const base: Record<number, OpenApiResponse> = {
+      200: {
+        content: {
+          'application/json': {
+            schema: this.toJsonSchema(route.options.result),
+          },
+        },
+      },
+    }
+
+    if (!!route.options.params || !!route.options.query) {
+      base[400] = {
+        content: {
+          'application/json': {
+            schema: this.toJsonSchema(BadRequestResponse),
+          },
+        },
+      }
+    }
+
+    return base
+  }
+
+  private schemaToParameters<T>(
     type: 'params' | 'query',
     schema: Parser<T> & { meta?: ImpMeta },
-  ) {
+  ): OpenApiParameter[] {
     if (!schema.meta) {
       throw new Error('Params meta is required')
     }
