@@ -22,6 +22,7 @@ export const forta: ScalingProject = underReviewL3({
       ],
       documentation: ['https://docs.forta.network/'],
       explorers: ['https://explorer.forta.org/'],
+      repositories: ['https://github.com/forta-network'],
       socialMedia: ['https://x.com/FortaNetwork'],
     },
   },
