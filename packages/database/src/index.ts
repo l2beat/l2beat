@@ -1,5 +1,6 @@
 export { createDatabase, type Database } from './database'
 export { type Transaction } from './kysely'
+export { createTokenDatabase, type TokenDatabase } from './tokenDatabase'
 export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 
 // Records
