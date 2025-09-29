@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8576ac1d42b54031a31ff318ea47217bcfc48906
+Generated with discovered.json: 0x96f2d0070436460e2019fdf699ff3014eed3466c
 
-# Diff at Mon, 29 Sep 2025 15:01:23 GMT:
+# Diff at Mon, 29 Sep 2025 15:03:40 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1757939071
-- current timestamp: 1759158019
+- current timestamp: 1759158156
 
 ## Description
 
@@ -86,7 +86,6 @@ discovery. Values are for block 1757939071 (main branch discovery), not current.
 +        "eth:0x0000000000000000000000000000000000000000"
     }
 ```
-
 
 Generated with discovered.json: 0xcc9ddcff41f36f31ec30ba9721e08d861988c4cf
 
