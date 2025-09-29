@@ -36,6 +36,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
             events.push(event)
             pluginEventCounts[plugin.name] =
               (pluginEventCounts[plugin.name] || 0) + 1
+            break
           }
         } catch (e) {
           this.logger.error(e, { project: plugin.name })
