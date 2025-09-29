@@ -1,6 +1,5 @@
 import { formatSeconds, type UnixTime } from '@l2beat/shared-pure'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
-import { Button } from '~/components/core/Button'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import {
   Dialog,
@@ -13,10 +12,8 @@ import {
 } from '~/components/core/Dialog'
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -138,13 +135,6 @@ export function PastUpgradesDialog({
               />
             ))}
           </ScrollWithGradient>
-          <DrawerFooter className="flex flex-row justify-center pt-6">
-            <DrawerClose asChild>
-              <Button className="bg-transparent text-secondary text-sm underline dark:bg-transparent">
-                Close
-              </Button>
-            </DrawerClose>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>
