@@ -69,7 +69,7 @@ export class BlockIndexer extends ManagedChildIndexer {
         from: adjustedFrom,
         to: adjustedTo,
       })
-      return adjustedFrom - 1
+      throw new Error("Couldn't get consistent blocks & logs")
     }
     const actualTo = consistentBlocks[consistentBlocks.length - 1].block.number
 
