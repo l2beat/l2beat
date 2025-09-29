@@ -11,7 +11,7 @@ import {
   ClientCore,
   type ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
-import type { BlockClient, LogsClient } from '../types'
+import type { BlockClient } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import {
   type CallParameters,
@@ -42,7 +42,7 @@ type Param =
   | boolean
   | Record<string, string | string[] | string[][]>
 
-export class RpcClient extends ClientCore implements BlockClient, LogsClient {
+export class RpcClient extends ClientCore implements BlockClient {
   multicallClient?: MulticallV3Client
 
   constructor(private readonly $: Dependencies) {

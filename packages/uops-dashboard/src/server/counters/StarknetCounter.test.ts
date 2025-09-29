@@ -144,7 +144,6 @@ function createBlock(number: number, timestamp?: UnixTime): Block {
     number,
     timestamp: timestamp ?? UnixTime.now(),
     hash: `${number}.hash`,
-    logsBloom: 'UNSUPPORTED',
     transactions: [
       {
         type: 'INVOKE',

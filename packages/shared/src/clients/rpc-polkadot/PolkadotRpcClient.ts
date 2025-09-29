@@ -36,7 +36,6 @@ export class PolkadotRpcClient extends ClientCore {
     return {
       number: bn,
       hash: 'UNSUPPORTED',
-      logsBloom: 'UNSUPPORTED',
       timestamp: PolkadotRpcClient.calculateAvailTimestamp(bn),
       transactions: [], // UNSUPPORTED
     }

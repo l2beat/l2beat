@@ -68,7 +68,6 @@ export class StarknetClient implements BlockClient {
       number: block.block_number,
       timestamp: block.timestamp,
       hash: block.block_hash,
-      logsBloom: 'UNSUPPORTED',
       transactions: block.transactions.map((tx: StarknetApiTransaction) => ({
         hash: tx.transaction_hash,
         data: tx.calldata ?? [],

@@ -15,7 +15,6 @@ describe(StarknetClient.name, () => {
     it('fetches block from api and parses response', async () => {
       const mockStarknetBlock: Block = {
         hash: '0xabcdef',
-        logsBloom: 'UNSUPPORTED',
         number: 100,
         timestamp: UnixTime.now(),
         transactions: [

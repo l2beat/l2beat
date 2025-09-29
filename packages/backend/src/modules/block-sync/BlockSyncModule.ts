@@ -50,6 +50,7 @@ export function createBlockSyncModule({
       parents: [blockNumberIndexer],
       blockProcessors: blockProcessors.filter((x) => x.chain === chain),
       source: chain,
+      mode: 'CONTINUOUS',
       blockProvider: providers.block.getBlockProvider(chain),
       logsProvider: providers.logs.getLogsProvider(chain),
       indexerService,

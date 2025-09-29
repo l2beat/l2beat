@@ -48,7 +48,6 @@ describe(PolkadotRpcClient.name, () => {
       expect(result).toEqual({
         number: +mockBlockNumber,
         hash: 'UNSUPPORTED',
-        logsBloom: 'UNSUPPORTED',
         timestamp: expectedTimestamp,
         transactions: [],
       })
@@ -77,7 +76,6 @@ describe(PolkadotRpcClient.name, () => {
       expect(result).toEqual({
         number: +mockBlockNumber,
         hash: 'UNSUPPORTED',
-        logsBloom: 'UNSUPPORTED',
         timestamp: expectedTimestamp,
         transactions: [],
       })

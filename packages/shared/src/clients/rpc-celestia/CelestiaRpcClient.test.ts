@@ -61,7 +61,6 @@ describe(CelestiaRpcClient.name, () => {
       expect(result).toEqual({
         number: Number(mockBlockHeight),
         hash: 'UNSUPPORTED',
-        logsBloom: 'UNSUPPORTED',
         timestamp: UnixTime.fromDate(new Date(mockTimestamp)),
         transactions: [],
       })
@@ -117,7 +116,6 @@ describe(CelestiaRpcClient.name, () => {
       expect(result).toEqual({
         number: Number(mockBlockHeight),
         hash: 'UNSUPPORTED',
-        logsBloom: 'UNSUPPORTED',
         timestamp: UnixTime.fromDate(new Date(mockTimestamp)),
         transactions: [],
       })

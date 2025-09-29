@@ -56,7 +56,6 @@ export class StarknetClient extends ClientCore implements BlockClient {
         type: t.type,
         data: t.calldata,
       })),
-      logsBloom: 'UNSUPPORTED',
     }
   }
 

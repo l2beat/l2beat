@@ -65,7 +65,6 @@ export class ZksyncLiteClient extends ClientCore implements BlockClient {
     return {
       number: blockNumber,
       hash: 'UNSUPPORTED',
-      logsBloom: 'UNSUPPORTED',
       timestamp: Math.min(...transactions.map((t) => t.createdAt)),
       transactions: transactions.map((t) => ({
         hash: t.txHash,
