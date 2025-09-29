@@ -3,20 +3,31 @@ import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
 import type { ImpMeta } from '@l2beat/validate/dist/cjs/validate'
 import type { Application, Request, RequestHandler } from 'express'
 
+type Tags = 'hello' | 'test'
+
 // biome-ignore lint/suspicious/noExplicitAny: its fine
-interface OpenApiRouteOptions<P = any, O = any, B = any, Q = any> {
-  params?: Parser<P> & { meta?: ImpMeta }
+interface OpenApiRouteOptions<P = any, O = any, Q = any> {
+  description?: string
+  tags?: Tags[]
+  params?: Parser<P>
   query?: Parser<Q>
-  body?: Parser<B>
   result: Parser<O>
   // TODO: descriptions, examples, etc...
 }
 
-type BadRequestResponse = v.infer<typeof BadRequestResponse>
 const BadRequestResponse = v.object({
   path: v.string(),
   error: v.string(),
 })
+
+type OpenApiPath = {
+  description?: string
+  tags?: Tags[]
+  // biome-ignore lint/suspicious/noExplicitAny: will add
+  parameters: any[]
+  // biome-ignore lint/suspicious/noExplicitAny: will add
+  responses: Record<number, any>
+}
 
 export class OpenApiExpress {
   private routes: {
@@ -27,15 +38,10 @@ export class OpenApiExpress {
 
   constructor(private readonly app: Application) {}
 
-  get<TParams, TOutput, TBody, TQuery>(
+  get<TParams, TOutput, TQuery>(
     path: string,
-    options: OpenApiRouteOptions<TParams, TOutput, TBody, TQuery>,
-    handler: RequestHandler<
-      TParams,
-      TOutput | BadRequestResponse,
-      TBody,
-      TQuery
-    >,
+    options: OpenApiRouteOptions<TParams, TOutput, TQuery>,
+    handler: RequestHandler<TParams, TOutput, unknown, TQuery>,
   ) {
     this.routes.push({ path, method: 'get', options })
 
@@ -71,20 +77,8 @@ export class OpenApiExpress {
         Object.defineProperty(req, 'query', { value: result.data })
       }
 
-      if (options.body) {
-        const result = options.body.safeParse(req.body)
-        if (!result.success) {
-          res.status(400).json({
-            path: `.body${result.path}`,
-            error: result.message,
-          })
-          return
-        }
-        Object.defineProperty(req, 'body', { value: result.data })
-      }
-
       return handler(
-        req as Request<TParams, TOutput | BadRequestResponse, TBody, TQuery>,
+        req as Request<TParams, TOutput, unknown, TQuery>,
         res,
         next,
       )
@@ -98,6 +92,16 @@ export class OpenApiExpress {
         title: 'Public API',
         version: '1.0.0',
       },
+      tags: [
+        {
+          name: 'hello',
+          description: 'Collection of hello worlds',
+        },
+        {
+          name: 'test',
+          description: 'Test endpoints',
+        },
+      ],
       components: {},
       paths: this.getPaths(),
     }
@@ -106,48 +110,39 @@ export class OpenApiExpress {
   private getPaths() {
     return this.routes.reduce(
       (acc, route) => {
+        const { result, params, query, ...rest } = route.options
         acc[this.parsePath(route.path)] = {
           [route.method]: {
+            ...rest,
             parameters: [
-              ...(route.options.params
-                ? this.schemaToParams('params', route.options.params)
-                : []),
-              ...(route.options.query
-                ? this.schemaToParams('query', route.options.query)
-                : []),
+              ...(params ? this.schemaToParams('params', params) : []),
+              ...(query ? this.schemaToParams('query', query) : []),
             ],
             responses: {
               200: {
                 content: {
                   'application/json': {
-                    schema: this.toJsonSchema(route.options.result),
+                    schema: this.toJsonSchema(result),
                   },
                 },
               },
-              400: {
-                content: {
-                  'application/json': {
-                    schema: this.toJsonSchema(BadRequestResponse),
-                  },
-                },
-              },
+              ...(params || query
+                ? {
+                    400: {
+                      content: {
+                        'application/json': {
+                          schema: this.toJsonSchema(BadRequestResponse),
+                        },
+                      },
+                    },
+                  }
+                : {}),
             },
           },
         }
         return acc
       },
-      {} as Record<
-        string,
-        Record<
-          string,
-          {
-            // biome-ignore lint/suspicious/noExplicitAny: will add
-            parameters: any[]
-            // biome-ignore lint/suspicious/noExplicitAny: will add
-            responses: Record<number, any>
-          }
-        >
-      >,
+      {} as Record<string, Record<string, OpenApiPath>>,
     )
   }
 

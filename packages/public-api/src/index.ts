@@ -13,6 +13,7 @@ app.get('/openapi', (_, res) => {
 openapi.get(
   '/hello/:name',
   {
+    tags: ['hello'],
     params: v.object({ name: v.string() }),
     result: v.string(),
   },
@@ -24,6 +25,7 @@ openapi.get(
 openapi.get(
   '/hello',
   {
+    tags: ['hello'],
     query: v.object({ name: v.string() }),
     result: v.string(),
   },
@@ -33,7 +35,26 @@ openapi.get(
   },
 )
 
+openapi.get(
+  '/test',
+  {
+    tags: ['test'],
+    description: 'A test for no input',
+    result: v.object({
+      whats: v.literal('upp'),
+    }),
+  },
+  (req, res) => {
+    res.json({ whats: 'upp' })
+  },
+)
+
 app.get('/scalar', apiReference({ url: '/openapi' }))
+
+app.get(
+  '/pet-store',
+  apiReference({ url: 'https://petstore3.swagger.io/api/v3/openapi.json' }),
+)
 
 const port = 3000
 app.listen(port, () => {
