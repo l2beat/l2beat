@@ -266,6 +266,35 @@ export const katana: ScalingProject = {
         ],
       },
     ],
+    zkProgramHashes: [
+      {
+        hash: '0x003991487ea72a40a1caa7c234612c0da52fc4ccc748a07f6ebd35466654772e',
+        programUrl: 'https://github.com/l2beat/l2beat',
+        description:
+          'Aggregation program for OP Succinct: aggregates batch STF proofs',
+        proverSystemProject: ProjectId('sp1'),
+        verificationStatus: 'successful',
+        verificationSteps: `
+      - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
+      - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
+      - Make sure that you have [go lang installed](https://go.dev/doc/install).
+      - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
+      `,
+      },
+      {
+        hash: '0x00eff0b6998df46ec38866305618089ae3dc74e513e767662e1909694F49cc30',
+        programUrl: 'https://github.com/l2beat/l2beat',
+        description: 'Pessimistic program for Agglayer',
+        proverSystemProject: ProjectId('sp1'),
+        verificationStatus: 'notVerified',
+        verificationSteps: `
+      - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
+      - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
+      - Make sure that you have [go lang installed](https://go.dev/doc/install).
+      - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
+      `,
+      },
+    ],
   },
   technology: {
     dataAvailability: {
