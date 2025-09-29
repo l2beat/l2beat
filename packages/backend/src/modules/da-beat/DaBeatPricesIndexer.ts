@@ -5,9 +5,9 @@ import {
   type RemovalConfiguration,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { v } from '@l2beat/validate'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type { ManagedMultiIndexerOptions } from '../../tools/uif/multi/types'
-import { CoingeckoResponse } from './types'
 
 interface DaBeatPricesConfig {
   coingeckoIds: string[]
@@ -87,3 +87,7 @@ export class DaBeatPricesIndexer extends ManagedMultiIndexer<DaBeatPricesConfig>
     }
   }
 }
+
+const CoingeckoResponse = v.array(
+  v.object({ id: v.string(), current_price: v.number() }),
+)
