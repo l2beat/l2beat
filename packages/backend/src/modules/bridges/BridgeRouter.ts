@@ -3,21 +3,30 @@ import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { BridgesConfig } from '../../config/Config'
+import type { BridgeBlockProcessor } from './BridgeBlockProcessor'
 import { renderEventsPage } from './dashboard/EventsPage'
 import { renderMainPage } from './dashboard/MainPage'
 import { renderMessagesPage } from './dashboard/MessagesPage'
+import { renderTransfersPage } from './dashboard/TransfersPage'
 
-export function createBridgeRouter(db: Database, config: BridgesConfig) {
+export function createBridgeRouter(
+  db: Database,
+  config: BridgesConfig,
+  processors: BridgeBlockProcessor[],
+) {
   const router = new Router()
 
   router.get('/bridges', async (ctx) => {
     const events = await db.bridgeEvent.getStats()
     const messages = await getMessagesStats(db)
     const transfers = await getTransfersStats(db)
+    const status = getProcessorsStatus(processors)
+
     ctx.body = renderMainPage({
       events,
       messages,
       transfers,
+      status,
     })
   })
 
@@ -41,6 +50,7 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
 
   router.get('/bridges/events/:kind/:type', async (ctx) => {
     const params = Params.validate(ctx.params)
+    const status = getProcessorsStatus(processors)
 
     if (params.kind === 'unmatched') {
       const events = await db.bridgeEvent.getByType(params.type, {
@@ -50,6 +60,7 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
       ctx.body = renderEventsPage({
         events,
         getExplorerUrl: config.dashboard.getExplorerUrl,
+        status,
       })
     } else if (params.kind === 'unsupported') {
       const events = await db.bridgeEvent.getByType(params.type, {
@@ -58,6 +69,7 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
       ctx.body = renderEventsPage({
         events,
         getExplorerUrl: config.dashboard.getExplorerUrl,
+        status,
       })
     } else if (params.kind === 'matched') {
       const events = await db.bridgeEvent.getByType(params.type, {
@@ -66,6 +78,7 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
       ctx.body = renderEventsPage({
         events,
         getExplorerUrl: config.dashboard.getExplorerUrl,
+        status,
       })
     } else if (params.kind === 'old-unmatched') {
       const now = new Date()
@@ -80,12 +93,14 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
       ctx.body = renderEventsPage({
         events,
         getExplorerUrl: config.dashboard.getExplorerUrl,
+        status,
       })
     } else if (params.kind === 'all') {
       const events = await db.bridgeEvent.getByType(params.type)
       ctx.body = renderEventsPage({
         events,
         getExplorerUrl: config.dashboard.getExplorerUrl,
+        status,
       })
     }
   })
@@ -98,6 +113,7 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
         dstChain: v.string().optional(),
       })
       .validate(ctx.query)
+    const status = getProcessorsStatus(processors)
     const messages = await db.bridgeMessage.getByType(params.type, {
       srcChain: query.srcChain,
       dstChain: query.dstChain,
@@ -105,6 +121,7 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
     ctx.body = renderMessagesPage({
       messages,
       getExplorerUrl: config.dashboard.getExplorerUrl,
+      status,
     })
   })
 
@@ -116,17 +133,34 @@ export function createBridgeRouter(db: Database, config: BridgesConfig) {
         dstChain: v.string().optional(),
       })
       .validate(ctx.query)
-    const messages = await db.bridgeTransfer.getByType(params.type, {
+    const status = getProcessorsStatus(processors)
+
+    const transfers = await db.bridgeTransfer.getByType(params.type, {
       srcChain: query.srcChain,
       dstChain: query.dstChain,
     })
-    ctx.body = renderMessagesPage({
-      messages,
+    ctx.body = renderTransfersPage({
+      transfers,
       getExplorerUrl: config.dashboard.getExplorerUrl,
+      status,
     })
   })
 
   return router
+}
+
+function getProcessorsStatus(processors: BridgeBlockProcessor[]) {
+  return processors.flatMap((p) =>
+    p.lastProcessed
+      ? [
+          {
+            chain: p.chain,
+            block: p.lastProcessed.number,
+            timestamp: p.lastProcessed.timestamp,
+          },
+        ]
+      : [],
+  )
 }
 
 async function getMessagesStats(db: Database) {

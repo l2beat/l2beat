@@ -11,6 +11,7 @@ export function createBridgeModule({
   db,
   logger,
   blockProcessors,
+  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.bridges) {
     logger.info('Bridges module disabled')
@@ -21,6 +22,7 @@ export function createBridgeModule({
   const plugins = createBridgePlugins()
   const bridgeStore = new BridgeStore(db)
 
+  const processors = []
   if (config.bridges.capture) {
     for (const chain of config.bridges.capture.chains) {
       const processor = new BridgeBlockProcessor(
@@ -30,6 +32,7 @@ export function createBridgeModule({
         logger,
       )
       blockProcessors.push(processor)
+      processors.push(processor)
     }
   }
 
@@ -41,7 +44,7 @@ export function createBridgeModule({
     logger,
   )
 
-  const bridgeRouter = createBridgeRouter(db, config.bridges)
+  const bridgeRouter = createBridgeRouter(db, config.bridges, processors)
 
   const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
 
