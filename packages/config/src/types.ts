@@ -556,6 +556,7 @@ export interface ProjectScalingStateValidation {
   description?: string
   categories: ProjectScalingStateValidationCategory[]
   proofVerification?: ProjectProofVerification
+  zkProgramHashes?: ProjectScalingStateValidationZkProgramHash[]
   isUnderReview?: boolean
 }
 
@@ -578,6 +579,15 @@ export interface ProjectScalingStateValidationCategory {
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
   isIncomplete?: boolean
+}
+
+export interface ProjectScalingStateValidationZkProgramHash {
+  hash: string
+  proverSystemProject: ProjectId
+  description: string
+  programUrl: string
+  verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
+  verificationSteps?: string
 }
 // #endregion
 
