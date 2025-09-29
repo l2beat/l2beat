@@ -50,7 +50,7 @@ export function createDaBeatModule({
   }
 
   const pricesIndexer = new DaBeatPricesIndexer({
-    coingeckoClient: providers.clients.coingecko,
+    priceProvider: providers.price,
     db: peripherals.database,
     logger,
     indexerService,

@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import type { CoingeckoClient } from '@l2beat/shared'
-import type { Configuration } from '@l2beat/shared-pure'
+import type { PriceProvider } from '@l2beat/shared'
+import { CoingeckoId, type Configuration } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../test/database'
 import type { IndexerService } from '../../tools/uif/IndexerService'
@@ -30,14 +30,14 @@ describe(DaBeatPricesIndexer.name, () => {
   })
 
   describe(DaBeatPricesIndexer.prototype.multiUpdate.name, () => {
-    it('fetches prices from coingecko and saves to database', async () => {
-      const coingeckoResponse = [
-        { id: 'ethereum', current_price: 2500.5 },
-        { id: 'bitcoin', current_price: 45000.75 },
-      ]
+    it('fetches prices from price provider and saves to database', async () => {
+      const pricesMap = new Map([
+        [CoingeckoId('ethereum'), 2500.5],
+        [CoingeckoId('bitcoin'), 45000.75],
+      ])
 
-      const coingeckoClient = mockObject<CoingeckoClient>({
-        query: mockFn().resolvesTo(coingeckoResponse),
+      const priceProvider = mockObject<PriceProvider>({
+        getLatestPrices: mockFn().resolvesTo(pricesMap),
       })
 
       const currentPriceRepository = mockObject<Database['currentPrice']>({
@@ -47,7 +47,7 @@ describe(DaBeatPricesIndexer.name, () => {
       const configuration = mockConfiguration(['ethereum', 'bitcoin'])
       const deps = mockIndexerDeps({
         configurations: [configuration],
-        coingeckoClient,
+        priceProvider,
         currentPriceRepository,
       })
 
@@ -56,22 +56,24 @@ describe(DaBeatPricesIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(100, 200, [configuration])
       const result = await updateFn()
 
-      expect(coingeckoClient.query).toHaveBeenOnlyCalledWith('/coins/markets', {
-        vs_currency: 'usd',
-        ids: 'ethereum,bitcoin',
-      })
+      expect(priceProvider.getLatestPrices).toHaveBeenOnlyCalledWith([
+        CoingeckoId('ethereum'),
+        CoingeckoId('bitcoin'),
+      ])
 
       expect(currentPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([
-        { coingeckoId: 'ethereum', priceUsd: 2500.5 },
-        { coingeckoId: 'bitcoin', priceUsd: 45000.75 },
+        { coingeckoId: CoingeckoId('ethereum'), priceUsd: 2500.5 },
+        { coingeckoId: CoingeckoId('bitcoin'), priceUsd: 45000.75 },
       ])
 
       expect(result).toEqual(200)
     })
 
     it('returns early when no prices found', async () => {
-      const coingeckoClient = mockObject<CoingeckoClient>({
-        query: mockFn().resolvesTo([]),
+      const emptyPricesMap = new Map()
+
+      const priceProvider = mockObject<PriceProvider>({
+        getLatestPrices: mockFn().resolvesTo(emptyPricesMap),
       })
 
       const currentPriceRepository = mockObject<Database['currentPrice']>({
@@ -81,7 +83,7 @@ describe(DaBeatPricesIndexer.name, () => {
       const configuration = mockConfiguration(['ethereum'])
       const deps = mockIndexerDeps({
         configurations: [configuration],
-        coingeckoClient,
+        priceProvider,
         currentPriceRepository,
       })
 
@@ -90,47 +92,32 @@ describe(DaBeatPricesIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(100, 200, [configuration])
       const result = await updateFn()
 
-      expect(coingeckoClient.query).toHaveBeenOnlyCalledWith('/coins/markets', {
-        vs_currency: 'usd',
-        ids: 'ethereum',
-      })
+      expect(priceProvider.getLatestPrices).toHaveBeenOnlyCalledWith([
+        CoingeckoId('ethereum'),
+      ])
 
       expect(currentPriceRepository.upsertMany).not.toHaveBeenCalled()
       expect(result).toEqual(200)
     })
 
-    it('throws error when too many coingecko ids provided', async () => {
-      const manyIds = Array.from({ length: 101 }, (_, i) => `token${i}`)
-      const configuration = mockConfiguration(manyIds)
-      const deps = mockIndexerDeps({
-        configurations: [configuration],
-      })
-
-      const indexer = new DaBeatPricesIndexer(deps)
-
-      await expect(
-        indexer.multiUpdate(100, 200, [configuration]),
-      ).toBeRejectedWith('Too many ids')
-    })
-
-    it('handles malformed coingecko response', async () => {
-      const coingeckoClient = mockObject<CoingeckoClient>({
-        query: mockFn().resolvesTo([
-          { id: 'ethereum' }, // Missing current_price
-        ]),
+    it('handles price provider errors', async () => {
+      const priceProvider = mockObject<PriceProvider>({
+        getLatestPrices: mockFn().rejectsWith(
+          new Error('Price provider error'),
+        ),
       })
 
       const configuration = mockConfiguration(['ethereum'])
       const deps = mockIndexerDeps({
         configurations: [configuration],
-        coingeckoClient,
+        priceProvider,
       })
 
       const indexer = new DaBeatPricesIndexer(deps)
 
       await expect(
         indexer.multiUpdate(100, 200, [configuration]),
-      ).toBeRejected()
+      ).toBeRejectedWith('Price provider error')
     })
   })
 
@@ -174,7 +161,7 @@ describe(DaBeatPricesIndexer.name, () => {
 
 interface MockIndexerDepsOptions {
   configurations?: Configuration<{ coingeckoIds: string[] }>[]
-  coingeckoClient?: CoingeckoClient
+  priceProvider?: PriceProvider
   currentPriceRepository?: Database['currentPrice']
 }
 
@@ -182,16 +169,16 @@ function mockIndexerDeps(options: MockIndexerDepsOptions = {}): Omit<
   ManagedMultiIndexerOptions<{ coingeckoIds: string[] }>,
   'name'
 > & {
-  coingeckoClient: CoingeckoClient
+  priceProvider: PriceProvider
 } {
   const defaultConfiguration = mockConfiguration(['ethereum'])
 
   return {
-    configurations: options.configurations || [defaultConfiguration],
-    coingeckoClient: options.coingeckoClient || mockObject<CoingeckoClient>(),
+    configurations: options.configurations ?? [defaultConfiguration],
+    priceProvider: options.priceProvider ?? mockObject<PriceProvider>(),
     db: mockDatabase({
       currentPrice:
-        options.currentPriceRepository ||
+        options.currentPriceRepository ??
         mockObject<Database['currentPrice']>(),
     }),
     logger: Logger.SILENT,

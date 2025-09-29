@@ -1,11 +1,11 @@
-import type { CoingeckoClient } from '@l2beat/shared'
+import type { PriceProvider } from '@l2beat/shared'
 import {
   assert,
+  type CoingeckoId,
   type Configuration,
   type RemovalConfiguration,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import { v } from '@l2beat/validate'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type { ManagedMultiIndexerOptions } from '../../tools/uif/multi/types'
 
@@ -15,7 +15,7 @@ interface DaBeatPricesConfig {
 
 interface DaBeatPricesIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<DaBeatPricesConfig>, 'name'> {
-  coingeckoClient: CoingeckoClient
+  priceProvider: PriceProvider
 }
 
 export class DaBeatPricesIndexer extends ManagedMultiIndexer<DaBeatPricesConfig> {
@@ -37,19 +37,12 @@ export class DaBeatPricesIndexer extends ManagedMultiIndexer<DaBeatPricesConfig>
     configurations: Configuration<DaBeatPricesConfig>[],
   ) {
     const configuration = configurations[0]
-    assert(configuration.properties.coingeckoIds.length <= 100, 'Too many ids')
 
-    const coingeckoResponse = await this.$.coingeckoClient.query(
-      '/coins/markets',
-      {
-        vs_currency: 'usd',
-        ids: configuration.properties.coingeckoIds.join(','),
-      },
+    const latestPrices = await this.$.priceProvider.getLatestPrices(
+      configuration.properties.coingeckoIds as CoingeckoId[],
     )
 
-    const parsed = CoingeckoResponse.parse(coingeckoResponse)
-
-    if (parsed.length === 0) {
+    if (latestPrices.size === 0) {
       this.logger.info('No prices found', {
         from,
         to,
@@ -57,10 +50,12 @@ export class DaBeatPricesIndexer extends ManagedMultiIndexer<DaBeatPricesConfig>
       return () => Promise.resolve(to)
     }
 
-    const result = parsed.map(({ id, current_price }) => ({
-      coingeckoId: id,
-      priceUsd: current_price,
-    }))
+    const result = Array.from(latestPrices.entries()).map(
+      ([coingeckoId, priceUsd]) => ({
+        coingeckoId,
+        priceUsd,
+      }),
+    )
 
     return async () => {
       await this.$.db.currentPrice.upsertMany(result)
@@ -87,7 +82,3 @@ export class DaBeatPricesIndexer extends ManagedMultiIndexer<DaBeatPricesConfig>
     }
   }
 }
-
-const CoingeckoResponse = v.array(
-  v.object({ id: v.string(), current_price: v.number() }),
-)
