@@ -23,6 +23,7 @@ export class LoopringClient extends ClientCore implements BlockClient {
 
     return {
       hash: block.blockId.toString(),
+      logsBloom: 'UNSUPPORTED',
       number: block.blockId,
       timestamp: block.createdAt,
       transactions: block.transactions.map((t) => ({

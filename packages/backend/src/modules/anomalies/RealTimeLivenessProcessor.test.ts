@@ -131,6 +131,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           number: 123,
           timestamp: UnixTime.now(),
           transactions,
+          hash: '0x123456',
         })
 
         const logs: Log[] = [
@@ -140,6 +141,7 @@ describe(RealTimeLivenessProcessor.name, () => {
             data: '0xdata',
             transactionHash: txHash1,
             blockNumber: block.number,
+            blockHash: block.hash,
             logIndex: 0,
           },
           {
@@ -148,6 +150,7 @@ describe(RealTimeLivenessProcessor.name, () => {
             data: '0xdata',
             transactionHash: txHash2,
             blockNumber: block.number,
+            blockHash: block.hash,
             logIndex: 1,
           },
         ]
