@@ -5,8 +5,7 @@ import type {
   ReferenceLink,
 } from '@l2beat/config'
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
-import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import mean from 'lodash/mean'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
@@ -15,6 +14,7 @@ import type { TechnologyContract } from '../../../components/projects/sections/C
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/ContractsSection'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
 import type { ContractUtils } from './getContractUtils'
+import { getPastUpgradesData } from './getPastUpgradesData'
 import { toVerificationStatus } from './toVerificationStatus'
 
 type ProjectParams = {
@@ -227,61 +227,7 @@ function makeTechnologyContract(
     impactfulChange,
     upgradeableBy: item.upgradableBy,
     upgradeConsiderations: item.upgradeConsiderations,
-    pastUpgrades: getPastUpgrades(item.pastUpgrades, explorerUrl),
-  }
-}
-
-function getPastUpgrades(
-  contractPastUpgrades: ProjectContract['pastUpgrades'],
-  explorerUrl: string,
-): TechnologyContract['pastUpgrades'] {
-  const pastUpgrades =
-    contractPastUpgrades
-      ?.sort((a, b) => b.timestamp - a.timestamp)
-      .map((upgrade, i) => {
-        const previousUpgrade = contractPastUpgrades?.[i + 1]
-        return {
-          timestamp: upgrade.timestamp,
-          transactionHash: {
-            hash: upgrade.transactionHash,
-            href: `${explorerUrl}/tx/${upgrade.transactionHash}`,
-          },
-          implementations: upgrade.implementations.map(
-            (implementation, implementationIndex) => {
-              const previousImplementation =
-                previousUpgrade?.implementations[implementationIndex]
-              const diffUrl = previousImplementation
-                ? `https://disco.l2beat.com/diff/${implementation}/${previousImplementation}`
-                : undefined
-              return {
-                address: ChainSpecificAddress.address(implementation),
-                href: `${explorerUrl}/address/${ChainSpecificAddress.address(implementation)}#code`,
-                diffUrl,
-              }
-            },
-          ),
-        }
-      }) ?? []
-
-  const lastUpgrade = pastUpgrades[0]
-  if (!lastUpgrade) return
-
-  const intervals: number[] = []
-  for (let i = 1; i < pastUpgrades.length; i++) {
-    const prevUpgrade = pastUpgrades[i - 1]
-    const currentUpgrade = pastUpgrades[i]
-    if (!prevUpgrade || !currentUpgrade) continue
-    intervals.push(prevUpgrade.timestamp - currentUpgrade.timestamp)
-  }
-
-  return {
-    upgrades: pastUpgrades,
-    stats: {
-      count: pastUpgrades.length - 1,
-      avgInterval: intervals.length > 0 ? mean(intervals) : null,
-      lastInterval:
-        pastUpgrades.length > 1 ? UnixTime.now() - lastUpgrade.timestamp : null,
-    },
+    pastUpgrades: getPastUpgradesData(item.pastUpgrades, explorerUrl),
   }
 }
 
