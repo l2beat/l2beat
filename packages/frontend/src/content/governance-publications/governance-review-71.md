@@ -26,10 +26,6 @@ SEEDGov [created a post](https://gov.optimism.io/t/token-house-participation-and
 
 You can find us to discuss everything related to Optimism’s governance, from current initiatives to high-level conversations, during our [Optimism Office Hours](https://meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
-**Upcoming Events (Times in UTC):**
-
-[DAB Office Hours](https://meet.google.com/pgj-ibvv-trr) - on 23.9 at 14:00.
-
 
 ## **Arbitrum**
 
