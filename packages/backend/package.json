@@ -5,7 +5,7 @@
   "main": "./build/data.json",
   "types": "./index.d.ts",
   "scripts": {
-    "build": "./scripts/build.sh",
+    "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:backend",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:backend",
     "build:config": "cd ../config && pnpm build",
