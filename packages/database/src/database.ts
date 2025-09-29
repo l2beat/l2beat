@@ -1,7 +1,6 @@
 import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { DatabaseClient } from './kysely'
-import { AbstractTokenRepository } from './repositories/AbstractTokenRepository'
 import { ActivityRepository } from './repositories/ActivityRepository'
 import { AggregatedL2CostRepository } from './repositories/AggregatedL2CostRepository'
 import { AggregatedLivenessRepository } from './repositories/AggregatedLivenessRepository'
@@ -14,7 +13,6 @@ import { BridgeTransferRepository } from './repositories/BridgeTransferRepositor
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
-import { DeployedTokenRepository } from './repositories/DeployedTokenRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
@@ -29,7 +27,6 @@ import { RealTimeAnomaliesRepository } from './repositories/RealTimeAnomaliesRep
 import { RealTimeLivenessRepository } from './repositories/RealTimeLivenessRepository'
 import { StakeRepository } from './repositories/StakeRepository'
 import { SyncMetadataRepository } from './repositories/SyncMetadataRepository'
-import { TokenConnectionRepository } from './repositories/TokenConnectionRepository'
 import { TokenMetadataRepository } from './repositories/TokenMetadataRepository'
 import { TokenValueRepository } from './repositories/TokenValueRepository'
 import { TvsAmountRepository } from './repositories/TvsAmountRepository'
@@ -99,12 +96,6 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     verifierStatus: new VerifierStatusRepository(db),
     syncMetadata: new SyncMetadataRepository(db),
     notifications: new NotificationsRepository(db),
-    // #endregion
-
-    // #region Tokens
-    abstractToken: new AbstractTokenRepository(db),
-    deployedToken: new DeployedTokenRepository(db),
-    tokenConnection: new TokenConnectionRepository(db),
     // #endregion
 
     // #region Tvs

@@ -1,13 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { describeDatabase } from '../test/database'
+import { describeTokenDatabase } from '../test/tokenDatabase'
 import type { DeployedTokenRecord } from './DeployedTokenRepository'
 import {
   type TokenConnectionRecord,
   TokenConnectionRepository,
 } from './TokenConnectionRepository'
 
-describeDatabase(TokenConnectionRepository.name, (db) => {
+describeTokenDatabase(TokenConnectionRepository.name, (db) => {
   const repository = db.tokenConnection
   const deployedTokens = db.deployedToken
 
