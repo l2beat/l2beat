@@ -18,13 +18,10 @@ export function getPastUpgradesData(
             hash: upgrade.transactionHash,
             href: `${explorerUrl}/tx/${upgrade.transactionHash}`,
           },
-          implementations: upgrade.implementations.map(
-            (implementation, implementationIndex) =>
-              getImplementationData(
-                explorerUrl,
-                implementation,
-                previousUpgrade?.implementations[implementationIndex],
-              ),
+          implementations: getImplementations(
+            explorerUrl,
+            upgrade.implementations,
+            previousUpgrade,
           ),
         }
       }) ?? []
@@ -38,19 +35,23 @@ export function getPastUpgradesData(
   }
 }
 
-function getImplementationData(
+function getImplementations(
   explorerUrl: string,
-  implementation: ChainSpecificAddress,
-  previousImplementation: ChainSpecificAddress | undefined,
+  implementations: ChainSpecificAddress[],
+  pastUpgrade: NonNullable<ProjectContract['pastUpgrades']>[number] | undefined,
 ) {
-  const diffUrl = previousImplementation
-    ? `https://disco.l2beat.com/diff/${implementation}/${previousImplementation}`
-    : undefined
-  return {
-    address: ChainSpecificAddress.address(implementation),
-    href: `${explorerUrl}/address/${ChainSpecificAddress.address(implementation)}#code`,
-    diffUrl,
-  }
+  return implementations.map((implementation, index) => {
+    const previousImplementation = pastUpgrade?.implementations[index]
+    const diffUrl = previousImplementation
+      ? `https://disco.l2beat.com/diff/${implementation}/${previousImplementation}`
+      : undefined
+
+    return {
+      address: ChainSpecificAddress.address(implementation),
+      href: `${explorerUrl}/address/${ChainSpecificAddress.address(implementation)}#code`,
+      diffUrl,
+    }
+  })
 }
 
 function getPastUpgradesStats(
