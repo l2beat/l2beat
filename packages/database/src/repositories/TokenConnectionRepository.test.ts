@@ -73,6 +73,45 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     })
   })
 
+  describe(
+    TokenConnectionRepository.prototype.getConnectionsFromOrTo.name,
+    () => {
+      it('returns inbound and outbound connections', async () => {
+        await repository.upsertMany([
+          tokenConnection({
+            tokenFromId: 'token-1',
+            tokenToId: 'token-2',
+            type: 'canonical',
+          }),
+          tokenConnection({
+            tokenFromId: 'token-3',
+            tokenToId: 'token-1',
+            type: 'wrapper',
+          }),
+          tokenConnection({
+            tokenFromId: 'token-2',
+            tokenToId: 'token-3',
+            type: 'wrapper',
+          }),
+        ])
+
+        const result = await repository.getConnectionsFromOrTo('token-1')
+        expect(result).toEqualUnsorted([
+          tokenConnection({
+            tokenFromId: 'token-1',
+            tokenToId: 'token-2',
+            type: 'canonical',
+          }),
+          tokenConnection({
+            tokenFromId: 'token-3',
+            tokenToId: 'token-1',
+            type: 'wrapper',
+          }),
+        ])
+      })
+    },
+  )
+
   describe(TokenConnectionRepository.prototype.getConnectionsFrom.name, () => {
     it('returns outbound connections', async () => {
       await repository.upsertMany([
@@ -135,41 +174,47 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     })
   })
 
-  describe(TokenConnectionRepository.prototype.getBetween.name, () => {
-    it('returns connections in both directions', async () => {
-      await repository.upsertMany([
-        tokenConnection({
-          tokenFromId: 'token-1',
-          tokenToId: 'token-2',
-          type: 'canonical',
-        }),
-        tokenConnection({
-          tokenFromId: 'token-2',
-          tokenToId: 'token-1',
-          type: 'wrapper',
-        }),
-        tokenConnection({
-          tokenFromId: 'token-2',
-          tokenToId: 'token-3',
-          type: 'canonical',
-        }),
-      ])
+  describe(
+    TokenConnectionRepository.prototype.getConnectionsBetween.name,
+    () => {
+      it('returns connections in both directions', async () => {
+        await repository.upsertMany([
+          tokenConnection({
+            tokenFromId: 'token-1',
+            tokenToId: 'token-2',
+            type: 'canonical',
+          }),
+          tokenConnection({
+            tokenFromId: 'token-2',
+            tokenToId: 'token-1',
+            type: 'wrapper',
+          }),
+          tokenConnection({
+            tokenFromId: 'token-2',
+            tokenToId: 'token-3',
+            type: 'canonical',
+          }),
+        ])
 
-      const result = await repository.getBetween('token-1', 'token-2')
-      expect(result).toEqualUnsorted([
-        tokenConnection({
-          tokenFromId: 'token-1',
-          tokenToId: 'token-2',
-          type: 'canonical',
-        }),
-        tokenConnection({
-          tokenFromId: 'token-2',
-          tokenToId: 'token-1',
-          type: 'wrapper',
-        }),
-      ])
-    })
-  })
+        const result = await repository.getConnectionsBetween(
+          'token-1',
+          'token-2',
+        )
+        expect(result).toEqualUnsorted([
+          tokenConnection({
+            tokenFromId: 'token-1',
+            tokenToId: 'token-2',
+            type: 'canonical',
+          }),
+          tokenConnection({
+            tokenFromId: 'token-2',
+            tokenToId: 'token-1',
+            type: 'wrapper',
+          }),
+        ])
+      })
+    },
+  )
 
   describe(TokenConnectionRepository.prototype.deleteByTokenIds.name, () => {
     it('deletes connections touching provided token ids', async () => {

@@ -77,6 +77,20 @@ export class TokenConnectionRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getConnectionsFromOrTo(
+    tokenId: string,
+  ): Promise<TokenConnectionRecord[]> {
+    const rows = await this.db
+      .selectFrom('TokenConnection')
+      .selectAll()
+      .where((eb) =>
+        eb.or([eb('tokenFromId', '=', tokenId), eb('tokenToId', '=', tokenId)]),
+      )
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getConnectionsFrom(tokenId: string): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
@@ -111,7 +125,7 @@ export class TokenConnectionRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getBetween(
+  async getConnectionsBetween(
     tokenA: string,
     tokenB: string,
   ): Promise<TokenConnectionRecord[]> {

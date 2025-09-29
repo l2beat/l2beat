@@ -47,6 +47,9 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
       const result = await repository.findById('token-1')
       expect(result).toEqual(updated)
+
+      const result2 = await repository.findByIdSubstring('KEN-1')
+      expect(result2).toEqual(updated)
     })
   })
 

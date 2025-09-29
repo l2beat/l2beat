@@ -68,6 +68,18 @@ export class DeployedTokenRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
+  async findByIdSubstring(
+    subs: string,
+  ): Promise<DeployedTokenRecord | undefined> {
+    const row = await this.db
+      .selectFrom('DeployedToken')
+      .selectAll()
+      .where('id', 'ilike', `%${subs}%`)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async getByIds(ids: string[]): Promise<DeployedTokenRecord[]> {
     if (ids.length === 0) return []
 
