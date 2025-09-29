@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x268d34249e12f7da1df105d7f14425fbb078b33e
+Generated with discovered.json: 0x8576ac1d42b54031a31ff318ea47217bcfc48906
 
-# Diff at Fri, 26 Sep 2025 07:47:57 GMT:
+# Diff at Mon, 29 Sep 2025 15:01:23 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@0baa1255a33ce1a02b431265f21e07fd28f2de49 block: 1757939071
-- current timestamp: 1758872812
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1757939071
+- current timestamp: 1759158019
 
 ## Description
 
@@ -12,6 +12,15 @@ Introduced MVM_ProposerRegistry.
 https://disco.l2beat.com/diff/eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1/eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7
 
 ## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.owner:
+-        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
 
 ```diff
     contract Lib_AddressManager (eth:0x918778e825747a892b17C66fe7D24C618262867d) {
@@ -78,7 +87,7 @@ discovery. Values are for block 1757939071 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xab702e87dac0d30c6e70433c4cecf5ff9889c986
+Generated with discovered.json: 0xcc9ddcff41f36f31ec30ba9721e08d861988c4cf
 
 # Diff at Mon, 15 Sep 2025 12:26:22 GMT:
 
