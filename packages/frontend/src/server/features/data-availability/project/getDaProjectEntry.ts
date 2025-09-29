@@ -127,7 +127,7 @@ export async function getDaProjectEntry(
 
   const [economicSecurity, tvsPerProject, projectsChangeReport, liveness] =
     await Promise.all([
-      getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
+      getDaProjectEconomicSecurity(layer.id, layer.daLayer.economicSecurity),
       getDaProjectsTvs(allUsedIn.map((x) => x.id)),
       getProjectsChangeReport(),
       selected ? getLiveness() : undefined,
@@ -280,7 +280,7 @@ export async function getEthereumDaProjectEntry(
   )
 
   const [economicSecurity, tvsPerProject, sections] = await Promise.all([
-    getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
+    getDaProjectEconomicSecurity(layer.id, layer.daLayer.economicSecurity),
     getDaProjectsTvs(bridge.daBridge.usedIn.map((x) => x.id)),
     getEthereumDaProjectSections({
       layer,

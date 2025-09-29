@@ -14,6 +14,7 @@ import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/toVerificationStatus'
+import { type PastUpgradesData, PastUpgradesDialog } from './PastUpgradesDialog'
 import type { Participant } from './permissions/Participants'
 import { ParticipantsEntry } from './permissions/Participants'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
@@ -34,6 +35,7 @@ export interface TechnologyContract {
   upgradeConsiderations?: string
   references: ReferenceLink[]
   impactfulChange: boolean
+  pastUpgrades?: PastUpgradesData
 }
 
 export interface TechnologyContractAddress {
@@ -103,6 +105,10 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
               </HighlightableLink>
             ))}
           </div>
+          {contract.pastUpgrades?.upgrades &&
+            contract.pastUpgrades.upgrades.length > 0 && (
+              <PastUpgradesDialog pastUpgrades={contract.pastUpgrades} />
+            )}
           {contract.description && (
             <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
               {contract.description}

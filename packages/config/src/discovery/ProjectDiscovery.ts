@@ -35,6 +35,7 @@ import type {
 } from '../types'
 import { RoleDescriptions } from './descriptions'
 import { get$Admins, get$Implementations, toAddressArray } from './extractors'
+import { pastUpgradesSchema } from './models'
 import type { PermissionRegistry } from './PermissionRegistry'
 import { PermissionsFromDiscovery } from './PermissionsFromDiscovery'
 import {
@@ -154,6 +155,7 @@ export class ProjectDiscovery {
         title: x.text,
         url: x.href,
       })),
+      pastUpgrades: getPastUpgrades(contract),
       ...descriptionOrOptions,
     }
   }
@@ -1128,6 +1130,23 @@ function getUpgradeability(
     upgradeability.immutable = !!contract.values.$immutable
   }
   return upgradeability
+}
+
+function getPastUpgrades(
+  contract: EntryParameters,
+): ProjectContract['pastUpgrades'] | undefined {
+  const pastUpgrades = pastUpgradesSchema.safeValidate(
+    contract.values?.$pastUpgrades,
+  )
+  if (!pastUpgrades.success) return
+
+  return pastUpgrades.data.map(([date, txHash, implementations]) => {
+    return {
+      timestamp: UnixTime.fromDate(new Date(date)),
+      transactionHash: txHash,
+      implementations: implementations.map((y) => ChainSpecificAddress(y)),
+    }
+  })
 }
 
 function isNonNullable<T>(

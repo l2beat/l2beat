@@ -155,6 +155,7 @@ function block(x: number) {
     number: x,
     transactions: [],
     hash: '0x' + x.toString(),
+    logsBloom: `0x${'0'.repeat(512)}`,
     timestamp: x * 100,
   }
 }
