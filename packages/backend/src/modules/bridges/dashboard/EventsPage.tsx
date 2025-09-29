@@ -18,12 +18,16 @@ function EventsTable(props: {
           <th>Timestamp UTC</th>
           <th>Chain</th>
           <th>Tx Hash</th>
+          <th>$srcChain</th>
+          <th>$dstChain</th>
           <th>Args</th>
         </tr>
       </thead>
       <tbody>
         {props.events.map((e) => {
           const explorerUrl = props.getExplorerUrl(e.chain)
+          const srcChain = (e.args as { $srcChain?: string }).$srcChain
+          const dstChain = (e.args as { $dstChain?: string }).$dstChain
 
           return (
             <tr>
@@ -40,6 +44,8 @@ function EventsTable(props: {
                   e.txHash
                 )}
               </td>
+              <td>{srcChain ?? ''}</td>
+              <td>{dstChain ?? ''}</td>
               <td>{JSON.stringify(e.args)}</td>
             </tr>
           )
