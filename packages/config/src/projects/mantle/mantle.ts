@@ -137,7 +137,7 @@ export const mantle: ScalingProject = opStackL2({
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
         sinceTimestamp: UnixTime(1758008591),
       },
-    }
+    },
   ],
   nonTemplateDaTracking: [
     {
