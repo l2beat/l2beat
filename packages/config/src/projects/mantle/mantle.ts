@@ -116,11 +116,10 @@ export const mantle: ScalingProject = opStackL2({
         address: ChainSpecificAddress.address(
           discovery.getContract('OPSuccinctL2OutputOracle').address,
         ),
-        selector: '0x59c3e00a', // non-optimistic mode
+        selector: '0x9aaab648', // optimistic mode (since genesis now disabled, optimistic mode toggle can reactivate it)
         functionSignature:
-          'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
-        sinceTimestamp: UnixTime(1746606971),
-        untilTimestamp: UnixTime(1757405447),
+          'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)',
+        sinceTimestamp: UnixTime(1688314886),
       },
     },
     {
@@ -136,25 +135,9 @@ export const mantle: ScalingProject = opStackL2({
         selector: '0x9ad84880', // non-optimistic mode
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
-        sinceTimestamp: UnixTime(1688314886),
+        sinceTimestamp: UnixTime(1758008591),
       },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'stateUpdates' },
-        { type: 'l2costs', subtype: 'stateUpdates' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: ChainSpecificAddress.address(
-          discovery.getContract('OPSuccinctL2OutputOracle').address,
-        ),
-        selector: '0x9aaab648', // optimistic mode
-        functionSignature:
-          'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)',
-        sinceTimestamp: UnixTime(1746606971),
-      },
-    },
+    }
   ],
   nonTemplateDaTracking: [
     {
