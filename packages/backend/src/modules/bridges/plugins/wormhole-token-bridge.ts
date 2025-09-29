@@ -47,6 +47,7 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
     db: BridgeEventDb,
   ): MatchResult | undefined {
     if (TransferRedeemed.checkType(transferRedeemed)) {
+      // TODO: we should match by sequence + emitter/sender address (wormhole proto), not assume there is only one emitter per chain of LogMessagePublished
       const logMessagePublished = db.find(LogMessagePublished, {
         sequence: transferRedeemed.args.sequence,
         wormholeChainId: transferRedeemed.args.srcWormholeChainId,

@@ -85,4 +85,5 @@ export class WormholePlugin implements BridgePlugin {
       sender: EthereumAddress(parsed.sender),
     })
   }
+  // no matching because wormhole matches by source emitter address + sequence, of which the destination event depends on the app layer
 }

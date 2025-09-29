@@ -589,5 +589,62 @@
     "events": [],
     "messages": [],
     "transfers": []
+  },
+  "hyperlane-debug": {
+    "txs": [
+      {
+        "chain": "optimism",
+        "tx": "0x196da52c2139bc69199b3b4921b199ee10623b0fffb520102d4b038c28a4648b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x7c0494779f339006aa5930eab84a7c70ecd22d54c1a48c952f0af1435c8db4f9"
+      },
+      {
+        "chain": "base",
+        "tx": "0x297484366df26801ae4123266cd4f59f3de4cc26dbcc78179de54daefd42d8a3"
+      },
+      {
+        "chain": "base",
+        "tx": "0xc431a37bc0700d893e1613c84775aa5ca79277cca533d8947a8be8733cfdf719"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x64d3de3fda6a9df908cd77940c1c416f1df71f92fda9c99550529d0803055ceb"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "wormhole-debug": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x17aa2be5aafb29e41a7e75eeaff7a06aaeabae0bfb9bee5f47d7f9d6979649b4"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x625564530b469cdb41c11ed585276688362964bbf4a9e7c93b03ae5dd73be8d7"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "stargate-debug": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xb257d1d886fbd7b7edff122d369ff5567719f4f2566c4c0a1492a57c79eb5526"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd9b1e59ed889335a82bae3643c2cc695e490c4dec1e3e2d638e5e2157d3dca28"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
   }
 }
