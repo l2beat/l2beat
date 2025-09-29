@@ -135,7 +135,7 @@ describe(DaBeatPricesIndexer.name, () => {
   })
 
   describe(DaBeatPricesIndexer.prototype.removeData.name, () => {
-    it('deletes records by coingecko ids and logs when records deleted', async () => {
+    it('deletes records by coingecko ids', async () => {
       const currentPriceRepository = mockObject<Database['currentPrice']>({
         deleteByCoingeckoIds: mockFn().resolvesTo(5),
       })
@@ -153,26 +153,6 @@ describe(DaBeatPricesIndexer.name, () => {
       expect(
         currentPriceRepository.deleteByCoingeckoIds,
       ).toHaveBeenOnlyCalledWith(['ethereum', 'bitcoin'])
-    })
-
-    it('does not log when no records deleted', async () => {
-      const currentPriceRepository = mockObject<Database['currentPrice']>({
-        deleteByCoingeckoIds: mockFn().resolvesTo(0),
-      })
-
-      const configuration = mockConfiguration(['ethereum'])
-      const deps = mockIndexerDeps({
-        configurations: [configuration],
-        currentPriceRepository,
-      })
-
-      const indexer = new DaBeatPricesIndexer(deps)
-
-      await indexer.removeData([{ id: 'config1', from: 100, to: 200 }])
-
-      expect(
-        currentPriceRepository.deleteByCoingeckoIds,
-      ).toHaveBeenOnlyCalledWith(['ethereum'])
     })
 
     it('throws error when multiple configurations provided', async () => {
