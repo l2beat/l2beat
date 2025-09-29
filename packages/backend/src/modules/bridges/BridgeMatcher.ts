@@ -122,7 +122,7 @@ export async function match(
         try {
           result = await plugin.match?.(event, db)
         } catch (e) {
-          logger.tag({ project: plugin.name }).error(e)
+          logger.error(e, { project: plugin.name })
         }
         if (!result) {
           continue
