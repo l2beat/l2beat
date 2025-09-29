@@ -66,7 +66,7 @@ export const openvmprover: BaseProject = {
 
     ## Proof system
 
-    The proof system is split into ZK frontend, i.e. arithmetization, and ZK backend, i.e. a polynomial IOP with the Fiat-Shamir transform. In practice, a batched FRI-based polynomial commitment is used as the backend. OpenVM backend relies on Plonky3 prover system.
+    The proof system is split into ZK frontend, i.e. arithmetization, and ZK backend, i.e. a polynomial IOP with the Fiat-Shamir heuristic. In practice, a batched FRI-based polynomial commitment is used as the backend. OpenVM backend relies on Plonky3 prover system.
 
     OpenVM arithmetizes the execution trace using AIR with Interactions over BabyBear prime field. Interactions which include LogUp, permutation check and others.
 

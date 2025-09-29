@@ -1,0 +1,5 @@
+{
+  "term": "Groth16",
+  "definition": "A zk-SNARK proving system introduced by Groth in 2016 that proves arithmetic circuits and requires a separate trusted setup for each circuit. It allows extremely efficient proof verification.",
+  "isSpicy": false
+}

@@ -1,8 +1,13 @@
 {
   "name": "ronin",
-  "timestamp": 1751371163,
-  "configHash": "0x6bfb539fa0b0c81642a5865181715a07065f2b7aced00dabb8dc218fcb538394",
+  "timestamp": 1758803380,
+  "configHash": "0xdd1af14321f35e8c125adbfaebed242fdf79c145ddeeba3e400dc9292abc5959",
   "entries": [
+    {
+      "address": "eth:0x0182147F7aC923BF8024C953acA2225C91206485",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "eth:0x020Dd9a5e318695A61DDa88DB7Ad077Ec306e3E9",
       "type": "EOA",
@@ -20,11 +25,6 @@
     },
     {
       "address": "eth:0x0DCA20728c8bb7173D3452559F40E95C60915799",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x18471CC6d2d427077CAA7896D7956cD066CAbe49",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -261,7 +261,7 @@
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "eth:0x4BFEc2a63B72c67e6c3f599fCc40E1d42AE519ff",
-          "eth:0x18471CC6d2d427077CAA7896D7956cD066CAbe49",
+          "eth:0x0182147F7aC923BF8024C953acA2225C91206485",
           "eth:0xC93f43dbbf0a1346D9E0d623B68d78891b131Bf9",
           "eth:0xFE1a01580d7Cd7EC333DDC087b2c4DE3226f6031",
           "eth:0xCfD1C43CdB2bD66c7B66a7aBe66Fb6BE497d7f86"
@@ -271,7 +271,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -506,7 +506,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2698701732682237808787569"
+        "totalSupply": "2452485798884594710038839"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1008,6 +1008,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22824247 },
-  "permissionsConfigHash": "0xdc43bcc5b581ae0aa3bb0d3cbca2051ac4ec1bd72ab0226d015d8650bb62d2ba"
+  "usedBlockNumbers": { "ethereum": 23440058 },
+  "permissionsConfigHash": "0xe1642c913b5dbf490de7c16ca58096c6dd3c86b4f652a604d86a5050b44fbae5"
 }

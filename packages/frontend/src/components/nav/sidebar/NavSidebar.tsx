@@ -52,7 +52,7 @@ export function NavSidebar({ groups, logoLink, sideLinks, whatsNew }: Props) {
           </div>
         </div>
       </SidebarHeader>
-      <SidebarContent className="mt-2!">
+      <SidebarContent>
         {groups.map((group) => {
           return (
             <SidebarGroup key={group.title}>

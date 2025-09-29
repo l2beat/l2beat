@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Simple contract that allows the owner to call an `update` function on arbitrary contracts.",
-  "category": "core"
+  "category": "core",
+  "fields": { "owner": { "permissions": [{ "type": "act" }] } }
 }

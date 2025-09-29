@@ -33,6 +33,18 @@ const CelestiaBlockResult = v.object({
   ]),
 })
 
+export const CelestiaValidatorsResponse = v.object({
+  result: v.object({
+    validators: v.array(
+      v.object({
+        voting_power: v.string().transform((x) => Number.parseInt(x)),
+      }),
+    ),
+    count: v.string().transform((x) => Number.parseInt(x)),
+    total: v.string().transform((x) => Number.parseInt(x)),
+  }),
+})
+
 export const CelestiaBlockResultResponse = v.object({
   result: CelestiaBlockResult,
 })

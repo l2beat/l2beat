@@ -35,6 +35,7 @@ export const orderly: ScalingProject = opStackL2({
       documentation: [
         'https://orderly.network/docs/build-on-evm/building-on-evm',
       ],
+      repositories: ['https://github.com/OrderlyNetwork'],
       explorers: ['https://explorer.orderly.network/'],
       socialMedia: [
         'https://twitter.com/OrderlyNetwork',

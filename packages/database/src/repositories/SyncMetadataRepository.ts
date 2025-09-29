@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { SyncMetadata } from '../kysely/generated/types'
@@ -53,10 +53,6 @@ export function toRowWithoutTarget(
 }
 
 export class SyncMetadataRepository extends BaseRepository {
-  async upsert(record: Insertable<SyncMetadataRecord>): Promise<void> {
-    await this.upsertMany([record])
-  }
-
   async upsertMany(records: Insertable<SyncMetadataRecord>[]): Promise<number> {
     if (records.length === 0) return 0
 
@@ -101,6 +97,44 @@ export class SyncMetadataRepository extends BaseRepository {
       .where('feature', '=', feature)
       .where('id', 'in', ids)
       .execute()
+  }
+
+  async getByFeatureAndId(
+    feature: SyncMetadataRecord['feature'],
+    id: string,
+  ): Promise<SyncMetadataRecord | undefined> {
+    const row = await this.db
+      .selectFrom('SyncMetadata')
+      .selectAll()
+      .where('feature', '=', feature)
+      .where('id', '=', id)
+      .executeTakeFirst()
+    return row && toRecord(row)
+  }
+
+  async getByFeatureAndIds(
+    feature: SyncMetadataRecord['feature'],
+    ids: string[],
+  ): Promise<SyncMetadataRecord[]> {
+    const rows = await this.db
+      .selectFrom('SyncMetadata')
+      .selectAll()
+      .where('feature', '=', feature)
+      .where('id', 'in', ids)
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async getMaxTargetForFeature(
+    feature: SyncMetadataRecord['feature'],
+  ): Promise<UnixTime> {
+    const row = await this.db
+      .selectFrom('SyncMetadata')
+      .select(this.db.fn.max('target').as('maxTarget'))
+      .where('feature', '=', feature)
+      .executeTakeFirst()
+    assert(row?.maxTarget, 'Max target for feature not found')
+    return UnixTime.fromDate(row.maxTarget)
   }
 
   async getAll(): Promise<SyncMetadataRecord[]> {

@@ -1,20 +1,24 @@
 import Router from '@koa/router'
-import type {
-  BridgeEventStatsRecord,
-  BridgeMessageStatsRecord,
-  BridgeTransfersStatsRecord,
-  Database,
-} from '@l2beat/database'
+import type { Database } from '@l2beat/database'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { BridgesConfig } from '../../config/Config'
+import { renderEventsPage } from './dashboard/EventsPage'
+import { renderMainPage } from './dashboard/MainPage'
+import { renderMessagesPage } from './dashboard/MessagesPage'
 
-export function createBridgeRouter(db: Database) {
+export function createBridgeRouter(db: Database, config: BridgesConfig) {
   const router = new Router()
 
   router.get('/bridges', async (ctx) => {
     const events = await db.bridgeEvent.getStats()
-    const messages = await db.bridgeMessage.getStats()
-    const transfers = await db.bridgeTransfer.getStats()
-    ctx.body = statsToHtml(events, messages, transfers)
+    const messages = await getMessagesStats(db)
+    const transfers = await getTransfersStats(db)
+    ctx.body = renderMainPage({
+      events,
+      messages,
+      transfers,
+    })
   })
 
   router.get('/bridges.json', async (ctx) => {
@@ -24,108 +28,153 @@ export function createBridgeRouter(db: Database) {
   })
 
   const Params = v.object({
-    kind: v.enum(['all', 'unmatched', 'unsupported', 'messages', 'transfers']),
+    kind: v.enum([
+      'all',
+      'unmatched',
+      'unsupported',
+      'transfers',
+      'matched',
+      'old-unmatched',
+    ]),
     type: v.string(),
   })
 
-  router.get('/bridges/:kind/:type', async (ctx) => {
+  router.get('/bridges/events/:kind/:type', async (ctx) => {
     const params = Params.validate(ctx.params)
-    if (params.kind === 'messages') {
-      const messages = await db.bridgeMessage.getByType(params.type)
-      ctx.body = messages
-    } else if (params.kind === 'transfers') {
-      const messages = await db.bridgeTransfer.getByType(params.type)
-      ctx.body = messages
-    } else {
-      let events = await db.bridgeEvent.getByType(params.type)
-      if (params.kind === 'unmatched') {
-        events = events.filter((x) => !x.matched && !x.unsupported)
-      } else if (params.kind === 'unsupported') {
-        events = events.filter((x) => x.unsupported)
-      }
-      ctx.body = events
+
+    if (params.kind === 'unmatched') {
+      const events = await db.bridgeEvent.getByType(params.type, {
+        matched: false,
+        unsupported: false,
+      })
+      ctx.body = renderEventsPage({
+        events,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      })
+    } else if (params.kind === 'unsupported') {
+      const events = await db.bridgeEvent.getByType(params.type, {
+        unsupported: true,
+      })
+      ctx.body = renderEventsPage({
+        events,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      })
+    } else if (params.kind === 'matched') {
+      const events = await db.bridgeEvent.getByType(params.type, {
+        matched: true,
+      })
+      ctx.body = renderEventsPage({
+        events,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      })
+    } else if (params.kind === 'old-unmatched') {
+      const now = new Date()
+      const cutoffTime = new Date(now.toISOString())
+      cutoffTime.setUTCHours(cutoffTime.getUTCHours() - 2)
+
+      const events = await db.bridgeEvent.getByType(params.type, {
+        matched: false,
+        unsupported: false,
+        oldCutoff: UnixTime.fromDate(cutoffTime),
+      })
+      ctx.body = renderEventsPage({
+        events,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      })
+    } else if (params.kind === 'all') {
+      const events = await db.bridgeEvent.getByType(params.type)
+      ctx.body = renderEventsPage({
+        events,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      })
     }
+  })
+
+  router.get('/bridges/messages/:type', async (ctx) => {
+    const params = v.object({ type: v.string() }).validate(ctx.params)
+    const query = v
+      .object({
+        srcChain: v.string().optional(),
+        dstChain: v.string().optional(),
+      })
+      .validate(ctx.query)
+    const messages = await db.bridgeMessage.getByType(params.type, {
+      srcChain: query.srcChain,
+      dstChain: query.dstChain,
+    })
+    ctx.body = renderMessagesPage({
+      messages,
+      getExplorerUrl: config.dashboard.getExplorerUrl,
+    })
+  })
+
+  router.get('/bridges/transfers/:type', async (ctx) => {
+    const params = v.object({ type: v.string() }).validate(ctx.params)
+    const query = v
+      .object({
+        srcChain: v.string().optional(),
+        dstChain: v.string().optional(),
+      })
+      .validate(ctx.query)
+    const messages = await db.bridgeTransfer.getByType(params.type, {
+      srcChain: query.srcChain,
+      dstChain: query.dstChain,
+    })
+    ctx.body = renderMessagesPage({
+      messages,
+      getExplorerUrl: config.dashboard.getExplorerUrl,
+    })
   })
 
   return router
 }
 
-function statsToHtml(
-  events: BridgeEventStatsRecord[],
-  messages: BridgeMessageStatsRecord[],
-  transfers: BridgeTransfersStatsRecord[],
-) {
-  let html = '<!doctype html>'
-  html += '<html>'
-  html += '<head>'
-  html += '<title>Bridge Stats</title>'
-  html += '</head>'
-  html += '</body>'
-  html += '<h1>Bridge Stats</h1>'
+async function getMessagesStats(db: Database) {
+  const stats = await db.bridgeMessage.getStats()
+  const detailedStats = await db.bridgeMessage.getDetailedStats()
 
-  html += '<h2>Unmatched (not unsupported) events</h2>'
-  html += '<ul>'
-  for (const { type, count, matched, unsupported } of events) {
-    const unmatched = count - matched - unsupported
-    if (unmatched !== 0) {
-      html += `<li><a href="/bridges/unmatched/${type}">${type}</a>: ${unmatched}</li>`
-    }
-  }
-  html += '</ul>'
+  return stats.map((overall) => ({
+    type: overall.type,
+    count: Number(overall.count),
+    medianDuration: Number(overall.medianDuration),
+    chains: detailedStats
+      .filter((chain) => chain.type === overall.type)
+      .map((chain) => {
+        assert(chain.sourceChain && chain.destinationChain)
+        return {
+          type: chain.type,
+          sourceChain: chain.sourceChain,
+          destinationChain: chain.destinationChain,
+          count: Number(chain.count),
+          medianDuration: Number(chain.medianDuration),
+        }
+      }),
+  }))
+}
 
-  html += '<h2>Unsupported events</h2>'
-  html += '<ul>'
-  for (const { type, unsupported } of events) {
-    if (unsupported !== 0) {
-      html += `<li><a href="/bridges/unsupported/${type}">${type}</a>: ${unsupported}</li>`
-    }
-  }
-  html += '</ul>'
+async function getTransfersStats(db: Database) {
+  const stats = await db.bridgeTransfer.getStats()
+  const detailedStats = await db.bridgeTransfer.getDetailedStats()
 
-  html += '<h2>All events</h2>'
-  html += '<ul>'
-  for (const { type, count } of events) {
-    html += `<li><a href="/bridges/all/${type}">${type}</a>: ${count}</li>`
-  }
-  html += '</ul>'
-
-  html += '<h2>Messages</h2>'
-  html += '<ul>'
-  for (const { type, count, averageDuration } of messages) {
-    html += `<li><a href="/bridges/messages/${type}">${type}</a>: ${count}, avg = ${averageDuration} seconds</li>`
-  }
-  html += '</ul>'
-
-  html += '<h2>Transfers</h2>'
-  html += '<ul>'
-  for (const {
-    type,
-    count,
-    averageDuration,
-    outboundValueSum,
-    inboundValueSum,
-    chains,
-  } of transfers) {
-    html += `<li><a href="/bridges/transfers/${type}">${type}</a>: ${count}</li>`
-    html += '<ul>'
-    html += `<li>avg = ${averageDuration} seconds</li>`
-    html += `<li>outbound = ${outboundValueSum} $</li>`
-    html += `<li>inbound = ${inboundValueSum} $</li>`
-    html += '<li>chains</li>'
-    html += '<ul>'
-    for (const chain of chains) {
-      html += `<li>${chain.sourceChain} -> ${chain.destinationChain}: ${chain.count}</li>`
-      html += '<ul>'
-      html += `<li>avg = ${chain.averageDuration} seconds</li>`
-      html += `<li>outbound = ${chain.outboundValueSum} $</li>`
-      html += `<li>inbound = ${chain.inboundValueSum} $</li>`
-      html += '</ul>'
-    }
-    html += '</ul>'
-    html += '</ul>'
-  }
-  html += '</ul>'
-
-  html += '</body>'
-  return html
+  return stats.map((overall) => ({
+    type: overall.type,
+    count: Number(overall.count),
+    medianDuration: Number(overall.medianDuration),
+    outboundValueSum: Number(overall.outboundValueSum),
+    inboundValueSum: Number(overall.inboundValueSum),
+    chains: detailedStats
+      .filter((chain) => chain.type === overall.type)
+      .map((chain) => {
+        assert(chain.sourceChain && chain.destinationChain)
+        return {
+          type: chain.type,
+          sourceChain: chain.sourceChain,
+          destinationChain: chain.destinationChain,
+          count: Number(chain.count),
+          medianDuration: Number(chain.medianDuration),
+          outboundValueSum: Number(chain.outboundValueSum),
+          inboundValueSum: Number(chain.inboundValueSum),
+        }
+      }),
+  }))
 }

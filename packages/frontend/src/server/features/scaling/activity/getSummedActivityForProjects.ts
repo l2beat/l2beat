@@ -11,7 +11,7 @@ export async function getSummedActivityForProjects(
   rangeByProject: Record<string, [UnixTime, UnixTime]>,
 ) {
   const db = getDb()
-  const range = getFullySyncedActivityRange({ type: timeRange })
+  const range = await getFullySyncedActivityRange({ type: timeRange })
   const records = await db.activity.getByProjectsAndTimeRange(
     projectIds.map(ProjectId),
     range,

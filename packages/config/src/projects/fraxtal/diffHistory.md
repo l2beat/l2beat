@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x52842f9cfd736317c8c9308ac558010732917d56
+
+# Diff at Wed, 24 Sep 2025 08:25:46 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d7323b1d7fcd47448cd95a9f8ee7b4214e04c807 block: 1755609388
+- current timestamp: 1758702279
+
+## Description
+
+New mint function added that can mint the gas token (FRAX) on L2. The function is permissioned by the Frax Multisig. So far they have minted 10 FRAX using this function. Those tokens seem not to be backed unless im missing something hence i asked them on tg why they added that.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      template:
+-        "opstack/OptimismPortal"
++        "fraxtal/OptimismPortalCGT"
+      sourceHashes.1:
+-        "0xb9ed3314327cfa4bdab9614d4772040c01df636f632f7317611422dec046197f"
++        "0x62a12fbc7ebd0b204991e4c3447170732d2acfab390458caa08cc96bd6417ece"
+      values.$implementation:
+-        "eth:0xd30B971922D42AA46C8A6432C332547432C89E14"
++        "eth:0xDe882c2CBd6e790a35Cc63BA25eCA7b7DDd234B2"
+      values.$pastUpgrades.9:
++        ["2025-09-22T19:07:35.000Z","0xf2882d571b3a770d737ce0b81adb738b116e94a1d16f19a9cc837fdc20b25f05",["eth:0xDe882c2CBd6e790a35Cc63BA25eCA7b7DDd234B2"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.FRAX_COMPTROLLER:
++        "eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
+      implementationNames.eth:0xd30B971922D42AA46C8A6432C332547432C89E14:
+-        "OptimismPortalCGT"
+      implementationNames.eth:0xDe882c2CBd6e790a35Cc63BA25eCA7b7DDd234B2:
++        "OptimismPortalCGT"
+    }
+```
+
+```diff
+    contract Fraxtal Multisig 2 (eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D","description":"can increase the gas token balance assigned to the OptimismPortal and mint the gas token on L2 without actually depositing tokens.","role":".FRAX_COMPTROLLER"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../OptimismPortal/OptimismPortalCGT.sol            | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0xb748e04130df0df908aacf125886e05d70d77eeb
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -1,5 +1,5 @@
 {
   "term": "Arithmetic circuit",
-  "definition": "The computation model of ZK-SNARKs.",
+  "definition": "A computation model often used in ZK-SNARKs, represents a sequential application of + and * to initial inputs and some intermediate computational results to get a single numerical outcome.",
   "isSpicy": false
 }

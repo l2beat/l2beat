@@ -17,7 +17,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
     private bridgeStore: BridgeStore,
     private logger: Logger,
   ) {
-    this.logger = logger.for(this)
+    this.logger = logger.for(this).tag({ chain, tag: chain })
   }
 
   async processBlock(block: Block, logs: Log[]): Promise<void> {
@@ -42,6 +42,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
     this.logger.info('Block processed', {
       chain: this.chain,
       blockNumber: block.number,
+      logs: toDecode.length,
       events: events.length,
     })
   }

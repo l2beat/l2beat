@@ -5,12 +5,11 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { Cache } from '../src/cache/Cache'
 import { QueryExecutor } from '../src/QueryExecutor'
 
-main().catch(() => {
-  process.exit(1)
-})
+main().catch((err) => console.error(err))
 
 async function main() {
   const logger = getLogger()
+
   const db = getDb()
   const cache = getCache()
 

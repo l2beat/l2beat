@@ -7,6 +7,7 @@ import {
   CelestiaDaProvider,
   CirculatingSupplyProvider,
   CoingeckoQueryService,
+  DaBeatStatsProvider,
   type DaBlobProvider,
   DaProvider,
   EthereumDaProvider,
@@ -40,6 +41,7 @@ export class Providers {
   balance: BalanceProvider
   svmBlock: SvmBlockProviders
   slotTimestamp: SlotTimestampProvider
+  daBeatStats: DaBeatStatsProvider
 
   constructor(
     readonly config: Config,
@@ -100,6 +102,12 @@ export class Providers {
       logger,
     )
     this.balance = new BalanceProvider(this.clients.rpcClients, logger)
+    this.daBeatStats = new DaBeatStatsProvider(
+      this.clients.beacon,
+      this.clients.near,
+      this.clients.celestiaDaBeat,
+      this.clients.availWs,
+    )
   }
 
   getPriceProviders() {
