@@ -47,19 +47,19 @@ export class BridgeBlockProcessor implements BlockProcessor {
     await this.bridgeStore.saveNewEvents(events)
     this.lastProcessed = block
 
+    for (const [plugin, count] of Object.entries(pluginEventCounts)) {
+      this.logger.info('Plugin processed', {
+        plugin,
+        events: count,
+      })
+    }
+
     this.logger.info('Block processed', {
       chain: this.chain,
       blockNumber: block.number,
       logs: toDecode.length,
       events: events.length,
     })
-
-    for (const [plugin, count] of Object.entries(pluginEventCounts)) {
-      this.logger.info('Capture plugin processed', {
-        plugin,
-        events: count,
-      })
-    }
   }
 }
 
