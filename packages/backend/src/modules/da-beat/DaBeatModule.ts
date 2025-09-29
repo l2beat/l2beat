@@ -1,8 +1,9 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
+import { generateConfigurationId } from '../tvs/tools/extractPricesAndAmounts'
 import type { ApplicationModule, ModuleDependencies } from '../types'
-import { DaBeatPricesRefresher } from './DaBeatPricesRefresher'
+import { DaBeatPricesIndexer } from './DaBeatPricesIndexer'
 import { DaBeatStakeRefresher } from './DaBeatStakeRefresher'
 import { DaBeatStatsIndexer } from './DaBeatStatsIndexer'
 
@@ -23,14 +24,6 @@ export function createDaBeatModule({
     feature: 'dabeat',
     module: 'dabeat',
   })
-
-  const pricesRefresher = new DaBeatPricesRefresher(
-    peripherals.database,
-    providers.clients.coingecko,
-    daBeatConfig,
-    clock,
-    logger,
-  )
 
   const stakeRefresher = new DaBeatStakeRefresher(
     peripherals,
@@ -56,17 +49,33 @@ export function createDaBeatModule({
     statsIndexers.push(indexer)
   }
 
+  const pricesIndexer = new DaBeatPricesIndexer({
+    coingeckoClient: providers.clients.coingecko,
+    db: peripherals.database,
+    logger,
+    indexerService,
+    parents: [hourlyIndexer],
+    configurations: [
+      {
+        id: generateConfigurationId(daBeatConfig.coingeckoIds),
+        minHeight: 0,
+        maxHeight: null,
+        properties: { coingeckoIds: daBeatConfig.coingeckoIds },
+      },
+    ],
+  })
+
   const start = async () => {
     logger = logger.for('DaBeatModule')
     logger.info('Starting')
 
-    pricesRefresher.start()
     stakeRefresher.start()
 
     await hourlyIndexer.start()
     for (const indexer of statsIndexers) {
       await indexer.start()
     }
+    await pricesIndexer.start()
 
     logger.info('Started')
   }
