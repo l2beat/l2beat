@@ -30,6 +30,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
           const event = await plugin.capture?.(logToDecode)
           if (event) {
             events.push(event)
+            break
           }
         } catch (e) {
           this.logger.error(e)
