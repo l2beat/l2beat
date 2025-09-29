@@ -1,7 +1,7 @@
 {
   "name": "bob",
   "timestamp": 1757326876,
-  "configHash": "0xc5f6d626ec2c2975ecaec3b725156ca2a358171d9d00a248d99ae25c54fd8dae",
+  "configHash": "0x5cf6f90a5befda2c8cbdd55bc0ebd67dc1542a04c4c81dae6e43e1d39a55338b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

@@ -2,20 +2,42 @@ import { assert } from '../tools'
 import { notUndefined } from './notUndefined'
 import { pluralize } from './pluralize'
 
-const units = ['d', 'h', 'm', 's']
-const fullUnits = ['day', 'hour', 'minute', 'second']
+const units = ['y', 'mo', 'd', 'h', 'm', 's']
+const fullUnits = ['year', 'month', 'day', 'hour', 'minute', 'second']
 
 export function formatSeconds(
   seconds: number,
   opts?: { preventRoundingUp?: boolean; fullUnit?: boolean },
 ): string {
   assert(seconds !== undefined, 'seconds is required')
-  const days = Math.floor(seconds / 86400)
-  const hours = Math.floor((seconds % 86400) / 3600)
-  const minutes = Math.floor(((seconds % 86400) % 3600) / 60)
-  const secs = Math.floor(((seconds % 86400) % 3600) % 60)
 
-  const values = [days, hours, minutes, secs]
+  const SECONDS_IN_YEAR = 365 * 24 * 60 * 60
+  const SECONDS_IN_MONTH = 30 * 24 * 60 * 60
+  const SECONDS_IN_DAY = 24 * 60 * 60
+  const SECONDS_IN_HOUR = 60 * 60
+  const SECONDS_IN_MINUTE = 60
+
+  const years = Math.floor(seconds / SECONDS_IN_YEAR)
+  const months = Math.floor((seconds % SECONDS_IN_YEAR) / SECONDS_IN_MONTH)
+  const days = Math.floor(
+    ((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) / SECONDS_IN_DAY,
+  )
+  const hours = Math.floor(
+    (((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) /
+      SECONDS_IN_HOUR,
+  )
+  const minutes = Math.floor(
+    ((((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) %
+      SECONDS_IN_HOUR) /
+      SECONDS_IN_MINUTE,
+  )
+  const secs = Math.floor(
+    ((((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) %
+      SECONDS_IN_HOUR) %
+      SECONDS_IN_MINUTE,
+  )
+
+  const values = [years, months, days, hours, minutes, secs]
   if (opts?.preventRoundingUp) {
     return values
       .map((v, i) =>

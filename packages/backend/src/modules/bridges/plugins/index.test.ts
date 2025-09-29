@@ -1,15 +1,27 @@
 import { ProjectService } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { createBridgePlugins } from '.'
 import { definedNetworks } from './types'
 
 describe('Plugins', async () => {
   const chainNames = new Set<string>()
+  const plugins = createBridgePlugins()
 
   before(async () => {
     const ps = new ProjectService()
     const projects = await ps.getProjects({ select: ['chainConfig'] })
     for (const p of projects) {
       chainNames.add(p.chainConfig.name)
+    }
+  })
+
+  describe('matchTypes check', () => {
+    for (const plugin of plugins) {
+      if (plugin.match) {
+        it(plugin.name, () => {
+          assert(plugin.matchTypes, `matchTypes missing for ${plugin.name}`)
+        })
+      }
     }
   })
 

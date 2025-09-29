@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x6a4c10d9d4b8060956f4e8f84a9f6a1ea80df613
+
+# Diff at Mon, 22 Sep 2025 09:09:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3aa102df1ae0b60ff981cfe12b1d0c919b4c2704 block: 1754397932
+- current timestamp: 1758532079
+
+## Description
+
+upgrade to validium contracts standard type 7, forkID 12 (pay chain was the last chain to upgrade out of all cdk chains).
+
+## Watched changes
+
+```diff
+    contract Validium (eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9) {
+    +++ description: The main system contract defining the pay-chain Layer 2 logic. Entry point for sequencing batches.
+      sourceHashes.1:
+-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
++        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
+      values.$implementation:
+-        "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
++        "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.$pastUpgrades.1:
++        ["2025-09-22T07:25:47.000Z","0x23960a8fc591368d7d73c22322e32c5c287f44cc412fd5ccd03916238f12400b",["eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C:
+-        "PolygonValidiumStorageMigration"
+      implementationNames.eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F:
++        "PolygonValidiumEtrog"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Validium/PolygonValidiumEtrog.sol}             | 203 +++++++++++----------
+ 1 file changed, 111 insertions(+), 92 deletions(-)
+```
+
 Generated with discovered.json: 0x4c0a9e242ebd8cd323472db035effcf182f1f5bb
 
 # Diff at Wed, 03 Sep 2025 15:52:05 GMT:

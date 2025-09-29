@@ -1,7 +1,7 @@
 {
   "name": "soneium",
   "timestamp": 1756804623,
-  "configHash": "0x07ab1315255d36e155ec91a26c26ad53842fcedff543773a8c827948298b02bc",
+  "configHash": "0xdaebced3259ad88018897cb3ac758939cdf92adc9dae611e2122ee0433559585",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -635,7 +635,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 3315,
+        "permissionedGamesTotal": 3316,
         "proxyAdmin": "eth:0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "1.2.0"

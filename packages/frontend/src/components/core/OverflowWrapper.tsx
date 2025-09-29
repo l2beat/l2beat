@@ -101,9 +101,9 @@ export const OverflowWrapper = ({
         ref={mergeRefs(contentRef, ref)}
         className={cn(
           'scrollbar-hide overflow-x-auto',
-          visibleArrows === 'left' && 'fade-out-to-left',
-          visibleArrows === 'right' && 'fade-out-to-right',
-          visibleArrows === 'both' && 'fade-out-horizontal',
+          visibleArrows === 'left' && 'fade-out-to-left-[30px]',
+          visibleArrows === 'right' && 'fade-out-to-right-[30px]',
+          visibleArrows === 'both' && 'fade-out-horizontal-[30px]',
           childrenClassName,
         )}
       >

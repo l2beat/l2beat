@@ -1,7 +1,7 @@
 {
   "name": "polygon-pos",
-  "timestamp": 1756995439,
-  "configHash": "0x6ab0e7a1c571bf2df898ec3ad34a09f6f8b7851535881ec996dcdcbb9104d424",
+  "timestamp": 1758802148,
+  "configHash": "0x9024e2b0190f916bbec2a5b1854caef7abf3b7c042252660489ed9e1efdd7ee8",
   "entries": [
     {
       "address": "eth:0x06f2caFB5276B11bAA6679ABE49D5A5C0A911f5B",
@@ -146,7 +146,7 @@
       "sinceBlock": 10167763,
       "values": {
         "$immutable": true,
-        "counter": 3097981,
+        "counter": 3102244,
         "isOwner": false,
         "owner": "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -678,13 +678,13 @@
         "CHECKPOINT_REWARD": "37108000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 87903,
+        "currentEpoch": 89201,
         "currentValidatorSetSize": 104,
-        "currentValidatorSetTotalStake": "3392716333548774109853314193",
+        "currentValidatorSetTotalStake": "3413514285946294259759907046",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 87903,
+        "epoch": 89201,
         "eventsHub": "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -698,7 +698,7 @@
         "minDeposit": "1000000000000000000",
         "minHeimdallFee": "1000000000000000000",
         "NFTContract": "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
-        "NFTCounter": 186,
+        "NFTCounter": 187,
         "owner": "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "ownerOf": [
           "eth:0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
@@ -712,19 +712,19 @@
         "registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "3263730633595258365543732",
+        "rewardPerStake": "3279823176215335285179194",
         "rootChain": "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "tokenMatic": "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "11539939209428901681108",
+        "totalHeimdallFee": "11614939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "144954708824832485133876881",
-        "totalStaked": "11513761193872498318668959",
+        "totalRewardsLiquidated": "146229984089690256544904093",
+        "totalStaked": "11513348023014337095543111",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3392716333548774109853314193",
+          "amount": "3413514285946294259759907046",
           "stakerCount": 104
         },
         "validatorThreshold": 105,
@@ -955,7 +955,7 @@
       "sinceTimestamp": 1590849960,
       "sinceBlock": 10167725,
       "values": {
-        "_nextHeaderBlock": 879030000,
+        "_nextHeaderBlock": 892010000,
         "$immutable": false,
         "$implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -964,8 +964,8 @@
           "_registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 879020000,
-        "getLastChildBlock": 76044709,
+        "currentHeaderBlock": 892000000,
+        "getLastChildBlock": 76882341,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -1498,6 +1498,13 @@
           "permission": "upgrade",
           "from": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
           "role": "admin"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48",
+          "role": ".owner"
         }
       ],
       "sinceTimestamp": 1630059303,
@@ -3108,7 +3115,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "polygonposbridge/DepositManager": "0x6f4da1313c9430a0d74b2b699e6c30210705857922f30262c4533dc9c0e2690e",
     "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
-    "polygonposbridge/Governance": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "polygonposbridge/Governance": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "polygonposbridge/predicate": "0x15319e6e8947d37c32a6ecf4e3356cfe7300b2e28d7a48036dabb989f6d98ca7",
     "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
     "polygonposbridge/RootChainManagerMigrator": "0x7dd7e5d6f70c722c75f13a43c5509f47a2bb3377499f1d927c44150bdb3d97c5",
@@ -3117,6 +3124,6 @@
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23290286 },
-  "permissionsConfigHash": "0x1f3169dd8b7ae028ca48f6df6db0cf7d507eab53495bba1e999400b64569f6e8"
+  "usedBlockNumbers": { "ethereum": 23439956 },
+  "permissionsConfigHash": "0xb3ad1b0b70fbfe64066c0c33ce95bfb7598ed54c921547e5b8e458e4a6b63d73"
 }

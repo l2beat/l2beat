@@ -16,6 +16,7 @@ import { logToViemLog } from '../BridgeBlockProcessor'
 import { match } from '../BridgeMatcher'
 import { FinancialsService } from '../financials/FinancialsService'
 import { INTEROP_TOKENS } from '../financials/tokens'
+import { InMemoryEventDb } from '../InMemoryEventDb'
 import { createBridgePlugins } from '../plugins'
 import type {
   BridgeEvent,
@@ -23,7 +24,6 @@ import type {
   BridgeTransfer,
   BridgeTransferWithFinancials,
 } from '../plugins/types'
-import { InMemoryEventDb } from './InMemoryEventDb'
 
 export function readJsonc(path: string): JSON {
   const contents = readFileSync(path, 'utf-8')
@@ -107,7 +107,7 @@ interface RunResult {
 }
 
 async function runExample(example: Example): Promise<RunResult> {
-  const logger = Logger.INFO
+  const logger = Logger.ERROR
   const http = new HttpClient()
   const env = getEnv()
   const coingeckoClient = new CoingeckoClient({
@@ -171,16 +171,22 @@ async function runExample(example: Example): Promise<RunResult> {
 
         if (event) {
           events.push(event)
+          break
         }
       }
     }
   }
 
-  const eventDb = new InMemoryEventDb(events)
+  const eventDb = new InMemoryEventDb()
+  for (const event of events) {
+    eventDb.addEvent(event)
+  }
 
   const result = await match(
     eventDb,
-    events,
+    (type) => events.filter((x) => x.type === type),
+    [...new Set(events.map((x) => x.type))],
+    events.length,
     plugins,
     chains.map((x) => x.name),
     logger,

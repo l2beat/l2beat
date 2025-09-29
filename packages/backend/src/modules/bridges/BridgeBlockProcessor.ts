@@ -4,42 +4,61 @@ import type { Log as ViemLog } from 'viem'
 import type { BlockProcessor } from '../types'
 import type { BridgeStore } from './BridgeStore'
 import type {
+  BridgeEvent,
   BridgeEventContext,
   BridgePlugin,
   LogToCapture,
 } from './plugins/types'
 
 export class BridgeBlockProcessor implements BlockProcessor {
+  lastProcessed: Block | undefined
+
   constructor(
     public chain: string,
     private plugins: BridgePlugin[],
     private bridgeStore: BridgeStore,
     private logger: Logger,
   ) {
-    this.logger = logger.for(this)
+    this.logger = logger.for(this).tag({ chain, tag: chain })
   }
 
   async processBlock(block: Block, logs: Log[]): Promise<void> {
     const toDecode = getLogsToDecode(this.chain, block, logs)
-    let count = 0
+
+    const events: BridgeEvent[] = []
+    const pluginEventCounts: Record<string, number> = {}
+
     for (const logToDecode of toDecode) {
       for (const plugin of this.plugins) {
         try {
           const event = await plugin.capture?.(logToDecode)
           if (event) {
-            count++
-            this.bridgeStore.addEvent(event)
+            events.push(event)
+            pluginEventCounts[plugin.name] =
+              (pluginEventCounts[plugin.name] || 0) + 1
+            break
           }
         } catch (e) {
-          this.logger.error(e)
+          this.logger.error(e, { project: plugin.name })
         }
       }
     }
-    await this.bridgeStore.save()
+
+    await this.bridgeStore.saveNewEvents(events)
+    this.lastProcessed = block
+
+    for (const [plugin, count] of Object.entries(pluginEventCounts)) {
+      this.logger.info('Plugin processed', {
+        plugin,
+        events: count,
+      })
+    }
+
     this.logger.info('Block processed', {
       chain: this.chain,
       blockNumber: block.number,
-      events: count,
+      logs: toDecode.length,
+      events: events.length,
     })
   }
 }

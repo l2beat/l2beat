@@ -13,6 +13,7 @@ jobs:
     # Saves us from wasting time required to spin up the runner
     if: 1 == 0
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       # It will not run but is required
       - name: Skip run in PR context

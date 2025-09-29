@@ -81,7 +81,7 @@ export const bob: ScalingProject = opStackL2({
     explorerUrl: 'https://explorer.gobob.xyz',
     sinceTimestamp: UnixTime(1712861989),
     apis: [
-      { type: 'rpc', url: 'https://rpc.gobob.xyz/', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.gobob.xyz/', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
     ],
   },

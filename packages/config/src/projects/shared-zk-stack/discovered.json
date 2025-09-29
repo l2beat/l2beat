@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
-  "timestamp": 1756817344,
-  "configHash": "0x0c3703d310258140c94eec12ad05abfdafb6dcb94e3b5e3594adea7cdb0dc611",
+  "timestamp": 1758619329,
+  "configHash": "0xcd0cbdf47aadf779551fa87c38178aa17096dd93343d956064727bfa4b1a3986",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -736,7 +736,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 221,
+        "nonce": 222,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1313,7 +1313,7 @@
           "eth:0x2Fd57fdFba5aABbFdc43Fd450c2817D1401E72F2",
           "eth:0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1",
           "eth:0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c",
-          "eth:0xDFbD13B78010BF2110a168FA59b682c8a6D96564",
+          "eth:0xB438667fea1cE20951430A68731F73f55D93D678",
           "eth:0x3133781381bC58564D5e9888c208ED0b7BD7721F"
         ],
         "$threshold": 2,
@@ -1321,7 +1321,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1505,6 +1505,11 @@
     },
     {
       "address": "eth:0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xB438667fea1cE20951430A68731F73f55D93D678",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1947,11 +1952,6 @@
     },
     {
       "address": "eth:0xdF28907A6A272fa06333a197d7F0379A0f8f00aa",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xDFbD13B78010BF2110a168FA59b682c8a6D96564",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2497,7 +2497,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1756817342,
+        "clock": 1758619326,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2518,7 +2518,7 @@
         "MinterAdmin": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "13751372591315200000000000000"
+        "totalSupply": "13756836157279494774223755316"
       },
       "implementationNames": {
         "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
@@ -2603,7 +2603,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1756817342,
+        "clock": 1758619326,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2736,7 +2736,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1756817342,
+        "clock": 1758619326,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -3004,7 +3004,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1756817342,
+        "clock": 1758619326,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -4372,6 +4372,6 @@
     "shared-zk-stack/ZkGovernor": "0x627a5b1cf3f7bfbb4bda2c2996de6a7e2d49c2fc9250811d48f3508071e07ac6",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "usedBlockNumbers": { "ethereum": 23275521, "zksync2": 64419296 },
-  "permissionsConfigHash": "0x8da0cd3ee8d336ee805a910e36d333596910edbdb6e34e68dd1b660a24038f56"
+  "usedBlockNumbers": { "ethereum": 23424803, "zksync2": 64837812 },
+  "permissionsConfigHash": "0x9ff6af34d86d3a4bc0459454f9fe3528436f96c26faf1b4237f327ee743ba184"
 }

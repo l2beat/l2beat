@@ -38,7 +38,7 @@ export const playblock: ScalingProject = orbitStackL3({
     name: 'playblock',
     chainId: 1829,
     apis: [
-      { type: 'rpc', url: 'https://playnance.drpc.org/', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://playnance.drpc.org/', callsPerMinute: 300 },
     ],
     gasTokens: ['PBG'],
   },

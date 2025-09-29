@@ -58,7 +58,7 @@ export const soneium = opStackL2({
       },
     ],
     apis: [
-      { type: 'rpc', url: 'https://rpc.soneium.org/', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.soneium.org/', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://soneium.blockscout.com/api' },
       { type: 'blockscoutV2', url: 'https://soneium.blockscout.com/api/v2' },
     ],

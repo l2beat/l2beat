@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "timestamp": 1754308257,
-  "configHash": "0x622360e32e8f70853d5eea6453e7c3677fd0e41caa9ef5dfc466f94e6f49de5a",
+  "configHash": "0x930e91ace54ac860519c6db864bcf2a5cb4782b41915d5bf9724af4d4478b869",
   "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
     {
@@ -2517,6 +2517,6 @@
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "gateway": 18615, "ethereum": 23067513 },
+  "usedBlockNumbers": { "ethereum": 23067513, "gateway": 18615 },
   "permissionsConfigHash": "0x42005ed3c81f9aae64ac01060fc8dac3be4294c9fa8594353764b2409394cd35"
 }
