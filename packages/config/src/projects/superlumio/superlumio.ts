@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('superlumio')
 
 export const superlumio: ScalingProject = opStackL2({
   addedAt: UnixTime(1726646157), // 2024-09-18T07:55:57Z
+  archivedAt: UnixTime(1759137268),
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],

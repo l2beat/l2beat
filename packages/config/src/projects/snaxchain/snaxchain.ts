@@ -11,6 +11,7 @@ const genesisTimestamp = UnixTime(1723562231)
 export const snaxchain: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1740099913),
+  archivedAt: UnixTime(1759137268),
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
