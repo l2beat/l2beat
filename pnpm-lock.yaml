@@ -155,7 +155,7 @@ importers:
         version: 9.0.1
       viem:
         specifier: ^2.31.6
-        version: 2.31.6(typescript@5.6.3)(zod@3.23.8)
+        version: 2.31.6(typescript@5.6.3)(zod@3.24.1)
       ws:
         specifier: ^8.18.2
         version: 8.18.2
@@ -741,7 +741,7 @@ importers:
         version: 5.0.10
       viem:
         specifier: ^2.18.6
-        version: 2.31.6(typescript@5.6.3)(zod@3.23.8)
+        version: 2.31.6(typescript@5.6.3)(zod@3.24.1)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -838,6 +838,25 @@ importers:
         specifier: ^5.4.10
         version: 5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0)
 
+  packages/public-api:
+    dependencies:
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
+      '@scalar/express-api-reference':
+        specifier: ^0.8.19
+        version: 0.8.19
+      express:
+        specifier: ^5.0.0
+        version: 5.0.1
+    devDependencies:
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/express':
+        specifier: ^5.0.0
+        version: 5.0.0
+
   packages/shared:
     dependencies:
       '@l2beat/backend-tools':
@@ -872,7 +891,7 @@ importers:
         version: 11.1.0
       viem:
         specifier: ^2.21.36
-        version: 2.31.6(typescript@5.6.3)(zod@3.23.8)
+        version: 2.31.6(typescript@5.6.3)(zod@3.24.1)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -946,7 +965,7 @@ importers:
         version: 15.6.1(react@19.0.0)
       viem:
         specifier: ^2.18.6
-        version: 2.31.6(typescript@5.6.3)(zod@3.23.8)
+        version: 2.31.6(typescript@5.6.3)(zod@3.24.1)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -995,7 +1014,7 @@ importers:
         version: 5.0.0
       abitype:
         specifier: ^1.0.6
-        version: 1.0.8(typescript@5.6.3)(zod@3.23.8)
+        version: 1.0.8(typescript@5.6.3)(zod@3.24.1)
       cors:
         specifier: ^2.8.5
         version: 2.8.5
@@ -1004,7 +1023,7 @@ importers:
         version: 5.0.1
       viem:
         specifier: ^2.8.14
-        version: 2.31.6(typescript@5.6.3)(zod@3.23.8)
+        version: 2.31.6(typescript@5.6.3)(zod@3.24.1)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -3265,6 +3284,22 @@ packages:
   '@sapphire/snowflake@3.5.3':
     resolution: {integrity: sha512-jjmJywLAFoWeBi1W7994zZyiNWPIiqRRNAmSERxyg93xRGzNYvGjlZ0gR6x0F4gPRi2+0O6S71kOZYyr3cxaIQ==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+
+  '@scalar/core@0.3.17':
+    resolution: {integrity: sha512-G6tP+2oorFA90szI8DGiEQ23SmobiuhN93GfTJNpFMhz/kdEtC4lcYawAxL1tWkZhlK/QYRcaCZcVzmpTUgBCA==}
+    engines: {node: '>=20'}
+
+  '@scalar/express-api-reference@0.8.19':
+    resolution: {integrity: sha512-mzzQATXeJw+OvymyrTVTrMtu4RRQcf7s/TnhYOvji7H3UDgTwH69Md52RB3hZA+xOycMznU3tfwYgo0Mh+xXFw==}
+    engines: {node: '>=20'}
+
+  '@scalar/openapi-types@0.3.7':
+    resolution: {integrity: sha512-QHSvHBVDze3+dUwAhIGq6l1iOev4jdoqdBK7QpfeN1Q4h+6qpVEw3EEqBiH0AXUSh/iWwObBv4uMgfIx0aNZ5g==}
+    engines: {node: '>=20'}
+
+  '@scalar/types@0.2.16':
+    resolution: {integrity: sha512-XWff9jWfYaj6q3ww94x66S6Q58u/3kA1sDOUhLAwb9va7r58bzk3NRwLOkEEdJmyEns1MEJAM53mY8KRWX6elA==}
+    engines: {node: '>=20'}
 
   '@scure/base@1.2.6':
     resolution: {integrity: sha512-g/nm5FgUa//MCj1gV09zTJTaM6KBAHqLN907YVQqf7zC49+DcO4B1so4ZX07Ef10Twr6nuqYEH9GEggFXA4Fmg==}
@@ -5928,6 +5963,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@5.1.5:
+    resolution: {integrity: sha512-Ir/+ZpE9fDsNH0hQ3C68uyThDXzYcim2EqcZ8zn8Chtt1iylPT9xXJB0kPCnqzgcEGikO9RxSrh63MsmVCU7Fw==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+
   napi-build-utils@2.0.0:
     resolution: {integrity: sha512-GEbrYkbfF7MoNaoh2iGG84Mnf/WZfB0GdGEsM8wz7Expx/LlWf5U8t9nvJKXSp3qr5IsEbK04cBGhol/KwOsWA==}
 
@@ -7673,6 +7713,9 @@ packages:
 
   zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+
+  zod@3.24.1:
+    resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
   zustand@5.0.0:
     resolution: {integrity: sha512-LE+VcmbartOPM+auOjCCLQOsQ05zUTp8RkgwRzefUk+2jISdMMFnxvyTjA4YNWr5ZGXYbVsEMZosttuxUBkojQ==}
@@ -10040,6 +10083,24 @@ snapshots:
 
   '@sapphire/snowflake@3.5.3': {}
 
+  '@scalar/core@0.3.17':
+    dependencies:
+      '@scalar/types': 0.2.16
+
+  '@scalar/express-api-reference@0.8.19':
+    dependencies:
+      '@scalar/core': 0.3.17
+
+  '@scalar/openapi-types@0.3.7':
+    dependencies:
+      zod: 3.24.1
+
+  '@scalar/types@0.2.16':
+    dependencies:
+      '@scalar/openapi-types': 0.3.7
+      nanoid: 5.1.5
+      zod: 3.24.1
+
   '@scure/base@1.2.6': {}
 
   '@scure/bip32@1.7.0':
@@ -10591,10 +10652,10 @@ snapshots:
   abbrev@1.1.1:
     optional: true
 
-  abitype@1.0.8(typescript@5.6.3)(zod@3.23.8):
+  abitype@1.0.8(typescript@5.6.3)(zod@3.24.1):
     optionalDependencies:
       typescript: 5.6.3
-      zod: 3.23.8
+      zod: 3.24.1
 
   abort-controller@3.0.0:
     dependencies:
@@ -12993,6 +13054,8 @@ snapshots:
 
   nanoid@3.3.7: {}
 
+  nanoid@5.1.5: {}
+
   napi-build-utils@2.0.0: {}
 
   negotiator@0.6.3: {}
@@ -13195,7 +13258,7 @@ snapshots:
 
   outdent@0.5.0: {}
 
-  ox@0.8.1(typescript@5.6.3)(zod@3.23.8):
+  ox@0.8.1(typescript@5.6.3)(zod@3.24.1):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
       '@noble/ciphers': 1.3.0
@@ -13203,7 +13266,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.0.8(typescript@5.6.3)(zod@3.23.8)
+      abitype: 1.0.8(typescript@5.6.3)(zod@3.24.1)
       eventemitter3: 5.0.1
     optionalDependencies:
       typescript: 5.6.3
@@ -14765,15 +14828,15 @@ snapshots:
       d3-time: 3.1.0
       d3-timer: 3.0.1
 
-  viem@2.31.6(typescript@5.6.3)(zod@3.23.8):
+  viem@2.31.6(typescript@5.6.3)(zod@3.24.1):
     dependencies:
       '@noble/curves': 1.9.2
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.0.8(typescript@5.6.3)(zod@3.23.8)
+      abitype: 1.0.8(typescript@5.6.3)(zod@3.24.1)
       isows: 1.0.7(ws@8.18.2)
-      ox: 0.8.1(typescript@5.6.3)(zod@3.23.8)
+      ox: 0.8.1(typescript@5.6.3)(zod@3.24.1)
       ws: 8.18.2
     optionalDependencies:
       typescript: 5.6.3
@@ -14901,6 +14964,8 @@ snapshots:
       readable-stream: 3.6.2
 
   zod@3.23.8: {}
+
+  zod@3.24.1: {}
 
   zustand@5.0.0(@types/react@19.0.10)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0)):
     optionalDependencies:
