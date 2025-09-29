@@ -26,17 +26,25 @@ export class BridgeBlockProcessor implements BlockProcessor {
     const toDecode = getLogsToDecode(this.chain, block, logs)
 
     const events: BridgeEvent[] = []
-    for (const logToDecode of toDecode) {
-      for (const plugin of this.plugins) {
+
+    for (const plugin of this.plugins) {
+      const pluginEvents: BridgeEvent[] = []
+      for (const logToDecode of toDecode) {
         try {
           const event = await plugin.capture?.(logToDecode)
           if (event) {
-            events.push(event)
+            pluginEvents.push(event)
           }
         } catch (e) {
           this.logger.tag({ project: plugin.name }).error(e)
         }
       }
+      this.logger.info('Plugin processed', {
+        chain: this.chain,
+        plugin: plugin.name,
+        events: pluginEvents.length,
+      })
+      events.push(...pluginEvents)
     }
 
     await this.bridgeStore.saveNewEvents(events)
