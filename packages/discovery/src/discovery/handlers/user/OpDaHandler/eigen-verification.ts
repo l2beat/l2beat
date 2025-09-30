@@ -29,7 +29,13 @@ export async function checkForEigenDA(
   const v1Verification = await verifyV1Commitments(provider, v1Commitments)
   const v2Verification = verifyV2Commitments(v2Commitments)
 
-  return v1Verification || v2Verification
+  if (v1Verification || v2Verification) {
+    return {
+      version: v2Verification ? 'v2' : 'v1',
+    }
+  }
+
+  return false
 }
 
 async function getConfirmedBatchHeaderHashes(
