@@ -3,12 +3,20 @@
   "name": "MVM_InboxSenderManager",
   "description": "Container contract for designated sequencer addresses.",
   "fields": {
-    "randomBlobBatcher": {
+    "blobBatcher": {
       "handler": {
         "type": "call",
         "method": "getInboxSender",
-        "args": ["23476963", "1"]
-      }
+        "args": [
+          "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "1"
+        ] // this will always return the current address
+      },
+      "permissions": [
+        {
+          "type": "sequence"
+        }
+      ]
     }
   }
 }

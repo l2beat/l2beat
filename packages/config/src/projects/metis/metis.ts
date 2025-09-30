@@ -26,7 +26,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 const discovery = new ProjectDiscovery('metis')
 
 const blobBatcher = discovery.getContractValue<string>(
-  'Lib_AddressManager',
+  'MVM_InboxSenderManager',
   'blobBatcher',
 )
 

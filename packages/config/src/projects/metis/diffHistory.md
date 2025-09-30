@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1da12bc8fe47a9f298897af43af5f92f985a1020
+Generated with discovered.json: 0x8664d4abd42fc7a9230e30f7d6bbbaa4ecb9fb78
 
-# Diff at Tue, 30 Sep 2025 16:31:27 GMT:
+# Diff at Tue, 30 Sep 2025 17:10:58 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1757939071
-- current timestamp: 1759249784
+- current timestamp: 1759252030
 
 ## Description
 
@@ -98,11 +98,22 @@ discovery. Values are for block 1757939071 (main branch discovery), not current.
 ```diff
     contract Lib_AddressManager (eth:0x918778e825747a892b17C66fe7D24C618262867d) {
     +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.blobBatcher:
+-        "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9"
       values.MVM_ProposerRegistry:
 +        "eth:0x0000000000000000000000000000000000000000"
       values.OVM_Sequencer:
 +        "eth:0x0000000000000000000000000000000000000000"
       values.Proxy__MVM_InboxSenderManager:
++        "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0"
+    }
+```
+
+```diff
+    EOA  (eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
 +        "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0"
     }
 ```

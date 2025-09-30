@@ -175,17 +175,17 @@
       }
     },
     // specified on L2 node (https://github.com/MetisProtocol/mvm/blob/e816c6c461a8e91db3a9ccaa33d2d0f6a60633d5/go/op-program/chainconfig/rollupcfg.go#L85)
-    "blobBatcher": {
-      "handler": {
-        "type": "hardcoded",
-        "value": "0xae4d46bd9117cb017c5185844699c51107cb28a9"
-      },
-      "permissions": [
-        {
-          "type": "sequence"
-        }
-      ]
-    },
+    // "blobBatcher": {
+    //   "handler": {
+    //     "type": "hardcoded",
+    //     "value": "0xae4d46bd9117cb017c5185844699c51107cb28a9"
+    //   },
+    //   "permissions": [
+    //     {
+    //       "type": "sequence"
+    //     }
+    //   ]
+    // },
     "inboxAddress": {
       "handler": {
         "type": "hardcoded",
