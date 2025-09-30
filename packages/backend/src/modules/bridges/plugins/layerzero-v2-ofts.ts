@@ -149,7 +149,7 @@ export class LayerZeroV2OFTsPlugin implements BridgePlugin {
         packetOFTSent,
         packetOFTDelivered,
       ]),
-      Result.Transfer('oftv2.Swap', {
+      Result.Transfer('oftv2.Transfer', {
         srcEvent: packetOFTSent,
         srcAmount: packetOFTSent.args.amountSentLD.toString(),
         dstEvent: packetOFTDelivered,
