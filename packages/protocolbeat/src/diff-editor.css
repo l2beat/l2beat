@@ -5,31 +5,31 @@
 }
 
 .monaco-editor .view-overlays .selected-line-highlight {
-  background-color: rgba(154, 52, 18, 0.2) !important;
-  border-left: 4px solid #f97316 !important;
-  border-right: 1px solid #f97316 !important;
+  background-color: rgba(160, 115, 213, 0.2) !important;
+  border-left: 4px solid #a073d5 !important;
+  border-right: 1px solid #a073d5 !important;
 }
 
 .monaco-editor .view-overlays .selected-line-highlight-first {
-  background-color: rgba(154, 52, 18, 0.2) !important;
-  border-left: 4px solid #f97316 !important;
-  border-right: 1px solid #f97316 !important;
-  border-top: 1px solid #f97316 !important;
+  background-color: rgba(160, 115, 213, 0.2) !important;
+  border-left: 4px solid #a073d5 !important;
+  border-right: 1px solid #a073d5 !important;
+  border-top: 1px solid #a073d5 !important;
 }
 
 .monaco-editor .view-overlays .selected-line-highlight-last {
-  background-color: rgba(154, 52, 18, 0.2) !important;
-  border-left: 4px solid #f97316 !important;
-  border-right: 1px solid #f97316 !important;
-  border-bottom: 1px solid #f97316 !important;
+  background-color: rgba(160, 115, 213, 0.2) !important;
+  border-left: 4px solid #a073d5 !important;
+  border-right: 1px solid #a073d5 !important;
+  border-bottom: 1px solid #a073d5 !important;
 }
 
 .monaco-editor .view-overlays .selected-line-highlight-single {
-  background-color: rgba(154, 52, 18, 0.2) !important;
-  border: 1px solid #f97316 !important;
-  border-left: 4px solid #f97316 !important;
+  background-color: rgba(160, 115, 213, 0.2) !important;
+  border: 1px solid #a073d5 !important;
+  border-left: 4px solid #a073d5 !important;
 }
 
 .monaco-editor .margin .selected-line-margin {
-  background-color: rgba(154, 52, 18, 0.3) !important;
+  background-color: rgba(160, 115, 213, 0.3) !important;
 }
