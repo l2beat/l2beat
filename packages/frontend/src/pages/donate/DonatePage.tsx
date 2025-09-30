@@ -135,6 +135,11 @@ function DonationNetworks({ networks }: { networks: HeaderProps['networks'] }) {
 
 export const fundingSources = [
   {
+    source: 'Partnership Fund',
+    tier: 'Significant',
+    description: 'Contributions from the partner projects listed above',
+  },
+  {
     source: 'Ethereum Foundation',
     tier: 'Significant',
     description: 'Different grants in years 2021-2025',
