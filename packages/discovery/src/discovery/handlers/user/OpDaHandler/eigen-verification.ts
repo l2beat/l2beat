@@ -23,16 +23,18 @@ export async function checkForEigenDA(
     return false
   }
 
-  const v1Commitments = possibleCommitments.filter((c) => c.version === 'v1')
   const v2Commitments = possibleCommitments.filter((c) => c.version === 'v2')
-
-  const v1Verification = await verifyV1Commitments(provider, v1Commitments)
   const v2Verification = verifyV2Commitments(v2Commitments)
 
-  if (v1Verification || v2Verification) {
-    return {
-      version: v2Verification ? 'v2' : 'v1',
-    }
+  if (v2Verification && v2Commitments.length > 0) {
+    return 'v2'
+  }
+
+  const v1Commitments = possibleCommitments.filter((c) => c.version === 'v1')
+  const v1Verification = await verifyV1Commitments(provider, v1Commitments)
+
+  if (v1Verification && v1Commitments.length > 0) {
+    return 'v1'
   }
 
   return false

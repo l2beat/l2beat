@@ -1,5 +1,5 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { expect, mockObject } from 'earl'
 import type { providers } from 'ethers'
 import type { Transaction } from '../../../../utils/IEtherscanClient'
 import type { IProvider } from '../../../provider/IProvider'
@@ -72,7 +72,7 @@ describe(checkForEigenDA.name, () => {
     expect(checkForEigenDA(provider, invalidTransactions)).not.toBeRejected()
   })
 
-  it('should return true for valid v1 commitments', async () => {
+  it('should return v1 for v1 commitments', async () => {
     const v1Txs: Transaction[] = [aevoSequencerTransactions[0]!]
 
     const providerToSwitchTo = getProvider({
@@ -88,58 +88,16 @@ describe(checkForEigenDA.name, () => {
     })
 
     const result = await checkForEigenDA(provider, v1Txs)
-    expect(result).toEqual(true)
+    expect(result).toEqual('v1')
   })
 
-  it('should return true for valid v2 commitments', async () => {
+  it('should return v2 for v2 commitments', async () => {
     const v2Txs: Transaction[] = [aevoSequencerTransactions[2]!] // third tx is v2
 
     const provider = getProvider()
 
     const result = await checkForEigenDA(provider, v2Txs)
-    expect(result).toEqual(true)
-  })
-
-  it('should return true for valid v1 and v2 commitments', async () => {
-    const mixedTxs: Transaction[] = [
-      aevoSequencerTransactions[0]!, // v1
-      aevoSequencerTransactions[2]!, // v2
-    ]
-
-    const providerToSwitchTo = getProvider({
-      getEvents: async () =>
-        confirmedBatchHeaderHashes.map((cbhh) => ({
-          log: {} as providers.Log,
-          event: { batchHeaderHash: cbhh.blobBatchMetadata },
-        })),
-    })
-
-    const provider = getProvider({
-      switchChain: mockFn().resolvesTo(providerToSwitchTo),
-    })
-
-    const result = await checkForEigenDA(provider, mixedTxs)
-    expect(result).toEqual(true)
-  })
-
-  it('should return true if commitments have been confirmed', async () => {
-    const providerToSwitchTo = getProvider({
-      getEvents: async () =>
-        confirmedBatchHeaderHashes.map((cbhh) => ({
-          log: {} as providers.Log,
-          event: { batchHeaderHash: cbhh.blobBatchMetadata },
-        })),
-    })
-
-    const provider = getProvider({
-      switchChain: mockFn().resolvesTo(providerToSwitchTo),
-    })
-
-    const isUsingEigenDA = await checkForEigenDA(
-      provider,
-      aevoSequencerTransactions,
-    )
-    expect(isUsingEigenDA).toEqual(true)
+    expect(result).toEqual('v2')
   })
 })
 
