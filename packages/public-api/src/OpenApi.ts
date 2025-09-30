@@ -26,15 +26,15 @@ type OpenApiParameter = {
 }
 
 type OpenApiResponse = {
+  description: string
   content: {
     'application/json': {
-      description?: string
       schema: JsonSchema
     }
   }
 }
 
-type Tags = 'projects'
+type Tags = 'Projects'
 
 const BadRequestResponse = v
   .object({
@@ -112,7 +112,7 @@ export class OpenApi {
       },
       tags: [
         {
-          name: 'projects',
+          name: 'Projects',
           description: 'Project endpoints',
         },
       ] satisfies { name: Tags; description: string }[],
@@ -184,6 +184,7 @@ export class OpenApi {
   private getResponses(route: Route): Record<number, OpenApiResponse> {
     const base: Record<number, OpenApiResponse> = {
       200: {
+        description: 'Successful response',
         content: {
           'application/json': {
             schema: this.toJsonSchemaWithRefs(route.options.result),
@@ -194,6 +195,7 @@ export class OpenApi {
 
     if (!!route.options.params || !!route.options.query) {
       base[400] = {
+        description: 'Bad request',
         content: {
           'application/json': {
             schema: this.toJsonSchemaWithRefs(BadRequestResponse),

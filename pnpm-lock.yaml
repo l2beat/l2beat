@@ -843,28 +843,25 @@ importers:
       '@l2beat/validate':
         specifier: workspace:*
         version: link:../validate
-      '@scalar/express-api-reference':
-        specifier: ^0.8.19
-        version: 0.8.19
       express:
         specifier: ^5.0.0
         version: 5.0.1
-      swagger-ui-dist:
-        specifier: ^5.29.1
-        version: 5.29.1
       swagger-ui-express:
         specifier: ^5.0.1
         version: 5.0.1(express@5.0.1)
     devDependencies:
+      '@l2beat/config':
+        specifier: workspace:*
+        version: link:../config
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
-      '@types/swagger-ui-dist':
-        specifier: ^3.30.6
-        version: 3.30.6
       '@types/swagger-ui-express':
         specifier: ^4.1.8
         version: 4.1.8
@@ -3297,22 +3294,6 @@ packages:
     resolution: {integrity: sha512-jjmJywLAFoWeBi1W7994zZyiNWPIiqRRNAmSERxyg93xRGzNYvGjlZ0gR6x0F4gPRi2+0O6S71kOZYyr3cxaIQ==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
 
-  '@scalar/core@0.3.17':
-    resolution: {integrity: sha512-G6tP+2oorFA90szI8DGiEQ23SmobiuhN93GfTJNpFMhz/kdEtC4lcYawAxL1tWkZhlK/QYRcaCZcVzmpTUgBCA==}
-    engines: {node: '>=20'}
-
-  '@scalar/express-api-reference@0.8.19':
-    resolution: {integrity: sha512-mzzQATXeJw+OvymyrTVTrMtu4RRQcf7s/TnhYOvji7H3UDgTwH69Md52RB3hZA+xOycMznU3tfwYgo0Mh+xXFw==}
-    engines: {node: '>=20'}
-
-  '@scalar/openapi-types@0.3.7':
-    resolution: {integrity: sha512-QHSvHBVDze3+dUwAhIGq6l1iOev4jdoqdBK7QpfeN1Q4h+6qpVEw3EEqBiH0AXUSh/iWwObBv4uMgfIx0aNZ5g==}
-    engines: {node: '>=20'}
-
-  '@scalar/types@0.2.16':
-    resolution: {integrity: sha512-XWff9jWfYaj6q3ww94x66S6Q58u/3kA1sDOUhLAwb9va7r58bzk3NRwLOkEEdJmyEns1MEJAM53mY8KRWX6elA==}
-    engines: {node: '>=20'}
-
   '@scarf/scarf@1.4.0':
     resolution: {integrity: sha512-xxeapPiUXdZAE3che6f3xogoJPeZgig6omHEy1rIY5WVsB3H2BHNnZH+gHG6x91SCWyQCzWGsuL2Hh3ClO5/qQ==}
 
@@ -3831,9 +3812,6 @@ packages:
 
   '@types/supertest@2.0.16':
     resolution: {integrity: sha512-6c2ogktZ06tr2ENoZivgm7YnprnhYE4ZoXGMY+oA7IuAf17M8FWvujXZGmxLv8y0PTyts4x5A+erSwVUFA8XSg==}
-
-  '@types/swagger-ui-dist@3.30.6':
-    resolution: {integrity: sha512-FVxN7wjLYRtJsZBscOcOcf8oR++m38vbUFjT33Mr9HBuasX9bRDrJsp7iwixcOtKSHEEa2B7o2+4wEiXqC+Ebw==}
 
   '@types/swagger-ui-express@4.1.8':
     resolution: {integrity: sha512-AhZV8/EIreHFmBV5wAs0gzJUNq9JbbSXgJLQubCC0jtIo6prnI9MIRRxnU4MZX9RB9yXxF1V4R7jtLl/Wcj31g==}
@@ -5982,11 +5960,6 @@ packages:
   nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
-    hasBin: true
-
-  nanoid@5.1.5:
-    resolution: {integrity: sha512-Ir/+ZpE9fDsNH0hQ3C68uyThDXzYcim2EqcZ8zn8Chtt1iylPT9xXJB0kPCnqzgcEGikO9RxSrh63MsmVCU7Fw==}
-    engines: {node: ^18 || >=20}
     hasBin: true
 
   napi-build-utils@2.0.0:
@@ -10113,24 +10086,6 @@ snapshots:
 
   '@sapphire/snowflake@3.5.3': {}
 
-  '@scalar/core@0.3.17':
-    dependencies:
-      '@scalar/types': 0.2.16
-
-  '@scalar/express-api-reference@0.8.19':
-    dependencies:
-      '@scalar/core': 0.3.17
-
-  '@scalar/openapi-types@0.3.7':
-    dependencies:
-      zod: 3.24.1
-
-  '@scalar/types@0.2.16':
-    dependencies:
-      '@scalar/openapi-types': 0.3.7
-      nanoid: 5.1.5
-      zod: 3.24.1
-
   '@scarf/scarf@1.4.0': {}
 
   '@scure/base@1.2.6': {}
@@ -10653,8 +10608,6 @@ snapshots:
   '@types/supertest@2.0.16':
     dependencies:
       '@types/superagent': 8.1.9
-
-  '@types/swagger-ui-dist@3.30.6': {}
 
   '@types/swagger-ui-express@4.1.8':
     dependencies:
@@ -13093,8 +13046,6 @@ snapshots:
 
   nanoid@3.3.7: {}
 
-  nanoid@5.1.5: {}
-
   napi-build-utils@2.0.0: {}
 
   negotiator@0.6.3: {}
@@ -15013,7 +14964,8 @@ snapshots:
 
   zod@3.23.8: {}
 
-  zod@3.24.1: {}
+  zod@3.24.1:
+    optional: true
 
   zustand@5.0.0(@types/react@19.0.10)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0)):
     optionalDependencies:

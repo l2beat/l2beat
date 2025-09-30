@@ -17,8 +17,9 @@ function main() {
     '/docs',
     swaggerUi.serve,
     swaggerUi.setup(undefined, {
+      customSiteTitle: 'L2BEAT - Swagger UI',
       swaggerOptions: {
-        url: '/openapi', // Swagger UI will GET your spec from here
+        url: '/openapi',
       },
     }),
   )
