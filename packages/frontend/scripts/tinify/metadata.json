@@ -1473,5 +1473,8 @@
   "static/images/badges/Nodeinfra.png": "64d5cc0f3b6a5920bd900d65ec013df2",
   "static/partners/cartesi/background.png": "70d22fa399de64650d7cb325706a17c9",
   "static/partners/cartesi/logo.png": "dd299c34f84fdbce7d1290b4036e96ef",
-  "static/meta-images/publications/governance-review-71.png": "fb9787223d1943e6761b5b63ba2d9a3f"
+  "static/meta-images/publications/governance-review-71.png": "fb9787223d1943e6761b5b63ba2d9a3f",
+  "static/icons/adi.png": "af2039ebdb3c8fb4d97817772a7e3699",
+  "static/meta-images/scaling/projects/lighter/opengraph-image.png": "f5b9d05fe294a44a115ba6e23c4bc74e",
+  "static/icons/lighter.png": "cd99632ad38166179bdc3ee944fca9d2"
 }
