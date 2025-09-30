@@ -14,7 +14,7 @@ export const adi: ScalingProject = upcomingL2({
     purposes: ['Universal'],
     stacks: ['ZK Stack'],
     links: {
-      websites: ['https://www.adi.foundation/'],
+      websites: ['https://adi.foundation/'],
       explorers: ['https://explorer.testnet.adifoundation.ai/'],
       repositories: ['https://github.com/orgs/ADI-Foundation-Labs/'],
       socialMedia: [
