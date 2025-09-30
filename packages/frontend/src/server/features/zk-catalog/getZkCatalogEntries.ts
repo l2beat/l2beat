@@ -1,15 +1,6 @@
-import type {
-  Project,
-  ProjectZkCatalogInfo,
-  TrustedSetup,
-  ZkCatalogTag,
-} from '@l2beat/config'
+import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
 import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAttesters'
-import { notUndefined } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
-import uniq from 'lodash/uniq'
-import uniqBy from 'lodash/uniqBy'
-import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
+
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import {
   get7dTvsBreakdown,
@@ -18,11 +9,15 @@ import {
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
-import { getLogger } from '~/server/utils/logger'
 import {
   type ContractUtils,
   getContractUtils,
 } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import {
+  getTrustedSetupsWithVerifiersAndAttesters,
+  type TrustedSetupsByProofSystem,
+} from './utils/getTrustedSetupsWithVerifiersAndAttesters'
+import { getZkCatalogProjectTvs } from './utils/getZkCatalogProjectTvs'
 
 export type TrustedSetupVerifierData = {
   count: number
@@ -35,20 +30,7 @@ export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
   creator?: string
   tvs: number
   techStack: ProjectZkCatalogInfo['techStack']
-  trustedSetupsByProofSystem: Record<
-    string,
-    {
-      trustedSetups: (TrustedSetup & {
-        proofSystem: ZkCatalogTag
-      })[]
-      verifiers: {
-        successful?: TrustedSetupVerifierData
-        unsuccessful?: TrustedSetupVerifierData
-        notVerified?: TrustedSetupVerifierData
-      }
-      projectsUsedIn: UsedInProjectWithIcon[]
-    }
-  >
+  trustedSetupsByProofSystem: TrustedSetupsByProofSystem
 }
 
 export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
@@ -80,25 +62,17 @@ function getZkCatalogEntry(
   tvs: SevenDayTvsBreakdown,
   contractUtils: ContractUtils,
 ): ZkCatalogEntry {
-  const usedInVerifiers = uniq(
-    project.zkCatalogInfo.verifierHashes
-      .flatMap((v) =>
-        v.knownDeployments.flatMap((d) =>
-          contractUtils.getUsedIn(project.id, d.chain, d.address),
-        ),
-      )
-      .map((u) => u.id),
-  )
-
-  const tvsForProject = usedInVerifiers.reduce((acc, projectId) => {
-    return acc + calculateProjectTvs(projectId, allProjects, tvs)
-  }, 0)
-
   const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
     project,
     contractUtils,
     tvs,
     allProjects,
+  )
+  const { tvs: tvsForProject } = getZkCatalogProjectTvs(
+    project,
+    allProjects,
+    tvs,
+    contractUtils,
   )
 
   return {
@@ -122,114 +96,4 @@ function getZkCatalogEntry(
       })),
     ],
   }
-}
-
-function getTrustedSetupsWithVerifiersAndAttesters(
-  project: Project<'zkCatalogInfo'>,
-  contractUtils: ContractUtils,
-  tvs: SevenDayTvsBreakdown,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
-): ZkCatalogEntry['trustedSetupsByProofSystem'] {
-  const grouped = groupBy(
-    project.zkCatalogInfo.trustedSetups,
-    (e) => `${e.proofSystem.type}-${e.proofSystem.id}`,
-  )
-  return Object.fromEntries(
-    Object.entries(grouped).map(([key, trustedSetups]) => {
-      const trustedSetupVerifiers = project.zkCatalogInfo.verifierHashes.filter(
-        (v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`,
-      )
-
-      const groupedByStatus = groupBy(
-        trustedSetupVerifiers,
-        (v) => v.verificationStatus,
-      )
-
-      const projectsUsedIn = uniqBy(
-        trustedSetupVerifiers.flatMap((v) =>
-          v.knownDeployments.flatMap((d) =>
-            contractUtils.getUsedIn(project.id, d.chain, d.address),
-          ),
-        ),
-        (u) => u.id,
-      )
-        .map((u) => ({
-          ...u,
-          tvs: calculateProjectTvs(u.id, allProjects, tvs),
-        }))
-        .sort((a, b) => b.tvs - a.tvs)
-
-      return [
-        key,
-        {
-          trustedSetups,
-          verifiers: {
-            successful: getVerifiersWithAttesters(
-              groupedByStatus,
-              'successful',
-            ),
-            unsuccessful: getVerifiersWithAttesters(
-              groupedByStatus,
-              'unsuccessful',
-            ),
-            notVerified: getVerifiersWithAttesters(
-              groupedByStatus,
-              'notVerified',
-            ),
-          },
-          projectsUsedIn,
-        },
-      ]
-    }),
-  )
-}
-
-export function getVerifiersWithAttesters(
-  verifiers: Record<string, ProjectZkCatalogInfo['verifierHashes']>,
-  key: 'successful' | 'unsuccessful' | 'notVerified',
-): TrustedSetupVerifierData | undefined {
-  const verifiersForStatus = verifiers[key]
-  if (!verifiersForStatus || verifiersForStatus.length === 0) return undefined
-
-  return {
-    count: verifiersForStatus.length,
-    attesters: verifiersForStatus
-      .flatMap((v) => v.attesters)
-      .filter(notUndefined)
-      .map((a) => ({
-        ...a,
-        icon: getProjectIcon(a.id),
-      })),
-  }
-}
-
-function calculateProjectTvs(
-  projectId: string,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
-  tvs: SevenDayTvsBreakdown,
-): number {
-  const project = allProjects.find((p) => p.id === projectId)
-  if (!project) {
-    const logger = getLogger().for('getZkCatalogEntry')
-    logger.warn(`Project ${projectId} not found`)
-    return 0
-  }
-
-  // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
-  if (project.daBridge) {
-    return project.daBridge.usedIn
-      .map((p) => p.id)
-      .reduce((acc, p) => {
-        const projectTvs = tvs.projects[p]?.breakdown.total
-        return projectTvs ? acc + projectTvs : acc
-      }, 0)
-  }
-
-  return tvs.projects[project.id]?.breakdown.total ?? 0
 }

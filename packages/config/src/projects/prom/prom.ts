@@ -40,7 +40,7 @@ export const prom: ScalingProject = underReviewL2({
       {
         type: 'rpc',
         url: 'https://rpc.prom.io/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x86dfb4df731f28f59c29a279b7810053110d3d5e
+
+# Diff at Fri, 19 Sep 2025 12:58:50 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a930e518d214c15603feeda62e2a483dbd2454e0 block: 1755507657
+- current timestamp: 1758286666
+
+## Description
+
+Multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xCA730AFfb87935E70E5889418C731eb196237476"
++        "eth:0xa3353Ae4458F663f1F888705b044269bd30cd110"
+    }
+```
+
 Generated with discovered.json: 0x4f6a0dabc0739db9b017b4fd58216c8d93667c67
 
 # Diff at Mon, 15 Sep 2025 09:50:32 GMT:

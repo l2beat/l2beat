@@ -1,3 +1,119 @@
+Generated with discovered.json: 0xd9fb1807158ea919c9a3fa8989e2cdcc89960134
+
+# Diff at Thu, 25 Sep 2025 10:25:13 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@08eb3e2b6dafb4d1e7d4a8e779cd4e303c71568e block: 1758621561
+- current timestamp: 1758795850
+
+## Description
+
+Removed 5 members of multisig, added 2 new members that were a part of another multisig.
+
+## Watched changes
+
+```diff
+    contract Morph Multisig 2 (eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x19C0CebaEC6EDb61c00178Cf8c6112BAD5Ef68E6"
+      values.$members.1:
+-        "eth:0xa79fEE4418338B59B8C6c93b87777A89F57c0Fd3"
+      values.$members.2:
+-        "eth:0x429087D7cb89cD816b80804bCE9c7b1A1FFE229F"
++        "eth:0xC7F81B58ec3937D11Bf4BA74C04FF69e944423F2"
+      values.$members.3:
+-        "eth:0x0659dF9D53A987e3aDaa9019407431413A101eF3"
++        "eth:0xbA430e784fe11ADbc20fa1a99193eeD87ACD68C7"
+      values.$members.6:
+-        "eth:0xAD249861A911717fE74FA329fEC3c619f55DfFDf"
+      values.$threshold:
+-        5
++        3
+      values.multisigThreshold:
+-        "5 of 8 (63%)"
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0xed34c197a104a6366dbeac0f6ff4d78762a6f299
+
+# Diff at Tue, 23 Sep 2025 10:00:23 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1758269993
+- current timestamp: 1758621561
+
+## Description
+
+Multisig update, new signer was already a member of Multisig 2.
+
+## Watched changes
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x05e1d4694041aF987Af6F8402D902686018E2136"
+      values.$threshold:
+-        3
++        4
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "4 of 6 (67%)"
+    }
+```
+
+Generated with discovered.json: 0xdf7f5d9659cc3b737f86d2e4c41221b19ffdc9ec
+
+# Diff at Fri, 19 Sep 2025 08:20:56 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@db1760252dd9dd68603e4c71d0f4e284d5d0d15f block: 1758186428
+- current timestamp: 1758269993
+
+## Description
+
+Removed a member of morph multisig 1, this address stays a member of morph multisig 2.
+
+## Watched changes
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x0659dF9D53A987e3aDaa9019407431413A101eF3"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0x8bde2188efe9de48fa02c980bb73248170245dab
+
+# Diff at Thu, 18 Sep 2025 09:08:11 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@36e98eaeb23cc6fe43ec50708b5af9a452891d86 block: 1756804333
+- current timestamp: 1758186428
+
+## Description
+
+Added a new member to Morph multisig 1, this address already was a member of morph multisig 2.
+
+## Watched changes
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x59C09F33d7D901b8B57644D68a45b123e9Bbd0E5"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xd34b8bb01741e2082b5bdc67c278560374a65e5e
 
 # Diff at Tue, 02 Sep 2025 09:13:34 GMT:

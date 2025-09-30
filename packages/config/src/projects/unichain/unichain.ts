@@ -96,7 +96,7 @@ export const unichain: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.unichain.org',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },
     ],

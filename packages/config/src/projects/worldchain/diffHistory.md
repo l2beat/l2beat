@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x6decf12b6b7914110b56f8ae6904c83a8f67383b
+
+# Diff at Mon, 29 Sep 2025 14:58:54 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1758287214
+- current timestamp: 1759157870
+
+## Description
+
+Gas limit increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        70000000
++        80000000
+    }
+```
+
+Generated with discovered.json: 0xb65455706e7528250815c4cb190288c5487c0760
+
+# Diff at Fri, 19 Sep 2025 13:07:59 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a930e518d214c15603feeda62e2a483dbd2454e0 block: 1757939471
+- current timestamp: 1758287214
+
+## Description
+
+Multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xCA730AFfb87935E70E5889418C731eb196237476"
++        "eth:0xa3353Ae4458F663f1F888705b044269bd30cd110"
+    }
+```
+
 Generated with discovered.json: 0x31ad5e167e7816cc47887137eb1d5bd429f41fe0
 
 # Diff at Mon, 15 Sep 2025 12:32:21 GMT:

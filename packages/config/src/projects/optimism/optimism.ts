@@ -199,7 +199,7 @@ export const optimism: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.optimism.io/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },

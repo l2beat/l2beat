@@ -51,7 +51,7 @@ export const powerloom: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc-v2.powerloom.network',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

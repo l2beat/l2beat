@@ -55,7 +55,7 @@ export const worldchain = opStackL2({
       {
         type: 'rpc',
         url: 'https://worldchain-mainnet.g.alchemy.com/public',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

@@ -177,6 +177,32 @@
     },
     {
       "mode": "auto",
+      "id": "unichain-HYPE",
+      "priceId": "hyperliquid",
+      "symbol": "HYPE",
+      "name": "HYPE",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?1729431300",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x15D0e0c55a3E7eE67152aD7E89acf164253Ff68d",
+        "chain": "unichain",
+        "decimals": 18,
+        "sinceTimestamp": 1754494758
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "unichain-kBTC",
       "priceId": "kraken-wrapped-btc",
       "symbol": "kBTC",
@@ -350,6 +376,32 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-SOL-1",
+      "priceId": "solana",
+      "symbol": "SOL",
+      "name": "Wrapped SOL",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xbdE8A5331E8Ac4831cf8ea9e42e229219EafaB97",
+        "chain": "unichain",
+        "decimals": 9,
+        "sinceTimestamp": 1754451932
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
           }
         ]
       }

@@ -55,7 +55,7 @@ export const ham: ScalingProject = opStackL3({
       {
         type: 'rpc',
         url: 'https://ham.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

@@ -1,5 +1,5 @@
 {
   "term": "Polynomial commitment",
-  "definition": "A commitment scheme that commits to a polynomial.",
+  "definition": "A commitment scheme that commits to a polynomial and allows generating the proof of opening the polynomial at a given point against the commitment.",
   "isSpicy": false
 }

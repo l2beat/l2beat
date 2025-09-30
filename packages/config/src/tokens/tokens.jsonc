@@ -7122,6 +7122,36 @@
   ],
   "unichain": [
     {
+      "symbol": "HYPE",
+      "address": "0x15D0e0c55a3E7eE67152aD7E89acf164253Ff68d",
+      "coingeckoId": "hyperliquid",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SOL",
+      "address": "0xbdE8A5331E8Ac4831cf8ea9e42e229219EafaB97",
+      "coingeckoId": "solana",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "oUSDT",
       "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
       "category": "stablecoin",
@@ -7808,7 +7838,8 @@
       "category": "stablecoin",
       "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
       "source": "native",
-      "supply": "totalSupply" // minted like an RWA (backed by RWA)
+      "supply": "totalSupply", // minted like an RWA (backed by RWA)
+      "coingeckoId": "agora-dollar"
     }
   ],
   "ternoa": [

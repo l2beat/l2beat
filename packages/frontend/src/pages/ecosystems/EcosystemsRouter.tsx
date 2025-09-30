@@ -1,6 +1,5 @@
 import { v } from '@l2beat/validate'
 import express from 'express'
-import { env } from '~/env'
 import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
@@ -12,10 +11,6 @@ export function createEcosystemsRouter(
   render: RenderFunction,
   cache: ICache,
 ) {
-  if (!env.CLIENT_SIDE_PARTNERS) {
-    return undefined
-  }
-
   const router = express.Router()
 
   router.get(
@@ -33,7 +28,7 @@ export function createEcosystemsRouter(
         () =>
           getEcosystemProjectData(manifest, req.params.slug, req.originalUrl),
       )
-      if (!data || !env.CLIENT_SIDE_PARTNERS) {
+      if (!data) {
         res.status(404).send('Not found')
         return
       }

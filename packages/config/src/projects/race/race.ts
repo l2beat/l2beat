@@ -45,7 +45,7 @@ export const race: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://racemainnet.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

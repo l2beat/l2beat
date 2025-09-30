@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '../global/milestones'
 import type { ScalingProject } from '../internalTypes'
 import { abstract } from '../projects/abstract/abstract'
+import { adi } from '../projects/adi/adi'
 import { aevo } from '../projects/aevo/aevo'
 import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
@@ -62,6 +63,7 @@ import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
 import { gasp } from '../projects/gasp/gasp'
 import { genlayer } from '../projects/genlayer/genlayer'
+import { giwa } from '../projects/giwa/giwa'
 import { gluon } from '../projects/gluon/gluon'
 import { gmnetwork } from '../projects/gmnetwork/gmnetwork'
 import { gpt } from '../projects/gpt/gpt'
@@ -159,6 +161,7 @@ import { redstone } from '../projects/redstone/redstone'
 import { reya } from '../projects/reya/reya'
 import { rise } from '../projects/rise/rise'
 import { river } from '../projects/river/river'
+import { roninNetwork } from '../projects/ronin-network/ronin-network'
 import { rss3 } from '../projects/rss3/rss3'
 import { rufus } from '../projects/rufus/rufus'
 import { scroll } from '../projects/scroll/scroll'
@@ -201,6 +204,7 @@ import { thanos } from '../projects/thanos/thanos'
 import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdings'
 import { treasure } from '../projects/treasure/treasure'
 import { tusima } from '../projects/tusima/tusima'
+import { umi } from '../projects/umi/umi'
 import { unichain } from '../projects/unichain/unichain'
 import { wilderworld } from '../projects/wilderworld/wilderworld'
 import { wirex } from '../projects/wirex/wirex'
@@ -230,6 +234,7 @@ export const layer2s: ScalingProject[] = [
   airas,
   alephzero,
   alienx,
+  adi,
   allo,
   ancient,
   apex,
@@ -285,6 +290,7 @@ export const layer2s: ScalingProject[] = [
   gameswift,
   gasp,
   genlayer,
+  giwa,
   gluon,
   gmnetwork,
   gpt,
@@ -377,6 +383,7 @@ export const layer2s: ScalingProject[] = [
   rayls,
   real,
   reddioex,
+  roninNetwork,
   reddiozkvm,
   redstone,
   reya,
@@ -426,6 +433,7 @@ export const layer2s: ScalingProject[] = [
   thebinaryholdings,
   treasure,
   tusima,
+  umi,
   unichain,
   wirex,
   witness,

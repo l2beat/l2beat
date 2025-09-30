@@ -25,7 +25,7 @@ export const xrone: ScalingProject = underReviewL3({
     purposes: ['Gaming'],
     links: {
       websites: ['https://saltwatergames.com/'],
-      bridges: [],
+      bridges: ['https://xr-sepolia-testnet.bridge.caldera.xyz'],
       documentation: ['https://xr-one.gitbook.io/xr'],
       explorers: ['https://xr1.calderaexplorer.xyz/'],
       socialMedia: [
@@ -49,7 +49,7 @@ export const xrone: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://xr1.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

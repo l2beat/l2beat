@@ -1,4 +1,6 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
+import type { Database, TokenMetadataRecord } from '@l2beat/database'
 import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
@@ -18,8 +20,7 @@ import {
 } from './tools/extractPricesAndAmounts'
 import { getTokenSyncRange } from './tools/getTokenSyncRange'
 import { SyncOptimizer } from './tools/SyncOptimizer'
-import { isOnchainAmountConfig } from './types'
-
+import { isOnchainAmountConfig, type ProjectTvsConfig } from './types'
 export function initTvsModule({
   config,
   logger,
@@ -239,7 +240,9 @@ export function initTvsModule({
     valueIndexers.push(projectValueIndexer)
   }
 
+  const tvsProjects = config.tvs.projects
   const start = async () => {
+    await updateTokenMetadata(tvsProjects, db, logger)
     await hourlyIndexer.start()
     await priceIndexer.start()
 
@@ -295,4 +298,27 @@ function getProjectSyncRange(tokens: TokenWithRanges[]) {
     since,
     until,
   }
+}
+
+async function updateTokenMetadata(
+  projects: ProjectTvsConfig[],
+  db: Database,
+  logger: Logger,
+) {
+  const records: TokenMetadataRecord[] = projects.flatMap((project) =>
+    project.tokens.map((token) => {
+      return {
+        tokenId: token.id,
+        projectId: project.projectId,
+        source: token.source,
+        category: token.category,
+        isAssociated: token.isAssociated,
+      }
+    }),
+  )
+  await db.transaction(async () => {
+    await db.tvsTokenMetadata.deleteAll()
+    await db.tvsTokenMetadata.insertMany(records)
+    logger.info('Token metadata updated', { count: records.length })
+  })
 }

@@ -93,7 +93,7 @@ export const blast: ScalingProject = opStackL2({
       },
     ],
     apis: [
-      { type: 'rpc', url: 'https://rpc.blast.io/', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.blast.io/', callsPerMinute: 300 },
       { type: 'etherscan', chainId },
     ],
   },

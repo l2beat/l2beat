@@ -51,7 +51,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.zkevm.cronos.org',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

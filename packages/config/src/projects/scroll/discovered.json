@@ -1,7 +1,7 @@
 {
   "name": "scroll",
-  "timestamp": 1756895025,
-  "configHash": "0x108b27e8fb48e87da8d4383080236547331dfe8851179e8549d3f978dedbce3a",
+  "timestamp": 1758107952,
+  "configHash": "0xc55f65155f28177b711e34a8a919eeb5a637eaf56c006c3888e821d72709abe8",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -994,11 +994,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1756889267,
+        "getFirstUnfinalizedMessageEnqueueTime": 1758101855,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 961992,
-        "nextUnfinalizedQueueIndex": 961987,
+        "nextCrossDomainMessageIndex": 963347,
+        "nextUnfinalizedQueueIndex": 963339,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -2076,14 +2076,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 377033,
+        "lastFinalizedBatchIndex": 388067,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 377081,
-          "lastFinalizedBatchIndex": 377033,
-          "lastFinalizeTimestamp": 1756890767,
+          "lastCommittedBatchIndex": 388133,
+          "lastFinalizedBatchIndex": 388067,
+          "lastFinalizeTimestamp": 1758107783,
           "flags": 1,
           "reserved": 0
         },
@@ -2851,7 +2851,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 25250897574807,
+        "totalBridgedUSDC": 20394715397755,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3195,8 +3195,8 @@
               "setOverhead(uint256)": ["ops-fast"],
               "setCommitScalar(uint256)": ["ops-fast"],
               "setBlobScalar(uint256)": ["ops-fast"],
-              "0xaa5e9334": ["ops-fast"],
-              "0xc63b9e2d": ["ops-fast"]
+              "setPenaltyThreshold(uint256)": ["ops-fast"],
+              "setPenaltyFactor(uint256)": ["ops-fast"]
             },
             "scr:0x5300000000000000000000000000000000000005": {
               "updateMinWithdrawAmount(uint256)": ["ops-fast"],
@@ -3908,9 +3908,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x05f97f9d885106c290ec27bf46b518abe3c486baa3a2fc969a282039cdaf21e8",
+        "messageRoot": "0x74f302b945dd598dc2c5a337f26346a61e4f52b2709b63564cb3617501c97f98",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 208908,
+        "nextMessageIndex": 209902,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -7498,6 +7498,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "scroll": 20550206, "ethereum": 23281964 },
+  "usedBlockNumbers": { "scroll": 21440927, "ethereum": 23382457 },
   "permissionsConfigHash": "0x38572e7ef44089f04e4f6ff13c9b6485f1fe1187ef9b2963df564d511a7e874f"
 }

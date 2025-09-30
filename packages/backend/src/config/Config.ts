@@ -52,7 +52,7 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
-  readonly bridgesEnabled: boolean
+  readonly bridges: BridgesConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -202,7 +202,21 @@ export interface AnomaliesConfig {
   readonly anomaliesMinDuration: number
 }
 
+export interface BridgesConfig {
+  capture: {
+    enabled: boolean
+    chains: string[]
+  }
+  matching: boolean
+  cleaner: boolean
+  dashboard: {
+    enabled: boolean
+    getExplorerUrl: (chain: string) => string | undefined
+  }
+}
+
 export interface DaBeatConfig {
+  readonly projectsForDaBeatStats: ProjectId[]
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
   /** Names of the economic security types */

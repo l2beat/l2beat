@@ -11,7 +11,7 @@ export const superchain: BaseProject = {
   display: {
     description: 'The Superchain is a network of OP Stack chains.',
     links: {
-      websites: ['https://superchain.eco'],
+      websites: ['https://optimism.io'],
       documentation: [
         'https://docs.optimism.io/',
         'https://docs.optimism.io/superchain/superchain-explainer',
@@ -32,8 +32,8 @@ export const superchain: BaseProject = {
   },
   ecosystemConfig: {
     links: {
-      buildOn: 'https://superchain.eco/develop',
-      learnMore: 'https://superchain.eco/',
+      buildOn: 'https://optimism.io/',
+      learnMore: 'https://docs.optimism.io/superchain/superchain-explainer',
       governanceDelegateToL2BEAT:
         'https://vote.optimism.io/delegates/0x1b686ee8e31c5959d9f5bbd8122a58682788eead',
       governanceProposals: 'https://vote.optimism.io/proposals',

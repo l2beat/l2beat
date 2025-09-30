@@ -12,6 +12,8 @@ import {
   Result,
 } from './types'
 
+// DEPRECATED in favor of the general OFT plugin
+
 const parseOFTSent = createEventParser(
   'event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)',
 )
@@ -72,7 +74,6 @@ const USDT0_NETWORKS = defineNetworks('usdt0', [
 
 export class Usdt0Plugin implements BridgePlugin {
   name = 'usdt0'
-  chains = USDT0_NETWORKS.map((n) => n.chain)
 
   capture(input: LogToCapture) {
     const network = USDT0_NETWORKS.find((n) => n.chain === input.ctx.chain)
@@ -98,6 +99,7 @@ export class Usdt0Plugin implements BridgePlugin {
     }
   }
 
+  matchTypes = [Usdt0OFTReceived]
   match(oftReceived: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (!Usdt0OFTReceived.checkType(oftReceived)) return
 

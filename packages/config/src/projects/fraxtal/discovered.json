@@ -1,7 +1,7 @@
 {
   "name": "fraxtal",
-  "timestamp": 1755609388,
-  "configHash": "0x53d87cd8fc94e0edafb3336614db1780b8c1287a9c7e1bb550e8991f5f303e20",
+  "timestamp": 1758702279,
+  "configHash": "0x769574d6951f118b4f5c3b0f8f5f49f9b6995f92dc746326125f050ac6e7370d",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -115,7 +115,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638043",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638339",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -420,10 +420,10 @@
       "name": "OptimismPortal",
       "address": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
       "type": "Contract",
-      "template": "opstack/OptimismPortal",
+      "template": "fraxtal/OptimismPortalCGT",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xb9ed3314327cfa4bdab9614d4772040c01df636f632f7317611422dec046197f"
+        "0x62a12fbc7ebd0b204991e4c3447170732d2acfab390458caa08cc96bd6417ece"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
@@ -432,7 +432,7 @@
       "sinceBlock": 19135323,
       "values": {
         "$admin": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-        "$implementation": "eth:0xd30B971922D42AA46C8A6432C332547432C89E14",
+        "$implementation": "eth:0xDe882c2CBd6e790a35Cc63BA25eCA7b7DDd234B2",
         "$pastUpgrades": [
           [
             "2024-02-01T18:20:23.000Z",
@@ -478,9 +478,15 @@
             "2025-08-18T19:16:59.000Z",
             "0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",
             ["eth:0xd30B971922D42AA46C8A6432C332547432C89E14"]
+          ],
+          [
+            "2025-09-22T19:07:35.000Z",
+            "0xf2882d571b3a770d737ce0b81adb738b116e94a1d16f19a9cc837fdc20b25f05",
+            ["eth:0xDe882c2CBd6e790a35Cc63BA25eCA7b7DDd234B2"]
           ]
         ],
-        "$upgradeCount": 9,
+        "$upgradeCount": 10,
+        "FRAX_COMPTROLLER": "eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
         "FRXETH": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
         "gasPayingToken": {
           "addr_": "eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
@@ -491,8 +497,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 10000000,
-          "prevBoughtGas": 516982,
-          "prevBlockNum": 23174824
+          "prevBoughtGas": 200000,
+          "prevBlockNum": 23431472
         },
         "paused": false,
         "superchainConfig": "eth:0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
@@ -501,7 +507,7 @@
       },
       "implementationNames": {
         "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D": "Proxy",
-        "eth:0xd30B971922D42AA46C8A6432C332547432C89E14": "OptimismPortalCGT"
+        "eth:0xDe882c2CBd6e790a35Cc63BA25eCA7b7DDd234B2": "OptimismPortalCGT"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -565,7 +571,7 @@
         "owner": "eth:0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "symbol": "frxETH",
         "timelock_address": "eth:0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "115443823474186906348384"
+        "totalSupply": "111653440770167243766513"
       },
       "implementationNames": {
         "eth:0x5E8422345238F34275888049021821E8E08CAa1f": "frxETH"
@@ -681,10 +687,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 24397200,
-        "latestOutputIndex": 13553,
-        "nextBlockNumber": 24399000,
-        "nextOutputIndex": 13554,
+        "latestBlockNumber": 25943400,
+        "latestOutputIndex": 14412,
+        "nextBlockNumber": 25945200,
+        "nextOutputIndex": 14413,
         "proposer": "eth:0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "eth:0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -807,7 +813,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 1350,
+        "nonce": 1364,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -974,15 +980,15 @@
         "asset": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xe8254029df4a5fbfcf2de75f8fcf68b1060354a363693b1507e1197cc3dcc29b",
-        "lastRewardAmount": "50508000000000000000",
-        "lastSync": 1755129911,
+        "lastRewardAmount": "46215000000000000000",
+        "lastSync": 1758153911,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1131607784407310085",
-        "rewardsCycleEnd": 1755734400,
+        "pricePerShare": "1135165956974237900",
+        "rewardsCycleEnd": 1758758400,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "79423872101819484107049",
-        "totalSupply": "70186749504748646359880"
+        "totalAssets": "79061848037630899840084",
+        "totalSupply": "69647832153431266254399"
       },
       "implementationNames": {
         "eth:0xac3E018457B222d93114458476f3E3416Abbe38F": "sfrxETH"
@@ -999,6 +1005,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "description": "can increase the gas token balance assigned to the OptimismPortal and mint the gas token on L2 without actually depositing tokens.",
+          "role": ".FRAX_COMPTROLLER"
+        },
         {
           "permission": "interact",
           "from": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
@@ -1050,7 +1062,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6795,
+        "nonce": 6934,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1081,7 +1093,7 @@
       "sinceBlock": 15686046,
       "values": {
         "$immutable": true,
-        "currentWithheldETH": 294000000000000,
+        "currentWithheldETH": 6146928774000000,
         "DEPOSIT_SIZE": "32000000000000000000",
         "depositContract": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositEtherPaused": false,
@@ -1261,7 +1273,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 49,
+        "nonce": 51,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1884,52 +1896,6 @@
       "function unsafeBlockSigner() view returns (address addr_)",
       "function version() pure returns (string)"
     ],
-    "eth:0xd30B971922D42AA46C8A6432C332547432C89E14": [
-      "constructor()",
-      "error BadTarget()",
-      "error CallPaused()",
-      "error ContentLengthMismatch()",
-      "error EmptyItem()",
-      "error GasEstimation()",
-      "error InvalidDataRemainder()",
-      "error InvalidHeader()",
-      "error LargeCalldata()",
-      "error NoValue()",
-      "error NonReentrant()",
-      "error OnlyCustomGasToken()",
-      "error OutOfGas()",
-      "error SmallGasLimit()",
-      "error TransferFailed()",
-      "error Unauthorized()",
-      "error UnexpectedList()",
-      "error UnexpectedString()",
-      "event Initialized(uint8 version)",
-      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
-      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
-      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
-      "function FRXETH() view returns (address)",
-      "function balance() view returns (uint256)",
-      "function depositERC20Transaction(address _to, uint256 _mint, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data)",
-      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
-      "function donateETH() payable",
-      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
-      "function finalizedWithdrawals(bytes32) view returns (bool)",
-      "function gasPayingToken() view returns (address addr_, uint8 decimals_)",
-      "function guardian() view returns (address)",
-      "function initialize(address _l2Oracle, address _systemConfig, address _superchainConfig, address _frxEthErc20Address)",
-      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
-      "function l2Oracle() view returns (address)",
-      "function l2Sender() view returns (address)",
-      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
-      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
-      "function paused() view returns (bool paused_)",
-      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
-      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
-      "function setGasPayingToken(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol)",
-      "function superchainConfig() view returns (address)",
-      "function systemConfig() view returns (address)",
-      "function version() pure returns (string)"
-    ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -1979,6 +1945,54 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0xDe882c2CBd6e790a35Cc63BA25eCA7b7DDd234B2": [
+      "constructor(address _fraxComptroller)",
+      "error BadTarget()",
+      "error CallPaused()",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error GasEstimation()",
+      "error InvalidDataRemainder()",
+      "error InvalidHeader()",
+      "error LargeCalldata()",
+      "error NoValue()",
+      "error NonReentrant()",
+      "error OnlyCustomGasToken()",
+      "error OutOfGas()",
+      "error SmallGasLimit()",
+      "error TransferFailed()",
+      "error Unauthorized()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "event Initialized(uint8 version)",
+      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
+      "function FRAX_COMPTROLLER() view returns (address)",
+      "function FRXETH() view returns (address)",
+      "function balance() view returns (uint256)",
+      "function depositERC20Transaction(address _to, uint256 _mint, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data)",
+      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function donateETH() payable",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function gasPayingToken() view returns (address addr_, uint8 decimals_)",
+      "function guardian() view returns (address)",
+      "function initialize(address _l2Oracle, address _systemConfig, address _superchainConfig, address _frxEthErc20Address)",
+      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
+      "function l2Oracle() view returns (address)",
+      "function l2Sender() view returns (address)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function mint(uint256 _amount, address _to, uint64 _gasLimit)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
+      "function paused() view returns (bool paused_)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
+      "function setGasPayingToken(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function version() pure returns (string)"
+    ],
     "eth:0xe0d7755252873c4eF5788f7f45764E0e17610508": [
       "constructor(address _singleton)"
     ],
@@ -2024,6 +2038,7 @@
     "fraxtal/FraxEtherMinter": "0xd950e978a75fe4dae81af9617c3f4e653ac5090089be7630a9b3d718ab74ef9a",
     "fraxtal/frxETH": "0xd56ac6d2d451ee10e78811f0c50e81cbf5abfd333e6985ae16bcce1922e86ca1",
     "fraxtal/FrxEthMinter": "0xd3fc3e0dfaee21dbd259775520c71c738aad904ff81876abf12cd458677fcf90",
+    "fraxtal/OptimismPortalCGT": "0x75f236b5702645eba128e458f50e247428644afdfb05c2d74b45acfb225a397f",
     "fraxtal/sfrxETH": "0x658424c4c1ef4b2085df560f7d1996c64bc333438d1b73d648d47a26a44fa7db",
     "fraxtal/Timelock": "0x8079de478ba3ed9fb9c870c9a1a8ea4ae157f9151992200a7087c3d897d46245",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
@@ -2034,10 +2049,9 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23175359 },
-  "permissionsConfigHash": "0x24bc7cb45391991c59e22f93dbbc5b47b121c59e9991979df96c206b494d9144"
+  "usedBlockNumbers": { "ethereum": 23431685 },
+  "permissionsConfigHash": "0xe7c4df6965362c4c121b359295eaa42ee187dfa2908be2e5cc5366e3b04eb7bf"
 }

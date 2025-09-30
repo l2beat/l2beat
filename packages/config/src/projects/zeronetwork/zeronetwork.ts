@@ -50,7 +50,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.zerion.io/v1/zero',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

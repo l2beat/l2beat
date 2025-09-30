@@ -39,7 +39,7 @@ export const xchain: ScalingProject = orbitStackL2({
     multicallContracts: [],
     sinceTimestamp: UnixTime.fromDate(new Date('2024-08-21T00:00:00Z')),
     apis: [
-      { type: 'rpc', url: 'https://xchain-rpc.idex.io/', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://xchain-rpc.idex.io/', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://xchain-explorer.idex.io/api' },
     ],
   },

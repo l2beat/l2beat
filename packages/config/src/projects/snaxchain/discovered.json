@@ -1,7 +1,7 @@
 {
   "name": "snaxchain",
-  "timestamp": 1757661625,
-  "configHash": "0xa19f378f2598ca9659194fc983e696c389016e407b444b1413ca16a6f9df595e",
+  "timestamp": 1758699468,
+  "configHash": "0x56c4f76028b7b4932dbd5611537d67c8c313379d59397ade39b014547ca79fb9",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -87,7 +87,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 64,
+        "gameCount": 76,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x1B780edfb393CB9f07Dcd7C699CBDF0fd663572b",
@@ -99,7 +99,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 64,
+        "permissionedGamesTotal": 76,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -445,12 +445,6 @@
         },
         {
           "permission": "interact",
-          "from": "eth:0x9c9B78f798F821C2f6398f603825fd175e2427f9",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
           "from": "eth:0xa3596ceeC35c004E560f57937bD695dbd22FEFcc",
           "description": "can pull funds from the contract in case of emergency.",
           "role": ".owner"
@@ -582,7 +576,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 166,
+        "nonce": 171,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -674,6 +668,19 @@
       "implementationNames": {
         "eth:0x672B75103c0CbFdCC4A40737a80724f87a8A25D7": "ProxyAdmin"
       }
+    },
+    {
+      "address": "eth:0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x9c9B78f798F821C2f6398f603825fd175e2427f9",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
@@ -866,7 +873,7 @@
         "optimismMintableERC20Factory": "eth:0xeEC78bcEA0EfBbA6e1BE7aFc58C93b70f97d3A6A",
         "optimismPortal": "eth:0x936D881b4760D5e9b6D55b774f65c509236b4743",
         "overhead": 188,
-        "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+        "owner": "eth:0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C",
         "resourceConfig": {
           "maxResourceLimit": 20000000,
           "elasticityMultiplier": 10,
@@ -1816,6 +1823,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23345447 },
-  "permissionsConfigHash": "0xa55f9792289f331e89363c4a2e9193ec7001bddc40ce8dd46d4feab9a947eda3"
+  "usedBlockNumbers": { "ethereum": 23431452 },
+  "permissionsConfigHash": "0xabc040797eec7fd5800219dd70360b85b6ff25e6085d74a3e355ec5d81d37330"
 }

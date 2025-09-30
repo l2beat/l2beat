@@ -1,3 +1,114 @@
+Generated with discovered.json: 0x1c823f09f82109d2dd65a934539a03a4d5455b66
+
+# Diff at Tue, 23 Sep 2025 10:45:53 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b6e19f60c69fa605df017b3852b7ffb8d92b60cf block: 1758270123
+- current timestamp: 1758624268
+
+## Description
+
+Increased daily limits on moving Ether between L1 and L2. Also added a new multisig address.
+
+## Watched changes
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
++++ description: The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds.
+      values.limitInWei:
+-        "18750000000000000000000"
++        "30000000000000000000000"
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) {
+    +++ description: None
++++ description: The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds.
+      values.limitInWei:
+-        "15000000000000000000000"
++        "24000000000000000000000"
+    }
+```
+
+```diff
+    contract Linea Multisig 3 (linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD) {
+    +++ description: None
+      values.$members.0:
++        "linea:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f"
+      values.$members.0:
+-        "linea:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE"
++        "linea:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "5 of 9 (56%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758270123 (main branch discovery), not current.
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      fieldMeta.verifiers.description:
+-        "Mapping of proof type to ZK Plonk Verifier contract"
++        "Mapping of proof type to ZK Plonk Verifier contract."
+      fieldMeta.limitInWei:
++        {"description":"The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."}
+      fieldMeta.periodInSeconds:
++        {"description":"The duration of the rate limit window over which the withdrawal amounts are accumulated."}
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) {
+    +++ description: None
+      fieldMeta.limitInWei:
++        {"description":"The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."}
+      fieldMeta.periodInSeconds:
++        {"description":"The duration of the rate limit window over which the withdrawal amounts are accumulated."}
+    }
+```
+
+Generated with discovered.json: 0x25faf88efb8cede7069dfca91df9e8df6a5df564
+
+# Diff at Fri, 19 Sep 2025 08:23:31 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@db1760252dd9dd68603e4c71d0f4e284d5d0d15f block: 1756720779
+- current timestamp: 1758270123
+
+## Description
+
+Added new member to Linea Multisig 1, rotated another member and incremented threshold.
+
+## Watched changes
+
+```diff
+    contract Linea Multisig 1 (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f"
+      values.$members.1:
+-        "eth:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE"
++        "eth:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "5 of 9 (56%)"
+    }
+```
+
 Generated with discovered.json: 0x5678846ddf45997be0cbeb9c6f7948a673698320
 
 # Diff at Mon, 01 Sep 2025 12:53:18 GMT:

@@ -1,5 +1,6 @@
 {
   "term": "KZG commitments",
+  "match": ["KZG"],
   "definition": "A polynomial commitment scheme that allows a prover to compute a commitment to a polynomial, with the properties that this commitment can later be opened at any position: the prover shows that the value of the polynomial at a certain position is equal to a claimed value.\nKZG is widely used as it’s applicable both for univariate and k-variate polynomials, is efficient for batch proofs, and is able to generate many proofs at once relatively fast. It is also proof generation time efficient: the time for prover to commit to a polynomial is linear on the degree of the polynomial.",
   "isSpicy": false
 }

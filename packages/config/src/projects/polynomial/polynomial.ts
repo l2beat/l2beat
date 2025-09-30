@@ -27,6 +27,7 @@ export const polynomial: ScalingProject = opStackL2({
       websites: ['https://polynomial.fi/'],
       documentation: ['https://docs.polynomial.fi/'],
       explorers: ['https://polynomialscan.io/'],
+      bridges: ['https://polynomial.fi/en/mainnet/earn/bridge'],
       repositories: ['https://github.com/Polynomial-Protocol'],
       socialMedia: [
         'https://x.com/PolynomialFi',
@@ -41,7 +42,7 @@ export const polynomial: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.polynomial.fi',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

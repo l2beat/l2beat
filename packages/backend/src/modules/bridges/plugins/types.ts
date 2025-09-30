@@ -125,20 +125,20 @@ export type BridgeEventQuery<T> = Partial<T> & {
 export interface BridgeEventDb {
   find<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined
   findAll<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T>[]
 }
 
 export interface BridgePlugin {
   name: string
-  chains: string[]
   capture?: (
     input: LogToCapture,
   ) => BridgeEvent | undefined | Promise<BridgeEvent | undefined>
+  matchTypes?: BridgeEventType<unknown>[]
   match?: (
     event: BridgeEvent,
     db: BridgeEventDb,
@@ -265,4 +265,15 @@ export function defineNetworks<T extends { chain: string }>(
     chains: networks.map((x) => x.chain),
   })
   return networks
+}
+
+export function findChain<C extends { chain: string }, P>(
+  networks: C[],
+  getProperty: (network: C) => P,
+  propertyValue: P,
+): string {
+  return (
+    networks.find((n) => getProperty(n) === propertyValue)?.chain ??
+    `Unknown_${propertyValue}`
+  )
 }

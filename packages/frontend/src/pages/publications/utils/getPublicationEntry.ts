@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
+import type { ExternalPublicationTag } from '~/content/external-publications'
 import type { CollectionEntry } from '~/content/getCollection'
 import {
   getImageParams,
@@ -14,7 +15,8 @@ export interface PublicationEntry extends FilterableEntry {
   publishedOn: UnixTime
   thumbnail: ImageParams
   url: string
-  tag: 'governance' | 'monthly-update'
+  tag: 'governance' | 'monthly-update' | ExternalPublicationTag
+  customCtaText?: string
 }
 
 export function getPublicationEntryFromGovernance(
@@ -43,6 +45,7 @@ export function getPublicationEntryFromGovernance(
     ],
   }
 }
+
 export function getPublicationEntryFromMonthlyUpdate(
   monthlyUpdate: CollectionEntry<'monthly-updates'>,
 ): PublicationEntry {
@@ -65,6 +68,34 @@ export function getPublicationEntryFromMonthlyUpdate(
       {
         id: 'contentCategory',
         value: 'Monthly Update',
+      },
+    ],
+  }
+}
+
+export function getPublicationEntryFromExternalPublication(
+  externalPublication: CollectionEntry<'external-publications'>,
+): PublicationEntry {
+  const thumbnail = getImageParams(
+    `/meta-images/publications/${externalPublication.id}.png`,
+  )
+  if (!thumbnail) {
+    throw new Error(`Thumbnail not found for ${externalPublication.id}`)
+  }
+  return {
+    id: externalPublication.id,
+    title: externalPublication.data.title,
+    thumbnail,
+    shortTitle: undefined,
+    description: externalPublication.data.description,
+    publishedOn: UnixTime.fromDate(externalPublication.data.publishedOn),
+    url: externalPublication.data.url,
+    tag: externalPublication.data.tag,
+    customCtaText: externalPublication.data.ctaText,
+    filterable: [
+      {
+        id: 'contentCategory',
+        value: externalPublication.data.tag,
       },
     ],
   }

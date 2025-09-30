@@ -68,7 +68,6 @@ export const LogMessagePublished = createBridgeEventType<{
 
 export class WormholePlugin implements BridgePlugin {
   name = 'wormhole'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const parsed = parseLogMessagePublished(input.log, null)
@@ -86,4 +85,5 @@ export class WormholePlugin implements BridgePlugin {
       sender: EthereumAddress(parsed.sender),
     })
   }
+  // no matching because wormhole matches by source emitter address + sequence, of which the destination event depends on the app layer
 }

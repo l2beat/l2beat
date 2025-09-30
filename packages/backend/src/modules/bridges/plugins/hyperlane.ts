@@ -1,69 +1,91 @@
-/* 
-Minimalistic plugin matching Hyperlane messsages w/out detecting anything more specific. To detetc sender/receivers
-additional event parsers would be needed.
-*/
-
+import { keccak256 } from 'viem'
 import {
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  defineNetworks,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-/* 
-event DispatchId (index_topic_1 bytes32 messageId)
-event ProcessId (index_topic_1 bytes32 messageId)
+export const parseDispatch = createEventParser(
+  'event Dispatch(address indexed sender, uint32 indexed destination, bytes32 indexed recipient, bytes message)',
+)
 
-*/
-
-const parseDispatchId = createEventParser(
-  'event DispatchId(bytes32 indexed messageId)',
+const parseProcess = createEventParser(
+  'event Process(uint32 indexed origin, bytes32 indexed sender, address indexed recipient)',
 )
 
 const parseProcessId = createEventParser(
   'event ProcessId(bytes32 indexed messageId)',
 )
 
-export const DispatchId = createBridgeEventType<{
+export const Dispatch = createBridgeEventType<{
   messageId: `0x${string}`
-}>('hyperlane.DispatchId')
+  $dstChain: string
+}>('hyperlane.Dispatch')
 
-export const ProcessId = createBridgeEventType<{
+export const Process = createBridgeEventType<{
   messageId: `0x${string}`
-}>('hyperlane.ProcessId')
+  $srcChain: string
+}>('hyperlane.Process')
+
+const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
+  { chain: 'ethereum', chainId: 1 },
+  { chain: 'arbitrum', chainId: 42161 },
+  { chain: 'base', chainId: 8453 },
+  { chain: 'optimism', chainId: 10 },
+])
 
 export class HyperlanePlugIn implements BridgePlugin {
   name = 'hyperlane'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
-    const processId = parseProcessId(input.log, null)
-    if (processId)
-      return ProcessId.create(input.ctx, {
+    const process = parseProcess(input.log, null)
+    if (process) {
+      const nextLog = input.txLogs.find(
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        (x) => x.logIndex === input.log.logIndex! + 1,
+      )
+      const processId = nextLog && parseProcessId(nextLog, null)
+      if (!processId) return
+      return Process.create(input.ctx, {
         messageId: processId.messageId,
+        $srcChain: findChain(
+          HYPERLANE_NETWORKS,
+          (x) => x.chainId,
+          process.origin,
+        ),
       })
+    }
 
-    const dispatchId = parseDispatchId(input.log, null)
-    if (dispatchId)
-      return DispatchId.create(input.ctx, {
-        messageId: dispatchId.messageId,
+    const dispatch = parseDispatch(input.log, null)
+    if (dispatch)
+      return Dispatch.create(input.ctx, {
+        messageId: keccak256(dispatch.message),
+        $dstChain: findChain(
+          HYPERLANE_NETWORKS,
+          (x) => x.chainId,
+          dispatch.destination,
+        ),
       })
   }
 
+  matchTypes = [Process]
   match(delivery: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (ProcessId.checkType(delivery)) {
-      const dispatchId = db.find(DispatchId, {
+    if (Process.checkType(delivery)) {
+      const dispatch = db.find(Dispatch, {
         messageId: delivery.args.messageId,
       })
-      if (!dispatchId) {
+      if (!dispatch) {
         return
       }
 
-      return [Result.Message('hyperlane.Message', [dispatchId, delivery])]
+      return [Result.Message('hyperlane.Message', [dispatch, delivery])]
     }
   }
 }

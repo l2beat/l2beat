@@ -10,8 +10,8 @@ import {
 
 export class StargateV2TaxiPlugin implements BridgePlugin {
   name = 'stargate-v2-taxi'
-  chains = ['ethereum', 'arbitrum', 'base']
 
+  matchTypes = [StargateV2OFTSentTaxi]
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (!StargateV2OFTSentTaxi.checkType(event)) return
 

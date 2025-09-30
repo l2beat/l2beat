@@ -1,7 +1,7 @@
 {
   "name": "hyperlane",
-  "timestamp": 1757660887,
-  "configHash": "0xafa39489ef968d5aa43dc00f319bd0a834a316b5e8e9eb1fef3f27dbff782ab6",
+  "timestamp": 1758116721,
+  "configHash": "0x65e7e657703707f9630870ea5c3ccf0f42f57153fcaaa13ecd7b78acd58ecc2d",
   "entries": [
     {
       "address": "eth:0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -209,8 +209,8 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x47Bbac4147c330c8FAD542d1A52f1bB97716826b",
           "eth:0x478be6076f31E9666123B9721D0B6631baD944AF",
-          "eth:0x5dd9a0814022A61777938263308EBB336174f13D",
           "eth:0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba",
           "eth:0x5b73A98165778BCCE72979B4EE3faCdb31728b8E",
           "eth:0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA",
@@ -224,7 +224,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 65,
+        "nonce": 69,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -254,6 +254,11 @@
     },
     {
       "address": "eth:0x478be6076f31E9666123B9721D0B6631baD944AF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x47Bbac4147c330c8FAD542d1A52f1bB97716826b",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -433,11 +438,6 @@
     },
     {
       "address": "eth:0x5b73A98165778BCCE72979B4EE3faCdb31728b8E",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x5dd9a0814022A61777938263308EBB336174f13D",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -694,7 +694,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 2067,
+        "nonce": 2068,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -857,7 +857,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 223,
+        "nonce": 225,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1567,6 +1567,6 @@
     "hyperlane/PausableIsm": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "usedBlockNumbers": { "ethereum": 23345385 },
-  "permissionsConfigHash": "0x53d57b8be6ebf6a8a3ae2461a37263146560e359a78e72678b36bca88fb420d9"
+  "usedBlockNumbers": { "ethereum": 23383183 },
+  "permissionsConfigHash": "0x47845ce9748fd4edd20f496a5ce594cee48b8ff7e3443e803afbff6c27aca47c"
 }

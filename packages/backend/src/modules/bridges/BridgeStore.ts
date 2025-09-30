@@ -1,5 +1,6 @@
 import type { BridgeEventRecord, Database } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
+import { InMemoryEventDb } from './InMemoryEventDb'
 import type {
   BridgeEvent,
   BridgeEventDb,
@@ -8,185 +9,71 @@ import type {
 } from './plugins/types'
 
 export class BridgeStore implements BridgeEventDb {
-  private events = new Map<string, BridgeEvent[]>()
-  private unmatched: BridgeEvent[] = []
-  private matchedIds = new Set<string>()
-  private unsupportedIds = new Set<string>()
-
-  private newEvents: BridgeEvent[] = []
-  private newMatched = new Set<string>()
-  private newUnsupported = new Set<string>()
+  private eventDb = new InMemoryEventDb()
 
   constructor(private db: Database) {}
 
   async start() {
-    const records = await this.db.bridgeEvent.getAll()
+    const records = await this.db.bridgeEvent.getUnmatched()
     for (const record of records) {
       const event = fromDbRecord(record)
-      this.categorizeEvent(event)
-
-      if (!record.matched) {
-        this.unmatched.push(event)
-      } else {
-        this.matchedIds.add(event.eventId)
-      }
-
-      if (record.unsupported) {
-        this.unsupportedIds.add(event.eventId)
-      }
+      this.eventDb.addEvent(event)
     }
   }
 
-  addEvent(event: BridgeEvent) {
-    this.categorizeEvent(event)
-    this.unmatched.push(event)
-    this.newEvents.push(event)
-  }
-
-  private categorizeEvent(event: BridgeEvent) {
-    const array = this.events.get(event.type) ?? []
-    array.push(event)
-    this.events.set(event.type, array)
-  }
-
-  markMatched(eventIds: string[]) {
-    for (const eventId of eventIds) {
-      this.matchedIds.add(eventId)
-      this.newMatched.add(eventId)
+  async saveNewEvents(events: BridgeEvent[]): Promise<void> {
+    for (const event of events) {
+      this.eventDb.addEvent(event)
     }
-    this.unmatched = this.unmatched.filter((x) => !eventIds.includes(x.eventId))
+    const records = events.map((e) => toDbRecord(e))
+    await this.db.bridgeEvent.insertMany(records)
   }
 
-  markUnsupported(eventIds: string[]) {
-    for (const eventId of eventIds) {
-      this.unsupportedIds.add(eventId)
-      this.newUnsupported.add(eventId)
-    }
-    this.unmatched = this.unmatched.filter((x) => !eventIds.includes(x.eventId))
-  }
-
-  getUnmatched(): BridgeEvent[] {
-    return [...this.unmatched]
-  }
-
-  async save(): Promise<void> {
-    const records = this.newEvents.map((e) =>
-      toDbRecord(e, {
-        matched: this.matchedIds.has(e.eventId),
-        unsupported: this.unsupportedIds.has(e.eventId),
-      }),
-    )
-    const matchedIds = Array.from(this.newMatched)
-    const unsupportedIds = Array.from(this.newUnsupported)
-
-    this.newEvents.length = 0
-    this.newMatched.clear()
-    this.newUnsupported.clear()
-
+  async updateMatchedAndUnsupported({
+    matched,
+    unsupported,
+  }: {
+    matched: Set<string>
+    unsupported: Set<string>
+  }): Promise<void> {
+    const all = new Set([...matched, ...unsupported])
+    this.eventDb.removeEvents(all)
     await this.db.transaction(async () => {
-      await this.db.bridgeEvent.insertMany(records)
-      await this.db.bridgeEvent.updateMatched(matchedIds)
-      await this.db.bridgeEvent.updateUnsupported(unsupportedIds)
+      await this.db.bridgeEvent.updateMatched(Array.from(matched))
+      await this.db.bridgeEvent.updateUnsupported(Array.from(unsupported))
     })
   }
 
-  async deleteExpired(now: UnixTime) {
-    const expired = new Set<string>()
-    for (const [type, events] of this.events.entries()) {
-      let some = false
-      for (const event of events) {
-        if (event.expiresAt <= now) {
-          some = true
-          expired.add(event.eventId)
-        }
-      }
-      if (some) {
-        this.events.set(
-          type,
-          events.filter((x) => x.expiresAt > now),
-        )
-      }
-    }
+  getEvents(type: string): BridgeEvent[] {
+    return this.eventDb.getEvents(type)
+  }
 
-    this.unmatched = this.unmatched.filter((x) => x.expiresAt > now)
-    this.newEvents = this.newEvents.filter((x) => x.expiresAt > now)
+  getEventTypes() {
+    return this.eventDb.getEventTypes()
+  }
 
-    for (const id of expired) {
-      this.matchedIds.delete(id)
-      this.newMatched.delete(id)
-    }
-
-    await this.db.bridgeEvent.deleteExpired(now)
+  getEventCount() {
+    return this.eventDb.getEventCount()
   }
 
   find<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T> | undefined {
-    const typed = (this.events.get(type.type) ?? []) as BridgeEvent<T>[]
-    return getMatching(typed, query ?? {})[0]
+    return this.eventDb.find(type, query)
   }
 
   findAll<T>(
     type: BridgeEventType<T>,
-    query?: BridgeEventQuery<T>,
+    query: BridgeEventQuery<T>,
   ): BridgeEvent<T>[] {
-    const typed = (this.events.get(type.type) ?? []) as BridgeEvent<T>[]
-    return getMatching(typed, query ?? {})
+    return this.eventDb.findAll(type, query)
   }
-}
 
-export function getMatching<T>(
-  events: BridgeEvent<T>[],
-  query: BridgeEventQuery<T>,
-): BridgeEvent<T>[] {
-  const filtered = events.filter((e) => matchesQuery(e, query))
-  if (query.sameTxAfter) {
-    events.sort((a, b) => a.ctx.logIndex - b.ctx.logIndex)
-  } else if (query.sameTxBefore) {
-    events.sort((a, b) => b.ctx.logIndex - a.ctx.logIndex)
+  async deleteExpired(now: UnixTime) {
+    this.eventDb.removeExpired(now)
+    return await this.db.bridgeEvent.deleteExpired(now)
   }
-  return filtered
-}
-
-function matchesQuery<T>(
-  event: BridgeEvent<T>,
-  query: BridgeEventQuery<T>,
-): boolean {
-  for (const key in query) {
-    if (key === 'ctx') {
-      for (const ctxKey in query[key]) {
-        // @ts-ignore
-        if (event.ctx[ctxKey] !== query.ctx[ctxKey]) {
-          return false
-        }
-      }
-    } else if (key !== 'sameTxBefore' && key !== 'sameTxAfter') {
-      // @ts-ignore
-      if (event.args[key] !== query[key]) {
-        return false
-      }
-    }
-  }
-  if (query.sameTxAfter) {
-    if (
-      event.ctx.chain !== query.sameTxAfter.ctx.chain ||
-      event.ctx.txHash !== query.sameTxAfter.ctx.txHash ||
-      event.ctx.logIndex <= query.sameTxAfter.ctx.logIndex
-    ) {
-      return false
-    }
-  }
-  if (query.sameTxBefore) {
-    if (
-      event.ctx.chain !== query.sameTxBefore.ctx.chain ||
-      event.ctx.txHash !== query.sameTxBefore.ctx.txHash ||
-      event.ctx.logIndex >= query.sameTxBefore.ctx.logIndex
-    ) {
-      return false
-    }
-  }
-  return true
 }
 
 function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
@@ -207,10 +94,7 @@ function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
   }
 }
 
-function toDbRecord(
-  event: BridgeEvent,
-  flags: { matched: boolean; unsupported: boolean },
-): BridgeEventRecord {
+function toDbRecord(event: BridgeEvent): BridgeEventRecord {
   return {
     eventId: event.eventId,
     type: event.type,
@@ -223,7 +107,7 @@ function toDbRecord(
     timestamp: event.ctx.timestamp,
     txHash: event.ctx.txHash,
     txTo: event.ctx.txTo,
-    matched: flags.matched,
-    unsupported: flags.unsupported,
+    matched: false,
+    unsupported: false,
   }
 }

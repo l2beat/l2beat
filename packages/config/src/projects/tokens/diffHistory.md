@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x452b93407e604d63d147c7c6b2e6f1f89138f0d8
+
+# Diff at Thu, 25 Sep 2025 12:26:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0baa1255a33ce1a02b431265f21e07fd28f2de49 block: 1758619454
+- current timestamp: 1758803109
+
+## Description
+
+ms change.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0x7843225BA488cf780A4Fe2c842B5dc2aBCf8A03e) {
+    +++ description: None
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xc06eba1ecdc676e37f47ecbc90e11756afc416ee
+
+# Diff at Tue, 23 Sep 2025 09:25:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9a796f3fca0d6345ed73136526bf67003edbb829 block: 1758527427
+- current timestamp: 1758619454
+
+## Description
+
+ms changes.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) {
+    +++ description: None
+      values.$members.0:
++        "base:0x17aBc3F085fb4B7eAf5002785DE22867f964D273"
+      values.$members.4:
+-        "base:0x244df059d103347a054487Da7f8D42d52Cb29A55"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (base:0x92A19381444A001d62cE67BaFF066fA1111d7202) {
+    +++ description: None
+      values.$members.6:
+-        "base:0x244df059d103347a054487Da7f8D42d52Cb29A55"
++        "base:0x17aBc3F085fb4B7eAf5002785DE22867f964D273"
+    }
+```
+
+Generated with discovered.json: 0xd8ca3f0fd6307fe942b7b37c0210bb0636f9da59
+
+# Diff at Mon, 22 Sep 2025 07:51:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3aa102df1ae0b60ff981cfe12b1d0c919b4c2704 block: 1755691670
+- current timestamp: 1758527427
+
+## Description
+
+blacklister for USDC swapped.
+
+## Watched changes
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
+      values.blacklister:
+-        "base:0x4d15e70518A20Fc8828b5C3853f32e35238d0b77"
++        "base:0x1f2e3A640175d20ac31ed523B6733B977173E277"
+    }
+```
+
 Generated with discovered.json: 0xa89a357e0618d26a34840d542d8fcd13e06c0341
 
 # Diff at Mon, 15 Sep 2025 10:45:07 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "linea",
-  "timestamp": 1756720779,
-  "configHash": "0x12103cbdc67491e257fc6165103870ddffd7572f9e4582d89c9faa68685923e9",
+  "timestamp": 1758624268,
+  "configHash": "0xb555ae23206254fbd35ae8de0105dd64ca7ec66f24d65ae32ade6708fb007f71",
   "entries": [
     {
       "name": "TokenBridge",
@@ -190,7 +190,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
+      "address": "eth:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -681,8 +681,9 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f",
           "eth:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB",
-          "eth:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
+          "eth:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d",
           "eth:0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5",
           "eth:0xC263178AC471C4411abAf5c22cD4D8D67033bc82",
           "eth:0x9376c137AF5124FFc39bD8940A3D88D1cd508992",
@@ -690,14 +691,14 @@
           "eth:0x99234cd9B532F30538ac797D33c212e3B69Fd087",
           "eth:0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
         ],
-        "$threshold": 4,
+        "$threshold": 5,
         "domainSeparator": "0xf720f1fd8bfacb497aa1c16a19a7f17ba6e7bfba9ae23c73812ce40727956e08",
         "getChainId": 1,
         "GnosisSafe_modules": [
           "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
         ],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 61,
+        "multisigThreshold": "5 of 9 (56%)",
+        "nonce": 63,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -983,11 +984,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0x0404dad7630cf460c8d683f04272586d03e673a70ad40e557e23060abc7e9d0a",
-        "currentFinalizedState": "0x0977f91be6bea2e594c2a88673bfcee74ccf1a02a3b1d444eaed986344f76628",
+        "currentFinalizedShnarf": "0xf1668d677c629c0c6d62a4a21ed08d901452f5c58888c6d6eab25f4075faddb8",
+        "currentFinalizedState": "0x3eca9b5037a519e0333cce029d5d6137512c6284598a79e5633166de52f9eda0",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "914795376457072105431",
+        "currentPeriodAmountInWei": "640930440000000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -1002,7 +1003,7 @@
         "isPaused_INITIATE_TOKEN_BRIDGING": false,
         "isPaused_L1_L2": false,
         "isPaused_L2_L1": false,
-        "limitInWei": "18750000000000000000000",
+        "limitInWei": "30000000000000000000000",
         "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
         "Operators": [
           "eth:0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
@@ -1053,7 +1054,7 @@
       },
       "fieldMeta": {
         "verifiers": {
-          "description": "Mapping of proof type to ZK Plonk Verifier contract"
+          "description": "Mapping of proof type to ZK Plonk Verifier contract."
         },
         "isPaused_GENERAL": { "severity": "HIGH" },
         "isPaused_L1_L2": { "severity": "HIGH" },
@@ -1062,12 +1063,23 @@
         "isPaused_CALLDATA_SUBMISSION": { "severity": "HIGH" },
         "isPaused_FINALIZATION": { "severity": "HIGH" },
         "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" }
+        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" },
+        "limitInWei": {
+          "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
+        },
+        "periodInSeconds": {
+          "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
+        }
       },
       "implementationNames": {
         "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "TransparentUpgradeableProxy",
         "eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0": "LineaRollup"
       }
+    },
+    {
+      "address": "eth:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Timelock",
@@ -1323,7 +1335,7 @@
       }
     },
     {
-      "address": "linea:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
+      "address": "linea:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1756,8 +1768,8 @@
           }
         },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "5241088278173320873",
-        "currentPeriodEnd": 1756786836,
+        "currentPeriodAmountInWei": "19863436501800968895877",
+        "currentPeriodEnd": 1758629280,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -1766,11 +1778,11 @@
         "l1l2MessageSetter": [
           "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"
         ],
-        "lastAnchoredL1MessageNumber": 777675,
-        "limitInWei": "15000000000000000000000",
+        "lastAnchoredL1MessageNumber": 786470,
+        "limitInWei": "24000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 97317,
+        "nextMessageNumber": 99879,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
@@ -1785,6 +1797,12 @@
       "fieldMeta": {
         "sender": {
           "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
+        },
+        "limitInWei": {
+          "description": "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
+        },
+        "periodInSeconds": {
+          "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
         }
       },
       "implementationNames": {
@@ -2065,6 +2083,11 @@
       }
     },
     {
+      "address": "linea:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LineaVoyageXP",
       "address": "linea:0xd83af4fbD77f3AB65C3B1Dc4B38D7e67AEcf599A",
       "type": "Contract",
@@ -2307,7 +2330,8 @@
         "$immutable": false,
         "$implementation": "linea:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "linea:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
+          "linea:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f",
+          "linea:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d",
           "linea:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB",
           "linea:0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4",
           "linea:0xB4dAebe4D01f467701F95f0196fc29033c54dBcb",
@@ -2316,14 +2340,14 @@
           "linea:0xC263178AC471C4411abAf5c22cD4D8D67033bc82",
           "linea:0x99234cd9B532F30538ac797D33c212e3B69Fd087"
         ],
-        "$threshold": 4,
+        "$threshold": 5,
         "domainSeparator": "0xe0f063329e41ab79d7613d3a597cf99f6ba127b9f3675d255beac070b585ca3f",
         "getChainId": 59144,
         "GnosisSafe_modules": [
           "linea:0x3886a948eA7b4053312c3aE31a13776144aA6239"
         ],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 49,
+        "multisigThreshold": "5 of 9 (56%)",
+        "nonce": 51,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3471,15 +3495,15 @@
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/L1TokenBridge": "0xef38a739bf90c693c298d238745c360992548cf941cdee82ed7c4a5ba41df4ae",
     "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
-    "linea/L2MessageService": "0x734bf260a111807cc0b66114f86680b832667c5f1d22a8c3509f18823bdd0872",
+    "linea/L2MessageService": "0xedda44cd37e50cfac16b991bfd1291c10ed903063625cc7621f278451b5997af",
     "linea/L2Roles": "0x87df637d02e99d769d43f393133e5ea3e583758a151bdccb3bf7a6a1bd6c6187",
     "linea/L2TokenBridge": "0xde60fe36104dfc27d1da95bf2e74c70fc2b30fa7cb17e179ebcfce8c4a701e3b",
-    "linea/LineaRollup": "0x62179b632448b6fa5622bfea4240428dcd0cd7f2fd455914a05b040313014dfe",
+    "linea/LineaRollup": "0xd44592a83dca8480df2581e49f66228d752ccc4ccc6ea4b446e1054b29246933",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/Roles": "0xa53488bfd173ae836ebda33b0560f0f0dd61141e44bc38b9ce23133023bde792",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "linea": 22778234, "ethereum": 23267544 },
-  "permissionsConfigHash": "0x42675d6fc2ff4a6ece45a816fa7c18ee1113d9e4543cde2b9590dd394d797942"
+  "usedBlockNumbers": { "ethereum": 23425214, "linea": 23696863 },
+  "permissionsConfigHash": "0x79d73cc93a72f72d682b38f102a7053a7fd3fdee72ca1293b5e7b5145281d5da"
 }

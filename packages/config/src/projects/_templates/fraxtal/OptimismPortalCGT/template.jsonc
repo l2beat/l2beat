@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismPortal",
+  "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+  "ignoreMethods": ["isOutputFinalized", "balance"],
+  "ignoreRelatives": ["gasPayingToken"],
+  "ignoreInWatchMode": ["params"],
+  "fields": {
+    "guardian": { "permissions": [{ "type": "guard" }] },
+    "GUARDIAN": { "permissions": [{ "type": "guard" }] },
+    "FRAX_COMPTROLLER": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can increase the gas token balance assigned to the OptimismPortal and mint the gas token on L2 without actually depositing tokens."
+        }
+      ]
+    }
+  },
+  "category": "core"
+}

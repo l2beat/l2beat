@@ -1,0 +1,5 @@
+{
+  "term": "RISC-V",
+  "definition": "A free and open-source instruction set architecure (ISA) used in hardware and software. It is simple and well specified, for this reason it is chosen as an ISA for several zkVMs (usually 32-bit version with base integer instructions and multiplication extension RV32IM).",
+  "isSpicy": false
+}

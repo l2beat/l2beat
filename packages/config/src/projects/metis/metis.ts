@@ -134,7 +134,7 @@ export const metis: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://andromeda.metis.io/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       {
         type: 'blockscout',
