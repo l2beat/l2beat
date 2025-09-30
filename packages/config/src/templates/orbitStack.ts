@@ -74,7 +74,6 @@ import {
   explorerReferences,
   mergeBadges,
   safeGetImplementation,
-  unwrapSingle,
 } from './utils'
 
 type DAProvider = ProjectScalingDa & {
@@ -577,7 +576,7 @@ function orbitStackCommon(
         })(),
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
-        unwrapSingle(daProviders.map((p) => p.technology)),
+        daProviders.map((p) => p.technology),
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [

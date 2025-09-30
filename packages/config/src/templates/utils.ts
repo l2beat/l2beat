@@ -86,9 +86,3 @@ export function asArray<T>(value: T | T[] | undefined): T[] {
   }
   return Array.isArray(value) ? value : [value]
 }
-
-export function unwrapSingle<T>(arr: T[]) {
-  if (arr.length === 0) return undefined
-  if (arr.length === 1) return arr[0]
-  return arr
-}

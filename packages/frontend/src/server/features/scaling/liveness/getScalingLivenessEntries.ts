@@ -118,10 +118,7 @@ function getScalingLivenessEntry(
     data,
     explanation: project.livenessInfo?.explanation,
     anomalies: liveness.anomalies,
-    dataAvailabilityMode: (Array.isArray(project.scalingDa)
-      ? project.scalingDa.map((da) => da.mode)
-      : [project.scalingDa?.mode]
-    ).filter((da) => da !== undefined),
+    dataAvailabilityMode: project.scalingDa?.map((da) => da.mode),
     tvsOrder: tvs ?? -1,
     hasTrackedContractsChanged,
   }

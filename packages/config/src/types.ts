@@ -91,7 +91,7 @@ export interface BaseProject {
   scalingInfo?: ProjectScalingInfo
   scalingStage?: ProjectScalingStage
   scalingRisks?: ProjectScalingRisks
-  scalingDa?: ProjectScalingDa | ProjectScalingDa[]
+  scalingDa?: ProjectScalingDa[]
   scalingTechnology?: ProjectScalingTechnology
 
   // da data
@@ -353,7 +353,7 @@ export interface ProjectScalingInfo {
   raas: string | undefined
   infrastructure: string | undefined
   vm: string[]
-  daLayer: string | string[] | undefined
+  daLayer: string[] | undefined
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]
   scopeOfAssessment: ProjectScalingScopeOfAssessment | undefined
