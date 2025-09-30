@@ -1,5 +1,5 @@
-import { apiReference } from '@scalar/express-api-reference'
 import express from 'express'
+import swaggerUi from 'swagger-ui-express'
 import { OpenApi } from './OpenApi'
 import { addProjectsRoutes } from './projects/routes'
 
@@ -13,7 +13,15 @@ function main() {
 
   addProjectsRoutes(openapi)
 
-  app.get('/scalar', apiReference({ url: '/openapi' }))
+  app.use(
+    '/docs',
+    swaggerUi.serve,
+    swaggerUi.setup(undefined, {
+      swaggerOptions: {
+        url: '/openapi', // Swagger UI will GET your spec from here
+      },
+    }),
+  )
 
   const port = 3000
   app.listen(port, () => {

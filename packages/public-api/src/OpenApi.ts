@@ -9,7 +9,6 @@ interface OpenApiRouteOptions<P = any, O = any, Q = any> {
   params?: Validator<P> & { meta?: ImpMeta }
   query?: Validator<Q> & { meta?: ImpMeta }
   result: Validator<O> & { meta?: ImpMeta }
-  // TODO: descriptions, examples, etc...
 }
 
 type OpenApiPath = {
@@ -37,10 +36,12 @@ type OpenApiResponse = {
 
 type Tags = 'projects'
 
-const BadRequestResponse = v.object({
-  path: v.string(),
-  error: v.string(),
-})
+const BadRequestResponse = v
+  .object({
+    path: v.string(),
+    error: v.string(),
+  })
+  .describe('BadRequestResponse')
 
 type JsonSchema = ReturnType<typeof _toJsonSchema>
 
@@ -104,7 +105,7 @@ export class OpenApi {
 
   getOpenApiSchema() {
     return {
-      openapi: '3.2.0',
+      openapi: '3.1.0',
       info: {
         title: 'L2BEAT API',
         version: '1.0.0',
@@ -149,7 +150,9 @@ export class OpenApi {
         (route) => !!route.options.params || !!route.options.query,
       )
     ) {
-      schemas.BadRequestResponse = this.toJsonSchema(BadRequestResponse)
+      // biome-ignore lint/style/noNonNullAssertion: it's there
+      schemas[BadRequestResponse.description!] =
+        this.toJsonSchema(BadRequestResponse)
     }
 
     return {
@@ -252,12 +255,6 @@ export class OpenApi {
   private toJsonSchema<T>(validator: Validator<T>) {
     // @ts-expect-error - it's there
     const { $schema: _, ...rest } = _toJsonSchema(validator)
-
-    return {
-      ...rest,
-      xml: {
-        name: validator.description,
-      },
-    }
+    return rest
   }
 }
