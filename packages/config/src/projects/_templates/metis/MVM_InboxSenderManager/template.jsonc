@@ -1,4 +1,5 @@
-{ "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "MVM_InboxSenderManager",
   "description": "Container contract for designated sequencer addresses.",
   "fields": {
