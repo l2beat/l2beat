@@ -1,6 +1,6 @@
 {
   "name": "game7",
-  "timestamp": 1756452867,
+  "timestamp": 1759157094,
   "configHash": "0x4c01dbf62e89e3bc511e4d059f4bde42a1e45d583e6bf8306cb634403c827c46",
   "entries": [
     {
@@ -112,7 +112,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 3692,
+        "nonce": 3982,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -198,8 +198,8 @@
         "outboxHistory": ["arb1:0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
         "rollup": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerInbox": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
-        "sequencerMessageCount": 4639,
-        "sequencerReportedSubMessageCount": 1668210
+        "sequencerMessageCount": 4945,
+        "sequencerReportedSubMessageCount": 1672291
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -442,7 +442,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 4639,
+        "batchCount": 4945,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
@@ -610,13 +610,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3799,
+        "firstUnresolvedNode": 4089,
         "inbox": "arb1:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22746354,
-        "latestConfirmed": 3798,
-        "latestNodeCreated": 3798,
+        "latestConfirmed": 4088,
+        "latestNodeCreated": 4088,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "arb1:0xfbe537816d181888fAbE52338a5D921eE131E9Db",
@@ -626,7 +626,7 @@
         "rollupEventInbox": "arb1:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1",
         "sequencerInbox": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
         "setValidatorCount": 4,
-        "stakerCount": 1,
+        "stakerCount": 0,
         "stakeToken": "arb1:0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
@@ -881,7 +881,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 88,
+        "nonce": 96,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2335,6 +2335,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 373455297 },
+  "usedBlockNumbers": { "arbitrum": 384281869 },
   "permissionsConfigHash": "0x938f2bb28efabf2fd3b9cdcd575bef422c9bbf2f9eb57f38b7aa84024110b37d"
 }

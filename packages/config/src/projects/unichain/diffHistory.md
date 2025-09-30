@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x53b1bbed87a4fa9f83e6295e016d2af712a6f4b3
+
+# Diff at Mon, 29 Sep 2025 14:57:58 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1755525939
+- current timestamp: 1759157813
+
+## Description
+
+Key rotation.
+
+## Watched changes
+
+```diff
+    contract Unichain Multisig 2 (eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xc531e0368dc3928E11987D096558dEE7A22ECEE4"
+      values.$members.1:
+-        "eth:0x7f781194ACF0d3Ae519A5aB0D0597e3831d62237"
+    }
+```
+
+```diff
+    contract Unichain Multisig 1 (eth:0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xAC68D69dC0FE6E00BcdABEe391b06d09098804bb"
+      values.$members.1:
+-        "eth:0x19b175a56C52e14944a3D37b33C0Bcb7A2091779"
+    }
+```
+
 Generated with discovered.json: 0x4d359837dc728e9f5f88d37ae4fe1954271f8fb8
 
 # Diff at Fri, 26 Sep 2025 14:18:09 GMT:
