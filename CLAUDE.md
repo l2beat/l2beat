@@ -98,6 +98,18 @@ git fetch upstream && git merge upstream/main
 - **Data Sources**: Uses `getProject`, `useContractTags`, and `getPermissionOverrides` APIs
 - **Integration**: Registered in `ProjectPage.tsx` and `store.ts` following panel patterns
 
+### External Contract Attributes ✅
+**Contract Tagging Enhancement**: Extended contract tags with centralization/mitigation attributes
+- **Data Structure**: `contract-tags.json` stores `centralization` (high/medium/low) and `mitigations` (complete/partial/none)
+- **UI Component**: `/defidisco/ExternalButton.tsx` with dropdown picker (ColorButton pattern)
+- **Features**:
+  - Mark contracts as external/internal
+  - Two-column attribute selector (Centralization | Mitigations)
+  - Reads current values from tags and displays them in picker
+  - Async mutations with proper cache invalidation
+- **Backend**: `/defidisco/contractTags.ts` preserves attributes across updates
+- **Address Format**: Normalizes `eth:0x...` → `0x...` when comparing with tags
+
 ---
 
 ## Development Guidelines
@@ -161,6 +173,26 @@ packages/
 - **Permission Overrides**: Use `useQuery` with `getPermissionOverrides(project)` directly (no hook exists)
 - **Address Format**: Always normalize `contract.address.replace('eth:', '').toLowerCase()` when matching with tags
 - **EOA Counting**: EOAs stored separately in `entry.eoas[]` array, not mixed with contracts
+
+**Contract Tags Data Structure**:
+```json
+{
+  "version": "1.0",
+  "lastModified": "2025-09-30T19:47:51.353Z",
+  "tags": [
+    {
+      "contractAddress": "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "isExternal": true,
+      "centralization": "high",
+      "mitigations": "complete",
+      "timestamp": "2025-09-30T19:47:42.278Z"
+    }
+  ]
+}
+```
+- **File Location**: `packages/config/src/projects/{project}/contract-tags.json`
+- **Fields**: `isExternal` (boolean), `centralization` (high/medium/low), `mitigations` (complete/partial/none)
+- **Update Pattern**: Backend preserves existing attributes when updating individual fields
 
 ### Permission Overrides Data Structure ✅
 **Contract-Grouped Format**: Optimized for O(1) contract lookups and efficient data access
