@@ -23,49 +23,51 @@ export type DaSolution = Common & {
 export async function getScalingDaSolutions(
   project: Project<'scalingInfo', 'scalingDa'>,
 ): Promise<DaSolution[]> {
-  const scalingDa = Array.isArray(project.scalingDa)
-    ? project.scalingDa
-    : [project.scalingDa]
-
   const [daLayers, daBridges] = await Promise.all([
     ps.getProjects({
-      ids: scalingDa.map((da) => da?.layer.projectId).filter(notUndefined),
+      ids: project.scalingDa
+        ?.map((da) => da?.layer.projectId)
+        .filter(notUndefined),
     }),
     ps.getProjects({
-      ids: scalingDa.map((da) => da?.bridge.projectId).filter(notUndefined),
+      ids: project.scalingDa
+        ?.map((da) => da?.bridge.projectId)
+        .filter(notUndefined),
       optional: ['permissions', 'contracts'],
     }),
   ])
 
   const hostChainSelector = project.scalingInfo.hostChain.id
 
-  return scalingDa
-    .map((da) => {
-      const daLayer = daLayers.find(
-        (daLayer) => daLayer.id === da?.layer.projectId,
-      )
-      const daBridge = daBridges.find(
-        (daBridge) => daBridge.id === da?.bridge.projectId,
-      )
+  return (
+    project.scalingDa
+      ?.map((da) => {
+        const daLayer = daLayers.find(
+          (daLayer) => daLayer.id === da?.layer.projectId,
+        )
+        const daBridge = daBridges.find(
+          (daBridge) => daBridge.id === da?.bridge.projectId,
+        )
 
-      if (!daLayer || !hostChainSelector) {
-        return
-      }
+        if (!daLayer || !hostChainSelector) {
+          return
+        }
 
-      const daBridgePermissions = daBridge?.permissions?.[hostChainSelector]
-      const daBridgeContracts =
-        daBridge?.contracts?.addresses[hostChainSelector]
+        const daBridgePermissions = daBridge?.permissions?.[hostChainSelector]
+        const daBridgeContracts =
+          daBridge?.contracts?.addresses[hostChainSelector]
 
-      return {
-        layerName: daLayer.name,
-        layerSlug: daLayer.slug,
-        layerId: daLayer.id,
-        bridgeName: daBridge?.name ?? 'No bridge',
-        bridgeSlug: daBridge?.slug ?? 'no-bridge',
-        hostChainName: project.scalingInfo.hostChain.name,
-        permissions: daBridgePermissions,
-        contracts: daBridgeContracts,
-      }
-    })
-    .filter(notUndefined)
+        return {
+          layerName: daLayer.name,
+          layerSlug: daLayer.slug,
+          layerId: daLayer.id,
+          bridgeName: daBridge?.name ?? 'No bridge',
+          bridgeSlug: daBridge?.slug ?? 'no-bridge',
+          hostChainName: project.scalingInfo.hostChain.name,
+          permissions: daBridgePermissions,
+          contracts: daBridgeContracts,
+        }
+      })
+      .filter(notUndefined) ?? []
+  )
 }

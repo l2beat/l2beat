@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { assert, notUndefined } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import type { GroupSectionProps } from '~/components/projects/sections/GroupSection'
 import type { TechnologyChoicesSectionProps } from '~/components/projects/sections/TechnologyChoicesSection'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -107,11 +107,7 @@ function getPublicDaSection(
   project: Project<'statuses' | 'scalingTechnology', 'scalingDa'>,
   daSolutions?: DaSolution[],
 ): Extract<DataAvailabilitySection, { type: 'TechnologyChoicesSection' }> {
-  const dataAvailability = (
-    Array.isArray(project.scalingTechnology.dataAvailability)
-      ? project.scalingTechnology.dataAvailability
-      : [project.scalingTechnology.dataAvailability]
-  ).filter(notUndefined)
+  const dataAvailability = project.scalingTechnology.dataAvailability ?? []
 
   assert(dataAvailability.length > 0, 'dataAvailability is required')
 

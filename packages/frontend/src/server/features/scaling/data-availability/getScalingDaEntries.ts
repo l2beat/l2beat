@@ -115,9 +115,7 @@ function getScalingDaEntry(
 ): ScalingDaEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
-    dataAvailability: Array.isArray(project.scalingDa)
-      ? project.scalingDa
-      : [project.scalingDa],
+    dataAvailability: project.scalingDa,
     proofSystem: getProofSystemWithName(
       project.scalingInfo.proofSystem,
       zkCatalogProjects,
@@ -154,12 +152,8 @@ function getRisks(
     })
   }
 
-  const scalingDa = Array.isArray(project.scalingDa)
-    ? project.scalingDa
-    : [project.scalingDa]
-
   risks.push(
-    ...scalingDa
+    ...project.scalingDa
       .map((da) => {
         const daLayerProject =
           da === undefined
@@ -212,12 +206,8 @@ function getDaHref(
     })
   }
 
-  const scalingDa = Array.isArray(project.scalingDa)
-    ? project.scalingDa
-    : [project.scalingDa]
-
   daHref.push(
-    ...scalingDa
+    ...project.scalingDa
       .map((da) => {
         const daLayer =
           da === undefined

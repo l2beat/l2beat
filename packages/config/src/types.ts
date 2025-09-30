@@ -528,7 +528,7 @@ export interface ProjectScalingTechnology {
   warning?: string
   detailedDescription?: string
   architectureImage?: string
-  dataAvailability?: ProjectTechnologyChoice | ProjectTechnologyChoice[]
+  dataAvailability?: ProjectTechnologyChoice[]
   operator?: ProjectTechnologyChoice
   sequencing?: ProjectTechnologyChoice
   sequencingImage?: string

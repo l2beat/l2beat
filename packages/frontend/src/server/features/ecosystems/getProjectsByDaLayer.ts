@@ -10,20 +10,12 @@ export function getProjectsByDaLayer(
 
     if (daLayer === undefined) return acc
 
-    if (Array.isArray(daLayer)) {
-      daLayer.forEach((da) => {
-        if (!acc[da]) {
-          acc[da] = 0
-        }
-        acc[da] += 1
-      })
-      return acc
-    }
-
-    if (!acc[daLayer]) {
-      acc[daLayer] = 0
-    }
-    acc[daLayer] += 1
+    daLayer.forEach((da) => {
+      if (!acc[da]) {
+        acc[da] = 0
+      }
+      acc[da] += 1
+    })
     return acc
   }, {} as ProjectsByDaLayer)
 

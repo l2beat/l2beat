@@ -143,11 +143,7 @@ export function getScalingSummaryEntry(
       zkCatalogProjects,
     ),
     stacks: project.scalingInfo.stacks,
-    dataAvailability: Array.isArray(project.scalingDa)
-      ? project.scalingDa
-      : project.scalingDa
-        ? [project.scalingDa]
-        : undefined,
+    dataAvailability: project.scalingDa,
     purposes: project.scalingInfo.purposes,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     tvs: {
