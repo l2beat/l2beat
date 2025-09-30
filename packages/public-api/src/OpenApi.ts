@@ -1,26 +1,16 @@
-import type { Parser } from '@l2beat/validate'
 import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
-import type { ImpMeta } from '@l2beat/validate/dist/cjs/validate'
+import type { ImpMeta, Validator } from '@l2beat/validate/dist/cjs/validate'
 import type { Application, Request, RequestHandler } from 'express'
-
-type Tags = 'hello' | 'test'
 
 // biome-ignore lint/suspicious/noExplicitAny: its fine
 interface OpenApiRouteOptions<P = any, O = any, Q = any> {
   description?: string
   tags?: Tags[]
-  params?: Parser<P>
-  query?: Parser<Q>
-  result: Parser<O>
+  params?: Validator<P> & { meta?: ImpMeta }
+  query?: Validator<Q> & { meta?: ImpMeta }
+  result: Validator<O> & { meta?: ImpMeta }
   // TODO: descriptions, examples, etc...
 }
-
-const BadRequestResponse = v.object({
-  path: v.string(),
-  error: v.string(),
-})
-
-type JsonSchema = ReturnType<typeof _toJsonSchema>
 
 type OpenApiPath = {
   description?: string
@@ -45,13 +35,22 @@ type OpenApiResponse = {
   }
 }
 
+type Tags = 'projects'
+
+const BadRequestResponse = v.object({
+  path: v.string(),
+  error: v.string(),
+})
+
+type JsonSchema = ReturnType<typeof _toJsonSchema>
+
 interface Route {
   path: string
   method: 'get'
   options: OpenApiRouteOptions
 }
 
-export class OpenApiExpress {
+export class OpenApi {
   private routes: Route[] = []
 
   constructor(private readonly app: Application) {}
@@ -107,21 +106,54 @@ export class OpenApiExpress {
     return {
       openapi: '3.2.0',
       info: {
-        title: 'Public API',
+        title: 'L2BEAT API',
         version: '1.0.0',
       },
       tags: [
         {
-          name: 'hello',
-          description: 'Collection of hello worlds',
+          name: 'projects',
+          description: 'Project endpoints',
         },
-        {
-          name: 'test',
-          description: 'Test endpoints',
-        },
-      ],
-      components: {},
+      ] satisfies { name: Tags; description: string }[],
       paths: this.getPaths(),
+      components: this.getComponents(),
+    }
+  }
+
+  private getComponents() {
+    const schemas = {} as Record<string, JsonSchema>
+    for (const route of this.routes) {
+      const { result, params, query } = route.options
+      if (
+        result.meta?.type === 'array' &&
+        result.meta.element.description &&
+        !schemas[result.meta.element.description]
+      ) {
+        schemas[result.meta.element.description] = this.toJsonSchema(
+          result.meta.element,
+        )
+      }
+      if (result.description && !schemas[result.description]) {
+        schemas[result.description] = this.toJsonSchema(result)
+      }
+      if (params && params.description && !schemas[params.description]) {
+        schemas[params.description] = this.toJsonSchema(params)
+      }
+      if (query && query.description && !schemas[query.description]) {
+        schemas[query.description] = this.toJsonSchema(query)
+      }
+    }
+
+    if (
+      this.routes.some(
+        (route) => !!route.options.params || !!route.options.query,
+      )
+    ) {
+      schemas.BadRequestResponse = this.toJsonSchema(BadRequestResponse)
+    }
+
+    return {
+      schemas,
     }
   }
 
@@ -151,7 +183,7 @@ export class OpenApiExpress {
       200: {
         content: {
           'application/json': {
-            schema: this.toJsonSchema(route.options.result),
+            schema: this.toJsonSchemaWithRefs(route.options.result),
           },
         },
       },
@@ -161,7 +193,7 @@ export class OpenApiExpress {
       base[400] = {
         content: {
           'application/json': {
-            schema: this.toJsonSchema(BadRequestResponse),
+            schema: this.toJsonSchemaWithRefs(BadRequestResponse),
           },
         },
       }
@@ -172,20 +204,20 @@ export class OpenApiExpress {
 
   private schemaToParameters<T>(
     type: 'params' | 'query',
-    schema: Parser<T> & { meta?: ImpMeta },
+    schema: Validator<T> & { meta?: ImpMeta },
   ): OpenApiParameter[] {
     if (!schema.meta) {
-      throw new Error('Params meta is required')
+      throw new Error('Schema meta is required')
     }
     if (schema.meta.type !== 'object') {
-      throw new Error('Params must be an object')
+      throw new Error('Schema must be an object')
     }
 
     return Object.entries(schema.meta.schema).map(([key, value]) => ({
       name: key,
       in: type === 'query' ? 'query' : 'path',
       required: value.meta.type !== 'optional',
-      schema: this.toJsonSchema(value),
+      schema: this.toJsonSchemaWithRefs(value),
     }))
   }
 
@@ -193,9 +225,39 @@ export class OpenApiExpress {
     return path.replace(/:([^/]+)/g, '{$1}')
   }
 
-  private toJsonSchema<T>(parser: Parser<T>) {
+  private toJsonSchemaWithRefs<T>(
+    validator: Validator<T> & { meta?: ImpMeta },
+  ) {
+    if (
+      validator.meta?.type === 'array' &&
+      validator.meta.element.description
+    ) {
+      return {
+        type: 'array',
+        items: {
+          $ref: `#/components/schemas/${validator.meta.element.description}`,
+        },
+      }
+    }
+
+    if (validator.description) {
+      return {
+        $ref: `#/components/schemas/${validator.description}`,
+      }
+    }
+
+    return this.toJsonSchema(validator)
+  }
+
+  private toJsonSchema<T>(validator: Validator<T>) {
     // @ts-expect-error - it's there
-    const { $schema: _, ...rest } = _toJsonSchema(parser)
-    return rest
+    const { $schema: _, ...rest } = _toJsonSchema(validator)
+
+    return {
+      ...rest,
+      xml: {
+        name: validator.description,
+      },
+    }
   }
 }
