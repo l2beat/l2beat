@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-22T23:12:05.021Z",
+  "lastModified": "2025-09-30T19:47:51.353Z",
   "tags": [
     {
       "contractAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -85,7 +85,9 @@
     {
       "contractAddress": "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
       "isExternal": true,
-      "timestamp": "2025-09-22T23:09:40.446Z"
+      "timestamp": "2025-09-30T19:47:42.278Z",
+      "centralization": "high",
+      "mitigations": "none"
     },
     {
       "contractAddress": "0xF38326579519377178725A741C35999E8051e907",
@@ -210,7 +212,9 @@
     {
       "contractAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       "isExternal": true,
-      "timestamp": "2025-09-22T23:12:04.996Z"
+      "timestamp": "2025-09-30T19:47:51.353Z",
+      "centralization": "high",
+      "mitigations": "complete"
     },
     {
       "contractAddress": "0x4914f61d25e5C567143774B76EdbF4D5109a8566",
@@ -220,7 +224,7 @@
     {
       "contractAddress": "0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
       "isExternal": true,
-      "timestamp": "2025-09-22T23:12:05.021Z"
+      "timestamp": "2025-09-30T19:13:55.466Z"
     },
     {
       "contractAddress": "0xE982615d461DD5cD06575BbeA87624fda4e3de17",

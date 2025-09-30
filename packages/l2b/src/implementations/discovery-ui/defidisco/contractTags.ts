@@ -57,11 +57,26 @@ export function updateContractTag(
   )
 
   if (updateRequest.isExternal !== undefined) {
-    // Create new tag entry
+    // Create or update tag entry
     const newTag: ContractTag = {
       contractAddress: updateRequest.contractAddress,
       isExternal: updateRequest.isExternal,
       timestamp: new Date().toISOString(),
+    }
+
+    // Preserve existing centralization and mitigations if not explicitly updated
+    if (existingTagIndex >= 0) {
+      const existingTag = contractTags[existingTagIndex]
+      newTag.centralization = updateRequest.centralization !== undefined
+        ? updateRequest.centralization
+        : existingTag.centralization
+      newTag.mitigations = updateRequest.mitigations !== undefined
+        ? updateRequest.mitigations
+        : existingTag.mitigations
+    } else {
+      // New tag - apply provided values
+      newTag.centralization = updateRequest.centralization
+      newTag.mitigations = updateRequest.mitigations
     }
 
     if (existingTagIndex >= 0) {
@@ -71,8 +86,23 @@ export function updateContractTag(
       // Add new tag
       contractTags.push(newTag)
     }
+  } else if (updateRequest.centralization !== undefined || updateRequest.mitigations !== undefined) {
+    // Update only centralization/mitigations for existing tag
+    if (existingTagIndex >= 0) {
+      const existingTag = contractTags[existingTagIndex]
+      contractTags[existingTagIndex] = {
+        ...existingTag,
+        centralization: updateRequest.centralization !== undefined
+          ? updateRequest.centralization
+          : existingTag.centralization,
+        mitigations: updateRequest.mitigations !== undefined
+          ? updateRequest.mitigations
+          : existingTag.mitigations,
+        timestamp: new Date().toISOString(),
+      }
+    }
   } else if (existingTagIndex >= 0) {
-    // Remove tag if isExternal is undefined/null and tag exists
+    // Remove tag if all fields are undefined and tag exists
     contractTags.splice(existingTagIndex, 1)
   }
 

@@ -259,10 +259,14 @@ export interface ApiContractTagsResponse {
 export interface ContractTag {
   contractAddress: string
   isExternal: boolean
+  centralization?: 'high' | 'medium' | 'low'
+  mitigations?: 'complete' | 'partial' | 'none'
   timestamp: string
 }
 
 export interface ApiContractTagsUpdateRequest {
   contractAddress: string
   isExternal?: boolean
+  centralization?: 'high' | 'medium' | 'low'
+  mitigations?: 'complete' | 'partial' | 'none'
 }
