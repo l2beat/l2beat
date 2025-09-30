@@ -4,7 +4,6 @@ import { IndexerService } from '../../tools/uif/IndexerService'
 import { generateConfigurationId } from '../tvs/tools/extractPricesAndAmounts'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { DaBeatPricesIndexer } from './DaBeatPricesIndexer'
-import { DaBeatStakeRefresher } from './DaBeatStakeRefresher'
 import { DaBeatStatsIndexer } from './DaBeatStatsIndexer'
 
 export function createDaBeatModule({
@@ -24,13 +23,6 @@ export function createDaBeatModule({
     feature: 'dabeat',
     module: 'dabeat',
   })
-
-  const stakeRefresher = new DaBeatStakeRefresher(
-    peripherals,
-    daBeatConfig,
-    clock,
-    logger,
-  )
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const indexerService = new IndexerService(peripherals.database)
@@ -68,8 +60,6 @@ export function createDaBeatModule({
   const start = async () => {
     logger = logger.for('DaBeatModule')
     logger.info('Starting')
-
-    stakeRefresher.start()
 
     await hourlyIndexer.start()
     for (const indexer of statsIndexers) {
