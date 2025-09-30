@@ -1,6 +1,6 @@
 {
   "name": "form",
-  "timestamp": 1758875904,
+  "timestamp": 1759250210,
   "configHash": "0x544ec749300122d984556d7fe73eb0068160f28812c6e74f0ff3bc95419e707d",
   "entries": [
     {
@@ -155,6 +155,9 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
+          "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+          "eth:0xEC114946E7213d113c9B9481028271B5E9e09371",
           "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
           "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
           "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
@@ -168,8 +171,8 @@
         "domainSeparator": "0xd91194ba8cca06b67a77df9ba8745b666c7af26af03b914ede155b940b307d6b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 30,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -225,10 +228,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 12726000,
-        "latestOutputIndex": 7069,
-        "nextBlockNumber": 12727800,
-        "nextOutputIndex": 7070,
+        "latestBlockNumber": 12913200,
+        "latestOutputIndex": 7173,
+        "nextBlockNumber": 12915000,
+        "nextOutputIndex": 7174,
         "proposer": "eth:0x8D882B43220A190779c2dF25901f9E089dd4fa7D",
         "PROPOSER": "eth:0x8D882B43220A190779c2dF25901f9E089dd4fa7D",
         "startingBlockNumber": 0,
@@ -282,7 +285,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 23435047
+          "prevBlockNum": 23474792
         },
         "paused": false,
         "superchainConfig": "eth:0x7280d2BFd18aa1383C2218E6Bb2964bA8287c66e",
@@ -344,6 +347,11 @@
         "eth:0x5C4F5e749A61a9503c4AAE8a9393e89609a0e804": "L1ERC721Bridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -669,7 +677,17 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xEC114946E7213d113c9B9481028271B5E9e09371",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -700,7 +718,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621446",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621450",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1129,6 +1147,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23446049 },
-  "permissionsConfigHash": "0xd07e05b4669b23588b72c2207cbc51a9a6f83cd0ad9d5ca519e3bdd459ced10b"
+  "usedBlockNumbers": { "ethereum": 23477040 },
+  "permissionsConfigHash": "0x543ed307ecf3b4b67f10fa34d241e3a502a1d40b764fda32eea4e02db6d5463c"
 }

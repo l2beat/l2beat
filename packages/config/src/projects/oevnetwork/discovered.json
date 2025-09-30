@@ -1,6 +1,6 @@
 {
   "name": "oevnetwork",
-  "timestamp": 1758875907,
+  "timestamp": 1759250213,
   "configHash": "0xb89e0c9eadf081d79513a8e995cf3ed4d715432d946c8ae3b514c76615b6100f",
   "entries": [
     {
@@ -95,7 +95,7 @@
           "eth:0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
         ],
         "allowedOutboxList": ["eth:0xe4F99a0734C87C298d73C161F54874225E416997"],
-        "delayedMessageCount": 3051,
+        "delayedMessageCount": 3075,
         "inboxHistory": [
           "eth:0x7EF9d2fe20307165599101e93Ea05b04d46Af159",
           "eth:0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
@@ -103,8 +103,8 @@
         "outboxHistory": ["eth:0xe4F99a0734C87C298d73C161F54874225E416997"],
         "rollup": "eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006",
         "sequencerInbox": "eth:0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7",
-        "sequencerMessageCount": 2797,
-        "sequencerReportedSubMessageCount": 49398
+        "sequencerMessageCount": 2821,
+        "sequencerReportedSubMessageCount": 49741
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -253,6 +253,9 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
+          "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+          "eth:0xEC114946E7213d113c9B9481028271B5E9e09371",
           "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
           "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
           "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
@@ -266,8 +269,8 @@
         "domainSeparator": "0xd91194ba8cca06b67a77df9ba8745b666c7af26af03b914ede155b940b307d6b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 30,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -372,13 +375,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1105,
+        "firstUnresolvedNode": 1114,
         "inbox": "eth:0x7EF9d2fe20307165599101e93Ea05b04d46Af159",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19882033,
-        "latestConfirmed": 1104,
-        "latestNodeCreated": 1117,
+        "latestConfirmed": 1113,
+        "latestNodeCreated": 1126,
         "loserStakeEscrow": "eth:0xAe2032b4bfB56B70d48B314A71e0462346c122b0",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xe4F99a0734C87C298d73C161F54874225E416997",
@@ -567,6 +570,11 @@
         "eth:0x745fdabB168b7bdEe3801a37093C3A3c3230c50b": "ChallengeManager"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Inbox",
@@ -768,7 +776,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 2797,
+        "batchCount": 2821,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0x23b6bFACe63BFa288783b8344574c75b78FaEd59"],
         "bridge": "eth:0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd",
@@ -798,7 +806,7 @@
         "rollup": "eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3050,
+        "totalDelayedMessagesRead": 3074,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -877,7 +885,17 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xEC114946E7213d113c9B9481028271B5E9e09371",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1517,6 +1535,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23446049 },
-  "permissionsConfigHash": "0x09a7152486b1e0058ccfd84226308f315f67230db95d82d6ebfb95d092b35965"
+  "usedBlockNumbers": { "ethereum": 23477040 },
+  "permissionsConfigHash": "0x03cc8053a50e9f301d47ad0ddf9ea37ccc9bda7f0cd103a66e3ee6ed3ce37087"
 }
