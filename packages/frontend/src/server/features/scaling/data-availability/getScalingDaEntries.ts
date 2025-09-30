@@ -90,15 +90,15 @@ export async function getScalingDaEntries() {
 
 export interface ScalingDaEntry extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem | undefined
-  dataAvailability: ProjectScalingDa[]
+  dataAvailability: (ProjectScalingDa & {
+    daHref?: ScalingDaEntryHref
+  })[]
   stacks: ProjectScalingStack[] | undefined
   tvsOrder: number
-  risks: EntryRisks[] | undefined
-  daHref:
-    | {
-        summary: string
-        risk: string | undefined
-      }[]
+  risks:
+    | (EntryRisks & {
+        daHref?: ScalingDaEntryHref
+      })[]
     | undefined
 }
 
@@ -107,7 +107,7 @@ function getScalingDaEntry(
     'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
     'customDa'
   >,
-  risks: EntryRisks[] | undefined,
+  risks: ScalingDaEntry['risks'] | undefined,
   daLayers: Project<'daLayer'>[],
   changes: ProjectChanges,
   tvs: number | undefined,
@@ -115,12 +115,14 @@ function getScalingDaEntry(
 ): ScalingDaEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
-    dataAvailability: project.scalingDa,
+    dataAvailability: project.scalingDa.map((da) => ({
+      ...da,
+      daHref: getDaHref(project, da, daLayers),
+    })),
     proofSystem: getProofSystemWithName(
       project.scalingInfo.proofSystem,
       zkCatalogProjects,
     ),
-    daHref: getDaHref(project, daLayers),
     stacks: project.scalingInfo.stacks,
     risks,
     tvsOrder: tvs ?? -1,
@@ -143,12 +145,21 @@ function getRisks(
     sevenDaysAgo: number
   },
   projectsEconomicSecurity: ProjectsEconomicSecurity,
-): EntryRisks[] | undefined {
-  const risks: EntryRisks[] = []
+): ScalingDaEntry['risks'] | undefined {
+  const risks: ScalingDaEntry['risks'] = []
   if (project.customDa) {
     risks.push({
       daLayer: mapLayerRisksToRosetteValues(getDaLayerRisks(project.customDa)),
       daBridge: mapBridgeRisksToRosetteValues(project.customDa.risks),
+      daHref: getDaHref(
+        project,
+        {
+          layer: {
+            value: 'DAC',
+          },
+        } as ProjectScalingDa,
+        daLayers,
+      ),
     })
   }
 
@@ -184,6 +195,7 @@ function getRisks(
           daBridge: daBridgeProject
             ? mapBridgeRisksToRosetteValues(daBridgeProject.daBridge.risks)
             : mapBridgeRisksToRosetteValues({ isNoBridge: true }),
+          daHref: getDaHref(project, da, daLayers),
         }
       })
       .filter((da) => da !== undefined),
@@ -191,42 +203,32 @@ function getRisks(
   return risks
 }
 
+interface ScalingDaEntryHref {
+  summary: string
+  risk: string | undefined
+}
 function getDaHref(
-  project: Project<
-    'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
-    'customDa'
-  >,
+  project: Project,
+  scalingDa: ProjectScalingDa,
   daLayers: Project<'daLayer'>[],
-): ScalingDaEntry['daHref'] {
-  const daHref: ScalingDaEntry['daHref'] = []
-  if (project.customDa) {
-    daHref.push({
+): ScalingDaEntryHref | undefined {
+  if (scalingDa.layer.value === 'DAC') {
+    return {
       summary: `/data-availability/summary?tab=custom&highlight=${project.slug}`,
       risk: `/data-availability/risk?tab=custom&highlight=${project.slug}`,
-    })
+    }
   }
 
-  daHref.push(
-    ...project.scalingDa
-      .map((da) => {
-        const daLayer =
-          da === undefined
-            ? undefined
-            : daLayers.find((l) => l.id === da.layer.projectId)
-        if (!daLayer) {
-          return undefined
-        }
+  const daLayer = daLayers.find((l) => l.id === scalingDa.layer.projectId)
+  if (!daLayer) {
+    return undefined
+  }
 
-        return {
-          summary: `/data-availability/summary?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`,
-          risk:
-            daLayer.id === ProjectId.ETHEREUM
-              ? undefined
-              : `/data-availability/risk?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`,
-        }
-      })
-      .filter((da) => da !== undefined),
-  )
-
-  return daHref
+  return {
+    summary: `/data-availability/summary?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`,
+    risk:
+      daLayer.id === ProjectId.ETHEREUM
+        ? undefined
+        : `/data-availability/risk?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`,
+  }
 }

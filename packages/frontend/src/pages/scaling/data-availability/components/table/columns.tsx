@@ -38,14 +38,14 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
               <TableValueCell
                 key={da.layer.value}
                 value={da.layer}
-                href={ctx.row.original.daHref?.[i + 1]?.summary}
+                href={da.daHref?.summary}
               />
             ))
         },
       },
       cell: (ctx) => {
         const firstDa = ctx.row.original.dataAvailability[0]
-        const firstDaHref = ctx.row.original.daHref?.[0]
+        const firstDaHref = firstDa?.daHref
         return (
           <TableValueCell value={firstDa?.layer} href={firstDaHref?.summary} />
         )
@@ -65,14 +65,14 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
               <TableValueCell
                 key={da.layer.value}
                 value={da.bridge}
-                href={ctx.row.original.daHref?.[i + 1]?.risk}
+                href={da.daHref?.risk}
               />
             ))
         },
       },
       cell: (ctx) => {
         const firstDa = ctx.row.original.dataAvailability[0]
-        const firstDaHref = ctx.row.original.daHref?.[0]
+        const firstDaHref = firstDa?.daHref
         return (
           <TableValueCell value={firstDa?.bridge} href={firstDaHref?.risk} />
         )
@@ -89,7 +89,7 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
         }
 
         return (
-          <TableLink href={ctx.row.original.daHref?.[0]?.risk}>
+          <TableLink href={firstDaRisk.daHref?.risk}>
             <CombinedGrissiniCell
               daLayerRisks={firstDaRisk.daLayer}
               daBridgeRisks={firstDaRisk.daBridge}
@@ -102,7 +102,7 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
         additionalRows: (ctx) => {
           return (
             ctx.row.original.risks?.slice(1).map((risk, i) => (
-              <TableLink key={i} href={ctx.row.original.daHref?.[i + 1]?.risk}>
+              <TableLink key={i} href={risk.daHref?.risk}>
                 <CombinedGrissiniCell
                   daLayerRisks={risk.daLayer}
                   daBridgeRisks={risk.daBridge}
