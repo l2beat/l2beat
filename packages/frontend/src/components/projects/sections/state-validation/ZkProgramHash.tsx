@@ -42,8 +42,8 @@ export function ZkProgramHash({
   return (
     <Collapsible className="group rounded-lg border border-divider">
       <CollapsibleTrigger asChild>
-        <div className="flex w-full items-center justify-between gap-1 px-6 py-4 hover:cursor-pointer">
-          <div className="flex flex-col gap-2">
+        <div className="flex w-full items-center justify-between gap-6 px-6 py-4 hover:cursor-pointer">
+          <div className="flex w-full flex-col gap-2">
             <div className="flex items-center gap-2">
               <span className="font-bold text-label-value-16">
                 {zkProgramHash.description}
@@ -52,13 +52,9 @@ export function ZkProgramHash({
                 <ZkProjectTooltip zkProject={zkProgramHash.zkCatalogProject} />
               )}
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-medium text-label-value-14 text-secondary max-md:hidden">
+            <div className="flex items-center gap-1.5 max-md:hidden">
+              <span className="font-medium text-label-value-14 text-secondary">
                 {zkProgramHash.hash}
-              </span>
-              <span className="font-medium text-label-value-14 text-secondary md:hidden">
-                {zkProgramHash.hash.slice(0, 6)}...
-                {zkProgramHash.hash.slice(-6)}
               </span>
               <CopyButton
                 toCopy={zkProgramHash.hash}
@@ -140,7 +136,7 @@ function ZkProjectTooltip({
 }) {
   return (
     <Tooltip>
-      <a href={zkProject.href} className="size-5">
+      <a href={zkProject.href} className="size-5 min-h-5 min-w-5">
         <TooltipTrigger>
           <img
             width={20}
