@@ -4,6 +4,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import { getProgramHashesSection } from '~/utils/project/getProgramHashesSection'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getTrustedSetupsSection } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
@@ -49,9 +50,12 @@ export async function getZkCatalogProjectEntry(
     'archivedAt' | 'milestones'
   >,
 ): Promise<ProjectZkCatalogEntry> {
-  const [allProjects, tvs, contractUtils] = await Promise.all([
+  const [allProjects, scalingProjects, tvs, contractUtils] = await Promise.all([
     ps.getProjects({
       optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
+    }),
+    ps.getProjects({
+      select: ['scalingTechnology'],
     }),
     get7dTvsBreakdown({ type: 'layer2' }),
     getContractUtils(),
@@ -146,6 +150,21 @@ export async function getZkCatalogProjectEntry(
       ...verifiersSection,
     },
   })
+
+  const programHashesSection = await getProgramHashesSection(
+    project,
+    scalingProjects,
+  )
+  if (programHashesSection) {
+    sections.push({
+      type: 'ProgramHashesSection',
+      props: {
+        id: 'program-hashes',
+        title: 'Program Hashes',
+        ...programHashesSection,
+      },
+    })
+  }
 
   return { ...common, sections }
 }

@@ -11,6 +11,7 @@ import type { L3RiskAnalysisSectionProps } from './L3RiskAnalysisSection'
 import type { LivenessSectionProps } from './LivenessSection'
 import type { MarkdownSectionProps } from './MarkdownSection'
 import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection'
+import type { ProgramHashesSectionProps } from './ProgramHashesSection'
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
@@ -51,6 +52,7 @@ type SectionId =
   | 'proof-system'
   | 'trusted-setups'
   | 'verifiers'
+  | 'program-hashes'
 
 type GroupId = 'da-layer' | 'da-bridge'
 
@@ -126,6 +128,11 @@ interface ProjectDetailsTrustedSetupSection {
 interface ProjectDetailsVerifiersSection {
   type: 'VerifiersSection'
   props: ProjectDetailsProps<VerifiersSectionProps>
+}
+
+interface ProjectDetailsProgramHashesSection {
+  type: 'ProgramHashesSection'
+  props: ProjectDetailsProps<ProgramHashesSectionProps>
 }
 
 interface L3ProjectDetailsRiskAnalysisSection {
@@ -223,4 +230,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsActivitySection
   | ProjectDetailsTrustedSetupSection
   | ProjectDetailsVerifiersSection
+  | ProjectDetailsProgramHashesSection
 )

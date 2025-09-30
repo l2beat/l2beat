@@ -12,6 +12,7 @@ import { L3RiskAnalysisSection } from './sections/L3RiskAnalysisSection'
 import { LivenessSection } from './sections/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
+import { ProgramHashesSection } from './sections/ProgramHashesSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSummarySection } from './sections/RiskSummarySection'
@@ -175,6 +176,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'StateValidationSection':
             return (
               <StateValidationSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'ProgramHashesSection':
+            return (
+              <ProgramHashesSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

@@ -26,7 +26,7 @@ export type StateValidationZkProgramHashData = Omit<
   ProjectScalingStateValidationZkProgramHash,
   'proverSystemProject'
 > & {
-  zkCatalogProject: {
+  zkCatalogProject?: {
     name: string
     href: string
     icon: string
@@ -48,7 +48,9 @@ export function ZkProgramHash({
               <span className="font-bold text-label-value-16">
                 {zkProgramHash.description}
               </span>
-              <ZkProjectTooltip zkProject={zkProgramHash.zkCatalogProject} />
+              {zkProgramHash.zkCatalogProject && (
+                <ZkProjectTooltip zkProject={zkProgramHash.zkCatalogProject} />
+              )}
             </div>
             <div className="flex items-center gap-1.5">
               <span className="font-medium text-label-value-14 text-secondary max-md:hidden">
@@ -134,7 +136,7 @@ export function ZkProgramHash({
 function ZkProjectTooltip({
   zkProject,
 }: {
-  zkProject: StateValidationZkProgramHashData['zkCatalogProject']
+  zkProject: NonNullable<StateValidationZkProgramHashData['zkCatalogProject']>
 }) {
   return (
     <Tooltip>
