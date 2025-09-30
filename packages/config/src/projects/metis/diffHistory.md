@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x96f2d0070436460e2019fdf699ff3014eed3466c
+Generated with discovered.json: 0xdccbdb5efa3bc5439ebfaef6dc5da5ffe4210e53
 
-# Diff at Mon, 29 Sep 2025 15:03:40 GMT:
+# Diff at Tue, 30 Sep 2025 12:59:44 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1757939071
-- current timestamp: 1759158156
+- current timestamp: 1759237119
 
 ## Description
 
@@ -58,6 +58,24 @@ https://disco.l2beat.com/diff/eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1/eth
 ```
 
 ```diff
+    contract Ether Token (metis-andromeda:0x420000000000000000000000000000000000000A) {
+    +++ description: None
+      values.totalSupply:
+-        "4804391152042712516897"
++        "4803274560845429809151"
+    }
+```
+
+```diff
+    contract MVM_Coinbase (metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000) {
+    +++ description: None
+      values.totalSupply:
+-        "6914444516037876739233851"
++        "6915210796933756685181355"
+    }
+```
+
+```diff
 +   Status: CREATED
     contract MVM_ProposerRegistry (eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18)
     +++ description: The Proposer Registry contains the addresses of the current active proposers for the chain.
@@ -84,7 +102,53 @@ discovery. Values are for block 1757939071 (main branch discovery), not current.
 +        "eth:0x0000000000000000000000000000000000000000"
       values.OVM_Sequencer:
 +        "eth:0x0000000000000000000000000000000000000000"
+      values.Proxy__MVM_InboxSenderManager:
++        "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0"
     }
+```
+
+```diff
+    contract Metis Security Council (eth:0xbf1752DE62d825aF0634F514226F881a449874b6) {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MVM_InboxSenderManager (eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OVM_L2ToL1MessagePasser (metis-andromeda:0x4200000000000000000000000000000000000000)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MVM_ChainConfig (metis-andromeda:0x4200000000000000000000000000000000000005)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Ether Token (metis-andromeda:0x420000000000000000000000000000000000000A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (metis-andromeda:0x4200000000000000000000000000000000000013)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MVM_Coinbase (metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0xcc9ddcff41f36f31ec30ba9721e08d861988c4cf

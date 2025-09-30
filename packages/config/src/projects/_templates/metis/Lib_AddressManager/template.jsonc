@@ -167,6 +167,13 @@
         "args": ["OVM_Sequencer"]
       }
     },
+    "Proxy__MVM_InboxSenderManager": {
+      "handler": {
+        "type": "call",
+        "method": "getAddress",
+        "args": ["Proxy__MVM_InboxSenderManager"]
+      }
+    },
     // specified on L2 node (https://github.com/MetisProtocol/mvm/blob/e816c6c461a8e91db3a9ccaa33d2d0f6a60633d5/go/op-program/chainconfig/rollupcfg.go#L85)
     "blobBatcher": {
       "handler": {
