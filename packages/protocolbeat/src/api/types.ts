@@ -219,11 +219,15 @@ export interface UpgradeabilityActor {
 export interface ApiPermissionOverridesResponse {
   version: string
   lastModified: string
-  overrides: PermissionOverride[]
+  contracts: Record<string, ContractPermissions>
+}
+
+export interface ContractPermissions {
+  functions: PermissionOverride[]
 }
 
 export interface PermissionOverride {
-  contractAddress: string
+  contractAddress?: string
   functionName: string
   userClassification: 'permissioned' | 'non-permissioned'
   checked?: boolean
@@ -233,6 +237,11 @@ export interface PermissionOverride {
   timestamp: string
   // NEW: Multiple owner definitions using L2BEAT's existing handlers
   ownerDefinitions?: OwnerDefinition[]
+  // Delay field reference
+  delay?: {
+    contractAddress: string
+    fieldName: string
+  }
 }
 
 // Owner definition types leveraging L2BEAT's CallHandler and AccessControlHandler
@@ -263,6 +272,10 @@ export interface ApiPermissionOverridesUpdateRequest {
   reason?: string
   description?: string
   ownerDefinitions?: OwnerDefinition[]
+  delay?: {
+    contractAddress: string
+    fieldName: string
+  }
 }
 
 // Contract tags types

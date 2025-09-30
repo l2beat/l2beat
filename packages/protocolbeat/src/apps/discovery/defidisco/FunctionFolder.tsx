@@ -26,6 +26,7 @@ interface FunctionFolderProps {
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
+  onDelayUpdate: (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => void
 }
 
 export function FunctionFolder({
@@ -38,7 +39,8 @@ export function FunctionFolder({
   onScoreToggle,
   onDescriptionUpdate,
   onOpenInCode,
-  onOwnerDefinitionsUpdate
+  onOwnerDefinitionsUpdate,
+  onDelayUpdate
 }: FunctionFolderProps) {
   const { project } = useParams()
   const [isOpen, setIsOpen] = useState(false)
@@ -105,6 +107,47 @@ export function FunctionFolder({
   const ownersLoading = false
   const ownersError = null
 
+  // Resolve delay value from projectData
+  const resolvedDelay = React.useMemo(() => {
+    if (!currentOverride?.delay || !projectData?.entries) {
+      return null
+    }
+
+    const delayRef = currentOverride.delay
+
+    try {
+      for (const entry of projectData.entries) {
+        const allContracts = [...entry.initialContracts, ...entry.discoveredContracts]
+        const contract = allContracts.find(c => c.address === delayRef.contractAddress)
+
+        if (contract?.fields) {
+          const field = contract.fields.find(f => f.name === delayRef.fieldName)
+          if (field?.value?.type === 'number') {
+            const seconds = parseInt(field.value.value, 10)
+            if (!isNaN(seconds)) {
+              return {
+                seconds,
+                isResolved: true
+              }
+            }
+          }
+        }
+      }
+
+      return {
+        seconds: 0,
+        isResolved: false,
+        error: 'Could not resolve delay field'
+      }
+    } catch (error) {
+      return {
+        seconds: 0,
+        isResolved: false,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      }
+    }
+  }, [currentOverride?.delay, projectData])
+
   // Extract available contracts and their fields
   const availableContracts = React.useMemo(() => {
     if (!projectData?.entries) return []
@@ -156,6 +199,35 @@ export function FunctionFolder({
           .map(field => ({
             name: field.name,
             description: field.description || ''
+          }))
+      }
+    }
+    return []
+  }
+
+  // Get available numeric fields for delay (fields that contain time/delay or are numeric)
+  const getAvailableDelayFields = (contractAddr: string) => {
+    if (!projectData?.entries) return []
+
+    for (const entry of projectData.entries) {
+      // Check both initial and discovered contracts
+      const allContracts = [...entry.initialContracts, ...entry.discoveredContracts]
+      const contract = allContracts.find(c => c.address === contractAddr)
+
+      if (contract?.fields) {
+        return contract.fields
+          .filter(field => {
+            const isNumeric = field.value?.type === 'number'
+            const hasDelayName = field.name?.toLowerCase().includes('delay') ||
+                                 field.name?.toLowerCase().includes('timelock') ||
+                                 field.name?.toLowerCase().includes('period') ||
+                                 field.name?.toLowerCase().includes('duration')
+            return isNumeric && (hasDelayName || true) // Accept all numeric fields, but prefer delay-related ones
+          })
+          .map(field => ({
+            name: field.name,
+            description: field.description || '',
+            value: field.value?.type === 'number' ? field.value.value : ''
           }))
       }
     }
@@ -214,6 +286,13 @@ export function FunctionFolder({
     accessControlContract: contractAddress,
     roleName: '',
     roleHash: ''
+  })
+
+  // State for managing delay field
+  const [isSettingDelay, setIsSettingDelay] = useState(false)
+  const [newDelayData, setNewDelayData] = useState({
+    contractAddress: contractAddress,
+    fieldName: ''
   })
 
   // Update local description when external data changes
@@ -314,6 +393,25 @@ export function FunctionFolder({
     const currentDefinitions = currentOverride?.ownerDefinitions || []
     const updatedDefinitions = currentDefinitions.filter((_, i) => i !== index)
     onOwnerDefinitionsUpdate(contractAddress, functionName, updatedDefinitions)
+  }
+
+  // Delay management handlers
+  const handleSetDelay = () => {
+    if (newDelayData.contractAddress && newDelayData.fieldName) {
+      onDelayUpdate(contractAddress, functionName, {
+        contractAddress: newDelayData.contractAddress,
+        fieldName: newDelayData.fieldName
+      })
+      setIsSettingDelay(false)
+      setNewDelayData({
+        contractAddress: contractAddress,
+        fieldName: ''
+      })
+    }
+  }
+
+  const handleClearDelay = () => {
+    onDelayUpdate(contractAddress, functionName, undefined)
   }
 
   const isAddFormValid = () => {
@@ -482,6 +580,19 @@ export function FunctionFolder({
           >
             <IconOpen />
           </button>
+
+          {/* Delay Indicator Icon */}
+          {currentOverride?.delay && resolvedDelay?.isResolved && (
+            <span
+              className="inline-block text-xs"
+              style={{
+                color: '#3b82f6', // blue-500
+              }}
+              title={`Delay: ${resolvedDelay.seconds} seconds`}
+            >
+              ⏱️
+            </span>
+          )}
         </div>
 
         {/* Function signature */}
@@ -706,6 +817,100 @@ export function FunctionFolder({
                   className="text-xs bg-green-600 hover:bg-green-500 disabled:bg-coffee-600 disabled:text-coffee-400 text-white px-3 py-1 rounded"
                 >
                   Add Owner Definition
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Function Delay Section */}
+          <div className="p-3 border-b border-coffee-700">
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-xs text-coffee-300">
+                Function Delay
+              </label>
+              {currentOverride?.delay ? (
+                <button
+                  onClick={handleClearDelay}
+                  className="text-xs bg-coffee-700 hover:bg-coffee-600 text-coffee-100 px-2 py-1 rounded"
+                >
+                  Clear Delay
+                </button>
+              ) : (
+                <button
+                  onClick={() => setIsSettingDelay(!isSettingDelay)}
+                  className="text-xs bg-coffee-700 hover:bg-coffee-600 text-coffee-100 px-2 py-1 rounded"
+                >
+                  {isSettingDelay ? 'Cancel' : '+ Set Delay'}
+                </button>
+              )}
+            </div>
+
+            {/* Display current delay */}
+            {currentOverride?.delay && (
+              <div className="mb-3">
+                <div className="bg-coffee-800 p-2 rounded">
+                  <div className="text-xs font-mono text-coffee-300 mb-1">
+                    {currentOverride.delay.fieldName} on {availableContracts.find(c => c.address === currentOverride.delay?.contractAddress)?.name || 'Unknown'} ({currentOverride.delay.contractAddress.slice(0, 10)}...)
+                  </div>
+                  {resolvedDelay?.isResolved && (
+                    <div className="text-sm font-bold text-green-400">
+                      Delay: {resolvedDelay.seconds} seconds
+                    </div>
+                  )}
+                  {resolvedDelay && !resolvedDelay.isResolved && (
+                    <div className="text-xs text-red-400">
+                      Error: {resolvedDelay.error}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Set delay form */}
+            {isSettingDelay && !currentOverride?.delay && (
+              <div className="bg-coffee-800 p-3 rounded">
+                <div className="mb-2">
+                  <label className="block text-xs text-coffee-300 mb-1">Contract:</label>
+                  <select
+                    value={newDelayData.contractAddress}
+                    onChange={(e) => setNewDelayData(prev => ({ ...prev, contractAddress: e.target.value, fieldName: '' }))}
+                    className="w-full px-2 py-1 text-xs bg-coffee-700 text-coffee-100 border border-coffee-600 rounded"
+                  >
+                    <option value="">Select a contract...</option>
+                    {availableContracts.map((contract) => (
+                      <option key={contract.address} value={contract.address}>
+                        {contract.name} ({contract.address.slice(0, 10)}...) [{contract.source}]
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="mb-3">
+                  <label className="block text-xs text-coffee-300 mb-1">Delay Field:</label>
+                  <select
+                    value={newDelayData.fieldName}
+                    onChange={(e) => setNewDelayData(prev => ({ ...prev, fieldName: e.target.value }))}
+                    disabled={!newDelayData.contractAddress}
+                    className="w-full px-2 py-1 text-xs bg-coffee-700 text-coffee-100 border border-coffee-600 rounded disabled:opacity-50"
+                  >
+                    <option value="">Select a field...</option>
+                    {newDelayData.contractAddress && getAvailableDelayFields(newDelayData.contractAddress).map((field) => (
+                      <option key={field.name} value={field.name}>
+                        {field.name} (value: {field.value}) {field.description && `- ${field.description}`}
+                      </option>
+                    ))}
+                  </select>
+                  {newDelayData.contractAddress && getAvailableDelayFields(newDelayData.contractAddress).length === 0 && (
+                    <div className="text-xs text-coffee-400 mt-1">
+                      No numeric fields found in this contract
+                    </div>
+                  )}
+                </div>
+                <button
+                  onClick={handleSetDelay}
+                  disabled={!newDelayData.contractAddress || !newDelayData.fieldName}
+                  className="text-xs bg-green-600 hover:bg-green-500 disabled:bg-coffee-600 disabled:text-coffee-400 text-white px-3 py-1 rounded"
+                >
+                  Set Delay
                 </button>
               </div>
             )}

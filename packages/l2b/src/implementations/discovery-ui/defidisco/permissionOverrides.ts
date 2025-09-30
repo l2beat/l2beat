@@ -17,6 +17,13 @@ export interface ResolvedOwner {
   error?: string
 }
 
+// Interface for resolved delay information
+export interface ResolvedDelay {
+  seconds: number
+  isResolved: boolean
+  error?: string
+}
+
 // Cache for discovered permissions to avoid repeated file parsing
 const discoveredPermissionsCache = new Map<string, {
   contracts: Record<string, ContractPermissions>
@@ -97,6 +104,7 @@ export function updatePermissionOverride(
     reason: updateRequest.reason ?? existingOverride?.reason,
     description: updateRequest.description ?? existingOverride?.description,
     ownerDefinitions: updateRequest.ownerDefinitions ?? existingOverride?.ownerDefinitions,
+    delay: updateRequest.delay !== undefined ? updateRequest.delay : existingOverride?.delay,
     timestamp: new Date().toISOString(),
   }
 
@@ -463,4 +471,99 @@ function resolveRoleFromDiscovered(discovered: any, definition: OwnerDefinition)
   }
 
   throw new Error(`Unexpected role data format for ${roleName}`)
+}
+
+/**
+ * Resolves a delay field value from discovered data.
+ * Extracts numeric value from a contract field and returns it in seconds.
+ */
+export function resolveDelayFromDiscovered(
+  paths: DiscoveryPaths,
+  project: string,
+  delayRef: { contractAddress: string; fieldName: string }
+): ResolvedDelay {
+  const discoveredPath = getDiscoveredPath(paths, project)
+
+  if (!fs.existsSync(discoveredPath)) {
+    return {
+      seconds: 0,
+      isResolved: false,
+      error: 'No discovered.json file found for project'
+    }
+  }
+
+  try {
+    const fileContent = fs.readFileSync(discoveredPath, 'utf8')
+    const discovered = JSON.parse(fileContent)
+
+    // Find the contract in discovered data
+    if (!discovered.entries || !Array.isArray(discovered.entries)) {
+      return {
+        seconds: 0,
+        isResolved: false,
+        error: 'No entries found in discovered data'
+      }
+    }
+
+    const contractEntry = discovered.entries.find((entry: any) =>
+      entry.type === 'Contract' && entry.address === delayRef.contractAddress
+    )
+
+    if (!contractEntry) {
+      return {
+        seconds: 0,
+        isResolved: false,
+        error: `Contract ${delayRef.contractAddress} not found in discovered data`
+      }
+    }
+
+    // Look for the field in the contract's fields
+    if (!contractEntry.fields || !Array.isArray(contractEntry.fields)) {
+      return {
+        seconds: 0,
+        isResolved: false,
+        error: `No fields found for contract ${delayRef.contractAddress}`
+      }
+    }
+
+    const field = contractEntry.fields.find((f: any) => f.name === delayRef.fieldName)
+
+    if (!field) {
+      return {
+        seconds: 0,
+        isResolved: false,
+        error: `Field ${delayRef.fieldName} not found in contract ${delayRef.contractAddress}`
+      }
+    }
+
+    // Extract numeric value from field
+    if (field.value && field.value.type === 'number') {
+      // Parse the string value to a number
+      const numValue = parseInt(field.value.value, 10)
+      if (isNaN(numValue)) {
+        return {
+          seconds: 0,
+          isResolved: false,
+          error: `Field ${delayRef.fieldName} contains non-numeric value`
+        }
+      }
+      return {
+        seconds: numValue,
+        isResolved: true
+      }
+    }
+
+    return {
+      seconds: 0,
+      isResolved: false,
+      error: `Field ${delayRef.fieldName} is not a number type`
+    }
+  } catch (error) {
+    console.error('Error parsing discovered.json:', error)
+    return {
+      seconds: 0,
+      isResolved: false,
+      error: 'Failed to parse discovered.json'
+    }
+  }
 }

@@ -73,9 +73,15 @@ git fetch upstream && git merge upstream/main
 **UI System**: Complete permission management in `/defidisco/ValuesPanelExtensions.tsx`
 - **Data Structure**: Contract-grouped permissions for O(1) lookups (`contracts[address].functions[]`)
 - **Data Separation**: Discovered permissions vs user overrides (persistent)
-- **Three Attributes**: Checked (✓), Permission (🔒), Risk Score (⚡)
-- **Features**: Expandable functions, code navigation, owner tracking
+- **Four Attributes**: Checked (✓), Permission (🔒), Risk Score (⚡), Delay (⏱️)
+- **Features**: Expandable functions, code navigation, owner tracking, delay field specification
 - **Performance**: File caching, optimistic updates, debounced inputs, efficient contract-specific queries
+
+**Delay Field Feature**: Associate delays with permissioned functions
+- **UI**: Select contract + numeric field to specify delay reference
+- **Backend**: Resolves delay value from discovered.json in real-time
+- **Display**: Shows resolved delay in seconds, indicator icon (⏱️) in collapsed view
+- **Storage**: Delay reference stored in `permission-overrides.json` as `{ contractAddress, fieldName }`
 
 ### Permissions Report Generation ✅
 **Terminal Integration**: Button in `/defidisco/TerminalExtensions.tsx`
@@ -124,6 +130,8 @@ git fetch upstream && git merge upstream/main
 - ❌ Mixing discovered data with user data
 - ❌ Using non-existent hooks (check existing patterns in `/defidisco/` files)
 - ❌ Address format mismatches (contracts use `eth:0x...`, tags use `0x...`)
+- ❌ Using `??` instead of `!== undefined` for optional fields that can be explicitly cleared
+- ❌ Forgetting to rebuild both `protocolbeat` AND `l2b` after backend changes
 
 ### File Structure
 ```
@@ -159,7 +167,7 @@ packages/
 ```json
 {
   "version": "1.0",
-  "lastModified": "2025-09-23T16:18:18.029Z",
+  "lastModified": "2025-09-30T15:21:54.826Z",
   "contracts": {
     "eth:0x123...": {
       "functions": [
@@ -170,13 +178,22 @@ packages/
           "score": "high-risk",
           "description": "Emergency pause function",
           "ownerDefinitions": [...],
-          "timestamp": "2025-09-23T16:18:18.029Z"
+          "delay": {
+            "contractAddress": "eth:0x456...",
+            "fieldName": "delay"
+          },
+          "timestamp": "2025-09-30T15:21:54.826Z"
         }
       ]
     }
   }
 }
 ```
+
+**Delay Field**:
+- Stores reference to numeric field (not the value itself)
+- Backend resolves value at runtime from discovered.json
+- Use `delay !== undefined` pattern (not `??`) to handle explicit clearing
 
 **Access Patterns**:
 - **Direct Contract Access**: `permissionOverrides.contracts[contractAddress]` - O(1) lookup

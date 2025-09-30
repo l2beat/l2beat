@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-23T16:34:13.466Z",
+  "lastModified": "2025-09-30T15:21:54.826Z",
   "contracts": {
     "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": {
       "functions": [
@@ -173,7 +173,11 @@
           "userClassification": "permissioned",
           "checked": true,
           "score": "low-risk",
-          "timestamp": "2025-09-22T17:09:38.866Z"
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2025-09-30T15:21:54.826Z"
         },
         {
           "functionName": "admin",

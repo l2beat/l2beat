@@ -71,7 +71,13 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     const contractPermissions = overridesData?.contracts?.[contractAddress]?.functions || []
     const localPermissionsForContract = localOverrides.filter(o => o.contractAddress === contractAddress)
 
-    return [...contractPermissions.map(func => ({ contractAddress, ...func })), ...localPermissionsForContract]
+    // Map contract permissions to include contractAddress (functions in contracts don't have it)
+    const withContractAddress = contractPermissions.map(func => ({
+      ...func,
+      contractAddress
+    }))
+
+    return [...withContractAddress, ...localPermissionsForContract]
   }
 
   const handlePermissionToggle = async (contractAddress: string, functionName: string, currentClassification: 'permissioned' | 'non-permissioned') => {
@@ -109,6 +115,12 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     if (!project) return
 
     await updateOverride(contractAddress, functionName, { ownerDefinitions })
+  }
+
+  const handleDelayUpdate = async (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => {
+    if (!project) return
+
+    await updateOverride(contractAddress, functionName, { delay })
   }
 
   const handleOpenInCode = async (contractAddress: string, functionName: string) => {
@@ -173,7 +185,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   const updateOverride = async (
     contractAddress: string,
     functionName: string,
-    updates: Partial<Pick<PermissionOverride, 'userClassification' | 'checked' | 'score' | 'description' | 'ownerDefinitions'>>
+    updates: Partial<Pick<PermissionOverride, 'userClassification' | 'checked' | 'score' | 'description' | 'ownerDefinitions' | 'delay'>>
   ) => {
     // Get current override data from contract-specific overrides
     const contractOverrides = getOverridesForContract(contractAddress)
@@ -188,6 +200,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
       score: updates.score ?? currentOverride?.score,
       description: updates.description ?? currentOverride?.description,
       ownerDefinitions: updates.ownerDefinitions ?? currentOverride?.ownerDefinitions,
+      delay: updates.delay !== undefined ? updates.delay : currentOverride?.delay,
       timestamp: new Date().toISOString(),
     }
 
@@ -255,6 +268,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
             onDescriptionUpdate={handleDescriptionUpdate}
             onOpenInCode={handleOpenInCode}
             onOwnerDefinitionsUpdate={handleOwnerDefinitionsUpdate}
+            onDelayUpdate={handleDelayUpdate}
           />
         </li>
       ))}
@@ -271,7 +285,8 @@ function PermissionsCode({
   onScoreToggle,
   onDescriptionUpdate,
   onOpenInCode,
-  onOwnerDefinitionsUpdate
+  onOwnerDefinitionsUpdate,
+  onDelayUpdate
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
@@ -282,6 +297,7 @@ function PermissionsCode({
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
+  onDelayUpdate: (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => void
 }) {
   const readMarkers = [' view ', ' pure ']
 
@@ -311,6 +327,7 @@ function PermissionsCode({
           onDescriptionUpdate={onDescriptionUpdate}
           onOpenInCode={onOpenInCode}
           onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
+          onDelayUpdate={onDelayUpdate}
         />
       </Folder>
     </div>
@@ -326,7 +343,8 @@ function WritePermissionsCodeEntries({
   onScoreToggle,
   onDescriptionUpdate,
   onOpenInCode,
-  onOwnerDefinitionsUpdate
+  onOwnerDefinitionsUpdate,
+  onDelayUpdate
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
@@ -337,6 +355,7 @@ function WritePermissionsCodeEntries({
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
+  onDelayUpdate: (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => void
 }) {
   const extractFunctionName = (abiEntry: string): string | null => {
     const match = abiEntry.match(/function\s+(\w+)\s*\(/)
@@ -373,6 +392,7 @@ function WritePermissionsCodeEntries({
             onDescriptionUpdate={onDescriptionUpdate}
             onOpenInCode={onOpenInCode}
             onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
+            onDelayUpdate={onDelayUpdate}
           />
         )
       })}
