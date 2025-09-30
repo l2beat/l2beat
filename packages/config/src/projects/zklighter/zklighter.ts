@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -7,26 +7,27 @@ export const zklighter: ScalingProject = upcomingL2({
   capability: 'universal',
   addedAt: UnixTime(1711551933), // 2024-03-27T15:05:33Z
   display: {
-    name: 'zkLighter',
-    slug: 'zklighter',
+    name: 'Lighter',
+    slug: 'lighter',
     description:
-      'zkLighter is an efficient order book Validium on Ethereum - low cost, low latency, verifiable matching.',
+      'Lighter is an application-specific zk rollup on a mission to revolutionize trading by building provably fair, secure, and scalable infrastructure for finance.',
     purposes: ['Universal', 'Exchange'],
     stacks: ['ZK Stack'],
     links: {
-      websites: ['https://zk.lighter.xyz'],
+      websites: ['https://lighter.xyz', 'https://app.lighter.xyz/'],
       explorers: ['https://scan.lighter.xyz'],
-      documentation: ['https://docs.lighter.xyz'],
+      documentation: [
+        'https://docs.lighter.xyz',
+        'https://assets.lighter.xyz/whitepaper.pdf',
+      ],
       repositories: ['https://github.com/elliottech'],
       socialMedia: [
         'https://x.com/Lighter_xyz',
-        'https://discord.com/invite/gPHuvUE6VU',
+        'https://discord.gg/lighterxyz',
         'https://linkedin.com/company/lighter-xyz',
+        'https://t.me/lighterxyz_official',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('the-elastic-network'),
   },
   proofSystem: {
     type: 'Validity',
