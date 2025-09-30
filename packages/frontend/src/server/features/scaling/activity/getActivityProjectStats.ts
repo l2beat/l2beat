@@ -3,6 +3,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { getActivitySyncState } from '../../utils/syncState'
+import { countPerSecond } from './utils/countPerSecond'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 import { getActivityAdjustedTimestamp } from './utils/syncStatus'
 
@@ -30,14 +31,17 @@ async function getActivityProjectStatsData(projectId: ProjectId) {
   const syncState = getActivitySyncState(syncMetadata, range[1])
   const syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
 
-  const lastDayUops =
-    counts.find((r) => r.timestamp === syncedUntil)?.uopsCount ?? 0
+  const lastDayRecord = counts.find((r) => r.timestamp === syncedUntil)
+  const sevenDaysAgoRecord = counts.find(
+    (r) => r.timestamp === syncedUntil - 7 * UnixTime.DAY,
+  )
+
+  const lastDayUops = lastDayRecord?.uopsCount ?? lastDayRecord?.count ?? 0
   const sevenDaysAgoUops =
-    counts.find((r) => r.timestamp === syncedUntil - 7 * UnixTime.DAY)
-      ?.uopsCount ?? 0
+    sevenDaysAgoRecord?.uopsCount ?? sevenDaysAgoRecord?.count ?? 0
 
   return {
-    lastDayUops,
+    lastDayUops: countPerSecond(lastDayUops),
     uopsWeeklyChange: calculatePercentageChange(lastDayUops, sevenDaysAgoUops),
   }
 }

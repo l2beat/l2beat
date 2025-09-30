@@ -1,31 +1,48 @@
 import React from 'react'
 
-interface DataTablePageProps {
+interface TableConfig {
   title: string
   table: React.ReactNode
-  tableId?: string
+  tableId: string
   dataTableOptions?: object
 }
 
-export function DataTablePage(props: DataTablePageProps) {
-  const { title, table, tableId = 'myTable', dataTableOptions = {} } = props
+interface DataTablePageProps {
+  showHome?: boolean
+  tables: TableConfig[]
+  globalDataTableOptions?: object
+  footer?: React.ReactNode
+}
 
-  const defaultOptions = {
-    pageLength: 25,
-    order: [[0, 'desc']], // Default sort by first column
-    dom: 'Bfrtip', // B = Buttons, f = filter, r = processing, t = table, i = info, p = pagination
-    buttons: [
-      'colvis', // Column visibility button
-      'pageLength',
-      'csv',
-    ],
-    ...dataTableOptions,
+export function DataTablePage(props: DataTablePageProps) {
+  const { tables, globalDataTableOptions = {} } = props
+
+  const getTableOptions = (tableOptions: object = {}) => {
+    const defaultOptions = {
+      pageLength: 25,
+      order: [[0, 'desc']], // Default sort by first column
+      dom: 'Bfrtip', // B = Buttons, f = filter, r = processing, t = table, i = info, p = pagination
+      buttons: [
+        'colvis', // Column visibility button
+        'pageLength',
+        'csv',
+      ],
+      ...globalDataTableOptions,
+      ...tableOptions,
+    }
+    return defaultOptions
   }
+
+  const initScript = tables
+    .map(({ tableId, dataTableOptions = {} }) => {
+      const options = getTableOptions(dataTableOptions)
+      return `$('#${tableId}').DataTable(${JSON.stringify(options)});`
+    })
+    .join('\n              ')
 
   return (
     <html>
       <head>
-        <title>{title}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -59,18 +76,26 @@ export function DataTablePage(props: DataTablePageProps) {
         `}</style>
       </head>
       <body>
-        <a href="/bridges" className="home-button">
-          ← Back to Home
-        </a>
-        <h1>{title}</h1>
+        {props.showHome && (
+          <div>
+            <a href="/bridges">← Back to Home</a>
+          </div>
+        )}
 
-        {table}
+        {tables.map(({ table, tableId, title }, index) => (
+          <>
+            <h1>{title}</h1>
+            <div key={tableId || index}>{table}</div>
+          </>
+        ))}
+
+        {props.footer}
 
         <script
           dangerouslySetInnerHTML={{
             __html: `
             $(document).ready(function() {
-              $('#${tableId}').DataTable(${JSON.stringify(defaultOptions)});
+              ${initScript}
             });
           `,
           }}

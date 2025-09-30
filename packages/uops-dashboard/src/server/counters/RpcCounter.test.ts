@@ -1325,6 +1325,7 @@ function createBlock(number: number, timestamp?: UnixTime): Block {
     number,
     timestamp: timestamp ?? UnixTime.now(),
     hash: `${number}.hash`,
+    logsBloom: `0x${'0'.repeat(512)}`,
     transactions: [
       {
         from: 'tx1.from',

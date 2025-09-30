@@ -1,7 +1,7 @@
 {
   "name": "w",
   "timestamp": 1752832725,
-  "configHash": "0x3824067688095080abe9fda4ddfd8abd3776d63bdf41f56c885f85fc1407c175",
+  "configHash": "0xf98f35f6cd458a881918370ca14673dc8a5ff7a419bfd8c7756c4897ed175e4c",
   "entries": [
     {
       "name": "Wormhole Token",
@@ -34,7 +34,7 @@
           "deploymentTimestamp": 1713221460,
           "coingeckoListingTimestamp": 1712102400,
           "category": "other",
-          "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/W_Token_%283%29.png?1758122686",
           "chainId": 42161,
           "supply": "totalSupply",
           "source": "external",
@@ -112,7 +112,7 @@
           "deploymentTimestamp": 1713221517,
           "coingeckoListingTimestamp": 1712102400,
           "category": "other",
-          "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/W_Token_%283%29.png?1758122686",
           "chainId": 8453,
           "supply": "totalSupply",
           "source": "external",
@@ -389,6 +389,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "base": 33021689, "arbitrum": 358957206 },
+  "usedBlockNumbers": { "arbitrum": 358957206, "base": 33021689 },
   "permissionsConfigHash": "0xdba4f6ddf7f3a2cb07331701a95eb5c773ed66799218829c29f84ca7f4c9921a"
 }

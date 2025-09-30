@@ -1,214 +1,56 @@
-import { Logger } from '@l2beat/backend-tools'
-import type { BlockProvider, LogsProvider } from '@l2beat/shared'
-import { type Block, type Log, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
-import type { IndexerService } from '../../tools/uif/IndexerService'
-import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
-import type { BlockProcessor } from '../types'
-import { BlockIndexer, type BlockIndexerDeps } from './BlockIndexer'
+import type { Block, Log } from '@l2beat/shared-pure'
+import { expect } from 'earl'
+import { onlyConsistent } from './BlockIndexer'
 
-describe(BlockIndexer.name, () => {
-  beforeEach(() => {
-    _TEST_ONLY_resetUniqueIds()
+describe(onlyConsistent.name, () => {
+  const EMPTY_LOGS_BLOOM = `0x${'0'.repeat(512)}`
+  const FULL_LOGS_BLOOM = `0x${'1'.repeat(512)}`
+
+  it('handles the case where everything works', () => {
+    const block1 = { hash: '0x1', logsBloom: FULL_LOGS_BLOOM } as Block
+    const block2 = { hash: '0x2', logsBloom: EMPTY_LOGS_BLOOM } as Block
+    const block3 = { hash: '0x3', logsBloom: FULL_LOGS_BLOOM } as Block
+
+    const logA = { data: '0xa', blockHash: '0x1' } as Log
+    const logB = { data: '0xb', blockHash: '0x3' } as Log
+    const logC = { data: '0xc', blockHash: '0x3' } as Log
+
+    const result = onlyConsistent([block1, block2, block3], [logA, logB, logC])
+    expect(result).toEqual([
+      { block: block1, logs: [logA] },
+      { block: block2, logs: [] },
+      { block: block3, logs: [logB, logC] },
+    ])
   })
 
-  describe(BlockIndexer.prototype.update.name, () => {
-    it('fetches block and calls processors in LATEST_ONLY mode', async () => {
-      const block = mockBlock(10)
-      const logs = mockLogs(10)
+  it('handles a reorg', () => {
+    const block1 = { hash: '0x1', logsBloom: FULL_LOGS_BLOOM } as Block
+    const block2 = { hash: '0x2', logsBloom: EMPTY_LOGS_BLOOM } as Block
+    // This hash is reorged from 0x3 to 0x4
+    const block3 = { hash: '0x4', logsBloom: FULL_LOGS_BLOOM } as Block
 
-      const mockBlockProvider = mockObject<BlockProvider>({
-        getBlockWithTransactions: mockFn().resolvesTo(block),
-      })
+    const logA = { data: '0xa', blockHash: '0x1' } as Log
+    const logB = { data: '0xb', blockHash: '0x3' } as Log
+    const logC = { data: '0xc', blockHash: '0x3' } as Log
 
-      const mockLogsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().resolvesTo(logs),
-      })
-
-      const mockProcessor = mockObject<BlockProcessor>({
-        processBlock: mockFn().resolvesTo(undefined),
-      })
-
-      const indexer = createIndexer({
-        mode: 'LATEST_ONLY',
-        blockProvider: mockBlockProvider,
-        logsProvider: mockLogsProvider,
-        blockProcessors: [mockProcessor],
-      })
-
-      const newSafeHeight = await indexer.update(0, block.number)
-
-      expect(mockBlockProvider.getBlockWithTransactions).toHaveBeenCalledWith(
-        block.number,
-      )
-
-      expect(mockBlockProvider.getBlockWithTransactions).toHaveBeenCalledWith(
-        block.number,
-      )
-
-      expect(mockProcessor.processBlock).toHaveBeenCalledWith(block, logs)
-
-      expect(newSafeHeight).toEqual(block.number)
-    })
-
-    it('fetches block and calls processors in CONTINUOUS mode', async () => {
-      const blocks = [mockBlock(8), mockBlock(9), mockBlock(10), mockBlock(11)]
-      const logs = [mockLogs(8), mockLogs(9), mockLogs(10), mockLogs(11)]
-
-      const mockBlockProvider = mockObject<BlockProvider>({
-        getBlockWithTransactions: mockFn()
-          .resolvesToOnce(blocks[0])
-          .resolvesToOnce(blocks[1])
-          .resolvesToOnce(blocks[2]),
-      })
-
-      const mockLogsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn()
-          .resolvesToOnce(logs[0])
-          .resolvesToOnce(logs[1])
-          .resolvesToOnce(logs[2]),
-      })
-
-      const mockProcessor = mockObject<BlockProcessor>({
-        processBlock: mockFn().resolvesTo(undefined),
-      })
-
-      const indexer = createIndexer({
-        mode: 'CONTINUOUS',
-        blockProvider: mockBlockProvider,
-        logsProvider: mockLogsProvider,
-        blockProcessors: [mockProcessor],
-        batchSize: 3,
-      })
-
-      const newSafeHeight = await indexer.update(8, 11)
-
-      expect(mockBlockProvider.getBlockWithTransactions).toHaveBeenCalledTimes(
-        3,
-      )
-
-      expect(
-        mockBlockProvider.getBlockWithTransactions,
-      ).toHaveBeenNthCalledWith(1, blocks[0].number)
-
-      expect(
-        mockBlockProvider.getBlockWithTransactions,
-      ).toHaveBeenNthCalledWith(2, blocks[1].number)
-
-      expect(
-        mockBlockProvider.getBlockWithTransactions,
-      ).toHaveBeenNthCalledWith(3, blocks[2].number)
-
-      expect(mockProcessor.processBlock).toHaveBeenCalledTimes(3)
-
-      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
-        1,
-        blocks[0],
-        logs[0],
-      )
-
-      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
-        2,
-        blocks[1],
-        logs[1],
-      )
-
-      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
-        3,
-        blocks[2],
-        logs[2],
-      )
-
-      expect(newSafeHeight).toEqual(10)
-    })
-
-    it('handles processor errors', async () => {
-      const block = mockBlock(10)
-      const logs = mockLogs(10)
-
-      const mockBlockProvider = mockObject<BlockProvider>({
-        getBlockWithTransactions: mockFn().resolvesTo(block),
-      })
-
-      const mockLogsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().resolvesTo(logs),
-      })
-
-      const mockProcessor1 = mockObject<BlockProcessor>({
-        processBlock: mockFn().throws(new Error('Processor 1 failed')),
-      })
-
-      const mockProcessor2 = mockObject<BlockProcessor>({
-        processBlock: mockFn().resolvesTo(undefined),
-      })
-
-      const indexer = createIndexer({
-        mode: 'LATEST_ONLY',
-        blockProvider: mockBlockProvider,
-        logsProvider: mockLogsProvider,
-        blockProcessors: [mockProcessor1, mockProcessor2],
-      })
-
-      const newSafeHeight = await indexer.update(0, block.number)
-
-      expect(mockBlockProvider.getBlockWithTransactions).toHaveBeenCalledWith(
-        block.number,
-      )
-
-      expect(mockProcessor1.processBlock).toHaveBeenCalledWith(block, logs)
-
-      expect(mockProcessor2.processBlock).toHaveBeenCalledWith(block, logs)
-
-      expect(newSafeHeight).toEqual(block.number)
-    })
+    const result = onlyConsistent([block1, block2, block3], [logA, logB, logC])
+    expect(result).toEqual([
+      { block: block1, logs: [logA] },
+      { block: block2, logs: [] },
+    ])
   })
 
-  describe(BlockIndexer.prototype.invalidate.name, () => {
-    it('returns targetHeight', async () => {
-      const indexer = createIndexer()
+  it('handles missing logs', () => {
+    const block1 = { hash: '0x1', logsBloom: FULL_LOGS_BLOOM } as Block
+    const block2 = { hash: '0x2', logsBloom: EMPTY_LOGS_BLOOM } as Block
+    const block3 = { hash: '0x3', logsBloom: FULL_LOGS_BLOOM } as Block
 
-      const targetHeight = 10
-      const newSafeHeight = await indexer.invalidate(targetHeight)
+    const logA = { data: '0xa', blockHash: '0x1' } as Log
 
-      expect(newSafeHeight).toEqual(targetHeight)
-    })
+    const result = onlyConsistent([block1, block2, block3], [logA])
+    expect(result).toEqual([
+      { block: block1, logs: [logA] },
+      { block: block2, logs: [] },
+    ])
   })
 })
-
-function createIndexer(deps?: Partial<BlockIndexerDeps>): BlockIndexer {
-  return new BlockIndexer({
-    logger: Logger.SILENT,
-    parents: [],
-    indexerService: mockObject<IndexerService>({}),
-    minHeight: 0,
-    mode: deps?.mode ?? 'LATEST_ONLY',
-    source: 'test',
-    blockProvider: mockObject<BlockProvider>({}),
-    logsProvider: mockObject<LogsProvider>({}),
-    blockProcessors: [],
-    batchSize: 5,
-    ...deps,
-  })
-}
-
-function mockBlock(blockNumber: number): Block {
-  return {
-    number: blockNumber,
-    hash: 'hash',
-    timestamp: UnixTime.now(),
-    transactions: [],
-  }
-}
-
-function mockLogs(blockNumber: number): Log[] {
-  return [
-    {
-      address: '0x123',
-      topics: ['0xabc'],
-      data: '0x',
-      blockNumber,
-      transactionHash: '0x456',
-      logIndex: 0,
-    },
-  ]
-}

@@ -15,7 +15,12 @@ export const ArbitrumScheduledTransactionsHandlerDefinition = v.strictObject({
 })
 
 const executeFn = 'execute(address upgrade, bytes upgradeCallData) payable'
-const ExecutorInterface = new utils.Interface([`function ${executeFn}`])
+const executeCallFn =
+  'executeCall(address upgrade, bytes upgradesCallData) payable'
+const ExecutorInterface = new utils.Interface([
+  `function ${executeFn}`,
+  `function ${executeCallFn}`,
+])
 
 const unsafeCreateRetryableTicketFn =
   'unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data) payable returns (uint256)'

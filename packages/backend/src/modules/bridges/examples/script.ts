@@ -171,6 +171,7 @@ async function runExample(example: Example): Promise<RunResult> {
 
         if (event) {
           events.push(event)
+          break
         }
       }
     }

@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "timestamp": 1757665061,
-  "configHash": "0x22c5661e736f57c319b2a084096d00980172fef41e2b01d30b0ed08247d2ea54",
+  "configHash": "0x0be154e6a9c86be8b871ce3a217cd0407a6a27bd3694f3f8fc1a3053d0e6d366",
   "entries": [
     {
       "name": "TokenMessagingArbitrum",
@@ -4927,12 +4927,12 @@
     "stargate/Treasurer": "0x893e4b5c910be84ccc45d870bef75de4b3fc748040df291137faab3705c83c24"
   },
   "usedBlockNumbers": {
-    "arbitrum": 378308400,
     "ethereum": 23345732,
-    "linea": 23223304,
-    "base": 35437857,
     "optimism": 141033142,
-    "scroll": 21091061
+    "arbitrum": 378308400,
+    "scroll": 21091061,
+    "linea": 23223304,
+    "base": 35437857
   },
   "permissionsConfigHash": "0xd6dbcf684509cd2702666c5d9eab65e5f34db401f9c83c00bc3e13946467b8a8"
 }
