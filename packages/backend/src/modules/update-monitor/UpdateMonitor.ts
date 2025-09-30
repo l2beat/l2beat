@@ -6,7 +6,7 @@ import {
   type DiscoveryDiff,
   type DiscoveryOutput,
   diffDiscovery,
-  hashJsonStable,
+  generateStructureHash,
 } from '@l2beat/discovery'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
@@ -194,7 +194,7 @@ export class UpdateMonitor {
         timestamp,
         blockNumber: 0,
         discovery,
-        configHash: hashJsonStable(projectConfig.structure),
+        configHash: generateStructureHash(projectConfig.structure),
       })
 
       const chainUpdateEnd = UnixTime.now()
@@ -263,7 +263,8 @@ export class UpdateMonitor {
     const flatSourceTimestamp = flatSourceEntry?.timestamp ?? 0
     const onDiskDiscoveryChanged = diskDiscovery.timestamp > flatSourceTimestamp
     const onDiskConfigChanged =
-      databaseEntry?.configHash !== hashJsonStable(projectConfig.structure)
+      databaseEntry?.configHash !==
+      generateStructureHash(projectConfig.structure)
 
     let previousDiscovery: DiscoveryOutput
 
