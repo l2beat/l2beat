@@ -1,6 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../BinaryReader'
+import { PacketOFTDelivered, PacketOFTSent } from './layerzero-v2-ofts'
+import { parseOFTReceived, parseOFTSent } from './stargate'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -68,6 +70,36 @@ export class LayerZeroV2Plugin implements BridgePlugin {
 
     const packetSent = parsePacketSent(input.log, [network.address])
     if (packetSent) {
+      // layerzero-v2-ofts capturing block
+      const nextLog = input.txLogs.find(
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        (x) => x.logIndex === input.log.logIndex! + 1,
+      )
+      const oftSent = nextLog && parseOFTSent(nextLog, null)
+      if (oftSent) {
+        const packet = decodePacket(packetSent.encodedPayload)
+        if (packet) {
+          const guid = createLayerZeroGuid(
+            packet.header.nonce,
+            packet.header.srcEid,
+            packet.header.sender,
+            packet.header.dstEid,
+            packet.header.receiver,
+          )
+          const $dstChain = findChain(
+            LAYERZERO_NETWORKS,
+            (x) => x.eid,
+            packet.header.dstEid,
+          )
+          return PacketOFTSent.create(input.ctx, {
+            $dstChain,
+            guid,
+            amountSentLD: Number(oftSent.amountSentLD),
+            amountReceivedLD: Number(oftSent.amountReceivedLD),
+          })
+        }
+      }
+
       const packet = decodePacket(packetSent.encodedPayload)
       if (!packet) return
       const guid = createLayerZeroGuid(
@@ -87,6 +119,32 @@ export class LayerZeroV2Plugin implements BridgePlugin {
 
     const packetDelivered = parsePacketDelivered(input.log, [network.address])
     if (packetDelivered) {
+      // layerzero-v2-ofts capturing block
+      const previousLog = input.txLogs.find(
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        (x) => x.logIndex === input.log.logIndex! - 1,
+      )
+      const oftReceived = previousLog && parseOFTReceived(previousLog, null)
+      if (oftReceived) {
+        const guid = createLayerZeroGuid(
+          packetDelivered.origin.nonce,
+          packetDelivered.origin.srcEid,
+          packetDelivered.origin.sender,
+          network.eid,
+          packetDelivered.receiver,
+        )
+        const $srcChain = findChain(
+          LAYERZERO_NETWORKS,
+          (x) => x.eid,
+          packetDelivered.origin.srcEid,
+        )
+        return PacketOFTDelivered.create(input.ctx, {
+          $srcChain,
+          guid,
+          amountReceivedLD: Number(oftReceived.amountReceivedLD),
+        })
+      }
+
       const guid = createLayerZeroGuid(
         packetDelivered.origin.nonce,
         packetDelivered.origin.srcEid,

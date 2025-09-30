@@ -9,7 +9,7 @@ import {
   type LogToCapture,
 } from './types'
 
-const parseOFTSent = createEventParser(
+export const parseOFTSent = createEventParser(
   'event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)',
 )
 export const StargateV2OFTSentBusRode = createBridgeEventType<{
@@ -34,7 +34,7 @@ export const StargateV2OFTSentTaxi = createBridgeEventType<{
   $dstChain: string
 }>('stargate-v2.OFTSentTaxi')
 
-const parseOFTReceived = createEventParser(
+export const parseOFTReceived = createEventParser(
   'event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)',
 )
 export const StargateV2OFTReceived = createBridgeEventType<{
