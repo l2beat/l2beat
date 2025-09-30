@@ -137,7 +137,7 @@ export const fundingSources = [
   {
     source: 'Partnership Fund',
     tier: 'Significant',
-    description: 'Contributions from the partner projects listed above',
+    description: "A grant-based funding initiative where projects contribute financially to L2BEAT’s operations. Partners are listed above",
   },
   {
     source: 'Ethereum Foundation',
