@@ -51,15 +51,19 @@ export function ZkProgramHash({
               <ZkProjectTooltip zkProject={zkProgramHash.zkCatalogProject} />
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="font-medium text-label-value-14 text-secondary">
+              <span className="font-medium text-label-value-14 text-secondary max-md:hidden">
                 {zkProgramHash.hash}
+              </span>
+              <span className="font-medium text-label-value-14 text-secondary md:hidden">
+                {zkProgramHash.hash.slice(0, 6)}...
+                {zkProgramHash.hash.slice(-6)}
               </span>
               <CopyButton
                 toCopy={zkProgramHash.hash}
                 iconClassName="size-3 fill-secondary"
               />
             </div>
-            <div className="mt-1 grid grid-cols-3">
+            <div className="mt-1 grid grid-cols-2 md:grid-cols-3">
               <div
                 className={cn(
                   'flex items-center gap-0.5',
@@ -97,7 +101,7 @@ export function ZkProgramHash({
                   hideCount
                 />
               </div>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1 max-md:hidden">
                 <span className="font-medium text-label-value-12 text-secondary">
                   Used in
                 </span>
