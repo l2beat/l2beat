@@ -47,7 +47,7 @@ import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
-import { getScalingDaSolutions } from './getScalingDaSolution'
+import { getScalingDaSolutions } from './getScalingDaSolutions'
 import type { ScalingRosette } from './getScalingRosetteValues'
 import { getScalingRosette } from './getScalingRosetteValues'
 

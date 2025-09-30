@@ -8,7 +8,7 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { getDaLayerRisks } from '~/server/features/data-availability/utils/getDaLayerRisks'
-import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolution'
+import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolutions'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { getDiagramParams } from '../getDiagramParams'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
