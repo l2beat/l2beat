@@ -556,6 +556,7 @@ export interface ProjectScalingStateValidation {
   description?: string
   categories: ProjectScalingStateValidationCategory[]
   proofVerification?: ProjectProofVerification
+  zkProgramHashes?: ProjectScalingStateValidationZkProgramHash[]
   isUnderReview?: boolean
 }
 
@@ -578,6 +579,15 @@ export interface ProjectScalingStateValidationCategory {
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
   isIncomplete?: boolean
+}
+
+export interface ProjectScalingStateValidationZkProgramHash {
+  hash: string
+  proverSystemProject: ProjectId
+  description: string
+  programUrl: string
+  verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
+  verificationSteps?: string
 }
 // #endregion
 
@@ -1074,6 +1084,12 @@ export interface ProjectContract {
     /** Who can pause/unpause the contract */
     pausableBy: string[]
   }
+  /** List of past upgrades */
+  pastUpgrades?: {
+    timestamp: UnixTime
+    transactionHash: string
+    implementations: ChainSpecificAddress[]
+  }[]
   /** List of references */
   references?: ReferenceLink[]
   /** Indicates whether the generation of contained data was driven by discovery */

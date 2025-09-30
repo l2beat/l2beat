@@ -38,6 +38,7 @@ const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'ethereum', chainId: 1 },
   { chain: 'arbitrum', chainId: 42161 },
   { chain: 'base', chainId: 8453 },
+  { chain: 'optimism', chainId: 10 },
 ])
 
 export class HyperlanePlugIn implements BridgePlugin {

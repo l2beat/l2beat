@@ -48,7 +48,7 @@ const DrawerContent = ({
       )}
       {...props}
     >
-      <div className="mx-auto my-4 h-2 w-[100px] rounded-full bg-gray-400 dark:bg-zinc-800" />
+      <div className="mx-auto my-4 h-2 w-[100px] shrink-0 rounded-full bg-gray-400 dark:bg-zinc-800" />
       <div className="px-4 pb-4">{children}</div>
     </DrawerPrimitive.Content>
   </DrawerPortal>

@@ -67,6 +67,7 @@ export class FuelClient extends ClientCore implements BlockClient {
 
     return {
       hash: blockResponse.data.data.block.id,
+      logsBloom: 'UNSUPPORTED',
       number: Number(blockResponse.data.data.block.height),
       timestamp: tai64ToUnix(blockResponse.data.data.block.header.time),
       transactions: blockResponse.data.data.block.transactionIds.map(

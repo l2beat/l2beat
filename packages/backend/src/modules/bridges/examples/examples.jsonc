@@ -209,12 +209,12 @@
   "layerzerov2": {
     "txs": [
       {
-        "chain": "base",
-        "tx": "0x2612a784a94aeed2eba6ea170b368f86e6aff4a00af1b2d104646fba4180dca0"
+        "chain": "arbitrum",
+        "tx": "0xe67010ab95e21c2818084b4ad64caf5757d7fc64fe47b9fcd472007c0e189aa8"
       },
       {
-        "chain": "ethereum",
-        "tx": "0x0eb86d1c6690d314971c0f1b038c06f278a7217a414e0b6ea28bcecb3f005743"
+        "chain": "optimism",
+        "tx": "0x27c5888644df95b0b60c40a67e5388598f7b66050ef1dc8eb908f0920ca02759"
       }
     ],
     "events": [],
@@ -584,6 +584,94 @@
       {
         "chain": "ethereum",
         "tx": "0xf031b41688650d9cc8c2e02408376c60f43443e3bdc5d1219872da18fafcb9a2"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "hyperlane-debug": {
+    "txs": [
+      {
+        "chain": "optimism",
+        "tx": "0x196da52c2139bc69199b3b4921b199ee10623b0fffb520102d4b038c28a4648b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x7c0494779f339006aa5930eab84a7c70ecd22d54c1a48c952f0af1435c8db4f9"
+      },
+      {
+        "chain": "base",
+        "tx": "0x297484366df26801ae4123266cd4f59f3de4cc26dbcc78179de54daefd42d8a3"
+      },
+      {
+        "chain": "base",
+        "tx": "0xc431a37bc0700d893e1613c84775aa5ca79277cca533d8947a8be8733cfdf719"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x64d3de3fda6a9df908cd77940c1c416f1df71f92fda9c99550529d0803055ceb"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "wormhole-debug": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x17aa2be5aafb29e41a7e75eeaff7a06aaeabae0bfb9bee5f47d7f9d6979649b4"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x625564530b469cdb41c11ed585276688362964bbf4a9e7c93b03ae5dd73be8d7"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "stargate-debug": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xb257d1d886fbd7b7edff122d369ff5567719f4f2566c4c0a1492a57c79eb5526"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd9b1e59ed889335a82bae3643c2cc695e490c4dec1e3e2d638e5e2157d3dca28"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "lzv2ofts": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x2d424381dce5382e1c8876a38b68179d3543313c8a366026c29d9636cdae55a1"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x8ccc62930b7076413a60fe682cfbd4c9607cdb8e0cbbfe2ff2031874f97829e0"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xbc456cfa0f1e2d6e410f6317d026c23eba0bb2ac2f556ce3c7936b4aa6e7afbe"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x3cabb123406c909e712c68493a7c1f74452d21a28e9a5aee9443f4f497e1ca58"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9bec261577671eb4293dd57bb7c137e4d28479550f70e97e89a8250344b20007"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
       }
     ],
     "events": [],

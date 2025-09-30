@@ -1,4 +1,5 @@
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
+import type { Block, Log } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import {
   ManagedChildIndexer,
@@ -6,11 +7,8 @@ import {
 } from '../../tools/uif/ManagedChildIndexer'
 import type { BlockProcessor } from '../types'
 
-export type BlockIndexerMode = `CONTINUOUS` | `LATEST_ONLY`
-
 export interface BlockIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
-  mode: BlockIndexerMode
   source: string
   blockProvider: BlockProvider
   logsProvider: LogsProvider
@@ -34,16 +32,9 @@ export class BlockIndexer extends ManagedChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     let adjustedFrom = from
-    if (
-      adjustedFrom !== to &&
-      (from === this.$.minHeight || this.$.mode === 'LATEST_ONLY')
-    ) {
+    if (adjustedFrom !== to && from === this.$.minHeight) {
       adjustedFrom = to
     }
-
-    const delay = to - adjustedFrom
-    this.logger.info('Delay from the tip', { blocks: delay })
-
     const adjustedTo = Math.min(to, adjustedFrom + this.$.batchSize - 1)
 
     const blockNumbers = []
@@ -55,31 +46,42 @@ export class BlockIndexer extends ManagedChildIndexer {
       blockNumbers.push(blockNumber)
     }
 
+    const start = Date.now()
+
     this.logger.info('Fetching blocks and logs', {
+      blocks: to - adjustedFrom,
       from: adjustedFrom,
       to: adjustedTo,
       count: adjustedTo - adjustedFrom + 1,
-      mode: this.$.mode,
     })
 
-    const start = Date.now()
-    const blockData = await Promise.all(
-      blockNumbers.map(async (blockNumber) => {
-        const [block, logs] = await Promise.all([
-          this.$.blockProvider.getBlockWithTransactions(blockNumber),
-          // TODO: Fetch logs for the entire batch in a single request
-          this.$.logsProvider.getLogs(blockNumber, blockNumber),
-        ])
-        return { blockNumber, block, logs }
-      }),
-    )
+    const [blocks, logs] = await Promise.all([
+      Promise.all(
+        blockNumbers.map((n) =>
+          this.$.blockProvider.getBlockWithTransactions(n),
+        ),
+      ),
+      this.$.logsProvider.getLogs(adjustedFrom, adjustedTo),
+    ])
+    const consistentBlocks = onlyConsistent(blocks, logs)
+    if (consistentBlocks.length === 0) {
+      this.logger.info("Couldn't get consistent blocks & logs", {
+        from: adjustedFrom,
+        to: adjustedTo,
+      })
+      throw new Error("Couldn't get consistent blocks & logs")
+    }
+    const actualTo = consistentBlocks[consistentBlocks.length - 1].block.number
+
     const totalDuration = Date.now() - start
     this.logger.info('Fetched blocks and logs', {
       totalDuration,
-      count: blockData.length,
+      from: adjustedFrom,
+      to: actualTo,
+      count: consistentBlocks.length,
     })
 
-    for (const { blockNumber, block, logs } of blockData) {
+    for (const { block, logs } of consistentBlocks) {
       for (const processor of this.$.blockProcessors) {
         try {
           const start = Date.now()
@@ -92,18 +94,46 @@ export class BlockIndexer extends ManagedChildIndexer {
         } catch (error) {
           this.logger.error('Processor failed', {
             processor: processor.constructor.name,
-            blockNumber,
+            blockNumber: block.number,
             error,
           })
         }
       }
-      this.logger.info('Processed block', { blockNumber, logs: logs.length })
+      this.logger.info('Processed block', {
+        blockNumber: block.number,
+        logs: logs.length,
+      })
     }
 
-    return adjustedTo
+    return actualTo
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
+}
+
+/*
+There are two cases where logs can become inconsistent with blocks.
+1) A reorg happened in between the requests and log hashes don't match block hashes
+2) The node has block headers but doesn't yet have the logs
+
+In order to guarantee that the logs we're getting belong to the blocks we're getting
+we need to check that:
+1) The log hashes match the block hashes (reorg protection)
+2) If and only if the logsBloom is empty there are no logs (no logs protection)
+*/
+const LOGS_BLOOM_ZERO = `0x${'0'.repeat(512)}`
+export function onlyConsistent(blocks: Block[], logs: Log[]) {
+  const result: { block: Block; logs: Log[] }[] = []
+  for (const block of blocks) {
+    const blockLogs = logs.filter((l) => l.blockHash === block.hash)
+    const hasLogs = blockLogs.length > 0
+    const shouldHaveLogs = block.logsBloom !== LOGS_BLOOM_ZERO
+    if (hasLogs !== shouldHaveLogs) {
+      break
+    }
+    result.push({ block, logs: blockLogs })
+  }
+  return result
 }

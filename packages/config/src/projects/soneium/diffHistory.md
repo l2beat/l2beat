@@ -1,4 +1,27 @@
-Generated with discovered.json: 0xd1aaca6e8d0809ab6efa48904ef0f4853097bbba
+Generated with discovered.json: 0x33ef571b9d959ee1de6a8e6dc659966874b60eef
+
+# Diff at Mon, 29 Sep 2025 14:50:42 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1756804623
+- current timestamp: 1759157377
+
+## Description
+
+Increase in EIP-1559 elasticity (from 8 to 9), meaning that in periods of high demand the block can expand up to 9x the block gas target.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Elasticity:
+-        8
++        9
+    }
+```
+
+Generated with discovered.json: 0x39b2414b88a8076534e228c94d172d9a66ca5c56
 
 # Diff at Mon, 15 Sep 2025 09:50:51 GMT:
 

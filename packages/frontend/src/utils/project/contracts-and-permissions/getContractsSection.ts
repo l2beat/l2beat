@@ -14,6 +14,7 @@ import type { TechnologyContract } from '../../../components/projects/sections/C
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/ContractsSection'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
 import type { ContractUtils } from './getContractUtils'
+import { getPastUpgradesData } from './getPastUpgradesData'
 import { toVerificationStatus } from './toVerificationStatus'
 
 type ProjectParams = {
@@ -227,6 +228,7 @@ function makeTechnologyContract(
     impactfulChange,
     upgradeableBy: item.upgradableBy,
     upgradeConsiderations: item.upgradeConsiderations,
+    pastUpgrades: getPastUpgradesData(item.pastUpgrades, explorerUrl),
   }
 }
 
