@@ -135,9 +135,7 @@ export class BridgeMessageRepository extends BaseRepository {
 
   async getExistingItems(
     items: {
-      srcChain: string
       srcTxHash: string
-      dstChain: string
       dstTxHash: string
     }[],
     types: string[],
@@ -153,9 +151,7 @@ export class BridgeMessageRepository extends BaseRepository {
     query = query.where((eb) => {
       const conditions = items.map((item) => {
         return eb.and([
-          eb('srcChain', '=', item.srcChain),
-          eb('srcTxHash', '=', item.dstTxHash),
-          eb('dstChain', '=', item.dstChain),
+          eb('srcTxHash', '=', item.srcTxHash),
           eb('dstTxHash', '=', item.dstTxHash),
         ])
       })
