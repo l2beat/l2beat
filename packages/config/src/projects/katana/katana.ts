@@ -283,7 +283,6 @@ export const katana: ScalingProject = {
       },
       {
         hash: '0x00eff0b6998df46ec38866305618089ae3dc74e513e767662e1909694F49cc30',
-        programUrl: 'https://github.com/l2beat/l2beat',
         description: 'Pessimistic program for Agglayer',
         proverSystemProject: ProjectId('sp1'),
         verificationStatus: 'notVerified',

@@ -70,7 +70,8 @@ function getZkProgramHashes(
       return {
         ...zkHash,
         zkCatalogProject: {
-          id: zkCatalogProject.id,
+          name: zkCatalogProject.name,
+          href: `/zk-catalog/${zkCatalogProject.slug}`,
           icon: getProjectIcon(zkCatalogProject.slug),
         },
         usedIn: usedIn.map((project) => ({
