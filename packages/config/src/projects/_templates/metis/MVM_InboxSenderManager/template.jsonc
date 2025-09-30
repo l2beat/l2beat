@@ -1,0 +1,13 @@
+{ "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "MVM_InboxSenderManager",
+  "description": "Container contract for designated sequencer addresses.",
+  "fields": {
+    "randomBlobBatcher": {
+      "handler": {
+        "type": "call",
+        "method": "getInboxSender",
+        "args": ["23476963", "1"]
+      }
+    }
+  }
+}

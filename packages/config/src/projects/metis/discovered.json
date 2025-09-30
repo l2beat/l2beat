@@ -1,7 +1,7 @@
 {
   "name": "metis",
-  "timestamp": 1759237119,
-  "configHash": "0x3a2fcad7709d2b949199c0a78d1e1d1c551d7533d47d91de51a1eafe686da94f",
+  "timestamp": 1759249784,
+  "configHash": "0x0d256705d9cfb07daf092eebc4c2ac6a6f07a4ff7d319d0d3da4603959426345",
   "entries": [
     {
       "address": "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -124,10 +124,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000068dbd1970001458dad",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068dbd1970001458dad",
-        "length": 32769,
-        "lengthByChainId": 32769,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000068dc02870001459340",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068dc02870001459340",
+        "length": 32775,
+        "lengthByChainId": 32775,
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -682,11 +682,13 @@
       "name": "MVM_InboxSenderManager",
       "address": "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0",
       "type": "Contract",
+      "template": "metis/MVM_InboxSenderManager",
       "sourceHashes": [
         "0xefe49678ee34a110a1e4cec0ff81ea6685897ac9f9bd8bdef1e6d248d1298479",
         "0xa8f518a9021354b3e0862b048e3cdaf5d91341dcedcabfa42a9fb04966c9a059"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Container contract for designated sequencer addresses.",
       "sinceTimestamp": 1747125503,
       "sinceBlock": 22473166,
       "values": {
@@ -696,7 +698,8 @@
         "$upgradeCount": 0,
         "blockNumbers": [],
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
-        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
+        "randomBlobBatcher": "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9"
       },
       "implementationNames": {
         "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0": "L1ChugSplashProxy",
@@ -861,12 +864,12 @@
         "earliestDisputedBlockNumber": 0,
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1759236503,
-        "getLastSequencerTimestampByChainId": 1759236503,
-        "getTotalBatches": 32769,
-        "getTotalBatchesByChainId": 32769,
-        "getTotalElements": 21335469,
-        "getTotalElementsByChainId": 21335469,
+        "getLastSequencerTimestamp": 1759249031,
+        "getLastSequencerTimestampByChainId": 1759249031,
+        "getTotalBatches": 32775,
+        "getTotalBatchesByChainId": 32775,
+        "getTotalElements": 21336896,
+        "getTotalElementsByChainId": 21336896,
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "MVM_PROPOSER_REGISTRY_NAME": "MVM_ProposerRegistry",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
@@ -1536,19 +1539,6 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "metis-andromeda:0x4200000000000000000000000000000000000012": "L2StandardTokenFactory"
-      }
-    },
-    {
-      "name": "",
-      "address": "metis-andromeda:0x4200000000000000000000000000000000000013",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1637270379,
-      "sinceBlock": 0,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "metis-andromeda:0x4200000000000000000000000000000000000013": ""
       }
     },
     {
@@ -2631,12 +2621,13 @@
     "metis/METISToken": "0xe4c7c8a93327a313a78b8443c90b3cfe44501c5ddc41bab647f77de5ff00152f",
     "metis/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/MVM_DiscountOracle": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/MVM_InboxSenderManager": "0xccddda9e348b66f83337bce0d0e7100e21c4d724bdcfaea85e15675609cc6931",
     "metis/MVM_ProposerRegistry": "0xe1ffd265bd8338b3febfd389d682d407e4109970d138c349e86e6c131b918a57",
     "metis/MVM_StateCommitmentChain": "0x8496d4b5edbf854305227b9e0e5b8c845600e4bad4d3bd9aa391933a57a5e82e",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
     "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060"
   },
-  "usedBlockNumbers": { "ethereum": 23475957, "metis": 21337670 },
-  "permissionsConfigHash": "0xc5d64b754eadeb9ba3e164ffd89f27ca0a6bf47203b0a035f60328d41efaf77f"
+  "usedBlockNumbers": { "metis": 21338845, "ethereum": 23477004 },
+  "permissionsConfigHash": "0x3509df39070b20db716167875c9f819b6afd5bf287e9b52a58f7d4f3da960cf7"
 }

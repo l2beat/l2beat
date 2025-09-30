@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xdccbdb5efa3bc5439ebfaef6dc5da5ffe4210e53
+Generated with discovered.json: 0x1da12bc8fe47a9f298897af43af5f92f985a1020
 
-# Diff at Tue, 30 Sep 2025 12:59:44 GMT:
+# Diff at Tue, 30 Sep 2025 16:31:27 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1757939071
-- current timestamp: 1759237119
+- current timestamp: 1759249784
 
 ## Description
 
@@ -118,7 +118,7 @@ discovery. Values are for block 1757939071 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract MVM_InboxSenderManager (eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0)
-    +++ description: None
+    +++ description: Container contract for designated sequencer addresses.
 ```
 
 ```diff
@@ -136,12 +136,6 @@ discovery. Values are for block 1757939071 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract Ether Token (metis-andromeda:0x420000000000000000000000000000000000000A)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (metis-andromeda:0x4200000000000000000000000000000000000013)
     +++ description: None
 ```
 
