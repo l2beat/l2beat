@@ -24,7 +24,7 @@ describe(DiscoveryRunner.name, () => {
     it('does not modify the source config', async () => {
       const engine = mockObject<DiscoveryEngine>({
         discover: async () => [],
-        reset: mockFn(),
+        reset: () => {},
       })
       const sourceConfig: ConfigRegistry = getMockConfig()
       const runner = new DiscoveryRunner(
@@ -57,7 +57,7 @@ describe(DiscoveryRunner.name, () => {
     it('discovers dependent project when modelCrossChainPermissions is set', async () => {
       const engine = mockObject<DiscoveryEngine>({
         discover: async () => [],
-        reset: mockFn(),
+        reset: () => {},
       })
       const sourceConfig: ConfigRegistry = getMockConfig({
         modelCrossChainPermissions: true,
@@ -104,7 +104,7 @@ describe(DiscoveryRunner.name, () => {
             .rejectsWithOnce(new Error('error'))
             .rejectsWithOnce(new Error('error'))
             .resolvesToOnce([]),
-          reset: mockFn(),
+          reset: () => {},
         })
         const runner = new DiscoveryRunner(
           mockObject<AllProviders>({
@@ -140,7 +140,7 @@ describe(DiscoveryRunner.name, () => {
             .rejectsWithOnce(new Error('error'))
             .rejectsWithOnce(new Error('error'))
             .resolvesToOnce([]),
-          reset: mockFn(),
+          reset: () => {},
         })
         const runner = new DiscoveryRunner(
           mockObject<AllProviders>({
