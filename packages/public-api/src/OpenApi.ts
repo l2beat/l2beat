@@ -9,6 +9,7 @@ type XOR<T, U> =
 
 // biome-ignore lint/suspicious/noExplicitAny: its fine
 interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
+  summary?: string
   description?: string
   tags?: Tags[]
   params?: Validator<P> & { meta?: ImpMeta }
@@ -19,6 +20,7 @@ interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
 }
 
 type OpenApiPath = {
+  summary?: string
   description?: string
   tags?: Tags[]
   parameters: OpenApiParameter[]
@@ -41,7 +43,7 @@ type OpenApiResponse = {
   }
 }
 
-type Tags = 'Projects'
+type Tags = 'projects'
 
 const BadRequestResponse = v
   .object({
@@ -112,15 +114,18 @@ export class OpenApi {
 
   getOpenApiSchema() {
     return {
-      openapi: '3.1.0',
+      openapi: '3.0.0',
       info: {
         title: 'L2BEAT API',
         version: '1.0.0',
       },
+      // TODO: add proper server url
+      servers: [{ url: 'http://localhost:3000' }],
       tags: [
         {
-          name: 'Projects',
-          description: 'Project endpoints',
+          name: 'projects',
+          description:
+            'Endpoints for listing projects and retrieving detailed information about individual projects.',
         },
       ] satisfies { name: Tags; description: string }[],
       paths: this.getPaths(),
@@ -150,15 +155,14 @@ export class OpenApi {
       if (query && query.description && !schemas[query.description]) {
         schemas[query.description] = this.toJsonSchema(query)
       }
-      if (errors) {
-        for (const errorValidator of Object.values(errors)) {
-          if (
-            errorValidator.description &&
-            !schemas[errorValidator.description]
-          ) {
-            schemas[errorValidator.description] =
-              this.toJsonSchema(errorValidator)
-          }
+
+      for (const errorValidator of Object.values(errors ?? {})) {
+        if (
+          errorValidator.description &&
+          !schemas[errorValidator.description]
+        ) {
+          schemas[errorValidator.description] =
+            this.toJsonSchema(errorValidator)
         }
       }
     }
@@ -181,14 +185,18 @@ export class OpenApi {
   private getPaths() {
     return this.routes.reduce(
       (acc, route) => {
-        const { result: _, params, query, ...rest } = route.options
-
         acc[this.parsePath(route.path)] = {
           [route.method]: {
-            ...rest,
+            tags: route.options.tags,
+            summary: route.options.summary,
+            description: route.options.description,
             parameters: [
-              ...(params ? this.schemaToParameters('params', params) : []),
-              ...(query ? this.schemaToParameters('query', query) : []),
+              ...(route.options.params
+                ? this.schemaToParameters('params', route.options.params)
+                : []),
+              ...(route.options.query
+                ? this.schemaToParameters('query', route.options.query)
+                : []),
             ],
             responses: this.getResponses(route),
           },
@@ -223,22 +231,20 @@ export class OpenApi {
     }
 
     // Add custom error responses if specified
-    if (route.options.errors) {
-      for (const [statusCode, errorValidator] of Object.entries(
-        route.options.errors,
-      )) {
-        const code = Number.parseInt(statusCode, 10)
-        base[code] = {
-          description:
-            httpResponsesDescriptions[
-              code as keyof typeof httpResponsesDescriptions
-            ] || `Error ${code}`,
-          content: {
-            'application/json': {
-              schema: this.toJsonSchemaWithRefs(errorValidator),
-            },
+    for (const [statusCode, errorValidator] of Object.entries(
+      route.options.errors ?? {},
+    )) {
+      const code = Number.parseInt(statusCode, 10)
+      base[code] = {
+        description:
+          httpResponsesDescriptions[
+            code as keyof typeof httpResponsesDescriptions
+          ] || `Error ${code}`,
+        content: {
+          'application/json': {
+            schema: this.toJsonSchemaWithRefs(errorValidator),
           },
-        }
+        },
       }
     }
 

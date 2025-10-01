@@ -19,7 +19,8 @@ export function addProjectsRoutes(openapi: OpenApi) {
   openapi.get(
     '/projects',
     {
-      tags: ['Projects'],
+      summary: 'List all projects',
+      tags: ['projects'],
       result: v.array(ProjectSchema),
     },
     async (_, res) => {
@@ -39,7 +40,8 @@ export function addProjectsRoutes(openapi: OpenApi) {
   openapi.get(
     '/project/:projectId',
     {
-      tags: ['Projects'],
+      summary: 'Get a project by ID',
+      tags: ['projects'],
       params: v.object({
         projectId: v.string(),
       }),
