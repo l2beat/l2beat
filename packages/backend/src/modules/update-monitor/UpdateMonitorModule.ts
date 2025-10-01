@@ -65,7 +65,7 @@ export function createUpdateMonitorModule({
     paths,
     http,
     peripherals,
-    Logger.SILENT,
+    Logger.INFO,
     chains,
     !!cacheEnabled,
     cacheUri,
