@@ -9,6 +9,7 @@
   "abstractTokens": [
     {
       "id": "9HN5PN:circle.USDC",
+      "reviewed": true,
       "coingeckoId": "usd-coin",
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
@@ -42,6 +43,7 @@
     },
     {
       "id": "C0Hmkq:ethereum.ETH",
+      "reviewed": true,
       "coingeckoId": "ethereum",
       "coingeckoListingTimestamp": 1573689600,
       "category": "ether",
@@ -70,6 +72,7 @@
     },
     {
       "id": "tmyD4t:ethena.USDe",
+      "reviewed": true,
       "coingeckoId": "ethena-usde",
       "coingeckoListingTimestamp": 1702512000,
       "category": "stablecoin",
@@ -93,6 +96,7 @@
     },
     {
       "id": "4j9emc:ethena.sUSDe",
+      "reviewed": true,
       "coingeckoId": "ethena-staked-usde",
       "coingeckoListingTimestamp": 1710979200,
       "category": "stablecoin",
@@ -116,6 +120,7 @@
     },
     {
       "id": "xxeNQv:tether.USDT",
+      "reviewed": true,
       "coingeckoId": "tether",
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
@@ -138,6 +143,7 @@
     },
     {
       "id": "aP73dU:etherfi.weETH",
+      "reviewed": true,
       "coingeckoId": "wrapped-eeth",
       "coingeckoListingTimestamp": 1701648000,
       "category": "ether",
@@ -159,6 +165,7 @@
     },
     {
       "id": "LNtC8P:kelpdao.rsETH",
+      "reviewed": true,
       "coingeckoId": "kelp-dao-restaked-eth",
       "coingeckoListingTimestamp": 1705017600,
       "category": "ether",
@@ -180,6 +187,7 @@
     },
     {
       "id": "jH5QVs:renzo.ezETH",
+      "reviewed": true,
       "coingeckoId": "renzo-restaked-eth",
       "coingeckoListingTimestamp": 1706140800,
       "category": "ether",
@@ -200,6 +208,7 @@
     },
     {
       "id": "fGFXHv:solv.SolvBTC",
+      "reviewed": true,
       "coingeckoId": "solv-btc",
       "coingeckoListingTimestamp": 1712448000,
       "category": "btc",
@@ -220,6 +229,7 @@
     },
     {
       "id": "dAuO5y:stakestone.STONE",
+      "reviewed": true,
       "coingeckoId": "stakestone-ether",
       "coingeckoListingTimestamp": 1700611200,
       "category": "other",
@@ -239,6 +249,7 @@
     },
     {
       "id": "VfIedD:wbtc.WBTC",
+      "reviewed": true,
       "coingeckoId": "wrapped-bitcoin",
       "coingeckoListingTimestamp": 1573689600,
       "category": "btc",
@@ -256,6 +267,7 @@
     },
     {
       "id": "wZ2OOh:unknown.oUSDT",
+      "reviewed": true,
       "coingeckoId": "openusdt",
       "coingeckoListingTimestamp": 1741824000,
       "category": "stablecoin",
@@ -273,6 +285,7 @@
     },
     {
       "id": "yoI9zn:usdt0.USDT0",
+      "reviewed": true,
       "coingeckoId": "usdt0",
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
@@ -288,6 +301,7 @@
     },
     {
       "id": "WOFCYe:frax.FRAX-legacy",
+      "reviewed": true,
       "coingeckoId": "frax",
       "coingeckoListingTimestamp": 1608508800,
       "category": "stablecoin",
@@ -303,6 +317,7 @@
     },
     {
       "id": "h6PBKU:solv.xSolvBTC",
+      "reviewed": true,
       "coingeckoId": "solv-protocol-solvbtc-bbn",
       "coingeckoListingTimestamp": 1722556800,
       "category": "btc",
@@ -318,6 +333,7 @@
     },
     {
       "id": "AL0gTs:sky.DAI",
+      "reviewed": true,
       "coingeckoId": "dai",
       "coingeckoListingTimestamp": 1574121600,
       "category": "stablecoin",
@@ -332,6 +348,7 @@
     },
     {
       "id": "tWz57m:frax.FRAX",
+      "reviewed": true,
       "coingeckoId": "frax-share",
       "coingeckoListingTimestamp": 1608508800,
       "category": "other",
@@ -346,6 +363,7 @@
     },
     {
       "id": "pisDQy:frax.FPI",
+      "reviewed": true,
       "coingeckoId": "frax-price-index",
       "coingeckoListingTimestamp": 1649462400,
       "category": "other",
@@ -360,6 +378,7 @@
     },
     {
       "id": "jldW9B:frax.FPIS",
+      "reviewed": true,
       "coingeckoId": "frax-price-index-share",
       "coingeckoListingTimestamp": 1649462400,
       "category": "other",
@@ -388,6 +407,7 @@
     },
     {
       "id": "cMuZqn:frax.sfrxETH",
+      "reviewed": true,
       "coingeckoId": "staked-frax-ether",
       "coingeckoListingTimestamp": 1669852800,
       "category": "ether",
@@ -402,6 +422,7 @@
     },
     {
       "id": "g5JAdl:mountainprotocol.USDM",
+      "reviewed": true,
       "coingeckoId": "mountain-protocol-usdm",
       "coingeckoListingTimestamp": 1696982400,
       "category": "stablecoin",
@@ -416,6 +437,7 @@
     },
     {
       "id": "c6ARra:merlinchain.M-BTC",
+      "reviewed": true,
       "coingeckoId": "merlin-s-seal-btc",
       "coingeckoListingTimestamp": 1711929600,
       "category": "btc",
@@ -430,6 +452,7 @@
     },
     {
       "id": "ObxzPG:lido.wstETH",
+      "reviewed": true,
       "coingeckoId": "wrapped-steth",
       "coingeckoListingTimestamp": 1633564800,
       "category": "ether",
@@ -443,6 +466,7 @@
     },
     {
       "id": "YvJtim:frax.sFRAX-legacy",
+      "reviewed": true,
       "coingeckoId": "staked-frax",
       "coingeckoListingTimestamp": 1708387200,
       "category": "stablecoin",
@@ -456,6 +480,7 @@
     },
     {
       "id": "Obn5X3:ethena.ENA",
+      "reviewed": true,
       "coingeckoId": "ethena",
       "coingeckoListingTimestamp": 1712016000,
       "category": "other",
@@ -469,6 +494,7 @@
     },
     {
       "id": "fhlNqc:renzo.pzETH",
+      "reviewed": true,
       "coingeckoId": "renzo-restaked-lst",
       "coingeckoListingTimestamp": 1720569600,
       "category": "ether",
@@ -1147,7 +1173,7 @@
       ]
     },
     {
-      "id": "4SmUGw:unknown.vbUSDS",
+      "id": "4SmUGw:sky.USDS",
       "coingeckoId": "usds",
       "coingeckoListingTimestamp": 1727136000,
       "category": "stablecoin",

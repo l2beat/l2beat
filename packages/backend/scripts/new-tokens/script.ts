@@ -13,6 +13,7 @@ interface AbstractToken {
   coingeckoListingTimestamp?: UnixTime
   deployedTokens: DeployedTokenId[]
   category?: string
+  reviewed?: boolean
 }
 
 interface DeployedToken {
