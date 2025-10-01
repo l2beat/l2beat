@@ -102,7 +102,7 @@ export class MayanSwiftPlugin implements BridgePlugin {
     if (!orderCreated) return
     return [
       // TODO: implement properly. Handle optional wormhole core settlement event
-      Result.Transfer('mayan-swift.Swap', {
+      Result.Transfer('mayan-swift.Transfer', {
         srcEvent: orderCreated,
         dstEvent: orderFulfilled,
       }),

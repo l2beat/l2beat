@@ -1,19 +1,4 @@
 {
-  "stargate": {
-    "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0xca89268e8e787bc9ffd0d0f2d47369161634acea27c6a2374c8c9a9b8ed6189f"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0x9fdc94bf02e1efd47970137e4f4642810c733c834a23d48fd0de946d32deb6e3"
-      }
-    ],
-    "events": [],
-    "messages": [],
-    "transfers": []
-  },
   "allbridge": {
     "txs": [
       {
@@ -36,7 +21,7 @@
       "allbridge.TokensReceived"
     ],
     "messages": ["allbridge.Message.allbridgeswap"],
-    "transfers": ["allbridge.Swap"]
+    "transfers": ["allbridge.Transfer"]
   },
   "ccip": {
     "txs": [
@@ -406,6 +391,8 @@
     "transfers": []
   },
   "stargatev2bus": {
+    // 1. bus with 2 passengers from Base to Ethereum
+    // 2. bus with 1 passenger from Ethereum to Arbitrum
     "txs": [
       {
         "chain": "base",
@@ -441,6 +428,12 @@
     "transfers": []
   },
   "layerzeromix": {
+    // Messages:
+    //   layerzero-v2.Message 5
+    // Transfers:
+    //   oftv2.Transfer 2
+    //   stargate-v2-bus.Transfer 3
+    //   stargate-v2-taxi.Transfer 1
     "txs": [
       {
         "chain": "base",
@@ -647,7 +640,8 @@
     "messages": [],
     "transfers": []
   },
-  "lzv2ofts": {
+  "layerzero-v2-ofts": {
+    // 3 oft transfers
     "txs": [
       {
         "chain": "ethereum",
