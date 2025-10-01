@@ -21,6 +21,7 @@ import {
   orbitStackL2,
   WASMVM_OTHER_CONSIDERATIONS,
 } from '../../templates/orbitStack'
+import { formatEther } from 'ethers/lib/utils'
 
 const discovery = new ProjectDiscovery('nova')
 const discovery_arbitrum = new ProjectDiscovery('arbitrum') // needed for governance section
@@ -36,6 +37,12 @@ const challengeWindow = discovery.getContractValue<number>(
   'confirmPeriodBlocks',
 )
 const challengeWindowSeconds = challengeWindow * assumedBlockTime
+const challengeGracePeriodSeconds =
+  discovery.getContractValue<number>(
+    'RollupProxy',
+    'challengeGracePeriodBlocks',
+  ) * assumedBlockTime
+
 const l1TimelockDelay = discovery.getContractValue<number>(
   'L1Timelock',
   'getMinDelay',
@@ -186,6 +193,7 @@ export const nova: ScalingProject = orbitStackL2({
     l1TimelockDelay,
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
+    challengeGracePeriodSeconds,
   ),
   nonTemplateRiskView: {
     exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
@@ -196,6 +204,16 @@ export const nova: ScalingProject = orbitStackL2({
       l1TimelockDelay,
       isPostBoLD,
     ),
+    stateValidation: {
+      ...RISK_VIEW.STATE_FP_INT(
+        challengeWindowSeconds,
+        challengeGracePeriodSeconds,
+      ),
+      initialBond: formatEther(
+        discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+      ),
+    },
+
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -237,6 +255,7 @@ export const nova: ScalingProject = orbitStackL2({
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
         l2TimelockDelay,
+        challengeGracePeriodSeconds
       ),
     ],
   },

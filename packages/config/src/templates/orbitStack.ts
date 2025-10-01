@@ -209,6 +209,7 @@ export function getNitroGovernance(
   l1TimelockDelay: number,
   treasuryTimelockDelay: number,
   l2TreasuryQuorumPercent: number,
+  challengeGracePeriodSeconds: number,
 ): string {
   return `
 All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is governed by the Arbitrum Decentralized Autonomous Organization (DAO)
@@ -227,7 +228,7 @@ CoreGovernor-enforced ${l2CoreQuorumPercent}% threshold of the votable tokens. T
     l2TimelockDelay,
   )} delay and then sends it to the Outbox contract on Ethereum. This incurs another delay (the challenge period) of ${formatSeconds(
     challengeWindowSeconds,
-  )}.
+  )}, which is extended by an additional ${formatSeconds(challengeGracePeriodSeconds)} if the top-level assertion has been challenged.
 When that has passed, the L1 Timelock delays for additional ${formatSeconds(
     l1TimelockDelay,
   )}. Both timelocks serve as delays during which the transparent transaction contents can be audited,
