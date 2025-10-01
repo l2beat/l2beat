@@ -102,12 +102,16 @@ async function main() {
 
   const humanIds = new Set<string>()
   for (const abstract of out.abstractTokens) {
+    abstract.deployedTokens.sort()
+
     const humanId = abstract.id.slice(7)
     if (humanIds.has(humanId)) {
       console.log('Duplicate abstract id', humanId)
     }
     humanIds.add(humanId)
   }
+
+  out.deployedTokens.sort((a, b) => a.id.localeCompare(b.id))
 
   writeFileSync(
     join(__dirname, 'out.json'),
