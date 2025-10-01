@@ -129,7 +129,9 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       detailedDescription: p.display.detailedDescription,
       architectureImage: p.display.architectureImage,
       ...p.technology,
-      dataAvailability: asArray(p.technology?.dataAvailability),
+      dataAvailability: emptyArrayToUndefined(
+        asArray(p.technology?.dataAvailability),
+      ),
       sequencingImage: p.display.sequencingImage,
       stateDerivation: p.stateDerivation,
       stateValidation: p.stateValidation,
