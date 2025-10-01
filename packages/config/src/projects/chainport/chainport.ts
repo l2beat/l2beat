@@ -32,6 +32,9 @@ export const chainport: Bridge = {
       websites: ['https://chainport.io/'],
       documentation: ['https://docs.chainport.io/'],
       socialMedia: ['https://twitter.com/chain_port'],
+      bridges: ['https://app.chainport.io'],
+      explorers: ['https://app.chainport.io/explore'],
+      repositories: ['https://github.com/chainport'],
     },
   },
   config: {
