@@ -16,12 +16,6 @@ model CurrentPrice {
   updatedAt   DateTime @db.Timestamp(6)
 }
 
-model Stake {
-  id             String @id @db.VarChar(255)
-  totalStake     Float  @db.Real
-  thresholdStake Float  @db.Real
-}
-
 model DaBeatStats {
   id                 String @id @db.VarChar(255)
   totalStake         Float  @db.Real
