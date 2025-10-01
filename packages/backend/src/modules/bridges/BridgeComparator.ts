@@ -11,7 +11,7 @@ export class BridgeComparator {
     private logger: Logger,
     private intervalMs = 10 * 60_000,
     // Timeout between getting external items and check, needed for backend to index latest events
-    private timeoutMs = 1_000,
+    private timeoutMs = 10_000,
   ) {
     this.logger = logger.for(this)
   }
@@ -64,14 +64,8 @@ export class BridgeComparator {
     for (const i of items) {
       const records =
         i.plugin.type === 'message'
-          ? await this.db.bridgeMessage.getExistingItems(
-              i.items,
-              i.plugin.types,
-            )
-          : await this.db.bridgeTransfer.getExistingItems(
-              i.items,
-              i.plugin.types,
-            )
+          ? await this.db.bridgeMessage.getExistingItems(i.items)
+          : await this.db.bridgeTransfer.getExistingItems(i.items)
 
       let missing = 0
       for (const item of i.items) {

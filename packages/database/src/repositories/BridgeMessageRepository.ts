@@ -138,15 +138,10 @@ export class BridgeMessageRepository extends BaseRepository {
       srcTxHash: string
       dstTxHash: string
     }[],
-    types: string[],
   ): Promise<BridgeMessageRecord[]> {
     if (items.length === 0) return []
 
     let query = this.db.selectFrom('BridgeMessage').selectAll()
-
-    if (types.length > 0) {
-      query = query.where('type', 'in', types)
-    }
 
     query = query.where((eb) => {
       const conditions = items.map((item) => {

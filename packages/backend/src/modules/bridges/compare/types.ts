@@ -1,7 +1,6 @@
 export interface BridgeComparePlugin {
   name: string
   type: 'message' | 'transfer'
-  types: string[]
   getExternalItems: () => Promise<BridgeExternalItem[]>
 }
 

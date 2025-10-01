@@ -238,15 +238,10 @@ export class BridgeTransferRepository extends BaseRepository {
       srcTxHash: string
       dstTxHash: string
     }[],
-    types: string[],
   ): Promise<BridgeTransferRecord[]> {
     if (items.length === 0) return []
 
     let query = this.db.selectFrom('BridgeTransfer').selectAll()
-
-    if (types.length > 0) {
-      query = query.where('type', 'in', types)
-    }
 
     query = query.where((eb) => {
       const conditions = items.map((item) => {
