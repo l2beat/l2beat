@@ -90,9 +90,9 @@ export class UpdateMonitor {
   generateDailyReminder(): Record<string, DailyReminderChainEntry> {
     const result: Record<string, DailyReminderChainEntry> = {}
 
-    const projectConfigs = this.configReader
-      .readAllDiscoveredProjects()
-      .map((project) => this.configReader.readConfig(project))
+    const projectConfigs = this.projects.map((project) =>
+      this.configReader.readConfig(project),
+    )
 
     for (const projectConfig of projectConfigs) {
       if (projectConfig.archived) {
