@@ -344,25 +344,6 @@ model SyncMetadata {
   @@index([feature, id])
 }
 
-model BridgeEvent {
-  eventId     String   @db.VarChar(40)
-  type        String   @db.VarChar(64)
-  expiresAt   DateTime @db.Timestamp(6)
-  timestamp   DateTime @db.Timestamp(6)
-  chain       String   @db.VarChar(32)
-  blockNumber Int
-  blockHash   String   @db.VarChar(66)
-  txHash      String   @db.VarChar(66)
-  txTo        String?  @db.VarChar(42)
-  matched     Boolean
-  unsupported Boolean  @default(false)
-  logIndex    Int
-  args        Json
-
-  @@id([eventId])
-  @@index([type])
-}
-
 model BridgeMessage {
   messageId   String    @db.VarChar(40)
   type        String    @db.VarChar(64)
