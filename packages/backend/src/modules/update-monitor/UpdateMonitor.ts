@@ -46,11 +46,11 @@ export class UpdateMonitor {
     )
   }
 
-  async start() {
+  start() {
     this.logger.info('Started')
     this.logger.info('Run on start', { runOnStart: this.runOnStart })
     if (this.runOnStart) {
-      await this.updateNotifier.handleStart()
+      // this.updateNotifier.handleStart()
       this.taskQueue.addToFront(UnixTime.now())
     }
     return this.clock.onNewHour((timestamp) => {
