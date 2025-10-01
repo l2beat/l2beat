@@ -44,6 +44,7 @@ export async function getScalingActivityEntries() {
       getEthereumEntry(ethereumData, 'others'),
       getEthereumEntry(ethereumData, 'notReviewed'),
     ])
+    .filter((p) => p !== undefined)
     .sort(compareActivityEntry)
 
   return groupByScalingTabs(entries)
@@ -74,19 +75,19 @@ function getScalingProjectActivityEntry(
   project: Project<'statuses' | 'scalingInfo' | 'display'>,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
-): ScalingActivityEntry {
+): ScalingActivityEntry | undefined {
   const syncWarning = getActivitySyncWarning(data?.syncState)
+
+  if (!data) return undefined
 
   return {
     ...getCommonScalingEntry({ project, changes, syncWarning }),
-    data: data
-      ? {
-          tps: data.tps,
-          uops: data.uops,
-          ratio: data.ratio,
-          isSynced: !syncWarning,
-        }
-      : undefined,
+    data: {
+      tps: data.tps,
+      uops: data.uops,
+      ratio: data.ratio,
+      isSynced: !syncWarning,
+    },
   }
 }
 

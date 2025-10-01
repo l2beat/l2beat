@@ -21,6 +21,7 @@ export interface Parser<T> {
 }
 
 export interface Validator<T> {
+  description?: string
   validate: (value: unknown) => T
   safeValidate: (value: unknown) => Result<T>
   isValid: (value: unknown) => value is T
@@ -40,6 +41,7 @@ export interface Validator<T> {
   ): Parser<Exclude<T, null | undefined>>
   catch(value: T): Parser<T>
   optional(): Validator<T | undefined>
+  describe: (description: string) => Validator<T>
 }
 
 const CANNOT_VALIDATE = () => {
@@ -80,6 +82,7 @@ export type ImpMeta =
 
 export class Imp<T> implements Validator<T>, Parser<T> {
   meta: ImpMeta
+  description?: string
   safeValidate: (value: unknown) => Result<T>
   safeParse: (value: unknown) => Result<T>
 
@@ -103,6 +106,11 @@ export class Imp<T> implements Validator<T>, Parser<T> {
 
   isValid(value: unknown): value is T {
     return this.safeValidate(value).success
+  }
+
+  describe(description: string) {
+    this.description = description
+    return this
   }
 
   parse(value: unknown): T {

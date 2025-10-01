@@ -229,7 +229,7 @@ function Transfer(
 ): BridgeTransfer {
   if (!/\w+\.\w+(\.\w+)?/.test(type)) {
     throw new Error(
-      'BridgeTransfer type must have the format: "app-name.Transfer" or "app-name.Swap" or "app-name.Transfer.app-name"',
+      'BridgeTransfer type must have the format: "app-name.Transfer" or "app-name.Transfer.app-name"',
     )
   }
   return {

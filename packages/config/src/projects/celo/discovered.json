@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1755507657,
+  "timestamp": 1759250495,
   "configHash": "0x233391dc575aec1c6373568f5fc4beaa61aa5ba9e6cfb85c5ae995f6196a9e0b",
   "entries": [
     {
@@ -17,7 +17,7 @@
         "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
       ],
       "proxyType": "immutable",
-      "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
+      "description": "used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -31,7 +31,7 @@
         "$immutable": true,
         "fallbackOwner": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
         "livenessGuard": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
-        "livenessInterval": "98d",
+        "livenessInterval": "3mo 8d",
         "minOwners": 8,
         "ownershipTransferredToFallback": false,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -205,7 +205,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620122",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620326",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -278,7 +278,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-          "description": "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
+          "description": "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 3mo 8d.",
           "role": ".livenessGuard"
         }
       ],
@@ -1285,7 +1285,7 @@
         "initVersion": 2,
         "paused": false,
         "pauseExpiry": 7884000,
-        "pauseExpiryFmt": "91d 6h",
+        "pauseExpiryFmt": "3mo 1d",
         "proxyAdmin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "2.3.0"
@@ -1742,7 +1742,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "balance": "999849305453450932825158896",
+        "balance": "999849305431040932825158896",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "eth:0x6E226fa22e5F19363d231D3FA048aaBa73CC1f47",
@@ -1750,7 +1750,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516982,
-          "prevBlockNum": 23164345
+          "prevBlockNum": 23476067
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2003,7 +2003,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 1159,
+        "gameCount": 1505,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -2015,7 +2015,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112",
-        "permissionedGamesTotal": 1159,
+        "permissionedGamesTotal": 1505,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -3052,6 +3052,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23166914 },
-  "permissionsConfigHash": "0x6125b63444f27008e66e34bc827a9a66841a8c495f69c9bb710106f1a8ea876f"
+  "usedBlockNumbers": { "ethereum": 23477064 },
+  "permissionsConfigHash": "0x41f1eff94de4ca459d86bf569011991a3078d23b1556a865f8375ebc64ad6962"
 }

@@ -80,6 +80,7 @@ export function createUpdateMonitorModule({
     clock,
     discoveryOutputCache,
     logger,
+    config.updateMonitor.projects,
     !!config.updateMonitor.runOnStart,
   )
 
