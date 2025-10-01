@@ -459,20 +459,20 @@ model AbstractToken {
 model DeployedToken {
   id                  Int      @default(autoincrement())
   chain               String   @db.VarChar(32)
-  address             String   @db.VarChar(32)
+  address             String   @db.VarChar(255)
   abstractTokenId     String?  @db.Char(6)
   symbol              String   @db.VarChar(255)
   decimals            Int
   deploymentTimestamp DateTime @db.Timestamp(6)
   comment             String?  @db.Text
-  
+
   abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
   connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
   connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
 
   @@id([id])
-  @@index([abstractTokenId])
   @@unique([chain, address])
+  @@index([abstractTokenId])
 }
 
 model TokenConnection {

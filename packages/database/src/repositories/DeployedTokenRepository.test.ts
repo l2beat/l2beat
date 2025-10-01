@@ -19,8 +19,8 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
   describe(DeployedTokenRepository.prototype.upsertMany.name, () => {
     it('inserts new records', async () => {
       const records = [
-        deployedToken({ id: 'token-1', deploymentTimestamp: UnixTime(10) }),
-        deployedToken({ id: 'token-2', deploymentTimestamp: UnixTime(20) }),
+        deployedToken({ id: 1, deploymentTimestamp: UnixTime(10) }),
+        deployedToken({ id: 2, deploymentTimestamp: UnixTime(20) }),
       ]
 
       const inserted = await repository.upsertMany(records)
@@ -32,11 +32,11 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
     it('updates existing records', async () => {
       await repository.upsertMany([
-        deployedToken({ id: 'token-1', symbol: 'OLD', decimals: 8 }),
+        deployedToken({ id: 1, symbol: 'OLD', decimals: 8 }),
       ])
 
       const updated = deployedToken({
-        id: 'token-1',
+        id: 1,
         symbol: 'NEW',
         decimals: 18,
         deploymentTimestamp: UnixTime(30),
@@ -45,11 +45,8 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       const inserted = await repository.upsert(updated)
       expect(inserted).toEqual(undefined)
 
-      const result = await repository.findById('token-1')
+      const result = await repository.findById(1)
       expect(result).toEqual(updated)
-
-      const result2 = await repository.findByIdSubstring('KEN-1')
-      expect(result2).toEqual(updated)
     })
   })
 
@@ -62,16 +59,16 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
       const records = [
         deployedToken({
-          id: 'token-1',
+          id: 1,
           abstractTokenId: 'TK0001',
           deploymentTimestamp: UnixTime(10),
         }),
         deployedToken({
-          id: 'token-2',
+          id: 2,
           abstractTokenId: 'TK0002',
           deploymentTimestamp: UnixTime(20),
         }),
-        deployedToken({ id: 'token-3', abstractTokenId: undefined }),
+        deployedToken({ id: 3, abstractTokenId: undefined }),
       ]
       await repository.upsertMany(records)
 
@@ -83,16 +80,16 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
   describe(DeployedTokenRepository.prototype.deleteByIds.name, () => {
     it('removes selected records', async () => {
       await repository.upsertMany([
-        deployedToken({ id: 'token-1' }),
-        deployedToken({ id: 'token-2' }),
-        deployedToken({ id: 'token-3' }),
+        deployedToken({ id: 1 }),
+        deployedToken({ id: 2 }),
+        deployedToken({ id: 3 }),
       ])
 
-      const deleted = await repository.deleteByIds(['token-1', 'token-3'])
+      const deleted = await repository.deleteByIds([1, 3])
       expect(deleted).toEqual(2)
 
       const remaining = await repository.getAll()
-      expect(remaining).toEqual([deployedToken({ id: 'token-2' })])
+      expect(remaining).toEqual([deployedToken({ id: 2 })])
     })
   })
 })
@@ -113,13 +110,18 @@ function abstractToken(
 }
 
 function deployedToken(
-  overrides: Partial<DeployedTokenRecord> & { id: string },
+  overrides: Partial<DeployedTokenRecord> & { id: number },
 ): DeployedTokenRecord {
+  const idHex = overrides.id.toString(16).padStart(40, '0')
+
   return {
     id: overrides.id,
+    chain: overrides.chain ?? 'ethereum',
+    address: overrides.address ?? `0x${idHex}`,
     abstractTokenId: overrides.abstractTokenId,
     symbol: overrides.symbol ?? 'TOKEN',
     decimals: overrides.decimals ?? 18,
     deploymentTimestamp: overrides.deploymentTimestamp ?? UnixTime(0),
+    comment: overrides.comment,
   }
 }

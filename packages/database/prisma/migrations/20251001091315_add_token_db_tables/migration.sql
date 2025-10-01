@@ -16,7 +16,7 @@ CREATE TABLE "AbstractToken" (
 CREATE TABLE "DeployedToken" (
     "id" SERIAL NOT NULL,
     "chain" VARCHAR(32) NOT NULL,
-    "address" VARCHAR(32) NOT NULL,
+    "address" VARCHAR(255) NOT NULL,
     "abstractTokenId" CHAR(6),
     "symbol" VARCHAR(255) NOT NULL,
     "decimals" INTEGER NOT NULL,

@@ -13,9 +13,9 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
 
   beforeEach(async () => {
     await deployedTokens.upsertMany([
-      deployedToken({ id: 'token-1' }),
-      deployedToken({ id: 'token-2' }),
-      deployedToken({ id: 'token-3' }),
+      deployedToken({ id: 1 }),
+      deployedToken({ id: 2 }),
+      deployedToken({ id: 3 }),
     ])
   })
 
@@ -28,13 +28,13 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     it('inserts new records', async () => {
       const connections = [
         tokenConnection({
-          tokenFromId: 'token-1',
-          tokenToId: 'token-2',
+          tokenFromId: 1,
+          tokenToId: 2,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'token-2',
-          tokenToId: 'token-3',
+          tokenFromId: 2,
+          tokenToId: 3,
           type: 'wrapper',
           params: { type: 'canonical' },
           comment: 'wrapped',
@@ -51,16 +51,16 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     it('updates existing records when keys match', async () => {
       await repository.upsertMany([
         tokenConnection({
-          tokenFromId: 'token-1',
-          tokenToId: 'token-2',
+          tokenFromId: 1,
+          tokenToId: 2,
           type: 'canonical',
           comment: 'initial',
         }),
       ])
 
       const updated = tokenConnection({
-        tokenFromId: 'token-1',
-        tokenToId: 'token-2',
+        tokenFromId: 1,
+        tokenToId: 2,
         type: 'canonical',
         params: { type: 'canonical' },
         comment: 'updated comment',
@@ -68,7 +68,7 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
 
       await repository.upsert(updated)
 
-      const result = await repository.getFromTo('token-1', 'token-2')
+      const result = await repository.getFromTo(1, 2)
       expect(result).toEqual([updated])
     })
   })
@@ -79,32 +79,32 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
       it('returns inbound and outbound connections', async () => {
         await repository.upsertMany([
           tokenConnection({
-            tokenFromId: 'token-1',
-            tokenToId: 'token-2',
+            tokenFromId: 1,
+            tokenToId: 2,
             type: 'canonical',
           }),
           tokenConnection({
-            tokenFromId: 'token-3',
-            tokenToId: 'token-1',
+            tokenFromId: 3,
+            tokenToId: 1,
             type: 'wrapper',
           }),
           tokenConnection({
-            tokenFromId: 'token-2',
-            tokenToId: 'token-3',
+            tokenFromId: 2,
+            tokenToId: 3,
             type: 'wrapper',
           }),
         ])
 
-        const result = await repository.getConnectionsFromOrTo('token-1')
+        const result = await repository.getConnectionsFromOrTo(1)
         expect(result).toEqualUnsorted([
           tokenConnection({
-            tokenFromId: 'token-1',
-            tokenToId: 'token-2',
+            tokenFromId: 1,
+            tokenToId: 2,
             type: 'canonical',
           }),
           tokenConnection({
-            tokenFromId: 'token-3',
-            tokenToId: 'token-1',
+            tokenFromId: 3,
+            tokenToId: 1,
             type: 'wrapper',
           }),
         ])
@@ -116,32 +116,32 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     it('returns outbound connections', async () => {
       await repository.upsertMany([
         tokenConnection({
-          tokenFromId: 'token-1',
-          tokenToId: 'token-2',
+          tokenFromId: 1,
+          tokenToId: 2,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'token-1',
-          tokenToId: 'token-3',
+          tokenFromId: 1,
+          tokenToId: 3,
           type: 'wrapper',
         }),
         tokenConnection({
-          tokenFromId: 'token-2',
-          tokenToId: 'token-1',
+          tokenFromId: 2,
+          tokenToId: 1,
           type: 'canonical',
         }),
       ])
 
-      const result = await repository.getConnectionsFrom('token-1')
+      const result = await repository.getConnectionsFrom(1)
       expect(result).toEqualUnsorted([
         tokenConnection({
-          tokenFromId: 'token-1',
-          tokenToId: 'token-2',
+          tokenFromId: 1,
+          tokenToId: 2,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'token-1',
-          tokenToId: 'token-3',
+          tokenFromId: 1,
+          tokenToId: 3,
           type: 'wrapper',
         }),
       ])
@@ -152,22 +152,22 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     it('returns inbound connections', async () => {
       await repository.upsertMany([
         tokenConnection({
-          tokenFromId: 'token-1',
-          tokenToId: 'token-2',
+          tokenFromId: 1,
+          tokenToId: 2,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'token-3',
-          tokenToId: 'token-1',
+          tokenFromId: 3,
+          tokenToId: 1,
           type: 'wrapper',
         }),
       ])
 
-      const result = await repository.getConnectionsTo('token-2')
+      const result = await repository.getConnectionsTo(2)
       expect(result).toEqualUnsorted([
         tokenConnection({
-          tokenFromId: 'token-1',
-          tokenToId: 'token-2',
+          tokenFromId: 1,
+          tokenToId: 2,
           type: 'canonical',
         }),
       ])
@@ -180,35 +180,32 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
       it('returns connections in both directions', async () => {
         await repository.upsertMany([
           tokenConnection({
-            tokenFromId: 'token-1',
-            tokenToId: 'token-2',
+            tokenFromId: 1,
+            tokenToId: 2,
             type: 'canonical',
           }),
           tokenConnection({
-            tokenFromId: 'token-2',
-            tokenToId: 'token-1',
+            tokenFromId: 2,
+            tokenToId: 1,
             type: 'wrapper',
           }),
           tokenConnection({
-            tokenFromId: 'token-2',
-            tokenToId: 'token-3',
+            tokenFromId: 2,
+            tokenToId: 3,
             type: 'canonical',
           }),
         ])
 
-        const result = await repository.getConnectionsBetween(
-          'token-1',
-          'token-2',
-        )
+        const result = await repository.getConnectionsBetween(1, 2)
         expect(result).toEqualUnsorted([
           tokenConnection({
-            tokenFromId: 'token-1',
-            tokenToId: 'token-2',
+            tokenFromId: 1,
+            tokenToId: 2,
             type: 'canonical',
           }),
           tokenConnection({
-            tokenFromId: 'token-2',
-            tokenToId: 'token-1',
+            tokenFromId: 2,
+            tokenToId: 1,
             type: 'wrapper',
           }),
         ])
@@ -220,30 +217,30 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     it('deletes connections touching provided token ids', async () => {
       await repository.upsertMany([
         tokenConnection({
-          tokenFromId: 'token-1',
-          tokenToId: 'token-2',
+          tokenFromId: 1,
+          tokenToId: 2,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'token-2',
-          tokenToId: 'token-1',
+          tokenFromId: 2,
+          tokenToId: 1,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'token-2',
-          tokenToId: 'token-3',
+          tokenFromId: 2,
+          tokenToId: 3,
           type: 'wrapper',
         }),
       ])
 
-      const deleted = await repository.deleteByTokenIds(['token-1'])
+      const deleted = await repository.deleteByTokenIds([1])
       expect(deleted).toEqual(2)
 
       const remaining = await repository.getAll()
       expect(remaining).toEqual([
         tokenConnection({
-          tokenFromId: 'token-2',
-          tokenToId: 'token-3',
+          tokenFromId: 2,
+          tokenToId: 3,
           type: 'wrapper',
         }),
       ])
@@ -256,33 +253,30 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
       it('removes all connections between tokens regardless of type', async () => {
         await repository.upsertMany([
           tokenConnection({
-            tokenFromId: 'token-1',
-            tokenToId: 'token-2',
+            tokenFromId: 1,
+            tokenToId: 2,
             type: 'canonical',
           }),
           tokenConnection({
-            tokenFromId: 'token-1',
-            tokenToId: 'token-2',
+            tokenFromId: 1,
+            tokenToId: 2,
             type: 'wrapper',
           }),
           tokenConnection({
-            tokenFromId: 'token-2',
-            tokenToId: 'token-3',
+            tokenFromId: 2,
+            tokenToId: 3,
             type: 'wrapper',
           }),
         ])
 
-        const deleted = await repository.deleteConnectionsFromTo(
-          'token-1',
-          'token-2',
-        )
+        const deleted = await repository.deleteConnectionsFromTo(1, 2)
         expect(deleted).toEqual(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toEqual([
           tokenConnection({
-            tokenFromId: 'token-2',
-            tokenToId: 'token-3',
+            tokenFromId: 2,
+            tokenToId: 3,
             type: 'wrapper',
           }),
         ])
@@ -292,21 +286,26 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
 })
 
 function deployedToken(
-  overrides: Partial<DeployedTokenRecord> & { id: string },
+  overrides: Partial<DeployedTokenRecord> & { id: number },
 ): DeployedTokenRecord {
+  const idHex = overrides.id.toString(16).padStart(40, '0')
+
   return {
     id: overrides.id,
+    chain: overrides.chain ?? 'ethereum',
+    address: overrides.address ?? `0x${idHex}`,
     abstractTokenId: overrides.abstractTokenId,
     symbol: overrides.symbol ?? 'TOKEN',
     decimals: overrides.decimals ?? 18,
     deploymentTimestamp: overrides.deploymentTimestamp ?? UnixTime(0),
+    comment: overrides.comment,
   }
 }
 
 function tokenConnection(
   overrides: Partial<TokenConnectionRecord> & {
-    tokenFromId: string
-    tokenToId: string
+    tokenFromId: number
+    tokenToId: number
     type: string
   },
 ): TokenConnectionRecord {

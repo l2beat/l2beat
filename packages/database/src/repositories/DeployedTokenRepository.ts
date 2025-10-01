@@ -4,30 +4,39 @@ import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
 
 export interface DeployedTokenRecord {
-  id: string
+  id: number
+  chain: string
+  address: string
   abstractTokenId: string | undefined
   symbol: string
   decimals: number
   deploymentTimestamp: UnixTime
+  comment: string | undefined
 }
 
 export function toRecord(row: Selectable<DeployedToken>): DeployedTokenRecord {
   return {
     id: row.id,
+    chain: row.chain,
+    address: row.address,
     abstractTokenId: row.abstractTokenId ?? undefined,
     symbol: row.symbol,
     decimals: row.decimals,
     deploymentTimestamp: UnixTime.fromDate(row.deploymentTimestamp),
+    comment: row.comment ?? undefined,
   }
 }
 
 export function toRow(record: DeployedTokenRecord): Insertable<DeployedToken> {
   return {
     id: record.id,
+    chain: record.chain,
+    address: record.address,
     abstractTokenId: record.abstractTokenId,
     symbol: record.symbol,
     decimals: record.decimals,
     deploymentTimestamp: UnixTime.toDate(record.deploymentTimestamp),
+    comment: record.comment,
   }
 }
 
@@ -58,7 +67,7 @@ export class DeployedTokenRepository extends BaseRepository {
     return records.length
   }
 
-  async findById(id: string): Promise<DeployedTokenRecord | undefined> {
+  async findById(id: number): Promise<DeployedTokenRecord | undefined> {
     const row = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
@@ -68,19 +77,7 @@ export class DeployedTokenRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async findByIdSubstring(
-    subs: string,
-  ): Promise<DeployedTokenRecord | undefined> {
-    const row = await this.db
-      .selectFrom('DeployedToken')
-      .selectAll()
-      .where('id', 'ilike', `%${subs}%`)
-      .executeTakeFirst()
-
-    return row ? toRecord(row) : undefined
-  }
-
-  async getByIds(ids: string[]): Promise<DeployedTokenRecord[]> {
+  async getByIds(ids: number[]): Promise<DeployedTokenRecord[]> {
     if (ids.length === 0) return []
 
     const rows = await this.db
@@ -111,7 +108,7 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async deleteByIds(ids: string[]): Promise<number> {
+  async deleteByIds(ids: number[]): Promise<number> {
     if (ids.length === 0) return 0
 
     const result = await this.db

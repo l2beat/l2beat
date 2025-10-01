@@ -7,8 +7,8 @@ export interface TokenConnectionParams {
 }
 
 export interface TokenConnectionRecord {
-  tokenFromId: string
-  tokenToId: string
+  tokenFromId: number
+  tokenToId: number
   type: string
   params: TokenConnectionParams | undefined
   comment: string | undefined
@@ -78,7 +78,7 @@ export class TokenConnectionRepository extends BaseRepository {
   }
 
   async getConnectionsFromOrTo(
-    tokenId: string,
+    tokenId: number,
   ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
@@ -91,7 +91,7 @@ export class TokenConnectionRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getConnectionsFrom(tokenId: string): Promise<TokenConnectionRecord[]> {
+  async getConnectionsFrom(tokenId: number): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -101,7 +101,7 @@ export class TokenConnectionRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getConnectionsTo(tokenId: string): Promise<TokenConnectionRecord[]> {
+  async getConnectionsTo(tokenId: number): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -112,8 +112,8 @@ export class TokenConnectionRepository extends BaseRepository {
   }
 
   async getFromTo(
-    tokenFromId: string,
-    tokenToId: string,
+    tokenFromId: number,
+    tokenToId: number,
   ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
@@ -126,8 +126,8 @@ export class TokenConnectionRepository extends BaseRepository {
   }
 
   async getConnectionsBetween(
-    tokenA: string,
-    tokenB: string,
+    tokenA: number,
+    tokenB: number,
   ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
@@ -150,8 +150,8 @@ export class TokenConnectionRepository extends BaseRepository {
   }
 
   async deleteConnectionsFromTo(
-    tokenFromId: string,
-    tokenToId: string,
+    tokenFromId: number,
+    tokenToId: number,
   ): Promise<number> {
     const result = await this.db
       .deleteFrom('TokenConnection')
@@ -162,7 +162,7 @@ export class TokenConnectionRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async deleteByTokenIds(tokenIds: string[]): Promise<number> {
+  async deleteByTokenIds(tokenIds: number[]): Promise<number> {
     if (tokenIds.length === 0) return 0
 
     const result = await this.db
