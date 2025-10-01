@@ -7,7 +7,7 @@ describe(OpenApi.name, () => {
   describe('route registration', () => {
     it('registers a simple GET route', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       const handler = mockFn().returns(undefined)
       openapi.get(
@@ -24,7 +24,7 @@ describe(OpenApi.name, () => {
 
     it('registers multiple routes', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       openapi.get('/route1', { result: v.string() }, mockFn())
       openapi.get('/route2', { result: v.number() }, mockFn())
@@ -36,7 +36,7 @@ describe(OpenApi.name, () => {
   describe('query validation', () => {
     it('passes valid query parameters to handler', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
       const handler = mockFn().returns(undefined)
 
       const querySchema = v.object({
@@ -64,7 +64,7 @@ describe(OpenApi.name, () => {
 
     it('returns 400 for invalid query parameters', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       const querySchema = v.object({
         page: v.number(),
@@ -90,7 +90,7 @@ describe(OpenApi.name, () => {
 
     it('sanitizes empty string query parameters', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
       const handler = mockFn().returns(undefined)
 
       const querySchema = v.object({
@@ -120,7 +120,7 @@ describe(OpenApi.name, () => {
   describe('params validation', () => {
     it('passes valid path parameters to handler', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
       const handler = mockFn().returns(undefined)
 
       const paramsSchema = v.object({
@@ -149,7 +149,7 @@ describe(OpenApi.name, () => {
 
     it('returns 400 for invalid path parameters', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       const paramsSchema = v.object({
         id: v.number(),
@@ -175,7 +175,7 @@ describe(OpenApi.name, () => {
 
     it('validates both params and query', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
       const handler = mockFn().returns(undefined)
 
       openapi.get(
@@ -206,7 +206,7 @@ describe(OpenApi.name, () => {
   describe('OpenAPI schema generation', () => {
     it('generates basic schema structure', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       const schema = openapi.getOpenApiSchema()
 
@@ -230,7 +230,7 @@ describe(OpenApi.name, () => {
 
     it('includes route in paths', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       openapi.get(
         '/test',
@@ -260,7 +260,7 @@ describe(OpenApi.name, () => {
 
     it('converts Express path params to OpenAPI format', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       openapi.get(
         '/users/:userId/posts/:postId',
@@ -283,7 +283,7 @@ describe(OpenApi.name, () => {
 
     it('includes query parameters in schema', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       openapi.get(
         '/test',
@@ -318,7 +318,7 @@ describe(OpenApi.name, () => {
 
     it('includes path parameters in schema', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       openapi.get(
         '/users/:id',
@@ -346,7 +346,7 @@ describe(OpenApi.name, () => {
 
     it('includes 400 response when params or query are present', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       openapi.get(
         '/test',
@@ -375,7 +375,7 @@ describe(OpenApi.name, () => {
 
     it('includes custom error responses', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       const NotFoundError = v
         .object({
@@ -412,7 +412,7 @@ describe(OpenApi.name, () => {
   describe('components schemas', () => {
     it('includes described schemas in components and references them', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       const UserSchema = v
         .object({
@@ -436,7 +436,7 @@ describe(OpenApi.name, () => {
 
     it('handles array responses with described elements and references them', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       const ItemSchema = v
         .object({
@@ -462,7 +462,7 @@ describe(OpenApi.name, () => {
 
     it('includes BadRequestResponse when validation is present', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       openapi.get(
         '/test',
@@ -482,7 +482,7 @@ describe(OpenApi.name, () => {
 
     it('does not include BadRequestResponse when no validation', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       openapi.get('/test', { result: v.string() }, mockFn())
 
@@ -495,7 +495,7 @@ describe(OpenApi.name, () => {
 
     it('includes error schemas in components', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       const CustomError = v
         .object({
@@ -526,7 +526,7 @@ describe(OpenApi.name, () => {
   describe('edge cases', () => {
     it('handles routes without optional fields', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       openapi.get('/minimal', { result: v.string() }, mockFn())
 
@@ -545,7 +545,7 @@ describe(OpenApi.name, () => {
 
     it('handles inline schemas without descriptions', () => {
       const app = mockApp()
-      const openapi = new OpenApi(app)
+      const openapi = new OpenApi(app, baseSchema)
 
       openapi.get(
         '/test',
@@ -605,4 +605,20 @@ function mockResponse() {
 function getRouteHandler(app: Application) {
   const calls = (app.get as ReturnType<typeof mockFn>).calls
   return calls[calls.length - 1]?.args[1]
+}
+
+const baseSchema = {
+  openapi: '3.0.0' as const,
+  info: {
+    title: 'L2BEAT API',
+    version: '1.0.0',
+  },
+  servers: [{ url: 'http://localhost:3000' }],
+  tags: [
+    {
+      name: 'projects' as const,
+      description:
+        'Endpoints for listing projects and retrieving detailed information about individual projects.',
+    },
+  ],
 }

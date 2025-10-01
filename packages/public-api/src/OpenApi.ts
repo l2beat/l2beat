@@ -60,10 +60,23 @@ interface Route {
   options: OpenApiRouteOptions
 }
 
+interface BaseOpenApiSchema {
+  openapi: '3.0.0'
+  info: {
+    title: string
+    version: string
+  }
+  servers: { url: string }[]
+  tags: { name: Tags; description: string }[]
+}
+
 export class OpenApi {
   private routes: Route[] = []
 
-  constructor(private readonly app: Application) {}
+  constructor(
+    private readonly app: Application,
+    private readonly baseSchema: BaseOpenApiSchema,
+  ) {}
 
   get<TParams, TOutput, TQuery, TErrors>(
     path: string,
@@ -114,20 +127,7 @@ export class OpenApi {
 
   getOpenApiSchema() {
     return {
-      openapi: '3.0.0',
-      info: {
-        title: 'L2BEAT API',
-        version: '1.0.0',
-      },
-      // TODO: add proper server url
-      servers: [{ url: 'http://localhost:3000' }],
-      tags: [
-        {
-          name: 'projects',
-          description:
-            'Endpoints for listing projects and retrieving detailed information about individual projects.',
-        },
-      ] satisfies { name: Tags; description: string }[],
+      ...this.baseSchema,
       paths: this.getPaths(),
       components: this.getComponents(),
     }
