@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1758523605,
+  "timestamp": 1759239729,
   "configHash": "0xfab89f75d053cae1a12bd233309b4f78f60b5a3821cbd44da3f00eca20de9a46",
   "entries": [
     {
@@ -398,68 +398,68 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1330716,
-          "blockId_": 2553004,
+          "batchId_": 1332312,
+          "blockId_": 2663844,
           "ts_": {
-            "parentHash": "0x1da20f0d8e9c3578a3c640d6ef14260d1bb6cf50d8dbedf686bfcdec2b6f9c85",
-            "blockHash": "0xd34ab2bef474b23ed3123c6eb7fa20acfd0fc70373ab4d63cf13239790c17425",
-            "stateRoot": "0xb0f7d7870f4239170b3081291381e46192cd3a4166cb62e63f8c67a3fa7d968c",
-            "prover": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+            "parentHash": "0x3efa2a606f33f20c3fdc4622bf144ae8c33717cc98d36f7a6096814416d37fae",
+            "blockHash": "0x5e5de8fed7a1d20a99e4332113603905a7d9df1e0375ea28c587438819d642df",
+            "stateRoot": "0xfc731baed89ee6e35af8f49e2ba6a679ac7a2092dcefaeea6c2f320417d43d3e",
+            "prover": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
             "inProvingWindow": true,
-            "createdAt": 1758514475
+            "createdAt": 1759227359
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1330718,
-          "blockHash_": "0x856ba0d84dbeb02f98e18e80845db3be1c072d028089e50dff5d04dbdb0f2ebc",
+          "blockId_": 1332314,
+          "blockHash_": "0xdaf98931594e29c30ca72d9a76e94fc103b1bcbcdb049f4f345c45327f8c64fb",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1741933343
+          "verifiedAt_": 1741958411
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1330718,
-          "blockId_": 2553160,
+          "batchId_": 1332314,
+          "blockId_": 2663957,
           "ts_": {
-            "parentHash": "0x6197a7929b46b32c6bd0c3bbf36ffeafc8feafd85924697dde9365c21d4d7a1d",
-            "blockHash": "0x856ba0d84dbeb02f98e18e80845db3be1c072d028089e50dff5d04dbdb0f2ebc",
+            "parentHash": "0x9724e99b5d6d8f4cb686724ef1c680c0ab1412cdc8ab35944414baabd5bc7afb",
+            "blockHash": "0xdaf98931594e29c30ca72d9a76e94fc103b1bcbcdb049f4f345c45327f8c64fb",
             "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "prover": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+            "prover": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
             "inProvingWindow": true,
-            "createdAt": 1758515735
+            "createdAt": 1759225259
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1330716,
-            "lastSynecdAt": 1758523175
+            "lastSyncedBlockId": 1332312,
+            "lastSynecdAt": 1759238387
           },
           {
-            "numBlocks": 1330738,
-            "lastVerifiedBlockId": 1330718,
+            "numBlocks": 1332346,
+            "lastVerifiedBlockId": 1332314,
             "provingPaused": false,
-            "lastProposedIn": 23416869,
+            "lastProposedIn": 23476141,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1330716,
-          "lastSyncedAt": 1758523175
+          "lastSyncedBatchId": 1332312,
+          "lastSyncedAt": 1759238387
         },
         "getStats2": {
-          "numBatches": 1330738,
-          "lastVerifiedBatchId": 1330718,
+          "numBatches": 1332346,
+          "lastVerifiedBatchId": 1332314,
           "paused": false,
-          "lastProposedIn": 23416869,
+          "lastProposedIn": 23476141,
           "lastUnpausedAt": 1716571955
         },
         "impl": "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
         "inboxWrapper": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 23416869,
+        "lastProposedIn": 23476141,
         "newFork": "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8",
         "oldFork": "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
@@ -500,14 +500,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1330716,
-            "lastSyncedAt": 1758523175
+            "lastSyncedBatchId": 1332312,
+            "lastSyncedAt": 1759238387
           },
           "stats2": {
-            "numBatches": 1330738,
-            "lastVerifiedBatchId": 1330718,
+            "numBatches": 1332346,
+            "lastVerifiedBatchId": 1332314,
             "paused": false,
-            "lastProposedIn": 23416869,
+            "lastProposedIn": 23476141,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -728,7 +728,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1758523595,
+        "clock": 1759239719,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -1422,7 +1422,23 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "resolver": "eth:0x0000000000000000000000000000000000000000",
         "riscoGroth16Verifier": "eth:0x34Eda8BfFb539AeC33078819847B36D221c6641c",
-        "taikoChainId": 167000
+        "taikoChainId": 167000,
+        "trustedImages": [
+          "0x49c8f13fdfbec7c03fc8516ef7d32d8fa43fa4f495d62e9ff6bf63710df402d4",
+          "0x052010a130f9957a9d218a173242070c47af1c5d2c3ccae1d8e8d85ce6c7d78e",
+          "0x1f28744f3b199dd31cfe84ee45bf6a7c9e4b7e8f7e888bb47889bba0237e00ff",
+          "0x0a0488e485692dd711b60258bd799099f8d1e6776cb96ede88c9fecfcc9b7e7c",
+          "0xa41db9223051c1a6b046829dc372eab4989ff0a3e027c360d8c906d831ca60d4",
+          "0xa3f175713dc988430192dfd9a6c49ea111e389e2c008428eedd5f38648094404",
+          "0xe9aec1d30d25da1ccfc02a81c4b71f32e0a6f675dff4ce01fe4bd5f96ff320bd",
+          "0xee950d20e2483b9b6b859272feaea2dd84cea8a9cfdf1af8834df6b75c3d715e"
+        ]
+      },
+      "fieldMeta": {
+        "trustedImages": {
+          "severity": "HIGH",
+          "description": "Image IDs (i.e. program digest) of Risc0 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them."
+        }
       },
       "implementationNames": {
         "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE": "ERC1967Proxy",
@@ -2827,7 +2843,27 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "resolver": "eth:0x0000000000000000000000000000000000000000",
         "sp1RemoteVerifier": "eth:0xFF5Adab685362DC4C33536a65aF5873738D1216B",
-        "taikoChainId": 167000
+        "taikoChainId": 167000,
+        "trustedPrograms": [
+          "0x00380861a3c05aa16421c66921e7b952005ddad5b91b81e56d1a5f92a88db099",
+          "0x1c0430d17016a8590438cd241e7b952002eed6ad646e07955a34bf25288db099",
+          "0x00745853e47349fb2ddb364dae473e099c19890da8c786490da83066a0959689",
+          "0x3a2c29f21cd27ecb3b66c9b56473e09960cc486d231e19241b5060cd20959689",
+          "0x34712aed5061bce303b4bae32d3edafc05a1b9ec04c6d1d84dedc5ab28e8fe98",
+          "0x0068e255db4186f38c1da5d71ad3edafc0b4373d8131b47626f6e2d5a8e8fe98",
+          "0x43645b1b5d225d4539e38da910e3ba2a4d8d8dfc457a10d26a03d3cf1fb969be",
+          "0x0086c8b63774897515cf1c6d490e3ba2a9b1b1bf915e8434b501e9e79fb969be",
+          "0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3",
+          "0x205b010d6f951ff14a29257944eea12e5554d853002190e440dc4e925ec6d6c3",
+          "0x00b14510cec97d3449eb84b814be2f4b5dae3eb56528d6bb65e1aa8226f2bed3",
+          "0x58a28867325f4d123d7097024be2f4b56d71f5ab14a35aed4bc3550426f2bed3"
+        ]
+      },
+      "fieldMeta": {
+        "trustedPrograms": {
+          "severity": "HIGH",
+          "description": "Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them."
+        }
       },
       "implementationNames": {
         "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9": "ERC1967Proxy",
@@ -3033,7 +3069,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37916,
+        "nextMessageId": 37932,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -3376,7 +3412,7 @@
           "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
         ],
         "getOperatorForCurrentEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-        "getOperatorForNextEpoch": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+        "getOperatorForNextEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
         "havingPerfectOperators": false,
         "impl": "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc",
         "inNonReentrant": false,
@@ -6183,14 +6219,14 @@
     "taiko/PreconfWhitelist": "0x66b90cd81a3d4c503859f73a9eac9db422adec22d2cb29fc6e704f17d7052009",
     "taiko/ProverSet": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "taiko/QuotaManager": "0x60a9974b6da61ae37b06e2fc4839dece6d902b60d2baac895e8886d1609be020",
-    "taiko/Risc0VerifierGateway": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
+    "taiko/Risc0VerifierGateway": "0xbfa607093526a799c9cbdaa0434b29d30a484b7b6f6e7e1185d4796c6b49b574",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SgxVerifier": "0x76591e4af9aa17fa8b64070623f9f2599e0161de42b8c518384374ca652c644e",
     "taiko/SharedERC20Vault": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/SignalService": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/SignerList": "0x09efeff976f7ad4f78dcc3bfa1d6c9116b57ba24a2db0f2ddeb17aee1f2cf2e9",
     "taiko/SigVerifyLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "taiko/SP1VerifierGateway": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
+    "taiko/SP1VerifierGateway": "0x90dec47dd072435b90c527b936ef46f8c4330db981950b20855b91a67cf1a3a7",
     "taiko/TaikoAnchor": "0xe0fd7c7cfd46807053cf50f2f122c29c522bcde9da4f26d346bee658b7687f70",
     "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",
     "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
@@ -6199,6 +6235,6 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23416872, "taiko": 2554506 },
+  "usedBlockNumbers": { "ethereum": 23476170, "taiko": 2666243 },
   "permissionsConfigHash": "0xa874cbc06f08e79346916c5254aae42b6e9da0ff5b3d432ac1f0869117a93f63"
 }
