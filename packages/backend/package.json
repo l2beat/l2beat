@@ -26,6 +26,7 @@
     "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
     "starkware-multiplier": "ts-node --transpile-only scripts/starkwareMultiplier.ts",
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
+    "new-tokens": "ts-node --transpile-only scripts/new-tokens/script.ts",
     "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
     "db:inspect": "pnpm prisma studio",
     "dev": "pnpm build:dependencies && pnpm start:dev",

@@ -13,6 +13,8 @@ export interface LegacyToken {
   decimals: number
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
+  deploymentTimestamp?: UnixTime
+  coingeckoListingTimestamp?: UnixTime
   category:
     | 'ether'
     | 'stablecoin'
