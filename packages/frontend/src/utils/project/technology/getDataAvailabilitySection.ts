@@ -36,7 +36,10 @@ export function getDataAvailabilitySection(
   if (project.customDa) {
     return getCustomDaSection(project)
   }
-  if (project.scalingTechnology?.dataAvailability) {
+  if (
+    project.scalingTechnology?.dataAvailability &&
+    project.scalingTechnology?.dataAvailability?.length > 0
+  ) {
     return getPublicDaSection(
       {
         ...project,
@@ -107,9 +110,9 @@ function getPublicDaSection(
   project: Project<'statuses' | 'scalingTechnology', 'scalingDa'>,
   daSolutions?: DaSolution[],
 ): Extract<DataAvailabilitySection, { type: 'TechnologyChoicesSection' }> {
-  const dataAvailability = project.scalingTechnology.dataAvailability ?? []
+  const dataAvailability = project.scalingTechnology.dataAvailability
 
-  assert(dataAvailability.length > 0, 'dataAvailability is required')
+  assert(dataAvailability, 'dataAvailability is required')
 
   const props = getTechnologyChoicesSectionProps(
     project,
