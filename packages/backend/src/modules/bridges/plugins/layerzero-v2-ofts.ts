@@ -2,6 +2,7 @@ import {
   createLayerZeroGuid,
   decodePacket,
   LAYERZERO_NETWORKS,
+  parsePacketDelivered,
   parsePacketSent,
 } from './layerzero-v2'
 import {
@@ -23,14 +24,14 @@ export const parseOFTReceived = createEventParser(
   'event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)',
 )
 
-export const PacketOFTSent = createBridgeEventType<{
+export const OFTSentPacketSent = createBridgeEventType<{
   $dstChain: string
   guid: string
   amountSentLD: number
   amountReceivedLD: number
 }>('layerzero-v2.PacketOFTSent')
 
-export const PacketOFTDelivered = createBridgeEventType<{
+export const OFTReceivedPacketDelivered = createBridgeEventType<{
   $srcChain: string
   guid: string
   amountReceivedLD: number
@@ -43,85 +44,88 @@ export class LayerZeroV2OFTsPlugin implements BridgePlugin {
     const network = LAYERZERO_NETWORKS.find((x) => x.chain === input.ctx.chain)
     if (!network) return
 
-    const packetSent = parsePacketSent(input.log, [network.address])
-    if (packetSent) {
-      const nextLog = input.txLogs.find(
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! + 1,
-      )
-      const oftSent = nextLog && parseOFTSent(nextLog, null)
-      if (!oftSent) return
-      const packet = decodePacket(packetSent.encodedPayload)
-      if (!packet) return
-
-      const guid = createLayerZeroGuid(
-        packet.header.nonce,
-        packet.header.srcEid,
-        packet.header.sender,
-        packet.header.dstEid,
-        packet.header.receiver,
-      )
-      const $dstChain = findChain(
-        LAYERZERO_NETWORKS,
-        (x) => x.eid,
-        packet.header.dstEid,
-      )
-      return PacketOFTSent.create(input.ctx, {
-        $dstChain,
-        guid,
-        amountSentLD: Number(oftSent.amountSentLD),
-        amountReceivedLD: Number(oftSent.amountReceivedLD),
-      })
-    }
-
-    const packetDelivered = parsePacketDelivered(input.log, [network.address])
-    if (packetDelivered) {
+    const oftSent = parseOFTSent(input.log, null)
+    if (oftSent) {
       const previousLog = input.txLogs.find(
         // biome-ignore lint/style/noNonNullAssertion: It's there
         (x) => x.logIndex === input.log.logIndex! - 1,
       )
-      const oftReceived = previousLog && parseOFTReceived(previousLog, null)
-      if (!oftReceived) return
-      const guid = createLayerZeroGuid(
-        packetDelivered.origin.nonce,
-        packetDelivered.origin.srcEid,
-        packetDelivered.origin.sender,
-        network.eid,
-        packetDelivered.receiver,
+      if (previousLog) {
+        const packetSent = parsePacketSent(previousLog, [network.address])
+        if (packetSent) {
+          const packet = decodePacket(packetSent.encodedPayload)
+          if (packet) {
+            const guid = createLayerZeroGuid(
+              packet.header.nonce,
+              packet.header.srcEid,
+              packet.header.sender,
+              packet.header.dstEid,
+              packet.header.receiver,
+            )
+            const $dstChain = findChain(
+              LAYERZERO_NETWORKS,
+              (x) => x.eid,
+              packet.header.dstEid,
+            )
+            return OFTSentPacketSent.create(input.ctx, {
+              $dstChain,
+              guid,
+              amountSentLD: Number(oftSent.amountSentLD),
+              amountReceivedLD: Number(oftSent.amountReceivedLD),
+            })
+          }
+        }
+      }
+    }
+
+    const oftReceived = parseOFTReceived(input.log, null)
+    if (oftReceived) {
+      const nextLog = input.txLogs.find(
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        (x) => x.logIndex === input.log.logIndex! + 1,
       )
-      const $srcChain = findChain(
-        LAYERZERO_NETWORKS,
-        (x) => x.eid,
-        packetDelivered.origin.srcEid,
-      )
-      return PacketOFTDelivered.create(input.ctx, {
-        $srcChain,
-        guid,
-        amountReceivedLD: Number(oftReceived.amountReceivedLD),
-      })
+      if (nextLog) {
+        const packetDelivered = parsePacketDelivered(nextLog, [network.address])
+        if (packetDelivered) {
+          const guid = createLayerZeroGuid(
+            packetDelivered.origin.nonce,
+            packetDelivered.origin.srcEid,
+            packetDelivered.origin.sender,
+            network.eid,
+            packetDelivered.receiver,
+          )
+          const $srcChain = findChain(
+            LAYERZERO_NETWORKS,
+            (x) => x.eid,
+            packetDelivered.origin.srcEid,
+          )
+          return OFTReceivedPacketDelivered.create(input.ctx, {
+            $srcChain,
+            guid,
+            amountReceivedLD: Number(oftReceived.amountReceivedLD),
+          })
+        }
+      }
     }
   }
 
-  matchTypes = [PacketOFTDelivered]
+  matchTypes = [OFTReceivedPacketDelivered]
   match(
-    packetOFTDelivered: BridgeEvent,
+    oftReceivedPacketDelivered: BridgeEvent,
     db: BridgeEventDb,
   ): MatchResult | undefined {
-    if (!PacketOFTDelivered.checkType(packetOFTDelivered)) return
-    const packetOFTSent = db.find(PacketOFTSent, {
-      guid: packetOFTDelivered.args.guid,
+    if (!OFTReceivedPacketDelivered.checkType(oftReceivedPacketDelivered))
+      return
+    const oftSentPacketSent = db.find(OFTSentPacketSent, {
+      guid: oftReceivedPacketDelivered.args.guid,
     })
-    if (!packetOFTSent) return
+    if (!oftSentPacketSent) return
     return [
-      Result.Message('layerzero-v2.Message', [
-        packetOFTSent,
-        packetOFTDelivered,
-      ]),
       Result.Transfer('oftv2.Transfer', {
-        srcEvent: packetOFTSent,
-        srcAmount: packetOFTSent.args.amountSentLD.toString(),
-        dstEvent: packetOFTDelivered,
-        dstAmount: packetOFTDelivered.args.amountReceivedLD.toString(),
+        srcEvent: oftSentPacketSent,
+        srcAmount: oftSentPacketSent.args.amountSentLD.toString(),
+        dstEvent: oftReceivedPacketDelivered,
+        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD.toString(),
       }),
     ]
   }
