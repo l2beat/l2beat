@@ -35,6 +35,14 @@
       "ecosystemId": "the-elastic-network",
       "news": [
         {
+          "title": "SANDchain Joins Elastic Network to Power $250B Creator Economy",
+          "content": "SANDchain, a blockchain built with ZKsync’s ZK Stack, [has been announced](https://x.com/zksync/status/1973018372532212000) as part of the Elastic Network to bring scalability, low fees, and trustless infrastructure to the global creator economy. Positioned as the financial backbone for creators, fans, and brands, it will use $SAND as its universal currency and introduce loyalty points, creator tokens, and programmable financing vaults. Launch partners include The Sandbox, Animoca Brands, and ZKsync, with its debut at TOKEN2049 Singapore on October 1 and testnet release on October 14."
+        },
+        {
+          "title": "ZKsync Co-Leads Grvt’s $19M Series A to Advance Privacy-First Onchain Finance",
+          "content": "Grvt [has secured](https://x.com/zksync/status/1973018372532212000) $19M in a Series A round co-led by ZKsync, Further Ventures, EigenCloud, and 500 Global. Grvt aims to address fragmentation and vulnerabilities in DeFi with privacy-by-default systems, stablecoin-enabled products, and structured yield strategies, positioning itself as a global blueprint for secure and scalable financial markets."
+        },
+        {
           "title": "Adding a ZKsync OS CTM",
           "content": "ZIP‑13, the [proposal](https://forum.zknation.io/t/zip-13-adding-a-zksync-os-ctm/776) by Matter Labs to add a ZKsync OS–based ChainTypeManager (CTM) into the Bridgehub, is now live and under vote (via[ Tally](https://www.tally.xyz/gov/zksync/proposal/22471812359223094779541460804735287481991027375586193607912523407322605938475?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f)). This upgrade is a stepping stone toward enabling full EVM equivalence, cheaper proofs, and modular chain architecture via the new Airbender prover * The CTM will initially operate under a temporary multisig to allow fast fixes during rollout, with plans to hand governance over later. * Existing ZKsync chains won’t be disrupted—there are no breaking changes. * For security isolation, ZKsync OS chains will not connect to the ZKsync Gateway initially. * Mechanisms are in place to ensure that new chains cannot withdraw more than their deposits via the shared bridge. If passed, ZIP‑13 unlocks early mainnet feedback for ZKsync OS, while preserving safety for current chains."
         },
@@ -167,12 +175,24 @@
       "projectId": "cartesi",
       "news": [
         {
+          "title": "Cartesi Joins L2BEAT’s Supporter Tier",
+          "content": "Cartesi joined [L2BEAT](https://x.com/l2beat/status/1971556291353977213)’s Supporter Tier, recognizing L2BEAT’s contribution to rollup transparency and aligning with industry leaders pushing the boundaries of Layer 2 security and visibility."
+        },
+        {
           "title": "Honeypot Bug Locks 20,042 CTSI in Fail-Stop Test",
           "content": "A [bug triggered](https://x.com/cartesiproject/status/1970902442259685855) during testing caused the Cartesi Honeypot smart contract to enter a fail-stop state, permanently locking 20,042 CTSI (~$1,420). This event validated the Honeypot’s purpose as a real-world stress test of the fraud-proof system, reinforcing its importance for secure deployments."
         },
         {
-          "title": "Chinonso Explains Merkle Trees in PRT Fraud Proofs",
-          "content": "[ChinonsoIdogwu](https://x.com/ChinonsoIdogwu/status/1970824742740574488) shared a detailed video explaining how Cartesi’s fraud-proof system (PRT) uses Merkle trees. The hashing structure of Merkle trees helps quickly identify discrepancies during dispute resolution, enhancing the security and transparency of off-chain computation."
+          "title": "New Research Challenges Non-Interactive ZK Fraud Proofs for Rollups",
+          "content": "Gabriel Coutinho de Paula and co-authors published an [in-depth analysis](https://ethresear.ch/t/best-of-both-worlds-a-measured-review-of-non-interactive-zk-fraud-proofs/) showing that Non-Interactive (NI) ZK Fraud Proofs, often described as the 'best of both worlds' for rollups, may actually combine the worst aspects. Their study finds NI proofs fail to remove the ~7-day withdrawal window of optimistic rollups while adding high capital costs from ZK-rollups. The research warns NI designs could be untenable under adversarial conditions, calling for more rigorous evaluation of rollup security models."
+        },
+        {
+          "title": "Cartesi Revamps Developer Docs for Easier Onboarding",
+          "content": "Cartesi has redesigned and expanded its [documentation](https://x.com/cartesiproject/status/1973010036785045946) to better support builders. The update introduces a streamlined developer journey, clearer guides, visuals for faster learning, a new Appchains page, a dedicated Fraud Proofs section, and an updated tabular design for easier navigation."
+        },
+        {
+          "title": "Merkle Trees in PRT Fraud Proofs Explained",
+          "content": "ChinonsoIdogwu shared [a detailed video](https://x.com/ChinonsoIdogwu/status/1970824742740574488) explaining how Cartesi’s fraud-proof system (PRT) uses Merkle trees. The hashing structure of Merkle trees helps quickly identify discrepancies during dispute resolution, enhancing the security and transparency of off-chain computation."
         },
         {
           "title": "DeFi Use Cases Explored on Cartesi Stack",
@@ -181,10 +201,6 @@
         {
           "title": "Gearing Up for European Blockchain Convention",
           "content": "Cartesi is preparing for [European Blockchain Convention](https://x.com/cartesiproject/status/1970473294542578024) in Barcelona this October. The team is expected to be on the ground, engaging with builders and showcasing Cartesi’s infrastructure."
-        },
-        {
-          "title": "Cartesi Joins L2BEAT’s Supporter Tier",
-          "content": "Ending the week on a high note, Cartesi joined [L2BEAT](https://x.com/l2beat/status/1971556291353977213)’s Supporter Tier, recognizing L2BEAT’s contribution to rollup transparency and aligning with industry leaders pushing the boundaries of Layer 2 security and visibility."
         }
       ]
     }
