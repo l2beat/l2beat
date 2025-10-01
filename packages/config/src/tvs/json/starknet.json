@@ -104,6 +104,24 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "starknet-LBTC",
+      "priceId": "lombard-staked-btc",
+      "symbol": "LBTC",
+      "name": "Lombard Staked Bitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x036834A40984312F7f7de8D31e3f6305B325389eAEeA5B1c0664b2fB936461a4",
+        "chain": "starknet",
+        "decimals": 8,
+        "sinceTimestamp": 1757525503
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "starknet-LORDS",
       "priceId": "lords",
@@ -215,6 +233,24 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-SolvBTC",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x0593e034DdA23eea82d2bA9a30960ED42CF4A01502Cc2351Dc9B9881F9931a68",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1750863511
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684"
     },
     {
       "mode": "auto",
