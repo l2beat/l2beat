@@ -15,10 +15,10 @@ interface AddAbstractTokenIntent {
   abstractToken: AbstractTokenRecord
 }
 
-type Command = AddAbstracTokenCommand
+type Command = AddAbstractTokenCommand
 
-interface AddAbstracTokenCommand {
-  type: 'AddAbstracTokenCommand'
+interface AddAbstractTokenCommand {
+  type: 'AddAbstractTokenCommand'
   abstractToken: AbstractTokenRecord
 }
 
@@ -52,7 +52,7 @@ export class TokenService {
     switch (intent.type) {
       case 'AddAbstractTokenIntent':
         commands.push({
-          type: 'AddAbstracTokenCommand',
+          type: 'AddAbstractTokenCommand',
           abstractToken: intent.abstractToken,
         })
         break
@@ -97,10 +97,10 @@ export class TokenService {
     )
   }
 
-  executeCommand(command: Command) {
+  async executeCommand(command: Command) {
     switch (command.type) {
-      case 'AddAbstracTokenCommand':
-        this.db.abstractToken.upsert(command.abstractToken)
+      case 'AddAbstractTokenCommand':
+        await this.db.abstractToken.upsert(command.abstractToken)
         break
       default:
         assertUnreachable(command.type)

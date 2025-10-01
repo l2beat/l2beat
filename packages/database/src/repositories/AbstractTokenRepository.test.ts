@@ -13,52 +13,42 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  describe(AbstractTokenRepository.prototype.upsertMany.name, () => {
-    it('inserts new records', async () => {
-      const records = [
-        abstractToken({ id: 'TK0001' }),
-        abstractToken({
-          id: 'TK0002',
-          coingeckoListingTimestamp: UnixTime(20),
-        }),
-      ]
-
-      const inserted = await repository.upsertMany(records)
-      expect(inserted).toEqual(2)
-
-      const result = await repository.getAll()
-      expect(result).toEqualUnsorted(records)
-    })
-
-    it('updates existing records', async () => {
-      await repository.upsertMany([
-        abstractToken({ id: 'TK0001', issuer: 'Issuer A' }),
-      ])
-
-      const updated = abstractToken({
+  describe(AbstractTokenRepository.prototype.insert.name, () => {
+    it('inserts record and returns id', async () => {
+      const record = abstractToken({
         id: 'TK0001',
-        issuer: 'Issuer B',
+        issuer: 'issuer',
+        symbol: 'ISTK',
+        category: 'stablecoin',
         iconUrl: 'https://example.com/icon.png',
-        coingeckoId: 'token-1',
-        coingeckoListingTimestamp: UnixTime(30),
-        comment: 'updated comment',
+        coingeckoId: 'coin-1',
+        coingeckoListingTimestamp: UnixTime(10),
+        comment: 'some comment',
       })
 
-      const inserted = await repository.upsert(updated)
-      expect(inserted).toEqual(undefined)
+      const id = await repository.insert(record)
+      expect(id).toEqual(record.id)
 
-      const result = await repository.findById('TK0001')
-      expect(result).toEqual(updated)
+      const stored = await repository.findById(record.id)
+      expect(stored).toEqual(record)
+    })
+
+    it('persists optional fields as undefined when not provided', async () => {
+      const record = abstractToken({ id: 'TK0002' })
+
+      const id = await repository.insert(record)
+      expect(id).toEqual(record.id)
+
+      const stored = await repository.findById(record.id)
+      expect(stored).toEqual(record)
     })
   })
 
   describe(AbstractTokenRepository.prototype.deleteByIds.name, () => {
     it('deletes selected records', async () => {
-      await repository.upsertMany([
-        abstractToken({ id: 'TK0001' }),
-        abstractToken({ id: 'TK0002' }),
-        abstractToken({ id: 'TK0003' }),
-      ])
+      await repository.insert(abstractToken({ id: 'TK0001' }))
+      await repository.insert(abstractToken({ id: 'TK0002' }))
+      await repository.insert(abstractToken({ id: 'TK0003' }))
 
       const deleted = await repository.deleteByIds(['TK0001', 'TK0003'])
       expect(deleted).toEqual(2)

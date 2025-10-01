@@ -52,10 +52,8 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
   describe(DeployedTokenRepository.prototype.getByAbstractTokenIds.name, () => {
     it('returns matching records', async () => {
-      await abstractTokens.upsertMany([
-        abstractToken({ id: 'TK0001' }),
-        abstractToken({ id: 'TK0002' }),
-      ])
+      await abstractTokens.insert(abstractToken({ id: 'TK0001' }))
+      await abstractTokens.insert(abstractToken({ id: 'TK0002' }))
 
       const records = [
         deployedToken({

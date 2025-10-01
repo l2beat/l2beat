@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AbstractToken } from '../kysely/generated/types'
@@ -47,35 +47,15 @@ export function toRow(record: AbstractTokenRecord): Insertable<AbstractToken> {
 }
 
 export class AbstractTokenRepository extends BaseRepository {
-  async upsert(record: AbstractTokenRecord): Promise<void> {
-    await this.upsertMany([record])
-  }
+  async insert(record: AbstractTokenRecord): Promise<string> {
+    const [row] = await this.db
+      .insertInto('AbstractToken')
+      .values(toRow(record))
+      .returning('id')
+      .execute()
 
-  async upsertMany(records: AbstractTokenRecord[]): Promise<number> {
-    if (records.length === 0) return 0
-
-    const rows = records.map(toRow)
-    await this.batch(rows, 1_000, async (batch) => {
-      await this.db
-        .insertInto('AbstractToken')
-        .values(batch)
-        .onConflict((oc) =>
-          oc.columns(['id']).doUpdateSet((eb) => ({
-            issuer: eb.ref('excluded.issuer'),
-            symbol: eb.ref('excluded.symbol'),
-            category: eb.ref('excluded.category'),
-            iconUrl: eb.ref('excluded.iconUrl'),
-            coingeckoId: eb.ref('excluded.coingeckoId'),
-            coingeckoListingTimestamp: eb.ref(
-              'excluded.coingeckoListingTimestamp',
-            ),
-            comment: eb.ref('excluded.comment'),
-          })),
-        )
-        .execute()
-    })
-
-    return records.length
+    assert(row)
+    return row?.id
   }
 
   async findById(id: string): Promise<AbstractTokenRecord | undefined> {
