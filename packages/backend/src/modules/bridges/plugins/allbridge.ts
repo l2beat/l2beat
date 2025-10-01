@@ -167,7 +167,7 @@ export class AllbridgePlugIn implements BridgePlugin {
           messageSent,
           messageReceived,
         ]),
-        Result.Transfer('allbridge.Swap', {
+        Result.Transfer('allbridge.Transfer', {
           srcEvent: tokensSent,
           srcAmount: tokensSent.args.amount.toString(),
           dstEvent: delivery,
