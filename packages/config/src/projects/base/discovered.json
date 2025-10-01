@@ -1,7 +1,7 @@
 {
   "name": "base",
-  "timestamp": 1755525868,
-  "configHash": "0x9c5516a9ddf4e4d203e5c3f0ac2d9831bd64613b1003aad8cad4d5d8779b8b25",
+  "timestamp": 1759250277,
+  "configHash": "0xd238af9607ffb878f8c4b8db8bb4e8bdc00ce8100fa3d110447ab682a6609526",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -31,7 +31,7 @@
         "BASIS_POINT_SCALE": 10000,
         "FEE_DISBURSEMENT_INTERVAL": 86400,
         "L1_WALLET": "base:0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
-        "lastDisbursementTime": 1755388817,
+        "lastDisbursementTime": 1759017605,
         "netFeeRevenue": 0,
         "OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS": 250,
         "OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS": 1500,
@@ -79,7 +79,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292663259",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292665150",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -290,7 +290,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "basefee": 1014188843,
+        "basefee": 937947047,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
         "blobBaseFee": 1,
@@ -302,15 +302,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x62b45cce16692876790e9f27aefc2c95418ec970b52bbc40a375ffdc798030d8",
+        "hash": "0x72ceda36494a9ea459b9523efb4822aa1300a5b5d9543b8efdc420d13ad4fe91",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 23168403,
+        "number": 23477030,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 11,
-        "timestamp": 1755525671,
+        "sequenceNumber": 5,
+        "timestamp": 1759250087,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -822,7 +822,7 @@
         "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
       ],
       "proxyType": "immutable",
-      "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
+      "description": "used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -836,7 +836,7 @@
         "$immutable": true,
         "fallbackOwner": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
         "livenessGuard": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
-        "livenessInterval": "98d",
+        "livenessInterval": "3mo 8d",
         "minOwners": 8,
         "ownershipTransferredToFallback": false,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -1201,7 +1201,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-          "description": "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
+          "description": "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 3mo 8d.",
           "role": ".livenessGuard"
         }
       ],
@@ -1415,7 +1415,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 6979,
+        "gameCount": 8011,
         "gameImpls": [
           "eth:0xAB91FB6cef84199145133f75cBD96B8a31F184ED",
           "eth:0x7344Da3A618b86cdA67f8260C0cc2027D99F5B49",
@@ -1511,8 +1511,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516982,
-          "prevBlockNum": 23168373
+          "prevBoughtGas": 821744,
+          "prevBlockNum": 23477023
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1576,11 +1576,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x84dD19522ffE57C9847b93022fef587388A94484",
+        "anchorGame": "eth:0x3bDE709b7f9791CC876daF2A5Dc4Ef40d08aD33e",
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "getAnchorRoot": [
-          "0xaaf7365d6ef38e46d5dacfb41e99e270d229f05c579eb7619f53bebb992f6f0e",
-          34065200
+          "0xe20789d0a75849e22a23109e43533c62c274d9ded82eb44ecd5c92a663b2e116",
+          35926635
         ],
         "portal": "eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
         "respectedGameType": 0,
@@ -2397,7 +2397,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293068253",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293081740",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2506,7 +2506,7 @@
         "initVersion": 2,
         "paused": false,
         "pauseExpiry": 7884000,
-        "pauseExpiryFmt": "91d 6h",
+        "pauseExpiryFmt": "3mo 1d",
         "proxyAdmin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "2.3.0"
@@ -4675,6 +4675,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23168419, "base": 34368260 },
-  "permissionsConfigHash": "0x2e5de7c6727a927413418c89b4a12fab49446f93697ed3c22554952631140b8b"
+  "usedBlockNumbers": { "base": 36230465, "ethereum": 23477045 },
+  "permissionsConfigHash": "0x3fdb92019c72a2cf2812b9f78e37dc9b3fbbf4775b4f4cef8e7bf7489492a23a"
 }

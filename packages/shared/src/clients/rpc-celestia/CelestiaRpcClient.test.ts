@@ -61,6 +61,7 @@ describe(CelestiaRpcClient.name, () => {
       expect(result).toEqual({
         number: Number(mockBlockHeight),
         hash: 'UNSUPPORTED',
+        logsBloom: 'UNSUPPORTED',
         timestamp: UnixTime.fromDate(new Date(mockTimestamp)),
         transactions: [],
       })
@@ -116,6 +117,7 @@ describe(CelestiaRpcClient.name, () => {
       expect(result).toEqual({
         number: Number(mockBlockHeight),
         hash: 'UNSUPPORTED',
+        logsBloom: 'UNSUPPORTED',
         timestamp: UnixTime.fromDate(new Date(mockTimestamp)),
         transactions: [],
       })
@@ -217,6 +219,79 @@ describe(CelestiaRpcClient.name, () => {
       expect(result).toEqual({ result: 'success' })
       expect(http.fetch).toHaveBeenOnlyCalledWith(
         'API_URL/test_method?param1=value1&param2=value2',
+        {
+          method: 'GET',
+          redirect: 'follow',
+        },
+      )
+    })
+  })
+
+  describe(CelestiaRpcClient.prototype.getValidatorsInfo.name, () => {
+    it('returns validators info with default parameters', async () => {
+      const mockValidatorsResult = {
+        validators: [
+          {
+            voting_power: '1000000',
+          },
+        ],
+        count: '1',
+        total: '1',
+      }
+
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: mockValidatorsResult,
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.getValidatorsInfo({ page: 1 })
+
+      expect(result).toEqual({
+        validators: [
+          {
+            voting_power: 1000000,
+          },
+        ],
+        count: 1,
+        total: 1,
+      })
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'API_URL/validators?page=1&per_page=100',
+        {
+          method: 'GET',
+          redirect: 'follow',
+        },
+      )
+    })
+
+    it('returns validators info with custom page and perPage parameters', async () => {
+      const mockValidatorsResult = {
+        validators: [],
+        count: '0',
+        total: '50',
+      }
+
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: mockValidatorsResult,
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.getValidatorsInfo({
+        page: 2,
+        perPage: 50,
+      })
+
+      expect(result).toEqual({
+        validators: [],
+        count: 0,
+        total: 50,
+      })
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'API_URL/validators?page=2&per_page=50',
         {
           method: 'GET',
           redirect: 'follow',

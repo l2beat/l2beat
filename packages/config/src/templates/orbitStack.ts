@@ -327,6 +327,7 @@ function defaultStateValidation(
 const wmrValidForBlobstream = [
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
   '0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3',
+  '0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d',
 ]
 
 // TODO: Add blobstream delay when timelock is enabled

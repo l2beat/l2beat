@@ -1,7 +1,7 @@
 {
   "name": "lens",
   "timestamp": 1757944442,
-  "configHash": "0xdc5ab8c76ae242ebcbdc94caaf02df4f99e0616191de074c40956f6fc97f2d28",
+  "configHash": "0xeea0e61ff0c182cef5670e9e1f7de167117c89c14c40ec1789a33eed727ed00e",
   "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
   "entries": [
     {

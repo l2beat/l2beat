@@ -1,3 +1,106 @@
+Generated with discovered.json: 0x53b1bbed87a4fa9f83e6295e016d2af712a6f4b3
+
+# Diff at Mon, 29 Sep 2025 14:57:58 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1755525939
+- current timestamp: 1759157813
+
+## Description
+
+Key rotation.
+
+## Watched changes
+
+```diff
+    contract Unichain Multisig 2 (eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xc531e0368dc3928E11987D096558dEE7A22ECEE4"
+      values.$members.1:
+-        "eth:0x7f781194ACF0d3Ae519A5aB0D0597e3831d62237"
+    }
+```
+
+```diff
+    contract Unichain Multisig 1 (eth:0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xAC68D69dC0FE6E00BcdABEe391b06d09098804bb"
+      values.$members.1:
+-        "eth:0x19b175a56C52e14944a3D37b33C0Bcb7A2091779"
+    }
+```
+
+Generated with discovered.json: 0x4d359837dc728e9f5f88d37ae4fe1954271f8fb8
+
+# Diff at Fri, 26 Sep 2025 14:18:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec4b16fd723bf2a8625a616c4b3a1119ce79fb29 block: 1755525939
+- current timestamp: 1755525939
+
+## Description
+
+add new celestia nitro wasmmoduleroot
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755525939 (main branch discovery), not current.
+
+```diff
+    contract GasPriceOracle (unichain:0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      values.$pastUpgrades.0.0:
+-        "2025-06-01T18:12:11.000Z"
++        "2025-05-09T16:00:01.000Z"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (unichain:0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
+-        ["2024-12-05T19:19:37.000Z","0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",["unichain:0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]]
+      values.$upgradeCount:
+-        1
++        0
+    }
+```
+
+```diff
+    contract L1Block (unichain:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.$pastUpgrades.0.0:
+-        "2025-06-01T18:12:11.000Z"
++        "2025-05-09T16:00:01.000Z"
+    }
+```
+
+```diff
+    contract BaseFeeVault (unichain:0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
+-        ["2024-12-05T19:19:37.000Z","0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",["unichain:0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]]
+      values.$upgradeCount:
+-        1
++        0
+    }
+```
+
+```diff
+    contract L1FeeVault (unichain:0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
+-        ["2024-12-05T19:19:37.000Z","0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",["unichain:0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]]
+      values.$upgradeCount:
+-        1
++        0
+    }
+```
+
 Generated with discovered.json: 0x79d49d831ef757cce89247d366284d2baac540c0
 
 # Diff at Mon, 15 Sep 2025 09:50:56 GMT:

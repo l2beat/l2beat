@@ -11,9 +11,14 @@ import { getScalingTvsColumns } from './columns'
 interface Props {
   entries: ScalingTvsEntry[]
   breakdownType: 'bridgeType' | 'assetCategory'
+  ignoreUnderReviewIcon?: boolean
 }
 
-export function ScalingTvsTable({ entries, breakdownType }: Props) {
+export function ScalingTvsTable({
+  entries,
+  breakdownType,
+  ignoreUnderReviewIcon,
+}: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -29,10 +34,10 @@ export function ScalingTvsTable({ entries, breakdownType }: Props) {
   const columns = useMemo(
     () =>
       getScalingTvsColumns({
-        ignoreUnderReviewIcon: true,
+        ignoreUnderReviewIcon,
         breakdownType,
       }),
-    [breakdownType],
+    [breakdownType, ignoreUnderReviewIcon],
   )
 
   const table = useTable({

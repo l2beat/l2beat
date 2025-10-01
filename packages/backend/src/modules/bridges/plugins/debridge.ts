@@ -10,6 +10,7 @@ import {
   createBridgeEventType,
   createEventParser,
   defineNetworks,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -100,7 +101,6 @@ export const Claimed = createBridgeEventType<{
 
 export class DeBridgePlugin implements BridgePlugin {
   name = 'debridge'
-  chains = ['ethereum', 'arbitrum', 'base']
 
   capture(input: LogToCapture) {
     const sent = parseSent(input.log, null)
@@ -109,9 +109,11 @@ export class DeBridgePlugin implements BridgePlugin {
         submissionId: sent.submissionId,
         debridgeId: sent.debridgeId,
         amount: sent.amount.toString(),
-        $dstChain:
-          DEBRIDGE_NETWORKS.find((c) => c.chainId === sent.chainIdTo.toString())
-            ?.chain ?? `DEBRIDGE_${sent.chainIdTo.toString()}`,
+        $dstChain: findChain(
+          DEBRIDGE_NETWORKS,
+          (x) => x.chainId,
+          sent.chainIdTo.toString(),
+        ),
       })
     }
 
@@ -122,10 +124,11 @@ export class DeBridgePlugin implements BridgePlugin {
         debridgeId: claimed.debridgeId,
         amount: claimed.amount.toString(),
         receiver: EthereumAddress(claimed.receiver),
-        $srcChain:
-          DEBRIDGE_NETWORKS.find(
-            (c) => c.chainId === claimed.chainIdFrom.toString(),
-          )?.chain ?? `DEBRIDGE_${claimed.chainIdFrom.toString()}`,
+        $srcChain: findChain(
+          DEBRIDGE_NETWORKS,
+          (x) => x.chainId,
+          claimed.chainIdFrom.toString(),
+        ),
       })
     }
   }

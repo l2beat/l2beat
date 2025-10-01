@@ -613,53 +613,120 @@
   scrollbar-gutter: stable;
 }
 
-@utility fade-out-to-left {
+@utility fade-out-to-left-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
   -webkit-mask-image: linear-gradient(
     to left,
     transparent 0,
     black 0px,
-    black calc(100% - 30px),
+    black calc(100% - var(--fade-size)),
     transparent 100%
   );
   mask-image: linear-gradient(
     to left,
     transparent 0,
     black 0px,
-    black calc(100% - 30px),
+    black calc(100% - var(--fade-size)),
     transparent 100%
   );
 }
 
-@utility fade-out-to-right {
+@utility fade-out-to-right-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0,
     black 0px,
-    black calc(100% - 30px),
+    black calc(100% - var(--fade-size)),
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0,
     black 0px,
-    black calc(100% - 30px),
+    black calc(100% - var(--fade-size)),
     transparent 100%
   );
 }
 
-@utility fade-out-horizontal {
+@utility fade-out-horizontal-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent,
-    black 30px calc(100% - 30px),
+    black var(--fade-size) calc(100% - var(--fade-size)),
     transparent
   ) !important;
   mask-image: linear-gradient(
     90deg,
     transparent,
-    black 30px calc(100% - 30px),
+    black var(--fade-size) calc(100% - var(--fade-size)),
     transparent
   ) !important;
+}
+
+@utility fade-out-vertical-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent,
+    black var(--fade-size) calc(100% - var(--fade-size)),
+    transparent
+  ) !important;
+  mask-image: linear-gradient(
+    180deg,
+    transparent,
+    black var(--fade-size) calc(100% - var(--fade-size)),
+    transparent
+  ) !important;
+}
+
+@utility fade-out-to-top-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent 0,
+    black 0px,
+    black calc(100% - var(--fade-size)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to top,
+    transparent 0,
+    black 0px,
+    black calc(100% - var(--fade-size)),
+    transparent 100%
+  );
+}
+
+@utility fade-out-to-bottom-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    black 0px,
+    black calc(100% - var(--fade-size)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    black 0px,
+    black calc(100% - var(--fade-size)),
+    transparent 100%
+  );
 }
 
 @utility chart-fade-out-to-bottom {

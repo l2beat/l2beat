@@ -7,6 +7,7 @@ import {
   createBridgeEventType,
   createEventParser,
   defineNetworks,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -16,6 +17,7 @@ const parseFundsDeposited = createEventParser(
   'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
 )
 export const AcrossFundsDeposited = createBridgeEventType<{
+  $dstChain: string
   originChainId: number
   destinationChainId: number
   depositId: number
@@ -31,6 +33,7 @@ const parseFilledV3Relay = createEventParser(
 )
 // For both V3 and V4 event capturing
 export const AcrossFilledRelay = createBridgeEventType<{
+  $srcChain: string
   originChainId: number
   depositId: number
   tokenAddress: EthereumAddress
@@ -90,6 +93,11 @@ export class AcrossPlugin implements BridgePlugin {
     const fundsDeposited = parseFundsDeposited(input.log, [network.address])
     if (fundsDeposited) {
       return AcrossFundsDeposited.create(input.ctx, {
+        $dstChain: findChain(
+          ACROSS_NETWORKS,
+          (x) => x.chainId,
+          Number(fundsDeposited.destinationChainId),
+        ),
         originChainId: network.chainId,
         destinationChainId: Number(fundsDeposited.destinationChainId),
         depositId: Number(fundsDeposited.depositId),
@@ -103,6 +111,11 @@ export class AcrossPlugin implements BridgePlugin {
     const filledRelay = parseFilledRelay(input.log, [network.address])
     if (filledRelay) {
       return AcrossFilledRelay.create(input.ctx, {
+        $srcChain: findChain(
+          ACROSS_NETWORKS,
+          (x) => x.chainId,
+          Number(filledRelay.originChainId),
+        ),
         originChainId: Number(filledRelay.originChainId),
         depositId: Number(filledRelay.depositId),
         tokenAddress: EthereumAddress(
@@ -115,6 +128,11 @@ export class AcrossPlugin implements BridgePlugin {
     const filledV3Relay = parseFilledV3Relay(input.log, [network.address])
     if (filledV3Relay) {
       return AcrossFilledRelay.create(input.ctx, {
+        $srcChain: findChain(
+          ACROSS_NETWORKS,
+          (x) => x.chainId,
+          Number(filledV3Relay.originChainId),
+        ),
         originChainId: Number(filledV3Relay.originChainId),
         depositId: Number(filledV3Relay.depositId),
         tokenAddress: EthereumAddress(filledV3Relay.outputToken),

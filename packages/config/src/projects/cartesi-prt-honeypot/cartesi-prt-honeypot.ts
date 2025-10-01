@@ -39,6 +39,7 @@ export const cartesiprthoneypot: ScalingProject = {
   id: ProjectId('cartesi-prt-honeypot'),
   capability: 'appchain',
   addedAt: UnixTime(1749678198), // 2025-06-11T21:43:18Z
+  archivedAt: UnixTime(1759137268),
   badges: [
     BADGES.VM.CartesiVM,
     BADGES.VM.AppChain,
@@ -49,7 +50,7 @@ export const cartesiprthoneypot: ScalingProject = {
     name: 'Cartesi PRT Honeypot',
     shortName: 'Honeypot PRT',
     headerWarning:
-      'Bug Bounty Appchain: Any user deposit is a **donation** to the Honeypot. The purpose of this Appchain is to test the Cartesi PRT optimistic fraud proof system. Withdrawals by users are not possible. Note that given the unique purpose of this Appchain, the Risk Rosette and Stages framework do not perfectly apply and additional considerations are required.',
+      'The chain deployment is permanently frozen after the team managed to find a bug in the PRT contracts.[Read more](https://x.com/cartesiproject/status/1970902442259685855)',
     warning: 'The challenge protocol can be subject to delay attacks.',
     slug: 'cartesi-prt-honeypot',
     stacks: ['Cartesi Rollups'],

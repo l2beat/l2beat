@@ -6,7 +6,6 @@ import { generateTimestamps } from '../../utils/generateTimestamps'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
-import { getActivitySyncWarning } from './utils/isActivitySynced'
 import type { ActivityProjectFilter } from './utils/projectFilterUtils'
 import { createActivityProjectsFilter } from './utils/projectFilterUtils'
 import type { ActivityTimeRange } from './utils/range'
@@ -58,7 +57,7 @@ export async function getRecategorisedActivityChart(
     .filter((p) => p.scalingInfo.type === 'Other')
     .map((p) => p.id)
 
-  const adjustedRange = getFullySyncedActivityRange({ type: range })
+  const adjustedRange = await getFullySyncedActivityRange({ type: range })
   const [
     rollupsEntries,
     validiumsAndOptimiumsEntries,
@@ -77,9 +76,6 @@ export async function getRecategorisedActivityChart(
     ),
   ])
 
-  const syncedUntil = adjustedRange[1]
-  const syncWarning = getActivitySyncWarning(syncedUntil)
-
   const aggregatedRollupsEntries =
     aggregateActivityRecords(rollupsEntries) ?? {}
   const aggregatedValidiumsAndOptimiumsEntries =
@@ -94,7 +90,7 @@ export async function getRecategorisedActivityChart(
     Object.values(aggregatedOthersEntries).length === 0 &&
     Object.values(aggregatedEthereumEntries).length === 0
   ) {
-    return { data: [], syncWarning, syncedUntil: syncedUntil }
+    return { data: [], syncWarning: undefined, syncedUntil: adjustedRange[1] }
   }
 
   const startTimestamp = Math.min(
@@ -133,8 +129,8 @@ export async function getRecategorisedActivityChart(
   )
   return {
     data,
-    syncWarning,
-    syncedUntil: syncedUntil,
+    syncWarning: undefined,
+    syncedUntil: adjustedRange[1],
   }
 }
 
@@ -154,7 +150,7 @@ function getMockRecategorisedActivityChart(
       12000,
       10000,
     ]),
-    syncWarning: getActivitySyncWarning(adjustedRange[1]),
+    syncWarning: undefined,
     syncedUntil: adjustedRange[1],
   }
 }

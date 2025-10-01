@@ -5,6 +5,7 @@ import {
   type CelestiaBlockResult,
   CelestiaBlockResultResponse,
   CelestiaErrorResponse,
+  CelestiaValidatorsResponse,
 } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
@@ -32,6 +33,7 @@ export class CelestiaRpcClient extends ClientCore {
     return {
       number: Number(block.height),
       hash: 'UNSUPPORTED',
+      logsBloom: 'UNSUPPORTED',
       timestamp: blockTimestamp,
       transactions: [], // UNSUPPORTED
     }
@@ -73,6 +75,33 @@ export class CelestiaRpcClient extends ClientCore {
     }
 
     return blockResponse.data.result
+  }
+
+  async getValidatorsInfo({
+    page = 1,
+    perPage = 100,
+  }: {
+    page: number
+    perPage?: number
+  }) {
+    const response = await this.query(
+      `validators?${new URLSearchParams({
+        page: page.toString(),
+        per_page: perPage.toString(),
+      }).toString()}`,
+      {},
+    )
+
+    const parsedResponse = CelestiaValidatorsResponse.safeParse(response)
+
+    if (!parsedResponse.success) {
+      this.$.logger.warn('Invalid response', {
+        response: JSON.stringify(parsedResponse),
+      })
+      throw new Error('Error during validators parsing')
+    }
+
+    return parsedResponse.data.result
   }
 
   async query(method: string, params: Record<string, string>) {

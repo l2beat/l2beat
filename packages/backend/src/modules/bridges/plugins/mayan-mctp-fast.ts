@@ -7,6 +7,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -19,7 +20,7 @@ const parseOrderFulfilled = createEventParser(
 
 export const OrderFulfilled = createBridgeEventType<{
   amount: string
-  sourceDomain: string
+  $srcChain: string
 }>('mayan-mctp-fast.OrderFulfilled')
 
 export class MayanMctpFastPlugin implements BridgePlugin {
@@ -28,12 +29,14 @@ export class MayanMctpFastPlugin implements BridgePlugin {
   capture(input: LogToCapture) {
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
+      const $srcChain = findChain(
+        WORMHOLE_NETWORKS,
+        (x) => x.wormholeChainId,
+        Number(orderFulfilled.sourceDomain),
+      )
       return OrderFulfilled.create(input.ctx, {
         amount: orderFulfilled.amount.toString(),
-        sourceDomain:
-          WORMHOLE_NETWORKS.find(
-            (n) => n.wormholeChainId === Number(orderFulfilled.sourceDomain),
-          )?.chain || '???',
+        $srcChain,
       })
     }
   }

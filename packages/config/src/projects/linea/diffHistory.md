@@ -1,4 +1,34 @@
-Generated with discovered.json: 0x59fd5ccdb8635d5c2c5c8ca9b0cd683897a9daf9
+Generated with discovered.json: 0x3305d3d53dc03ee2d1f569c0ca1f664ba05dbd2d
+
+# Diff at Tue, 30 Sep 2025 16:48:29 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1758624268
+- current timestamp: 1759250766
+
+## Description
+
+Period formatting change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758624268 (main branch discovery), not current.
+
+```diff
+    contract Delay (eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436) {
+    +++ description: A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there.
+      description:
+-        "A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 90d, if registered as a module there."
++        "A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there."
+      values.txCooldownFmt:
+-        "90d"
++        "3mo"
+    }
+```
+
+Generated with discovered.json: 0x1c823f09f82109d2dd65a934539a03a4d5455b66
 
 # Diff at Tue, 23 Sep 2025 10:45:53 GMT:
 

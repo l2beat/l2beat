@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. After the shibarium hack, this contract also includes a validator blacklist managed by {{governance}}.",
   "ignoreRelatives": [
     "token",
     "tokenMatic",
@@ -36,7 +37,15 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can replace all validators."
+          "description": "can replace all validators and change the root chain address."
+        }
+      ]
+    },
+    "governance": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can manage the validator blacklist and change other critical settings related to staking."
         }
       ]
     }

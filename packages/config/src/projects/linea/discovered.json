@@ -1,7 +1,7 @@
 {
   "name": "linea",
-  "timestamp": 1758624268,
-  "configHash": "0x12103cbdc67491e257fc6165103870ddffd7572f9e4582d89c9faa68685923e9",
+  "timestamp": 1759250766,
+  "configHash": "0xb555ae23206254fbd35ae8de0105dd64ca7ec66f24d65ae32ade6708fb007f71",
   "entries": [
     {
       "name": "TokenBridge",
@@ -403,7 +403,7 @@
         "0x6fa89ecef1d104e0b7fd7adc29f3bbfbd1a0fb71fe67422181d1201980ec2d56"
       ],
       "proxyType": "gnosis safe zodiac module",
-      "description": "A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 90d, if registered as a module there.",
+      "description": "A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there.",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -423,7 +423,7 @@
         "queueNonce": 0,
         "target": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
         "txCooldown": 7776000,
-        "txCooldownFmt": "90d",
+        "txCooldownFmt": "3mo",
         "txExpiration": 0,
         "txNonce": 0,
         "ZodiacModule_avatar": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
@@ -984,11 +984,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0xf1668d677c629c0c6d62a4a21ed08d901452f5c58888c6d6eab25f4075faddb8",
-        "currentFinalizedState": "0x3eca9b5037a519e0333cce029d5d6137512c6284598a79e5633166de52f9eda0",
+        "currentFinalizedShnarf": "0x1f17837bc402cc5d658f854692e9c8daee83839d9aeb42b9a64bf608ca71fe56",
+        "currentFinalizedState": "0xf70a393798f738021fc1c1612b1f12e8c382e83818b1755da2fb9645fa8d7d7d",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "640930440000000000000",
+        "currentPeriodAmountInWei": "2853546850000000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -1768,8 +1768,8 @@
           }
         },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "19863436501800968895877",
-        "currentPeriodEnd": 1758629280,
+        "currentPeriodAmountInWei": "272141900000000000000",
+        "currentPeriodEnd": 1759329419,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -1778,11 +1778,11 @@
         "l1l2MessageSetter": [
           "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"
         ],
-        "lastAnchoredL1MessageNumber": 786470,
+        "lastAnchoredL1MessageNumber": 787542,
         "limitInWei": "24000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 99879,
+        "nextMessageNumber": 100739,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
@@ -3504,6 +3504,6 @@
     "linea/Roles": "0xa53488bfd173ae836ebda33b0560f0f0dd61141e44bc38b9ce23133023bde792",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23425214, "linea": 23696863 },
+  "usedBlockNumbers": { "ethereum": 23477086, "linea": 23990343 },
   "permissionsConfigHash": "0x79d73cc93a72f72d682b38f102a7053a7fd3fdee72ca1293b5e7b5145281d5da"
 }

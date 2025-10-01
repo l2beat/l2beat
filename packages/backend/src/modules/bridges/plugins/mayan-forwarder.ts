@@ -11,19 +11,19 @@ import {
   type LogToCapture,
 } from './types'
 
-const parseForwardedEth = createEventParser(
+export const parseForwardedEth = createEventParser(
   'event ForwardedEth(address mayanProtocol, bytes protocolData)',
 )
 
-const parseForwardedERC20 = createEventParser(
+export const parseForwardedERC20 = createEventParser(
   'event ForwardedERC20(address token, uint256 amount, address mayanProtocol, bytes protocolData)',
 )
 
-const swapAndForwardedEth = createEventParser(
+export const swapAndForwardedEth = createEventParser(
   'event SwapAndForwardedEth(uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)',
 )
 
-const swapAndForwardedERC20 = createEventParser(
+export const swapAndForwardedERC20 = createEventParser(
   'event SwapAndForwardedERC20(address tokenIn, uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)',
 )
 

@@ -4,6 +4,7 @@ import {
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
+  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -30,10 +31,11 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
 
     return TransferRedeemed.create(input.ctx, {
       sequence: parsed.sequence.toString(),
-      $srcChain:
-        WORMHOLE_NETWORKS.find(
-          (x) => x.wormholeChainId === parsed.emitterChainId,
-        )?.chain ?? 'unknown',
+      $srcChain: findChain(
+        WORMHOLE_NETWORKS,
+        (x) => x.wormholeChainId,
+        parsed.emitterChainId,
+      ),
       srcWormholeChainId: parsed.emitterChainId,
       sender: parsed.emitterAddress,
     })
@@ -45,6 +47,7 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
     db: BridgeEventDb,
   ): MatchResult | undefined {
     if (TransferRedeemed.checkType(transferRedeemed)) {
+      // TODO: we should match by sequence + emitter/sender address (wormhole proto), not assume there is only one emitter per chain of LogMessagePublished
       const logMessagePublished = db.find(LogMessagePublished, {
         sequence: transferRedeemed.args.sequence,
         wormholeChainId: transferRedeemed.args.srcWormholeChainId,
