@@ -8,18 +8,29 @@ import type {
 } from '@l2beat/database'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 
-type Intent = AddAbstractTokenIntent
+type Intent = AddAbstractTokenIntent | UpdateAbstractTokenIntent
 
 interface AddAbstractTokenIntent {
   type: 'AddAbstractTokenIntent'
   abstractToken: AbstractTokenRecord
 }
 
-type Command = AddAbstractTokenCommand
+interface UpdateAbstractTokenIntent {
+  type: 'UpdateAbstractTokenIntent'
+  abstractToken: AbstractTokenRecord
+}
+
+type Command = AddAbstractTokenCommand | UpdateAbstractTokenCommand
 
 interface AddAbstractTokenCommand {
   type: 'AddAbstractTokenCommand'
   abstractToken: AbstractTokenRecord
+}
+
+interface UpdateAbstractTokenCommand {
+  type: 'UpdateAbstractTokenCommand'
+  before: AbstractTokenRecord
+  after: AbstractTokenRecord
 }
 
 interface Plan {
@@ -46,24 +57,44 @@ export class TokenService {
     this.logger = logger.for(this)
   }
 
-  // biome-ignore lint/suspicious/useAwait: TODO
   async plan(intent: Intent): Promise<Plan> {
-    const commands: Command[] = []
+    let commands: Command[]
     switch (intent.type) {
       case 'AddAbstractTokenIntent':
-        commands.push({
-          type: 'AddAbstractTokenCommand',
-          abstractToken: intent.abstractToken,
-        })
+        commands = [
+          {
+            type: 'AddAbstractTokenCommand',
+            abstractToken: intent.abstractToken,
+          },
+        ]
+        break
+      case 'UpdateAbstractTokenIntent':
+        commands = await this.planUpdateAbstractToken(intent)
         break
       default:
-        assertUnreachable(intent.type)
+        assertUnreachable(intent)
     }
 
     return {
       intent,
       commands,
     }
+  }
+
+  async planUpdateAbstractToken(
+    intent: UpdateAbstractTokenIntent,
+  ): Promise<Command[]> {
+    const before = await this.db.abstractToken.findById(intent.abstractToken.id)
+    if (before === undefined) {
+      throw new Error(`AbstractToken ${intent.abstractToken.id} doesn't exist`)
+    }
+    return [
+      {
+        type: 'UpdateAbstractTokenCommand',
+        before,
+        after: intent.abstractToken,
+      },
+    ]
   }
 
   execute(plan: Plan): Promise<PlanExecutionResult> {
@@ -100,10 +131,14 @@ export class TokenService {
   async executeCommand(command: Command) {
     switch (command.type) {
       case 'AddAbstractTokenCommand':
-        await this.db.abstractToken.upsert(command.abstractToken)
+        await this.db.abstractToken.insert(command.abstractToken)
+        break
+      case 'UpdateAbstractTokenCommand':
+        // TODO: this should be an update
+        await this.db.abstractToken.insert(command.after)
         break
       default:
-        assertUnreachable(command.type)
+        assertUnreachable(command)
     }
   }
 
