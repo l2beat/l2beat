@@ -20,7 +20,6 @@ export const capx: ScalingProject = upcomingL2({
       explorers: ['https://capxscan.com'],
       documentation: ['http://docs.capx.ai'],
       repositories: ['https://github.com/capx-ai'],
-      bridges: ['http://app.capx.ai/'],
     },
   },
   ecosystemInfo: {
