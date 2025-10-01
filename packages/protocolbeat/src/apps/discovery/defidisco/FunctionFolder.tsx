@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import type { ApiAbiEntry, PermissionOverride } from '../../../api/types'
+import type { ApiAbiEntry, PermissionOverride, AddressFieldValue } from '../../../api/types'
 import * as solidity from '../../../components/editor/languages/solidity'
 import { IconCheckFalse } from './IconCheckFalse'
 import { IconCheckTrue } from './IconCheckTrue'
@@ -34,6 +34,40 @@ function navigateDataPathInUI(contract: any, dataPath: string): string[] {
   // Special case: $self means the source contract itself is the owner
   if (dataPath === '$self') {
     return [contract.address]
+  }
+
+  // Check for accessControl path pattern: accessControl.ROLE_NAME.members
+  const accessControlMatch = dataPath.match(/^accessControl\.([^.]+)\.members$/)
+  if (accessControlMatch) {
+    const roleName = accessControlMatch[1]!
+    const accessControlField = contract.fields?.find((f: any) => f.name === 'accessControl')
+
+    if (accessControlField?.value?.type === 'object') {
+      // Find the role in the object structure [[key, value], [key, value], ...]
+      for (const [keyField, valueField] of accessControlField.value.values) {
+        if (keyField.type === 'string' && keyField.value === roleName) {
+          // valueField should be an object with 'members' property
+          if (valueField.type === 'object') {
+            // Find 'members' in the role object
+            for (const [propKey, propValue] of valueField.values) {
+              if (propKey.type === 'string' && propKey.value === 'members') {
+                // propValue should be an array of addresses
+                if (propValue.type === 'array') {
+                  const addresses: string[] = []
+                  for (const member of propValue.values) {
+                    if (member.type === 'address') {
+                      addresses.push((member as AddressFieldValue).address)
+                    }
+                  }
+                  return addresses
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    throw new Error(`AccessControl role ${roleName} not found or has no members`)
   }
 
   // Check for array access pattern: fieldName[index]
@@ -233,14 +267,28 @@ export function FunctionFolder({
 
     if (!currentContract?.fields) return []
 
-    // Return only address-type fields
-    return currentContract.fields
+    const sources: Array<{ name: string; address: string; description: string }> = []
+
+    // Add address-type fields
+    sources.push(...currentContract.fields
       .filter(field => field.value.type === 'address')
       .map(field => ({
         name: field.name,
         address: field.value.address,
         description: field.description || ''
-      }))
+      })))
+
+    // Add accessControl field if it exists (points to current contract itself)
+    const hasAccessControl = currentContract.fields.some(f => f.name === 'accessControl')
+    if (hasAccessControl) {
+      sources.push({
+        name: 'accessControl',
+        address: contractAddress, // Points to self
+        description: 'Access control roles in this contract'
+      })
+    }
+
+    return sources
   }, [projectData, contractAddress])
 
   // When source field changes, resolve the source address
@@ -248,6 +296,12 @@ export function FunctionFolder({
     if (newOwnerData.sourceField && projectData?.entries) {
       const currentContract = projectData.entries.flatMap(e => [...e.initialContracts, ...e.discoveredContracts])
         .find(c => c.address === contractAddress)
+
+      // Special case: accessControl points to current contract itself
+      if (newOwnerData.sourceField === 'accessControl') {
+        setResolvedSourceAddress(contractAddress)
+        return
+      }
 
       const sourceField = currentContract?.fields?.find(f => f.name === newOwnerData.sourceField)
 
@@ -273,6 +327,23 @@ export function FunctionFolder({
     const dataPaths: Array<{ path: string; description: string; type: string }> = []
 
     for (const field of sourceContract.fields) {
+      // AccessControl roles - check for fields named 'accessControl' with object type
+      if (field.name === 'accessControl' && field.value.type === 'object') {
+        // Parse accessControl roles from object structure
+        // Structure: [[key, value], [key, value], ...]
+        for (const tuple of field.value.values) {
+          const [keyField, valueField] = tuple
+          if (keyField.type === 'string') {
+            const roleName = keyField.value
+            dataPaths.push({
+              path: `${roleName}`,
+              description: `AccessControl role: ${roleName}`,
+              type: 'accessControl-role'
+            })
+          }
+        }
+      }
+
       // Single address fields
       if (field.value.type === 'address') {
         dataPaths.push({
@@ -286,10 +357,11 @@ export function FunctionFolder({
       if (field.value.type === 'array') {
         const arrayValue = field.value.values
         for (let i = 0; i < Math.min(arrayValue.length, 10); i++) {
-          if (arrayValue[i]?.type === 'address') {
+          const element = arrayValue[i]
+          if (element?.type === 'address') {
             dataPaths.push({
               path: `${field.name}[${i}]`,
-              description: `${field.name}[${i}] → ${arrayValue[i].address.slice(0, 10)}...`,
+              description: `${field.name}[${i}] → ${(element as AddressFieldValue).address.slice(0, 10)}...`,
               type: 'array-element'
             })
           }

@@ -407,12 +407,35 @@ function getFieldValue(contract: any, fieldName: string): any {
  * - Special case: "$self" - returns the contract address itself
  * - Simple fields: "admin"
  * - Array access: "signers[0]", "members[1]"
- * - Role names: "PAUSER_ROLE" (from accessControl data)
+ * - AccessControl roles: "accessControl.DEFAULT_ADMIN_ROLE.members"
+ * - AccessControl nested: "DEFAULT_ADMIN_ROLE" (when in accessControl context)
  */
 function navigateDataPath(contract: any, dataPath: string): string[] {
   // Special case: $self means the source contract itself is the owner
   if (dataPath === '$self') {
     return [contract.address]
+  }
+
+  // Check for accessControl path pattern: accessControl.ROLE_NAME.members
+  const accessControlMatch = dataPath.match(/^accessControl\.([^.]+)\.members$/)
+  if (accessControlMatch) {
+    const roleName = accessControlMatch[1]
+    if (contract.values?.accessControl && typeof contract.values.accessControl === 'object') {
+      const roleData = contract.values.accessControl[roleName!]
+      if (roleData?.members && Array.isArray(roleData.members)) {
+        return roleData.members.filter((m: any) => typeof m === 'string' && m.startsWith('eth:'))
+      }
+    }
+    throw new Error(`AccessControl role ${roleName} not found or has no members`)
+  }
+
+  // Check for direct role name (for backward compatibility when dataPath is just the role name)
+  // This checks if we're in an accessControl context
+  if (contract.values?.accessControl && typeof contract.values.accessControl === 'object') {
+    const roleData = contract.values.accessControl[dataPath]
+    if (roleData?.members && Array.isArray(roleData.members)) {
+      return roleData.members.filter((m: any) => typeof m === 'string' && m.startsWith('eth:'))
+    }
   }
 
   // Check for array access pattern: fieldName[index]
@@ -468,29 +491,6 @@ function navigateDataPath(contract: any, dataPath: string): string[] {
 
     if (addresses.length > 0) {
       return addresses
-    }
-  }
-
-  // Check if it's a role in access control data
-  // This would be in a field with handler type 'accessControl'
-  if (contract.fields && Array.isArray(contract.fields)) {
-    const accessControlField = contract.fields.find((f: any) =>
-      f.handler?.type === 'accessControl'
-    )
-
-    if (accessControlField?.value?.type === 'object' && accessControlField.value.values) {
-      // Access control stores roles as object entries
-      const roles = Object.fromEntries(accessControlField.value.values)
-      const roleData = roles[dataPath]
-
-      if (roleData) {
-        if (roleData.members && Array.isArray(roleData.members)) {
-          return roleData.members
-        }
-        if (Array.isArray(roleData)) {
-          return roleData
-        }
-      }
     }
   }
 

@@ -110,6 +110,25 @@ git fetch upstream && git merge upstream/main
 - **Backend**: `/defidisco/contractTags.ts` preserves attributes across updates
 - **Address Format**: Normalizes `eth:0x...` → `0x...` when comparing with tags
 
+### AccessControl Role Support ✅
+**OpenZeppelin AccessControl Integration**: Full support for role-based access control
+- **Handler**: Use `accessControl` handler in templates or config overrides
+  ```jsonc
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl" }
+    }
+  }
+  ```
+- **Discovery**: Automatically detects roles from `RoleGranted`/`RoleRevoked` events
+- **Data Structure**: Roles stored in `values.accessControl` with `members` arrays
+- **Owner Tracking**:
+  - Set `sourceField: "accessControl"` to reference current contract's roles
+  - Set `dataPath` to role name (e.g., `"DEFAULT_ADMIN_ROLE"`)
+  - Roles appear in dropdown when selecting owner definitions
+- **Cross-Contract**: Can reference AccessControl roles in external contracts via address fields
+- **Backend Resolution**: Supports both direct role names and full paths (`accessControl.ROLE.members`)
+
 ---
 
 ## Development Guidelines
@@ -229,9 +248,14 @@ packages/
 
 **Owner Definitions**:
 - Two-step approach for tracking function permissions
-- `sourceField`: Points to address field in current contract (e.g., `"$admin"`, `"governor"`)
-- `dataPath`: Specifies data to extract from resolved source address (e.g., `"$self"`, `"signers[0]"`, `"PAUSER_ROLE"`)
-- Example: `{"sourceField": "$admin", "dataPath": "$self"}` resolves to the admin address itself
+- `sourceField`: Points to address field in current contract (e.g., `"$admin"`, `"governor"`) OR `"accessControl"` for roles
+- `dataPath`: Specifies data to extract from resolved source address
+  - Address fields: `"$self"`, `"signers[0]"`, field names
+  - AccessControl roles: Role name directly (e.g., `"DEFAULT_ADMIN_ROLE"`, `"PAUSER_ROLE"`)
+- Examples:
+  - `{"sourceField": "$admin", "dataPath": "$self"}` - Admin address itself
+  - `{"sourceField": "accessControl", "dataPath": "DEFAULT_ADMIN_ROLE"}` - Members of DEFAULT_ADMIN_ROLE in current contract
+  - `{"sourceField": "governor", "dataPath": "PAUSER_ROLE"}` - Members of PAUSER_ROLE in governor contract
 - Multiple owner definitions supported via array
 - Use `ownerDefinitions !== undefined` pattern (not `??`) to handle explicit clearing
 
