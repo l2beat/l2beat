@@ -2,6 +2,7 @@ import { ProjectService } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../OpenApi'
+import { GenericErrorResponse } from '../types'
 
 const ProjectSchema = v
   .object({
@@ -43,6 +44,9 @@ export function addProjectsRoutes(openapi: OpenApi) {
         projectId: v.string(),
       }),
       result: ProjectSchema,
+      errors: {
+        404: GenericErrorResponse,
+      },
     },
     async (req, res) => {
       const { projectId } = req.params
@@ -53,6 +57,9 @@ export function addProjectsRoutes(openapi: OpenApi) {
       })
 
       if (!project) {
+        res
+          .status(404)
+          .json({ message: `Project with id ${projectId} does not exist` })
         return
       }
 

@@ -1,14 +1,21 @@
 import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
 import type { ImpMeta, Validator } from '@l2beat/validate/dist/cjs/validate'
 import type { Application, Request, RequestHandler } from 'express'
+import { httpResponsesDescriptions } from './utils.ts/errorDescriptions'
+
+type XOR<T, U> =
+  | (T & { [K in keyof U]?: never })
+  | (U & { [K in keyof T]?: never })
 
 // biome-ignore lint/suspicious/noExplicitAny: its fine
-interface OpenApiRouteOptions<P = any, O = any, Q = any> {
+interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
   description?: string
   tags?: Tags[]
   params?: Validator<P> & { meta?: ImpMeta }
   query?: Validator<Q> & { meta?: ImpMeta }
   result: Validator<O> & { meta?: ImpMeta }
+  // Add possibility to have different type per error code
+  errors?: Record<number, Validator<E> & { meta?: ImpMeta }>
 }
 
 type OpenApiPath = {
@@ -39,7 +46,7 @@ type Tags = 'Projects'
 const BadRequestResponse = v
   .object({
     path: v.string(),
-    error: v.string(),
+    message: v.string(),
   })
   .describe('BadRequestResponse')
 
@@ -56,10 +63,10 @@ export class OpenApi {
 
   constructor(private readonly app: Application) {}
 
-  get<TParams, TOutput, TQuery>(
+  get<TParams, TOutput, TQuery, TErrors>(
     path: string,
-    options: OpenApiRouteOptions<TParams, TOutput, TQuery>,
-    handler: RequestHandler<TParams, TOutput, unknown, TQuery>,
+    options: OpenApiRouteOptions<TParams, TOutput, TQuery, TErrors>,
+    handler: RequestHandler<TParams, XOR<TOutput, TErrors>, unknown, TQuery>,
   ) {
     this.routes.push({ path, method: 'get', options })
 
@@ -69,7 +76,7 @@ export class OpenApi {
         if (!result.success) {
           res.status(400).json({
             path: `.params${result.path}`,
-            error: result.message,
+            message: result.message,
           })
           return
         }
@@ -88,7 +95,7 @@ export class OpenApi {
         if (!result.success) {
           res.status(400).json({
             path: `.query${result.path}`,
-            error: result.message,
+            message: result.message,
           })
           return
         }
@@ -96,7 +103,7 @@ export class OpenApi {
       }
 
       return handler(
-        req as Request<TParams, TOutput, unknown, TQuery>,
+        req as Request<TParams, XOR<TOutput, TErrors>, unknown, TQuery>,
         res,
         next,
       )
@@ -124,7 +131,7 @@ export class OpenApi {
   private getComponents() {
     const schemas = {} as Record<string, JsonSchema>
     for (const route of this.routes) {
-      const { result, params, query } = route.options
+      const { result, params, query, errors } = route.options
       if (
         result.meta?.type === 'array' &&
         result.meta.element.description &&
@@ -142,6 +149,17 @@ export class OpenApi {
       }
       if (query && query.description && !schemas[query.description]) {
         schemas[query.description] = this.toJsonSchema(query)
+      }
+      if (errors) {
+        for (const errorValidator of Object.values(errors)) {
+          if (
+            errorValidator.description &&
+            !schemas[errorValidator.description]
+          ) {
+            schemas[errorValidator.description] =
+              this.toJsonSchema(errorValidator)
+          }
+        }
       }
     }
 
@@ -184,7 +202,7 @@ export class OpenApi {
   private getResponses(route: Route): Record<number, OpenApiResponse> {
     const base: Record<number, OpenApiResponse> = {
       200: {
-        description: 'Successful response',
+        description: httpResponsesDescriptions[200],
         content: {
           'application/json': {
             schema: this.toJsonSchemaWithRefs(route.options.result),
@@ -195,12 +213,32 @@ export class OpenApi {
 
     if (!!route.options.params || !!route.options.query) {
       base[400] = {
-        description: 'Bad request',
+        description: httpResponsesDescriptions[400],
         content: {
           'application/json': {
             schema: this.toJsonSchemaWithRefs(BadRequestResponse),
           },
         },
+      }
+    }
+
+    // Add custom error responses if specified
+    if (route.options.errors) {
+      for (const [statusCode, errorValidator] of Object.entries(
+        route.options.errors,
+      )) {
+        const code = Number.parseInt(statusCode, 10)
+        base[code] = {
+          description:
+            httpResponsesDescriptions[
+              code as keyof typeof httpResponsesDescriptions
+            ] || `Error ${code}`,
+          content: {
+            'application/json': {
+              schema: this.toJsonSchemaWithRefs(errorValidator),
+            },
+          },
+        }
       }
     }
 
