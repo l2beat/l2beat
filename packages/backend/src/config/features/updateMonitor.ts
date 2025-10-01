@@ -18,11 +18,11 @@ export function getUpdateMonitorConfig(
 ): UpdateMonitorConfig {
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
+  const allProjects = configReader.readAllDiscoveredProjects()
 
   const allChains = [
     ...new Set(
-      configReader
-        .readAllDiscoveredProjects()
+      allProjects
         .flatMap((project) => configReader.readDiscovery(project).entries)
         .map((entry) => ChainSpecificAddress.longChain(entry.address)),
     ),
@@ -33,12 +33,14 @@ export function getUpdateMonitorConfig(
   const disabledChains = allChains.filter(
     (chain) => !flags.isEnabled('updateMonitor', chain),
   )
+  const enabledProjects = allProjects.filter((project) =>
+    flags.isEnabled('updateMonitorProjects', project),
+  )
+
   return {
     configReader,
     paths,
-    runOnStart: isLocal
-      ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
-      : undefined,
+    runOnStart: env.boolean('UPDATE_MONITOR_RUN_ON_START', isLocal ?? false),
     updateDifferEnabled: flags.isEnabled('updateMonitor', 'updateDiffer'),
     discord: getDiscordConfig(env, isLocal),
     chains: enabledChains.map((chain) =>
@@ -51,6 +53,7 @@ export function getUpdateMonitorConfig(
       ['UPDATE_MESSAGES_RETENTION_PERIOD_DAYS'],
       30,
     ),
+    projects: enabledProjects,
   }
 }
 

@@ -33,6 +33,7 @@ export class UpdateMonitor {
     private readonly clock: Clock,
     private readonly discoveryOutputCache: DiscoveryOutputCache,
     private readonly logger: Logger,
+    private readonly projects: string[],
     private readonly runOnStart: boolean,
   ) {
     this.logger = this.logger.for(this)
@@ -66,8 +67,7 @@ export class UpdateMonitor {
       updateTargetDate: targetDateIso,
     })
 
-    const projects = this.configReader.readAllDiscoveredProjects()
-    for (const project of projects) {
+    for (const project of this.projects) {
       await this.updateProject(this.runner, project, timestamp)
       await this.updateDiffer?.runForProject(project, timestamp)
     }
@@ -90,9 +90,9 @@ export class UpdateMonitor {
   generateDailyReminder(): Record<string, DailyReminderChainEntry> {
     const result: Record<string, DailyReminderChainEntry> = {}
 
-    const projectConfigs = this.configReader
-      .readAllDiscoveredProjects()
-      .map((project) => this.configReader.readConfig(project))
+    const projectConfigs = this.projects.map((project) =>
+      this.configReader.readConfig(project),
+    )
 
     for (const projectConfig of projectConfigs) {
       if (projectConfig.archived) {
