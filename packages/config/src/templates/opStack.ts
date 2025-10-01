@@ -1835,7 +1835,6 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     'Host chain must have technology data availability',
   )
 
-  // Currently we don't support multiple-DAs on the host chain
   const hostChainDAs = asArray(hostChain.dataAvailability)
   const hostChainDaTechs = asArray(hostChain.technology.dataAvailability)
   assert(
