@@ -61,8 +61,8 @@ export class TokenService {
       // Using SERIALIZABLE isolation level ensures that no other transaction can
       // run at the same time. This prevents situations where we make a query
       // (e.g. selecting all connected tokens), prepare an update based on its
-      // result, but in the meantime someone else makes an updated that
-      // invalidates our query (e.g. adds a new connection).  In reality DB is
+      // result, but in the meantime someone else makes an update that
+      // invalidates our query (e.g. adds a new connection).  In reality Postgres is
       // smart enough to allow parallel transactions as long as they don't break
       // the "illusion" of no two transactions running at the same time (in
       // "serialzed" order)
