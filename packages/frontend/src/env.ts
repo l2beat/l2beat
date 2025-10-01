@@ -44,6 +44,19 @@ const SERVER_CONFIG = {
   // Heroku specific (available only on previews)
   HEROKU_APP_NAME: z.string().optional(),
 
+  LOG_LEVEL: z
+    .enum([
+      'NONE',
+      'CRITICAL',
+      'ERROR',
+      'WARN',
+      'INFO',
+      'DEBUG',
+      'TRACE',
+      'METRIC',
+    ])
+    .default('INFO'),
+
   // Elastic Search
   ES_ENABLED: coerceBoolean.default(false),
   ES_NODE: z
@@ -110,7 +123,7 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     ES_API_KEY: process.env.ES_API_KEY,
     ES_INDEX_PREFIX: process.env.ES_INDEX_PREFIX,
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
-
+    LOG_LEVEL: process.env.LOG_LEVEL,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,

@@ -58,7 +58,33 @@
     "rangeVkeyCommitment": {
       "severity": "HIGH",
       "description": "Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
+    },
+    "useDefaultGateway": {
+      "severity": "HIGH",
+      "description": "If set to false then aggchainVKey will be loaded from this contract and not from AggLayerGateway. In this case you can uncomment two handlers in this template to track ownedAggchainVKeys."
     }
+    //
+    // "ownedAggchainVKeys": {
+    //   "description": "The ownedAggchainVkey is an alternative aggchain vkey stored in this smart contract that could be used instead of default one (stored in AggLayerGateway) if useDefaultGateway is set to false. Aggchain is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA).",
+    //   "handler": {
+    //     "type": "event",
+    //     "groupBy": "selector",
+    //     "add": {
+    //       "event": "AddAggchainVKey"
+    //     }
+    //   }
+    // },
+    // "ownedAggchainVKeysUpdated": {
+    //   "description": "emitted when an existing ownedAggchainVKey in `ownedAggchainVKeys` is updated.",
+    //   "handler": {
+    //     "type": "event",
+    //     "groupBy": "selector",
+    //     "set": {
+    //       "event": "UpdateAggchainVKey"
+    //     }
+    //   }
+    // }
+
     // these params are there but not used, just like 'optimistic mode' is currently not wired up (must check whether the proof references it):
     // "admin": {
     //   "permissions": [

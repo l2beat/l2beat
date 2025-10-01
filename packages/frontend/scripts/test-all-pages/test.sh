@@ -14,7 +14,7 @@ trap cleanup EXIT
 pnpm build
 
 # Start server in background
-pnpm start:mock &
+LOG_LEVEL=ERROR pnpm start:mock &
 server_pid=$!
 
 sleep 2

@@ -1,9 +1,11 @@
 import type { DaEconomicSecurity } from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 
 export async function getDaProjectEconomicSecurity(
+  projectId: ProjectId,
   economicSecurity: DaEconomicSecurity | undefined,
 ): Promise<number | undefined> {
   if (!economicSecurity) {
@@ -17,7 +19,7 @@ export async function getDaProjectEconomicSecurity(
   const coingeckoId = economicSecurity.token.coingeckoId
 
   const [stake, currentPrice] = await Promise.all([
-    db.stake.findById(economicSecurity.name),
+    db.daBeatStats.findById(projectId),
     db.currentPrice.findByCoingeckoId(coingeckoId),
   ])
   if (!stake || !currentPrice) {

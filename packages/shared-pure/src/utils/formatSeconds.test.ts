@@ -20,6 +20,16 @@ describe(formatSeconds.name, () => {
       expect(formatSeconds(90000)).toEqual('1d 1h')
       expect(formatSeconds(90060)).toEqual('1d 1h')
       expect(formatSeconds(90061)).toEqual('1d 1h')
+
+      expect(formatSeconds(31536000)).toEqual('1y')
+      expect(formatSeconds(63072000)).toEqual('2y')
+      expect(formatSeconds(2592000)).toEqual('1mo')
+      expect(formatSeconds(5184000)).toEqual('2mo')
+      expect(formatSeconds(34128000)).toEqual('1y 1mo')
+      expect(formatSeconds(34214400)).toEqual('1y 1mo')
+      expect(formatSeconds(5270400)).toEqual('2mo 1d')
+      expect(formatSeconds(5443200)).toEqual('2mo 3d')
+      expect(formatSeconds(34218000)).toEqual('1y 1mo')
     })
 
     it('does not round up', () => {
@@ -45,6 +55,21 @@ describe(formatSeconds.name, () => {
       )
       expect(formatSeconds(90061, { preventRoundingUp: true })).toEqual(
         '1d 1h 1m 1s',
+      )
+
+      expect(formatSeconds(31536000, { preventRoundingUp: true })).toEqual('1y')
+      expect(formatSeconds(2592000, { preventRoundingUp: true })).toEqual('1mo')
+      expect(formatSeconds(34128000, { preventRoundingUp: true })).toEqual(
+        '1y 1mo',
+      )
+      expect(formatSeconds(34214400, { preventRoundingUp: true })).toEqual(
+        '1y 1mo 1d',
+      )
+      expect(formatSeconds(34218000, { preventRoundingUp: true })).toEqual(
+        '1y 1mo 1d 1h',
+      )
+      expect(formatSeconds(5270461, { preventRoundingUp: true })).toEqual(
+        '2mo 1d 1m 1s',
       )
     })
   })
@@ -74,6 +99,20 @@ describe(formatSeconds.name, () => {
       expect(formatSeconds(90000, { fullUnit: true })).toEqual('1 day 1 hour')
       expect(formatSeconds(90060, { fullUnit: true })).toEqual('1 day 1 hour')
       expect(formatSeconds(90061, { fullUnit: true })).toEqual('1 day 1 hour')
+
+      expect(formatSeconds(31536000, { fullUnit: true })).toEqual('1 year')
+      expect(formatSeconds(63072000, { fullUnit: true })).toEqual('2 years')
+      expect(formatSeconds(2592000, { fullUnit: true })).toEqual('1 month')
+      expect(formatSeconds(5184000, { fullUnit: true })).toEqual('2 months')
+      expect(formatSeconds(34128000, { fullUnit: true })).toEqual(
+        '1 year 1 month',
+      )
+      expect(formatSeconds(34214400, { fullUnit: true })).toEqual(
+        '1 year 1 month',
+      )
+      expect(formatSeconds(5270400, { fullUnit: true })).toEqual(
+        '2 months 1 day',
+      )
     })
 
     it('does not round up', () => {
@@ -123,6 +162,28 @@ describe(formatSeconds.name, () => {
       expect(
         formatSeconds(90061, { preventRoundingUp: true, fullUnit: true }),
       ).toEqual('1 day 1 hour 1 minute 1 second')
+
+      expect(
+        formatSeconds(31536000, { preventRoundingUp: true, fullUnit: true }),
+      ).toEqual('1 year')
+      expect(
+        formatSeconds(63072000, { preventRoundingUp: true, fullUnit: true }),
+      ).toEqual('2 years')
+      expect(
+        formatSeconds(2592000, { preventRoundingUp: true, fullUnit: true }),
+      ).toEqual('1 month')
+      expect(
+        formatSeconds(34128000, { preventRoundingUp: true, fullUnit: true }),
+      ).toEqual('1 year 1 month')
+      expect(
+        formatSeconds(34214400, { preventRoundingUp: true, fullUnit: true }),
+      ).toEqual('1 year 1 month 1 day')
+      expect(
+        formatSeconds(34218061, { preventRoundingUp: true, fullUnit: true }),
+      ).toEqual('1 year 1 month 1 day 1 hour 1 minute 1 second')
+      expect(
+        formatSeconds(5270461, { preventRoundingUp: true, fullUnit: true }),
+      ).toEqual('2 months 1 day 1 minute 1 second')
     })
   })
 })
