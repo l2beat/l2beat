@@ -3,7 +3,7 @@ import type { BridgeComparePlugin, BridgeExternalItem } from './types'
 export class AcrossComparePlugin implements BridgeComparePlugin {
   name = 'across'
   type = 'transfer' as const
-  types = ['across.Swap']
+  types = ['across.Transfer']
 
   async getExternalItems(): Promise<BridgeExternalItem[]> {
     const response = await fetch(

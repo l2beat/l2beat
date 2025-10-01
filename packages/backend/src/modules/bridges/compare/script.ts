@@ -29,11 +29,10 @@ const cmd = command({
       keepAlive: false,
     })
 
-    console.log(await db.bridgeMessage.getStats())
-
     const bridgeComparator = new BridgeComparator(db, comparePlugins, logger)
 
     await bridgeComparator.compare()
+    await db.close()
   },
 })
 
