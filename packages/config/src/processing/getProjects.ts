@@ -18,7 +18,7 @@ import type {
   ProjectScalingRiskView,
   ScalingProject,
 } from '../internalTypes'
-import { asArray } from '../templates/utils'
+import { asArray, emptyArrayToUndefined } from '../templates/utils'
 import {
   type BaseProject,
   type ProjectCostsInfo,
@@ -103,7 +103,9 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       raas: getRaas(p.badges),
       infrastructure: getInfrastructure(p.badges),
       vm: getVM(p.badges),
-      daLayer: asArray(p.dataAvailability).map((d) => d.layer.value),
+      daLayer: emptyArrayToUndefined(
+        asArray(p.dataAvailability).map((d) => d.layer.value),
+      ),
       stage: getStage(p.stage),
       purposes: p.display.purposes,
       scopeOfAssessment: p.scopeOfAssessment,
@@ -121,7 +123,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
           ? getProcessedRiskView(p.stackedRiskView)
           : undefined,
     },
-    scalingDa: asArray(p.dataAvailability),
+    scalingDa: emptyArrayToUndefined(asArray(p.dataAvailability)),
     scalingTechnology: {
       warning: p.display.warning,
       detailedDescription: p.display.detailedDescription,

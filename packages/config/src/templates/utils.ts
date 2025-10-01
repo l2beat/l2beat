@@ -86,3 +86,7 @@ export function asArray<T>(value: T | T[] | undefined): T[] {
   }
   return Array.isArray(value) ? value : [value]
 }
+
+export function emptyArrayToUndefined<T>(arr: T[]): T[] | undefined {
+  return arr.length === 0 ? undefined : arr
+}
