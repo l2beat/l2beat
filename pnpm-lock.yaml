@@ -957,6 +957,9 @@ importers:
       react-dom:
         specifier: ^19.1.1
         version: 19.1.1(react@19.1.1)
+      react-router-dom:
+        specifier: ^6.27.0
+        version: 6.27.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
@@ -14295,10 +14298,22 @@ snapshots:
       react-dom: 19.0.0(react@19.0.0)
       react-router: 6.27.0(react@19.0.0)
 
+  react-router-dom@6.27.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
+    dependencies:
+      '@remix-run/router': 1.20.0
+      react: 19.1.1
+      react-dom: 19.1.1(react@19.1.1)
+      react-router: 6.27.0(react@19.1.1)
+
   react-router@6.27.0(react@19.0.0):
     dependencies:
       '@remix-run/router': 1.20.0
       react: 19.0.0
+
+  react-router@6.27.0(react@19.1.1):
+    dependencies:
+      '@remix-run/router': 1.20.0
+      react: 19.1.1
 
   react-router@7.0.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
