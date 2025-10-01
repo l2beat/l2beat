@@ -115,6 +115,28 @@
       ]
     },
     {
+      "id": "xxeNQv:tether.USDT",
+      "coingeckoId": "tether",
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "deployedTokens": [
+        "abstract+0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD (USDT 6)",
+        "arbitrum+0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9 (USDT 6)",
+        "celo+0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e (USDT 6)",
+        "ethereum+0xdAC17F958D2ee523a2206206994597C13D831ec7 (USDT 6)",
+        "form+0xFA3198ecF05303a6d96E57a45E6c815055D255b1 (USDT 6)",
+        "galxegravity+0x816E810f9F787d669FB71932DeabF6c83781Cd48 (USDT 6)",
+        "metis+0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC (USDT 6)",
+        "optimism+0x94b008aA00579c1307B0EF2c499aD98a8ce58e58 (USDT 6)",
+        "rari+0x362FAE9A75B27BBc550aAc28a7c1F96C8D483120 (USDT 6)",
+        "scroll+0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df (USDT 6)",
+        "swell+0xb89c6ED617f5F46175E41551350725A09110bbCE (USDT 6)",
+        "taiko+0x9c2dc7377717603eB92b2655c5f2E7997a4945BD (USDT 6)",
+        "zksync2+0x493257fD37EDB34451f62EDf8D2a0C418852bA4C (USDT 6)"
+      ]
+    },
+    {
       "id": "aP73dU:etherfi.weETH",
       "coingeckoId": "wrapped-eeth",
       "coingeckoListingTimestamp": 1701648000,
@@ -154,26 +176,6 @@
         "unichain+0xc3eACf0612346366Db554C991D7858716db09f58 (rsETH 18)",
         "zircuit+0x4186BFC76E2E237523CBC30FD220FE055156b41F (rsETH 18)",
         "zksync2+0x6bE2425C381eb034045b527780D2Bf4E21AB7236 (rsETH 18)"
-      ]
-    },
-    {
-      "id": "xxeNQv:tether.USDT",
-      "coingeckoId": "tether",
-      "coingeckoListingTimestamp": 1573689600,
-      "category": "stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
-      "deployedTokens": [
-        "abstract+0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD (USDT 6)",
-        "arbitrum+0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9 (USDT 6)",
-        "celo+0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e (USDT 6)",
-        "ethereum+0xdAC17F958D2ee523a2206206994597C13D831ec7 (USDT 6)",
-        "form+0xFA3198ecF05303a6d96E57a45E6c815055D255b1 (USDT 6)",
-        "galxegravity+0x816E810f9F787d669FB71932DeabF6c83781Cd48 (USDT 6)",
-        "metis+0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC (USDT 6)",
-        "rari+0x362FAE9A75B27BBc550aAc28a7c1F96C8D483120 (USDT 6)",
-        "scroll+0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df (USDT 6)",
-        "swell+0xb89c6ED617f5F46175E41551350725A09110bbCE (USDT 6)",
-        "taiko+0x9c2dc7377717603eB92b2655c5f2E7997a4945BD (USDT 6)"
       ]
     },
     {
@@ -270,7 +272,7 @@
       ]
     },
     {
-      "id": "yoI9zn:unknown.USD₮0",
+      "id": "yoI9zn:usdt0.USDT0",
       "coingeckoId": "usdt0",
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
@@ -285,7 +287,7 @@
       ]
     },
     {
-      "id": "WOFCYe:unknown.FRAX.legacy",
+      "id": "WOFCYe:frax.FRAX-legacy",
       "coingeckoId": "frax",
       "coingeckoListingTimestamp": 1608508800,
       "category": "stablecoin",
@@ -300,7 +302,7 @@
       ]
     },
     {
-      "id": "h6PBKU:unknown.SolvBTC.BBN",
+      "id": "h6PBKU:solv.xSolvBTC",
       "coingeckoId": "solv-protocol-solvbtc-bbn",
       "coingeckoListingTimestamp": 1722556800,
       "category": "btc",
@@ -315,7 +317,7 @@
       ]
     },
     {
-      "id": "AL0gTs:unknown.DAI",
+      "id": "AL0gTs:sky.DAI",
       "coingeckoId": "dai",
       "coingeckoListingTimestamp": 1574121600,
       "category": "stablecoin",
@@ -329,7 +331,7 @@
       ]
     },
     {
-      "id": "tWz57m:unknown.FRAX",
+      "id": "tWz57m:frax.FRAX",
       "coingeckoId": "frax-share",
       "coingeckoListingTimestamp": 1608508800,
       "category": "other",
@@ -343,7 +345,7 @@
       ]
     },
     {
-      "id": "pisDQy:unknown.FPI",
+      "id": "pisDQy:frax.FPI",
       "coingeckoId": "frax-price-index",
       "coingeckoListingTimestamp": 1649462400,
       "category": "other",
@@ -357,7 +359,7 @@
       ]
     },
     {
-      "id": "jldW9B:unknown.FPIS",
+      "id": "jldW9B:frax.FPIS",
       "coingeckoId": "frax-price-index-share",
       "coingeckoListingTimestamp": 1649462400,
       "category": "other",
@@ -385,7 +387,7 @@
       ]
     },
     {
-      "id": "cMuZqn:unknown.sfrxETH",
+      "id": "cMuZqn:frax.sfrxETH",
       "coingeckoId": "staked-frax-ether",
       "coingeckoListingTimestamp": 1669852800,
       "category": "ether",
@@ -399,7 +401,7 @@
       ]
     },
     {
-      "id": "g5JAdl:unknown.USDM",
+      "id": "g5JAdl:mountainprotocol.USDM",
       "coingeckoId": "mountain-protocol-usdm",
       "coingeckoListingTimestamp": 1696982400,
       "category": "stablecoin",
@@ -413,7 +415,7 @@
       ]
     },
     {
-      "id": "c6ARra:unknown.M-BTC",
+      "id": "c6ARra:merlinchain.M-BTC",
       "coingeckoId": "merlin-s-seal-btc",
       "coingeckoListingTimestamp": 1711929600,
       "category": "btc",
@@ -427,7 +429,7 @@
       ]
     },
     {
-      "id": "ObxzPG:unknown.wstETH",
+      "id": "ObxzPG:lido.wstETH",
       "coingeckoId": "wrapped-steth",
       "coingeckoListingTimestamp": 1633564800,
       "category": "ether",
@@ -440,7 +442,7 @@
       ]
     },
     {
-      "id": "YvJtim:unknown.sFRAX.legacy",
+      "id": "YvJtim:frax.sFRAX-legacy",
       "coingeckoId": "staked-frax",
       "coingeckoListingTimestamp": 1708387200,
       "category": "stablecoin",
@@ -453,7 +455,7 @@
       ]
     },
     {
-      "id": "Obn5X3:unknown.ENA",
+      "id": "Obn5X3:ethena.ENA",
       "coingeckoId": "ethena",
       "coingeckoListingTimestamp": 1712016000,
       "category": "other",
@@ -466,7 +468,7 @@
       ]
     },
     {
-      "id": "fhlNqc:unknown.pzETH",
+      "id": "fhlNqc:renzo.pzETH",
       "coingeckoId": "renzo-restaked-lst",
       "coingeckoListingTimestamp": 1720569600,
       "category": "ether",
@@ -1043,17 +1045,6 @@
       "deployedTokens": [
         "ethereum+0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa (mETH 18)",
         "mantle+0xcDA86A272531e8640cD7F1a92c01839911B90bb0 (mETH 18)"
-      ]
-    },
-    {
-      "id": "CRu84w:unknown.USDT",
-      "coingeckoId": "bridged-usdt",
-      "coingeckoListingTimestamp": 1706918400,
-      "category": "stablecoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35001/large/logo.png?1706959346",
-      "deployedTokens": [
-        "optimism+0x94b008aA00579c1307B0EF2c499aD98a8ce58e58 (USDT 6)",
-        "zksync2+0x493257fD37EDB34451f62EDf8D2a0C418852bA4C (USDT 6)"
       ]
     },
     {
