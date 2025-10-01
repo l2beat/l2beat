@@ -1,3 +1,4 @@
+import { isDeepStrictEqual } from 'node:util'
 import type { Logger } from '@l2beat/backend-tools'
 import type {
   AbstractTokenRecord,
@@ -26,6 +27,17 @@ interface Plan {
   commands: Command[]
 }
 
+type PlanExecutionResult = PlanExecutionSuccess | PlanExecutionError
+
+interface PlanExecutionError {
+  outcome: 'error'
+  error: string
+}
+
+interface PlanExecutionSuccess {
+  outcome: 'success'
+}
+
 export class TokenService {
   constructor(
     private readonly db: TokenDatabase,
@@ -34,7 +46,8 @@ export class TokenService {
     this.logger = logger.for(this)
   }
 
-  plan(intent: Intent): Plan {
+  // biome-ignore lint/suspicious/useAwait: TODO
+  async plan(intent: Intent): Promise<Plan> {
     const commands: Command[] = []
     switch (intent.type) {
       case 'AddAbstractTokenIntent':
@@ -53,10 +66,24 @@ export class TokenService {
     }
   }
 
-  execute(plan: Plan) {
-    this.db.transaction(
-      async () => {
-        // TODO
+  execute(plan: Plan): Promise<PlanExecutionResult> {
+    return this.db.transaction(
+      async (): Promise<PlanExecutionResult> => {
+        const regeneratedPlan = await this.plan(plan.intent)
+        if (!isDeepStrictEqual(regeneratedPlan, plan)) {
+          return {
+            outcome: 'error',
+            error:
+              'Plan is no longer valid due to recent changes to the database',
+          }
+        }
+
+        for (const command of plan.commands) {
+          await this.executeCommand(command)
+        }
+        return {
+          outcome: 'success',
+        }
       },
       // Using SERIALIZABLE isolation level ensures that no other transaction can
       // run at the same time. This prevents situations where we make a query
@@ -68,6 +95,16 @@ export class TokenService {
       // "serialzed" order)
       'serializable',
     )
+  }
+
+  executeCommand(command: Command) {
+    switch (command.type) {
+      case 'AddAbstracTokenCommand':
+        this.db.abstractToken.upsert(command.abstractToken)
+        break
+      default:
+        assertUnreachable(command.type)
+    }
   }
 
   async findAllConnected(deployedId: number) {
