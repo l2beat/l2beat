@@ -4,6 +4,7 @@ import {
   formatSeconds,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
@@ -21,7 +22,6 @@ import {
   orbitStackL2,
   WASMVM_OTHER_CONSIDERATIONS,
 } from '../../templates/orbitStack'
-import { formatEther } from 'ethers/lib/utils'
 
 const discovery = new ProjectDiscovery('nova')
 const discovery_arbitrum = new ProjectDiscovery('arbitrum') // needed for governance section
@@ -213,7 +213,6 @@ export const nova: ScalingProject = orbitStackL2({
         discovery.getContractValue<number>('RollupProxy', 'baseStake'),
       ),
     },
-
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -255,7 +254,7 @@ export const nova: ScalingProject = orbitStackL2({
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
         l2TimelockDelay,
-        challengeGracePeriodSeconds
+        challengeGracePeriodSeconds,
       ),
     ],
   },

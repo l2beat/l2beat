@@ -196,7 +196,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
     l1TimelockDelay,
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
-    challengeGracePeriodSeconds
+    challengeGracePeriodSeconds,
   ),
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
@@ -340,7 +340,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
         l2TimelockDelay,
-        challengeGracePeriodSeconds
+        challengeGracePeriodSeconds,
       ),
     ],
   },
