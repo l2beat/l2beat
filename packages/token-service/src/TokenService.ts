@@ -5,7 +5,26 @@ import type {
   TokenConnectionRecord,
   TokenDatabase,
 } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
+import { assert, assertUnreachable } from '@l2beat/shared-pure'
+
+type Intent = AddAbstractTokenIntent
+
+interface AddAbstractTokenIntent {
+  type: 'AddAbstractTokenIntent'
+  abstractToken: AbstractTokenRecord
+}
+
+type Command = AddAbstracTokenCommand
+
+interface AddAbstracTokenCommand {
+  type: 'AddAbstracTokenCommand'
+  abstractToken: AbstractTokenRecord
+}
+
+interface Plan {
+  intent: Intent
+  commands: Command[]
+}
 
 export class TokenService {
   constructor(
@@ -15,15 +34,43 @@ export class TokenService {
     this.logger = logger.for(this)
   }
 
-  upsertAbstractTokens(t: AbstractTokenRecord[]): Promise<number> {
-    return this.db.abstractToken.upsertMany(t)
+  plan(intent: Intent): Plan {
+    const commands: Command[] = []
+    switch (intent.type) {
+      case 'AddAbstractTokenIntent':
+        commands.push({
+          type: 'AddAbstracTokenCommand',
+          abstractToken: intent.abstractToken,
+        })
+        break
+      default:
+        assertUnreachable(intent.type)
+    }
+
+    return {
+      intent,
+      commands,
+    }
   }
 
-  upsertDeployedTokens(t: DeployedTokenRecord[]): Promise<number> {
-    return this.db.deployedToken.upsertMany(t)
+  execute(plan: Plan) {
+    this.db.transaction(
+      async () => {
+        // TODO
+      },
+      // Using SERIALIZABLE isolation level ensures that no other transaction can
+      // run at the same time. This prevents situations where we make a query
+      // (e.g. selecting all connected tokens), prepare an update based on its
+      // result, but in the meantime someone else makes an updated that
+      // invalidates our query (e.g. adds a new connection).  In reality DB is
+      // smart enough to allow parallel transactions as long as they don't break
+      // the "illusion" of no two transactions running at the same time (in
+      // "serialzed" order)
+      'serializable',
+    )
   }
 
-  async findAllConnected(deployedId: string) {
+  async findAllConnected(deployedId: number) {
     const result: {
       connection: TokenConnectionRecord
       otherToken: DeployedTokenRecord
