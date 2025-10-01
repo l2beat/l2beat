@@ -14,7 +14,7 @@ import type { Partners } from './getDonateData'
 export const DONATE_ADDRESS = '0x41626BA92c0C2a1aD38fC83920300434082B1870'
 const GITCOIN_ROUND_URL =
   'https://explorer.gitcoin.co/#/round/424/0x222ea76664ed77d18d4416d2b2e77937b76f0a35/0x222ea76664ed77d18d4416d2b2e77937b76f0a35-27'
-export const LAST_UPDATED = 'March 2025'
+export const LAST_UPDATED = 'October 2025'
 
 interface Props extends AppLayoutProps {
   partners: Partners | undefined
