@@ -5,7 +5,7 @@ import { BridgeComparator } from './BridgeComparator'
 import { BridgeMatcher } from './BridgeMatcher'
 import { createBridgeRouter } from './BridgeRouter'
 import { BridgeStore } from './BridgeStore'
-import { createBridgeComparisonPlugins } from './comparison'
+import { createBridgeComparePlugins } from './compare'
 import { createBridgePlugins } from './plugins'
 
 export function createBridgeModule({
@@ -47,9 +47,9 @@ export function createBridgeModule({
 
   const bridgeRouter = createBridgeRouter(db, config.bridges, processors)
 
-  const comparisonPlugins = createBridgeComparisonPlugins()
+  const comparePlugins = createBridgeComparePlugins()
 
-  const bridgeComparator = new BridgeComparator(db, comparisonPlugins, logger)
+  const bridgeComparator = new BridgeComparator(db, comparePlugins, logger)
 
   const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
 
@@ -60,7 +60,7 @@ export function createBridgeModule({
       await bridgeStore.start()
       bridgeMatcher.start()
     }
-    if (config.bridges && config.bridges.comparison) {
+    if (config.bridges && config.bridges.compare) {
       bridgeComparator.start()
     }
     if (config.bridges && config.bridges.cleaner) {

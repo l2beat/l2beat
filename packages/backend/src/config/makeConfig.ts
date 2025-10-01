@@ -164,7 +164,7 @@ export async function makeConfig(
           return c?.explorerUrl
         },
       },
-      comparison: flags.isEnabled('bridges', 'comparison'),
+      compare: flags.isEnabled('bridges', 'compare'),
     },
     // Must be last
     flags: flags.getResolved(),

@@ -213,7 +213,7 @@ export interface BridgesConfig {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
   }
-  comparison: boolean
+  compare: boolean
 }
 
 export interface DaBeatConfig {

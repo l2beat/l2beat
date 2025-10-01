@@ -1,6 +1,6 @@
-import type { BridgeComparisonPlugin, BridgeExternalItem } from './types'
+import type { BridgeComparePlugin, BridgeExternalItem } from './types'
 
-export class AcrossComparisonPlugin implements BridgeComparisonPlugin {
+export class AcrossComparePlugin implements BridgeComparePlugin {
   name = 'across'
   type = 'transfer' as const
   types = ['across.Swap']

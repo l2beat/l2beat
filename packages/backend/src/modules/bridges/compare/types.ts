@@ -1,4 +1,4 @@
-export interface BridgeComparisonPlugin {
+export interface BridgeComparePlugin {
   name: string
   type: 'message' | 'transfer'
   types: string[]
