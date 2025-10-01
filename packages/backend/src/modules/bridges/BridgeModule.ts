@@ -53,8 +53,6 @@ export function createBridgeModule({
 
   const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
 
-  console.log('here')
-
   const start = async () => {
     logger = logger.for('BridgeModule')
     logger.info('Starting')
