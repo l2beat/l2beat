@@ -226,7 +226,12 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const { project } = paramsValidation.data
 
     try {
-      const { ownerDefinitions } = req.body
+      const { contractAddress, ownerDefinitions } = req.body
+
+      if (!contractAddress || typeof contractAddress !== 'string') {
+        res.status(400).json({ error: 'contractAddress is required' })
+        return
+      }
 
       if (!ownerDefinitions || !Array.isArray(ownerDefinitions)) {
         res.status(400).json({ error: 'ownerDefinitions array is required' })
@@ -234,7 +239,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       }
 
       // Resolve owner definitions using discovered data
-      const resolved = resolveOwnersFromDiscovered(paths, project, ownerDefinitions)
+      const resolved = resolveOwnersFromDiscovered(paths, project, contractAddress, ownerDefinitions)
       res.json({ resolved })
     } catch (error) {
       console.error('Error resolving owners:', error)

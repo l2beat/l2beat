@@ -244,23 +244,12 @@ export interface PermissionOverride {
   }
 }
 
-// Owner definition types leveraging L2BEAT's CallHandler and AccessControlHandler
+// Owner definition types - optimized two-step approach
+// Step 1: sourceField points to an address field in the current contract
+// Step 2: dataPath specifies which data to extract from the resolved source address
 export interface OwnerDefinition {
-  type: 'field' | 'role'
-
-  // For 'field' type - uses L2BEAT's CallHandler pattern
-  field?: {
-    contractAddress: string
-    method: string           // e.g., "owner", "admin", "governance"
-    args?: any[]            // Optional arguments for function call
-  }
-
-  // For 'role' type - uses L2BEAT's AccessControlHandler pattern
-  role?: {
-    accessControlContract: string
-    roleName: string        // e.g., "DEFAULT_ADMIN_ROLE", "PAUSER_ROLE"
-    roleHash?: string       // Optional: explicit role hash
-  }
+  sourceField: string       // Field name in current contract (e.g., "governor", "admin")
+  dataPath: string          // Path to data in source contract (e.g., "admin", "signers[0]", "PAUSER_ROLE")
 }
 
 export interface ApiPermissionOverridesUpdateRequest {

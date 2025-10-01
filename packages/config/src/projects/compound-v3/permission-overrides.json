@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-30T15:21:54.826Z",
+  "lastModified": "2025-10-01T19:10:13.425Z",
   "contracts": {
     "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": {
       "functions": [
@@ -101,23 +101,8 @@
         {
           "functionName": "pause",
           "userClassification": "permissioned",
-          "ownerDefinitions": [
-            {
-              "type": "field",
-              "field": {
-                "contractAddress": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-                "method": "governor"
-              }
-            },
-            {
-              "type": "role",
-              "role": {
-                "accessControlContract": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-                "roleName": "PAUSER_ROLE"
-              }
-            }
-          ],
-          "timestamp": "2025-09-18T15:45:55.926Z"
+          "ownerDefinitions": [],
+          "timestamp": "2025-10-01T19:10:13.425Z"
         },
         {
           "functionName": "absorb",
@@ -152,14 +137,11 @@
           "score": "high-risk",
           "ownerDefinitions": [
             {
-              "type": "field",
-              "field": {
-                "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-                "method": "admin"
-              }
+              "sourceField": "$admin",
+              "dataPath": "$self"
             }
           ],
-          "timestamp": "2025-09-23T16:34:13.466Z"
+          "timestamp": "2025-10-01T19:09:44.175Z"
         },
         {
           "functionName": "implementation",
@@ -185,16 +167,8 @@
           "checked": true,
           "score": "medium-risk",
           "description": "This function is a simple getter on the current admin address.",
-          "ownerDefinitions": [
-            {
-              "type": "field",
-              "field": {
-                "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-                "method": "$admin"
-              }
-            }
-          ],
-          "timestamp": "2025-09-22T20:23:07.219Z"
+          "ownerDefinitions": [],
+          "timestamp": "2025-10-01T19:01:59.563Z"
         }
       ]
     },

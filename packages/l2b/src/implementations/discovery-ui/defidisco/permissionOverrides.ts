@@ -274,12 +274,14 @@ function mergeContractPermissions(
 }
 
 /**
- * Resolves owner definitions using already discovered data from discovered.json.
- * This reads field values and access control data that L2BEAT has already discovered.
+ * Resolves owner definitions using the new two-step approach:
+ * 1. Find sourceField in current contract to get source address
+ * 2. Navigate to source address and extract data at dataPath
  */
 export function resolveOwnersFromDiscovered(
   paths: DiscoveryPaths,
   project: string,
+  contractAddress: string,
   ownerDefinitions: OwnerDefinition[]
 ): ResolvedOwner[] {
   const discoveredPath = getDiscoveredPath(paths, project)
@@ -301,21 +303,12 @@ export function resolveOwnersFromDiscovered(
 
     for (const definition of ownerDefinitions) {
       try {
-        if (definition.type === 'field') {
-          const addresses = resolveFieldFromDiscovered(discovered, definition)
-          resolved.push(...addresses.map(address => ({
-            address,
-            source: definition,
-            isResolved: true,
-          })))
-        } else if (definition.type === 'role') {
-          const addresses = resolveRoleFromDiscovered(discovered, definition)
-          resolved.push(...addresses.map(address => ({
-            address,
-            source: definition,
-            isResolved: true,
-          })))
-        }
+        const addresses = resolveOwnerDefinition(discovered, contractAddress, definition)
+        resolved.push(...addresses.map(address => ({
+          address,
+          source: definition,
+          isResolved: true,
+        })))
       } catch (error) {
         resolved.push({
           address: 'RESOLUTION_FAILED',
@@ -339,138 +332,169 @@ export function resolveOwnersFromDiscovered(
 }
 
 /**
- * Resolves field-type owner definition from discovered data.
- * Looks for the field value in the contract's discovered data.
+ * Resolves a single owner definition using the two-step approach:
+ * 1. Find sourceField in current contract → get source address
+ * 2. Navigate to source address and extract data at dataPath
  */
-function resolveFieldFromDiscovered(discovered: any, definition: OwnerDefinition): string[] {
-  if (!definition.field) {
-    throw new Error('Field definition is missing')
-  }
-
-  const { contractAddress, method } = definition.field
-
-  // Find the contract in discovered data
+function resolveOwnerDefinition(
+  discovered: any,
+  currentContractAddress: string,
+  definition: OwnerDefinition
+): string[] {
+  // Step 1: Find current contract
   if (!discovered.entries || !Array.isArray(discovered.entries)) {
     throw new Error('No entries found in discovered data')
   }
 
-  // Debug: log what we're looking for
-  console.log('Resolving field:', { contractAddress, method })
-  console.log('Available contracts:', discovered.entries.map((e: any) => ({ type: e.type, address: e.address, name: e.name })))
-
-  const contractEntry = discovered.entries.find((entry: any) =>
-    entry.type === 'Contract' && entry.address === contractAddress
+  const currentContract = discovered.entries.find((entry: any) =>
+    entry.type === 'Contract' && entry.address === currentContractAddress
   )
 
-  if (!contractEntry) {
-    throw new Error(`Contract ${contractAddress} not found in discovered data`)
+  if (!currentContract) {
+    throw new Error(`Current contract ${currentContractAddress} not found in discovered data`)
   }
 
-  // Debug: log contract info
-  console.log('Found contract:', { address: contractEntry.address, fieldsCount: contractEntry.fields?.length || 0 })
+  // Step 2: Get source address from sourceField
+  const sourceAddress = getFieldValue(currentContract, definition.sourceField)
 
-  // Look for the field in the contract's fields
-  if (!contractEntry.fields || !Array.isArray(contractEntry.fields)) {
-    throw new Error(`No fields found for contract ${contractAddress}`)
+  if (!sourceAddress || typeof sourceAddress !== 'string') {
+    throw new Error(`Source field ${definition.sourceField} not found or not an address in contract ${currentContractAddress}`)
   }
 
-  const field = contractEntry.fields.find((f: any) => f.name === method)
+  // Step 3: Find source contract
+  const sourceContract = discovered.entries.find((entry: any) =>
+    entry.type === 'Contract' && entry.address === sourceAddress
+  )
 
-  if (!field) {
-    throw new Error(`Field ${method} not found in contract ${contractAddress}`)
+  if (!sourceContract) {
+    throw new Error(`Source contract ${sourceAddress} not found in discovered data`)
   }
 
-  // Extract address from field value
-  if (field.value && field.value.type === 'address') {
-    return [field.value.address]
-  }
-
-  // Handle array of addresses
-  if (field.value && field.value.type === 'array') {
-    const addresses = field.value.values
-      .filter((v: any) => v.type === 'address')
-      .map((v: any) => v.address)
-    return addresses
-  }
-
-  throw new Error(`Field ${method} does not contain address data`)
+  // Step 4: Navigate dataPath to extract owner addresses
+  return navigateDataPath(sourceContract, definition.dataPath)
 }
 
 /**
- * Resolves role-type owner definition from discovered data.
- * Looks for AccessControl data in the contract's discovered data.
+ * Gets a field value from a contract's values object
  */
-function resolveRoleFromDiscovered(discovered: any, definition: OwnerDefinition): string[] {
-  if (!definition.role) {
-    throw new Error('Role definition is missing')
+function getFieldValue(contract: any, fieldName: string): any {
+  if (!contract.values || typeof contract.values !== 'object') {
+    throw new Error('Contract has no values')
   }
 
-  const { accessControlContract, roleName, roleHash } = definition.role
+  const value = contract.values[fieldName]
 
-  // Find the contract in discovered data
-  if (!discovered.entries || !Array.isArray(discovered.entries)) {
-    throw new Error('No entries found in discovered data')
+  if (value === undefined) {
+    throw new Error(`Field ${fieldName} not found in contract values`)
   }
 
-  const contractEntry = discovered.entries.find((entry: any) =>
-    entry.type === 'Contract' && entry.address === accessControlContract
-  )
-
-  if (!contractEntry) {
-    throw new Error(`Contract ${accessControlContract} not found in discovered data`)
+  // Handle string addresses (most common case)
+  if (typeof value === 'string' && value.startsWith('eth:')) {
+    return value
   }
 
-  // Look for access control data in the contract's fields
-  if (!contractEntry.fields || !Array.isArray(contractEntry.fields)) {
-    throw new Error(`No fields found for contract ${accessControlContract}`)
+  // Handle complex field value objects
+  if (typeof value === 'object' && value.type === 'address') {
+    return value.address
   }
 
-  // Look for a field that contains access control data (could be named accessControl, roles, etc.)
-  const accessControlField = contractEntry.fields.find((f: any) =>
-    f.handler?.type === 'accessControl' ||
-    f.name?.toLowerCase().includes('accesscontrol') ||
-    f.name?.toLowerCase().includes('roles')
-  )
+  return value
+}
 
-  if (!accessControlField || !accessControlField.value) {
-    throw new Error(`No access control data found for contract ${accessControlContract}`)
+/**
+ * Navigates a data path to extract addresses
+ * Supports:
+ * - Special case: "$self" - returns the contract address itself
+ * - Simple fields: "admin"
+ * - Array access: "signers[0]", "members[1]"
+ * - Role names: "PAUSER_ROLE" (from accessControl data)
+ */
+function navigateDataPath(contract: any, dataPath: string): string[] {
+  // Special case: $self means the source contract itself is the owner
+  if (dataPath === '$self') {
+    return [contract.address]
   }
 
-  const accessControlData = accessControlField.value
+  // Check for array access pattern: fieldName[index]
+  const arrayMatch = dataPath.match(/^(.+?)\[(\d+)\]$/)
 
-  // Handle different possible structures for access control data
-  let roles: any = {}
+  if (arrayMatch) {
+    const [, fieldName, indexStr] = arrayMatch
+    const index = parseInt(indexStr!, 10)
 
-  if (accessControlData.type === 'object' && accessControlData.values) {
-    // Convert array of [key, value] pairs to object
-    roles = Object.fromEntries(accessControlData.values)
-  } else if (typeof accessControlData === 'object') {
-    roles = accessControlData
-  } else {
-    throw new Error(`Unexpected access control data format`)
+    const arrayValue = getFieldValue(contract, fieldName!)
+
+    if (!Array.isArray(arrayValue)) {
+      throw new Error(`Field ${fieldName} is not an array`)
+    }
+
+    if (index >= arrayValue.length) {
+      throw new Error(`Index ${index} out of bounds for array ${fieldName} (length: ${arrayValue.length})`)
+    }
+
+    const element = arrayValue[index]
+
+    // Handle string addresses
+    if (typeof element === 'string' && element.startsWith('eth:')) {
+      return [element]
+    }
+
+    // Handle address objects
+    if (typeof element === 'object' && element.type === 'address') {
+      return [element.address]
+    }
+
+    throw new Error(`Array element at ${dataPath} is not an address`)
   }
 
-  // Try to find the role by name first, then by hash
-  let roleData = roles[roleName]
-  if (!roleData && roleHash) {
-    roleData = roles[roleHash]
+  // Simple field access
+  const value = getFieldValue(contract, dataPath)
+
+  // Single address
+  if (typeof value === 'string' && value.startsWith('eth:')) {
+    return [value]
   }
 
-  if (!roleData) {
-    // Role exists but has no members (return empty array, not an error)
-    return []
+  // Array of addresses
+  if (Array.isArray(value)) {
+    const addresses: string[] = []
+    for (const element of value) {
+      if (typeof element === 'string' && element.startsWith('eth:')) {
+        addresses.push(element)
+      } else if (typeof element === 'object' && element.type === 'address') {
+        addresses.push(element.address)
+      }
+    }
+
+    if (addresses.length > 0) {
+      return addresses
+    }
   }
 
-  // Extract members from role data
-  if (roleData.members && Array.isArray(roleData.members)) {
-    return roleData.members
+  // Check if it's a role in access control data
+  // This would be in a field with handler type 'accessControl'
+  if (contract.fields && Array.isArray(contract.fields)) {
+    const accessControlField = contract.fields.find((f: any) =>
+      f.handler?.type === 'accessControl'
+    )
+
+    if (accessControlField?.value?.type === 'object' && accessControlField.value.values) {
+      // Access control stores roles as object entries
+      const roles = Object.fromEntries(accessControlField.value.values)
+      const roleData = roles[dataPath]
+
+      if (roleData) {
+        if (roleData.members && Array.isArray(roleData.members)) {
+          return roleData.members
+        }
+        if (Array.isArray(roleData)) {
+          return roleData
+        }
+      }
+    }
   }
 
-  if (Array.isArray(roleData)) {
-    return roleData
-  }
-
-  throw new Error(`Unexpected role data format for ${roleName}`)
+  throw new Error(`Could not resolve data path "${dataPath}" to address(es)`)
 }
 
 /**

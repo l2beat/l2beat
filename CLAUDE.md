@@ -209,7 +209,12 @@ packages/
           "checked": true,
           "score": "high-risk",
           "description": "Emergency pause function",
-          "ownerDefinitions": [...],
+          "ownerDefinitions": [
+            {
+              "sourceField": "$admin",
+              "dataPath": "$self"
+            }
+          ],
           "delay": {
             "contractAddress": "eth:0x456...",
             "fieldName": "delay"
@@ -221,6 +226,14 @@ packages/
   }
 }
 ```
+
+**Owner Definitions**:
+- Two-step approach for tracking function permissions
+- `sourceField`: Points to address field in current contract (e.g., `"$admin"`, `"governor"`)
+- `dataPath`: Specifies data to extract from resolved source address (e.g., `"$self"`, `"signers[0]"`, `"PAUSER_ROLE"`)
+- Example: `{"sourceField": "$admin", "dataPath": "$self"}` resolves to the admin address itself
+- Multiple owner definitions supported via array
+- Use `ownerDefinitions !== undefined` pattern (not `??`) to handle explicit clearing
 
 **Delay Field**:
 - Stores reference to numeric field (not the value itself)

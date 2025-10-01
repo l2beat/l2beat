@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "lastModified": "2025-10-01T19:11:57.678Z",
+  "contracts": {
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
+      "functions": [
+        {
+          "functionName": "executeTransaction",
+          "userClassification": "non-permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "admin",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-01T19:11:57.678Z"
+        }
+      ]
+    }
+  }
+}

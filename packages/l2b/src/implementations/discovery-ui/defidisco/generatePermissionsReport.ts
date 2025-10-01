@@ -74,20 +74,15 @@ export function generatePermissionsReport(
         let owners: string[] = []
         if (func.ownerDefinitions && func.ownerDefinitions.length > 0) {
           try {
-            const resolved = resolveOwnersFromDiscovered(paths, project, func.ownerDefinitions)
+            const resolved = resolveOwnersFromDiscovered(paths, project, contractAddress, func.ownerDefinitions)
             owners = resolved
               .filter(owner => owner.isResolved)
               .map(owner => owner.address)
 
-            // If no owners could be resolved, show the definition types
+            // If no owners could be resolved, show the definition format
             if (owners.length === 0) {
               owners = func.ownerDefinitions.map((def: any) => {
-                if (def.type === 'field') {
-                  return `Field: ${def.field?.method || 'unknown'}`
-                } else if (def.type === 'role') {
-                  return `Role: ${def.role?.roleName || 'unknown'}`
-                }
-                return 'Unknown definition type'
+                return `${def.sourceField} → ${def.dataPath}`
               })
             }
           } catch (error) {
