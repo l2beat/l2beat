@@ -24,6 +24,7 @@ interface DeployedToken {
 
 interface Output {
   ignored: DeployedTokenId[]
+  flagged: DeployedTokenId[]
   abstractTokens: AbstractToken[]
   deployedTokens: DeployedToken[]
 }
@@ -37,6 +38,10 @@ async function main() {
 
   const assigned = new Set<string>()
   for (const abstract of out.abstractTokens) {
+    if (abstract.id.startsWith('?:')) {
+      abstract.id = abstract.id.replace('?', randomId()) as AbstractTokenId
+    }
+
     for (const id of abstract.deployedTokens ?? []) {
       if (assigned.has(id)) {
         console.log('DUPLICATE ASSIGNMENT', id)
@@ -62,7 +67,7 @@ async function main() {
       (x) => x.coingeckoId === abstract.coingeckoId,
     )
     for (const token of relevant) {
-      const id = `${token.chainName}+${token.address ?? 'native'}`
+      const id = deployedId(token)
       if (known.has(id)) {
         continue
       }
@@ -73,7 +78,7 @@ async function main() {
   }
 
   for (const token of tokens) {
-    const id = `${token.chainName}+${token.address ?? 'native'}`
+    const id = deployedId(token)
     if (!known.has(id)) {
       let abstract = out.abstractTokens.find(
         (x) => x.coingeckoId === token.coingeckoId,
@@ -150,13 +155,17 @@ function createAbstractToken(token: LegacyToken): AbstractToken {
   return abstract
 }
 
+function deployedId(token: LegacyToken): DeployedTokenId {
+  return `${token.chainName}+${token.address ?? 'native'} (${token.symbol} ${token.decimals})`
+}
+
 function createDeployedToken(
   token: LegacyToken,
   abstract: AbstractToken,
 ): DeployedToken {
   console.log('For abstract', abstract.id)
   const deployed: DeployedToken = {
-    id: `${token.chainName}+${token.address ?? 'native'}`,
+    id: deployedId(token),
     decimals: token.decimals,
     symbol: token.symbol,
     deploymentTimestamp: token.deploymentTimestamp,
