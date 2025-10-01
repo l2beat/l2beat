@@ -34,41 +34,60 @@ export class BridgeComparator {
   }
 
   async compare() {
-    await Promise.all(
-      this.plugins.map(async (plugin) => {
-        const items = await plugin.getExternalItems()
-
-        await new Promise((resolve) => setTimeout(resolve, this.waitingTimeMs))
-
-        const records =
-          plugin.type === 'message'
-            ? await this.db.bridgeMessage.getExistingItems(items, plugin.types)
-            : await this.db.bridgeTransfer.getExistingItems(items, plugin.types)
-
-        let missing = 0
-        for (const item of items) {
-          const record = records.find(
-            (r) =>
-              r.srcTxHash?.toLowerCase() === item.srcTxHash.toLowerCase() &&
-              r.dstTxHash?.toLowerCase() === item.dstTxHash.toLowerCase(),
-          )
-
-          if (!record) {
-            missing++
-            this.logger.info('Missing item detected', {
-              plugin: plugin.name,
-              item,
-            })
+    const items = (
+      await Promise.all(
+        this.plugins.map(async (plugin) => {
+          try {
+            return {
+              plugin,
+              items: await plugin.getExternalItems(),
+            }
+          } catch (error) {
+            this.logger.warn(`Plugin for ${plugin.name} failed`, error)
+            return null
           }
-        }
+        }),
+      )
+    ).filter((x) => x != null)
 
-        this.logger.info('Comparison finished', {
-          plugin: plugin.name,
-          items: items.length,
-          records: records.length,
-          missing,
-        })
-      }),
-    )
+    // This timeout is needed to make sure our backend indexes latest events
+    await new Promise((resolve) => setTimeout(resolve, this.waitingTimeMs))
+
+    for (const i of items) {
+      const records =
+        i.plugin.type === 'message'
+          ? await this.db.bridgeMessage.getExistingItems(
+              i.items,
+              i.plugin.types,
+            )
+          : await this.db.bridgeTransfer.getExistingItems(
+              i.items,
+              i.plugin.types,
+            )
+
+      let missing = 0
+      for (const item of i.items) {
+        const record = records.find(
+          (r) =>
+            r.srcTxHash?.toLowerCase() === item.srcTxHash.toLowerCase() &&
+            r.dstTxHash?.toLowerCase() === item.dstTxHash.toLowerCase(),
+        )
+
+        if (!record) {
+          missing++
+          this.logger.warn('Missing item detected', {
+            plugin: i.plugin.name,
+            item,
+          })
+        }
+      }
+
+      this.logger.info('Comparison finished', {
+        plugin: i.plugin.name,
+        items: i.items.length,
+        records: records.length,
+        missing,
+      })
+    }
   }
 }

@@ -151,8 +151,8 @@ export class BridgeMessageRepository extends BaseRepository {
     query = query.where((eb) => {
       const conditions = items.map((item) => {
         return eb.and([
-          eb('srcTxHash', '=', item.srcTxHash),
-          eb('dstTxHash', '=', item.dstTxHash),
+          eb(eb.fn('lower', ['srcTxHash']), '=', item.srcTxHash.toLowerCase()),
+          eb(eb.fn('lower', ['dstTxHash']), '=', item.dstTxHash.toLowerCase()),
         ])
       })
 
